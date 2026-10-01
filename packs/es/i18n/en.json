@@ -416,6 +416,26 @@
     "exempt": "Exempt supply — article 20 of the Spanish VAT Act (Ley 37/1992).",
     "cash_basis": "Special cash accounting scheme"
   },
+  "asset_categories": {
+    "goodwill": "Goodwill",
+    "development": "Capitalised development costs",
+    "software": "Software",
+    "intangible-other": "Other intangible assets (useful life not reliably estimable)",
+    "building-commercial": "Commercial, administrative and service buildings and dwellings",
+    "building-industrial": "Industrial buildings",
+    "fixtures": "Installations (other installations)",
+    "machinery": "Machinery",
+    "machinery-declining": "Machinery — constant percentage",
+    "medical-equipment": "Medical and similar equipment",
+    "vehicle": "External transport equipment",
+    "truck": "Lorries",
+    "truck-declining": "Lorries — constant percentage",
+    "furniture": "Furniture",
+    "tools": "Tools and implements",
+    "electronic-equipment": "Electronic equipment",
+    "it-equipment": "Information-processing equipment",
+    "it-equipment-declining": "Information-processing equipment — constant percentage"
+  },
   "corporate_tax": {
     "tax": "Corporate income tax",
     "parameter:turnover_prior_period": "Net turnover of the immediately preceding tax period, determined under article 101, paragraphs 2 and 3, of Law 27/2014 (restated to a year and, in a group, that of the whole group)",

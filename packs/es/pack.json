@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "ES",
   "name": "España",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "schema_min": "20260929141500",
   "seed_sequence": 19,
   "released_at": "2026-10-01",
@@ -14,7 +14,7 @@
         "title": "Real Decreto 1514/2007, de 16 de noviembre, por el que se aprueba el Plan General de Contabilidad — texto consolidado",
         "publisher": "Agencia Estatal Boletín Oficial del Estado",
         "url": "https://www.boe.es/eli/es/rd/2007/11/16/1514/con",
-        "consulted_on": "2026-09-21",
+        "consulted_on": "2026-10-01",
         "kind": "regulation"
       },
       {
@@ -299,7 +299,7 @@
       },
       {
         "key": "lis",
-        "title": "Ley 27/2014, de 27 de noviembre, del Impuesto sobre Sociedades — texto consolidado (última actualización publicada el 02/09/2026): arts. 15, 26, 29, 30, 40 y 101 y disposición transitoria cuadragésima cuarta",
+        "title": "Ley 27/2014, de 27 de noviembre, del Impuesto sobre Sociedades — texto consolidado (última actualización publicada el 02/09/2026): arts. 12, 15, 26, 29, 30, 40 y 101 y disposición transitoria cuadragésima cuarta",
         "publisher": "Agencia Estatal Boletín Oficial del Estado",
         "url": "https://www.boe.es/eli/es/l/2014/11/27/27/con",
         "consulted_on": "2026-10-01",
@@ -347,6 +347,8 @@
       "cash": "570",
       "fx_gain": "768",
       "fx_loss": "668",
+      "asset_disposal_gain": "771",
+      "asset_disposal_loss": "671",
       "tax_payable": "4750",
       "tax_receivable": "4700"
     },

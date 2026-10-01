@@ -225,3 +225,56 @@ provision stops there; the exclusion of asset-holding entities from the 24 %
 rate (art. 101.1 and the manual of the Agencia Tributaria); the rate of a new
 entity that is also a micro-enterprise; and the days against months
 proration above.
+
+## Fixed assets
+
+`fixed_assets.json` carries how Spain depreciates a fixed asset and takes it off
+the balance sheet. It was read on 1 October 2026 in the consolidated Ley 27/2014
+(art. 12, the table of maximum linear coefficients, the constant-percentage
+method and the intangibles) and in the PGC (rules of recognition and
+measurement 2.ª, 5.ª and 6.ª).
+
+- **Disposal is `net_result`**: PGC rule 2.ª, 3 books one gain or loss on 771 or
+  671, and the abridged profit and loss account prints it as one line
+  (670/671/672 and 770/771/772). The two accounts are the roles
+  `asset_disposal_gain` and `asset_disposal_loss`.
+- **The first-period prorata is practice, not text.** Neither the PGC nor art. 12
+  says how to cut the first year; the section counts real days from entry into
+  service, in straight line and in declining balance, and says so in its
+  `legal_reference`.
+- **Durations.** The PGC fixes four: goodwill ten years (presumed), capitalised
+  development and software five years at most (presumed), other intangibles ten
+  years when the life cannot be estimated. For tangible assets the law gives
+  only ceilings: a maximum linear coefficient and a maximum period per kind of
+  element. A straight-line category proposes the shortest life whose annual rate
+  stays within the coefficient (12 × 100 / coefficient months), and the
+  `legal_reference` of each prints the coefficient and the maximum period it
+  came from. A constant-percentage category takes the table's maximum period and
+  the factor of art. 12.1.b (1.5, 2 or 2.5 by that period). Buildings and
+  furniture have no such category, as the article forbids it.
+- **A category proposes, never imposes**: the useful life is the company's
+  estimate (rule 2.ª, 2.1).
+
+### Fixed assets: what `fixed_assets.json` leaves out
+
+| Not carried | Why |
+|---|---|
+| Tax depreciation distinct from the book charge | The module keeps one schedule per asset. A company whose accounting life differs from the tax table (goodwill at ten years against the 1/20 limit of art. 12.2, a faster book life than the table) carries the difference as a tax adjustment outside the module. |
+| The 11 % floor of the constant percentage (art. 12.1.b) | No field says a minimum rate. It does not bite on any category here (the lowest is 13.9 %, machinery), but an asset set up with a longer period would need it. |
+| Sum-of-digits method (art. 12.1.c) | The module has no such method. |
+| Free depreciation (art. 12.3: R&D assets, assets of up to 300 € within 25 000 € a year, labour companies) and accelerated depreciation of other regimes | Outside the vocabulary of a category. Not read beyond art. 12.3. |
+| Depreciation plans agreed with the tax administration (art. 12.1.d) and justified depreciation (12.1.e) | Case by case, no table. |
+| Separate depreciation of the components of an asset (rule 2.ª, 2.1) | The module has one asset, one duration. |
+| Residual value, impairment and its reversal | Not a pack rule. |
+| Threshold below which an asset is expensed | Not read in an official text, and the module has no such field. |
+| Revaluations and legal updates | Not carried. |
+| Other element kinds of the art. 12 table (civil works, power plants, rolling stock, ships and aircraft, glassware, linen, moulds, audiovisual productions) | Unusual for the first company; the table is in the law and a category can be added. |
+| Investment property (accounts 220/221, 282) | Not read in rule 4.ª. |
+| Assets held for sale (rule 7.ª) | The module cannot stop depreciation on a reclassification. |
+| Units of production | Refused by the module. |
+| Day-by-day convention of the first period | Practice, not text (see above); a company that prorates by months sets `prorata = 'months'` on the asset. |
+
+The declining-balance categories also inherit the module's switch to the
+straight line when it is the larger annuity, which art. 12.1.b does not provide
+for: the text applies a constant percentage on the remaining value, and the
+module needs the switch for the schedule to end.

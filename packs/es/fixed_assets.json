@@ -1,0 +1,202 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "depreciation": {
+    "prorata_straight_line": "days",
+    "prorata_declining": "days",
+    "day_count": "actual",
+    "declining_cap_percent": null,
+    "declining_switch_to_linear": true,
+    "legal_reference": "Plan General de Contabilidad (Real Decreto 1514/2007), norma de registro y valoración 2.ª, apartado 2.1 — las amortizaciones se establecen de manera sistemática y racional en función de la vida útil y del valor residual del bien. Ni el Plan ni la Ley 27/2014 (art. 12) fijan cómo se prorratea el primer ejercicio: contar los días reales desde la puesta en funcionamiento hasta el cierre es la práctica corriente y no una regla de texto, tanto en lineal como en porcentaje constante. Ley 27/2014, art. 12.1.b — el porcentaje constante se aplica sobre el valor pendiente de amortización, ponderando el coeficiente lineal por 1,5, 2 o 2,5 según el período, con un mínimo del 11 %; la ley no fija un tope sobre el valor de adquisición (por eso no hay tope) ni prevé el paso al lineal, que el módulo aplica para que el plan termine.",
+    "source": "pgc"
+  },
+  "disposal": {
+    "style": "net_result",
+    "legal_reference": "Plan General de Contabilidad, norma de registro y valoración 2.ª, apartado 3 — la diferencia entre el importe obtenido por un elemento del inmovilizado material, neto de los costes de venta, y su valor contable determina el beneficio o la pérdida de la baja, que se imputa a la cuenta de pérdidas y ganancias. Cuentas 771 «Beneficios procedentes del inmovilizado material» y 671 «Pérdidas procedentes del inmovilizado material»; la cuenta de pérdidas y ganancias abreviada las agrupa en «Deterioro y resultado por enajenaciones del inmovilizado» (670/671/672 y 770/771/772), en una sola cifra.",
+    "source": "pgc"
+  },
+  "categories": [
+    {
+      "code": "goodwill",
+      "name": "Fondo de comercio",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 10,
+      "legal_reference": "Plan General de Contabilidad (Real Decreto 1514/2007), norma de registro y valoración 6.ª, c) — el fondo de comercio se amortiza durante su vida útil y se presume, salvo prueba en contrario, que es de diez años y que su recuperación es lineal. Fiscalmente, Ley 27/2014, art. 12.2, la amortización del fondo de comercio es deducible con el límite anual máximo de la veinteava parte de su importe: el exceso sobre ese límite es un ajuste fiscal que esta sección no expresa.",
+      "source": "pgc"
+    },
+    {
+      "code": "development",
+      "name": "Gastos de desarrollo activados",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 20,
+      "legal_reference": "Plan General de Contabilidad, norma de registro y valoración 6.ª, a) — los gastos de desarrollo activados se amortizan durante su vida útil, que se presume, salvo prueba en contrario, que no es superior a cinco años (los de investigación, dentro del plazo de cinco años). Cinco años es el tope de la presunción, no una duración obligatoria.",
+      "source": "pgc"
+    },
+    {
+      "code": "software",
+      "name": "Aplicaciones informáticas",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 30,
+      "legal_reference": "Plan General de Contabilidad, norma de registro y valoración 6.ª, e) — los programas de ordenador siguen los mismos criterios de amortización que los gastos de desarrollo: vida útil presumida no superior a cinco años. Ley 27/2014, art. 12.1.a, «Sistemas y programas informáticos»: coeficiente lineal máximo 33 %, período máximo 6 años; cinco años (20 % anual) queda dentro de la tabla.",
+      "source": "pgc"
+    },
+    {
+      "code": "intangible-other",
+      "name": "Otro inmovilizado intangible (vida útil no estimable)",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 40,
+      "legal_reference": "Plan General de Contabilidad, norma de registro y valoración 5.ª, apartado 2 — cuando la vida útil de un inmovilizado intangible no pueda estimarse de manera fiable, se amortiza en un plazo de diez años, sin perjuicio de los plazos de las normas particulares (6.ª). Una concesión o una licencia con plazo propio usa ese plazo en su lugar. Ley 27/2014, art. 12.2: sin vida útil fiable, la amortización fiscal tiene el límite anual de la veinteava parte.",
+      "source": "pgc"
+    },
+    {
+      "code": "building-commercial",
+      "name": "Edificios comerciales, administrativos, de servicios y viviendas",
+      "method": "straight_line",
+      "duration_months": 600,
+      "account_type": "asset_fixed",
+      "sequence": 50,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Edificios comerciales, administrativos, de servicios y viviendas», coeficiente lineal máximo 2 %, período máximo 100 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "building-industrial",
+      "name": "Edificios industriales",
+      "method": "straight_line",
+      "duration_months": 400,
+      "account_type": "asset_fixed",
+      "sequence": 60,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Edificios industriales», coeficiente lineal máximo 3 %, período máximo 68 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "fixtures",
+      "name": "Instalaciones (resto de instalaciones)",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 70,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Resto instalaciones», coeficiente lineal máximo 10 %, período máximo 20 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "machinery",
+      "name": "Maquinaria",
+      "method": "straight_line",
+      "duration_months": 100,
+      "account_type": "asset_fixed",
+      "sequence": 80,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Maquinaria», coeficiente lineal máximo 12 %, período máximo 18 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "machinery-declining",
+      "name": "Maquinaria — porcentaje constante",
+      "method": "declining_balance",
+      "duration_months": 216,
+      "coefficient": 2.5,
+      "account_type": "asset_fixed",
+      "sequence": 90,
+      "legal_reference": "Ley 27/2014, art. 12.1.b — porcentaje constante sobre el valor pendiente de amortización: el coeficiente lineal obtenido del período de la tabla del art. 12.1.a («Maquinaria», 18 años, máximo 12 %) se pondera por 2,5, según que el período sea inferior a 5 años (1,5), de 5 a menos de 8 años (2) o de 8 años o más (2,5); el porcentaje constante no puede ser inferior al 11 %. La duración es el período máximo de la tabla. Los edificios, el mobiliario y los enseres no pueden acogerse a este método. El texto no prevé el paso al lineal: el que aplica el módulo es su mecanismo para que el plan termine.",
+      "source": "lis"
+    },
+    {
+      "code": "medical-equipment",
+      "name": "Equipos médicos y asimilados",
+      "method": "straight_line",
+      "duration_months": 80,
+      "account_type": "asset_fixed",
+      "sequence": 100,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Equipos médicos y asimilados», coeficiente lineal máximo 15 %, período máximo 14 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "vehicle",
+      "name": "Elementos de transporte externo",
+      "method": "straight_line",
+      "duration_months": 75,
+      "account_type": "asset_fixed",
+      "sequence": 110,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Elementos de transporte externo», coeficiente lineal máximo 16 %, período máximo 14 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "truck",
+      "name": "Autocamiones",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 120,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Autocamiones», coeficiente lineal máximo 20 %, período máximo 10 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "truck-declining",
+      "name": "Autocamiones — porcentaje constante",
+      "method": "declining_balance",
+      "duration_months": 120,
+      "coefficient": 2.5,
+      "account_type": "asset_fixed",
+      "sequence": 130,
+      "legal_reference": "Ley 27/2014, art. 12.1.b — porcentaje constante sobre el valor pendiente de amortización: el coeficiente lineal obtenido del período de la tabla del art. 12.1.a («Autocamiones», 10 años, máximo 20 %) se pondera por 2,5, según que el período sea inferior a 5 años (1,5), de 5 a menos de 8 años (2) o de 8 años o más (2,5); el porcentaje constante no puede ser inferior al 11 %. La duración es el período máximo de la tabla. Los edificios, el mobiliario y los enseres no pueden acogerse a este método. El texto no prevé el paso al lineal: el que aplica el módulo es su mecanismo para que el plan termine.",
+      "source": "lis"
+    },
+    {
+      "code": "furniture",
+      "name": "Mobiliario",
+      "method": "straight_line",
+      "duration_months": 120,
+      "account_type": "asset_fixed",
+      "sequence": 140,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Mobiliario», coeficiente lineal máximo 10 %, período máximo 20 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "tools",
+      "name": "Útiles y herramientas",
+      "method": "straight_line",
+      "duration_months": 48,
+      "account_type": "asset_fixed",
+      "sequence": 150,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Útiles y herramientas», coeficiente lineal máximo 25 %, período máximo 8 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "electronic-equipment",
+      "name": "Equipos electrónicos",
+      "method": "straight_line",
+      "duration_months": 60,
+      "account_type": "asset_fixed",
+      "sequence": 160,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Equipos electrónicos», coeficiente lineal máximo 20 %, período máximo 10 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "it-equipment",
+      "name": "Equipos para procesos de información",
+      "method": "straight_line",
+      "duration_months": 48,
+      "account_type": "asset_fixed",
+      "sequence": 170,
+      "legal_reference": "Ley 27/2014 del Impuesto sobre Sociedades, art. 12.1.a — tabla de coeficientes de amortización lineal: «Equipos para procesos de información», coeficiente lineal máximo 25 %, período máximo 8 años. La duración propuesta es la más corta cuyo porcentaje anual no supera el coeficiente lineal máximo de la tabla (12 × 100 / coeficiente, en meses); el período máximo de la tabla es un tope de años, no una vida útil. La vida útil real la estima la empresa (PGC, norma de registro y valoración 2.ª, apartado 2.1) y la categoría solo propone.",
+      "source": "lis"
+    },
+    {
+      "code": "it-equipment-declining",
+      "name": "Equipos para procesos de información — porcentaje constante",
+      "method": "declining_balance",
+      "duration_months": 96,
+      "coefficient": 2.5,
+      "account_type": "asset_fixed",
+      "sequence": 180,
+      "legal_reference": "Ley 27/2014, art. 12.1.b — porcentaje constante sobre el valor pendiente de amortización: el coeficiente lineal obtenido del período de la tabla del art. 12.1.a («Equipos para procesos de información», 8 años, máximo 25 %) se pondera por 2,5, según que el período sea inferior a 5 años (1,5), de 5 a menos de 8 años (2) o de 8 años o más (2,5); el porcentaje constante no puede ser inferior al 11 %. La duración es el período máximo de la tabla. Los edificios, el mobiliario y los enseres no pueden acogerse a este método. El texto no prevé el paso al lineal: el que aplica el módulo es su mecanismo para que el plan termine.",
+      "source": "lis"
+    }
+  ]
+}
