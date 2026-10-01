@@ -18,6 +18,7 @@ import {
   taxCompany,
   taxPacks,
   thresholdRate,
+  type EstimateLine,
 } from './helpers.js';
 
 // The `tax` module apart from its worked examples, which `golden.test.ts`
@@ -222,7 +223,6 @@ describe('an estimate', () => {
     );
     expect(prorated, 'no pack shares a threshold out over months').toBeDefined();
     const rate = thresholdRate(prorated!.corporateTax!, YEAR)!;
-    const top = ordinaryRate(prorated!.corporateTax!, '2025-07-01');
 
     // Six months, so half the threshold; the profit is the whole threshold.
     const half = { name: 'Second half of 2025', start: '2025-07-01', end: '2025-12-31' };
@@ -233,10 +233,19 @@ describe('an estimate', () => {
 
     const slices = (await estimate(db, fixture)).filter((l) => l.kind === 'rate');
     const cap = share(profit, 50);
-    expect(slices.map((l) => [l.code, decimal(l.base), decimal(l.amount)])).toEqual([
-      [rate.code, decimal(cap), decimal(share(cap, rate.rate))],
-      [top.code, decimal(cap), decimal(share(cap, top.rate))],
+    expect(slices).toHaveLength(2);
+    const [first, rest] = slices as [EstimateLine, EstimateLine];
+    expect([first.code, decimal(first.base), decimal(first.amount)]).toEqual([
+      rate.code,
+      decimal(cap),
+      decimal(share(cap, rate.rate)),
     ]);
+    // What is left goes to the rate the pack gives the rest of the base of
+    // such a company: the ordinary one, or a reduced one under the same
+    // conditions. Either way it takes the other half, at its own rate.
+    const above = prorated!.corporateTax!.rates.find((r) => r.code === rest.code)!;
+    expect(above.up_to).toBeNull();
+    expect([decimal(rest.base), decimal(rest.amount)]).toEqual([decimal(cap), decimal(share(cap, Number(rest.rate)))]);
   });
 
   it('reads the base of a rule from an account the company names, once', async () => {
