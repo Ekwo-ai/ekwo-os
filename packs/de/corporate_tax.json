@@ -1,0 +1,195 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "tax": {
+    "code": "DE-KSt",
+    "name": "Körperschaftsteuer",
+    "legal_reference": "Körperschaftsteuergesetz (KStG) — Körperschaftsteuer; ohne Solidaritätszuschlag und ohne Gewerbesteuer, die eigene Steuern sind",
+    "source": "kstg"
+  },
+  "result": {
+    "statement": "DE-HGB-275-GKV",
+    "line": "17",
+    "legal_reference": "HGB § 275 Abs. 2 — die Gewinn- und Verlustrechnung in Gesamtkostenverfahren weist kein Ergebnis vor Steuern aus: Posten 15 ist das Ergebnis nach Steuern und Posten 17 der Jahresüberschuss oder Jahresfehlbetrag. Die Berechnung geht vom Jahresüberschuss aus; die Steuern vom Einkommen und vom Ertrag (Posten 14) werden durch Hinzurechnungsregeln auf ihren Konten wieder hinzugerechnet (KStG § 8 Abs. 1 Satz 1 — das Einkommen bestimmt sich nach den Vorschriften des Einkommensteuergesetzes und des KStG)",
+    "source": "hgb"
+  },
+  "accounts": {
+    "expense": "9610",
+    "payable": "5220",
+    "receivable": "2247",
+    "legal_reference": "HGB § 266 Abs. 3 B.2 und § 275 Abs. 2 Nr. 14 — Konto 9610 Körperschaftsteuer (Steuern vom Einkommen und vom Ertrag), 5220 Körperschaftsteuerrückstellung (Steuerrückstellungen) und 2247 Erstattungsansprüche aus Steuern vom Einkommen und vom Ertrag des Kontenplans dieses Pakets",
+    "source": "hgb"
+  },
+  "parameters": [],
+  "adjustment_rules": [
+    {
+      "code": "income-taxes",
+      "name": "Steuern vom Einkommen: Körperschaftsteuer und Solidaritätszuschlag",
+      "direction": "add_back",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "code_range",
+          "code_from": "9610",
+          "code_to": "9611"
+        }
+      ],
+      "valid_from": "2024-01-01",
+      "valid_on": "period_start",
+      "sequence": 10,
+      "legal_reference": "KStG § 10 Nr. 2 — die Steuern vom Einkommen und sonstige Personensteuern sind nicht abziehbar, ebenso die auf diese Steuern entfallenden Nebenleistungen; § 8 Abs. 1 Satz 1 — das Einkommen wird nach dem EStG und dem KStG ermittelt",
+      "source": "kstg"
+    },
+    {
+      "code": "trade-tax",
+      "name": "Gewerbesteuer",
+      "direction": "add_back",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "account_code",
+          "code_from": "9620"
+        }
+      ],
+      "valid_from": "2024-01-01",
+      "valid_on": "period_start",
+      "sequence": 20,
+      "legal_reference": "EStG § 4 Abs. 5b — die Gewerbesteuer und die darauf entfallenden Nebenleistungen sind keine Betriebsausgaben; anzuwenden über KStG § 8 Abs. 1 Satz 1",
+      "source": "estg"
+    },
+    {
+      "code": "entertainment",
+      "name": "Bewirtungsaufwendungen aus geschäftlichem Anlass — nicht abziehbarer Teil",
+      "direction": "add_back",
+      "percent": 30,
+      "valid_from": "2024-01-01",
+      "valid_on": "period_start",
+      "sequence": 30,
+      "legal_reference": "EStG § 4 Abs. 5 Satz 1 Nr. 2 — Aufwendungen für die Bewirtung von Personen aus geschäftlichem Anlass dürfen den Gewinn nicht mindern, soweit sie 70 Prozent der angemessenen und nachgewiesenen Aufwendungen übersteigen; die Gesellschaft nennt den Betrag der nachgewiesenen, angemessenen Aufwendungen",
+      "source": "estg"
+    },
+    {
+      "code": "gifts",
+      "name": "Geschenke an Nichtarbeitnehmer über der Freigrenze von 50 Euro",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2024-01-01",
+      "valid_on": "period_start",
+      "sequence": 40,
+      "legal_reference": "EStG § 4 Abs. 5 Satz 1 Nr. 1 — Aufwendungen für Geschenke an Personen, die nicht Arbeitnehmer des Steuerpflichtigen sind, dürfen den Gewinn nicht mindern; Satz 2 — nicht, wenn die Anschaffungs- oder Herstellungskosten der dem Empfänger im Wirtschaftsjahr zugewendeten Gegenstände insgesamt 50 Euro nicht übersteigen; § 52 — in dieser Fassung für Wirtschaftsjahre anzuwenden, die nach dem 31. Dezember 2023 beginnen. Die Gesellschaft nennt die Geschenke an Empfänger, deren Summe 50 Euro übersteigt",
+      "source": "estg"
+    },
+    {
+      "code": "administrative-fines",
+      "name": "Geldbußen, Ordnungsgelder und Verwarnungsgelder",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2024-01-01",
+      "valid_on": "period_start",
+      "sequence": 50,
+      "legal_reference": "EStG § 4 Abs. 5 Satz 1 Nr. 8 — Geldbußen, Ordnungsgelder und Verwarnungsgelder, die von einem Gericht oder einer Behörde im Geltungsbereich des Gesetzes, von einem Mitgliedstaat oder von Organen der Europäischen Union festgesetzt wurden, sowie damit zusammenhängende Aufwendungen; anzuwenden über KStG § 8 Abs. 1 Satz 1. Der Kontenplan führt kein eigenes Konto dafür: die Gesellschaft nennt den Betrag",
+      "source": "estg"
+    },
+    {
+      "code": "criminal-fines",
+      "name": "Geldstrafen und Auflagen in einem Strafverfahren",
+      "direction": "add_back",
+      "percent": 100,
+      "valid_from": "2024-01-01",
+      "valid_on": "period_start",
+      "sequence": 60,
+      "legal_reference": "KStG § 10 Nr. 3 — in einem Strafverfahren festgesetzte Geldstrafen, sonstige Rechtsfolgen vermögensrechtlicher Art, bei denen der Strafcharakter überwiegt, und Leistungen zur Erfüllung von Auflagen oder Weisungen, soweit sie nicht lediglich der Wiedergutmachung des Schadens dienen, sowie damit zusammenhängende Aufwendungen. Die Gesellschaft nennt den Betrag",
+      "source": "kstg"
+    },
+    {
+      "code": "supervisory-board",
+      "name": "Vergütungen an den Aufsichtsrat — Hälfte",
+      "direction": "add_back",
+      "percent": 50,
+      "valid_from": "2024-01-01",
+      "valid_on": "period_start",
+      "sequence": 70,
+      "legal_reference": "KStG § 10 Nr. 4 — die Hälfte der Vergütungen jeder Art, die an Mitglieder des Aufsichtsrats, Verwaltungsrats oder andere mit der Überwachung der Geschäftsführung beauftragte Personen gewährt werden, ist nicht abziehbar. Die Gesellschaft nennt den Betrag der Vergütungen",
+      "source": "kstg"
+    }
+  ],
+  "rates": [
+    {
+      "code": "standard",
+      "name": "Körperschaftsteuer — Steuersatz",
+      "rate": 15,
+      "valid_from": "2024-01-01",
+      "valid_to": "2027-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "KStG § 23 Abs. 1 Nr. 1 — die Körperschaftsteuer beträgt für Veranlagungszeiträume bis 2027 15 Prozent des zu versteuernden Einkommens; § 7 Abs. 4 Satz 2 — bei einem vom Kalenderjahr abweichenden Wirtschaftsjahr gilt der Gewinn in dem Kalenderjahr als bezogen, in dem das Wirtschaftsjahr endet",
+      "source": "kstg"
+    },
+    {
+      "code": "standard",
+      "name": "Körperschaftsteuer — Steuersatz",
+      "rate": 14,
+      "valid_from": "2028-01-01",
+      "valid_to": "2028-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "KStG § 23 Abs. 1 Nr. 2 — die Körperschaftsteuer beträgt für den Veranlagungszeitraum 2028 14 Prozent des zu versteuernden Einkommens; Wirtschaftsjahre, die im Kalenderjahr 2028 enden (§ 7 Abs. 4 Satz 2)",
+      "source": "kstg"
+    },
+    {
+      "code": "standard",
+      "name": "Körperschaftsteuer — Steuersatz",
+      "rate": 13,
+      "valid_from": "2029-01-01",
+      "valid_to": "2029-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "KStG § 23 Abs. 1 Nr. 3 — die Körperschaftsteuer beträgt für den Veranlagungszeitraum 2029 13 Prozent des zu versteuernden Einkommens; Wirtschaftsjahre, die im Kalenderjahr 2029 enden (§ 7 Abs. 4 Satz 2)",
+      "source": "kstg"
+    },
+    {
+      "code": "standard",
+      "name": "Körperschaftsteuer — Steuersatz",
+      "rate": 12,
+      "valid_from": "2030-01-01",
+      "valid_to": "2030-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "KStG § 23 Abs. 1 Nr. 4 — die Körperschaftsteuer beträgt für den Veranlagungszeitraum 2030 12 Prozent des zu versteuernden Einkommens; Wirtschaftsjahre, die im Kalenderjahr 2030 enden (§ 7 Abs. 4 Satz 2)",
+      "source": "kstg"
+    },
+    {
+      "code": "standard",
+      "name": "Körperschaftsteuer — Steuersatz",
+      "rate": 11,
+      "valid_from": "2031-01-01",
+      "valid_to": "2031-12-31",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "KStG § 23 Abs. 1 Nr. 5 — die Körperschaftsteuer beträgt für den Veranlagungszeitraum 2031 11 Prozent des zu versteuernden Einkommens; Wirtschaftsjahre, die im Kalenderjahr 2031 enden (§ 7 Abs. 4 Satz 2)",
+      "source": "kstg"
+    },
+    {
+      "code": "standard",
+      "name": "Körperschaftsteuer — Steuersatz",
+      "rate": 10,
+      "valid_from": "2032-01-01",
+      "valid_on": "period_end",
+      "sequence": 10,
+      "legal_reference": "KStG § 23 Abs. 1 Nr. 6 — die Körperschaftsteuer beträgt für Veranlagungszeiträume ab 2032 10 Prozent des zu versteuernden Einkommens; Wirtschaftsjahre, die ab dem Kalenderjahr 2032 enden (§ 7 Abs. 4 Satz 2)",
+      "source": "kstg"
+    }
+  ],
+  "loss_carryforward": [
+    {
+      "floor": 1000000,
+      "percent_above": 70,
+      "years": null,
+      "valid_from": "2024-01-01",
+      "valid_on": "period_end",
+      "legal_reference": "EStG § 10d Abs. 2 Satz 1 — nicht ausgeglichene negative Einkünfte sind in den folgenden Veranlagungszeiträumen bis zu einem Gesamtbetrag der Einkünfte von 1 Million Euro unbeschränkt, darüber hinaus bis zu 70 Prozent des 1 Million Euro übersteigenden Gesamtbetrags abzuziehen (Verlustvortrag), ohne zeitliche Begrenzung; Satz 2 — der Betrag von 2 Millionen Euro gilt nur für zusammenveranlagte Ehegatten; § 52 Abs. 18b Satz 3 — in der Fassung des Gesetzes vom 27. März 2024 (BGBl. 2024 I Nr. 108) erstmals für den Veranlagungszeitraum 2024; für Körperschaften über KStG § 8 Abs. 1 Satz 1",
+      "source": "estg"
+    }
+  ],
+  "prepayments": [],
+  "credits": []
+}

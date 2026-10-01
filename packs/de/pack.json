@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "DE",
   "name": "Germany",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260929141500",
   "seed_sequence": 18,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-01",
   "certification": {
     "status": "community",
     "sources": [
@@ -144,6 +144,22 @@
         "url": "https://www.bundesbank.de/de/bundesbank/organisation/agb-und-regelungen/basiszinssatz-607820",
         "consulted_on": "2026-09-21",
         "kind": "guidance"
+      },
+      {
+        "key": "kstg",
+        "title": "Körperschaftsteuergesetz (KStG) — §§ 7, 8, 10, 23 und 31",
+        "publisher": "Bundesministerium der Justiz — gesetze-im-internet.de",
+        "url": "https://www.gesetze-im-internet.de/kstg_1977/",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
+      },
+      {
+        "key": "estg",
+        "title": "Einkommensteuergesetz (EStG) — §§ 4, 10d, 37 und 52",
+        "publisher": "Bundesministerium der Justiz — gesetze-im-internet.de",
+        "url": "https://www.gesetze-im-internet.de/estg/",
+        "consulted_on": "2026-10-01",
+        "kind": "law"
       }
     ]
   },

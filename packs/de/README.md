@@ -17,7 +17,7 @@ proves the pack is coherent and proves nothing about whether it is right.
 
 Every rate, box, mention and statement line carries its own `legal_reference`
 and names the entry of `certification.sources` its article is in. The register
-holds seventeen texts, every one opened on the day recorded beside it:
+holds nineteen texts, every one opened on the day recorded beside it:
 
 | What | Text | Publisher |
 |---|---|---|
@@ -32,6 +32,7 @@ holds seventeen texts, every one opened on the day recorded beside it:
 | Code lists | UNCL5305, VATEX, EAS | docs.peppol.eu |
 | Where the return and the recapitulative statement are filed | ELSTER, Bundeszentralamt für Steuern | elster.de, bzst.de |
 | The base rate the default interest is added to | Basiszinssatz | bundesbank.de |
+| Corporate income tax: the rate, what is not deductible, the limit on losses | Körperschaftsteuergesetz (KStG) §§ 7, 8, 10, 23; Einkommensteuergesetz (EStG) §§ 4, 10d, 37, 52 | gesetze-im-internet.de |
 
 The form was read from the BMF's own PDF: the Kennzahlen, the line numbers, the
 three unnumbered sums and the instructions quoted in the box references are
@@ -117,3 +118,26 @@ A reviewer should look at these first:
    use under § 15 Abs. 4 is a share nobody can put in a pack.
 6. **The e-invoicing profile.** `xrechnung` is named; ZUGFeRD in its EN 16931
    profile is equally lawful.
+
+## Corporate income tax: what `corporate_tax.json` leaves out
+
+The section carries what was read on gesetze-im-internet.de on 1 October 2026
+and nothing else. It estimates the **Körperschaftsteuer alone**. It starts
+from the Jahresüberschuss (item 17 of § 275 Abs. 2 HGB), because the income
+statement of the pack prints no result before tax, and adds back the accounts
+`9610` to `9620`. Dates are the earliest year the pack carries, not the day a
+rule came into force. A rule that is missing makes an estimate too high or too
+low by something a reader can name; these are the ones to name.
+
+| Not carried | Why |
+|---|---|
+| The Solidaritätszuschlag (5,5 % of the tax) and the Gewerbesteuer (the Hebesatz of the municipality) | Both are taxes of their own. The first is a tax on the tax and the second depends on a local rate the company would have to declare; the section has a shape for neither. Their accounts are added back, and no figure for them is computed. |
+| Rounding of the tax to the euro (KStG § 31 Abs. 1 Satz 2) | The estimate is kept at the cent. |
+| The instalments (KStG § 31, EStG § 37: 10 March, 10 June, 10 September and 10 December) | The dates are read; the share of each is not. The law has the Finanzamt set every instalment by notice from the last assessment and says nothing of a quarter, so `prepayments` is empty. The minimum of 400 euro a year and 100 euro an instalment (§ 37 Abs. 5) is not expressible either. |
+| Deferred taxes, account `9630` | Booked in item 14 with the other taxes on income, but no article was read that removes them from the base; a company names the account in `tax.adjustments` under `income-taxes`. |
+| Dividends and gains on shares, 95 % exempt (KStG § 8b) | Needs the holding thresholds of § 8b Abs. 4 and the conditions of Abs. 1 to 5, not read in full. |
+| A change of the limit on losses after 2027 | None was found: the consolidated text of § 10d Abs. 2 EStG carries 70 % with no end date, so the section carries one entry from 2024. The years before (60 %, and other thresholds) are not carried. |
+| Loss forfeiture on a change of shareholders (KStG § 8c), the carry-back (EStG § 10d Abs. 1), the interest barrier (EStG § 4h), the group taxation of an Organschaft (KStG §§ 14 ff.) | Not read, and nothing here computes them. |
+| Business entertainment, gifts, fines, supervisory board remuneration | Fixed rules, read, but the chart holds restaurant bills with staff entertainment on `8841` and every gift on `8842`, and has no account for fines, so none of them names an account: the company states the amount. |
+| Private use of vehicles, non-deductible interest, hidden profit distributions, related-party rules | No flat rule could be cited. |
+| Tax credits | `credits` is empty: none was cited. |

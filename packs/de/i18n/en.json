@@ -358,5 +358,16 @@
     "exempt": "Exempt supply under section 4 UStG",
     "small_business": "Exempt under the small-business scheme, section 19 UStG",
     "late_payment": "A debtor who is not a consumer and pays late owes default interest of nine percentage points above the base rate and a flat fee of 40 euros (section 288(2) and (5) BGB)."
+  },
+  "corporate_tax": {
+    "tax": "Corporate income tax (Körperschaftsteuer)",
+    "rule:income-taxes": "Taxes on income: corporate income tax and solidarity surcharge",
+    "rule:trade-tax": "Trade tax (Gewerbesteuer)",
+    "rule:entertainment": "Business entertainment — non-deductible share",
+    "rule:gifts": "Gifts to non-employees above the 50 euro limit",
+    "rule:administrative-fines": "Fines, regulatory fines and cautionary fines",
+    "rule:criminal-fines": "Criminal fines and conditions imposed in criminal proceedings",
+    "rule:supervisory-board": "Remuneration of the supervisory board — one half",
+    "rate:standard": "Corporate income tax rate"
   }
 }

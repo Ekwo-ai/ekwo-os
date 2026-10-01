@@ -1,0 +1,737 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "why": "Drei fiktive Gesellschaften, deren Körperschaftsteuer für das Geschäftsjahr 2025 von Hand berechnet wurde: eine gewinnbringende GmbH, ein Verlustjahr und eine GmbH mit Hinzurechnungen und Verlustvorträgen über der Grenze des § 10d Abs. 2 EStG. Das Paket kennt nur einen Satz für alle; die Zeilen geben ihn an.",
+  "fiscal_year": {
+    "name": "Geschäftsjahr 2025",
+    "start": "2025-01-01",
+    "end": "2025-12-31"
+  },
+  "companies": [
+    {
+      "ref": "gmbh-profit",
+      "name": "Brauhaus Lindenhof GmbH",
+      "why": "Eine gewinnbringende GmbH: 15 % auf das gesamte Einkommen, ohne ermäßigten Satz. Körperschaftsteuer, Solidaritätszuschlag und Gewerbesteuer werden von ihren Konten wieder hinzugerechnet, ohne dass die Gesellschaft etwas erklärt; Bewirtung und ein Verwarnungsgeld nennt sie selbst.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Erlöse des Geschäftsjahres",
+          "lines": [
+            {
+              "account": "2420",
+              "debit": "842300.00"
+            },
+            {
+              "account": "8110",
+              "credit": "842300.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Wareneinsatz",
+          "lines": [
+            {
+              "account": "8511",
+              "debit": "312450.00"
+            },
+            {
+              "account": "2420",
+              "credit": "312450.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Löhne",
+          "lines": [
+            {
+              "account": "8610",
+              "debit": "148200.00"
+            },
+            {
+              "account": "2420",
+              "credit": "148200.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Gesetzliche soziale Aufwendungen",
+          "lines": [
+            {
+              "account": "8620",
+              "debit": "31150.50"
+            },
+            {
+              "account": "2420",
+              "credit": "31150.50"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Abschreibungen auf Sachanlagen",
+          "lines": [
+            {
+              "account": "8711",
+              "debit": "18400.00"
+            },
+            {
+              "account": "2420",
+              "credit": "18400.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Miete",
+          "lines": [
+            {
+              "account": "8810",
+              "debit": "36000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "36000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Bewirtungskosten",
+          "lines": [
+            {
+              "account": "8841",
+              "debit": "4200.00"
+            },
+            {
+              "account": "2420",
+              "credit": "4200.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Verwarnungsgeld",
+          "lines": [
+            {
+              "account": "8890",
+              "debit": "350.00"
+            },
+            {
+              "account": "2420",
+              "credit": "350.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Körperschaftsteuer des Geschäftsjahres",
+          "lines": [
+            {
+              "account": "9610",
+              "debit": "45000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "45000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Solidaritätszuschlag des Geschäftsjahres",
+          "lines": [
+            {
+              "account": "9611",
+              "debit": "2475.00"
+            },
+            {
+              "account": "2420",
+              "credit": "2475.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Gewerbesteuer des Geschäftsjahres",
+          "lines": [
+            {
+              "account": "9620",
+              "debit": "38000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "38000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {},
+      "adjustments": [
+        {
+          "rule": "entertainment",
+          "amount": "4200.00"
+        },
+        {
+          "rule": "administrative-fines",
+          "amount": "350.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Jahresüberschuss (Posten 17): 842 300,00 − 312 450,00 − 148 200,00 − 31 150,50 − 18 400,00 − 36 000,00 − 4 200,00 − 350,00 − 45 000,00 − 2 475,00 − 38 000,00 = 206 074,50.",
+          "Körperschaftsteuer und Solidaritätszuschlag, Salden der Konten 9610 und 9611: (45 000,00 + 2 475,00) × 100 % = 47 475,00 (KStG § 10 Nr. 2).",
+          "Gewerbesteuer, Saldo des Kontos 9620: 38 000,00 × 100 % = 38 000,00 (EStG § 4 Abs. 5b).",
+          "Bewirtung, von der Gesellschaft genannt: 4 200,00 × 30 % = 1 260,00 (EStG § 4 Abs. 5 Satz 1 Nr. 2).",
+          "Verwarnungsgeld, von der Gesellschaft genannt: 350,00 × 100 % = 350,00 (EStG § 4 Abs. 5 Satz 1 Nr. 8).",
+          "Steuerliches Ergebnis: 206 074,50 + 47 475,00 + 38 000,00 + 1 260,00 + 350,00 = 293 159,50. Kein Verlustvortrag: das zu versteuernde Einkommen beträgt 293 159,50.",
+          "Körperschaftsteuer: 293 159,50 × 15 % = 43 973,925, also 43 973,93 (KStG § 23 Abs. 1 Nr. 1).",
+          "Geschätzte Steuer: 43 973,93."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "17",
+            "amount": "206074.50"
+          },
+          {
+            "kind": "adjustment",
+            "code": "income-taxes",
+            "base": "47475.00",
+            "rate": "100",
+            "amount": "47475.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "trade-tax",
+            "base": "38000.00",
+            "rate": "100",
+            "amount": "38000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "4200.00",
+            "rate": "30",
+            "amount": "1260.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "administrative-fines",
+            "base": "350.00",
+            "rate": "100",
+            "amount": "350.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "293159.50"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "293159.50"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "293159.50",
+            "rate": "15",
+            "amount": "43973.93"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "293159.50",
+            "amount": "43973.93"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "DE-KSt",
+            "base": "293159.50",
+            "amount": "43973.93"
+          }
+        ],
+        "tax": "43973.93"
+      }
+    },
+    {
+      "ref": "ug-loss",
+      "name": "Studio Nordlicht UG (haftungsbeschränkt)",
+      "why": "Ein Verlustjahr: kein Einkommen, keine Steuer, und der steuerliche Verlust — der Jahresfehlbetrag, vermindert um die Hinzurechnungen — ist der Bestand, den ein späteres Jahr abziehen kann.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Erlöse des Geschäftsjahres",
+          "lines": [
+            {
+              "account": "2420",
+              "debit": "96400.00"
+            },
+            {
+              "account": "8110",
+              "credit": "96400.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Gehälter",
+          "lines": [
+            {
+              "account": "8611",
+              "debit": "71800.00"
+            },
+            {
+              "account": "2420",
+              "credit": "71800.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Gesetzliche soziale Aufwendungen",
+          "lines": [
+            {
+              "account": "8620",
+              "debit": "14936.40"
+            },
+            {
+              "account": "2420",
+              "credit": "14936.40"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Miete",
+          "lines": [
+            {
+              "account": "8810",
+              "debit": "24000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "24000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Software und IT-Dienstleistungen",
+          "lines": [
+            {
+              "account": "8873",
+              "debit": "6120.00"
+            },
+            {
+              "account": "2420",
+              "credit": "6120.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Abschreibungen auf Sachanlagen",
+          "lines": [
+            {
+              "account": "8711",
+              "debit": "3100.00"
+            },
+            {
+              "account": "2420",
+              "credit": "3100.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Bewirtungskosten",
+          "lines": [
+            {
+              "account": "8841",
+              "debit": "1500.00"
+            },
+            {
+              "account": "2420",
+              "credit": "1500.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Geschenke",
+          "lines": [
+            {
+              "account": "8842",
+              "debit": "240.00"
+            },
+            {
+              "account": "2420",
+              "credit": "240.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {},
+      "adjustments": [
+        {
+          "rule": "entertainment",
+          "amount": "1500.00"
+        },
+        {
+          "rule": "gifts",
+          "amount": "180.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Jahresfehlbetrag (Posten 17): 96 400,00 − 71 800,00 − 14 936,40 − 24 000,00 − 6 120,00 − 3 100,00 − 1 500,00 − 240,00 = −25 296,40.",
+          "Bewirtung, von der Gesellschaft genannt: 1 500,00 × 30 % = 450,00.",
+          "Geschenke an Empfänger über 50 Euro, von der Gesellschaft genannt: 180,00 × 100 % = 180,00; die übrigen 60,00 liegen je Empfänger unter der Grenze und bleiben abziehbar.",
+          "Steuerliches Ergebnis: −25 296,40 + 450,00 + 180,00 = −24 666,40. Das zu versteuernde Einkommen ist null und der Verlust des Jahres beträgt 24 666,40.",
+          "Geschätzte Steuer: 0,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "17",
+            "amount": "-25296.40"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "1500.00",
+            "rate": "30",
+            "amount": "450.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "gifts",
+            "base": "180.00",
+            "rate": "100",
+            "amount": "180.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "-24666.40"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "0.00"
+          },
+          {
+            "kind": "loss_of_period",
+            "amount": "24666.40"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "0.00",
+            "amount": "0.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "DE-KSt",
+            "base": "0.00",
+            "amount": "0.00"
+          }
+        ],
+        "tax": "0.00"
+      }
+    },
+    {
+      "ref": "gmbh-prior-losses",
+      "name": "Maschinenbau Rheinaue GmbH",
+      "why": "Eine große GmbH mit Hinzurechnungen aller Art und Verlustvorträgen aus zwei Jahren, die die Grenze von 1 Million Euro zuzüglich 70 % des Mehrbetrags übersteigen: der älteste Verlust wird zuerst abgezogen, der Rest bleibt vorgetragen.",
+      "entries": [
+        {
+          "date": "2025-06-30",
+          "description": "Erlöse des Geschäftsjahres",
+          "lines": [
+            {
+              "account": "2420",
+              "debit": "8900000.00"
+            },
+            {
+              "account": "8110",
+              "credit": "8900000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Wareneinsatz",
+          "lines": [
+            {
+              "account": "8511",
+              "debit": "3400000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "3400000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Löhne",
+          "lines": [
+            {
+              "account": "8610",
+              "debit": "1900000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "1900000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Gesetzliche soziale Aufwendungen",
+          "lines": [
+            {
+              "account": "8620",
+              "debit": "380000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "380000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Abschreibungen auf Sachanlagen",
+          "lines": [
+            {
+              "account": "8711",
+              "debit": "640000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "640000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Miete",
+          "lines": [
+            {
+              "account": "8810",
+              "debit": "420000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "420000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Rechts- und Beratungskosten",
+          "lines": [
+            {
+              "account": "8860",
+              "debit": "230000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "230000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Bewirtungskosten",
+          "lines": [
+            {
+              "account": "8841",
+              "debit": "36000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "36000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Geldbuße und Aufsichtsratsvergütung",
+          "lines": [
+            {
+              "account": "8890",
+              "debit": "52500.00"
+            },
+            {
+              "account": "2420",
+              "credit": "52500.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Körperschaftsteuer des Geschäftsjahres",
+          "lines": [
+            {
+              "account": "9610",
+              "debit": "300000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "300000.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Solidaritätszuschlag des Geschäftsjahres",
+          "lines": [
+            {
+              "account": "9611",
+              "debit": "16500.00"
+            },
+            {
+              "account": "2420",
+              "credit": "16500.00"
+            }
+          ]
+        },
+        {
+          "date": "2025-12-31",
+          "description": "Gewerbesteuer des Geschäftsjahres",
+          "lines": [
+            {
+              "account": "9620",
+              "debit": "215000.00"
+            },
+            {
+              "account": "2420",
+              "credit": "215000.00"
+            }
+          ]
+        }
+      ],
+      "parameters": {},
+      "adjustments": [
+        {
+          "rule": "entertainment",
+          "amount": "36000.00"
+        },
+        {
+          "rule": "administrative-fines",
+          "amount": "12500.00"
+        },
+        {
+          "rule": "supervisory-board",
+          "amount": "40000.00"
+        }
+      ],
+      "losses": [
+        {
+          "origin_period_end": "2023-12-31",
+          "amount": "900000.00"
+        },
+        {
+          "origin_period_end": "2024-12-31",
+          "amount": "1100000.00"
+        }
+      ],
+      "expected": {
+        "computation": [
+          "Jahresüberschuss (Posten 17): 8 900 000,00 − 3 400 000,00 − 1 900 000,00 − 380 000,00 − 640 000,00 − 420 000,00 − 230 000,00 − 36 000,00 − 52 500,00 − 300 000,00 − 16 500,00 − 215 000,00 = 1 310 000,00.",
+          "Körperschaftsteuer und Solidaritätszuschlag: (300 000,00 + 16 500,00) × 100 % = 316 500,00. Gewerbesteuer: 215 000,00 × 100 % = 215 000,00.",
+          "Bewirtung, von der Gesellschaft genannt: 36 000,00 × 30 % = 10 800,00.",
+          "Geldbuße, von der Gesellschaft genannt: 12 500,00 × 100 % = 12 500,00 (EStG § 4 Abs. 5 Satz 1 Nr. 8).",
+          "Vergütung des Aufsichtsrats, von der Gesellschaft genannt: 40 000,00 × 50 % = 20 000,00 (KStG § 10 Nr. 4). Beide Beträge stehen auf dem Konto 8890, das 52 500,00 trägt.",
+          "Steuerliches Ergebnis: 1 310 000,00 + 316 500,00 + 215 000,00 + 10 800,00 + 12 500,00 + 20 000,00 = 1 884 800,00.",
+          "Verlustvorträge: 900 000,00 (2023) und 1 100 000,00 (2024), zusammen 2 000 000,00.",
+          "Grenze nach EStG § 10d Abs. 2: 1 000 000,00 + 70 % × (1 884 800,00 − 1 000 000,00) = 1 000 000,00 + 619 360,00 = 1 619 360,00. Der Verlust von 2023 wird ganz abgezogen (900 000,00), vom Verlust von 2024 719 360,00; 380 640,00 bleiben vorgetragen.",
+          "Zu versteuerndes Einkommen: 1 884 800,00 − 1 619 360,00 = 265 440,00.",
+          "Körperschaftsteuer: 265 440,00 × 15 % = 39 816,00.",
+          "Geschätzte Steuer: 39 816,00."
+        ],
+        "lines": [
+          {
+            "kind": "accounting_result",
+            "code": "17",
+            "amount": "1310000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "income-taxes",
+            "base": "316500.00",
+            "rate": "100",
+            "amount": "316500.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "trade-tax",
+            "base": "215000.00",
+            "rate": "100",
+            "amount": "215000.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "entertainment",
+            "base": "36000.00",
+            "rate": "30",
+            "amount": "10800.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "administrative-fines",
+            "base": "12500.00",
+            "rate": "100",
+            "amount": "12500.00"
+          },
+          {
+            "kind": "adjustment",
+            "code": "supervisory-board",
+            "base": "40000.00",
+            "rate": "50",
+            "amount": "20000.00"
+          },
+          {
+            "kind": "fiscal_result",
+            "amount": "1884800.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2023-12-31",
+            "base": "900000.00",
+            "amount": "-900000.00"
+          },
+          {
+            "kind": "loss_used",
+            "code": "2024-12-31",
+            "base": "1100000.00",
+            "amount": "-719360.00"
+          },
+          {
+            "kind": "taxable_base",
+            "amount": "265440.00"
+          },
+          {
+            "kind": "rate",
+            "code": "standard",
+            "base": "265440.00",
+            "rate": "15",
+            "amount": "39816.00"
+          },
+          {
+            "kind": "tax_before_credits",
+            "base": "265440.00",
+            "amount": "39816.00"
+          },
+          {
+            "kind": "estimated_tax",
+            "code": "DE-KSt",
+            "base": "265440.00",
+            "amount": "39816.00"
+          }
+        ],
+        "tax": "39816.00"
+      }
+    }
+  ]
+}
