@@ -30,8 +30,12 @@ const packs = taxPacks(allPacks);
 const YEAR = { name: 'Year 2025', start: '2025-01-01', end: '2025-12-31' };
 const NEXT = { name: 'Year 2026', start: '2026-01-01', end: '2026-12-31' };
 
-/** A pack whose reduced rate is in force for the year the tests book in. */
-const pack = packs.find((p) => thresholdRate(p.corporateTax!, YEAR) !== undefined)!;
+/**
+ * A pack whose reduced rate is in force for the year the tests book in, and
+ * asks something of the company. A band every company gets — a nil rate on
+ * the first of the profit — has no condition to leave undeclared.
+ */
+const pack = packs.find((p) => (thresholdRate(p.corporateTax!, YEAR)?.conditions.length ?? 0) > 0)!;
 const section = pack.corporateTax!;
 const country = pack.manifest.country;
 const reduced = thresholdRate(section, YEAR)!;
