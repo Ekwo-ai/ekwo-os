@@ -103,15 +103,19 @@ describe('the packs that say how a profit is taxed', () => {
     for (const pack of packs) {
       const golden = goldenOf(pack);
       expect(golden.companies.length, pack.slug).toBeGreaterThanOrEqual(3);
-      // One of them ends the year below zero, and one is refused a rate.
+      // One of them ends the year below zero. Where a rate has conditions, one
+      // is refused it; a country with the same rates for every company has
+      // nobody to refuse.
       expect(
         golden.companies.some((c) => c.expected.lines.some((l) => l.kind === 'loss_of_period')),
         `${pack.slug}: no loss year`,
       ).toBe(true);
-      expect(
-        golden.companies.some((c) => c.expected.lines.some((l) => l.kind === 'rate_not_applied')),
-        `${pack.slug}: no company outside the conditions of a rate`,
-      ).toBe(true);
+      if (pack.corporateTax?.rates.some((rate) => rate.conditions.length > 0)) {
+        expect(
+          golden.companies.some((c) => c.expected.lines.some((l) => l.kind === 'rate_not_applied')),
+          `${pack.slug}: no company outside the conditions of a rate`,
+        ).toBe(true);
+      }
     }
   });
 });

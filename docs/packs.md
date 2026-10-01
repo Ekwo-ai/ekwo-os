@@ -1858,8 +1858,8 @@ on one day, and versions of one code that disagree about `valid_on`.
 
 A section comes with **at least three fictitious companies whose tax was
 worked out by hand**, and `ekwo pack check` refuses a section without them:
-a small company with a profit under the reduced rate, a year that ends in a
-loss, and a small company kept out of the reduced rate. Each carries the
+a company with a profit, a year that ends in a loss, and, where a rate has
+conditions, a company kept out of that rate. Each carries the
 journal entries of its year, what it declares, the losses it carried in, and
 under `expected` every line `tax.estimate()` has to return — with the
 arithmetic written out, one step per sentence, in `computation`:
