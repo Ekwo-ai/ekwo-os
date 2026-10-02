@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.10.0] — 2026-10-02
+
 ### Added
 
 - **Corporate income tax, estimated from the books** — a third module, code
@@ -58,6 +60,21 @@ somewhere has already run it.
   `ekwo pack check` refuses a section that names a statement, a line, an
   account or a parameter the pack does not carry, two versions of a rule in
   force on one day, and a section without its worked examples.
+
+- **The fixed assets section is carried by fourteen packs.**
+  `packs/<cc>/fixed_assets.json` gives the module what a country says about
+  its fixed assets: the categories with the method and the life each is
+  usually written off over, how a first and a last year are prorated, whether
+  a declining balance is allowed and when it turns linear, and how a disposal
+  is booked — every figure with the text it comes from. The packs that carry
+  it: Australia, Belgium, France, Germany, Mexico, the Netherlands, Nigeria,
+  Senegal, Singapore, South Africa, Spain, the United Arab Emirates, the
+  United Kingdom and the United States. Every pack on the SYSCOHADA chart
+  names the two accounts a fixed asset leaves the books through,
+  `asset_disposal_value` (812) and `asset_disposal_proceeds` (822), written
+  once in `packs/ohada/manifest.json`. The section is open to every pack, the
+  way the corporate income tax section is; a company of a country whose pack
+  does not carry it yet is told so by name, `no_fixed_assets_country_rules`.
 
 - **A member can be removed, and moved to another preset.** Membership had a
   way in — `invite_member()`, `accept_invitation()` — and no way out but a
@@ -3971,7 +3988,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.6.0...v0.7.0

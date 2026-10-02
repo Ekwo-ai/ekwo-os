@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/transaction-journal",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Reads a transaction journal saved as CSV — each transaction a run of rows under one date, type and number, closed by its total — with the list of accounts exported beside it, into plain objects in TypeScript: amounts as decimal strings, and what does not add up. Zero dependencies.",
   "keywords": [
     "transaction-journal",
