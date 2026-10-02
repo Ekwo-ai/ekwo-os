@@ -169,7 +169,28 @@ that is not cut.
    `--reset`: all green both times, about 58 s each. Run it with both forms of
    key: a new project hands out the new ones first.
 
-   **The last run: 22 September 2026, for `0.7.0`**, on a throwaway project in
+   **The last run: 2 October 2026, for `0.10.0`**, on a throwaway project in
+   `eu-west-3` (Postgres 17.11, session pooler `aws-1`), deleted afterwards.
+   AE, BE, EE (`et`), FR, GB (year opening 1 April), LU (quarterly), SG, SN
+   (monthly), US and ZA (monthly), each upgraded from `ekwo-os@0.9.0` on npm —
+   9 migrations pending, applied by `ekwo migrate` in 21 to 27 s — and
+   `--reset` between runs: 21 steps each, all green, about 155 s a run, the
+   install of `0.9.0` alone taking 61 to 72 s of it. MX (`es`) installs,
+   upgrades and signs in, then stops at the sale invoice: the script takes the
+   first plain domestic sale tax at the standard rate and finds none it can
+   post in that pack, as it did with JP at `0.5.0`. That is the script's
+   reading of a pack and it is still to be taught. Then `--multi-country`
+   with `sb_publishable_…` as the anon key and the legacy `service_role` key
+   for `ekwo init`: `init --no-company` installed 104 packs and no company,
+   twice with nothing created the second time, `ekwo company new` made an
+   Estonian and a Singaporean company on their own packs, and the
+   administrator saw both through PostgREST — 12 steps, all green, 112 s. The
+   `sb_secret_…` key was not tried: the Supabase command line prints it
+   masked, and the run that was handed the masked value was refused at the
+   first administrator with `Invalid API key`, which is the right answer. No
+   load run.
+
+   The run before, on 22 September 2026, for `0.7.0`, on a throwaway project in
    `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,
    EE, FR, GB (year opening 1 April), LU (quarterly) and US, each upgraded from
    `ekwo-os@0.6.0` on npm — 3 migrations pending — and `--reset` between runs:
