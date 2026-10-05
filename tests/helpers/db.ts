@@ -31,6 +31,12 @@ export interface Options {
    * other test needs one, and a contrib module nobody loads costs nothing.
    */
   extensions?: Extensions;
+  /**
+   * Socle migrations to leave out, by file name: the database is then the one
+   * an installation held before they were published, and an upgrade test
+   * applies them itself, on books written by the schema as it was.
+   */
+  withoutMigrations?: string[];
 }
 
 /** Files applied, in order, by `freshDatabase`. */
@@ -139,7 +145,8 @@ export async function freshDatabase(options: Options = {}): Promise<PGlite> {
 
   await db.exec(await readFile(shimPath, 'utf8'));
 
-  for (const file of await migrationFiles()) {
+  const leftOut = new Set(options.withoutMigrations ?? []);
+  for (const file of (await migrationFiles()).filter((f) => !leftOut.has(f))) {
     const sql = await readFile(join(migrationsDir, file), 'utf8');
     try {
       await db.exec(sql);
