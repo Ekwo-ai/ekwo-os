@@ -721,6 +721,12 @@ that applies to it: [`supabase/`](supabase/), [`supabase/migrations/`](supabase/
 [`tests/`](tests/), [`docs/`](docs/) and [`scripts/`](scripts/). The long-form
 reference is in `docs/`.
 
+A few names still carry the vocabulary of one tax régime — `vat_return` for the
+periodic return of every country, among others. They are renamed before 1.0,
+each with an alias for at least one minor release:
+[the names that change before 1.0](docs/releasing.md#names-that-change-before-10)
+lists them with what to call instead.
+
 ## Development
 
 ```sh

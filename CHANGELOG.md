@@ -9,6 +9,40 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Removed
+
+- **The former names of the fixed assets tools, announced in 0.10.0.** The MCP
+  server registers each fixed assets tool under one name, `fixed_assets_*`; the
+  arguments and the answers are those the former names already gave in 0.10.0.
+  An agent or a client configured against an old name calls the new one:
+
+  | Removed | Call instead |
+  |---|---|
+  | MCP tool `assets_list` | `fixed_assets_list` (the register is under `fixed_assets`) |
+  | MCP tool `assets_create` | `fixed_assets_create` |
+  | MCP tool `assets_schedule` | `fixed_assets_schedule` |
+  | MCP tool `assets_run_depreciation` | `fixed_assets_run_depreciation` |
+  | MCP tool `assets_dispose` | `fixed_assets_dispose` |
+  | `compileAssetsSeed`, command line's library | `compileFixedAssetsSeed` |
+  | type `PackAssets`, command line's library | `PackFixedAssets` |
+
+  The module code stays `assets`, as 0.10.0 described: `ekwo module enable
+  assets` and the capabilities `assets.read`, `assets.write` and `assets.post`
+  are unchanged.
+
+### Documentation
+
+- **The names that change before 1.0, announced.** A few names carry the
+  vocabulary of value added tax where they serve every régime: `vat_return`
+  computes the periodic return of every country, GST and sales tax included.
+  [`docs/releasing.md`](docs/releasing.md#names-that-change-before-10) lists
+  each with its country-neutral successor — `vat_return` becomes `tax_return`,
+  `vat_number` becomes `tax_number`, `vat_category` becomes `tax_category`,
+  among others — the former names already superseded that go before 1.0, and
+  the policy: a renamed name keeps answering for at least one minor release,
+  and breaking changes stop before the release candidate. Nothing is renamed
+  in this release.
+
 ### Security
 
 - **One guard a machine key walked past** (`20261005090000`). Letting a key
