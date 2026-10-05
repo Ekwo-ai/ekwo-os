@@ -728,6 +728,11 @@ each with an alias for at least one minor release:
 [the names that change before 1.0](docs/releasing.md#names-that-change-before-10)
 lists them with what to call instead.
 
+Where the project is heading: [`docs/road-to-1.0.md`](docs/road-to-1.0.md)
+says what version 1.0 will promise for the whole 1.x line, and the proofs —
+each one checkable, several of them open to anybody who keeps books — that
+come before the tag.
+
 ## Development
 
 ```sh
