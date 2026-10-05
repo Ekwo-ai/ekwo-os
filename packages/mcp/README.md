@@ -307,9 +307,8 @@ startup to know which: `fixed_assets_list`, `fixed_assets_create`,
 `fixed_assets_schedule`, `fixed_assets_run_depreciation`,
 `fixed_assets_dispose`, `budgets_list`, `budgets_upsert_lines`,
 `budgets_variance`. The fixed assets tools were called `assets_*` until
-0.10.0; those names are still registered, as deprecated aliases that say so in
-their description, and are removed in 0.11.0. A module that is not installed is
-not offered, because a tool a model cannot use is worse than a tool it cannot
+0.10.0; from 0.11.0 only the `fixed_assets_*` names are registered. A module
+that is not installed is not offered, because a tool a model cannot use is worse than a tool it cannot
 see. PostgREST serves a module's schema only once the project exposes it, and
 the refusal it answers with is a profile error that says nothing useful — so
 every module tool turns it into the sentence that names the setting.

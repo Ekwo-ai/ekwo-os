@@ -177,7 +177,8 @@ cent, and so does every right a member or a key holds — the migration is
    project** — no migration can do that. Until it is done, PostgREST answers a
    call to the module with a profile error.
 3. A client that calls the API by name moves to the new names. The MCP tools
-   keep their former names, `assets_*`, as deprecated aliases until 0.11.0.
+   are `fixed_assets_*`; their former names, `assets_*`, answered beside them
+   in 0.10.0 only and were removed in 0.11.0.
 4. A pack of your own that carries `assets.json` renames it
    `fixed_assets.json`; `ekwo pack check` says so if it has not.
 

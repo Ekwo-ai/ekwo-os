@@ -107,25 +107,8 @@ describe('the loader', () => {
       'budgets_upsert_lines',
       'budgets_variance',
     ]);
-    await client.close();
-  });
-
-  it('keeps a former prefix as a deprecated name of the same tool, for one release', async () => {
-    const client = await connect(['assets']);
-    const tools = (await client.listTools()).tools;
-    const former = tools.filter((tool) => tool.name.startsWith('assets_'));
-    expect(former.map((tool) => tool.name).sort()).toEqual([
-      'assets_create',
-      'assets_dispose',
-      'assets_list',
-      'assets_run_depreciation',
-      'assets_schedule',
-    ]);
-    for (const tool of former) {
-      expect(tool.description).toMatch(
-        new RegExp(`^Deprecated: the former name of fixed_${tool.name}\\b.*removed in 0\\.11\\.0`),
-      );
-    }
+    // The former `assets_*` names were removed in 0.11.0.
+    expect(names.filter((name) => name.startsWith('assets_'))).toEqual([]);
     await client.close();
   });
 
@@ -222,7 +205,7 @@ describe('the fixed assets tools', () => {
     ]);
   });
 
-  it('report the socle refusal rather than paraphrasing it, under the deprecated name too', async () => {
+  it('report the socle refusal rather than paraphrasing it', async () => {
     await db.query(`update companies set lock_date = date '2027-12-31' where id = $1`, [companyId]);
     await db.query(
       `select fixed_assets.create_fixed_asset($1, 'IT-02', 'Ecran', date '2027-01-01', 600,
@@ -230,7 +213,7 @@ describe('the fixed assets tools', () => {
       [companyId],
     );
     await expect(
-      call(client, 'assets_run_depreciation', { company_id: companyId, period_end: '2027-12-31' }),
+      call(client, 'fixed_assets_run_depreciation', { company_id: companyId, period_end: '2027-12-31' }),
     ).rejects.toThrow(/period_locked/);
     await db.query(`update companies set lock_date = null where id = $1`, [companyId]);
   });
