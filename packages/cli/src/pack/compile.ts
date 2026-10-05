@@ -234,9 +234,6 @@ export function compileCorporateTaxSeed(pack: Pack): string | undefined {
   });
 }
 
-/** @deprecated Renamed `compileFixedAssetsSeed` in 0.10.0; this name goes in 0.11.0. */
-export const compileAssetsSeed = compileFixedAssetsSeed;
-
 /** `packs/generic` → `05_framework_generic.sql`. It sorts before every pack. */
 export function frameworkSeedFileName(slug: string): string {
   return `05_framework_${slug}.sql`;

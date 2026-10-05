@@ -59,7 +59,6 @@ export {
   type PackDescription,
 } from './pack/describe.js';
 export {
-  compileAssetsSeed,
   compileCorporateTaxSeed,
   compileFixedAssetsSeed,
   compileFrameworkPack,
@@ -101,7 +100,6 @@ export {
   type PackTax,
   type PackCertification,
   type PackSource,
-  type PackAssets,
   type PackFixedAssets,
   type PackAssetCategory,
   type PackCorporateTax,

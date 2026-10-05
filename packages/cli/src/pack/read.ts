@@ -766,9 +766,6 @@ export interface PackFixedAssets {
   categories: PackAssetCategory[];
 }
 
-/** @deprecated Renamed `PackFixedAssets` in 0.10.0; this name goes in 0.11.0. */
-export type PackAssets = PackFixedAssets;
-
 export type { PackCorporateTax } from './corporate-tax.js';
 
 export interface Pack {

@@ -6,11 +6,6 @@
  * can tell which module answers for what. The prefix is in `module.json`, and
  * a test holds the tool names to it.
  *
- * **A prefix that changed keeps its former name for one release.** The fixed
- * assets tools were `assets_*` until 0.10.0; a client configured against those
- * names still finds them, marked deprecated in their description, until the
- * release `deprecatedPrefix.until` names.
- *
  * **Nothing here decides what is installed.** `public.modules` does, and the
  * server asks it at startup: a module whose migrations have never run has no
  * row, so its tools are not offered, and a tool a model cannot use is worse
@@ -36,11 +31,6 @@ export interface ModuleToolset {
   code: string;
   /** Every tool of this module is `<prefix>_<verb>`. */
   prefix: string;
-  /**
-   * A prefix this module's tools had before, still registered beside the new
-   * one — every tool under both names — until the release it names.
-   */
-  deprecatedPrefix?: { prefix: string; until: string };
   /** The schema its objects live in, for the message when it is not exposed. */
   schema: string;
   tools: ModuleTool[];
@@ -83,7 +73,6 @@ export async function inSchema<T>(schema: string, run: () => Promise<T>): Promis
 const FIXED_ASSETS: ModuleToolset = {
   code: 'assets',
   prefix: 'fixed_assets',
-  deprecatedPrefix: { prefix: 'assets', until: '0.11.0' },
   schema: 'fixed_assets',
   tools: [
     {
