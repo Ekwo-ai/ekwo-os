@@ -1283,9 +1283,11 @@ itself, and why France declares `delivery_date` and is right to.
 reads the column, and it turns the word plus a document's own dates into one
 date. `post_document()` writes that date onto `documents.tax_point_date` — EN
 16931's BT-7, which a document may also state itself, and a stated fact
-outranks a rule — and onto every ledger line a tax posting writes;
-`vat_return()` puts a figure in the period its tax fell due in rather than the
-period its entry was booked in. A document that says nothing new answers
+outranks a rule — and onto every ledger line a tax posting writes. Each line
+keeps the day it counts for a return in `entry_lines.declared_on` — its tax
+point, or its entry's date where it has none — and `vat_return()` reads the
+period on that column, so a figure lands in the period its tax fell due in
+rather than the period its entry was booked in. A document that says nothing new answers
 exactly as it did: null means the entry's own date. Two limits are written down
 in [`docs/international.md`](international.md): the payment branch is honoured
 only through `cash_basis`, because Ekwo has no prepayment document, and the

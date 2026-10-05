@@ -108,6 +108,31 @@ somewhere has already run it.
 
 ### Changed
 
+- **The period of a tax return is read through an index**
+  (`20261005160858`, `20261005160859`, `20261005160900`). Every ledger line
+  now stores the day it counts for a return, `entry_lines.declared_on`: its
+  tax point where the posting engine worked one out, the date of its entry
+  otherwise — the rule every return already applied, unchanged. A trigger
+  writes it on every line and follows the date of a draft and the tax point a
+  cash-basis settlement writes; nobody types it — a value written by hand on a
+  draft is replaced by the rule's, and on a posted line refused like any other
+  column. `declared_lines(company, from, to)` is the one
+  statement of which lines a period holds, read by `vat_return()`,
+  `filing_tax_movements()` and `filings_touched_since()`, and the planner turns
+  it into a range on the new partial index `entry_lines_declared_on_idx`. A
+  return of one quarter in the load test reads about 2 400 rows where it read
+  86 000, and the cost now follows the period rather than the years kept.
+
+  **Upgrading.** `ekwo migrate` (or `supabase db push`) applies the three
+  files in one go. The second fills the column on every line already written —
+  lifting `entry_lines_guard_posted` by name for that one statement and
+  putting it back in the same transaction — then makes it `not null`. Returns,
+  frozen filings and `filing_drift()` answer exactly what they answered
+  before: `tests/declared_on.test.ts` books the golden year of every pack on
+  the previous schema, upgrades it and compares to the cent. The company
+  archive carries the column; `import_company()` derives it for an archive
+  written before it existed and refuses one whose day is not the rule's
+  (`declared_on_mismatch`).
 - **The end-to-end script reads taxes in force on the invoice date and taxes
   split between several accounts** (`scripts/e2e-supabase.mjs`), which lets it
   go through a pack whose standard rate is collected in a national and a local

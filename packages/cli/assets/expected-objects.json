@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.10.0",
-  "migration": "20261005090000",
+  "migration": "20261005160900",
   "socle": {
     "schema": "public",
     "tables": [
@@ -2225,6 +2225,10 @@
             "type": "text"
           },
           {
+            "name": "declared_on",
+            "type": "date"
+          },
+          {
             "name": "entry_id",
             "type": "uuid"
           },
@@ -3973,6 +3977,14 @@
         "arguments": "p_period declaration_period, p_day date"
       },
       {
+        "name": "declared_lines",
+        "arguments": "p_company_id uuid, p_from date, p_to date"
+      },
+      {
+        "name": "declared_on_of",
+        "arguments": "p_tax_point_date date, p_entry_date date"
+      },
+      {
         "name": "default_statement_code",
         "arguments": "p_company_id uuid, p_kind text, p_at date"
       },
@@ -4057,6 +4069,10 @@
         "arguments": "p_company_id uuid, p_code text, p_settings jsonb"
       },
       {
+        "name": "entries_declared_on_follows",
+        "arguments": ""
+      },
+      {
         "name": "entries_guard_kind",
         "arguments": ""
       },
@@ -4082,6 +4098,10 @@
       },
       {
         "name": "entry_lines_guard_posted",
+        "arguments": ""
+      },
+      {
+        "name": "entry_lines_set_declared_on",
         "arguments": ""
       },
       {
@@ -5365,6 +5385,10 @@
       },
       {
         "table": "entries",
+        "name": "entries_declared_on_follows"
+      },
+      {
+        "table": "entries",
         "name": "entries_guard_kind"
       },
       {
@@ -5394,6 +5418,10 @@
       {
         "table": "entry_lines",
         "name": "entry_lines_refresh_totals"
+      },
+      {
+        "table": "entry_lines",
+        "name": "entry_lines_set_declared_on"
       },
       {
         "table": "entry_lines",
@@ -7455,6 +7483,28 @@
           ]
         },
         {
+          "name": "declared_lines",
+          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "declared_on_of",
+          "arguments": "p_tax_point_date date, p_entry_date date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "default_statement_code",
           "arguments": "p_company_id uuid, p_kind text, p_at date",
           "anon": [],
@@ -7661,6 +7711,14 @@
           ]
         },
         {
+          "name": "entries_declared_on_follows",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "entries_guard_kind",
           "arguments": "",
           "trigger": true,
@@ -7710,6 +7768,14 @@
         },
         {
           "name": "entry_lines_guard_posted",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "entry_lines_set_declared_on",
           "arguments": "",
           "trigger": true,
           "anon": [],
