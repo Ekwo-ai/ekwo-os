@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error — a plain script of the repository, with no types of its own
 import { publishOrder, staleRanges, workspaces } from '../scripts/publish.mjs';
@@ -43,5 +44,24 @@ describe('what a release publishes', () => {
 
   it('holds no range on one of its own packages that the repository no longer satisfies', () => {
     expect(staleRanges()).toEqual([]);
+  });
+});
+
+describe('the release workflow', () => {
+  const workflow = readFileSync(new URL('../.github/workflows/release.yml', import.meta.url), 'utf8');
+
+  it('publishes through OIDC, with no stored token', () => {
+    expect(workflow).toMatch(/id-token: write/);
+    expect(workflow).not.toMatch(/NPM_TOKEN|NODE_AUTH_TOKEN/);
+  });
+
+  it('starts on a version tag or by hand, never on a pull request', () => {
+    expect(workflow).toMatch(/tags: \['v\*'\]/);
+    expect(workflow).toMatch(/workflow_dispatch/);
+    expect(workflow).not.toMatch(/pull_request/);
+  });
+
+  it('pins the npm version that supports trusted publishing', () => {
+    expect(workflow).toMatch(/npm install -g npm@11\.\d+\.\d+/);
   });
 });

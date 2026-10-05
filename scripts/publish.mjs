@@ -17,9 +17,14 @@
  *
  * For real, it refuses a working tree that is not clean and a HEAD that no
  * tag names — a version on npm is a version someone can read the source of —
- * and it needs `npm login` to have been done by a person: there is no token in
- * this repository and there will not be one. A version the registry already
- * holds is skipped, so a run that stopped half way is run again.
+ * and it needs either `npm login` done by a person at a terminal, or the
+ * GitHub Actions workflow `.github/workflows/release.yml`, where npm trades
+ * the run's OIDC identity for a short-lived publish credential (trusted
+ * publishing) and attaches a provenance statement to every package. There is
+ * no token in this repository. A version the registry already holds is
+ * skipped, so a run that stopped half way is run again.
+ *
+ * It never publishes from a pull request: `--for-real` is refused there.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -138,6 +143,11 @@ function onRegistry(name, version) {
 
 function main() {
   const forReal = process.argv.includes('--for-real');
+  const inActions = process.env.GITHUB_ACTIONS === 'true';
+  if (forReal && inActions && process.env.GITHUB_EVENT_NAME === 'pull_request') {
+    console.error('A pull request never publishes. Nothing was sent.');
+    process.exit(1);
+  }
   const order = publishOrder();
 
   const stale = staleRanges();
@@ -159,22 +169,28 @@ function main() {
       console.error('HEAD is not a tag: a version on npm is a version someone can read the source of. Tag first.');
       process.exit(1);
     }
-    try {
-      console.log(`Publishing ${tag} as ${run('npm', ['whoami'], { stdio: ['ignore', 'pipe', 'ignore'] })}.`);
-    } catch {
-      console.error('Nobody is logged in to npm. Run `npm login --auth-type=web` yourself, then come back.');
-      process.exit(1);
+    if (inActions) {
+      console.log(`Publishing ${tag} with provenance, through GitHub OIDC.`);
+    } else {
+      try {
+        console.log(`Publishing ${tag} as ${run('npm', ['whoami'], { stdio: ['ignore', 'pipe', 'ignore'] })}.`);
+      } catch {
+        console.error('Nobody is logged in to npm. Run `npm login --auth-type=web` yourself, then come back.');
+        process.exit(1);
+      }
     }
   }
 
   for (const entry of order) {
     const label = `${entry.name}@${entry.version}`;
+    // npm refuses to publish over a version, dry run included, so both skip it.
     if (onRegistry(entry.name, entry.version)) {
       console.log(`= ${label} is already on the registry`);
       continue;
     }
     const args = ['publish', '--workspace', entry.directory, '--access', 'public'];
     if (!forReal) args.push('--dry-run');
+    else if (inActions) args.push('--provenance');
     console.log(`${forReal ? '+' : '?'} ${label}${entry.needs.length > 0 ? `  (after ${entry.needs.join(', ')})` : ''}`);
     execFileSync('npm', args, { cwd: root, stdio: forReal ? 'inherit' : ['ignore', 'ignore', 'inherit'] });
   }

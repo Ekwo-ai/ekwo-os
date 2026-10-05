@@ -5782,3 +5782,22 @@ unlike Georgia's equally IFRS-only regime, which this repository already
 carries the same way (`packs/ge`). `packs/xk/accounts.csv` is therefore the
 pack's own numbering, declared as such in its README, and not a transcription
 of a register this research failed to locate.
+
+## What the end-to-end script reads of a pack
+
+`npm run e2e:supabase` installs one pack on a real project, posts a sale and a
+purchase through the API and compares the VAT return with the boxes the pack
+declares. It picks the plain standard-rate tax of the pack in force on the
+invoice date, and since `0.11.0` it accepts a rate that one tax splits between
+several accounts whose shares add up to the whole, as the combined national and
+local consumption tax of the Japan pack does. Both packs install, upgrade and
+sign in; `packs/jp/` is read to the end (sale, purchase, return) by that rule.
+
+One gap remains, in the script and not in the pack: the standard-rate taxes of
+the Mexico pack (`MX-S-16`, `MX-P-16`) are on the **cash basis**, so the VAT
+they book reaches the declaration boxes when a payment is recorded. The script
+posts invoices and has no payment step, so for that pack it stops at the sale
+invoice and names the reason in its message. A payment step that records the
+payment and expects the boxes after it will close the gap; no pack content needs
+to change. The pack itself is replayed to the cent, payments included, by
+`tests/golden.test.ts`.

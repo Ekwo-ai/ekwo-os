@@ -292,50 +292,105 @@ that is not cut.
    ```
 
    The tag is what the additive-migrations job compares against from then on,
-   which is why it is never moved and never deleted.
+   which is why it is never moved and never deleted. It also starts the
+   **Release** workflow that publishes the packages to npm, see *npm* below.
 4. Publish a GitHub Release on that tag, with the changelog section of the
    version as its body.
 
 ## npm
 
 The packages live on npm under the `ekwo-ai` organisation, and the command line
-as `ekwo-os`. Publishing is part of the release and comes after the tag, so a
-version on npm is always a version someone can read the source of:
+as `ekwo-os`. Publishing is part of the release and comes with the tag, so a
+version on npm is always a version someone can read the source of. It runs in
+GitHub Actions, through npm **trusted publishing**: the workflow
+`.github/workflows/release.yml` proves its identity to npm with a GitHub OIDC
+token (`permissions: id-token: write`), npm exchanges it for a short-lived
+credential per package, and every package is published with a **provenance**
+statement linking the tarball to the commit and the workflow run that built it.
+No npm token and no two-factor approval is involved: one tag publishes all the
+packages.
+
+### One-time setup, on npmjs.com
+
+A maintainer with publish rights does this once for **each** public package —
+the list is `npm run release:publish`, one line per package (twenty at
+`0.10.0`; a package added later needs the same step before its first release):
+
+1. Open `https://www.npmjs.com/package/<name>/access` (Settings → *Trusted
+   Publisher*).
+2. Choose **GitHub Actions** and fill in: organisation or user and repository
+   of this project, workflow filename `release.yml` (the file name only, with
+   its extension), and leave *Environment* empty unless the workflow is later
+   given one.
+3. Save. Optionally, under *Publishing access*, choose *Require two-factor
+   authentication and disallow tokens*, which closes every other route.
+
+A package that has never been published has no settings page yet: publish its
+first version by hand once (`npm login --auth-type=web`, then
+`npm run release:publish -- --for-real` on the tag), then add the trusted
+publisher. Trusted publishing needs npm 11.5.1 or later and Node 22.14 or later
+on the runner; the workflow pins `npm@11.13.0`.
+
+### Releasing
+
+1. Merge the release pull request, then tag `main` and push the tag (see
+   *Cutting it* above). The tag starts the **Release** workflow, which runs
+   `npm ci`, the typecheck and the build, then `npm run release:publish --
+   --for-real`.
+2. Follow the run under *Actions*. A package whose version the registry already
+   holds is skipped, so a run that stopped half way — a network error, a
+   package whose trusted publisher was not set — is started again from the
+   *Actions* tab (*Re-run failed jobs*) and finishes the rest.
+3. Check a package: its npm page shows *Built and signed on GitHub Actions*,
+   and `npm audit signatures` verifies it.
+
+**Dry run, on any branch.** *Actions → Release → Run workflow*, pick the
+branch, leave *Publish for real* unticked: the workflow builds and runs
+`npm publish --dry-run` for each package, which packs the tarball and lists its
+files without sending anything. The same locally:
 
 ```sh
 npm run build
 npm run release:publish                 # the plan, and a dry run of every pack
+```
+
+The workflow cannot publish from a pull request or from a branch: a real
+publish needs a run on a `v*` tag, whether it was started by the tag itself or
+by hand with *Publish for real* ticked, and the script refuses `--for-real` in a
+pull-request run on its own.
+
+`scripts/publish.mjs` **reads the list from the workspaces**: whatever is a
+workspace and is not `private` is published, after every package of this
+repository it depends on. For real, it refuses a working tree that is not
+clean and a HEAD that no tag names, and it skips a version the registry already
+holds. The order is the dependency order: a package is published after
+everything it depends on. The root workspace is `private` and is never
+published.
+
+### From a terminal, as a fallback
+
+The same script publishes from a maintainer's machine when the workflow cannot
+run:
+
+```sh
 npm login --auth-type=web               # a person, in a browser: no token lives here
 npm run release:publish -- --for-real   # on the tag
 ```
 
-`scripts/publish.mjs` **reads the list from the workspaces**: whatever is a
-workspace and is not `private` is published, after every package of this
-repository it depends on. The list used to be written here by hand, and a brick
-was once in the repository and not in it. For real, the script refuses a
-working tree that is not clean and a HEAD that no tag names, and it skips a
-version the registry already holds — so a run that stopped half way is simply
-run again.
-
-The order is the dependency order: a package is published after everything it
-depends on. The root workspace is `private` and is never published.
-
-**The command line is `ekwo-os` on npm and `ekwo` once installed.** The
-registry refuses the unscoped name `ekwo` as too close to two existing
-packages, which a scoped name is never judged for — so the fourteen libraries
-went out as `@ekwo-ai/*` at `0.4.0` and the CLI followed at `0.4.1` under the
-name of the repository. `npx ekwo-os init` runs it without installing anything;
-`npm install -g ekwo-os` puts a binary called `ekwo` on the path, and every
-example that starts with `ekwo ` assumes that.
-
 An account with two-factor authentication on writes is asked to approve each
 `npm publish` in a browser, and the script needs a real terminal for that: npm
 only waits for the approval when it has one, and ends on `EOTP` when it does
-not. Count one approval per package. The approval page offers to stop asking
-for five minutes; on the `0.4.1` run that did not carry from one package to the
-next, and fifteen packages were fifteen approvals. An approval that is not
-given in time ends the run on a 404 from the registry's `done` address — run
-the script again, it skips what is already there.
+not. Count one approval per package. An approval that is not given in time
+ends the run on a 404 from the registry's `done` address — run the script
+again, it skips what is already there.
+
+**The command line is `ekwo-os` on npm and `ekwo` once installed.** The
+registry refuses the unscoped name `ekwo` as too close to two existing
+packages, which a scoped name is never judged for — so the libraries go out as
+`@ekwo-ai/*` and the CLI under the name of the repository. `npx ekwo-os init`
+runs it without installing anything; `npm install -g ekwo-os` puts a binary
+called `ekwo` on the path, and every example that starts with `ekwo ` assumes
+that.
 
 ## The MCP registry
 

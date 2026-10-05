@@ -31,6 +31,24 @@ somewhere has already run it.
   `auth.uid()` for null against the database, so the next one written the
   skipping way fails there instead of being found a year later.
 
+### Added
+
+- **Releases publish themselves, with provenance.** `.github/workflows/release.yml`
+  publishes every public package with `npm publish --provenance` through npm
+  trusted publishing (GitHub OIDC, no npm token) when a `v*` tag is pushed, in
+  dependency order, skipping versions the registry already holds. A manual run
+  on any branch performs a dry run of every package. `scripts/publish.mjs`
+  recognises that environment and refuses to publish from a pull request;
+  `docs/releasing.md` lists the one-time setup per package on npmjs.com.
+
+### Changed
+
+- **The end-to-end script reads taxes in force on the invoice date and taxes
+  split between several accounts** (`scripts/e2e-supabase.mjs`), which lets it
+  go through a pack whose standard rate is collected in a national and a local
+  share. A pack whose standard-rate taxes are on the cash basis now gets a
+  message that says so (`docs/international.md`).
+
 ## [0.10.0] — 2026-10-02
 
 ### Added
