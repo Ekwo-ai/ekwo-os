@@ -408,6 +408,36 @@ describe(`${DOCUMENTS} documents in each of ${COMPANIES} companies — packs/${p
     expect(asked.filter((a) => a.checks > CAPABILITY_CHECKS_AT_MOST)).toEqual([]);
   });
 
+  it('reads the period of a return through its index, not the history of the company', async () => {
+    // The lines a return of this period is made of, and every line of the
+    // company that names a box: five years against one period.
+    const period = golden.periods[0] as PackGolden['periods'][number];
+    const lines = await one<{ period: number; history: number }>(
+      pg,
+      `select count(*) filter (where declared_on between $2::date and $3::date)::int as period,
+              count(*)::int as history
+         from entry_lines where company_id = $1 and declaration_box is not null`,
+      [companyId, period.from, period.to],
+    );
+    expect(lines.period, 'the period asked for holds no declaration line').toBeGreaterThan(0);
+    expect(lines.history).toBeGreaterThan(lines.period * 4);
+
+    for (const m of measured.filter((x) => x.path.key === 'vat_return')) {
+      const access = accessOf(m.plans);
+      expect(
+        access.some((a) => a.startsWith('entry_lines:') && a.includes('entry_lines_declared_on_idx')),
+        `vat_return as ${m.as} reached entry_lines by ${access.join('; ')}`,
+      ).toBe(true);
+      // Each line of the period, and the entry it belongs to: of the order of
+      // the period, whatever the years kept.
+      const read = rowsReadOf(m.plans);
+      expect(read, `vat_return as ${m.as} read ${read} rows for ${lines.period} lines`).toBeLessThanOrEqual(
+        lines.period * 3,
+      );
+      expect(read).toBeLessThan(lines.history);
+    }
+  });
+
   it('still books a document through the engine, into books of this size', async () => {
     // A sale of the latest year — the copies of earlier years carry taxes at
     // dates the pack may not have them in force — booked again, as new.

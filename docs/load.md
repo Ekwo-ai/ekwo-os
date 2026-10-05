@@ -190,14 +190,22 @@ month of statement against 500 contacts took 3.5 s, all of it in function calls
 on contacts whose name shared no word with the line. They are now set aside by
 an array operator on a stored column (`20260918143352`): 0.24 s, same answers.
 
-**`vat_return()` reads the history of the company to answer about a period —
-confirmed, not fixed.** Its filter is `coalesce(l.tax_point_date, e.entry_date)
-between …`, which no index can serve, so it reaches every declaration line the
-company ever wrote through `entry_lines_box_idx` and discards those outside
-the period: 86 000 rows read for the ten boxes of one quarter. It is not a
-sequential scan and it is 37 ms today; it grows with every year kept. The same
-filter now stands in four functions, which is why the fix — a stored
-declaration date on the ledger line — is its own piece of work.
+**`vat_return()` read the history of the company to answer about a period —
+fixed.** Its filter was `coalesce(l.tax_point_date, e.entry_date) between …`,
+which spans two tables and which no index can serve, so it reached every
+declaration line the company ever wrote through `entry_lines_box_idx` and
+discarded those outside the period: 86 000 rows read for the ten boxes of one
+quarter, 37 ms at 10 000 documents and 255 ms at 100 000, growing with every
+year kept. The same filter stood in three functions. Each ledger line now
+stores the day it counts for a return, `entry_lines.declared_on`, written by a
+trigger from the same rule (`20261005160858`, backfilled by `20261005160859`),
+and every reader asks one inlined function, `declared_lines()`, which the
+planner turns into a range on `entry_lines_declared_on_idx`
+(`20261005160900`). The same quarter reads about 2 400 rows — each line of the
+period and the entry it belongs to — in 9 ms at 10 000 documents. The test
+asserts it: the return reaches `entry_lines` through that index, reads at most
+three rows per line of the period, and fewer than the declaration lines of the
+whole history.
 
 ## What is still not known
 
