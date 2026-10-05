@@ -8,6 +8,10 @@ a database answers with is what a client decides on.
 `v0.2.0`, on 14 September 2026, is the first published release. `0.1.0` was the
 first schema of this repository and was never tagged.
 
+The criteria for `1.0.0` — what the 1.x line promises and the proofs required
+before the tag, several of which are runs of the procedure below — are in
+[`road-to-1.0.md`](road-to-1.0.md).
+
 ## What has to move, and in which order
 
 Nothing below is optional. Each step fails a test or the build when it is

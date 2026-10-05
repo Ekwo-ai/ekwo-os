@@ -67,6 +67,14 @@ somewhere has already run it.
 
 ### Added
 
+- **The road to 1.0, in public** (`docs/road-to-1.0.md`). What version 1.0
+  promises for the whole 1.x line — an additive schema, functions and their
+  named errors, `ekwo migrate` from any published version, posted figures that
+  never change on upgrade, the MCP tools, the CLI, `pack.1.json`,
+  `module.1.json`, company archives that travel forward and a security policy
+  — what carries its own promise, and the nine proofs required before the
+  tag, each with where its evidence will live. Linked from the README and from
+  `docs/releasing.md`.
 - **Releases publish themselves, with provenance.** `.github/workflows/release.yml`
   publishes every public package with `npm publish --provenance` through npm
   trusted publishing (GitHub OIDC, no npm token) when a `v*` tag is pushed, in
