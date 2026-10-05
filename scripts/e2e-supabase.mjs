@@ -650,20 +650,26 @@ async function main() {
   if (setup === undefined) return report();
   const { company, year, decimals, defaults } = installation;
 
-  /** The plain standard-rate tax of the pack, on one side. */
-  async function simpleTax(scope) {
+  /**
+   * The plain standard-rate tax of the pack in force on a date, on one side.
+   * Plain means one tax, or one tax split between several accounts whose
+   * shares add up to the whole — a national and a local share, as in
+   * packs where the rate is collected by two authorities.
+   */
+  async function simpleTax(scope, date) {
     // Two foreign keys join `taxes` to `tax_postings` — one on the id and one
     // on the pair (id, company_id) — so PostgREST refuses to guess which
     // embedding is meant, and rightly. Two reads rather than a constraint
     // name in this file: a name is a thing that changes.
-    const taxes = await rest.select(
+    const inForce = (t) => t.valid_from <= date && (t.valid_to === null || t.valid_to >= date);
+    const taxes = (await rest.select(
       `/taxes?company_id=eq.${company.id}&applies_to=in.(${scope},both)&treatment=eq.domestic` +
         '&amount_type=eq.percent&amount=gt.0&order=amount.desc,code.asc' +
-        '&select=id,code,amount,cash_basis,' +
+        '&select=id,code,amount,cash_basis,valid_from,valid_to,' +
         'applies_seller_territory,applies_buyer_territory,applies_supply_territory',
-    );
+    )).filter(inForce);
     if (taxes.length === 0) {
-      throw new Error(`${company.fiscal_country} offers no domestic ${scope} tax at all`);
+      throw new Error(`${company.fiscal_country} offers no domestic ${scope} tax in force on ${date}`);
     }
     const ids = taxes.map((t) => t.id).join(',');
     const all = await rest.select(
@@ -683,7 +689,10 @@ async function main() {
       const postings = all.filter((p) => p.tax_id === tax.id);
       const taxPostings = postings.filter((p) => p.posting_type === 'tax');
       const onBase = postings.filter((p) => p.posting_type === 'tax_on_base');
-      if (taxPostings.length === 1 && onBase.length === 0) return { ...tax, postings, onBase: false };
+      const shares = taxPostings.reduce((sum, p) => sum + Number(p.factor_percent ?? 100), 0);
+      if (taxPostings.length >= 1 && shares === 100 && onBase.length === 0) {
+        return { ...tax, postings, onBase: false };
+      }
     }
     // A purchase tax nobody recovers — the American sales tax a buyer pays,
     // which is part of the cost and not a claim on the state — is what a pack
@@ -697,7 +706,11 @@ async function main() {
         if (types === 'base,tax_on_base') return { ...tax, postings, onBase: true };
       }
     }
-    throw new Error(`${company.fiscal_country} offers no plain ${scope} tax at the standard rate`);
+    const cashBasis = taxes.some((t) => t.cash_basis === true);
+    throw new Error(
+      `${company.fiscal_country} offers no plain ${scope} tax at the standard rate` +
+        (cashBasis ? ' — its standard-rate taxes are on the cash basis, which needs a payment step this script does not have yet' : ''),
+    );
   }
 
   await step('open the financial year', async () => {
@@ -719,7 +732,7 @@ async function main() {
   let taxInCost = 0;
 
   async function invoice(docType, scope, base, date, accountCode) {
-    const tax = await simpleTax(scope);
+    const tax = await simpleTax(scope, date);
     // Where the tax applies, the invoice is placed: the company is the seller
     // on a sale and the buyer on a purchase, the contact the other party, and
     // the supply is the document's. `post_document()` raises
