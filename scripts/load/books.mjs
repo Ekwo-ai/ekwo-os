@@ -344,7 +344,8 @@ export async function bankStatementMonth(db, options) {
  *
  * Returns the list of what is wrong, empty when nothing is. Every foreign key
  * that leaves a copied table is re-checked — all of its columns, so a copy
- * that landed in the wrong company is caught too — and every entry balances.
+ * that landed in the wrong company is caught too — every entry balances, and
+ * every line counts for a return on the day its rule gives.
  */
 export async function checkCoherence(db, companyId) {
   const problems = [];
@@ -393,6 +394,18 @@ export async function checkCoherence(db, companyId) {
     [companyId],
   );
   if (totals.n > 0) problems.push(`${totals.n} entries carry totals their lines do not add up to`);
+
+  // A copy moves every date by the same whole years, `declared_on` with the
+  // tax point and the entry it is derived from; this says the three moved
+  // together.
+  const [declared] = await db.query(
+    `select count(*)::int as n
+       from entry_lines l join entries e on e.id = l.entry_id
+      where l.company_id = $1
+        and l.declared_on is distinct from declared_on_of(l.tax_point_date, e.entry_date)`,
+    [companyId],
+  );
+  if (declared.n > 0) problems.push(`${declared.n} lines count for a return on a day the rule does not give`);
 
   return problems;
 }
