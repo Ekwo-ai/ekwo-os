@@ -74,6 +74,29 @@ somewhere has already run it.
   on any branch performs a dry run of every package. `scripts/publish.mjs`
   recognises that environment and refuses to publish from a pull request;
   `docs/releasing.md` lists the one-time setup per package on npmjs.com.
+- **A first session for an agent, said where it reads.** The MCP server's
+  instructions now walk an agent through five steps — `list_companies`,
+  `get_company` for the financial years and the lock dates, `list_accounts`
+  and the taxes resource for the codes a line names, `search_contacts` and
+  `create_document`, then `post_document` once the user agrees — and say how to
+  read `vat_return`, how a posted document or entry is corrected, and that a
+  refusal comes with its next step. The tools of that path each name the one
+  to call next. `ekwo --help` carries the same session for a shell, and
+  [`docs/agents.md`](docs/agents.md) gives both side by side.
+  `tests/mcp/first-session.test.ts` checks that every tool, prompt, argument
+  and refusal the instructions name exists.
+- **`ekwo company show`**, the company in use read as the person signed in:
+  its financial years, lock dates, journals and accounts by role. It is
+  `getCompany()` of `@ekwo-ai/core`, which the MCP tool `get_company` now
+  calls too, so both answer the same document.
+- **A friendly invitation to register the installation**, at three moments: the
+  end of an `ekwo init` that asked no questions, `ekwo status`, and one line of
+  the MCP server's instructions for the agent to relay once. It says what
+  registering gives, the six fields it sends and the one command, only on an
+  installation that is not registered, and never waits for an answer. Under
+  `--json` it is the field `registration` of `init` and `status`, and of the
+  `status` tool. `EKWO_NO_REGISTER_INVITE=1` hides it. The words live once, in
+  `@ekwo-ai/core`.
 
 ### Changed
 
@@ -82,6 +105,11 @@ somewhere has already run it.
   go through a pack whose standard rate is collected in a national and a local
   share. A pack whose standard-rate taxes are on the cash basis now gets a
   message that says so (`docs/international.md`).
+- **Refusals of the core say what to call instead.** A company, a contact, a
+  document or an entry that is not found now carries a hint naming the tool
+  and the command that list them, and `--json` puts it in `error.hint` for a
+  call to change (exit code 2) as it already did for a refusal of the
+  database.
 
 ## [0.10.0] — 2026-10-02
 

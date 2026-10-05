@@ -7,6 +7,7 @@
  */
 
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { registrationInvitation } from '@ekwo-ai/core';
 import type { Backend } from './backend.js';
 import { openBackend, readConfig } from './config.js';
 import { assertSchemaSupported } from './schema.js';
@@ -47,12 +48,32 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
   // predates the module framework answers with nothing, and the socle's own
   // tools are all a client then sees.
   const modules = await installedModules(backend);
+  const inviteToRegister = await shouldInviteToRegister(backend, env);
   return {
-    server: buildServer(backend, { modules }),
+    server: buildServer(backend, { modules, inviteToRegister }),
     backend,
     summary:
       `ekwo-mcp: connected over ${config.mode === 'sql' ? 'a direct Postgres connection' : 'PostgREST as the signed-in user'}` +
       `, schema ${schemaVersion}` +
       `${modules.length > 0 ? `, modules: ${modules.join(', ')}` : ''}`,
   };
+}
+
+/**
+ * True when the instance row says the installation is not registered with
+ * Ekwo and the environment did not silence the invitation. A row this user
+ * may not read, or a read that fails, gives no invitation: it is a courtesy,
+ * and a courtesy never stops a server from starting.
+ */
+export async function shouldInviteToRegister(backend: Backend, env: NodeJS.ProcessEnv): Promise<boolean> {
+  try {
+    const rows = await backend.select<{ registered_at: string | null }>({
+      table: 'instance',
+      columns: ['registered_at::text'],
+    });
+    const row = rows[0];
+    return row !== undefined && registrationInvitation(row.registered_at, env) !== null;
+  } catch {
+    return false;
+  }
 }

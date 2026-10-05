@@ -44,6 +44,8 @@ Three ways in, all acting on the same functions of the schema:
 - **The installation guide:** [`packages/cli/README.md`](packages/cli/README.md).
 - **The tools of the MCP server:** [`packages/mcp/README.md`](packages/mcp/README.md).
 - **A declaration from computing to correcting:** [`docs/filing.md`](docs/filing.md).
+- **A first session, once installed:** [`docs/agents.md`](docs/agents.md) — five
+  steps, the MCP tool and the command for each.
 
 ## Installing for somebody
 

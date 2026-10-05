@@ -19,4 +19,13 @@ export {
 export { SCHEMA_MIN, compareSchemaVersions, schemaIsAtLeast } from './schema.js';
 export { isRefusalState, socleCode } from './refusal.js';
 export { IDENTITY_ENV, isServiceRoleKey, serviceRoleRefusal, type KeySlot } from './identity.js';
+export {
+  REGISTER_INVITE_ENV,
+  REGISTRATION_INVITATION,
+  registerInviteSilenced,
+  registrationInvitation,
+  relayableInvitation,
+  type EnvironmentVariables,
+  type RegistrationInvitation,
+} from './registration.js';
 export * from './books/index.js';

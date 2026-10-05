@@ -11,6 +11,7 @@ import { allModuleMigrations, listModules } from '../module/read.js';
 import { isInteractive } from '../prompt.js';
 import { SCHEMA_MIN } from '../schema.js';
 import { status } from '../status.js';
+import { printInvitation, registrationField } from '../invitation.js';
 import { setResult } from '../output.js';
 import { dim, heading, line, note, pairs, warn, yellow } from '../ui.js';
 
@@ -45,7 +46,12 @@ export async function statusCommand(args: ParsedArgs, deps: CommandDeps = {}): P
     const migrations = await everything();
     const report = await status(db, migrations);
 
-    setResult(report);
+    // Registration is a field of its own: whether this installation is
+    // registered, and the invitation when it is not. Present once the instance
+    // row exists, since before that there is nothing to register.
+    const registration =
+      report.instance === undefined ? undefined : registrationField(report.instance.registered_at);
+    setResult(registration === undefined ? report : { ...report, registration });
 
     if (!report.schemaInstalled) {
       heading('Schema');
@@ -144,6 +150,7 @@ export async function statusCommand(args: ParsedArgs, deps: CommandDeps = {}): P
       }
     }
 
+    printInvitation(registration?.invitation ?? null);
     line();
     return report.pending.length > 0 ? 1 : 0;
   } finally {

@@ -12,7 +12,7 @@ import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mc
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from './backend.js';
-import { columns } from '@ekwo-ai/core';
+import { columns, relayableInvitation } from '@ekwo-ai/core';
 import * as read from './tools/read.js';
 import * as write from './tools/write.js';
 import { toolsetsFor } from './tools/modules.js';
@@ -66,15 +66,41 @@ export interface ServerOptions {
    * `bin.ts` asks the database; a test passes the list it wants.
    */
   modules?: readonly string[];
+  /**
+   * Adds one line to the instructions: the invitation to register, for the
+   * agent to relay once to its person. `start.ts` sets it when the instance
+   * row says the installation is not registered and `EKWO_NO_REGISTER_INVITE`
+   * is not set; the hosted connector and the tests leave it off.
+   */
+  inviteToRegister?: boolean;
+}
+
+/**
+ * What a client reads at the handshake, before it calls anything.
+ *
+ * Written as the first session an agent has with a set of books: what to call
+ * first, where the company and its financial years are, how to read a tax
+ * return, how to correct what is posted, and what a refusal means.
+ * `tests/mcp/surface.test.ts` checks that every tool and prompt named here is
+ * one this server offers, and that every refusal named has its sentence.
+ */
+export const INSTRUCTIONS = [
+  'Ekwo OS keeps double-entry books in the user\'s own Postgres. You act as that user: everything you can see and change is what row level security lets them see and change. Amounts are decimal strings ("1210.00"), dates are ISO (2026-06-15), identifiers are uuids.',
+  'A first session, in order. (1) list_companies: every other tool takes a company_id from it; an empty list means this user has not been invited to a company yet, and status says who you are acting as. (2) get_company: the financial years and whether each is closed, the lock dates, the journals and the role accounts — a date you book on falls in an open year, after the lock date. (3) list_accounts and the resource ekwo://companies/{companyId}/taxes: a document line names its account and its tax by code, never by rate, because several taxes share a rate; describe_pack says which country pack those codes come from and how far it has been reviewed. (4) search_contacts, then create_contact only if nobody matches, then create_document: a draft with the totals the database computed. Show it to the user. (5) post_document once the user has said yes to that document; record_payment when the money moves.',
+  'Reading a tax return: vat_return gives the boxes of a period with their names and amounts, summed from what was posted, and the boxes computed from other boxes; a draft is in no box. Name a report_code only where the country files several declarations. It prepares figures and files nothing — the prompt prepare_vat_return walks through checking them against the ledger. The reports beside it are trial_balance, general_ledger, aged_balance and financial_statement (list_statements first).',
+  'Correcting: a posted entry is never deleted or edited. A posted invoice is undone by cancel_document — back to draft where its country allows it and nothing has left, by the credit note that names it otherwise, and it says which — and an entry keyed by hand by reverse_entry. A paid document is unmatched first with unreconcile, and only when the user says so. Ask the user before every post, cancel, reversal, payment or lock.',
+  'When the database refuses, the message starts with a name — period_locked, entry_unbalanced, document_total_mismatch, reversal_date_needed — followed by a sentence saying what to do next. Report it to the user and follow that sentence rather than working around it.',
+].join('\n\n');
+
+/** The instructions, with the invitation to register when it applies. */
+export function instructionsFor(options: ServerOptions = {}): string {
+  return options.inviteToRegister === true ? `${INSTRUCTIONS}\n\n${relayableInvitation()}` : INSTRUCTIONS;
 }
 
 export function buildServer(backend: Backend, options: ServerOptions = {}): McpServer {
   const server = new McpServer(
     { name: SERVER_NAME, version: SERVER_VERSION },
-    {
-      instructions:
-        'Ekwo OS keeps double-entry books in the user\'s own Postgres. You act as that user: everything you can see and change is what row level security lets them see and change. Amounts are decimal strings ("1210.00"), dates are ISO (2026-06-15), identifiers are uuids. Invoices are created as drafts and become ledger entries only when post_document is called; a posted entry is never deleted or edited: an invoice is undone by cancel_document — back to draft where its country allows it and nothing has left, by the credit note that names it otherwise, and it says which — and an entry keyed by hand by reverse_entry. When the database refuses — period_locked, entry_unbalanced, document_total_mismatch — report the refusal rather than working around it.',
-    },
+    { instructions: instructionsFor(options) },
   );
 
   // -------------------------------------------------------------------- read
@@ -84,7 +110,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'List companies',
       description:
-        'The companies of this installation that you are a member of, with your role on each. Start here: every other tool needs a company_id. Returns id, name, country, currency and your role. It does not list companies you were never invited to — those are invisible, not hidden.',
+        'The companies of this installation that you are a member of, with your role on each. Start here: every other tool needs a company_id. Returns id, name, country, currency and your role. It does not list companies you were never invited to — those are invisible, not hidden. Next: get_company on the one the user means.',
       inputSchema: read.ListCompaniesInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -96,7 +122,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Company settings',
       description:
-        'Everything needed before booking in a company: its financial years and whether they are closed, its lock dates, its journals, and the accounts that play the receivable, payable, suspense and retained-earnings roles. Read this before creating a document if you do not already know the journals and the lock dates.',
+        'Everything needed before booking in a company: its financial years and whether they are closed, its lock dates, its journals, and the accounts that play the receivable, payable, suspense and retained-earnings roles. Read this before creating a document if you do not already know the journals and the lock dates. Next: list_accounts and the ekwo://companies/{companyId}/taxes resource give the codes a document line names.',
       inputSchema: read.GetCompanyInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -120,7 +146,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Find a contact',
       description:
-        'Customers, suppliers and other third parties of a company, by name, by type or by VAT number. Use it before creating a document: a document is booked against a contact, and creating a second contact for a customer who already exists splits their account.',
+        'Customers, suppliers and other third parties of a company, by name, by type or by VAT number. Use it before creating a document: a document is booked against a contact, and creating a second contact for a customer who already exists splits their account. Nobody matches: create_contact. Found: create_document with its id.',
       inputSchema: read.SearchContactsInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -352,7 +378,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       inputSchema: read.StatusInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
-    async () => guard(() => read.status(backend)),
+    async () => guard(() => read.status(backend, { inviteToRegister: options.inviteToRegister === true })),
   );
 
   server.registerTool(
@@ -410,7 +436,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Create a contact',
       description:
-        'Adds a customer, supplier or other third party to a company. Search first: a duplicate contact splits a customer account in two and the aged balance stops making sense. payment_terms_days drives the due date a posted invoice gets when none is given.',
+        'Adds a customer, supplier or other third party to a company. Search first: a duplicate contact splits a customer account in two and the aged balance stops making sense. payment_terms_days drives the due date a posted invoice gets when none is given. Next: create_document with the id it returns.',
       inputSchema: write.CreateContactInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     },
@@ -422,7 +448,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Create a draft invoice',
       description:
-        'Creates a draft invoice, credit note or quote with its lines, and returns it with the totals the database computed — never with totals you supplied. A line may name a product_code, which fills in its text, price, unit, account and tax; anything the line carries wins over that. With no product and no account_code, the account falls back to the company default and then to its country model. A tax is different: a line with none is booked as a base with no VAT box, which is not the same as 0 %. Nothing is in the ledger yet; post_document is what books it.',
+        'Creates a draft invoice, credit note or quote with its lines, and returns it with the totals the database computed — never with totals you supplied. A line may name a product_code, which fills in its text, price, unit, account and tax; anything the line carries wins over that. With no product and no account_code, the account falls back to the company default and then to its country model. A tax is different: a line with none is booked as a base with no VAT box, which is not the same as 0 %. Nothing is in the ledger yet. Next: show the draft to the user; update_document_lines changes it, and post_document books it once they agree.',
       inputSchema: write.CreateDocumentInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     },
@@ -446,7 +472,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Post a document to the ledger',
       description:
-        'Books a draft document: base lines, VAT lines from the tax configuration, and the customer or supplier counterpart, numbered and posted. A posted entry is never edited; a mistake is undone by cancel_document, which puts the document back to draft only where its country allows it and nothing has left, and issues a credit note otherwise. Ask the user before calling it. It refuses a locked period, a tax that is not in force, and a header total that disagrees with the lines.',
+        'Books a draft document: base lines, VAT lines from the tax configuration, and the customer or supplier counterpart, numbered and posted. A posted entry is never edited; a mistake is undone by cancel_document, which puts the document back to draft only where its country allows it and nothing has left, and issues a credit note otherwise. Ask the user before calling it. It refuses a locked period, a tax that is not in force, and a header total that disagrees with the lines. Next: get_document shows the entry it wrote, and record_payment books the money when it moves.',
       inputSchema: write.PostDocumentInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },

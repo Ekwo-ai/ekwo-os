@@ -305,13 +305,13 @@ instead if the account already exists, and no key is needed.
 |---|---|
 | `ekwo init` | The whole installation, interactive or not: the socle's migrations, the reference seeds, then the modules', as `ekwo migrate` applies them. `--no-company` stops before the first company: see [several countries](#several-countries-in-one-installation-init---no-company). |
 | `ekwo migrate` | Applies the migrations this release adds, after showing the gap — the socle's, then the modules'. Re-applies the reference seeds, which are idempotent. `--no-modules` leaves the modules alone. |
-| `ekwo status` | Schema version installed against available, pending migrations, the instance, its administrators, the country packs it holds and, per company, the pack version it copied. Exits 1 when something is pending. |
+| `ekwo status` | Schema version installed against available, pending migrations, the instance, its administrators, the country packs it holds and, per company, the pack version it copied. On an installation that is not registered, a short invitation to [register](#registering-with-ekwo). Exits 1 when something is pending. |
 | `ekwo doctor` | Every object this release defines and every privilege it grants, against what the database holds; row level security on every table, a policy on every protected table, no pending migration, no membership pointing at a deleted user, every company with a bank account, statements that tie to their lines, posted entries that balance. Exits 1 on a problem, 0 on warnings. |
-| `ekwo register` | Opt in to security advisories and release notes. Also the retry when the announcement did not go through. |
+| `ekwo register` | Opt in to security advisories and release notes. Optional: everything works the same without it. Also the retry when the announcement did not go through. |
 | `ekwo unregister` | Opt back out. Clears the address and the date on the instance row. |
 | `ekwo demo` | Loads the sample company. Fictional data, explicit request only. |
 | `ekwo module` | What is installed beside the socle, applies a module's migrations and its country seeds, and turns one on or off for a company. |
-| `ekwo company` | `new` creates a company in its own country, through `create_company()`, and `list` shows the companies held here. One company leaves an installation with its books — `export` writes an archive anybody can read, as a member under row level security — and arrives in another one alive: `import` takes it in whole or not at all. |
+| `ekwo company` | `new` creates a company in its own country, through `create_company()`, and `list` shows the companies held here. `show` reads the company in use as the person signed in — its financial years, lock dates, journals and accounts by role — the same document as the MCP tool `get_company`. One company leaves an installation with its books — `export` writes an archive anybody can read, as a member under row level security — and arrives in another one alive: `import` takes it in whole or not at all. |
 | `ekwo pack` | Compiles a country pack into its seed, and refuses a seed that is no longer the output of its pack. Runs in a checkout of the repository only. |
 | `ekwo login` | Signs in to an instance as yourself and keeps the session, in your own configuration directory. See [acting as a person](#acting-as-a-person-login-use-whoami). |
 | `ekwo logout` | Ends that session, here and on the instance. |
@@ -962,6 +962,7 @@ Every command takes `--json`; see [what a command answers](#what-a-command-answe
 | `EKWO_PROFILE` | `--profile` |
 | `EKWO_CONFIG_DIR` | Where profiles and sessions are kept. |
 | `EKWO_REGISTRY_URL` | `--registry-url`. Default `https://api.ekwo.ai/v1/registrations`. |
+| `EKWO_NO_REGISTER_INVITE` | Set to `1` to hide the invitation to register that `ekwo init` and `ekwo status` show on an installation that is not registered. The MCP server reads it too. |
 | `NO_COLOR` | Plain output. |
 
 See [`.env.example`](../../.env.example) at the root of the repository.
@@ -990,12 +991,24 @@ database the same way.
 
 ## Registering with Ekwo
 
-At the end of `ekwo init` you are asked:
+At the end of `ekwo init`, in a terminal, you are asked:
 
-> Register this installation with Ekwo to receive security advisories and
-> release notes?
+> Register this installation with Ekwo, for security advisories that concern
+> your version and release notes? Everything works the same without it.
 
-The default answer is no, and no is supported forever. Community works
+The default answer is no, and no is supported forever.
+
+Where nobody is asked — `--yes`, `--json`, a script — the end of `ekwo init`
+shows a short invitation instead, after everything else, and `ekwo status`
+shows the same one on an installation that is not registered: what registering
+gives, the six fields it sends and the one command,
+`npx -y ekwo-os@latest register --email <your address>`. Under `--json` it is
+the field `registration` of the document, `{ "registered": false,
+"invitation": { … } }`, and the standard output stays one document. It never
+waits for an answer, it disappears once the installation is registered, and
+`EKWO_NO_REGISTER_INVITE=1` hides it. The MCP server gives its agent one line
+to relay to the person, once, on the same terms; see
+[`docs/agents.md`](../../docs/agents.md#registering-the-installation). Community works
 unregistered: nothing in the schema and nothing in this CLI reads
 `contact_email` or `registered_at` to decide what you may do, and `edition`
 gates no feature.

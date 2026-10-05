@@ -95,6 +95,13 @@ do on your project** — among them, switching off public sign-up in
 Authentication. Do them while the dashboard is open; they are explained in the
 [installation guide](../packages/cli/README.md#before-you-go-live-four-things-on-your-project).
 
+At the very end, the installer also asks whether you would like to register
+the installation with Ekwo, for security advisories that concern your version
+and release notes. It is optional and everything works the same without it;
+`npx -y ekwo-os@latest register --email <your address>` does it later, and the
+[installation guide](../packages/cli/README.md#registering-with-ekwo) lists
+the six fields it sends.
+
 Everything can also be given as flags, for example
 `npx -y ekwo-os@latest init --country EE` or
 `npx -y ekwo-os@latest init --country GB --fiscal-year-start 2026-04-01`; the
@@ -353,6 +360,10 @@ return (form KMD) came back with 1 000.00 in box 1 and 240.00 in boxes 4 and
 12; the British company's first quarter (the VAT return) with 200.00 in boxes
 1, 3 and 5 and 1 000.00 in box 6. Asked for before that invoice, both were
 empty — the imported history carries no tax, as said below.
+
+Claude finds its way on its own: the server tells it, at the handshake, what to
+call first and how to correct what is posted. The same first session, tool by
+tool and command by command, is in [`agents.md`](agents.md).
 
 **Filing is yours.** Ekwo prepares the figures; it does not send them. Copy
 them into your tax administration's portal, or give them to whoever files for

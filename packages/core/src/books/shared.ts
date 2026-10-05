@@ -5,6 +5,10 @@
 
 import { BooksError, type Backend } from './backend.js';
 
+/** What to do about a company that is not there: find the ones that are. */
+export const NO_SUCH_COMPANY =
+  'list_companies (ekwo whoami on the command line) names the companies you are a member of, with their ids.';
+
 /** The row, or a refusal naming what row level security did not return. */
 export function only<T>(rows: T[], what: string): T {
   const row = rows[0];
@@ -93,6 +97,7 @@ export async function companyCurrency(backend: Backend, company: string): Promis
   if (currency === undefined) {
     throw new BooksError(
       `not_found: company ${company}. Either it does not exist or you are not a member of it.`,
+      { hint: NO_SUCH_COMPANY },
     );
   }
   return currency;
@@ -113,6 +118,7 @@ export async function companyBankAccountScheme(backend: Backend, company: string
   if (country === undefined) {
     throw new BooksError(
       `not_found: company ${company}. Either it does not exist or you are not a member of it.`,
+      { hint: NO_SUCH_COMPANY },
     );
   }
   const rows = await backend.select<{ bank_account_scheme: string | null }>({

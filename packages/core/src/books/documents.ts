@@ -738,5 +738,7 @@ export async function resolveDocument(backend: Backend, company: string, wanted:
     }
     if (found[0] !== undefined) return found[0].id;
   }
-  throw new BooksError(`unknown_document: no document of this company has the number or the reference ${wanted}.`);
+  throw new BooksError(`unknown_document: no document of this company has the number or the reference ${wanted}.`, {
+    hint: 'list_documents (ekwo doc list) gives the documents of the company with their ids and numbers.',
+  });
 }

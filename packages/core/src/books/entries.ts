@@ -65,5 +65,7 @@ export async function resolveEntry(backend: Backend, company: string, wanted: st
     limit: 1,
   });
   if (found[0] !== undefined) return found[0].id;
-  throw new BooksError(`unknown_entry: no entry of this company has the number ${wanted}.`);
+  throw new BooksError(`unknown_entry: no entry of this company has the number ${wanted}.`, {
+    hint: 'general_ledger lists the posted entries of a period with their numbers; an id works too.',
+  });
 }

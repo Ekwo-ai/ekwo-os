@@ -173,7 +173,8 @@ the same name and answers `ekwo: command not found`.
 
 Asking an AI agent to do it with you? Point it at
 [`AGENTS.md`](AGENTS.md): what it needs, the commands, and what it must never
-do. Each country also has its own step-by-step page on the site, generated
+do. Once installed, [`docs/agents.md`](docs/agents.md) is its first session in
+five steps, on the MCP server and on the command line alike. Each country also has its own step-by-step page on the site, generated
 from its pack, and the whole documentation is served to a model as
 `https://ekwo.ai/llms.txt`.
 

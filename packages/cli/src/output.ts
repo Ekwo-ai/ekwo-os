@@ -136,7 +136,9 @@ export function classify(error: unknown): { exitCode: number; error: OutputError
   // a document that is not a draft. The call has to change; the books did not
   // refuse, so it is not 3.
   if (error instanceof UsageError || error instanceof NotInteractiveError || error instanceof BooksError) {
-    return { exitCode: EXIT_USAGE, error: { kind: 'usage', ...named, message } };
+    // The core's sentence on what to call instead, when it has one.
+    const next = error instanceof BooksError ? error.hint : undefined;
+    return { exitCode: EXIT_USAGE, error: { kind: 'usage', ...named, message, ...(next === undefined ? {} : { hint: next }) } };
   }
 
   // Both drivers this CLI meets — `postgres` on a real project, PGlite in the

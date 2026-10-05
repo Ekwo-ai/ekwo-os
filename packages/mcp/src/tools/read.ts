@@ -17,7 +17,16 @@ import {
 } from '@ekwo-ai/fec';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Filter, type Row } from '../backend.js';
-import { DOC_TYPES, columns, money, moneyFields, namesOf, onlyVisible as only } from '@ekwo-ai/core';
+import {
+  DOC_TYPES,
+  REGISTRATION_INVITATION,
+  columns,
+  money,
+  moneyFields,
+  namesOf,
+  onlyVisible as only,
+  type RegistrationInvitation,
+} from '@ekwo-ai/core';
 
 // Moved to the core with the writing half they are read back by; exported
 // from here under the names they always had.
@@ -65,106 +74,8 @@ export async function listCompanies(backend: Backend): Promise<unknown> {
 
 export const GetCompanyInput = z.object({ company_id: companyId });
 
-export async function getCompany(
-  backend: Backend,
-  args: z.infer<typeof GetCompanyInput>,
-): Promise<unknown> {
-  const company = only(
-    await backend.select<Row>({
-      table: 'companies',
-      columns: columns.COMPANY,
-      where: [{ column: 'id', op: 'eq', value: args.company_id }],
-    }),
-    `company ${args.company_id}`,
-  );
-
-  const [years, journals, accounts] = await Promise.all([
-    backend.select<Row>({
-      table: 'fiscal_years',
-      columns: columns.FISCAL_YEAR,
-      where: [{ column: 'company_id', op: 'eq', value: args.company_id }],
-      order: [{ column: 'start_date' }],
-    }),
-    backend.select<Row>({
-      table: 'journals',
-      columns: columns.JOURNAL,
-      where: [{ column: 'company_id', op: 'eq', value: args.company_id }],
-      order: [{ column: 'code' }],
-    }),
-    backend.select<{ id: string; code: string; name: string }>({
-      table: 'accounts',
-      columns: ['id', 'code', 'name'],
-      where: [
-        {
-          column: 'id',
-          op: 'in',
-          value: [
-            company['receivable_account_id'],
-            company['payable_account_id'],
-            company['suspense_account_id'],
-            company['retained_earnings_account_id'],
-          ].filter((id): id is string => typeof id === 'string'),
-        },
-      ],
-    }),
-  ]);
-
-  const byId = new Map(accounts.map((account) => [account.id, account]));
-  const named = (key: string): unknown => {
-    const id = company[key];
-    return typeof id === 'string' ? (byId.get(id) ?? { id }) : null;
-  };
-
-  const packs = await backend.select<Row>({
-    table: 'company_packs',
-    columns: ['country', 'version', 'chart_code', 'installed_at'],
-    where: [{ column: 'company_id', op: 'eq', value: args.company_id }],
-    order: [{ column: 'country' }],
-  });
-
-  // Who is on the books, and what the person asking may actually do. A role
-  // is a preset here and nothing more: the capabilities are the answer, and
-  // a tool that reported the role alone would be reporting the label rather
-  // than the permission.
-  const members = await backend.select<Row>({
-    table: 'company_members',
-    columns: ['user_id', 'role', 'capabilities_granted', 'capabilities_revoked', 'created_at::text'],
-    where: [{ column: 'company_id', op: 'eq', value: args.company_id }],
-  });
-  // A function returning `setof text` comes back as a list of strings over
-  // PostgREST and as a list of one-column rows over Postgres. Both are read
-  // here, so the answer is the same list on either route.
-  const mine = await backend.rpc<unknown>('member_capabilities', {
-    p_company_id: args.company_id,
-  });
-  const capabilities = mine
-    .map((row) =>
-      typeof row === 'string'
-        ? row
-        : ((row as Record<string, unknown>)['member_capabilities'] as string | undefined),
-    )
-    .filter((code): code is string => typeof code === 'string');
-
-  return {
-    company,
-    country_packs: packs,
-    members,
-    your_capabilities: capabilities,
-    locks: {
-      lock_date: company['lock_date'],
-      tax_lock_date: company['tax_lock_date'],
-      note: 'Nothing may be booked on or before lock_date; tax_lock_date additionally freezes anything carrying a VAT box.',
-    },
-    default_accounts: {
-      receivable: named('receivable_account_id'),
-      payable: named('payable_account_id'),
-      suspense: named('suspense_account_id'),
-      retained_earnings: named('retained_earnings_account_id'),
-    },
-    fiscal_years: years,
-    journals,
-  };
-}
+// Moved to the core, where `ekwo company show` reads the same answer.
+export { getCompany } from '@ekwo-ai/core';
 
 // ---------------------------------------------------------------------------
 // Reference data
@@ -953,7 +864,10 @@ export async function describePack(
 
 export const StatusInput = z.object({});
 
-export async function status(backend: Backend): Promise<unknown> {
+export async function status(
+  backend: Backend,
+  options: { inviteToRegister?: boolean } = {},
+): Promise<unknown> {
   const version = await backend.rpc<string>('ekwo_schema_version');
   const instance = await backend.select<Row>({ table: 'instance', columns: columns.INSTANCE });
   const companies = await backend.select<Row>({
@@ -966,11 +880,27 @@ export async function status(backend: Backend): Promise<unknown> {
     schema_version: version[0] ?? null,
     connection: { mode: backend.mode, acting_as: backend.actingAs ?? null },
     instance: instance[0] ?? null,
+    // Whether this installation is registered with Ekwo, which is optional,
+    // and — only where the server was started to say so — the invitation
+    // the agent may relay once to the person it works for.
+    registration: registrationOf(instance[0], options.inviteToRegister === true),
     companies,
     note:
       backend.mode === 'postgrest'
         ? 'Reading and writing as the signed-in user, over PostgREST. Row level security decides what is visible.'
         : 'Reading and writing over a direct Postgres connection, with the claims and the role of the user this server acts for.',
+  };
+}
+
+function registrationOf(
+  instance: Row | undefined,
+  invite: boolean,
+): { registered: boolean | null; invitation: RegistrationInvitation | null } {
+  if (instance === undefined) return { registered: null, invitation: null };
+  const registeredAt = (instance['registered_at'] as string | null | undefined) ?? null;
+  return {
+    registered: registeredAt !== null,
+    invitation: invite && registeredAt === null ? REGISTRATION_INVITATION : null,
   };
 }
 
