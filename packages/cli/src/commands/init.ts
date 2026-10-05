@@ -38,6 +38,7 @@ import {
   installedPacks,
 } from '../bootstrap.js';
 import { printOperatorChecklist } from '../checklist.js';
+import { printInvitation, registrationField, type RegistrationField } from '../invitation.js';
 import {
   chooseChart,
   chooseCountry,
@@ -56,7 +57,7 @@ import { applyMigrations } from '../migrations.js';
 import { listModules } from '../module/read.js';
 import { applyModuleMigrations } from './module.js';
 import { ask as askText, askRequired, askSecret, choose, confirm, isInteractive } from '../prompt.js';
-import { register, registryUrl } from '../registry.js';
+import { readInstance, register, registryUrl } from '../registry.js';
 import { applyDemoSeed, applySeeds } from '../seeds.js';
 import { asUser, scalar } from '../sql.js';
 import { syncSchemaVersion } from '../status.js';
@@ -375,7 +376,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
     // ---- ekwo.json ----------------------------------------------------------
     const configFile = await writeInstallationConfig(connection, schemaVersion, deps);
 
-    setResult({
+    const summary = {
       organization,
       instanceId: outcome.instanceId,
       adminUserId,
@@ -400,10 +401,11 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
       schemaVersion: schemaVersion ?? null,
       demo: boolFlag(args, 'demo'),
       configFile,
-    });
+    };
 
     // ---- Registration, offered, never required ------------------------------
-    await offerRegistration(db, args, { interactive, adminUserId, deps });
+    const registration = await offerRegistration(db, args, { interactive, adminUserId, deps });
+    setResult({ ...summary, registration });
 
     heading('Done');
     pairs([
@@ -443,6 +445,9 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
     // reading. `packages/cli/README.md` carries the same four, and a test
     // reads both so the two cannot drift.
     printOperatorChecklist();
+    // Last, and once: an installation that was not asked — `--yes`, `--json` —
+    // is told what registering gives and how, and nothing waits on it.
+    printInvitation(registration.invitation);
     line();
     return 0;
   } finally {
@@ -544,7 +549,7 @@ async function installWithoutCompany(
 
   const configFile = await writeInstallationConfig(options.connection, schemaVersion, deps);
 
-  setResult({
+  const summary = {
     organization,
     instanceId: claimed.instanceId,
     adminUserId,
@@ -560,9 +565,10 @@ async function installWithoutCompany(
     schemaVersion: schemaVersion ?? null,
     demo: boolFlag(args, 'demo'),
     configFile,
-  });
+  };
 
-  await offerRegistration(db, args, { interactive, adminUserId, deps });
+  const registration = await offerRegistration(db, args, { interactive, adminUserId, deps });
+  setResult({ ...summary, registration });
 
   heading('Done');
   pairs([
@@ -577,6 +583,7 @@ async function installWithoutCompany(
   line(`  ${cyan('ekwo company new "<name>" --country <cc>')}, then ${cyan('ekwo company list')}.`);
 
   printOperatorChecklist();
+  printInvitation(registration.invitation);
   line();
   return 0;
 }
@@ -676,25 +683,38 @@ async function resolveAdminUser(
   return user.id;
 }
 
+/**
+ * Asks once, in a terminal, and registers on a yes.
+ *
+ * What it returns is the `registration` field of `--json`. Its invitation is
+ * printed by the caller at the very end, and only where nobody was asked —
+ * `--yes`, `--json`, a pipe: a person who has just answered no is not told
+ * again what they declined.
+ */
 async function offerRegistration(
   db: Awaited<ReturnType<typeof openDatabase>>['db'],
   args: ParsedArgs,
   options: { interactive: boolean; adminUserId: string; deps: InitDeps },
-): Promise<void> {
+): Promise<RegistrationField> {
   const asked = boolFlag(args, 'register');
+  // `init` run again on an installation that already registered asks nothing.
+  const registeredAt = (await readInstance(db))?.registered_at ?? null;
+  if (registeredAt !== null && !asked) return registrationField(registeredAt);
   const wanted = asked
     ? true
     : options.interactive
       ? await ask(
-          'Register this installation with Ekwo to receive security advisories and release notes?',
+          'Register this installation with Ekwo, for security advisories that concern your version and ' +
+            'release notes? Everything works the same without it.',
         )
       : false;
 
   if (!wanted) {
+    if (!options.interactive) return registrationField(null);
     heading('Registration');
-    skipped('not registered — Community works unregistered, forever');
-    note(dim('Change your mind later with `ekwo register --email you@example.com`.'));
-    return;
+    skipped('not registered — everything works the same');
+    note(dim('Whenever you like: `ekwo register --email you@example.com`.'));
+    return { registered: false, invitation: null };
   }
 
   const email =
@@ -703,7 +723,7 @@ async function offerRegistration(
     (options.interactive ? await askRequired('Contact address?') : undefined);
   if (email === undefined) {
     warn('--register needs an address: pass --register-email or --admin-email. Skipped.');
-    return;
+    return registrationField(null);
   }
 
   heading('Registration');
@@ -722,6 +742,7 @@ async function offerRegistration(
     note(dim('The local registration stands. `ekwo register` will try again.'));
   }
   note(dim(`Sent: ${JSON.stringify(result.payload)}`));
+  return { registered: true, invitation: null };
 }
 
 /** Yes/no with no as the default, kept separate so the wording stays fixed. */

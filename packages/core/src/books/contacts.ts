@@ -97,7 +97,9 @@ export async function resolveContact(
   const exact = found.filter((contact) => contact.name.toLowerCase() === wanted.toLowerCase());
   const matches = exact.length > 0 ? exact : found;
   if (matches.length === 0) {
-    throw new BooksError(`unknown_contact: no contact of this company is called ${wanted}, or has it in its name.`);
+    throw new BooksError(`unknown_contact: no contact of this company is called ${wanted}, or has it in its name.`, {
+      hint: 'search_contacts (ekwo contact list) finds a contact by part of its name; create_contact (ekwo contact add) adds one.',
+    });
   }
   if (matches.length > 1) {
     throw new BooksError(

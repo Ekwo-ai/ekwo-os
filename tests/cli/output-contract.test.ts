@@ -280,6 +280,12 @@ describe('every command answers --json with one document of the published shape'
     const who = await asPerson(['whoami']);
     expect(who.context).toEqual(used.context);
     expect((who.data as { capabilities: string[] }).capabilities.length).toBeGreaterThan(0);
+    // The company in use, as the MCP tool get_company reads it: the financial
+    // years, the lock dates and the journals an agent needs before booking.
+    const settings = await asPerson(['company', 'show']);
+    expect(settings.context).toEqual(used.context);
+    expect((settings.data as { fiscal_years: unknown[] }).fiscal_years.length).toBeGreaterThan(0);
+    expect((settings.data as { journals: unknown[] }).journals.length).toBeGreaterThan(0);
     // The verbs that keep books, each once, on the company `init` made. What
     // they do is `books.test.ts`; here it is the shape of what they answer.
     const sales = roleOf(somePack, 'sales');

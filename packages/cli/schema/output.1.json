@@ -111,6 +111,32 @@
       "additionalProperties": false,
       "properties": { "id": { "type": "string" }, "email": { "oneOf": [{ "type": "string" }, { "type": "null" }] } }
     },
+    "registration": {
+      "type": "object",
+      "required": ["registered", "invitation"],
+      "additionalProperties": false,
+      "$comment": "Registering with Ekwo is optional. `invitation` is null once registered, and when EKWO_NO_REGISTER_INVITE is set.",
+      "properties": {
+        "registered": { "type": "boolean" },
+        "invitation": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["text", "gives", "sends", "command", "silence"],
+              "additionalProperties": false,
+              "properties": {
+                "text": { "type": "string" },
+                "gives": { "type": "array", "items": { "type": "string" } },
+                "sends": { "type": "string" },
+                "command": { "type": "string" },
+                "silence": { "type": "string" }
+              }
+            }
+          ]
+        }
+      }
+    },
     "migrationFile": {
       "type": "object",
       "required": ["version", "file"],
@@ -148,7 +174,7 @@
         "type": "object",
         "required": [
           "organization", "instanceId", "adminUserId", "company", "fiscalYear", "filingPeriods",
-          "bankAccountId", "migrations", "steps", "schemaVersion", "demo", "configFile"
+          "bankAccountId", "migrations", "steps", "schemaVersion", "demo", "configFile", "registration"
         ],
         "additionalProperties": false,
         "properties": {
@@ -185,7 +211,8 @@
           },
           "schemaVersion": { "type": ["string", "null"] },
           "demo": { "type": "boolean" },
-          "configFile": { "type": "string" }
+          "configFile": { "type": "string" },
+          "registration": { "$ref": "#/$defs/registration" }
         }
       },
       "migrate": {
@@ -220,6 +247,7 @@
           "pending": { "type": "array", "items": { "$ref": "#/$defs/migrationFile" } },
           "unknown": { "type": "array", "items": { "type": "string" } },
           "instance": { "type": "object" },
+          "registration": { "$ref": "#/$defs/registration" },
           "admins": { "type": "integer", "minimum": 0 },
           "companies": {
             "type": "array",
@@ -666,6 +694,22 @@
             "additionalProperties": false,
             "properties": { "toCarry": { "type": "integer", "minimum": 0 } }
           }
+        }
+      },
+      "company show": {
+        "type": "object",
+        "$comment": "What getCompany() of the core answers, the same document as the MCP tool get_company.",
+        "required": ["company", "country_packs", "members", "your_capabilities", "locks", "default_accounts", "fiscal_years", "journals"],
+        "additionalProperties": false,
+        "properties": {
+          "company": { "type": "object" },
+          "country_packs": { "type": "array", "items": { "type": "object" } },
+          "members": { "type": "array", "items": { "type": "object" } },
+          "your_capabilities": { "type": "array", "items": { "type": "string" } },
+          "locks": { "type": "object" },
+          "default_accounts": { "type": "object" },
+          "fiscal_years": { "type": "array", "items": { "type": "object" } },
+          "journals": { "type": "array", "items": { "type": "object" } }
         }
       },
       "whoami": {

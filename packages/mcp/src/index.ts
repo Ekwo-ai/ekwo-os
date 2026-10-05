@@ -29,9 +29,16 @@ export {
   type HttpConnection,
   type HttpHandlerOptions,
 } from './http.js';
-export { SERVER_NAME, SERVER_VERSION, buildServer, type ServerOptions } from './server.js';
+export {
+  INSTRUCTIONS,
+  SERVER_NAME,
+  SERVER_VERSION,
+  buildServer,
+  instructionsFor,
+  type ServerOptions,
+} from './server.js';
 export { SCHEMA_MIN, assertSchemaSupported, installedSchemaVersion } from './schema.js';
-export { serverFromEnvironment, type Started } from './start.js';
+export { serverFromEnvironment, shouldInviteToRegister, type Started } from './start.js';
 export { isMissingConfiguration, unconfiguredBackend } from './unconfigured.js';
 export * as readTools from './tools/read.js';
 export * as writeTools from './tools/write.js';

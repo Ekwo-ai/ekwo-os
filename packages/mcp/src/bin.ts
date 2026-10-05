@@ -61,6 +61,11 @@ For a self-hosted database, without PostgREST in front of it:
   EKWO_ACT_AS_USER_ID     the auth.users id this server acts for — required,
                           because a database connection is nobody
 
+Optional:
+
+  EKWO_NO_REGISTER_INVITE 1 leaves the invitation to register out of the
+                          instructions of an unregistered installation
+
 Row level security applies either way. This server has no privileges of its
 own and refuses a service_role key.
 

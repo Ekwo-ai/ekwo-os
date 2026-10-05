@@ -4,6 +4,7 @@
  *
  *   ekwo company new <name> --country <cc>      create a company, in its own country
  *   ekwo company list                           the companies this installation holds
+ *   ekwo company show                           the company in use, read as yourself
  *   ekwo company export <company> --out <dir>   write the archive of one company
  *   ekwo company import <dir>                   take an archive into this installation
  *
@@ -43,6 +44,8 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { boolFlag, numberFlag, rejectUnknownFlags, stringFlag, UsageError, type ParsedArgs } from '../args.js';
+import { getCompany, type Row } from '@ekwo-ai/core';
+import { BOOKS_FLAGS, openBooks, type BooksDeps } from '../books.js';
 import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
 import { setResult } from '../output.js';
 import { isInteractive } from '../prompt.js';
@@ -88,9 +91,12 @@ export interface ArchiveManifest {
   [key: string]: unknown;
 }
 
-export async function companyCommand(args: ParsedArgs, deps: CommandDeps = {}): Promise<number> {
-  rejectUnknownFlags(args, COMPANY_FLAGS);
+export async function companyCommand(args: ParsedArgs, deps: CommandDeps & BooksDeps = {}): Promise<number> {
   const action = args.positional[0];
+  // The one verb of this command that acts as a person rather than as the
+  // installer: it signs in, and takes no connection string.
+  if (action === 'show') return showCommand(args, deps);
+  rejectUnknownFlags(args, COMPANY_FLAGS);
 
   if (action === undefined) throw new UsageError(`name a subcommand\n${usage()}`);
   if (action === 'help') {
@@ -113,6 +119,67 @@ export async function companyCommand(args: ParsedArgs, deps: CommandDeps = {}): 
   } finally {
     await db.close();
   }
+}
+
+// ---------------------------------------------------------------------- show
+
+/**
+ * The company in use, before anything is booked in it: its financial years and
+ * whether each is closed, its lock dates, its journals, the accounts that play
+ * the receivable, payable and suspense roles, and what you may do there.
+ *
+ * `getCompany()` of the core, which the MCP tool `get_company` calls too, so
+ * the two answer the same document.
+ */
+async function showCommand(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, BOOKS_FLAGS);
+  if (args.positional.length > 1) {
+    throw new UsageError('usage: ekwo company show [--company <name|id>] — the company in use, or the one named');
+  }
+  const { backend, company } = await openBooks(args, deps);
+  const result = (await getCompany(backend, { company_id: company.id })) as {
+    company: Row;
+    locks: { lock_date: unknown; tax_lock_date: unknown };
+    fiscal_years: Row[];
+    journals: Row[];
+    default_accounts: Record<string, { code?: unknown; name?: unknown } | null>;
+    your_capabilities: string[];
+  };
+  setResult(result);
+
+  const text = (value: unknown): string => (value === null || value === undefined ? '—' : String(value));
+  heading(company.name);
+  pairs([
+    ['country', text(result.company['country'])],
+    ['currency', text(result.company['currency_code'])],
+    ['lock date', text(result.locks.lock_date)],
+    ['tax lock date', text(result.locks.tax_lock_date)],
+  ]);
+  heading('Financial years');
+  if (result.fiscal_years.length === 0) note(dim('None open yet.'));
+  else {
+    table(
+      [{ title: 'name' }, { title: 'from' }, { title: 'to' }, { title: 'state' }],
+      result.fiscal_years.map((y) => [
+        text(y['name']), text(y['start_date']), text(y['end_date']), y['is_closed'] === true ? 'closed' : 'open',
+      ]),
+    );
+  }
+  heading('Journals');
+  table(
+    [{ title: 'code' }, { title: 'name' }, { title: 'type' }],
+    result.journals.map((j) => [text(j['code']), text(j['name']), text(j['journal_type'])]),
+  );
+  heading('Accounts by role');
+  pairs(
+    Object.entries(result.default_accounts).map(([role, account]): [string, string] => [
+      role.replace(/_/g, ' '),
+      account === null ? '—' : `${text(account.code)} ${text(account.name)}`,
+    ]),
+  );
+  line();
+  note(dim(`What you may do here: ${result.your_capabilities.join(', ') || 'nothing'}.`));
+  return 0;
 }
 
 // ----------------------------------------------------------------------- new
@@ -538,6 +605,10 @@ function usage(): string {
                                               country pack copied in, its first financial year
                                               opened, the administrator its first owner.
   ekwo company list                           The companies this installation holds.
+  ekwo company show                           The company in use, read as yourself after
+                                              ekwo login: its financial years, lock dates,
+                                              journals and accounts by role. --company names
+                                              another for this one command.
   ekwo company export <company> --out <dir>   Write the archive of one company: manifest.json
                                               and one data/<table>.jsonl per table.
   ekwo company import <dir>                   Take an archive into this installation, whole or

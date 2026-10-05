@@ -128,6 +128,7 @@ alongside the server; the recommended route needs no driver at all.
 | `EKWO_ACCESS_TOKEN` | A session already in hand, instead of the two above |
 | `EKWO_DB_URL` | A direct Postgres connection, for a self-hosted installation |
 | `EKWO_ACT_AS_USER_ID` | Required with `EKWO_DB_URL`: the `auth.users` id to act for |
+| `EKWO_NO_REGISTER_INVITE` | Optional. `1` leaves the invitation to register out of the instructions |
 
 ### Started with nothing set
 
@@ -320,6 +321,25 @@ declaration box each of its postings feeds.
 **Prompts.** `close_month` walks the month-end checklist — drafts, unmatched
 bank lines, the balance, the VAT, what is still open. `prepare_vat_return`
 pulls the boxes and ties them back to the ledger before anything is filed.
+
+## What an agent reads first
+
+The instructions of the handshake are a first session in five steps:
+`list_companies`, then `get_company` for the financial years and the lock
+dates, then `list_accounts` and the taxes resource for the codes a line names,
+then `search_contacts` and `create_document`, and `post_document` once the user
+agrees. They say how to read `vat_return`, how a posted document or entry is
+corrected (`cancel_document`, `reverse_entry`), and that a refusal comes with
+its next step. The descriptions of those tools each name the tool to call next.
+[`docs/agents.md`](../../docs/agents.md) is the same session for the person
+setting the agent up, with the command line beside it.
+
+On an installation that is not registered with Ekwo, the instructions carry
+one more line: an invitation the agent may relay to the person once, at a
+natural pause, with what registering gives and the command. The `status` tool
+carries it as the field `registration`. Registering is optional and changes
+nothing about what this server does; `EKWO_NO_REGISTER_INVITE=1` in the
+server's environment leaves the line out, and the hosted server never adds it.
 
 ## Conventions
 

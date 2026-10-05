@@ -24,6 +24,7 @@ import { statusCommand } from './commands/status.js';
 import { useCommand, whoamiCommand } from './commands/whoami.js';
 import type { BooksDeps } from './books.js';
 import { askedForJson, commandLabel, execute, reportFailure, setResult } from './output.js';
+import { REGISTER_INVITE_ENV } from '@ekwo-ai/core';
 import { bold, cyan, dim, line } from './ui.js';
 
 export function version(): string {
@@ -89,10 +90,12 @@ ${bold('Commands')}
               seed is still the exact output of the pack, and move a company
               onto the version an installation holds.
   ${cyan('company')}     new <name> --country <cc> — one more company, in its own country;
-              list — the companies held here. export and import: one company
+              list — the companies held here; show — the one in use, read as
+              yourself: financial years, lock dates, journals. export and import: one company
               leaves an installation with its books, as an archive anybody can
               read, and arrives in another one alive.
-  ${cyan('register')}    Opt in to security advisories and release notes. Never required.
+  ${cyan('register')}    Opt in to security advisories and release notes. Optional:
+              everything works the same without it.
   ${cyan('unregister')}  Opt back out. Clears the address and the date.
   ${cyan('demo')}        Load the sample company. Fictional data; ask for it explicitly.
 
@@ -102,6 +105,22 @@ ${bold('Commands')}
   ${cyan('use')}         Pick the company the next commands run on.
   ${cyan('whoami')}      Who you are on which instance, the companies you can see, and
               what you may do on the one in use.
+
+${bold('A first session')} ${dim('(a person, or an agent with a shell: add --json to any of them)')}
+  1. ${cyan('ekwo login')}                  Sign in as yourself. The session is kept in your
+                                 configuration directory, never in a repository.
+  2. ${cyan('ekwo whoami')}                 The companies you can reach and your role on each;
+                                 then ${cyan('ekwo use "<company>"')} and ${cyan('ekwo company show')}:
+                                 its financial years, lock dates and journals.
+  3. ${cyan('ekwo contact list')}, ${cyan('ekwo doc list')}
+                                 What the books already hold, before adding to them.
+  4. ${cyan('ekwo doc new … --ref <yours>')}, then ${cyan('ekwo post <doc> --dry-run')}
+                                 A draft, and the entry it would write. ${cyan('ekwo post <doc>')}
+                                 books it once the person has seen it and agreed.
+  5. ${cyan('ekwo cancel <doc>')}, ${cyan('ekwo reverse <entry>')}
+                                 How a posted document or entry is corrected.
+  A refusal ends on exit code 3 with its name (period_locked, …) and the
+  database's sentence, which says what to do next.
 
 ${bold('Connecting')} ${dim('(every command)')}
   --db-url <url>            Postgres connection string. Supabase dashboard →
@@ -241,6 +260,10 @@ ${bold('ekwo company')}
                             --currency and --fiscal-year as for init.
   list                      The companies this installation holds, with their
                             country, currency, language, chart and pack.
+  show                      The company in use, as the person signed in: its
+                            financial years and whether each is closed, its lock
+                            dates, journals and accounts by role. What the MCP
+                            tool get_company answers.
   export <company> --out <dir>
                             Write the archive of one company: manifest.json and
                             one data/<table>.jsonl per table. Read as a member
@@ -289,6 +312,8 @@ ${bold('Environment')}
   EKWO_CONFIG_DIR           Where profiles and sessions are kept. Defaults to
                             $XDG_CONFIG_HOME/ekwo, else ~/.config/ekwo.
   EKWO_REGISTRY_URL         Where registrations are announced.
+  ${REGISTER_INVITE_ENV}   Set to 1 to hide the invitation to register that
+                            init and status show on an unregistered installation.
   NO_COLOR                  Plain output.
 
 ${bold('What this CLI does not do')}
