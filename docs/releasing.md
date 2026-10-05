@@ -333,7 +333,13 @@ A package that has never been published has no settings page yet: publish its
 first version by hand once (`npm login --auth-type=web`, then
 `npm run release:publish -- --for-real` on the tag), then add the trusted
 publisher. Trusted publishing needs npm 11.5.1 or later and Node 22.14 or later
-on the runner; the workflow pins `npm@11.13.0`.
+on the runner; the workflow pins `npm@11.21.0`.
+
+The trusted publisher can also be set from a terminal, one package at a time:
+`npm trust github <name> --repo <owner>/<repo> --file release.yml --allow-publish`,
+signed in with `npm login --auth-type=web`. The registry now requires the
+relation to say what it allows, so it needs npm 11.21 or later: an older npm
+sends no permission and is answered `400 Bad Request`.
 
 ### Releasing
 
