@@ -28,8 +28,10 @@
 --      keep a posted document, its lines, a posted entry and its lines from
 --      moving are definer, run before row level security, and read the row a
 --      new value names before anything said it was the caller's. They now look
---      for it in the row's own company, and step aside for a row headed for a
---      company the caller may not know of, which row level security refuses.
+--      for it in the row's own company, and a person or a key writing a row
+--      into a company they may not know of is refused before anything is
+--      read, with one answer whatever the company. Everybody else — the
+--      backend role, the owner, a scheduled job — meets every guard as before.
 --   4. **A preference named any company.** `user_preferences` refused a
 --      company that does not exist by its foreign key, and so said which ones
 --      do. A company the caller may not know of is now refused first, with
@@ -39,7 +41,13 @@
 --      socle is now a composite key with `company_id` (the modules do the same
 --      in their own migrations), so a row only ever names a row of its own
 --      company — and another company cannot plant a reference that keeps one
---      of yours from being deleted.
+--      of yours from being deleted. `companies` is one of those tables: its
+--      own id is its company, and its default accounts and journals name rows
+--      of that company only. A row written before that names a row of another
+--      company stops the migration before it changes anything, with every
+--      such row counted by table and column. A deposit of a declaration,
+--      which reaches its company through the declaration, names files of that
+--      company only.
 --   6. **Two keys on one column.** Where a column carried both its old key
 --      and the composite one, an id of another company failed the second and
 --      an id of nobody the first: two constraint names for two facts. The
@@ -59,6 +67,120 @@
 -- by its composite key, and the error a reference to nothing gives names
 -- that key.
 -- ---------------------------------------------------------------------------
+
+-- ---------------------------------------------------------------------------
+-- 0. Before anything: no row names a row of another company already
+-- ---------------------------------------------------------------------------
+--
+-- Section 5 turns every reference by id alone into a composite key with the
+-- company, and validates it over every row. A row written before this that
+-- names a row of another company would fail that key half-way through, with
+-- the bare words of a foreign key and nothing to say which rows. So the
+-- migration first asks, of every key it is about to create, which rows would
+-- fail it — one anti-join per key, on the index of the row it names — and
+-- says all of them at once, by table, column and count, before it changes
+-- anything. It quotes no value: the operator reads the rows themselves.
+
+-- The column a table names its company by: `company_id`, or, for `companies`
+-- itself, its own id. Null for a table that holds no company's rows.
+create or replace function company_column(p_table regclass)
+returns text
+language sql
+stable
+set search_path = public, pg_temp
+as $$
+  select case
+           when p_table = 'public.companies'::regclass then 'id'
+           when exists (select 1 from pg_attribute a
+                         where a.attrelid = p_table and a.attname = 'company_id' and not a.attisdropped)
+             then 'company_id'
+         end;
+$$;
+
+comment on function company_column(regclass) is
+  'The column a table names its company by: company_id, or id for companies itself, whose own id is its company. Null for a table that holds no company''s rows. For migrations (decision 0065).';
+
+-- Every reference of a schema, by one uuid column, from a table that holds a
+-- company's rows to another table that does: the keys section 5 makes
+-- composite. Read from the catalogue, so a table added later is one of them
+-- without anybody listing it.
+create or replace function company_references_by_id(p_schema text)
+returns table (conname text, conrelid regclass, confrelid regclass, confdeltype "char",
+               condeferrable boolean, condeferred boolean,
+               col text, fcol text, ccol text, relname text, target_name text,
+               source text, target text)
+language sql
+stable
+set search_path = public, pg_temp
+as $$
+  select f.conname::text, f.conrelid::regclass, f.confrelid::regclass, f.confdeltype,
+         f.condeferrable, f.condeferred,
+         a.attname::text, fa.attname::text, company_column(f.conrelid),
+         rel.relname::text, trel.relname::text,
+         format('%I.%I', n.nspname, rel.relname), format('%I.%I', tn.nspname, trel.relname)
+    from pg_constraint f
+    join pg_class rel on rel.oid = f.conrelid
+    join pg_namespace n on n.oid = rel.relnamespace
+    join pg_class trel on trel.oid = f.confrelid
+    join pg_namespace tn on tn.oid = trel.relnamespace
+    join pg_attribute a on a.attrelid = f.conrelid and a.attnum = f.conkey[1]
+    join pg_attribute fa on fa.attrelid = f.confrelid and fa.attnum = f.confkey[1]
+   where f.contype = 'f'
+     and cardinality(f.conkey) = 1
+     and n.nspname = p_schema
+     and f.confrelid <> 'public.companies'::regclass
+     and a.atttypid = 'uuid'::regtype
+     and company_column(f.conrelid) is not null
+     and a.attname::text <> company_column(f.conrelid)
+     and company_column(f.confrelid) = 'company_id'
+   order by rel.relname, a.attname, f.conname;
+$$;
+
+comment on function company_references_by_id(text) is
+  'Every foreign key of a schema by one uuid column from a table that holds a company''s rows (company_column()) to another table that does: what scope_references_to_company() makes composite. For migrations (decision 0065).';
+
+create or replace function assert_references_within_company(p_schema text)
+returns void
+language plpgsql
+set search_path = public, pg_temp
+as $$
+declare
+  r       record;
+  v_rows  bigint;
+  v_total bigint := 0;
+  v_found text[] := '{}';
+begin
+  for r in select * from company_references_by_id(p_schema) loop
+    execute format(
+      'select count(*) from %s c
+        where c.%I is not null and c.%I is not null
+          and not exists (select 1 from %s t where t.%I = c.%I and t.company_id = c.%I)',
+      r.conrelid, r.col, r.ccol, r.confrelid, r.fcol, r.col, r.ccol)
+      into v_rows;
+    if v_rows > 0 then
+      v_total := v_total + v_rows;
+      v_found := v_found || format('%s.%s names %s of another company in %s row%s',
+                                   r.source, r.col, r.target, v_rows, case when v_rows = 1 then '' else 's' end);
+    end if;
+  end loop;
+
+  if cardinality(v_found) > 0 then
+    raise exception 'reference_across_companies: % row% of schema % name a row of another company, which a key with the company refuses from this migration on (decision 0065): %. Nothing was changed.',
+      v_total, case when v_total = 1 then '' else 's' end, p_schema, array_to_string(v_found, '; ')
+      using errcode = '23503',
+            hint = 'Point each of these columns at a row of its own row''s company, or empty it, then run the migration again. A row names the row of the other table whose id it holds and whose company_id differs from its own.';
+  end if;
+end;
+$$;
+
+comment on function assert_references_within_company(text) is
+  'Raises reference_across_companies, naming every table and column and how many rows, when a row of the schema names a row of another company by a key scope_references_to_company() is about to make composite. One anti-join per key, run before anything changes. For migrations (decision 0065).';
+
+do $$
+begin
+  perform assert_references_within_company('public');
+end;
+$$;
 
 -- ---------------------------------------------------------------------------
 -- 1. The trail counts nothing a reader may not read
@@ -313,6 +435,36 @@ create trigger instance_admins_keep_one
 -- ---------------------------------------------------------------------------
 --
 -- Bodies unchanged but for the lines that say why.
+--
+-- A guard reads, as definer, the rows a new value names. It reads them in the
+-- row's own company; and when that company is one the writer may not know of,
+-- it reads nothing at all, because what it would then quote or compare is
+-- another company's. Stepping aside there and leaving the refusal to row level
+-- security would also let past everybody whom row level security does not
+-- stop: on a shared installation the backend role, the owner and a scheduled
+-- job may know of no company, and they would move posted rows unguarded. So
+-- the writer who may not know of the company is refused, by name and before
+-- anything is read — the same words for a company that exists and one that
+-- does not, since neither is one they may know of — and only a person or a
+-- key is ever that writer. Everybody else meets every guard.
+
+create or replace function assert_writes_into_known_company(p_company_id uuid)
+returns void
+language plpgsql
+stable
+set search_path = public, pg_temp
+as $$
+begin
+  if (auth.uid() is not null or nullif(current_setting('ekwo.api_key', true), '') is not null)
+     and not may_know_of_company(p_company_id) then
+    raise exception 'not_allowed: this row is written into no company you may write in'
+      using errcode = '42501';
+  end if;
+end;
+$$;
+
+comment on function assert_writes_into_known_company(uuid) is
+  'Refuses a person or a machine key who writes a row into a company they may not know of (may_know_of_company()), with one answer whether the company exists or not. Called by the definer guards before they read anything for that row. The backend role, the owner and the installer are neither, and pass: the guard then runs for them in full (decision 0065).';
 
 create or replace function documents_guard_posted()
 returns trigger
@@ -355,10 +507,10 @@ begin
     return new;
   end if;
 
-  -- A row moved to a company the caller may not know of is refused by row
-  -- level security, after this trigger; nothing below is read for it.
-  if tg_op = 'UPDATE' and not may_know_of_company(new.company_id) then
-    return new;
+  -- A row moved into a company the writer may not know of: nothing below is
+  -- read for it.
+  if tg_op = 'UPDATE' then
+    perform assert_writes_into_known_company(new.company_id);
   end if;
 
   if tg_op = 'DELETE' then
@@ -538,13 +690,13 @@ declare
   v_type    doc_type;
   v_moved   text[];
 begin
-  -- A line written into a company the caller may not know of is refused by
-  -- row level security, after this trigger; nothing is read for it. And the
-  -- document a line names is looked for in the line's own company: one of
-  -- another company is, to this trigger, one that does not exist, and the
-  -- foreign key refuses it as it refuses an id nobody holds.
-  if tg_op <> 'DELETE' and not may_know_of_company(new.company_id) then
-    return new;
+  -- A line written into a company the writer may not know of: nothing is
+  -- read for it. And the document a line names is looked for in the line's
+  -- own company: one of another company is, to this trigger, one that does
+  -- not exist, and the foreign key refuses it as it refuses an id nobody
+  -- holds.
+  if tg_op <> 'DELETE' then
+    perform assert_writes_into_known_company(new.company_id);
   end if;
 
   select d.state, d.number, d.doc_type into v_state, v_number, v_type
@@ -624,10 +776,10 @@ begin
     return new;
   end if;
 
-  -- An entry moved to a company the caller may not know of is refused by row
-  -- level security, after this trigger; nothing below is read for it.
-  if tg_op = 'UPDATE' and not may_know_of_company(new.company_id) then
-    return new;
+  -- An entry moved into a company the writer may not know of: nothing below
+  -- is read for it.
+  if tg_op = 'UPDATE' then
+    perform assert_writes_into_known_company(new.company_id);
   end if;
 
   if old.state = 'draft' then
@@ -742,11 +894,11 @@ declare
   v_number text;
   v_moved  text[];
 begin
-  -- A line written into a company the caller may not know of is refused by
-  -- row level security, after this trigger; nothing is read for it. The entry
-  -- a line names is looked for in the line's own company.
-  if tg_op <> 'DELETE' and not may_know_of_company(new.company_id) then
-    return new;
+  -- A line written into a company the writer may not know of: nothing is
+  -- read for it. The entry a line names is looked for in the line's own
+  -- company.
+  if tg_op <> 'DELETE' then
+    perform assert_writes_into_known_company(new.company_id);
   end if;
 
   -- The entry the line is leaving, where it is leaving one: a line does not
@@ -863,28 +1015,13 @@ declare
   v_action    text;
   v_done      integer := 0;
 begin
-  for r in
-    select f.conname, f.conrelid, f.confrelid, f.confdeltype, f.condeferrable, f.condeferred,
-           a.attname::text as col, fa.attname::text as fcol,
-           rel.relname::text as relname, trel.relname::text as target_name
-      from pg_constraint f
-      join pg_class rel on rel.oid = f.conrelid
-      join pg_namespace n on n.oid = rel.relnamespace
-      join pg_class trel on trel.oid = f.confrelid
-      join pg_attribute a on a.attrelid = f.conrelid and a.attnum = f.conkey[1]
-      join pg_attribute fa on fa.attrelid = f.confrelid and fa.attnum = f.confkey[1]
-     where f.contype = 'f'
-       and cardinality(f.conkey) = 1
-       and n.nspname = p_schema
-       and f.confrelid <> 'public.companies'::regclass
-       and a.attname <> 'company_id'
-       and a.atttypid = 'uuid'::regtype
-       and exists (select 1 from pg_attribute c
-                    where c.attrelid = f.conrelid and c.attname = 'company_id' and not c.attisdropped)
-       and exists (select 1 from pg_attribute c
-                    where c.attrelid = f.confrelid and c.attname = 'company_id' and not c.attisdropped)
-     order by rel.relname, a.attname, f.conname
-  loop
+  -- A row that would fail one of the keys below is said now, with every other
+  -- one, before anything changes (section 0).
+  perform assert_references_within_company(p_schema);
+
+  -- `ccol` is the column the referencing table names its company by:
+  -- `company_id`, or `id` for `companies` itself.
+  for r in select * from company_references_by_id(p_schema) loop
     -- The table it points at answers to its key and the company together.
     if not exists (
       select 1 from pg_index i
@@ -894,7 +1031,7 @@ begin
                 from pg_attribute x where x.attrelid = i.indrelid and x.attnum = any (i.indkey))
              = (select array_agg(v order by v) from unnest(array[r.fcol, 'company_id']) v)) then
       execute format('create unique index %I on %s (%I, company_id)',
-                     left(r.target_name || '_' || r.fcol || '_company_idx', 63), r.confrelid::regclass, r.fcol);
+                     left(r.target_name || '_' || r.fcol || '_company_idx', 63), r.confrelid, r.fcol);
     end if;
 
     -- The composite key the column may already have beside this one.
@@ -909,7 +1046,7 @@ begin
        and exists (select 1 from unnest(c.conkey, c.confkey) k(a, b)
                      join pg_attribute x on x.attrelid = c.conrelid and x.attnum = k.a
                      join pg_attribute y on y.attrelid = c.confrelid and y.attnum = k.b
-                    where x.attname = 'company_id' and y.attname = 'company_id')
+                    where x.attname = r.ccol and y.attname = 'company_id')
      limit 1;
 
     -- What deleting the row it names did — cascade, or empty the column — the
@@ -925,13 +1062,13 @@ begin
     if v_composite.conname is null
        or (r.confdeltype in ('c', 'n', 'd') and v_composite.confdeltype <> r.confdeltype) then
       if v_composite.conname is not null then
-        execute format('alter table %s drop constraint %I', r.conrelid::regclass, v_composite.conname);
+        execute format('alter table %s drop constraint %I', r.conrelid, v_composite.conname);
         v_name := v_composite.conname;
       else
         v_name := left(r.relname || '_' || r.col || '_company_id_fkey', 63);
       end if;
-      execute format('alter table %s add constraint %I foreign key (%I, company_id) references %s (%I, company_id) %s%s',
-                     r.conrelid::regclass, v_name, r.col, r.confrelid::regclass, r.fcol, v_action,
+      execute format('alter table %s add constraint %I foreign key (%I, %I) references %s (%I, company_id) %s%s',
+                     r.conrelid, v_name, r.col, r.ccol, r.confrelid, r.fcol, v_action,
                      case when not r.condeferrable then ''
                           when r.condeferred then ' deferrable initially deferred'
                           else ' deferrable initially immediate' end);
@@ -945,12 +1082,12 @@ begin
          and (select array_agg(x.attname::text order by k.n)
                 from unnest((i.indkey::smallint[])[0:1]) with ordinality k(attnum, n)
                 join pg_attribute x on x.attrelid = i.indrelid and x.attnum = k.attnum)
-             = array[r.col, 'company_id']) then
-      execute format('create index %I on %s (%I, company_id)',
-                     left(r.relname || '_' || r.col || '_company_idx', 63), r.conrelid::regclass, r.col);
+             = array[r.col, r.ccol]) then
+      execute format('create index %I on %s (%I, %I)',
+                     left(r.relname || '_' || r.col || '_company_idx', 63), r.conrelid, r.col, r.ccol);
     end if;
 
-    execute format('alter table %s drop constraint %I', r.conrelid::regclass, r.conname);
+    execute format('alter table %s drop constraint %I', r.conrelid, r.conname);
     v_done := v_done + 1;
   end loop;
 
@@ -963,7 +1100,7 @@ begin
   -- own company only, so what was unique stays unique.
   for r in
     select i.indexrelid, i.indrelid, i.indisprimary, c.relname::text as relname,
-           con.conname, con.contype,
+           con.conname, con.contype, company_column(i.indrelid) as ccol,
            pg_get_expr(i.indpred, i.indrelid) as predicate,
            (select string_agg(format('%I', a.attname), ', ' order by k.n)
               from unnest(i.indkey::smallint[]) with ordinality k(attnum, n)
@@ -974,32 +1111,31 @@ begin
       left join pg_constraint con on con.conindid = i.indexrelid and con.conrelid = i.indrelid
      where n.nspname = p_schema
        and i.indisunique and i.indexprs is null
-       and exists (select 1 from pg_attribute a
-                    where a.attrelid = i.indrelid and a.attname = 'company_id' and not a.attisdropped)
+       and company_column(i.indrelid) is not null
        and not exists (select 1 from pg_attribute a
-                        where a.attrelid = i.indrelid and a.attnum = any (i.indkey) and a.attname = 'company_id')
+                        where a.attrelid = i.indrelid and a.attnum = any (i.indkey)
+                          and a.attname::text = company_column(i.indrelid))
        and exists (select 1
                      from pg_constraint f
                      join pg_attribute a on a.attrelid = f.conrelid and a.attnum = any (f.conkey)
                     where f.contype = 'f' and f.conrelid = i.indrelid
                       and f.confrelid <> 'public.companies'::regclass
-                      and a.attname <> 'company_id'
+                      and a.attname::text <> company_column(i.indrelid)
                       and a.attnum = any (i.indkey)
-                      and exists (select 1 from pg_attribute t
-                                   where t.attrelid = f.confrelid and t.attname = 'company_id' and not t.attisdropped))
+                      and company_column(f.confrelid) = 'company_id')
      order by c.relname, i.indexrelid::regclass::text
   loop
     if r.contype = 'p' then
-      execute format('alter table %s drop constraint %I, add constraint %I primary key (%s, company_id)',
-                     r.indrelid::regclass, r.conname, r.conname, r.columns);
+      execute format('alter table %s drop constraint %I, add constraint %I primary key (%s, %I)',
+                     r.indrelid::regclass, r.conname, r.conname, r.columns, r.ccol);
     elsif r.contype = 'u' then
-      execute format('alter table %s drop constraint %I, add constraint %I unique (%s, company_id)',
-                     r.indrelid::regclass, r.conname, r.conname, r.columns);
+      execute format('alter table %s drop constraint %I, add constraint %I unique (%s, %I)',
+                     r.indrelid::regclass, r.conname, r.conname, r.columns, r.ccol);
     else
       v_name := (select relname::text from pg_class where oid = r.indexrelid);
       execute format('drop index %s', r.indexrelid::regclass);
-      execute format('create unique index %I on %s (%s, company_id)%s',
-                     v_name, r.indrelid::regclass, r.columns,
+      execute format('create unique index %I on %s (%s, %I)%s',
+                     v_name, r.indrelid::regclass, r.columns, r.ccol,
                      case when r.predicate is null then '' else ' where ' || r.predicate end);
     end if;
     v_done := v_done + 1;
@@ -1009,7 +1145,7 @@ end;
 $$;
 
 comment on function scope_references_to_company(text) is
-  'Makes every reference of a schema from a company''s table to another company''s table by id alone a composite key with company_id, keeping its delete action, and drops the single-column key — where a composite one stood beside it too, the two failed with different names for an id of another company and an id of nobody. Then adds company_id to every unique key of those tables that holds such a reference and not the company, which a row naming another company''s row collided with before any foreign key was asked (decision 0065). Returns how many it changed. For migrations, the socle''s and the modules''; executable by nobody else.';
+  'Makes every reference of a schema from a company''s table to another company''s table by id alone a composite key with the company — company_id, or the id of companies itself (company_column()) — keeping its delete action, and drops the single-column key: where a composite one stood beside it too, the two failed with different names for an id of another company and an id of nobody. Then adds the company to every unique key of those tables that holds such a reference and not the company, which a row naming another company''s row collided with before any foreign key was asked (decision 0065). Asks assert_references_within_company() first, so a row that would fail a new key stops it before anything changes. Returns how many it changed. For migrations, the socle''s and the modules''; executable by nobody else.';
 
 do $$
 begin
@@ -1336,6 +1472,507 @@ begin
 end;
 $function$;
 
+-- `import_company()` (`20261005160900`) writes a reference to a table that
+-- loads later in a second pass, and finds those references from the foreign
+-- keys, less `company_id`. The keys of `companies` now hold its own id beside
+-- the account or journal they name; that column is the company itself, there
+-- from the first pass. Unchanged but for that line.
+create or replace function import_company(p_archive jsonb, p_owner_user_id uuid default null)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  v_archive   jsonb;
+  v_manifest  jsonb;
+  v_tables    jsonb;
+  v_company   uuid;
+  v_owner     uuid := coalesce(p_owner_user_id, auth.uid());
+  v_item      jsonb;
+  v_problem   record;
+  v_table     record;
+  v_class     regclass;
+  v_rows      jsonb;
+  v_count     bigint;
+  v_checksum  text;
+  v_values    text;
+  v_columns   text[];
+  v_deferred  text[];
+  v_unknown   text;
+  v_select    text;
+  v_silenced  regclass[] := '{}';
+  v_second    jsonb := '[]'::jsonb;
+  v_were_off  jsonb := '[]'::jsonb;
+  v_pass      jsonb;
+  v_fk        record;
+  v_total     bigint := 0;
+  v_name      text;
+  v_found     text;
+begin
+  -- The guard, first and in the open: the two callers who may create a company
+  -- here, and nobody else. A definer function that checks nobody is how two
+  -- doors were found open on 18 September.
+  --
+  -- `is not true`, not `not`: a helper that answers NULL turns `if not … and
+  -- not …` into an `if NULL`, which does not raise. `is_installer()` did, until
+  -- `20260918140000`, for the backend role through the API. The guard is
+  -- written so that it holds whatever the helpers answer.
+  if is_installer() is not true and is_instance_admin() is not true then
+    raise exception 'not_instance_admin: taking a company into this installation is an instance-level act'
+      using errcode = '42501';
+  end if;
+
+  -- A table a module has renamed since the archive was written is read under
+  -- the name it has today; nothing else of the archive changes.
+  v_archive  := archive_under_current_names(p_archive);
+  v_manifest := v_archive -> 'manifest';
+  v_tables   := coalesce(v_archive -> 'tables', '{}'::jsonb);
+
+  if v_manifest is null or v_manifest ->> 'format' is distinct from 'ekwo.company-archive' then
+    raise exception 'not_an_archive: this document does not say it is an ekwo.company-archive';
+  end if;
+  if v_manifest ->> 'format_version' is distinct from '1' then
+    raise exception 'unknown_archive_version: this installation reads version 1 of the format, and the archive says %',
+      coalesce(v_manifest ->> 'format_version', 'nothing');
+  end if;
+  if not coalesce(version_at_least(ekwo_schema_version(), v_manifest ->> 'socle_version'), false) then
+    raise exception 'socle_too_old: the archive was written by socle % and this installation is %. Run `ekwo migrate` first.',
+      v_manifest ->> 'socle_version', ekwo_schema_version()
+      using errcode = '55006';
+  end if;
+
+  -- What the company needs is read from its rows as well as from the manifest:
+  -- the manifest is a summary somebody could have edited, the rows are what
+  -- will be here afterwards.
+  for v_item in
+    select jsonb_build_object('country', e ->> 'country', 'version', e ->> 'version')
+      from jsonb_array_elements(coalesce(v_tables -> 'public.company_packs', '[]'::jsonb)) e
+    union
+    select jsonb_build_object('country', m ->> 'country', 'version', m ->> 'version')
+      from jsonb_array_elements(coalesce(v_manifest -> 'packs', '[]'::jsonb)) m
+  loop
+    select p.version into v_found from country_packs p where p.country = v_item ->> 'country';
+    if not found then
+      raise exception 'pack_missing: the company holds the % pack and this installation does not', v_item ->> 'country'
+        using errcode = '55006';
+    end if;
+    if not coalesce(version_at_least(v_found, v_item ->> 'version'), false) then
+      raise exception 'pack_too_old: the company is on version % of the % pack and this installation holds %',
+        v_item ->> 'version', v_item ->> 'country', v_found
+        using errcode = '55006';
+    end if;
+  end loop;
+
+  for v_item in
+    select jsonb_build_object('code', m ->> 'code', 'version', m ->> 'version')
+      from jsonb_array_elements(coalesce(v_manifest -> 'modules', '[]'::jsonb)) m
+    union
+    select jsonb_build_object('code', e ->> 'module_code', 'version', null)
+      from jsonb_array_elements(coalesce(v_tables -> 'public.company_modules', '[]'::jsonb)) e
+  loop
+    select m.version into v_found from modules m where m.code = v_item ->> 'code';
+    if not found then
+      raise exception 'module_missing: the company uses the % module and this installation does not carry it', v_item ->> 'code'
+        using errcode = '55006';
+    end if;
+    if v_item ->> 'version' is not null and not version_at_least(v_found, v_item ->> 'version') then
+      raise exception 'module_too_old: the company used version % of the % module and this installation holds %',
+        v_item ->> 'version', v_item ->> 'code', v_found
+        using errcode = '55006';
+    end if;
+  end loop;
+
+  v_company := (v_manifest #>> '{company,id}')::uuid;
+  if v_company is null then
+    raise exception 'not_an_archive: the manifest names no company';
+  end if;
+  -- Identifiers are kept, so a company is here or it is not. This is also what
+  -- a second run of the same import meets.
+  if exists (select 1 from companies c where c.id = v_company) then
+    raise exception 'company_already_here: % is a company of this installation. An import never merges: a company arrives whole, once.', v_company
+      using errcode = '23505';
+  end if;
+
+  select * into v_problem from company_archive_unclassified() limit 1;
+  if found then
+    raise exception 'unclassified_table: %.% % — this installation cannot say what an archive is made of',
+      v_problem.table_schema, v_problem.table_name, v_problem.problem
+      using errcode = '55006';
+  end if;
+
+  -- The manifest and the tables say the same thing, and every table is one
+  -- this installation exports itself.
+  for v_name in select jsonb_object_keys(v_tables) loop
+    if not exists (select 1 from jsonb_array_elements(v_manifest -> 'tables') m where m ->> 'name' = v_name) then
+      raise exception 'archive_corrupt: the archive carries rows of % and its manifest does not list it', v_name;
+    end if;
+  end loop;
+  for v_item in select jsonb_array_elements(coalesce(v_manifest -> 'tables', '[]'::jsonb)) loop
+    v_name := v_item ->> 'name';
+    if not exists (select 1 from company_archive_tables() t
+                    where t.table_schema || '.' || t.table_name = v_name and t.disposition = 'exported') then
+      raise exception 'unknown_table: the archive carries %, which this installation does not know as a table of a company', v_name
+        using errcode = '55006';
+    end if;
+    v_rows := coalesce(v_tables -> v_name, '[]'::jsonb);
+    -- Two checksums, and the manifest says which one this archive carries.
+    -- `values_sha256` is over the canonical form of the rows, which a reader
+    -- reproduces after parsing them; `sha256` is over the bytes the database
+    -- wrote, which is what `shasum` checks on the file and what an archive
+    -- from 0.8.0 or earlier carries alone. Whichever is checked, the answer to
+    -- a changed value is the same refusal.
+    select count(*),
+           encode(sha256(convert_to(coalesce(string_agg(x.r::text || E'\n', '' order by x.n), ''), 'UTF8')), 'hex'),
+           encode(sha256(convert_to(coalesce(string_agg(canonical_json(x.r)::text || E'\n', '' order by x.n), ''), 'UTF8')), 'hex')
+      into v_count, v_checksum, v_values
+      from jsonb_array_elements(v_rows) with ordinality as x(r, n);
+    if v_count is distinct from (v_item ->> 'rows')::bigint then
+      raise exception 'archive_corrupt: % does not match its manifest (% rows against %)',
+        v_name, v_count, v_item ->> 'rows';
+    end if;
+    if v_item ? 'values_sha256' then
+      if v_values is distinct from v_item ->> 'values_sha256' then
+        raise exception 'archive_corrupt: the values of % are not the ones its manifest was written for', v_name;
+      end if;
+    elsif v_checksum is distinct from v_item ->> 'sha256' then
+      raise exception 'archive_corrupt: % does not match its manifest (another checksum). An archive written before 0.9.0 carries a checksum of its bytes, so a reader that printed it again changed them — keep the archive as the database wrote it, or export it again.',
+        v_name;
+    end if;
+  end loop;
+
+  if jsonb_array_length(coalesce(v_tables -> 'public.companies', '[]'::jsonb)) <> 1 then
+    raise exception 'foreign_row: an archive holds one company, and this one holds % rows of public.companies',
+      jsonb_array_length(coalesce(v_tables -> 'public.companies', '[]'::jsonb));
+  end if;
+
+  -- An archive written before `entry_lines.declared_on` existed carries none.
+  -- The day is derived from the archive's own lines and entries, by the rule
+  -- the column stores, before anything is loaded; the checksums above were
+  -- read on the archive as it was written.
+  if jsonb_array_length(coalesce(v_tables -> 'public.entry_lines', '[]'::jsonb)) > 0
+     and not ((v_tables -> 'public.entry_lines' -> 0) ? 'declared_on') then
+    v_tables := jsonb_set(v_tables, array['public.entry_lines'], (
+      select jsonb_agg(x.l || jsonb_build_object('declared_on',
+                         declared_on_of((x.l ->> 'tax_point_date')::date, (e.v ->> 'entry_date')::date))
+                       order by x.n)
+        from jsonb_array_elements(v_tables -> 'public.entry_lines') with ordinality as x(l, n)
+        left join jsonb_array_elements(coalesce(v_tables -> 'public.entries', '[]'::jsonb)) as e(v)
+          on e.v ->> 'id' = x.l ->> 'entry_id'));
+  end if;
+
+  -- First pass: the rows, in the order the registry names.
+  for v_table in
+    select t.table_schema, t.table_name, t.load_order,
+           t.table_schema || '.' || t.table_name as name
+      from company_archive_tables() t
+     where t.disposition = 'exported'
+     order by t.load_order, t.table_schema, t.table_name
+  loop
+    v_rows := coalesce(v_tables -> v_table.name, '[]'::jsonb);
+    continue when jsonb_array_length(v_rows) = 0;
+    v_class := to_regclass(format('%I.%I', v_table.table_schema, v_table.table_name));
+    v_total := v_total + jsonb_array_length(v_rows);
+
+    -- A column this installation does not have is data it would drop in
+    -- silence. It refuses instead.
+    select k.key into v_unknown
+      from (select distinct jsonb_object_keys(e) as key from jsonb_array_elements(v_rows) e) k
+     where not exists (select 1 from pg_attribute a
+                        where a.attrelid = v_class and a.attname = k.key
+                          and a.attnum > 0 and not a.attisdropped)
+     limit 1;
+    if v_unknown is not null then
+      raise exception 'unknown_column: %.% is in the archive and not in this installation', v_table.name, v_unknown
+        using errcode = '55006';
+    end if;
+
+    -- Every row has the columns of the first. The list of columns written is
+    -- read from one row; a key that only a later row carries would be dropped
+    -- in silence, and one it lacks would be written as null over a default.
+    if exists (select 1 from jsonb_array_elements(v_rows) e
+                where (select array_agg(k order by k) from jsonb_object_keys(e) k)
+                      is distinct from
+                      (select array_agg(k order by k) from jsonb_object_keys(v_rows -> 0) k)) then
+      raise exception 'archive_corrupt: the rows of % do not all have the same columns', v_table.name;
+    end if;
+
+    -- Every row says which company it is of, and it is the one that arrives.
+    if v_table.name = 'public.companies' then
+      if jsonb_array_length(v_rows) <> 1 or (v_rows -> 0 ->> 'id') is distinct from v_company::text then
+        raise exception 'foreign_row: an archive holds one company, the one its manifest names';
+      end if;
+    elsif exists (select 1 from pg_attribute a
+                   where a.attrelid = v_class and a.attname = 'company_id' and not a.attisdropped) then
+      if exists (select 1 from jsonb_array_elements(v_rows) e
+                  where e ->> 'company_id' is distinct from v_company::text) then
+        raise exception 'foreign_row: % holds a row of another company than the one the archive names', v_table.name;
+      end if;
+    end if;
+
+    -- A reference to a table that loads later, or to its own table, waits for
+    -- the second pass. Derived from the foreign keys, so a new one needs no
+    -- line here; it has to be nullable, and a test says so before a user does.
+    select coalesce(array_agg(distinct a.attname), '{}') into v_deferred
+      from pg_constraint c
+      join unnest(c.conkey) as k(attnum) on true
+      join pg_attribute a on a.attrelid = c.conrelid and a.attnum = k.attnum
+      join pg_class rc on rc.oid = c.confrelid
+      join pg_namespace rn on rn.oid = rc.relnamespace
+      join company_archive_tables() r
+        on r.table_schema = rn.nspname and r.table_name = rc.relname and r.disposition = 'exported'
+     where c.contype = 'f' and c.conrelid = v_class
+       and r.load_order >= v_table.load_order
+       and a.attname <> 'company_id'
+       -- The company's own id, in the keys that hold `companies` to its own
+       -- accounts and journals: it is there from the first pass.
+       and not (v_class = 'public.companies'::regclass and a.attname = 'id');
+
+    if exists (select 1 from pg_attribute a
+                where a.attrelid = v_class and a.attname = any (v_deferred) and a.attnotnull) then
+      raise exception 'cannot_order: % holds a required reference to a table that loads after it', v_table.name;
+    end if;
+
+    -- What is written: every column of the table the archive names, but the
+    -- generated ones, which compute themselves, and an identity, which is
+    -- local to an installation and is drawn again.
+    select array_agg(a.attname order by a.attnum) into v_columns
+      from pg_attribute a
+     where a.attrelid = v_class and a.attnum > 0 and not a.attisdropped
+       and a.attgenerated = '' and a.attidentity = ''
+       and (v_rows -> 0) ? a.attname;
+
+    select string_agg(case when c = any (v_deferred) then format('null as %I', c) else format('r.%I', c) end, ', ')
+      into v_select
+      from unnest(v_columns) as c;
+
+    -- The guards of a table are written for a person booking one thing at a
+    -- time, in order, today. They are switched off on the tables being filled
+    -- and nowhere else, inside this transaction, under a lock that makes every
+    -- other writer of the table wait — and only where there is one to switch
+    -- off, so `audit_log`, whose only trigger refuses updates and deletes,
+    -- is never touched.
+    if exists (select 1 from pg_trigger g
+                where g.tgrelid = v_class and not g.tgisinternal
+                  and ((g.tgtype & 4) <> 0 or ((g.tgtype & 16) <> 0 and cardinality(v_deferred) > 0))) then
+      -- A trigger an operator had set otherwise — off, or firing on a replica
+      -- — is put back the way it was.
+      v_were_off := v_were_off || coalesce((
+        select jsonb_agg(jsonb_build_object(
+                 'class', v_class::text, 'name', g.tgname,
+                 'verb', case g.tgenabled when 'D' then 'disable trigger'
+                                          when 'R' then 'enable replica trigger'
+                                          else 'enable always trigger' end))
+          from pg_trigger g
+         where g.tgrelid = v_class and not g.tgisinternal and g.tgenabled <> 'O'), '[]'::jsonb);
+      execute format('alter table %s disable trigger user', v_class);
+      v_silenced := v_silenced || v_class;
+    end if;
+
+    -- In the order of the archive, so that an identity drawn again — the ids
+    -- of the trail — follows the order the rows were written in.
+    execute format('insert into %s (%s) select %s from jsonb_array_elements($1) with ordinality as e(v, n)
+                      cross join lateral jsonb_populate_record(null::%s, e.v) as r order by e.n',
+                   v_class, (select string_agg(format('%I', c), ', ') from unnest(v_columns) c),
+                   v_select, v_class)
+      using v_rows;
+
+    if cardinality(v_deferred) > 0 then
+      v_second := v_second || jsonb_build_object('table', v_table.name, 'class', v_class::text,
+                                                 'columns', to_jsonb(v_deferred));
+    end if;
+  end loop;
+
+  -- Second pass: the references that pointed forward.
+  for v_pass in select jsonb_array_elements(v_second) loop
+    select array_agg(c) into v_deferred
+      from jsonb_array_elements_text(v_pass -> 'columns') c
+     where (v_tables -> (v_pass ->> 'table') -> 0) ? c;
+    continue when v_deferred is null;
+    execute format(
+      'update %s t set %s from jsonb_populate_recordset(null::%s, $1) r where %s and (%s)',
+      v_pass ->> 'class',
+      (select string_agg(format('%I = r.%I', c, c), ', ') from unnest(v_deferred) c),
+      v_pass ->> 'class',
+      -- By the primary key, read from the catalogue rather than assumed to be `id`.
+      (select string_agg(format('t.%I = r.%I', a.attname, a.attname), ' and ')
+         from pg_index i
+         join pg_attribute a on a.attrelid = i.indrelid and a.attnum = any (i.indkey)
+        where i.indrelid = (v_pass ->> 'class')::regclass and i.indisprimary),
+      (select string_agg(format('r.%I is not null', c), ' or ') from unnest(v_deferred) c))
+      using v_tables -> (v_pass ->> 'table');
+  end loop;
+
+  foreach v_class in array v_silenced loop
+    execute format('alter table %s enable trigger user', v_class);
+  end loop;
+  for v_pass in select jsonb_array_elements(v_were_off) loop
+    execute format('alter table %s %s %I', v_pass ->> 'class', v_pass ->> 'verb', v_pass ->> 'name');
+  end loop;
+
+  -- What the triggers would have guaranteed, asked of the result.
+
+  -- 1. Everything that arrived is of this company: a row that hung itself on
+  --    a parent of another company is missing from this count.
+  for v_table in
+    select t.table_schema, t.table_name, t.table_schema || '.' || t.table_name as name
+      from company_archive_tables() t where t.disposition = 'exported'
+  loop
+    execute format('select count(*) from %I.%I t where %s', v_table.table_schema, v_table.table_name,
+                   company_archive_predicate(v_table.table_schema, v_table.table_name, 't'))
+       into v_count using v_company;
+    if v_count <> jsonb_array_length(coalesce(v_tables -> v_table.name, '[]'::jsonb)) then
+      raise exception 'foreign_row: % holds % rows of this company after the import and the archive carried %',
+        v_table.name, v_count, jsonb_array_length(coalesce(v_tables -> v_table.name, '[]'::jsonb));
+    end if;
+  end loop;
+
+  -- 2. No reference leaves the company. Most foreign keys of the schema carry
+  --    `company_id` and refuse this themselves; the ones that do not are why
+  --    this is asked of all of them.
+  for v_fk in
+    select c.conrelid::regclass as child, c.confrelid::regclass as parent,
+           cn.nspname as child_schema, ck.relname as child_table,
+           pn.nspname as parent_schema, pk.relname as parent_table,
+           ca.attname as child_column, pa.attname as parent_column
+      from pg_constraint c
+      join pg_class ck on ck.oid = c.conrelid
+      join pg_namespace cn on cn.oid = ck.relnamespace
+      join pg_class pk on pk.oid = c.confrelid
+      join pg_namespace pn on pn.oid = pk.relnamespace
+      join pg_attribute ca on ca.attrelid = c.conrelid and ca.attnum = c.conkey[1]
+      join pg_attribute pa on pa.attrelid = c.confrelid and pa.attnum = c.confkey[1]
+      join company_archive_tables() ct
+        on ct.table_schema = cn.nspname and ct.table_name = ck.relname and ct.disposition = 'exported'
+      join company_archive_tables() pt
+        on pt.table_schema = pn.nspname and pt.table_name = pk.relname and pt.disposition = 'exported'
+     where c.contype = 'f' and cardinality(c.conkey) = 1
+  loop
+    execute format(
+      'select count(*) from %s t join %s p on p.%I = t.%I where %s and not (%s)',
+      v_fk.child, v_fk.parent, v_fk.parent_column, v_fk.child_column,
+      company_archive_predicate(v_fk.child_schema, v_fk.child_table, 't'),
+      company_archive_predicate(v_fk.parent_schema, v_fk.parent_table, 'p'))
+      into v_count using v_company;
+    if v_count > 0 then
+      raise exception 'foreign_row: %.% points at a row of another company in % (% rows)',
+        v_fk.child, v_fk.child_column, v_fk.parent, v_count;
+    end if;
+  end loop;
+
+  -- 3. The ledger: an entry agrees with its lines, and a posted one balances.
+  select e.number into v_found
+    from entries e
+    left join lateral (select coalesce(sum(l.debit), 0) as debit, coalesce(sum(l.credit), 0) as credit
+                         from entry_lines l where l.entry_id = e.id) s on true
+   where e.company_id = v_company
+     and (e.total_debit <> s.debit or e.total_credit <> s.credit
+          or (e.state = 'posted' and s.debit <> s.credit))
+   limit 1;
+  if found then
+    raise exception 'unbalanced_entry: entry % does not balance, or does not agree with its lines', coalesce(v_found, '(no number)');
+  end if;
+
+  --    And every line counts for a return on the day the rule gives it, which
+  --    is what the trigger would have written.
+  select coalesce(e.number, '(no number)') || ', line ' || l.sequence into v_found
+    from entry_lines l
+    join entries e on e.id = l.entry_id
+   where l.company_id = v_company
+     and l.declared_on is distinct from declared_on_of(l.tax_point_date, e.entry_date)
+   limit 1;
+  if found then
+    raise exception 'declared_on_mismatch: entry % carries a declared_on that is not its tax point, nor the date of its entry where it has none', v_found;
+  end if;
+
+  -- 4. The matching: what a line says is matched is what its matchings add up to.
+  select l.id::text into v_found
+    from entry_lines l
+   where l.company_id = v_company
+     and l.matched_amount <> coalesce((select sum(r.amount) from reconciliations r
+                                        where r.debit_line_id = l.id or r.credit_line_id = l.id), 0)
+   limit 1;
+  if found then
+    raise exception 'matching_mismatch: line % says it is matched for another amount than its matchings add up to', v_found;
+  end if;
+
+  -- 5. The numbered books: no counter is behind a number already used, or the
+  --    next entry would take a number that exists.
+  select e.number into v_found
+    from entries e
+    join journals j on j.id = e.journal_id
+    cross join lateral numbering_rules(v_company) n
+   where e.company_id = v_company and e.number is not null
+     and number_counter(n.number_format, e.number) is not null
+     and number_counter(n.number_format, e.number) > coalesce((
+           select s.last_number from journal_sequences s
+            where s.journal_id = j.id
+              and s.year = case when n.number_format ~ '\{(YYYY|YY)\}'
+                                then extract(year from e.entry_date)::smallint
+                                else 0::smallint end), 0)
+   limit 1;
+  if found then
+    raise exception 'counter_behind: entry % carries a number its journal has not counted up to; the next entry would collide', v_found;
+  end if;
+
+  --    The letters of the matching, the same way.
+  select l.matching_number into v_found
+    from entry_lines l
+   where l.company_id = v_company and l.matching_number ~ '[0-9]+$'
+     and substring(l.matching_number from '[0-9]+$')::bigint
+         > coalesce((select s.last_number from matching_sequences s where s.company_id = v_company), 0)
+   limit 1;
+  if found then
+    raise exception 'counter_behind: the matching letter % is ahead of the counter of the company; the next matching would reuse a letter', v_found;
+  end if;
+
+  -- 6. The financial years do not overlap: every date belongs to one year or
+  --    to none, which is what a lock and a closing are read against.
+  select x.name into v_found
+    from fiscal_years x
+    join fiscal_years y on y.company_id = x.company_id and y.id <> x.id
+     and daterange(x.start_date, x.end_date, '[]') && daterange(y.start_date, y.end_date, '[]')
+   where x.company_id = v_company
+   limit 1;
+  if found then
+    raise exception 'overlapping_years: the financial year % overlaps another one of the same company', v_found;
+  end if;
+
+  -- The first member. The people of the other installation did not travel.
+  if v_owner is not null then
+    insert into company_members (company_id, user_id, role)
+    values (v_company, v_owner, 'owner')
+    on conflict (company_id, user_id) do nothing;
+  end if;
+
+  -- Where this installation's own testimony starts: everything on the trail
+  -- of this company before this row is what the archive said.
+  perform audit_record(v_company, 'companies', v_company, v_manifest #>> '{company,name}',
+                       'insert', 'company_imported', null,
+                       jsonb_build_object(
+                         'origin_instance', v_manifest -> 'origin_instance',
+                         'exported_at', v_manifest -> 'exported_at',
+                         'exported_by', v_manifest -> 'exported_by',
+                         'socle_version', v_manifest -> 'socle_version',
+                         'rows', v_total));
+
+  return jsonb_build_object(
+    'company_id', v_company,
+    'name', v_manifest #>> '{company,name}',
+    'rows', v_total,
+    'owner', v_owner,
+    'tables', (select jsonb_object_agg(m ->> 'name', (m ->> 'rows')::bigint)
+                 from jsonb_array_elements(v_manifest -> 'tables') m),
+    'files_to_carry', jsonb_array_length(coalesce(v_manifest #> '{files,list}', '[]'::jsonb)));
+end;
+$$;
+
+comment on function import_company(jsonb, uuid) is
+  'Takes one company archive into this installation, whole or not at all. Checks the manifest against the values of the rows — `values_sha256`, which a reader reproduces after parsing the archive — and against their bytes for an archive written before 0.9.0. A table a module has renamed since is read under its name of today. entry_lines.declared_on is derived for an archive written before it existed, and checked against declared_on_of() for one that carries it.';
+
+revoke execute on function import_company(jsonb, uuid) from public, anon;
+grant execute on function import_company(jsonb, uuid) to authenticated, service_role;
+
 -- ---------------------------------------------------------------------------
 -- 8. A company records who created it
 -- ---------------------------------------------------------------------------
@@ -1488,11 +2125,66 @@ comment on function create_company(text, char, char, char, text, integer, date, 
   'Creates a company, makes its owner the first member, copies the country pack into it and opens its first financial year on the month that pack declares. An instance-level act; on a shared installation, also a signed-in person''s for a company of their own, up to companies_per_person counted on what they created (decision 0065).';
 
 -- ---------------------------------------------------------------------------
+-- 9. A deposit keeps files of its own declaration's company
+-- ---------------------------------------------------------------------------
+--
+-- `tax_filing_deposits` carries no company: it reaches one through its
+-- declaration. Its two files named `attachments` by id alone, so a deposit of
+-- one's own accepted a file of another company — which said that it exists,
+-- and kept a reference to it — and refused an id of nobody by its foreign key.
+-- The file is now looked for in the declaration's company, before either key
+-- is asked, and refused in the same words whether it is another company's or
+-- nobody's. A person or a key who names a declaration of a company they may
+-- not know of is refused before anything is read for it, as by the guards of
+-- section 3; the backend role and the owner meet the check in full.
+
+create or replace function tax_filing_deposits_files_are_its_own()
+returns trigger
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  v_company uuid;
+begin
+  -- Only what the row names anew: emptying a file, which deleting it does by
+  -- its foreign key, names nothing.
+  if tg_op = 'UPDATE'
+     and new.filing_id = old.filing_id
+     and (new.sent_file_id is null or new.sent_file_id is not distinct from old.sent_file_id)
+     and (new.acknowledgement_id is null or new.acknowledgement_id is not distinct from old.acknowledgement_id) then
+    return new;
+  end if;
+
+  select f.company_id into v_company from tax_filings f where f.id = new.filing_id;
+  perform assert_writes_into_known_company(v_company);
+
+  if (new.sent_file_id is not null
+      and not exists (select 1 from attachments a where a.id = new.sent_file_id and a.company_id = v_company))
+     or (new.acknowledgement_id is not null
+      and not exists (select 1 from attachments a where a.id = new.acknowledgement_id and a.company_id = v_company)) then
+    raise exception 'unknown_attachment: a deposit keeps the files of its own declaration''s company, and names one that is not'
+      using errcode = '23503';
+  end if;
+  return new;
+end;
+$$;
+
+comment on function tax_filing_deposits_files_are_its_own() is
+  'Refuses a deposit whose sent file or receipt is not an attachment of its declaration''s company, in the same words for a file of another company and a file of nobody, before either foreign key is asked; and a person or a key who names a declaration of a company they may not know of, before anything is read (decision 0065).';
+
+drop trigger if exists tax_filing_deposits_files_are_its_own on tax_filing_deposits;
+create trigger tax_filing_deposits_files_are_its_own
+  before insert or update of filing_id, sent_file_id, acknowledgement_id on tax_filing_deposits
+  for each row execute function tax_filing_deposits_files_are_its_own();
+
+-- ---------------------------------------------------------------------------
 -- Grants
 -- ---------------------------------------------------------------------------
 
 -- Every function redefined above keeps the grants it had. The new ones are
--- triggers, and a helper for migrations: nobody's.
+-- triggers, helpers the guards call as definer, and helpers for migrations:
+-- nobody's.
 
 revoke execute on all functions in schema public from public;
 
@@ -1500,3 +2192,8 @@ revoke execute on function instance_admins_keep_one() from public, anon, authent
 revoke execute on function user_preferences_company_is_known() from public, anon, authenticated, service_role;
 revoke execute on function companies_creator_is_fixed() from public, anon, authenticated, service_role;
 revoke execute on function scope_references_to_company(text) from public, anon, authenticated, service_role;
+revoke execute on function company_column(regclass) from public, anon, authenticated, service_role;
+revoke execute on function company_references_by_id(text) from public, anon, authenticated, service_role;
+revoke execute on function assert_references_within_company(text) from public, anon, authenticated, service_role;
+revoke execute on function assert_writes_into_known_company(uuid) from public, anon, authenticated, service_role;
+revoke execute on function tax_filing_deposits_files_are_its_own() from public, anon, authenticated, service_role;

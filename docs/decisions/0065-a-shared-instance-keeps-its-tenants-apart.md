@@ -75,12 +75,49 @@ beside a composite key it failed under another name than for an id of nobody.
 Every unique key of those tables that holds such a reference holds the company
 too, or a row naming another company's row collides with it before any foreign
 key is asked. `scope_references_to_company()` does both from the catalogue,
-for the socle and for each module's schema. The definer guards that read the
-row a new value names — of a posted document, its lines, a posted entry and
-its lines — look for it in the row's own company, and step aside for a row
-headed for a company the caller may not know of, which row level security
-then refuses. A preferred company the caller may not know of is refused as
-one that does not exist.
+for the socle and for each module's schema. A table holds a company's rows by
+its `company_id`, and `companies` by its own id (`company_column()`): its
+default accounts and journals are such references too. A deposit of a
+declaration has no company of its own and reaches one through its
+declaration; its two files are looked for in that company by a trigger, which
+refuses a file of another company in the words it uses for a file of nobody.
+A preferred company the caller may not know of is refused as one that does
+not exist.
+
+**A guard reads nothing for a company the writer may not know of, and still
+guards.** The definer guards that read the row a new value names — of a posted
+document, its lines, a posted entry and its lines, and the files of a deposit —
+look for it in the row's own company. When a person or a machine key writes a
+row into a company they may not know of, `assert_writes_into_known_company()`
+refuses them before anything is read, with one answer whether the company
+exists or not. A first draft stepped aside there instead and left the refusal
+to row level security; but row level security does not stop the backend role,
+the owner or a scheduled job, and on a shared installation they may know of
+no company, so a posted row moved unguarded for them. Only a person or a key
+is ever refused that way; every other writer meets every guard.
+
+**A migration that makes a reference composite says first what would fail
+it.** Before it changes anything, it counts, one anti-join per key, the rows
+that already name a row of another company, and refuses with
+`reference_across_companies`, listing table, column and count and never a
+value, with the remedy in its hint. The operator mends the rows, and runs it
+again.
+
+**On a shared installation a person joins a company of their own accord.**
+`company_members.user_id` carries no foreign key, on purpose
+([0007](0007-an-invitation-names-an-address.md)), so whoever manages a
+company's members could write any id into it. On a shared installation a
+membership is written only by its own person — `accept_invitation()` for the
+invitee, `create_company()` for the creator — or by the installer or an
+instance administrator, and it is never handed to another person or moved to
+another company. The refusal comes before anything is asked, so an id with an
+account and an id without one are answered alike. On an installation that is
+one customer's this does not change: every account on it is that customer's
+([0001](0001-one-installation-is-one-customer.md)), a membership may be written
+before its person signs up, and an owner adding a colleague directly is how a
+company is staffed ([0004](0004-a-permission-is-a-capability.md)). Requiring
+consent there too would be a decision about staffing, not about tenants, and
+is left to one of its own.
 
 **A shared installation keeps its administrator.** It is shared only when it
 has one, nobody claims it while it is shared, and its last administrator does
@@ -106,7 +143,13 @@ person's, then at a row of nobody's, and the answers have to match — which is
 how a guard that quotes a number or a key that answers by another name shows
 itself. It hands the first person's ids inside the objects and lists that the
 functions read them from, the functions found from the catalogue and their
-shapes written down beside the test, which refuses one that is not. And it
+shapes written down beside the test, which refuses one that is not. The
+write covers `companies` and every table that reaches a company through a
+parent, found from the catalogue, and the person a `user_id` names; and a
+write that names a row of the first person's and goes through fails it,
+whatever a row of nobody's is answered — two answers alike that both let the
+write happen are a leak too, which is how a membership of anybody's went
+unseen. And it
 reads everything the second person may read with the first person idle and
 with her busy, and requires the two to be the same.
 `tests/mcp/shared_instance.test.ts` does the same through every tool of the MCP
@@ -114,8 +157,9 @@ server, in a company of nobody's and in the person's own. A table, a function
 or a tool added later is probed without anybody listing it. The last four
 functions above were found that way.
 
-**What sharing does not change.** What a member may do in their company, what a
-key may do, and what an instance administrator may do. On a shared
+**What sharing does not change.** What a member may do in their company — but
+add somebody else to it, which they do by invitation — what a key may do, and
+what an instance administrator may do. On a shared
 installation the administrator is the operator, who already reaches every
 company through the database. The installation claims its first administrator
 when it is installed, before any person signs in, and an operator hosting
@@ -143,6 +187,13 @@ administrators, which on a shared installation are the operator's.
 - A reference between two rows of one company that named a row of another
   is refused, by the composite key, and a reference to nothing is refused by
   that key's name. A unique key that holds a reference holds the company.
+- Upgrading an installation whose rows already name a row of another company
+  stops at `reference_across_companies` until those rows are mended. The new
+  keys are validated and the unique keys rebuilt inside the migration's
+  transaction, which locks those tables while it runs.
+- On a shared installation the backend role adds nobody to a company either:
+  an operator's own service staffs a company through an instance
+  administrator's session, or an invitation.
 - A person who already holds the id of a row of another company can still
   learn that the id is taken, by inserting a row of their own that carries it:
   the primary key answers before anything else does. The ids are random, so it
@@ -154,7 +205,9 @@ administrators, which on a shared installation are the operator's.
 - `supabase/migrations/20261007113412_a_tenant_measures_nothing_of_another.sql`,
   and `20261007113413`, `20261007113414` and `20261007113415` in the
   `budgets`, `fixed-assets` and `corporate-tax` modules
-- `tests/shared_instance.test.ts`, `tests/mcp/shared_instance.test.ts`
+- `supabase/migrations/20261007160000_a_person_joins_a_company_of_their_own_accord.sql`
+- `tests/shared_instance.test.ts`, `tests/mcp/shared_instance.test.ts`,
+  `tests/references_across_companies.test.ts`
 - [0001 One installation belongs to one customer](0001-one-installation-is-one-customer.md)
 - [0043 A company leaves with its books](0043-a-company-leaves-with-its-books.md)
 - [0064 A key writes as the person who issued it](0064-a-key-writes-as-its-issuer.md)

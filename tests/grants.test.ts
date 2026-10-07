@@ -63,6 +63,18 @@ import {
 import { newCompany } from './helpers/factory.js';
 import { replayScenario } from './helpers/golden-scenario.js';
 
+/** The functions of the socle no client calls: see the test that lists them. */
+const RESERVED = [
+  'assert_references_within_company',
+  'assert_writes_into_known_company',
+  'audit_record',
+  'company_column',
+  'company_references_by_id',
+  'purge_audit_log',
+  'scope_references_to_company',
+  'touch_api_key',
+];
+
 /** `describeGrants` wants rows; PGlite returns a result around them. */
 const queryRows =
   (db: PGlite): QueryRows =>
@@ -320,7 +332,7 @@ describe('what the grants say, against what the policies say', () => {
     expect(callable).toEqual([]);
   });
 
-  it('reserves four functions to the connections that are not a client', () => {
+  it('reserves eight functions to the connections that are not a client', () => {
     const socle = sections.find((s) => s.schema === 'public');
     const closed = (socle?.functions ?? [])
       .filter((f) => f.trigger !== true && f.authenticated.length === 0)
@@ -332,8 +344,12 @@ describe('what the grants say, against what the policies say', () => {
     // ever called by `use_api_key()`, which is definer and needs no grant for
     // it: a client that could call it could keep a forgotten key looking alive.
     // `scope_references_to_company` rewrites the foreign keys of a schema, and
-    // is the migrations' own.
-    expect(closed).toEqual(['audit_record', 'purge_audit_log', 'scope_references_to_company', 'touch_api_key']);
+    // is the migrations' own, with the three it reads the catalogue and the
+    // rows through: `company_column`, `company_references_by_id` and
+    // `assert_references_within_company`. `assert_writes_into_known_company`
+    // is what the definer guards ask before they read a row's company: they
+    // call it as its owner.
+    expect(closed).toEqual(RESERVED);
   });
 
   it('keeps every other callable function reachable by a signed-in user', () => {
@@ -341,7 +357,7 @@ describe('what the grants say, against what the policies say', () => {
     for (const section of sections) {
       for (const fn of section.functions) {
         if (fn.trigger === true) continue;
-        if (['audit_record', 'purge_audit_log', 'scope_references_to_company', 'touch_api_key'].includes(fn.name)) continue;
+        if (RESERVED.includes(fn.name)) continue;
         if (!fn.authenticated.includes('execute')) unreachable.push(`${section.schema}.${fn.name}`);
       }
     }

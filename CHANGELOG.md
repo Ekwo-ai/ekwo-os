@@ -66,8 +66,13 @@ somewhere has already run it.
     lines from moving read the row a new value named in any company and quoted
     its number in their refusal; a posted entry on another company's journal
     compared its number with that journal's counter. They now look in the
-    row's own company, and step aside for a row headed for a company the
-    caller may not know of, which row level security refuses.
+    row's own company. A person or a machine key writing a row into a company
+    they may not know of is refused by `assert_writes_into_known_company()`
+    before anything is read — `not_allowed`, the same words for a company that
+    exists and one that does not. Everybody else, the backend role, the owner
+    and a scheduled job included, meets every guard in full: on a shared
+    installation they may know of no company, and an earlier draft of this
+    change let them move posted rows unguarded.
   - `user_preferences.preferred_company_id` said by its foreign key whether a
     company exists. A company the caller may not know of is now refused as
     one that does not exist, `unknown_company`.
@@ -83,7 +88,26 @@ somewhere has already run it.
     an id of another company and an id of nobody. Every unique key of those
     tables that holds such a reference holds `company_id` too, or a row naming
     another company's row collided with it first.
-    `scope_references_to_company()` does it from the catalogue.
+    `scope_references_to_company()` does it from the catalogue, with
+    `company_column()`: `companies` is one of those tables, by its own id, so
+    its default accounts and journals (`receivable_account_id`,
+    `payable_account_id`, `suspense_account_id`, `rounding_account_id`,
+    `retained_earnings_account_id`, the sales, purchase and miscellaneous
+    journals, the default sales and purchase accounts and the default bank
+    account) name rows of that company only.
+  - **Before it changes anything**, the migration counts, one anti-join per
+    key it is about to create, the rows that already name a row of another
+    company, and refuses with `reference_across_companies`, naming every
+    table, column and count — never a value — and the remedy in its hint. An
+    installation whose rows all name their own company's sees nothing of it.
+    The keys are validated and the unique keys rebuilt inside the migration's
+    transaction, without `concurrently`: on a large installation, plan the
+    upgrade for a quiet moment.
+  - `tax_filing_deposits` reaches its company through its declaration, and
+    its sent file and receipt named any attachment. A trigger now refuses a
+    file that is not an attachment of the declaration's company with
+    `unknown_attachment`, the same for a file of another company and a file
+    of nobody, before either foreign key is asked.
   - The cancellation guard looks for the credit note in the invoice's own
     company: a credit note of another company can no longer keep an invoice
     from being cancelled.
@@ -97,8 +121,27 @@ somewhere has already run it.
   company's rows, writes — a row of one's own pointing each foreign key at the
   other person's row, then at nobody's — hands ids inside the objects and
   lists functions read them from, and checks that nothing a person reads
-  moves while the other works. `tests/mcp/shared_instance.test.ts` also
-  probes each tool in the person's own company.
+  moves while the other works. The write sweep covers `companies` and the
+  tables that reach a company through a parent, found from the catalogue,
+  names a person in `user_id`, and fails on any write that names the other
+  person's row and goes through, whatever a row of nobody's is answered.
+  `tests/mcp/shared_instance.test.ts` also probes each tool in the person's
+  own company, and `tests/references_across_companies.test.ts` runs the
+  migration over books that already cross companies.
+
+- **A person joins a company of their own accord**
+  (`20261007160000`; decision
+  [0065](docs/decisions/0065-a-shared-instance-keeps-its-tenants-apart.md)).
+  `company_members.user_id` carries no foreign key, so whoever held
+  `members.manage` could write any id into it: add any person to their
+  company without asking them, or hand a membership to somebody else. On a
+  shared installation a membership is now written only by its own person —
+  `accept_invitation()` for the invitee, `create_company()` for the creator —
+  or by the installer or an instance administrator, and its person and
+  company never change; anything else is `not_allowed`, the same whether the
+  person named has an account or not. An installation that is not shared is
+  unchanged: every account on it is the customer's, and an owner adding a
+  colleague directly remains the documented way to staff a company.
 
 ### Changed
 

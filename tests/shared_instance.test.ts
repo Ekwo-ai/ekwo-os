@@ -96,6 +96,20 @@ async function probe(sql: string, params: unknown[], ids: readonly string[]): Pr
   }
 }
 
+/**
+ * A write, the same way, with every key checked as it is written: a deferred
+ * key is otherwise only asked at a commit the probe never makes.
+ */
+async function probeWrite(sql: string, params: unknown[], ids: readonly string[]): Promise<string> {
+  await db.query('begin');
+  try {
+    await db.query('set constraints all immediate');
+    return await outcome(sql, params, ids);
+  } finally {
+    await db.query('rollback');
+  }
+}
+
 beforeAll(async () => {
   db = await freshDatabase();
   country = (
@@ -137,6 +151,16 @@ beforeAll(async () => {
               (select id from contacts where company_id = $2 order by id limit 1), 6000, 1200, 4800, -4700,
               (select id from entries where company_id = $2 and state = 'posted' order by id limit 1)`,
       [asset.id, company, openDay],
+    );
+    // And a deposit of one of its declarations, with the file sent and the
+    // receipt: a table that reaches its company through its declaration.
+    await db.query(
+      `insert into tax_filing_deposits (filing_id, sequence, sent_file_id, acknowledgement_id)
+       select f.id, 99, a.id, a.id
+         from tax_filings f, attachments a
+        where f.company_id = $1 and a.company_id = $1
+        order by f.id, a.id limit 1`,
+      [company],
     );
   }
 }, 600_000);
@@ -266,8 +290,13 @@ describe('a company of one’s own', () => {
     const carol = await newUser(db, 'carol-owner@example.test');
     await db.query('begin');
     try {
+      // Carol joins by accepting an invitation: on a shared installation
+      // nobody adds somebody else.
+      const { token } = await asUser(db, alice, () =>
+        one<{ token: string }>(db, `select token from invite_member($1, 'carol-owner@example.test', 'owner')`, [aliceCompany]),
+      );
+      await asUser(db, carol, () => db.query(`select accept_invitation($1)`, [token]));
       await asUser(db, alice, async () => {
-        await db.query(`insert into company_members (company_id, user_id, role) values ($1, $2, 'owner')`, [aliceCompany, carol]);
         await db.query(`delete from company_members where company_id = $1 and user_id = $2`, [aliceCompany, alice]);
       });
       expect(await rows(db, `select 1 from company_members where user_id = $1 and role = 'owner' and company_id = $2`, [alice, aliceCompany])).toEqual([]);
@@ -503,6 +532,10 @@ async function takingUuid(): Promise<{ name: string; first: string; call: string
 
 interface Writable {
   table: string;
+  /** The column the table names its company by: `company_id`, `id` for `companies`, or none for a child table. */
+  companyColumn: string | null;
+  /** For a table that carries no company: the column that names its parent, which does. */
+  parent: { column: string; table: string; key: string } | null;
   /** The primary key, column by column. */
   key: string[];
   /** What an insert may name: every column but the generated ones and an identity. */
@@ -514,21 +547,41 @@ interface Writable {
 }
 
 /**
- * Every table of a tenant schema with a `company_id` a signed-in user may
- * insert into or update, with the uuid columns its foreign keys read: the
- * column of a composite key with `company_id` points at the row it names, and
- * `company_id` points at `companies`.
+ * Every table of a tenant schema that holds a company's rows and that a
+ * signed-in user may insert into or update, with the uuid columns its foreign
+ * keys read: the column of a composite key with the company points at the row
+ * it names, and `company_id` points at `companies`. A table holds a company's
+ * rows by its `company_id`; `companies` by its own id; and a table with
+ * neither through a parent that does, named by a column that may not be empty
+ * — a deposit through its declaration. A person is named by `user_id`, which
+ * carries no key on purpose (decision 0007): that column points at
+ * `auth.users` all the same.
  */
 async function writableTables(): Promise<Writable[]> {
   const found = await rows<{
     table: string;
+    company_column: string | null;
+    parent: { column: string; table: string; key: string } | null;
     key: string[];
     columns: string[];
     refs: { column: string; target: string }[] | null;
     state_type: string | null;
   }>(
     db,
-    `select format('%I.%I', n.nspname, c.relname) as table,
+    `select * from (
+     select format('%I.%I', n.nspname, c.relname) as table,
+            case when c.oid = 'public.companies'::regclass then 'id'
+                 when exists (select 1 from pg_attribute k where k.attrelid = c.oid and k.attname = 'company_id' and not k.attisdropped)
+                   then 'company_id' end as company_column,
+            (select jsonb_build_object('column', a.attname, 'table', format('%I.%I', tn.nspname, tc.relname), 'key', fa.attname)
+               from pg_constraint f
+               join pg_attribute a on a.attrelid = f.conrelid and a.attnum = f.conkey[1]
+               join pg_attribute fa on fa.attrelid = f.confrelid and fa.attnum = f.confkey[1]
+               join pg_class tc on tc.oid = f.confrelid
+               join pg_namespace tn on tn.oid = tc.relnamespace
+              where f.conrelid = c.oid and f.contype = 'f' and cardinality(f.conkey) = 1 and a.attnotnull
+                and exists (select 1 from pg_attribute t where t.attrelid = f.confrelid and t.attname = 'company_id' and not t.attisdropped)
+              order by a.attname limit 1) as parent,
             array(select a.attname::text
                     from pg_index i join pg_attribute a on a.attrelid = i.indrelid and a.attnum = any (i.indkey)
                    where i.indrelid = c.oid and i.indisprimary
@@ -537,28 +590,38 @@ async function writableTables(): Promise<Writable[]> {
                    where a.attrelid = c.oid and a.attnum > 0 and not a.attisdropped
                      and a.attgenerated = '' and a.attidentity = ''
                    order by a.attnum) as columns,
-            (select jsonb_agg(distinct jsonb_build_object('column', a.attname, 'target', format('%I.%I', tn.nspname, tc.relname)))
-               from pg_constraint f
-               cross join lateral unnest(f.conkey, f.confkey) as k(attnum, fattnum)
-               join pg_attribute a on a.attrelid = f.conrelid and a.attnum = k.attnum
-               join pg_attribute fa on fa.attrelid = f.confrelid and fa.attnum = k.fattnum
-               join pg_class tc on tc.oid = f.confrelid
-               join pg_namespace tn on tn.oid = tc.relnamespace
-              where f.conrelid = c.oid and f.contype = 'f' and a.atttypid = 'uuid'::regtype
-                and fa.attname <> 'company_id') as refs,
+            (select jsonb_agg(distinct r.ref)
+               from (select jsonb_build_object('column', a.attname, 'target', format('%I.%I', tn.nspname, tc.relname)) as ref
+                       from pg_constraint f
+                       cross join lateral unnest(f.conkey, f.confkey) as k(attnum, fattnum)
+                       join pg_attribute a on a.attrelid = f.conrelid and a.attnum = k.attnum
+                       join pg_attribute fa on fa.attrelid = f.confrelid and fa.attnum = k.fattnum
+                       join pg_class tc on tc.oid = f.confrelid
+                       join pg_namespace tn on tn.oid = tc.relnamespace
+                      where f.conrelid = c.oid and f.contype = 'f' and a.atttypid = 'uuid'::regtype
+                        and fa.attname <> 'company_id'
+                     union all
+                     select jsonb_build_object('column', a.attname, 'target', 'auth.users')
+                       from pg_attribute a
+                      where a.attrelid = c.oid and a.attname = 'user_id' and a.atttypid = 'uuid'::regtype and not a.attisdropped
+                        and not exists (select 1 from pg_constraint f
+                                         where f.conrelid = c.oid and f.contype = 'f' and a.attnum = any (f.conkey))) r) as refs,
             (select format_type(s.atttypid, null) from pg_attribute s
               where s.attrelid = c.oid and s.attname = 'state' and not s.attisdropped
                 and exists (select 1 from pg_type t where t.oid = s.atttypid and t.typtype = 'e')) as state_type
        from pg_class c
        join pg_namespace n on n.oid = c.relnamespace
-       join pg_attribute k on k.attrelid = c.oid and k.attname = 'company_id' and not k.attisdropped
       where n.nspname = any ($1::text[]) and c.relkind = 'r'
         and (has_table_privilege('authenticated', c.oid, 'insert') or has_any_column_privilege('authenticated', c.oid, 'update'))
-      order by 1`,
+     ) t
+     where t.company_column is not null or t.parent is not null
+     order by 1`,
     [await tenantSchemas()],
   );
   return found.map((one) => ({
     table: one.table,
+    companyColumn: one.company_column,
+    parent: one.company_column === null ? one.parent : null,
     key: one.key,
     columns: one.columns,
     references: one.refs ?? [],
@@ -568,11 +631,15 @@ async function writableTables(): Promise<Writable[]> {
 
 /** Rows of a company's table to write over: one, and one per state where it has a state. */
 async function rowsOf(table: Writable, companyId: string): Promise<Record<string, unknown>[]> {
+  const from =
+    table.companyColumn !== null
+      ? `${table.table} t where t.${table.companyColumn} = $1`
+      : `${table.table} t join ${table.parent?.table} p on p.${table.parent?.key} = t.${table.parent?.column} where p.company_id = $1`;
   const picked = await rows<{ row: Record<string, unknown> }>(
     db,
     table.stateType === null
-      ? `select to_jsonb(t) as row from ${table.table} t where t.company_id = $1 order by ${table.key.map((k) => `t.${k}`).join(', ')} limit 1`
-      : `select distinct on (t.state) to_jsonb(t) as row from ${table.table} t where t.company_id = $1 order by t.state, ${table.key.map((k) => `t.${k}`).join(', ')}`,
+      ? `select to_jsonb(t) as row from ${from} order by ${table.key.map((k) => `t.${k}`).join(', ')} limit 1`
+      : `select distinct on (t.state) to_jsonb(t) as row from ${from} order by t.state, ${table.key.map((k) => `t.${k}`).join(', ')}`,
     [companyId],
   );
   return picked.map((one) => one.row);
@@ -797,10 +864,22 @@ describe('the other person, signed in', () => {
     expect(differs).toEqual([]);
   });
 
-  it('is answered alike when a row of their own names a row of Alice’s or a row that does not exist', async () => {
+  it('is answered alike when a row of their own names a row of Alice’s or a row that does not exist, and is never let write it', async () => {
     const tables = await writableTables();
     expect(tables.length).toBeGreaterThan(30);
+    // The company itself, a table that reaches its company through a parent,
+    // and the members, whose person carries no key: found, not listed.
+    expect(tables.map((table) => table.table)).toEqual(
+      expect.arrayContaining(['public.companies', 'public.tax_filing_deposits', 'public.company_members']),
+    );
+    expect(tables.find((table) => table.table === 'public.company_members')?.references).toEqual(
+      expect.arrayContaining([{ column: 'user_id', target: 'auth.users' }]),
+    );
     const differs: string[] = [];
+    // A write that names a row of Alice's and goes through is a leak whatever
+    // a row of nobody's is answered: it plants a reference to her row, or puts
+    // her somewhere she did not ask to be.
+    const written: string[] = [];
     let probed = 0;
     const targets = new Map<string, string[]>();
     for (const table of tables) {
@@ -817,6 +896,9 @@ describe('the other person, signed in', () => {
     }
     const own = new Map<string, Record<string, unknown>[]>();
     for (const table of tables) own.set(table.table, await rowsOf(table, bobBooks));
+    for (const name of ['public.companies', 'public.tax_filing_deposits', 'public.company_members']) {
+      expect(own.get(name)?.length, name).toBeGreaterThan(0);
+    }
 
     await asUser(db, bob, async () => {
       for (const table of tables) {
@@ -837,14 +919,18 @@ describe('the other person, signed in', () => {
               const said: string[] = [];
               for (const variant of variants) {
                 said.push(
-                  await probe(`update ${table.table} t set ${column} = $1::uuid${variant.set} where ${where}`, [id, ...keyValues], [id, NOWHERE]),
+                  await probeWrite(
+                    `update ${table.table} t set ${column} = $1::uuid${variant.set} where ${where} returning true as written`,
+                    [id, ...keyValues],
+                    [id, NOWHERE],
+                  ),
                 );
               }
               const copy: Record<string, unknown> = { ...row, [column]: id };
               if (table.key.length === 1 && table.key[0] === 'id' && column !== 'id') copy['id'] = fresh;
               said.push(
-                await probe(
-                  `insert into ${table.table} (${table.columns.join(', ')}) select ${table.columns.join(', ')} from jsonb_populate_record(null::${table.table}, $1::jsonb)`,
+                await probeWrite(
+                  `insert into ${table.table} (${table.columns.join(', ')}) select ${table.columns.join(', ')} from jsonb_populate_record(null::${table.table}, $1::jsonb) returning true as written`,
                   [copy],
                   [id, NOWHERE, fresh],
                 ),
@@ -857,6 +943,7 @@ describe('the other person, signed in', () => {
               probed += answers.length;
               for (const [index, answer] of answers.entries()) {
                 if (answer !== nobodys[index]) differs.push(`${table.table}.${column} (${String(row['state'] ?? '')} #${index}): ${answer} / ${nobodys[index]}`);
+                if (answer.startsWith('ok [{')) written.push(`${table.table}.${column} (${String(row['state'] ?? '')} #${index})`);
               }
             }
           }
@@ -865,6 +952,7 @@ describe('the other person, signed in', () => {
     });
     expect(probed).toBeGreaterThan(300);
     expect(differs).toEqual([]);
+    expect(written).toEqual([]);
   });
 
   it('cannot post a draft of their own onto an entry of Alice’s, nor learn the number it carries', async () => {
@@ -1199,6 +1287,215 @@ describe('the other person, through a machine key', () => {
   });
 });
 
+/**
+ * Run a block as a connection that is neither a person nor a key nor the
+ * installer: the backend role, which row level security does not stop, or —
+ * with no role — the owner, as the management API, `psql` or a scheduled job
+ * connects.
+ */
+async function asBackend<T>(role: 'service_role' | null, fn: () => Promise<T>): Promise<T> {
+  await db.exec(
+    `select set_config('request.jwt.claims', '', false); select set_config('ekwo.installing', '', false);${role === null ? '' : ` set role ${role};`}`,
+  );
+  try {
+    return await fn();
+  } finally {
+    await db.exec(`reset role; select set_config('ekwo.installing', 'on', false);`);
+  }
+}
+
+describe('a posted row, on a shared installation', () => {
+  /** Every change a posted document, its lines, its entry and the entry's lines refuse. */
+  const changes = async (): Promise<{ sql: string; params: unknown[] }[]> => {
+    // The last one booked: past any lock date, so that the guards of a posted
+    // row are what answers, and not the closed period.
+    const document = await one<{ id: string; entry_id: string; account: string }>(
+      db,
+      `select d.id, d.entry_id, (select a.id from accounts a where a.company_id = d.company_id order by a.code limit 1) as account
+         from documents d join entries e on e.id = d.entry_id
+        where d.company_id = $1 and d.state = 'posted'
+          and exists (select 1 from document_lines l where l.document_id = d.id)
+        order by e.entry_date desc, d.number desc limit 1`,
+      [aliceBooks],
+    );
+    const line = await one<{ id: string }>(db, `select id from document_lines where document_id = $1 order by sequence limit 1`, [document.id]);
+    const entryLine = await one<{ id: string }>(db, `select id from entry_lines where entry_id = $1 order by id limit 1`, [document.entry_id]);
+    return [
+      { sql: `update documents set number = number || '-9' where id = $1`, params: [document.id] },
+      { sql: `update documents set state = 'draft' where id = $1`, params: [document.id] },
+      { sql: `update documents set company_id = $2 where id = $1`, params: [document.id, bobBooks] },
+      { sql: `delete from documents where id = $1`, params: [document.id] },
+      { sql: `update document_lines set unit_price = unit_price + 1 where id = $1`, params: [line.id] },
+      {
+        sql: `insert into document_lines (document_id, company_id, sequence, name, quantity, unit_price) values ($1, $2, 9999, 'More', 1, 1)`,
+        params: [document.id, aliceBooks],
+      },
+      { sql: `delete from document_lines where id = $1`, params: [line.id] },
+      { sql: `update entries set number = number || '-9' where id = $1`, params: [document.entry_id] },
+      { sql: `update entries set state = 'draft' where id = $1`, params: [document.entry_id] },
+      { sql: `update entries set company_id = $2 where id = $1`, params: [document.entry_id, bobBooks] },
+      { sql: `delete from entries where id = $1`, params: [document.entry_id] },
+      { sql: `update entry_lines set debit = debit + 1, credit = credit + 1 where id = $1`, params: [entryLine.id] },
+      {
+        sql: `insert into entry_lines (entry_id, company_id, account_id, debit, credit) values ($1, $2, $3, 1, 0)`,
+        params: [document.entry_id, aliceBooks, document.account],
+      },
+      { sql: `delete from entry_lines where id = $1`, params: [entryLine.id] },
+    ];
+  };
+
+  for (const role of ['service_role', null] as const) {
+    it(`cannot be changed by ${role ?? 'the owner'}, who may know of no company and is not stopped by row level security`, async () => {
+      const all = await changes();
+      const said = await asBackend(role, async () => {
+        // What made the guards step aside for them once.
+        const known = await one<{ x: boolean; installer: boolean }>(db, `select may_know_of_company($1) as x, is_installer() as installer`, [aliceBooks]);
+        expect(known).toEqual({ x: false, installer: false });
+        const answers: string[] = [];
+        for (const change of all) answers.push(`${change.sql.split('\n')[0]} → ${await probeWrite(change.sql, change.params, [])}`);
+        return answers;
+      });
+      const through = said.filter((answer) => !/→ error (document_posted|entry_posted)/.test(answer));
+      expect(through).toEqual([]);
+    });
+  }
+
+  it('is refused to a person who writes into a company they may not know of, before anything is read, as for a company of nobody’s', async () => {
+    const all = await changes();
+    const draft = await one<{ id: string }>(db, `select id from documents where company_id = $1 and state = 'draft' order by id limit 1`, [bobBooks]).catch(
+      async () =>
+        one<{ id: string }>(
+          db,
+          `insert into documents (company_id, doc_type, contact_id, document_date)
+           select $1, 'sale_invoice', c.id, $2::date from contacts c where c.company_id = $1 order by c.id limit 1 returning id`,
+          [bobBooks, openDay],
+        ),
+    );
+    await asUser(db, bob, async () => {
+      const move = (company: string) => probeWrite(`update documents set company_id = $2 where id = $1`, [draft.id, company], [company, NOWHERE]);
+      expect(await move(aliceBooks)).toMatch(/^error not_allowed: this row is written into no company you may write in/);
+      expect(await move(aliceBooks)).toBe(await move(NOWHERE));
+      // A line onto her posted document and onto her posted entry, and the
+      // same with ids of nobody's.
+      for (const change of all.filter((one) => one.sql.startsWith('insert'))) {
+        const theirs = await probeWrite(change.sql, change.params, change.params.map(String));
+        expect(theirs).toBe(await probeWrite(change.sql, change.params.map(() => NOWHERE), [NOWHERE]));
+        expect(theirs).toMatch(/^error not_allowed/);
+      }
+    });
+  });
+});
+
+describe('a company’s own defaults, on a shared installation', () => {
+  it('name accounts and journals of that company only, and say nothing of anybody else’s', async () => {
+    const theirs = await one<{ account: string; journal: string }>(
+      db,
+      `select (select id from accounts where company_id = $1 order by code limit 1) as account,
+              (select id from journals where company_id = $1 order by code limit 1) as journal`,
+      [aliceBooks],
+    );
+    const columns = await rows<{ col: string; target: string }>(
+      db,
+      `select a.attname::text as col, f.confrelid::regclass::text as target
+         from pg_constraint f join pg_attribute a on a.attrelid = f.conrelid and a.attnum = f.conkey[1]
+        where f.conrelid = 'public.companies'::regclass and f.contype = 'f' and f.confrelid in ('accounts'::regclass, 'journals'::regclass)
+        order by 1`,
+    );
+    expect(columns.length).toBeGreaterThanOrEqual(10);
+    await asUser(db, bob, async () => {
+      for (const { col, target } of columns) {
+        const id = target === 'accounts' ? theirs.account : theirs.journal;
+        const set = (value: string) => probeWrite(`update companies set ${col} = $2 where id = $1 returning true as written`, [bobBooks, value], [value, NOWHERE]);
+        const said = await set(id);
+        expect(said, col).toMatch(new RegExp(`^error .*"companies_${col}_company_id_fkey"`));
+        expect(said, col).toBe(await set(NOWHERE));
+      }
+    });
+  });
+});
+
+describe('a deposit of a declaration, on a shared installation', () => {
+  it('names files of its own declaration’s company only, and is answered alike for a file of Alice’s and a file of nobody’s', async () => {
+    const own = await one<{ filing: string; file: string }>(
+      db,
+      `select (select id from tax_filings where company_id = $1 order by id limit 1) as filing,
+              (select id from attachments where company_id = $1 order by id limit 1) as file`,
+      [bobBooks],
+    );
+    const hers = await one<{ filing: string; file: string }>(
+      db,
+      `select (select id from tax_filings where company_id = $1 order by id limit 1) as filing,
+              (select id from attachments where company_id = $1 order by id limit 1) as file`,
+      [aliceBooks],
+    );
+    const deposit = (filing: string, file: string) =>
+      probeWrite(
+        `insert into tax_filing_deposits (filing_id, sequence, sent_file_id) values ($1, 77, $2) returning true as written`,
+        [filing, file],
+        [filing, file, NOWHERE],
+      );
+    await asUser(db, bob, async () => {
+      expect(await deposit(own.filing, hers.file)).toMatch(/^error unknown_attachment/);
+      expect(await deposit(own.filing, hers.file)).toBe(await deposit(own.filing, NOWHERE));
+      expect(await deposit(hers.filing, hers.file)).toMatch(/^error not_allowed/);
+      expect(await deposit(hers.filing, hers.file)).toBe(await deposit(NOWHERE, NOWHERE));
+      expect(await deposit(own.filing, own.file)).toMatch(/^ok /);
+    });
+    // The backend role meets the same check.
+    await asBackend('service_role', async () => {
+      expect(await deposit(own.filing, hers.file)).toMatch(/^error unknown_attachment/);
+      expect(await deposit(own.filing, own.file)).toMatch(/^ok /);
+    });
+  });
+});
+
+describe('the members of a company, on a shared installation', () => {
+  it('are not joined by somebody a manager names, whether that person has an account or not', async () => {
+    await asUser(db, bob, async () => {
+      const add = (person: string) =>
+        probeWrite(`insert into company_members (company_id, user_id, role) values ($1, $2, 'viewer') returning true as written`, [bobBooks, person], [person, NOWHERE]);
+      const said = await add(alice);
+      expect(said).toMatch(/^error not_allowed: on a shared installation a person joins a company by accepting an invitation/);
+      expect(said).toBe(await add(NOWHERE));
+    });
+  });
+
+  it('are not handed to another person, nor moved to another company', async () => {
+    await asUser(db, bob, async () => {
+      const hand = (person: string) =>
+        probeWrite(`update company_members set user_id = $2 where company_id = $1 and user_id = $3 returning true as written`, [bobBooks, person, bob], [person, NOWHERE]);
+      expect(await hand(alice)).toMatch(/^error not_allowed: on a shared installation a membership stays/);
+      expect(await hand(alice)).toBe(await hand(NOWHERE));
+      const move = (company: string) =>
+        probeWrite(`update company_members set company_id = $2 where company_id = $1 and user_id = $3 returning true as written`, [bobBooks, company, bob], [company, NOWHERE]);
+      expect(await move(bobCompany)).toMatch(/^error not_allowed/);
+      expect(await move(aliceBooks)).toBe(await move(NOWHERE));
+    });
+  });
+
+  it('are joined by a person who accepts an invitation, and added by the operator', async () => {
+    const dave = await newUser(db, 'dave-joins@example.test');
+    const erin = await newUser(db, 'erin-added@example.test');
+    await db.query('begin');
+    try {
+      const { token } = await asUser(db, bob, () =>
+        one<{ token: string }>(db, `select token from invite_member($1, 'dave-joins@example.test', 'viewer')`, [bobBooks]),
+      );
+      await asUser(db, dave, () => db.query(`select accept_invitation($1)`, [token]));
+      await asUser(db, DEMO_OWNER, () =>
+        db.query(`insert into company_members (company_id, user_id, role) values ($1, $2, 'viewer')`, [bobBooks, erin]),
+      );
+      const members = await rows<{ user_id: string }>(db, `select user_id from company_members where company_id = $1 and user_id = any ($2::uuid[]) order by user_id`, [
+        bobBooks,
+        [dave, erin],
+      ]);
+      expect(members.map((one) => one.user_id)).toEqual([dave, erin].sort());
+    } finally {
+      await db.query('rollback');
+    }
+  });
+});
+
 describe('the operator', () => {
   it('administers the shared installation and is the one caller who sees every company — never a person on a trial', async () => {
     // The demo owner is the seeded administrator; on a trial instance it is the
@@ -1211,6 +1508,18 @@ describe('the operator', () => {
     await db.query(`select unshare_instance()`);
     const carol = await newUser(db, 'carol2@example.test');
     expect(await asUser(db, carol, () => expectError(db, `select create_company('Carol', $1)`, [country]))).toMatch(/^not_instance_admin/);
+  });
+
+  it('lets an owner staff their company directly again once it is one customer’s', async () => {
+    const colleague = await newUser(db, 'colleague@example.test');
+    await db.query('begin');
+    try {
+      await asUser(db, bob, () =>
+        db.query(`insert into company_members (company_id, user_id, role) values ($1, $2, 'viewer')`, [bobBooks, colleague]),
+      );
+    } finally {
+      await db.query('rollback');
+    }
   });
 
   it('may leave the installation without an administrator once it is one customer’s again', async () => {

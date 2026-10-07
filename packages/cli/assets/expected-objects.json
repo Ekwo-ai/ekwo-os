@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.10.0",
-  "migration": "20261007113415",
+  "migration": "20261007160000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3809,6 +3809,14 @@
         "arguments": "p_company_id uuid, p_date date, p_is_tax boolean"
       },
       {
+        "name": "assert_references_within_company",
+        "arguments": "p_schema text"
+      },
+      {
+        "name": "assert_writes_into_known_company",
+        "arguments": "p_company_id uuid"
+      },
+      {
         "name": "audit_changes",
         "arguments": ""
       },
@@ -3929,6 +3937,10 @@
         "arguments": ""
       },
       {
+        "name": "company_column",
+        "arguments": "p_table regclass"
+      },
+      {
         "name": "company_filing_periods_mirror",
         "arguments": ""
       },
@@ -3945,8 +3957,16 @@
         "arguments": ""
       },
       {
+        "name": "company_members_join_of_their_own_accord",
+        "arguments": ""
+      },
+      {
         "name": "company_members_list",
         "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "company_references_by_id",
+        "arguments": "p_schema text"
       },
       {
         "name": "company_role",
@@ -4590,6 +4610,10 @@
       },
       {
         "name": "tax_filing_boxes_are_frozen",
+        "arguments": ""
+      },
+      {
+        "name": "tax_filing_deposits_files_are_its_own",
         "arguments": ""
       },
       {
@@ -5333,6 +5357,10 @@
       },
       {
         "table": "company_members",
+        "name": "company_members_join_of_their_own_accord"
+      },
+      {
+        "table": "company_members",
         "name": "company_members_set_updated_at"
       },
       {
@@ -5586,6 +5614,10 @@
       {
         "table": "tax_filing_boxes",
         "name": "tax_filing_boxes_are_frozen"
+      },
+      {
+        "table": "tax_filing_deposits",
+        "name": "tax_filing_deposits_files_are_its_own"
       },
       {
         "table": "tax_filings",
@@ -7098,6 +7130,20 @@
           ]
         },
         {
+          "name": "assert_references_within_company",
+          "arguments": "p_schema text",
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "assert_writes_into_known_company",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "audit_changes",
           "arguments": "",
           "trigger": true,
@@ -7386,6 +7432,13 @@
           ]
         },
         {
+          "name": "company_column",
+          "arguments": "p_table regclass",
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "company_filing_periods_mirror",
           "arguments": "",
           "trigger": true,
@@ -7423,6 +7476,14 @@
           "service_role": []
         },
         {
+          "name": "company_members_join_of_their_own_accord",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "company_members_list",
           "arguments": "p_company_id uuid",
           "anon": [],
@@ -7432,6 +7493,13 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "company_references_by_id",
+          "arguments": "p_schema text",
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "company_role",
@@ -9131,6 +9199,14 @@
         },
         {
           "name": "tax_filing_boxes_are_frozen",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "tax_filing_deposits_files_are_its_own",
           "arguments": "",
           "trigger": true,
           "anon": [],

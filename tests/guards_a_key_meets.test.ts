@@ -85,6 +85,14 @@ describe('every guard that asks whether anybody is signed in', () => {
     // Asks for a signed-in user *and* the capability before allowing, so a key
     // fails the condition and the guard fires. The safe direction.
     entries_guard_posted: 'demands a user before allowing, so a key is refused',
+    // On a shared installation a membership is written by its own person, in
+    // their own session, and a key presented is refused beside a null user
+    // (0065).
+    company_members_join_of_their_own_accord: 'raises when there is no user, or a key is presented',
+    // Asks whether the writer is a person *or* a key, and refuses either
+    // where they may not know of the company: a key is never let through for
+    // being no user (0065).
+    assert_writes_into_known_company: 'counts a key as a writer, beside a user',
     // False as soon as a key is presented: a key is never the installer.
     is_installer: 'is false whenever a key is presented',
     // Ask the question the other way round: a key is a caller this

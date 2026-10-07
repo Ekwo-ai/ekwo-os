@@ -138,6 +138,8 @@ describe('what belongs to a company is read from the catalogue', () => {
 
     // A reference that points forward, or at its own table, is filled in a
     // second pass: it has to be nullable, and its table has to have an `id`.
+    // The company's own id, which the keys of `companies` hold beside the
+    // account or journal they name, is there from the first pass.
     const stuck = await rows(
       a,
       `select c.conrelid::regclass::text as child, a.attname as col, a.attnotnull as required,
@@ -151,6 +153,7 @@ describe('what belongs to a company is read from the catalogue', () => {
          join pg_attribute a on a.attrelid = c.conrelid and a.attnum = k.attnum
         where c.contype = 'f' and ct.disposition = 'exported' and pt.disposition = 'exported'
           and pt.load_order >= ct.load_order and a.attname <> 'company_id'
+          and not (c.conrelid = 'public.companies'::regclass and a.attname = 'id')
           and (a.attnotnull or not exists (select 1 from pg_attribute i
                                             where i.attrelid = c.conrelid and i.attname = 'id'))`,
     );
