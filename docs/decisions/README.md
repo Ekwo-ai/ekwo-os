@@ -16,6 +16,7 @@ records it relies on). New records take the next free number.
 ## The instance and who may act
 
 - [0001](0001-one-installation-is-one-customer.md) — One installation belongs to one customer
+- [0065](0065-a-shared-instance-keeps-its-tenants-apart.md) — A shared instance keeps its tenants apart
 - [0002](0002-the-surface-is-closed-not-merely-empty.md) — The surface is closed, not merely empty
 - [0003](0003-the-schema-grants-its-own-rights.md) — The schema grants its own rights
 - [0004](0004-a-permission-is-a-capability.md) — A permission is a capability; a role is a preset

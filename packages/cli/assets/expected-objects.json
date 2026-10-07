@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.10.0",
-  "migration": "20261007041208",
+  "migration": "20261007060225",
   "socle": {
     "schema": "public",
     "tables": [
@@ -2319,6 +2319,10 @@
         "name": "instance",
         "columns": [
           {
+            "name": "companies_per_person",
+            "type": "integer"
+          },
+          {
             "name": "contact_email",
             "type": "text"
           },
@@ -2357,6 +2361,10 @@
           {
             "name": "schema_version",
             "type": "text"
+          },
+          {
+            "name": "shared",
+            "type": "boolean"
           },
           {
             "name": "updated_at",
@@ -4237,6 +4245,14 @@
         "arguments": ""
       },
       {
+        "name": "instance_is_shared",
+        "arguments": ""
+      },
+      {
+        "name": "instance_sharing",
+        "arguments": ""
+      },
+      {
         "name": "invite_member",
         "arguments": "p_company_id uuid, p_email text, p_role member_role, p_capabilities jsonb, p_valid_for interval"
       },
@@ -4294,6 +4310,10 @@
       },
       {
         "name": "matching_policy_of",
+        "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "may_know_of_company",
         "arguments": "p_company_id uuid"
       },
       {
@@ -4517,6 +4537,10 @@
         "arguments": "p_document_id uuid, p_expires_at timestamp with time zone"
       },
       {
+        "name": "share_instance",
+        "arguments": "p_companies_per_person integer"
+      },
+      {
         "name": "shared_document",
         "arguments": "p_token text"
       },
@@ -4606,6 +4630,10 @@
       },
       {
         "name": "unregister_instance",
+        "arguments": ""
+      },
+      {
+        "name": "unshare_instance",
         "arguments": ""
       },
       {
@@ -8150,6 +8178,28 @@
           ]
         },
         {
+          "name": "instance_is_shared",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "instance_sharing",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "invite_member",
           "arguments": "p_company_id uuid, p_email text, p_role member_role, p_capabilities jsonb, p_valid_for interval",
           "anon": [],
@@ -8312,6 +8362,17 @@
         },
         {
           "name": "matching_policy_of",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "may_know_of_company",
           "arguments": "p_company_id uuid",
           "anon": [],
           "authenticated": [
@@ -8920,6 +8981,17 @@
           ]
         },
         {
+          "name": "share_instance",
+          "arguments": "p_companies_per_person integer",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "shared_document",
           "arguments": "p_token text",
           "anon": [
@@ -9151,6 +9223,17 @@
         },
         {
           "name": "unregister_instance",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "unshare_instance",
           "arguments": "",
           "anon": [],
           "authenticated": [

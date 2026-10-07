@@ -9,6 +9,38 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A shared instance keeps its tenants apart** (`20261007060225`; decision
+  [0065](docs/decisions/0065-a-shared-instance-keeps-its-tenants-apart.md)). An
+  installation can be shared by several unrelated people, each with companies
+  of their own: a trial an operator hosts, for example. `share_instance(n)`
+  turns it on and `unshare_instance()` turns it off; both are the installer's
+  or an instance administrator's, and both are on the trail.
+  `instance_sharing()` says whether an installation is shared. Off, which is
+  the default, nothing changes.
+
+  On a shared installation a signed-in person creates up to `n` companies of
+  their own with `create_company()`, in their own session, and owns them; a
+  machine key never does. Nobody learns of a company they are not a member
+  of. `company_has_no_member()`, `module_is_enabled()`, `module_settings()`
+  and `preferred_languages()` answer about it as about a company that does not
+  exist, and a company with no member can no longer be claimed by whoever
+  arrives first. The definer functions that take the id of a row say
+  *unknown* rather than *not allowed* for a row of such a company:
+  `share_document()`, `revoke_share()`, `revoke_api_key()`,
+  `revoke_invitation()`, `unpost_document()`, `pack_upgrade()`,
+  `next_entry_number()` and `catch_up_journal_sequence()`.
+  `create_company()` becomes `security definer`, its guard unchanged for an
+  administrator and the installer.
+
+  `tests/shared_instance.test.ts` puts two people on one shared installation.
+  It probes every table and view that carries a company. It calls every
+  function, once per uuid argument, with each of the other person's ids and
+  with an id nobody holds, as a session and through a machine key, and it
+  requires the same answer both times. `tests/mcp/shared_instance.test.ts`
+  does the same through every tool of the MCP server.
+
 ### Changed
 
 - **A key writes as the person who issued it** (`20261007041207`, and

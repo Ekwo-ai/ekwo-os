@@ -79,6 +79,9 @@ describe('every guard that asks whether anybody is signed in', () => {
     // invitation is accepted by a person, and preferences belong to one.
     accept_invitation: 'raises when there is no user',
     set_preferences: 'raises when there is no user',
+    // On a shared installation a company of one's own is created by a person
+    // in their own session, and a key never chooses who owns one (0064, 0065).
+    create_company: 'raises when there is no user',
     // Asks for a signed-in user *and* the capability before allowing, so a key
     // fails the condition and the guard fires. The safe direction.
     entries_guard_posted: 'demands a user before allowing, so a key is refused',
