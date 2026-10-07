@@ -90,6 +90,7 @@ records it relies on). New records take the next free number.
 
 - [0052](0052-the-installer-needs-only-node-and-a-customer-project.md) — The installer needs only Node and the customer's project
 - [0053](0053-the-mcp-server-acts-as-the-user.md) — The MCP server acts as the user
+- [0064](0064-a-key-writes-as-its-issuer.md) — A key writes as the person who issued it
 - [0054](0054-the-command-line-output-contract.md) — The command line answers one document and an exit code
 - [0055](0055-the-command-line-acts-as-a-signed-in-person.md) — The command line acts as a signed-in person
 - [0056](0056-the-command-line-computes-no-amount.md) — The command line computes no amount

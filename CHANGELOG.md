@@ -9,6 +9,30 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Changed
+
+- **A key writes as the person who issued it** (`20261007041207`, and
+  `20261007041208` for the `tax` module; decision
+  [0064](docs/decisions/0064-a-key-writes-as-its-issuer.md)). A machine key is
+  not a session, so `auth.uid()` is null for it, and every write that took its
+  author from `auth.uid()` recorded nobody: `audit_log` wrote `api_key_id`
+  beside a null `actor_id`, and `enabled_by`, `invited_by`, `filed_by`,
+  `uploaded_by`, `unposted_by`, `created_by` of a book import and of a share,
+  `declared_by`, `recorded_by`, `finalised_by` and `superseded_by` stayed
+  empty. They now record `acting_user()` — the signed-in user, or the person
+  who issued the key presented (`api_keys.created_by`) — so decision 0053, *the
+  MCP server acts as the user*, holds for an assistant connected through a key.
+  `audit_log.api_key_id` keeps naming the key. One function says it, and
+  `create_api_key()` uses it for the issuer of a key minted under a key.
+
+  It attributes and never authorises: `auth.uid()`, every policy and every
+  guard are unchanged, a key still holds only its own list bounded by what its
+  issuer holds today, and a key withdrawn or expired is refused before it
+  writes anything. A key the installation issued itself (`created_by` null) is
+  recorded against nobody, as before. Rows written before this release keep
+  their null `actor_id`. `tests/key_writes_as_its_issuer.test.ts` fails on any
+  function or column default that writes an author from `auth.uid()` again.
+
 ### Removed
 
 - **The former names of the fixed assets tools, announced in 0.10.0.** The MCP

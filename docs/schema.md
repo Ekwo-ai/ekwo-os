@@ -308,7 +308,7 @@ Machine access to one company. Hashed at rest, scoped to an explicit list of cap
 | `prefix` | `text` | not null — The readable head of the secret. It identifies a key without being one. |
 | `key_hash` | `text` | not null |
 | `capabilities` | `text[]` | not null — Exactly what this key may do. Not a role: a machine has a job, not a job title. |
-| `created_by` | `uuid` | auth.users.id of the person the key is a delegation from: whoever issued it, or the person behind the key that issued it. Null for a key the installation issued itself. The key never holds more than this person holds today. No foreign key, for the same reason company_members has none. |
+| `created_by` | `uuid` | auth.users.id of the person the key is a delegation from: whoever issued it, or the person behind the key that issued it. Null for a key the installation issued itself. The key never holds more than this person holds today, and what it writes is recorded against this person (acting_user()). No foreign key, for the same reason company_members has none. |
 | `created_at` | `timestamp with time zone` | not null |
 | `expires_at` | `timestamp with time zone` |  |
 | `last_used_at` | `timestamp with time zone` | When this key was last presented in a transaction that could write it down. A read over the API runs read-only and is not stamped, so this is a floor and never a ceiling: a key with an old date may still be in daily use for reading. |
@@ -353,8 +353,8 @@ Append-only record of every change to the configuration and reference data of a 
 |---|---|---|
 | `id` | `bigint` | not null |
 | `occurred_at` | `timestamp with time zone` | not null |
-| `actor_id` | `uuid` | auth.uid() at the time of the change. Null when the change came from a machine key or from a direct connection. |
-| `api_key_id` | `uuid` | The machine key presented in the transaction, when one was. |
+| `actor_id` | `uuid` | The person the change was made for: the signed-in user, or the person who issued the machine key presented (acting_user()). Null on a direct connection, and for a key the installation issued itself. |
+| `api_key_id` | `uuid` | The machine key presented in the transaction, when one was. Beside actor_id, the trail says for whom and through what. |
 | `company_id` | `uuid` | The company the change belongs to, and what row level security reads. No foreign key: the trail outlives the row it describes. |
 | `table_name` | `text` | not null |
 | `record_id` | `uuid` |  |
@@ -1940,6 +1940,7 @@ Constraints:
 | `account_id_by_code(p_company_id uuid, p_code text)` | Account of a company by its code, or NULL. |
 | `accounts_guard_frozen()` | Refuses a change of code or of account_type on an account that carries ledger lines, is named by a tax posting or plays a company role. The label, the translations, the parent, reconcilable, deprecated and pinned stay editable. |
 | `accounts_in_use(p_company_id uuid, p_from date, p_to date)` | The accounts of a company that are in use: moved by a posted entry in the period — ever, when no period is given — or referenced by the configuration of the company — a role default, a contact override, a journal, a tax posting, a cash-basis transition, a bank account, a product — or held by a module the company has enabled, or pinned. Deprecated accounts are left out. A configuration reference is not dated; only the movement is. This is a reading: nothing here restricts what may be booked. |
+| `acting_user()` | The person a write is recorded against: the signed-in user, or the person who issued the machine key presented in this transaction (api_keys.created_by). Null on a direct connection and for a key the installation issued itself. It attributes and never authorises: what a key may do is still has_capability(), and auth.uid() stays null for a key. |
 | `aged_balance(p_company_id uuid, p_at date, p_group text)` | Ageing of what is still open, read from the ledger and from the matching, written at the decimals of the company's currency. Two groups, receivable and payable; anything else is refused by name. |
 | `amount_text_format(p_rounding money_rounding)` | The to_char mask an amount of this currency is written with. Two decimals for the euro, none for the yen, three for the dinar. |
 | `api_key_on_company(p_company_id uuid)` | Whether the machine key presented in this transaction reaches anything on this company — at least one capability of its list that key_holds() still grants there. What is_company_member() asks for a key. False, never NULL, and false without a key. |

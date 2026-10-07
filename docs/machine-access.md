@@ -60,7 +60,8 @@ by `pgrst.db_pre_request` on its login role. Here that is
 that ask for a signed-in user still answer no, and what the caller may do is
 decided by `has_capability()`, which consults the key's own list and what the
 person who issued it holds today. The role is the door; the capabilities are
-the rooms.
+the rooms. What the key writes is recorded against that person —
+`acting_user()` — and that attribution decides nothing about what it may do.
 
 **The pre-request writes nothing**, and it cannot. PostgREST opens a GET — and
 an RPC whose function is not volatile — inside a **read-only transaction**, so
@@ -120,8 +121,11 @@ select * from create_api_key(
 ```
 
 The secret comes back once. What is stored is its sha256, and the audit trail
-of every act the key performs records `api_key_id` beside a null `actor_id`, so
-the trail says a machine acted and which one.
+of every act the key performs records `api_key_id` beside the person who issued
+the key as `actor_id` (`acting_user()`,
+[decision 0064](decisions/0064-a-key-writes-as-its-issuer.md)), so the trail
+says which machine acted and for whom. A key the installation issued itself is
+recorded against nobody.
 
 A backup key issued from somebody's session is that person's delegation: the
 day they leave the company, or move to a preset that no longer reads what the

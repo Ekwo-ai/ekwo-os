@@ -360,7 +360,9 @@ describe('leaving with the books, which is what this was for', () => {
     expect(archive.company).toBe(companyId);
   });
 
-  it('records the key, and not a person, on the audit trail', async () => {
+  // Decision 0064: a write through a key is recorded against the person who
+  // issued it, with the key beside them — never against nobody.
+  it('records the key, and the person who issued it, on the audit trail', async () => {
     const secret = await issue('Tracee', await clientCapabilities());
     const key = await request(secret, async () =>
       one<{ id: string }>(db, `select id::text from current_api_key()`),
@@ -368,15 +370,16 @@ describe('leaving with the books, which is what this was for', () => {
     await request(secret, async () => {
       await db.query(`select export_company($1)`, [companyId]);
     });
-    const trail = await one<{ actor_id: string | null; api_key_id: string | null; name: string }>(
+    const trail = await one<{ actor_id: string | null; api_key_id: string | null; name: string; issuer: string | null }>(
       db,
-      `select a.actor_id::text, a.api_key_id::text, k.name
+      `select a.actor_id::text, a.api_key_id::text, k.name, k.created_by::text as issuer
          from audit_log a join api_keys k on k.id = a.api_key_id
         where a.company_id = $1 and a.action = 'company_exported'
         order by a.occurred_at desc limit 1`,
       [companyId],
     );
-    expect(trail.actor_id).toBeNull();
+    expect(trail.issuer).not.toBeNull();
+    expect(trail.actor_id).toBe(trail.issuer);
     expect(trail.api_key_id).toBe(key.id);
     expect(trail.name).toBe('Tracee');
   });
