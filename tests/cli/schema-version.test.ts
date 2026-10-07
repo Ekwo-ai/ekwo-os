@@ -27,13 +27,20 @@ import {
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
 
 /** The schema this release defines. */
-const RELEASE = '0.11.0';
+const RELEASE = '0.11.1';
 
 /** What `ekwo_schema_version()` returned before the migration of this release. */
-const PREVIOUS = '0.10.0';
+const PREVIOUS = '0.11.0';
 
 /** The migration that carries the number, and nothing else. */
-const BUMP = 'schema_version_0_11_0';
+const BUMP = 'schema_version_0_11_1';
+
+/**
+ * The floor the packages of this release declare. It rises only when a
+ * package reads something an older schema does not have, so a release that
+ * adds nothing a package reads leaves it below `RELEASE` — 0.11.1 is one.
+ */
+const FLOOR = '0.11.0';
 
 let db: SqlClient;
 let migrations: Migration[];
@@ -131,12 +138,14 @@ describe('an installation made at the previous version', () => {
     expect(row[0]?.schema_version).toBe(RELEASE);
   });
 
-  it('is refused by a client of this release until it is migrated', async () => {
+  it('is refused by a client of this release only when it is below the floor', async () => {
     const { schemaIsAtLeast } = await import('../../packages/core/src/schema.js');
     const { SCHEMA_MIN } = await import('../../packages/mcp/src/schema.js');
 
-    expect(schemaIsAtLeast(PREVIOUS, SCHEMA_MIN)).toBe(false);
     expect(schemaIsAtLeast(RELEASE, SCHEMA_MIN)).toBe(true);
+    // The previous version is refused when the floor rose with this release,
+    // and answered for when it did not.
+    expect(schemaIsAtLeast(PREVIOUS, SCHEMA_MIN)).toBe(schemaIsAtLeast(PREVIOUS, FLOOR));
   });
 });
 
@@ -145,6 +154,6 @@ describe('the number the packages declare', () => {
     const cli = (await import('../../packages/cli/src/schema.js')).SCHEMA_MIN;
     const core = (await import('../../packages/core/src/schema.js')).SCHEMA_MIN;
     const mcp = (await import('../../packages/mcp/src/schema.js')).SCHEMA_MIN;
-    expect([cli, core, mcp]).toEqual([RELEASE, RELEASE, RELEASE]);
+    expect([cli, core, mcp]).toEqual([FLOOR, FLOOR, FLOOR]);
   });
 });

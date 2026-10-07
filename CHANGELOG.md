@@ -9,6 +9,46 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.11.1] — 2026-10-07
+
+### Fixed
+
+- **A nightly export fits the time a key's request is given**
+  (`20261007190000`). A copy of a company taken over the API with a machine
+  key — `POST /rest/v1/rpc/export_company` with `X-Ekwo-Api-Key` — failed
+  with `canceling statement due to statement timeout` once a company carried
+  the tables of 0.10.0 and later. Two causes, both fixed:
+
+  - `ekwo_pre_request()` moved the request onto `authenticated` and left it on
+    the `statement_timeout` PostgREST had armed for `anon` — three seconds on
+    a hosted project. It now gives the request the timeout configured for
+    `authenticated` (`authenticated_statement_timeout()`, the setting for this
+    database first, then the one for every database). Where nothing is
+    configured, the clock stays as it was.
+  - `export_company()` did the work of a table twice per table: once for the
+    manifest, once for the rows, and each time it checked the right to export,
+    swept the catalogue for an unclassified table, listed the tables of an
+    archive and counted the rows twice — about 30 ms per table before a row
+    was read. `export_company_archive()` asks the right, the sweep and the list
+    once per archive, counts what the administrator holds once for every
+    table (`company_archive_row_counts()`), and reads each table once for its
+    count, both checksums and its rows. `export_company()`,
+    `export_company_manifest()` and `export_company_tables()` are that
+    function, and `export_company_table()` builds its rows from the same query
+    (`company_archive_rows_query()`). Still one statement and one snapshot.
+    On PGlite, a company with rows in 45 of the 47 tables of an archive
+    exports in 64 ms instead of 470 ms.
+
+  The archive does not change: format version 1, the same bytes, the same
+  `sha256` and `values_sha256`. `tests/export_fits_a_key_request.test.ts`
+  exports a furnished company with the functions of 0.11.0 and with these,
+  in one transaction, and compares the two documents byte for byte.
+
+- **The audit trail asks who reads it once per statement.** `audit_log_select`
+  compared each row with `is_company_member()`; it now compares `company_id`
+  with `caller_companies()`, worked out once per statement, the way the
+  policies of `20260918141627` do. Who reads what is unchanged.
+
 ## [0.11.0] — 2026-10-07
 
 ### Added
@@ -4296,7 +4336,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.1...HEAD
+[0.11.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.8.0...v0.9.0
