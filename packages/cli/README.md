@@ -326,6 +326,7 @@ instead if the account already exists, and no key is needed.
 | `ekwo match <transaction> <document>` | A bank statement line pays a document, through `settle_from_statement()`. |
 | `ekwo import <source> <file>…` | Books kept elsewhere — `trial-balance`, `fec`, `journal-items`, `journal-report`, `transaction-journal`, `xaf` — whole or not at all, through `import_books()`, with a correspondence of accounts and journals you save and give back; or a bank statement — `camt.053`, `coda`, `cfonb120` — as pending lines. `--dry-run` rehearses. See [taking over books](#taking-over-books-ekwo-import). |
 | `ekwo doc list` / `show` | What exists, and with `--unpaid` what is posted and still owed. See [keeping books](#keeping-books). |
+| `ekwo proof stamp` / `upgrade` / `verify` | The sha256 of a filed file — a declaration, the annual accounts of a financial year, a document — committed to Bitcoin through the public OpenTimestamps calendars; only the hash leaves. `upgrade` completes the pending proofs of the company and is made to run on a schedule; `verify` checks a file against its proof and the block it names, and `--out` writes the `.ots` file any verifier reads. See [`docs/filing-proofs.md`](../../docs/filing-proofs.md). |
 
 There is no `eject`, because there is nothing to eject from. The schema is in
 your database, the migrations are in the repository under AGPL-3.0, and

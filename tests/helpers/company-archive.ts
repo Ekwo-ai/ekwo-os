@@ -321,6 +321,15 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     [filing.id, await attach('declaration.xml'), await attach('acknowledgement.pdf')],
   );
   await db.query(`select record_filing_outcome($1, 'accepted', null, $2)`, [filing.id, `Accepted ${tag}`]);
+  // The hash of the file that went, committed to a public ledger. The proof
+  // bytes are opaque here; what travels is that they are the same bytes.
+  await asUser(db, ownerId, async () => {
+    await db.query(
+      `select record_filing_proof('tax_filing', $1, encode(sha256(convert_to($2, 'UTF8')), 'hex'),
+                                  'opentimestamps', encode(convert_to($2, 'UTF8'), 'base64'))`,
+      [filing.id, `declaration.xml-${tag}`],
+    );
+  });
 
   const next = day(period.to);
   next.setUTCDate(next.getUTCDate() + 1);

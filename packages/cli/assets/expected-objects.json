@@ -2283,6 +2283,95 @@
         ]
       },
       {
+        "name": "filing_proofs",
+        "columns": [
+          {
+            "name": "anchor_chain",
+            "type": "text"
+          },
+          {
+            "name": "anchor_height",
+            "type": "bigint"
+          },
+          {
+            "name": "anchor_reference",
+            "type": "text"
+          },
+          {
+            "name": "anchor_time",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "attachment_id",
+            "type": "uuid"
+          },
+          {
+            "name": "calendars",
+            "type": "text[]"
+          },
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "completed_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "created_by",
+            "type": "uuid"
+          },
+          {
+            "name": "document_id",
+            "type": "uuid"
+          },
+          {
+            "name": "fiscal_year_id",
+            "type": "uuid"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "method",
+            "type": "filing_proof_method"
+          },
+          {
+            "name": "proof",
+            "type": "bytea"
+          },
+          {
+            "name": "sha256",
+            "type": "text"
+          },
+          {
+            "name": "status",
+            "type": "filing_proof_status"
+          },
+          {
+            "name": "subject_kind",
+            "type": "filing_proof_subject"
+          },
+          {
+            "name": "tax_filing_id",
+            "type": "uuid"
+          },
+          {
+            "name": "upgraded_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "values_sha256",
+            "type": "text"
+          }
+        ]
+      },
+      {
         "name": "fiscal_years",
         "columns": [
           {
@@ -4217,6 +4306,10 @@
         "arguments": "p_company_id uuid, p_report_code text"
       },
       {
+        "name": "filing_proof",
+        "arguments": "p_sha256 text"
+      },
+      {
         "name": "filing_rounding",
         "arguments": "p_company_id uuid, p_report_code text"
       },
@@ -4513,6 +4606,10 @@
         "arguments": "p_filing_id uuid, p_state tax_filing_state, p_reference text, p_message text"
       },
       {
+        "name": "record_filing_proof",
+        "arguments": "p_subject_kind filing_proof_subject, p_subject_id uuid, p_sha256 text, p_method filing_proof_method, p_proof_base64 text, p_calendars jsonb, p_attachment_id uuid, p_values_sha256 text"
+      },
+      {
         "name": "register_instance",
         "arguments": "p_contact_email text"
       },
@@ -4641,6 +4738,10 @@
         "arguments": ""
       },
       {
+        "name": "tax_filing_values_sha256",
+        "arguments": "p_filing_id uuid"
+      },
+      {
         "name": "tax_filings_report_exists",
         "arguments": ""
       },
@@ -4707,6 +4808,10 @@
       {
         "name": "upcoming_filings",
         "arguments": "p_company_id uuid, p_from date, p_to date"
+      },
+      {
+        "name": "upgrade_filing_proof",
+        "arguments": "p_proof_id uuid, p_proof_base64 text, p_anchor_chain text, p_anchor_height bigint, p_anchor_time timestamp with time zone, p_anchor_reference text"
       },
       {
         "name": "use_api_key",
@@ -5029,6 +5134,11 @@
         "table": "entry_lines",
         "name": "entry_lines_write",
         "command": "all"
+      },
+      {
+        "table": "filing_proofs",
+        "name": "filing_proofs_select",
+        "command": "select"
       },
       {
         "table": "fiscal_years",
@@ -5869,6 +5979,31 @@
         ]
       },
       {
+        "name": "filing_proof_method",
+        "kind": "enum",
+        "labels": [
+          "opentimestamps",
+          "eas"
+        ]
+      },
+      {
+        "name": "filing_proof_status",
+        "kind": "enum",
+        "labels": [
+          "pending",
+          "complete"
+        ]
+      },
+      {
+        "name": "filing_proof_subject",
+        "kind": "enum",
+        "labels": [
+          "tax_filing",
+          "fiscal_year",
+          "document"
+        ]
+      },
+      {
         "name": "instance_edition",
         "kind": "enum",
         "labels": [
@@ -6571,6 +6706,16 @@
             "insert",
             "select",
             "update"
+          ]
+        },
+        {
+          "name": "filing_proofs",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
           ]
         },
         {
@@ -8149,6 +8294,19 @@
           ]
         },
         {
+          "name": "filing_proof",
+          "arguments": "p_sha256 text",
+          "anon": [
+            "execute"
+          ],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "filing_rounding",
           "arguments": "p_company_id uuid, p_report_code text",
           "anon": [],
@@ -8963,6 +9121,17 @@
           ]
         },
         {
+          "name": "record_filing_proof",
+          "arguments": "p_subject_kind filing_proof_subject, p_subject_id uuid, p_sha256 text, p_method filing_proof_method, p_proof_base64 text, p_calendars jsonb, p_attachment_id uuid, p_values_sha256 text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "register_instance",
           "arguments": "p_contact_email text",
           "anon": [],
@@ -9304,6 +9473,17 @@
           "service_role": []
         },
         {
+          "name": "tax_filing_values_sha256",
+          "arguments": "p_filing_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "tax_filings_report_exists",
           "arguments": "",
           "trigger": true,
@@ -9471,6 +9651,17 @@
         {
           "name": "upcoming_filings",
           "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "upgrade_filing_proof",
+          "arguments": "p_proof_id uuid, p_proof_base64 text, p_anchor_chain text, p_anchor_height bigint, p_anchor_time timestamp with time zone, p_anchor_reference text",
           "anon": [],
           "authenticated": [
             "execute"

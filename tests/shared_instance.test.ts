@@ -728,6 +728,9 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
   // was matched to, the statement a new one follows.
   'public.import_books': { reads: [], writesOnly: ['contact_id'] },
   'public.import_bank_statement': { reads: [], writesOnly: ['previous_statement_id'] },
+  // The jsonb it takes is a list of calendar addresses; the subject it names
+  // is an argument of its own, and the key is only what it writes on the trail.
+  'public.record_filing_proof': { reads: [], writesOnly: ['subject_id'] },
 };
 
 describe('the other person, signed in', () => {

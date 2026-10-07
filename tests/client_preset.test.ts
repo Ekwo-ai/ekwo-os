@@ -975,6 +975,16 @@ describe('a client writes nothing else — by the function', () => {
       'public.revoke_api_key': { sql: `select revoke_api_key($1)`, params: [mine.apiKeyId] },
       'public.share_document': { sql: `select * from share_document($1)`, params: [mine.postedDocumentId] },
       'public.revoke_share': { sql: `select revoke_share($1)`, params: [mine.shareId] },
+      // Publishing a hash in the company's name is filings.prove, which the
+      // client preset does not hold.
+      'public.record_filing_proof': {
+        sql: `select record_filing_proof('fiscal_year', $1, repeat('a', 64), 'opentimestamps', 'AA==')`,
+        params: [mine.fiscalYearId],
+      },
+      'public.upgrade_filing_proof': {
+        sql: `select upgrade_filing_proof(gen_random_uuid(), 'AA==')`,
+        params: [],
+      },
       'public.enable_module': { sql: `select enable_module($1, 'budgets')`, params: [mine.companyId] },
       'public.disable_module': { sql: `select disable_module($1, 'budgets')`, params: [mine.companyId] },
       'public.pack_upgrade': {

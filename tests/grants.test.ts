@@ -243,6 +243,11 @@ describe('what the grants say, against what the policies say', () => {
     // (`20260922161500`), which is the shape of "learn nothing" for a function
     // that has to be callable before a key is presented.
     //
+    // `filing_proof` is the third door (`20261007192418`): given the sha256 of
+    // a file, the proof that it was committed to a public ledger, and nothing
+    // about who proved it or what it is about. Whoever presents the hash
+    // already holds the file.
+    //
     // The list is asserted rather than counted: an entry appearing here is a
     // decision and not a detail.
     const callable = sections
@@ -254,6 +259,7 @@ describe('what the grants say, against what the policies say', () => {
       'public.company_has_no_member',
       'public.company_role',
       'public.ekwo_pre_request',
+      'public.filing_proof',
       'public.has_capability',
       'public.installed_schema_version',
       'public.instance_has_no_admin',

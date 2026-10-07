@@ -110,12 +110,17 @@ describe('the anonymous role', () => {
     // `installed_schema_version` is granted and answers `anon` with zero rows
     // (`20260922161500`): the grant is for the screen that checks a pasted key
     // before presenting it, and an anonymous call learns nothing.
+    //
+    // `filing_proof` is a door of the kind `shared_document` is
+    // (`20261007192418`): bounded by the sha256 presented to it, it answers the
+    // proof of that one file, with nothing about the company or the subject.
     expect(callable.map((r) => r.proname)).toEqual([
       'api_key_on_company',
       'can_write_company',
       'company_has_no_member',
       'company_role',
       'ekwo_pre_request',
+      'filing_proof',
       'has_capability',
       'installed_schema_version',
       'instance_has_no_admin',

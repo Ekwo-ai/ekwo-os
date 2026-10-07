@@ -19,6 +19,7 @@ import { migrateCommand } from './commands/migrate.js';
 import { moduleCommand } from './commands/module.js';
 import { packCommand } from './commands/pack.js';
 import { matchCommand, paymentCommand } from './commands/payment.js';
+import { proofCommand, type ProofDeps } from './commands/proof.js';
 import { registerCommand, unregisterCommand } from './commands/register.js';
 import { statusCommand } from './commands/status.js';
 import { useCommand, whoamiCommand } from './commands/whoami.js';
@@ -60,12 +61,13 @@ export const COMMANDS = [
   'payment',
   'match',
   'import',
+  'proof',
   // An alias, last: `invoice` is what `doc` used to be called.
   'invoice',
 ] as const;
 
 /** What a test may hand a command instead of the network, the disk and the environment. */
-export type RunDeps = InitDeps & LoginDeps & BooksDeps;
+export type RunDeps = InitDeps & LoginDeps & BooksDeps & ProofDeps;
 
 export function help(): string {
   return `${bold('ekwo')} — install and operate Ekwo OS on a Supabase project you own.
@@ -152,6 +154,12 @@ ${bold('Connecting')} ${dim('(every command)')}
               transaction-journal, xaf, or the export of another ledger by
               its name (ekwo import --help). Or a
               bank statement: camt.053, coda, cfonb120, pending lines for match.
+  ${cyan('proof')}       stamp <file> --filing <id> | --year <id> | --document <id> — the
+              sha256 of a filed file, committed to Bitcoin through the public
+              OpenTimestamps calendars; only the hash leaves. upgrade — complete
+              the pending proofs of the company, on a schedule. verify <file>
+              [--ots <proof.ots>] — check a file against its proof and the block
+              it names; --out writes the .ots for any verifier.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
   --profile <name>          Which profile: a demo instance, production, one client
@@ -432,6 +440,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await matchCommand(args, deps);
       case 'import':
         return await importCommand(args, deps);
+      case 'proof':
+        return await proofCommand(args, deps);
       default:
         throw new UsageError(`unknown command: ${args.command}\nRun \`ekwo --help\` for the list.`);
     }

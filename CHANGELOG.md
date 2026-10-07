@@ -9,6 +9,40 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A filing is proved by its hash** (`20261007192418`; decision
+  [0066](docs/decisions/0066-a-filing-is-proved-by-its-hash.md);
+  [`docs/filing-proofs.md`](docs/filing-proofs.md)). The sha256 of the exact
+  bytes of a declaration, of the annual accounts of a financial year, or of a
+  document, is committed to Bitcoin through the public OpenTimestamps
+  calendars. Only the hash leaves. Anybody holding the file can later check,
+  without an account, that it existed no later than a given block. The same
+  for every country and every pack.
+
+  `filing_proofs` keeps one row per hash and per method, with the proof bytes,
+  the status (`pending`, `complete`) and the anchor (chain, block height, block
+  time, block hash). `record_filing_proof()` and `upgrade_filing_proof()` are
+  the only way in and need the new capability `filings.prove`, on `owner` and
+  `accountant`. A complete proof is frozen. `tax_filing_values_sha256()` hashes
+  the frozen figures of a declaration with `canonical_json()` and is recorded
+  with each of its proofs. `filing_proof(sha256)` is a public door like
+  `shared_document()`: the anonymous role may call it, and it returns the proof
+  of one hash and nothing about who proved it or what it is about. Proofs
+  travel with a company's archive.
+
+  `@ekwo-ai/core` reads and writes the `.ots` format, submits to the calendars,
+  upgrades a pending proof, and dates it from an Esplora block explorer after
+  checking the block's merkle root: `proveFile()`, `upgradeFilingProofs()`,
+  `lookupFilingProof()`, `checkProof()`. No new dependency.
+
+  `ekwo proof stamp <file> --filing | --year | --document`, `ekwo proof
+  upgrade` (made for a schedule) and `ekwo proof verify <file> [--ots] [--out]`.
+
+  The method column also accepts `eas`, the Ethereum Attestation Service.
+  Nothing writes it yet: `docs/filing-proofs.md` evaluates it as a second,
+  signed layer, with its costs.
+
 ## [0.11.1] — 2026-10-07
 
 ### Fixed

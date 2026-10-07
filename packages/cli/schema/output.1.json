@@ -512,6 +512,38 @@
           "note": { "type": "string" }
         }
       },
+      "proof stamp": {
+        "$comment": "The proof recorded for the sha256 of the file, without its bytes. already_proved: the same bytes were proved before and nothing was submitted. calendars_failed: the calendars that did not answer, when enough others did.",
+        "type": "object",
+        "required": ["proof", "already_proved", "calendars_failed"],
+        "properties": {
+          "proof": { "$ref": "#/$defs/row" },
+          "already_proved": { "type": "boolean" },
+          "calendars_failed": { "type": "array", "items": { "type": "object" } }
+        }
+      },
+      "proof upgrade": {
+        "$comment": "The pending proofs of the company asked about again: those a block now anchors, and those still waiting on a calendar.",
+        "type": "object",
+        "required": ["checked", "completed", "pending"],
+        "properties": {
+          "checked": { "type": "integer" },
+          "completed": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "pending": { "type": "array", "items": { "type": "object" } }
+        }
+      },
+      "proof verify": {
+        "$comment": "A file checked against its proof. proved: the proof is about this file and names a Bitcoin block. published: what the installation publishes for the hash, without the proof bytes, or null when the proof was given with --ots. check is null when no proof exists for the hash.",
+        "type": "object",
+        "required": ["sha256", "proved", "published", "check"],
+        "properties": {
+          "sha256": { "type": "string" },
+          "proved": { "type": "boolean" },
+          "published": { "oneOf": [{ "type": "object" }, { "type": "null" }] },
+          "check": { "oneOf": [{ "type": "object" }, { "type": "null" }] },
+          "written": { "type": "string" }
+        }
+      },
       "payment record": {
         "type": "object",
         "required": ["payment", "entry", "entry_lines", "matched", "note"],

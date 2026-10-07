@@ -29,3 +29,4 @@ export {
   type RegistrationInvitation,
 } from './registration.js';
 export * from './books/index.js';
+export * from './proofs/index.js';

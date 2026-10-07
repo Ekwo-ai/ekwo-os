@@ -68,6 +68,7 @@ records it relies on). New records take the next free number.
 - [0038](0038-a-deadline-is-a-rule-of-the-country.md) — A deadline is a rule of the country; null is an answer
 - [0039](0039-a-deposit-is-an-event.md) — A deposit is an event, written from the frozen figures
 - [0040](0040-a-portfolio-is-what-the-caller-may-read.md) — A portfolio is what the caller may read
+- [0066](0066-a-filing-is-proved-by-its-hash.md) — A filing is proved by its hash, on a public ledger
 
 ## Companies, documents and the bank
 

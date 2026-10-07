@@ -446,6 +446,15 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       expect(proof[0]?.sent).toContain('declaration.xml');
       expect(proof[0]?.ack).toContain('acknowledgement.pdf');
 
+      // The hash committed to a public ledger travels with its proof, byte
+      // for byte: it is verified against the ledger, not against A.
+      const proved = (table: PGlite) =>
+        rows(table, `select sha256, values_sha256, method, encode(proof, 'hex') as proof from filing_proofs where tax_filing_id = $1`, [
+          leaves.filingId,
+        ]);
+      expect(await proved(b)).toEqual(await proved(a));
+      expect(await proved(b)).toHaveLength(1);
+
       // Frozen for the owner of B as it was for the owner of A.
       const thaw = await asUser(b, ownerInB, () =>
         expectError(b, `update tax_filing_boxes set amount = amount + 1 where filing_id = $1`, [leaves.filingId]),

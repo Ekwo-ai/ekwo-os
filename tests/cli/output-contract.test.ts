@@ -354,6 +354,35 @@ describe('every command answers --json with one document of the published shape'
     expect(rehearsed.exitCode).toBe(0);
     expect((rehearsed.data as { dry_run: boolean }).dry_run).toBe(true);
 
+    // A proof: the hash of a file goes to a calendar, which here answers the
+    // way a calendar does before it has a block — pending.
+    const pendingAnswer = Uint8Array.from([
+      0x00, 0x83, 0xdf, 0xe3, 0x0d, 0x2e, 0xf9, 0x0c, 0x8e, 0x16, 0x15,
+      ...new TextEncoder().encode('https://calendar.test'),
+    ]);
+    const calendar = async (url: string): Promise<Response> =>
+      url.endsWith('/digest') ? new Response(pendingAnswer, { status: 200 }) : new Response('', { status: 404 });
+    const asProver = async (argv: string[]): Promise<OutputDocument> => {
+      const captured = await capture(() =>
+        run([...argv, '--json'], { fetchImpl: instance.fetchImpl, env, cwd, proofFetch: calendar }),
+      );
+      const document = documentOf(captured);
+      if (document.error === undefined) expectData(document);
+      seen.add(document.command.split(' ')[0] as string);
+      return document;
+    };
+    const filed = join(cwd, 'annual-accounts.xml');
+    await writeFile(filed, '<accounts>as deposited</accounts>');
+    const year = await root.query<{ id: string }>(
+      `select y.id from fiscal_years y join companies c on c.id = y.company_id where c.name = 'Example One' order by y.start_date limit 1`,
+    );
+    const stamped = await asProver(['proof', 'stamp', filed, '--year', year.rows[0]?.id as string, '--calendar', 'https://pool.test']);
+    expect(stamped.data).toMatchObject({ already_proved: false, proof: { status: 'pending' } });
+    const upgraded = await asProver(['proof', 'upgrade', '--upgrade-calendar', 'https://calendar.test']);
+    expect(upgraded.data).toMatchObject({ checked: 1, completed: [] });
+    const verified = await asProver(['proof', 'verify', filed, '--offline', '--out', join(cwd, 'annual-accounts.xml.ots')]);
+    expect(verified.data).toMatchObject({ proved: false, check: { matches_file: true, pending: ['https://calendar.test'] } });
+
     expect((await asPerson(['logout'])).data).toMatchObject({ signedOut: true });
     // The commands that install act as nobody, and carry no such field.
     expect((await json(['status'])).context).toBeUndefined();

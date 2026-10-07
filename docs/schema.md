@@ -173,6 +173,7 @@ the return say the same thing, because they are the same rows.
 | [`entries`](#entries) | Journal entries. A document and its entry are two layers joined by a foreign key. |
 | [`entry_line_analytics`](#entry_line_analytics) | Analytic split of a ledger line. One row per value, share in percent. |
 | [`entry_lines`](#entry_lines) | Ledger lines. Amounts are always positive; a reversal flips the side, it never negates. |
+| [`filing_proofs`](#filing_proofs) | Proofs that a file existed at a date: the sha256 of its exact bytes, committed to a public ledger, with the proof that it was. Written through record_filing_proof() and upgrade_filing_proof(); a complete proof is frozen. filing_proof(sha256) is the public way to read one. |
 | [`fiscal_years`](#fiscal_years) | Accounting periods. An exercise is an object, not two integers on the company. |
 | [`instance`](#instance) | The installation itself. Exactly one row. Registration with Ekwo is optional and empty by default. |
 | [`instance_admins`](#instance_admins) | Instance administrators: they create companies and invite members. One row per user, keyed on auth.users of the customer's own Supabase project. |
@@ -1194,6 +1195,45 @@ Constraints:
 - `CHECK (((posting_type IS NULL) OR (tax_id IS NOT NULL)))`
 - `PRIMARY KEY (id)`
 
+### `filing_proofs`
+
+Proofs that a file existed at a date: the sha256 of its exact bytes, committed to a public ledger, with the proof that it was. Written through record_filing_proof() and upgrade_filing_proof(); a complete proof is frozen. filing_proof(sha256) is the public way to read one.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `subject_kind` | `filing_proof_subject` | not null |
+| `tax_filing_id` | `uuid` |  |
+| `fiscal_year_id` | `uuid` |  |
+| `document_id` | `uuid` |  |
+| `attachment_id` | `uuid` |  |
+| `sha256` | `text` | not null — sha256 of the exact bytes of the file proved, hex. The file itself never leaves: only this hash is submitted. |
+| `values_sha256` | `text` | sha256 of the figures in canonical form (canonical_json, one line per row), so the figures can be matched without the file. Computed by tax_filing_values_sha256() for a declaration; given by the caller otherwise, or null. |
+| `method` | `filing_proof_method` | not null |
+| `status` | `filing_proof_status` | not null |
+| `proof` | `bytea` | not null — The proof, as bytes: a detached OpenTimestamps file (.ots) for opentimestamps, the signed attestation for eas. |
+| `calendars` | `text[]` | The calendars an opentimestamps hash was submitted to. Recorded so a scheduled upgrade knows where to come back, and so a reader knows who aggregated it. |
+| `anchor_chain` | `text` | The ledger the proof is anchored in, as its usual name: bitcoin for opentimestamps. |
+| `anchor_height` | `bigint` | The block height the proof is anchored at, where the ledger has heights. |
+| `anchor_time` | `timestamp with time zone` | The time of that block, as its header states it. The proof says the file existed no later than this. |
+| `anchor_reference` | `text` | An identifier on the ledger where a height is not the natural one: the uid of an attestation, a transaction hash. |
+| `created_by` | `uuid` | auth.users.id of whoever recorded the proof. No foreign key, for the same reason company_members has none. |
+| `created_at` | `timestamp with time zone` | not null |
+| `upgraded_at` | `timestamp with time zone` |  |
+| `completed_at` | `timestamp with time zone` |  |
+
+Constraints:
+
+- `CHECK (((anchor_height IS NULL) OR (anchor_height >= 0)))`
+- `CHECK ((((status = 'complete'::filing_proof_status) = (completed_at IS NOT NULL)) AND ((status = 'pending'::filing_proof_status) OR ((anchor_chain IS NOT NULL) AND ((anchor_height IS NOT NULL) OR (anchor_reference IS NOT NULL))))))`
+- `CHECK ((length(proof) > 0))`
+- `CHECK ((sha256 ~ '^[0-9a-f]{64}$'::text))`
+- `CHECK (((num_nonnulls(tax_filing_id, fiscal_year_id, document_id) = 1) AND ((subject_kind = 'tax_filing'::filing_proof_subject) = (tax_filing_id IS NOT NULL)) AND ((subject_kind = 'fiscal_year'::filing_proof_subject) = (fiscal_year_id IS NOT NULL)) AND ((subject_kind = 'document'::filing_proof_subject) = (document_id IS NOT NULL))))`
+- `CHECK (((values_sha256 IS NULL) OR (values_sha256 ~ '^[0-9a-f]{64}$'::text)))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, sha256, method)`
+
 ### `fiscal_years`
 
 Accounting periods. An exercise is an object, not two integers on the company.
@@ -2046,6 +2086,7 @@ Constraints:
 | `filing_deadline(p_company_id uuid, p_report_code text, p_period_end date)` | When a period closed on this date has to be declared, under the rule the pack carries. Null where the pack declares none, and null where it declares depends_on_taxpayer — a country whose schedule depends on the filer, not a country without deadlines. |
 | `filing_drift(p_filing_id uuid)` | Box by box and kind by kind, what the ledger says now — at the unit the form is filed in — against what was filed, for the figures where the two disagree. Empty is the answer everybody wants; anything else is either a corrective to file or an entry in the wrong period. |
 | `filing_period(p_company_id uuid, p_report_code text)` | How often this company files that declaration, or null when it has not been recorded. Null is not a cadence and not an error: the books are kept the same either way, and a guard that reads it refuses nothing. |
+| `filing_proof(p_sha256 text)` | The public way to read a proof: given the sha256 of a file, one row per proof recorded for it — method, status, anchor and the proof bytes as base64 — and nothing about who proved it or what it is about. No row, the same empty answer, for a malformed hash and for a hash nobody proved. |
 | `filing_rounding(p_company_id uuid, p_report_code text)` | How a figure of this form is written when it is frozen for this company: the currency's decimals and the country's method, coarsened to the unit of the form where the form names one. The only reader of tax_report_templates.rounding_unit. |
 | `filing_tax_movements(p_filing_id uuid)` | The tax accounts a declared period moved and by how much, on the same window and the same tax-point rule the return read, net of what an earlier settlement of the same period already carried. What settle_filing() clears — the whole period the first time, the difference on a corrective — and what anybody can read before it does. |
 | `filings_touched_since(p_company_id uuid, p_from date, p_to date)` | Declarations that have gone and whose period the ledger moved afterwards: how many entries carrying a declaration box landed in it, when the last one did, and how many of the filed figures now disagree. An entry that changes no figure is still listed — it was posted into a period that had been declared, and that is the fact being reported. |
@@ -2118,6 +2159,7 @@ Constraints:
 | `reconcile(p_line_a uuid, p_line_b uuid, p_amount numeric)` | Matches a debit line against a credit line, in the currency the two share when it is not the company's, and books what the matching reveals: the realised exchange difference, and the share of a cash-basis tax that has become due. |
 | `reconciliations_guard_cancelled()` | Refuses to undo a matching on the entry of a cancelled document: cancel_document() matched it against its credit note, and that matching is what makes cancelled true. Unmatching it would leave a document that says cancelled and not_paid at once. document_cancelled_stays_matched, for everybody. |
 | `record_filing_outcome(p_filing_id uuid, p_state tax_filing_state, p_reference text, p_message text)` | What came back: accepted, rejected, or paid, written on the declaration and on the send it answers — with the administration's own words where it gave any. Paying follows acceptance, and a declaration that never went cannot come back at all. |
+| `record_filing_proof(p_subject_kind filing_proof_subject, p_subject_id uuid, p_sha256 text, p_method filing_proof_method, p_proof_base64 text, p_calendars jsonb, p_attachment_id uuid, p_values_sha256 text)` | Records the proof a client just obtained for the sha256 of a file about a declaration, annual accounts or a document. Needs filings.prove. The proof is given as base64, the calendars as a JSON array. The same bytes recorded again by the same method return the existing row; for a declaration, values_sha256 is computed from its boxes and never taken from the caller. |
 | `register_instance(p_contact_email text)` | Opt-in: records an address and a date so Ekwo can reach the operator. Never required, and reversible with unregister_instance(). |
 | `rehearse_post_document(p_document_id uuid)` | What post_document() would write, without writing it: the function is called for real inside a block that is then rolled back, so every rule, lock and refusal is the real one. The entry number shown is the one it would take now; somebody else posting first takes it instead. Amounts are text. |
 | `remove_member(p_company_id uuid, p_user_id uuid)` | Takes a member out of a company and returns the row that left. Needs members.manage, except to leave oneself. The last owner of a company is refused, themself included: promote a successor first. Pending invitations are not touched; revoke_invitation() withdraws them. |
@@ -2149,6 +2191,7 @@ Constraints:
 | `suggest_matches(p_transaction_id uuid)` | What a statement line could settle: the open items it matches, the evidence, and how many candidates that same evidence produced. Writes nothing. A combination of several documents is offered by suggest_combination(), separately, because it is a resemblance and not an identification. |
 | `supersede_filing(p_filing_id uuid)` | Opens a corrective: the declaration that went becomes superseded and a new draft is prepared from today's ledger, at the unit the form is filed in, pointing at it. What was sent stays as it was sent. |
 | `tax_filing_deposits_files_are_its_own()` | Refuses a deposit whose sent file or receipt is not an attachment of its declaration's company, in the same words for a file of another company and a file of nobody, before either foreign key is asked; and a person or a key who names a declaration of a company they may not know of, before anything is read (decision 0065). |
+| `tax_filing_values_sha256(p_filing_id uuid)` | sha256 of the figures of a declaration in canonical form: one canonical_json() line for {report_code, period_start, period_end}, then one per box {box, kind, amount} in box then kind order. Null for a declaration whose figures were never computed, or that the caller may not read. |
 | `tax_point_of(p_company_id uuid, p_document_date date, p_delivery_date date, p_payment_date date)` | The day the tax on a document falls due, under the rule its company's country declares. The only function that reads country_defaults.tax_point_rule, and the only place the vocabulary of that column is written out. Null where the country declares no rule or where the rule names a date the caller does not have, and null means the entry's own date to every reader of it. |
 | `tax_posting_boxes_agree()` | Keeps declaration_box and declaration_boxes in step on a tax posting: a writer that moves one is handed the other. A writer that moves both is left alone and judged by the check constraint, and a writer that clears the box clears the list with it. |
 | `tax_rate_at(p_tax_id uuid, p_date date)` | Percentage in force at a date, NULL when the tax does not apply then. |
@@ -2165,6 +2208,7 @@ Constraints:
 | `unregister_instance()` | Undoes register_instance(). Opting in is reversible, or it is not a choice. |
 | `unshare_instance()` | Turns the shared setting off: the installation is one customer's again, and creating a company an instance-level act. The installer or an instance administrator. |
 | `upcoming_filings(p_company_id uuid, p_from date, p_to date)` | What this company has to file between two dates: the periods its cadences produce — any whole number of months, anchored on 1 January — the day each is due where the pack says, and the declaration already prepared or sent against it. Read-only; sending the reminder is somebody else's job, because a reminder needs a channel and somebody to operate it. |
+| `upgrade_filing_proof(p_proof_id uuid, p_proof_base64 text, p_anchor_chain text, p_anchor_height bigint, p_anchor_time timestamp with time zone, p_anchor_reference text)` | Replaces the bytes of a pending proof with the longer proof a calendar returned. With an anchor — the ledger, and a block height or a reference — the proof becomes complete and is frozen. Needs filings.prove. |
 | `use_api_key(p_secret text)` | Presents a machine key for the current transaction: has_capability() answers for it until the transaction ends. Refuses a key that is unknown, withdrawn or expired. Records the use when the transaction may write — a read request runs in a read-only transaction, where the stamp is worth less than the request. |
 | `user_preferences_company_is_known()` | Refuses a preferred company that does not exist or that the person may not know of, with one answer for both (decision 0065). |
 | `vat_prefix_of(p_code text)` | The two letters a territory's VAT identification numbers carry: EL for Greece, FR for Monaco, GB for the Isle of Man, and the code itself everywhere else — including for a territory this table does not carry, whose own two letters come back unchanged. Null when what it resolves to is not two letters, which is a territory that identifies under nobody. |
