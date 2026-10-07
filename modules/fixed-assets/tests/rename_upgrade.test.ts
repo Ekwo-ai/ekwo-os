@@ -35,7 +35,11 @@ const seedDir = join(repoRoot, 'supabase', 'seed');
 /** The module's seed as it was compiled before the rename: the same rows, into `assets.*`. */
 const beforeTheRename = (sql: string): string => sql.replace(/\bfixed_assets\./g, 'assets.');
 
-/** An installation of the release before: every migration but the two of the rename. */
+/**
+ * An installation of the release before: every migration but the two of the
+ * rename, and none of the module's written after it — those were published
+ * with or after the rename, and an upgrade applies them after it.
+ */
 async function installedBefore(): Promise<PGlite> {
   const db = new PGlite();
   await db.waitReady;
@@ -45,7 +49,7 @@ async function installedBefore(): Promise<PGlite> {
     await db.exec(await readFile(join(socleDir, file), 'utf8'));
   }
   for (const migration of await moduleMigrationFiles()) {
-    if (migration.version === RENAME) continue;
+    if (migration.code === 'assets' && migration.version >= RENAME) continue;
     await db.exec(await readFile(migration.path, 'utf8'));
   }
   for (const file of await seedFiles()) await db.exec(await readFile(join(seedDir, file), 'utf8'));
@@ -59,8 +63,12 @@ async function installedBefore(): Promise<PGlite> {
 async function applyTheRename(db: PGlite): Promise<void> {
   const socle = (await readdir(socleDir)).find((f) => f.startsWith(ARCHIVE_NAMES)) as string;
   await db.exec(await readFile(join(socleDir, socle), 'utf8'));
-  const module = (await moduleMigrationFiles()).find((m) => m.version === RENAME);
-  await db.exec(await readFile(module?.path as string, 'utf8'));
+  // The rename, then what the module published after it, in the order of
+  // their versions — as `ekwo migrate` applies them.
+  for (const migration of await moduleMigrationFiles()) {
+    if (migration.code !== 'assets' || migration.version < RENAME) continue;
+    await db.exec(await readFile(migration.path, 'utf8'));
+  }
 }
 
 /** Every row the module holds, and every entry it posted, as text. */
