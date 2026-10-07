@@ -61,7 +61,7 @@ function network(args: ParsedArgs, deps: ProofDeps): NetworkOptions {
   const upgradeCalendars = stringFlags(args, 'upgrade-calendar');
   const explorer = stringFlag(args, 'explorer');
   return {
-    fetch: deps.proofFetch ?? ((url, init) => globalThis.fetch(url, init)),
+    fetch: deps.proofFetch ?? ((url, init) => globalThis.fetch(url, init as RequestInit | undefined)),
     ...(calendars.length === 0 ? {} : { calendars }),
     ...(upgradeCalendars.length === 0 ? {} : { upgradeCalendars }),
     ...(explorer === undefined ? {} : { explorer }),
@@ -183,7 +183,7 @@ async function verify(args: ParsedArgs, deps: ProofDeps): Promise<number> {
     return 1;
   }
 
-  const fetch = deps.proofFetch ?? ((url: string, init?: Parameters<ProofFetch>[1]) => globalThis.fetch(url, init));
+  const fetch = deps.proofFetch ?? ((url: string, init?: Parameters<ProofFetch>[1]) => globalThis.fetch(url, init as RequestInit | undefined));
   const check = await checkProof(
     bytes,
     ots,

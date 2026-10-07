@@ -13,6 +13,12 @@ committed to a public ledger that nobody controls, and the proof of that
 commitment is kept. Anybody who holds the file recomputes the hash, reads the
 proof, and checks it against the ledger with software of their own choosing.
 
+The company is the one that publishes. It decides which filing to prove and
+when, and it decides whom to show the file to — an investor, a bank, a
+customer, the public, or nobody. The world sees what the company chooses to
+hand over, and the proof makes that choice verifiable. Only the company stamps
+its own filings.
+
 The feature is the same for every company in every country. It reads no pack
 and has no national variant: a hash is a hash, and a public ledger is public
 everywhere. What is proved can be any declaration, the annual accounts of any
