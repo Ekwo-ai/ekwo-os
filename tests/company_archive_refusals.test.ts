@@ -188,13 +188,15 @@ describe('an archive that lies is refused whole', () => {
   it('an export that leaked: the sweep sees it, and so does the door', async () => {
     // Not a lie somebody told — a bug somebody could write. The predicate of
     // one table is broken on purpose in a scratch installation, and both ends
-    // have to notice on their own.
+    // have to notice on their own. The condition is written in one place,
+    // which company_archive_predicate() and the export both read.
     const leaky = await freshDatabase();
     try {
       const one1 = await furnish(leaky, pack, 'First', 'FIRST');
       await furnish(leaky, pack, 'Second', 'SECOND');
       await leaky.exec(`
-        create or replace function company_archive_predicate(p_schema text, p_table text, p_alias text)
+        create or replace function company_archive_predicate_via(p_schema text, p_table text, p_via_column text,
+                                                                  p_via_table text, p_alias text)
         returns text language sql stable as $f$
           select case when p_table = 'companies' then format('%I.id = $1', p_alias)
                       when p_table in ('journal_sequences') then format('%I.journal_id in (select id from journals where company_id = $1)', p_alias)

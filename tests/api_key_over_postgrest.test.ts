@@ -185,6 +185,92 @@ describe('a request that carries a key', () => {
   });
 });
 
+describe('the clock of a request that carries a key', () => {
+  /**
+   * The statement_timeout a request runs its work under. PostgREST arms the
+   * clock of the role it starts the request as — `anon` — before the
+   * pre-request; `set local` stands for that, and the hook comes after it.
+   */
+  async function clockOf(secret: string | undefined): Promise<{ role: string; timeout: string }> {
+    await db.exec(`
+      select set_config('request.jwt.claims', '', false);
+      select set_config('ekwo.installing', '', false);
+    `);
+    await db.query('begin');
+    try {
+      await db.exec(`
+        set local role anon;
+        set local statement_timeout = '3s';
+        select set_config('request.headers', '${headers(secret)}', true);
+      `);
+      await db.query(`select ekwo_pre_request()`);
+      return await one<{ role: string; timeout: string }>(
+        db,
+        `select current_user::text as role, current_setting('statement_timeout') as timeout`,
+      );
+    } finally {
+      await db.query('commit');
+      await db.exec(`
+        reset role;
+        select set_config('request.headers', '', false);
+        select set_config('ekwo.installing', 'on', false);
+      `);
+    }
+  }
+
+  /** Runs a block with role settings in place, as a hosted project configures them. */
+  async function withRoleSettings<T>(statements: string[], undo: string[], fn: () => Promise<T>): Promise<T> {
+    for (const statement of statements) await db.exec(statement);
+    try {
+      return await fn();
+    } finally {
+      for (const statement of undo) await db.exec(statement);
+    }
+  }
+
+  it('is the one configured for `authenticated`, not the one of `anon`', async () => {
+    const secret = await issue('Copie de nuit', ['entries.read']);
+    const clock = await withRoleSettings(
+      [`alter role anon set statement_timeout = '3s'`, `alter role authenticated set statement_timeout = '8s'`],
+      [`alter role anon reset statement_timeout`, `alter role authenticated reset statement_timeout`],
+      () => clockOf(secret),
+    );
+    expect(clock).toEqual({ role: 'authenticated', timeout: '8s' });
+  });
+
+  it('prefers the setting for this database to the one for every database', async () => {
+    const secret = await issue('Copie de nuit, ici', ['entries.read']);
+    const here = (await one<{ name: string }>(db, `select current_database() as name`)).name;
+    const clock = await withRoleSettings(
+      [
+        `alter role authenticated set statement_timeout = '8s'`,
+        `alter role authenticated in database "${here}" set statement_timeout = '9s'`,
+      ],
+      [
+        `alter role authenticated reset statement_timeout`,
+        `alter role authenticated in database "${here}" reset statement_timeout`,
+      ],
+      () => clockOf(secret),
+    );
+    expect(clock.timeout).toBe('9s');
+  });
+
+  it('is left as it is where nothing is configured for `authenticated`', async () => {
+    const secret = await issue('Copie de nuit, sans reglage', ['entries.read']);
+    const clock = await clockOf(secret);
+    expect(clock).toEqual({ role: 'authenticated', timeout: '3s' });
+  });
+
+  it('stays the anonymous one for a request without a key', async () => {
+    const clock = await withRoleSettings(
+      [`alter role authenticated set statement_timeout = '8s'`],
+      [`alter role authenticated reset statement_timeout`],
+      () => clockOf(undefined),
+    );
+    expect(clock).toEqual({ role: 'anon', timeout: '3s' });
+  });
+});
+
 describe('what a key is on', () => {
   it('is its own company, and no other', async () => {
     const secret = await issue('Portee', ['entries.read', 'settings.read']);

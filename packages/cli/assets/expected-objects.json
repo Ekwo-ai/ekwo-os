@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.11.0",
-  "migration": "20261007180000",
+  "migration": "20261007190000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3845,6 +3845,10 @@
         "arguments": ""
       },
       {
+        "name": "authenticated_statement_timeout",
+        "arguments": ""
+      },
+      {
         "name": "auto_settle",
         "arguments": "p_company_id uuid, p_from date, p_to date, p_apply boolean"
       },
@@ -3870,6 +3874,10 @@
       },
       {
         "name": "bank_statements_refresh_balance",
+        "arguments": ""
+      },
+      {
+        "name": "caller_companies",
         "arguments": ""
       },
       {
@@ -3925,8 +3933,20 @@
         "arguments": "p_schema text, p_table text, p_alias text"
       },
       {
+        "name": "company_archive_predicate_via",
+        "arguments": "p_schema text, p_table text, p_via_column text, p_via_table text, p_alias text"
+      },
+      {
         "name": "company_archive_row_count",
         "arguments": "p_company_id uuid, p_table text"
+      },
+      {
+        "name": "company_archive_row_counts",
+        "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "company_archive_rows_query",
+        "arguments": "p_schema text, p_table text, p_where text"
       },
       {
         "name": "company_archive_tables",
@@ -4159,6 +4179,10 @@
       {
         "name": "export_company",
         "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "export_company_archive",
+        "arguments": "p_company_id uuid, p_with_rows boolean"
       },
       {
         "name": "export_company_manifest",
@@ -7201,6 +7225,17 @@
           "service_role": []
         },
         {
+          "name": "authenticated_statement_timeout",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "auto_settle",
           "arguments": "p_company_id uuid, p_from date, p_to date, p_apply boolean",
           "anon": [],
@@ -7264,6 +7299,17 @@
           "anon": [],
           "authenticated": [],
           "service_role": []
+        },
+        {
+          "name": "caller_companies",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
         },
         {
           "name": "can_write_company",
@@ -7399,8 +7445,41 @@
           ]
         },
         {
+          "name": "company_archive_predicate_via",
+          "arguments": "p_schema text, p_table text, p_via_column text, p_via_table text, p_alias text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "company_archive_row_count",
           "arguments": "p_company_id uuid, p_table text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "company_archive_row_counts",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "company_archive_rows_query",
+          "arguments": "p_schema text, p_table text, p_where text",
           "anon": [],
           "authenticated": [
             "execute"
@@ -7962,6 +8041,17 @@
         {
           "name": "export_company",
           "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "export_company_archive",
+          "arguments": "p_company_id uuid, p_with_rows boolean",
           "anon": [],
           "authenticated": [
             "execute"

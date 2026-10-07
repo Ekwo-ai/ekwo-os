@@ -54,7 +54,14 @@ by `pgrst.db_pre_request` on its login role. Here that is
 2. it presents the key, which checks the hash and refuses one that is unknown,
    withdrawn or expired. A refusal here fails the whole request;
 3. only then it moves the request off `anon` and onto `authenticated`, whose
-   grants row level security is written against.
+   grants row level security is written against;
+4. and gives it the `statement_timeout` configured for `authenticated`, read
+   from the role settings of the database (`authenticated_statement_timeout()`)
+   — the setting for this database first, then the one for every database.
+   PostgREST armed the clock of `anon` when the request started, and a
+   request a key makes would otherwise run its work on the anonymous time —
+   three seconds on a hosted project, where a person signed in gets eight.
+   Where nothing is configured for `authenticated`, the clock stays as it was.
 
 `auth.uid()` stays null through all of it. A key is not a session: the policies
 that ask for a signed-in user still answer no, and what the caller may do is

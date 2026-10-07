@@ -197,9 +197,12 @@ member. Three conditions, all checked by the database:
    off with rows in it stops the export too, until it is turned back on.
 
 **One snapshot.** `export_company()` reads the manifest and every table in one
-statement. `export_company_manifest()` and `export_company_table()` are stable
-and read the snapshot of whatever calls them: called one after the other — to
-stream a large company, as the CLI does — they belong in one `repeatable read`
+statement, through `export_company_archive()`: the right, the sweep of the
+catalogue and the list of tables are asked once per archive, and each table is
+read once for its row count, both checksums and its rows.
+`export_company_manifest()` and `export_company_table()` are stable and read
+the snapshot of whatever calls them: called one after the other — to stream a
+large company, as the CLI does — they belong in one `repeatable read`
 transaction, or the tables may disagree with each other and with the manifest.
 
 An export is recorded: `export_company()` and the CLI write `company_exported`
