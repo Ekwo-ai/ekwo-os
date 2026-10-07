@@ -173,7 +173,17 @@ that is not cut.
    `--reset`: all green both times, about 58 s each. Run it with both forms of
    key: a new project hands out the new ones first.
 
-   **The last run: 2 October 2026, for `0.10.0`**, on a throwaway project in
+   **The last run: 7 October 2026, for `0.11.0`**, on a throwaway project in
+   `eu-west-3` (Postgres 17.11, session pooler `aws-1`), deleted afterwards.
+   BE (`default` chart, `fr`), EE (`et`), FR, GB (year opening 1 April) and
+   US, each upgraded from `ekwo-os@0.10.0` on npm, with `--reset` between
+   runs: 22 steps each, all green, 123 to 140 s a run. Then `--multi-country`,
+   EE and SG: 12 steps, all green, 87 s. The first run stopped at *the audit
+   trail recorded the acts*: the script ordered the trail by `id`, which this
+   release no longer grants to clients (decision 0065); it now orders by
+   `occurred_at, sequence`, as `read_audit_log` does. No load run.
+
+   The run before, on 2 October 2026, for `0.10.0`, on a throwaway project in
    `eu-west-3` (Postgres 17.11, session pooler `aws-1`), deleted afterwards.
    AE, BE, EE (`et`), FR, GB (year opening 1 April), LU (quarterly), SG, SN
    (monthly), US and ZA (monthly), each upgraded from `ekwo-os@0.9.0` on npm —

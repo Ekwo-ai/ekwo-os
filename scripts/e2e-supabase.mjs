@@ -970,7 +970,7 @@ async function main() {
 
   await step('the audit trail recorded the acts', async () => {
     const written = await rest.select(
-      `/audit_log?company_id=eq.${company.id}&select=action&order=id.asc`,
+      `/audit_log?company_id=eq.${company.id}&select=action&order=occurred_at.asc,sequence.asc`,
     );
     const actions = new Set(written.map((row) => row.action));
     for (const wanted of ['document_posted', 'fiscal_year_closed', 'fiscal_year_reopened']) {
