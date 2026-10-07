@@ -173,7 +173,12 @@ that is not cut.
    `--reset`: all green both times, about 58 s each. Run it with both forms of
    key: a new project hands out the new ones first.
 
-   **The last run: 7 October 2026, for `0.11.0`**, on a throwaway project in
+   **The last run: 7 October 2026, for `0.11.1`**, on a throwaway project in
+   `eu-west-3`, deleted afterwards: BE (`default` chart, `fr`) and FR, each
+   upgraded from `ekwo-os@0.11.0` on npm, `--reset` between runs: 22 steps
+   each, all green, about 178 s a run. No load run.
+
+   The run before, on 7 October 2026, for `0.11.0`, on a throwaway project in
    `eu-west-3` (Postgres 17.11, session pooler `aws-1`), deleted afterwards.
    BE (`default` chart, `fr`), EE (`et`), FR, GB (year opening 1 April) and
    US, each upgraded from `ekwo-os@0.10.0` on npm, with `--reset` between
