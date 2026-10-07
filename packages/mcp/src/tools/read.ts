@@ -957,7 +957,7 @@ export async function readAuditLog(
     table: 'audit_log',
     columns: columns.AUDIT_LOG,
     where,
-    order: [{ column: 'occurred_at', ascending: false }, { column: 'id', ascending: false }],
+    order: [{ column: 'occurred_at', ascending: false }, { column: 'sequence', ascending: false }],
     limit: args.limit ?? 50,
   });
 

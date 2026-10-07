@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.10.0",
-  "migration": "20261007060225",
+  "migration": "20261007113415",
   "socle": {
     "schema": "public",
     "tables": [
@@ -344,6 +344,10 @@
           {
             "name": "record_key",
             "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "integer"
           },
           {
             "name": "table_name",
@@ -752,6 +756,10 @@
           {
             "name": "created_at",
             "type": "timestamp with time zone"
+          },
+          {
+            "name": "created_by",
+            "type": "uuid"
           },
           {
             "name": "currency_code",
@@ -3885,6 +3893,10 @@
         "arguments": "p_contact_id uuid"
       },
       {
+        "name": "companies_creator_is_fixed",
+        "arguments": ""
+      },
+      {
         "name": "companies_default_bank_account_is_ours",
         "arguments": ""
       },
@@ -4241,6 +4253,10 @@
         "arguments": ""
       },
       {
+        "name": "instance_admins_keep_one",
+        "arguments": ""
+      },
+      {
         "name": "instance_has_no_admin",
         "arguments": ""
       },
@@ -4509,6 +4525,10 @@
         "arguments": "p_company_id uuid, p_currency_code text"
       },
       {
+        "name": "scope_references_to_company",
+        "arguments": "p_schema text"
+      },
+      {
         "name": "set_member_role",
         "arguments": "p_company_id uuid, p_user_id uuid, p_role member_role, p_capabilities jsonb"
       },
@@ -4643,6 +4663,10 @@
       {
         "name": "use_api_key",
         "arguments": "p_secret text"
+      },
+      {
+        "name": "user_preferences_company_is_known",
+        "arguments": ""
       },
       {
         "name": "vat_prefix_of",
@@ -5257,6 +5281,10 @@
       },
       {
         "table": "companies",
+        "name": "companies_creator_is_fixed"
+      },
+      {
+        "table": "companies",
         "name": "companies_default_bank_account_is_ours"
       },
       {
@@ -5493,6 +5521,10 @@
       },
       {
         "table": "instance_admins",
+        "name": "instance_admins_keep_one"
+      },
+      {
+        "table": "instance_admins",
         "name": "instance_members_set_updated_at"
       },
       {
@@ -5594,6 +5626,10 @@
       {
         "table": "taxes",
         "name": "taxes_set_updated_at"
+      },
+      {
+        "table": "user_preferences",
+        "name": "user_preferences_company_is_known"
       },
       {
         "table": "user_preferences",
@@ -6113,10 +6149,10 @@
           "name": "audit_log",
           "anon": [],
           "authenticated": [
-            "select"
+            "select(occurred_at, actor_id, api_key_id, company_id, table_name, record_id, record_key, operation, action, old_values, new_values, sequence)"
           ],
           "service_role": [
-            "select"
+            "select(occurred_at, actor_id, api_key_id, company_id, table_name, record_id, record_key, operation, action, old_values, new_values, sequence)"
           ]
         },
         {
@@ -7263,6 +7299,14 @@
           ]
         },
         {
+          "name": "companies_creator_is_fixed",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "companies_default_bank_account_is_ours",
           "arguments": "",
           "trigger": true,
@@ -8165,6 +8209,14 @@
           ]
         },
         {
+          "name": "instance_admins_keep_one",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "instance_has_no_admin",
           "arguments": "",
           "anon": [
@@ -8907,6 +8959,13 @@
           ]
         },
         {
+          "name": "scope_references_to_company",
+          "arguments": "p_schema text",
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "set_member_role",
           "arguments": "p_company_id uuid, p_user_id uuid, p_role member_role, p_capabilities jsonb",
           "anon": [],
@@ -9264,6 +9323,14 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "user_preferences_company_is_known",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "vat_prefix_of",

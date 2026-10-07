@@ -141,7 +141,7 @@ Everything the database holds about the company:
 | The bank | `bank_accounts`, `bank_statements`, `bank_transactions`, and which lines each statement lists in `bank_statement_lines` |
 | Declarations | `tax_filings`, the figures each was frozen with in `tax_filing_boxes`, and the proof each one went in `tax_filing_deposits` |
 | Pieces | `attachments` — the rows |
-| The trail | `audit_log` of the company |
+| The trail | `audit_log` of the company, in the order of `occurred_at` and `sequence` — without its row ids, which are the installation's own counter, are not a signed-in reader's to read, and are drawn again on arrival |
 | Modules | `fixed_assets.fixed_assets`, `fixed_assets.depreciation_lines`, `fixed_assets.disposals`, `budgets.budgets`, `budgets.lines`, and what the company declared and computed for its corporate income tax: `tax.company_parameters`, `tax.adjustments`, `tax.credits`, `tax.computations`, `tax.computation_lines`, `tax.losses`, `tax.loss_uses` |
 
 ## What does not, and why

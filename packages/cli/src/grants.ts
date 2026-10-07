@@ -90,6 +90,24 @@ export async function describeGrants(rows: QueryRows, schema: string): Promise<G
       where n.nspname = $1 and c.relkind in (${KINDS})`,
   );
 
+  // A privilege granted on some columns only — `audit_log`, whose id is not a
+  // client's to read — is one entry, `select(occurred_at, sequence, …)`, the
+  // columns in table order: it is a declaration of its own, and a table-level
+  // grant in its place is the very thing a check has to see.
+  const columnAcl = await q<{ key: string; grantee: string; privilege: string }>(
+    `select x.key, x.grantee, x.privilege || '(' || string_agg(x.column_name, ', ' order by x.attnum) || ')' as privilege
+       from (select c.relname as key, a.attname as column_name, a.attnum,
+                    pg_get_userbyid((aclexplode(a.attacl)).grantee) as grantee,
+                    lower((aclexplode(a.attacl)).privilege_type) as privilege
+               from pg_attribute a
+               join pg_class c on c.oid = a.attrelid
+               join pg_namespace n on n.oid = c.relnamespace
+              where n.nspname = $1 and c.relkind in (${KINDS})
+                and a.attnum > 0 and not a.attisdropped and a.attacl is not null) x
+      group by x.key, x.grantee, x.privilege`,
+  );
+  relations.push(...columnAcl);
+
   const names = await q<{ name: string; kind: string }>(
     `select c.relname as name, c.relkind as kind
        from pg_class c

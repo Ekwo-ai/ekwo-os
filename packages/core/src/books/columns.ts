@@ -461,8 +461,8 @@ export const RECONCILIATION = [
 ];
 
 export const AUDIT_LOG = [
-  'id',
   'occurred_at::text',
+  'sequence',
   'actor_id',
   'api_key_id',
   'company_id',

@@ -294,7 +294,7 @@ Values of an axis, optionally hierarchical.
 Constraints:
 
 - `PRIMARY KEY (id)`
-- `UNIQUE (axis_id, code)`
+- `UNIQUE (axis_id, code, company_id)`
 
 ### `api_keys`
 
@@ -351,7 +351,7 @@ Append-only record of every change to the configuration and reference data of a 
 
 | Column | Type | Notes |
 |---|---|---|
-| `id` | `bigint` | not null |
+| `id` | `bigint` | not null — The row's number in the installation. Not granted to a signed-in user: the gap between two ids of one company is the work of every other company in between. Read the trail in the order of occurred_at and sequence. |
 | `occurred_at` | `timestamp with time zone` | not null |
 | `actor_id` | `uuid` | The person the change was made for: the signed-in user, or the person who issued the machine key presented (acting_user()). Null on a direct connection, and for a key the installation issued itself. |
 | `api_key_id` | `uuid` | The machine key presented in the transaction, when one was. Beside actor_id, the trail says for whom and through what. |
@@ -363,6 +363,7 @@ Append-only record of every change to the configuration and reference data of a 
 | `action` | `text` | The business act this change is, when it is one. Null for an ordinary edit. |
 | `old_values` | `jsonb` | The row before, as jsonb. Null on an insert. Secrets are replaced by null, never stored twice. |
 | `new_values` | `jsonb` | The row after, as jsonb. Null on a delete. |
+| `sequence` | `integer` | not null — The order of this change among those its transaction made to the same company (or to the installation itself), from 1. With occurred_at, the order a reader sorts the trail by. It counts nothing but rows of that company: unlike id, which is the installation's, it says nothing of anybody else's work (decision 0065). 0 on a row an archive brought in from an installation that did not write it. |
 
 Constraints:
 
@@ -408,7 +409,7 @@ Which lines a statement lists. A line is stored once, in bank_transactions, unde
 
 Constraints:
 
-- `PRIMARY KEY (statement_id, transaction_id)`
+- `PRIMARY KEY (statement_id, transaction_id, company_id)`
 
 ### `bank_statements`
 
@@ -585,6 +586,7 @@ Legal entities kept in this instance. One instance may hold several.
 | `territory_code` | `text` | Territory of `territories` this company is established in for tax, where the country is not precise enough: US-CA for a Californian filer, XI for a Northern Irish one. Null everywhere the country is the answer, which is every country of the common system of VAT — the resolution then reads fiscal_country. Distinct from `region`, which is a province code without a prefix and answers a different question. |
 | `peppol_scheme` | `text` | Scheme of the electronic address this company receives and sends under (EN 16931 BT-34-1): a code of the Electronic Address Scheme list, e.g. 0088 for a GLN. A fact of the company's registration with its access point, never derived from its VAT or registration number. Null together with peppol_identifier. |
 | `peppol_identifier` | `text` | The electronic address itself (EN 16931 BT-34), in the scheme peppol_scheme names. |
+| `created_by` | `uuid` | The person who created the company — acting_user() when it was written — or null when the installation did (the installer, a migration, an archive brought in). Written once and never changed: it is what companies_per_person counts on a shared installation, whoever owns the company today (decision 0065). No foreign key: it outlives the account, like the trail. |
 
 Constraints:
 
@@ -1151,7 +1153,7 @@ Constraints:
 
 - `CHECK (((percentage > (0)::numeric) AND (percentage <= (100)::numeric)))`
 - `PRIMARY KEY (id)`
-- `UNIQUE (entry_line_id, analytic_value_id)`
+- `UNIQUE (entry_line_id, analytic_value_id, company_id)`
 
 ### `entry_lines`
 
@@ -1487,7 +1489,7 @@ Constraints:
 - `CHECK ((amount > (0)::numeric))`
 - `CHECK ((debit_line_id <> credit_line_id))`
 - `PRIMARY KEY (id)`
-- `UNIQUE (debit_line_id, credit_line_id)`
+- `UNIQUE (debit_line_id, credit_line_id, company_id)`
 
 ### `role_capabilities`
 
@@ -1969,6 +1971,7 @@ Constraints:
 | `claim_instance_admin(p_user_id uuid)` | Makes a user an instance administrator. The first claim is open; afterwards only an administrator may appoint one. |
 | `close_fiscal_year(p_fiscal_year_id uuid)` | Closes a fiscal year: the result leaves the income statement the way the country model says, and every income and expense account goes back to zero. The entry that moves the result is `appropriation`, the one that empties the income statement is `closing`. The balance sheet needs no entry — the reports read the ledger from the beginning. The allocation decided by a meeting is never part of it. |
 | `commercial_entity(p_contact_id uuid)` | Root of the contact parent chain; the entity a document is booked against. |
+| `companies_creator_is_fixed()` | Writes companies.created_by from acting_user() when a company is created, and refuses to change it afterwards. The installer writes what it brings in as it is. |
 | `companies_default_capital_currency()` | A capital stated with no currency is stated in the company's own. The alternative was a literal in the schema, which is one country's answer given to every country. |
 | `companies_vat_period_is_a_filing_period()` | Records a write to the deprecated companies.vat_period as what it is: how often this company files its country's periodic return. Everything written before this migration named that column and nothing else, and this is what keeps such a writer correct without it learning a table. |
 | `companies_with_capability(p_capability text)` | The companies in which the current caller may do one named thing — the question has_capability() answers, asked once for all of them. It is what a row level security policy compares company_id against, inside a sub-select, so that the answer is worked out once per statement instead of once per row. |
@@ -1985,7 +1988,7 @@ Constraints:
 | `confirm_contact(p_transaction_id uuid, p_contact_id uuid)` | Attributes a statement line to a contact and learns from it: the account and the name as this bank writes them become motifs, and every motif that had named somebody else is charged a use without a success. Knowing who the money came from is not knowing what it pays — this function never touches a document and never reconciles anything. |
 | `contacts_language_reaches_drafts()` | A customer who changes language changes the drafts addressed to them, and nothing else: a posted document keeps the language it was sent in. |
 | `create_api_key(p_company_id uuid, p_name text, p_capabilities jsonb, p_expires_at timestamp with time zone)` | Issues a machine key on one company and returns the secret once. Only the hash is stored. No capability can be put on a key that the person issuing it does not hold, and at every use the key holds only what that person still holds (key_holds). A key issued while another key is presented records the person behind that key. |
-| `create_company(p_name text, p_country character, p_currency_code character, p_language character, p_chart_code text, p_fiscal_year integer, p_fiscal_year_start date, p_owner_user_id uuid)` | Creates a company, makes its owner the first member, copies the country pack into it and opens its first financial year on the month that pack declares. An instance-level act; on a shared installation, also a signed-in person's for a company of their own, up to companies_per_person (decision 0065). |
+| `create_company(p_name text, p_country character, p_currency_code character, p_language character, p_chart_code text, p_fiscal_year integer, p_fiscal_year_start date, p_owner_user_id uuid)` | Creates a company, makes its owner the first member, copies the country pack into it and opens its first financial year on the month that pack declares. An instance-level act; on a shared installation, also a signed-in person's for a company of their own, up to companies_per_person counted on what they created (decision 0065). |
 | `currency_of_bank_account()` | Fills a statement line's currency_code from its bank account, and from the company as a last resort. |
 | `currency_of_company()` | Fills currency_code from the company when the caller named none. The one place the question is answered for a table that belongs to a company. |
 | `currency_unit(p_rounding money_rounding)` | The smallest amount a currency has: a cent in the euro, a yen in the yen. A tolerance is written as a fraction of this rather than as a fraction of a cent. |
@@ -2025,7 +2028,7 @@ Constraints:
 | `evaluate_totals(p_values jsonb, p_formulas jsonb, p_rounding money_rounding, p_keep_zero boolean)` | Works out the totals of a declaration form or of a financial statement — a plus/minus list, or a rate applied to one other key — in the order they depend on each other. The one place that calculation lives: vat_return() and financial_statement() both call it. |
 | `export_company(p_company_id uuid)` | The whole archive as one document, read in one snapshot: `manifest`, and `tables` keyed by table name. It is what `import_company()` takes, and it writes `company_exported` on the audit trail. A large company is better read table by table, which is what the CLI does; this is the same rows in one answer. |
 | `export_company_manifest(p_company_id uuid)` | What an archive of this company is: the format and its version, the socle, the packs and the modules an installation needs to take it in, every table with its row count, the sha256 of the bytes its file holds and the sha256 of its values, the tables left behind with the reason, and the list of the files the attachments point at — which the archive does not carry. |
-| `export_company_table(p_company_id uuid, p_table text)` | The rows of one table for one company, one JSON object each, in primary key order: decimals as text, timestamps in UTC. Runs as its caller, needs company.export, refuses when the caller may read fewer rows than the table holds, and refuses while any table of a company is unclassified. Stable, so it reads the snapshot of the statement that calls it: called table after table, it needs a repeatable read transaction around the calls for the tables to agree with each other and with the manifest — which is what the CLI opens — or use export_company(), which is one statement. |
+| `export_company_table(p_company_id uuid, p_table text)` | The rows of one table for one company, one JSON object each, in primary key order — or, for a table whose primary key is an identity, which does not leave, in the order of every column that does: decimals as text, timestamps in UTC. Runs as its caller, needs company.export, refuses when the caller may read fewer rows than the table holds, and refuses while any table of a company is unclassified. Stable, so it reads the snapshot of the statement that calls it: called table after table, it needs a repeatable read transaction around the calls for the tables to agree with each other and with the manifest — which is what the CLI opens — or use export_company(), which is one statement. |
 | `export_company_tables(p_company_id uuid)` | Every exported table of one company as one object, keyed by table name. The `tables` half of export_company(). |
 | `fec_lines(p_company_id uuid, p_from date, p_to date)` | The eighteen columns of the French FEC for a period: the opening balances of the financial year first, computed and never posted, then its movements in chronological order. The entries the close wrote are left out — the file carries the income statement in its ordinary lines, and the result reaches the balance sheet in the opening lines of the year that follows. |
 | `file_filing(p_filing_id uuid, p_reference text, p_filed_at timestamp with time zone, p_channel filing_channel, p_service text)` | Records that a declaration has gone, with the reference the administration gave back, and keeps the send as a row of tax_filing_deposits. It asks that the figures were computed, not that there are any: a period where nothing happened is filed nil. A rejected declaration may be sent again — it was never received — and the second send is a second deposit, not a corrective. |
@@ -2051,6 +2054,8 @@ Constraints:
 | `init_instance(p_organization_name text, p_country character, p_edition instance_edition)` | Records the installation. Called once, by the installer. Leaves the registration fields empty. |
 | `install_country_template(p_company_id uuid, p_country character, p_language character, p_chart_code text)` | Copies one chart of a country pack into a company in one language, with the country's journals and taxes, wires the default roles, pins the accounts it wired, and records the pack version and the chart in company_packs. A tax posting is copied with every declaration box it prints in. |
 | `installed_schema_version()` | The schema version this installation runs, and its edition, for a caller it knows: a signed-in account that is on no company yet, or the holder of a machine key that still reaches something. No rows for anybody else, so an anonymous call learns nothing. Nothing else of the instance row comes with it. |
+| `instance_admins_keep_one()` | Refuses to remove the last administrator of a shared installation, whoever asks (decision 0065). |
+| `instance_has_no_admin()` | Whether the first signed-in user may claim this installation: it has no administrator, and it is not shared (decision 0065). |
 | `instance_is_shared()` | Whether this installation is shared by several unrelated people (decision 0065). False on an installation with no instance row yet. |
 | `instance_sharing()` | Whether this installation is shared, and how many companies one person may create on it. Says nothing about anybody's companies. |
 | `invite_member(p_company_id uuid, p_email text, p_role member_role, p_capabilities jsonb, p_valid_for interval)` | Invites an address into a company and returns the token once. Only the hash is stored; re-inviting the same address revokes the pending invitation. |
@@ -2116,6 +2121,7 @@ Constraints:
 | `revoke_share(p_share_id uuid)` | Withdraws a link, now and for good. A withdrawn link answers exactly like one that never existed; there is no un-withdraw, because a secret that has been out of the building is issued again rather than brought back. |
 | `round_amount(p_amount numeric, p_rounding money_rounding)` | Rounds an amount at the decimals of its currency, by the method of its country. The only function of the schema that names a rounding method; every other one asks rounding_of() and passes the answer here. |
 | `rounding_of(p_company_id uuid, p_currency_code text)` | How this company writes an amount in this currency, or in its own when none is named. The only place currencies.decimal_places and country_defaults.rounding_method are read. |
+| `scope_references_to_company(p_schema text)` | Makes every reference of a schema from a company's table to another company's table by id alone a composite key with company_id, keeping its delete action, and drops the single-column key — where a composite one stood beside it too, the two failed with different names for an id of another company and an id of nobody. Then adds company_id to every unique key of those tables that holds such a reference and not the company, which a row naming another company's row collided with before any foreign key was asked (decision 0065). Returns how many it changed. For migrations, the socle's and the modules'; executable by nobody else. |
 | `set_member_role(p_company_id uuid, p_user_id uuid, p_role member_role, p_capabilities jsonb)` | Moves a member to another preset. Needs members.manage; the last owner of a company is not demoted. The per-member adjustments are reset, as accept_invitation() writes a new member: capabilities_granted becomes p_capabilities (none by default) and capabilities_revoked is emptied, because an adjustment was decided against the preset the member leaves. |
 | `set_preferences(p_patch jsonb)` | Writes the signed-in user's preferences. A key that is present is written, null included; a key that is absent is left alone; a key nobody declared is refused. |
 | `set_updated_at()` | Generic BEFORE UPDATE trigger keeping updated_at honest. |
@@ -2123,7 +2129,7 @@ Constraints:
 | `settle_filing(p_filing_id uuid, p_credit tax_credit_treatment, p_reference text, p_contact_id uuid, p_date date)` | Clears the tax accounts a declared period moved and carries the net to the account the pack names for what is owed to the administration — or, where the period ends in a credit, to the one it names for a credit, once the company has said whether it is carried forward or claimed back. One entry per declaration, through post_entry(), with the reference the payment will be matched by. Naming the administration as the contact is what makes the debt settle by itself: matching books a payment, and a payment is made to somebody. |
 | `settle_from_statement(p_transaction_id uuid, p_line_ids uuid[])` | Books the payment a statement line is, and matches it against the open items named. One counterparty, one payment, `post_payment()` and `reconcile()` doing the accounting — nothing here writes a ledger of its own. |
 | `share_document(p_document_id uuid, p_expires_at timestamp with time zone)` | Publishes a sales document behind a link and returns the token once — only its hash is stored. `url` is the instance's public base plus /shared/<token>, or null where the instance has not recorded one. A share is never edited: revoke it and make another. |
-| `share_instance(p_companies_per_person integer)` | Turns the shared setting on (decision 0065): a signed-in person may create up to this many companies of their own, and nobody learns of a company they may not know of. The installer or an instance administrator. |
+| `share_instance(p_companies_per_person integer)` | Turns the shared setting on (decision 0065): a signed-in person may create up to this many companies of their own, and nobody learns of a company they may not know of. The installer or an instance administrator, on an installation that has an administrator. |
 | `shared_document(p_token text)` | One document, read by whoever holds its link: the header, the lines with the price as it was keyed and whether that price holds the tax, the tax breakdown, the totals, the legal mentions in the language the document was written in, and what is still owed today. Returns null — the same null, in the same shape — for a token that is unknown, withdrawn, expired, or onto a document that may no longer be shared. |
 | `significant_words(p_text text, p_minimum_length integer)` | The words of a name that are long enough to be evidence, lowercased and deduplicated. No stop list: a word shared by several contacts is disqualified by the count of what it reaches, which is a fact about this company rather than an opinion about a language. |
 | `statement_account_matches(p_company_id uuid, p_statement_code text, p_from date, p_to date)` | Every account of a company with a balance in the period, and the statement line it falls on — null when no rule catches it. An income statement and an allocation section leave the closing entry out; a balance sheet keeps it. The single decision financial_statement() and unmapped_accounts() both read. |
@@ -2148,6 +2154,7 @@ Constraints:
 | `unshare_instance()` | Turns the shared setting off: the installation is one customer's again, and creating a company an instance-level act. The installer or an instance administrator. |
 | `upcoming_filings(p_company_id uuid, p_from date, p_to date)` | What this company has to file between two dates: the periods its cadences produce — any whole number of months, anchored on 1 January — the day each is due where the pack says, and the declaration already prepared or sent against it. Read-only; sending the reminder is somebody else's job, because a reminder needs a channel and somebody to operate it. |
 | `use_api_key(p_secret text)` | Presents a machine key for the current transaction: has_capability() answers for it until the transaction ends. Refuses a key that is unknown, withdrawn or expired. Records the use when the transaction may write — a read request runs in a read-only transaction, where the stamp is worth less than the request. |
+| `user_preferences_company_is_known()` | Refuses a preferred company that does not exist or that the person may not know of, with one answer for both (decision 0065). |
 | `vat_prefix_of(p_code text)` | The two letters a territory's VAT identification numbers carry: EL for Greece, FR for Monaco, GB for the Isle of Man, and the code itself everywhere else — including for a territory this table does not carry, whose own two letters come back unchanged. Null when what it resolves to is not two letters, which is a territory that identifies under nobody. |
 | `vat_return(p_company_id uuid, p_from date, p_to date, p_report_code text)` | Declaration boxes for a period: summed from the ledger by the day each figure's tax fell due — `entry_lines.declared_on`, read through declared_lines() — then the totals of the country's form worked out by evaluate_totals(), the same evaluator financial_statement() uses. Refuses a period the company does not file **this form** on, when it has recorded one for it. No country rule lives in this function. |
 | `version_at_least(p_version text, p_floor text)` | Whether a three-part version is at or above another, number by number: 0.10.0 is above 0.9.0, which a comparison of text gets wrong. |
@@ -2250,8 +2257,8 @@ Constraints:
 - `CHECK ((period_end >= period_start))`
 - `CHECK (((posted_at IS NULL) OR (entry_id IS NOT NULL)))`
 - `PRIMARY KEY (id)`
-- `UNIQUE (asset_id, period_end)`
-- `UNIQUE (asset_id, sequence)`
+- `UNIQUE (asset_id, period_end, company_id)`
+- `UNIQUE (asset_id, sequence, company_id)`
 
 <a id="fixed_assets-disposals"></a>
 
@@ -2279,7 +2286,7 @@ Constraints:
 
 - `CHECK ((proceeds >= (0)::numeric))`
 - `PRIMARY KEY (id)`
-- `UNIQUE (asset_id)`
+- `UNIQUE (asset_id, company_id)`
 
 <a id="fixed_assets-fixed_assets"></a>
 
@@ -2399,7 +2406,7 @@ Constraints:
 
 - `CHECK ((period_end >= period_start))`
 - `PRIMARY KEY (id)`
-- `UNIQUE (budget_id, account_id, period_start, period_end)`
+- `UNIQUE (budget_id, account_id, period_start, period_end, company_id)`
 
 ### Functions
 
@@ -2539,7 +2546,7 @@ The lines tax.estimate() returned when a computation was recorded, as they were:
 Constraints:
 
 - `PRIMARY KEY (id)`
-- `UNIQUE (computation_id, sequence)`
+- `UNIQUE (computation_id, sequence, company_id)`
 
 <a id="tax-computations"></a>
 
@@ -2696,7 +2703,7 @@ Constraints:
 
 - `CHECK ((amount > (0)::numeric))`
 - `PRIMARY KEY (id)`
-- `UNIQUE (loss_id, computation_id)`
+- `UNIQUE (loss_id, computation_id, company_id)`
 
 <a id="tax-losses"></a>
 

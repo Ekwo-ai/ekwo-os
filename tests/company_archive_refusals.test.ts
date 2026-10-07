@@ -121,7 +121,9 @@ describe('an archive that lies is refused whole', () => {
     const theirs = await one<{ id: string }>(b, `select id from entries where company_id = $1 limit 1`, [victim.companyId]);
     expect(
       await attempt((x) => { firstRow(x, 'public.entries')['reversed_entry_id'] = theirs.id; }),
-    ).toContain('foreign_row');
+      // The reference is a key with the company in it (decision 0065): it is
+      // refused by that key, before the import asks whose rows arrived.
+    ).toMatch(/foreign_row|entries_reversed_entry_id_company_id_fkey/);
   });
 
   it('an entry that does not balance', async () => {

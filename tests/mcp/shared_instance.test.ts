@@ -181,15 +181,22 @@ for (const [way, backendOf] of [
         for (const target of targets) {
           const base: Record<string, unknown> = {};
           for (const name of tool.inputSchema.required ?? []) base[name] = filler(name, properties[name] ?? {});
-          const id = alice[target] as string;
-          const theirs = await called(backend, tool.name, { ...base, [target]: id }, [id, NOWHERE]);
-          const nobodys = await called(backend, tool.name, { ...base, [target]: NOWHERE }, [id, NOWHERE]);
-          probed += 1;
-          if (theirs !== nobodys) differs.push(`${tool.name}.${target}: ${theirs.slice(0, 300)} / ${nobodys.slice(0, 300)}`);
-          expect(theirs, `${tool.name}.${target}`).not.toContain('Alice Atelier');
+          // Once in a company of nobody's, and once in the person's own: a tool
+          // that writes in their company a row naming one of hers has to
+          // answer as for a row of nobody's too.
+          const companies = target !== 'company_id' && properties['company_id'] !== undefined ? [base['company_id'], bobCompany] : [base['company_id']];
+          for (const company of companies) {
+            const args = company === undefined ? base : { ...base, company_id: company };
+            const id = alice[target] as string;
+            const theirs = await called(backend, tool.name, { ...args, [target]: id }, [id, NOWHERE]);
+            const nobodys = await called(backend, tool.name, { ...args, [target]: NOWHERE }, [id, NOWHERE]);
+            probed += 1;
+            if (theirs !== nobodys) differs.push(`${tool.name}.${target}: ${theirs.slice(0, 300)} / ${nobodys.slice(0, 300)}`);
+            expect(theirs, `${tool.name}.${target}`).not.toContain('Alice Atelier');
+          }
         }
       }
-      expect(probed).toBeGreaterThan(30);
+      expect(probed).toBeGreaterThan(60);
       expect(differs).toEqual([]);
     });
   });

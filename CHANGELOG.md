@@ -41,7 +41,70 @@ somewhere has already run it.
   requires the same answer both times. `tests/mcp/shared_instance.test.ts`
   does the same through every tool of the MCP server.
 
+### Security
+
+- **A tenant measures nothing of another** (`20261007113412`, and
+  `20261007113413`, `20261007113414`, `20261007113415` for the `budgets`,
+  `fixed-assets` and `corporate-tax` modules; decision
+  [0065](docs/decisions/0065-a-shared-instance-keeps-its-tenants-apart.md)).
+  Eight ways remained, on a shared installation, for one person to see,
+  reach, measure or learn of another's rows. All are closed.
+
+  - `audit_log.id` is one counter for the installation, and members read it:
+    the gap between two ids of one's own company counted every other
+    company's changes. It is no longer granted to `authenticated`. The trail
+    gains `sequence`, the order of a change among those its transaction made
+    to the same company, and is read in the order of `occurred_at` and
+    `sequence` — which the MCP tool `read_audit_log` now does, returning
+    `sequence` instead of `id`. An archive no longer carries the id of the
+    trail, which was drawn again on arrival anyway.
+  - On a shared installation nobody claims it (`instance_has_no_admin()` says
+    false), `share_instance()` refuses with `no_instance_admin` while it has
+    no administrator, and the last administrator does not leave
+    (`last_instance_admin`).
+  - The guards that keep a posted document, its lines, a posted entry and its
+    lines from moving read the row a new value named in any company and quoted
+    its number in their refusal; a posted entry on another company's journal
+    compared its number with that journal's counter. They now look in the
+    row's own company, and step aside for a row headed for a company the
+    caller may not know of, which row level security refuses.
+  - `user_preferences.preferred_company_id` said by its foreign key whether a
+    company exists. A company the caller may not know of is now refused as
+    one that does not exist, `unknown_company`.
+  - Every reference from a company's table to another company's table by id
+    alone — `documents.reversed_document_id`, `entries.document_id`,
+    `entries.fiscal_year_id`, `accounts.parent_id`, the accounts of a contact
+    and a journal, `budgets.budgets.fiscal_year_id`, the document line,
+    product, entries, contact and account of a fixed asset, a depreciation
+    line and a disposal, the financial year of the `tax` tables, and the rest
+    the catalogue lists — is now a composite key with `company_id`, keeping
+    its delete action. Where the composite key already stood beside the
+    single one, the single one is dropped: the two failed under two names for
+    an id of another company and an id of nobody. Every unique key of those
+    tables that holds such a reference holds `company_id` too, or a row naming
+    another company's row collided with it first.
+    `scope_references_to_company()` does it from the catalogue.
+  - The cancellation guard looks for the credit note in the invoice's own
+    company: a credit note of another company can no longer keep an invoice
+    from being cancelled.
+  - `create_company()` counted the companies a person owned, which handing
+    one to a second account reset. `companies.created_by` now records who
+    created a company, cannot be rewritten (`company_creator_is_fixed`), and
+    is what the allowance counts. Companies that existed before are counted
+    against their first owner, as they were until now.
+
+  `tests/shared_instance.test.ts` now walks every schema that holds a
+  company's rows, writes — a row of one's own pointing each foreign key at the
+  other person's row, then at nobody's — hands ids inside the objects and
+  lists functions read them from, and checks that nothing a person reads
+  moves while the other works. `tests/mcp/shared_instance.test.ts` also
+  probes each tool in the person's own company.
+
 ### Changed
+
+- **The audit trail is read by its columns.** A signed-in client selecting
+  `*` from `audit_log` is refused, because it names `id`; name the columns,
+  and order by `occurred_at` and `sequence`.
 
 - **A key writes as the person who issued it** (`20261007041207`, and
   `20261007041208` for the `tax` module; decision
