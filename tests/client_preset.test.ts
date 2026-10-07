@@ -1004,6 +1004,9 @@ describe('a client writes nothing else — by the function', () => {
       },
       'public.register_instance': { sql: `select register_instance('client@example.test')`, params: [] },
       'public.unregister_instance': { sql: `select unregister_instance()`, params: [] },
+      // Sharing the installation is the installer's or an administrator's (0065).
+      'public.share_instance': { sql: `select share_instance(1)`, params: [] },
+      'public.unshare_instance': { sql: `select unshare_instance()`, params: [] },
       'public.documents_refresh_totals': {
         sql: `select documents_refresh_totals($1)`,
         params: [mine.draftDocumentId],

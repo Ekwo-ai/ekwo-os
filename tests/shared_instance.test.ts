@@ -487,6 +487,14 @@ describe('the other person, signed in', () => {
     });
   });
 
+  it('learns nothing of who has an account by inviting: an address with one and an address with none are answered alike', async () => {
+    await asUser(db, bob, async () => {
+      const invite = (email: string) =>
+        probe(`select expires_at > now() as live from invite_member($1, $2)`, [bobCompany, email], [email]);
+      expect(await invite('alice@example.test')).toBe(await invite('nobody-at-all@example.test'));
+    });
+  });
+
   it('cannot invite into Alice’s company, export it or take an archive into the installation', async () => {
     await asUser(db, bob, async () => {
       const invite = (id: string) => probe(`select * from invite_member($1, 'eve@example.test')`, [id], [id]);
