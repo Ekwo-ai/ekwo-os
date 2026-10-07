@@ -3,7 +3,7 @@
   "name": "ai.ekwo/mcp",
   "title": "Ekwo OS — open source accounting: ledger, invoices and VAT on your own Supabase or Postgres",
   "description": "Double-entry books an agent keeps as the user: invoices, VAT returns, 107 country packs.",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "repository": {
     "url": "https://github.com/Ekwo-ai/ekwo-os",
     "source": "github",
@@ -15,7 +15,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@ekwo-ai/mcp",
-      "version": "0.10.0",
+      "version": "0.11.0",
       "transport": {
         "type": "stdio"
       },

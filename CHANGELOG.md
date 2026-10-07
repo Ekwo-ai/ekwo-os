@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.11.0] — 2026-10-07
+
 ### Added
 
 - **A shared instance keeps its tenants apart** (`20261007060225`; decision
@@ -40,6 +42,158 @@ somewhere has already run it.
   with an id nobody holds, as a session and through a machine key, and it
   requires the same answer both times. `tests/mcp/shared_instance.test.ts`
   does the same through every tool of the MCP server.
+
+- **The names that change before 1.0, announced.** A few names carry the
+  vocabulary of value added tax where they serve every régime: `vat_return`
+  computes the periodic return of every country, GST and sales tax included.
+  [`docs/releasing.md`](docs/releasing.md#names-that-change-before-10) lists
+  each with its country-neutral successor — `vat_return` becomes `tax_return`,
+  `vat_number` becomes `tax_number`, `vat_category` becomes `tax_category`,
+  among others — the former names already superseded that go before 1.0, and
+  the policy: a renamed name keeps answering for at least one minor release,
+  and breaking changes stop before the release candidate. Nothing is renamed
+  in this release.
+
+- **The road to 1.0, in public** (`docs/road-to-1.0.md`). What version 1.0
+  promises for the whole 1.x line — an additive schema, functions and their
+  named errors, `ekwo migrate` from any published version, posted figures that
+  never change on upgrade, the MCP tools, the CLI, `pack.1.json`,
+  `module.1.json`, company archives that travel forward and a security policy
+  — what carries its own promise, and the nine proofs required before the
+  tag, each with where its evidence will live. Linked from the README and from
+  `docs/releasing.md`.
+- **Releases publish themselves, with provenance.** `.github/workflows/release.yml`
+  publishes every public package with `npm publish --provenance` through npm
+  trusted publishing (GitHub OIDC, no npm token) when a `v*` tag is pushed, in
+  dependency order, skipping versions the registry already holds. A manual run
+  on any branch performs a dry run of every package. `scripts/publish.mjs`
+  recognises that environment and refuses to publish from a pull request;
+  `docs/releasing.md` lists the one-time setup per package on npmjs.com.
+- **A first session for an agent, said where it reads.** The MCP server's
+  instructions now walk an agent through five steps — `list_companies`,
+  `get_company` for the financial years and the lock dates, `list_accounts`
+  and the taxes resource for the codes a line names, `search_contacts` and
+  `create_document`, then `post_document` once the user agrees — and say how to
+  read `vat_return`, how a posted document or entry is corrected, and that a
+  refusal comes with its next step. The tools of that path each name the one
+  to call next. `ekwo --help` carries the same session for a shell, and
+  [`docs/agents.md`](docs/agents.md) gives both side by side.
+  `tests/mcp/first-session.test.ts` checks that every tool, prompt, argument
+  and refusal the instructions name exists.
+- **`ekwo company show`**, the company in use read as the person signed in:
+  its financial years, lock dates, journals and accounts by role. It is
+  `getCompany()` of `@ekwo-ai/core`, which the MCP tool `get_company` now
+  calls too, so both answer the same document.
+- **A friendly invitation to register the installation**, at three moments: the
+  end of an `ekwo init` that asked no questions, `ekwo status`, and one line of
+  the MCP server's instructions for the agent to relay once. It says what
+  registering gives, the six fields it sends and the one command, only on an
+  installation that is not registered, and never waits for an answer. Under
+  `--json` it is the field `registration` of `init` and `status`, and of the
+  `status` tool. `EKWO_NO_REGISTER_INVITE=1` hides it. The words live once, in
+  `@ekwo-ai/core`.
+
+### Changed
+
+- **The schema of this release is 0.11.0, and the packages refuse an older
+  database by name** (`20261007180000`). `@ekwo-ai/core` selects
+  `audit_log.sequence` with the rest of the trail and the MCP tool
+  `read_audit_log` orders by it, and a 0.10.0 database has no such column —
+  so the floor of `ekwo-os`, `@ekwo-ai/core` and `@ekwo-ai/mcp` rises to
+  0.11.0, and an installation left behind is told to run `ekwo migrate`
+  rather than failing in a query nobody can place.
+
+- **The audit trail is read by its columns.** A signed-in client selecting
+  `*` from `audit_log` is refused, because it names `id`; name the columns,
+  and order by `occurred_at` and `sequence`.
+
+- **A key writes as the person who issued it** (`20261007041207`, and
+  `20261007041208` for the `tax` module; decision
+  [0064](docs/decisions/0064-a-key-writes-as-its-issuer.md)). A machine key is
+  not a session, so `auth.uid()` is null for it, and every write that took its
+  author from `auth.uid()` recorded nobody: `audit_log` wrote `api_key_id`
+  beside a null `actor_id`, and `enabled_by`, `invited_by`, `filed_by`,
+  `uploaded_by`, `unposted_by`, `created_by` of a book import and of a share,
+  `declared_by`, `recorded_by`, `finalised_by` and `superseded_by` stayed
+  empty. They now record `acting_user()` — the signed-in user, or the person
+  who issued the key presented (`api_keys.created_by`) — so decision 0053, *the
+  MCP server acts as the user*, holds for an assistant connected through a key.
+  `audit_log.api_key_id` keeps naming the key. One function says it, and
+  `create_api_key()` uses it for the issuer of a key minted under a key.
+
+  It attributes and never authorises: `auth.uid()`, every policy and every
+  guard are unchanged, a key still holds only its own list bounded by what its
+  issuer holds today, and a key withdrawn or expired is refused before it
+  writes anything. A key the installation issued itself (`created_by` null) is
+  recorded against nobody, as before. Rows written before this release keep
+  their null `actor_id`. `tests/key_writes_as_its_issuer.test.ts` fails on any
+  function or column default that writes an author from `auth.uid()` again.
+
+- **The period of a tax return is read through an index**
+  (`20261005160858`, `20261005160859`, `20261005160900`). Every ledger line
+  now stores the day it counts for a return, `entry_lines.declared_on`: its
+  tax point where the posting engine worked one out, the date of its entry
+  otherwise — the rule every return already applied, unchanged. A trigger
+  writes it on every line and follows the date of a draft and the tax point a
+  cash-basis settlement writes; nobody types it — a value written by hand on a
+  draft is replaced by the rule's, and on a posted line refused like any other
+  column. `declared_lines(company, from, to)` is the one
+  statement of which lines a period holds, read by `vat_return()`,
+  `filing_tax_movements()` and `filings_touched_since()`, and the planner turns
+  it into a range on the new partial index `entry_lines_declared_on_idx`. A
+  return of one quarter in the load test reads about 2 400 rows where it read
+  86 000, and the cost now follows the period rather than the years kept.
+
+  **Upgrading.** `ekwo migrate` (or `supabase db push`) applies the three
+  files in one go. The second fills the column on every line already written —
+  lifting `entry_lines_guard_posted` by name for that one statement and
+  putting it back in the same transaction — then makes it `not null`. Returns,
+  frozen filings and `filing_drift()` answer exactly what they answered
+  before: `tests/declared_on.test.ts` books the golden year of every pack on
+  the previous schema, upgrades it and compares to the cent. The company
+  archive carries the column; `import_company()` derives it for an archive
+  written before it existed and refuses one whose day is not the rule's
+  (`declared_on_mismatch`).
+- **The end-to-end script reads taxes in force on the invoice date and taxes
+  split between several accounts** (`scripts/e2e-supabase.mjs`), which lets it
+  go through a pack whose standard rate is collected in a national and a local
+  share. A pack whose standard-rate taxes are on the cash basis now gets a
+  message that says so (`docs/international.md`).
+- **Refusals of the core say what to call instead.** A company, a contact, a
+  document or an entry that is not found now carries a hint naming the tool
+  and the command that list them, and `--json` puts it in `error.hint` for a
+  call to change (exit code 2) as it already did for a refusal of the
+  database.
+
+### Removed
+
+- **The former names of the fixed assets tools, announced in 0.10.0.** The MCP
+  server registers each fixed assets tool under one name, `fixed_assets_*`; the
+  arguments and the answers are those the former names already gave in 0.10.0.
+  An agent or a client configured against an old name calls the new one:
+
+  | Removed | Call instead |
+  |---|---|
+  | MCP tool `assets_list` | `fixed_assets_list` (the register is under `fixed_assets`) |
+  | MCP tool `assets_create` | `fixed_assets_create` |
+  | MCP tool `assets_schedule` | `fixed_assets_schedule` |
+  | MCP tool `assets_run_depreciation` | `fixed_assets_run_depreciation` |
+  | MCP tool `assets_dispose` | `fixed_assets_dispose` |
+  | `compileAssetsSeed`, command line's library | `compileFixedAssetsSeed` |
+  | type `PackAssets`, command line's library | `PackFixedAssets` |
+
+  The module code stays `assets`, as 0.10.0 described: `ekwo module enable
+  assets` and the capabilities `assets.read`, `assets.write` and `assets.post`
+  are unchanged.
+
+### Fixed
+
+- **The release workflow speaks to the registry in its current terms.** npm
+  now answers `400 Bad Request` to a trusted-publisher relation that does not
+  say what it allows; npm 11.21 sends it with `--allow-publish`.
+  `.github/workflows/release.yml` pins `npm@11.21.0`, and
+  [`docs/releasing.md`](docs/releasing.md#npm) says how to set the trusted
+  publisher from a terminal with `npm trust github`.
 
 ### Security
 
@@ -143,70 +297,6 @@ somewhere has already run it.
   unchanged: every account on it is the customer's, and an owner adding a
   colleague directly remains the documented way to staff a company.
 
-### Changed
-
-- **The audit trail is read by its columns.** A signed-in client selecting
-  `*` from `audit_log` is refused, because it names `id`; name the columns,
-  and order by `occurred_at` and `sequence`.
-
-- **A key writes as the person who issued it** (`20261007041207`, and
-  `20261007041208` for the `tax` module; decision
-  [0064](docs/decisions/0064-a-key-writes-as-its-issuer.md)). A machine key is
-  not a session, so `auth.uid()` is null for it, and every write that took its
-  author from `auth.uid()` recorded nobody: `audit_log` wrote `api_key_id`
-  beside a null `actor_id`, and `enabled_by`, `invited_by`, `filed_by`,
-  `uploaded_by`, `unposted_by`, `created_by` of a book import and of a share,
-  `declared_by`, `recorded_by`, `finalised_by` and `superseded_by` stayed
-  empty. They now record `acting_user()` — the signed-in user, or the person
-  who issued the key presented (`api_keys.created_by`) — so decision 0053, *the
-  MCP server acts as the user*, holds for an assistant connected through a key.
-  `audit_log.api_key_id` keeps naming the key. One function says it, and
-  `create_api_key()` uses it for the issuer of a key minted under a key.
-
-  It attributes and never authorises: `auth.uid()`, every policy and every
-  guard are unchanged, a key still holds only its own list bounded by what its
-  issuer holds today, and a key withdrawn or expired is refused before it
-  writes anything. A key the installation issued itself (`created_by` null) is
-  recorded against nobody, as before. Rows written before this release keep
-  their null `actor_id`. `tests/key_writes_as_its_issuer.test.ts` fails on any
-  function or column default that writes an author from `auth.uid()` again.
-
-### Removed
-
-- **The former names of the fixed assets tools, announced in 0.10.0.** The MCP
-  server registers each fixed assets tool under one name, `fixed_assets_*`; the
-  arguments and the answers are those the former names already gave in 0.10.0.
-  An agent or a client configured against an old name calls the new one:
-
-  | Removed | Call instead |
-  |---|---|
-  | MCP tool `assets_list` | `fixed_assets_list` (the register is under `fixed_assets`) |
-  | MCP tool `assets_create` | `fixed_assets_create` |
-  | MCP tool `assets_schedule` | `fixed_assets_schedule` |
-  | MCP tool `assets_run_depreciation` | `fixed_assets_run_depreciation` |
-  | MCP tool `assets_dispose` | `fixed_assets_dispose` |
-  | `compileAssetsSeed`, command line's library | `compileFixedAssetsSeed` |
-  | type `PackAssets`, command line's library | `PackFixedAssets` |
-
-  The module code stays `assets`, as 0.10.0 described: `ekwo module enable
-  assets` and the capabilities `assets.read`, `assets.write` and `assets.post`
-  are unchanged.
-
-### Documentation
-
-- **The names that change before 1.0, announced.** A few names carry the
-  vocabulary of value added tax where they serve every régime: `vat_return`
-  computes the periodic return of every country, GST and sales tax included.
-  [`docs/releasing.md`](docs/releasing.md#names-that-change-before-10) lists
-  each with its country-neutral successor — `vat_return` becomes `tax_return`,
-  `vat_number` becomes `tax_number`, `vat_category` becomes `tax_category`,
-  among others — the former names already superseded that go before 1.0, and
-  the policy: a renamed name keeps answering for at least one minor release,
-  and breaking changes stop before the release candidate. Nothing is renamed
-  in this release.
-
-### Security
-
 - **One guard a machine key walked past** (`20261005090000`). Letting a key
   reach the API changed what "nobody is signed in" means: it used to be the
   installer on a direct connection, and it is now also a key, which arrives as
@@ -226,85 +316,6 @@ somewhere has already run it.
   `tests/guards_a_key_meets.test.ts` holds the list of functions that may test
   `auth.uid()` for null against the database, so the next one written the
   skipping way fails there instead of being found a year later.
-
-### Added
-
-- **The road to 1.0, in public** (`docs/road-to-1.0.md`). What version 1.0
-  promises for the whole 1.x line — an additive schema, functions and their
-  named errors, `ekwo migrate` from any published version, posted figures that
-  never change on upgrade, the MCP tools, the CLI, `pack.1.json`,
-  `module.1.json`, company archives that travel forward and a security policy
-  — what carries its own promise, and the nine proofs required before the
-  tag, each with where its evidence will live. Linked from the README and from
-  `docs/releasing.md`.
-- **Releases publish themselves, with provenance.** `.github/workflows/release.yml`
-  publishes every public package with `npm publish --provenance` through npm
-  trusted publishing (GitHub OIDC, no npm token) when a `v*` tag is pushed, in
-  dependency order, skipping versions the registry already holds. A manual run
-  on any branch performs a dry run of every package. `scripts/publish.mjs`
-  recognises that environment and refuses to publish from a pull request;
-  `docs/releasing.md` lists the one-time setup per package on npmjs.com.
-- **A first session for an agent, said where it reads.** The MCP server's
-  instructions now walk an agent through five steps — `list_companies`,
-  `get_company` for the financial years and the lock dates, `list_accounts`
-  and the taxes resource for the codes a line names, `search_contacts` and
-  `create_document`, then `post_document` once the user agrees — and say how to
-  read `vat_return`, how a posted document or entry is corrected, and that a
-  refusal comes with its next step. The tools of that path each name the one
-  to call next. `ekwo --help` carries the same session for a shell, and
-  [`docs/agents.md`](docs/agents.md) gives both side by side.
-  `tests/mcp/first-session.test.ts` checks that every tool, prompt, argument
-  and refusal the instructions name exists.
-- **`ekwo company show`**, the company in use read as the person signed in:
-  its financial years, lock dates, journals and accounts by role. It is
-  `getCompany()` of `@ekwo-ai/core`, which the MCP tool `get_company` now
-  calls too, so both answer the same document.
-- **A friendly invitation to register the installation**, at three moments: the
-  end of an `ekwo init` that asked no questions, `ekwo status`, and one line of
-  the MCP server's instructions for the agent to relay once. It says what
-  registering gives, the six fields it sends and the one command, only on an
-  installation that is not registered, and never waits for an answer. Under
-  `--json` it is the field `registration` of `init` and `status`, and of the
-  `status` tool. `EKWO_NO_REGISTER_INVITE=1` hides it. The words live once, in
-  `@ekwo-ai/core`.
-
-### Changed
-
-- **The period of a tax return is read through an index**
-  (`20261005160858`, `20261005160859`, `20261005160900`). Every ledger line
-  now stores the day it counts for a return, `entry_lines.declared_on`: its
-  tax point where the posting engine worked one out, the date of its entry
-  otherwise — the rule every return already applied, unchanged. A trigger
-  writes it on every line and follows the date of a draft and the tax point a
-  cash-basis settlement writes; nobody types it — a value written by hand on a
-  draft is replaced by the rule's, and on a posted line refused like any other
-  column. `declared_lines(company, from, to)` is the one
-  statement of which lines a period holds, read by `vat_return()`,
-  `filing_tax_movements()` and `filings_touched_since()`, and the planner turns
-  it into a range on the new partial index `entry_lines_declared_on_idx`. A
-  return of one quarter in the load test reads about 2 400 rows where it read
-  86 000, and the cost now follows the period rather than the years kept.
-
-  **Upgrading.** `ekwo migrate` (or `supabase db push`) applies the three
-  files in one go. The second fills the column on every line already written —
-  lifting `entry_lines_guard_posted` by name for that one statement and
-  putting it back in the same transaction — then makes it `not null`. Returns,
-  frozen filings and `filing_drift()` answer exactly what they answered
-  before: `tests/declared_on.test.ts` books the golden year of every pack on
-  the previous schema, upgrades it and compares to the cent. The company
-  archive carries the column; `import_company()` derives it for an archive
-  written before it existed and refuses one whose day is not the rule's
-  (`declared_on_mismatch`).
-- **The end-to-end script reads taxes in force on the invoice date and taxes
-  split between several accounts** (`scripts/e2e-supabase.mjs`), which lets it
-  go through a pack whose standard rate is collected in a national and a local
-  share. A pack whose standard-rate taxes are on the cash basis now gets a
-  message that says so (`docs/international.md`).
-- **Refusals of the core say what to call instead.** A company, a contact, a
-  document or an entry that is not found now carries a hint naming the tool
-  and the command that list them, and `--json` puts it in `error.hint` for a
-  call to change (exit code 2) as it already did for a refusal of the
-  database.
 
 ## [0.10.0] — 2026-10-02
 
@@ -4285,7 +4296,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.7.0...v0.8.0

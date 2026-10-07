@@ -27,13 +27,13 @@ import {
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
 
 /** The schema this release defines. */
-const RELEASE = '0.10.0';
+const RELEASE = '0.11.0';
 
 /** What `ekwo_schema_version()` returned before the migration of this release. */
-const PREVIOUS = '0.9.0';
+const PREVIOUS = '0.10.0';
 
 /** The migration that carries the number, and nothing else. */
-const BUMP = 'schema_version_0_10_0';
+const BUMP = 'schema_version_0_11_0';
 
 let db: SqlClient;
 let migrations: Migration[];
