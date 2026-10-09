@@ -240,6 +240,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`ee`](../packs/ee/) | Estonia | `13_pack_ee.sql` | et, en | `community` |
 | [`eg`](../packs/eg/) | مصر | `83_pack_eg.sql` | ar, en | `community` |
 | [`es`](../packs/es/) | España | `19_pack_es.sql` | es, en | `community` |
+| [`et`](../packs/et/) | Ethiopia | `133_pack_et.sql` | en | `community` |
 | [`fi`](../packs/fi/) | Finland | `67_pack_fi.sql` | fi, en | `community` |
 | [`fr`](../packs/fr/) | France | `11_pack_fr.sql` | fr, en | `maintained` |
 | [`ga`](../packs/ga/) | Gabon | `28_pack_ga.sql` | fr | `community` |

@@ -1,0 +1,364 @@
+[
+  {
+    "code": "ET-S-15",
+    "name": "Sale, standard rate 15 %",
+    "description": "The general rate on a taxable supply made in Ethiopia",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 8(2) — VAT is imposed at zero per cent on a zero-rated supply and at fifteen per cent in every other case; art. 8(1) — it applies to taxable supplies by a registered person. Registration is compulsory above an annual turnover of ETB 2,000,000 (art. 12(2), or the amount the Directive sets). Electricity and water above the monthly 200 kWh and 15 cubic metres thresholds are taxed at this rate (utilities directive of 5 September 2024).",
+    "source": "vat-proclamation",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "ET-S-ZR-EXP",
+    "name": "Sale, zero-rated (export of goods)",
+    "description": "Goods exported from Ethiopia",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 9 — a supply specified in Schedule 1 is a zero-rated supply; Schedule 1 covers the export of goods. The seller keeps the documentary proof of export the tax authority accepts. A zero-rated supply remains taxable, so input tax stays deductible.",
+    "source": "vat-proclamation",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "ET-S-ZR-EXPSVC",
+    "name": "Sale, zero-rated (export of services)",
+    "description": "A service supplied to a customer outside Ethiopia",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 9 and Schedule 1 — the export of services is zero-rated; the proof of the customer's foreign location is documentary and is kept by the seller.",
+    "source": "vat-proclamation",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "ET-S-ZR-INTL",
+    "name": "Sale, zero-rated (international transport)",
+    "description": "International air or sea transport of passengers or goods",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 9 and Schedule 1 — international transport services are zero-rated.",
+    "source": "vat-proclamation",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "ET-S-EX-FIN",
+    "name": "Sale, exempt (financial services)",
+    "description": "Interest on loans, insurance and other financial services",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 10(1) — a supply specified in Schedule 2 is an exempt supply; Schedule 2 covers financial services (the Regulation excludes legal, accounting and debt-collection services from the exemption). An exempt supply carries no output VAT and no input VAT is deductible against it.",
+    "source": "vat-proclamation",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "ET-S-EX-RES",
+    "name": "Sale, exempt (residential rent)",
+    "description": "Letting of residential premises",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 10(1) and Schedule 2 — the letting of residential premises (and parking attached to them, per the Regulation) is exempt.",
+    "source": "vat-proclamation",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "ET-S-EX-UTIL",
+    "name": "Sale, exempt (first 200 kWh of electricity or 15 m³ of water)",
+    "description": "The monthly household allowance of electricity or water supplied exempt from VAT",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-09-05",
+    "legal_reference": "Directive of the Ministry of Finance of 5 September 2024 — electricity and water supplies are taxable under the Proclamation of 21 August 2024 except the first 200 kWh of electricity and the first 15 cubic metres of water consumed in a month (bottled water excluded). The supplier splits a bill into an exempt tier on this code and a taxable one on ET-S-15; the core cannot split a quantity automatically, which docs/international.md records.",
+    "source": "utilities-directive",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "ET-P-15",
+    "name": "Purchase, standard rate 15 %, deductible",
+    "description": "A local purchase at the general rate, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 29(1) — a registered person may credit the input tax on acquisitions made for the purpose of taxable supplies, supported by a tax invoice; art. 8(2) — the rate. Zero-rated supplies are taxable, so their input tax is deductible.",
+    "source": "vat-proclamation",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "ET-P-15-BL",
+    "name": "Purchase, standard rate 15 %, input tax disallowed",
+    "description": "A passenger vehicle and its repairs, entertainment, or club membership fees",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 30(1) — no credit for input tax on passenger vehicles and their repair, unless the person deals in them; on entertainment, except in the cases the article lists; or on club membership fees for sporting, social or recreational activities. The tax is a cost: it lands on the account of the line and reaches no box.",
+    "source": "vat-proclamation",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "ET-P-EX",
+    "name": "Purchase, exempt",
+    "description": "An insurance premium, or another exempt supply bought for the business",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 10(1) and Schedule 2 — an exempt supply bears no VAT, so there is nothing to credit.",
+    "source": "vat-proclamation",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "ET-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "VAT collected by the Customs Commission on importation and credited once paid",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 8(1) — VAT is charged on taxable imports; art. 27(1) — the taxable value of imports is the customs value plus duties and fiscal charges; art. 29(1) — the VAT paid on imports is creditable. The tax is owed to Customs, not to the supplier, so it waits on 2125 until the import declaration is settled.",
+    "source": "vat-proclamation",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 140
+  }
+]

@@ -1,0 +1,257 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of an Addis Ababa trading company, VAT-registered and filing monthly, for the fiscal year to 7 July 2026 (the Gregorian January 2026 stands in for the Ethiopian month)",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Fiscal year 2025/26",
+    "start": "2025-07-01",
+    "end": "2026-06-30"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "ET-IFRS-SFP",
+    "ET-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-addis",
+      "name": "Selam Retailers PLC",
+      "type": "customer",
+      "country": "ET"
+    },
+    {
+      "ref": "cust-ke",
+      "name": "Nairobi Fresh Foods Ltd",
+      "type": "customer",
+      "country": "KE"
+    },
+    {
+      "ref": "cust-gb",
+      "name": "Chalmers Consulting Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-addis",
+      "name": "Merkato Wholesalers PLC",
+      "type": "supplier",
+      "country": "ET"
+    },
+    {
+      "ref": "supp-cn",
+      "name": "Guangzhou Trading Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-addis",
+      "date": "2026-01-10",
+      "why": "A domestic sale at the standard rate of 15 %: box 1 and the output VAT of box 5.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale",
+          "quantity": 10,
+          "unit_price": 5000,
+          "tax": "ET-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-addis",
+      "date": "2026-01-15",
+      "why": "A loan-interest and fee invoice from a lender, an exempt financial service under Schedule 2: box 3, no output VAT, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Financial services fee",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "ET-S-EX-FIN",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-ke",
+      "date": "2026-01-18",
+      "why": "An export of goods, zero-rated under Schedule 1: box 2, no output VAT, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Roasted coffee, export consignment",
+          "quantity": 100,
+          "unit_price": 600,
+          "tax": "ET-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2026-01-20",
+      "why": "An export of a service to a customer outside Ethiopia, zero-rated under Schedule 1: box 2.",
+      "lines": [
+        {
+          "name": "Market research report",
+          "quantity": 1,
+          "unit_price": 90000,
+          "tax": "ET-S-ZR-EXPSVC",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-addis",
+      "date": "2026-01-25",
+      "why": "A credit note for two units returned from INV-001, so box 1 and box 5 fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale — two units returned",
+          "quantity": 2,
+          "unit_price": 5000,
+          "tax": "ET-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-addis",
+      "date": "2026-01-12",
+      "why": "A domestic purchase at the standard rate, creditable in full: box 6 and the input VAT of box 9, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "ET-P-15",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-addis",
+      "date": "2026-01-14",
+      "why": "A passenger car whose input tax is disallowed under art. 30(1): the VAT becomes part of the cost of the vehicle and reaches no box.",
+      "lines": [
+        {
+          "name": "Passenger motor vehicle for the sales manager",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "ET-P-15-BL",
+          "account": "1660"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-addis",
+      "date": "2026-01-19",
+      "why": "An insurance premium, an exempt financial service under Schedule 2: no input tax, box 7.",
+      "lines": [
+        {
+          "name": "Annual business insurance premium",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "ET-P-EX",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-22",
+      "why": "An import of goods: VAT collected by Customs at the border, credited through box 6 and box 9, and held on the customs control account until settled.",
+      "lines": [
+        {
+          "name": "Imported electronics for resale",
+          "quantity": 1,
+          "unit_price": 800000,
+          "tax": "ET-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-addis",
+      "date": "2026-01-30",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 6 and box 9 fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "ET-P-15",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 20000,
+      "contact": "cust-addis",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The fee of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 60000,
+      "contact": "cust-ke",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-07",
+      "amount": 46000,
+      "contact": "supp-addis",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 25000,
+      "contact": "cust-gb",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Chalmers Consulting Ltd before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

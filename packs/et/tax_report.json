@@ -1,0 +1,136 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "ET-VAT",
+  "name": "Monthly VAT declaration",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2024-08-21",
+  "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 58 — a registered person files a VAT return for each accounting period, whether or not tax is payable; the accounting period is each calendar month of the Ethiopian calendar, the months of Nehase (August) and Pagumen being aggregated and treated as one month. The return is filed electronically on the Ministry of Revenues e-Tax portal. This pack carries the output side, the credit side and the net figure; credit brought forward from earlier months (art. 48), the refund claim (arts. 49-51), the 50 % withholding of VAT by public bodies (art. 62) and the reverse charge on services bought from abroad (art. 6) are period-to-period settlements or mechanisms the declaration format cannot state as a plus/minus list, and are recorded in docs/international.md. The numbering of the boxes is this pack's own: the layout of the Ministry's bilingual monthly declaration could not be opened in machine-readable form, so each box states what it holds and the article it comes from rather than a printed line number.",
+  "source": "vat-form",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 58 — the return is filed on or before the last day of the calendar month following the end of the accounting period; art. 59 — the net VAT is payable by the same date. The Ethiopian calendar has twelve months of thirty days and a thirteenth, Pagumen, of five or six: because Nehase (August) and Pagumen are one accounting period, the deadline is the end of the Ethiopian month that follows that combined period, which the Gregorian month-end this rule computes only approximates. The gap is recorded in docs/international.md.",
+    "source": "vat-proclamation"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Taxable sales (15 %) — value",
+      "sequence": 10,
+      "legal_reference": "Art. 8(2): sales at the 15 % rate, excluding VAT.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "1",
+      "kind": "tax",
+      "name": "Taxable sales (15 %) — output VAT",
+      "sequence": 15,
+      "legal_reference": "Art. 8(2): the output VAT on the sales of box 1.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Zero-rated sales",
+      "sequence": 20,
+      "legal_reference": "Art. 9 and Schedule 1: exports, international transport and the other zero-rated supplies.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Exempt sales",
+      "sequence": 30,
+      "legal_reference": "Art. 10 and Schedule 2: financial services, residential rent, health, education and the other exempt supplies, and the exempt tier of electricity and water.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Total sales",
+      "sequence": 40,
+      "plus": [
+        "1:base",
+        "2",
+        "3"
+      ],
+      "legal_reference": "Sum of boxes 1 (value), 2 and 3.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Total output VAT",
+      "sequence": 50,
+      "plus": [
+        "1:tax"
+      ],
+      "legal_reference": "Output VAT of box 1; zero-rated and exempt sales carry none.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "6",
+      "kind": "base",
+      "name": "Taxable purchases and imports (15 %) — value",
+      "sequence": 60,
+      "legal_reference": "Art. 29(1): purchases and imports whose input tax is creditable.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "Taxable purchases and imports (15 %) — input VAT",
+      "sequence": 65,
+      "legal_reference": "Art. 29(1): the input tax credited, including VAT paid at customs on imports.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Exempt purchases",
+      "sequence": 70,
+      "legal_reference": "Art. 10: purchases of exempt supplies, which carry no input tax.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Total purchases",
+      "sequence": 80,
+      "plus": [
+        "6:base",
+        "7"
+      ],
+      "legal_reference": "Sum of boxes 6 (value) and 7.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "9",
+      "kind": "total",
+      "name": "Total input VAT",
+      "sequence": 90,
+      "plus": [
+        "6:tax"
+      ],
+      "legal_reference": "Input VAT of box 6.",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "VAT payable / credit for the month",
+      "sequence": 100,
+      "plus": [
+        "5"
+      ],
+      "minus": [
+        "9"
+      ],
+      "legal_reference": "Output VAT (box 5) less input VAT (box 9). A positive figure is payable by the deadline above (art. 59); a negative one is a credit carried forward to later months (art. 48) or refunded in the cases of arts. 49-51, which this pack does not track.",
+      "source": "vat-proclamation"
+    }
+  ]
+}

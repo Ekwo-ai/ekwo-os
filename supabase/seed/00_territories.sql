@@ -2172,3 +2172,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Ethiopia
+--
+-- A third country to the common system of VAT of Directive 2006/112/EC,
+-- article 5(2), which applies only in the territory of the Community as the
+-- Treaties define it. Ethiopia levies its own value added tax under Value
+-- Added Tax Proclamation No. 1341/2024, unrelated to the Union's common
+-- system. `vat_prefix` is null: an Ethiopian taxpayer is identified by the
+-- Taxpayer Identification Number (TIN) the Ministry of Revenues assigns, which
+-- carries no ISO country prefix comparable to an EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('ET', 'iso_3166_1', 'Ethiopia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Ethiopia is a third country to it. Ethiopia levies a value added tax of its own under Value Added Tax Proclamation No. 1341/2024 (21 August 2024), article 8(2), at fifteen per cent (15 %) and a rate of zero per cent (0 %) on zero-rated supplies such as exports.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

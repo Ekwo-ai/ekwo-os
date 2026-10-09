@@ -1,0 +1,197 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "ET",
+  "name": "Ethiopia",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 133,
+  "released_at": "2026-10-09",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-proclamation",
+        "title": "Value Added Tax Proclamation No. 1341/2024 (Federal Negarit Gazette, 21 August 2024), repealing Proclamation No. 285/2002",
+        "publisher": "Federal Democratic Republic of Ethiopia, Ministry of Finance",
+        "url": "https://www.mofed.gov.et/media/filer_public/af/45/af45af2f-7959-4e8b-b736-9494dda9f017/vat_proclamation_no_1341-2016_with_annex.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "vat-proclamation-register",
+        "title": "Value Added Tax Proclamation (Proclamation No. 1341/2024) — federal law register entry",
+        "publisher": "Ministry of Justice of Ethiopia",
+        "url": "https://justice.gov.et/en/law/value-added-tax-proclamation-2/",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "vat-regulation",
+        "title": "Council of Ministers Value Added Tax Regulation No. 570/2025 (Federal Negarit Gazette, 17 March 2025)",
+        "publisher": "Council of Ministers of Ethiopia",
+        "url": "https://ethiodata.et/wp-content/uploads/2026/05/Ethiopia-Value-Added-Tax-Regulation-No.-570_2025.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "utilities-directive",
+        "title": "Directive exempting the first 200 kWh of electricity and 15 cubic metres of water per month from VAT, 5 September 2024",
+        "publisher": "Ministry of Finance of Ethiopia, reported by Addis Standard",
+        "url": "https://addisstandard.com/finance-ministry-grants-vat-exemption-on-initial-200-kwh-of-electricity-15-cubic-meters-of-water-consumption/",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "einvoicing-directive",
+        "title": "Electronic Invoicing System Administration Directive No. 1142/2026 and Tax Administration Amendment Proclamation No. 1434/2026 — summary of the e-invoicing framework",
+        "publisher": "VATupdate, citing the Ministry of Revenues",
+        "url": "https://www.vatupdate.com/2026/10/02/ethiopia-e-invoicing-and-e-reporting-framework/",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-form",
+        "title": "Value Added Tax declaration forms",
+        "publisher": "Ethiopian Revenues and Customs Authority (now the Ministry of Revenues)",
+        "url": "https://www.erca.gov.et/index.php/declaration-forms/59-value-added-tax-vat-forms",
+        "consulted_on": "2026-10-09",
+        "kind": "form"
+      },
+      {
+        "key": "ifrs-profile",
+        "title": "IFRS Accounting Standards — application around the world, jurisdictional profile: Ethiopia (Financial Reporting Proclamation No. 847/2014)",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/publications/jurisdictions/pdf-profiles/ethiopia-ifrs-profile.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "etax",
+        "title": "e-Tax — the Ministry of Revenues portal where VAT returns are filed and tax is paid",
+        "publisher": "Ministry of Revenues of Ethiopia",
+        "url": "https://etax.mor.gov.et/",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      },
+      {
+        "key": "mor",
+        "title": "Ministry of Revenues — legal publications, directives, forms and QR verification",
+        "publisher": "Ministry of Revenues of Ethiopia",
+        "url": "https://www.mor.gov.et/",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "ETB",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "july",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Ethiopia reference chart of accounts (IFRS-inspired)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "ET-IFRS-SFP",
+        "ET-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Ethiopia. Financial Reporting Proclamation No. 847/2014, art. 5, requires commercial organisations to prepare financial statements under IFRS Accounting Standards (public interest entities) or the IFRS for SMEs Accounting Standard (the others), under the supervision of the Accounting and Auditing Board of Ethiopia (AABE); it prescribes no account plan. This chart is original: four digits, blocked so that each range reaches one line of the IFRS for SMEs statements below, with the accounts an Ethiopian company actually keeps — input and output VAT, import VAT owed to Customs at the border, withholding tax, pension contributions, employment income tax and amounts due to directors.",
+      "source": "ifrs-profile"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 52 — a registered person issues the original tax invoice for each supply, with the particulars the Regulation sets. No article asks for a gap-free series, which is why the style is `sequential`.",
+        "source": "vat-proclamation"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 21(1) — a supply takes place at the earliest of the issue of the tax invoice, the receipt of payment (to the extent paid) and the delivery of the goods or completion of the services. This is a three-way earliest-of test; Ekwo's `earliest_of_delivery_or_payment` omits the invoice date, so an invoice issued ahead of both delivery and payment fixes the tax point in Ethiopia but not in Ekwo's own reading of the word. The gap is recorded in docs/international.md.",
+        "source": "vat-proclamation"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Ethiopia has no structured-invoice exchange format (no UBL, CII, Peppol or EN 16931 profile has been published) and no ISO 6523 party scheme, so `profile`, `party_scheme` and `vat_scheme` are null. What exists is a clearance model: Electronic Invoicing System Administration Directive No. 1142/2026 (9 June 2026) requires an invoice to be registered in real time on the Ministry of Revenues platform, which returns an Invoice Registration Number (receipts: a Receipt Reference Number) and a QR code, and the Tax Administration Amendment Proclamation No. 1434/2026 (in force 30 July 2026) raises the penalties. The directive is in force but no nationwide go-live date, rollout schedule or grace period had been published on 9 October 2026, and fiscal cash registers remain in use; `obligation` is therefore `none` until the Ministry activates taxpayers, and the clearance itself is outside the core. The gap is recorded in docs/international.md and in this pack's README.",
+    "source": "einvoicing-directive"
+  }
+}

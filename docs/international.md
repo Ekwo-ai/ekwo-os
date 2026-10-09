@@ -6233,3 +6233,44 @@ do, and states the numeral in the entry rather than in the code.
 company with taxable and exempt supplies, only the share of the IVA on shared
 costs that the taxable supplies represent. The pack offers the two ends —
 fully creditable and fully non-creditable purchase codes — and no ratio.
+
+## From Ethiopia
+
+Ethiopia's value added tax (Value Added Tax Proclamation No. 1341/2024) is
+fully expressible as a pack. The gaps below were worked around in the pack and
+the core was not patched.
+
+**A clearance system, not an exchange format.** Electronic Invoicing System
+Administration Directive No. 1142/2026 requires every invoice to be registered
+in real time with the Ministry of Revenues platform, which returns an Invoice
+Registration Number and a QR code; the invoice is invalid until that response
+arrives. No UBL, CII or Peppol profile has been published and no go-live date
+had been announced on 9 October 2026. The pack says
+`einvoicing.obligation: none`.
+
+**A withholding by the buyer.** Article 62 makes a public body retain 50 % of
+the VAT on a registered supplier's invoice and remit it to the authority. The
+core has no posting for a part of the tax that the buyer pays on the seller's
+behalf, so it is booked manually on the VAT settlement account.
+
+**A calendar with a thirteenth month.** The accounting period is a month of
+the Ethiopian calendar, with Nehase and Pagumen aggregated into one period
+(article 2). `last_day_of_month_after_period` computes Gregorian month ends and
+cannot express a thirteenth month of five or six days.
+
+**A fiscal year that starts on 8 July.** The statutory tax year runs from
+1 Hamle to 30 Sene (8 July to 7 July). `fiscal_year_default` offers `july`
+(1 July), the nearest value.
+
+**A quantity-tiered exemption.** The first 200 kWh of electricity and 15 m³ of
+water per month are exempt, the rest taxable. The pack has an exempt code for
+the tier; splitting a bill is the user's job.
+
+**A three-way time of supply.** Article 21(1) takes the earliest of invoice,
+payment and delivery; the closed vocabulary has `earliest_of_delivery_or_payment`
+only.
+
+**Credit carried forward, refunds and reverse charge.** Box 10 of the return is
+the month's net figure alone. Credits carried forward (article 48), refunds
+(articles 49 to 51) and the reverse charge on services supplied from abroad
+(article 6) are not modelled.
