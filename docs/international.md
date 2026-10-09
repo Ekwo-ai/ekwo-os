@@ -6274,3 +6274,39 @@ only.
 the month's net figure alone. Credits carried forward (article 48), refunds
 (articles 49 to 51) and the reverse charge on services supplied from abroad
 (article 6) are not modelled.
+
+## From Mauritius
+
+**The cadence of the return depends on turnover, and the date does not.** A
+registered person with annual taxable turnover up to Rs 10 million files
+quarterly and may elect to file monthly; above that the return is monthly (Value
+Added Tax Act, s. 22(1A), Second Schedule). The deadline is a different matter:
+20 days after the period for a paper submission, the end of the following month
+where the filing and the payment are both electronic. `tax_report.json` declares
+`month` and `quarter` with no default and the electronic date as
+`last_day_of_month_after_period`; the 20-day rule is documented in the
+`legal_reference`, since a `deadline` holds one rule.
+
+**A tax point that is the earlier of two events the vocabulary does not pair.**
+Section 5(1) deems a supply made at the invoice or at the receipt of payment,
+whichever is earlier. The closed vocabulary offers `invoice_date` and
+`earliest_of_delivery_or_payment`, which names delivery. The pack declares
+`invoice_date`; an advance received before the invoice brings the tax point
+forward in Mauritius and not in Ekwo.
+
+**A clearance, again.** The e-invoicing system of s. 20A is a real-time
+fiscalisation: the billing system sends each invoice to the Authority's platform
+and prints the registration number and QR code that come back. It is neither a
+Peppol exchange nor a profile, so `einvoicing.obligation` is `none`. The roll-out
+is by taxpayer category and turnover, which is data of the notification and not
+of the statute, and the pack states it in the reference only.
+
+**An apportionment of input tax and a value that includes VAT.** Section 21(3)(b)
+credits the input tax of a partly exempt business in the proportion of taxable
+supplies to turnover of the previous year, and the VAT 3 notes ask line 7 to
+include the VAT of refused purchases. Neither is expressible: the pack reports
+the whole credit on line 10 and the value excluding VAT on line 7.
+
+**Period-to-period lines.** Lines 12 to 19 of form VAT 3 (excess brought
+forward, adjustments, repayment claim, penalties and interest) are not carried,
+for the reason given for the same lines in other countries' returns.

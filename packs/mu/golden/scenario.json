@@ -1,0 +1,343 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Port Louis trading company, VAT-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "MU-IFRS-SFP",
+    "MU-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-mu",
+      "name": "Curepipe Retail Ltd",
+      "type": "customer",
+      "country": "MU"
+    },
+    {
+      "ref": "cust-za",
+      "name": "Durban Tea Traders (Pty) Ltd",
+      "type": "customer",
+      "country": "ZA"
+    },
+    {
+      "ref": "cust-gb",
+      "name": "Harlow Consulting Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-mu",
+      "name": "Port Louis Wholesalers Ltd",
+      "type": "supplier",
+      "country": "MU"
+    },
+    {
+      "ref": "supp-cn",
+      "name": "Shenzhen Components Co.",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supp-us",
+      "name": "CloudWorks Inc.",
+      "type": "supplier",
+      "country": "US"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-mu",
+      "date": "2026-01-08",
+      "why": "A domestic sale at the standard rate of 15 %: line 1.4, column A and column B.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale",
+          "quantity": 10,
+          "unit_price": 12000,
+          "tax": "MU-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-mu",
+      "date": "2026-01-12",
+      "why": "The letting of a flat as a residence for a continuous term over 90 days, exempt under item 46 of the First Schedule: line 3, no output VAT, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Residential letting, January",
+          "quantity": 1,
+          "unit_price": 45000,
+          "tax": "MU-S-EX",
+          "account": "4520"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-za",
+      "date": "2026-01-15",
+      "why": "An export of goods under Customs control, zero-rated under item 1 of the Fifth Schedule: line 1.1, no output VAT, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Packaged tea, export consignment",
+          "quantity": 500,
+          "unit_price": 240,
+          "tax": "MU-S-ZR-EXPG",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2026-01-19",
+      "why": "A service supplied to a customer who belongs outside Mauritius and is not consuming it in Mauritius, zero-rated under item 6(a) of the Fifth Schedule: line 1.1.",
+      "lines": [
+        {
+          "name": "Market research report",
+          "quantity": 1,
+          "unit_price": 90000,
+          "tax": "MU-S-ZR-EXPS",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-mu",
+      "date": "2026-01-21",
+      "why": "A local sale of rice, zero-rated under item 2(a) of the Fifth Schedule although it never leaves Mauritius: line 1.2.",
+      "lines": [
+        {
+          "name": "Rice, 25 kg bags, retail sale",
+          "quantity": 200,
+          "unit_price": 450,
+          "tax": "MU-S-ZR-DOM",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-mu",
+      "date": "2026-01-26",
+      "why": "A credit note for one unit returned from INV-001, so line 1.4 falls back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "MU-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-mu",
+      "date": "2026-01-09",
+      "why": "A local purchase at the standard rate, credit allowed in full: line 6.6, column A and column B, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "MU-P-15",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-mu",
+      "date": "2026-01-11",
+      "why": "Goods of a capital nature bought locally, credit allowed: line 6.4.",
+      "lines": [
+        {
+          "name": "Packaging machine",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "MU-P-15-CAP",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-mu",
+      "date": "2026-01-13",
+      "why": "A passenger car whose input tax section 21(2)(b) refuses: the VAT joins the cost of the vehicle and only the value reaches line 7.",
+      "lines": [
+        {
+          "name": "Passenger motor car for the sales manager",
+          "quantity": 1,
+          "unit_price": 600000,
+          "tax": "MU-P-15-BL",
+          "account": "1660"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-mu",
+      "date": "2026-01-14",
+      "why": "A local purchase of zero-rated rice from a registered supplier: no input tax, line 6.5.",
+      "lines": [
+        {
+          "name": "Rice for resale",
+          "quantity": 150,
+          "unit_price": 400,
+          "tax": "MU-P-ZR",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-mu",
+      "date": "2026-01-16",
+      "why": "An insurance premium, exempt under item 50(f) of the First Schedule: no input tax, line 8.2.",
+      "lines": [
+        {
+          "name": "Business insurance premium",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "MU-P-EX",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-20",
+      "why": "An import of goods: VAT collected on importation, claimed as input tax through line 6.3 and held on the import control account until settled.",
+      "lines": [
+        {
+          "name": "Imported electronic components for resale",
+          "quantity": 1,
+          "unit_price": 250000,
+          "tax": "MU-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-007",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-01-27",
+      "why": "A service received from a supplier abroad that is not VAT registered: the recipient self-charges the output tax on line 1.4 and claims it on line 6.6 under section 14, netting to nothing on a wholly taxable purchase.",
+      "lines": [
+        {
+          "name": "Cloud hosting subscription",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "MU-P-RC-SVC",
+          "account": "6350"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-008",
+      "type": "purchase_invoice",
+      "contact": "supp-mu",
+      "date": "2026-01-28",
+      "why": "A purchase from a supplier that is not registered for VAT: no VAT can be charged, so only the value reaches line 7(b).",
+      "lines": [
+        {
+          "name": "Cleaning services from an unregistered individual",
+          "quantity": 1,
+          "unit_price": 25000,
+          "tax": "MU-P-NR",
+          "account": "6330"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-mu",
+      "date": "2026-01-30",
+      "why": "A purchase credit note for a short delivery on PINV-001, so line 6.6 falls back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "MU-P-15",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 45000,
+      "contact": "cust-mu",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The letting of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 120000,
+      "contact": "cust-za",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-07",
+      "amount": 46000,
+      "contact": "supp-mu",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 20000,
+      "contact": "cust-gb",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Harlow Consulting Ltd before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

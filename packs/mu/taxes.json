@@ -1,0 +1,573 @@
+[
+  {
+    "code": "MU-S-15",
+    "name": "Sale, standard rate 15 %",
+    "description": "A taxable supply of goods or services made in Mauritius by a registered person and neither zero-rated nor exempt",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 4 and s. 10(1) with the Fourth Schedule — VAT is chargeable on every taxable supply made in Mauritius by a taxable person in the course of a business, at fifteen per cent; the FAQ of the Mauritius Revenue Authority adds that a standard-rated supply is any taxable supply that is neither exempt (First Schedule) nor zero-rated (Fifth Schedule). Form VAT 3, line 1.4 — Other taxable supplies. Time of supply: s. 5(1), the earlier of the invoice and the receipt of payment.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1d"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1d",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "MU-S-ZR-EXPG",
+    "name": "Sale, zero-rated (export of goods)",
+    "description": "Goods exported from Mauritius under Customs control",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "vat_category": "G",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 11 and Fifth Schedule, item 1 — goods exported from Mauritius under Customs control are zero-rated: the supply stays a taxable supply at a rate of nil, so the input tax of the exporter remains deductible. Form VAT 3, line 1.1 — Zero-rated supplies (exports); the notes for completion name goods exported, goods shipped, supplies to duty-free shops and supplies to licensees in the freeport zone.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "MU-S-ZR-EXPS",
+    "name": "Sale, zero-rated (export of services)",
+    "description": "A service supplied to a person who belongs outside Mauritius and is outside Mauritius when it is performed, where the service is not consumed in Mauritius",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "vat_category": "G",
+    "valid_from": "2025-08-09",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 11 and Fifth Schedule, item 6(a) and 6(c) — the supply of services to a person who belongs in a country other than Mauritius (no permanent establishment in Mauritius, or an abode outside it) and who is outside Mauritius at the time the services are performed is zero-rated, provided the services are not consumed in Mauritius; the last proviso was added by the Finance (Miscellaneous Provisions) Act 2025 with effect from 9 August 2025 (endnote 501 of the consolidated text). Form VAT 3, line 1.1.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "MU-S-ZR-DOM",
+    "name": "Sale, zero-rated (local supply)",
+    "description": "A supply on the local market of a good or service the Fifth Schedule zero-rates — staple foods, medical and hospital services, public transport, hairdressing and the like",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 11 and Fifth Schedule — a supply of a description listed there is zero-rated although it never leaves Mauritius: among others rice, wheat flour and bread (item 2), the transport of passengers by public service vehicles (item 38), medical, hospital and dental services (item 42, replaced from 5 August 2021) and hairdressing services (item 62, added by the Finance (Miscellaneous Provisions) Act 2025 and deemed in force from 6 June 2025). The pack carries one tax code for the whole list; which item applies is the preparer's judgement and is not a field of the format. Form VAT 3, line 1.2 — Zero-rated supplies other than exports.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1b",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "MU-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply of a good or service the First Schedule exempts — residential letting over 90 days, education, banking and insurance services, land and residential property",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 9 and First Schedule — an exempt supply is not a taxable supply, carries no output VAT and gives no right to deduct the input tax of the goods and services used to make it (s. 21(2)(a)); examples are item 16 educational services, item 46 the letting of residential accommodation for a continuous term over 90 days, item 48 the sale of immovable property, item 50 financial services and item 50(f) insurance. A person who makes only exempt supplies cannot register. Form VAT 3, line 3 — Exempt supplies.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "MU-P-15",
+    "name": "Purchase, standard rate 15 %, deductible",
+    "description": "A local purchase of goods or services at the standard rate, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 21(1) and (3)(a) — a taxable person takes the input tax allowable in the taxable period as a credit against output tax, in full where the goods or services are used to make taxable supplies; s. 21(5) — the credit needs a VAT invoice from a supplier authorised to charge VAT. Form VAT 3, line 6.6 — Other goods and services purchased locally.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6f"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6f"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6f",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6f",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "MU-P-15-CAP",
+    "name": "Purchase of capital goods, standard rate 15 %, deductible",
+    "description": "Goods of a capital nature bought locally for the business",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 21(1) and (3)(a); the VAT 3 notes for completion distinguish goods of a capital nature purchased locally. A repayment of the excess is claimable at line 15 when the input tax on capital goods exceeds Rs 100,000 (VAT FAQ). Form VAT 3, line 6.4 — Capital goods purchased locally.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6d"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6d",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "MU-P-15-BL",
+    "name": "Purchase, standard rate 15 %, input tax not allowed",
+    "description": "A motor car for up to nine persons, accommodation, catering, entertainment and similar items on which section 21(2) refuses the credit",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "recoverable": false,
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 21(2) — no input tax is allowed as a credit on motor cars and other vehicles for the transport of not more than nine persons including the driver, motorcycles and mopeds for own use (paragraph (b)) and their maintenance and repairs (paragraph (d)); accommodation or lodging, catering services, receptions and entertainment (paragraph (c)); petroleum oils of heading 27.10 other than fuel oils and oils for resale (paragraph (e)); and, since 1 January 2026, the supply of digital or electronic services (paragraph (i), added by the Finance (Miscellaneous Provisions) Act 2025). The VAT is part of the cost of the line. Form VAT 3, line 7 — Taxable input on which no input tax is allowed as a credit. The form asks for the value inclusive of VAT for paragraph (a) goods; this pack reports the value excluding VAT, a gap recorded in the README.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "MU-P-NR",
+    "name": "Purchase from a supplier not registered for VAT",
+    "description": "A purchase from a person who is not a registered person and charges no VAT",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "vat_category": "O",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 20(5) — no person may issue a document indicating an amount that purports to be VAT unless registered; no input tax can arise on such a purchase. Form VAT 3, line 7(b) — purchases from non VAT registered persons.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "MU-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A local purchase of a good or service the Fifth Schedule zero-rates, from a registered supplier",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 11 and Fifth Schedule — the supply is a taxable supply at a rate of nil, so the buyer carries no input tax. Form VAT 3, line 6.5 — Zero-rated goods and services purchased locally.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6e"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6e",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "MU-P-EX",
+    "name": "Purchase, exempt",
+    "description": "An insurance premium, a bank service or another exempt supply bought for the business",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 9 and First Schedule — an exempt supply carries no VAT. Form VAT 3, line 8.2 — Exempt input, goods and services purchased locally.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "8b",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "MU-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "Goods imported for the business; the VAT is collected on importation and claimed as input tax",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 10(1)(b) — VAT is charged on the importation of any goods other than those in the First Schedule, by reference to the value determined under s. 13; s. 21(5)(b) — the customs import declaration supports the credit. Form VAT 3, line 6.3 — Other imports. The VAT is held on the import control account until it is settled to the Mauritius Revenue Authority.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6c"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6c"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6c",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6c",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 170
+  },
+  {
+    "code": "MU-P-IMP-CAP",
+    "name": "Import of capital goods, VAT paid at the border",
+    "description": "Goods of a capital nature imported for the business",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 10(1)(b) and s. 21(1). Form VAT 3, line 6.1 — Capital goods imported, which includes goods on which VAT payment has been deferred; the Deferred Payment Scheme itself (line 2) is not modelled, see the README.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6a"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 180
+  },
+  {
+    "code": "MU-P-IMP-ZR",
+    "name": "Import of zero-rated goods",
+    "description": "Goods imported that the Fifth Schedule zero-rates",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 11 and Fifth Schedule. Form VAT 3, line 6.2 — Zero-rated imports.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6b",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 190
+  },
+  {
+    "code": "MU-P-IMP-EX",
+    "name": "Import of exempt goods",
+    "description": "Goods imported that the First Schedule exempts",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 10(1)(b) — goods in the First Schedule bear no VAT on importation. Form VAT 3, line 8.1 — Exempt input, imported goods.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "8a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 200
+  },
+  {
+    "code": "MU-P-RC-SVC",
+    "name": "Service received from abroad, self-charged and claimed",
+    "description": "A taxable service supplied by a person who does not belong in Mauritius and is not VAT registered, performed or used in Mauritius",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2002-07-01",
+    "legal_reference": "Value Added Tax Act 1998 (consolidated version up to May 2026), s. 14(1) to (4) — the registered recipient is treated as having supplied the services itself, accounts for the output tax and may claim it as input tax under s. 21; the supplier's invoice is treated as a VAT invoice and the value is the amount paid or payable. Form VAT 3, line 1.4 (supplies of services received from abroad, reverse charge) for the value and the output tax, line 6.6 for the input tax. A foreign supplier of digital or electronic services registers and charges Mauritian VAT itself from 1 January 2026 (s. 14A), which is an ordinary purchase and not this tax; the input tax on that supply is refused by s. 21(2)(i).",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1d",
+            "6f"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6f"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1d",
+            "6f"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6f",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1d",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 210
+  }
+]

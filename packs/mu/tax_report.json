@@ -1,0 +1,282 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "MU-VAT3",
+  "name": "VAT return (form VAT 3)",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "valid_from": "2002-07-01",
+  "legal_reference": "Value Added Tax Act, s. 22(1) — every registered person submits electronically, after the end of every taxable period, a return in the form the Director-General approves; the Second Schedule sets the turnover limit at Rs 10 million. s. 22(1A) — a registered person whose annual turnover of taxable supplies does not exceed that amount files for each quarter (31 March, 30 June, 30 September and 31 December) and may elect, by irrevocable written notice, to file monthly; above Rs 10 million the taxable period is the month (VAT FAQ). The cadence therefore depends on a fact about the company, its turnover, which is why no `period_default` is declared. The form is VAT 3; this pack carries the lines a document writes into (1.1 to 11) and not lines 12 to 19, which settle one period against the next and are recorded in docs/international.md. A monthly filer also uploads a list of taxable supplies other than retail with invoice number and value (s. 22(1C)), an annex the format cannot write.",
+  "source": "vat3-form",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Value Added Tax Act, s. 22(2)(a) — the tax payable is paid electronically when the return is submitted. The Mauritius Revenue Authority's e-services page gives the date for a return filed and a payment made electronically: for a quarterly return, at the end of the month following the end of the quarter; for a monthly return, at the end of the following month. The default rule printed on form VAT 3 and in the VAT FAQ is shorter — 20 days after the end of the month or quarter — and the electronic one-month period replaces it where both the filing and the payment are electronic. A date that falls on a Saturday, a Sunday or a public holiday moves to the next working day. The pack retains the electronic date, since s. 22(1) obliges the return to be submitted electronically; the 20-day rule is not representable beside it.",
+    "source": "vat-return-page"
+  },
+  "boxes": [
+    {
+      "box": "1a",
+      "kind": "base",
+      "name": "Line 1.1 — Zero-rated supplies (exports)",
+      "sequence": 10,
+      "legal_reference": "Form VAT 3, line 1.1, column A — export of goods and services, goods shipped, supplies to duty-free shops, to licensees in the freeport zone and the other supplies the notes for completion list under 1.1.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "1b",
+      "kind": "base",
+      "name": "Line 1.2 — Zero-rated supplies other than exports",
+      "sequence": 20,
+      "legal_reference": "Form VAT 3, line 1.2, column A — zero-rated goods and services supplied on the local market (Fifth Schedule).",
+      "source": "vat3-form"
+    },
+    {
+      "box": "1c",
+      "kind": "base",
+      "name": "Line 1.3 — Taxable supplies made to exempt bodies or persons — value",
+      "sequence": 30,
+      "legal_reference": "Form VAT 3, line 1.3, column A — the value of taxable supplies made to bodies or persons exempted from payment of VAT. Declared and empty: which buyer is an exempt body or person is a fact about the customer the format does not hold, so no tax code posts to it and the preparer enters the line by hand.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "1c",
+      "kind": "tax",
+      "name": "Line 1.3 — Taxable supplies made to exempt bodies or persons — VAT",
+      "sequence": 40,
+      "legal_reference": "Form VAT 3, line 1.3, column B — declared and empty, for the reason given at the value column.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "1d",
+      "kind": "base",
+      "name": "Line 1.4 — Other taxable supplies — value",
+      "sequence": 50,
+      "legal_reference": "Form VAT 3, line 1.4, column A — supplies of taxable goods and services, including the disposal of taxable capital goods, supplies for private use, donations and gifts, and supplies of services received from abroad (reverse charge), excluding the zero-rated supplies of lines 1.1 to 1.3.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "1d",
+      "kind": "tax",
+      "name": "Line 1.4 — Other taxable supplies — output VAT",
+      "sequence": 60,
+      "legal_reference": "Form VAT 3, line 1.4, column B — the output VAT on the value of column A, at 15 %.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Line 2 — Deferred VAT on importation",
+      "sequence": 70,
+      "legal_reference": "Form VAT 3, line 2, column B — the VAT deferred on imported capital goods under the VAT Deferred Payment Scheme. Declared and empty: the scheme postpones a payment at the border and has no document of its own in the format; see the README.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Line 3 — Exempt supplies",
+      "sequence": 80,
+      "legal_reference": "Form VAT 3, line 3, column A — the value of exempt goods and services supplied on the local market (First Schedule).",
+      "source": "vat3-form"
+    },
+    {
+      "box": "4",
+      "kind": "tax",
+      "name": "Line 4 — Penalty on excess amount overclaimed",
+      "sequence": 90,
+      "legal_reference": "Form VAT 3, line 4, column B — the 20 % penalty on an excess amount overclaimed in a previous period, deemed to be output tax and capped at Rs 100,000. Declared and empty: it is an assessment, not the result of a document.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "5A",
+      "kind": "total",
+      "name": "Line 5 — Total, column A (value)",
+      "sequence": 100,
+      "plus": [
+        "1a",
+        "1b",
+        "1c:base",
+        "1d:base",
+        "3"
+      ],
+      "legal_reference": "Form VAT 3, line 5, column A — the total of the values of lines 1.1 to 1.4 and 3; line 2 and line 4 carry VAT only.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "5B",
+      "kind": "total",
+      "name": "Line 5 — Total, column B (output VAT)",
+      "sequence": 110,
+      "plus": [
+        "1c:tax",
+        "1d:tax",
+        "2",
+        "4"
+      ],
+      "legal_reference": "Form VAT 3, line 5, column B — the total of the VAT of lines 1.3, 1.4, 2 and 4; zero-rated and exempt supplies carry none.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6a",
+      "kind": "base",
+      "name": "Line 6.1 — Capital goods imported — value",
+      "sequence": 120,
+      "legal_reference": "Form VAT 3, line 6.1, column A — the importation of goods of a capital nature to the business, including goods on which VAT payment has been deferred.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6a",
+      "kind": "tax",
+      "name": "Line 6.1 — Capital goods imported — input VAT",
+      "sequence": 130,
+      "legal_reference": "Form VAT 3, line 6.1, column B.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6b",
+      "kind": "base",
+      "name": "Line 6.2 — Zero-rated imports",
+      "sequence": 140,
+      "legal_reference": "Form VAT 3, line 6.2 — the importation of zero-rated goods.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6c",
+      "kind": "base",
+      "name": "Line 6.3 — Other imports — value",
+      "sequence": 150,
+      "legal_reference": "Form VAT 3, line 6.3, column A — the importation of goods other than capital goods (6.1) and zero-rated goods (6.2).",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6c",
+      "kind": "tax",
+      "name": "Line 6.3 — Other imports — input VAT",
+      "sequence": 160,
+      "legal_reference": "Form VAT 3, line 6.3, column B.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6d",
+      "kind": "base",
+      "name": "Line 6.4 — Capital goods purchased locally — value",
+      "sequence": 170,
+      "legal_reference": "Form VAT 3, line 6.4, column A — goods of a capital nature to the business purchased locally.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6d",
+      "kind": "tax",
+      "name": "Line 6.4 — Capital goods purchased locally — input VAT",
+      "sequence": 180,
+      "legal_reference": "Form VAT 3, line 6.4, column B.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6e",
+      "kind": "base",
+      "name": "Line 6.5 — Zero-rated goods and services purchased locally",
+      "sequence": 190,
+      "legal_reference": "Form VAT 3, line 6.5 — zero-rated goods and services supplied to the business locally.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6f",
+      "kind": "base",
+      "name": "Line 6.6 — Other goods and services purchased locally — value",
+      "sequence": 200,
+      "legal_reference": "Form VAT 3, line 6.6, column A — local supplies to the business other than capital goods (6.4) and zero-rated supplies (6.5); a service received from abroad under the reverse charge is also reported here.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "6f",
+      "kind": "tax",
+      "name": "Line 6.6 — Other goods and services purchased locally — input VAT",
+      "sequence": 210,
+      "legal_reference": "Form VAT 3, line 6.6, column B.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Line 7 — Taxable input on which no input tax is allowed as a credit",
+      "sequence": 220,
+      "legal_reference": "Form VAT 3, line 7 — (a) imports and purchases in respect of which section 21(2) refuses the credit, which the notes ask to be entered inclusive of VAT, and (b) purchases from persons who are not VAT registered. This pack enters the value excluding VAT, see the README.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "8a",
+      "kind": "base",
+      "name": "Line 8.1 — Exempt input, imported goods",
+      "sequence": 230,
+      "legal_reference": "Form VAT 3, line 8.1 — imports of exempt goods.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "8b",
+      "kind": "base",
+      "name": "Line 8.2 — Exempt input, goods and services purchased locally",
+      "sequence": 240,
+      "legal_reference": "Form VAT 3, line 8.2 — exempt goods and services purchased locally.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "9A",
+      "kind": "total",
+      "name": "Line 9 — Total, column A (value)",
+      "sequence": 250,
+      "plus": [
+        "6a:base",
+        "6b",
+        "6c:base",
+        "6d:base",
+        "6e",
+        "6f:base",
+        "7",
+        "8a",
+        "8b"
+      ],
+      "legal_reference": "Form VAT 3, line 9, column A — the total of the values of lines 6.1 to 6.6, 7, 8.1 and 8.2.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "9B",
+      "kind": "total",
+      "name": "Line 9 — Total, column B (input VAT)",
+      "sequence": 260,
+      "plus": [
+        "6a:tax",
+        "6c:tax",
+        "6d:tax",
+        "6f:tax"
+      ],
+      "legal_reference": "Form VAT 3, line 9, column B — the total of the VAT of lines 6.1, 6.3, 6.4 and 6.6.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Line 10 — Input tax deductible",
+      "sequence": 270,
+      "plus": [
+        "9B"
+      ],
+      "legal_reference": "Form VAT 3, line 10, column B — the input tax allowed as a credit. Section 21(3)(b) apportions the input tax of a person who makes both taxable and exempt supplies by the proportion of taxable supplies to total turnover of the previous accounting year (the percentage printed at the head of the input section); this pack carries no such proportion and reports the whole of line 9B, which is the figure a wholly taxable business files. The apportionment is recorded in the README.",
+      "source": "vat3-form"
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "Line 11 — VAT due and payable / (Excess VAT)",
+      "sequence": 280,
+      "plus": [
+        "5B"
+      ],
+      "minus": [
+        "10"
+      ],
+      "legal_reference": "Form VAT 3, line 11 — line 5B minus line 10B. A positive figure is payable to the Mauritius Revenue Authority with the return; a negative figure is an excess carried forward on line 12 of the next return or claimed for repayment on line 15 (s. 22(2)(b) and s. 24). Lines 12 to 19 — the excess brought forward, adjustments, the repayment claim, the penalties and interest — are period-to-period settlement and assessment, not the result of a document, and are not carried.",
+      "source": "vat3-form"
+    }
+  ]
+}

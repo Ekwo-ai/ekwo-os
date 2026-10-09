@@ -1,0 +1,208 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MU",
+  "name": "Mauritius",
+  "version": "0.1.0",
+  "schema_min": "20260929141500",
+  "seed_sequence": 134,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act 1998 (Act No. 2 of 1998), consolidated version up to May 2026 — ss. 4, 5, 9, 10, 11, 14, 14A, 15, 20, 20A, 21, 22, First, Second, Fourth, Fifth and Sixth Schedules",
+        "publisher": "Mauritius Revenue Authority",
+        "url": "https://www.mra.mu/download/VATAct.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "vat3-form",
+        "title": "Form VAT 3 — Value Added Tax return, with the notes for completion",
+        "publisher": "Mauritius Revenue Authority",
+        "url": "https://www.mra.mu/download/VAT3FormNew.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "form"
+      },
+      {
+        "key": "vat-return-page",
+        "title": "VAT return — periodicity and electronic filing and payment deadlines",
+        "publisher": "Mauritius Revenue Authority",
+        "url": "https://www.mra.mu/eservices1/vat-eservices/vat-return",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-faqs",
+        "title": "Value Added Tax Frequently Asked Questions, September 2025",
+        "publisher": "Mauritius Revenue Authority",
+        "url": "https://www.mra.mu/download/VATFAQs.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "mra-eservices",
+        "title": "MRA e-Services — where the VAT return is submitted and the tax paid",
+        "publisher": "Mauritius Revenue Authority",
+        "url": "https://eservices.mra.mu",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      },
+      {
+        "key": "einvoicing-regs",
+        "title": "Value Added Tax (E-invoicing) Regulations 2023 — Government Notice No. 132 of 2023",
+        "publisher": "Government of Mauritius, published by the Mauritius Revenue Authority",
+        "url": "https://www.mra.mu/download/VATe-InvoicingReg2023.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "einvoicing-page",
+        "title": "MRA e-Invoicing System — implementation phases by taxpayer category and turnover",
+        "publisher": "Mauritius Revenue Authority",
+        "url": "https://www.mra.mu/index.php/e-invoicing",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "fra-2004",
+        "title": "Financial Reporting Act 2004 (Act No. 45 of 2004), ss. 72 and 75 — financial reporting and accounting standards",
+        "publisher": "Mauritius Legal Information Institute",
+        "url": "https://mauritiuslii.org/akn/mu/act/2004/45/eng@2017-06-30",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "frc-framework",
+        "title": "Financial Reporting Council — the financial reporting framework in Mauritius",
+        "publisher": "Financial Reporting Council of Mauritius",
+        "url": "https://frc.govmu.org/frc/?page_id=1489",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "MUR",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "fr"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Mauritius reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "MU-IFRS-SFP",
+        "MU-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Mauritius. Financial Reporting Act 2004, s. 72 — the Financial Reporting Council issues the financial reporting and accounting standards and keeps them consistent with the International Financial Reporting Standards; s. 75(1) — the financial statements of a public interest entity comply with IFRS; the Council's own framework page adds that the other companies prepare theirs under standards consistent with IFRS (Companies Act 2001, s. 211), and that a company which is not a public interest entity may apply IFRS for SMEs. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-style statements below, with the accounts a Mauritian company actually keeps — VAT input and output tax, import VAT owed to the Mauritius Revenue Authority at the border, PAYE, National Pension Fund, National Savings Fund and Contribution Sociale Généralisée contributions, the HRDC levy and the Corporate Social Responsibility fund.",
+      "source": "frc-framework"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, s. 20(2)(a) to (c) — a VAT invoice carries the words \"VAT INVOICE\" in a prominent place, the supplier's name, address, VAT registration number and business registration number, its serial number and its date of issue; s. 20(3) — legible copies are kept in chronological order, and s. 20(4) for at least five years. The law asks for a serial number and not for a series without a gap, which is why the style is `sequential`. The fiscal invoice of the e-invoicing system carries, in addition, the Invoice Registration Number the Mauritius Revenue Authority's platform issues (Value Added Tax (E-invoicing) Regulations 2023, reg. 2 and 5(e)), which this pack cannot generate.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, s. 5(1) — a supply of goods or services is deemed to take place at the time an invoice or VAT invoice for it is issued by the supplier or at the time payment is received by the supplier, whichever is the earlier; s. 5(2) applies the same rule to each successive part of a continuous supply of services. The closed vocabulary has no word for \"the earlier of the invoice and the payment\": `invoice_date` is the principle, and a payment received before the invoice, which brings the tax point forward in Mauritius, is the gap recorded in docs/international.md.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "vat_invoice",
+        "applies_when": "always",
+        "text": "VAT INVOICE",
+        "sequence": 10,
+        "legal_reference": "Value Added Tax Act, s. 20(2)(a) — a registered person issuing a VAT invoice specifies the words \"VAT INVOICE\" in a prominent place; s. 20(1) — every registered person who makes a taxable supply to any person issues one.",
+        "source": "vat-act"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Mauritius has no Peppol profile, no published structured-invoice standard and no ISO 6523 scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`: what Mauritius has instead is a real-time fiscalisation (clearance) system, which the vocabulary of this field does not describe. Value Added Tax Act, s. 20A(1) — the Director-General sets up an e-invoicing system through which a business registers every invoice, debit note and credit note and issues fiscal invoices to its customers; s. 20A(2) — a person who carries on a business activity of a prescribed category, or who is notified in writing by the Director-General, acquires the equipment and software and issues fiscal invoices from the date the Director-General fixes, whether or not it is a taxable person (s. 20A(3)); ss. 20B and 20C — a penalty of Rs 10,000 per month, capped at Rs 200,000, for failing to issue fiscal invoices, and up to Rs 50,000 for tampering. The Value Added Tax (E-invoicing) Regulations 2023 (Government Notice No. 132 of 2023, in force 2 October 2023) require an Electronic Billing System to send each transaction to the Invoice Fiscalisation Platform and to print on the fiscal invoice the Invoice Registration Number and the QR code the platform returns. The Authority's roll-out table lists limited companies above Rs 100 million of annual turnover from 15 May 2024, and the other taxpayers above Rs 100 million from 1 August 2025, above Rs 80 million from 30 June 2026 and above Rs 40 million from 1 September 2026, each marked as launched. Ekwo does not call the platform and issues no Invoice Registration Number: a company in scope fiscalises through a certified Electronic Billing System, and the gap is recorded in docs/international.md and in the README of this pack.",
+    "source": "einvoicing-regs"
+  }
+}

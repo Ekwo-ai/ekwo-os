@@ -2197,3 +2197,30 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — Mauritius
+--
+-- A third country to the common system of VAT of Directive 2006/112/EC,
+-- article 5(2), which applies only in the territory of the Community as the
+-- Treaties define it. Mauritius levies its own value added tax under the Value
+-- Added Tax Act 1998, unrelated to the Union's common system. `vat_prefix` is
+-- null: a Mauritian taxpayer is identified by a VAT registration number and a
+-- Business Registration Number, which the Mauritius Revenue Authority and the
+-- Corporate and Business Registration Department assign and which carry no ISO
+-- country prefix comparable to an EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('MU', 'iso_3166_1', 'Mauritius', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Mauritius is a third country to it. Mauritius levies a value added tax of its own under the Value Added Tax Act 1998, section 10 and the Fourth Schedule, at a standard rate of fifteen per cent (15 %), with a rate of zero per cent (0 %) on the supplies of the Fifth Schedule, including exports.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
