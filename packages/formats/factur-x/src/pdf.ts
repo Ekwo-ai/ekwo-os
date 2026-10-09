@@ -1,7 +1,8 @@
 /**
  * PDF side of Factur-X: attach the CII XML to a PDF as `factur-x.xml` with
  * `AFRelationship /Alternative`, declare the document as PDF/A-3 in XMP, and
- * read the XML back from an existing Factur-X / ZUGFeRD file.
+ * read the XML back from an existing Factur-X / ZUGFeRD file, and read the
+ * invoice it holds (`readFacturX`).
  *
  * Only this module depends on `pdf-lib`; import it from `@ekwo-ai/factur-x/pdf`.
  */
@@ -16,12 +17,17 @@ import {
   PDFString,
   decodePDFRawStream,
 } from 'pdf-lib';
+import { type ReceivedCiiFile, readCii } from './cii-read.js';
+import { InvoiceFileError } from './errors.js';
+import type { ReadOptions } from './received.js';
 import type { Profile } from './types.js';
 import { buildXmpMetadata } from './xmp.js';
 
 export const FACTURX_FILENAME = 'factur-x.xml';
 /** File name used by ZUGFeRD 2.x documents; accepted when reading. */
 export const ZUGFERD_FILENAME = 'zugferd-invoice.xml';
+/** File name ZUGFeRD 2.1 and later give the XML of their XRECHNUNG profile; accepted when reading. */
+export const XRECHNUNG_FILENAME = 'xrechnung.xml';
 
 export interface EmbedOptions {
   /** Defaults to `"basic"`. Must match the guideline used for the XML. */
@@ -75,27 +81,81 @@ export interface ExtractedInvoice {
   xml: string;
 }
 
-/**
- * Reads the embedded invoice XML (`factur-x.xml` or `zugferd-invoice.xml`)
- * from a PDF. Returns `null` when the file carries none.
- */
-export async function extractFacturX(pdf: Uint8Array | ArrayBuffer): Promise<ExtractedInvoice | null> {
+const WANTED: ReadonlySet<string> = new Set([FACTURX_FILENAME, ZUGFERD_FILENAME, XRECHNUNG_FILENAME]);
+
+/** The bytes of the first embedded file of the PDF whose name is one of {@link WANTED}. */
+async function embeddedInvoice(pdf: Uint8Array | ArrayBuffer): Promise<{ filename: string; bytes: Uint8Array } | null> {
   const doc = await PDFDocument.load(pdf, { updateMetadata: false, ignoreEncryption: true });
   const names = doc.catalog.lookupMaybe(PDFName.of('Names'), PDFDict);
   const embedded = names?.lookupMaybe(PDFName.of('EmbeddedFiles'), PDFDict);
   if (!embedded) return null;
 
-  const wanted = new Set([FACTURX_FILENAME, ZUGFERD_FILENAME]);
   for (const [name, spec] of walkNameTree(doc, embedded)) {
-    if (!wanted.has(name)) continue;
+    if (!WANTED.has(name)) continue;
     const ef = spec.lookupMaybe(PDFName.of('EF'), PDFDict);
     const candidate = ef?.lookup(PDFName.of('UF')) ?? ef?.lookup(PDFName.of('F'));
     if (!(candidate instanceof PDFRawStream)) continue;
-    const stream = candidate;
-    const bytes = decodePDFRawStream(stream).decode();
-    return { filename: name, xml: new TextDecoder('utf-8').decode(bytes) };
+    return { filename: name, bytes: decodePDFRawStream(candidate).decode() };
   }
   return null;
+}
+
+/**
+ * Reads the embedded invoice XML (`factur-x.xml`, `zugferd-invoice.xml` or
+ * `xrechnung.xml`) from a PDF. Returns `null` when the file carries none.
+ */
+export async function extractFacturX(pdf: Uint8Array | ArrayBuffer): Promise<ExtractedInvoice | null> {
+  const found = await embeddedInvoice(pdf);
+  return found === null ? null : { filename: found.filename, xml: new TextDecoder('utf-8').decode(found.bytes) };
+}
+
+/** What {@link readFacturX} returns: the invoice read from the XML, and the name the XML was attached under. */
+export interface ReceivedFacturX extends ReceivedCiiFile {
+  /** `factur-x.xml`, `zugferd-invoice.xml` or `xrechnung.xml`. */
+  filename: string;
+}
+
+/**
+ * Reads a received Factur-X or ZUGFeRD PDF: finds the CII XML attached to it
+ * and reads it with {@link readCii}, into the shape the UBL reader of
+ * `@ekwo-ai/peppol-ubl` returns too. The PDF itself is the caller's already,
+ * and is not returned again.
+ *
+ * Rejects with an {@link InvoiceFileError}: `too_large` for a file over
+ * `maxBytes`, before it is opened; `not_a_pdf` for bytes `pdf-lib` cannot open
+ * as a PDF; `no_embedded_invoice` for a PDF without the XML; and every code of
+ * {@link readCii} for the XML. Nothing `pdf-lib` throws escapes as anything
+ * else.
+ */
+export async function readFacturX(pdf: Uint8Array | ArrayBuffer, options: ReadOptions = {}): Promise<ReceivedFacturX> {
+  const bytes = pdf instanceof Uint8Array ? pdf : new Uint8Array(pdf);
+  const maxBytes = options.maxBytes ?? 64 * 1024 * 1024;
+  if (bytes.byteLength > maxBytes) {
+    throw new InvoiceFileError('too_large', `the file is ${bytes.byteLength} bytes, over the limit of ${maxBytes}`);
+  }
+  // A PDF opens with its %PDF- header (ISO 32000-1, 7.5.2), which readers
+  // accept within the first kilobyte; asked here so that the refusal of a
+  // file that is not one says so before anything is parsed.
+  const head = new TextDecoder('latin1').decode(bytes.subarray(0, 1024));
+  if (!head.includes('%PDF-')) {
+    throw new InvoiceFileError('not_a_pdf', 'the file is not a PDF: it has no %PDF- header');
+  }
+  let found: { filename: string; bytes: Uint8Array } | null;
+  try {
+    found = await embeddedInvoice(bytes);
+  } catch (error) {
+    throw new InvoiceFileError(
+      'not_a_pdf',
+      `the PDF could not be opened: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+  if (found === null) {
+    throw new InvoiceFileError(
+      'no_embedded_invoice',
+      `the PDF carries no ${[...WANTED].join(', ')}: it is not a Factur-X or ZUGFeRD invoice`,
+    );
+  }
+  return { ...readCii(found.bytes, options), filename: found.filename };
 }
 
 /** Yields `[fileName, fileSpecification]` pairs of an EmbeddedFiles name tree. */

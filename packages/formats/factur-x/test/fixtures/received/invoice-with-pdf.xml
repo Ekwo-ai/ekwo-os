@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Invented: no company, person, account or identifier here belongs to anybody. -->
+<!-- The invoice of peppol-ubl/test/fixtures/received/invoice-with-pdf.xml, written in CII. -->
+<rsm:CrossIndustryInvoice xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100" xmlns:qdt="urn:un:unece:uncefact:data:standard:QualifiedDataType:100" xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100">
+  <rsm:ExchangedDocumentContext>
+    <ram:BusinessProcessSpecifiedDocumentContextParameter>
+      <ram:ID>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</ram:ID>
+    </ram:BusinessProcessSpecifiedDocumentContextParameter>
+    <ram:GuidelineSpecifiedDocumentContextParameter>
+      <ram:ID>urn:cen.eu:en16931:2017</ram:ID>
+    </ram:GuidelineSpecifiedDocumentContextParameter>
+  </rsm:ExchangedDocumentContext>
+  <rsm:ExchangedDocument>
+    <ram:ID>RCV-2026-0107</ram:ID>
+    <ram:TypeCode>380</ram:TypeCode>
+    <ram:IssueDateTime>
+      <udt:DateTimeString format="102">20260915</udt:DateTimeString>
+    </ram:IssueDateTime>
+    <ram:IncludedNote>
+      <ram:Content>Delivered in August, invoiced in September.</ram:Content>
+    </ram:IncludedNote>
+    <ram:IncludedNote>
+      <ram:Content>Questions: invoicing@atelier-fictif.example.test</ram:Content>
+    </ram:IncludedNote>
+  </rsm:ExchangedDocument>
+  <rsm:SupplyChainTradeTransaction>
+    <ram:IncludedSupplyChainTradeLineItem>
+      <ram:AssociatedDocumentLineDocument>
+        <ram:LineID>1</ram:LineID>
+        <ram:IncludedNote>
+          <ram:Content>Assembled on site</ram:Content>
+        </ram:IncludedNote>
+      </ram:AssociatedDocumentLineDocument>
+      <ram:SpecifiedTradeProduct>
+        <ram:GlobalID schemeID="0160">02000000000108</ram:GlobalID>
+        <ram:SellerAssignedID>AF-SH-180</ram:SellerAssignedID>
+        <ram:BuyerAssignedID>SHELF-OAK</ram:BuyerAssignedID>
+        <ram:Name>Oak shelving, assembled</ram:Name>
+        <ram:Description>Oak, 180 x 90 cm</ram:Description>
+      </ram:SpecifiedTradeProduct>
+      <ram:SpecifiedLineTradeAgreement>
+        <ram:BuyerOrderReferencedDocument>
+          <ram:LineID>3</ram:LineID>
+        </ram:BuyerOrderReferencedDocument>
+        <ram:GrossPriceProductTradePrice>
+          <ram:ChargeAmount>125.00</ram:ChargeAmount>
+          <ram:AppliedTradeAllowanceCharge>
+            <ram:ChargeIndicator>
+              <udt:Indicator>false</udt:Indicator>
+            </ram:ChargeIndicator>
+            <ram:ActualAmount>5.00</ram:ActualAmount>
+          </ram:AppliedTradeAllowanceCharge>
+        </ram:GrossPriceProductTradePrice>
+        <ram:NetPriceProductTradePrice>
+          <ram:ChargeAmount>120.00</ram:ChargeAmount>
+          <ram:BasisQuantity unitCode="C62">1</ram:BasisQuantity>
+        </ram:NetPriceProductTradePrice>
+      </ram:SpecifiedLineTradeAgreement>
+      <ram:SpecifiedLineTradeDelivery>
+        <ram:BilledQuantity unitCode="C62">4</ram:BilledQuantity>
+      </ram:SpecifiedLineTradeDelivery>
+      <ram:SpecifiedLineTradeSettlement>
+        <ram:ApplicableTradeTax>
+          <ram:TypeCode>VAT</ram:TypeCode>
+          <ram:CategoryCode>S</ram:CategoryCode>
+          <ram:RateApplicablePercent>21</ram:RateApplicablePercent>
+        </ram:ApplicableTradeTax>
+        <ram:SpecifiedTradeAllowanceCharge>
+          <ram:ChargeIndicator>
+            <udt:Indicator>false</udt:Indicator>
+          </ram:ChargeIndicator>
+          <ram:ActualAmount>10.00</ram:ActualAmount>
+          <ram:ReasonCode>95</ram:ReasonCode>
+          <ram:Reason>Loyalty</ram:Reason>
+        </ram:SpecifiedTradeAllowanceCharge>
+        <ram:SpecifiedTradeSettlementLineMonetarySummation>
+          <ram:LineTotalAmount>470.00</ram:LineTotalAmount>
+        </ram:SpecifiedTradeSettlementLineMonetarySummation>
+      </ram:SpecifiedLineTradeSettlement>
+    </ram:IncludedSupplyChainTradeLineItem>
+    <ram:IncludedSupplyChainTradeLineItem>
+      <ram:AssociatedDocumentLineDocument>
+        <ram:LineID>2</ram:LineID>
+      </ram:AssociatedDocumentLineDocument>
+      <ram:SpecifiedTradeProduct>
+        <ram:Name>Delivery and installation</ram:Name>
+      </ram:SpecifiedTradeProduct>
+      <ram:SpecifiedLineTradeAgreement>
+        <ram:NetPriceProductTradePrice>
+          <ram:ChargeAmount>45.00</ram:ChargeAmount>
+        </ram:NetPriceProductTradePrice>
+      </ram:SpecifiedLineTradeAgreement>
+      <ram:SpecifiedLineTradeDelivery>
+        <ram:BilledQuantity unitCode="HUR">3</ram:BilledQuantity>
+      </ram:SpecifiedLineTradeDelivery>
+      <ram:SpecifiedLineTradeSettlement>
+        <ram:ApplicableTradeTax>
+          <ram:TypeCode>VAT</ram:TypeCode>
+          <ram:CategoryCode>S</ram:CategoryCode>
+          <ram:RateApplicablePercent>21</ram:RateApplicablePercent>
+        </ram:ApplicableTradeTax>
+        <ram:BillingSpecifiedPeriod>
+          <ram:StartDateTime>
+            <udt:DateTimeString format="102">20260827</udt:DateTimeString>
+          </ram:StartDateTime>
+          <ram:EndDateTime>
+            <udt:DateTimeString format="102">20260828</udt:DateTimeString>
+          </ram:EndDateTime>
+        </ram:BillingSpecifiedPeriod>
+        <ram:SpecifiedTradeSettlementLineMonetarySummation>
+          <ram:LineTotalAmount>135.00</ram:LineTotalAmount>
+        </ram:SpecifiedTradeSettlementLineMonetarySummation>
+      </ram:SpecifiedLineTradeSettlement>
+    </ram:IncludedSupplyChainTradeLineItem>
+    <ram:IncludedSupplyChainTradeLineItem>
+      <ram:AssociatedDocumentLineDocument>
+        <ram:LineID>3</ram:LineID>
+      </ram:AssociatedDocumentLineDocument>
+      <ram:SpecifiedTradeProduct>
+        <ram:Name>Assembly manual</ram:Name>
+      </ram:SpecifiedTradeProduct>
+      <ram:SpecifiedLineTradeAgreement>
+        <ram:NetPriceProductTradePrice>
+          <ram:ChargeAmount>12.00</ram:ChargeAmount>
+        </ram:NetPriceProductTradePrice>
+      </ram:SpecifiedLineTradeAgreement>
+      <ram:SpecifiedLineTradeDelivery>
+        <ram:BilledQuantity unitCode="C62">1</ram:BilledQuantity>
+      </ram:SpecifiedLineTradeDelivery>
+      <ram:SpecifiedLineTradeSettlement>
+        <ram:ApplicableTradeTax>
+          <ram:TypeCode>VAT</ram:TypeCode>
+          <ram:CategoryCode>S</ram:CategoryCode>
+          <ram:RateApplicablePercent>6</ram:RateApplicablePercent>
+        </ram:ApplicableTradeTax>
+        <ram:SpecifiedTradeSettlementLineMonetarySummation>
+          <ram:LineTotalAmount>12.00</ram:LineTotalAmount>
+        </ram:SpecifiedTradeSettlementLineMonetarySummation>
+      </ram:SpecifiedLineTradeSettlement>
+    </ram:IncludedSupplyChainTradeLineItem>
+    <ram:ApplicableHeaderTradeAgreement>
+      <ram:BuyerReference>DEPT-OPS</ram:BuyerReference>
+      <ram:SellerTradeParty>
+        <ram:GlobalID schemeID="0088">0200000000011</ram:GlobalID>
+        <ram:Name>Atelier Fictif SRL</ram:Name>
+        <ram:Description>SRL, capital invented</ram:Description>
+        <ram:SpecifiedLegalOrganization>
+          <ram:ID schemeID="0208">0999999031</ram:ID>
+          <ram:TradingBusinessName>Atelier Fictif</ram:TradingBusinessName>
+        </ram:SpecifiedLegalOrganization>
+        <ram:DefinedTradeContact>
+          <ram:PersonName>Invoicing desk</ram:PersonName>
+          <ram:TelephoneUniversalCommunication>
+            <ram:CompleteNumber>+32 81 00 00 00</ram:CompleteNumber>
+          </ram:TelephoneUniversalCommunication>
+          <ram:EmailURIUniversalCommunication>
+            <ram:URIID>invoicing@atelier-fictif.example.test</ram:URIID>
+          </ram:EmailURIUniversalCommunication>
+        </ram:DefinedTradeContact>
+        <ram:PostalTradeAddress>
+          <ram:PostcodeCode>5000</ram:PostcodeCode>
+          <ram:LineOne>Rue des Essais 12</ram:LineOne>
+          <ram:LineTwo>Boîte 3</ram:LineTwo>
+          <ram:CityName>Namur</ram:CityName>
+          <ram:CountryID>BE</ram:CountryID>
+        </ram:PostalTradeAddress>
+        <ram:URIUniversalCommunication>
+          <ram:URIID schemeID="0208">0999999031</ram:URIID>
+        </ram:URIUniversalCommunication>
+        <ram:SpecifiedTaxRegistration>
+          <ram:ID schemeID="VA">BE0999999031</ram:ID>
+        </ram:SpecifiedTaxRegistration>
+      </ram:SellerTradeParty>
+      <ram:BuyerTradeParty>
+        <ram:Name>Voorbeeld Kantoor BV</ram:Name>
+        <ram:SpecifiedLegalOrganization>
+          <ram:ID>99999999</ram:ID>
+          <ram:TradingBusinessName>Voorbeeld Kantoor</ram:TradingBusinessName>
+        </ram:SpecifiedLegalOrganization>
+        <ram:PostalTradeAddress>
+          <ram:PostcodeCode>3511 AA</ram:PostcodeCode>
+          <ram:LineOne>Verzonnenstraat 2</ram:LineOne>
+          <ram:LineTwo>Second floor</ram:LineTwo>
+          <ram:CityName>Utrecht</ram:CityName>
+          <ram:CountryID>NL</ram:CountryID>
+        </ram:PostalTradeAddress>
+        <ram:URIUniversalCommunication>
+          <ram:URIID schemeID="9944">NL999999999B01</ram:URIID>
+        </ram:URIUniversalCommunication>
+        <ram:SpecifiedTaxRegistration>
+          <ram:ID schemeID="VA">NL999999999B01</ram:ID>
+        </ram:SpecifiedTaxRegistration>
+      </ram:BuyerTradeParty>
+      <ram:SellerOrderReferencedDocument>
+        <ram:IssuerAssignedID>SO-7710</ram:IssuerAssignedID>
+      </ram:SellerOrderReferencedDocument>
+      <ram:BuyerOrderReferencedDocument>
+        <ram:IssuerAssignedID>PO-RCV-55</ram:IssuerAssignedID>
+      </ram:BuyerOrderReferencedDocument>
+      <ram:ContractReferencedDocument>
+        <ram:IssuerAssignedID>FRAME-2026</ram:IssuerAssignedID>
+      </ram:ContractReferencedDocument>
+      <ram:AdditionalReferencedDocument>
+        <ram:IssuerAssignedID>SHELF-LOT-12</ram:IssuerAssignedID>
+        <ram:TypeCode>130</ram:TypeCode>
+        <ram:ReferenceTypeCode>ZZZ</ram:ReferenceTypeCode>
+      </ram:AdditionalReferencedDocument>
+      <ram:AdditionalReferencedDocument>
+        <ram:IssuerAssignedID>RCV-2026-0107</ram:IssuerAssignedID>
+        <ram:TypeCode>916</ram:TypeCode>
+        <ram:Name>Invoice as printed</ram:Name>
+        <ram:AttachmentBinaryObject mimeCode="application/pdf" filename="RCV-2026-0107.pdf">
+          JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2Jq
+          CjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2Jq
+          CjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA1OTUg
+          ODQyXSAvQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAwIFIgPj4g
+          Pj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCA1MiA+PgpzdHJlYW0KQlQgL0YxIDE4IFRm
+          IDUwIDc4MCBUZCAoSW52b2ljZSBSQ1YtMjAyNi0wMTA3KSBUaiBFVAplbmRzdHJlYW0KZW5kb2Jq
+          CjUgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNlRm9udCAvSGVsdmV0
+          aWNhID4+CmVuZG9iagp4cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMDkgMDAw
+          MDAgbiAKMDAwMDAwMDA1OCAwMDAwMCBuIAowMDAwMDAwMTE1IDAwMDAwIG4gCjAwMDAwMDAyNDEg
+          MDAwMDAgbiAKMDAwMDAwMDM0MyAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDYgL1Jvb3QgMSAw
+          IFIgPj4Kc3RhcnR4cmVmCjQxMwolJUVPRgo=
+      </ram:AttachmentBinaryObject>
+      </ram:AdditionalReferencedDocument>
+      <ram:AdditionalReferencedDocument>
+        <ram:IssuerAssignedID>TIMESHEET-08</ram:IssuerAssignedID>
+        <ram:URIID>https://atelier-fictif.example.test/timesheets/08</ram:URIID>
+        <ram:TypeCode>916</ram:TypeCode>
+        <ram:Name>Installation timesheet</ram:Name>
+      </ram:AdditionalReferencedDocument>
+      <ram:SpecifiedProcuringProject>
+        <ram:ID>OFFICE-REFIT</ram:ID>
+        <ram:Name>Project reference</ram:Name>
+      </ram:SpecifiedProcuringProject>
+    </ram:ApplicableHeaderTradeAgreement>
+    <ram:ApplicableHeaderTradeDelivery>
+      <ram:ShipToTradeParty>
+        <ram:PostalTradeAddress>
+          <ram:PostcodeCode>3512 BB</ram:PostcodeCode>
+          <ram:LineOne>Proefweg 5</ram:LineOne>
+          <ram:CityName>Utrecht</ram:CityName>
+          <ram:CountryID>NL</ram:CountryID>
+        </ram:PostalTradeAddress>
+      </ram:ShipToTradeParty>
+      <ram:ActualDeliverySupplyChainEvent>
+        <ram:OccurrenceDateTime>
+          <udt:DateTimeString format="102">20260828</udt:DateTimeString>
+        </ram:OccurrenceDateTime>
+      </ram:ActualDeliverySupplyChainEvent>
+    </ram:ApplicableHeaderTradeDelivery>
+    <ram:ApplicableHeaderTradeSettlement>
+      <ram:PaymentReference>RCV-2026-0107</ram:PaymentReference>
+      <ram:InvoiceCurrencyCode>EUR</ram:InvoiceCurrencyCode>
+      <ram:SpecifiedTradeSettlementPaymentMeans>
+        <ram:TypeCode>58</ram:TypeCode>
+        <ram:Information>SEPA credit transfer</ram:Information>
+        <ram:PayeePartyCreditorFinancialAccount>
+          <ram:IBANID>BE53999000000099</ram:IBANID>
+          <ram:AccountName>Atelier Fictif SRL</ram:AccountName>
+        </ram:PayeePartyCreditorFinancialAccount>
+        <ram:PayeeSpecifiedCreditorFinancialInstitution>
+          <ram:BICID>ZZZZBEB0</ram:BICID>
+        </ram:PayeeSpecifiedCreditorFinancialInstitution>
+      </ram:SpecifiedTradeSettlementPaymentMeans>
+      <ram:SpecifiedTradeSettlementPaymentMeans>
+        <ram:TypeCode>30</ram:TypeCode>
+        <ram:PayeePartyCreditorFinancialAccount>
+          <ram:ProprietaryID>ACC-000-1234</ram:ProprietaryID>
+        </ram:PayeePartyCreditorFinancialAccount>
+      </ram:SpecifiedTradeSettlementPaymentMeans>
+      <ram:ApplicableTradeTax>
+        <ram:CalculatedAmount>127.68</ram:CalculatedAmount>
+        <ram:TypeCode>VAT</ram:TypeCode>
+        <ram:BasisAmount>608.00</ram:BasisAmount>
+        <ram:CategoryCode>S</ram:CategoryCode>
+        <ram:RateApplicablePercent>21</ram:RateApplicablePercent>
+      </ram:ApplicableTradeTax>
+      <ram:ApplicableTradeTax>
+        <ram:CalculatedAmount>0.72</ram:CalculatedAmount>
+        <ram:TypeCode>VAT</ram:TypeCode>
+        <ram:BasisAmount>12.00</ram:BasisAmount>
+        <ram:CategoryCode>S</ram:CategoryCode>
+        <ram:RateApplicablePercent>6</ram:RateApplicablePercent>
+      </ram:ApplicableTradeTax>
+      <ram:BillingSpecifiedPeriod>
+        <ram:StartDateTime>
+          <udt:DateTimeString format="102">20260801</udt:DateTimeString>
+        </ram:StartDateTime>
+        <ram:EndDateTime>
+          <udt:DateTimeString format="102">20260831</udt:DateTimeString>
+        </ram:EndDateTime>
+      </ram:BillingSpecifiedPeriod>
+      <ram:SpecifiedTradeAllowanceCharge>
+        <ram:ChargeIndicator>
+          <udt:Indicator>false</udt:Indicator>
+        </ram:ChargeIndicator>
+        <ram:ActualAmount>17.00</ram:ActualAmount>
+        <ram:ReasonCode>95</ram:ReasonCode>
+        <ram:Reason>Early order discount</ram:Reason>
+        <ram:CategoryTradeTax>
+          <ram:TypeCode>VAT</ram:TypeCode>
+          <ram:CategoryCode>S</ram:CategoryCode>
+          <ram:RateApplicablePercent>21</ram:RateApplicablePercent>
+        </ram:CategoryTradeTax>
+      </ram:SpecifiedTradeAllowanceCharge>
+      <ram:SpecifiedTradeAllowanceCharge>
+        <ram:ChargeIndicator>
+          <udt:Indicator>true</udt:Indicator>
+        </ram:ChargeIndicator>
+        <ram:CalculationPercent>4</ram:CalculationPercent>
+        <ram:BasisAmount>500.00</ram:BasisAmount>
+        <ram:ActualAmount>20.00</ram:ActualAmount>
+        <ram:ReasonCode>ABL</ram:ReasonCode>
+        <ram:Reason>Packaging</ram:Reason>
+        <ram:CategoryTradeTax>
+          <ram:TypeCode>VAT</ram:TypeCode>
+          <ram:CategoryCode>S</ram:CategoryCode>
+          <ram:RateApplicablePercent>21</ram:RateApplicablePercent>
+        </ram:CategoryTradeTax>
+      </ram:SpecifiedTradeAllowanceCharge>
+      <ram:SpecifiedTradePaymentTerms>
+        <ram:Description>30 days net; 100.00 paid on order</ram:Description>
+        <ram:DueDateDateTime>
+          <udt:DateTimeString format="102">20261015</udt:DateTimeString>
+        </ram:DueDateDateTime>
+      </ram:SpecifiedTradePaymentTerms>
+      <ram:SpecifiedTradeSettlementHeaderMonetarySummation>
+        <ram:LineTotalAmount>617.00</ram:LineTotalAmount>
+        <ram:ChargeTotalAmount>20.00</ram:ChargeTotalAmount>
+        <ram:AllowanceTotalAmount>17.00</ram:AllowanceTotalAmount>
+        <ram:TaxBasisTotalAmount>620.00</ram:TaxBasisTotalAmount>
+        <ram:TaxTotalAmount currencyID="EUR">128.40</ram:TaxTotalAmount>
+        <ram:GrandTotalAmount>748.40</ram:GrandTotalAmount>
+        <ram:TotalPrepaidAmount>100.00</ram:TotalPrepaidAmount>
+        <ram:DuePayableAmount>648.40</ram:DuePayableAmount>
+      </ram:SpecifiedTradeSettlementHeaderMonetarySummation>
+      <ram:ReceivableSpecifiedTradeAccountingAccount>
+        <ram:ID>WORKSHOP-FURNITURE</ram:ID>
+      </ram:ReceivableSpecifiedTradeAccountingAccount>
+    </ram:ApplicableHeaderTradeSettlement>
+  </rsm:SupplyChainTradeTransaction>
+</rsm:CrossIndustryInvoice>
