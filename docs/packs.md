@@ -280,6 +280,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`mu`](../packs/mu/) | Mauritius | `134_pack_mu.sql` | en, fr | `community` |
 | [`mx`](../packs/mx/) | México | `42_pack_mx.sql` | es, en | `community` |
 | [`my`](../packs/my/) | Malaysia | `39_pack_my.sql` | ms | `community` |
+| [`mz`](../packs/mz/) | Moçambique | `135_pack_mz.sql` | pt | `community` |
 | [`ne`](../packs/ne/) | Niger | `33_pack_ne.sql` | fr | `community` |
 | [`ng`](../packs/ng/) | Nigeria | `49_pack_ng.sql` | en | `community` |
 | [`ni`](../packs/ni/) | Nicaragua | `132_pack_ni.sql` | es | `community` |

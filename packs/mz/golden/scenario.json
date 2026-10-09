@@ -1,0 +1,433 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Um mês de contabilidade de uma sociedade comercial de Maputo, sujeito passivo de IVA do regime normal e declarando por mês",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercício de 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "MZ-NIRF-BAL",
+    "MZ-NIRF-DR"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-mpt",
+      "name": "Comercial Maputo Sul, Lda",
+      "type": "customer",
+      "country": "MZ"
+    },
+    {
+      "ref": "cust-za",
+      "name": "Johannesburg Mining Supplies (Pty) Ltd",
+      "type": "customer",
+      "country": "ZA"
+    },
+    {
+      "ref": "cust-tr",
+      "name": "Viagens Índico, Lda",
+      "type": "customer",
+      "country": "MZ"
+    },
+    {
+      "ref": "cust-bank",
+      "name": "Seguros do Índico, S.A.",
+      "type": "customer",
+      "country": "MZ"
+    },
+    {
+      "ref": "cust-food",
+      "name": "Mercearia Matola, Lda",
+      "type": "customer",
+      "country": "MZ"
+    },
+    {
+      "ref": "cust-student",
+      "name": "Escola Técnica Zambeze, Lda",
+      "type": "customer",
+      "country": "MZ"
+    },
+    {
+      "ref": "supp-mz",
+      "name": "Distribuidora Beira, Lda",
+      "type": "supplier",
+      "country": "MZ"
+    },
+    {
+      "ref": "supp-cars",
+      "name": "Auto Moçambique, S.A.",
+      "type": "supplier",
+      "country": "MZ"
+    },
+    {
+      "ref": "supp-fuel",
+      "name": "Combustíveis do Norte, Lda",
+      "type": "supplier",
+      "country": "MZ"
+    },
+    {
+      "ref": "supp-insurer",
+      "name": "Companhia de Seguros Moçambique, S.A.",
+      "type": "supplier",
+      "country": "MZ"
+    },
+    {
+      "ref": "supp-cn",
+      "name": "Shenzhen Parts Trading Co.",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supp-us",
+      "name": "CloudWorks Inc.",
+      "type": "supplier",
+      "country": "US"
+    },
+    {
+      "ref": "supp-school",
+      "name": "Instituto de Formação Nampula, Lda",
+      "type": "supplier",
+      "country": "MZ"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-mpt",
+      "date": "2026-01-08",
+      "why": "Venda à taxa normal de 16 %: base no campo 01 e imposto liquidado no campo 02.",
+      "lines": [
+        {
+          "name": "Mobiliário de escritório",
+          "quantity": 10,
+          "unit_price": 20000,
+          "tax": "MZ-S-16",
+          "account": "711"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-student",
+      "date": "2026-01-09",
+      "why": "Formação profissional de uma entidade privada, à taxa reduzida de 5 % do art. 17-A: base no campo 01, imposto no campo 02, e um cliente que paga mais tarde por inteiro.",
+      "lines": [
+        {
+          "name": "Curso de formação profissional",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "MZ-S-5",
+          "account": "72"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-za",
+      "date": "2026-01-12",
+      "why": "Exportação de bens, isenta com direito à dedução: campo 03, sem imposto liquidado.",
+      "lines": [
+        {
+          "name": "Castanha de caju embalada, expedição para o estrangeiro",
+          "quantity": 500,
+          "unit_price": 1000,
+          "tax": "MZ-S-EXP",
+          "account": "711"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-bank",
+      "date": "2026-01-14",
+      "why": "Corretagem de seguros, isenta sem direito à dedução (art. 9, n.º 6): campo 04.",
+      "lines": [
+        {
+          "name": "Comissões de mediação de seguros",
+          "quantity": 1,
+          "unit_price": 80000,
+          "tax": "MZ-S-EX-FIN",
+          "account": "72"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-food",
+      "date": "2026-01-16",
+      "why": "Farinha de milho, isenta com direito à dedução (art. 9, n.º 10 e art. 19, n.º 1, alínea b), subalínea v): campo 03 e não campo 04.",
+      "lines": [
+        {
+          "name": "Farinha de milho, sacos de 25 kg",
+          "quantity": 200,
+          "unit_price": 100,
+          "tax": "MZ-S-EX-STAPLES",
+          "account": "711"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-tr",
+      "date": "2026-01-19",
+      "why": "Transporte de pessoas com destino ao estrangeiro (art. 13, n.º 1, alínea p)): campo 03.",
+      "lines": [
+        {
+          "name": "Transporte de passageiros Maputo–Joanesburgo",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "MZ-S-EXP-SVC",
+          "account": "72"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-mpt",
+      "date": "2026-01-26",
+      "why": "Nota de crédito de duas unidades devolvidas de INV-001: a base e o imposto do campo 01 e do campo 02 diminuem.",
+      "lines": [
+        {
+          "name": "Mobiliário de escritório devolvido",
+          "quantity": 2,
+          "unit_price": 20000,
+          "tax": "MZ-S-16",
+          "account": "711"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-mz",
+      "date": "2026-01-10",
+      "why": "Compra de mercadorias a 16 %, dedutível: imposto no campo 06 (existências).",
+      "lines": [
+        {
+          "name": "Mercadorias para revenda",
+          "quantity": 200,
+          "unit_price": 1500,
+          "tax": "MZ-P-16-INV",
+          "account": "6112"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-mz",
+      "date": "2026-01-11",
+      "why": "Compra de um equipamento a 16 %, dedutível: imposto no campo 05 (imobilizado).",
+      "lines": [
+        {
+          "name": "Máquina de embalagem",
+          "quantity": 1,
+          "unit_price": 1000000,
+          "tax": "MZ-P-16-FA",
+          "account": "322"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-mz",
+      "date": "2026-01-13",
+      "why": "Serviço corrente a 16 %, dedutível: imposto no campo 07 (outros bens e serviços).",
+      "lines": [
+        {
+          "name": "Serviço de manutenção do armazém",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "MZ-P-16-SVC",
+          "account": "63221"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-cars",
+      "date": "2026-01-15",
+      "why": "Viatura de turismo, dedução excluída pelo art. 20, n.º 1, alínea a): o imposto passa ao custo da viatura e não chega a nenhum campo.",
+      "lines": [
+        {
+          "name": "Viatura de turismo para o director comercial",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "MZ-P-16-EXC",
+          "account": "324"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-fuel",
+      "date": "2026-01-17",
+      "why": "Gasóleo, dedutível a 50 % (art. 20, n.º 1, alínea b)): metade do imposto no campo 07 e metade no custo.",
+      "lines": [
+        {
+          "name": "Gasóleo, 1 000 litros",
+          "quantity": 1000,
+          "unit_price": 100,
+          "tax": "MZ-P-16-FUEL",
+          "account": "632131"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-20",
+      "why": "Importação de bens: o imposto pago na alfândega é dedutível no campo 08 e fica devido ao Estado na conta 4691 até ao pagamento.",
+      "lines": [
+        {
+          "name": "Peças importadas para revenda",
+          "quantity": 1,
+          "unit_price": 400000,
+          "tax": "MZ-P-IMP",
+          "account": "6112"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-007",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-01-22",
+      "why": "Serviço digital (computação em nuvem) comprado a um não residente: autoliquidação, imposto liquidado no campo 02 e deduzido no campo 07, e base no campo 01.",
+      "lines": [
+        {
+          "name": "Subscrição de computação em nuvem",
+          "quantity": 1,
+          "unit_price": 250000,
+          "tax": "MZ-P-RC-16",
+          "account": "63299"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-008",
+      "type": "purchase_invoice",
+      "contact": "supp-insurer",
+      "date": "2026-01-23",
+      "why": "Prémio de seguro isento: nenhum imposto a deduzir e nenhum campo.",
+      "lines": [
+        {
+          "name": "Prémio de seguro multirriscos",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "MZ-P-EX",
+          "account": "63233"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-009",
+      "type": "purchase_invoice",
+      "contact": "supp-mz",
+      "date": "2026-01-24",
+      "why": "Equipamento a 16 % afecto à formação à taxa de 5 %: desde 2026 o art. 19, n.º 2 exclui a dedução, e o imposto fica no custo do activo sem chegar a nenhum campo.",
+      "lines": [
+        {
+          "name": "Projector para a sala de formação",
+          "quantity": 1,
+          "unit_price": 60000,
+          "tax": "MZ-P-16-ND5",
+          "account": "323"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-010",
+      "type": "purchase_invoice",
+      "contact": "supp-school",
+      "date": "2026-01-27",
+      "why": "Formação comprada a uma escola privada à taxa de 5 %: o imposto pago não é dedutível (art. 20, n.º 2) e fica no custo.",
+      "lines": [
+        {
+          "name": "Curso de formação para o pessoal",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "MZ-P-5-ND",
+          "account": "63237"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-mz",
+      "date": "2026-01-29",
+      "why": "Nota de crédito de fornecedor por 20 unidades devolvidas de PINV-001: o campo 06 diminui.",
+      "lines": [
+        {
+          "name": "Mercadorias devolvidas",
+          "quantity": 20,
+          "unit_price": 1500,
+          "tax": "MZ-P-16-INV",
+          "account": "6112"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-03",
+      "amount": 232000,
+      "contact": "cust-mpt",
+      "journal": "BAN",
+      "match": "INV-001",
+      "why": "INV-001 recebida por inteiro, imposto incluído: um pagamento ligado."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-04",
+      "amount": 500000,
+      "contact": "cust-za",
+      "journal": "BAN",
+      "match": "INV-003",
+      "why": "A exportação de INV-003 recebida por inteiro: um pagamento ligado numa relação com o estrangeiro."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-05",
+      "amount": 348000,
+      "contact": "supp-mz",
+      "journal": "BAN",
+      "match": "PINV-001",
+      "why": "PINV-001 paga por inteiro, imposto incluído: um pagamento ligado a uma compra."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 50000,
+      "contact": "cust-student",
+      "journal": "BAN",
+      "match": null,
+      "why": "Um adiantamento recebido sem factura: o pagamento fica em aberto e reconcile() tem de o suportar."
+    }
+  ]
+}

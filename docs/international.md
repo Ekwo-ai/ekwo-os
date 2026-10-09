@@ -6310,3 +6310,47 @@ the whole credit on line 10 and the value excluding VAT on line 7.
 **Period-to-period lines.** Lines 12 to 19 of form VAT 3 (excess brought
 forward, adjustments, repayment claim, penalties and interest) are not carried,
 for the reason given for the same lines in other countries' returns.
+
+## From Mozambique
+
+**Reporting invoices to the tax authority, where the format has a profile for
+exchanging them.** Mozambique obliges taxpayers who issue invoices by computer
+program to submit every month, through the e-Declaração portal, the file of the
+previous month's invoices produced by billing software certified by the
+Autoridade Tributária (Código do IVA, art. 27(10); Aviso n.º 40/AT/DGI/2025,
+from May 2025). A full SAF-T (Moz) file, a software certification regulation and
+fiscal machines connected to the authority are announced or being phased in;
+no real-time clearance is in force. `einvoicing` describes the exchange of a
+structured document between two parties, so `packs/mz/` says `obligation: none`
+with no profile and states the reporting duty in the legal reference. Ekwo
+produces neither the monthly invoice file nor SAF-T (Moz), and is not certified
+billing software.
+
+**Two deadlines for one return, where the format holds one.** Art. 32(1)
+sets the 15th of the following month for a return showing a credit or no
+operations, the last day of the following month for a return with tax to
+pay, and the 10th for the self-assessed operations of art. 26(4).
+`packs/mz/` declares the last day of the month, the date of a return with
+tax to pay, and writes the other two in the README.
+
+**A reduced rate that removes the right to deduct.** The 5 % rate of art. 17-A
+carries no right to deduct, either on the tax paid on 5 % purchases (art. 20(2))
+or on the input tax attributable to 5 % supplies (art. 19(2), since 1 January
+2026). The pack offers wholly deductible and wholly disallowed purchase codes
+and no apportionment of a mixed-use purchase; the reduced bases of art. 15(2)
+and the partial deduction of art. 22 are not modelled either.
+
+**Self-assessed output tax on a return with no field for it.** The Modelo A has
+no box for the output tax of art. 26(4). `packs/mz/` posts the base and the tax
+to boxes 01 and 02 and the deduction to box 07, an assumption recorded in the
+README for a local reviewer.
+
+**A filer the portal cannot serve.** Since the reform, taxpayers whose supplies
+are taxed at 5 % file a payment slip at an AT collection unit, and the Portal
+do Contribuinte is not yet adapted to them. The pack has no way to tell such a
+filer apart.
+
+**Withholding at source.** Income tax withheld on payments, and the
+Código do IVA's withholding statement for digital purchases of non-residents
+(art. 25(7)), are not tax codes: they are computed on a payment and remitted by
+a party that is not on the document.

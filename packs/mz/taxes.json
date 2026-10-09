@@ -1,0 +1,709 @@
+[
+  {
+    "code": "MZ-S-16",
+    "name": "Venda ou prestação de serviços à taxa normal (16 %)",
+    "description": "Transmissão de bens ou prestação de serviços tributada que não é isenta nem sujeita à taxa reduzida",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Código do IVA, art. 17, n.º 1, na redacção da Lei n.º 22/2022, de 28 de Dezembro (art. 1; em vigor desde 1 de Janeiro de 2023, art. 6): a taxa do imposto é de 16 %; n.º 2 — aplica-se a taxa em vigor no momento em que o imposto se torna exigível. Modelo A, quadro 5, campos 01 (base) e 02 (imposto liquidado). `vat_category` e `exemption_code` ficam nulos: o pacote não declara perfil de factura electrónica.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "01"
+        },
+        {
+          "type": "tax",
+          "account": "44331",
+          "box": "02"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "01",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "44331",
+          "box": "02",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "MZ-S-5",
+    "name": "Venda ou prestação de serviços à taxa reduzida (5 %)",
+    "description": "Serviços médicos e sanitários de estabelecimentos privados, ensino e formação profissional privados, lições a título pessoal",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Código do IVA, art. 17-A, aditado pela Lei n.º 22/2022 (em vigor desde 1 de Janeiro de 2023): taxa reduzida de 5 % para (a) os serviços médicos e sanitários prestados por estabelecimentos hospitalares privados, clínicas, dispensários e similares, (b) o ensino ministrado por estabelecimentos privados integrados no Sistema Nacional de Ensino, (c) a formação profissional prestada por entidades privadas e (d) as lições dadas a título pessoal. O Modelo A não tem campo próprio para a taxa reduzida: a base e o imposto vão nos campos 01 e 02, e o Portal do Contribuinte informa que os sujeitos passivos à taxa de 5 % entregam, enquanto o portal não é adaptado, uma guia nas unidades de cobrança e pedem o documento de arrecadação (GARE).",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "01"
+        },
+        {
+          "type": "tax",
+          "account": "44331",
+          "box": "02"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "01",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "44331",
+          "box": "02",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "MZ-S-17",
+    "name": "Venda ou prestação de serviços à taxa normal de 17 % (até 31/12/2022)",
+    "description": "Código fechado: a taxa normal antes da Lei n.º 22/2022",
+    "kind": "vat",
+    "rate": 17,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2008-01-01",
+    "valid_to": "2022-12-31",
+    "legal_reference": "Código do IVA, art. 17, n.º 1, na redacção anterior à Lei n.º 22/2022, de 28 de Dezembro: a taxa do imposto era de 17 %; a nova redacção, de 16 %, está em vigor desde 1 de Janeiro de 2023 (art. 6 da Lei n.º 22/2022). A data de início, 1 de Janeiro de 2008, é a da entrada em vigor do Código aprovado pela Lei n.º 32/2007 e não está no texto consolidado consultado: ver o README.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "01"
+        },
+        {
+          "type": "tax",
+          "account": "44331",
+          "box": "02"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "01",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "44331",
+          "box": "02",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "MZ-S-EXP",
+    "name": "Exportação de bens, isenta com direito à dedução",
+    "description": "Bens expedidos ou transportados para o estrangeiro pelo vendedor, pelo adquirente não residente ou por um terceiro por conta destes",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2008-01-01",
+    "legal_reference": "Código do IVA, art. 13, n.º 1, alíneas a) e b) — estão isentas as transmissões de bens expedidos ou transportados com destino ao estrangeiro pelo vendedor ou por conta deste, ou por um adquirente sem residência nem estabelecimento em território nacional; art. 19, n.º 1, alínea b), subalínea i) — as exportações e operações isentas nos termos do art. 13 conferem direito à dedução (o equivalente de uma taxa zero); art. 25, n.º 5 — a isenção é comprovada por documentos aduaneiros apropriados. Modelo A, campo 03.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "03"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "03",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "MZ-S-EXP-SVC",
+    "name": "Transporte internacional de pessoas e serviços assimilados a exportações, isentos com direito à dedução",
+    "description": "Transporte de pessoas provenientes ou com destino ao estrangeiro, serviços ligados à expedição de bens para o estrangeiro, trabalhos sobre bens móveis reexpedidos",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2008-01-01",
+    "legal_reference": "Código do IVA, art. 13, n.º 1, alíneas n) (serviços relacionados com a expedição de bens destinados ao estrangeiro), p) (o transporte de pessoas provenientes ou com destino ao estrangeiro) e q) (trabalhos sobre bens móveis reexpedidos para o estrangeiro); art. 19, n.º 1, alínea b), subalínea i) — direito à dedução. Modelo A, campo 03.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "03"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "03",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "MZ-S-EX-STAPLES",
+    "name": "Venda de bens de primeira necessidade, isenta com direito à dedução",
+    "description": "Milho, farinha de milho, arroz, pão, sal iodado, trigo, tomate, batata, cebola, carapau congelado, gás doméstico, entre outros (art. 9, n.º 10)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2008-01-01",
+    "legal_reference": "Código do IVA, art. 9, n.º 10 — estão isentas as transmissões de milho, farinha de milho, arroz, pão, sal iodado, leite em pó para lactente até um ano, trigo, farinha de trigo, tomate fresco ou refrigerado, batata, cebola, carapau congelado, petróleo de iluminação, gás doméstico (GPL), jet fuel, bicicletas comuns, preservativos e insecticidas; art. 19, n.º 1, alínea b), subalínea v) — estas isenções, tal como as do n.º 7, alínea a), do n.º 12, alínea f) e do n.º 13, alíneas d) e f) do art. 9, conferem direito à dedução. Por isso a base vai no campo 03 do Modelo A e não no 04.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "03"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "03",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "MZ-S-EX-FIN",
+    "name": "Operação bancária, financeira ou de seguro, isenta sem direito à dedução",
+    "description": "Operações sujeitas a imposto do selo (art. 9, n.os 4 e 6)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Código do IVA, art. 9, n.º 4 — estão isentas as operações bancárias e financeiras sujeitas ao imposto do selo — e n.º 6 — as operações de seguro e resseguro e os serviços conexos de corretores e mediadores sujeitas a imposto do selo (n.os 4 e 6 na redacção da Lei n.º 22/2022). Sem direito à dedução: art. 19, n.º 1 não inclui estas isenções. Modelo A, campo 04.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "04"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "04",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "MZ-S-EX",
+    "name": "Venda ou prestação de serviços isenta sem direito à dedução (saúde e ensino públicos e outras)",
+    "description": "Serviços médicos de estabelecimentos hospitalares públicos, ensino de estabelecimentos públicos, locação de imóveis para habitação, entre outras isenções do art. 9",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Código do IVA, art. 9, n.º 1, alínea a) (serviços médicos e sanitários de estabelecimentos hospitalares públicos), n.º 3 (ensino e formação profissional por estabelecimentos e entidades públicos), n.º 5 (locação de imóveis para fins de habitação) e restantes isenções das operações internas que o art. 19, n.º 1 não faz seguir de direito à dedução. A Lei n.º 22/2022 retirou os estabelecimentos privados destas isenções, hoje sujeitos à taxa de 5 % (art. 17-A). Modelo A, campo 04.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "04"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "04",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "MZ-P-16-INV",
+    "name": "Compra de inventários à taxa normal (16 %), dedutível",
+    "description": "Mercadorias, matérias-primas e materiais adquiridos a um sujeito passivo para operações com direito à dedução",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Código do IVA, art. 18, n.º 1, alínea a) — o sujeito passivo deduz o imposto que lhe foi facturado na aquisição de bens e serviços por outros sujeitos passivos; n.º 2 — só confere direito à dedução o imposto mencionado em facturas ou documentos equivalentes emitidos por sujeitos passivos inscritos no IVA (redacção da Lei n.º 10/2025); art. 19, n.º 1 — o imposto só se deduz se os bens e serviços forem usados em operações tributadas ou isentas com direito à dedução. Modelo A, quadro 5, campo 06 (existências).",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "44321",
+          "box": "06"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "44321",
+          "box": "06",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "MZ-P-16-FA",
+    "name": "Compra de activos tangíveis e intangíveis à taxa normal (16 %), dedutível",
+    "description": "Equipamento, mobiliário e outros activos fixos",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Código do IVA, art. 18, n.º 1, alínea a) — o sujeito passivo deduz o imposto que lhe foi facturado na aquisição de bens e serviços por outros sujeitos passivos; n.º 2 — só confere direito à dedução o imposto mencionado em facturas ou documentos equivalentes emitidos por sujeitos passivos inscritos no IVA (redacção da Lei n.º 10/2025); art. 19, n.º 1 — o imposto só se deduz se os bens e serviços forem usados em operações tributadas ou isentas com direito à dedução. Modelo A, quadro 5, campo 05 (imobilizado).",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "44322",
+          "box": "05"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "44322",
+          "box": "05",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "MZ-P-16-SVC",
+    "name": "Compra de outros bens e serviços à taxa normal (16 %), dedutível",
+    "description": "Serviços e fornecimentos correntes",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Código do IVA, art. 18, n.º 1, alínea a) — o sujeito passivo deduz o imposto que lhe foi facturado na aquisição de bens e serviços por outros sujeitos passivos; n.º 2 — só confere direito à dedução o imposto mencionado em facturas ou documentos equivalentes emitidos por sujeitos passivos inscritos no IVA (redacção da Lei n.º 10/2025); art. 19, n.º 1 — o imposto só se deduz se os bens e serviços forem usados em operações tributadas ou isentas com direito à dedução. Modelo A, quadro 5, campo 07 (outros bens e serviços).",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "44323",
+          "box": "07"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "44323",
+          "box": "07",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "MZ-P-17",
+    "name": "Compra à taxa normal de 17 % (até 31/12/2022), dedutível",
+    "description": "Código fechado: a taxa normal antes da Lei n.º 22/2022",
+    "kind": "vat",
+    "rate": 17,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2008-01-01",
+    "valid_to": "2022-12-31",
+    "legal_reference": "Código do IVA, art. 18, n.º 1, alínea a) — o sujeito passivo deduz o imposto que lhe foi facturado na aquisição de bens e serviços por outros sujeitos passivos; n.º 2 — só confere direito à dedução o imposto mencionado em facturas ou documentos equivalentes emitidos por sujeitos passivos inscritos no IVA (redacção da Lei n.º 10/2025); art. 19, n.º 1 — o imposto só se deduz se os bens e serviços forem usados em operações tributadas ou isentas com direito à dedução. A taxa de 17 % foi substituída por 16 % em 1 de Janeiro de 2023 (Lei n.º 22/2022, art. 6). Modelo A, campo 07.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "44323",
+          "box": "07"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "44323",
+          "box": "07",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "MZ-P-16-FUEL",
+    "name": "Compra de gasóleo à taxa normal (16 %), dedutível a 50 %",
+    "description": "Gasóleo para viaturas que não estão excluídas por categoria: o imposto é dedutível na proporção de 50 %",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Código do IVA, art. 20, n.º 1, alínea b) — exclui-se do direito à dedução o imposto das despesas com combustíveis normalmente utilizáveis em viaturas automóveis, com excepção do gasóleo, cujo imposto é dedutível na proporção de 50 %, a menos que se trate de veículos pesados de passageiros, veículos licenciados para transporte público de passageiros (excepto rent a car), máquinas consumidoras de gasóleo não matriculadas ou tractores agrícolas, caso em que é integralmente dedutível (use MZ-P-16-SVC). Metade vai ao campo 07 do Modelo A e a outra metade fica no custo da compra.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "44323",
+          "box": "07",
+          "box_factor": 50
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 50
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 50,
+          "account": "44323",
+          "box": "07",
+          "box_factor": -50
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 50
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "MZ-P-16-EXC",
+    "name": "Compra à taxa normal (16 %) com dedução excluída (art. 20, n.º 1)",
+    "description": "Viaturas de turismo, combustíveis, transportes e viagens, alojamento, alimentação, representação, telefone móvel, divertimento e luxo",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "recoverable": false,
+    "legal_reference": "Código do IVA, art. 20, n.º 1 — exclui-se do direito à dedução o imposto contido nas despesas de (a) aquisição, locação e reparação de viaturas de turismo, barcos de recreio, helicópteros, aviões, motos e motociclos, (c) transportes e viagens do sujeito passivo e do seu pessoal, (d) alojamento, alimentação, bebidas e tabaco e recepção, (e) comunicações telefónicas, excepto telefone fixo em nome do sujeito passivo, e (f) divertimento e luxo; o n.º 3 afasta a exclusão da alínea a) para quem tem a venda ou a exploração desses bens como actividade. O imposto não recuperável integra o custo.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "MZ-P-16-ND5",
+    "name": "Compra à taxa normal (16 %) afecta a operações à taxa reduzida de 5 %, dedução excluída",
+    "description": "O imposto de bens e serviços usados para operações sujeitas à taxa reduzida do art. 17-A não é dedutível desde 1 de Janeiro de 2026",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "recoverable": false,
+    "legal_reference": "Código do IVA, art. 19, n.º 2, na redacção da Lei n.º 10/2025 (em vigor desde 1 de Janeiro de 2026) — não há direito à dedução do imposto respeitante às transmissões de bens e prestações de serviços previstas no art. 17-A, isto é, às que são tributadas à taxa de 5 %. O imposto de uma compra usada exclusivamente nessas operações integra o custo; o imposto de uma compra de uso misto exigiria uma repartição que o pacote não calcula (ver o README).",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 170
+  },
+  {
+    "code": "MZ-P-5-ND",
+    "name": "Compra à taxa reduzida (5 %), dedução excluída",
+    "description": "Serviço de saúde, ensino ou formação profissional adquirido a taxa de 5 %: o imposto pago não é dedutível",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "recoverable": false,
+    "legal_reference": "Código do IVA, art. 20, n.º 2, aditado pela Lei n.º 22/2022 — exclui-se do direito à dedução o imposto pago nas transmissões de bens e prestações de serviços sujeitas à taxa reduzida do art. 17-A; art. 19, n.º 2 (redacção da Lei n.º 10/2025) — idem. O imposto integra o custo da compra.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 180
+  },
+  {
+    "code": "MZ-P-EX",
+    "name": "Compra isenta",
+    "description": "Prémio de seguro ou outra compra isenta, sem imposto a deduzir",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2008-01-01",
+    "legal_reference": "Código do IVA, art. 9 — as transmissões de bens e prestações de serviços isentas não levam imposto; nada há a deduzir e a compra não chega a nenhum campo do Modelo A.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 190
+  },
+  {
+    "code": "MZ-P-IMP",
+    "name": "Importação de bens à taxa normal (16 %), imposto pago na alfândega",
+    "description": "IVA liquidado no desembaraço aduaneiro, dedutível pelo importador",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Código do IVA, art. 5 (a importação de bens está sujeita a imposto), art. 7, n.º 1, alínea c) (o imposto é devido no desembaraço aduaneiro) e art. 18, n.º 1, alínea b) — o sujeito passivo deduz o imposto devido pela importação de bens, mencionado no bilhete de despacho (n.º 2). Modelo A, campo 08. O imposto debitado a 44324 tem como contrapartida a conta 4691, saldada com o pagamento à alfândega.",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "44324",
+          "box": "08"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4691"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "44324",
+          "box": "08",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4691"
+        }
+      ]
+    },
+    "sequence": 200
+  },
+  {
+    "code": "MZ-P-RC-16",
+    "name": "Serviço ou bem digital adquirido a um não residente (autoliquidação, 16 %)",
+    "description": "Serviços do art. 6, n.º 7 (consultoria, publicidade, direitos, locação, bens e serviços digitais) prestados por quem não tem sede, estabelecimento estável nem domicílio em Moçambique",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Código do IVA, art. 6, n.º 7 — são tributáveis, quando o prestador não tem sede, estabelecimento estável ou domicílio em território nacional, as cessões de direitos, a publicidade, as telecomunicações, os serviços de consultores, a locação de bens móveis e, desde a Lei n.º 10/2025 (alínea k), os bens e serviços digitais (sítios, programas, bases de dados, música, filmes e jogos, ensino à distância, SaaS, computação em nuvem); art. 26, n.os 3 e 4 — o adquirente cumpre as obrigações do prestador não residente; art. 18, n.º 1, alíneas c) e d) — o imposto pago como destinatário é dedutível; art. 32, n.º 1, alínea c) — o prazo da declaração das operações do art. 26, n.º 4 é o dia 10 do mês seguinte. O Modelo A não tem campo para a autoliquidação: o pacote lança a base e o imposto liquidado nos campos 01 e 02, e o imposto dedutível no campo 07 (hipótese a rever, ver o README).",
+    "source": "civa",
+    "vat_category": null,
+    "exemption_code": null,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "01"
+        },
+        {
+          "type": "tax",
+          "account": "44323",
+          "box": "07"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "44333",
+          "box": "02"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "01",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "44323",
+          "box": "07",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "44333",
+          "box": "02",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 210
+  }
+]

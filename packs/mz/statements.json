@@ -1,0 +1,1050 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "MZ-NIRF-BAL",
+      "kind": "balance_sheet",
+      "framework": "MZ-PGC-NIRF",
+      "name": "Balanço",
+      "valid_from": "2010-01-01",
+      "legal_reference": "Decreto n.º 70/2009, de 22 de Dezembro, capítulo 1.6 — modelo de Balanço do SCE: activos não correntes e correntes; capital próprio e passivos não correntes e correntes. As denominações são as do modelo oficial (colunas Notas, Período n e Período n-1 não representadas); o mapeamento conta a conta é uma selecção feita para este pacote, a partir dos códigos do capítulo 1.5. Não se representam os activos biológicos não correntes, os outros passivos financeiros nem os interesses minoritários, para os quais o plano não tem conta nesta selecção. A linha do resultado líquido junta aos saldos da classe 8 o resultado ainda não apurado das contas das classes 6 e 7, de modo que o balanço fecha antes e depois do apuramento.",
+      "source": "decreto-70-2009",
+      "lines": [
+        {
+          "code": "ANC.1",
+          "parent": "ANC",
+          "name": "Activos tangíveis",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "32",
+              "code_to": "32",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "342",
+              "code_to": "342",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "382",
+              "code_to": "382",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "387",
+              "code_to": "387",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "392",
+              "code_to": "392",
+              "sequence": 50
+            }
+          ]
+        },
+        {
+          "code": "ANC.2",
+          "parent": "ANC",
+          "name": "Activos tangíveis de investimento",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "36",
+              "code_to": "36",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "386",
+              "code_to": "386",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "396",
+              "code_to": "396",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "ANC.3",
+          "parent": "ANC",
+          "name": "Goodwill",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "333",
+              "code_to": "333",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "ANC.4",
+          "parent": "ANC",
+          "name": "Activos intangíveis",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "331",
+              "code_to": "332",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "334",
+              "code_to": "334",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "343",
+              "code_to": "343",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "383",
+              "code_to": "383",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "393",
+              "code_to": "393",
+              "sequence": 50
+            }
+          ]
+        },
+        {
+          "code": "ANC.5",
+          "parent": "ANC",
+          "name": "Investimentos em associadas",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "312",
+              "code_to": "312",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "ANC.6",
+          "parent": "ANC",
+          "name": "Outros activos financeiros",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "311",
+              "code_to": "311",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "313",
+              "code_to": "316",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "391",
+              "code_to": "391",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "ANC.7",
+          "parent": "ANC",
+          "name": "Activos por impostos diferidos",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4461",
+              "code_to": "4461",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "ANC.8",
+          "parent": "ANC",
+          "name": "Activos não correntes detidos para venda",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "35",
+              "code_to": "35",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "395",
+              "code_to": "395",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "ANC",
+          "parent": "TA",
+          "name": "Activos não correntes",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "ANC.1",
+            "ANC.2",
+            "ANC.3",
+            "ANC.4",
+            "ANC.5",
+            "ANC.6",
+            "ANC.7",
+            "ANC.8"
+          ]
+        },
+        {
+          "code": "AC.1",
+          "parent": "AC",
+          "name": "Inventários",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22",
+              "code_to": "26",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "28",
+              "code_to": "29",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "AC.2",
+          "parent": "AC",
+          "name": "Activos biológicos",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "27",
+              "code_to": "27",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "AC.3",
+          "parent": "AC",
+          "name": "Clientes",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "411",
+              "code_to": "418",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "471",
+              "code_to": "471",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "AC.4",
+          "parent": "AC",
+          "name": "Outros activos financeiros",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "13",
+              "code_to": "13",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "AC.5",
+          "parent": "AC",
+          "name": "Outros activos correntes",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4412",
+              "code_to": "4413",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "4431",
+              "code_to": "4432",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "44341",
+              "code_to": "44341",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "4438",
+              "code_to": "4439",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "45",
+              "code_to": "45",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "472",
+              "code_to": "472",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "493",
+              "code_to": "494",
+              "sequence": 70
+            }
+          ]
+        },
+        {
+          "code": "AC.6",
+          "parent": "AC",
+          "name": "Caixa e bancos",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "11",
+              "code_to": "12",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "AC",
+          "parent": "TA",
+          "name": "Activos correntes",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "AC.1",
+            "AC.2",
+            "AC.3",
+            "AC.4",
+            "AC.5",
+            "AC.6"
+          ]
+        },
+        {
+          "code": "TA",
+          "name": "Total dos activos",
+          "sequence": 170,
+          "is_total": true,
+          "plus": [
+            "ANC",
+            "AC"
+          ]
+        },
+        {
+          "code": "CP.1",
+          "parent": "CP",
+          "name": "Capital social",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "51",
+              "code_to": "54",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "CP.2",
+          "parent": "CP",
+          "name": "Reservas",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "55",
+              "code_to": "55",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "CP.3",
+          "parent": "CP",
+          "name": "Resultados transitados",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "59",
+              "code_to": "59",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "CP.4",
+          "parent": "CP",
+          "name": "Outras componentes do capital próprio",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "56",
+              "code_to": "56",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "58",
+              "code_to": "58",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "CP.5",
+          "parent": "CP",
+          "name": "Resultado líquido do período",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "81",
+              "code_to": "83",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "88",
+              "code_to": "88",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "89",
+              "code_to": "89",
+              "sequence": 30
+            },
+            {
+              "kind": "account_type",
+              "account_type": "income",
+              "sequence": 40
+            },
+            {
+              "kind": "account_type",
+              "account_type": "income_other",
+              "sequence": 50
+            },
+            {
+              "kind": "account_type",
+              "account_type": "expense",
+              "sequence": 60
+            },
+            {
+              "kind": "account_type",
+              "account_type": "expense_direct_cost",
+              "sequence": 70
+            },
+            {
+              "kind": "account_type",
+              "account_type": "expense_depreciation",
+              "sequence": 80
+            }
+          ]
+        },
+        {
+          "code": "CP",
+          "parent": "TCPP",
+          "name": "Total do capital próprio",
+          "sequence": 230,
+          "is_total": true,
+          "plus": [
+            "CP.1",
+            "CP.2",
+            "CP.3",
+            "CP.4",
+            "CP.5"
+          ]
+        },
+        {
+          "code": "PNC.1",
+          "parent": "PNC",
+          "name": "Provisões",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "48",
+              "code_to": "48",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PNC.2",
+          "parent": "PNC",
+          "name": "Empréstimos obtidos",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4312",
+              "code_to": "4312",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "432",
+              "code_to": "433",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "439",
+              "code_to": "439",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "PNC.3",
+          "parent": "PNC",
+          "name": "Passivos por impostos diferidos",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4462",
+              "code_to": "4462",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PNC.4",
+          "parent": "PNC",
+          "name": "Outros passivos não correntes",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4924",
+              "code_to": "4924",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PNC",
+          "parent": "TP",
+          "name": "Passivos não correntes",
+          "sequence": 280,
+          "is_total": true,
+          "plus": [
+            "PNC.1",
+            "PNC.2",
+            "PNC.3",
+            "PNC.4"
+          ]
+        },
+        {
+          "code": "PC.1",
+          "parent": "PC",
+          "name": "Fornecedores",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "42",
+              "code_to": "42",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PC.2",
+          "parent": "PC",
+          "name": "Empréstimos obtidos",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4311",
+              "code_to": "4311",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PC.3",
+          "parent": "PC",
+          "name": "Impostos a pagar",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4411",
+              "code_to": "4411",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "442",
+              "code_to": "442",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "4433",
+              "code_to": "4433",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "44342",
+              "code_to": "44343",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "4435",
+              "code_to": "4437",
+              "sequence": 50
+            },
+            {
+              "kind": "code_range",
+              "code_from": "444",
+              "code_to": "445",
+              "sequence": 60
+            },
+            {
+              "kind": "code_range",
+              "code_from": "449",
+              "code_to": "449",
+              "sequence": 70
+            }
+          ]
+        },
+        {
+          "code": "PC.4",
+          "parent": "PC",
+          "name": "Outras contas a pagar",
+          "sequence": 320,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "419",
+              "code_to": "419",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "46",
+              "code_to": "46",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "491",
+              "code_to": "491",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "4929",
+              "code_to": "4929",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "PC",
+          "parent": "TP",
+          "name": "Passivos correntes",
+          "sequence": 330,
+          "is_total": true,
+          "plus": [
+            "PC.1",
+            "PC.2",
+            "PC.3",
+            "PC.4"
+          ]
+        },
+        {
+          "code": "TP",
+          "parent": "TCPP",
+          "name": "Total dos passivos",
+          "sequence": 340,
+          "is_total": true,
+          "plus": [
+            "PNC",
+            "PC"
+          ]
+        },
+        {
+          "code": "TCPP",
+          "name": "Total do capital próprio e dos passivos",
+          "sequence": 350,
+          "is_total": true,
+          "plus": [
+            "CP",
+            "TP"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "MZ-NIRF-DR",
+      "kind": "income_statement",
+      "framework": "MZ-PGC-NIRF",
+      "name": "Demonstração dos resultados por naturezas",
+      "valid_from": "2010-01-01",
+      "legal_reference": "Decreto n.º 70/2009, de 22 de Dezembro, capítulo 1.6 — modelo da Demonstração dos resultados por naturezas do SCE. As denominações são as do modelo oficial (colunas Notas, Período n e Período n-1 não representadas); o mapeamento conta a conta é uma selecção feita para este pacote. Não se representam os ganhos e perdas imputados de associadas, o resultado das operações descontinuadas, a repartição por detentores nem os resultados por acção. A linha 12 reúne as classes 67, 68, 74, 75, 76 e 79.",
+      "source": "decreto-70-2009",
+      "lines": [
+        {
+          "code": "1",
+          "parent": "RO",
+          "name": "Vendas de bens e de serviços",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "71",
+              "code_to": "72",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "parent": "RO",
+          "name": "Variação da produção e de trabalhos em curso",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "612",
+              "code_to": "612",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "parent": "RO",
+          "name": "Investimentos realizados pela própria empresa",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "73",
+              "code_to": "73",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "4",
+          "parent": "RO",
+          "name": "Custo dos inventários vendidos ou consumidos",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "611",
+              "code_to": "611",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "parent": "RO",
+          "name": "Custos com o pessoal",
+          "sequence": 50,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "62",
+              "code_to": "62",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "6",
+          "parent": "RO",
+          "name": "Fornecimentos e serviços de terceiros",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "63",
+              "code_to": "63",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "parent": "RO",
+          "name": "Amortizações",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "65",
+              "code_to": "65",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "parent": "RO",
+          "name": "Provisões",
+          "sequence": 80,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "66",
+              "code_to": "66",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "9",
+          "parent": "RO",
+          "name": "Ajustamentos de inventários",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "641",
+              "code_to": "641",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "10",
+          "parent": "RO",
+          "name": "Imparidade de contas a receber",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "648",
+              "code_to": "648",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "11",
+          "parent": "RO",
+          "name": "Imparidade dos activos tangíveis e intangíveis",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "642",
+              "code_to": "644",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "12",
+          "parent": "RO",
+          "name": "Outros ganhos e perdas operacionais",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "67",
+              "code_to": "68",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "74",
+              "code_to": "76",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "79",
+              "code_to": "79",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "RO",
+          "parent": "RAI",
+          "name": "Resultados operacionais",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        },
+        {
+          "code": "13",
+          "parent": "RAI",
+          "name": "Rendimentos financeiros",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "78",
+              "code_to": "78",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "14",
+          "parent": "RAI",
+          "name": "Gastos financeiros",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "69",
+              "code_to": "69",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "RAI",
+          "parent": "RLP",
+          "name": "Resultados antes de impostos",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "RO",
+            "13",
+            "14"
+          ]
+        },
+        {
+          "code": "15",
+          "parent": "RLP",
+          "name": "Imposto sobre o rendimento",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "85",
+              "code_to": "85",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "RLP",
+          "name": "Resultados líquidos do período",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "RAI",
+            "15"
+          ]
+        }
+      ]
+    }
+  ]
+}

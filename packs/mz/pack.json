@@ -1,0 +1,184 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MZ",
+  "name": "Moçambique",
+  "version": "0.1.0",
+  "schema_min": "20260929141500",
+  "seed_sequence": 135,
+  "released_at": "2026-10-09",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "civa",
+        "title": "Código do Imposto sobre o Valor Acrescentado, Lei n.º 32/2007, de 31 de Dezembro, com as alterações das Leis n.º 3/2012, 13/2016, 16/2020, 22/2022 e 10/2025 (texto consolidado)",
+        "publisher": "Boletim da República de Moçambique, texto consolidado reproduzido por Moore Moçambique",
+        "url": "https://mooremz.co.mz/wp-content/uploads/2025/04/Lei-n.o-32_2007-de-31-de-Dezembro-Codigo-do-Imposto-Sobre-o-Valor-Acrescentado_alteracoes-2025.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "lei-10-2025",
+        "title": "Alterações ao Código do IVA introduzidas pela Lei n.º 10/2025, de 29 de Dezembro, em vigor desde 1 de Janeiro de 2026 (taxa reduzida de 5 % sem direito à dedução, bens e serviços digitais, prazos de entrega da declaração, revogação dos regimes especiais)",
+        "publisher": "SAL & Caldeira Advogados (DLA Piper Africa)",
+        "url": "https://www.dlapiperafrica.com/pt/mozambique/insights/2026/Changes-to-the-Value-Added-Tax-Code-",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "modelo-a",
+        "title": "Declaração Periódica para IVA — Regime Normal (Modelo A), formulário do e-Declaração",
+        "publisher": "Autoridade Tributária de Moçambique",
+        "url": "https://edeclaracao.at.gov.mz/formularios/iva/view/formulario_iva_ma.aspx",
+        "consulted_on": "2026-10-09",
+        "kind": "form"
+      },
+      {
+        "key": "portal-contribuinte",
+        "title": "Portal do Contribuinte — autenticação e serviços da Autoridade Tributária, onde se entrega a declaração periódica",
+        "publisher": "Autoridade Tributária de Moçambique",
+        "url": "https://portaldocontribuinte.at.gov.mz",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      },
+      {
+        "key": "decreto-70-2009",
+        "title": "Decreto n.º 70/2009, de 22 de Dezembro — Sistema de Contabilidade para o Sector Empresarial (SCE): PGC-NIRF, PGC-PE, capítulo 1.5 Códigos de contas e capítulo 1.6 Modelos de demonstrações financeiras",
+        "publisher": "Boletim da República de Moçambique, I Série, n.º 50 (cópia publicada por FR Assessoria)",
+        "url": "https://fracessoriasa.co.mz/wp-content/uploads/2021/03/29-Plano-de-Contas-BR-Decreto-70-2009-de-22-de-Dezembro.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "aviso-40-2025",
+        "title": "Aviso n.º 40/AT/DGI/2025, de 27 de Março — comunicação mensal das facturas à Autoridade Tributária a partir de Maio de 2025",
+        "publisher": "SAL & Caldeira Advogados (DLA Piper Africa)",
+        "url": "https://www.dlapiperafrica.com/pt/mozambique/insights/2025/Notice-from-the-Tax-Authority-Regarding-the-Obligation-to-Submit-Invoices-",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "ocam-facturacao",
+        "title": "Perguntas frequentes sobre a facturação electrónica (Aviso n.º 40/AT/DGI/2025, ficheiro SAF-T (Moz), programas certificados)",
+        "publisher": "Ordem dos Contabilistas e Auditores de Moçambique (OCAM)",
+        "url": "https://ocam.org.mz/2025/06/27/perguntas-frequentes-sobre-a-facturacao-electronica/",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "MZN",
+    "language": "pt",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Lançamento de abertura",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "411",
+      "payable": "421",
+      "suspense": "4699",
+      "rounding": "68991",
+      "retained_earnings": "59",
+      "current_year_result_profit": "88",
+      "current_year_result_loss": "88",
+      "sales": "711",
+      "purchase": "6112",
+      "bank": "121",
+      "cash": "11",
+      "fx_gain": "7841",
+      "fx_loss": "6941",
+      "asset_disposal_gain": "7631",
+      "asset_disposal_loss": "6831",
+      "tax_payable": "4437",
+      "tax_receivable": "4438"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIV",
+      "opening": "ABE"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VEN",
+      "type": "sales",
+      "name": "Diário de vendas",
+      "sequence": 10
+    },
+    {
+      "code": "COM",
+      "type": "purchase",
+      "name": "Diário de compras",
+      "sequence": 20
+    },
+    {
+      "code": "BAN",
+      "type": "bank",
+      "name": "Diário de bancos",
+      "sequence": 30
+    },
+    {
+      "code": "CAI",
+      "type": "cash",
+      "name": "Diário de caixa",
+      "sequence": 40
+    },
+    {
+      "code": "DIV",
+      "type": "general",
+      "name": "Diário de operações diversas",
+      "sequence": 50
+    },
+    {
+      "code": "ABE",
+      "type": "opening",
+      "name": "Diário de abertura",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "PGC-NIRF — Plano Geral de Contabilidade para as Normas Internacionais de Relato Financeiro (selecção)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "MZ-NIRF-BAL",
+        "MZ-NIRF-DR"
+      ],
+      "legal_reference": "Decreto n.º 70/2009, de 22 de Dezembro, que aprova o Sistema de Contabilidade para o Sector Empresarial (SCE). O SCE comporta o PGC-NIRF, aplicável às médias entidades, o PGC-PE, aplicável às pequenas entidades, e as Normas Internacionais de Relato Financeiro completas, aplicáveis às grandes entidades e às entidades cotadas. O capítulo 1.5 fixa o código de contas em oito classes (1 Meios financeiros, 2 Inventários e activos biológicos, 3 Investimentos de capital, 4 Contas a receber, contas a pagar, acréscimos e diferimentos, 5 Capital próprio, 6 Gastos e perdas, 7 Rendimentos e ganhos, 8 Resultados). Esta selecção retoma os códigos e as denominações do quadro detalhado, com os pontos dos níveis suprimidos (4.4.3.3.1 escreve-se 44331), e acrescenta apenas as subcontas 44324 (IVA dedutível nas importações), 4691 (alfândegas, IVA de importação a pagar), 4699 (conta transitória a regularizar) e 68991 (diferenças de arredondamento), cuja denominação assinala o facto. A lista completa é a do decreto.",
+      "source": "decreto-70-2009"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Código do IVA, art. 27, n.º 5 — as facturas ou documentos equivalentes são emitidos em língua e moeda nacionais, datados, numerados sequencialmente e contêm, entre outros elementos, o NUIT do fornecedor e do adquirente, o preço líquido de imposto, a taxa e o montante do imposto, o motivo da não aplicação do imposto e o Número de Identificação Bancária (NIB) para o qual é efectuado o pagamento; o n.º 4 exige pelo menos duplicado. A lei pede uma numeração sequencial e não proíbe expressamente uma falha, pelo que o estilo declarado é `sequential`.",
+        "source": "civa"
+      },
+      "tax_point": {
+        "legal_reference": "Código do IVA, art. 7 — o imposto é devido e exigível, nas transmissões de bens, quando os bens são postos à disposição do adquirente e, nas prestações de serviços, quando são realizadas ou, se antes, quando o preço é cobrado; art. 8 — havendo obrigação de emitir factura, o imposto torna-se exigível no momento da emissão, ou no termo do prazo de emissão se este não for respeitado, ou ainda no momento de um pagamento, mesmo parcial, anterior à factura. A regra geral é a entrega ou a realização, e a factura emitida substitui-a: é o sentido de `invoice_if_issued`, ao qual o vocabulário fechado não acrescenta o pagamento antecipado do art. 8, alínea c).",
+        "source": "civa"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Nenhum diploma moçambicano impõe às empresas a troca entre si de uma factura electrónica estruturada (não existe autoridade Peppol, perfil publicado nem esquema ISO 6523 de endereçamento), pelo que `profile`, `party_scheme` e `vat_scheme` ficam nulos e `obligation` é `none`. O que Moçambique tem é outro mecanismo, de comunicação ao Estado e não de troca entre partes: o Código do IVA, art. 27, n.º 10 (aditado em 2016) obriga a comunicar as facturas à Autoridade Tributária, e o Aviso n.º 40/AT/DGI/2025, de 27 de Março, pôs a obrigação em prática: a partir de Maio de 2025, os sujeitos passivos que emitem facturas por programa informático comunicam todos os meses, pelo e-Declaração, o ficheiro (XML, XLSX ou CSV) das facturas do mês anterior, extraído de um programa de facturação certificado pela Autoridade Tributária (Despacho Ministerial de 29 de Fevereiro de 2012); a comunicação do ficheiro SAF-T (Moz) completo, o regulamento de certificação de software e o regime das máquinas fiscais ligadas à Autoridade Tributária estavam anunciados ou em implementação gradual à data de redacção, sem facturação em tempo real em vigor. O socle não representa este mecanismo; a lacuna está escrita no README do pacote e em docs/international.md.",
+    "source": "aviso-40-2025"
+  }
+}

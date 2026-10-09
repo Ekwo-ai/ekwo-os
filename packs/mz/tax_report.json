@@ -1,0 +1,169 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "MZ-IVA-MODELO-A",
+  "name": "Declaração Periódica de IVA — Modelo A (regime normal)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2008-01-01",
+  "legal_reference": "Código do IVA, art. 25, n.º 1, alínea c), e art. 32, n.º 1 — os sujeitos passivos entregam mensalmente a declaração periódica, mesmo sem operações tributáveis (art. 25, n.º 2); o Modelo A (art. 36 do Código em vigor à data do formulário) é entregue pelo e-Declaração, obrigatório desde Junho de 2022, e no Portal do Contribuinte. Os campos 01 a 15 abaixo são os do formulário oficial lido em 9 de Outubro de 2026. Ficam fora do pacote o quadro 1 de identificação, o quadro 4 (inexistência de operações), a utilização de créditos de períodos anteriores (campos 16 e 17), o quadro 6 (imposto a entregar, juros de mora, campos 18 a 20) e o quadro 7 (reporte e pedido de reembolso, campos 21 a 23): ver o README. O regime simplificado e o regime de isenção foram revogados pela Lei n.º 10/2025 (art. 3), pelo que todos os sujeitos passivos entregam o Modelo A.",
+  "source": "modelo-a",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Código do IVA, art. 32, n.º 1, na redacção da Lei n.º 10/2025 — a declaração periódica entrega-se (b) até ao último dia do mês seguinte àquele a que respeitam as operações, quando há imposto a pagar; (a) até ao décimo quinto dia do mês seguinte, quando a declaração apresenta créditos ou não tem operações; (c) até ao décimo dia do mês seguinte, para as operações do art. 26, n.º 4 (bens e serviços digitais adquiridos a não residentes). O pacote tem uma única data por declaração e retém o último dia do mês seguinte, o prazo da declaração com imposto a pagar; os prazos do dia 15 e do dia 10 estão no README.",
+    "source": "civa"
+  },
+  "boxes": [
+    {
+      "box": "01",
+      "kind": "base",
+      "name": "Transmissões de bens e prestações de serviços tributadas — base tributável",
+      "sequence": 10,
+      "legal_reference": "Modelo A, quadro 5, campo 01 — base tributável das transmissões de bens e prestações de serviços efectuadas pelo sujeito passivo (o formulário refere ainda a taxa de 17 % do texto anterior a 2023).",
+      "source": "modelo-a"
+    },
+    {
+      "box": "02",
+      "kind": "tax",
+      "name": "Imposto liquidado",
+      "sequence": 20,
+      "legal_reference": "Modelo A, quadro 5, campo 02 — imposto liquidado sobre as operações do campo 01.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "03",
+      "kind": "base",
+      "name": "Operações isentas com direito à dedução (exportações e assimiladas)",
+      "sequence": 30,
+      "legal_reference": "Modelo A, quadro 5, campo 03 — operações isentas referidas no art. 19, n.º 1, alínea b) (o formulário cita a alínea b) do n.º 1 do art. 18, numeração anterior ao texto actual).",
+      "source": "modelo-a"
+    },
+    {
+      "box": "04",
+      "kind": "base",
+      "name": "Operações que não conferem direito à dedução",
+      "sequence": 40,
+      "legal_reference": "Modelo A, quadro 5, campo 04 — operações isentas que não conferem direito à dedução.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "05",
+      "kind": "tax",
+      "name": "Imposto dedutível — imobilizado",
+      "sequence": 50,
+      "legal_reference": "Modelo A, quadro 5, n.º 2, campo 05 — imposto dedutível respeitante às aquisições de imobilizado.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "06",
+      "kind": "tax",
+      "name": "Imposto dedutível — existências",
+      "sequence": 60,
+      "legal_reference": "Modelo A, quadro 5, n.º 2, campo 06 — imposto dedutível respeitante às aquisições de existências.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "07",
+      "kind": "tax",
+      "name": "Imposto dedutível — outros bens e serviços",
+      "sequence": 70,
+      "legal_reference": "Modelo A, quadro 5, n.º 2, campo 07 — imposto dedutível respeitante a outros bens e serviços.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "08",
+      "kind": "tax",
+      "name": "Imposto dedutível — importações",
+      "sequence": 80,
+      "legal_reference": "Modelo A, quadro 5, n.º 3, campo 08 — imposto dedutível suportado nas importações de bens.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "09",
+      "kind": "tax",
+      "name": "Regularizações a favor do sujeito passivo",
+      "sequence": 90,
+      "legal_reference": "Modelo A, quadro 5, n.º 4, campo 09 — regularizações mensais ou anuais, excepto as comunicadas pela Administração Fiscal. Nenhuma taxa do pacote escreve neste campo: preenche-se à mão.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "Regularizações a favor do Estado",
+      "sequence": 100,
+      "legal_reference": "Modelo A, quadro 5, n.º 4, campo 10 — regularizações mensais ou anuais a favor do Estado. Nenhuma taxa do pacote escreve neste campo: preenche-se à mão.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "Valor da liquidação",
+      "sequence": 110,
+      "plus": [
+        "01",
+        "03",
+        "04"
+      ],
+      "legal_reference": "Modelo A, quadro 5, campo 11 — soma dos campos 01, 03 e 04.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Total do imposto dedutível",
+      "sequence": 120,
+      "plus": [
+        "05",
+        "06",
+        "07",
+        "08",
+        "09"
+      ],
+      "legal_reference": "Modelo A, quadro 5, campo 12 — soma dos campos 05, 06, 07, 08 e 09.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Total do imposto liquidado",
+      "sequence": 130,
+      "plus": [
+        "02",
+        "10"
+      ],
+      "legal_reference": "Modelo A, quadro 5, campo 13 — soma dos campos 02 e 10.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "name": "Imposto a favor do Estado",
+      "sequence": 140,
+      "plus": [
+        "13"
+      ],
+      "minus": [
+        "12"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Modelo A, quadro 5, campo 14 — se o campo 13 é superior ao campo 12, a diferença (13 − 12); alimenta o quadro 6, imposto a entregar ao Estado.",
+      "source": "modelo-a"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Imposto a favor do sujeito passivo",
+      "sequence": 150,
+      "plus": [
+        "12"
+      ],
+      "minus": [
+        "13"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Modelo A, quadro 5, campo 15 — se o campo 12 é superior ao campo 13, a diferença (12 − 13); alimenta o quadro 7, imposto a recuperar (reporte para o período seguinte ou pedido de reembolso).",
+      "source": "modelo-a"
+    }
+  ]
+}
