@@ -6112,3 +6112,45 @@ article shows, but earlier versions of the form were not compared.
 
 **Seed number.** The manifest takes 129 as assigned; the schema allows 100 to
 899 for packs after 89.
+
+## From Honduras
+
+`packs/hn/`, `community`, seed 130, outside the common system of VAT:
+Honduras levies its own Impuesto Sobre Ventas (ISV) under Decreto-Ley 24 of
+1963, at 15 % since 1 January 2014 (Decreto 278-2013, art. 16) and 18 % on
+alcoholic drinks, beer, cigarettes and business-class air tickets. `HNL` is
+added to `00_currencies.sql` at two decimals and `HN` to `00_territories.sql`
+with `eu_vat_scope` `none`. Gaps, in the order the pack met them.
+
+**Range-authorised invoicing, not an e-invoice.** The Honduran invoice is
+issued by an authorised printer or a registered self-printing system under a
+*Código de Autorización de Impresión* (CAI) range assigned by the tax
+authority (Acuerdo 481-2017). No electronic-invoice obligation exists at the
+date of the pack, so `einvoicing.obligation` is `none`; but an invoice that is
+valid only when it belongs to an authorised range has no counterpart in the
+format, which knows `profile`, `mandatory_from` and mentions. The pack carries
+a mention saying a document produced by Ekwo is not such an invoice.
+
+**A second, informative return due on a different day.** Large and medium
+taxpayers file a monthly purchases return (DMC, the 8th) before the ISV return
+(form 201, the 10th), and form 201 section B is pre-filled from it.
+`tax_report.json` is one form per pack, so the DMC is documented in the README
+and not modelled. Section C of form 201 (carried-over surplus, payments,
+compensation, credit assignments, withheld tax) is filled by the tax
+authority's portal from data no document of the pack carries; `TOTAL` is the
+figure before it.
+
+**Withholding by third parties.** Card issuers withhold the ISV on card sales,
+and large taxpayers withhold 15 % on a list of services; the withheld amount
+reaches the seller's return as a credit. The format has no withholding tax
+attached to a payment, so none is declared.
+
+**A deadline that rolls to the next business day.** The ten-day deadline moves
+to the next business day when it falls on a weekend or holiday; the three
+deadline rules compute no calendar.
+
+**A source that is older than its reform.** The only consolidated text of the
+law found on an official site is updated to January 2004; the current rates
+and the basic basket come from Decreto 278-2013, read beside it. The pack cites
+both and does not declare the pre-2014 rates, whose dates the consolidated text
+does not give.

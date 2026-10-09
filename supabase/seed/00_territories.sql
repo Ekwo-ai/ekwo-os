@@ -2091,3 +2091,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Honduras
+--
+-- A third country to the common system of VAT of Directive 2006/112/EC,
+-- article 5(2), which applies only in the territory of the Community as the
+-- Treaties define it. Honduras levies its own Impuesto Sobre Ventas (ISV)
+-- under Decreto-Ley Número 24 of 20 December 1963 and its reforms, unrelated
+-- to the Union's common system. `vat_prefix` is null: a Honduran taxpayer is
+-- identified by the Registro Tributario Nacional (RTN), which the Servicio de
+-- Administración de Rentas (SAR) assigns and which carries no ISO country
+-- prefix comparable to an EU VAT number.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('HN', 'iso_3166_1', 'Honduras', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Honduras is a third country to it. Honduras levies a sales tax of its own, the Impuesto Sobre Ventas (ISV), under Decreto-Ley Número 24 of 20 December 1963 (Ley del Impuesto Sobre Ventas) and its reforms, at a general rate of 15% and a rate of 18% on alcoholic drinks, beer, cigarettes and business-class air tickets since 1 January 2014 (Decreto Número 278-2013, article 16). No EU VAT number prefix applies; taxpayers are identified by the Registro Tributario Nacional (RTN).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

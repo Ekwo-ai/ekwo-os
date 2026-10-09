@@ -1,0 +1,192 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "HN-SAR-201",
+  "name": "Formulario 201 — Declaración Jurada del Impuesto Sobre Ventas (ISV), determinativa, mensual",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2014-01-01",
+  "legal_reference": "Ley del Impuesto Sobre Ventas, art. 11 — los responsables de la recaudación presentan mensualmente una declaración jurada de ventas y enteran las sumas percibidas dentro de los primeros diez (10) días calendario del mes siguiente, aun cuando la diferencia entre débito y crédito sea cero o a favor del responsable; art. 12 — la liquidación es la diferencia entre el débito y el crédito fiscal. La declaración 201 se presenta únicamente por la Oficina Virtual del SAR (Acuerdo SAR-236-2024) y consta de cuatro secciones: A, Determinación del Impuesto Ventas; B, Determinación del Impuesto Compras; C, Créditos; D, Detalle de la liquidación. Antes de ella los grandes y medianos contribuyentes presentan la Declaración Mensual de Compras (DMC), informativa y distinta, con vencimiento el día ocho: este paquete no la modela — véase el README",
+  "source": "sar-isv-201",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 10,
+    "legal_reference": "Ley del Impuesto Sobre Ventas, art. 11 — el entero se hace dentro de los primeros diez (10) días calendario del mes siguiente a aquel en que se efectuaron las ventas; el SAR indica que, si el día diez no es hábil, el vencimiento pasa al siguiente día hábil, ajuste que esta regla no calcula",
+    "source": "sar-impuestos-declaraciones"
+  },
+  "boxes": [
+    {
+      "box": "V15",
+      "kind": "base",
+      "name": "Ventas en el mercado interno al 15 % — base imponible",
+      "sequence": 10,
+      "legal_reference": "Formulario 201, sección A, Determinación del Impuesto Ventas — valor total de la base imponible de las ventas realizadas a la tasa del 15 %",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "D15",
+      "kind": "tax",
+      "name": "Débito fiscal sobre ventas al 15 %",
+      "sequence": 20,
+      "legal_reference": "Ley del Impuesto Sobre Ventas, art. 12, apartado A — el débito se determina aplicando la tarifa al valor de las ventas, menos el impuesto devuelto por ventas anuladas, rebajas y descuentos",
+      "source": "ley-isv"
+    },
+    {
+      "box": "V18",
+      "kind": "base",
+      "name": "Ventas en el mercado interno al 18 % — base imponible",
+      "sequence": 30,
+      "legal_reference": "Formulario 201, sección A — valor total de la base imponible de las ventas realizadas a la tasa del 18 %",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "D18",
+      "kind": "tax",
+      "name": "Débito fiscal sobre ventas al 18 %",
+      "sequence": 40,
+      "legal_reference": "Ley del Impuesto Sobre Ventas, art. 12, apartado A, y Decreto 278-2013, art. 16",
+      "source": "decreto-278-2013"
+    },
+    {
+      "box": "VEXO",
+      "kind": "base",
+      "name": "Ventas exentas en el mercado interno",
+      "sequence": 50,
+      "legal_reference": "Formulario 201, sección A — las ventas exentas no generan débito fiscal pero deben informarse",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "VEXP",
+      "kind": "base",
+      "name": "Exportaciones (fuera de la región centroamericana)",
+      "sequence": 60,
+      "legal_reference": "Formulario 201, sección A, subsección «Indica las Exportaciones» — no genera débito fiscal",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "VEXPCA",
+      "kind": "base",
+      "name": "Exportaciones región centroamericana",
+      "sequence": 70,
+      "legal_reference": "Formulario 201, sección A, subsección «Indica las Exportaciones» — no genera débito fiscal",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "TDEB",
+      "kind": "total",
+      "name": "Total débito del período",
+      "sequence": 80,
+      "plus": [
+        "D15",
+        "D18"
+      ],
+      "legal_reference": "Formulario 201, sección A, «Total Débito del Período» — suma de los débitos fiscales",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "C15",
+      "kind": "base",
+      "name": "Compras netas en el mercado interno (gravadas al 15 %)",
+      "sequence": 90,
+      "legal_reference": "Formulario 201, sección B, Determinación del Impuesto Compras — base imponible de las compras al 15 %",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "CR15",
+      "kind": "tax",
+      "name": "Crédito por compras en el mercado interno (gravadas al 15 %)",
+      "sequence": 100,
+      "legal_reference": "Formulario 201, sección B — crédito que el sistema calcula al indicar las compras netas al 15 %",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "C18",
+      "kind": "base",
+      "name": "Compras netas en el mercado interno (gravadas al 18 %)",
+      "sequence": 110,
+      "legal_reference": "Formulario 201, sección B — base imponible de las compras al 18 %",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "CR18",
+      "kind": "tax",
+      "name": "Crédito por compras en el mercado interno (gravadas al 18 %)",
+      "sequence": 120,
+      "legal_reference": "Formulario 201, sección B — crédito que el sistema calcula al indicar las compras netas al 18 %",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "CEXO",
+      "kind": "base",
+      "name": "Compras exentas o exoneradas en el mercado interno",
+      "sequence": 130,
+      "legal_reference": "Formulario 201, sección B — las compras exentas y exoneradas no generan crédito fiscal",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "IMP15",
+      "kind": "base",
+      "name": "Importaciones al 15 %",
+      "sequence": 140,
+      "legal_reference": "Formulario 201, sección B, subsección «Indica las Importaciones» — base imponible de las importaciones al 15 %",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "CRIMP15",
+      "kind": "tax",
+      "name": "Crédito Importaciones 15 %",
+      "sequence": 150,
+      "legal_reference": "Formulario 201, sección B — crédito que el sistema calcula al indicar las importaciones al 15 %",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "IMP18",
+      "kind": "base",
+      "name": "Importaciones al 18 %",
+      "sequence": 160,
+      "legal_reference": "Formulario 201, sección B — base imponible de las importaciones al 18 %",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "CRIMP18",
+      "kind": "tax",
+      "name": "Crédito Importaciones 18 %",
+      "sequence": 170,
+      "legal_reference": "Formulario 201, sección B — crédito que el sistema calcula al indicar las importaciones al 18 %",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "TCRED",
+      "kind": "total",
+      "name": "Total de créditos declarados en las compras",
+      "sequence": 180,
+      "plus": [
+        "CR15",
+        "CR18",
+        "CRIMP15",
+        "CRIMP18"
+      ],
+      "legal_reference": "Formulario 201, sección B — «Total de créditos declarados en las compras»; la sección C suma además los pagos del período, los excedentes del período anterior, las compensaciones, las cesiones y los impuestos retenidos, que Ekwo no calcula",
+      "source": "sar-isv-201"
+    },
+    {
+      "box": "TOTAL",
+      "kind": "total",
+      "name": "Impuesto a pagar o saldo a favor antes de la sección C",
+      "sequence": 190,
+      "plus": [
+        "D15",
+        "D18"
+      ],
+      "minus": [
+        "CR15",
+        "CR18",
+        "CRIMP15",
+        "CRIMP18"
+      ],
+      "legal_reference": "Ley del Impuesto Sobre Ventas, art. 12 — la liquidación se hace sobre la diferencia entre el débito y el crédito fiscal; formulario 201, sección D, «Detalle de la liquidación» — total de débito del período frente al total de crédito originado por compras y créditos disponibles. Un resultado negativo es un excedente que el sistema traslada al período siguiente; este paquete no aplica excedentes anteriores, pagos, compensaciones ni retenciones de la sección C",
+      "source": "ley-isv"
+    }
+  ]
+}

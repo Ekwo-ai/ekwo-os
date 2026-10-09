@@ -1,0 +1,843 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "HN-EF-ESF",
+      "kind": "balance_sheet",
+      "framework": "HN-NIIFPYMES",
+      "name": "Estado de Situación Financiera",
+      "legal_reference": "La Junta Técnica de Normas de Contabilidad y de Auditoría (JUNTEC) adoptó la NIIF para las PYMES para su aplicación obligatoria en Honduras y publica un modelo oficial de estados financieros; el Código de Comercio (Decreto Número 73-50) obliga al comerciante a llevar contabilidad por partida doble. Este paquete presenta el activo y el pasivo en corriente y no corriente, que es como la sección 4 de la NIIF para las PYMES ordena el estado de situación financiera cuando la entidad no presenta por liquidez. La JUNTEC no impone un esquema de líneas único: las líneas siguen el modelo de la NIIF para las PYMES y las reglas son las de este plan de cuentas.",
+      "source": "juntec-niif-pymes",
+      "lines": [
+        {
+          "code": "ACT",
+          "parent": null,
+          "name": "Activo",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "AC",
+            "ANC"
+          ]
+        },
+        {
+          "code": "AC",
+          "parent": "ACT",
+          "name": "Activo corriente",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "119"
+          ]
+        },
+        {
+          "code": "111",
+          "parent": "AC",
+          "name": "Efectivo y equivalentes de efectivo",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "111",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por la JUNTEC; Honduras no prescribe un catálogo de cuentas — véase el README",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "112",
+          "parent": "AC",
+          "name": "Cuentas por cobrar comerciales",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "112",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "113",
+          "parent": "AC",
+          "name": "Otras cuentas por cobrar",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "113",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "114",
+          "parent": "AC",
+          "name": "Impuestos por cobrar",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "114",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete; incluye el crédito fiscal del Impuesto Sobre Ventas (cuentas 1141 y 1142)",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "115",
+          "parent": "AC",
+          "name": "Gastos pagados por anticipado",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "115",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "116",
+          "parent": "AC",
+          "name": "Inventarios",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "116",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "119",
+          "parent": "AC",
+          "name": "Partidas pendientes de imputación",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "119",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuenta de suspenso del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "ANC",
+          "parent": "ACT",
+          "name": "Activo no corriente",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "121",
+            "122",
+            "123"
+          ]
+        },
+        {
+          "code": "121",
+          "parent": "ANC",
+          "name": "Propiedad, planta y equipo",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "121",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, netas de su depreciación acumulada",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "122",
+          "parent": "ANC",
+          "name": "Activos intangibles",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "122",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "123",
+          "parent": "ANC",
+          "name": "Otros activos no corrientes",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "123",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "PYP",
+          "parent": null,
+          "name": "Pasivo y patrimonio neto",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "PAS",
+            "PAT"
+          ]
+        },
+        {
+          "code": "PAS",
+          "parent": "PYP",
+          "name": "Pasivo",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "PC",
+            "PNC"
+          ]
+        },
+        {
+          "code": "PC",
+          "parent": "PAS",
+          "name": "Pasivo corriente",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "211",
+            "212",
+            "213",
+            "214",
+            "215"
+          ]
+        },
+        {
+          "code": "211",
+          "parent": "PC",
+          "name": "Cuentas por pagar comerciales",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "211",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "212",
+          "parent": "PC",
+          "name": "Remuneraciones y prestaciones laborales por pagar",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "212",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "213",
+          "parent": "PC",
+          "name": "Impuestos por pagar",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "213",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete; incluye el débito fiscal y el ISV por pagar del período (cuentas 2131 y 2132)",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "214",
+          "parent": "PC",
+          "name": "Anticipos de clientes",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "214",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "215",
+          "parent": "PC",
+          "name": "Provisiones a corto plazo",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "215",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "PNC",
+          "parent": "PAS",
+          "name": "Pasivo no corriente",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "221",
+            "222",
+            "223",
+            "224"
+          ]
+        },
+        {
+          "code": "221",
+          "parent": "PNC",
+          "name": "Préstamos bancarios a largo plazo",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "221",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "222",
+          "parent": "PNC",
+          "name": "Arrendamientos financieros por pagar",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "222",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "223",
+          "parent": "PNC",
+          "name": "Provisión para indemnizaciones laborales",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "223",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "224",
+          "parent": "PNC",
+          "name": "Otras cuentas por pagar a largo plazo",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "224",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "PAT",
+          "parent": "PYP",
+          "name": "Patrimonio neto",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "310",
+            "311",
+            "320",
+            "330",
+            "341",
+            "342",
+            "351",
+            "352"
+          ]
+        },
+        {
+          "code": "310",
+          "parent": "PAT",
+          "name": "Capital autorizado",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "310",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "311",
+          "parent": "PAT",
+          "name": "Capital suscrito y pagado",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "311",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "320",
+          "parent": "PAT",
+          "name": "Aportaciones por capitalizar",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "320",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "330",
+          "parent": "PAT",
+          "name": "Reserva legal",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "330",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "341",
+          "parent": "PAT",
+          "name": "Utilidades no distribuidas",
+          "sequence": 320,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "341",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "342",
+          "parent": "PAT",
+          "name": "Pérdidas acumuladas",
+          "sequence": 330,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "342",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "351",
+          "parent": "PAT",
+          "name": "Resultado del ejercicio - Ganancia",
+          "sequence": 340,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "351",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "352",
+          "parent": "PAT",
+          "name": "Resultado del ejercicio - Pérdida",
+          "sequence": 350,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "352",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        }
+      ]
+    },
+    {
+      "code": "HN-EF-ER",
+      "kind": "income_statement",
+      "framework": "HN-NIIFPYMES",
+      "name": "Estado de Resultados",
+      "legal_reference": "La Junta Técnica de Normas de Contabilidad y de Auditoría (JUNTEC) adoptó la NIIF para las PYMES para su aplicación obligatoria en Honduras y publica un modelo oficial de estados financieros; el Código de Comercio (Decreto Número 73-50) obliga al comerciante a llevar contabilidad por partida doble. La sección 5 de la NIIF para las PYMES admite presentar los gastos por naturaleza, que es la forma en que este paquete agrupa su plan de cuentas de gastos.",
+      "source": "juntec-niif-pymes",
+      "lines": [
+        {
+          "code": "ING",
+          "parent": null,
+          "name": "Ingresos de operación",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "411",
+            "412",
+            "413",
+            "414",
+            "415"
+          ]
+        },
+        {
+          "code": "411",
+          "parent": "ING",
+          "name": "Ventas locales gravadas",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "411",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "412",
+          "parent": "ING",
+          "name": "Ventas de exportación",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "412",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "413",
+          "parent": "ING",
+          "name": "Ventas exentas",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "413",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "414",
+          "parent": "ING",
+          "name": "Prestación de servicios gravados",
+          "sequence": 50,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "414",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "415",
+          "parent": "ING",
+          "name": "Descuentos y devoluciones sobre ventas",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "415",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, cuenta de naturaleza deudora que reduce el ingreso de operación",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "51",
+          "parent": null,
+          "name": "Costo de ventas",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "51",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "UB",
+          "parent": null,
+          "name": "Utilidad (pérdida) bruta",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "ING"
+          ],
+          "minus": [
+            "51"
+          ]
+        },
+        {
+          "code": "52",
+          "parent": null,
+          "name": "Gastos de venta",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "52",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "53",
+          "parent": null,
+          "name": "Gastos de administración",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "53",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "GO",
+          "parent": null,
+          "name": "Gastos operativos",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "52",
+            "53"
+          ]
+        },
+        {
+          "code": "UO",
+          "parent": null,
+          "name": "Utilidad (pérdida) de operación",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "UB"
+          ],
+          "minus": [
+            "GO"
+          ]
+        },
+        {
+          "code": "46",
+          "parent": null,
+          "name": "Otros ingresos",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "46",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete: intereses ganados, diferencial cambiario ganado, descuentos obtenidos, ganancia en venta de activos fijos e ingresos varios",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "54",
+          "parent": null,
+          "name": "Gastos financieros",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "54",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "56",
+          "parent": null,
+          "name": "Otros gastos",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "56",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "RF",
+          "parent": null,
+          "name": "Resultado financiero y otros",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "46"
+          ],
+          "minus": [
+            "54",
+            "56"
+          ]
+        },
+        {
+          "code": "UAI",
+          "parent": null,
+          "name": "Utilidad (pérdida) antes de impuesto sobre la renta",
+          "sequence": 170,
+          "is_total": true,
+          "plus": [
+            "UO",
+            "RF"
+          ]
+        },
+        {
+          "code": "55",
+          "parent": null,
+          "name": "Impuesto sobre la renta e Impuesto de Solidaridad",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "55",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete",
+          "source": "juntec-niif-pymes"
+        },
+        {
+          "code": "UN",
+          "parent": null,
+          "name": "Utilidad (pérdida) neta del ejercicio",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "UAI"
+          ],
+          "minus": [
+            "55"
+          ]
+        }
+      ]
+    }
+  ]
+}

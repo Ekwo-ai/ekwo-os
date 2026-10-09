@@ -1,0 +1,357 @@
+[
+  {
+    "code": "HN-V-15",
+    "name": "Venta o servicio gravado, 15 %",
+    "description": "Venta de bienes y prestación de servicios gravados a la tasa general del Impuesto Sobre Ventas",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Ley del Impuesto Sobre Ventas, art. 1 — se crea un impuesto sobre las ventas realizadas en todo el territorio, no acumulativo, en la importación y en cada etapa de venta de mercaderías o servicios; art. 2 — son ventas las transferencias onerosas de mercaderías y los servicios gravables; art. 3 — la base imponible es el valor del bien o servicio sin los gastos directos de financiación, seguros, fletes, comisiones y garantías; art. 6, reformado por el art. 16 del Decreto 278-2013 — la tasa general es del quince por ciento (15 %) desde el 1 de enero de 2014; art. 9 — el contribuyente puede recargar la tasa sobre el precio, con redondeo al centavo. El formulario 201 la declara en «Ventas en el mercado interno al 15 %» y calcula el débito fiscal. Honduras no forma parte del sistema común del IVA de la Unión Europea: este paquete no declara `exemption_code` ni ningún tratamiento `intracom_*`, y el artículo que exime cada operación va en `legal_reference`.",
+    "source": "decreto-278-2013",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "V15"
+        },
+        {
+          "type": "tax",
+          "account": "2131",
+          "box": "D15"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "V15",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2131",
+          "box": "D15",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "HN-V-18",
+    "name": "Venta gravada, 18 % (cerveza, bebidas alcohólicas, cigarrillos y boletos aéreos de clase ejecutiva)",
+    "description": "Venta o importación de bebidas alcohólicas, cerveza, cigarrillos y boletos aéreos de clase ejecutiva, a la tasa del dieciocho por ciento",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Decreto 278-2013, art. 16 — reforma el art. 6 de la Ley del Impuesto Sobre Ventas para fijar en dieciocho por ciento (18 %) la tasa aplicada a las bebidas alcohólicas, la cerveza y los cigarrillos, al igual que los boletos aéreos de clase ejecutiva; Ley del Impuesto Sobre Ventas, art. 6 — para la cerveza, las aguas gaseosas y las bebidas refrescantes la base es el precio de venta en la etapa de distribuidor, y para los cigarrillos el precio en la etapa de mayorista, incluido el impuesto de producción y consumo. El texto de la reforma no nombra las aguas gaseosas ni las bebidas refrescantes entre los bienes al dieciocho por ciento: este paquete no las incluye en este código y las deja en la tasa general. El formulario 201 la declara en «Ventas en el mercado interno al 18 %». Honduras no forma parte del sistema común del IVA de la Unión Europea: este paquete no declara `exemption_code` ni ningún tratamiento `intracom_*`, y el artículo que exime cada operación va en `legal_reference`.",
+    "source": "decreto-278-2013",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "V18"
+        },
+        {
+          "type": "tax",
+          "account": "2131",
+          "box": "D18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "V18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2131",
+          "box": "D18",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "HN-V-EXP",
+    "name": "Exportación fuera de la región centroamericana, tasa cero",
+    "description": "Exportación de bienes o servicios a destinos fuera de Centroamérica, a tasa cero y con derecho a crédito",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2014-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Ley del Impuesto Sobre Ventas, art. 6, último párrafo — el impuesto sobre los bienes y servicios que se exporten, incluidos los regímenes especiales y de fomento a las exportaciones, se calcula a tasa cero, quedando exentas las exportaciones y con derecho a crédito o devolución por el impuesto pagado en los insumos y servicios incorporados cuando el productor es el mismo exportador. El formulario 201 informa las «Exportaciones (fuera de la región centroamericana)» sin generar débito fiscal. La devolución del crédito al exportador es un trámite administrativo que este paquete no modela — véase el README. Honduras no forma parte del sistema común del IVA de la Unión Europea: este paquete no declara `exemption_code` ni ningún tratamiento `intracom_*`, y el artículo que exime cada operación va en `legal_reference`.",
+    "source": "ley-isv",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VEXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VEXP",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "HN-V-EXP-CA",
+    "name": "Exportación a la región centroamericana, tasa cero",
+    "description": "Exportación de bienes o servicios a otro país de la región centroamericana, a tasa cero",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2014-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Ley del Impuesto Sobre Ventas, art. 6, último párrafo — la exportación se calcula a tasa cero sin distinguir el destino; el formulario 201 separa, sin generar débito fiscal, las «Exportaciones región centroamericana» de las «Exportaciones (fuera de la región centroamericana)», y por eso este paquete declara dos códigos con el mismo tratamiento. Honduras no forma parte del sistema común del IVA de la Unión Europea: este paquete no declara `exemption_code` ni ningún tratamiento `intracom_*`, y el artículo que exime cada operación va en `legal_reference`.",
+    "source": "sar-isv-201",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VEXPCA"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VEXPCA",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "HN-V-EXO",
+    "name": "Venta o servicio exento",
+    "description": "Venta de bienes o prestación de servicios exentos conforme al artículo 15 de la Ley del Impuesto Sobre Ventas (canasta básica del Anexo I, medicamentos, servicios de enseñanza, salud, entre otros)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2014-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Ley del Impuesto Sobre Ventas, art. 15, reformado por los arts. 17 y 18 del Decreto 278-2013 — están exentos los bienes del Anexo I (canasta básica), los productos farmacéuticos para uso humano y el material de curación, quirúrgico y las jeringas, ciertos bienes como libros, periódicos y combustibles, y los servicios de energía eléctrica, agua potable y alcantarillado, construcción, honorarios profesionales de personas naturales, enseñanza, hospitalización, laboratorios y diagnóstico médico, transporte terrestre de pasajeros, servicios bancarios y financieros y primas de seguros de personas, quedando sujetos al impuesto los alimentos preparados para consumo dentro o fuera del local; además, la compraventa de inmuebles, el arrendamiento de locales comerciales con renta mensual hasta cinco mil lempiras y el arrendamiento de viviendas. Este paquete declara un único código para el conjunto; el inciso que ampara cada operación se cita en el asiento — véase el README. El formulario 201 informa estas operaciones en «Ventas exentas en el mercado interno» sin débito fiscal. Honduras no forma parte del sistema común del IVA de la Unión Europea: este paquete no declara `exemption_code` ni ningún tratamiento `intracom_*`, y el artículo que exime cada operación va en `legal_reference`.",
+    "source": "ley-isv",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VEXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VEXO",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "HN-C-15",
+    "name": "Compra o servicio gravado, 15 %, con derecho a crédito fiscal",
+    "description": "Adquisición interna de bienes o servicios gravados a la tasa general, con derecho a crédito fiscal",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Ley del Impuesto Sobre Ventas, art. 12, apartado B — el crédito fiscal está constituido por el impuesto pagado con motivo de la importación y por las compras internas de bienes o servicios, menos el impuesto devuelto por compras anuladas o rescindidas y por reducciones de precio; art. 6 reformado por el art. 16 del Decreto 278-2013 — tasa del 15 %. El formulario 201 declara la base en «Compras netas en el mercado interno (gravadas al 15 %)» y el «Crédito por compras en el mercado interno» que el sistema calcula.",
+    "source": "ley-isv",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "C15"
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CR15"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "C15",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CR15",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "HN-C-18",
+    "name": "Compra gravada, 18 %, con derecho a crédito fiscal",
+    "description": "Adquisición interna de cerveza, bebidas alcohólicas, cigarrillos o boletos aéreos de clase ejecutiva, con derecho a crédito fiscal",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Ley del Impuesto Sobre Ventas, art. 12, apartado B — crédito fiscal por las compras internas; Decreto 278-2013, art. 16 — tasa del 18 % sobre bebidas alcohólicas, cerveza, cigarrillos y boletos aéreos de clase ejecutiva. El formulario 201 declara la base en «Compras netas en el mercado interno (gravadas al 18 %)» y el «Crédito por compras en el mercado interno (gravadas al 18 %)».",
+    "source": "decreto-278-2013",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "C18"
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CR18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "C18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CR18",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "HN-C-EXO",
+    "name": "Compra o servicio exento o exonerado",
+    "description": "Adquisición de bienes o servicios exentos o exonerados, que no generan crédito fiscal",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Ley del Impuesto Sobre Ventas, art. 15 — ventas de bienes y servicios exentas; formulario 201, sección B — «las compras exentas y exoneradas en el mercado interno no generan crédito fiscal». La compra de un bien gravado que no reúne los requisitos de documentación del crédito no tiene casilla propia en el formulario 201: se registra con este código y su impuesto se lleva al costo del bien.",
+    "source": "sar-isv-201",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CEXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CEXO",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "HN-C-IMP-15",
+    "name": "Importación gravada, 15 %",
+    "description": "Importación de bienes gravados a la tasa general, con crédito por el impuesto pagado en la aduana",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Ley del Impuesto Sobre Ventas, art. 3, letra b) — la base de las importaciones es el valor CIF incrementado con los derechos arancelarios, impuestos selectivos al consumo y demás cargos; art. 5-A, letra d) — el hecho generador se produce al nacionalizar el bien o liquidar y pagar la póliza; art. 8, letra c) — en las importaciones son responsables el importador o su agente aduanero; art. 12, apartado B — el impuesto pagado en la importación integra el crédito. El formulario 201 declara «Importaciones al 15 %» y su «Crédito Importaciones 15 %».",
+    "source": "ley-isv",
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "IMP15"
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CRIMP15"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "IMP15",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CRIMP15",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "HN-C-IMP-18",
+    "name": "Importación gravada, 18 %",
+    "description": "Importación de bebidas alcohólicas, cerveza, cigarrillos u otros bienes a la tasa del dieciocho por ciento, con crédito por el impuesto pagado en la aduana",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Decreto 278-2013, art. 16 — tasa del 18 % sobre bebidas alcohólicas, cerveza y cigarrillos; Ley del Impuesto Sobre Ventas, art. 6 — el impuesto se capta en la importación al momento de la liquidación y pago; art. 12, apartado B — crédito por el impuesto pagado en la importación. El formulario 201 declara «Importaciones al 18 %» y su «Crédito Importaciones 18 %».",
+    "source": "decreto-278-2013",
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "IMP18"
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CRIMP18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "IMP18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CRIMP18",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]

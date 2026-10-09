@@ -1,0 +1,233 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "HN",
+  "name": "Honduras",
+  "version": "0.1.0",
+  "schema_min": "20260929141500",
+  "seed_sequence": 130,
+  "released_at": "2026-10-09",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ley-isv",
+        "title": "Decreto-Ley Número 24 del 20 de diciembre de 1963, Ley del Impuesto Sobre Ventas y sus reformas (texto actualizado hasta el 12 de enero de 2004; las tasas y la canasta básica vigentes se leen con el Decreto 278-2013)",
+        "publisher": "Secretaría de Finanzas de Honduras — Dirección Ejecutiva de Ingresos",
+        "url": "https://www.sefin.gob.hn/wp-content/uploads/leyes/LEY%20DE%20IMPTO_S_VTAS.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "decreto-278-2013",
+        "title": "Decreto Número 278-2013, Ley de Ordenamiento de las Finanzas Públicas, Control de las Exoneraciones y Medidas Antievasión, La Gaceta No. 33,316 del 30 de diciembre de 2013, artículos 16 (tasas del Impuesto Sobre Ventas), 17 (canasta básica) y 18 (servicios exentos); en vigor desde el 1 de enero de 2014",
+        "publisher": "República de Honduras — Diario Oficial La Gaceta",
+        "url": "https://foprideh.org/wp-content/uploads/2020/10/DECRETO-278-2013.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "sar-isv-201",
+        "title": "Ayuda Declaración Jurada de Impuesto Sobre Ventas (formulario 201, determinativa): secciones A a D, casillas de ventas, compras, importaciones y créditos, plazo de presentación y pago",
+        "publisher": "Servicio de Administración de Rentas (SAR) — Oficina Virtual",
+        "url": "https://www.sar.gob.hn/wp-content/uploads/2024/06/AYUDA-DECLARACION-JURADA-IMPUESTO-SOBRE-VENTAS-OVI.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "sar-impuestos-declaraciones",
+        "title": "Impuestos y Declaraciones — vencimientos del Impuesto Sobre Ventas (día diez de cada mes), de la Declaración Mensual de Compras (día ocho de cada mes) y de las retenciones del Impuesto Sobre Ventas",
+        "publisher": "Servicio de Administración de Rentas (SAR)",
+        "url": "https://www.sar.gob.hn/impuestos-y-declaraciones-20997/",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "acuerdo-sar-236-2024",
+        "title": "Acuerdo No. SAR-236-2024, La Gaceta No. 36,538 del 20 de mayo de 2024, que crea la Oficina Virtual del Servicio de Administración de Rentas como plataforma para elaborar, rectificar y presentar declaraciones y generar boletines de pago",
+        "publisher": "Servicio de Administración de Rentas (SAR)",
+        "url": "https://www.sar.gob.hn/download/acuerdo-no-sar-236-2024-no-36538-de-fecha-20-de-mayo-2024-se-crea-la-oficina-virtual-del-servicio-de-administracion-de-rentas-sar-como-la-herramienta-que-facilita-a-los-obligados-tributarios-el/",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "oficina-virtual-sar",
+        "title": "Oficina Virtual del SAR — portal de presentación y pago de declaraciones tributarias",
+        "publisher": "Servicio de Administración de Rentas (SAR)",
+        "url": "https://oficinavirtual.sar.gob.hn/",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      },
+      {
+        "key": "acuerdo-481-2017",
+        "title": "Acuerdo No. 481-2017, La Gaceta No. 34,413 del 10 de agosto de 2017, Reglamento del Régimen de Facturación, Otros Documentos Fiscales y Registro Fiscal de Imprentas, reformado por los Acuerdos 609-2017, 725-2018 y 817-2018: obligación de emitir comprobante fiscal, impresión autorizada por imprenta o autoimpresor, Código de Autorización de Impresión (CAI)",
+        "publisher": "Servicio de Administración de Rentas (SAR)",
+        "url": "https://www.sar.gob.hn/facturacion/",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "codigo-comercio",
+        "title": "Decreto Número 73-50, Código de Comercio de Honduras",
+        "publisher": "Congreso Nacional de Honduras — texto consultado en WIPO Lex",
+        "url": "https://www.wipo.int/wipolex/es/legislation/details/2143",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "juntec-niif-pymes",
+        "title": "Modelo de Estados Financieros de acuerdo a la NIIF para las PYMES, adoptada por la JUNTEC para su aplicación obligatoria en Honduras",
+        "publisher": "Junta Técnica de Normas de Contabilidad y de Auditoría (JUNTEC)",
+        "url": "https://juntec.org.hn/2024/12/05/modelo-de-estados-financieros-de-acuerdo-a-las-niif-para-las-pymes/",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "HNL",
+    "language": "es",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1121",
+      "payable": "2111",
+      "suspense": "119",
+      "rounding": "544",
+      "retained_earnings": "341",
+      "retained_earnings_loss": "342",
+      "current_year_result_profit": "351",
+      "current_year_result_loss": "352",
+      "sales": "411",
+      "purchase": "511",
+      "bank": "1113",
+      "cash": "1111",
+      "fx_gain": "462",
+      "fx_loss": "542",
+      "tax_payable": "2132",
+      "tax_receivable": "1142"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VEN",
+      "type": "sales",
+      "name": "Ventas",
+      "sequence": 10
+    },
+    {
+      "code": "COM",
+      "type": "purchase",
+      "name": "Compras",
+      "sequence": 20
+    },
+    {
+      "code": "BAN",
+      "type": "bank",
+      "name": "Bancos",
+      "sequence": 30
+    },
+    {
+      "code": "CAJ",
+      "type": "cash",
+      "name": "Caja",
+      "sequence": 40
+    },
+    {
+      "code": "DIA",
+      "type": "general",
+      "name": "Diario general",
+      "sequence": 50
+    },
+    {
+      "code": "APE",
+      "type": "opening",
+      "name": "Asiento de apertura",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas de referencia, inspirado en la NIIF para las PYMES",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "HN-EF-ESF",
+        "HN-EF-ER"
+      ],
+      "legal_reference": "Honduras no impone un catálogo de cuentas único ni numerado. El Código de Comercio (Decreto Número 73-50) obliga al comerciante a llevar su contabilidad organizada por el sistema de partida doble, sin prescribir cuentas; la Junta Técnica de Normas de Contabilidad y de Auditoría (JUNTEC), creada por el Decreto Legislativo 189-2004, adoptó la NIIF para las PYMES para su aplicación obligatoria y publica un modelo oficial de estados financieros. Este plan es original: sigue una numeración propia y cada bloque de códigos corresponde a una línea de los esquemas HN-EF-ESF y HN-EF-ER, que siguen las secciones 4 y 5 de la NIIF para las PYMES. La numeración de los artículos del Código de Comercio sobre la contabilidad no se cita porque varias fuentes difieren sobre ella y parte de esas disposiciones pasó a la normativa de la JUNTEC — véase el README",
+      "source": "juntec-niif-pymes"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Ley del Impuesto Sobre Ventas, art. 7 — los responsables entregan al adquirente el original de la factura o documento equivalente con los requisitos que señale el reglamento, y la Dirección Ejecutiva de Ingresos controla la impresión y emisión de esos documentos; el Acuerdo 481-2017 exige que toda factura lleve un Código de Autorización de Impresión (CAI) y un número correlativo dentro del rango autorizado por el SAR a una imprenta o a un autoimpresor. El número que declara este paquete es el de la pieza contable, correlativo por diario, y no el número fiscal del rango CAI — véase «Ekwo no es un autoimpresor registrado ante el SAR»",
+        "source": "acuerdo-481-2017"
+      },
+      "tax_point": {
+        "legal_reference": "Ley del Impuesto Sobre Ventas, art. 5-A — el hecho generador se produce, en la venta de bienes, en la fecha de emisión de la factura o documento equivalente y, a falta de éste, en el momento de la entrega; en la prestación de servicios, en la fecha de emisión de la factura, en la de prestación del servicio o en la de pago o abono a cuenta, la que ocurra primero; en las importaciones, al momento de la nacionalización o de la liquidación y pago de la póliza. Para las ventas de bienes el punto de partida es la emisión de la factura, de ahí invoice_if_issued; la regla más temprana de los servicios no se distingue a este nivel — véase el README",
+        "source": "ley-isv"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Ley del Impuesto Sobre Ventas, art. 12 — el débito se determina aplicando la tarifa al valor de las ventas menos el impuesto devuelto por ventas anuladas o rescindidas y por rebajas, descuentos u otras deducciones normales del comercio, de modo que una venta ya facturada se corrige con un documento que la reduce y no volviendo a borrador; el Acuerdo 481-2017 exige un comprobante fiscal por cada transferencia. Un documento contabilizado en Ekwo se anula con una nota de crédito que lo nombra",
+        "source": "ley-isv"
+      }
+    },
+    "mentions": [
+      {
+        "code": "cai_not_issued",
+        "applies_when": "always",
+        "sequence": 10,
+        "text": "Este documento no es una factura autorizada por el Servicio de Administración de Rentas (SAR): no lleva Código de Autorización de Impresión (CAI) ni rango autorizado. Solo la factura emitida por una imprenta autorizada o por un autoimpresor registrado sustenta la operación para efectos tributarios.",
+        "legal_reference": "Acuerdo 481-2017, Reglamento del Régimen de Facturación — los obligados emiten el comprobante fiscal impreso por una imprenta autorizada o generado por un sistema de autoimpresor registrado ante el SAR, y el SAR asigna a cada rango de facturas un Código de Autorización de Impresión (CAI) con su fecha límite de emisión. Ekwo no se inscribe ante el SAR como sistema autoimpresor ni solicita rangos CAI — véase «Ekwo no es un autoimpresor registrado ante el SAR»",
+        "source": "acuerdo-481-2017"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "sequence": 20,
+        "text": "Exportación de bienes o de servicios, exenta del Impuesto Sobre Ventas y sujeta a la tasa cero (artículo 6 de la Ley del Impuesto Sobre Ventas).",
+        "legal_reference": "Ley del Impuesto Sobre Ventas, art. 6, último párrafo — el impuesto sobre los bienes y servicios que se exporten, incluidos los regímenes especiales y de fomento a las exportaciones, se calcula a tasa cero, quedando exentas las exportaciones",
+        "source": "ley-isv"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "sequence": 30,
+        "text": "Operación exenta del Impuesto Sobre Ventas (artículo 15 de la Ley del Impuesto Sobre Ventas).",
+        "legal_reference": "Ley del Impuesto Sobre Ventas, art. 15, reformado por los artículos 17 y 18 del Decreto 278-2013 — enumera las ventas de bienes y servicios exentos",
+        "source": "ley-isv"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "A 9 de octubre de 2026 ninguna ley ni acuerdo del Servicio de Administración de Rentas (SAR) obliga a los contribuyentes hondureños a emitir facturas electrónicas estructuradas ni a someterlas a una validación previa del SAR. El régimen vigente es el de facturación del Acuerdo 481-2017 (reformado por los Acuerdos 609-2017, 725-2018 y 817-2018): todo contribuyente que transfiera bienes o preste servicios emite un comprobante fiscal impreso por una imprenta autorizada o producido por un sistema de autoimpresor registrado ante el SAR, con un Código de Autorización de Impresión (CAI) asignado a cada rango. La factura generada por un autoimpresor puede ser digital, pero es una variante del mismo régimen de rangos CAI y no un intercambio de documentos estructurados entre las partes; el SAR no ha publicado un perfil ni una fecha de obligatoriedad. La página de facturación del SAR y sus comunicados de 2026 siguen hablando de impresión por imprenta y autoimpresor. profile y mandatory_from quedan vacíos; el Número de Registro Tributario Nacional (RTN) identifica al emisor y al receptor y no tiene un código ISO 6523 propio, de modo que party_scheme y vat_scheme quedan vacíos",
+    "source": "acuerdo-481-2017"
+  },
+  "bank": {
+    "account_scheme": "iban",
+    "statement_formats": [],
+    "payment_formats": []
+  }
+}

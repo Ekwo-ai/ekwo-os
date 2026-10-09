@@ -1,0 +1,375 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre de una comercializadora hondureña, declarante mensual del ISV",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Ejercicio 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    }
+  ],
+  "statements": [
+    "HN-EF-ESF",
+    "HN-EF-ER"
+  ],
+  "contacts": [
+    {
+      "ref": "client-hn",
+      "name": "Comercial Tegucigalpa, S. de R.L.",
+      "type": "customer",
+      "country": "HN"
+    },
+    {
+      "ref": "client-bar",
+      "name": "Distribuidora La Ceiba, S.A.",
+      "type": "customer",
+      "country": "HN"
+    },
+    {
+      "ref": "client-us",
+      "name": "Sunrise Imports LLC",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "client-gt",
+      "name": "Importadora Quetzal, S.A.",
+      "type": "customer",
+      "country": "GT"
+    },
+    {
+      "ref": "client-exento",
+      "name": "Universidad Exenta del Norte",
+      "type": "customer",
+      "country": "HN"
+    },
+    {
+      "ref": "supplier-hn",
+      "name": "Distribuidora San Pedro Sula, S.A.",
+      "type": "supplier",
+      "country": "HN"
+    },
+    {
+      "ref": "supplier-exo",
+      "name": "Cooperativa Agrícola de Comayagua",
+      "type": "supplier",
+      "country": "HN"
+    },
+    {
+      "ref": "agente-aduanero",
+      "name": "Agencia Aduanera Puerto Cortés, S.A.",
+      "type": "supplier",
+      "country": "HN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-hn",
+      "date": "2026-01-15",
+      "why": "Una venta gravada al 15 %: la base de la casilla V15 y el débito fiscal de la casilla D15.",
+      "lines": [
+        {
+          "name": "Mercadería A",
+          "quantity": 10,
+          "unit_price": 100,
+          "tax": "HN-V-15",
+          "account": "411"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-us",
+      "date": "2026-01-20",
+      "why": "Una exportación de bienes fuera de la región centroamericana, a tasa cero y declarada en la casilla VEXP, sin ISV.",
+      "lines": [
+        {
+          "name": "Mercadería B, exportación",
+          "quantity": 5,
+          "unit_price": 200,
+          "tax": "HN-V-EXP",
+          "account": "412"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_credit_note",
+      "contact": "client-hn",
+      "date": "2026-01-25",
+      "why": "Una devolución parcial de V1: reduce, dentro de las mismas casillas V15 y D15, la base y el débito fiscal ya declarados por V1 (art. 12, apartado A).",
+      "lines": [
+        {
+          "name": "Devolución de Mercadería A",
+          "quantity": 2,
+          "unit_price": 100,
+          "tax": "HN-V-15",
+          "account": "415"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-exento",
+      "date": "2026-02-10",
+      "why": "Una venta exenta conforme al artículo 15 (por ejemplo, medicamentos o bienes de la canasta básica): la base va a la casilla VEXO y no genera débito fiscal.",
+      "lines": [
+        {
+          "name": "Productos farmacéuticos de uso humano",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "HN-V-EXO",
+          "account": "413"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-bar",
+      "date": "2026-02-18",
+      "why": "Una venta de cerveza a la tasa del 18 % (Decreto 278-2013, art. 16): la base de la casilla V18 y el débito de la casilla D18.",
+      "lines": [
+        {
+          "name": "Cerveza, caja",
+          "quantity": 10,
+          "unit_price": 50,
+          "tax": "HN-V-18",
+          "account": "411"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-hn",
+      "date": "2026-03-05",
+      "why": "Una segunda venta gravada al 15 %, en marzo, para que ese período declare movimiento propio.",
+      "lines": [
+        {
+          "name": "Mercadería A",
+          "quantity": 20,
+          "unit_price": 100,
+          "tax": "HN-V-15",
+          "account": "411"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-gt",
+      "date": "2026-03-15",
+      "why": "Una exportación a un país de la región centroamericana, a tasa cero y declarada en la casilla VEXPCA, distinta de VEXP.",
+      "lines": [
+        {
+          "name": "Mercadería B, exportación",
+          "quantity": 4,
+          "unit_price": 200,
+          "tax": "HN-V-EXP-CA",
+          "account": "412"
+        }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "supplier-hn",
+      "date": "2026-01-18",
+      "why": "Una compra gravada al 15 % destinada a ventas gravadas: la base y el crédito fiscal pleno de las casillas C15 y CR15.",
+      "lines": [
+        {
+          "name": "Mercadería A, compra",
+          "quantity": 8,
+          "unit_price": 80,
+          "tax": "HN-C-15",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "supplier-hn",
+      "date": "2026-02-05",
+      "why": "Una compra de cerveza al 18 %, con derecho a crédito: casillas C18 y CR18.",
+      "lines": [
+        {
+          "name": "Cerveza, compra",
+          "quantity": 4,
+          "unit_price": 100,
+          "tax": "HN-C-18",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "supplier-exo",
+      "date": "2026-02-12",
+      "why": "Una compra a una cooperativa que no carga el impuesto: casilla CEXO, sin crédito fiscal.",
+      "lines": [
+        {
+          "name": "Productos agropecuarios",
+          "quantity": 1,
+          "unit_price": 250,
+          "tax": "HN-C-EXO",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_credit_note",
+      "contact": "supplier-hn",
+      "date": "2026-02-20",
+      "why": "Una nota de crédito de compra: reduce, dentro de las mismas casillas C15 y CR15, la base y el crédito fiscal ya declarados por C1 (art. 12, apartado B).",
+      "lines": [
+        {
+          "name": "Devolución de Mercadería A",
+          "quantity": 1,
+          "unit_price": 80,
+          "tax": "HN-C-15",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C5",
+      "type": "purchase_invoice",
+      "contact": "supplier-hn",
+      "date": "2026-03-10",
+      "why": "Una compra de marzo al 15 %, para comprobar el crédito fiscal de un período distinto al de enero.",
+      "lines": [
+        {
+          "name": "Mercadería A, compra",
+          "quantity": 15,
+          "unit_price": 80,
+          "tax": "HN-C-15",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C6",
+      "type": "purchase_invoice",
+      "contact": "supplier-exo",
+      "date": "2026-03-20",
+      "why": "Una segunda compra no gravada, para que la casilla CEXO tenga movimiento en dos períodos.",
+      "lines": [
+        {
+          "name": "Productos agropecuarios",
+          "quantity": 1,
+          "unit_price": 150,
+          "tax": "HN-C-EXO",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C7",
+      "type": "purchase_invoice",
+      "contact": "agente-aduanero",
+      "date": "2026-03-08",
+      "why": "Una importación definitiva al 15 % liquidada por el agente aduanero: la base de la casilla IMP15 y el crédito de la casilla CRIMP15.",
+      "lines": [
+        {
+          "name": "Importación definitiva de mercadería",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "HN-C-IMP-15",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C8",
+      "type": "purchase_invoice",
+      "contact": "agente-aduanero",
+      "date": "2026-03-22",
+      "why": "Una importación de bebidas alcohólicas al 18 %: la base de la casilla IMP18 y el crédito de la casilla CRIMP18.",
+      "lines": [
+        {
+          "name": "Importación de licores",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "HN-C-IMP-18",
+          "account": "511"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 1150.0,
+      "contact": "client-hn",
+      "journal": "BAN",
+      "match": "V1",
+      "why": "Un cobro que salda exactamente la factura V1 (1 000 de base más 150 de ISV)."
+    },
+    {
+      "ref": "P2",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 500.0,
+      "contact": "client-exento",
+      "journal": "BAN",
+      "match": "V4",
+      "why": "Un cobro que salda exactamente la venta exenta V4, sin ISV."
+    },
+    {
+      "ref": "P3",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 300.0,
+      "contact": "client-hn",
+      "journal": "BAN",
+      "match": null,
+      "why": "Un cobro a cuenta, sin factura que saldar: queda como partida abierta."
+    },
+    {
+      "ref": "P4",
+      "direction": "outbound",
+      "date": "2026-03-25",
+      "amount": 1380.0,
+      "contact": "supplier-hn",
+      "journal": "BAN",
+      "match": "C5",
+      "why": "Un pago que salda exactamente la compra C5 (1 200 de base más 180 de ISV)."
+    },
+    {
+      "ref": "P5",
+      "direction": "outbound",
+      "date": "2026-03-01",
+      "amount": 472.0,
+      "contact": "supplier-hn",
+      "journal": "BAN",
+      "match": "C2",
+      "why": "Un pago que salda exactamente la compra C2 de cerveza (400 de base más 72 de ISV)."
+    }
+  ]
+}
