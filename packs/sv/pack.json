@@ -1,0 +1,228 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "SV",
+  "name": "El Salvador",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 131,
+  "released_at": "2026-10-09",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "liva",
+        "title": "Ley de Impuesto a la Transferencia de Bienes Muebles y a la Prestación de Servicios (Decreto Legislativo No. 296 del 24 de julio de 1992), con sus reformas — art. 8 y 18 (momento en que se causa el impuesto), 45 y 46 (exenciones), 54 (tasa del 13 %, Decreto Legislativo No. 370 del 8 de junio de 1995), 74 y 75 (exportaciones a tasa cero), 93 y 94 (declaración mensual y plazo)",
+        "publisher": "Asamblea Legislativa de la República de El Salvador (texto publicado en el portal de Transparencia Fiscal del Ministerio de Hacienda)",
+        "url": "https://www.transparenciafiscal.gob.sv/downloads/pdf/DC9226_Ley_del_Impuesto_a_la_Transferencia_de_Bienes_Muebles_y_a_la_Prestacion_de_Servicios.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "ct",
+        "title": "Código Tributario (Decreto Legislativo No. 230 del 14 de diciembre de 2000) — art. 110 (notas de crédito y de débito), 114 (documentos), 162 (retención del 1 % del IVA por los grandes contribuyentes), 162-A (anticipo a cuenta del 2 % en pagos con tarjeta) y 163 (percepción del 1 %)",
+        "publisher": "Asamblea Legislativa de la República de El Salvador (texto publicado en eRegulations El Salvador)",
+        "url": "https://elsalvador.eregulations.org/media/codigo%20tributario%2009.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "d487",
+        "title": "Decreto Legislativo No. 487 — reformas al Código Tributario sobre Documentos Tributarios Electrónicos (arts. 119-A a 119-H) y disposiciones transitorias (art. 12: la Administración Tributaria fija las fechas desde las cuales cada contribuyente está obligado a emitirlos)",
+        "publisher": "Asamblea Legislativa de la República de El Salvador",
+        "url": "https://www.asamblea.gob.sv/sites/default/files/documents/decretos/A607DD05-7C5C-471B-A7F6-7393107250B7.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "f07",
+        "title": "Declaración y Pago del Impuesto a la Transferencia de Bienes Muebles y a la Prestación de Servicios — formulario F07",
+        "publisher": "Ministerio de Hacienda — Dirección General de Impuestos Internos (DGII)",
+        "url": "https://www7.mh.gob.sv/downloads/pdf/PMHDC8215.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "form"
+      },
+      {
+        "key": "boletin",
+        "title": "Boletín para nuevos contribuyentes de IVA — obligaciones formales de la Ley del IVA y del impuesto sobre la renta (tipos de documento, retención del 1 %, declaraciones F-07 y F-14, servicios en línea)",
+        "publisher": "Ministerio de Hacienda — Dirección General de Impuestos Internos (DGII)",
+        "url": "https://www.mh.gob.sv/wp-content/uploads/2025/12/BOLETIN-PARA-NUEVOS-CONTRIBUYENTES-01122025.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "portal",
+        "title": "Portal de servicios en línea de la DGII — presentar y pagar declaraciones (F-07) e informes",
+        "publisher": "Ministerio de Hacienda — Dirección General de Impuestos Internos (DGII)",
+        "url": "https://portaldgii.mh.gob.sv/ssc/",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      },
+      {
+        "key": "factura",
+        "title": "Sistema de Facturación Electrónica — Documentos Tributarios Electrónicos (DTE): documentos técnicos y consulta de la fecha de inicio obligatorio de cada emisor",
+        "publisher": "Ministerio de Hacienda de la República de El Salvador",
+        "url": "https://factura.gob.sv",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "cvpcpa462",
+        "title": "Resolución 462 del 18 de marzo de 2021 — adopta y ratifica la NIIF para las PYMES (versión en español 2015) y las NIIF completas (versión en español 2020)",
+        "publisher": "Consejo de Vigilancia de la Profesión de Contaduría Pública y Auditoría (CVPCPA)",
+        "url": "https://www.cvpcpa.gob.sv/download/resolucion-462/",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "USD",
+    "language": "es",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "110301",
+      "payable": "210101",
+      "suspense": "210605",
+      "rounding": "4203",
+      "retained_earnings": "360101",
+      "retained_earnings_loss": "360102",
+      "current_year_result_profit": "370101",
+      "current_year_result_loss": "370102",
+      "sales": "4101",
+      "purchase": "5102",
+      "bank": "110103",
+      "cash": "110101",
+      "fx_gain": "4202",
+      "fx_loss": "5402",
+      "asset_disposal_gain": "4204",
+      "asset_disposal_loss": "5214",
+      "tax_payable": "210503",
+      "tax_receivable": "110701"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VEN",
+      "type": "sales",
+      "name": "Diario de ventas",
+      "sequence": 10
+    },
+    {
+      "code": "COM",
+      "type": "purchase",
+      "name": "Diario de compras",
+      "sequence": 20
+    },
+    {
+      "code": "BAN",
+      "type": "bank",
+      "name": "Bancos",
+      "sequence": 30
+    },
+    {
+      "code": "CAJ",
+      "type": "cash",
+      "name": "Caja",
+      "sequence": 40
+    },
+    {
+      "code": "DIA",
+      "type": "general",
+      "name": "Diario general",
+      "sequence": 50
+    },
+    {
+      "code": "APE",
+      "type": "opening",
+      "name": "Asiento de apertura",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas inspirado en las NIIF",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "SV-NIIF-ESF",
+        "SV-NIIF-ER"
+      ],
+      "legal_reference": "El Salvador no tiene un catálogo de cuentas legal obligatorio. El Código de Comercio exige a los comerciantes llevar contabilidad formal, y el Consejo de Vigilancia de la Profesión de Contaduría Pública y Auditoría fija el marco: la Resolución 462 del 18 de marzo de 2021 ratifica la NIIF para las PYMES (versión en español 2015) para las entidades sin obligación pública de rendir cuentas y las NIIF completas (versión en español 2020) para las demás. Este plan es original: sigue la clasificación en activo, pasivo, patrimonio, ingresos y gastos que las NIIF prescriben, de modo que cada cuenta de detalle alcanza exactamente una línea de SV-NIIF-ESF o de SV-NIIF-ER",
+      "source": "cvpcpa462"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Código Tributario, art. 114 — los comprobantes de crédito fiscal y las facturas llevan numeración correlativa, independiente para cada establecimiento; en el régimen de Documentos Tributarios Electrónicos el número de control de cada documento lo fija la normativa técnica de la Administración Tributaria (arts. 119-A y siguientes). El código de esta pieza contable es el diario y un consecutivo de nueve dígitos; Ekwo no genera el número de control ni el código de generación del DTE: véase el README de este paquete",
+        "source": "ct"
+      },
+      "tax_point": {
+        "legal_reference": "Ley del IVA, art. 8 — en las transferencias de bienes el impuesto se causa cuando se emite el documento que da constancia de la operación, y antes si el precio se paga o los bienes se entregan real o simbólicamente antes de esa emisión; art. 18 — en las prestaciones de servicios, cuando ocurra primero la emisión del documento, el término de la prestación, la entrega del bien o el pago total o parcial. El vocabulario cerrado de esta casilla no nombra la emisión del documento como tercer hecho: la regla se aproxima con la primera de entrega o pago, que coincide con la emisión en la práctica general",
+        "source": "liva"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Código Tributario, art. 110 — cuando con posterioridad a la emisión de un comprobante de crédito fiscal se produzcan devoluciones, ajustes o anulaciones, se expiden notas de crédito o de débito que referencian el documento original; Decreto Legislativo No. 487 — un documento tributario electrónico que ha obtenido el sello de recepción se corrige con un documento nuevo o se anula mediante un evento de invalidación dentro del plazo que fija la Administración Tributaria; Ekwo registra solo la corrección por nota de crédito",
+        "source": "d487"
+      }
+    },
+    "mentions": [
+      {
+        "code": "dte_seal_pending",
+        "applies_when": "always",
+        "sequence": 10,
+        "text": "Este documento no constituye un Documento Tributario Electrónico con sello de recepción del Ministerio de Hacienda: solo el documento transmitido y sellado por la Administración Tributaria se tiene por emitido para efectos tributarios.",
+        "legal_reference": "Código Tributario, art. 119-B y 119-C (Decreto Legislativo No. 487) — los documentos tributarios electrónicos se entienden emitidos cuando la Administración Tributaria otorga el sello de recepción; Ekwo no firma, no transmite ni obtiene el sello: véase el README de este paquete",
+        "source": "d487"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "sequence": 20,
+        "text": "Exportación — operación afecta a la tasa del cero por ciento del impuesto a la transferencia de bienes muebles y a la prestación de servicios.",
+        "legal_reference": "Ley del IVA, arts. 74 y 75 — las exportaciones de bienes destinados al uso y consumo en el exterior y de servicios utilizados exclusivamente en el extranjero están afectas a la tasa del cero por ciento",
+        "source": "liva"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "sequence": 30,
+        "text": "Operación exenta del impuesto a la transferencia de bienes muebles y a la prestación de servicios.",
+        "legal_reference": "Ley del IVA, art. 46 — servicios exentos (entre ellos el arrendamiento de inmuebles destinados a vivienda, la educación prestada por instituciones autorizadas y el transporte público terrestre de pasajeros); art. 45 para las importaciones exentas",
+        "source": "liva"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Código Tributario, arts. 119-A a 119-H (Decreto Legislativo No. 487 de 2022) — los contribuyentes emiten Documentos Tributarios Electrónicos (DTE) que se generan, firman y transmiten a la Administración Tributaria, y se tienen por emitidos cuando ésta otorga el sello de recepción; el sello no implica validación ni autorización de la operación. El art. 12 transitorio faculta a la Administración Tributaria para fijar las fechas desde las cuales cada contribuyente está obligado: no hay una fecha única, la DGII notifica a cada contribuyente su fecha de inicio y cada uno la consulta en factura.gob.sv. La obligación existe para los contribuyentes notificados, pero el formato solo acepta «obligation: mandatory» junto con una fecha y un perfil construido sobre EN 16931 (que el DTE no es), por lo que obligation y mandatory_from quedan sin declarar, como en los paquetes de México y Colombia; los grandes contribuyentes empezaron el 1 de julio de 2023 según la información pública del calendario de incorporación, dato que no se contrastó con un comunicado de la Administración Tributaria — véase el README. Es un régimen de validación previa (clearance) con sello de recepción, y no un intercambio sobre EN 16931: profile queda vacío. EKWO NO GENERA, NO FIRMA NI TRANSMITE NINGÚN DTE. El RUC salvadoreño (NIT y NRC) no tiene un esquema ISO 6523 registrado: party_scheme y vat_scheme quedan vacíos",
+    "source": "d487"
+  },
+  "bank": {
+    "statement_formats": [
+      "csv"
+    ],
+    "payment_formats": []
+  }
+}

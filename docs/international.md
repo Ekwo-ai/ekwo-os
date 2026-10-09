@@ -6154,3 +6154,37 @@ law found on an official site is updated to January 2004; the current rates
 and the basic basket come from Decreto 278-2013, read beside it. The pack cites
 both and does not declare the pre-2014 rates, whose dates the consolidated text
 does not give.
+
+## From El Salvador
+
+**A deadline counted in business days.** The Ley del IVA, article 94, sets the
+monthly return at the first ten business days of the following month. The
+closed deadline vocabulary (`day_of_month_after_period`,
+`last_day_of_month_after_period`, `depends_on_taxpayer`) counts calendar days
+only. `packs/sv/` uses `depends_on_taxpayer`, which computes no date, because
+any calendar day would be early for some months and late for others. A
+`nth_business_day_of_month_after_period` rule would close the gap.
+
+**An e-invoicing obligation without an EN 16931 profile.** `einvoicing`
+refuses `mandatory_from` without a `profile`, and `obligation: mandatory`
+without `mandatory_from`, so a clearance regime that is not an EN 16931 profile
+(the Salvadoran Documento Tributario Electrónico, granted a sello de recepción
+by the Ministerio de Hacienda) cannot say that it is mandatory. The obligation
+is also individual: the Administration notifies each taxpayer its start date
+under transitional article 12 of Decreto Legislativo No. 487. The pack leaves
+the fields empty and carries the mention `dte_seal_pending`.
+
+**Withholding and perception that depend on the operation.** The 1% IVA
+withholding (Código Tributario, art. 162) and perception (art. 163) apply only
+to operations of 100 USD or more and only between a large taxpayer and a
+non-large one. A tax code cannot test an amount threshold or a counterparty
+class, so the pack documents the mechanism and provides the accounts without
+modelling a tax.
+
+**A tax point of three alternatives.** Article 8 fixes the tax point at the
+earliest of the document, the delivery and the payment;
+`earliest_of_delivery_or_payment` names two of the three.
+
+**Result boxes without a verified number.** The return's tax-payable and
+credit-carried-forward boxes carry mnemonic codes (`PAGAR`, `REMAN`) because
+the current form could not be read.

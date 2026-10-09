@@ -1,0 +1,354 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "name": "Un año de una comercializadora salvadoreña, declarante mensual del IVA",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Ejercicio 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "SV-NIIF-ESF",
+    "SV-NIIF-ER"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-contribuyente",
+      "name": "Comercial Cuscatlán, S.A. de C.V.",
+      "type": "customer",
+      "country": "SV"
+    },
+    {
+      "ref": "cust-consumidor",
+      "name": "Cliente consumidor final",
+      "type": "customer",
+      "country": "SV"
+    },
+    {
+      "ref": "cust-inquilino",
+      "name": "María Elena Rivas",
+      "type": "customer",
+      "country": "SV"
+    },
+    {
+      "ref": "cust-export-us",
+      "name": "Andes Trading LLC",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "cust-export-ca",
+      "name": "Distribuidora del Istmo, S.A.",
+      "type": "customer",
+      "country": "GT"
+    },
+    {
+      "ref": "sup-local",
+      "name": "Distribuidora Nacional, S.A. de C.V.",
+      "type": "supplier",
+      "country": "SV"
+    },
+    {
+      "ref": "sup-aduana",
+      "name": "Proveedor del exterior con despacho aduanero",
+      "type": "supplier",
+      "country": "SV"
+    },
+    {
+      "ref": "sup-exento",
+      "name": "Servicios Exentos, S.A. de C.V.",
+      "type": "supplier",
+      "country": "SV"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cust-contribuyente",
+      "date": "2026-01-10",
+      "why": "Una venta de mercadería a otro contribuyente con comprobante de crédito fiscal, al 13 %: 5 000,00 de base y 650,00 de débito fiscal; prueba las casillas 95 y 135.",
+      "lines": [
+        {
+          "name": "Mercadería general",
+          "quantity": 1,
+          "unit_price": 5000.0,
+          "tax": "SV-S-13-CCF",
+          "account": "4101"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cust-consumidor",
+      "date": "2026-01-15",
+      "why": "Una venta a un consumidor final con factura, al 13 %: 1 000,00 de base y 130,00 de débito fiscal; prueba las casillas 96 y 140, distintas de la 95 y la 135.",
+      "lines": [
+        {
+          "name": "Mercadería general",
+          "quantity": 1,
+          "unit_price": 1000.0,
+          "tax": "SV-S-13-FAC",
+          "account": "4101"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cust-inquilino",
+      "date": "2026-01-20",
+      "why": "El arrendamiento de un inmueble destinado a vivienda, servicio exento (art. 46, literal b): prueba la casilla 85 sin débito fiscal.",
+      "lines": [
+        {
+          "name": "Arrendamiento de vivienda",
+          "quantity": 1,
+          "unit_price": 1200.0,
+          "tax": "SV-S-EXE",
+          "account": "4102"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cust-export-us",
+      "date": "2026-02-05",
+      "why": "Una exportación de bienes fuera de la región centroamericana, a tasa cero (arts. 74 y 75): prueba la casilla 90.",
+      "lines": [
+        {
+          "name": "Mercadería exportada",
+          "quantity": 1,
+          "unit_price": 8000.0,
+          "tax": "SV-S-0-EXP-BIENES",
+          "account": "4103"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cust-export-ca",
+      "date": "2026-02-06",
+      "why": "Una exportación de bienes a la región centroamericana, a tasa cero: prueba la casilla 91, distinta de la 90.",
+      "lines": [
+        {
+          "name": "Mercadería exportada a Centroamérica",
+          "quantity": 1,
+          "unit_price": 2500.0,
+          "tax": "SV-S-0-EXP-CA",
+          "account": "4103"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "cust-export-us",
+      "date": "2026-02-08",
+      "why": "Una exportación de servicios a un usuario sin domicilio en el país, a tasa cero: prueba la casilla 94.",
+      "lines": [
+        {
+          "name": "Servicios de consultoría",
+          "quantity": 1,
+          "unit_price": 3000.0,
+          "tax": "SV-S-0-EXP-SERV",
+          "account": "4104"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "cust-consumidor",
+      "date": "2026-02-18",
+      "why": "Una operación no sujeta: prueba la casilla 86, sin débito fiscal.",
+      "lines": [
+        {
+          "name": "Operación no sujeta",
+          "quantity": 1,
+          "unit_price": 400.0,
+          "tax": "SV-S-NS",
+          "account": "4102"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cust-contribuyente",
+      "date": "2026-02-10",
+      "why": "Una devolución parcial de la venta V1: prueba que la nota de crédito reduce las casillas 95 y 135 del segundo período en vez de sumar una segunda base.",
+      "lines": [
+        {
+          "name": "Devolución de mercadería",
+          "quantity": 1,
+          "unit_price": 500.0,
+          "tax": "SV-S-13-CCF",
+          "account": "4101"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "cust-contribuyente",
+      "date": "2026-02-12",
+      "why": "Una venta a la tasa general en el segundo período: 2 000,00 de base y 260,00 de débito.",
+      "lines": [
+        {
+          "name": "Mercadería general",
+          "quantity": 1,
+          "unit_price": 2000.0,
+          "tax": "SV-S-13-CCF",
+          "account": "4101"
+        }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "sup-local",
+      "date": "2026-01-05",
+      "why": "Una compra interna de mercadería al 13 % con comprobante de crédito fiscal: 1 500,00 de base y 195,00 de crédito; prueba las casillas 80 y 130.",
+      "lines": [
+        {
+          "name": "Mercadería general",
+          "quantity": 1,
+          "unit_price": 1500.0,
+          "tax": "SV-P-13",
+          "account": "5102"
+        }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "sup-aduana",
+      "date": "2026-01-22",
+      "why": "Una importación de bienes de fuera de la región, cuyo impuesto se liquidó en la aduana: 2 000,00 de base y 260,00 de crédito; prueba las casillas 75 y 125, distintas de la 80 y la 130.",
+      "lines": [
+        {
+          "name": "Mercadería importada",
+          "quantity": 1,
+          "unit_price": 2000.0,
+          "tax": "SV-P-13-IMP",
+          "account": "5102"
+        }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "sup-exento",
+      "date": "2026-01-12",
+      "why": "Una compra a un proveedor exento: no traslada impuesto, no genera crédito fiscal y no se declara en ninguna casilla modelada.",
+      "lines": [
+        {
+          "name": "Servicio exento",
+          "quantity": 1,
+          "unit_price": 600.0,
+          "tax": "SV-P-0",
+          "account": "5102"
+        }
+      ]
+    },
+    {
+      "ref": "CN2",
+      "type": "purchase_credit_note",
+      "contact": "sup-local",
+      "date": "2026-02-08",
+      "why": "Una devolución parcial de la compra C1: prueba que la nota de crédito de una compra reduce las casillas 80 y 130 en vez de sumar una segunda base.",
+      "lines": [
+        {
+          "name": "Devolución de mercadería",
+          "quantity": 1,
+          "unit_price": 300.0,
+          "tax": "SV-P-13",
+          "account": "5102"
+        }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "sup-local",
+      "date": "2026-02-15",
+      "why": "Una compra grande en el segundo período, cuyo crédito supera el débito del mismo período: deja un remanente de crédito fiscal.",
+      "lines": [
+        {
+          "name": "Mercadería general",
+          "quantity": 1,
+          "unit_price": 9000.0,
+          "tax": "SV-P-13",
+          "account": "5102"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1",
+      "direction": "inbound",
+      "date": "2026-01-25",
+      "amount": 5650.0,
+      "contact": "cust-contribuyente",
+      "journal": "BAN",
+      "match": "V1",
+      "why": "El cliente paga exactamente el comprobante V1, antes de la nota de crédito: un pago que concilia una línea de clientes."
+    },
+    {
+      "ref": "P2",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 8000.0,
+      "contact": "cust-export-us",
+      "journal": "BAN",
+      "match": "V4",
+      "why": "El cobro de la exportación V4, sin impuesto por tratarse de tasa cero."
+    },
+    {
+      "ref": "P3",
+      "direction": "outbound",
+      "date": "2026-01-28",
+      "amount": 1695.0,
+      "contact": "sup-local",
+      "journal": "BAN",
+      "match": "C1",
+      "why": "El pago de la compra C1 al proveedor, antes de la nota de crédito."
+    },
+    {
+      "ref": "P4",
+      "direction": "inbound",
+      "date": "2026-01-30",
+      "amount": 400.0,
+      "contact": "cust-consumidor",
+      "journal": "BAN",
+      "match": null,
+      "why": "Un anticipo sin documento que salda: deja abierta una partida de clientes, como sostiene un libro real."
+    },
+    {
+      "ref": "P5",
+      "direction": "outbound",
+      "date": "2026-02-20",
+      "amount": 10170.0,
+      "contact": "sup-local",
+      "journal": "BAN",
+      "match": "C4",
+      "why": "El pago de la compra grande C4 del segundo período, para probar una conciliación de proveedores en ese período."
+    }
+  ]
+}

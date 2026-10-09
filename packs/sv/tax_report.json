@@ -1,0 +1,183 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "code": "SV-IVA-F07",
+  "name": "Declaración y pago del impuesto a la transferencia de bienes muebles y a la prestación de servicios — formulario F07",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "legal_reference": "Ley del IVA, art. 93 — el período tributario es de un mes calendario y los contribuyentes presentan mensualmente una declaración jurada sobre las operaciones gravadas, exentas y no sujetas, con el débito fiscal, el crédito fiscal y los remanentes de períodos anteriores; la declaración se presenta aunque no haya operaciones. Se presenta en línea en el portal de servicios de la DGII",
+  "source": "liva",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Ley del IVA, art. 94 — la declaración jurada incluye el pago y se presenta dentro de los diez primeros días hábiles del mes siguiente al período tributario; en el mismo lapso se ingresan los impuestos retenidos o percibidos por los agentes de retención o de percepción. El plazo se cuenta en días hábiles, y el vocabulario cerrado de la regla de vencimiento solo conoce días del calendario: este paquete no calcula una fecha, para no marcar como tardía una declaración presentada a tiempo. No es una fecha asignada por contribuyente, pero es la única forma del formato que no inventa un día",
+    "source": "liva"
+  },
+  "boxes": [
+    {
+      "box": "85",
+      "kind": "base",
+      "name": "Ventas internas exentas",
+      "sequence": 10,
+      "legal_reference": "Formulario F07, casilla 85 — ventas internas exentas (Ley del IVA, art. 46)",
+      "source": "f07"
+    },
+    {
+      "box": "86",
+      "kind": "base",
+      "name": "Ventas internas no sujetas",
+      "sequence": 20,
+      "legal_reference": "Formulario F07, casilla 86 — ventas internas no sujetas",
+      "source": "f07"
+    },
+    {
+      "box": "90",
+      "kind": "base",
+      "name": "Exportaciones de bienes fuera de la región centroamericana",
+      "sequence": 30,
+      "legal_reference": "Formulario F07, casilla 90 — exportaciones de bienes fuera de la región centroamericana, a tasa cero (Ley del IVA, arts. 74 y 75)",
+      "source": "f07"
+    },
+    {
+      "box": "91",
+      "kind": "base",
+      "name": "Exportaciones de bienes a la región centroamericana",
+      "sequence": 40,
+      "legal_reference": "Formulario F07, casilla 91 — exportaciones de bienes a la región centroamericana, a tasa cero",
+      "source": "f07"
+    },
+    {
+      "box": "94",
+      "kind": "base",
+      "name": "Exportaciones de servicios",
+      "sequence": 50,
+      "legal_reference": "Formulario F07, casilla 94 — exportaciones de servicios, a tasa cero",
+      "source": "f07"
+    },
+    {
+      "box": "95",
+      "kind": "base",
+      "name": "Ventas internas gravadas con comprobante de crédito fiscal",
+      "sequence": 60,
+      "legal_reference": "Formulario F07, casilla 95 — ventas internas gravadas documentadas con comprobante de crédito fiscal",
+      "source": "f07"
+    },
+    {
+      "box": "135",
+      "kind": "tax",
+      "name": "Débito fiscal por ventas con comprobante de crédito fiscal",
+      "sequence": 70,
+      "legal_reference": "Formulario F07, casilla 135 — débito fiscal de las ventas de la casilla 95",
+      "source": "f07"
+    },
+    {
+      "box": "96",
+      "kind": "base",
+      "name": "Ventas internas gravadas con factura",
+      "sequence": 80,
+      "legal_reference": "Formulario F07, casilla 96 — ventas internas gravadas documentadas con factura a consumidores finales",
+      "source": "f07"
+    },
+    {
+      "box": "140",
+      "kind": "tax",
+      "name": "Débito fiscal por ventas con factura",
+      "sequence": 90,
+      "legal_reference": "Formulario F07, casilla 140 — débito fiscal de las ventas de la casilla 96",
+      "source": "f07"
+    },
+    {
+      "box": "105",
+      "kind": "total",
+      "name": "Total de ventas",
+      "sequence": 100,
+      "legal_reference": "Formulario F07, casilla 105 — suma de las ventas del período. Este paquete suma solo las casillas que declara (85, 86, 90, 91, 94, 95 y 96); no modela las ventas exentas no sujetas a proporcionalidad (92) ni las ventas por cuenta de terceros (108), que el formulario excluye de la suma",
+      "source": "f07",
+      "plus": [
+        "85",
+        "86",
+        "90",
+        "91",
+        "94",
+        "95",
+        "96"
+      ]
+    },
+    {
+      "box": "150",
+      "kind": "total",
+      "name": "Total de débitos fiscales",
+      "sequence": 110,
+      "legal_reference": "Formulario F07, casilla 150 — suma de los débitos fiscales. Este paquete suma solo las casillas 135 y 140; no modela el débito proveniente de crédito negativo (146) ni los demás componentes de la suma",
+      "source": "f07",
+      "plus": [
+        "135",
+        "140"
+      ]
+    },
+    {
+      "box": "80",
+      "kind": "base",
+      "name": "Compras internas gravadas",
+      "sequence": 120,
+      "legal_reference": "Formulario F07, casilla 80 — compras internas gravadas",
+      "source": "f07"
+    },
+    {
+      "box": "130",
+      "kind": "tax",
+      "name": "Crédito fiscal por compras internas gravadas",
+      "sequence": 130,
+      "legal_reference": "Formulario F07, casilla 130 — crédito fiscal de las compras de la casilla 80",
+      "source": "f07"
+    },
+    {
+      "box": "75",
+      "kind": "base",
+      "name": "Importaciones gravadas de fuera de la región centroamericana",
+      "sequence": 140,
+      "legal_reference": "Formulario F07, casilla 75 — importaciones gravadas de bienes de fuera de la región (Ley del IVA, art. 94)",
+      "source": "f07"
+    },
+    {
+      "box": "125",
+      "kind": "tax",
+      "name": "Crédito fiscal por importaciones gravadas",
+      "sequence": 150,
+      "legal_reference": "Formulario F07, casilla 125 — crédito fiscal de las importaciones de la casilla 75",
+      "source": "f07"
+    },
+    {
+      "box": "PAGAR",
+      "kind": "total",
+      "name": "Impuesto a pagar",
+      "sequence": 160,
+      "legal_reference": "Diferencia entre el total de débitos fiscales (150) y el crédito fiscal del período (125 más 130), cuando es mayor que cero (Ley del IVA, art. 93, inciso segundo — la declaración liquida el impuesto a pagar). El formulario F07 imprime este resultado; la numeración de su casilla no pudo verificarse en una fuente oficial legible, por lo que este paquete lo identifica con un código mnemotécnico y no inventa un número. No modela el remanente de períodos anteriores, las retenciones y percepciones sufridas (art. 162 y 163 del Código Tributario) ni el anticipo del 2 % por pagos con tarjeta: véase el README",
+      "source": "liva",
+      "plus": [
+        "150"
+      ],
+      "minus": [
+        "125",
+        "130"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "REMAN",
+      "kind": "total",
+      "name": "Remanente de crédito fiscal",
+      "sequence": 170,
+      "legal_reference": "Diferencia entre el crédito fiscal del período (125 más 130) y el total de débitos fiscales (150), cuando es mayor que cero (Ley del IVA, arts. 67 y 76 — el remanente se deduce en los períodos siguientes o, en el caso del exportador, puede acreditarse o reintegrarse). La numeración de su casilla en el formulario F07 no pudo verificarse; este paquete lo identifica con un código mnemotécnico",
+      "source": "liva",
+      "plus": [
+        "125",
+        "130"
+      ],
+      "minus": [
+        "150"
+      ],
+      "floor_zero": true
+    }
+  ]
+}

@@ -2117,3 +2117,31 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- The row — El Salvador
+--
+-- A State of the Americas outside the common system of VAT: Directive
+-- 2006/112/EC, article 5(2), applies the common system only in the territory
+-- of the Community as the Treaties define it. El Salvador levies its own
+-- Impuesto a la Transferencia de Bienes Muebles y a la Prestación de
+-- Servicios (IVA) under Decreto Legislativo No. 296 of 24 July 1992, whose
+-- article 54 sets the rate at 13 per cent (Decreto Legislativo No. 370 of 8
+-- June 1995). `vat_prefix` is null: a Salvadoran taxpayer is identified by
+-- the Número de Identificación Tributaria (NIT) and the Número de Registro
+-- de Contribuyente (NRC), which carry no ISO country prefix.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('SV', 'iso_3166_1', 'El Salvador', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. El Salvador levies an impuesto a la transferencia de bienes muebles y a la prestación de servicios (IVA) of its own under Decreto Legislativo No. 296 of 24 July 1992, article 54 of which sets the rate at 13% (Decreto Legislativo No. 370 of 8 June 1995), with a rate of zero on exports (articles 74 and 75).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

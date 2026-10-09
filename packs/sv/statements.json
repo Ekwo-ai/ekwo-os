@@ -1,0 +1,537 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "statements": [
+    {
+      "code": "SV-NIIF-ESF",
+      "kind": "balance_sheet",
+      "framework": "SV-NIIF",
+      "name": "Estado de situación financiera",
+      "legal_reference": "Marco contable de El Salvador — Resolución 462 del Consejo de Vigilancia de la Profesión de Contaduría Pública y Auditoría (18 de marzo de 2021): los estados financieros se preparan conforme a la NIIF para las PYMES (versión en español 2015) o a las NIIF completas (versión en español 2020), cuyos estados de situación financiera y de resultado integral se presentan por clasificación de corriente y no corriente y por naturaleza del gasto. No existe un formato legal único; este paquete presenta un estado resumido. Estado de situación financiera resumido.",
+      "source": "cvpcpa462",
+      "lines": [
+        {
+          "code": "EFEC",
+          "parent": "AC",
+          "name": "Efectivo y equivalentes de efectivo",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1101"
+            }
+          ]
+        },
+        {
+          "code": "FIN",
+          "parent": "AC",
+          "name": "Activos financieros",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1102"
+            }
+          ]
+        },
+        {
+          "code": "CXC",
+          "parent": "AC",
+          "name": "Cuentas por cobrar comerciales",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1103"
+            }
+          ]
+        },
+        {
+          "code": "OCXC",
+          "parent": "AC",
+          "name": "Otras cuentas por cobrar",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1104"
+            }
+          ]
+        },
+        {
+          "code": "INV",
+          "parent": "AC",
+          "name": "Inventarios",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1105"
+            }
+          ]
+        },
+        {
+          "code": "ANT",
+          "parent": "AC",
+          "name": "Gastos pagados por anticipado",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1106"
+            }
+          ]
+        },
+        {
+          "code": "IMPC",
+          "parent": "AC",
+          "name": "Activos por impuestos corrientes",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1107"
+            }
+          ]
+        },
+        {
+          "code": "AC",
+          "parent": "ACT",
+          "name": "Total activo corriente",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "EFEC",
+            "FIN",
+            "CXC",
+            "OCXC",
+            "INV",
+            "ANT",
+            "IMPC"
+          ]
+        },
+        {
+          "code": "PPE",
+          "parent": "ANC",
+          "name": "Propiedades planta y equipo",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1201"
+            }
+          ]
+        },
+        {
+          "code": "INT",
+          "parent": "ANC",
+          "name": "Activos intangibles",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1202"
+            }
+          ]
+        },
+        {
+          "code": "ILP",
+          "parent": "ANC",
+          "name": "Inversiones a largo plazo",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1203"
+            }
+          ]
+        },
+        {
+          "code": "IDA",
+          "parent": "ANC",
+          "name": "Activos por impuesto diferido",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1204"
+            }
+          ]
+        },
+        {
+          "code": "ANC",
+          "parent": "ACT",
+          "name": "Total activo no corriente",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "PPE",
+            "INT",
+            "ILP",
+            "IDA"
+          ]
+        },
+        {
+          "code": "ACT",
+          "parent": null,
+          "name": "Total activo",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "AC",
+            "ANC"
+          ]
+        },
+        {
+          "code": "CXP",
+          "parent": "PC",
+          "name": "Cuentas por pagar comerciales",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2101"
+            }
+          ]
+        },
+        {
+          "code": "OFCP",
+          "parent": "PC",
+          "name": "Préstamos y obligaciones financieras a corto plazo",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2102"
+            }
+          ]
+        },
+        {
+          "code": "LAB",
+          "parent": "PC",
+          "name": "Obligaciones laborales y de seguridad social",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2103"
+            }
+          ]
+        },
+        {
+          "code": "ADMT",
+          "parent": "PC",
+          "name": "Obligaciones con la administración tributaria",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2104"
+            }
+          ]
+        },
+        {
+          "code": "IVAP",
+          "parent": "PC",
+          "name": "Impuesto a la transferencia de bienes muebles y a la prestación de servicios (IVA)",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2105"
+            }
+          ]
+        },
+        {
+          "code": "OCXP",
+          "parent": "PC",
+          "name": "Otras cuentas por pagar",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2106"
+            }
+          ]
+        },
+        {
+          "code": "PC",
+          "parent": "PAS",
+          "name": "Total pasivo corriente",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "CXP",
+            "OFCP",
+            "LAB",
+            "ADMT",
+            "IVAP",
+            "OCXP"
+          ]
+        },
+        {
+          "code": "OFLP",
+          "parent": "PNC",
+          "name": "Préstamos y obligaciones financieras a largo plazo",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2201"
+            }
+          ]
+        },
+        {
+          "code": "PROV",
+          "parent": "PNC",
+          "name": "Provisiones a largo plazo",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2202"
+            }
+          ]
+        },
+        {
+          "code": "IDP",
+          "parent": "PNC",
+          "name": "Pasivos por impuesto diferido",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2203"
+            }
+          ]
+        },
+        {
+          "code": "PNC",
+          "parent": "PAS",
+          "name": "Total pasivo no corriente",
+          "sequence": 250,
+          "is_total": true,
+          "plus": [
+            "OFLP",
+            "PROV",
+            "IDP"
+          ]
+        },
+        {
+          "code": "PAS",
+          "parent": null,
+          "name": "Total pasivo",
+          "sequence": 260,
+          "is_total": true,
+          "plus": [
+            "PC",
+            "PNC"
+          ]
+        },
+        {
+          "code": "CAP",
+          "parent": "PAT",
+          "name": "Capital",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "31"
+            }
+          ]
+        },
+        {
+          "code": "RES",
+          "parent": "PAT",
+          "name": "Reservas",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "32"
+            }
+          ]
+        },
+        {
+          "code": "RACU",
+          "parent": "PAT",
+          "name": "Resultados acumulados",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "36"
+            }
+          ]
+        },
+        {
+          "code": "REJE",
+          "parent": "PAT",
+          "name": "Resultado del ejercicio",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "37"
+            }
+          ]
+        },
+        {
+          "code": "PAT",
+          "parent": null,
+          "name": "Total patrimonio",
+          "sequence": 310,
+          "is_total": true,
+          "plus": [
+            "CAP",
+            "RES",
+            "RACU",
+            "REJE"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SV-NIIF-ER",
+      "kind": "income_statement",
+      "framework": "SV-NIIF",
+      "name": "Estado de resultado integral",
+      "legal_reference": "Marco contable de El Salvador — Resolución 462 del Consejo de Vigilancia de la Profesión de Contaduría Pública y Auditoría (18 de marzo de 2021): los estados financieros se preparan conforme a la NIIF para las PYMES (versión en español 2015) o a las NIIF completas (versión en español 2020), cuyos estados de situación financiera y de resultado integral se presentan por clasificación de corriente y no corriente y por naturaleza del gasto. No existe un formato legal único; este paquete presenta un estado resumido. Estado de resultados resumido, por naturaleza.",
+      "source": "cvpcpa462",
+      "lines": [
+        {
+          "code": "ING",
+          "parent": "UN",
+          "name": "Ingresos de actividades ordinarias",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "41"
+            }
+          ]
+        },
+        {
+          "code": "OIN",
+          "parent": "UN",
+          "name": "Otros ingresos",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "42"
+            }
+          ]
+        },
+        {
+          "code": "COV",
+          "parent": "UN",
+          "name": "Costo de ventas",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "51"
+            }
+          ]
+        },
+        {
+          "code": "GAD",
+          "parent": "UN",
+          "name": "Gastos de administración",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "52"
+            }
+          ]
+        },
+        {
+          "code": "GVE",
+          "parent": "UN",
+          "name": "Gastos de venta",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "53"
+            }
+          ]
+        },
+        {
+          "code": "GFI",
+          "parent": "UN",
+          "name": "Gastos financieros",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "54"
+            }
+          ]
+        },
+        {
+          "code": "GIR",
+          "parent": "UN",
+          "name": "Gasto por impuesto sobre la renta",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "55"
+            }
+          ]
+        },
+        {
+          "code": "UN",
+          "parent": null,
+          "name": "Ganancia (pérdida) neta del período",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "ING",
+            "OIN"
+          ],
+          "minus": [
+            "COV",
+            "GAD",
+            "GVE",
+            "GFI",
+            "GIR"
+          ]
+        }
+      ]
+    }
+  ]
+}

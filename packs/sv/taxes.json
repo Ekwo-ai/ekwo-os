@@ -1,0 +1,312 @@
+[
+  {
+    "code": "SV-S-13-CCF",
+    "name": "Ventas gravadas al 13 % a contribuyentes (comprobante de crédito fiscal)",
+    "description": "Transferencia de bienes muebles corporales y prestación de servicios gravadas, a otro contribuyente del IVA: se documenta con comprobante de crédito fiscal",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1995-06-21",
+    "legal_reference": "Ley del IVA, art. 54 — la tasa del impuesto es el trece por ciento, aplicable sobre la base imponible (texto del Decreto Legislativo No. 370 del 8 de junio de 1995, publicado en el Diario Oficial No. 114, Tomo 327, del 21 de junio de 1995; valid_from es la fecha de publicación, la fecha exacta de entrada en vigor no se verificó). El formulario F07 declara estas ventas en la casilla 95 y su débito fiscal en la 135; el Boletín de la DGII establece que el comprobante de crédito fiscal se emite en las operaciones con otros contribuyentes",
+    "source": "liva",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "95"
+        },
+        {
+          "type": "tax",
+          "account": "210501",
+          "box": "135"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "95",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "210501",
+          "box": "135",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SV-S-13-FAC",
+    "name": "Ventas gravadas al 13 % a consumidores finales (factura)",
+    "description": "Transferencia de bienes y prestación de servicios gravadas a un consumidor final: se documenta con factura",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1995-06-21",
+    "legal_reference": "Ley del IVA, art. 54 — la tasa del impuesto es el trece por ciento, aplicable sobre la base imponible (texto del Decreto Legislativo No. 370 del 8 de junio de 1995, publicado en el Diario Oficial No. 114, Tomo 327, del 21 de junio de 1995; valid_from es la fecha de publicación, la fecha exacta de entrada en vigor no se verificó). El formulario F07 declara estas ventas en la casilla 96 y su débito fiscal en la 140; el Boletín de la DGII establece que la factura se emite en las operaciones con consumidores finales",
+    "source": "liva",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "96"
+        },
+        {
+          "type": "tax",
+          "account": "210501",
+          "box": "140"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "96",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "210501",
+          "box": "140",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SV-S-EXE",
+    "name": "Ventas internas exentas",
+    "description": "Servicios exentos del impuesto, por ejemplo el arrendamiento de inmuebles destinados a vivienda",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1995-06-21",
+    "legal_reference": "Ley del IVA, art. 46 — están exentos, entre otros, los servicios de arrendamiento, subarrendamiento o cesión del uso o goce temporal de inmuebles destinados a viviendas para la habitación (literal b), los educacionales prestados por instituciones autorizadas por el Ministerio de Educación (literal e) y el transporte público terrestre de pasajeros (literal i); la declaración mensual incluye las operaciones exentas (art. 93). Formulario F07, casilla 85, ventas internas exentas",
+    "source": "liva",
+    "vat_category": "E",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "85"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "85",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SV-S-NS",
+    "name": "Ventas internas no sujetas",
+    "description": "Operaciones que la ley no grava, declaradas en el formulario F07 junto con las gravadas y las exentas",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "1995-06-21",
+    "legal_reference": "Ley del IVA, art. 93 — la declaración jurada mensual comprende las operaciones gravadas, exentas y no sujetas realizadas en el período; formulario F07, casilla 86, ventas internas no sujetas",
+    "source": "liva",
+    "vat_category": "O",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "86"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "86",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SV-S-0-EXP-BIENES",
+    "name": "Exportación de bienes fuera de Centroamérica, tasa 0 %",
+    "description": "Transferencia definitiva de bienes muebles corporales destinados al uso y consumo en el exterior, fuera de la región centroamericana",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1995-06-21",
+    "legal_reference": "Ley del IVA, arts. 74 y 75 — las exportaciones consistentes en transferencias de dominio definitivas de bienes muebles corporales destinados al uso y consumo en el exterior están afectas a la tasa del cero por ciento; art. 76 — el crédito fiscal de las adquisiciones necesarias para la actividad exportadora se deduce del débito fiscal y su remanente se arrastra o se reintegra. Formulario F07, casilla 90, exportaciones de bienes fuera de la región centroamericana",
+    "source": "liva",
+    "vat_category": "G",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "90"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "90",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SV-S-0-EXP-CA",
+    "name": "Exportación de bienes a Centroamérica, tasa 0 %",
+    "description": "Transferencia definitiva de bienes muebles corporales destinados a la región centroamericana",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1995-06-21",
+    "legal_reference": "Ley del IVA, arts. 74 y 75, en los mismos términos que la exportación fuera de la región; el formulario F07 la declara aparte, en la casilla 91, exportaciones de bienes a la región centroamericana",
+    "source": "liva",
+    "vat_category": "G",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "91"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "91",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SV-S-0-EXP-SERV",
+    "name": "Exportación de servicios, tasa 0 %",
+    "description": "Prestación de servicios en el país a usuarios sin domicilio ni residencia en él, utilizados exclusivamente en el extranjero",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1995-06-21",
+    "legal_reference": "Ley del IVA, arts. 74 y 75 — las prestaciones de servicios a usuarios que no tienen domicilio ni residencia en el país, cuando los servicios se utilizan exclusivamente en el extranjero, están afectas a la tasa del cero por ciento; no se entienden utilizados exclusivamente en el extranjero la conexión, continuación o terminación de servicios originados en el exterior, que se gravan al 13 %. Formulario F07, casilla 94, exportaciones de servicios",
+    "source": "liva",
+    "vat_category": "G",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "94"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "94",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SV-P-13",
+    "name": "Compras internas gravadas al 13 %, con derecho a crédito fiscal",
+    "description": "Adquisición local de bienes y servicios gravados, documentada con comprobante de crédito fiscal, destinada a operaciones gravadas o de exportación",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1995-06-21",
+    "legal_reference": "Ley del IVA, arts. 54, 61 y 65 — el impuesto trasladado en las adquisiciones de bienes y servicios necesarios para la actividad del contribuyente constituye su crédito fiscal, deducible del débito fiscal del período; formulario F07, casilla 80, compras internas gravadas, y casilla 130, su crédito fiscal. La proporcionalidad del art. 66 (operaciones gravadas y exentas en el mismo período) no está modelada: véase el README",
+    "source": "liva",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "80"
+        },
+        {
+          "type": "tax",
+          "account": "210502",
+          "box": "130"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "80",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "210502",
+          "box": "130",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SV-P-13-IMP",
+    "name": "Importaciones gravadas al 13 % de fuera de Centroamérica, con derecho a crédito fiscal",
+    "description": "Importación definitiva de bienes, cuyo impuesto se liquida ante la Dirección General de la Renta de Aduanas en el mismo acto que los derechos aduaneros",
+    "kind": "vat",
+    "recoverable": true,
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "1995-06-21",
+    "legal_reference": "Ley del IVA, art. 14 (la importación definitiva de bienes es hecho generador) y art. 94, inciso segundo — el impuesto sobre las importaciones se liquida ante la Dirección General de la Renta de Aduanas en el mismo acto que los impuestos aduaneros, y la constancia de pago constituye el comprobante de crédito fiscal; formulario F07, casilla 75 (importaciones gravadas fuera de la región) y casilla 125 (su crédito fiscal)",
+    "source": "liva",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "75"
+        },
+        {
+          "type": "tax",
+          "account": "210502",
+          "box": "125"
+        }
+      ]
+    }
+  },
+  {
+    "code": "SV-P-0",
+    "name": "Compras internas exentas o no sujetas",
+    "description": "Adquisición local de bienes o servicios que no causan impuesto trasladable",
+    "kind": "vat",
+    "recoverable": false,
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1995-06-21",
+    "legal_reference": "Ley del IVA, arts. 45 y 46 — una adquisición exenta o no sujeta no traslada impuesto y no genera crédito fiscal. El pack no declara estas compras en ninguna casilla porque la numeración del formulario F07 para ellas no pudo verificarse en una fuente oficial legible: véase el README",
+    "source": "liva",
+    "sequence": 100,
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    }
+  }
+]
