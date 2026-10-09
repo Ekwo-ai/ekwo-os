@@ -77,5 +77,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('RWF', 'Rwandan franc',        E'FRw', 0),
   ('KZT', 'Kazakhstani tenge',    E'₸', 2),
   ('PKR', 'Pakistani rupee', E'₨', 2),
-  ('BDT', 'Bangladeshi taka', E'৳', 2)
+  ('BDT', 'Bangladeshi taka', E'৳', 2),
+  ('LKR', 'Sri Lankan rupee', E'Rs', 2)
 on conflict (code) do nothing;

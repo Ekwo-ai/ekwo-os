@@ -1,0 +1,156 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Petty cash,10
+1010,,asset_cash,false,Current account — LKR,20
+1020,,asset_cash,false,Savings account — LKR,30
+1030,,asset_cash,false,Foreign currency account — USD,40
+1040,,asset_cash,false,Cash in transit — card and mobile wallet settlements,50
+1100,,asset_receivable,true,Trade receivables,60
+1110,,asset_current,false,Trade receivables — allowance for expected credit losses,70
+1120,,asset_current,false,Other receivables,80
+1130,,asset_current,false,Amounts due from related companies,90
+1140,,asset_current,false,Deposits paid,100
+1150,,asset_current,false,VAT input tax — local purchases,110
+1151,,asset_current,false,VAT input tax — imports paid at the border,120
+1155,,asset_current,true,VAT refundable by the Inland Revenue Department — net of a filed return,130
+1156,,asset_current,false,Withholding tax credits — certificates received,140
+1157,,asset_current,false,Income tax paid in advance — instalments and self-assessment,150
+1160,,asset_current,false,Advances to staff,160
+1200,,asset_current,false,Inventories — goods for resale,170
+1210,,asset_current,false,Inventories — raw materials,180
+1220,,asset_current,false,Inventories — work in progress,190
+1230,,asset_current,false,Inventories — finished goods,200
+1300,,asset_current,false,Short-term investments,210
+1350,,asset_current,false,Current tax recoverable,220
+1400,,asset_prepayments,false,Prepayments,230
+1410,,asset_prepayments,false,Accrued income,240
+1600,,asset_fixed,false,Land and buildings — cost,250
+1601,,asset_fixed,false,Land and buildings — accumulated depreciation,260
+1610,,asset_fixed,false,Leasehold improvements — cost,270
+1611,,asset_fixed,false,Leasehold improvements — accumulated depreciation,280
+1620,,asset_fixed,false,Plant and machinery — cost,290
+1621,,asset_fixed,false,Plant and machinery — accumulated depreciation,300
+1630,,asset_fixed,false,Office equipment — cost,310
+1631,,asset_fixed,false,Office equipment — accumulated depreciation,320
+1640,,asset_fixed,false,Computers — cost,330
+1641,,asset_fixed,false,Computers — accumulated depreciation,340
+1650,,asset_fixed,false,Furniture and fittings — cost,350
+1651,,asset_fixed,false,Furniture and fittings — accumulated depreciation,360
+1660,,asset_fixed,false,Motor vehicles — cost,370
+1661,,asset_fixed,false,Motor vehicles — accumulated depreciation,380
+1670,,asset_fixed,false,Right-of-use assets — cost,390
+1671,,asset_fixed,false,Right-of-use assets — accumulated depreciation,400
+1700,,asset_non_current,false,Investment property,410
+1750,,asset_fixed,false,Intangible assets — cost,420
+1751,,asset_fixed,false,Intangible assets — accumulated amortisation,430
+1760,,asset_fixed,false,Goodwill,440
+1800,,asset_non_current,false,Investments in associates,450
+1810,,asset_non_current,false,Investments in joint ventures,460
+1830,,asset_non_current,false,Long-term financial assets,470
+1840,,asset_non_current,false,Long-term deposits,480
+1900,,asset_non_current,false,Deferred tax assets,490
+2000,,liability_payable,true,Trade payables,500
+2010,,liability_current,false,Accrued expenses,510
+2020,,liability_current,false,Other payables,520
+2030,,liability_current,false,Amounts due to related companies,530
+2040,,liability_current,false,Deposits and advances received from customers,540
+2100,,liability_current,false,VAT output tax,550
+2110,,liability_current,true,VAT payable to the Inland Revenue Department — net of a filed return,560
+2125,,liability_current,false,Import VAT payable to Sri Lanka Customs at the border,570
+2130,,liability_current,false,Social Security Contribution Levy (SSCL) payable,580
+2135,,liability_current,false,Stamp duty payable,590
+2140,,liability_current,false,Withholding tax payable to the Inland Revenue Department,600
+2150,,liability_current,false,EPF contributions payable,610
+2155,,liability_current,false,ETF contributions payable,620
+2160,,liability_current,false,APIT income tax payable on employment income,630
+2165,,liability_current,false,Other statutory dues payable,640
+2180,,liability_current,false,Salaries payable,650
+2190,,liability_current,false,Directors' fees payable,660
+2200,,liability_current,false,Bank overdraft,670
+2210,,liability_current,false,Bank loans — current portion,680
+2220,,liability_current,false,Lease liabilities — current portion,690
+2230,,liability_current,false,Hire purchase — current portion,700
+2240,,liability_credit_card,false,Corporate credit card,710
+2250,,liability_current,false,Amounts due to directors,720
+2300,,liability_current,false,Current tax payable,730
+2350,,liability_current,false,Provision for unutilised leave,740
+2360,,liability_current,false,Other provisions — current,750
+2400,,liability_non_current,false,Bank loans — non-current portion,760
+2410,,liability_non_current,false,Lease liabilities — non-current portion,770
+2420,,liability_non_current,false,Hire purchase — non-current portion,780
+2430,,liability_non_current,false,Loans from shareholders and directors — non-current,790
+2500,,liability_non_current,false,Deferred tax liabilities,800
+2550,,liability_non_current,false,Retirement benefit obligation — gratuity,810
+2560,,liability_non_current,false,Provision for reinstatement costs,820
+2990,,liability_current,false,Suspense account,830
+3000,,equity,false,Stated capital,840
+3010,,equity,false,Share application money pending allotment,850
+3100,,equity,false,Revaluation reserve,860
+3110,,equity,false,Foreign currency translation reserve,870
+3200,,equity_retained,false,Retained earnings,880
+3210,,equity_retained,false,Dividends paid,890
+4000,,income,false,Sales of goods,900
+4010,,income,false,Services rendered,910
+4020,,income,false,Export sales of goods,920
+4030,,income,false,Export of services,930
+4040,,income,false,Financial services income — fees and commissions,940
+4500,,income_other,false,Interest income,950
+4510,,income_other,false,Dividend income,960
+4520,,income_other,false,Rental income,970
+4530,,income_other,false,Government grants,980
+4700,,income_other,false,Foreign exchange gains,990
+4750,,income_other,false,Gain on disposal of property plant and equipment,1000
+4790,,income_other,false,Other income,1010
+5000,,expense_direct_cost,false,Purchases of goods for resale,1020
+5010,,expense_direct_cost,false,Freight inwards customs duty and import levies,1030
+5020,,expense_direct_cost,false,Subcontract costs,1040
+5100,,expense_direct_cost,false,Changes in inventories,1050
+6000,,expense,false,Salaries and wages,1060
+6010,,expense,false,Directors' remuneration,1070
+6020,,expense,false,Directors' fees,1080
+6030,,expense,false,EPF contributions — employer,1090
+6035,,expense,false,ETF contributions — employer,1100
+6040,,expense,false,Gratuity expense,1110
+6045,,expense,false,Staff canteen and meals,1120
+6060,,expense,false,Staff welfare,1130
+6070,,expense,false,Staff medical expenses and insurance,1140
+6080,,expense,false,Staff training,1150
+6200,,expense_depreciation,false,Depreciation of property plant and equipment,1160
+6210,,expense_depreciation,false,Depreciation of right-of-use assets,1170
+6220,,expense_depreciation,false,Amortisation of intangible assets,1180
+6300,,expense,false,Rent — short-term leases,1190
+6310,,expense,false,Utilities,1200
+6320,,expense,false,Repairs and maintenance,1210
+6330,,expense,false,Cleaning and security services,1220
+6340,,expense,false,Telephone and internet,1230
+6350,,expense,false,Software subscriptions,1240
+6360,,expense,false,Advertising and marketing,1250
+6370,,expense,false,Travelling,1260
+6380,,expense,false,Motor vehicle expenses,1270
+6390,,expense,false,Entertainment,1280
+6395,,expense,false,Fuel and lubricants,1290
+6400,,expense,false,Subscriptions and memberships,1300
+6410,,expense,false,Insurance,1310
+6420,,expense,false,Professional fees,1320
+6430,,expense,false,Audit fees,1330
+6440,,expense,false,Company secretarial and registration fees,1340
+6450,,expense,false,Bank charges,1350
+6460,,expense,false,Printing and stationery,1360
+6470,,expense,false,Postage and courier,1370
+6480,,expense,false,Licences permits and local authority fees,1380
+6485,,expense,false,Property rates,1390
+6490,,expense,false,Royalties,1400
+6500,,expense,false,Bad debts written off,1410
+6510,,expense,false,Impairment loss on trade receivables,1420
+6700,,expense,false,Social Security Contribution Levy (SSCL),1430
+6710,,expense,false,Stamp duty,1440
+6900,,expense,false,Donations,1450
+6950,,expense,false,Foreign exchange losses,1460
+6960,,expense,false,Loss on disposal of property plant and equipment,1470
+6990,,expense,false,Rounding differences,1480
+7000,,expense,false,Interest on bank loans,1490
+7010,,expense,false,Interest on lease liabilities,1500
+7020,,expense,false,Hire purchase interest,1510
+7030,,expense,false,Interest on loans from related parties and others,1520
+8000,,expense,false,Current income tax expense,1530
+8010,,expense,false,Deferred tax expense,1540
+8020,,expense,false,Under or over provision of income tax in prior years,1550

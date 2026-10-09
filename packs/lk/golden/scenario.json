@@ -1,0 +1,312 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Colombo trading company incorporated on 1 July 2026, VAT-registered and filing monthly under the Value Added Tax Act, No. 14 of 2002",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "First financial period, 1 July 2026 to 31 March 2027",
+    "start": "2026-07-01",
+    "end": "2027-03-31"
+  },
+  "periods": [
+    {
+      "code": "2026-09",
+      "from": "2026-09-01",
+      "to": "2026-09-30"
+    }
+  ],
+  "statements": [
+    "LK-SLFRS-SFP",
+    "LK-SLFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-colombo",
+      "name": "Pettah Office Supplies (Pvt) Ltd",
+      "type": "customer",
+      "country": "LK"
+    },
+    {
+      "ref": "cust-school",
+      "name": "Kandy Training Institute",
+      "type": "customer",
+      "country": "LK"
+    },
+    {
+      "ref": "cust-finco",
+      "name": "Galle Finance PLC",
+      "type": "customer",
+      "country": "LK"
+    },
+    {
+      "ref": "cust-maldives",
+      "name": "Malé Trading Pvt Ltd",
+      "type": "customer",
+      "country": "MV"
+    },
+    {
+      "ref": "cust-uk",
+      "name": "Chalmers Software Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-local",
+      "name": "Colombo Wholesale Traders (Pvt) Ltd",
+      "type": "supplier",
+      "country": "LK"
+    },
+    {
+      "ref": "supp-bank",
+      "name": "Fort Commercial Bank PLC",
+      "type": "supplier",
+      "country": "LK"
+    },
+    {
+      "ref": "supp-lease",
+      "name": "Union Leasing PLC",
+      "type": "supplier",
+      "country": "LK"
+    },
+    {
+      "ref": "supp-china",
+      "name": "Shenzhen Electronics Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-colombo",
+      "date": "2026-09-03",
+      "why": "A domestic sale at the standard 18 %: value in cage A, tax in cage 0, VAT on account 2100.",
+      "lines": [
+        {
+          "name": "Laptop computers",
+          "quantity": 10,
+          "unit_price": 50000,
+          "tax": "LK-S-18",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-colombo",
+      "date": "2026-09-07",
+      "why": "A standard-rate sale on an awkward value, 333.33: 18 % is 59.9994 and must round to 60.00, not truncate.",
+      "lines": [
+        {
+          "name": "Set-up of an office network, one hour",
+          "quantity": 1,
+          "unit_price": 333.33,
+          "tax": "LK-S-18",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-maldives",
+      "date": "2026-09-10",
+      "why": "An export of goods zero-rated under s. 7(1)(a): the value in cage D and no tax.",
+      "lines": [
+        {
+          "name": "Processed cinnamon quills, export consignment",
+          "quantity": 200,
+          "unit_price": 1500,
+          "tax": "LK-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-uk",
+      "date": "2026-09-12",
+      "why": "Software developed for use wholly abroad and paid for in foreign currency, zero-rated under s. 7(1)(b)(v): the value in cage D1.",
+      "lines": [
+        {
+          "name": "Custom software development for a client in the United Kingdom",
+          "quantity": 1,
+          "unit_price": 250000,
+          "tax": "LK-S-ZR-SVC",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-school",
+      "date": "2026-09-14",
+      "why": "Educational services, exempt under Part III of the First Schedule: no tax and no cage.",
+      "lines": [
+        {
+          "name": "Accounting skills workshop, ten participants",
+          "quantity": 10,
+          "unit_price": 12000,
+          "tax": "LK-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-finco",
+      "date": "2026-09-16",
+      "why": "A financial service billed after 1 July 2026 at 20.5 %: value in cage B, tax in cage 2, still on the single output account.",
+      "lines": [
+        {
+          "name": "Credit scoring data processing fee",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "LK-S-FIN-205",
+          "account": "4040"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-colombo",
+      "date": "2026-09-24",
+      "why": "A credit note for one laptop returned from INV-001: cage A and cage 0 fall by 50 000 and 9 000.",
+      "lines": [
+        {
+          "name": "Laptop computer returned",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "LK-S-18",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-local",
+      "date": "2026-09-04",
+      "why": "A local purchase at 18 %, the tax deductible: cage I and cage 6, input on account 1150.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "LK-P-18",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-09-11",
+      "why": "An import of goods: the VAT of 18 % on the customs value is paid to Sri Lanka Customs on the declaration and deducted in cage 5, the supplier owed the value only.",
+      "lines": [
+        {
+          "name": "Imported printers for resale",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "LK-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2026-09-13",
+      "why": "Bank account fees, a financial service exempt under Part III of the First Schedule: no tax and no cage.",
+      "lines": [
+        {
+          "name": "Account maintenance and transfer charges",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "LK-P-EX",
+          "account": "6450"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-lease",
+      "date": "2026-09-17",
+      "why": "A financial service bought after 1 July 2026 at 20.5 %, its tax deducted in cage 6 with the 18 % purchases.",
+      "lines": [
+        {
+          "name": "Equipment leasing arrangement fee",
+          "quantity": 1,
+          "unit_price": 80000,
+          "tax": "LK-P-FIN-205",
+          "account": "6420"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-local",
+      "date": "2026-09-26",
+      "why": "A purchase credit note for a short delivery on PINV-001: cage I and cage 6 fall back, with the input account.",
+      "lines": [
+        {
+          "name": "Trading stock — short delivery credit",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "LK-P-18",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-10-02",
+      "amount": 300000,
+      "contact": "cust-maldives",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-10-05",
+      "amount": 590000,
+      "contact": "cust-colombo",
+      "journal": "BNK",
+      "match": "INV-001",
+      "why": "INV-001 collected in full, VAT included, before the credit note is offset: a matched inbound payment on a standard-rate sale."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-10-06",
+      "amount": 236000,
+      "contact": "supp-local",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-10-07",
+      "amount": 100000,
+      "contact": "cust-school",
+      "journal": "BNK",
+      "why": "An advance from a customer with no invoice to match yet: an unmatched inbound payment."
+    }
+  ]
+}

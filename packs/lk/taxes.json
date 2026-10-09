@@ -1,0 +1,468 @@
+[
+  {
+    "code": "LK-S-18",
+    "name": "Sale, standard rate — VAT 18 %",
+    "description": "The standard charge on a taxable supply of goods or services made in Sri Lanka by a registered person",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "legal_reference": "s. 2(1)(ix) of the Value Added Tax Act, No. 14 of 2002 — for any taxable period commencing on or after 1 January 2024 the tax is charged at eighteen per centum, of which the tax fraction is 9/59 (the Inland Revenue Department's page on VAT gives the same history: 15 % from 1 September 2022 to 31 December 2023, 18 % from 1 January 2024). Section 2(1) charges it on the value of the taxable supply in Sri Lanka; s. 5(1)(a) fixes that value as the consideration less the tax. Return: cage A takes the value and cage 0 the tax of Schedule 01 (IRD quick guide 'How to file VAT'). The Social Security Contribution Levy is a levy on the seller's own liable turnover and has no line on the invoice: s. 5(1)(a) takes from the consideration only 'any tax chargeable under this Act', so what the seller prices in to recover the levy stays inside the value the VAT is charged on, and this code needs no stacked posting for it. See the README.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "A"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "0"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "A",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "0",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10,
+    "kind": "vat",
+    "valid_from": "2024-01-01",
+    "vat_category": null
+  },
+  {
+    "code": "LK-S-15",
+    "name": "Sale, standard rate — VAT 15 % (until 31 December 2023)",
+    "description": "The standard charge of the period from 1 September 2022 to 31 December 2023, kept for books of those years",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "legal_reference": "s. 2(1)(viii) of the Value Added Tax Act, No. 14 of 2002 — for the period commencing on 1 September 2022 and ending on 30 September 2022 and any taxable period commencing on or after 1 October 2022 but ending on or before 31 December 2023 the tax is charged at fifteen per centum, of which the tax fraction is 3/23; the Inland Revenue Department's page on VAT gives 15 % from 1 September 2022 to 31 December 2023. Closed on 31 December 2023 by s. 2(1)(ix). Same cages as the 18 % code: A and 0.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "A"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "0"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "A",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "0",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20,
+    "kind": "vat",
+    "valid_from": "2022-09-01",
+    "valid_to": "2023-12-31",
+    "vat_category": null
+  },
+  {
+    "code": "LK-S-FIN-205",
+    "name": "Sale of financial services — VAT 20.5 %",
+    "description": "A taxable financial service supplied for a taxable period commencing on or after 1 July 2026",
+    "rate": 20.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "legal_reference": "Value Added Tax (Amendment) Act No. 14 of 2026, certified on 30 June 2026, as stated by Notice SEC/PN/VAT/2026-03 of 3 July 2026, item 7 — for any taxable period commencing on or after 1 July 2026 the rate applicable to the supply of financial services is 20.5 %; the same notice says the supply of financial services subject to VAT at that rate is exempt from the Social Security Contribution Levy (Item 25 of Part II of the First Schedule to the SSCL Act), so no levy is owed on it. Cages B and 2 are the ones the quick guide pairs with Schedule 01 beside A and 0: the pack uses them for the second rate of the period, which is an assumption (README). Financial services are charged on the value addition attributable to them, computed under Chapter IIIA of the Act by the attributable method and declared period by period; a code that applies a rate to an invoice line cannot compute that base, so it serves the fee a financial institution bills and not the value addition (docs/international.md).",
+    "source": "vat-amend-2026",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30,
+    "kind": "vat",
+    "valid_from": "2026-07-01",
+    "vat_category": null
+  },
+  {
+    "code": "LK-S-FIN-18",
+    "name": "Sale of financial services — VAT 18 % (until 30 June 2026)",
+    "description": "A taxable financial service supplied for a taxable period that began before 1 July 2026",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "legal_reference": "s. 2(1)(ix) of the Value Added Tax Act, No. 14 of 2002 — for any taxable period commencing on or after 1 January 2024 the tax is charged at eighteen per centum, of which the tax fraction is 9/59 (the Inland Revenue Department's page on VAT gives the same history: 15 % from 1 September 2022 to 31 December 2023, 18 % from 1 January 2024), the rate financial services bore until the rate of 20.5 % took over for taxable periods commencing on or after 1 July 2026 (Notice SEC/PN/VAT/2026-03 of 3 July 2026, item 7). The code is closed on 30 June 2026. Financial services are charged on the value addition attributable to them, computed under Chapter IIIA of the Act by the attributable method and declared period by period; a code that applies a rate to an invoice line cannot compute that base, so it serves the fee a financial institution bills and not the value addition (docs/international.md).",
+    "source": "vat-amend-2026",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "A"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "0"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "A",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "0",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40,
+    "kind": "vat",
+    "valid_from": "2024-01-01",
+    "valid_to": "2026-06-30",
+    "vat_category": null
+  },
+  {
+    "code": "LK-S-ZR-EXP",
+    "name": "Export of goods, zero-rated",
+    "description": "Goods the supplier exported and was paid for in foreign currency through a licensed bank within six months of the end of the taxable period",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "legal_reference": "s. 7(1)(a) and 7(2) of the Value Added Tax Act, No. 14 of 2002 — a supply of goods is zero-rated where the supplier has exported them and payment is received in foreign currency through a bank licensed under the Banking Act within six months from the end of the taxable period of the exportation; no tax is charged and the supply is otherwise a taxable supply at a rate of zero. s. 7(3): when that payment is late but the export is proved to the Commissioner-General, the standard rate does not apply either. Return: cage D takes the value of the article exports of Schedule 06.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "D"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "D",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50,
+    "kind": "vat",
+    "valid_from": "2024-01-01",
+    "vat_category": null
+  },
+  {
+    "code": "LK-S-ZR-SVC",
+    "name": "Export of services, zero-rated",
+    "description": "A service connected with property abroad, intellectual property for use abroad, software developed for use wholly abroad or any service consumed abroad, paid for in foreign currency",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "legal_reference": "s. 7(1)(b) and (c) of the Value Added Tax Act, No. 14 of 2002 — services directly connected with property outside Sri Lanka, intellectual property for use outside Sri Lanka, software developed for use wholly outside Sri Lanka, client support services to identified clients abroad, and any other service provided to a person outside Sri Lanka to be consumed or used outside it, are zero-rated where payment in full is received in foreign currency through a licensed bank within six months from the end of the taxable period. Notice SEC/PN/VAT/2026-03 of 3 July 2026, item 2, adds the services of a garment buying office to overseas buyers from 1 October 2025. Return: cage D1 takes the value of Schedule 07.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "D1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "D1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60,
+    "kind": "vat",
+    "valid_from": "2024-01-01",
+    "vat_category": null
+  },
+  {
+    "code": "LK-S-EX",
+    "name": "Exempt supply — First Schedule",
+    "description": "A supply the First Schedule exempts: educational services, public passenger transport, electricity, burial and cremation services, the listed financial services, pharmaceuticals on prescription",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "legal_reference": "s. 8 of the Value Added Tax Act, No. 14 of 2002 — no tax is charged on the supply of goods or services specified in the First Schedule, and such a supply is not taxable unless zero-rated under s. 7; for periods commencing on or after 1 January 2024 the list is Part III of the First Schedule (educational services; public passenger transport other than air and water transport, tourist and taxi services; electricity; burials and cremations; the financial services listed, among them the operation of a current, deposit or savings account, currency exchange, and the issue and transfer of notes, cheques and securities; pharmaceuticals bought on a physician's prescription). The quick guide names no cage for an exempt supply, so this code reaches none; Schedule 01 does list exempted supplies (Notice SEC/PN/VAT/2026-03 of 4 May 2026, item 4).",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 70,
+    "kind": "vat",
+    "valid_from": "2024-01-01",
+    "vat_category": null
+  },
+  {
+    "code": "LK-P-18",
+    "name": "Purchase, standard rate — VAT 18 %",
+    "description": "A local purchase from a VAT-registered supplier whose tax is deductible as input tax",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "legal_reference": "s. 2(1)(ix) of the Value Added Tax Act, No. 14 of 2002 — for any taxable period commencing on or after 1 January 2024 the tax is charged at eighteen per centum, of which the tax fraction is 9/59 (the Inland Revenue Department's page on VAT gives the same history: 15 % from 1 September 2022 to 31 December 2023, 18 % from 1 January 2024). Return: cage I takes the value of the local purchases of Schedule 02 and cage 6 the input tax on them (quick guide 'How to file VAT').",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "I"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "I",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100,
+    "kind": "vat",
+    "valid_from": "2024-01-01",
+    "vat_category": null
+  },
+  {
+    "code": "LK-P-15",
+    "name": "Purchase, standard rate — VAT 15 % (until 31 December 2023)",
+    "description": "A local purchase of the period from 1 September 2022 to 31 December 2023, kept for books of those years",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "legal_reference": "s. 2(1)(viii) of the Value Added Tax Act, No. 14 of 2002 — fifteen per centum for taxable periods from 1 September 2022 to 31 December 2023, closed by s. 2(1)(ix). Cages I and 6.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "I"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "I",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110,
+    "kind": "vat",
+    "valid_from": "2022-09-01",
+    "valid_to": "2023-12-31",
+    "vat_category": null
+  },
+  {
+    "code": "LK-P-FIN-205",
+    "name": "Purchase of financial services — VAT 20.5 %",
+    "description": "A taxable financial service bought from a financial institution, for a taxable period commencing on or after 1 July 2026",
+    "rate": 20.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "legal_reference": "Notice SEC/PN/VAT/2026-03 of 3 July 2026, item 7 — the rate on the supply of financial services is 20.5 % for taxable periods commencing on or after 1 July 2026. The buyer deducts it as it does any input tax: cages I and 6. Financial services are charged on the value addition attributable to them, computed under Chapter IIIA of the Act by the attributable method and declared period by period; a code that applies a rate to an invoice line cannot compute that base, so it serves the fee a financial institution bills and not the value addition (docs/international.md).",
+    "source": "vat-amend-2026",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "I"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "I",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120,
+    "kind": "vat",
+    "valid_from": "2026-07-01",
+    "vat_category": null
+  },
+  {
+    "code": "LK-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A purchase of a supply zero-rated under section 7",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "legal_reference": "s. 7 of the Value Added Tax Act, No. 14 of 2002. No tax is charged, so there is none to deduct; the quick guide names no cage for the value of a zero-rated purchase, so this code reaches none.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 130,
+    "kind": "vat",
+    "valid_from": "2024-01-01",
+    "vat_category": null
+  },
+  {
+    "code": "LK-P-EX",
+    "name": "Purchase, exempt",
+    "description": "A purchase of a supply the First Schedule exempts, such as bank account fees, education or electricity",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "legal_reference": "s. 8 of the Value Added Tax Act, No. 14 of 2002 and Part III of the First Schedule. No tax is charged and none is deducted; the quick guide names no cage for exempt purchases, so this code reaches none.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 140,
+    "kind": "vat",
+    "valid_from": "2024-01-01",
+    "vat_category": null
+  },
+  {
+    "code": "LK-P-IMP",
+    "name": "Import of goods — VAT 18 % paid at customs",
+    "description": "Goods imported for home consumption: the VAT is paid to Sri Lanka Customs on the declaration and deducted as input tax on the monthly return",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "legal_reference": "s. 2(1)(b) of the Value Added Tax Act, No. 14 of 2002 — the tax is charged on the importation of goods by any person at the rate of s. 2(1)(ix); s. 6(1) — the value is the customs value increased by ten per centum plus the customs duty, surcharge, cess, Ports and Airports Development Levy and excise duty, which is the importer's to compute from the declaration and the base a line here should carry. Return: the quick guide pairs cage 5 (VAT paid up front) with Schedule 03; cage 4 (VAT deferred) is not carried because no deferral scheme is modelled. The opposite posting holds what is owed to Sri Lanka Customs on account 2125 until it is paid.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1151",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1151",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 150,
+    "kind": "vat",
+    "valid_from": "2024-01-01",
+    "vat_category": null
+  }
+]

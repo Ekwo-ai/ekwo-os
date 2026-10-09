@@ -2021,3 +2021,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- Sri Lanka — outside the common system of VAT
+--
+-- A State outside the common system of VAT the way India or Ghana are: Sri
+-- Lanka levies a value added tax of its own under the Value Added Tax Act,
+-- No. 14 of 2002, at 18 % since 1 January 2024, 20.5 % on financial services
+-- since 1 July 2026 and zero on exports, and a Social Security Contribution
+-- Levy of 2.5 % on the liable turnover of a quarter under Act No. 25 of 2022.
+-- Sri Lanka belongs to no union whose instruments harmonise VAT.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('LK', 'iso_3166_1', 'Sri Lanka', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Sri Lanka levies a value added tax of its own under the Value Added Tax Act, No. 14 of 2002, at a standard rate of 18 % for taxable periods commencing on or after 1 January 2024 (section 2), 20.5 % on financial services for taxable periods commencing on or after 1 July 2026 (Value Added Tax (Amendment) Act No. 14 of 2026), and zero on exports (section 7); beside it the Social Security Contribution Levy Act, No. 25 of 2022 charges a levy of 2.5 % on the liable turnover of a quarter. Sri Lanka belongs to no customs or tax union whose instruments harmonise VAT, so there is no regional regime to test a supply against, only the Sri Lankan Act.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

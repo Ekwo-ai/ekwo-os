@@ -1,0 +1,266 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "LK",
+  "name": "Sri Lanka",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 127,
+  "released_at": "2026-10-09",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ird-vat",
+        "title": "Value Added Tax (VAT) — the Inland Revenue Department's page on the tax: the standard rate by period (8 % to 31 May 2022, 12 % from 1 June 2022, 15 % from 1 September 2022 to 31 December 2023, 18 % from 1 January 2024), the payment on or before the 20th day of the following month, the return on or before the last day of the month after the taxable period, the monthly or quarterly taxable period, the registration thresholds of LKR 15 million a quarter and LKR 60 million over twelve months, and the mandatory e-Services filing from 1 July 2025",
+        "publisher": "Inland Revenue Department of Sri Lanka",
+        "url": "https://www.ird.gov.lk/en/type%20of%20taxes/sitepages/value%20added%20tax%20(vat).aspx",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act, No. 14 of 2002, as amended to 2024 (unofficial consolidated reading) — s. 2 (charge and rates, the tax fraction 9/59 at 18 %), s. 4 (time of supply), s. 5 (value of a supply: the consideration less any tax chargeable under this Act), s. 7 (zero rating), s. 8 (exempt supplies and the First Schedule), s. 20 (tax invoice), s. 21 (return), s. 26 (payment), s. 83 (taxable period); First Schedule, Part III",
+        "publisher": "LankaLaw (consolidated text; the Inland Revenue Department publishes no consolidation after the 2014 one)",
+        "url": "https://lankalaw.net/wp-content/uploads/2025/03/Value-Added-Tax-Consolidated-2024.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "vat-amend-2026",
+        "title": "Notice SEC/PN/VAT/2026-03 of 3 July 2026 — Value Added Tax (Amendment) Act No. 14 of 2026, certified on 30 June 2026: financial services at 20.5 % for taxable periods commencing on or after 1 July 2026 and exempt from the SSCL (Item 25 of Part II of the First Schedule to the SSCL Act), registration thresholds unchanged, VAT on services supplied by non-residents through electronic platforms from 1 July 2026, schedules submitted from the first day of the period, secured point-of-sale machines",
+        "publisher": "Inland Revenue Department of Sri Lanka",
+        "url": "https://www.ird.gov.lk/en/Lists/Latest%20News%20%20Notices/Attachments/799/PN_VAT_2026-03_New_E.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-einvoicing",
+        "title": "Notice SEC/PN/VAT/2026-03 of 4 May 2026 — the National e-Invoicing System: a Web API from the taxpayer's ERP to RAMIS, a pilot, then export-oriented enterprises (phase 1) and every VAT-registered person (phase 2), Schedules 01, 04 and 07 transmitted, the purchaser's Schedules 02 and 04 pre-populated",
+        "publisher": "Inland Revenue Department of Sri Lanka",
+        "url": "https://www.ird.gov.lk/en/Lists/Latest%20News%20%20Notices/Attachments/781/PN_VAT_2026-03_E.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "gazette-2481",
+        "title": "Extraordinary Gazette No. 2481/22 of 27 March 2026 — the format and specification of the Tax Invoice every registered person issues: the title TAX INVOICE, the nine-digit TIN of supplier and purchaser, the serial number YYMMM_QQQQ_XXXXX of at most forty characters, the dates as MM/DD/YYYY, the value of supply, the VAT charged and the total consideration",
+        "publisher": "Government of Sri Lanka, Department of Government Printing",
+        "url": "https://www.ird.gov.lk/en/publications/Gazette_Documents/2026_2481-22_E.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "gazette-2500",
+        "title": "Extraordinary Gazette No. 2500/106 of 6 August 2026 — the effective date of the Tax Invoice specification of Gazette 2481/22 moved from 1 July 2026 to 1 October 2026",
+        "publisher": "Government of Sri Lanka, Department of Government Printing",
+        "url": "https://www.ird.gov.lk/en/publications/Gazette_Documents/2026_2500_106_E.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-notice-2025",
+        "title": "Notice PN/VAT/2025-01 (Revised) of 17 April 2025 — the Value Added Tax (Amendment) Act No. 4 of 2025: the Simplified VAT Scheme abolished with effect from 1 October 2025 and replaced by a Risk-Based Refund Scheme",
+        "publisher": "Inland Revenue Department of Sri Lanka",
+        "url": "https://www.ird.gov.lk/en/Lists/Latest%20News%20%20Notices/Attachments/677/PN_VAT_2025-01_11042025_E.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-guide",
+        "title": "Quick guide \"How to file VAT\" (version 3, for taxable periods commencing on or after 1 July 2025) — the return filed through e-Services, its cages and the VAT schedules 01 to 07 that feed them (A and 0, B and 2, D, D1, I and 6, 4 and 5, 8, J4 and R3)",
+        "publisher": "Inland Revenue Department of Sri Lanka",
+        "url": "https://www.ird.gov.lk/en/eServices/Lists/FilingReturns/Attachments/5/Quick_Guide_VAT_2025_V3.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "form"
+      },
+      {
+        "key": "vat-circular-2011",
+        "title": "Circular No. 2011/07, Instructions — filing of VAT returns: the cages of the return (the tax payable in cage 16, the excess of input over output in cage 15)",
+        "publisher": "Inland Revenue Department of Sri Lanka",
+        "url": "https://ird.gov.lk/en/publications/Circulars_Circulars/VATCirNo2011_07[E].pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "ramis",
+        "title": "RAMIS e-Services — the Inland Revenue Department's portal where the VAT return and its schedules are filed and the tax paid",
+        "publisher": "Inland Revenue Department of Sri Lanka",
+        "url": "https://eservices.ird.gov.lk/",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      },
+      {
+        "key": "sscl-act",
+        "title": "Social Security Contribution Levy Act, No. 25 of 2022, consolidated up to 9 April 2026 (reference consolidation prepared by the Inland Revenue Department, 26 May 2026) — s. 3 (the levy at 2.5 % of the liable turnover of a quarter, VAT excluded by s. 3(3)(b)), s. 4 (registration thresholds), s. 8 (quarterly return by the twentieth day after the quarter), s. 17 (monthly payment), the First and Second Schedules",
+        "publisher": "Inland Revenue Department of Sri Lanka",
+        "url": "https://www.ird.gov.lk/si/publications/Acts_SSCL/SSCL_Cons_Act_-_2026_Changes.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "sscl-notice-2026",
+        "title": "Notice PN/SSCL/2026-04/1 of 16 April 2026 — the Social Security Contribution Levy (Amendment) Act, No. 10 of 2026, certified on 9 April 2026: the registration thresholds of LKR 9 million a quarter and LKR 36 million over four quarters from 1 July 2026; motor vehicles from 1 May 2026",
+        "publisher": "Inland Revenue Department of Sri Lanka",
+        "url": "https://www.ird.gov.lk/en/Lists/Latest%20News%20%20Notices/Attachments/780/PN_SSCL_2026-04_1_E.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "ira-2017",
+        "title": "Inland Revenue Act, No. 24 of 2017, s. 20(1) — the year of assessment is the twelve months from 1 April to 31 March",
+        "publisher": "Inland Revenue Department of Sri Lanka",
+        "url": "https://www.ird.gov.lk/en/publications/Acts_Income%20Tax_2017/IR_Act_No_24_2017_E.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "companies-act",
+        "title": "Companies Act, No. 7 of 2007, ss. 148 to 151 — accounting records, the financial statements within six months of the balance sheet date, and their true and fair view",
+        "publisher": "Parliament of Sri Lanka",
+        "url": "https://www.parliament.lk/uploads/acts/gbills/english/3776.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "ca-standards",
+        "title": "Accounting Standards — the Sri Lanka Accounting and Auditing Standards Act, No. 15 of 1995, which empowers CA Sri Lanka to adopt the Sri Lanka Accounting Standards, mandatory for Specified Business Enterprises, converged with the IASB's standards since 1 January 2012",
+        "publisher": "Institute of Chartered Accountants of Sri Lanka (CA Sri Lanka)",
+        "url": "https://www.slaasc.lk/accounting/accountStandards.php",
+        "consulted_on": "2026-10-09",
+        "kind": "standard"
+      },
+      {
+        "key": "ifrs-lk",
+        "title": "Use of IFRS Standards by jurisdiction — Sri Lanka: SLFRS and LKAS issued by CA Sri Lanka, the SLFRS for SMEs permitted to entities that meet the smaller-entity thresholds",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction/sri-lanka/",
+        "consulted_on": "2026-10-09",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "LKR",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "april",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Sri Lanka reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "LK-SLFRS-SFP",
+        "LK-SLFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Sri Lanka. Companies Act, No. 7 of 2007, s. 148 requires every company to keep accounting records that correctly record and explain its transactions, s. 150 requires the financial statements within six months of the balance sheet date and s. 151 that they give a true and fair view; the Sri Lanka Accounting and Auditing Standards Act, No. 15 of 1995 empowers CA Sri Lanka to adopt the Sri Lanka Accounting Standards (SLFRS and LKAS, converged with the IASB's standards since 1 January 2012), mandatory for Specified Business Enterprises, and the SLFRS for SMEs is open to the entities that meet the smaller-entity thresholds. This chart is original: four digits, blocked so that each range reaches one line of the statements below, with the accounts a Sri Lankan company actually keeps — VAT output and input kept apart, import VAT owed to Sri Lanka Customs, the net VAT due to or from the Inland Revenue Department after a return, the Social Security Contribution Levy payable and its expense, EPF and ETF contributions, APIT, withholding tax and gratuity.",
+      "source": "companies-act"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{YY}{MM}-{CODE}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, No. 14 of 2002, s. 20(2)(c) — a tax invoice carries the date it was issued and a serial number of at most forty characters without a space; the Tax Invoice specification of Gazette No. 2481/22, in force from 1 October 2026 (Gazette No. 2500/106), item 4.1(a) fixes the shape YYMMM_QQQQ_XXXXX, with the month as its first three letters in capitals, a code for the branch, project or customer, and a numeric serial that continues from the previous month unless the person restarts it each month or year. The law asks for a serial and not for one without a gap, which is why the style is `sequential`; the pattern vocabulary writes the month as two digits, so the three-letter month of the Gazette is a gap recorded in the README.",
+        "source": "gazette-2481"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, No. 14 of 2002, s. 4(1) — goods are supplied on the earliest of the issue of an invoice, a payment including an advance, the date a payment falls due, and delivery; s. 4(3) — services on the earliest of performance, payment received, payment due and the issue of an invoice; s. 4(2) and 4(4) — an invoice issued within ten days of delivery or performance fixes the time of supply at the invoice. Ekwo's closed vocabulary expresses only a two-way earliest-of; `earliest_of_delivery_or_payment` is the nearest value, and the gap — an invoice issued ahead of both delivery and payment, or a payment that merely falls due, which fix the time of supply in Sri Lanka — is recorded in docs/international.md and in the README of this pack.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "tax_invoice_title",
+        "applies_when": "always",
+        "text": "TAX INVOICE",
+        "sequence": 10,
+        "valid_from": "2026-10-01",
+        "legal_reference": "Value Added Tax Act, No. 14 of 2002, s. 20(2)(g) — a tax invoice carries the words 'TAX INVOICE' at a conspicuous place; Gazette No. 2481/22, Annexure I, item 1 — the title is prominent, in bold or highlighted, and the specification applies from 1 October 2026 (Gazette No. 2500/106). Item 4.2 of the Annexure says a tax invoice lists only goods or services that are subject to VAT, so an exempt supply goes on another document.",
+        "source": "gazette-2481"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Sri Lankan text obliges a business to exchange a structured electronic invoice with another business in the sense Ekwo's vocabulary gives the word — there is no Peppol authority, no published profile and no ISO 6523 scheme a party is addressed by — so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What Sri Lanka has is a reporting system in the course of being built: the National e-Invoicing System announced under the National Budget 2026, whose Web API sends the invoice data of a taxpayer's ERP to RAMIS in real time (Notice SEC/PN/VAT/2026-03 of 4 May 2026). It is a pilot, on the board for export-oriented enterprises as phase 1 and for every VAT-registered person as phase 2, with the full integration expected by the end of 2026, and it transmits the data of Schedules 01, 04 and 07; the Value Added Tax (Amendment) Act No. 14 of 2026 adds the use of secured point-of-sale machines within three months of a date still to be prescribed (Notice SEC/PN/VAT/2026-03 of 3 July 2026, item 9). Neither is in force against every taxpayer at the date of this pack, and neither is a peer-to-peer exchange between two access points. The paper-or-PDF Tax Invoice itself is regulated by Gazette No. 2481/22, postponed to 1 October 2026 by Gazette No. 2500/106 and so in force today. Ekwo does not connect to RAMIS, and the gap is recorded in docs/international.md and in this pack's README.",
+    "source": "vat-einvoicing"
+  },
+  "bank": {
+    "account_scheme": "account-number"
+  }
+}

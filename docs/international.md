@@ -5931,3 +5931,69 @@ for it, so `obligation` is `none`.
 the supply, the issue of the invoice, the receipt of the consideration and own
 use. `earliest_of_delivery_or_payment` is the nearest value and misses an
 invoice issued first.
+
+## From Sri Lanka
+
+**A levy on the seller's own turnover, with its own return.** The Social
+Security Contribution Levy (Act No. 25 of 2022, s. 3) charges 2.5 % on the
+liable turnover of each quarter of the person who sells, with VAT excluded
+(s. 3(3)(b)). It has no line on the invoice, and the VAT Act values a supply at
+the consideration less *any tax chargeable under that Act* (s. 5(1)(a)), so
+what a seller prices in to recover the levy stays inside the VAT base. Sri
+Lanka therefore asks for no stacked posting of the kind `packs/gh/` uses; it
+asks for a second declaration that `packs/lk/` cannot hold. A pack carries one
+`tax_report.json`, a `tax` code books a line of an invoice and adds the amount
+to the document, and a levy computed on a period's turnover (a percentage of 100 %,
+85 %, 50 % or 25 % of it by activity, under the Second Schedule) is neither.
+The pack keeps the accounts for it (`2130` payable, `6700` expense) and no tax
+code: a company accrues the levy by a journal entry each quarter and files it
+outside Ekwo. A turnover-based levy with its own form, cadence and deadline is
+the gap.
+
+**Two dates for one return.** The VAT return is due on the last day of the month
+after the period (s. 21(1)(b)) and the tax on the 20th of that month (s. 26(1));
+a quarterly filer pays the first two months of a quarter on the 20th of the next
+two months. The core holds one `deadline` per return; only the filing date is
+encoded. The SSCL has the same shape (return on the 20th after the quarter,
+monthly instalments on the 20th).
+
+**A tax base that is not an invoice line.** Financial services bear 20.5 % of
+the value addition attributable to them under Chapter IIIA of the VAT Act (the
+attributable method), computed per period from profit and remuneration. The
+codes `LK-S-FIN-205` and `LK-S-FIN-18` apply the rate to a fee on an invoice;
+the period-end computation is outside the pack and no vocabulary of the format
+describes it.
+
+**Time of supply.** Goods are supplied on the earliest of the invoice, a payment
+including an advance, the date a payment falls due and delivery; services on the
+earliest of performance, payment, due date and invoice; an invoice issued within
+ten days of delivery or performance fixes it (s. 4). `tax_point` offers
+`earliest_of_delivery_or_payment`, the nearest value, which leaves out the
+invoice and the due date.
+
+**An invoice number with a month name.** Gazette 2481/22 (in force from
+1 October 2026) fixes the serial as `YYMMM_QQQQ_XXXXX`, the month as its first
+three letters in capitals. `number_format` writes `{MM}` as two digits; the
+Gazette's form is not reproduced.
+
+**A reporting system, not a clearance.** The National e-Invoicing System sends
+invoice data (Schedules 01, 04 and 07) from the ERP to RAMIS by Web API, in
+pilot and phased in (notice SEC/PN/VAT/2026-03 of 4 May 2026), and the
+Amendment Act No. 14 of 2026 adds secured point-of-sale machines. No Ekwo brick
+talks to RAMIS or prints a point-of-sale record, and the pack declares
+`obligation: none` because neither binds every taxpayer today. The VAT
+schedules (01 to 07, CSV) are not a format the core writes either.
+
+**The core's one cage, the form's two pairs.** The IRD quick guide pairs cages A
+and 0 and cages B and 2 with Schedule 01 without naming what separates them;
+the pack puts the standard rate in A and 0 and the 20.5 % of financial
+services in B and 2, which a reviewer should confirm.
+
+**A threshold announced and not enacted.** The SSCL registration threshold
+fell to LKR 9 million a quarter / 36 million over four quarters from 1 July 2026
+by Act No. 10 of 2026, and the Government announced on 23 June 2026 that it
+would not apply the lowering. `conditions` names `seller_threshold` and holds no
+value, so the pack carries neither figure; its README says what it retains.
+
+**SVAT.** The Simplified VAT scheme ended on 1 October 2025 (Act No. 4 of 2025)
+and is not modelled.
