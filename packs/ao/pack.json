@@ -1,0 +1,264 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "AO",
+  "name": "Angola",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 136,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "civa-lei-14-23",
+        "title": "Lei n.º 14/23, de 28 de dezembro — altera e republica o Código do Imposto sobre o Valor Acrescentado (Lei n.º 7/19): artigo 12.º (isenções nas operações internas), artigo 15.º (exportações), artigo 19.º (taxas: 14 %, 7 %, 5 %, 1 %), artigo 21.º (imposto cativo), artigo 44.º (declaração periódica), artigo 60.º (regime de exclusão), artigo 69.º-A (regime simplificado); Anexos I a IV",
+        "publisher": "Assembleia Nacional (Diário da República, I Série, n.º 246)",
+        "url": "https://lex.ao/docs/assembleia-nacional/2023/lei-n-o-14-23-de-28-de-dezembro/",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "civa-lei-14-23-texto",
+        "title": "Lei n.º 14/23 — texto da primeira alteração ao Código do IVA, com os artigos 12.º, 15.º, 19.º, 21.º, 44.º, 60.º e 69.º-A e os Anexos I e II (bens alimentares de amplo consumo e insumos agrícolas)",
+        "publisher": "Assembleia Nacional (Diário da República)",
+        "url": "https://angolex.com/paginas/codigos/alteracao-do-codigo-do-imposto-sobre-o-valor-acrescentado-14a-23a.html",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "civa-lei-7-19",
+        "title": "Código do Imposto sobre o Valor Acrescentado (Lei n.º 7/19, de 24 de abril) — artigo 11.º (exigibilidade do imposto) e artigo 44.º (a declaração periódica é submetida por transmissão electrónica de dados até ao último dia do mês seguinte àquele a que respeitam as operações)",
+        "publisher": "Assembleia Nacional (Diário da República)",
+        "url": "https://angolex.com/paginas/codigos/codigo-do-imposto-sobre-o-valor-acrescentado.html",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "mf-iva-5",
+        "title": "Nova taxa do IVA de 5 % para os bens alimentares de amplo consumo e cesta básica entra em vigor a 1 de janeiro de 2024",
+        "publisher": "Ministério das Finanças",
+        "url": "https://www.minfin.gov.ao/sala-de-imprensa/noticias/noticia/nova-taxa-do-iva-em-5-para-os-bens-alimentares-de-amplo-consumo-e-cesta-basica-entra-em-vigor-a-1-de-janeiro-de-2024",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "plmj-iva-7",
+        "title": "Redução de 50 % da taxa de IVA para produtos da cesta básica — taxa de 7 % introduzida pelo Orçamento Geral do Estado para 2022 (Lei n.º 32/21), em vigor de 1 de janeiro de 2022 até à taxa de 5 % de 1 de janeiro de 2024",
+        "publisher": "PLMJ Advogados",
+        "url": "https://www.plmj.com/xms/files/03_Novidades_legislativas/2021/11_novembro/N_Colab_Angola_-_Reducao_de_IVA.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "oge-2026",
+        "title": "Lei n.º 14/25, de 30 de dezembro — Orçamento Geral do Estado para 2026: artigo 23.º (taxa de 5 % do IVA na importação ou transmissão de equipamentos industriais pelo fabricante, mediante verificação da Administração Tributária) e artigo 35.º (isenção de IVA e de Imposto do Selo das transacções por plataformas de pagamento e transferências instantâneas móveis autorizadas pelo Banco Nacional de Angola)",
+        "publisher": "Assembleia Nacional (Diário da República)",
+        "url": "https://angolex.com/paginas/leis/lei-que-aprova-o-orcamento-geral-do-estado-para-o-exercicio-economico-de-2026a-14a-25a.html",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "modelo-7",
+        "title": "Modelo 7 — Declaração Periódica do IVA (regime geral e regime de caixa): quadros 1 a 15, campos 01 a 48, fórmulas dos campos 31 a 35 e 37",
+        "publisher": "Administração Geral Tributária / Ministério das Finanças",
+        "url": "https://www.hml.ucm.minfin.gov.ao/cs/groups/public/documents/document/zmlu/mdq5/~edisp/minfin049184.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "form"
+      },
+      {
+        "key": "modelo-7-dr",
+        "title": "Modelo 7 — Declaração Periódica do IVA, versão publicada no Diário da República (campos 01 a 48): a declaração é submetida até ao último dia de cada mês relativamente às operações do mês anterior",
+        "publisher": "Diário da República / Administração Geral Tributária",
+        "url": "https://ivaemangola.ideiasdinamicas.com/docs/02_MODELO_7_DECLARACAO_PERIODICA.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "form"
+      },
+      {
+        "key": "agt-iva",
+        "title": "Imposto sobre o Valor Acrescentado — página do Portal do Contribuinte (nota: reproduz ainda regras anteriores à Lei n.º 14/23, como Cabinda a 2 % e regime simplificado a 3 %; prevalece o texto da Lei n.º 14/23)",
+        "publisher": "Administração Geral Tributária",
+        "url": "https://portaldocontribuinte.minfin.gov.ao/impostos-e-taxas/imposto-sobre-valor-acrescentado",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "agt-saft",
+        "title": "Submissão dos ficheiros SAF-T (AO) de facturação e de aquisição de bens e serviços — mensal, até ao último dia do mês seguinte (Decreto Presidencial n.º 312/18)",
+        "publisher": "Administração Geral Tributária",
+        "url": "https://portaldocontribuinte.minfin.gov.ao/noticia?id=809127",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "portal-contribuinte",
+        "title": "Portal do Contribuinte — onde a declaração periódica (Modelo 7) é submetida e a nota de liquidação é paga",
+        "publisher": "Administração Geral Tributária",
+        "url": "https://portaldocontribuinte.minfin.gov.ao/",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      },
+      {
+        "key": "dp-71-25",
+        "title": "Decreto Presidencial n.º 71/25, de 20 de março — Regime Jurídico das Facturas: artigo 8.º (emissão até ao quinto dia útil), artigo 10.º (numeração sequencial e cronológica por tipo de documento e ano económico), artigo 16.º (facturação electrónica obrigatória nos regimes geral e simplificado do IVA), artigo 17.º (software validado ou disponibilizado pela AGT, comunicação em tempo real), artigo 37.º (fases)",
+        "publisher": "Presidente da República (Diário da República)",
+        "url": "https://lex.ao/docs/presidente-da-republica/2025/decreto-presidencial-n-o-71-25-de-20-de-marco/",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "ey-fact-elec",
+        "title": "Facturação Electrónica a partir de 1 de Janeiro de 2026 — grandes contribuintes e fornecedores do Estado",
+        "publisher": "EY Angola",
+        "url": "https://www.ey.com/pt_ao/technical/tax-alerts/facturacao-electronica-a-partir-de-1-de-janeiro-de-2026",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "pgc-82-01",
+        "title": "Decreto n.º 82/01, de 16 de novembro — aprova o Plano Geral de Contabilidade (PGC)",
+        "publisher": "Conselho de Ministros (Diário da República)",
+        "url": "https://angolex.com/paginas/decreto-presidencial/plano-geral-de-contabilidade-angolano-82a-01a.html",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "pgc-lista",
+        "title": "Plano Geral de Contabilidade Angolano, Decreto n.º 82/01 — lista de contas das classes 1 a 8 (código e denominação), edição de actualização da Ordem dos Contabilistas e Peritos Contabilistas de Angola",
+        "publisher": "Ordem dos Contabilistas e Peritos Contabilistas de Angola (OCPCA)",
+        "url": "https://www.segcontas.co.ao/sites/default/files/2022-08/PGC_Decreto_n%C2%BA82_01_ATF%20edi%C3%A7%C3%B5est%C3%A9cnicas.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
+      },
+      {
+        "key": "dp-180-19",
+        "title": "Decreto Presidencial n.º 180/19, de 24 de maio — introduz no Plano Geral de Contabilidade a conta 34.5 «Imposto sobre o Valor Acrescentado» e as suas subcontas (IVA suportado, dedutível, liquidado, regularizações, apuramento, a pagar, a recuperar)",
+        "publisher": "Presidente da República (Diário da República)",
+        "url": "https://lex.ao/docs/presidente-da-republica/2019/decreto-presidencial-n-o-180-19-de-24-de-maio/",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
+      },
+      {
+        "key": "iec-lei-8-19",
+        "title": "Lei n.º 8/19, de 24 de abril — Código do Imposto Especial de Consumo (IEC): incidência, valor tributável e exigibilidade",
+        "publisher": "Assembleia Nacional (Diário da República)",
+        "url": "https://lex.ao/docs/assembleia-nacional/2019/lei-n-o-8-19-de-24-de-abril/",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "AOA",
+    "language": "pt",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Lançamento de abertura",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "311",
+      "payable": "321",
+      "suspense": "377",
+      "rounding": "7581",
+      "retained_earnings": "81",
+      "current_year_result_profit": "88",
+      "current_year_result_loss": "88",
+      "sales": "613",
+      "purchase": "212",
+      "bank": "431",
+      "cash": "451",
+      "fx_gain": "662",
+      "fx_loss": "762",
+      "asset_disposal_gain": "683",
+      "asset_disposal_loss": "783",
+      "tax_payable": "34561",
+      "tax_receivable": "34571"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIV",
+      "opening": "ABE"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VEN",
+      "type": "sales",
+      "name": "Diário de vendas",
+      "sequence": 10
+    },
+    {
+      "code": "COM",
+      "type": "purchase",
+      "name": "Diário de compras",
+      "sequence": 20
+    },
+    {
+      "code": "BAN",
+      "type": "bank",
+      "name": "Diário de bancos",
+      "sequence": 30
+    },
+    {
+      "code": "CAI",
+      "type": "cash",
+      "name": "Diário de caixa",
+      "sequence": 40
+    },
+    {
+      "code": "DIV",
+      "type": "general",
+      "name": "Diário de operações diversas",
+      "sequence": 50
+    },
+    {
+      "code": "ABE",
+      "type": "opening",
+      "name": "Diário de abertura",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plano Geral de Contabilidade (PGC) — selecção para sociedades comerciais",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "AO-PGC-BAL",
+        "AO-PGC-DR"
+      ],
+      "legal_reference": "Decreto n.º 82/01, de 16 de novembro, approves the Plano Geral de Contabilidade, the legal chart of accounts of Angola. It applies to companies other than banks and insurers, which follow their own regimes (the International Financial Reporting Standards for banks); the IFRS complement the plan. The chart carries the official codes and names of classes 1 to 8, with the dots removed from each code (34.5.3.1 is 34531), at the level of detail a trading company posts to. The VAT sub-accounts of account 34.5 come from Decreto Presidencial n.º 180/19, de 24 de maio. Where this pack adds a level the plan leaves free, it says so in the name or in the README: 7581 Arredondamentos (rounding) and 3791 IVA de importação a pagar à alfândega (import VAT owed to customs).",
+      "source": "pgc-82-01"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Decreto Presidencial n.º 71/25, art. 10.º, n.º 1, alínea b) — an invoice carries a sequential and chronological number by type of document and economic year, in one or more identified series. The style is `sequential` and the number restarts each year, as the format carries the year.",
+        "source": "dp-71-25"
+      },
+      "tax_point": {
+        "legal_reference": "Código do IVA (Lei n.º 7/19, as republished by the Lei n.º 14/23), art. 11.º — the tax is due and chargeable when the goods are placed at the disposal of the buyer or when the service is performed; for continuous supplies with periodic payments, at the end of each period. `delivery_date` is the closest value of Ekwo's vocabulary; the special rules on advances, which the Modelo 7 reports in field 41, are not modelled and are recorded in the README.",
+        "source": "civa-lei-7-19"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Angola has no Peppol authority, no published structured-invoice profile and no ISO 6523 scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What Angola has instead is a clearance-style system: Decreto Presidencial n.º 71/25, art. 16.º, makes electronic invoicing mandatory for taxpayers of the general and simplified VAT regimes; art. 17.º requires invoicing software validated or provided by the Administração Geral Tributária (AGT) that transmits each invoice to it in real time; art. 37.º phases the obligation in — large taxpayers and suppliers of the State first, from 1 January 2026, then every taxpayer subject to it, from 1 January 2027 as the tax administration announced. That is a real-time reporting of each invoice to the tax administration, not a peer-to-peer exchange between businesses in the sense `einvoicing.profile` describes. Ekwo does not connect to the AGT platform; the gap is recorded in docs/international.md and in this pack's README.",
+    "source": "dp-71-25"
+  }
+}

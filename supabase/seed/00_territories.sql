@@ -2250,3 +2250,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Angola
+--
+-- A third country to the common system of VAT of Directive 2006/112/EC,
+-- article 5(2), which applies only in the territory of the Community as the
+-- Treaties define it. Angola levies its own Imposto sobre o Valor
+-- Acrescentado under the Código do IVA (Lei n.º 7/19, republished by the Lei
+-- n.º 14/23), unrelated to the Union's common system. `vat_prefix` is null: an
+-- Angolan taxpayer is identified by the Número de Identificação Fiscal (NIF),
+-- which the Administração Geral Tributária assigns and which carries no ISO
+-- country prefix.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('AO', 'iso_3166_1', 'Angola', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Angola is a third country to it. Angola levies a value added tax of its own, the Imposto sobre o Valor Acrescentado, under the Código do IVA (Lei n.º 7/19 of 24 April 2019, republished by the Lei n.º 14/23 of 28 December 2023), at a general rate of fourteen per cent (14 %).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

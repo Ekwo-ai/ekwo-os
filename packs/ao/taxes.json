@@ -1,0 +1,770 @@
+[
+  {
+    "code": "AO-S-14",
+    "name": "Venda ou serviço à taxa geral (14 %)",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "description": "The general rate, charged on every taxable supply that no other code of this pack covers",
+    "legal_reference": "Código do IVA, art. 19.º, as republished by the Lei n.º 14/23 — 14 % on imports, supplies of goods and services, the general rate since the VAT replaced the consumption tax on 1 October 2019. Modelo 7, quadro 9, line 1 — transactions on which the taxpayer charged tax: field 01 (taxable base) and field 02 (tax in favour of the State).",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-S-7-HR",
+    "name": "Hotelaria e restauração (7 %)",
+    "kind": "vat",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "description": "Reduced rate for hotel and restaurant services, in force since 1 January 2024",
+    "legal_reference": "Código do IVA, art. 19.º, as republished by the Lei n.º 14/23 — 7 % on accommodation (hotelaria) and catering (restauração) services. Modelo 7, quadro 9, line 1 — transactions on which the taxpayer charged tax: field 01 (taxable base) and field 02 (tax in favour of the State).",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-S-7-SIMP",
+    "name": "Regime simplificado (7 %) — taxa do contribuinte",
+    "kind": "vat",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "description": "Charged by a taxpayer of the simplified regime on all its supplies; documented as a separate code, never applied by default",
+    "legal_reference": "Código do IVA, art. 69.º-A and art. 19.º, as republished by the Lei n.º 14/23 — a taxable person whose turnover or imports in the previous year were at least Kz 25,000,000 and under Kz 350,000,000 is in the simplified regime and charges 7 %. This is a rate of the taxpayer's regime and not of the product: the code is never chosen by default, only by a company in that regime, and the pack does not model the regime's 10 % input-tax allowance. The page of the Portal do Contribuinte still shows the 3 % of the earlier text; the Lei n.º 14/23 prevails. Modelo 7, quadro 9, line 1 — transactions on which the taxpayer charged tax: field 01 (taxable base) and field 02 (tax in favour of the State).",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-S-5",
+    "name": "Bens alimentares de amplo consumo e insumos agrícolas (5 %)",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "description": "Reduced rate for the goods of Anexos I and II, since 1 January 2024",
+    "legal_reference": "Código do IVA, art. 19.º, as republished by the Lei n.º 14/23, and its Anexos I and II — 5 % on imports and supplies of widely consumed foodstuffs (meat, fish, milk, eggs, vegetables, fruit, cereals, flour, edible oils, sugar, bread, salt, water) and of agricultural inputs (seeds, fertilisers, tractors, fishing boats); the Ministry of Finance announced the reduction from 7 % on 1 January 2024. Modelo 7, quadro 9, line 1 — transactions on which the taxpayer charged tax: field 01 (taxable base) and field 02 (tax in favour of the State).",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-S-7-CB",
+    "name": "Cesta básica (7 %) — taxa encerrada em 31/12/2023",
+    "kind": "vat",
+    "rate": 7,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "valid_to": "2023-12-31",
+    "description": "Closed rate, kept for the documents dated 2022 and 2023",
+    "legal_reference": "Orçamento Geral do Estado para 2022 (Lei n.º 32/21) — the temporary 7 % on the goods of the basic basket (sugar, flour, beans, eggs, bread, fish, milk, cooking oil, salt, soap…), reduced from 14 %; it applied from 1 January 2022 until the rate of 5 % replaced it on 1 January 2024, so the code is closed and is kept to read documents of those two years. Modelo 7, quadro 9, line 1 — transactions on which the taxpayer charged tax: field 01 (taxable base) and field 02 (tax in favour of the State).",
+    "source": "plmj-iva-7",
+    "vat_category": null,
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-S-1-CAB",
+    "name": "Regime especial da província de Cabinda (1 %)",
+    "kind": "vat",
+    "rate": 1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "description": "Special regime of Cabinda, 1 % since 1 January 2024",
+    "legal_reference": "Código do IVA, art. 19.º, as republished by the Lei n.º 14/23 — 1 % on imports and supplies of goods subject to the special regime of the province of Cabinda, the goods of Anexo III excepted, which pay the general rate. The page of the Portal do Contribuinte still shows 2 %; the Lei n.º 14/23 prevails. Modelo 7, quadro 9, line 1 — transactions on which the taxpayer charged tax: field 01 (taxable base) and field 02 (tax in favour of the State).",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-S-5-IND",
+    "name": "Equipamentos industriais do fabricante (5 %)",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "description": "Industrial equipment supplied by its manufacturer under an approval of the tax administration",
+    "legal_reference": "Lei n.º 14/25 (Orçamento Geral do Estado para 2026), art. 23.º — the VAT rate on the import or supply of industrial equipment by the manufacturer is reduced to 5 %, after a procedure and verification by the tax administration that the equipment is industrial and has the declared purpose. The code is chosen only by a taxpayer who holds that approval. Modelo 7, quadro 9, line 1 — transactions on which the taxpayer charged tax: field 01 (taxable base) and field 02 (tax in favour of the State).",
+    "source": "oge-2026",
+    "vat_category": null,
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34531",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-S-EXP",
+    "name": "Exportação, isenta com direito à dedução",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2019-10-01",
+    "description": "Goods leaving Angola, with the transport evidence the customs require",
+    "legal_reference": "Código do IVA, art. 15.º — supplies of goods dispatched or transported abroad by the exporter are exempt, with the right to deduct the input tax. Modelo 7, quadro 9, field 10 — transactions on which no tax was charged, exempt with the right to deduct; the specimen of the form lists exports (field 45) as a detail of that line.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "conditions": [
+      "transport_evidence"
+    ],
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-S-EX",
+    "name": "Operação interna isenta, sem direito à dedução",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2019-10-01",
+    "description": "Supplies the Código do IVA exempts, such as medicines, education, health care, letting of property and financial services",
+    "legal_reference": "Código do IVA, art. 12.º, as republished by the Lei n.º 14/23 — domestic exemptions: books (also digital), wheelchairs for disabled people, letting of immovable property other than hotel accommodation, transfer of immovable property, collective passenger transport, education by establishments within the Lei de Bases, medical and health services other than aesthetic ones, the medical equipment of Anexo IV, medicines, financial services. Modelo 7, quadro 9, field 11 — exempt without the right to deduct (article 12 excluding its sub-paragraph a).",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "conditions": [
+      "supply_nature"
+    ],
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-S-EX-MOB",
+    "name": "Pagamentos por plataformas móveis autorizadas, isentos",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "description": "Fees of a transaction through a payment platform the central bank authorises",
+    "legal_reference": "Lei n.º 14/25 (Orçamento Geral do Estado para 2026), art. 35.º — transactions made through mobile payment and instant transfer platforms duly authorised by the Banco Nacional de Angola are exempt from VAT and stamp duty. Reported with the other exempt supplies, Modelo 7, quadro 9, field 11; the placement in that line is this pack's reading and is flagged for review in the README.",
+    "source": "oge-2026",
+    "vat_category": null,
+    "conditions": [
+      "supply_nature"
+    ],
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-S-NS",
+    "name": "Operação não tributada (artigo 10.º)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2019-10-01",
+    "description": "A service rendered to a recipient abroad, outside the scope of the tax",
+    "legal_reference": "Código do IVA, art. 10.º — operations outside the scope of the tax, such as a service whose place of supply is outside Angola. Modelo 7, quadro 9, field 12 — non-taxed operations.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-P-14-EXI",
+    "name": "Compra de existências à taxa geral (14 %), dedutível",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "description": "Goods for resale or consumption in production",
+    "legal_reference": "Código do IVA, art. 19.º — 14 % — and the right to deduct of the Capítulo V. Modelo 7, quadro 9, fields 18 (base) and 19 (tax in favour of the taxpayer) — acquisitions of inventories.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "18"
+        },
+        {
+          "type": "tax",
+          "account": "34521",
+          "box": "19"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34521",
+          "box": "19",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-P-5-EXI",
+    "name": "Compra de existências a 5 %, dedutível",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "description": "Foodstuffs and agricultural inputs bought at the reduced rate",
+    "legal_reference": "Código do IVA, art. 19.º, Anexos I and II — 5 %. Modelo 7, quadro 9, fields 18 (base) and 19 (tax in favour of the taxpayer) — acquisitions of inventories.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "18"
+        },
+        {
+          "type": "tax",
+          "account": "34521",
+          "box": "19"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34521",
+          "box": "19",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-P-14-MFI",
+    "name": "Compra de meios fixos e investimentos à taxa geral (14 %), dedutível",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "description": "Equipment and other fixed assets",
+    "legal_reference": "Código do IVA, art. 19.º — 14 %. Modelo 7, quadro 9, fields 16 (base) and 17 (tax in favour of the taxpayer) — acquisitions of fixed assets and investments.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "16"
+        },
+        {
+          "type": "tax",
+          "account": "34522",
+          "box": "17"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34522",
+          "box": "17",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-P-14-OUT",
+    "name": "Compra de outros bens de consumo à taxa geral (14 %), dedutível",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "description": "Consumables and other goods that are neither inventory nor fixed assets",
+    "legal_reference": "Código do IVA, art. 19.º — 14 %. Modelo 7, quadro 9, fields 20 (base) and 21 (tax in favour of the taxpayer) — acquisitions of other consumable goods.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "20"
+        },
+        {
+          "type": "tax",
+          "account": "34523",
+          "box": "21"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "20",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34523",
+          "box": "21",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-P-14-SERV",
+    "name": "Aquisição de serviços à taxa geral (14 %), dedutível",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "description": "Services bought from a supplier established in Angola",
+    "legal_reference": "Código do IVA, art. 19.º — 14 %. Modelo 7, quadro 9, fields 22 (base) and 23 (tax in favour of the taxpayer) — acquisitions of services.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 160,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "22"
+        },
+        {
+          "type": "tax",
+          "account": "34523",
+          "box": "23"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "22",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34523",
+          "box": "23",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-P-14-BL",
+    "name": "Aquisição à taxa geral (14 %), IVA não dedutível",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-10-01",
+    "description": "Tax charged on an expense the code excludes from the right to deduct",
+    "legal_reference": "Código do IVA, Capítulo V (right to deduct) — the tax charged on an expense the code excludes from deduction (for instance passenger cars and entertainment) is not deducted and is not declared: it adds to the cost of the line. Nothing is reported in the Modelo 7.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "recoverable": false,
+    "sequence": 170,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-P-EX",
+    "name": "Aquisição isenta ou não tributada",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2019-10-01",
+    "description": "Bank charges, medicines and other exempt purchases",
+    "legal_reference": "Código do IVA, art. 12.º — a purchase of a supply the code exempts, such as bank charges: no tax is charged and the Modelo 7 reports nothing.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 180,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-P-IMP-14",
+    "name": "Importação de bens à taxa geral (14 %), liquidada pela alfândega",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2019-10-01",
+    "description": "Goods imported for home consumption; the customs collect the tax",
+    "legal_reference": "Código do IVA, art. 19.º — 14 % on imports; the tax is assessed and collected by the customs services on the import declaration and is deductible. Modelo 7, quadro 9, fields 24 (base) and 25 (deductible tax paid on imports). The tax is owed to customs on account 3791 until paid.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 190,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "24"
+        },
+        {
+          "type": "tax",
+          "account": "34521",
+          "box": "25"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3791"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "24",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34521",
+          "box": "25",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3791"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AO-P-EXT-14",
+    "name": "Serviço adquirido a prestador não residente (14 %), autoliquidado",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2019-10-01",
+    "description": "A service bought abroad; the buyer charges and deducts the tax on the same return",
+    "legal_reference": "Código do IVA, art. 29.º — the recipient, a taxable person, accounts for the tax on a service supplied by a provider with no seat, permanent establishment or domicile in Angola. Modelo 7, quadro 9, fields 13 (base), 15 (tax in favour of the State) and 14 (the same tax deductible in favour of the taxpayer): the two net to zero when the right to deduct is complete.",
+    "source": "civa-lei-14-23",
+    "vat_category": null,
+    "sequence": 200,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "13"
+        },
+        {
+          "type": "tax",
+          "account": "34523",
+          "box": "14"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "34531",
+          "box": "15"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "34523",
+          "box": "14",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "34531",
+          "box": "15",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]

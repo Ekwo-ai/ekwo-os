@@ -6354,3 +6354,55 @@ filer apart.
 Código do IVA's withholding statement for digital purchases of non-residents
 (art. 25(7)), are not tax codes: they are computed on a payment and remitted by
 a party that is not on the document.
+
+## From Angola
+
+Angola's pack is `packs/ao`. Nothing in the core was patched for it.
+
+**Clearance, not exchange.** Decreto Presidencial n.º 71/25 makes electronic
+invoicing mandatory for the general and simplified VAT regimes, in phases:
+large taxpayers and suppliers of the State from 1 January 2026, every taxpayer
+subject to it from 1 January 2027 as announced. Each invoice is transmitted in
+real time to the tax administration (AGT) by software it validates. The
+`einvoicing` section describes an exchange between businesses; the pack says
+`obligation: none`, as for Ghana, and Ekwo does not connect to the AGT platform.
+
+**SAF-T (AO).** A monthly file of invoicing, and of purchases when the supplier
+annex is not filed, is due by the last day of the next month, and a taxpayer
+under electronic invoicing is relieved of it. The core has no export for it.
+
+**Rates the return does not distinguish.** The Modelo 7 has one line for all
+supplies on which tax was charged, so the five rates (14, 7, 5, 1 and the 5 %
+of industrial equipment) post to the same two fields, and the golden proves the
+sum and not the split by rate.
+
+**A rate of the regime, not of the product.** The simplified regime charges 7 %
+on everything a company in it supplies. A tax code is chosen by line; the pack
+carries `AO-S-7-SIMP` as a code the company in that regime picks, and nothing
+in the format can bind a code to a taxpayer's regime or to the allowance that
+regime gives on input tax.
+
+**A tax whose base includes another.** The special consumption tax (IEC) is
+added to the invoice and the VAT is computed on a base that includes it. Its
+rates are per product (2 % to 50 %) and the pack does not guess a table;
+modelling it would be a stacked code of the kind `packs/gh` uses, one per
+product family.
+
+**Withholding at source, cash accounting, pro rata.** Banks and insurers retain
+50 % of the VAT of the invoices they receive (art. 21), public bodies retain on
+imports, a cash-accounting regime lets the tax fall due on collection (art. 60)
+and a taxpayer with mixed supplies deducts pro rata. The format carries the
+boxes of these fields and no mechanism to fill them; the pack offers the full
+or the nil end only.
+
+**A deadline of the last day.** The periodic declaration is due by the last day
+of the following month (art. 44) and the tax is paid by the same date; some
+commentaries say the last *working* day. A `deadline` rule sees the calendar
+only.
+
+**Two printings of one form, and a portal page out of date.** The Modelo 7
+circulates in two printings that differ in fields 26, 27 and 30, and the heading
+of part B of quadro 12 names a tax field for a base. The pack follows the
+specimen of the Diário da República and says so. The AGT page for the IVA still
+shows Cabinda at 2 % and the simplified regime at 3 %; the Lei n.º 14/23 says
+1 % and 7 %, and the pack follows the law.

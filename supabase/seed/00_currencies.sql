@@ -85,5 +85,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('NIO', 'Nicaraguan córdoba', 'C$', 2),
   ('ETB', 'Ethiopian birr', 'Br', 2),
   ('MUR', 'Mauritian rupee', 'Rs', 2),
-  ('MZN', 'Mozambican metical', 'MT', 2)
+  ('MZN', 'Mozambican metical', 'MT', 2),
+  ('AOA', 'Angolan kwanza', 'Kz', 2)
 on conflict (code) do nothing;

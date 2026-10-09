@@ -1,0 +1,810 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "AO-PGC-BAL",
+      "kind": "balance_sheet",
+      "framework": "AO-PGC",
+      "name": "Balanço",
+      "legal_reference": "Decreto n.º 82/01 (Plano Geral de Contabilidade), Anexo — modelo de Balanço. The caption wording follows the plan's balance sheet; the account-to-line mapping is this pack's selection at the level of detail of the chart, not a transcription field by field of the model, and a balance sheet printed for a filing is prepared from the company's own notes.",
+      "source": "pgc-82-01",
+      "lines": [
+        {
+          "code": "AI.1",
+          "parent": "ANC",
+          "name": "Imobilizações corpóreas",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "11",
+              "code_to": "11",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "AI.2",
+          "parent": "ANC",
+          "name": "Imobilizações incorpóreas",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "12",
+              "code_to": "12",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "AI.3",
+          "parent": "ANC",
+          "name": "Investimentos financeiros",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "13",
+              "code_to": "13",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "19",
+              "code_to": "19",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "AI.4",
+          "parent": "ANC",
+          "name": "Imobilizações em curso",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "14",
+              "code_to": "14",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "AI.5",
+          "parent": "ANC",
+          "name": "Amortizações acumuladas",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "18",
+              "code_to": "18",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "ANC",
+          "parent": "ATIVO",
+          "name": "ACTIVO IMOBILIZADO",
+          "sequence": 60,
+          "is_total": true,
+          "plus": [
+            "AI.1",
+            "AI.2",
+            "AI.3",
+            "AI.4",
+            "AI.5"
+          ]
+        },
+        {
+          "code": "AC.1",
+          "parent": "AC",
+          "name": "Existências",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22",
+              "code_to": "29",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "AC.2",
+          "parent": "AC",
+          "name": "Clientes",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "31",
+              "code_to": "31",
+              "side": "debit",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "38",
+              "code_to": "38",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "AC.3",
+          "parent": "AC",
+          "name": "Estado e outras contas a receber",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "32",
+              "code_to": "32",
+              "side": "debit",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "34",
+              "code_to": "34",
+              "side": "debit",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "35",
+              "code_to": "35",
+              "side": "debit",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "36",
+              "code_to": "36",
+              "side": "debit",
+              "sequence": 40
+            },
+            {
+              "kind": "code_range",
+              "code_from": "37",
+              "code_to": "37",
+              "side": "debit",
+              "sequence": 50
+            }
+          ]
+        },
+        {
+          "code": "AC.4",
+          "parent": "AC",
+          "name": "Títulos negociáveis",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "41",
+              "code_to": "41",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "49",
+              "code_to": "49",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "AC.5",
+          "parent": "AC",
+          "name": "Depósitos bancários e caixa",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "42",
+              "code_to": "48",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "AC",
+          "parent": "ATIVO",
+          "name": "ACTIVO CIRCULANTE",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "AC.1",
+            "AC.2",
+            "AC.3",
+            "AC.4",
+            "AC.5"
+          ]
+        },
+        {
+          "code": "ATIVO",
+          "parent": null,
+          "name": "TOTAL DO ACTIVO",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "ANC",
+            "AC"
+          ]
+        },
+        {
+          "code": "CP.1",
+          "parent": "CP",
+          "name": "Capital, acções e quotas próprias",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "51",
+              "code_to": "52",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "CP.2",
+          "parent": "CP",
+          "name": "Prémios de emissão e prestações suplementares",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "53",
+              "code_to": "54",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "CP.3",
+          "parent": "CP",
+          "name": "Reservas",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "55",
+              "code_to": "58",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "CP.4",
+          "parent": "CP",
+          "name": "Resultados transitados",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "81",
+              "code_to": "81",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "CP.5",
+          "parent": "CP",
+          "name": "Resultado líquido do exercício",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "82",
+              "code_to": "89",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "CP",
+          "parent": "CPP",
+          "name": "CAPITAL PRÓPRIO",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "CP.1",
+            "CP.2",
+            "CP.3",
+            "CP.4",
+            "CP.5"
+          ]
+        },
+        {
+          "code": "PNC.1",
+          "parent": "PNC",
+          "name": "Provisões para outros riscos e encargos",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "39",
+              "code_to": "39",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PNC.2",
+          "parent": "PNC",
+          "name": "Empréstimos de médio e longo prazo",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "332",
+              "code_to": "339",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PNC",
+          "parent": "PT",
+          "name": "PASSIVO A MÉDIO E LONGO PRAZO",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "PNC.1",
+            "PNC.2"
+          ]
+        },
+        {
+          "code": "PC.1",
+          "parent": "PCT",
+          "name": "Empréstimos bancários",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "331",
+              "code_to": "331",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PC.2",
+          "parent": "PCT",
+          "name": "Fornecedores",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "32",
+              "code_to": "32",
+              "side": "credit",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PC.3",
+          "parent": "PCT",
+          "name": "Estado",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "34",
+              "code_to": "34",
+              "side": "credit",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PC.4",
+          "parent": "PCT",
+          "name": "Clientes com saldo credor e outras contas a pagar",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "31",
+              "code_to": "31",
+              "side": "credit",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "35",
+              "code_to": "35",
+              "side": "credit",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "36",
+              "code_to": "36",
+              "side": "credit",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "37",
+              "code_to": "37",
+              "side": "credit",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "PCT",
+          "parent": "PT",
+          "name": "PASSIVO A CURTO PRAZO",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "PC.1",
+            "PC.2",
+            "PC.3",
+            "PC.4"
+          ]
+        },
+        {
+          "code": "PT",
+          "parent": "CPP",
+          "name": "TOTAL DO PASSIVO",
+          "sequence": 280,
+          "is_total": true,
+          "plus": [
+            "PNC",
+            "PCT"
+          ]
+        },
+        {
+          "code": "CPP",
+          "parent": null,
+          "name": "TOTAL DO CAPITAL PRÓPRIO E DO PASSIVO",
+          "sequence": 290,
+          "is_total": true,
+          "plus": [
+            "CP",
+            "PT"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "AO-PGC-DR",
+      "kind": "income_statement",
+      "framework": "AO-PGC",
+      "name": "Demonstração de resultados por natureza",
+      "legal_reference": "Decreto n.º 82/01 (Plano Geral de Contabilidade), Anexo — modelo de Demonstração de Resultados por natureza. The account-to-line mapping is this pack's selection at the level of detail of the chart.",
+      "source": "pgc-82-01",
+      "lines": [
+        {
+          "code": "1",
+          "parent": "A",
+          "name": "Vendas",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "61",
+              "code_to": "61",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "parent": "A",
+          "name": "Prestações de serviços",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "62",
+              "code_to": "62",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "parent": "A",
+          "name": "Outros proveitos operacionais",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "63",
+              "code_to": "65",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "4",
+          "parent": "A",
+          "name": "Custo das existências vendidas e consumidas",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "21",
+              "code_to": "21",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "71",
+              "code_to": "71",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "parent": "A",
+          "name": "Custos com o pessoal",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "72",
+              "code_to": "72",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "6",
+          "parent": "A",
+          "name": "Amortizações do exercício",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "73",
+              "code_to": "73",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "parent": "A",
+          "name": "Outros custos e perdas operacionais",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "75",
+              "code_to": "75",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "A",
+          "parent": "C",
+          "name": "Resultados operacionais",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2",
+            "3"
+          ],
+          "minus": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
+          "code": "8",
+          "parent": "B",
+          "name": "Proveitos e ganhos financeiros",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "66",
+              "code_to": "67",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "9",
+          "parent": "B",
+          "name": "Custos e perdas financeiros",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "76",
+              "code_to": "77",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "B",
+          "parent": "C",
+          "name": "Resultados financeiros",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "8"
+          ],
+          "minus": [
+            "9"
+          ]
+        },
+        {
+          "code": "10",
+          "parent": "D",
+          "name": "Proveitos e ganhos não operacionais",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "68",
+              "code_to": "68",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "11",
+          "parent": "D",
+          "name": "Custos e perdas não operacionais",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "78",
+              "code_to": "78",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "D",
+          "parent": "C",
+          "name": "Resultados não operacionais",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "10"
+          ],
+          "minus": [
+            "11"
+          ]
+        },
+        {
+          "code": "12",
+          "parent": "E",
+          "name": "Proveitos e ganhos extraordinários",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "69",
+              "code_to": "69",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "13",
+          "parent": "E",
+          "name": "Custos e perdas extraordinários",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "79",
+              "code_to": "79",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "E",
+          "parent": "C",
+          "name": "Resultados extraordinários",
+          "sequence": 170,
+          "is_total": true,
+          "plus": [
+            "12"
+          ],
+          "minus": [
+            "13"
+          ]
+        },
+        {
+          "code": "C",
+          "parent": "F",
+          "name": "Resultado antes de impostos",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "A",
+            "B",
+            "D",
+            "E"
+          ]
+        },
+        {
+          "code": "14",
+          "parent": "F",
+          "name": "Imposto sobre os lucros",
+          "sequence": 190,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "87",
+              "code_to": "87",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "F",
+          "parent": null,
+          "name": "Resultado líquido do exercício",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "C"
+          ],
+          "minus": [
+            "14"
+          ]
+        }
+      ]
+    }
+  ]
+}

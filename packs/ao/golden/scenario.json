@@ -1,0 +1,425 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Luanda trading company, VAT-registered in the general regime and filing the Modelo 7 monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercício de 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "AO-PGC-BAL",
+    "AO-PGC-DR"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-luanda",
+      "name": "Distribuidora Talatona, Lda",
+      "type": "customer",
+      "country": "AO"
+    },
+    {
+      "ref": "cust-hotel",
+      "name": "Hotel Baía de Luanda, S.A.",
+      "type": "customer",
+      "country": "AO"
+    },
+    {
+      "ref": "cust-cabinda",
+      "name": "Comercial Cabinda Norte, Lda",
+      "type": "customer",
+      "country": "AO"
+    },
+    {
+      "ref": "cust-export",
+      "name": "Kinshasa Négoce SARL",
+      "type": "customer",
+      "country": "CD"
+    },
+    {
+      "ref": "cust-pt",
+      "name": "Estudos Atlântico, Lda",
+      "type": "customer",
+      "country": "PT"
+    },
+    {
+      "ref": "supp-luanda",
+      "name": "Armazéns do Kilamba, Lda",
+      "type": "supplier",
+      "country": "AO"
+    },
+    {
+      "ref": "supp-bank",
+      "name": "Banco Comercial Angolano, S.A.",
+      "type": "supplier",
+      "country": "AO"
+    },
+    {
+      "ref": "supp-china",
+      "name": "Shenzhen Electronics Co.",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supp-pt",
+      "name": "Consultoria Lusitana, Lda",
+      "type": "supplier",
+      "country": "PT"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-luanda",
+      "date": "2026-02-05",
+      "why": "A domestic sale at the general rate of 14 %: field 01 for the base and field 02 for the tax, 7,000 on 50,000.",
+      "lines": [
+        {
+          "name": "Computadores portáteis",
+          "quantity": 10,
+          "unit_price": 5000,
+          "tax": "AO-S-14",
+          "account": "613"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-luanda",
+      "date": "2026-02-06",
+      "why": "A sale of widely consumed foodstuffs at the reduced rate of 5 % (Anexo I): the same fields 01 and 02, 10,000 on 200,000 — the form has no line per rate.",
+      "lines": [
+        {
+          "name": "Farinha de milho — sacos de 25 kg",
+          "quantity": 400,
+          "unit_price": 500,
+          "tax": "AO-S-5",
+          "account": "613"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-hotel",
+      "date": "2026-02-09",
+      "why": "A catering service at the reduced rate of 7 % for hotels and restaurants: 7,000 on 100,000, reported in fields 01 and 02 with the other rates.",
+      "lines": [
+        {
+          "name": "Serviço de restauração para um evento",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "AO-S-7-HR",
+          "account": "621"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-cabinda",
+      "date": "2026-02-10",
+      "why": "A sale of goods under the special regime of Cabinda at 1 %: 1,000 on 100,000.",
+      "lines": [
+        {
+          "name": "Material de construção para a província de Cabinda",
+          "quantity": 100,
+          "unit_price": 1000,
+          "tax": "AO-S-1-CAB",
+          "account": "613"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-02-11",
+      "why": "An export of goods, exempt with the right to deduct: field 10, no tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Café em grão, carregamento de exportação",
+          "quantity": 20,
+          "unit_price": 12500,
+          "tax": "AO-S-EXP",
+          "account": "613"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-luanda",
+      "date": "2026-02-12",
+      "why": "A sale of medicines, exempt without the right to deduct under article 12: field 11.",
+      "lines": [
+        {
+          "name": "Medicamentos — caixas",
+          "quantity": 80,
+          "unit_price": 1000,
+          "tax": "AO-S-EX",
+          "account": "613"
+        }
+      ]
+    },
+    {
+      "ref": "INV-007",
+      "type": "sale_invoice",
+      "contact": "cust-pt",
+      "date": "2026-02-16",
+      "why": "A study rendered to a recipient in Portugal, outside the scope of the tax: field 12, in no tax account, and still revenue.",
+      "lines": [
+        {
+          "name": "Estudo de mercado entregue em Lisboa",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "AO-S-NS",
+          "account": "621"
+        }
+      ]
+    },
+    {
+      "ref": "INV-008",
+      "type": "sale_invoice",
+      "contact": "cust-luanda",
+      "date": "2026-02-17",
+      "why": "A general-rate sale on an awkward value, 333.33, so that the rounding stays on record: 14 % is 46.6662, which half-up rounding makes 46.67.",
+      "lines": [
+        {
+          "name": "Hora de configuração de rede",
+          "quantity": 1,
+          "unit_price": 333.33,
+          "tax": "AO-S-14",
+          "account": "621"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-luanda",
+      "date": "2026-02-24",
+      "why": "A credit note for one laptop returned from INV-001, so fields 01 and 02 fall back by 5,000 and 700.",
+      "lines": [
+        {
+          "name": "Computador portátil devolvido",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "AO-S-14",
+          "account": "613"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-luanda",
+      "date": "2026-02-06",
+      "why": "Inventory bought at the general rate: field 18 for the base and field 19 for the deductible tax, on account 34521.",
+      "lines": [
+        {
+          "name": "Mercadorias para revenda",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "AO-P-14-EXI",
+          "account": "212"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-luanda",
+      "date": "2026-02-08",
+      "why": "A fixed asset bought at 14 %: field 16 and field 17, on the fixed-asset input account 34522.",
+      "lines": [
+        {
+          "name": "Servidor informático",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "AO-P-14-MFI",
+          "account": "115"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-luanda",
+      "date": "2026-02-10",
+      "why": "A service bought from an Angolan supplier: field 22 and field 23.",
+      "lines": [
+        {
+          "name": "Serviços de manutenção do armazém",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "AO-P-14-SERV",
+          "account": "752"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-luanda",
+      "date": "2026-02-11",
+      "why": "Other consumable goods: field 20 and field 21 on account 34523.",
+      "lines": [
+        {
+          "name": "Material de escritório",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "AO-P-14-OUT",
+          "account": "713"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-luanda",
+      "date": "2026-02-12",
+      "why": "Foodstuffs bought at the reduced rate of 5 %: the same fields 18 and 19 as at 14 %, 5,000 on 100,000.",
+      "lines": [
+        {
+          "name": "Arroz para revenda — sacos",
+          "quantity": 100,
+          "unit_price": 1000,
+          "tax": "AO-P-5-EXI",
+          "account": "212"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-luanda",
+      "date": "2026-02-13",
+      "why": "A representation expense whose tax the code does not let the buyer deduct: the 2,800 joins the cost and reaches no field.",
+      "lines": [
+        {
+          "name": "Despesas de representação",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "AO-P-14-BL",
+          "account": "752"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-007",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2026-02-14",
+      "why": "Bank charges, an exempt financial service: no tax and no field.",
+      "lines": [
+        {
+          "name": "Comissões e despesas bancárias",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "AO-P-EX",
+          "account": "767"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-008",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-02-18",
+      "why": "An import of goods: the tax paid at customs is deducted through fields 24 and 25 and is owed on account 3791 until it is paid.",
+      "lines": [
+        {
+          "name": "Impressoras importadas para revenda",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "AO-P-IMP-14",
+          "account": "212"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-009",
+      "type": "purchase_invoice",
+      "contact": "supp-pt",
+      "date": "2026-02-20",
+      "why": "A consultancy bought from a provider with no seat in Angola, the buyer charging the tax (article 29): field 13 for the base, field 15 for the tax due and field 14 for the same tax deducted.",
+      "lines": [
+        {
+          "name": "Consultoria jurídica prestada a partir de Lisboa",
+          "quantity": 1,
+          "unit_price": 80000,
+          "tax": "AO-P-EXT-14",
+          "account": "752"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-luanda",
+      "date": "2026-02-26",
+      "why": "A credit note for a short delivery on PINV-001, so fields 18 and 19 fall back by 10,000 and 1,400.",
+      "lines": [
+        {
+          "name": "Mercadorias — falta na entrega",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "AO-P-14-EXI",
+          "account": "212"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-03-04",
+      "amount": 250000,
+      "contact": "cust-export",
+      "journal": "BAN",
+      "match": "INV-005",
+      "why": "The export of INV-005 collected in full: a matched inbound payment."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-03-05",
+      "amount": 57000,
+      "contact": "cust-luanda",
+      "journal": "BAN",
+      "match": "INV-001",
+      "why": "INV-001 collected in full, tax included, before the credit note is offset: a matched inbound payment on a general-rate sale."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-03-06",
+      "amount": 228000,
+      "contact": "supp-luanda",
+      "journal": "BAN",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, tax included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-03-10",
+      "amount": 20000,
+      "contact": "cust-pt",
+      "journal": "BAN",
+      "match": null,
+      "why": "An advance received from a customer before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}
