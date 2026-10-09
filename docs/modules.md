@@ -3,8 +3,9 @@
 A module is a Postgres schema beside the socle. `fixed_assets` holds fixed
 assets and their depreciation; `budgets` holds a plan and compares it to the ledger;
 `tax` estimates the corporate income tax of a year from the books and from the
-rules a country pack carries. The socle stays in `public` and knows nothing
-about any of them.
+rules a country pack carries; `einvoicing` keeps the electronic invoice of a
+posted sale and every time it was sent. The socle stays in `public` and knows
+nothing about any of them.
 
 The decision behind this, with what it rules out, is in
 [decision 0051](decisions/0051-a-module-has-its-own-schema.md). This document is how to write one.
@@ -49,12 +50,26 @@ packs/<cc>/fixed_assets.json          the source of that data
 | `mcp.prefix` | Every MCP tool of the module is `<prefix>_<verb>`. |
 | `pack.section` | The file a country pack carries for it, `packs/<cc>/<section>.json`, and the folder it compiles into, `supabase/seed/modules/<section>/`. |
 
-The three that ship are three different shapes, and a new one is usually like
-one of them. `fixed-assets` has country data and posts. `budgets` has neither.
-`corporate-tax` — code `tax` — has the most country data of the three and, in
-its first version, posts nothing: every table that holds a result is written
-by a `security definer` function and by no role, which is how "only an owner
-calls a computation final" holds for psql and PostgREST alike.
+The four that ship are four different shapes, and a new one is usually like
+one of them.
+
+| Module | Folder | Country data | Posts | Written by |
+|---|---|---|---|---|
+| `assets` | `fixed-assets` | its own section, `fixed_assets` | yes | clients, under its policies, and `post_module_entry()` |
+| `budgets` | `budgets` | none | no | clients, under its policies |
+| `tax` | `corporate-tax` | its own section, `corporate_tax` — the most of the four | no, in its first version | `security definer` functions, and no role |
+| `einvoicing` | `einvoicing` | none of its own: the `einvoicing` section every pack already carries, read where the socle compiled it | no | `security definer` functions, and no role; the file itself is written in TypeScript, by a brick |
+
+`fixed-assets` has country data and posts. `budgets` has neither.
+`corporate-tax` — code `tax` — has the most country data and, in its first
+version, posts nothing: every table that holds a result is written by a
+`security definer` function and by no role, which is how "only an owner calls
+a computation final" holds for psql and PostgREST alike. `einvoicing` is the
+same shape with one more side: what it keeps is produced outside the database
+— a file a brick of `packages/formats/` writes, sent through a transport the
+host brings — so its functions check what can be checked without trusting
+the caller (the document is a posted sale, the profile is the pack's, the
+checksum is the text's) and its tables only ever move forward.
 
 The folder under `modules/` is named after what the module is, lower case with
 hyphens — `fixed-assets` — and need not be the code. `ekwo module` takes
@@ -326,7 +341,10 @@ registry takes in the database.
 4. Tests in `modules/<folder>/tests/`. The root `npm test` picks them up.
 5. `npm run docs:schema` — the generator covers module schemas, one section
    each.
-6. Tools in `packages/mcp/src/tools/modules.ts`, under your prefix.
+6. Tools in `packages/mcp/src/tools/modules.ts`, under your prefix. What a
+   tool needs that is not in the database — the transport an electronic
+   invoice leaves through — reaches it in the context the server passes beside
+   the backend, set by whoever runs the server and never by a model.
 
 The guards in `tests/modules.test.ts` are what will tell you if you got it
 wrong: row level security, `module_enabled()` in the policies, `company_id` on

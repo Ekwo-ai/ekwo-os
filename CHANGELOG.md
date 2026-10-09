@@ -24,6 +24,35 @@ somewhere has already run it.
   Peppol brick also checks a participant identifier
   (`validateParticipantId()`, with the check digits of seven schemes) and
   computes its DNS name on the SML (`smlHostname()`), without a network call.
+- **The `einvoicing` module: the electronic invoice of a posted sale, and
+  every time it was sent.** A fourth module, in its own schema. From a posted
+  sale invoice or credit note it writes the file in the profile the company's
+  country pack declares — `peppol-bis-3` by `@ekwo-ai/peppol-ubl`,
+  `factur-x-en16931` by `@ekwo-ai/factur-x`, held to the posted totals to the
+  cent — and keeps the exact file with its SHA-256 and every rule of the
+  format it breaks. A file that breaks one is not sent, and the database says
+  which, word for word. Each sending is a row with a state that only moves
+  forward — `prepared`, `submitted`, `accepted_by_access_point`, `delivered`,
+  `rejected`, `failed`: a reference from a transport is not a delivery — and
+  every answer of the service is kept verbatim. A rejected document is issued
+  and sent again, as a second row. A profile no brick writes is refused as
+  `format_without_brick`. Capabilities `einvoicing.read` and
+  `einvoicing.send`; sending is not posting. The module knows no country,
+  names no provider and posts nothing. See
+  [`modules/einvoicing`](modules/einvoicing/README.md).
+- **A transport contract for electronic invoices**, in `@ekwo-ai/core`:
+  `send`, `status`, `receive` and `lookup`, with no credential crossing it.
+  The one transport that ships writes the file to a folder and reads the
+  receipts left beside it; network transports come later, behind the same
+  contract.
+- **MCP tools `einvoicing_validate`, `einvoicing_issue`, `einvoicing_status`
+  and `einvoicing_list`**, and **`ekwo einvoice validate | issue | status |
+  list`**. `EKWO_EINVOICE_DIRECTORY` (or `--to`) names the folder files are
+  sent to; unset, they are issued and kept, and nothing leaves.
+- Once a sending has left, `documents.peppol_status` and `peppol_message_id`
+  carry its state and reference, which is what keeps `unpost_document()` from
+  taking the document back to draft.
+
 - **A filing is proved by its hash** (`20261007192418`; decision
   [0066](docs/decisions/0066-a-filing-is-proved-by-its-hash.md);
   [`docs/filing-proofs.md`](docs/filing-proofs.md)). The sha256 of the exact

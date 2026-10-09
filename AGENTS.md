@@ -186,6 +186,7 @@ including `/mcp`. It reads today; writing is coming, so do not promise it.
 | A payment | `ekwo payment record --doc <doc> --amount … --date … --bank-account <id>` | `record_payment` |
 | Books kept elsewhere (FEC, journal items, a report, a trial balance) | `ekwo import <source> <files…> --dry-run --save-mapping map.json`, then `--mapping map.json` | `import_books` (`dry_run` first) |
 | A bank statement file | `ekwo import camt.053 <file>` (or `coda`, `cfonb120`) | `import_bank_statement` |
+| The electronic invoice of a posted sale (module `einvoicing`) | `ekwo einvoice validate <doc>`, then `ekwo einvoice issue <doc>` | `einvoicing_validate`, then `einvoicing_issue` |
 | The VAT return of a period | — | `vat_return` |
 | Trial balance, ledger | — | `trial_balance`, `general_ledger` |
 
