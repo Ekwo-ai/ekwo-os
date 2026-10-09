@@ -7,7 +7,9 @@ Factur-X / ZUGFeRD electronic invoices in TypeScript.
   `BR-IC`, `BR-G`, `BR-O`). Profiles MINIMUM, BASIC WL, BASIC (default), EN 16931, EXTENDED.
 - **PDF/A-3 embedding.** Attaches the XML as `factur-x.xml` with `AFRelationship /Alternative`
   and writes the XMP packet with the Factur-X extension schema.
-- **Extraction.** Reads `factur-x.xml` or `zugferd-invoice.xml` back from any PDF.
+- **Extraction.** Reads `factur-x.xml`, `zugferd-invoice.xml` or `xrechnung.xml` back from any PDF.
+- **Reading a received invoice.** `readCii` and `readFacturX` turn the CII of any profile
+  into the same plain result `@ekwo-ai/peppol-ubl` returns from UBL — see [Reading](#reading).
 - **Totals you can trust.** One VAT group per category and rate, VAT computed on the rounded
   basis, prepayments, credit notes referencing the original invoice.
 - Zero dependencies for the XML part; `pdf-lib` only for the PDF part (separate entry point).
@@ -92,6 +94,9 @@ back to `C62` (unit). See `UNIT_CODES` and `toUnitCode`.
 | `buildXmpMetadata`, `CONFORMANCE_LEVELS`, `GUIDELINES`, `DOCUMENT_TYPE_CODES` | Constants of the specification. |
 | `embedFacturX(pdf, xml, { profile?, title?, creator?, producer?, date? })` *(`/pdf`)* | Returns a new PDF with the XML attached and the PDF/A-3 XMP packet. |
 | `extractFacturX(pdf)` *(`/pdf`)* | `{ filename, xml }` or `null`. |
+| `readCii(xml, { maxBytes?, maxDepth?, maxElements? })` | `{ invoice, violations, profile }`, see [Reading](#reading). |
+| `readFacturX(pdf, options?)` *(`/pdf`)* | The same, read out of the PDF, with the `filename` of the attachment. |
+| `InvoiceFileError`, `profileOf`, `checkReceived`, `isValidIban`, `CREDIT_NOTE_TYPE_CODES` | What reading refuses, and the helpers it uses. |
 
 ## Scope and limitations
 
@@ -102,6 +107,74 @@ back to `C62` (unit). See `UNIT_CODES` and `toUnitCode`.
   platform before going live.
 - No XSD or Schematron validation is performed. Test against a validator such as the FNFE
   Factur-X validator or the Mustang project.
+
+## Reading
+
+The invoice a supplier sends you as Factur-X or ZUGFeRD, turned into a plain object a
+purchase draft can be made from.
+
+```ts
+import { readCii, InvoiceFileError } from '@ekwo-ai/factur-x';
+import { readFacturX } from '@ekwo-ai/factur-x/pdf';
+
+const { invoice, violations, profile, filename } = await readFacturX(pdfBytes);
+profile;                 // 'minimum' | 'basic-wl' | 'basic' | 'en16931' | 'extended' | null
+invoice.kind;            // 'invoice' | 'credit_note', from the type code
+invoice.totals.payable;  // '648.40', a decimal as text, never a number
+
+const same = readCii(xmlBytesOrText);   // the XML alone, without pdf-lib
+```
+
+- `readCii(input: string | Uint8Array, options?: ReadOptions): ReceivedCiiFile` reads a
+  CII D16B `CrossIndustryInvoice` — Factur-X 1.0, ZUGFeRD 2.x, an XRechnung in CII — and
+  returns `{ invoice, violations, profile }`.
+- `readFacturX(pdf: Uint8Array | ArrayBuffer, options?: ReadOptions): Promise<ReceivedFacturX>`
+  *(`/pdf`)* finds the XML attached to the PDF and reads it with `readCii`; the result
+  adds the `filename` it was attached under.
+- `profileOf(guideline)` is the profile a guideline identifier (BT-24) declares. An
+  EN 16931 CIUS (`urn:cen.eu:en16931:2017#compliant#…`, XRechnung for one) reads as
+  `en16931`; an identifier this package does not know is `null`, and
+  `invoice.customizationId` keeps what the file wrote.
+
+**The shape is the UBL reader's.** `invoice` is a `ReceivedInvoice`, the type
+`readUbl` of `@ekwo-ai/peppol-ubl` returns: each field names the EN 16931 business term it
+holds, and a business term is in the same field whichever syntax carried it — the test
+suite reads one invoice written in both syntaxes and gets the same object from both. The
+two bricks do not depend on each other; they hold byte-for-byte copies of the files that
+define the shape, the checks, the XML reader and the decimals, and a test keeps them
+identical. `syntax` says which one was read.
+
+**Nothing is recomputed, nothing is defaulted.** A figure is the text the file wrote,
+checked to be a decimal; an absent element is `null` — a MINIMUM or BASIC WL file has no
+line and no line total, and comes back so. The arithmetic of EN 16931 (BR-CO-10 to
+BR-CO-17) is checked on exact decimals and reported in `violations`. CII-specific
+findings are there too: `invalid_iban` (an `IBANID` whose check digits fail, still
+returned as written), `invalid_attachment`, `unsupported_date_format` (a date in a
+format other than 102, returned as `null`). Where CII writes something once for the
+document that UBL writes per means of payment — the payment reference (BT-83) and the
+direct debit mandate (BT-89) — it is returned on every means of payment.
+
+**What is not an invoice throws an `InvoiceFileError`** with a `code`: the codes of the
+UBL reader (`malformed_xml`, `unsupported_encoding`, `doctype_forbidden`,
+`undefined_entity`, `too_large`, `too_deep`, `too_many_elements`, `not_an_invoice`,
+`missing_element`, `invalid_value`), plus `not_a_pdf` and `no_embedded_invoice` from
+`readFacturX`. A line is required except in the MINIMUM and BASIC WL profiles. No raw
+error of the XML parser or of `pdf-lib` escapes. The XML is read by a strict reader of
+the package's own: no DOCTYPE and so no entity expansion, UTF-8 only, size, depth and
+element limits.
+
+**Limits.**
+
+- The PDF is opened with `pdf-lib`, already the dependency of the `/pdf` entry point:
+  the attachment is found in the `EmbeddedFiles` name tree of the catalogue, under one
+  of the three names above. An attachment reachable only from a page annotation, an
+  encrypted PDF, and a stream in a filter `pdf-lib` does not decode are not read: they
+  are refused with one of the codes above, never read wrongly. The XMP metadata is not read: the profile
+  comes from the XML.
+- ZUGFeRD 1.0 (`CrossIndustryDocument`, another namespace) is refused as
+  `not_an_invoice`.
+- Elements of EXTENDED beyond EN 16931 (several deliveries, line sub-structures…) are not
+  read. Nothing is validated against the CII schema or a Schematron.
 
 ## Development
 

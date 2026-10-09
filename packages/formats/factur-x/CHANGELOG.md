@@ -6,6 +6,19 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- **Reading a received invoice.** `readCii()` reads a CII D16B
+  `CrossIndustryInvoice` of any profile — MINIMUM, BASIC WL, BASIC, EN 16931,
+  EXTENDED, ZUGFeRD 2.x spellings included — and says which profile it
+  declares. `readFacturX()` of `@ekwo-ai/factur-x/pdf` reads it out of the
+  PDF. The result is the `ReceivedInvoice` that `readUbl()` of
+  `@ekwo-ai/peppol-ubl` returns, from byte-for-byte copies of the same files:
+  figures as the decimal text the file wrote, the EN 16931 arithmetic reported
+  in `violations`, an `InvoiceFileError` with a code for what is not an
+  invoice.
+- `extractFacturX()` also finds `xrechnung.xml`, the name ZUGFeRD gives the
+  XML of its XRECHNUNG profile.
+
 ## [0.2.0] — 2026-09-14
 
 Released with Ekwo OS `v0.2.0`, the first tagged release of the repository this

@@ -11,6 +11,19 @@ somewhere has already run it.
 
 ### Added
 
+- **The e-invoicing bricks read what they receive.** `readUbl()` of
+  `@ekwo-ai/peppol-ubl` reads a received Peppol BIS Billing 3.0 invoice or
+  credit note (UBL 2.1); `readCii()` and `readFacturX()` of
+  `@ekwo-ai/factur-x` read a Factur-X or ZUGFeRD invoice of any profile, from
+  its XML or out of its PDF. Both return the same `ReceivedInvoice` — parties
+  with their schemes, dates, lines, VAT breakdown, totals as exact decimal
+  text, payment means, attached documents as bytes — so that a received
+  invoice becomes a purchase draft the same way whichever syntax carried it.
+  The EN 16931 arithmetic is reported in `violations`, never corrected; a
+  file that is not an invoice throws an `InvoiceFileError` with a code. The
+  Peppol brick also checks a participant identifier
+  (`validateParticipantId()`, with the check digits of seven schemes) and
+  computes its DNS name on the SML (`smlHostname()`), without a network call.
 - **A filing is proved by its hash** (`20261007192418`; decision
   [0066](docs/decisions/0066-a-filing-is-proved-by-its-hash.md);
   [`docs/filing-proofs.md`](docs/filing-proofs.md)). The sha256 of the exact

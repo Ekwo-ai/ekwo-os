@@ -7,6 +7,21 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- **Reading a received invoice.** `readUbl()` reads a UBL 2.1 `Invoice` or
+  `CreditNote`, bare or in the envelope of an access point, into a
+  `ReceivedInvoice`: parties with their schemes, dates, references, lines, VAT
+  breakdown, totals, payment means and the documents attached, an embedded PDF
+  as bytes. Figures stay the decimal text the file wrote; the arithmetic of
+  EN 16931 (BR-CO-10 to BR-CO-17) is reported in `violations`, never
+  corrected. A file that is not an invoice throws an `InvoiceFileError` with a
+  code, read by a strict XML reader of the package's own (no DOCTYPE, size,
+  depth and element limits). `@ekwo-ai/factur-x` returns the same shape from
+  CII.
+- **Participant identifiers.** `validateParticipantId()` checks a Peppol
+  participant identifier — scheme of the EAS list Peppol delivers to, numeric
+  or symbolic spelling, and the check digits of seven schemes whose rule is
+  published. `smlHostname()` computes the DNS name of a participant on an SML,
+  for the CNAME and the NAPTR lookups, without any network call.
 - **The first version.** A sales invoice or credit note as Peppol BIS Billing
   3.0 (UBL 2.1), from a posted document as three row shapes — header, lines,
   VAT breakdown — with the figures written as they were posted and never

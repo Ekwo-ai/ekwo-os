@@ -21,7 +21,8 @@ VAT rounded once per tax. They are declared in this package's own types, so
 any invoicing system that can produce the same three things can use it. It
 reads no database and knows no accounting.
 
-Writing the file is all it does. **Sending it takes a certified access point**,
+Writing the file, and [reading one received](#reading), is all it does.
+**Sending it takes a certified access point**,
 a certificate and somebody on call, and this package has none of the three: you
 get the same UBL anybody gets, and you send it through the access point you
 chose.
@@ -229,6 +230,93 @@ against it found what reading had not:
   found it to be an address scheme, which for two of the four countries that
   declare this profile is not an ISO 6523 identifier scheme at all (BR-CL-11).
 
+## Reading
+
+The other half of e-invoicing: the invoice a supplier sends you, turned into a
+plain object a purchase draft can be made from.
+
+```ts
+import { readUbl, InvoiceFileError } from '@ekwo-ai/peppol-ubl';
+
+const { invoice, violations } = readUbl(bytesOrText);
+invoice.kind;            // 'invoice' | 'credit_note'
+invoice.seller.vatId;    // 'BE0999999031'
+invoice.totals.payable;  // '648.40', a decimal as text, never a number
+invoice.attachments[0];  // { filename: 'RCV-2026-0107.pdf', mimeType: 'application/pdf', content: Uint8Array, … }
+```
+
+`readUbl(input: string | Uint8Array, options?: ReadOptions): ReceivedInvoiceFile`
+reads a UBL 2.1 `Invoice` or `CreditNote` — bare, or inside the
+`StandardBusinessDocument` envelope an access point hands it over in — and
+returns a `ReceivedInvoice`: the seller and the buyer (legal and trading
+names, VAT and legal identifiers, electronic addresses with their schemes,
+postal addresses, contacts), number, type code, dates, currency, references,
+notes, lines (quantity and unit, net amount, prices, VAT category and rate,
+item identifiers), document allowances and charges, the VAT breakdown, the
+totals, the payment means (an IBAN, told from another account by its check
+digits) and the documents attached — an embedded PDF comes back as bytes, with
+its MIME type and its file name. Every field names the business term of
+EN 16931 it holds.
+
+**The shape is shared.** `@ekwo-ai/factur-x` returns the same
+`ReceivedInvoice` from a CII invoice (`readCii`, `readFacturX`), so whoever
+turns a received invoice into a purchase does it once for both syntaxes. The
+two bricks hold byte-for-byte copies of the files that define it, and a test
+keeps them identical.
+
+**Nothing is recomputed, nothing is defaulted.** A figure is the text the file
+wrote, checked to be a decimal, compared on exact decimals; an absent element
+is `null`. The arithmetic of EN 16931 (BR-CO-10 to BR-CO-17) is checked and
+what does not add up comes back in `violations`, next to the figures as the
+file wrote them. A credit note's figures are positive, as written: the sign is
+`kind`.
+
+**A file that is not an invoice throws an `InvoiceFileError`**, with a `code`:
+`malformed_xml`, `unsupported_encoding` (UTF-8 only), `doctype_forbidden`,
+`undefined_entity`, `too_large`, `too_deep`, `too_many_elements`,
+`not_an_invoice` (another root; a CII file is pointed at the CII reader),
+`missing_element` (no number, date, currency, totals or line), `invalid_value`
+(a date that is not one, an amount that is not a decimal). No raw parser error
+escapes. The XML is read by a strict reader of the package's own — no DOCTYPE
+and so no entity expansion, the five predefined entities only, a size limit
+before reading (`maxBytes`, 64 MiB by default), a depth and an element limit
+while reading — because a received file is hostile until read.
+
+What it does not do: validate against the schemas or the Schematron (whether
+the file is valid on the network was the sending access point's question),
+check signatures, or read UBL extensions.
+
+### Participant identifiers and the SML
+
+```ts
+import { validateParticipantId, smlHostname, SML_ZONES } from '@ekwo-ai/peppol-ubl';
+
+validateParticipantId('BE:EN:0999999031');
+// { valid: true, scheme: '0208', value: '0999999031', identifier: '0208:0999999031', canonical: '0208:0999999031', problems: [] }
+
+smlHostname('0208:0999999031', SML_ZONES.production, 'naptr');
+// '<base32 of SHA-256>.iso6523-actorid-upis.edelivery.tech.ec.europa.eu'
+```
+
+`validateParticipantId(input: string): ParticipantIdCheck` takes
+`scheme:value`, with or without `iso6523-actorid-upis::` in front, and the
+symbolic scheme names of the Peppol code list (`BE:EN`, `GLN`, `NO:ORG`…),
+returned as the numeric code. It checks that the scheme is an electronic
+address scheme (EAS) Peppol delivers to, and the check digits of the schemes
+whose rule is published by their issuer: GLN (0088), Belgian enterprise number
+(0208), SIREN (0002), Swedish (0007) and Norwegian (0192) organisation
+numbers, Australian Business Number (0151) and LEI (0199) — `CHECKED_SCHEMES`.
+Other schemes are checked for nothing but being non-empty: a rule written from
+a guess would refuse somebody's real address. The SIRET (0009) is one of them,
+for the published exception to its Luhn rule this package could not source
+exactly.
+
+`smlHostname(participant, zone, lookup)` computes the DNS name under which the
+SML publishes a participant: `B-` and the MD5 of the lower-cased identifier for
+the `cname` lookup, the unpadded base32 of its SHA-256 for the `naptr` lookup
+of BDXL. It is pure — the hashes are written out in the package, there is no
+default zone, and nothing is resolved: the lookup belongs to a transport.
+
 ## Sources
 
 - OASIS, *Universal Business Language 2.1*, schemas of 4 November 2013:
@@ -239,6 +327,17 @@ against it found what reading had not:
   tag `v3.0.20`.
 - CEN/TC 434, the validation artefacts of EN 16931:
   <https://github.com/ConnectingEurope/eInvoicing-EN16931>.
+- OpenPeppol, *Policy for use of Identifiers*, version 4, and the code list
+  *Participant identifier schemes*: <https://docs.peppol.eu/edelivery/> —
+  the identifier scheme, case-insensitive comparison, symbolic scheme names.
+- OpenPeppol, *Service Metadata Locator (SML)* specification, and OASIS
+  *Business Document Metadata Service Location (BDXL) 1.0* — the DNS names
+  of a participant. RFC 1321 (MD5), FIPS 180-4 (SHA-256), RFC 4648 (base32).
+- The check digit rules, each cited where it is implemented in
+  `src/participant.ts`: GS1 General Specifications (GLN), the Crossroads Bank
+  for Enterprises (Belgian enterprise number), INSEE (SIREN), Skatteverket and
+  the Brønnøysund Register Centre (organisation numbers), the Australian
+  Business Register (ABN), ISO 17442 (LEI), ISO 13616 (IBAN).
 
 ## Licence
 
