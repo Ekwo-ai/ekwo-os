@@ -32,6 +32,9 @@ export default defineConfig({
       '@ekwo-ai/peppol-ubl': fileURLToPath(
         new URL('./packages/formats/peppol-ubl/src/index.ts', import.meta.url),
       ),
+      '@ekwo-ai/factur-x': fileURLToPath(
+        new URL('./packages/formats/factur-x/src/index.ts', import.meta.url),
+      ),
       '@ekwo-ai/camt053': fileURLToPath(
         new URL('./packages/formats/camt053/src/index.ts', import.meta.url),
       ),

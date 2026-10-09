@@ -51,9 +51,11 @@
     "@ekwo-ai/camt053": "^0.11.1",
     "@ekwo-ai/cfonb120": "^0.11.1",
     "@ekwo-ai/coda": "^0.11.1",
+    "@ekwo-ai/factur-x": "^0.11.1",
     "@ekwo-ai/fec": "^0.11.1",
     "@ekwo-ai/journal-items": "^0.11.1",
     "@ekwo-ai/journal-report": "^0.11.1",
+    "@ekwo-ai/peppol-ubl": "^0.11.1",
     "@ekwo-ai/trial-balance": "^0.11.1",
     "@ekwo-ai/transaction-journal": "^0.11.1",
     "@ekwo-ai/xaf": "^0.11.1"

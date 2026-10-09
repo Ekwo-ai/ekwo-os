@@ -30,3 +30,4 @@ export {
 } from './registration.js';
 export * from './books/index.js';
 export * from './proofs/index.js';
+export * from './einvoicing/index.js';
