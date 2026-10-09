@@ -420,8 +420,10 @@ declare
   v_next     integer;
   v_bad      jsonb;
 begin
+  -- A document of a company the caller may not know of is answered as one
+  -- that does not exist, before any capability is asked about it.
   select * into v_doc from public.documents d where d.id = p_document_id;
-  if not found then
+  if not found or not public.may_know_of_company(v_doc.company_id) then
     raise exception 'unknown_document: document % does not exist', p_document_id
       using errcode = 'P0002';
   end if;
@@ -494,7 +496,7 @@ begin
   values
     (v_doc.company_id, p_document_id, v_next, p_profile, p_brick, p_specification, p_filename, p_media_type,
      p_content, octet_length(p_content), lower(p_checksum), p_violations,
-     jsonb_array_length(p_violations) = 0, auth.uid())
+     jsonb_array_length(p_violations) = 0, public.acting_user())
   returning * into v_issue;
 
   return v_issue;
@@ -529,7 +531,7 @@ declare
   v_rules  text;
 begin
   select * into v_issue from einvoicing.issues i where i.id = p_issue_id;
-  if not found then
+  if not found or not public.may_know_of_company(v_issue.company_id) then
     raise exception 'unknown_einvoice: no electronic invoice % was issued', p_issue_id
       using errcode = 'P0002';
   end if;
@@ -584,13 +586,13 @@ begin
   insert into einvoicing.transmissions
     (company_id, document_id, issue_id, sequence, channel, service, prepared_by)
   values
-    (v_issue.company_id, v_issue.document_id, v_issue.id, v_next, p_channel, nullif(btrim(p_service), ''), auth.uid())
+    (v_issue.company_id, v_issue.document_id, v_issue.id, v_next, p_channel, nullif(btrim(p_service), ''), public.acting_user())
   returning * into v_row;
 
   insert into einvoicing.transmission_events
     (company_id, transmission_id, sequence, state, recorded_by)
   values
-    (v_row.company_id, v_row.id, 1, 'prepared', auth.uid());
+    (v_row.company_id, v_row.id, 1, 'prepared', public.acting_user());
 
   return v_row;
 end;
@@ -621,7 +623,7 @@ declare
   v_next integer;
 begin
   select * into v_row from einvoicing.transmissions t where t.id = p_transmission_id;
-  if not found then
+  if not found or not public.may_know_of_company(v_row.company_id) then
     raise exception 'unknown_transmission: no sending % was recorded', p_transmission_id
       using errcode = 'P0002';
   end if;
@@ -659,7 +661,7 @@ begin
   insert into einvoicing.transmission_events
     (company_id, transmission_id, sequence, state, reference, message, detail, occurred_at, recorded_by)
   values
-    (v_row.company_id, v_row.id, v_next, p_state, p_reference, p_message, p_detail, p_occurred_at, auth.uid());
+    (v_row.company_id, v_row.id, v_next, p_state, p_reference, p_message, p_detail, p_occurred_at, public.acting_user());
 
   -- The socle's signal that the number is in somebody else's hands: the two
   -- columns `unpost_document()` reads before taking a document back to draft.
@@ -831,7 +833,7 @@ values (
   'einvoicing',
   '1.0.0',
   'available',
-  '20260922162500'
+  '20261007060225'
 )
 on conflict (code) do update set
   name               = excluded.name,

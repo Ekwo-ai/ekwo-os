@@ -6,7 +6,7 @@
   "schema": "einvoicing",
   "version": "1.0.0",
   "status": "available",
-  "requires_socle_min": "20260922162500",
+  "requires_socle_min": "20261007060225",
   "posts": false,
   "mcp": { "prefix": "einvoicing" }
 }
