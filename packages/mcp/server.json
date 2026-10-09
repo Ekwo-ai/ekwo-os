@@ -58,6 +58,11 @@
           "name": "EKWO_ACT_AS_USER_ID",
           "description": "Required with EKWO_DB_URL: the auth.users id the server acts for",
           "isRequired": false
+        },
+        {
+          "name": "EKWO_EINVOICE_DIRECTORY",
+          "description": "Optional: the folder electronic invoices are sent to. Unset, they are issued and kept, and not sent",
+          "isRequired": false
         }
       ]
     }

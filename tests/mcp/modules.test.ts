@@ -12,12 +12,19 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import {
+  ENV,
   MODULE_TOOLSETS,
   buildServer,
+  einvoiceTransportFrom,
   installedModules,
   type Backend,
+  type ServerOptions,
 } from '../../packages/mcp/src/index.js';
+import { directoryTransport, einvoiceChecksum } from '@ekwo-ai/core';
+import { packIssuing, packWithoutBrick, sale, seller } from '../../modules/einvoicing/tests/helpers.js';
 import { listModules } from '../../packages/cli/src/module/read.js';
 import { asUser, freshDatabase, moduleCodes, one, repoRoot, rows } from '../helpers/db.js';
 import { newCompany } from '../helpers/factory.js';
@@ -29,10 +36,10 @@ let backend: Backend;
 let companyId: string;
 let ownerId: string;
 
-async function connect(modules: readonly string[]): Promise<Client> {
+async function connect(modules: readonly string[], as: Backend = backend, options: ServerOptions = {}): Promise<Client> {
   const client = new Client({ name: 'test', version: '0' });
   const [a, b] = InMemoryTransport.createLinkedPair();
-  await Promise.all([buildServer(backend, { modules }).connect(b), client.connect(a)]);
+  await Promise.all([buildServer(as, { ...options, modules }).connect(b), client.connect(a)]);
   return client;
 }
 
@@ -70,7 +77,7 @@ describe('the loader', () => {
     const client = await connect([]);
     const names = (await client.listTools()).tools.map((tool) => tool.name);
     expect(
-      names.filter((name) => /^(fixed_assets|assets|budgets)_/.test(name)),
+      names.filter((name) => /^(fixed_assets|assets|budgets|einvoicing)_/.test(name)),
     ).toEqual([]);
     await client.close();
   });
@@ -82,7 +89,7 @@ describe('the loader', () => {
         module.manifest,
       ]),
     );
-    const client = await connect(['assets', 'budgets']);
+    const client = await connect(['assets', 'budgets', 'einvoicing']);
     const names = (await client.listTools()).tools.map((tool) => tool.name);
 
     for (const toolset of MODULE_TOOLSETS) {
@@ -106,6 +113,12 @@ describe('the loader', () => {
       'budgets_list',
       'budgets_upsert_lines',
       'budgets_variance',
+    ]);
+    expect(names.filter((name) => name.startsWith('einvoicing_')).sort()).toEqual([
+      'einvoicing_issue',
+      'einvoicing_list',
+      'einvoicing_status',
+      'einvoicing_validate',
     ]);
     // The former `assets_*` names were removed in 0.11.0.
     expect(names.filter((name) => name.startsWith('assets_'))).toEqual([]);
@@ -297,5 +310,59 @@ describe('the budgets tools', () => {
         ],
       }),
     ).rejects.toThrow(/unknown_account: 999999/);
+  });
+});
+
+describe('the electronic invoicing tools', () => {
+  let folder: string;
+
+  beforeAll(async () => {
+    folder = await mkdtemp(join(tmpdir(), 'ekwo-mcp-einvoicing-'));
+  });
+
+  afterAll(async () => {
+    await rm(folder, { recursive: true, force: true });
+  });
+
+  it('check, issue, send through the folder the server was given, and follow it', async () => {
+    const s = await seller(db, packIssuing('peppol-bis-3'), 'Seller over MCP');
+    const documentId = await sale(db, s);
+    const client = await connect(['einvoicing'], s.backend, { einvoiceTransport: directoryTransport(folder) });
+
+    const checked = (await call(client, 'einvoicing_validate', { document_id: documentId, include_file: true })) as Record<string, unknown>;
+    expect(checked).toMatchObject({ profile: 'peppol-bis-3', violations: [], sendable: true });
+    expect(checked['checksum']).toBe(einvoiceChecksum(checked['file'] as string));
+
+    const issued = (await call(client, 'einvoicing_issue', { document_id: documentId, send: true })) as {
+      issue: { checksum: string };
+      transmission: { id: string; state: string; reference: string; channel: string };
+    };
+    expect(issued.issue.checksum).toBe(checked['checksum']);
+    expect(issued.transmission).toMatchObject({ state: 'submitted', channel: 'self' });
+    expect(await readFile(join(folder, issued.transmission.reference), 'utf8')).toBe(checked['file']);
+
+    const status = (await call(client, 'einvoicing_status', { document_id: documentId, refresh: true })) as Record<string, unknown>;
+    expect(status['state']).toBe('submitted');
+    const listed = (await call(client, 'einvoicing_list', { company_id: s.companyId })) as { count: number; transmissions: { id: string }[] };
+    expect(listed.transmissions.map((t) => t.id)).toEqual([issued.transmission.id]);
+    await client.close();
+  });
+
+  it('refuse to send with no transport, and a profile without a brick, by name', async () => {
+    const s = await seller(db, packIssuing('peppol-bis-3'), 'Seller without a folder');
+    const client = await connect(['einvoicing'], s.backend);
+    await expect(call(client, 'einvoicing_issue', { document_id: await sale(db, s), send: true })).rejects.toThrow(/no_transport/);
+    await client.close();
+
+    const unwritten = await seller(db, packWithoutBrick(), 'Seller without a brick');
+    const other = await connect(['einvoicing'], unwritten.backend);
+    await expect(call(other, 'einvoicing_validate', { document_id: await sale(db, unwritten) })).rejects.toThrow(/format_without_brick/);
+    await other.close();
+  });
+
+  it('take their folder from the environment, and none when it is unset', () => {
+    expect(einvoiceTransportFrom({})).toBeUndefined();
+    expect(einvoiceTransportFrom({ [ENV.einvoiceDirectory]: '  ' })).toBeUndefined();
+    expect(einvoiceTransportFrom({ [ENV.einvoiceDirectory]: folder })).toMatchObject({ channel: 'self', service: null });
   });
 });

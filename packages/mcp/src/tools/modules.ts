@@ -22,7 +22,15 @@
 
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from '../backend.js';
-import { money } from '@ekwo-ai/core';
+import {
+  TRANSMISSION_STATES,
+  einvoiceStatus,
+  issueEinvoice,
+  listEinvoiceTransmissions,
+  money,
+  validateEinvoice,
+  type EinvoiceTransport,
+} from '@ekwo-ai/core';
 import { companyId, isoDate, uuid } from './read.js';
 
 /** One module's tools, as the loader sees them. */
@@ -43,7 +51,17 @@ export interface ModuleTool {
   description: string;
   input: z.ZodObject<z.ZodRawShape>;
   readOnly: boolean;
-  run(backend: Backend, args: Record<string, never>): Promise<unknown>;
+  run(backend: Backend, args: Record<string, never>, context: ModuleToolContext): Promise<unknown>;
+}
+
+/**
+ * What the host hands a module tool beside the backend: things that are not
+ * in the database and never will be. Today one — the transport an electronic
+ * invoice leaves through, built by whoever runs the server with what it
+ * needs, so no credential ever reaches a tool or a model.
+ */
+export interface ModuleToolContext {
+  einvoiceTransport?: EinvoiceTransport;
 }
 
 /**
@@ -392,8 +410,117 @@ const BUDGETS: ModuleToolset = {
   ],
 };
 
+// ---------------------------------------------------------------------------
+// electronic invoicing — module code `einvoicing`, schema `einvoicing`
+//
+// The four functions of the core the command line calls too. Which format a
+// document is written in is the profile of its company's country pack; which
+// transport a file leaves through is the server's, set by whoever runs it
+// (EKWO_EINVOICE_DIRECTORY for the folder that ships) and never by a model.
+// ---------------------------------------------------------------------------
+
+const documentId = uuid.describe('The posted sale invoice or credit note. list_documents finds it.');
+
+const EINVOICING: ModuleToolset = {
+  code: 'einvoicing',
+  prefix: 'einvoicing',
+  schema: 'einvoicing',
+  tools: [
+    {
+      verb: 'validate',
+      title: 'Check an electronic invoice',
+      readOnly: true,
+      description:
+        'Writes the electronic invoice of a posted sale invoice or credit note, in the profile its company\'s country pack declares, and lists every rule of the format it breaks — as the format names them, word for word. Records nothing and sends nothing. A broken rule is fixed in the books (the customer\'s electronic address, a due date, a reference), never in the file. A profile no brick writes is refused as format_without_brick.',
+      input: z.object({
+        document_id: documentId,
+        include_file: z.boolean().optional().describe('Hand the file back too. Left out, the answer is what is wrong with it.'),
+      }),
+      async run(backend, args) {
+        return inSchema('einvoicing', () =>
+          validateEinvoice(backend, {
+            document_id: args['document_id'] as unknown as string,
+            ...(args['include_file'] === undefined ? {} : { include_file: args['include_file'] as unknown as boolean }),
+          }),
+        );
+      },
+    },
+    {
+      verb: 'issue',
+      title: 'Issue an electronic invoice',
+      readOnly: false,
+      description:
+        'Writes the electronic invoice of a posted sale and keeps it — the exact file, its checksum and the rules it breaks; the same file twice is one issue. With send, also hands it to the transport this server is configured with and records what came back. A file that breaks a rule is kept and never sent (einvoice_not_sendable, with the rules); a document already on its way is refused (einvoice_already_sent). Submitted is not delivered: follow it with einvoicing_status. Ask the user before sending: a file that leaves is in a customer\'s hands.',
+      input: z.object({
+        document_id: documentId,
+        send: z.boolean().optional().describe('Send it as well, through the configured transport. Left out, nothing leaves.'),
+        include_file: z.boolean().optional().describe('Hand the file back too.'),
+      }),
+      async run(backend, args, context) {
+        return inSchema('einvoicing', () =>
+          issueEinvoice(
+            backend,
+            {
+              document_id: args['document_id'] as unknown as string,
+              ...(args['send'] === undefined ? {} : { send: args['send'] as unknown as boolean }),
+              ...(args['include_file'] === undefined ? {} : { include_file: args['include_file'] as unknown as boolean }),
+            },
+            context.einvoiceTransport,
+          ),
+        );
+      },
+    },
+    {
+      verb: 'status',
+      title: 'Where an electronic invoice stands',
+      readOnly: false,
+      description:
+        'Everything known of the electronic invoice of one document: each file issued, each sending and every answer the service gave, verbatim. state is not_issued, issued, or the state of the latest sending: prepared, submitted, accepted_by_access_point, delivered, rejected or failed. With refresh, asks the configured transport again about the sending still open and records its answer. A rejected or failed document is sent again with einvoicing_issue.',
+      input: z.object({
+        document_id: documentId,
+        refresh: z.boolean().optional().describe('Ask the transport again about the open sending, and record what it says.'),
+      }),
+      async run(backend, args, context) {
+        return inSchema('einvoicing', () =>
+          einvoiceStatus(
+            backend,
+            {
+              document_id: args['document_id'] as unknown as string,
+              ...(args['refresh'] === undefined ? {} : { refresh: args['refresh'] as unknown as boolean }),
+            },
+            context.einvoiceTransport,
+          ),
+        );
+      },
+    },
+    {
+      verb: 'list',
+      title: 'Electronic invoices sent',
+      readOnly: true,
+      description:
+        'Every sending of electronic invoices of a company, or of one document, latest first: the document, the file, the channel and the service, the reference it gave, the state and the last words the service said.',
+      input: z.object({
+        company_id: companyId,
+        document_id: uuid.optional().describe('Only the sendings of this document.'),
+        state: z.enum(TRANSMISSION_STATES).optional().describe('Only the sendings in this state.'),
+        limit: z.number().int().min(1).max(500).optional().describe('At most this many. 100 by default.'),
+      }),
+      async run(backend, args) {
+        return inSchema('einvoicing', () =>
+          listEinvoiceTransmissions(backend, {
+            company_id: args['company_id'] as unknown as string,
+            ...(args['document_id'] === undefined ? {} : { document_id: args['document_id'] as unknown as string }),
+            ...(args['state'] === undefined ? {} : { state: args['state'] as unknown as (typeof TRANSMISSION_STATES)[number] }),
+            ...(args['limit'] === undefined ? {} : { limit: args['limit'] as unknown as number }),
+          }),
+        );
+      },
+    },
+  ],
+};
+
 /** Every module this release knows how to expose, by module code. */
-export const MODULE_TOOLSETS: readonly ModuleToolset[] = [FIXED_ASSETS, BUDGETS];
+export const MODULE_TOOLSETS: readonly ModuleToolset[] = [FIXED_ASSETS, BUDGETS, EINVOICING];
 
 /** The toolsets for a set of installed module codes, in a fixed order. */
 export function toolsetsFor(installed: readonly string[]): ModuleToolset[] {

@@ -12,7 +12,7 @@ import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mc
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from './backend.js';
-import { columns, relayableInvitation } from '@ekwo-ai/core';
+import { columns, relayableInvitation, type EinvoiceTransport } from '@ekwo-ai/core';
 import * as read from './tools/read.js';
 import * as write from './tools/write.js';
 import { toolsetsFor } from './tools/modules.js';
@@ -73,6 +73,14 @@ export interface ServerOptions {
    * is not set; the hosted connector and the tests leave it off.
    */
   inviteToRegister?: boolean;
+  /**
+   * How an electronic invoice leaves, for `einvoicing_issue` and
+   * `einvoicing_status`. Built by whoever runs the server — `start.ts` makes
+   * the folder transport from `EKWO_EINVOICE_DIRECTORY` — and never by a
+   * model: no credential reaches a tool. Left out, files are issued and kept,
+   * and sending is refused as no_transport.
+   */
+  einvoiceTransport?: EinvoiceTransport;
 }
 
 /**
@@ -967,7 +975,12 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
           inputSchema: tool.input.shape,
           annotations: { readOnlyHint: tool.readOnly, openWorldHint: false },
         },
-        async (args: unknown) => guard(() => tool.run(backend, args as Record<string, never>)),
+        async (args: unknown) =>
+          guard(() =>
+            tool.run(backend, args as Record<string, never>, {
+              ...(options.einvoiceTransport === undefined ? {} : { einvoiceTransport: options.einvoiceTransport }),
+            }),
+          ),
       );
     }
   }

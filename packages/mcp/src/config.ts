@@ -39,6 +39,7 @@ export const ENV = {
   ...IDENTITY_ENV,
   dbUrl: 'EKWO_DB_URL',
   actAsUserId: 'EKWO_ACT_AS_USER_ID',
+  einvoiceDirectory: 'EKWO_EINVOICE_DIRECTORY',
 } as const;
 
 const SURFACE = 'this server';

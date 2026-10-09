@@ -7,9 +7,9 @@
  */
 
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { registrationInvitation } from '@ekwo-ai/core';
+import { directoryTransport, registrationInvitation, type EinvoiceTransport } from '@ekwo-ai/core';
 import type { Backend } from './backend.js';
-import { openBackend, readConfig } from './config.js';
+import { ENV, openBackend, readConfig } from './config.js';
 import { assertSchemaSupported } from './schema.js';
 import { buildServer } from './server.js';
 import { installedModules } from './tools/modules.js';
@@ -49,14 +49,32 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
   // tools are all a client then sees.
   const modules = await installedModules(backend);
   const inviteToRegister = await shouldInviteToRegister(backend, env);
+  const einvoiceTransport = einvoiceTransportFrom(env);
   return {
-    server: buildServer(backend, { modules, inviteToRegister }),
+    server: buildServer(backend, {
+      modules,
+      inviteToRegister,
+      ...(einvoiceTransport === undefined ? {} : { einvoiceTransport }),
+    }),
     backend,
     summary:
       `ekwo-mcp: connected over ${config.mode === 'sql' ? 'a direct Postgres connection' : 'PostgREST as the signed-in user'}` +
       `, schema ${schemaVersion}` +
-      `${modules.length > 0 ? `, modules: ${modules.join(', ')}` : ''}`,
+      `${modules.length > 0 ? `, modules: ${modules.join(', ')}` : ''}` +
+      `${einvoiceTransport === undefined ? '' : `, electronic invoices to the folder ${env[ENV.einvoiceDirectory]?.trim() ?? ''}`}`,
   };
+}
+
+/**
+ * The transport electronic invoices leave through, from the environment: the
+ * folder of `EKWO_EINVOICE_DIRECTORY`, the one transport this release ships.
+ * Unset, files are issued and kept and sending is refused by name. A network
+ * transport is handed to `buildServer()` by the host that operates it, the
+ * same way.
+ */
+export function einvoiceTransportFrom(env: NodeJS.ProcessEnv): EinvoiceTransport | undefined {
+  const directory = env[ENV.einvoiceDirectory]?.trim();
+  return directory === undefined || directory === '' ? undefined : directoryTransport(directory);
 }
 
 /**

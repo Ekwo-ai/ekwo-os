@@ -38,7 +38,7 @@ export {
   type ServerOptions,
 } from './server.js';
 export { SCHEMA_MIN, assertSchemaSupported, installedSchemaVersion } from './schema.js';
-export { serverFromEnvironment, shouldInviteToRegister, type Started } from './start.js';
+export { einvoiceTransportFrom, serverFromEnvironment, shouldInviteToRegister, type Started } from './start.js';
 export { isMissingConfiguration, unconfiguredBackend } from './unconfigured.js';
 export * as readTools from './tools/read.js';
 export * as writeTools from './tools/write.js';
@@ -47,5 +47,6 @@ export {
   installedModules,
   toolsetsFor,
   type ModuleTool,
+  type ModuleToolContext,
   type ModuleToolset,
 } from './tools/modules.js';

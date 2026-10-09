@@ -129,6 +129,7 @@ alongside the server; the recommended route needs no driver at all.
 | `EKWO_DB_URL` | A direct Postgres connection, for a self-hosted installation |
 | `EKWO_ACT_AS_USER_ID` | Required with `EKWO_DB_URL`: the `auth.users` id to act for |
 | `EKWO_NO_REGISTER_INVITE` | Optional. `1` leaves the invitation to register out of the instructions |
+| `EKWO_EINVOICE_DIRECTORY` | Optional. The folder electronic invoices are sent to by `einvoicing_issue` with `send`. Unset, files are issued and kept, and sending is refused as `no_transport` |
 
 ### Started with nothing set
 
@@ -307,12 +308,19 @@ prefix its `module.json` declares, and the server reads `public.modules` at
 startup to know which: `fixed_assets_list`, `fixed_assets_create`,
 `fixed_assets_schedule`, `fixed_assets_run_depreciation`,
 `fixed_assets_dispose`, `budgets_list`, `budgets_upsert_lines`,
-`budgets_variance`. The fixed assets tools were called `assets_*` until
+`budgets_variance`, `einvoicing_validate`, `einvoicing_issue`,
+`einvoicing_status`, `einvoicing_list`. The fixed assets tools were called `assets_*` until
 0.10.0; from 0.11.0 only the `fixed_assets_*` names are registered. A module
 that is not installed is not offered, because a tool a model cannot use is worse than a tool it cannot
 see. PostgREST serves a module's schema only once the project exposes it, and
 the refusal it answers with is a profile error that says nothing useful — so
 every module tool turns it into the sentence that names the setting.
+
+The electronic invoicing tools send through a transport the server is given,
+never one a model chooses: the folder of `EKWO_EINVOICE_DIRECTORY`, or a
+transport a host hands to `buildServer()` as `einvoiceTransport`. No
+credential of a network ever reaches a tool. See
+[`modules/einvoicing`](../../modules/einvoicing/README.md).
 
 **Resources.** `ekwo://companies/{id}/chart` is the whole chart of accounts;
 `ekwo://companies/{id}/taxes` is every tax with the ledger account and the
