@@ -1,0 +1,173 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Petty cash,10
+1010,,asset_cash,false,Current account — PKR,20
+1020,,asset_cash,false,Term deposits placed for three months or less,30
+1030,,asset_cash,false,Foreign currency account — USD,40
+1040,,asset_cash,false,Cash in transit — card and mobile wallet settlements,50
+1100,,asset_receivable,true,Trade receivables,60
+1110,,asset_current,false,Trade receivables — allowance for expected credit losses,70
+1120,,asset_current,false,Other receivables,80
+1130,,asset_current,false,Amounts due from related parties,90
+1140,,asset_current,false,Security deposits paid,100
+1150,,asset_current,false,Sales tax input — federal (FBR),110
+1151,,asset_current,false,Sales tax on services input — Punjab (PRA),120
+1152,,asset_current,false,Sales tax on services input — Sindh (SRB),130
+1153,,asset_current,false,Sales tax on services input — Khyber Pakhtunkhwa (KPRA),140
+1154,,asset_current,false,Sales tax on services input — Balochistan (BRA),150
+1155,,asset_current,true,Sales tax refundable from FBR — net of a filed return,160
+1156,,asset_current,false,Sales tax on services input — Islamabad Capital Territory,170
+1157,,asset_current,false,Sales tax withheld by customers — certificates received,180
+1160,,asset_current,false,Advances to staff,190
+1200,,asset_current,false,Inventories — goods for resale,200
+1210,,asset_current,false,Inventories — raw materials,210
+1220,,asset_current,false,Inventories — work in progress,220
+1230,,asset_current,false,Inventories — finished goods,230
+1300,,asset_current,false,Short-term investments,240
+1350,,asset_current,false,Income tax recoverable — advance tax and refunds,250
+1400,,asset_prepayments,false,Prepayments,260
+1410,,asset_prepayments,false,Accrued income,270
+1600,,asset_fixed,false,Land and buildings — cost,280
+1601,,asset_fixed,false,Land and buildings — accumulated depreciation,290
+1610,,asset_fixed,false,Leasehold improvements — cost,300
+1611,,asset_fixed,false,Leasehold improvements — accumulated depreciation,310
+1620,,asset_fixed,false,Plant and machinery — cost,320
+1621,,asset_fixed,false,Plant and machinery — accumulated depreciation,330
+1630,,asset_fixed,false,Office equipment — cost,340
+1631,,asset_fixed,false,Office equipment — accumulated depreciation,350
+1640,,asset_fixed,false,Computers — cost,360
+1641,,asset_fixed,false,Computers — accumulated depreciation,370
+1650,,asset_fixed,false,Furniture and fittings — cost,380
+1651,,asset_fixed,false,Furniture and fittings — accumulated depreciation,390
+1660,,asset_fixed,false,Motor vehicles — cost,400
+1661,,asset_fixed,false,Motor vehicles — accumulated depreciation,410
+1670,,asset_fixed,false,Right-of-use assets — cost,420
+1671,,asset_fixed,false,Right-of-use assets — accumulated depreciation,430
+1690,,asset_fixed,false,Capital work-in-progress,440
+1700,,asset_non_current,false,Investment property,450
+1750,,asset_fixed,false,Intangible assets — cost,460
+1751,,asset_fixed,false,Intangible assets — accumulated amortisation,470
+1760,,asset_fixed,false,Goodwill,480
+1800,,asset_non_current,false,Investments in associates,490
+1810,,asset_non_current,false,Investments in joint ventures,500
+1830,,asset_non_current,false,Long-term financial assets,510
+1840,,asset_non_current,false,Long-term deposits,520
+1900,,asset_non_current,false,Deferred tax assets,530
+2000,,liability_payable,true,Trade payables,540
+2010,,liability_current,false,Accrued expenses,550
+2020,,liability_current,false,Other payables,560
+2030,,liability_current,false,Amounts due to related parties,570
+2040,,liability_current,false,Advances from customers,580
+2100,,liability_current,false,Sales tax output — federal (FBR),590
+2101,,liability_current,false,Further tax payable (FBR),600
+2102,,liability_current,false,Sales tax withheld from suppliers — payable to FBR,610
+2103,,liability_current,false,Sales tax on services payable — Punjab (PRA),620
+2104,,liability_current,false,Sales tax on services payable — Sindh (SRB),630
+2105,,liability_current,false,Sales tax on services payable — Khyber Pakhtunkhwa (KPRA),640
+2106,,liability_current,false,Sales tax on services payable — Balochistan (BRA),650
+2107,,liability_current,false,Sales tax on services payable — Islamabad Capital Territory,660
+2110,,liability_current,true,Sales tax payable to FBR — net of a filed return,670
+2125,,liability_current,false,Sales tax payable on imports — Customs,680
+2130,,liability_current,false,Income tax withheld from suppliers and contractors — payable to FBR,690
+2135,,liability_current,false,Federal excise duty payable,700
+2140,,liability_current,false,Salary tax withheld from employees — payable to FBR,710
+2150,,liability_current,false,EOBI contributions payable,720
+2155,,liability_current,false,Provident fund contributions payable,730
+2160,,liability_current,false,Provincial social security contributions payable,740
+2165,,liability_current,false,Gratuity payable — current portion,750
+2170,,liability_current,false,Workers' Profit Participation Fund payable,760
+2175,,liability_current,false,Workers' Welfare Fund payable,770
+2180,,liability_current,false,Salaries payable,780
+2190,,liability_current,false,Directors' remuneration payable,790
+2200,,liability_current,false,Bank overdraft and running finance,800
+2210,,liability_current,false,Bank loans — current portion,810
+2220,,liability_current,false,Lease liabilities — current portion,820
+2230,,liability_current,false,Islamic financing — current portion,830
+2240,,liability_credit_card,false,Corporate credit card,840
+2250,,liability_current,false,Amounts due to directors,850
+2300,,liability_current,false,Income tax payable,860
+2350,,liability_current,false,Provision for unutilised leave,870
+2360,,liability_current,false,Other provisions — current,880
+2400,,liability_non_current,false,Bank loans — non-current portion,890
+2410,,liability_non_current,false,Lease liabilities — non-current portion,900
+2420,,liability_non_current,false,Islamic financing — non-current portion,910
+2430,,liability_non_current,false,Loans from shareholders and directors — non-current,920
+2500,,liability_non_current,false,Deferred tax liabilities,930
+2550,,liability_non_current,false,Provision for reinstatement costs,940
+2560,,liability_non_current,false,Staff retirement benefits — gratuity,950
+2990,,liability_current,false,Suspense account,960
+3000,,equity,false,Share capital,970
+3010,,equity,false,Treasury shares,980
+3020,,equity,false,Share premium,990
+3100,,equity,false,Other reserves,1000
+3110,,equity,false,Foreign currency translation reserve,1010
+3120,,equity,false,"Surplus on revaluation of property, plant and equipment",1020
+3200,,equity_retained,false,Unappropriated profit,1030
+3210,,equity_retained,false,Dividends paid,1040
+4000,,income,false,Sales of goods,1050
+4010,,income,false,Services rendered,1060
+4020,,income,false,Export sales of goods,1070
+4030,,income,false,Export of services,1080
+4050,,income,false,Sales returns and discounts,1090
+4500,,income_other,false,Interest income,1100
+4510,,income_other,false,Dividend income,1110
+4520,,income_other,false,Rental income,1120
+4530,,income_other,false,Government grants,1130
+4540,,income_other,false,Profit on deposits with Islamic banks,1140
+4700,,income_other,false,Foreign exchange gains,1150
+4750,,income_other,false,"Gain on disposal of property, plant and equipment",1160
+4790,,income_other,false,Other income,1170
+5000,,expense_direct_cost,false,Purchases of goods for resale,1180
+5010,,expense_direct_cost,false,Freight inwards and import duties,1190
+5020,,expense_direct_cost,false,Subcontract costs,1200
+5100,,expense_direct_cost,false,Changes in inventories,1210
+6000,,expense,false,Salaries and wages,1220
+6010,,expense,false,Directors' remuneration,1230
+6020,,expense,false,Directors' meeting fees,1240
+6030,,expense,false,EOBI contributions — employer,1250
+6035,,expense,false,Provincial social security contributions — employer,1260
+6040,,expense,false,Provident fund contributions — employer,1270
+6045,,expense,false,Gratuity expense,1280
+6060,,expense,false,Staff welfare,1290
+6070,,expense,false,Staff medical expenses and insurance,1300
+6080,,expense,false,Staff training,1310
+6200,,expense_depreciation,false,"Depreciation of property, plant and equipment",1320
+6210,,expense_depreciation,false,Depreciation of right-of-use assets,1330
+6220,,expense_depreciation,false,Amortisation of intangible assets,1340
+6300,,expense,false,Rent — short-term leases,1350
+6310,,expense,false,Utilities,1360
+6320,,expense,false,Repairs and maintenance,1370
+6330,,expense,false,Cleaning and security services,1380
+6340,,expense,false,Telephone and internet,1390
+6350,,expense,false,Software subscriptions,1400
+6360,,expense,false,Advertising and marketing,1410
+6370,,expense,false,Travelling,1420
+6380,,expense,false,Motor vehicle expenses,1430
+6390,,expense,false,Entertainment,1440
+6395,,expense,false,Fuel and lubricants,1450
+6400,,expense,false,Subscriptions and memberships,1460
+6410,,expense,false,Insurance,1470
+6420,,expense,false,Professional fees,1480
+6430,,expense,false,Audit fees,1490
+6440,,expense,false,Company registration and SECP filing fees,1500
+6450,,expense,false,Bank charges,1510
+6460,,expense,false,Printing and stationery,1520
+6470,,expense,false,Postage and courier,1530
+6480,,expense,false,"Licences, permits and fees",1540
+6485,,expense,false,Property tax,1550
+6490,,expense,false,Royalties,1560
+6500,,expense,false,Bad debts written off,1570
+6510,,expense,false,Impairment loss on trade receivables,1580
+6800,,expense,false,Workers' Profit Participation Fund,1590
+6810,,expense,false,Workers' Welfare Fund,1600
+6900,,expense,false,Donations,1610
+6950,,expense,false,Foreign exchange losses,1620
+6960,,expense,false,"Loss on disposal of property, plant and equipment",1630
+6990,,expense,false,Rounding differences,1640
+7000,,expense,false,Interest on bank loans and running finance,1650
+7010,,expense,false,Interest on lease liabilities,1660
+7020,,expense,false,Mark-up on Islamic financing,1670
+7030,,expense,false,Interest on loans from related parties and others,1680
+8000,,expense,false,Current income tax expense,1690
+8010,,expense,false,Deferred tax expense,1700
+8020,,expense,false,Under or over provision of income tax in prior years,1710
+8030,,expense,false,Super tax,1720

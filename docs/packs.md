@@ -282,6 +282,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`pa`](../packs/pa/) | Panamá | `107_pack_pa.sql` | es | `community` |
 | [`pe`](../packs/pe/) | Perú | `48_pack_pe.sql` | es, en | `community` |
 | [`ph`](../packs/ph/) | Philippines | `44_pack_ph.sql` | en | `community` |
+| [`pk`](../packs/pk/) | Pakistan | `125_pack_pk.sql` | en | `community` |
 | [`pl`](../packs/pl/) | Polska | `64_pack_pl.sql` | pl | `community` |
 | [`pt`](../packs/pt/) | Portugal | `43_pack_pt.sql` | pt, en | `community` |
 | [`py`](../packs/py/) | Paraguay | `103_pack_py.sql` | es | `community` |

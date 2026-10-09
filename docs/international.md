@@ -5801,3 +5801,76 @@ invoice and names the reason in its message. A payment step that records the
 payment and expects the boxes after it will close the gap; no pack content needs
 to change. The pack itself is replayed to the cent, payments included, by
 `tests/golden.test.ts`.
+
+## From Pakistan
+
+**A federal sales tax on goods and five other sales taxes on services, each
+declared to its own authority, in a format that files one return per pack.**
+Sales tax on goods is a federal levy (Sales Tax Act, 1990, s. 3(1), eighteen
+per cent), declared monthly on form STR-7 on FBR IRIS. Sales tax on services is
+provincial: the Punjab Revenue Authority (16 %), the Sindh Revenue Board
+(15 %), the Khyber Pakhtunkhwa Revenue Authority (15 %) and the Balochistan
+Revenue Authority (15 %), plus the Islamabad Capital Territory (15 %) under a
+federal Ordinance — each with its own statute, registration, portal and
+return. A pack declares one `tax_report.json`, so `packs/pk/` models STR-7
+only; the five service taxes have tax codes that post to their own payable
+accounts (2103 to 2107) and input accounts (1151 to 1154, 1156) and reach no
+box. A company's obligation to file with an authority is therefore not
+represented in `ekwo filing`; it is said in the README. The same shape as
+Canada's GST/HST and Québec returns, with five authorities instead of two and
+no federal-provincial agreement joining them. A pack that could file several
+returns, each with its authority and its due-date rule, would close it.
+
+**A further tax on the same value, split by a factor the posting cannot state
+exactly.** Section 3(1A) adds a four per cent further tax on supplies to a buyer
+with no registration number or who is not an active taxpayer, in addition to
+the eighteen of section 3(1), paid to FBR and reported on its own row (23a).
+`PK-S-18-FT` carries 22 % and splits it between two accounts, the way
+`packs/gh/` splits three charges. The share of a posting is `numeric(7,3)`, and
+18/22 and 4/22 are 81.8181… and 18.1818… per cent: the code uses 81.818 and
+18.182, exact to the paisa while the tax of the line is below about 2,700
+rupees and a few paisa off beyond it. Widening `factor_percent` and
+`box_factor_percent` to nine decimals, or letting a posting carry a rate of its
+own, would close it. The golden stays below that value.
+
+**A ceiling on input tax a box cannot compute.** Section 8B(1) of the Act caps
+the input tax a registered person may adjust at ninety per cent of the output
+tax of the period, fixed assets and capital goods excepted and unless the Board
+excludes the person; rows 24 to 26 of STR-7 state the result with a least-of
+and a conditional (`if 24 = Table-1 then 8; … {least of (8 − 4) or 90 % of 15
+or 17} + {if (8 − 4) < 90 % of 15 then 4; otherwise zero}`). The box language
+adds, subtracts, floors at zero and applies a rate to one other box; it has
+neither a minimum nor a conditional. Box `32A` is the net before the ceiling,
+said on the box, so a taxpayer subject to section 8B owes more than the
+declaration says.
+
+**Withholding of sales tax by the buyer.** The Eleventh Schedule has federal
+and provincial departments, companies and other withholding agents deduct a
+share of the tax on the supplier's invoice and pay it for them, and rows 16 and
+22 of STR-7 report both sides. A posting speaks of the two parties to its
+document and a withholding agent paying on the supplier's behalf is a third
+mechanism, the shape Kenya's and Rwanda's sections already record. The pack
+carries accounts for it (2102, 1157) and no code posts to them.
+
+**Real-time reporting of invoices, not an exchange.** Sections 23(1), 23(5) and
+23(6) of the Act and Chapter XIV of the Sales Tax Rules require the notified
+registered persons — extended to all registered persons by S.R.O. 709(I)/2025,
+whose phases the Board has revised — to issue each invoice through a system
+integrated with the Board's, with a verifiable FBR invoice number, and the
+Finance Act, 2026 makes non-integration a ground for suspending the
+registration (s. 21(2)). As for India and Kenya, which have a clearance regime,
+`einvoicing.obligation` is `none` because the vocabulary
+names an exchange between access points; the integration, the number and the QR
+code are outside the core.
+
+**A retail-price tax.** Goods of the Third Schedule are taxed on the printed
+retail price, which no document line carries. Not modelled.
+
+**No `i18n` for Urdu.** English is the language of the texts the pack cites; an
+Urdu file can be added without touching anything else.
+
+**An unreachable provincial text.** The Punjab Laws portal and the Punjab
+Revenue Authority site refused the connection from the machine the pack was
+written on, so the Punjab Act (16 % standard rate, section 2(41A)) is cited from
+its portal page and its rate read from a search extract of that page. The
+README of the pack says so.

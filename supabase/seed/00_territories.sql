@@ -1977,3 +1977,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+
+-- ---------------------------------------------------------------------------
+-- Pakistan — outside the common system of VAT
+--
+-- A State outside the common system of VAT the way India is: the Federation
+-- levies a sales tax on goods under the Sales Tax Act, 1990, section 3(1) of
+-- which sets the rate at eighteen per cent of the value of a taxable supply,
+-- and the provinces and the Islamabad Capital Territory each levy a separate
+-- sales tax on services under their own statutes, administered by their own
+-- authorities. No regional instrument harmonises either.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('PK', 'iso_3166_1', 'Pakistan', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Pakistan levies a federal sales tax on goods under the Sales Tax Act, 1990, section 3(1), at eighteen per cent of the value of a taxable supply, and a sales tax on services under each provincial statute and the Islamabad Capital Territory (Tax on Services) Ordinance, 2001.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

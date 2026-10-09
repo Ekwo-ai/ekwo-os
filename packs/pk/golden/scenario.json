@@ -1,0 +1,538 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Two months of books of a Lahore trading and services company, registered for sales tax and filing monthly on FBR IRIS",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Calendar year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-09",
+      "from": "2026-09-01",
+      "to": "2026-09-30"
+    },
+    {
+      "code": "2026-10",
+      "from": "2026-10-01",
+      "to": "2026-10-31"
+    }
+  ],
+  "statements": [
+    "PK-IFRS-SFP",
+    "PK-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-lhr",
+      "name": "Mughal Engineering Works (Pvt) Ltd",
+      "type": "customer",
+      "country": "PK"
+    },
+    {
+      "ref": "cust-unreg",
+      "name": "Retail customer without a registration number",
+      "type": "customer",
+      "country": "PK"
+    },
+    {
+      "ref": "cust-dubai",
+      "name": "Al Noor Trading LLC",
+      "type": "customer",
+      "country": "AE"
+    },
+    {
+      "ref": "cust-embassy",
+      "name": "Embassy of a foreign State in Islamabad",
+      "type": "customer",
+      "country": "PK"
+    },
+    {
+      "ref": "cust-khi",
+      "name": "Karachi Port Logistics Ltd",
+      "type": "customer",
+      "country": "PK"
+    },
+    {
+      "ref": "cust-psh",
+      "name": "Peshawar Industrial Estate Company",
+      "type": "customer",
+      "country": "PK"
+    },
+    {
+      "ref": "cust-qta",
+      "name": "Quetta Mining Services Ltd",
+      "type": "customer",
+      "country": "PK"
+    },
+    {
+      "ref": "cust-isb",
+      "name": "Margalla Events (Pvt) Ltd",
+      "type": "customer",
+      "country": "PK"
+    },
+    {
+      "ref": "supp-fed",
+      "name": "Faisalabad Textile Traders (Pvt) Ltd",
+      "type": "supplier",
+      "country": "PK"
+    },
+    {
+      "ref": "supp-unreg",
+      "name": "Local cotton grower",
+      "type": "supplier",
+      "country": "PK"
+    },
+    {
+      "ref": "supp-china",
+      "name": "Shenzhen Precision Parts Co.",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supp-lhr",
+      "name": "Gulberg Law Associates",
+      "type": "supplier",
+      "country": "PK"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-lhr",
+      "date": "2026-09-03",
+      "why": "A domestic sale of goods at the standard rate of section 3(1) to a registered buyer: 10 pumps at 50,000 is 500,000, the sales tax of 18 % is 90,000, and the supply lands in STR-7 row 9 (taxable value in 9A, tax in 9AT).",
+      "lines": [
+        {
+          "name": "Industrial pumps",
+          "quantity": 10,
+          "unit_price": 50000,
+          "tax": "PK-S-18",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-unreg",
+      "date": "2026-09-05",
+      "why": "A sale to a buyer with no registration number: 22 % on a value of 10,000 is 2,200, split into the sales tax of 1,800 (row 9) and the further tax of section 3(1A) of 400 (row 23a), on two accounts.",
+      "lines": [
+        {
+          "name": "Water filters",
+          "quantity": 10,
+          "unit_price": 1000,
+          "tax": "PK-S-18-FT",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-unreg",
+      "date": "2026-09-07",
+      "why": "A second sale to an unregistered buyer, on a value of 12,000: 22 % is 2,640, split 2,160 and 480 — the largest value on which the three decimals of the posting factor still give the exact paisa.",
+      "lines": [
+        {
+          "name": "Water filter cartridges",
+          "quantity": 4,
+          "unit_price": 3000,
+          "tax": "PK-S-18-FT",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-lhr",
+      "date": "2026-09-09",
+      "why": "A sale of photovoltaic panels at the reduced rate of 10 % of the Eighth Schedule, serial 90: 40 panels at 25,000 is 1,000,000 and the tax 100,000, reported in STR-7 row 10 and included in row 9.",
+      "lines": [
+        {
+          "name": "Photovoltaic panels",
+          "quantity": 40,
+          "unit_price": 25000,
+          "tax": "PK-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-dubai",
+      "date": "2026-09-11",
+      "why": "An export of goods, zero-rated under section 4(a): 300,000 in STR-7 row 11 and no tax.",
+      "lines": [
+        {
+          "name": "Cotton yarn, export consignment",
+          "quantity": 20,
+          "unit_price": 15000,
+          "tax": "PK-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-embassy",
+      "date": "2026-09-14",
+      "why": "A supply to a diplomatic mission, zero-rated by serial 2 of the Fifth Schedule: 80,000 reported in row 9 at nil tax.",
+      "lines": [
+        {
+          "name": "Office furniture for the chancery",
+          "quantity": 1,
+          "unit_price": 80000,
+          "tax": "PK-S-ZR-DOM",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-007",
+      "type": "sale_invoice",
+      "contact": "cust-lhr",
+      "date": "2026-09-16",
+      "why": "A sale of pulses, exempt under serial 14 of the Sixth Schedule: revenue of 30,000, no tax and no box of STR-7.",
+      "lines": [
+        {
+          "name": "Pulses, 50 kg bags",
+          "quantity": 100,
+          "unit_price": 300,
+          "tax": "PK-S-EX",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-008",
+      "type": "sale_invoice",
+      "contact": "cust-lhr",
+      "date": "2026-09-18",
+      "why": "A service provided in the Punjab, 16 % to the Punjab Revenue Authority: 150,000 and 24,000 on account 2103, outside the federal return.",
+      "lines": [
+        {
+          "name": "Management consulting, Lahore",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "PK-S-PRA-16",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-009",
+      "type": "sale_invoice",
+      "contact": "cust-khi",
+      "date": "2026-09-19",
+      "why": "A service provided in Sindh, 15 % to the Sindh Revenue Board: 120,000 and 18,000 on account 2104.",
+      "lines": [
+        {
+          "name": "Software development services, Karachi",
+          "quantity": 1,
+          "unit_price": 120000,
+          "tax": "PK-S-SRB-15",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-010",
+      "type": "sale_invoice",
+      "contact": "cust-psh",
+      "date": "2026-09-20",
+      "why": "A service provided in Khyber Pakhtunkhwa, 15 % to the KPRA: 80,000 and 12,000 on account 2105.",
+      "lines": [
+        {
+          "name": "Engineering inspection services, Peshawar",
+          "quantity": 1,
+          "unit_price": 80000,
+          "tax": "PK-S-KPRA-15",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-011",
+      "type": "sale_invoice",
+      "contact": "cust-qta",
+      "date": "2026-09-21",
+      "why": "A service provided in Balochistan, 15 % to the BRA: 60,000 and 9,000 on account 2106.",
+      "lines": [
+        {
+          "name": "Advertising services, Quetta",
+          "quantity": 1,
+          "unit_price": 60000,
+          "tax": "PK-S-BRA-15",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-012",
+      "type": "sale_invoice",
+      "contact": "cust-isb",
+      "date": "2026-09-22",
+      "why": "A service provided in the Islamabad Capital Territory, 15 %: 40,000 and 6,000 on account 2107.",
+      "lines": [
+        {
+          "name": "Event management services, Islamabad",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "PK-S-ICT-15",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-013",
+      "type": "sale_invoice",
+      "contact": "cust-dubai",
+      "date": "2026-09-23",
+      "why": "A service used by a recipient abroad, outside the federal tax: revenue of 25,000 and no tax account, no box.",
+      "lines": [
+        {
+          "name": "Market study for a Gulf client",
+          "quantity": 1,
+          "unit_price": 25000,
+          "tax": "PK-S-NS",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-lhr",
+      "date": "2026-09-25",
+      "why": "A credit note for one pump returned from INV-001: the taxable value, the tax and the STR-7 boxes fall back by 50,000 and 9,000.",
+      "lines": [
+        {
+          "name": "Industrial pump returned",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "PK-S-18",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-fed",
+      "date": "2026-09-04",
+      "why": "A local purchase of trading stock from a registered supplier at 18 %: 200,000 and an input tax of 36,000 in STR-7 rows 1 (1, 1T), adjustable under section 7(1).",
+      "lines": [
+        {
+          "name": "Trading stock for resale",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "PK-P-18",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-fed",
+      "date": "2026-09-08",
+      "why": "A purchase of plant and machinery for taxable supplies: 100,000 and 18,000 input tax in STR-7 row 4, the capital goods row.",
+      "lines": [
+        {
+          "name": "Packaging machine",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "PK-P-18-CAP",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-fed",
+      "date": "2026-09-10",
+      "why": "Office furniture, on which section 8(1)(i) allows no input tax: the 18 % of 10,800 joins the cost of the asset on account 1650 and reaches no box.",
+      "lines": [
+        {
+          "name": "Office desks and chairs",
+          "quantity": 1,
+          "unit_price": 60000,
+          "tax": "PK-P-18-NC",
+          "account": "1650"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-unreg",
+      "date": "2026-09-12",
+      "why": "A purchase from a supplier with no registration number: 25,000 in STR-7 row 2 and no input tax.",
+      "lines": [
+        {
+          "name": "Raw cotton, local",
+          "quantity": 1,
+          "unit_price": 25000,
+          "tax": "PK-P-UNREG",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-09-15",
+      "why": "An import of machine parts cleared at Customs: 400,000 and 72,000 sales tax in STR-7 row 3, owed to Customs through account 2125 and adjusted as input tax.",
+      "lines": [
+        {
+          "name": "Machine parts, imported",
+          "quantity": 1,
+          "unit_price": 400000,
+          "tax": "PK-P-IMP-18",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-lhr",
+      "date": "2026-09-17",
+      "why": "A service bought from a Punjab provider at 16 %: 20,000 and 3,200 of Punjab sales tax on services on its own input account 1151, outside the federal return.",
+      "lines": [
+        {
+          "name": "Legal services, Lahore",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "PK-P-PRA-16",
+          "account": "6420"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-007",
+      "type": "purchase_invoice",
+      "contact": "supp-fed",
+      "date": "2026-09-24",
+      "why": "A purchase at the reduced rate of 10 %: 50,000 and 5,000 input tax in STR-7 row 1.",
+      "lines": [
+        {
+          "name": "Photovoltaic panels for resale",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "PK-P-10",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-fed",
+      "date": "2026-09-26",
+      "why": "A credit note from the supplier of PINV-001 for 10,000 of goods returned: the input tax falls back by 1,800.",
+      "lines": [
+        {
+          "name": "Trading stock returned",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "PK-P-18",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-014",
+      "type": "sale_invoice",
+      "contact": "cust-lhr",
+      "date": "2026-10-06",
+      "why": "A small sale in October at 18 %, 10,000 and 1,800: the second period of the year, in which inputs exceed output.",
+      "lines": [
+        {
+          "name": "Industrial pump spares",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "PK-S-18",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-008",
+      "type": "purchase_invoice",
+      "contact": "supp-fed",
+      "date": "2026-10-08",
+      "why": "A purchase in October of 100,000 with 18,000 input tax: more credit than debit, so the return states a credit to carry forward (box 30) and nothing payable.",
+      "lines": [
+        {
+          "name": "Trading stock for resale",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "PK-P-18",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-09-20",
+      "amount": 590000,
+      "contact": "cust-lhr",
+      "journal": "BNK",
+      "match": "INV-001",
+      "why": "INV-001 collected in full, sales tax included: a matched inbound payment on a standard-rate sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-09-25",
+      "amount": 300000,
+      "contact": "cust-dubai",
+      "journal": "BNK",
+      "match": "INV-005",
+      "why": "The export collected in full: a matched inbound payment on a zero-rated sale."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-09-27",
+      "amount": 236000,
+      "contact": "supp-fed",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 paid in full, input tax included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-09-28",
+      "amount": 174000,
+      "contact": "cust-lhr",
+      "journal": "BNK",
+      "match": "INV-008",
+      "why": "The Punjab service collected in full, provincial tax included."
+    },
+    {
+      "ref": "PAY-005",
+      "direction": "inbound",
+      "date": "2026-09-29",
+      "amount": 10000,
+      "contact": "cust-khi",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received on account from a Karachi customer, matched to nothing: it stays an open item."
+    }
+  ]
+}
