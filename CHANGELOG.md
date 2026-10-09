@@ -85,6 +85,17 @@ somewhere has already run it.
   Nothing writes it yet: `docs/filing-proofs.md` evaluates it as a second,
   signed layer, with its costs.
 
+### Changed
+
+- **The privacy page says when Ekwo reads your books.** Version 1.1 of
+  `PRIVACY.md` replaces the statement that nobody opens an Ekwo Cloud backup
+  with what is actually done: Ekwo may read the books of a linked instance and
+  its backups in the customer's interest (support, checking entries against
+  the rules of the country, flagging an error) and to improve the software,
+  its importers and its country packs. The legal basis of each purpose, the
+  right to object to the second, and the confidentiality of what is read are
+  written beside it. Self-hosted Ekwo OS is unchanged: nothing reaches Ekwo.
+
 ## [0.11.1] — 2026-10-07
 
 ### Fixed

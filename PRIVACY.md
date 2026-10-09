@@ -15,7 +15,7 @@ Using Ekwo OS and never creating an account is a complete way to use Ekwo, not
 a degraded one. Everything in §3 exists because somebody asked for it, on an
 instance they linked on purpose, and none of it happens by default.
 
-*Version 1.0 — 28 September 2026. This page covers the software of this
+*Version 1.1 — 9 October 2026. This page covers the software of this
 repository, the site at ekwo.ai and the hosted service at cloud.ekwo.ai,
 including the MCP server at mcp.ekwo.ai. Each section says which one it is
 about.*
@@ -82,9 +82,28 @@ on by default, and what it holds is this and nothing else:
 The daily backup exports your companies and keeps the bytes. **That is a copy
 of your accounting data on our infrastructure**, with its checksum, and it is
 the whole point of the feature: it is what makes it restorable into an empty
-installation. We do not read it, and no part of the service opens it to look
-inside — but it is there, and you should decide with that in mind. Unlink an
+installation. It is there, and you should decide with that in mind. Unlink an
 instance and its backups go with it.
+
+### When Ekwo reads your books
+
+**Ekwo may open your backups, and read the books of an instance you linked,
+for two purposes:**
+
+- **In your interest** — to answer a support request, to check that the
+  entries recorded by you or by an agent follow the rules of your country, and
+  to tell you about an error it notices. This is part of the service you asked
+  for (Article 6(1)(b) GDPR).
+- **To improve the service** — to find where the software, an importer or a
+  country pack gets something wrong, and correct it for everybody. This rests
+  on Ekwo's legitimate interest in a service that keeps correct books
+  (Article 6(1)(f) GDPR), and you can object to it by writing to the address
+  in §8.
+
+Only people working for Ekwo do this, and they are bound to keep what they
+read confidential. Your figures are never published, sold or handed to anyone,
+and §4 still holds: your books do not train a model. You can ask what was read
+and when, as §7 describes.
 
 ### What the MCP server sees
 
