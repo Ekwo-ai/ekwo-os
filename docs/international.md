@@ -5997,3 +5997,52 @@ value, so the pack carries neither figure; its README says what it retains.
 
 **SVAT.** The Simplified VAT scheme ended on 1 October 2025 (Act No. 4 of 2025)
 and is not modelled.
+
+## From Armenia
+
+`packs/am/` is the Armenian pack: VAT at 20 %, a zero rate, the exemptions of
+article 64, the monthly *unified VAT and excise tax calculation*, and the national
+chart of accounts of Order No. 353-N. Armenia is outside the European Union (it is
+a member of the Eurasian Economic Union), so nothing here uses a European Union
+category or a VATEX code.
+
+**An e-invoicing obligation the manifest cannot state.** Armenian tax invoices
+are issued, signed and confirmed in the State Revenue Committee's electronic
+settlement documents system (Tax Code articles 56(3) and 66-68). The system is a
+clearance system with no EN 16931 profile. The manifest refuses
+`einvoicing.obligation: mandatory` without a `mandatory_from`, and refuses a
+`mandatory_from` without a profile that says what becomes obligatory, so the
+obligation cannot be written for a State system that has no profile. The pack
+leaves `obligation` out, as `packs/ge` and `packs/kz` do, and says so in its
+README. A profile kind for a State clearance system would let the manifest say it.
+
+**Input VAT on a mixed activity.** Article 72(1) point 2 forbids offsetting the VAT
+on goods and services attributed to exempt transactions. The core has no
+partial-deduction mechanism: a company with exempt and taxable activities posts the
+purchases for the exempt activity without the input VAT by hand.
+
+**A reverse charge borne by the issuer.** For a service supplied by a non-resident
+with no permanent establishment, the Armenian recipient issues the tax invoice on
+the supplier's behalf (articles 56(7) and 70(2)) and reports it on lines 10 and 11
+of the form. The `domestic_reverse_charge` and `foreign_services_received`
+treatments describe a buyer who self-assesses; they do not describe a buyer who
+issues the supplier's invoice, and no tax of this pack uses them.
+
+**A special regime that replaces VAT.** The turnover tax (articles 254-258) taxes
+resident entities under AMD 115 million of annual sales turnover, who are then not
+VAT payers. The same threshold makes an entity a VAT payer. The core has no regime
+that replaces a tax by a tax on turnover, so the pack models the VAT payer only and
+documents the threshold.
+
+**A foreign-currency rate fixed by statute.** Since 1 July 2026 (Law HO-234-N) a
+foreign-currency invoice converts at the Central Bank of Armenia rate of the
+previous working day. The core takes the rate from the document and carries no
+rule for which day's rate a country requires.
+
+**Clearance and cash registers.** The File Online filing, the electronic signature
+and the online cash registers (e-HDM) are outside the core.
+
+**The sign of a reduction line.** The form prints adjusting-invoice reductions on
+their own lines (8.1 and 19.1) and subtracts them in the totals. The pack posts a
+credit note into those lines with a positive sign and subtracts them in the total
+boxes `16A`, `16B` and `21A`, so the return reads like the paper form.

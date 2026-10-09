@@ -1,0 +1,203 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "AM",
+  "name": "Հայաստան",
+  "version": "0.1.0",
+  "schema_min": "20260929141500",
+  "seed_sequence": 128,
+  "released_at": "2026-10-09",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "tax-code",
+        "title": "Հայաստանի Հանրապետության հարկային օրենսգիրք (ՀՕ-165-Ն, 04.10.2016), պաշտոնական ինկորպորացիա — հոդվածներ 56, 60, 63-76 (ԱԱՀ), 254-258 (շրջանառության հարկ)",
+        "publisher": "ՀՀ իրավական տեղեկատվական համակարգ (ARLIS) — arlis.am",
+        "url": "https://www.arlis.am/hy/acts/199704",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "tax-code-en",
+        "title": "Tax Code of the Republic of Armenia (HO-165-N of 4 October 2016), English translation — Articles 56, 60, 63-76 (VAT), 254-258 (turnover tax)",
+        "publisher": "Armenian Legal Information System (ARLIS) — arlis.am",
+        "url": "https://www.arlis.am/en/acts/205620",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "vat-return-form",
+        "title": "ՀՀ կառավարությանն առընթեր պետական եկամուտների կոմիտեի նախագահի 2016 թվականի դեկտեմբերի 30-ի N 298-Ն հրաման — Ավելացված արժեքի հարկի և ակցիզային հարկի միասնական հաշվարկի ձևը և դրա լրացման կարգը",
+        "publisher": "ՀՀ իրավական տեղեկատվական համակարգ (ARLIS) — arlis.am",
+        "url": "https://www.arlis.am/hy/acts/136996",
+        "consulted_on": "2026-10-09",
+        "kind": "form"
+      },
+      {
+        "key": "chart-order",
+        "title": "ՀՀ ֆինանսների նախարարի 2012 թվականի ապրիլի 17-ի թիվ 353-Ն հրաման — Կազմակերպությունների ֆինանսատնտեսական գործունեության հաշվապահական հաշվառման հաշվային պլանը և դրա կիրառման հրահանգը",
+        "publisher": "ՀՀ իրավական տեղեկատվական համակարգ (ARLIS) — arlis.am",
+        "url": "https://www.arlis.am/hy/acts/75961",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "chart-sme-order",
+        "title": "ՀՀ ֆինանսների նախարարի 2012 թվականի նոյեմբերի 21-ի թիվ 1016-Ն հրաման — Փոքր և միջին կազմակերպությունների ֆինանսատնտեսական գործունեության հաշվապահական հաշվառման հաշվային պլանը և դրա կիրառման հրահանգը",
+        "publisher": "ՀՀ իրավական տեղեկատվական համակարգ (ARLIS) — arlis.am",
+        "url": "https://www.arlis.am/hy/acts/79913",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "accounting-law",
+        "title": "ՀՀ օրենքը հաշվապահական հաշվառման մասին (ընդունված 04.12.2019)",
+        "publisher": "ՀՀ իրավական տեղեկատվական համակարգ (ARLIS) — arlis.am",
+        "url": "https://www.arlis.am/hy/acts/208618",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "filing-portal",
+        "title": "Առցանց ներկայացման համակարգ (File Online) — ԱԱՀ-ի և ակցիզային հարկի միասնական հաշվարկի և էլեկտրոնային հաշվարկային փաստաթղթերի ներկայացում",
+        "publisher": "ՀՀ պետական եկամուտների կոմիտե (State Revenue Committee)",
+        "url": "https://file-online.taxservice.am/",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      },
+      {
+        "key": "src-portal",
+        "title": "ՀՀ պետական եկամուտների կոմիտե — պաշտոնական կայք",
+        "publisher": "ՀՀ պետական եկամուտների կոմիտե (State Revenue Committee) — src.am",
+        "url": "https://www.src.am/en",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "AMD",
+    "language": "hy",
+    "rounding_method": "half_up",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "221",
+      "payable": "521",
+      "suspense": "5319",
+      "rounding": "7291",
+      "retained_earnings": "342",
+      "current_year_result_profit": "343",
+      "current_year_result_loss": "343",
+      "sales": "611",
+      "purchase": "216",
+      "bank": "2521",
+      "cash": "2511",
+      "fx_gain": "625",
+      "fx_loss": "725",
+      "asset_disposal_gain": "6211",
+      "asset_disposal_loss": "7211",
+      "tax_payable": "5243",
+      "tax_receivable": "2253"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Վաճառքների ամսագիր",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Գնումների ամսագիր",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Բանկի ամսագիր",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Դրամարկղի ամսագիր",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "Ընդհանուր ամսագիր",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Բացման ամսագիր",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Կազմակերպությունների հաշվապահական հաշվառման հաշվային պլան (ՖՀՄՍ-ներին համապատասխան)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "AM-BS",
+        "AM-IS"
+      ],
+      "legal_reference": "ՀՀ ֆինանսների նախարարի 2012 թվականի ապրիլի 17-ի թիվ 353-Ն հրաման — հաշվային պլանը օրինակելի է և պարտադիր բնույթ չունի (հրահանգի I բաժին); փոքր և միջին կազմակերպությունների համար գործում է առանձին հաշվային պլան՝ 2012 թվականի նոյեմբերի 21-ի թիվ 1016-Ն հրաման, որը չի ներառված այս փաթեթում (տե՛ս README.md)։",
+      "source": "chart-order"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Հարկային օրենսգիրք, հոդված 56 — հաշվարկային փաստաթղթերը (այդ թվում՝ հարկային հաշիվները) դուրս են գրվում էլեկտրոնային եղանակով պետական եկամուտների կոմիտեի էլեկտրոնային հաշվարկային փաստաթղթերի համակարգում, որտեղ էլ տրվում է փաստաթղթի համարը․ առևտրային փաստաթղթի սեփական համարակալման պարտադիր ձևաչափ օրենքով սահմանված չէ, այստեղ բերված հաջորդական համարակալումը օրինակ է։",
+        "source": "tax-code"
+      },
+      "tax_point": {
+        "legal_reference": "Հարկային օրենսգիրք, հոդված 56, 4-րդ մաս — հաշվարկային փաստաթուղթը դուրս է գրվում ապրանքի մատակարարման, աշխատանքի կատարման կամ ծառայության մատուցման ավարտի պահին (օրենսգրքի 8-րդ և 8.1-ին մասերով նախատեսված դեպքերում՝ նախապես)․ փաթեթը մոտարկում է կանոնը `invoice_if_issued` արժեքով (տե՛ս README.md)։",
+        "source": "tax-code"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Հարկային օրենսգիրք, հոդված 56, 10-13-րդ մասեր — հաշվարկային փաստաթուղթը չեղյալ է հայտարարվում կամ ուղղվում է ճշգրտող հաշվարկային փաստաթղթով՝ առանց սկզբնական գրառումը ջնջելու։",
+        "source": "tax-code"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Հարկային օրենսգիրք, հոդված 56, 3-րդ մաս — հաշվարկային փաստաթղթերը դուրս են գրվում էլեկտրոնային ձևով (բացառություն՝ ՀԴՄ կտրոնը և Կառավարության սահմանած դեպքերը)․ հոդված 68 — ԱԱՀ վճարողները էլեկտրոնային ստորագրությամբ հաստատում են մատակարարների դուրս գրած հարկային հաշիվները։ Համակարգը պետական եկամուտների կոմիտեի էլեկտրոնային հաշվարկային փաստաթղթերի համակարգն է (file-online.taxservice.am), այլ ոչ թե EN 16931 / Peppol մոդելը, ուստի `profile`, `party_scheme` և `vat_scheme` դատարկ են, իսկ `obligation` և `mandatory_from` չեն լրացվում․ ձևաչափը պարտադիրություն է հայտարարում միայն այն դեպքում, երբ պրոֆիլն ասում է, թե ինչն է պարտադիր (տե՛ս README.md և docs/international.md, «From Armenia»)։",
+    "source": "tax-code"
+  },
+  "bank": {
+    "account_scheme": "iban",
+    "statement_formats": [
+      "csv"
+    ]
+  }
+}

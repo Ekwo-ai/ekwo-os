@@ -1,0 +1,340 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of books for an Armenian VAT payer filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "AM-BS",
+    "AM-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-am",
+      "name": "«Երևանի առևտրի տուն» ՍՊԸ",
+      "type": "customer",
+      "country": "AM"
+    },
+    {
+      "ref": "client-export",
+      "name": "Gulf Anatolia Trading LLC",
+      "type": "customer",
+      "country": "AE"
+    },
+    {
+      "ref": "supplier-am",
+      "name": "«Կովկասյան մատակարար» ՍՊԸ",
+      "type": "supplier",
+      "country": "AM"
+    },
+    {
+      "ref": "supplier-import",
+      "name": "Istanbul Textile Import Co.",
+      "type": "supplier",
+      "country": "TR"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-am",
+      "date": "2026-01-10",
+      "why": "Supply of goods in Armenia at 20 %: base in box 7A, VAT in box 7B.",
+      "lines": [
+        {
+          "name": "Building materials",
+          "quantity": 10,
+          "unit_price": 100000,
+          "tax": "AM-S-20",
+          "account": "6112"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-am",
+      "date": "2026-01-14",
+      "why": "Services at 20 % on another income account, so the declaration sums by rate and not by account.",
+      "lines": [
+        {
+          "name": "Consulting services",
+          "quantity": 5,
+          "unit_price": 80000,
+          "tax": "AM-S-20",
+          "account": "6114"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-export",
+      "date": "2026-01-18",
+      "why": "Export of goods under the customs procedure Export, zero rate (Article 65 part 2 point 1): base only, box 12A.",
+      "lines": [
+        {
+          "name": "Textile lot for export",
+          "quantity": 1,
+          "unit_price": 3000000,
+          "tax": "AM-S-0-EXPORT",
+          "account": "6112"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-am",
+      "date": "2026-01-20",
+      "why": "Medical services exempt under Article 64 part 2 point 11: base in box 13A, no VAT, and the input VAT on the costs behind it is not deductible (not modelled).",
+      "lines": [
+        {
+          "name": "Medical consultation",
+          "quantity": 1,
+          "unit_price": 600000,
+          "tax": "AM-S-EXEMPT",
+          "account": "6114"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-export",
+      "date": "2026-01-22",
+      "why": "International transport of cargo, zero rate (Article 65 part 2 point 4): box 12A next to the goods export.",
+      "lines": [
+        {
+          "name": "International freight forwarding",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "AM-S-0-SERVICES",
+          "account": "6114"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-am",
+      "date": "2026-01-25",
+      "why": "Partial return of two units of V1: an adjusting tax invoice reduces box 7 through line 8.1 (boxes 81A and 81B) in the period it is issued, V1 itself is not touched.",
+      "lines": [
+        {
+          "name": "Return of building materials",
+          "quantity": 2,
+          "unit_price": 100000,
+          "tax": "AM-S-20",
+          "account": "6112"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-am",
+      "date": "2026-02-08",
+      "why": "Sale in the second reporting month: the February return counts only its own month.",
+      "lines": [
+        {
+          "name": "Building materials",
+          "quantity": 3,
+          "unit_price": 100000,
+          "tax": "AM-S-20",
+          "account": "6112"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-am",
+      "date": "2026-02-15",
+      "why": "Second February sale, services at 20 %.",
+      "lines": [
+        {
+          "name": "Consulting services",
+          "quantity": 2,
+          "unit_price": 250000,
+          "tax": "AM-S-20",
+          "account": "6114"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-am",
+      "date": "2026-01-11",
+      "why": "Goods for resale from a local supplier at 20 %: input VAT in box 18B, deducted under Article 71 part 1 point 1.",
+      "lines": [
+        {
+          "name": "Building materials for resale",
+          "quantity": 1,
+          "unit_price": 1500000,
+          "tax": "AM-P-20",
+          "account": "2161"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-am",
+      "date": "2026-01-13",
+      "why": "Office rent, administrative expense, input VAT in box 18B.",
+      "lines": [
+        {
+          "name": "Office rent",
+          "quantity": 1,
+          "unit_price": 400000,
+          "tax": "AM-P-20",
+          "account": "7135"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-import",
+      "date": "2026-01-16",
+      "why": "Goods imported under the customs procedure Release for domestic consumption: VAT paid at customs, box 17B (Article 71 part 1 point 2).",
+      "lines": [
+        {
+          "name": "Imported textile raw material",
+          "quantity": 1,
+          "unit_price": 1000000,
+          "tax": "AM-P-IMPORT",
+          "account": "2111"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-am",
+      "date": "2026-02-09",
+      "why": "Accounting and audit services in the second month.",
+      "lines": [
+        {
+          "name": "Accounting services",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "AM-P-20",
+          "account": "7136"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supplier-am",
+      "date": "2026-02-12",
+      "why": "Utilities in the second month.",
+      "lines": [
+        {
+          "name": "Electricity and water",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "AM-P-20",
+          "account": "7135"
+        }
+      ]
+    },
+    {
+      "ref": "PCN1",
+      "type": "purchase_credit_note",
+      "contact": "supplier-am",
+      "date": "2026-02-18",
+      "why": "Return of goods to the supplier: an adjusting tax invoice received reduces box 18 through line 19.1 (boxes 191A and 191B).",
+      "lines": [
+        {
+          "name": "Return of goods to the supplier",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "AM-P-20",
+          "account": "2161"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-01-31",
+      "amount": 1200000,
+      "contact": "client-am",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Receipt covering V1 exactly (1,000,000 + 200,000 VAT)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-01-22",
+      "amount": 3000000,
+      "contact": "client-export",
+      "journal": "BNK",
+      "match": "V3",
+      "why": "Receipt covering the export invoice V3, no VAT."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 480000,
+      "contact": "client-am",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Receipt covering V2 (400,000 + 80,000 VAT) in the following month."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-02-25",
+      "amount": 100000,
+      "contact": "client-am",
+      "journal": "BNK",
+      "match": null,
+      "why": "Receipt tied to no document: it stays an open amount on the customer account."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 1800000,
+      "contact": "supplier-am",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Payment covering P1 exactly (1,500,000 + 300,000 VAT)."
+    },
+    {
+      "ref": "S3",
+      "direction": "outbound",
+      "date": "2026-01-30",
+      "amount": 1200000,
+      "contact": "supplier-import",
+      "journal": "BNK",
+      "match": "P3",
+      "why": "Payment to the foreign supplier covering P3 including the import VAT."
+    }
+  ]
+}

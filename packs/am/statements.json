@@ -1,0 +1,487 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "AM-BS",
+      "kind": "balance_sheet",
+      "framework": "IFRS",
+      "name": "Ֆինանսական վիճակի մասին հաշվետվություն (ծանոթագրություն՝ ամփոփ)",
+      "legal_reference": "ՀՀ օրենք հաշվապահական հաշվառման մասին (04.12.2019) — ֆինանսական հաշվետվությունները կազմվում են ՖՀՄՍ-ների կամ փոքր և միջին կազմակերպությունների ՖՀՄՍ-ի համաձայն․ տողերը խմբավորում են 353-Ն հրամանի հաշվային պլանի դասերը (1-2՝ ակտիվներ, 3՝ կապիտալ, 4-5՝ պարտավորություններ, 6-7՝ եկամուտներ և ծախսեր)։ Տողերի կառուցվածքը փաթեթի ամփոփ ներկայացումն է, ոչ թե օրենքով հաստատված ձև։",
+      "source": "accounting-law",
+      "lines": [
+        {
+          "code": "A-NC-FIX",
+          "parent": "A-NC",
+          "name": "Հիմնական միջոցներ, ներդրումային գույք և ոչ նյութական ակտիվներ",
+          "sequence": 10,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "11",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "12",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "13",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "A-NC-FIN",
+          "parent": "A-NC",
+          "name": "Ոչ ընթացիկ ֆինանսական ակտիվներ և այլ ոչ ընթացիկ ակտիվներ",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "14",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "15",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "A-NC",
+          "name": "Ոչ ընթացիկ ակտիվներ",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "A-NC-FIX",
+            "A-NC-FIN"
+          ]
+        },
+        {
+          "code": "A-C-INV",
+          "parent": "A-C",
+          "name": "Պաշարներ",
+          "sequence": 40,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "21"
+            }
+          ]
+        },
+        {
+          "code": "A-C-REC",
+          "parent": "A-C",
+          "name": "Դեբիտորական պարտքեր, կանխավճարներ և հարկերի գծով պահանջներ",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "22"
+            }
+          ]
+        },
+        {
+          "code": "A-C-FIN",
+          "parent": "A-C",
+          "name": "Ընթացիկ ֆինանսական ակտիվներ",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "23",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "24",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "A-C-CASH",
+          "parent": "A-C",
+          "name": "Դրամական միջոցներ",
+          "sequence": 70,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "25"
+            }
+          ]
+        },
+        {
+          "code": "A-C",
+          "name": "Ընթացիկ ակտիվներ",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "A-C-INV",
+            "A-C-REC",
+            "A-C-FIN",
+            "A-C-CASH"
+          ]
+        },
+        {
+          "code": "A-TOT",
+          "name": "Ակտիվներ, ընդամենը",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "A-NC",
+            "A-C"
+          ]
+        },
+        {
+          "code": "E-CAP",
+          "parent": "E-TOT",
+          "name": "Կապիտալ և պահուստներ",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "31",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "32",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "35",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "E-RET",
+          "parent": "E-TOT",
+          "name": "Չբաշխված շահույթ (չծածկված վնաս)",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "33",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "34",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "E-RESULT",
+          "parent": "E-TOT",
+          "name": "Հաշվետու ժամանակաշրջանի արդյունք (չփակված եկամուտներ և ծախսեր)",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "6",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "7",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "E-TOT",
+          "name": "Սեփական կապիտալ, ընդամենը",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "E-CAP",
+            "E-RET",
+            "E-RESULT"
+          ]
+        },
+        {
+          "code": "L-NC",
+          "parent": "L-TOT",
+          "name": "Ոչ ընթացիկ պարտավորություններ",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "4"
+            }
+          ]
+        },
+        {
+          "code": "L-C-FIN",
+          "parent": "L-C",
+          "name": "Ընթացիկ ֆինանսական պարտավորություններ",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "51"
+            }
+          ]
+        },
+        {
+          "code": "L-C-PAY",
+          "parent": "L-C",
+          "name": "Կրեդիտորական պարտքեր, ստացված կանխավճարներ և հարկերի գծով պարտքեր",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "52"
+            }
+          ]
+        },
+        {
+          "code": "L-C-OTH",
+          "parent": "L-C",
+          "name": "Այլ ընթացիկ պարտավորություններ և պահուստներ",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "53",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "54",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "L-C",
+          "parent": "L-TOT",
+          "name": "Ընթացիկ պարտավորություններ",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "L-C-FIN",
+            "L-C-PAY",
+            "L-C-OTH"
+          ]
+        },
+        {
+          "code": "L-TOT",
+          "name": "Պարտավորություններ, ընդամենը",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "L-NC",
+            "L-C"
+          ]
+        },
+        {
+          "code": "EL-TOT",
+          "name": "Սեփական կապիտալ և պարտավորություններ, ընդամենը",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "E-TOT",
+            "L-TOT"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "AM-IS",
+      "kind": "income_statement",
+      "framework": "IFRS",
+      "name": "Շահույթի կամ վնասի մասին հաշվետվություն (ծանոթագրություն՝ ամփոփ)",
+      "legal_reference": "ՀՀ օրենք հաշվապահական հաշվառման մասին (04.12.2019) — ֆինանսական հաշվետվությունները կազմվում են ՖՀՄՍ-ների կամ փոքր և միջին կազմակերպությունների ՖՀՄՍ-ի համաձայն․ տողերը խմբավորում են 353-Ն հրամանի հաշվային պլանի դասերը (1-2՝ ակտիվներ, 3՝ կապիտալ, 4-5՝ պարտավորություններ, 6-7՝ եկամուտներ և ծախսեր)։ Տողերի կառուցվածքը փաթեթի ամփոփ ներկայացումն է, ոչ թե օրենքով հաստատված ձև։",
+      "source": "accounting-law",
+      "lines": [
+        {
+          "code": "REV",
+          "name": "Հասույթ իրացումից (հանած վերադարձները)",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "611",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "612",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "COST",
+          "name": "Իրացման ինքնարժեք",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "711"
+            }
+          ]
+        },
+        {
+          "code": "GROSS",
+          "name": "Համախառն շահույթ",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "REV"
+          ],
+          "minus": [
+            "COST"
+          ]
+        },
+        {
+          "code": "OTH-OP-INC",
+          "name": "Գործառնական այլ եկամուտներ",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "614",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "615",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "SELL",
+          "name": "Իրացման ծախսեր",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "712"
+            }
+          ]
+        },
+        {
+          "code": "ADMIN",
+          "name": "Վարչական ծախսեր",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "713"
+            }
+          ]
+        },
+        {
+          "code": "OTH-OP-EXP",
+          "name": "Գործառնական այլ ծախսեր",
+          "sequence": 70,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "714",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "715",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "OP-PROFIT",
+          "name": "Գործառնական շահույթ (վնաս)",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "GROSS",
+            "OTH-OP-INC"
+          ],
+          "minus": [
+            "SELL",
+            "ADMIN",
+            "OTH-OP-EXP"
+          ]
+        },
+        {
+          "code": "NONOP-INC",
+          "name": "Շարունակվող գործունեության այլ եկամուտներ",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "62"
+            }
+          ]
+        },
+        {
+          "code": "NONOP-EXP",
+          "name": "Շարունակվող գործունեության այլ ծախսեր",
+          "sequence": 100,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "72"
+            }
+          ]
+        },
+        {
+          "code": "PBT",
+          "name": "Շահույթ (վնաս) մինչև հարկումը",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "OP-PROFIT",
+            "NONOP-INC"
+          ],
+          "minus": [
+            "NONOP-EXP"
+          ]
+        },
+        {
+          "code": "TAX",
+          "name": "Շահութահարկի գծով ծախս (եկամուտ)",
+          "sequence": 120,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "751"
+            }
+          ]
+        },
+        {
+          "code": "PROFIT",
+          "name": "Հաշվետու ժամանակաշրջանի զուտ շահույթ (վնաս)",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "PBT"
+          ],
+          "minus": [
+            "TAX"
+          ]
+        }
+      ]
+    }
+  ]
+}

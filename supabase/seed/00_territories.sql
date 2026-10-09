@@ -2046,3 +2046,24 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Armenia (AM). Not a Member State of the European Union; a member of the
+-- Eurasian Economic Union. Armenia levies its own value added tax under the
+-- Tax Code (Law HO-165-N of 4 October 2016), articles 60 and 63-65, at a
+-- standard rate of 20% with a zero rate for exports (article 65) and a list
+-- of exempt transactions (article 64).
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('AM', 'iso_3166_1', 'Armenia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2) — the common system of VAT applies in the territory of the Community as defined by the Treaties; Armenia is a member of the Eurasian Economic Union, not of the European Union. Armenia levies its own value added tax under the Tax Code (Law HO-165-N of 4 October 2016), article 63, at a standard rate of 20%, with a zero rate for exports and international transport (article 65) and exemptions (article 64).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
