@@ -154,8 +154,10 @@ A transport that throws `TransportError` — or anything else — records a
 No network and no account. Whatever carries the files further — a script that
 uploads them to a portal, the client of an access point, a person — reads the
 folder and answers by leaving a receipt beside the file; `status` reads the
-furthest one. The file name carries twelve characters of the checksum, so two
-issues of one document never meet.
+furthest one. The file name carries twelve characters of the checksum and
+eight of the sending's identifier, so two issues of one document never meet,
+and a file sent again after a refusal is a new file beside the refused one —
+the old receipt is never read as the answer to the new sending.
 
 **Plugging another one** is writing those four functions in a package of its
 own, or in the service that operates it, and handing the object to

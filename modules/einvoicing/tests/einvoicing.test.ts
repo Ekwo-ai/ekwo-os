@@ -558,7 +558,7 @@ describe('the directory transport, end to end', () => {
     const transmission = issued['transmission'] as Record<string, unknown>;
     expect(transmission).toMatchObject({ channel: 'self', service: null, state: 'submitted' });
     const reference = String(transmission['reference']);
-    expect(reference).toMatch(/^outbox\/invoice-.+\.cii\.[0-9a-f]{12}\.xml$/);
+    expect(reference).toMatch(/^outbox\/invoice-.+\.cii\.[0-9a-f]{12}\.[0-9a-f]{8}\.xml$/);
     expect(await readFile(join(folder, reference), 'utf8')).toBe(issued['file']);
 
     // Nobody has answered yet: still submitted, and nothing recorded.
@@ -572,21 +572,27 @@ describe('the directory transport, end to end', () => {
     expect(rejected['state']).toBe('rejected');
     expect((rejected['transmissions'] as { message: string }[])[0]?.message).toBe(words);
 
-    // The same file again: the folder holds it already, byte for byte, and
-    // the second sending is a second row.
+    // The same file again is a second sending, and a second file beside the
+    // refused one: the refusal stays where it was written, and is not read as
+    // the answer to the new sending.
     const again = (await issueEinvoice(facturX.backend, { document_id: documentId, send: true }, transport))['transmission'] as Record<
       string,
       unknown
     >;
-    expect(again).toMatchObject({ sequence: 2, state: 'submitted', reference });
-    await rm(join(folder, `${reference}.rejected`));
-    await writeFile(join(folder, `${reference}.delivered`), '');
+    expect(again).toMatchObject({ sequence: 2, state: 'submitted' });
+    const second = String(again['reference']);
+    expect(second).not.toBe(reference);
+    expect(await readFile(join(folder, second), 'utf8')).toBe(issued['file']);
+    expect((await einvoiceStatus(facturX.backend, { document_id: documentId, refresh: true }, transport))['state']).toBe('submitted');
+    await writeFile(join(folder, `${second}.delivered`), '');
     const delivered = await einvoiceStatus(facturX.backend, { document_id: documentId, refresh: true }, transport);
     expect(delivered['state']).toBe('delivered');
 
     const listed = await listEinvoiceTransmissions(facturX.backend, { company_id: facturX.companyId, document_id: documentId });
     expect((listed['transmissions'] as { state: string }[]).map((t) => t.state)).toEqual(['delivered', 'rejected']);
-    expect(await readdir(join(folder, 'outbox'))).toHaveLength(2);
+    expect((await readdir(join(folder, 'outbox'))).sort()).toEqual(
+      [reference, `${reference}.rejected`, second, `${second}.delivered`].map((path) => path.slice('outbox/'.length)).sort(),
+    );
   });
 
   it('never overwrites a file it did not write, reads what arrived, and cannot tell who is reachable', async () => {

@@ -18,10 +18,13 @@
  * program of its own. A folder cannot tell whether an address is reachable,
  * and `lookup()` says exactly that.
  *
- * A file name carries the first twelve characters of the file's checksum, so
- * two issues of one document never meet in the folder, and writing the same
- * file twice is the same file — the second write finds it and checks it is
- * byte for byte the one it would have written.
+ * A file name carries the first twelve characters of the file's checksum and
+ * the first eight of the sending's identifier. Two issues of one document
+ * never meet in the folder, and neither do two sendings of one file: a file
+ * sent again after a refusal is a new file beside the refused one, so the
+ * receipt of the first is never read as the answer to the second. Writing for
+ * the same sending twice is the same file — the second write finds it and
+ * checks it is byte for byte the one it would have written.
  */
 
 import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
@@ -48,12 +51,13 @@ function mediaTypeOf(name: string): string {
   return extname(name).toLowerCase() === '.xml' ? 'application/xml' : 'application/octet-stream';
 }
 
-/** `invoice-INV-1.xml` and a checksum → `invoice-INV-1.0f343b093112.xml`. */
-export function directoryFilename(file: Pick<EinvoiceFile, 'filename' | 'checksum'>): string {
+/** `invoice-INV-1.xml`, a checksum and a sending → `invoice-INV-1.0f343b093112.5c1e0a7d.xml`. */
+export function directoryFilename(file: Pick<EinvoiceFile, 'filename' | 'checksum'>, transmissionId: string): string {
   const safe = basename(file.filename).replace(/[^A-Za-z0-9._-]+/g, '-');
   const extension = extname(safe);
   const stem = extension === '' ? safe : safe.slice(0, -extension.length);
-  return `${stem === '' ? 'einvoice' : stem}.${file.checksum.slice(0, 12)}${extension}`;
+  const sending = transmissionId.replace(/[^A-Za-z0-9]+/g, '').slice(0, 8);
+  return `${stem === '' ? 'einvoice' : stem}.${file.checksum.slice(0, 12)}${sending === '' ? '' : `.${sending}`}${extension}`;
 }
 
 /** A reference this transport gave, and nothing else: `outbox/<one file name>`. */
@@ -80,8 +84,8 @@ export function directoryTransport(root: string, options: DirectoryTransportOpti
     channel: 'self',
     service: options.service ?? null,
 
-    async send(file: EinvoiceFile, _metadata: SendMetadata): Promise<Submission> {
-      const name = directoryFilename(file);
+    async send(file: EinvoiceFile, metadata: SendMetadata): Promise<Submission> {
+      const name = directoryFilename(file, metadata.transmissionId);
       const path = join(root, OUTBOX, name);
       try {
         await mkdir(join(root, OUTBOX), { recursive: true });
