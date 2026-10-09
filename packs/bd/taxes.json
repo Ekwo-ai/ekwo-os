@@ -1,0 +1,1215 @@
+[
+  {
+    "code": "BD-S-15",
+    "name": "Sale, standard rate — VAT 15 %",
+    "description": "The standard charge on a taxable supply made in Bangladesh, including a sale online and digital advertising at the standard rate",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 15(1) and (3) — VAT is imposed on taxable imports and taxable supplies at 15 per cent, unless the Act provides otherwise (the Third Schedule lets the government set truncated rates or specific amounts for named goods and services); s. 16(b) — the supplier is liable to pay it on a supply made in Bangladesh; s. 32(1) — the value of a taxable supply is the consideration less the tax fraction. Form Mushak 9.1, part 3, note 4 — standard rated goods or services, the tax-exclusive value in column (a) and the VAT in column (c). A credit note reduces the VAT through note 31 (decreasing adjustments, issuance of a credit note) and leaves the value of the original supply in its note, which is how the form treats it (IVAS guide, notes 31 and 39).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "4c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 10,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-15-SD5",
+    "name": "Sale, VAT 15 % on a value including supplementary duty at 5 %",
+    "description": "A sale of a good or service that bears supplementary duty at 5 %: ice cream (heading 21.05) and mineral water up to three litres (heading 22.01)",
+    "kind": "vat",
+    "rate": 20.75,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 55(1) and (4)(a) — supplementary duty is imposed on the supply of the goods and services of the Second Schedule, at the rate of column (4) (5 per cent here: ice cream (heading 21.05) and mineral water up to three litres (heading 22.01)), and s. 55(5) charges it at one stage only; s. 57(b) — the value it is charged on is the value of the supply under s. 32 less the duty, so the duty is 5 per cent of the value before duty. The VAT of s. 15(3) is charged on the value of the supply including the duty (s. 32 values a supply at its whole consideration, duty included; s. 57(b) takes the duty out only to find the base of the duty itself): 15 per cent of 105 gives 15.75 points, so the two together come to 20.75 per cent of the value before duty. One 20.75 % code carries two `tax` postings: 24.096 % of the tax is the duty on account 2101 and in note 4(b), 75.904 % is the VAT on account 2100 and in note 4(c). The two shares do not terminate, the posting factor holds three decimals and the engine rounds the tax once and gives the last posting the remainder, so on a large invoice the duty can differ from 5 per cent of the value by a few paisa — see the README and docs/international.md. Form Mushak 9.1, part 3, note 4 — standard rated goods or services, with the supplementary duty in column (b) and the VAT in column (c); note 9(b) adds the duty column; note 36 pays it. A credit note reduces the duty through note 39 and the VAT through note 31.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4a"
+        },
+        {
+          "type": "tax",
+          "factor": 24.096,
+          "account": "2101",
+          "box": "4b",
+          "box_factor": 24.096
+        },
+        {
+          "type": "tax",
+          "factor": 75.904,
+          "account": "2100",
+          "box": "4c",
+          "box_factor": 75.904
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 24.096,
+          "account": "2101",
+          "box": "39",
+          "box_factor": 24.096
+        },
+        {
+          "type": "tax",
+          "factor": 75.904,
+          "account": "2100",
+          "box": "31",
+          "box_factor": 75.904
+        }
+      ]
+    },
+    "sequence": 20,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-15-SD10",
+    "name": "Sale, VAT 15 % on a value including supplementary duty at 10 %",
+    "description": "A sale of a good or service that bears supplementary duty at 10 %: cooked pasta (19.02), prepared food such as burgers and pizza (21.06) and internet services (S012.14)",
+    "kind": "vat",
+    "rate": 26.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 55(1) and (4)(a) — supplementary duty is imposed on the supply of the goods and services of the Second Schedule, at the rate of column (4) (10 per cent here: cooked pasta (19.02), prepared food such as burgers and pizza (21.06) and internet services (S012.14)), and s. 55(5) charges it at one stage only; s. 57(b) — the value it is charged on is the value of the supply under s. 32 less the duty, so the duty is 10 per cent of the value before duty. The VAT of s. 15(3) is charged on the value of the supply including the duty (s. 32 values a supply at its whole consideration, duty included; s. 57(b) takes the duty out only to find the base of the duty itself): 15 per cent of 110 gives 16.5 points, so the two together come to 26.5 per cent of the value before duty. One 26.5 % code carries two `tax` postings: 37.736 % of the tax is the duty on account 2101 and in note 4(b), 62.264 % is the VAT on account 2100 and in note 4(c). The two shares do not terminate, the posting factor holds three decimals and the engine rounds the tax once and gives the last posting the remainder, so on a large invoice the duty can differ from 10 per cent of the value by a few paisa — see the README and docs/international.md. Form Mushak 9.1, part 3, note 4 — standard rated goods or services, with the supplementary duty in column (b) and the VAT in column (c); note 9(b) adds the duty column; note 36 pays it. A credit note reduces the duty through note 39 and the VAT through note 31.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4a"
+        },
+        {
+          "type": "tax",
+          "factor": 37.736,
+          "account": "2101",
+          "box": "4b",
+          "box_factor": 37.736
+        },
+        {
+          "type": "tax",
+          "factor": 62.264,
+          "account": "2100",
+          "box": "4c",
+          "box_factor": 62.264
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 37.736,
+          "account": "2101",
+          "box": "39",
+          "box_factor": 37.736
+        },
+        {
+          "type": "tax",
+          "factor": 62.264,
+          "account": "2100",
+          "box": "31",
+          "box_factor": 62.264
+        }
+      ]
+    },
+    "sequence": 30,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-15-SD30",
+    "name": "Sale, VAT 15 % on a value including supplementary duty at 30 %",
+    "description": "A sale of a good or service that bears supplementary duty at 30 %: carbonated beverages (22.02) and restaurant or hotel bills carrying wine or a floor show (S001)",
+    "kind": "vat",
+    "rate": 49.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 55(1) and (4)(a) — supplementary duty is imposed on the supply of the goods and services of the Second Schedule, at the rate of column (4) (30 per cent here: carbonated beverages (22.02) and restaurant or hotel bills carrying wine or a floor show (S001)), and s. 55(5) charges it at one stage only; s. 57(b) — the value it is charged on is the value of the supply under s. 32 less the duty, so the duty is 30 per cent of the value before duty. The VAT of s. 15(3) is charged on the value of the supply including the duty (s. 32 values a supply at its whole consideration, duty included; s. 57(b) takes the duty out only to find the base of the duty itself): 15 per cent of 130 gives 19.5 points, so the two together come to 49.5 per cent of the value before duty. One 49.5 % code carries two `tax` postings: 60.606 % of the tax is the duty on account 2101 and in note 4(b), 39.394 % is the VAT on account 2100 and in note 4(c). The two shares do not terminate, the posting factor holds three decimals and the engine rounds the tax once and gives the last posting the remainder, so on a large invoice the duty can differ from 30 per cent of the value by a few paisa — see the README and docs/international.md. Form Mushak 9.1, part 3, note 4 — standard rated goods or services, with the supplementary duty in column (b) and the VAT in column (c); note 9(b) adds the duty column; note 36 pays it. A credit note reduces the duty through note 39 and the VAT through note 31.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4a"
+        },
+        {
+          "type": "tax",
+          "factor": 60.606,
+          "account": "2101",
+          "box": "4b",
+          "box_factor": 60.606
+        },
+        {
+          "type": "tax",
+          "factor": 39.394,
+          "account": "2100",
+          "box": "4c",
+          "box_factor": 39.394
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "factor": 60.606,
+          "account": "2101",
+          "box": "39",
+          "box_factor": 60.606
+        },
+        {
+          "type": "tax",
+          "factor": 39.394,
+          "account": "2100",
+          "box": "31",
+          "box_factor": 39.394
+        }
+      ]
+    },
+    "sequence": 40,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-5",
+    "name": "Sale at the truncated rate of 5 %",
+    "description": "A supply the Third Schedule, Table 1 charges at 5 %: edible oils such as mustard oil, powdered milk, fabrics of man-made fibre, exercise books, internet agencies (S012.14), ride sharing (S080), English-medium schools (S069), electricity distributors (S057) and information-technology-enabled services (S099.10)",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 15(3), first proviso — the government may, in the public interest, determine truncated VAT rates for goods and services of the Third Schedule; Third Schedule, paragraph (1), applies the rates of Tables 1 to 3 to local supply only; Table 1 (Part A goods, Part B services). Form Mushak 9.1, part 3, note 7 — goods or services other than at the standard rate, value in column (a) and VAT in column (c). A credit note reduces the VAT through note 31 (decreasing adjustments, issuance of a credit note) and leaves the value of the original supply in its note, which is how the form treats it (IVAS guide, notes 31 and 39).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "7c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 50,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-7.5",
+    "name": "Sale at the truncated rate of 7.5 %",
+    "description": "A supply the Third Schedule, Table 2 charges at 7.5 %: LP gas, barbed wire, certain steel products, furniture manufacturers and furniture showrooms (S024)",
+    "kind": "vat",
+    "rate": 7.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 15(3), first proviso — the government may, in the public interest, determine truncated VAT rates for goods and services of the Third Schedule; Third Schedule, paragraph (1), applies the rates of Tables 1 to 3 to local supply only; Table 2 (Part A goods, Part B services). Form Mushak 9.1, part 3, note 7. A credit note reduces the VAT through note 31 (decreasing adjustments, issuance of a credit note) and leaves the value of the original supply in its note, which is how the form treats it (IVAS guide, notes 31 and 39).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "7c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 60,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-10",
+    "name": "Sale at the truncated rate of 10 % — construction",
+    "description": "A supply the Third Schedule, Table 3 charges at 10 %: construction firms (S004.00), procurement providers (S037), air-conditioned or air-cooled launch services (S036.20)",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 15(3), first proviso — the government may, in the public interest, determine truncated VAT rates for goods and services of the Third Schedule; Third Schedule, paragraph (1), applies the rates of Tables 1 to 3 to local supply only; Table 3, Part B, S004.00 construction firms 10 % — since the Finance Ordinance, 2025 (Ordinance No. 28 of 2025, s. 28(c)) inserted the entry in Table 3 with effect from 1 July 2025 after the Value Added Tax and Supplementary Duty (Amendment) Ordinance, 2025 (Ordinance No. 01 of 2025, s. 4(d)) had omitted it from Table 2 (7.5 %) (the ICAB summary of the VDS Guidelines, 2025: 7.5 % stays for construction contracts signed before 30 June 2025). Form Mushak 9.1, part 3, note 7. A credit note reduces the VAT through note 31 (decreasing adjustments, issuance of a credit note) and leaves the value of the original supply in its note, which is how the form treats it (IVAS guide, notes 31 and 39).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "7c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 70,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-5-ADV-DIGITAL",
+    "name": "Sale of digital advertising at 5 %",
+    "description": "Advertising placed on social media platforms, over-the-top platforms, search engines and other digital media, charged at 5 % from 1 July 2026 instead of the standard 15 %",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Finance Act, 2026 (Act No. 96 of 2026), in force on 1 July 2026 — VAT on advertisements on digital media reduced from 15 % to 5 %. The Act is published by the National Board of Revenue in Bangla only; the reduction is read from the press reports of the Finance Bill passed by the Parliament on 29 June 2026 and has not been checked against the section of the Act, nor against the service code of the Third Schedule it lands on. A point for a Bangladeshi accountant. Before 1 July 2026 the standard code BD-S-15 applies. Form Mushak 9.1, part 3, note 7.",
+    "source": "finance-act-2026",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "7c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 80,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-7.5-CONSTR",
+    "name": "Sale, construction at 7.5 % (until 30 June 2025)",
+    "description": "Construction firms (S004.00) at the rate of Table 2 of the Third Schedule before the Finance Ordinance, 2025",
+    "kind": "vat",
+    "rate": 7.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-07-01",
+    "valid_to": "2025-06-30",
+    "legal_reference": "Closed code kept so books before 1 July 2025 stay readable; Third Schedule, Table 2, Part B, S004.00 construction firms 7.5 %, replaced by 10 % in Table 3 by the Finance Ordinance, 2025 (Ordinance No. 28 of 2025) with effect from 1 July 2025; the code opens on 1 July 2019, the date the Finance Act, 2019 substituted the three schedules, the earliest date this register can prove. Form Mushak 9.1, part 3, note 7. No return of this pack is valid before 1 July 2026: the code serves the ledger and not a filing.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "7c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 90,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-5-ONLINE",
+    "name": "Sale of goods online at 5 % (until 30 June 2025)",
+    "description": "Online sellers of goods (S099.60) at the truncated rate they had before the Finance Ordinance, 2025",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2019-07-01",
+    "valid_to": "2025-06-30",
+    "legal_reference": "Closed code kept so books before 1 July 2025 stay readable; Third Schedule, Table 1, Part B, S099.60 sale of goods online 5 %, omitted by section 28(b) of the Finance Ordinance, 2025 (Ordinance No. 28 of 2025), as the footnote of the authentic text of 5 November 2025 records, so that the standard rate of 15 % (BD-S-15) applies from 1 July 2025. The code opens on 1 July 2019 for the reason given on BD-S-7.5-CONSTR. Form Mushak 9.1, part 3, note 7.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "7c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 100,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-TRADE-7.5",
+    "name": "Trader sale at 7.5 %",
+    "description": "A sale of goods at the local trading stage by a trader, the general trading rate",
+    "kind": "vat",
+    "rate": 7.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, Third Schedule, paragraph (3) — the rate of VAT is 7.5 per cent on the supply of all goods at the local trading stage (a \"trader\" sells goods without any change in shape, nature, characteristics or quality). Form Mushak 9.1, part 3, note 8 — retail, wholesale and trade-based supply. A trader who claims input tax credit files Mushak 9.1 and one who does not files Mushak 9.1.1 (Rules, 2016, as amended by the Finance Act, 2026). A credit note reduces the VAT through note 31 (decreasing adjustments, issuance of a credit note) and leaves the value of the original supply in its note, which is how the form treats it (IVAS guide, notes 31 and 39).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "8c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 110,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-TRADE-3",
+    "name": "Trader sale of medicine at 3 %",
+    "description": "A sale of medicine at the local trading stage",
+    "kind": "vat",
+    "rate": 3,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, Third Schedule, paragraph (3) — the rate of VAT is 7.5 per cent on the supply of all goods at the local trading stage (a \"trader\" sells goods without any change in shape, nature, characteristics or quality); the same paragraph sets 3 per cent for medicine (the pharmaceutical rate of 2.4 per cent that the Finance Act, 2021 had set was substituted by the Value Added Tax and Supplementary Duty (Amendment) Ordinance, 2025 (Ordinance No. 01 of 2025)). Form Mushak 9.1, part 3, note 8. A credit note reduces the VAT through note 31 (decreasing adjustments, issuance of a credit note) and leaves the value of the original supply in its note, which is how the form treats it (IVAS guide, notes 31 and 39).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "8c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 120,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-TRADE-2",
+    "name": "Trader sale of petroleum products at 2 %",
+    "description": "A sale of petroleum products at the local trading stage",
+    "kind": "vat",
+    "rate": 2,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, Third Schedule, paragraph (3) — the rate of VAT is 7.5 per cent on the supply of all goods at the local trading stage (a \"trader\" sells goods without any change in shape, nature, characteristics or quality); the same paragraph sets 2 per cent for petroleum products. Form Mushak 9.1, part 3, note 8. A credit note reduces the VAT through note 31 (decreasing adjustments, issuance of a credit note) and leaves the value of the original supply in its note, which is how the form treats it (IVAS guide, notes 31 and 39).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "8c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 130,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-TRADE-1.5",
+    "name": "Wholesale sale at 1.5 %",
+    "description": "Certain wholesale businesses that meet the prescribed conditions and procedures",
+    "kind": "vat",
+    "rate": 1.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, Third Schedule, paragraph (4) (inserted by the Finance Act, 2022) — the rate is 1.5 per cent for certain wholesale business, subject to compliance with the prescribed conditions and procedures, which this register does not hold. Form Mushak 9.1, part 3, note 8. A credit note reduces the VAT through note 31 (decreasing adjustments, issuance of a credit note) and leaves the value of the original supply in its note, which is how the form treats it (IVAS guide, notes 31 and 39).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "8c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "31"
+        }
+      ]
+    },
+    "sequence": 140,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-ZR-EXP",
+    "name": "Export of goods or services, zero-rated",
+    "description": "A supply of goods for export, or a service exported, with the evidence the Rules require",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 21(1)(a) — the VAT rate is zero on the supplies of ss. 22, 23 and 24; s. 21(2) — a supply both exempt and zero-rated is zero-rated; s. 23(1) — a supply of goods for export is zero-rated (not goods re-imported); s. 24 — services exported or directly related to land outside Bangladesh; s. 55(3) — no supplementary duty is imposed on a zero-rated supply. Form Mushak 9.1, part 3, note 1 — zero rated goods or services, direct export (value only; the VAT and SD columns are disabled).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 150,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-ZR-DEEMED",
+    "name": "Deemed export and other zero-rated supply",
+    "description": "A zero-rated supply that is not a direct export: stores and spares of ships and aircraft in international transport, goods to a duty-free seller for tourists, goods repaired under warranty, goods for repair of an ocean-going ship (s. 23(2) to (6))",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 21(1)(a) and s. 23(2) to (6) — zero-rated: goods supplied to a tourist or visitor by a licensed duty-free seller, goods located outside Bangladesh, stores and spares of an ocean-going ship or aircraft in international transport, goods supplied for repair or replacement under warranty. Form Mushak 9.1, part 3, note 2 — zero rated goods or services, deemed export.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 160,
+    "vat_category": null
+  },
+  {
+    "code": "BD-S-EX",
+    "name": "Exempt supply — First Schedule",
+    "description": "A supply the First Schedule exempts: live animals and unprocessed food, books and newspapers, medical and education services, accepting deposits, life insurance, passenger transport other than air-conditioned",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 26(a) — any supply or import specified in the First Schedule is exempted from VAT (Part One goods, Part Two services: basic services for living, social welfare, culture, finance, transport, personal services); s. 46(1)(i) — no input tax credit on inputs used to make exempt goods or services. The National Board of Revenue lost its power to exempt by special order under the Finance Ordinance, 2025; an exemption now comes from the Schedule or from the government. Form Mushak 9.1, part 3, note 3 — exempted goods or services (value only).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 170,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-15",
+    "name": "Purchase, standard rate — VAT 15 %",
+    "description": "A local purchase from a VAT-registered supplier with a tax invoice, whose VAT is creditable",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 46(1) — a registered person is entitled to an input tax credit against the VAT imposed on a taxable supply, except where the tax invoice lacks the buyer's and seller's names, addresses and registration numbers (s. 46(1)(f)), the purchase above Taka 100,000 is not paid through a bank or mobile banking channel (s. 46(1)(a)), the credit is not claimed within six tax periods (s. 46(1)(c)), or the input serves exempt supplies (s. 46(1)(i)); s. 45(1)(b) — the credit is subtracted from the output tax. Form Mushak 9.1, part 4, note 14 — standard rated goods or services, local purchase, value in column (a) and VAT in column (b). A supplier's credit note reduces the credit through note 27 (any other increasing adjustment), which the form has no separate line for.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "14a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "14b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "27"
+        }
+      ]
+    },
+    "sequence": 180,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-15-SD5",
+    "name": "Purchase, VAT 15 % on a value including supplementary duty at 5 %",
+    "description": "A purchase of ice cream and mineral water bearing supplementary duty at 5 %, whose VAT is creditable and whose duty is a cost",
+    "kind": "vat",
+    "rate": 20.75,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 46(1) — a registered person is entitled to an input tax credit against the VAT imposed on a taxable supply, except where the tax invoice lacks the buyer's and seller's names, addresses and registration numbers (s. 46(1)(f)), the purchase above Taka 100,000 is not paid through a bank or mobile banking channel (s. 46(1)(a)), the credit is not claimed within six tax periods (s. 46(1)(c)), or the input serves exempt supplies (s. 46(1)(i)); s. 45(1)(b) — the credit is subtracted from the output tax; s. 46(1)(k) — the supplementary duty paid on goods or services is not creditable; s. 57(b) and s. 15(3) — the VAT is charged on the value including the 5 per cent duty. One 20.75 % code therefore carries two postings: 75.904 % of the tax is the VAT, creditable on account 1150 and in note 14(b), and 24.096 % is the duty, a cost that lands on the account of the line (`tax_on_base`) and reaches no box. The shares do not terminate: see BD-S-15-SD5. Form Mushak 9.1, part 4, note 14. The value of note 14(a) is read here as the value before the duty; the guide does not say whether it includes it, a point for a Bangladeshi accountant.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "14a"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 24.096
+        },
+        {
+          "type": "tax",
+          "factor": 75.904,
+          "account": "1150",
+          "box": "14b",
+          "box_factor": 75.904
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 24.096
+        },
+        {
+          "type": "tax",
+          "factor": 75.904,
+          "account": "1150",
+          "box": "27",
+          "box_factor": 75.904
+        }
+      ]
+    },
+    "sequence": 190,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-15-SD10",
+    "name": "Purchase, VAT 15 % on a value including supplementary duty at 10 %",
+    "description": "A purchase of prepared food, pasta and internet services bearing supplementary duty at 10 %, whose VAT is creditable and whose duty is a cost",
+    "kind": "vat",
+    "rate": 26.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 46(1) — a registered person is entitled to an input tax credit against the VAT imposed on a taxable supply, except where the tax invoice lacks the buyer's and seller's names, addresses and registration numbers (s. 46(1)(f)), the purchase above Taka 100,000 is not paid through a bank or mobile banking channel (s. 46(1)(a)), the credit is not claimed within six tax periods (s. 46(1)(c)), or the input serves exempt supplies (s. 46(1)(i)); s. 45(1)(b) — the credit is subtracted from the output tax; s. 46(1)(k) — the supplementary duty paid on goods or services is not creditable; s. 57(b) and s. 15(3) — the VAT is charged on the value including the 10 per cent duty. One 26.5 % code therefore carries two postings: 62.264 % of the tax is the VAT, creditable on account 1150 and in note 14(b), and 37.736 % is the duty, a cost that lands on the account of the line (`tax_on_base`) and reaches no box. The shares do not terminate: see BD-S-15-SD10. Form Mushak 9.1, part 4, note 14. The value of note 14(a) is read here as the value before the duty; the guide does not say whether it includes it, a point for a Bangladeshi accountant.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "14a"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 37.736
+        },
+        {
+          "type": "tax",
+          "factor": 62.264,
+          "account": "1150",
+          "box": "14b",
+          "box_factor": 62.264
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 37.736
+        },
+        {
+          "type": "tax",
+          "factor": 62.264,
+          "account": "1150",
+          "box": "27",
+          "box_factor": 62.264
+        }
+      ]
+    },
+    "sequence": 200,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-15-SD30",
+    "name": "Purchase, VAT 15 % on a value including supplementary duty at 30 %",
+    "description": "A purchase of carbonated beverages bearing supplementary duty at 30 %, whose VAT is creditable and whose duty is a cost",
+    "kind": "vat",
+    "rate": 49.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 46(1) — a registered person is entitled to an input tax credit against the VAT imposed on a taxable supply, except where the tax invoice lacks the buyer's and seller's names, addresses and registration numbers (s. 46(1)(f)), the purchase above Taka 100,000 is not paid through a bank or mobile banking channel (s. 46(1)(a)), the credit is not claimed within six tax periods (s. 46(1)(c)), or the input serves exempt supplies (s. 46(1)(i)); s. 45(1)(b) — the credit is subtracted from the output tax; s. 46(1)(k) — the supplementary duty paid on goods or services is not creditable; s. 57(b) and s. 15(3) — the VAT is charged on the value including the 30 per cent duty. One 49.5 % code therefore carries two postings: 39.394 % of the tax is the VAT, creditable on account 1150 and in note 14(b), and 60.606 % is the duty, a cost that lands on the account of the line (`tax_on_base`) and reaches no box. The shares do not terminate: see BD-S-15-SD30. Form Mushak 9.1, part 4, note 14. The value of note 14(a) is read here as the value before the duty; the guide does not say whether it includes it, a point for a Bangladeshi accountant.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "14a"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 60.606
+        },
+        {
+          "type": "tax",
+          "factor": 39.394,
+          "account": "1150",
+          "box": "14b",
+          "box_factor": 39.394
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 60.606
+        },
+        {
+          "type": "tax",
+          "factor": 39.394,
+          "account": "1150",
+          "box": "27",
+          "box_factor": 39.394
+        }
+      ]
+    },
+    "sequence": 210,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-5",
+    "name": "Purchase at the truncated rate of 5 %",
+    "description": "A local purchase at the Third Schedule rate of 5 %",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 46(1) — a registered person is entitled to an input tax credit against the VAT imposed on a taxable supply, except where the tax invoice lacks the buyer's and seller's names, addresses and registration numbers (s. 46(1)(f)), the purchase above Taka 100,000 is not paid through a bank or mobile banking channel (s. 46(1)(a)), the credit is not claimed within six tax periods (s. 46(1)(c)), or the input serves exempt supplies (s. 46(1)(i)); s. 45(1)(b) — the credit is subtracted from the output tax; Third Schedule, Table 1, truncated rate of 5 per cent. Form Mushak 9.1, part 4, note 16 — goods or services other than at the standard rate, local purchase, value in column (a) and VAT in column (b). A supplier's credit note reduces the credit through note 27 (any other increasing adjustment), which the form has no separate line for.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "16a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "16b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "27"
+        }
+      ]
+    },
+    "sequence": 220,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-7.5",
+    "name": "Purchase at 7.5 % — truncated rate or trader",
+    "description": "A local purchase at the Third Schedule rate of 7.5 % (Table 2, or a trader at the local trading stage)",
+    "kind": "vat",
+    "rate": 7.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 46(1) — a registered person is entitled to an input tax credit against the VAT imposed on a taxable supply, except where the tax invoice lacks the buyer's and seller's names, addresses and registration numbers (s. 46(1)(f)), the purchase above Taka 100,000 is not paid through a bank or mobile banking channel (s. 46(1)(a)), the credit is not claimed within six tax periods (s. 46(1)(c)), or the input serves exempt supplies (s. 46(1)(i)); s. 45(1)(b) — the credit is subtracted from the output tax; Third Schedule, Table 2, truncated rate of 7.5 per cent. Form Mushak 9.1, part 4, note 16 — goods or services other than at the standard rate, local purchase, value in column (a) and VAT in column (b). A supplier's credit note reduces the credit through note 27 (any other increasing adjustment), which the form has no separate line for.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "16a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "16b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "27"
+        }
+      ]
+    },
+    "sequence": 230,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-10",
+    "name": "Purchase at the truncated rate of 10 % — construction",
+    "description": "A local purchase of construction or another service at the Third Schedule rate of 10 %",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 46(1) — a registered person is entitled to an input tax credit against the VAT imposed on a taxable supply, except where the tax invoice lacks the buyer's and seller's names, addresses and registration numbers (s. 46(1)(f)), the purchase above Taka 100,000 is not paid through a bank or mobile banking channel (s. 46(1)(a)), the credit is not claimed within six tax periods (s. 46(1)(c)), or the input serves exempt supplies (s. 46(1)(i)); s. 45(1)(b) — the credit is subtracted from the output tax; Third Schedule, Table 3, truncated rate of 10 per cent. Form Mushak 9.1, part 4, note 16 — goods or services other than at the standard rate, local purchase, value in column (a) and VAT in column (b). A supplier's credit note reduces the credit through note 27 (any other increasing adjustment), which the form has no separate line for. Construction contractors pay 10 % since 1 July 2025 (VDS Guidelines, 2025).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "16a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "16b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "27"
+        }
+      ]
+    },
+    "sequence": 240,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-7.5-CONSTR",
+    "name": "Purchase, construction at 7.5 % (until 30 June 2025)",
+    "description": "Construction services at the rate before the Finance Ordinance, 2025",
+    "kind": "vat",
+    "rate": 7.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2019-07-01",
+    "valid_to": "2025-06-30",
+    "legal_reference": "Closed code kept so books before 1 July 2025 stay readable; see BD-S-7.5-CONSTR; the rate stayed 7.5 % for contracts signed before 30 June 2025 (VDS Guidelines, 2025). Form Mushak 9.1, part 4, note 16.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "16a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "16b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "27"
+        }
+      ]
+    },
+    "sequence": 250,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-IMP-15",
+    "name": "Import of goods, VAT 15 % paid at the border",
+    "description": "Goods imported and cleared by Customs, whose VAT is collected with the import duty",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 27 — VAT on a taxable import is collected in the method and at the time import duty is collected under the Customs Act; s. 28 — the base is the customs value plus import duty, supplementary duty and other duties and taxes payable on the import (so the value of the line is the dutiable value including them); s. 46 — the VAT is creditable. Form Mushak 9.1, part 4, note 15 — standard rated goods or services, import. The advance tax (AT) collected at import under s. 48 is a separate decreasing adjustment (note 30) that this code does not post.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "15a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "15b"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "15a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "15b",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 260,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-RC-15",
+    "name": "Imported service, VAT 15 % self-charged and claimed",
+    "description": "A service supplied by a person with no place of business in Bangladesh to a registered recipient, whose VAT the recipient pays and claims",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 16(c) — the recipient is liable to pay the VAT on a supply of an imported service; s. 20 — the recipient accounts for the VAT as output tax (reverse charge) and may claim it as input tax if the service is an input; s. 46(1)(b) — no credit unless the output tax is stated separately in the return. Form Mushak 9.1, part 3, note 9(c) — the total VAT includes the VAT of imported services under section 20(2) as declared in the sub-form of note 15; part 4, note 15 — the same amount as input tax. The Finance Act, 2026 keeps the 15 % reverse charge and has the bank pay it by a-challan at the time of remittance; Ekwo does not model the challan.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "15a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "15b"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2102",
+          "box": "9i"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "15a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "15b",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2102",
+          "box": "9i",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 270,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A local purchase of a zero-rated good or service",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 21; Form Mushak 9.1, part 4, note 10 — zero rated goods or services, local purchase (value only).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 280,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-EX",
+    "name": "Purchase, exempt",
+    "description": "A local purchase of an exempt good or service",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 26 and the First Schedule; Form Mushak 9.1, part 4, note 12 — exempted goods or services, local purchase (value only). No input tax credit arises.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 290,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-NC-TURNOVER",
+    "name": "Purchase from a turnover tax unit — no credit",
+    "description": "A purchase from a person who pays turnover tax and charges no VAT",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 63 — a person enlisted for turnover tax pays it on the turnover and charges no VAT; s. 46(1)(j) — no input tax credit on turnover tax paid. Form Mushak 9.1, part 4, note 19 — goods or services not admissible for credit, local purchase from turnover tax units (value only).",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "19a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "19a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 300,
+    "vat_category": null
+  },
+  {
+    "code": "BD-P-NC-UNREG",
+    "name": "Purchase from an unregistered supplier — no credit",
+    "description": "A purchase from a supplier who is neither registered nor enlisted",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 46(1)(f) — no credit unless the tax invoice carries the registration numbers of both parties; s. 49(2) and its proviso — a withholding entity does not receive supplies from an unregistered supplier and, where it does, is itself responsible for the applicable VAT. Form Mushak 9.1, part 4, note 20 — goods or services not admissible for credit, local purchase from unregistered entities (value only). The VAT payable by the recipient under s. 49(2) is not posted: it is a withholding matter this pack documents and does not model.",
+    "source": "vat-act-2012",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "20a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "20a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 310,
+    "vat_category": null
+  }
+]

@@ -5874,3 +5874,60 @@ Revenue Authority site refused the connection from the machine the pack was
 written on, so the Punjab Act (16 % standard rate, section 2(41A)) is cited from
 its portal page and its rate read from a search extract of that page. The
 README of the pack says so.
+
+## From Bangladesh
+
+**A tax charged on the value plus another tax, rounded in shares that do not
+terminate.** Supplementary duty is charged on the supply at the rate of the
+Second Schedule, and the VAT is charged on the value including the duty
+(Value Added Tax and Supplementary Duty Act, 2012, ss. 15(3), 32, 55 and
+57(b)). On the buyer's side the duty is not creditable (s. 46(1)(k)) and the
+VAT is. `packs/bd/` models it the way `packs/gh/` models the Ghanaian levies:
+one code at the total rate — *s* + 15 × (1 + *s*/100) per cent for a duty of
+*s* % — with a duty posting and a VAT posting at factors that are the two shares
+of that total. Unlike Ghana's 75, 12.5 and 12.5, the shares (24.096 and 75.904
+for 5 %, 37.736 and 62.264 for 10 %, 60.606 and 39.394 for 30 %) do not
+terminate, `factor_percent` holds three decimals, and the engine rounds the
+total once and gives the last posting the remainder: on a large invoice the
+duty drifts from *s* % of the value by a few paisa, the VAT taking the
+difference. A tax whose base is the line plus another tax of the same line,
+each rounded on its own base, would say it exactly. Only three duty rates (5,
+10 and 30 %) are codes; every other rate of the Second Schedule is one more
+code built the same way.
+
+**One cadence by default, an option, and a draft that would reverse it.** The
+Finance Act, 2026 substituted section 64 with effect from 1 July 2026: the
+return is due within 15 days of the end of every three tax periods, and a
+return for each month remains allowed (due by the last day of the following
+month). `tax_report.json` takes `period_default: quarter` and a deadline of the
+15th; the deadline field holds one rule and cannot give the optional monthly
+return its later date. On 28 September 2026 the Cabinet approved a draft
+ordinance that would restore the monthly return within 15 days; if it is
+gazetted, the only change is `period_default`. A default that depends on the
+date of the period, quarterly after 1 July 2026 and monthly before, would need a
+second report with its own validity; the pack carries the law of 1 July 2026
+only.
+
+**Two returns for one taxpayer population.** A person who takes input tax credit
+files Mushak 9.1, every other registered person files Mushak 9.1.1 (no
+credit), and a turnover-tax enlistee files Mushak 9.2. The format binds one
+report to the pack's tax codes; the pack carries 9.1.
+
+**A credit note reports through a different note than the supply.** The form
+puts the VAT of a credit note in note 31 and the duty in note 39 and leaves the
+original supply in note 4. A credit-note posting that names other boxes than the
+invoice's does this exactly; a supplier's credit note has no note of its own and
+goes to note 27.
+
+**Withholding and the fiscal device have no document to ride on.** A
+withholding entity withholds the VAT at payment (s. 49) and the supplier claims
+a certificate (s. 50): a payment-time mechanism, booked by hand on accounts 1152
+and 2130. The National Board of Revenue's Electronic Fiscal Devices and Sales
+Data Controllers report each sale from the till, in a partial deployment across
+some twenty sectors; Ekwo does not connect to one, and `einvoicing` has no value
+for it, so `obligation` is `none`.
+
+**A time of supply of four limbs.** Section 33(1): the earliest of the making of
+the supply, the issue of the invoice, the receipt of the consideration and own
+use. `earliest_of_delivery_or_payment` is the nearest value and misses an
+invoice issued first.

@@ -1,0 +1,407 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A quarter of books of a Dhaka trading and manufacturing company, VAT-registered and filing the quarterly return (Mushak 9.1) under the Value Added Tax and Supplementary Duty Act, 2012 as amended by the Finance Act, 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026-27",
+    "start": "2026-07-01",
+    "end": "2027-06-30"
+  },
+  "periods": [
+    {
+      "code": "2026-Q3",
+      "from": "2026-07-01",
+      "to": "2026-09-30"
+    }
+  ],
+  "statements": [
+    "BD-IFRS-SFP",
+    "BD-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-dhaka",
+      "name": "Motijheel Office Supplies Limited",
+      "type": "customer",
+      "country": "BD"
+    },
+    {
+      "ref": "cust-eu",
+      "name": "Hamburg Textil Handels GmbH",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "supp-dhaka",
+      "name": "Tejgaon Trading Company",
+      "type": "supplier",
+      "country": "BD"
+    },
+    {
+      "ref": "supp-trader",
+      "name": "Chattogram Wholesale Traders",
+      "type": "supplier",
+      "country": "BD"
+    },
+    {
+      "ref": "supp-china",
+      "name": "Guangzhou Machinery Co.",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supp-cloud",
+      "name": "Northwind Cloud Services Inc.",
+      "type": "supplier",
+      "country": "US"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-dhaka",
+      "date": "2026-07-06",
+      "why": "A domestic sale at the standard 15 %: note 4, 100,000 in column (a) and 15,000 of VAT in column (c).",
+      "lines": [
+        {
+          "name": "Office chairs",
+          "quantity": 40,
+          "unit_price": 2500,
+          "tax": "BD-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-dhaka",
+      "date": "2026-07-14",
+      "why": "Ice cream bears supplementary duty at 5 % (Second Schedule, heading 21.05). The duty is 5 % of 2,000 = 100 and the VAT 15 % of 2,000 + 100 = 315: the VAT is charged on the value including the duty. Total tax 415 = 20.75 %.",
+      "lines": [
+        {
+          "name": "Ice cream, family tubs",
+          "quantity": 100,
+          "unit_price": 20,
+          "tax": "BD-S-15-SD5",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-dhaka",
+      "date": "2026-07-18",
+      "why": "Prepared food at supplementary duty of 10 % (heading 21.06): duty 500 on 5,000, VAT 15 % of 5,500 = 825. Total tax 1,325 = 26.5 %.",
+      "lines": [
+        {
+          "name": "Burgers, catering order",
+          "quantity": 50,
+          "unit_price": 100,
+          "tax": "BD-S-15-SD10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-dhaka",
+      "date": "2026-07-22",
+      "why": "A carbonated beverage at supplementary duty of 30 % (heading 22.02): duty 600 on 2,000, VAT 15 % of 2,600 = 390. Total tax 990 = 49.5 %.",
+      "lines": [
+        {
+          "name": "Carbonated beverage, 1 litre",
+          "quantity": 200,
+          "unit_price": 10,
+          "tax": "BD-S-15-SD30",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-dhaka",
+      "date": "2026-07-27",
+      "why": "Construction services at the truncated rate of 10 % (Third Schedule, Table 3, S004.00): note 7, 50,000 and 5,000.",
+      "lines": [
+        {
+          "name": "Fit-out of a showroom",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "BD-S-10",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-dhaka",
+      "date": "2026-08-03",
+      "why": "A trader's sale of goods at the local trading stage, 7.5 % (Third Schedule, paragraph (3)): note 8, 80,000 and 6,000.",
+      "lines": [
+        {
+          "name": "Electrical goods bought for resale",
+          "quantity": 160,
+          "unit_price": 500,
+          "tax": "BD-S-TRADE-7.5",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-007",
+      "type": "sale_invoice",
+      "contact": "cust-eu",
+      "date": "2026-08-10",
+      "why": "An export of goods, zero-rated (s. 23(1)): note 1, 30,000, no VAT and no supplementary duty.",
+      "lines": [
+        {
+          "name": "Ready-made garments, export consignment",
+          "quantity": 300,
+          "unit_price": 100,
+          "tax": "BD-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-008",
+      "type": "sale_invoice",
+      "contact": "cust-dhaka",
+      "date": "2026-08-17",
+      "why": "A sale of printed books, exempt (First Schedule, Part Two, 3(b)): note 3, 12,000.",
+      "lines": [
+        {
+          "name": "Printed textbooks",
+          "quantity": 60,
+          "unit_price": 200,
+          "tax": "BD-S-EX",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-dhaka",
+      "date": "2026-08-20",
+      "why": "A credit note for four office chairs returned from INV-001: the VAT of 1,500 is a decreasing adjustment (note 31), and note 4 still shows the original supply.",
+      "lines": [
+        {
+          "name": "Office chairs returned",
+          "quantity": 4,
+          "unit_price": 2500,
+          "tax": "BD-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN-002",
+      "type": "sale_credit_note",
+      "contact": "cust-dhaka",
+      "date": "2026-08-24",
+      "why": "A credit note on prepared food (500 of value) against INV-003: the duty of 50 goes to note 39 and the VAT of 82.50 to note 31.",
+      "lines": [
+        {
+          "name": "Burgers returned",
+          "quantity": 5,
+          "unit_price": 100,
+          "tax": "BD-S-15-SD10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-001",
+      "type": "purchase_invoice",
+      "contact": "supp-dhaka",
+      "date": "2026-07-08",
+      "why": "A local purchase from a registered supplier at 15 %: note 14, 60,000 and 9,000 of creditable VAT.",
+      "lines": [
+        {
+          "name": "Trading stock",
+          "quantity": 120,
+          "unit_price": 500,
+          "tax": "BD-P-15",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-002",
+      "type": "purchase_invoice",
+      "contact": "supp-dhaka",
+      "date": "2026-07-15",
+      "why": "A purchase bearing supplementary duty of 10 %: the duty of 400 is not creditable (s. 46(1)(k)) and lands on the account of the line; the VAT of 660 is 15 % of 4,400 and is creditable.",
+      "lines": [
+        {
+          "name": "Prepared food ingredients",
+          "quantity": 40,
+          "unit_price": 100,
+          "tax": "BD-P-15-SD10",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-003",
+      "type": "purchase_invoice",
+      "contact": "supp-trader",
+      "date": "2026-07-20",
+      "why": "A purchase from a trader at 7.5 %: note 16, 20,000 and 1,500.",
+      "lines": [
+        {
+          "name": "Packaging materials from a trader",
+          "quantity": 40,
+          "unit_price": 500,
+          "tax": "BD-P-7.5",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-004",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-07-25",
+      "why": "An import of machinery: the VAT of 9,000 is paid to Customs at the border and is creditable, note 15: 60,000 and 9,000.",
+      "lines": [
+        {
+          "name": "Packing machine, imported",
+          "quantity": 1,
+          "unit_price": 60000,
+          "tax": "BD-P-IMP-15",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-005",
+      "type": "purchase_invoice",
+      "contact": "supp-cloud",
+      "date": "2026-08-05",
+      "why": "An imported service, reverse-charged under s. 20: 6,000 of VAT is output tax (box 9i, in 9c) and the same amount is input tax in note 15.",
+      "lines": [
+        {
+          "name": "Cloud software subscription",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "BD-P-RC-15",
+          "account": "6350"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-006",
+      "type": "purchase_invoice",
+      "contact": "supp-dhaka",
+      "date": "2026-08-12",
+      "why": "An exempt purchase (printed books): note 12, no credit.",
+      "lines": [
+        {
+          "name": "Printed manuals",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "BD-P-EX",
+          "account": "6460"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-007",
+      "type": "purchase_invoice",
+      "contact": "supp-dhaka",
+      "date": "2026-08-19",
+      "why": "A repair bought from a supplier that is neither registered nor enlisted: note 20, no credit.",
+      "lines": [
+        {
+          "name": "Repair of delivery van",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "BD-P-NC-UNREG",
+          "account": "6320"
+        }
+      ]
+    },
+    {
+      "ref": "BILL-008",
+      "type": "purchase_invoice",
+      "contact": "supp-dhaka",
+      "date": "2026-08-26",
+      "why": "A zero-rated local purchase: note 10, value only.",
+      "lines": [
+        {
+          "name": "Zero-rated input",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "BD-P-ZR",
+          "account": "6310"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-dhaka",
+      "date": "2026-09-02",
+      "why": "A supplier's credit note against BILL-001 for 2,000: the credit falls back by 300, shown as an increasing adjustment (note 27).",
+      "lines": [
+        {
+          "name": "Trading stock, short delivery",
+          "quantity": 4,
+          "unit_price": 500,
+          "tax": "BD-P-15",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-07-25",
+      "amount": 115000,
+      "contact": "cust-dhaka",
+      "journal": "BNK",
+      "match": "INV-001",
+      "why": "INV-001 collected in full, VAT included."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-08-25",
+      "amount": 30000,
+      "contact": "cust-eu",
+      "journal": "BNK",
+      "match": "INV-007",
+      "why": "The export of INV-007 collected in full."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-07-30",
+      "amount": 69000,
+      "contact": "supp-dhaka",
+      "journal": "BNK",
+      "match": "BILL-001",
+      "why": "BILL-001 settled in full, VAT included."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-09-10",
+      "amount": 5000,
+      "contact": "cust-eu",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance from the German customer, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

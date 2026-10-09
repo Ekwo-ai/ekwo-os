@@ -1,0 +1,207 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BD",
+  "name": "Bangladesh",
+  "version": "0.1.0",
+  "schema_min": "20260923110000",
+  "seed_sequence": 126,
+  "released_at": "2026-10-09",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act-2012",
+        "title": "The Value Added Tax and Supplementary Duty Act, 2012 (Act No. 47 of 2012), Authentic English Text published by Notification S.R.O. No. 440-Law/2025/326-Mushak of 5 November 2025 (Bangladesh Gazette, extra, 13 November 2025), as amended up to the Finance Ordinance, 2025 — ss. 15 (rate of 15 % and truncated rates), 16, 17, 20 (imported services), 21 to 24 (zero rate), 26 (exemption), 28 (value of imports), 45 (net tax), 46 (input tax credit), 49 (VAT withheld at source), 55 to 57 and 60 (supplementary duty), 63 (turnover tax), 64 (return), 68 (carry forward); First, Second and Third Schedules",
+        "publisher": "National Board of Revenue, Internal Resources Division (Bangladesh Gazette, published on the Bangladesh Laws portal)",
+        "url": "https://bdlaws.minlaw.gov.bd/upload/act/2026-01-18-15-14-21-72.-Value-Added-Tax-and-Supplementary-Duty-Act,-2012.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "finance-act-2026",
+        "title": "The Finance Act, 2026 (Act No. 96 of 2026), Bangladesh Gazette, extra, 30 June 2026 — amends the Value Added Tax and Supplementary Duty Act, 2012 with effect from 1 July 2026 (section 64 substituted: the return on every three tax periods)",
+        "publisher": "National Board of Revenue (Bangladesh Gazette)",
+        "url": "https://nbr.gov.bd/uploads/acts/Finance_Act_2026.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "finance-act-2026-register",
+        "title": "Finance Acts — the register of Finance Acts the National Board of Revenue publishes, listing the Finance Act, 2026",
+        "publisher": "National Board of Revenue",
+        "url": "https://nbr.gov.bd/regulations/acts/finance-acts/eng",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "pwc-fa-2026",
+        "title": "Finance Act, 2026: Key Amendments — the changes to the Value Added Tax and Supplementary Duty Act, 2012 and to the Rules, 2016: quarterly return by default, monthly return optional, Mushak 9.1 and 9.1.1, as enacted. A professional-firm summary of the Act; the Act itself is the entry above",
+        "publisher": "PwC Bangladesh",
+        "url": "https://www.pwc.com/bd/en/assets/pdfs/budget/finance-act-2026-key-amendments.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "ordinance-2026-draft",
+        "title": "Cabinet approval on 28 September 2026 of the draft Value Added Tax and Supplementary Duty (Amendment) Ordinance, 2026, which would amend section 64 to restore the return for each tax period within 15 days (20 days for government bodies, banks, insurers and nil returns). A press report; no gazette notification of the ordinance had been found on 9 October 2026",
+        "publisher": "VATupdate (reporting the Bangladesh press)",
+        "url": "https://www.vatupdate.com/2026/09/29/monthly-vat-returns-restored-as-cabinet-approves-amendment-bill/",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "mushak-9-1-guide",
+        "title": "IVAS user guide for submitting the Value Added Tax Return, Form Mushak-9.1 (114 pages) — parts 1 to 10 and notes 1 to 68 of the online form, with the formulas that sum them",
+        "publisher": "National Board of Revenue, eVAT portal",
+        "url": "https://www.vat.gov.bd/sap/public/bc/ui2/zmcf_pub/user_management/img/Submit_VAT_Return_Mushak-9.1.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "form"
+      },
+      {
+        "key": "evat-portal",
+        "title": "eVAT Services — the National Board of Revenue's online VAT system, where the Mushak 9.1 return is filed and the tax paid",
+        "publisher": "National Board of Revenue",
+        "url": "https://www.vat.gov.bd",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      },
+      {
+        "key": "vds-guidelines-2025",
+        "title": "Important changes introduced in VAT Deduction and Collection at Source by the VDS Guidelines, 2025 (construction contractor, service code S004.00, raised from 7.5 % to 10 %, 7.5 % kept for contracts signed before 30 June 2025; section 49(5) limited to the first tier of sub-contractors)",
+        "publisher": "Institute of Chartered Accountants of Bangladesh (summary of the National Board of Revenue's Guidelines)",
+        "url": "https://www.icab.org.bd/icabadmin/uploads/ckeditor/5679Changes_in_VDS_2025-26.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "companies-act-1994",
+        "title": "The Companies Act, 1994, s. 181 — every company keeps proper books of account that give a true and fair view; copy of the Act hosted by BASIS",
+        "publisher": "Bangladesh Association of Software and Information Services (copy of the Act)",
+        "url": "https://basis.org.bd/public/files/policy/5e1654acafde5companiesact_0.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "ifrs-bangladesh",
+        "title": "Use of IFRS Standards by jurisdiction — Bangladesh: the Financial Reporting Act, 2015 and the Financial Reporting Council, which adopted the IFRS Accounting Standards without modification in November 2020 for public interest entities; the IFRS for SMEs for those that are not publicly traded",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction/bangladesh/",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BDT",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "july",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "bn"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Bangladesh reference chart of accounts (IFRS-inspired)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "BD-IFRS-SFP",
+        "BD-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Bangladesh. The Companies Act, 1994, s. 181 requires every company to keep proper books of account of the sums received and spent, of its sales and purchases and of its assets and liabilities, and treats books that do not give a true and fair view as not proper. The Financial Reporting Act, 2015 set up the Financial Reporting Council, which adopted the IFRS Accounting Standards without modification in November 2020 for public interest entities, and the IFRS for SMEs for those that are not publicly traded; no text prescribes account numbers. This chart is original: four digits, blocked so that each range reaches one line of the statement of financial position and the statement of profit or loss below, with the accounts a Bangladeshi company actually keeps — VAT output and input accounts kept apart from the supplementary duty payable, the VAT on imported services under section 20, the net VAT and supplementary duty due to or from the National Board of Revenue after a return, the tax and duties owed to Customs at the border, VAT withheld at source, turnover tax, advance tax at import, provident fund and workers' profit participation and welfare funds.",
+      "source": "ifrs-bangladesh"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 51 — every registered or enlisted person issues a tax invoice, in the manner the rules prescribe, on or before the date the tax becomes payable; s. 52 — a credit or debit note carries its serial number, date and time, the particulars of the original invoice and the effect on the VAT. The Act asks for a serial number and does not say in these sections that the sequence carries no gap, which is why the style is `sequential`. The layout of the Mushak 6.3 invoice is set by the VAT and Supplementary Duty Rules, 2016, which this register does not hold.",
+        "source": "vat-act-2012"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 33(1) (as substituted by the Finance Act, 2019) — the VAT on a taxable supply becomes payable when the first of these occurs: the supply is made, the invoice is issued, the whole or part of the consideration is received, or the supply is used personally or given to others. Ekwo's closed vocabulary expresses only a two-way earliest-of; `earliest_of_delivery_or_payment` is the nearest value, and the gap — an invoice issued ahead of both delivery and payment, which fixes the time in Bangladesh — is recorded in the README of this pack and in docs/international.md.",
+        "source": "vat-act-2012"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Bangladeshi statute obliges a business to exchange a structured electronic invoice with another business in the sense Ekwo's vocabulary gives the word: there is no Peppol authority, no published profile and no ISO 6523 scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What the National Board of Revenue has instead is the Electronic Fiscal Device (EFD) and Sales Data Controller (SDC) programme, which it has been rolling out to some twenty sectors, and the online VAT system (eVAT) at vat.gov.bd, where the Mushak 9.1 return is filed and the tax paid. A fiscal device that reports each sale to the administration is not a peer-to-peer exchange between two businesses; Ekwo does not connect to an EFD or SDC, and the gap is recorded in this pack's README and in docs/international.md. The extent of the deployment, sector by sector, is not in the texts this register holds.",
+    "source": "mushak-9-1-guide"
+  }
+}

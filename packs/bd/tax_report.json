@@ -1,0 +1,355 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "BD-MUSHAK-9.1",
+  "name": "Value Added Tax return (form Mushak 9.1)",
+  "period": [
+    "quarter",
+    "month"
+  ],
+  "period_default": "quarter",
+  "valid_from": "2026-07-01",
+  "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 64(1) as substituted by the Finance Act, 2026 (Act No. 96 of 2026, Bangladesh Gazette of 30 June 2026), in force on 1 July 2026 — every registered or enlisted person, or person who should be, files the return within 15 days of the end of every three tax periods; a tax period is one calendar month; the filing of a return for each tax period remains allowed (the Finance Act, 2026 as summarised by PwC; the Act itself is in Bangla and its section 64 was not read word for word). The return is Form Mushak 9.1, filed on the eVAT portal for a manufacturer, service provider or trader who takes input tax credit; every other registered person (a trader without credit, a commercial importer supplying under final settlement, a trader paying VAT on actual value addition) files Form Mushak 9.1.1, which allows no credit and which this pack does not carry; the paper return is gone. The boxes are the notes of the form (parts 3 to 7 and 10), a note's columns (a) value, (b) supplementary duty and (c) VAT being suffixes (4a, 4b, 4c) because the form puts the duty and the VAT of a supply on one line. Supplementary duty is declared in this return (s. 64(2), s. 60(2)). The 28 September 2026 draft Value Added Tax and Supplementary Duty (Amendment) Ordinance, 2026 would restore the return for each tax period within 15 days; it was not found in the Gazette on 9 October 2026, so the rule in force — quarterly — is the one modelled. Not carried: notes 5, 6 (goods on the maximum retail price, specific VAT), 11, 13, 17, 18, 21, 22, 24, 25, 26, 29, 30, 32, 38, 40, the payment parts (8 and 9, notes 41 to 64) and the Mushak 18.6 balance.",
+  "source": "finance-act-2026",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Value Added Tax and Supplementary Duty Act, 2012, s. 64(1) as substituted by the Finance Act, 2026 — within 15 days of the end of every three tax periods, so the 15th of the month after the quarter; if the 15th is a government holiday the return is due on the next working day (the proviso of s. 64(1), inserted in 2020), which the rule does not see. Government, semi-government and autonomous bodies, banks, insurers and filers of a zero return have 20 days. The net tax is paid before the return is submitted (s. 45(2)); the Finance Bill's monthly advance of one third of the previous quarter's tax was not enacted, so the payment falls due with the return (PwC, Finance Act, 2026). A taxable person who files monthly by option has until the last day of the following month (PwC): the deadline field holds one rule, the quarterly one that applies to everybody by default. The rule would stay the 15th for a monthly return if the draft Ordinance of 28 September 2026 were gazetted.",
+    "source": "finance-act-2026"
+  },
+  "boxes": [
+    {
+      "box": "1a",
+      "kind": "base",
+      "name": "Zero rated — direct export (value)",
+      "sequence": 10,
+      "legal_reference": "Form Mushak 9.1, part 3, note 1 — zero rated goods or services, direct export: the tax-exclusive value of direct exports. The VAT and supplementary duty columns are disabled.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "2a",
+      "kind": "base",
+      "name": "Zero rated — deemed export (value)",
+      "sequence": 20,
+      "legal_reference": "Form Mushak 9.1, part 3, note 2 — zero rated goods or services, deemed export: the tax-exclusive value. The VAT and supplementary duty columns are disabled.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "3a",
+      "kind": "base",
+      "name": "Exempted goods or services (value)",
+      "sequence": 30,
+      "legal_reference": "Form Mushak 9.1, part 3, note 3 — exempted goods or services: the tax-exclusive value of VAT-exempted supplies. The VAT and supplementary duty columns are disabled.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "4a",
+      "kind": "base",
+      "name": "Standard rated — value",
+      "sequence": 40,
+      "legal_reference": "Form Mushak 9.1, part 3, note 4 — standard rated goods or services, value in column (a): the tax-exclusive value of supplies at the standard rate (15 %).",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "4b",
+      "kind": "tax",
+      "name": "Standard rated — supplementary duty",
+      "sequence": 50,
+      "legal_reference": "Form Mushak 9.1, part 3, note 4 — column (b), the supplementary duty calculated on the value of the sub-form lines (value times the rate of the duty).",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "4c",
+      "kind": "tax",
+      "name": "Standard rated — VAT",
+      "sequence": 60,
+      "legal_reference": "Form Mushak 9.1, part 3, note 4 — column (c), the VAT calculated on the value of the sub-form lines.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "7a",
+      "kind": "base",
+      "name": "Other than standard rate — value",
+      "sequence": 70,
+      "legal_reference": "Form Mushak 9.1, part 3, note 7 — goods or services other than at the standard rate, value in column (a): the supplies at the truncated rates of the Third Schedule.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "7c",
+      "kind": "tax",
+      "name": "Other than standard rate — VAT",
+      "sequence": 80,
+      "legal_reference": "Form Mushak 9.1, part 3, note 7 — column (c), the VAT at the truncated rate. The supplementary duty column (b) is not carried: no tax code of this pack puts supplementary duty on a truncated-rate supply.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "8a",
+      "kind": "base",
+      "name": "Retail, wholesale and trade-based supply — value",
+      "sequence": 90,
+      "legal_reference": "Form Mushak 9.1, part 3, note 8 — retail, wholesale and trade-based supply, value in column (a).",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "8c",
+      "kind": "tax",
+      "name": "Retail, wholesale and trade-based supply — VAT",
+      "sequence": 100,
+      "legal_reference": "Form Mushak 9.1, part 3, note 8 — column (c), the VAT at the trader's rate.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "9i",
+      "kind": "tax",
+      "name": "VAT on imported services (section 20)",
+      "sequence": 105,
+      "legal_reference": "Form Mushak 9.1, part 3, note 9 — the total VAT adds the VAT of the imported services of section 20(2), as declared in the sub-form of note 15 (IVAS guide, note 9: 9c = 4c + 5c + 6c + 7c + 8c + the VAT of imported services). Not a line of the form: the pack gives that amount a box of its own so it can be summed.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "9a",
+      "kind": "total",
+      "name": "Total sales value",
+      "sequence": 110,
+      "plus": [
+        "1a",
+        "2a",
+        "3a",
+        "4a",
+        "7a",
+        "8a"
+      ],
+      "legal_reference": "Form Mushak 9.1, part 3, note 9 — total sales value and total payable taxes, column (a): 9a = 1a + 2a + 3a + 4a + 5a + 6a + 7a + 8a. Notes 5 and 6 (goods on the maximum retail price, specific VAT) are not carried.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "9b",
+      "kind": "total",
+      "name": "Total supplementary duty",
+      "sequence": 120,
+      "plus": [
+        "4b"
+      ],
+      "legal_reference": "Form Mushak 9.1, part 3, note 9 — column (b): 9b = 4b + 5b + 6b + 7b + 8b; only 4b is carried.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "9c",
+      "kind": "total",
+      "name": "Total output VAT",
+      "sequence": 130,
+      "plus": [
+        "4c",
+        "7c",
+        "8c",
+        "9i"
+      ],
+      "legal_reference": "Form Mushak 9.1, part 3, note 9 — column (c): 9c = 4c + 5c + 6c + 7c + 8c + the VAT of imported services under section 20(2).",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "10a",
+      "kind": "base",
+      "name": "Zero rated — local purchase (value)",
+      "sequence": 140,
+      "legal_reference": "Form Mushak 9.1, part 4, note 10 — zero rated goods or services, local purchase: the tax-exclusive value.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "12a",
+      "kind": "base",
+      "name": "Exempted — local purchase (value)",
+      "sequence": 150,
+      "legal_reference": "Form Mushak 9.1, part 4, note 12 — exempted goods or services, local purchase: the tax-exclusive value.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "14a",
+      "kind": "base",
+      "name": "Standard rated — local purchase (value)",
+      "sequence": 160,
+      "legal_reference": "Form Mushak 9.1, part 4, note 14 — standard rated goods or services, local purchase, value in column (a): the tax-exclusive value of purchases at 15 %. Read here as the value before supplementary duty.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "14b",
+      "kind": "tax",
+      "name": "Standard rated — local purchase (VAT)",
+      "sequence": 170,
+      "legal_reference": "Form Mushak 9.1, part 4, note 14 — column (b), the VAT paid on those purchases.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "15a",
+      "kind": "base",
+      "name": "Standard rated — import (value)",
+      "sequence": 180,
+      "legal_reference": "Form Mushak 9.1, part 4, note 15 — standard rated goods or services, import, value in column (a); the sub-form of this note also carries the imported services of section 20(2).",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "15b",
+      "kind": "tax",
+      "name": "Standard rated — import (VAT)",
+      "sequence": 190,
+      "legal_reference": "Form Mushak 9.1, part 4, note 15 — column (b), the VAT paid at the border on imports and the VAT self-charged on imported services.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "16a",
+      "kind": "base",
+      "name": "Other than standard rate — local purchase (value)",
+      "sequence": 200,
+      "legal_reference": "Form Mushak 9.1, part 4, note 16 — goods or services other than at the standard rate, local purchase, value in column (a).",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "16b",
+      "kind": "tax",
+      "name": "Other than standard rate — local purchase (VAT)",
+      "sequence": 210,
+      "legal_reference": "Form Mushak 9.1, part 4, note 16 — column (b), the VAT paid at the truncated rate.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "19a",
+      "kind": "base",
+      "name": "Not admissible for credit — turnover tax units (value)",
+      "sequence": 220,
+      "legal_reference": "Form Mushak 9.1, part 4, note 19 — goods or services not admissible for credit, local purchase from turnover tax units: the value, with no VAT column that reaches the credit.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "20a",
+      "kind": "base",
+      "name": "Not admissible for credit — unregistered entities (value)",
+      "sequence": 230,
+      "legal_reference": "Form Mushak 9.1, part 4, note 20 — goods or services not admissible for credit, local purchase from unregistered entities: the value, with no VAT column that reaches the credit.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "23a",
+      "kind": "total",
+      "name": "Total purchase value",
+      "sequence": 240,
+      "plus": [
+        "10a",
+        "12a",
+        "14a",
+        "15a",
+        "16a",
+        "19a",
+        "20a"
+      ],
+      "legal_reference": "Form Mushak 9.1, part 4, note 23 — total input tax credit, column (a): 23a = 10a + 11a + 12a + 13a + 14a + 15a + 16a + 17a + 18a + 19a + 20a + 21a + 22a; only the notes this pack carries are summed.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "23b",
+      "kind": "total",
+      "name": "Total input tax credit",
+      "sequence": 250,
+      "plus": [
+        "14b",
+        "15b",
+        "16b"
+      ],
+      "legal_reference": "Form Mushak 9.1, part 4, note 23 — column (b): 23b = 14b + 15b + 16b + 17b + 18b; only 14b, 15b and 16b are carried. Section 45(1)(b) subtracts it from the output tax.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "27",
+      "kind": "tax",
+      "name": "Increasing adjustment — any other (supplier credit notes)",
+      "sequence": 260,
+      "legal_reference": "Form Mushak 9.1, part 5, note 27 — any other increasing adjustment: manually entered adjustments not covered by notes 24, 25 or 26. This pack puts there the VAT of a credit note a supplier issued to the taxable person, which reduces the credit taken. Notes 24 (VAT deducted at source by the supply receiver), 25 (payment not made through a banking channel) and 26 (debit note) are entered by hand on the portal and no tax code posts to them.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "28",
+      "kind": "total",
+      "name": "Total increasing adjustments",
+      "sequence": 270,
+      "plus": [
+        "27"
+      ],
+      "legal_reference": "Form Mushak 9.1, part 5, note 28 — total increasing adjustment: 28 = 24 + 25 + 26 + 27; only 27 is carried.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "31",
+      "kind": "tax",
+      "name": "Decreasing adjustment — credit notes issued",
+      "sequence": 280,
+      "legal_reference": "Form Mushak 9.1, part 6, note 31 — issuance of a credit note: the VAT arising out of the credit notes the taxable person issued, entered by the taxpayer. Notes 29 (VAT deducted at source from the supplies delivered) and 30 (advance tax paid at import) are entered by hand and no tax code posts to them.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "33",
+      "kind": "total",
+      "name": "Total decreasing adjustments",
+      "sequence": 290,
+      "plus": [
+        "31"
+      ],
+      "legal_reference": "Form Mushak 9.1, part 6, note 33 — total decreasing adjustment: 33 = 29 + 30 + 31 + 32; only 31 is carried.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "34",
+      "kind": "total",
+      "name": "Net payable VAT for the tax period",
+      "sequence": 300,
+      "plus": [
+        "9c",
+        "28"
+      ],
+      "minus": [
+        "23b",
+        "33"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Form Mushak 9.1, part 7, note 34 — net payable VAT for the tax period (section 45): 34 = 9c - 23b + 28 - 33. Section 68 carries a negative figure forward for six tax periods and then refunds it; the figure is shown at zero here when negative, and box 65 carries the credit.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "65",
+      "kind": "total",
+      "name": "Closing balance of VAT carried forward",
+      "sequence": 310,
+      "plus": [
+        "23b",
+        "33"
+      ],
+      "minus": [
+        "9c",
+        "28"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Form Mushak 9.1, part 10, note 65 — closing balance (VAT), the credit carried into the next return when note 34 comes out negative (section 68(1)); note 52 of the next return takes it. The credit the Mushak 18.6 account holds (note 54) is not carried.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "36",
+      "kind": "total",
+      "name": "Net payable supplementary duty for the tax period",
+      "sequence": 320,
+      "plus": [
+        "9b"
+      ],
+      "minus": [
+        "39"
+      ],
+      "floor_zero": true,
+      "legal_reference": "Form Mushak 9.1, part 7, note 36 — net payable supplementary duty before adjustment with the closing balance: 36 = 9b + 38 - (39 + 40). Only 9b and 39 are carried; notes 38 (debit notes) and 40 (duty paid on inputs against exports) are entered by hand. Section 64(2) and section 60(2) put the duty in the VAT return.",
+      "source": "mushak-9-1-guide"
+    },
+    {
+      "box": "39",
+      "kind": "tax",
+      "name": "Supplementary duty — credit notes issued",
+      "sequence": 275,
+      "legal_reference": "Form Mushak 9.1, part 7, note 39 — supplementary duty against issuance of a credit note, entered by the taxpayer.",
+      "source": "mushak-9-1-guide"
+    }
+  ]
+}
