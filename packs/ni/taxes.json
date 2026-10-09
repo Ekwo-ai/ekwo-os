@@ -1,0 +1,253 @@
+[
+  {
+    "code": "NI-V-15",
+    "name": "Venta o servicio gravado, 15 %",
+    "description": "Enajenación de bienes, prestación de servicios y uso o goce de bienes gravados con la alícuota general del Impuesto al Valor Agregado",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "vat_category": "S",
+    "exemption_code": null,
+    "legal_reference": "Ley No. 822, art. 107 — el IVA grava la enajenación de bienes, la importación e internación, la exportación de bienes y servicios conforme al art. 109 y la prestación de servicios y el uso o goce de bienes; art. 109 — «la alícuota del IVA es del quince por ciento (15%), salvo en las exportaciones de bienes de producción nacional y de servicios prestados al exterior, sobre las cuales se aplicará una alícuota del cero por ciento (0%)»; art. 114 — el responsable recaudador traslada el IVA al adquirente y el monto trasladado constituye su débito fiscal, que no forma parte de la base imponible. La Ley No. 987 de 2019 no cambió la alícuota. Nicaragua no tiene hoy alícuota reducida general: el 7 % transitorio de la energía eléctrica de la Ley No. 971 ya no está vigente y este paquete no lo modela. Nicaragua queda fuera del sistema común del IVA de la Unión Europea: este paquete no declara `exemption_code` ni tratamiento `intracom_*`, y el artículo que exime cada operación va en `legal_reference`",
+    "source": "ley-822",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VG"
+        },
+        {
+          "type": "tax",
+          "account": "2131",
+          "box": "DF"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VG",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2131",
+          "box": "DF",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "NI-V-EXP",
+    "name": "Exportación de bienes y servicios, alícuota 0 %",
+    "description": "Exportación de bienes de producción nacional y servicios prestados a usuarios no residentes, gravada con la alícuota del cero por ciento",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2013-01-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "vat_category": "G",
+    "exemption_code": null,
+    "legal_reference": "Ley No. 822, art. 109 — alícuota del cero por ciento (0%) en las exportaciones de bienes de producción nacional y de servicios prestados al exterior; se considera exportación «la salida del territorio aduanero nacional de las mercancías de producción nacional, para su uso o consumo definitivo en el exterior», y el mismo tratamiento corresponde a los servicios prestados a usuarios no residentes; art. 107, numeral 3 — la exportación es una operación gravada (a la alícuota cero), no una operación exenta; art. 116 y 121 — conserva el derecho a acreditar el IVA de las compras; art. 140, numeral 1 — las enajenaciones con alícuota cero pueden ser objeto de compensación o devolución del saldo a favor. El procedimiento de devolución no es una alícuota ni una casilla de la declaración y este paquete no lo modela — véase el README",
+    "source": "ley-822",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VEXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VEXP",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "NI-V-EXO",
+    "name": "Venta o servicio exento",
+    "description": "Enajenación de bienes de las listas del art. 127, servicios del art. 136 u operaciones de los sujetos exentos del art. 111 de la Ley No. 822",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2013-01-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "vat_category": "E",
+    "exemption_code": null,
+    "legal_reference": "Ley No. 822, art. 127 — están exentas del traslado del IVA, mediante listas taxativas establecidas por acuerdos ministeriales, las enajenaciones de libros y publicaciones periódicas, medicamentos, equipo médico, bienes agrícolas no transformados (arroz, maíz, frijol, tomate, banano, plátano y otros), alimentos básicos, carnes frescas, gas butano en envase de hasta 25 libras, bienes muebles usados, la transmisión del dominio de inmuebles y los paneles solares, entre otros; art. 136 — servicios exentos, entre ellos los médicos y odontológicos, la enseñanza, el transporte interno y el alquiler de inmuebles con fines de vivienda; art. 111 — sujetos exentos (universidades, iglesias, Cruz Roja y otros), con las condiciones del art. 112; art. 120 — el IVA que grava bienes y servicios destinados a operaciones exentas no es acreditable. Este paquete declara un único código para el conjunto; el numeral exacto de cada operación se cita en el asiento — véase el README",
+    "source": "ley-822",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "VEXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "VEXO",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "NI-C-15",
+    "name": "Compra o servicio gravado, 15 %, con derecho a crédito fiscal",
+    "description": "Adquisición de bienes o servicios gravados, destinada a operaciones gravadas con la alícuota general o con la alícuota cero",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Ley No. 822, art. 116 — constituye crédito fiscal el IVA trasladado al responsable recaudador y el pagado en importaciones, siempre que sea para efectuar operaciones gravadas con la alícuota general o con la alícuota cero; art. 117 — la acreditación resta del débito fiscal el crédito fiscal; art. 118 — requisitos de la acreditación (bienes o servicios necesarios para operaciones gravadas, gasto deducible para el IR, documento a nombre del responsable); art. 119 — el IVA se acredita en el mes en que se realiza la compra",
+    "source": "ley-822",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CG"
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CF"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CG",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CF",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "NI-C-15-NOCRED",
+    "name": "Compra o servicio gravado, 15 %, sin derecho a crédito fiscal",
+    "description": "Adquisición gravada destinada a operaciones exentas, o que no reúne los requisitos de la acreditación",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "recoverable": false,
+    "legal_reference": "Ley No. 822, art. 120 — no es acreditable el IVA que grava bienes, servicios o uso o goce de bienes destinados a enajenaciones o prestaciones exentas, ni el autoconsumo no deducible para el IR; art. 116, último párrafo — en las operaciones exentas el IVA no acreditable se considera parte del costo; art. 121 — cuando el IVA se usa en operaciones gravadas y exentas, solo se acredita la parte proporcional (la prorrata no está modelada: este paquete ofrece el caso total). La posición `tax_on_base` lleva el impuesto al costo sin casilla propia, porque la declaración no separa el impuesto no acreditable",
+    "source": "ley-822",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CNOCRED"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CNOCRED",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100,
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "NI-C-EXO",
+    "name": "Compra o servicio no gravado",
+    "description": "Adquisición de bienes o servicios exentos, o a un proveedor que no traslada el impuesto",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Ley No. 822, arts. 127 y 136 — bienes y servicios exentos del traslado del IVA; art. 111 — sujetos exentos que no trasladan el impuesto en sus ventas",
+    "source": "ley-822",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CEXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CEXO",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "NI-C-IMP-15",
+    "name": "Importación o internación gravada, 15 %",
+    "description": "Importación o internación de bienes, con derecho a crédito fiscal por el IVA pagado en la aduana",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Ley No. 822, art. 107, numeral 2 — la importación e internación de bienes están gravadas; art. 128 — definiciones de importación e internación; art. 129 — el hecho generador se realiza al aceptarse la declaración o formulario aduanero; art. 130 — la base imponible es el valor en aduana más los demás tributos recaudados en la importación y los gastos de la declaración aduanera; art. 139, numeral 2 — el IVA se paga en la declaración aduanera, antes del retiro de los bienes; art. 116 — el IVA pagado en la importación es crédito fiscal",
+    "source": "ley-822",
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "IMP"
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CFIMP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "IMP",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1141",
+          "box": "CFIMP",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]

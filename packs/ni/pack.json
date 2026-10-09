@@ -1,0 +1,225 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "NI",
+  "name": "Nicaragua",
+  "version": "0.1.0",
+  "schema_min": "20260929141500",
+  "seed_sequence": 132,
+  "released_at": "2026-10-09",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ley-822",
+        "title": "Ley No. 822, Ley de Concertación Tributaria (La Gaceta No. 241 del 17 de diciembre de 2012, en vigor desde el 1 de enero de 2013, art. 324), con sus reformas (Ley No. 891 de 2014, Ley No. 987 del 27 de febrero de 2019, La Gaceta No. 41 del 28 de febrero de 2019, y Ley No. 1212 de 2024), y su Reglamento, Decreto No. 01-2013, reformado por el Decreto No. 08-2019 (La Gaceta No. 53 del 15 de marzo de 2019) — Título II, Capítulo IV (IVA), arts. 107 a 143 de la ley y arts. 96 a 98 del Reglamento",
+        "publisher": "Nicatributos — compilación privada de los textos publicados en La Gaceta, Diario Oficial (el texto original de la ley está en la Asamblea Nacional de Nicaragua, legislacion.asamblea.gob.ni)",
+        "url": "https://nicatributos.com/ley-de-concertacion-tributaria/",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "dag-04-2013",
+        "title": "Disposición Administrativa General No. 04-2013, Presentación de declaraciones y pagos de impuestos (La Gaceta No. 18 del 30 de enero de 2013), anterior a la reforma de 2019 del plazo del IVA",
+        "publisher": "Dirección General de Ingresos (DGI) — texto reproducido por Justia Nicaragua",
+        "url": "https://nicaragua.justia.com/nacionales/disposiciones-administrativas/presentacion-de-declaraciones-y-pagos-de-impuestos-jan-30-2013/gdoc/",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "dgi-vet",
+        "title": "DGI en Línea — Ventanilla Electrónica Tributaria (VET), portal de declaración y pago de la Dirección General de Ingresos; el servidor de la DGI rechazó las consultas automatizadas desde el entorno de redacción de este paquete, por lo que su contenido no pudo leerse",
+        "publisher": "Dirección General de Ingresos (DGI)",
+        "url": "https://dgienlinea.dgi.gob.ni/menu/inicio.php",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      },
+      {
+        "key": "dt-09-2007",
+        "title": "Disposición Técnica No. 09-2007, Requisitos para uso de sistemas de facturación computarizados (La Gaceta No. 134 del 16 de julio de 2007)",
+        "publisher": "Dirección General de Ingresos (DGI) — texto reproducido por Justia Nicaragua",
+        "url": "https://nicaragua.justia.com/nacionales/disposiciones-tecnicas/requisitos-para-uso-de-sistemas-de-facturacion-computarizadas-jul-16-2007/gdoc/",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "dgi-plan-estrategico",
+        "title": "Plan Estratégico Institucional 2022-2026 de la Dirección General de Ingresos — prevé desarrollar un sistema de facturación electrónica; no fija una obligación (el servidor de la DGI rechazó la descarga automatizada, el pasaje se leyó en el extracto que devuelve un buscador)",
+        "publisher": "Dirección General de Ingresos (DGI)",
+        "url": "https://www.dgi.gob.ni/pdfInfo/PlanEstrategico",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "plan-arbitrios",
+        "title": "Plan de Arbitrios del Municipio de Managua, Decreto No. 10-91 (La Gaceta No. 30 del 12 de febrero de 1991), art. 3 reformado por la Ley No. 257 de 1997: impuesto municipal del 1 % sobre los ingresos brutos. El resto de los municipios aplica el Plan de Arbitrios Municipal, Decreto No. 455 de 1989, que este paquete no pudo leer en su texto vigente",
+        "publisher": "Nicatributos — compilación privada de los textos publicados en La Gaceta, Diario Oficial",
+        "url": "https://nicatributos.com/plan-de-arbitrios/",
+        "consulted_on": "2026-10-09",
+        "kind": "regulation"
+      },
+      {
+        "key": "ccpn-ifac",
+        "title": "Colegio de Contadores Públicos de Nicaragua (CCPN), creado por la Ley No. 6 del 14 de abril de 1959: único organismo reconocido por la ley como representante de la profesión contable, facultado para fijar normas de contabilidad y de auditoría (ficha de miembro de la IFAC)",
+        "publisher": "International Federation of Accountants (IFAC)",
+        "url": "https://www.ifac.org/about-ifac/membership/members/colegio-de-contadores-p-blicos-de-nicaragua",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "niif-pymes-nicaragua",
+        "title": "Adopción de NIIF para las PYMES en empresas de Nicaragua — cronología de las resoluciones del CCPN (resolución del 30 de mayo de 2010 que adopta la NIIF para las PYMES, aplicable a los períodos que inician después del 1 de julio de 2011)",
+        "publisher": "Revista Apuntes de Economía y Sociedad, Universidad Nacional Autónoma de Nicaragua, León (CAMJOL)",
+        "url": "https://www.camjol.info/index.php/aes/article/view/vol1_2_2020_arto6",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "NIO",
+    "language": "es",
+    "opening_entry_label": "Asiento de apertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1121",
+      "payable": "2111",
+      "suspense": "119",
+      "rounding": "544",
+      "retained_earnings": "341",
+      "retained_earnings_loss": "342",
+      "current_year_result_profit": "351",
+      "current_year_result_loss": "352",
+      "sales": "411",
+      "purchase": "511",
+      "bank": "1113",
+      "cash": "1111",
+      "fx_gain": "462",
+      "fx_loss": "542",
+      "tax_payable": "2132",
+      "tax_receivable": "1142"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "APE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VEN",
+      "type": "sales",
+      "name": "Ventas",
+      "sequence": 10
+    },
+    {
+      "code": "COM",
+      "type": "purchase",
+      "name": "Compras",
+      "sequence": 20
+    },
+    {
+      "code": "BAN",
+      "type": "bank",
+      "name": "Bancos",
+      "sequence": 30
+    },
+    {
+      "code": "CAJ",
+      "type": "cash",
+      "name": "Caja",
+      "sequence": 40
+    },
+    {
+      "code": "DIA",
+      "type": "general",
+      "name": "Diario general",
+      "sequence": 50
+    },
+    {
+      "code": "APE",
+      "type": "opening",
+      "name": "Asiento de apertura",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de cuentas de referencia, sobre la NIIF para las PYMES",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "NI-EF-ESF",
+        "NI-EF-ER"
+      ],
+      "legal_reference": "Nicaragua no impone un catálogo de cuentas único ni numerado. El marco contable lo fija el Colegio de Contadores Públicos de Nicaragua (CCPN), el organismo que la ley reconoce como representante de la profesión y que dicta las normas de contabilidad: por resolución del 30 de mayo de 2010 adoptó la NIIF para las PYMES, aplicable a los períodos que inician después del 1 de julio de 2011, y los principios de contabilidad generalmente aceptados nicaragüenses (PCGA) siguen siendo aceptados en la práctica. Este plan es original: sigue una numeración propia y cada bloque de códigos corresponde a una línea de los dos estados de este paquete — véase el README",
+      "source": "niif-pymes-nicaragua"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Código Tributario, art. 81, y Disposición Técnica No. 09-2007 (numeral 1.7) — los sistemas de facturación computarizados deben garantizar la continuidad numérica de las facturas, con una numeración inalterable. La factura impresa lleva el pie de imprenta fiscal de una imprenta autorizada por la DGI. El número que declara este paquete es el de la pieza contable, correlativo por diario, y no el de la factura autorizada por la DGI — véase el README",
+        "source": "dt-09-2007"
+      },
+      "tax_point": {
+        "legal_reference": "Ley No. 822, art. 125 y 133 — el hecho generador del IVA se realiza en el primero de estos actos: la expedición de la factura, el pago o abono del precio, o la entrega del bien (la exigencia de la contraprestación, en los servicios). Este paquete toma la fecha de la factura cuando existe; una entrega o un pago anteriores a la factura adelantan el hecho generador, y el formato no tiene una palabra para «el primero de tres actos» — véase el README",
+        "source": "ley-822"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Ley No. 822, art. 123 — toda devolución de bienes gravados debe estar soportada con la documentación contable que fije el Reglamento, y el responsable recaudador reduce su crédito o su débito fiscal en el período en que se hace la devolución. Un documento contabilizado en Ekwo se corrige con una nota de crédito que lo nombra, nunca volviendo a borrador",
+        "source": "ley-822"
+      }
+    },
+    "mentions": [
+      {
+        "code": "dgi_invoice_not_authorized",
+        "applies_when": "always",
+        "text": "Este documento no sustituye a la factura autorizada por la Dirección General de Ingresos (DGI): solo la factura impresa por una imprenta autorizada con pie de imprenta fiscal, o la emitida por un sistema de facturación computarizado autorizado por la DGI, sustenta la operación para efectos tributarios.",
+        "sequence": 10,
+        "legal_reference": "Disposición Técnica No. 09-2007, numerales primero y segundo — el contribuyente puede facturar por medios electrónicos previa autorización de la DGI, y su sistema debe cumplir los requisitos de seguridad, respaldo, numeración y formalidades que la disposición enumera. Ekwo no tiene esa autorización por sí mismo: la tiene, en su caso, el sistema de la empresa — véase el README",
+        "source": "dt-09-2007"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Exportación gravada con la alícuota del cero por ciento (0%) del Impuesto al Valor Agregado (artículo 109 de la Ley No. 822).",
+        "sequence": 20,
+        "legal_reference": "Ley No. 822, art. 109 — alícuota cero para las exportaciones de bienes de producción nacional y de servicios prestados al exterior",
+        "source": "ley-822"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Operación exenta del traslado del Impuesto al Valor Agregado (artículos 111, 127 y 136 de la Ley No. 822).",
+        "sequence": 30,
+        "legal_reference": "Ley No. 822, arts. 111, 127 y 136 — sujetos, bienes y servicios exentos del traslado del IVA",
+        "source": "ley-822"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "A la fecha de este paquete ninguna norma obliga a las empresas nicaragüenses a intercambiar facturas electrónicas. La factura en Nicaragua es un documento impreso con pie de imprenta fiscal, de una imprenta autorizada por la DGI, o el que emite un sistema de facturación computarizado autorizado por la DGI conforme a la Disposición Técnica No. 09-2007 (La Gaceta No. 134 del 16 de julio de 2007, al amparo del Código Tributario, arts. 81 y 126, numeral 4): una autorización de uso de un sistema, que no es un formato estructurado ni un régimen de validación previa. La DGI declara en su Plan Estratégico Institucional 2022-2026 que desarrollará un sistema de facturación electrónica, y un proyecto de factura electrónica con financiamiento del Banco Interamericano de Desarrollo se anunció en 2016: un proyecto anunciado y no legislado no cambia la palabra `none`. Este paquete no pudo leer la web de la DGI (su servidor rechaza las consultas automatizadas) y no encontró en ninguna fuente abierta una resolución que imponga la facturación electrónica; hay que reverificarlo antes de confiar en él. Nicaragua tampoco publica un código ISO 6523 para su Registro Único de Contribuyentes (RUC): party_scheme y vat_scheme quedan vacíos",
+    "source": "dt-09-2007"
+  },
+  "bank": {
+    "account_scheme": "account-number",
+    "statement_formats": [],
+    "payment_formats": []
+  }
+}

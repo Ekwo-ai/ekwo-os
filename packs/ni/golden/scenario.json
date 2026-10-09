@@ -1,0 +1,331 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre de una comercializadora nicaragüense, declarante mensual del IVA",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Ejercicio 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    }
+  ],
+  "statements": [
+    "NI-EF-ESF",
+    "NI-EF-ER"
+  ],
+  "contacts": [
+    {
+      "ref": "client-ni",
+      "name": "Comercial Granada, S.A.",
+      "type": "customer",
+      "country": "NI"
+    },
+    {
+      "ref": "client-us",
+      "name": "Sunrise Imports LLC",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "client-exento",
+      "name": "Universidad Exenta de Occidente",
+      "type": "customer",
+      "country": "NI"
+    },
+    {
+      "ref": "supplier-ni",
+      "name": "Distribuidora Metrocentro, S.A.",
+      "type": "supplier",
+      "country": "NI"
+    },
+    {
+      "ref": "supplier-exo",
+      "name": "Cooperativa Agrícola de Matagalpa",
+      "type": "supplier",
+      "country": "NI"
+    },
+    {
+      "ref": "agente-aduanero",
+      "name": "Agencia Aduanera Corinto, S.A.",
+      "type": "supplier",
+      "country": "NI"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-ni",
+      "date": "2026-01-15",
+      "why": "Una venta gravada al 15 %: la base de la casilla VG y el IVA trasladado de la casilla DF.",
+      "lines": [
+        {
+          "name": "Mercadería A",
+          "quantity": 10,
+          "unit_price": 1000,
+          "tax": "NI-V-15",
+          "account": "411"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-us",
+      "date": "2026-01-20",
+      "why": "Una exportación de bienes a la alícuota cero (art. 109): la base va a la casilla VEXP, sin IVA, y las compras conservan su crédito fiscal.",
+      "lines": [
+        {
+          "name": "Mercadería B, exportación",
+          "quantity": 5,
+          "unit_price": 2000,
+          "tax": "NI-V-EXP",
+          "account": "412"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_credit_note",
+      "contact": "client-ni",
+      "date": "2026-01-25",
+      "why": "Una devolución parcial de V1: reduce, dentro de las mismas casillas VG y DF, la base y el débito fiscal ya declarados (art. 123).",
+      "lines": [
+        {
+          "name": "Devolución de Mercadería A",
+          "quantity": 2,
+          "unit_price": 1000,
+          "tax": "NI-V-15",
+          "account": "415"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-exento",
+      "date": "2026-02-10",
+      "why": "Una venta a una universidad, sujeto exento del art. 111: la base va a la casilla VEXO y no genera débito fiscal.",
+      "lines": [
+        {
+          "name": "Mobiliario para biblioteca",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "NI-V-EXO",
+          "account": "413"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-ni",
+      "date": "2026-03-05",
+      "why": "Una segunda venta gravada, en marzo, para que ese período declare movimiento propio.",
+      "lines": [
+        {
+          "name": "Mercadería A",
+          "quantity": 20,
+          "unit_price": 1000,
+          "tax": "NI-V-15",
+          "account": "411"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-us",
+      "date": "2026-03-15",
+      "why": "Una segunda exportación, para que la casilla VEXP tenga movimiento en dos períodos.",
+      "lines": [
+        {
+          "name": "Mercadería B, exportación",
+          "quantity": 4,
+          "unit_price": 2000,
+          "tax": "NI-V-EXP",
+          "account": "412"
+        }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "supplier-ni",
+      "date": "2026-01-18",
+      "why": "Una compra gravada destinada a ventas gravadas: la base y el crédito fiscal pleno de las casillas CG y CF (art. 116).",
+      "lines": [
+        {
+          "name": "Mercadería A, compra",
+          "quantity": 100,
+          "unit_price": 60,
+          "tax": "NI-C-15",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "supplier-ni",
+      "date": "2026-02-05",
+      "why": "Una compra gravada destinada a la venta exenta V4: sin derecho a crédito fiscal (art. 120), casilla CNOCRED, y el IVA queda en el costo de la cuenta 512.",
+      "lines": [
+        {
+          "name": "Mobiliario, compra",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "NI-C-15-NOCRED",
+          "account": "512"
+        }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "supplier-exo",
+      "date": "2026-02-12",
+      "why": "Una compra de bienes agrícolas exentos del art. 127 a un productor que no traslada IVA: casilla CEXO, sin IVA.",
+      "lines": [
+        {
+          "name": "Productos agropecuarios",
+          "quantity": 1,
+          "unit_price": 2500,
+          "tax": "NI-C-EXO",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_credit_note",
+      "contact": "supplier-ni",
+      "date": "2026-02-20",
+      "why": "Una nota de crédito de compra: reduce, dentro de las mismas casillas CG y CF, la base y el crédito fiscal ya declarados por C1 (art. 123).",
+      "lines": [
+        {
+          "name": "Devolución de Mercadería A",
+          "quantity": 10,
+          "unit_price": 60,
+          "tax": "NI-C-15",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C5",
+      "type": "purchase_invoice",
+      "contact": "supplier-ni",
+      "date": "2026-03-10",
+      "why": "Una compra de marzo, para comprobar el crédito fiscal de un período distinto al de enero.",
+      "lines": [
+        {
+          "name": "Mercadería A, compra",
+          "quantity": 50,
+          "unit_price": 60,
+          "tax": "NI-C-15",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C6",
+      "type": "purchase_invoice",
+      "contact": "supplier-exo",
+      "date": "2026-03-20",
+      "why": "Una segunda compra no gravada, para que la casilla CEXO tenga movimiento en dos períodos.",
+      "lines": [
+        {
+          "name": "Productos agropecuarios",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "NI-C-EXO",
+          "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C7",
+      "type": "purchase_invoice",
+      "contact": "agente-aduanero",
+      "date": "2026-03-08",
+      "why": "Una importación liquidada con la declaración aduanera: la base de la casilla IMP y el IVA pagado en aduana de la casilla CFIMP (art. 130).",
+      "lines": [
+        {
+          "name": "Importación definitiva de mercadería",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "NI-C-IMP-15",
+          "account": "511"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "P1",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 11500,
+      "contact": "client-ni",
+      "journal": "BAN",
+      "match": "V1",
+      "why": "Un cobro que salda exactamente la factura V1."
+    },
+    {
+      "ref": "P2",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 5000,
+      "contact": "client-exento",
+      "journal": "BAN",
+      "match": "V4",
+      "why": "Un cobro que salda exactamente la venta exenta V4, sin IVA."
+    },
+    {
+      "ref": "P3",
+      "direction": "inbound",
+      "date": "2026-03-25",
+      "amount": 1000,
+      "contact": "client-ni",
+      "journal": "BAN",
+      "match": null,
+      "why": "Un cobro a cuenta, sin factura que saldar: queda como partida abierta."
+    },
+    {
+      "ref": "P4",
+      "direction": "outbound",
+      "date": "2026-03-25",
+      "amount": 3450,
+      "contact": "supplier-ni",
+      "journal": "BAN",
+      "match": "C5",
+      "why": "Un pago que salda exactamente la compra C5, IVA incluido."
+    },
+    {
+      "ref": "P5",
+      "direction": "outbound",
+      "date": "2026-03-01",
+      "amount": 3450,
+      "contact": "supplier-ni",
+      "journal": "BAN",
+      "match": "C2",
+      "why": "Un pago que salda exactamente la compra C2, cuyo IVA no acreditable forma parte del costo pagado."
+    }
+  ]
+}

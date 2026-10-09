@@ -81,5 +81,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('LKR', 'Sri Lankan rupee', E'Rs', 2),
   ('AMD', 'Armenian dram',        E'֏', 2),
   ('AZN', 'Azerbaijani manat',    E'₼', 2),
-  ('HNL', 'Honduran lempira', 'L', 2)
+  ('HNL', 'Honduran lempira', 'L', 2),
+  ('NIO', 'Nicaraguan córdoba', 'C$', 2)
 on conflict (code) do nothing;

@@ -6188,3 +6188,48 @@ earliest of the document, the delivery and the payment;
 **Result boxes without a verified number.** The return's tax-payable and
 credit-carried-forward boxes carry mnemonic codes (`PAGAR`, `REMAN`) because
 the current form could not be read.
+
+## From Nicaragua
+
+**A deadline that most published calendars get wrong.** The monthly IVA return
+is due on the fifth calendar day of the month after the period, not the
+fifteenth. Ley No. 822, article 139(1), as amended by Ley No. 987 of 2019, and
+the Reglamento's article 97(2)(c), as amended by Decreto No. 08-2019, put the
+declaration on the fifth day; article 98(3) of the same Reglamento lets the
+taxpayers that are not "principales" or "grandes" *pay* until the fifteenth.
+The older Disposición Administrativa General No. 04-2013 says fifteen days for
+both, and the calendars of accountancy firms repeat it. A `deadline` holds one
+date per return, so `packs/ni/tax_report.json` declares the filing day (5) and
+writes the payment day (15) into its `legal_reference`. The DGI's own site
+refused every automated request while the pack was written, so the reform could
+not be confirmed against a current notice from the DGI.
+
+**An invoice authorised as software, not as a format.** No statute obliges a
+Nicaraguan company to exchange electronic invoices: the invoice is a printed
+document with the fiscal imprint of an authorised printer, or the output of a
+computerised billing system the DGI has authorised (Disposición Técnica No.
+09-2007), and the printed copy stays the document. The DGI's 2022-2026
+strategic plan announces an electronic invoicing system without a date. The
+pack says `einvoicing.obligation: none`, and carries a mention on every document
+saying it does not replace the authorised invoice. If a mandate arrives, it will
+be a clearance regime of the kind already recorded for Guatemala above; the
+format would need the same word that Guatemala lacks.
+
+**Taxes on turnover that sit next to the VAT and are not VAT codes.** The
+*pago mínimo definitivo* of the income tax (1 %, 2 % or 3 % of gross income
+depending on the taxpayer's category, Ley No. 822 article 61) and the municipal
+tax on income (1 % of gross monthly income, Plan de Arbitrios) are charged on
+the sales of a month, not on an invoice line. A tax code posts on a line; these
+are computed on a period total and paid to a different administration. The pack
+gives the company the accounts to book them and adds no tax code for either:
+adding one would put a municipal levy on the face of every invoice.
+
+**One exemption code for two ministerial lists.** Article 127 (goods) and
+article 136 (services) exempt supplies by lists published as ministerial
+agreements. The pack has one `exempt` tax for both, as the neighbouring packs
+do, and states the numeral in the entry rather than in the code.
+
+**A proportional credit the format cannot hold.** Article 121 credits, for a
+company with taxable and exempt supplies, only the share of the IVA on shared
+costs that the taxable supplies represent. The pack offers the two ends —
+fully creditable and fully non-creditable purchase codes — and no ratio.

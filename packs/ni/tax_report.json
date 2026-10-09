@@ -1,0 +1,115 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "NI-DGI-IVA",
+  "name": "Declaración mensual del Impuesto al Valor Agregado (IVA) — Ventanilla Electrónica Tributaria de la DGI",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2013-01-01",
+  "legal_reference": "Ley No. 822, art. 138 — los responsables recaudadores declaran, liquidan y pagan el IVA en la forma, plazo y lugar que establece el Reglamento; art. 117 — el IVA a pagar es el débito fiscal menos el crédito fiscal; art. 140 — un saldo a favor se imputa a los períodos siguientes dentro del plazo de prescripción. Reglamento, art. 97 — el período es el mes calendario y la declaración se hace por medios electrónicos (TIC) que autorice la Administración Tributaria, con los datos y anexos del negocio. La DGI recibe la declaración en su Ventanilla Electrónica Tributaria (VET); sus campos no están publicados en un texto abierto que este paquete haya podido leer, así que las casillas de este paquete llevan un acrónimo propio y el nombre del concepto que la ley manda declarar — véase el README",
+  "source": "ley-822",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 5,
+    "legal_reference": "Decreto No. 01-2013, Reglamento de la Ley No. 822, art. 97, numeral 2, literal c), reformado por el art. 5 del Decreto No. 08-2019 (La Gaceta No. 53 del 15 de marzo de 2019): «la declaración del IVA debe realizarse a más tardar el quinto día calendario del mes siguiente al período gravado». El pago tiene su propia fecha: art. 98, numeral 3, del mismo Reglamento — el quinto día calendario del mes siguiente para los principales y grandes contribuyentes, y hasta el día quince (15) para los demás; los grandes contribuyentes hacen además un pago anticipado por la primera quincena (art. 98, numeral 4). La Disposición Administrativa General No. 04-2013, anterior a la reforma, fijaba «quince días después de finalizado el mes» para declarar y pagar, y es la fecha que repiten los calendarios fiscales privados; el texto vigente del Reglamento prevalece sobre ella, y el día 15 es solo el plazo de pago de los contribuyentes que no son principales ni grandes. Esta regla modela la fecha de la declaración",
+    "source": "ley-822"
+  },
+  "boxes": [
+    {
+      "box": "VG",
+      "kind": "base",
+      "name": "Ventas y servicios gravados al 15 % — base imponible",
+      "sequence": 10,
+      "legal_reference": "Ley No. 822, art. 109 y 126 — operaciones gravadas con la alícuota general, sobre el precio de la factura sin el IVA",
+      "source": "ley-822"
+    },
+    {
+      "box": "DF",
+      "kind": "tax",
+      "name": "Ventas y servicios gravados — IVA trasladado (débito fiscal)",
+      "sequence": 20,
+      "legal_reference": "Ley No. 822, art. 114 — el monto total de la traslación constituye el débito fiscal del responsable recaudador",
+      "source": "ley-822"
+    },
+    {
+      "box": "VEXP",
+      "kind": "base",
+      "name": "Exportaciones a alícuota 0 %",
+      "sequence": 30,
+      "legal_reference": "Ley No. 822, art. 109 — exportaciones de bienes de producción nacional y servicios prestados al exterior, a la alícuota del cero por ciento",
+      "source": "ley-822"
+    },
+    {
+      "box": "VEXO",
+      "kind": "base",
+      "name": "Ventas y servicios exentos",
+      "sequence": 40,
+      "legal_reference": "Ley No. 822, arts. 127 y 136 — operaciones exentas del traslado del IVA, que el responsable recaudador informa en su declaración",
+      "source": "ley-822"
+    },
+    {
+      "box": "CG",
+      "kind": "base",
+      "name": "Compras y servicios gravados con derecho a crédito fiscal — base",
+      "sequence": 50,
+      "legal_reference": "Ley No. 822, art. 116 y 119 — adquisiciones gravadas cuyo IVA se acredita en el mes de la compra",
+      "source": "ley-822"
+    },
+    {
+      "box": "CF",
+      "kind": "tax",
+      "name": "Compras y servicios gravados — IVA acreditable (crédito fiscal)",
+      "sequence": 60,
+      "legal_reference": "Ley No. 822, art. 116 — el IVA trasladado al responsable recaudador constituye crédito fiscal",
+      "source": "ley-822"
+    },
+    {
+      "box": "CNOCRED",
+      "kind": "base",
+      "name": "Compras gravadas sin derecho a crédito fiscal",
+      "sequence": 70,
+      "legal_reference": "Ley No. 822, art. 120 — IVA no acreditable, que forma parte del costo",
+      "source": "ley-822"
+    },
+    {
+      "box": "CEXO",
+      "kind": "base",
+      "name": "Compras y servicios exentos o no gravados",
+      "sequence": 80,
+      "legal_reference": "Ley No. 822, arts. 127 y 136 — adquisiciones sin traslado del IVA",
+      "source": "ley-822"
+    },
+    {
+      "box": "IMP",
+      "kind": "base",
+      "name": "Importaciones e internaciones gravadas — base",
+      "sequence": 90,
+      "legal_reference": "Ley No. 822, art. 130 — valor en aduana más los demás tributos y gastos de la declaración aduanera",
+      "source": "ley-822"
+    },
+    {
+      "box": "CFIMP",
+      "kind": "tax",
+      "name": "Importaciones e internaciones — IVA pagado en aduana (crédito fiscal)",
+      "sequence": 100,
+      "legal_reference": "Ley No. 822, art. 116 — el IVA pagado sobre importaciones e internaciones es crédito fiscal",
+      "source": "ley-822"
+    },
+    {
+      "box": "TOTAL",
+      "kind": "total",
+      "name": "IVA a pagar o saldo a favor",
+      "sequence": 110,
+      "plus": [
+        "DF"
+      ],
+      "minus": [
+        "CF",
+        "CFIMP"
+      ],
+      "legal_reference": "Ley No. 822, art. 117 — el IVA a pagar es el débito fiscal menos el crédito fiscal; art. 140 — el saldo a favor se imputa a los períodos subsiguientes y, en las exportaciones a alícuota cero, puede ser objeto de compensación o devolución",
+      "source": "ley-822"
+    }
+  ]
+}

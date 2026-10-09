@@ -1,0 +1,843 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "NI-EF-ESF",
+      "kind": "balance_sheet",
+      "framework": "NI-NIIFPYMES",
+      "name": "Estado de Situación Financiera",
+      "legal_reference": "NIIF para las PYMES, sección 4 (estado de situación financiera): el contenido mínimo de las partidas que presenta este esquema. Nicaragua no impone un esquema de estados financieros propio: el CCPN adoptó la NIIF para las PYMES por resolución del 30 de mayo de 2010, aplicable a los períodos que inician después del 1 de julio de 2011, y mantiene los PCGA nicaragüenses como marco aceptado; este paquete sigue la NIIF para las PYMES — véase el README",
+      "source": "niif-pymes-nicaragua",
+      "lines": [
+        {
+          "code": "ACT",
+          "parent": null,
+          "name": "Activo",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "AC",
+            "ANC"
+          ]
+        },
+        {
+          "code": "AC",
+          "parent": "ACT",
+          "name": "Activo corriente",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "119"
+          ]
+        },
+        {
+          "code": "111",
+          "parent": "AC",
+          "name": "Efectivo y equivalentes de efectivo",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "111",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "112",
+          "parent": "AC",
+          "name": "Cuentas por cobrar comerciales",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "112",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "113",
+          "parent": "AC",
+          "name": "Otras cuentas por cobrar",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "113",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "114",
+          "parent": "AC",
+          "name": "Impuestos por cobrar",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "114",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete; incluye el crédito fiscal del IVA (cuentas 1141 y 1142) y los anticipos y retenciones de IR a favor (1143 y 1144)",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "115",
+          "parent": "AC",
+          "name": "Gastos pagados por anticipado",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "115",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "116",
+          "parent": "AC",
+          "name": "Inventarios",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "116",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "119",
+          "parent": "AC",
+          "name": "Partidas pendientes de imputación",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "119",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuenta de suspenso del plan de cuentas de este paquete",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "ANC",
+          "parent": "ACT",
+          "name": "Activo no corriente",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "121",
+            "122",
+            "123"
+          ]
+        },
+        {
+          "code": "121",
+          "parent": "ANC",
+          "name": "Propiedad, planta y equipo",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "121",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "122",
+          "parent": "ANC",
+          "name": "Activos intangibles",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "122",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "123",
+          "parent": "ANC",
+          "name": "Otros activos no corrientes",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "123",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "PYP",
+          "parent": null,
+          "name": "Pasivo y patrimonio neto",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "PAS",
+            "PAT"
+          ]
+        },
+        {
+          "code": "PAS",
+          "parent": "PYP",
+          "name": "Pasivo",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "PC",
+            "PNC"
+          ]
+        },
+        {
+          "code": "PC",
+          "parent": "PAS",
+          "name": "Pasivo corriente",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "211",
+            "212",
+            "213",
+            "214",
+            "215"
+          ]
+        },
+        {
+          "code": "211",
+          "parent": "PC",
+          "name": "Cuentas por pagar comerciales",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "211",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "212",
+          "parent": "PC",
+          "name": "Remuneraciones y prestaciones laborales por pagar",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "212",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "213",
+          "parent": "PC",
+          "name": "Impuestos por pagar",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "213",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete; incluye el débito fiscal y el IVA por pagar del período (cuentas 2131 y 2132) y las retenciones por enterar",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "214",
+          "parent": "PC",
+          "name": "Anticipos de clientes",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "214",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "215",
+          "parent": "PC",
+          "name": "Provisiones a corto plazo",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "215",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "PNC",
+          "parent": "PAS",
+          "name": "Pasivo no corriente",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "221",
+            "222",
+            "223",
+            "224"
+          ]
+        },
+        {
+          "code": "221",
+          "parent": "PNC",
+          "name": "Préstamos bancarios a largo plazo",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "221",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "222",
+          "parent": "PNC",
+          "name": "Arrendamientos financieros por pagar",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "222",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "223",
+          "parent": "PNC",
+          "name": "Provisión para indemnizaciones laborales",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "223",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "224",
+          "parent": "PNC",
+          "name": "Otras cuentas por pagar a largo plazo",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "224",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "PAT",
+          "parent": "PYP",
+          "name": "Patrimonio neto",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "310",
+            "311",
+            "320",
+            "330",
+            "341",
+            "342",
+            "351",
+            "352"
+          ]
+        },
+        {
+          "code": "310",
+          "parent": "PAT",
+          "name": "Capital autorizado",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "310",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "311",
+          "parent": "PAT",
+          "name": "Capital suscrito y pagado",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "311",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "320",
+          "parent": "PAT",
+          "name": "Aportaciones por capitalizar",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "320",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "330",
+          "parent": "PAT",
+          "name": "Reserva legal",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "330",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "341",
+          "parent": "PAT",
+          "name": "Utilidades no distribuidas",
+          "sequence": 320,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "341",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "342",
+          "parent": "PAT",
+          "name": "Pérdidas acumuladas",
+          "sequence": 330,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "342",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "351",
+          "parent": "PAT",
+          "name": "Resultado del ejercicio - Ganancia",
+          "sequence": 340,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "351",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "352",
+          "parent": "PAT",
+          "name": "Resultado del ejercicio - Pérdida",
+          "sequence": 350,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "352",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        }
+      ]
+    },
+    {
+      "code": "NI-EF-ER",
+      "kind": "income_statement",
+      "framework": "NI-NIIFPYMES",
+      "name": "Estado de Resultados",
+      "legal_reference": "NIIF para las PYMES, sección 5 (estado del resultado integral y estado de resultados): el contenido mínimo de las partidas que presenta este esquema, con los gastos clasificados por función. Nicaragua no impone un esquema propio — véase el README",
+      "source": "niif-pymes-nicaragua",
+      "lines": [
+        {
+          "code": "ING",
+          "parent": null,
+          "name": "Ingresos de operación",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "411",
+            "412",
+            "413",
+            "414",
+            "415"
+          ]
+        },
+        {
+          "code": "411",
+          "parent": "ING",
+          "name": "Ventas locales gravadas",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "411",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "412",
+          "parent": "ING",
+          "name": "Ventas de exportación",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "412",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "413",
+          "parent": "ING",
+          "name": "Ventas exentas",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "413",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "414",
+          "parent": "ING",
+          "name": "Prestación de servicios gravados",
+          "sequence": 50,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "414",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "415",
+          "parent": "ING",
+          "name": "Descuentos y devoluciones sobre ventas",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "415",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "51",
+          "parent": null,
+          "name": "Costo de ventas",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "51",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "UB",
+          "parent": null,
+          "name": "Utilidad (pérdida) bruta",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "ING"
+          ],
+          "minus": [
+            "51"
+          ]
+        },
+        {
+          "code": "52",
+          "parent": null,
+          "name": "Gastos de venta",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "52",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "53",
+          "parent": null,
+          "name": "Gastos de administración",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "53",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "GO",
+          "parent": null,
+          "name": "Gastos operativos",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "52",
+            "53"
+          ]
+        },
+        {
+          "code": "UO",
+          "parent": null,
+          "name": "Utilidad (pérdida) de operación",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "UB"
+          ],
+          "minus": [
+            "GO"
+          ]
+        },
+        {
+          "code": "46",
+          "parent": null,
+          "name": "Otros ingresos",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "46",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "54",
+          "parent": null,
+          "name": "Gastos financieros",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "54",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "56",
+          "parent": null,
+          "name": "Otros gastos",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "56",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "RF",
+          "parent": null,
+          "name": "Resultado financiero y otros",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "46"
+          ],
+          "minus": [
+            "54",
+            "56"
+          ]
+        },
+        {
+          "code": "UAI",
+          "parent": null,
+          "name": "Utilidad (pérdida) antes de impuesto sobre la renta",
+          "sequence": 170,
+          "is_total": true,
+          "plus": [
+            "UO",
+            "RF"
+          ]
+        },
+        {
+          "code": "55",
+          "parent": null,
+          "name": "Impuesto sobre la renta y pago mínimo definitivo",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "55",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Cuentas de mayor del plan de cuentas de este paquete, abierto conforme a la NIIF para las PYMES adoptada por el Colegio de Contadores Públicos de Nicaragua; Nicaragua no prescribe un catálogo de cuentas — véase el README",
+          "source": "niif-pymes-nicaragua"
+        },
+        {
+          "code": "UN",
+          "parent": null,
+          "name": "Utilidad (pérdida) neta del ejercicio",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "UAI"
+          ],
+          "minus": [
+            "55"
+          ]
+        }
+      ]
+    }
+  ]
+}
