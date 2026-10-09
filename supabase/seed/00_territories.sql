@@ -2276,3 +2276,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Zambia
+--
+-- A third country to the common system of VAT of Directive 2006/112/EC,
+-- article 5(2), which applies only in the territory of the Community as the
+-- Treaties define it. Zambia levies its own value added tax under the Value
+-- Added Tax Act, Chapter 331 of the Laws of Zambia, unrelated to the Union's
+-- common system. `vat_prefix` is null: a Zambian taxpayer is identified by
+-- the Taxpayer Identification Number (TPIN) the Zambia Revenue Authority
+-- assigns, which carries no ISO country prefix.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('ZM', 'iso_3166_1', 'Zambia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Zambia is a third country to it. Zambia levies a value added tax of its own under the Value Added Tax Act, Chapter 331 of the Laws of Zambia, section 8, at a standard rate of sixteen per cent (16 %), with a rate of zero per cent (0 %) on exports and the supplies the Value Added Tax (Zero-Rating) Order lists.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

@@ -1,0 +1,205 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "ZM",
+  "name": "Zambia",
+  "version": "0.1.0",
+  "schema_min": "20260929141500",
+  "seed_sequence": 137,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act, Chapter 331 of the Laws of Zambia (consolidated edition published by the Parliament of Zambia): ss. 7, 8, 9, 13, 15, 16, 18, 19 and the schedules",
+        "publisher": "National Assembly of Zambia",
+        "url": "https://www.parliament.gov.zm/sites/default/files/documents/acts/Value%20Added%20Tax%20Act.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "practice-note-2024",
+        "title": "Practice Note No. 1/2024 — the Value Added Tax (Amendment) Act No. 27 of 2023, the Value Added Tax (Exemption) (Amendment) Order, Statutory Instrument No. 60 of 2023, and the electronic invoicing system",
+        "publisher": "Zambia Revenue Authority",
+        "url": "https://www.zra.org.zm/wp-content/uploads/2024/02/2024-Practice-Note.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-liability-guide",
+        "title": "VAT Liability Guide — the Value Added Tax (Exemption) Order and the Value Added Tax (Zero-Rating) Order, group by group",
+        "publisher": "Zambia Revenue Authority",
+        "url": "https://www.zra.org.zm/wp-content/uploads/2023/08/VAT-Liability-Guide.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-guide",
+        "title": "VAT Guide — the standard rate, registration threshold, filing, input tax and the VAT account that feeds the return",
+        "publisher": "Zambia Revenue Authority",
+        "url": "https://www.zra.org.zm/wp-content/uploads/2020/07/VAT-Guide.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "payment-due-dates",
+        "title": "Payment Due Dates — VAT, Insurance Premium Levy, PAYE, withholding tax and the other monthly obligations",
+        "publisher": "Zambia Revenue Authority",
+        "url": "https://www.zra.org.zm/payment-due-dates/",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "zero-rating-amendment-2025",
+        "title": "Value Added Tax (Zero Rating) (Amendment) Order, 2025, Statutory Instrument No. 95 of 2025 — mains water and sewerage services zero-rated from 1 January 2026",
+        "publisher": "Government of Zambia, published on ZambiaLII",
+        "url": "https://zambialii.org/akn/zm/act/si/2025/95/eng@2025-12-31",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
+      },
+      {
+        "key": "smart-invoice-faqs",
+        "title": "Smart Invoice — frequently asked questions: the legal requirement to use the electronic invoicing system and the penalties of s. 7A(3) of the Value Added Tax Act",
+        "publisher": "Zambia Revenue Authority",
+        "url": "https://www.zra.org.zm/wp-content/uploads/2024/08/Smart-Invoice-FAQs.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "smart-invoice-solutions",
+        "title": "Smart Invoice — available solutions and eligibility, including certified invoicing systems integrated through the Virtual Sales Data Controller",
+        "publisher": "Zambia Revenue Authority",
+        "url": "https://www.zra.org.zm/smart-invoice-learn-more/",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "zra-tax-online",
+        "title": "ZRA Tax Online — the taxpayer portal where the monthly VAT return is filed and the payment registration number is generated",
+        "publisher": "Zambia Revenue Authority",
+        "url": "https://portal.zra.org.zm/",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      },
+      {
+        "key": "zica-financial-reporting",
+        "title": "Financial Reporting — full IFRS adopted in 2005 and the three-tier framework: IFRS, IFRS for SMEs and the Financial Reporting Standard for Micro and Small Entities",
+        "publisher": "Zambia Institute of Chartered Accountants",
+        "url": "https://www.zica.co.zm/financial-reporting/",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "ZMW",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Zambia reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "ZM-ZICA-SFP",
+        "ZM-ZICA-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Zambia. The Zambia Institute of Chartered Accountants (ZICA), the standard-setting body of the Accountants Act, 2008, adopted IFRS Accounting Standards in 2005 and runs a three-tier framework (full IFRS, IFRS for SMEs, and a standard for micro and small entities). This chart is original: four digits, blocked so that each range reaches one line of the IFRS-based statements below, with the accounts a Zambian company actually keeps — VAT input and output tax, import VAT owed to the Zambia Revenue Authority at the border, NAPSA contributions, PAYE, skills development levy, withholding tax, insurance premium levy and excise duty payable, and the irrecoverable VAT that the Act leaves with a buyer of an imported service.",
+      "source": "zica-financial-reporting"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, s. 18(3), as substituted by the Value Added Tax (Amendment) Act No. 27 of 2023 — input tax is claimed only against a tax invoice issued from a serially numbered invoice book, from an authorised computer package, from the approved invoicing system or with the contents the Commissioner-General's administrative rule requires. Zambian law asks for a serial number and not for a series with no gap, which is why `numbering` is `sequential` and not `gapless_per_year`.",
+        "source": "practice-note-2024"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, s. 13(2) and (5) — goods are supplied at the earliest of removal from the supplier's premises or being made available, receipt of payment, and issue of a tax invoice; services at the earliest of receipt of payment, issue of a tax invoice and the time they are performed. That is a three-way earliest test and Ekwo's closed vocabulary only expresses a two-way one; `earliest_of_delivery_or_payment` is the nearest value, and the gap — an invoice issued ahead of both delivery and payment, which s. 13 still makes the tax point — is recorded in docs/international.md.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Zambian statute obliges a business to exchange a structured electronic invoice with another business in the sense Ekwo's vocabulary gives the word: there is no Peppol authority, no published profile and no scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What Zambia has instead is Smart Invoice, a clearance system run by the Zambia Revenue Authority: the Value Added Tax (Amendment) Act No. 27 of 2023, in force on 1 January 2024, defines the electronic invoicing system as a core system that transmits production, invoicing and stock data to the Authority in real time, and s. 7A(3) of the Value Added Tax Act punishes a taxpayer who does not issue electronic invoices (not more than K40,000 for a first offence, K80,000 for a second, K120,000 or imprisonment for a third). Smart Invoice has applied to every VAT-registered taxpayer since 30 September 2024 and penalties run from 1 October 2024; the dates come from the Authority's own announcements and trade commentary, not from a text this pack could open. Invoices must be issued, or integrated through a certified invoicing system and the Virtual Sales Data Controller, before they reach the buyer. That is real-time clearance with the tax administration and not a peer-to-peer exchange; the gap is recorded in docs/international.md and in this pack's README, and the socle is not patched to fit it.",
+    "source": "smart-invoice-faqs"
+  }
+}

@@ -320,6 +320,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`vn`](../packs/vn/) | Việt Nam | `55_pack_vn.sql` | vi | `community` |
 | [`xk`](../packs/xk/) | Kosova | `123_pack_xk.sql` | sq, en | `community` |
 | [`za`](../packs/za/) | South Africa | `88_pack_za.sql` | en | `community` |
+| [`zm`](../packs/zm/) | Zambia | `137_pack_zm.sql` | en | `community` |
 <!-- /generated -->
 
 The SQL is a **build artefact**, like `docs/schema.md`. The source is the

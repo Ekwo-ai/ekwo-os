@@ -6406,3 +6406,50 @@ of part B of quadro 12 names a tax field for a base. The pack follows the
 specimen of the Diário da República and says so. The AGT page for the IVA still
 shows Cabinda at 2 % and the simplified regime at 3 %; the Lei n.º 14/23 says
 1 % and 7 %, and the pack follows the law.
+
+## From Zambia
+
+**A statute the website no longer matches.** The consolidated Value Added Tax Act
+that the Parliament of Zambia publishes still prints a 17.5 % rate "unless the
+Minister, by statutory order, determines a lower rate" and a twenty-one day
+return; the rate the Authority applies is 16 % and an electronic return and its
+payment are due on the 18th. The exemptions and zero-ratings have moved from the
+Act's schedules into two Orders. The pack follows the Authority's guides and its
+due-dates page and names the old text in its README; the statutory order that
+set 16 % was not found.
+
+**Smart Invoice is a clearance, again.** The Authority's electronic invoicing
+system transmits every invoice to its core system before it reaches the buyer
+(Value Added Tax Act, s. 7A, from the Value Added Tax (Amendment) Act No. 27 of
+2023). The socle has no clearance channel, no fiscal code and no QR code, so the
+pack declares `einvoicing.obligation: none` and a company records in Ekwo the
+invoice it issued through a certified invoicing system. Same gap as Uganda
+(EFRIS), Kenya (eTIMS) and Tanzania.
+
+**A tax point of three clauses.** Section 13 fixes the time of supply of goods at
+the earliest of removal, availability, receipt of payment and issue of an invoice
+(services: payment, invoice, performance). `tax_point` offers a two-way earliest
+test, and `earliest_of_delivery_or_payment` is the nearest word; an invoice
+issued ahead of delivery and payment still triggers the tax and is not
+expressed.
+
+**Reverse charge with no input claim.** Section 8(5) to (7) of the Act, as
+substituted in 2024, makes the recipient of an imported service pay the tax and
+bars the matching input deduction. The format's `foreign_services_received`
+carries two tax lines; the pack posts the output half and a cost account, with
+no input box. A cross-border electronic service is taxed by the non-resident
+supplier and is an ordinary purchase.
+
+**A temporary zero rate with no instrument.** VAT on imports of petrol and
+diesel was zero-rated from 1 April 2026 for ninety days, extended to 30 September
+and, by press reports, until December. No instrument could be opened, so no
+code carries it; a dated code is the right form once the text is read.
+
+**Partial exemption has no ratio.** A business with taxable and exempt supplies
+recovers only the taxable share of input tax. The pack offers fully deductible
+and fully blocked purchase codes, and no apportionment, as in Nicaragua.
+
+**Authority hosts that refuse a plain request.** `zambialii.org` sits behind a
+browser check and `zra.org.zm` presents a certificate chain that common clients
+reject; Statutory Instrument No. 95 of 2025 (water zero-rated from 1 January
+2026) could not be read in its own words.

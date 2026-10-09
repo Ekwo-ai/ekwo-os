@@ -1,0 +1,154 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "ZM-VAT-RETURN",
+  "name": "Monthly Value Added Tax return",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "1995-07-01",
+  "legal_reference": "Value Added Tax Act, s. 16(1) — a taxable supplier lodges a tax return with the Commissioner-General for each prescribed accounting period, in the form the Commissioner-General approves; s. 16(3) — the accounting period is the calendar month unless the Commissioner-General fixes another. The Authority's VAT Guide, Part 7.3, describes the return through five numbered boxes: box 1 output VAT, box 2 input VAT on domestic purchases, box 3 input VAT on imports, box 4 total input VAT and box 5 the tax payable or repayable. The e-filing form on ZRA Tax Online could not be opened from the machine this pack was written on, so only those five boxes are sourced to the Authority; the value rows (zero-rated, exempt, standard-rated supplies and purchases) are this pack's own and the gap is recorded in this pack's README.",
+  "source": "vat-guide",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 18,
+    "legal_reference": "Authority's Payment Due Dates page — Value Added Tax: payment for electronic submissions is due on the 18th of every month; VAT Guide, Part 2.7 — a return with ten or more transactions is lodged electronically within eighteen days after the end of the accounting period. The Act's own text (s. 16(2), s. 19(1)) says twenty-one days and is overtaken by the Authority's electronic-filing practice; a return with fewer than ten transactions may be lodged manually within five days. Penalties for late filing are not modelled.",
+    "source": "payment-due-dates"
+  },
+  "boxes": [
+    {
+      "box": "ZE",
+      "kind": "base",
+      "name": "Zero-rated supplies — exports",
+      "sequence": 10,
+      "legal_reference": "Value Added Tax (Zero-Rating) Order, Group 1 — the value of exports and other zero-rated supplies made for use outside Zambia. A reporting row of this pack, not one of the five numbered boxes of the VAT Guide.",
+      "source": "vat-liability-guide"
+    },
+    {
+      "box": "ZL",
+      "kind": "base",
+      "name": "Zero-rated supplies — local",
+      "sequence": 20,
+      "legal_reference": "Value Added Tax (Zero-Rating) Order — the value of local supplies taxed at nil (medical supplies, mains water and sewerage from 2026, agricultural inputs). A reporting row of this pack.",
+      "source": "vat-liability-guide"
+    },
+    {
+      "box": "EX",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 30,
+      "legal_reference": "Value Added Tax (Exemption) Order — the value of exempt supplies. A reporting row of this pack.",
+      "source": "vat-liability-guide"
+    },
+    {
+      "box": "1S",
+      "kind": "base",
+      "name": "Standard-rated supplies — value",
+      "sequence": 40,
+      "legal_reference": "VAT Guide, Part 7.3 — the sales on which the output VAT of box 1 is charged. A reporting row of this pack.",
+      "source": "vat-guide"
+    },
+    {
+      "box": "1S",
+      "kind": "tax",
+      "name": "Output VAT on standard-rated supplies",
+      "sequence": 45,
+      "legal_reference": "VAT Guide, Part 7.3, box 1 of the VAT return — output VAT on sales and other outputs, net of credit notes given.",
+      "source": "vat-guide"
+    },
+    {
+      "box": "1R",
+      "kind": "base",
+      "name": "Imported services — value",
+      "sequence": 50,
+      "legal_reference": "Value Added Tax Act, s. 8(5), as substituted by Act No. 27 of 2023 — the value of an imported service on which the recipient pays the tax. A reporting row of this pack.",
+      "source": "practice-note-2024"
+    },
+    {
+      "box": "1R",
+      "kind": "tax",
+      "name": "Output VAT on imported services",
+      "sequence": 55,
+      "legal_reference": "Value Added Tax Act, s. 8(5) — the tax the recipient of an imported service pays; included in box 1 as output tax.",
+      "source": "practice-note-2024"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Box 1 — Output VAT",
+      "sequence": 60,
+      "plus": [
+        "1S:tax",
+        "1R:tax"
+      ],
+      "legal_reference": "VAT Guide, Part 7.3 — box 1 of the VAT return: output VAT on sales and other outputs. This pack adds the reverse-charged tax of imported services to the output VAT of standard-rated supplies.",
+      "source": "vat-guide"
+    },
+    {
+      "box": "ZP",
+      "kind": "base",
+      "name": "Zero-rated purchases — value",
+      "sequence": 70,
+      "legal_reference": "Value Added Tax (Zero-Rating) Order — the value of local purchases taxed at nil. A reporting row of this pack.",
+      "source": "vat-liability-guide"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Standard-rated local purchases — value",
+      "sequence": 80,
+      "legal_reference": "VAT Guide, Part 7.3 — the purchases on which the input VAT of box 2 is incurred. A reporting row of this pack.",
+      "source": "vat-guide"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Box 2 — Input VAT on domestic purchases",
+      "sequence": 85,
+      "legal_reference": "VAT Guide, Part 7.3, box 2 of the VAT return — input VAT on domestic purchases and other inputs, net of credits received and of any over-claim.",
+      "source": "vat-guide"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Imports of goods — value",
+      "sequence": 90,
+      "legal_reference": "VAT Guide, Part 7.3 — the customs value of imports on which the import VAT of box 3 is paid. A reporting row of this pack.",
+      "source": "vat-guide"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Box 3 — Input VAT on imports",
+      "sequence": 95,
+      "legal_reference": "VAT Guide, Part 7.3, box 3 of the VAT return — input VAT on imports.",
+      "source": "vat-guide"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Box 4 — Total input VAT",
+      "sequence": 100,
+      "plus": [
+        "2:tax",
+        "3:tax"
+      ],
+      "legal_reference": "VAT Guide, Part 7.3, box 4 of the VAT return — the total of box 2 and box 3.",
+      "source": "vat-guide"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Box 5 — VAT payable or repayable",
+      "sequence": 110,
+      "plus": [
+        "1"
+      ],
+      "minus": [
+        "4"
+      ],
+      "legal_reference": "VAT Guide, Part 7.3, box 5 of the VAT return — box 1 minus box 4. A positive figure is payable; a negative figure is a credit the Authority refunds (Value Added Tax Act, s. 19(2)).",
+      "source": "vat-guide"
+    }
+  ]
+}

@@ -1,0 +1,411 @@
+[
+  {
+    "code": "ZM-S-16",
+    "name": "Sale, standard rate 16 %",
+    "description": "The general rate on a taxable supply made in Zambia",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-01-01",
+    "legal_reference": "Value Added Tax Act, s. 8(1)(a) — tax is charged on a taxable supply of goods or services, other than a zero-rated supply, made in Zambia in furtherance of a business by a registered supplier; s. 9(1) — it is charged on the taxable value at the prescribed rate; s. 9(3) — the printed rate is seventeen and a half per centum unless the Minister, by statutory order, determines a lower rate, and the Authority's VAT Guide states that \"currently the Standard rate is 16%\". All supplies that are not exempt or zero-rated are standard-rated (VAT Guide, s. 1.4). The earliest date this pack could evidence for the 16 % rate is the Authority's own worked VAT account for the period ending 31 December 2012; the statutory order that set it was not found.",
+    "source": "vat-guide",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1S"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1S",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "ZM-S-Z-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "A supply of goods exported from Zambia, or a service physically rendered outside Zambia",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1995-07-01",
+    "legal_reference": "Value Added Tax Act, s. 15(2) and (3) read with the Value Added Tax (Zero-Rating) Order — Group 1: (a) export of goods from Zambia by or on behalf of a taxable supplier where evidence of exportation is produced; (b) freight transport services from or to the Republic and in transit; (f) services physically rendered outside Zambia. A zero-rated supply is a taxable supply: input tax stays deductible (VAT Guide, s. 1.4.5).",
+    "source": "vat-liability-guide",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "ZM-S-Z-DOM",
+    "name": "Sale, zero-rated (domestic — medical supplies and drugs)",
+    "description": "A local supply of medical supplies and drugs, a good the Zero-Rating Order taxes at nil without it leaving Zambia",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1995-07-01",
+    "legal_reference": "Value Added Tax Act, s. 15(2) and (3) read with the Value Added Tax (Zero-Rating) Order — Group 5, medical supplies: (a) medical supplies and drugs; (b) equipment designed solely for medical or prosthetic use supplied to a registered practitioner, hospital or clinic or to a patient. The same Order zero-rates other local supplies (agricultural inputs, mosquito nets, certain foods and capital equipment); a company selling those picks this code too.",
+    "source": "vat-liability-guide",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZL"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZL",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "ZM-S-Z-WATER",
+    "name": "Sale, zero-rated (mains water and sewerage, from 1 January 2026)",
+    "description": "Mains water and sewerage services, excluding sewerage pump-out services, zero-rated from 1 January 2026",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Value Added Tax (Zero Rating) (Amendment) Order, 2025, Statutory Instrument No. 95 of 2025, dated 31 December 2025 and in force on 1 January 2026 — the supply of mains water and sewerage services, excluding sewerage pump-out services, moves from the Exemption Order (item 17, inserted by Statutory Instrument No. 60 of 2023) to the Zero-Rating Order. The page of the instrument refuses a request without a browser, so its wording was not read here; the change is recorded from the Authority-side commentary found in the 2026 Budget analyses and must be confirmed against the instrument itself. Sewerage pump-out services stay standard-rated.",
+    "source": "zero-rating-amendment-2025",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZL"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZL",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 35
+  },
+  {
+    "code": "ZM-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply the Exemption Order lists: health and medical services, education, residential property, financial and insurance services, passenger transport, books and newspapers",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1995-07-01",
+    "legal_reference": "Value Added Tax Act, s. 15(1) and (3) read with the Value Added Tax (Exemption) Order — Group 2 health services by a registered practitioner, hospital or clinic; Group 3 educational services to nursery, primary, secondary and post-secondary learners; Group 6 the sale or lease of real property other than commercial property; Group 7 financial and insurance services, including interest, bank charges and insurance commissions; also betting and gaming, funeral services and trade union subscriptions. An exempt supplier cannot register for VAT and recovers no input tax (VAT Guide, s. 1.4.5). Insurance premiums are outside VAT but bear the 5 % Insurance Premium Levy, which this pack documents and does not compute.",
+    "source": "vat-liability-guide",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EX",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "ZM-S-EX-WATER",
+    "name": "Sale, exempt (mains water and sewerage, 2024 and 2025)",
+    "description": "Mains water and sewerage services, excluding pump-out services, while the Exemption Order held them",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-01-01",
+    "valid_to": "2025-12-31",
+    "legal_reference": "Value Added Tax (Exemption) (Amendment) Order, Statutory Instrument No. 60 of 2023, in force on 1 January 2024 — item 17: the supply of mains water and sewerage services, excluding sewerage pump out services, is exempt. Replaced by the zero rate from 1 January 2026 (code ZM-S-Z-WATER); this code is closed on 31 December 2025.",
+    "source": "practice-note-2024",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EX",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 45
+  },
+  {
+    "code": "ZM-P-16",
+    "name": "Purchase, standard rate 16 %, deductible",
+    "description": "A local purchase at the general rate, used in the business of a registered supplier",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-01-01",
+    "legal_reference": "Value Added Tax Act, s. 18(1)(a) — the tax payable on a supply to a registered supplier for the purposes of a business may be deducted from the tax liability of that or a later accounting period; s. 18(3), as substituted by Act No. 27 of 2023 — the supplier must hold a tax invoice from a serially numbered invoice book, an authorised computer package or the approved invoicing system when the return is lodged; s. 18(4) — not claimable after the period the law allows. Input tax is not deductible on every purchase (VAT Guide, Part 3.2: entertainment, motor vehicles, petrol and others) — such a purchase takes code ZM-P-16-ND.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "ZM-P-16-ND",
+    "name": "Purchase, standard rate 16 %, input tax not deductible",
+    "description": "A purchase whose input tax the law blocks — entertainment, passenger motor vehicles, petrol and similar",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-01-01",
+    "legal_reference": "Value Added Tax Act, s. 18(5) — the Minister may by regulation determine cases in which a deduction or credit of input tax is not allowed; the Authority's VAT Guide, Part 3.2, lists the items on which input tax cannot be claimed (telephone and internet bills in part, motor vehicles, business entertainment, benefits for directors and employees, petrol, diesel in part, staff housing). The tax follows the expense to account 6530. The list of blocked items is the Authority's guidance and not a code the pack applies by itself.",
+    "source": "vat-guide",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ]
+    },
+    "sequence": 115
+  },
+  {
+    "code": "ZM-P-Z",
+    "name": "Purchase, zero-rated (local)",
+    "description": "A local purchase of a good the Zero-Rating Order taxes at nil, from a registered supplier",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1995-07-01",
+    "legal_reference": "Value Added Tax Act, s. 15(2); Value Added Tax (Zero-Rating) Order — there is no input tax to deduct on a supply taxed at nil.",
+    "source": "vat-liability-guide",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "ZM-P-EX",
+    "name": "Purchase, exempt",
+    "description": "An insurance premium, or another exempt supply bought for the business",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1995-07-01",
+    "legal_reference": "Value Added Tax Act, s. 15(1); Value Added Tax (Exemption) Order, Group 7 — insurance services and financial charges are exempt, so there is no VAT to deduct. The return carries no row for an exempt purchase.",
+    "source": "vat-liability-guide",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "ZM-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "VAT charged on the importation of taxable goods, paid to the Authority as a customs duty and claimed as input tax",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2012-01-01",
+    "legal_reference": "Value Added Tax Act, s. 8(1)(b) — tax is charged on a taxable importation of goods; s. 8(4) — tax on an importation is charged as if it were a duty of customs and is payable by the importer; s. 18(1)(b) — tax paid by a registered supplier on the importation of goods used in the business may be deducted; s. 18(3)(e) — the supplier holds the bill of entry and the evidence of payment. The tax is owed to the Authority at the border and not to the supplier, so it waits on 2125 until the import declaration is settled.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "ZM-P-RC-SVC",
+    "name": "Imported service, reverse-charged, not recoverable",
+    "description": "A service supplied by a person outside Zambia, taxed to the recipient who cannot deduct the tax",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value Added Tax Act, s. 8(1)(b) and s. 8(5), as substituted by Act No. 27 of 2023 and in force on 1 January 2024 — the recipient of an imported service pays the tax on it where the tax was not paid in the country of exportation, the non-resident supplier has no appointed tax agent and the service is not a cross-border electronic service; s. 8(7) — the input tax corresponding to that payment is excluded from a claim, deduction or credit under s. 18. The self-charge is therefore output tax with no input offset: it lands in the cost account 6520. A cross-border electronic service is instead taxed by the non-resident supplier, who registers and charges the tax on its own invoice.",
+    "source": "practice-note-2024",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1R"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R"
+        },
+        {
+          "type": "tax",
+          "account": "6520"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "6520"
+        }
+      ]
+    },
+    "sequence": 150
+  }
+]
