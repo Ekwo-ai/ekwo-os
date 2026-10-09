@@ -1,0 +1,150 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "AZ-EDV-AYLIQ",
+  "name": "Əlavə dəyər vergisinin bəyannaməsi (aylıq)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2026-01-01",
+  "legal_reference": "Dövlət Vergi Xidmətinin 03.04.2026-cı il tarixli 2617140100317700 №-li Əmri ilə təsdiq edilmiş «Əlavə Dəyər Vergisinin bəyannaməsi» (2026-cı il forması, Hissə 1-5); Vergi Məcəlləsi, maddə 177.2 — ƏDV üzrə hesabat dövrü təqvim ayıdır. Pack bəyannamənin yalnız öz vergilərinin yazdığı sətirlərini göstərir: 301, 302, 303, 305, 308, 310, 317, 326, 327. Sətir 301.2/301-2 (kənd təsərrüfatı ticarət əlavəsi), 304, 306 (qeyri-rezident), 307 (debitor borclar), 309, 311-316, 318-324 (artırılan və azaldılan dövriyyələr, ƏDV geri al mexanizmi 319.2-319.4) və Əlavələr modelləşdirilmir — README-yə bax.",
+  "source": "vat-return-form",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Vergi Məcəlləsi, maddə 177.2 — ƏDV bəyannaməsi hesabat dövründən sonrakı ayın 20-dən gec olmayaraq təqdim edilir və vergi həmin müddətdə ödənilir (cədvəl «Vergilərin ödənilməsi və bəyannamələrin təqdim edilməsi müddətləri»: «Hesabat ayından sonrakı ayın 20-dən gec olmayaraq (20/I-XII)»). Son gün qeyri-iş gününə düşərsə, növbəti iş gününə keçir — pack bu keçidi hesablamır.",
+    "source": "filing-deadlines"
+  },
+  "boxes": [
+    {
+      "box": "301R",
+      "kind": "base",
+      "name": "Sətir 301 — ƏDV-nə 18 faiz dərəcə ilə cəlb olunan əməliyyatlar: daxil olmuş məbləğ (ƏDV nəzərə alınmadan)",
+      "sequence": 10,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 301, ikinci sütun «Daxil olmuş məbləğ (ƏDV nəzərə alınmadan)»",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "301T",
+      "kind": "tax",
+      "name": "Sətir 301 — ƏDV-nə 18 faiz dərəcə ilə cəlb olunan əməliyyatlar: ƏDV məbləği",
+      "sequence": 20,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 301, üçüncü sütun «Əlavə dəyər vergisi məbləği»",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "302R",
+      "kind": "base",
+      "name": "Sətir 302 — ƏDV-nə sıfır (0) faiz dərəcə ilə cəlb olunan əməliyyatlar (ixrac daxil)",
+      "sequence": 30,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 302",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "303R",
+      "kind": "base",
+      "name": "Sətir 303 — ƏDV-dən azad olunan əməliyyatlar",
+      "sequence": 40,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 303",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "305R",
+      "kind": "total",
+      "name": "Sətir 305 — Əməliyyatlar üzrə CƏMİ: daxil olmuş məbləğ",
+      "sequence": 50,
+      "plus": [
+        "301R",
+        "302R",
+        "303R"
+      ],
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 305 = 301 + 302 + 303 (modelləşdirilən sətirlər)",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "305T",
+      "kind": "total",
+      "name": "Sətir 305 — Əməliyyatlar üzrə CƏMİ: ƏDV məbləği",
+      "sequence": 60,
+      "plus": [
+        "301T"
+      ],
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 305, üçüncü sütun = sətir 301 + sətir 304",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "308B",
+      "kind": "base",
+      "name": "Sətir 308 — elektron qaimə-fakturalar üzrə nağdsız qaydada ödənilmiş məbləğ (ƏDV nəzərə alınmadan)",
+      "sequence": 70,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 308, birinci sütun",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "308T",
+      "kind": "tax",
+      "name": "Sətir 308 — əvəzləşdirilən ƏDV məbləği",
+      "sequence": 80,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 308, ikinci sütun",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "310B",
+      "kind": "base",
+      "name": "Sətir 310 — idxalda ƏDV-yə cəlb olunmuş mallara görə ödənilmiş məbləğ (ƏDV nəzərə alınmadan)",
+      "sequence": 90,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 310, birinci sütun",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "310T",
+      "kind": "tax",
+      "name": "Sətir 310 — idxalda ödənilmiş və əvəzləşdirilən ƏDV məbləği",
+      "sequence": 100,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 310, ikinci sütun",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "317T",
+      "kind": "total",
+      "name": "Sətir 317 — Əməliyyatlar üzrə CƏMİ: əvəzləşdirilən ƏDV",
+      "sequence": 110,
+      "plus": [
+        "308T",
+        "310T"
+      ],
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 317, ikinci sütun = sətir 308 + 309 + 310 + 312 − 313 − 315 (modelləşdirilən sətirlər)",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "326",
+      "kind": "total",
+      "name": "Sətir 326 — BÜDCƏYƏ ÖDƏNİLMƏLİDİR",
+      "sequence": 120,
+      "plus": [
+        "305T"
+      ],
+      "minus": [
+        "317T"
+      ],
+      "floor_zero": true,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 326 = 305 + 306 + 318 + 324 − 317 − 319 (modelləşdirilən sətirlər)",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "327",
+      "kind": "total",
+      "name": "Sətir 327 — BÜDCƏDƏN QAYTARILIR",
+      "sequence": 130,
+      "plus": [
+        "317T"
+      ],
+      "minus": [
+        "305T"
+      ],
+      "floor_zero": true,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 327 = 317 + 319 − 305 − 306 − 318 − 324 (modelləşdirilən sətirlər)",
+      "source": "vat-return-form"
+    }
+  ]
+}

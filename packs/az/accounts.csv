@@ -1,0 +1,156 @@
+code,parent,type,reconcilable,name,sequence
+101,,asset_fixed,false,Qeyri-maddi aktivlərin dəyəri,10
+102,,asset_fixed,false,Qeyri-maddi aktivlər üzrə yığılmış amortizasiya və qiymətdəndüşmə zərərləri,20
+103,,asset_fixed,false,Qeyri-maddi aktivlərlə bağlı məsrəflərin kapitallaşdırılması,30
+111,,asset_fixed,false,"Torpaq, tikili və avadanlıqların dəyəri",40
+112,,asset_fixed,false,"Torpaq, tikili və avadanlıqlar üzrə yığılmış amortizasiya və qiymətdəndüşmə zərərləri",50
+113,,asset_fixed,false,"Torpaq, tikili və avadanlıqlarla bağlı məsrəflərin kapitallaşdırılması",60
+121,,asset_fixed,false,İnvestisiya mülkiyyətinin dəyəri,70
+122,,asset_fixed,false,İnvestisiya mülkiyyəti üzrə yığılmış amortizasiya və qiymətdəndüşmə zərərləri,80
+123,,asset_fixed,false,İnvestisiya mülkiyyəti ilə bağlı məsrəflərin kapitallaşdırılması,90
+131,,asset_non_current,false,Bioloji aktivlərin dəyəri,100
+132,,asset_non_current,false,Bioloji aktivlər üzrə yığılmış amortizasiya və qiymətdəndüşmə zərərləri,110
+141,,asset_non_current,false,Təbii sərvətlərin dəyəri,120
+142,,asset_non_current,false,Təbii sərvətlərin tükənməsi,130
+151,,asset_non_current,false,Asılı müəssisələrə investisiyalar,140
+152,,asset_non_current,false,Birgə müəssisələrə investisiyalar,150
+153,,asset_non_current,false,Asılı və birgə müəssisələrə investisiyaların dəyərinin azalmasına görə düzəlişlər,160
+161,,asset_non_current,false,Mənfəət vergisi üzrə təxirə salınmış vergi aktivləri,170
+162,,asset_non_current,false,Digər təxirə salınmış vergi aktivləri,180
+171,,asset_non_current,false,Alıcıların və sifarişçilərin uzunmüddətli debitor borcları,190
+172,,asset_non_current,false,Törəmə müəssisələrin uzunmüddətli debitor borcları,200
+173,,asset_non_current,false,Əsas idarəetmə heyətinin uzunmüddətli debitor borcları,210
+174,,asset_non_current,false,İcarə üzrə uzunmüddətli debitor borcları,220
+175,,asset_non_current,false,Tikinti müqavilələri üzrə uzunmüddətli debitor borcları,230
+176,,asset_non_current,false,Faizlər üzrə uzunmüddətli debitor borcları,240
+177,,asset_non_current,false,Digər uzunmüddətli debitor borcları,250
+181,,asset_non_current,false,Ödənişə qədər saxlanılan uzunmüddətli investisiyalar,260
+182,,asset_non_current,false,Verilmiş uzunmüddətli borclar,270
+183,,asset_non_current,false,Digər uzunmüddətli investisiyalar,280
+184,,asset_non_current,false,Sair uzunmüddətli maliyyə aktivlərinin dəyərinin azalmasına görə düzəlişlər,290
+191,,asset_non_current,false,Gələcək hesabat dövrlərinin xərcləri,300
+192,,asset_non_current,false,Verilmiş uzunmüddətli avanslar,310
+193,,asset_non_current,false,Digər uzunmüddətli aktivlər,320
+201,,asset_current,false,Material ehtiyatları,330
+202,,asset_current,false,İstehsalat məsrəfləri,340
+203,,asset_current,false,Tikinti müqavilələri üzrə məsrəflər,350
+204,,asset_current,false,Hazır məhsul,360
+205,,asset_current,false,Mallar,370
+206,,asset_current,false,Satış məqsədi ilə saxlanılan digər aktivlər,380
+207,,asset_current,false,Digər ehtiyatlar,390
+208,,asset_current,false,Ehtiyatların dəyərinin azalmasına görə düzəlişlər,400
+211,,asset_receivable,true,Alıcıların və sifarişçilərin qısamüddətli debitor borcları,410
+212,,asset_current,false,Törəmə müəssisələrin qısamüddətli debitor borcları,420
+213,,asset_current,false,Əsas idarəetmə heyətinin qısamüddətli debitor borcları,430
+214,,asset_current,false,İcarə üzrə qısamüddətli debitor borcları,440
+215,,asset_current,false,Tikinti müqavilələri üzrə qısamüddətli debitor borcları,450
+216,,asset_current,false,Faizlər üzrə qısamüddətli debitor borcları,460
+217,,asset_current,false,Digər qısamüddətli debitor borcları,470
+218,,asset_current,false,Şübhəli borclar üzrə düzəlişlər,480
+221,,asset_cash,false,Kassa,490
+222,,asset_current,false,Yolda olan pul köçürmələri,500
+223,,asset_cash,false,Bank hesablaşma hesabları,510
+224,,asset_cash,false,Tələblərə əsasən açılan digər bank hesabları,520
+225,,asset_cash,false,Pul vəsaitlərinin ekvivalentləri,530
+226,,asset_current,false,ƏDV sub-uçot hesabı,540
+231,,asset_current,false,Satış məqsədi ilə saxlanılan qısamüddətli investisiyalar,550
+232,,asset_current,false,Ödənişə qədər saxlanılan qısamüddətli investisiyalar,560
+233,,asset_current,false,Verilmiş qısamüddətli borclar,570
+234,,asset_current,false,Digər qısamüddətli investisiyalar,580
+235,,asset_current,false,Sair qısamüddətli maliyyə aktivlərinin dəyərinin azalmasına görə düzəlişlər,590
+241,,asset_current,true,Əvəzləşdirilən vergilər,600
+2411,241,asset_current,false,Əvəzləşdirilən ƏDV — yerli alışlar,610
+2412,241,asset_current,false,Əvəzləşdirilən ƏDV — idxal,620
+2413,241,asset_current,false,Ödənişi gözlənilən əvəzləşdirilən ƏDV,630
+242,,asset_prepayments,false,Gələcək hesabat dövrünün xərcləri,640
+243,,asset_prepayments,false,Verilmiş qısamüddətli avanslar,650
+244,,asset_current,false,Təhtəlhesab məbləğlər,660
+245,,asset_current,false,Digər qısamüddətli aktivlər,670
+301,,equity,false,Nizamnamə kapitalı,680
+302,,equity,false,Nizamnamə kapitalın ödənilməmiş hissəsi,690
+311,,equity,false,Emissiya gəliri,700
+321,,equity,false,Geri alınmış kapital,710
+331,,equity,false,Yenidən qiymətləndirilmə üzrə ehtiyat,720
+332,,equity,false,Məzənnə fərqləri üzrə ehtiyat,730
+333,,equity,false,Qanunvericilik üzrə ehtiyat,740
+334,,equity,false,Nizamnamə üzrə ehtiyat,750
+335,,equity,false,Digər ehtiyatlar,760
+341,,equity,false,Hesabat dövründə xalis mənfəət (zərər),770
+342,,equity,false,Mühasibat uçotu siyasətində dəyişikliklərlə bağlı düzəlişlər,780
+343,,equity_retained,false,Keçmiş illər üzrə bölüşdürülməmiş mənfəət,790
+344,,equity,false,Elan edilmiş dividentlər,800
+401,,liability_non_current,false,Uzunmüddətli bank kreditləri,810
+402,,liability_non_current,false,İşçilər üçün uzunmüddətli bank kreditləri,820
+403,,liability_non_current,false,Uzunmüddətli konvertasiya olunan istiqrazlar,830
+404,,liability_non_current,false,Uzunmüddətli borclar,840
+405,,liability_non_current,false,Geri alınan məhdud tədavül müddətli imtiyazlı səhmlər,850
+406,,liability_non_current,false,Maliyyə icarəsi üzrə uzunmüddətli öhdəliklər,860
+407,,liability_non_current,false,Törəmə müəssisələrə uzunmüddətli faiz xərcləri yaradan öhdəliklər,870
+408,,liability_non_current,false,Digər uzunmüddətli faiz xərcləri yaradan öhdəliklər,880
+411,,liability_non_current,false,İşdən azad olma ilə bağlı uzunmüddətli müavinətlər,890
+412,,liability_non_current,false,Uzunmüddətli zəmanət öhdəlikləri,900
+413,,liability_non_current,false,Uzunmüddətli hüquqi öhdəliklər,910
+414,,liability_non_current,false,Digər uzunmüddətli qiymətləndirilmiş öhdəliklər,920
+414-1,414,liability_non_current,false,Sığorta müqavilələri üzrə uzunmüddətli öhdəliklər,930
+421,,liability_non_current,false,Mənfəət vergisi üzrə təxirə salınmış vergi öhdəlikləri,940
+422,,liability_non_current,false,Digər təxirə salınmış vergi öhdəlikləri,950
+431,,liability_non_current,false,Malsatan və podratçılara uzunmüddətli kreditor borcları,960
+432,,liability_non_current,false,Törəmə müəssisələrə uzunmüddətli kreditor borcları,970
+433,,liability_non_current,false,Tikinti müqavilələri üzrə uzunmüddətli kreditor borcları,980
+434,,liability_non_current,false,Faizlər üzrə uzunmüddətli kreditor borcları,990
+435,,liability_non_current,false,Digər uzunmüddətli kreditor borcları,1000
+441,,liability_non_current,false,Uzunmüddətli pensiya öhdəlikləri,1010
+442,,liability_non_current,false,Gələcək hesabat dövrlərinin gəlirləri,1020
+443,,liability_non_current,false,Alınmış uzunmüddətli avanslar,1030
+444,,liability_non_current,false,Uzunmüddətli məqsədli maliyyələşmələr,1040
+445,,liability_non_current,false,Digər uzunmüddətli öhdəliklər,1050
+501,,liability_current,false,Qısamüddətli bank kreditləri,1060
+501-1,501,liability_current,false,Bank overdraftı,1070
+502,,liability_current,false,İşçilər üçün qısamüddətli bank kreditləri,1080
+503,,liability_current,false,Qısamüddətli konvertasiya olunan istiqrazlar,1090
+504,,liability_current,false,Qısamüddətli borclar,1100
+505,,liability_current,false,Geri alınan məhdud tədavül müddətli imtiyazlı səhmlər,1110
+506,,liability_current,false,Törəmə müəssisələrə qısamüddətli faiz xərcləri yaradan öhdəliklər,1120
+507,,liability_current,false,Digər qısamüddətli faiz xərcləri yaradan öhdəliklər,1130
+511,,liability_current,false,İşdən azad olma ilə bağlı qısamüddətli müavinətlər,1140
+512,,liability_current,false,Qısamüddətli zəmanət öhdəlikləri,1150
+513,,liability_current,false,Qısamüddətli hüquqi öhdəliklər,1160
+514,,liability_current,false,Mənfəətdə iştirak planı və müavinət planları,1170
+515,,liability_current,false,Digər qısamüddətli qiymətləndirilmiş öhdəliklər,1180
+515-1,515,liability_current,false,Sığorta müqavilələri üzrə qısamüddətli öhdəliklər,1190
+521,,liability_current,true,Vergi öhdəlikləri,1200
+5211,521,liability_current,false,ƏDV üzrə hesablanmış vergi,1210
+5212,521,liability_current,false,Ödənişi gözlənilən hesablanmış ƏDV,1220
+522,,liability_current,false,Sosial sığorta və təminat üzrə öhdəliklər,1230
+523,,liability_current,false,Digər məcburi ödənişlər üzrə öhdəliklər,1240
+531,,liability_payable,true,Malsatan və podratçılara qısamüddətli kreditor borcları,1250
+532,,liability_current,false,Törəmə müəssisələrə qısamüddətli kreditor borcları,1260
+533,,liability_current,false,Əməyin ödənişi üzrə işçi heyətinə olan borclar,1270
+534,,liability_current,false,Dividendlərin ödənilməsi üzrə təsisçilərə kreditor borcları,1280
+535,,liability_current,false,İcarə üzrə qısamüddətli kreditor borcları,1290
+536,,liability_current,false,Tikinti müqavilələri üzrə qısamüddətli kreditor borcları,1300
+537,,liability_current,false,Faizlər üzrə qısamüddətli kreditor borcları,1310
+538,,liability_current,false,Digər qısamüddətli kreditor borcları,1320
+541,,liability_current,false,Qısamüddətli pensiya öhdəlikləri,1330
+542,,liability_current,false,Gələcək hesabat dövrünün gəlirləri,1340
+543,,liability_current,false,Alınmış qısamüddətli avanslar,1350
+544,,liability_current,false,Qısamüddətli məqsədli maliyyələşmələr,1360
+545,,liability_current,false,Digər qısamüddətli öhdəliklər,1370
+601,,income,false,Satış,1380
+602,,income,false,Satılmış malların qaytarılması və ucuzlaşdırılması,1390
+603,,income,false,Verilmiş güzəştlər,1400
+611,,income_other,false,Sair əməliyyat gəlirləri,1410
+621,,income_other,false,Fəaliyyətin dayandırılmasından yaranan gəlirlər,1420
+631,,income_other,false,Maliyyə gəlirləri,1430
+641,,income_other,false,Fövqəladə gəlirlər,1440
+701,,expense_direct_cost,false,Satışın maya dəyəri üzrə xərclər,1450
+711,,expense,false,Kommersiya xərcləri,1460
+721,,expense,false,İnzibati xərclər,1470
+731,,expense,false,Sair əməliyyat xərcləri,1480
+741,,expense,false,Fəaliyyətin dayandırılmasından yaranan xərclər,1490
+751,,expense,false,Maliyyə xərcləri,1500
+761,,expense,false,Fövqəladə xərclər,1510
+801,,equity,false,Ümumi mənfəət,1520
+811,,income_other,false,Asılı və birgə müəssisələrin mənfəətlərində pay,1530
+901,,expense,false,Cari mənfəət vergisi üzrə xərclər,1540
+902,,expense,false,Təxirə salınmış mənfəət vergisi üzrə xərclər,1550

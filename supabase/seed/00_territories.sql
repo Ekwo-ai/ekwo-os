@@ -2067,3 +2067,27 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Azerbaijan — outside the common system of VAT
+--
+-- Directive 2006/112/EC, article 5(2): the common system of VAT applies in
+-- the territory of the Community as defined by the Treaties, and Azerbaijan
+-- is not a Member State. It levies its own value added tax, Əlavə Dəyər
+-- Vergisi (ƏDV), under the Tax Code of the Republic of Azerbaijan, article
+-- 161, at a standard rate of 18%, with a zero rate in article 165 and
+-- exemptions in article 164.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('AZ', 'iso_3166_1', 'Azerbaijan', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2) — the common system of VAT applies in the territory of the Community as defined by the Treaties; Azerbaijan is not a Member State. Azerbaijan levies its own value added tax, Əlavə Dəyər Vergisi (ƏDV), under the Tax Code of the Republic of Azerbaijan, article 161, at a standard rate of 18%, with a zero rate in article 165 and exemptions in article 164, unrelated to the Union''s common system.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

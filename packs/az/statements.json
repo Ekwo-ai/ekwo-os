@@ -1,0 +1,653 @@
+{
+  "statements": [
+    {
+      "code": "AZ-BS",
+      "kind": "balance_sheet",
+      "framework": "AZ-CHART",
+      "name": "Maliyyə vəziyyəti haqqında hesabat (balans)",
+      "legal_reference": "Azərbaycan Respublikasının «Mühasibat uçotu haqqında» Qanunu, maddə 6 — maliyyə hesabatları MHBS, KOS üçün MHBS və ya (mikro və kiçik sahibkarlıq subyektləri üçün) sadələşdirilmiş milli qaydalara əsasən tərtib edilir; qanun balansın vahid məcburi sətirlərini müəyyən etmir. Bu pack MHBS-nin maliyyə vəziyyəti haqqında hesabatının minimal qruplaşdırmasından və hesablar planının iki rəqəmli qruplarından (10-19, 20-24, 30-34, 40-44, 50-54) istifadə edir.",
+      "source": "accounting-law",
+      "lines": [
+        {
+          "code": "A-NC-INT",
+          "parent": "A-NC",
+          "name": "Qeyri-maddi aktivlər",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "10",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "A-NC-PPE",
+          "parent": "A-NC",
+          "name": "Torpaq, tikili və avadanlıqlar",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "11",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "A-NC-OTH",
+          "parent": "A-NC",
+          "name": "Digər uzunmüddətli aktivlər",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "12",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "13",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "14",
+              "sequence": 30
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "15",
+              "sequence": 40
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "16",
+              "sequence": 50
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "17",
+              "sequence": 60
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "18",
+              "sequence": 70
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "19",
+              "sequence": 80
+            }
+          ]
+        },
+        {
+          "code": "A-NC",
+          "name": "Uzunmüddətli aktivlər",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "A-NC-INT",
+            "A-NC-PPE",
+            "A-NC-OTH"
+          ]
+        },
+        {
+          "code": "A-C-INV",
+          "parent": "A-C",
+          "name": "Ehtiyatlar",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "20",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "A-C-REC",
+          "parent": "A-C",
+          "name": "Qısamüddətli debitor borcları",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "21",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "A-C-CASH",
+          "parent": "A-C",
+          "name": "Pul vəsaitləri və onların ekvivalentləri",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "22",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "A-C-OTH",
+          "parent": "A-C",
+          "name": "Sair qısamüddətli maliyyə aktivləri və sair qısamüddətli aktivlər",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "23",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "24",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "A-C",
+          "name": "Qısamüddətli aktivlər",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "A-C-INV",
+            "A-C-REC",
+            "A-C-CASH",
+            "A-C-OTH"
+          ]
+        },
+        {
+          "code": "A-TOT",
+          "name": "AKTİVLƏR — CƏMİ",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "A-NC",
+            "A-C"
+          ]
+        },
+        {
+          "code": "E-CAP",
+          "parent": "E-TOT",
+          "name": "Ödənilmiş nizamnamə kapitalı, emissiya gəliri və geri alınmış kapital",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "30",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "31",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "32",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "E-RES",
+          "parent": "E-TOT",
+          "name": "Kapital ehtiyatları",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "33",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "E-RET",
+          "parent": "E-TOT",
+          "name": "Bölüşdürülməmiş mənfəət (keçmiş illər, düzəlişlər, dividentlər)",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "34",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "E-RESULT",
+          "parent": "E-TOT",
+          "name": "Hesabat dövrünün nəticəsi (gəlir və xərc hesabları)",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "60",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "61",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "62",
+              "sequence": 30
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "63",
+              "sequence": 40
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "64",
+              "sequence": 50
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "70",
+              "sequence": 60
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "71",
+              "sequence": 70
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "72",
+              "sequence": 80
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "73",
+              "sequence": 90
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "74",
+              "sequence": 100
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "75",
+              "sequence": 110
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "76",
+              "sequence": 120
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "80",
+              "sequence": 130
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "81",
+              "sequence": 140
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "90",
+              "sequence": 150
+            }
+          ]
+        },
+        {
+          "code": "E-TOT",
+          "name": "KAPİTAL — CƏMİ",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "E-CAP",
+            "E-RES",
+            "E-RET",
+            "E-RESULT"
+          ]
+        },
+        {
+          "code": "L-NC",
+          "parent": "L-TOT",
+          "name": "Uzunmüddətli öhdəliklər",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "40",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "41",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "42",
+              "sequence": 30
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "43",
+              "sequence": 40
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "44",
+              "sequence": 50
+            }
+          ]
+        },
+        {
+          "code": "L-C-DEBT",
+          "parent": "L-C",
+          "name": "Qısamüddətli faiz xərcləri yaradan öhdəliklər və qiymətləndirilmiş öhdəliklər",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "50",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "51",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "L-C-TAX",
+          "parent": "L-C",
+          "name": "Vergi və sair məcburi ödənişlər üzrə öhdəliklər",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "52",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "L-C-PAY",
+          "parent": "L-C",
+          "name": "Qısamüddətli kreditor borcları",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "53",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "L-C-OTH",
+          "parent": "L-C",
+          "name": "Sair qısamüddətli öhdəliklər",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "54",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "L-C",
+          "name": "Qısamüddətli öhdəliklər",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "L-C-DEBT",
+            "L-C-TAX",
+            "L-C-PAY",
+            "L-C-OTH"
+          ]
+        },
+        {
+          "code": "L-TOT",
+          "name": "ÖHDƏLİKLƏR — CƏMİ",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "L-NC",
+            "L-C"
+          ]
+        },
+        {
+          "code": "EL-TOT",
+          "name": "KAPİTAL VƏ ÖHDƏLİKLƏR — CƏMİ",
+          "sequence": 230,
+          "is_total": true,
+          "plus": [
+            "E-TOT",
+            "L-TOT"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "AZ-IS",
+      "kind": "income_statement",
+      "framework": "AZ-CHART",
+      "name": "Mənfəət və zərər haqqında hesabat",
+      "legal_reference": "Azərbaycan Respublikasının «Mühasibat uçotu haqqında» Qanunu, maddə 6 — qanun mənfəət və zərər haqqında hesabatın vahid məcburi sətirlərini müəyyən etmir; bu pack hesablar planının 6-7-ci bölmələrini (gəlirlər, xərclər) və 90-cı qrupunu (mənfəət vergisi) xərclərin funksiyasına görə qruplaşdırır.",
+      "source": "accounting-law",
+      "lines": [
+        {
+          "code": "REV",
+          "name": "Əsas əməliyyat gəliri (satış, qaytarılmalar və güzəştlər)",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "60",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "COST",
+          "name": "Satışın maya dəyəri",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "70",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "GROSS",
+          "name": "Ümumi mənfəət",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "REV"
+          ],
+          "minus": [
+            "COST"
+          ]
+        },
+        {
+          "code": "OTH-INC",
+          "name": "Sair əməliyyat gəlirləri və digər gəlirlər",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "61",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "62",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "64",
+              "sequence": 30
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "81",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "SELL",
+          "name": "Kommersiya xərcləri",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "71",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "ADMIN",
+          "name": "İnzibati xərclər",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "72",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "OTH-EXP",
+          "name": "Sair əməliyyat xərcləri və digər xərclər",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "73",
+              "sequence": 10
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "74",
+              "sequence": 20
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "76",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "FIN-INC",
+          "name": "Maliyyə gəlirləri",
+          "sequence": 80,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "63",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "FIN-EXP",
+          "name": "Maliyyə xərcləri",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "75",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PBT",
+          "name": "Mənfəət vergisindən əvvəl mənfəət",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "GROSS",
+            "OTH-INC",
+            "FIN-INC"
+          ],
+          "minus": [
+            "SELL",
+            "ADMIN",
+            "OTH-EXP",
+            "FIN-EXP"
+          ]
+        },
+        {
+          "code": "TAX",
+          "name": "Mənfəət vergisi",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "90",
+              "sequence": 10
+            }
+          ]
+        },
+        {
+          "code": "PROFIT",
+          "name": "Hesabat dövrünün xalis mənfəəti (zərəri)",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "PBT"
+          ],
+          "minus": [
+            "TAX"
+          ]
+        }
+      ]
+    }
+  ]
+}

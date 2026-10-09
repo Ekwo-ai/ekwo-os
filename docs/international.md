@@ -6046,3 +6046,69 @@ and the online cash registers (e-HDM) are outside the core.
 their own lines (8.1 and 19.1) and subtracts them in the totals. The pack posts a
 credit note into those lines with a positive sign and subtracts them in the total
 boxes `16A`, `16B` and `21A`, so the return reads like the paper form.
+
+## From Azerbaijan
+
+`packs/az` is a community pack (seed 129) in Azerbaijani, with a working
+English translation. The chart is the three-digit national chart; the return is
+the monthly ƏDV form of 2026 (lines 301, 302, 303, 305, 308, 310, 317, 326,
+327), due on the 20th of the following month. What follows is what the core
+could not carry.
+
+**A payment-date VAT, for sales and for purchases.** In Azerbaijan the time of
+a taxable operation is the time of payment: output VAT falls due when the
+customer pays, and input VAT is deductible when the buyer has paid the supplier
+(and the VAT into the supplier's deposit account, below). The pack declares
+`tax_point: payment_date` and puts `cash_basis` on the standard-rate sale and
+purchase, with 5212 and 2413 as the waiting accounts, the mechanism the Mexico
+pack uses. The same law treats zero-rated and exempt sales as taxable
+operations on payment; the pack books their base on the invoice date because a
+tax with no VAT to wait for has no waiting account. The "amount received"
+column of the form for lines 302 and 303 therefore differs from the pack's box
+whenever a zero-rate or exempt invoice is paid in a later month than it was
+issued.
+
+**The VAT deposit account (ƏDV depozit hesabı, Tax Code art. 175) is a
+destination rule the engine cannot hold.** The buyer's deduction depends on the
+VAT part of the payment having been transferred, within one business day, to
+the *seller's* deposit account, and the price to the seller's bank account.
+`post_payment()` and `reconcile()` know one payment to one counterparty; there
+is no way to say that a payment is split by destination or to refuse a
+deduction when the VAT part went elsewhere. The pack deducts when the invoice
+is paid and says so in its README. Account 226 "ƏDV sub-uçot hesabı" is in the
+chart for the holder's own balance and is deliberately not reconcilable: it is
+a balance held with the tax authority, not a bank account a statement matches.
+
+**A consumer-side refund is not a tax.** "ƏDV geri al" (art. 165.5, extended
+from 1 January 2026 to hairdressers, beauty salons and cosmetic centres)
+returns 17.5 % of the VAT paid by card and 5 % of the VAT paid in cash to the
+consumer. It moves money between the State and an individual, not between two
+parties of a sale; the seller reports it on lines 319.2–319.4 of the return.
+The pack creates no tax for it and does not model those lines.
+
+**Clearance and the electronic invoice.** The electronic tax invoice is issued
+on, and registered by, the State Tax Service's system, and the buyer deducts
+only on an invoice received there. Like the Georgian and Kazakh systems, it is a
+state-clearance network that the core's `einvoicing` section describes with
+null scheme fields. From 2026 a recurring service needs one invoice per
+calendar month (art. 71-1.1.3-2, known here from secondary sources only). Neither
+is checked by the engine.
+
+**A return with three columns per line.** Lines 301 to 305 of the form carry the
+value of supplies, the amount received and the VAT, side by side; lines 308 to
+317 the amount paid and the VAT. The pack's boxes each carry one number, so the
+"amount received" and "amount paid" columns are kept and the "value of supplies"
+column is not.
+
+**The chart's legal standing.** The Ministry of Finance's page lists the
+commercial National Accounting Standards as repealed, and the Law on Accounting
+requires IFRS or IFRS for SMEs without a numbered chart. The pack carries the
+published three-digit chart as the one practice still uses and flags the point
+for a local accountant.
+
+**A form version.** The form read is the one approved on 3 April 2026. The line
+numbers 301–327 are those of the 2020 order as well, as far as an explanatory
+article shows, but earlier versions of the form were not compared.
+
+**Seed number.** The manifest takes 129 as assigned; the schema allows 100 to
+899 for packs after 89.

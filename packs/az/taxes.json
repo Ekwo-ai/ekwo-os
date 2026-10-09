@@ -1,0 +1,227 @@
+[
+  {
+    "code": "AZ-S-18",
+    "name": "ƏDV 18 % — Azərbaycan ərazisində mal, iş və xidmətlərin təqdim edilməsi (satış)",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "5212",
+    "legal_reference": "Vergi Məcəlləsi, maddə 161 — vergi tutulan əməliyyatın və vergi tutulan idxalın dəyərinə ƏDV 18 faiz dərəcə ilə tətbiq edilir (ƏDV kitabçası, «ƏDV-nin dərəcəsi neçə faizdir?»). Bəyannamə: sətir 301 (18 faiz dərəcə ilə cəlb olunan əməliyyatlar) — daxil olmuş məbləğ (ƏDV nəzərə alınmadan) və ƏDV məbləği. Vergi tutulan əməliyyatın vaxtı ödəmənin aparıldığı vaxtdır (ƏDV kitabçası, «Vergi tutulan əməliyyatın aparıldığı vaxt»): faktura verildikdə ƏDV 5212 hesabında gözləyir, ödəniş alındıqda 5211 hesabına keçir və bəyannamənin həmin ayında görünür. Pack-in qüvvəsi 2026-01-01-dən götürülür; daha əvvəlki tarixçə araşdırılmayıb.",
+    "source": "vat-booklet",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "301R"
+        },
+        {
+          "type": "tax",
+          "account": "5211",
+          "box": "301T"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "301R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "5211",
+          "box": "301T",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AZ-S-0",
+    "name": "ƏDV 0 % — beynəlxalq və tranzit daşımalar və 165-ci maddədə sadalanan digər əməliyyatlar (satış)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Vergi Məcəlləsi, maddə 165.1.4 — beynəlxalq poçt xidmətləri istisna olmaqla, beynəlxalq və tranzit yük və sərnişin daşınması, tranzit yük daşınması ilə bilavasitə bağlı yük aşırılma xidməti, beynəlxalq və tranzit uçuşlarla bağlı işlər və xidmətlər, ekspeditor xidmətləri sıfır (0) dərəcəsi ilə tutulur; maddə 165.1 — maddənin digər bəndləri (məsələn 165.1.1, 165.1.2, 165.1.11) də bu vergi ilə modelləşdirilir. Sıfır dərəcə azadolma deyil, vergi tutulan əməliyyatdır (maddə 164 ilə 165 fərqi). Bəyannamə: sətir 302. Pack bu vergi üçün bazanı faktura tarixində göstərir.",
+    "source": "tax-code-extract",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "302R"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "302R",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AZ-S-EXPORT",
+    "name": "ƏDV 0 % — malların ixracı (satış)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Vergi Məcəlləsi, maddə 165.1.3 — malların və 168.1.5-ci maddədə göstərilmiş xidmətlərin ixracı ƏDV-yə sıfır (0) dərəcə ilə cəlb olunur; maddə 164.1 — azadolmalar ixrac əməliyyatlarına şamil edilmir. Bəyannamə: sətir 302 (ƏDV-yə sıfır dərəcə ilə cəlb olunan əməliyyatlar). Pack bu vergi üçün bazanı faktura tarixində göstərir.",
+    "source": "tax-code-extract",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "302R"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "302R",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AZ-S-EXEMPT",
+    "name": "ƏDV-dən azad — ödənişli təhsil xidmətləri (satış)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Vergi Məcəlləsi, maddə 164.1 — ödənişli təhsil xidmətlərinin göstərilməsi (digər fəaliyyətləri ilə bağlı xidmətlər istisna olmaqla) ƏDV-dən azaddır (ƏDV kitabçası, «ƏDV-dən azadolma halları»); maddə 164 digər azadolmaları da sadalayır — pack bu vergi ilə yalnız ən çox rast gəlinən nümunəni göstərir, istənilən 164-cü maddə azadolması üçün başqa kod əlavə edilməlidir. Bəyannamə: sətir 303.",
+    "source": "vat-booklet",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "303R"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "303R",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AZ-P-18",
+    "name": "ƏDV 18 % — yerli alış (elektron qaimə-faktura üzrə əvəzləşdirmə)",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "cash_basis": true,
+    "cash_basis_transition_account": "2413",
+    "legal_reference": "Vergi Məcəlləsi, maddə 175.1 — ödənilmiş ƏDV yalnız alınmış elektron qaimə-fakturaya əsasən, malların (işlərin, xidmətlərin) dəyəri alıcının bank hesabından təqdim edənin hesabına nağdsız köçürüldükdə və ƏDV məbləği bir iş günü ərzində satıcının ƏDV depozit hesabına ödənildikdə əvəzləşdirilir (ƏDV kitabçası, «Malların alışı zamanı ödənilmiş ƏDV məbləğinin əvəzləşdirilməsi şərtləri»). Bəyannamə: sətir 308 (elektron qaimə-fakturalar üzrə nağdsız ödənilmiş məbləğ) — ƏDV nəzərə alınmadan ödənilmiş məbləğ və ƏDV məbləği. Əvəzləşdirmə alıcının ödənişi ilə ayın hesabına düşür: faktura 2413 hesabında gözləyir, ödəniş zamanı 2411 hesabına keçir. Pack depozit hesabına ödənişi yoxlaya bilmir — README-yə bax.",
+    "source": "vat-booklet",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "308B"
+        },
+        {
+          "type": "tax",
+          "account": "2411",
+          "box": "308T"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "308B",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2411",
+          "box": "308T",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AZ-P-IMPORT",
+    "name": "ƏDV 18 % — malların idxalı (gömrük bəyannaməsi)",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Vergi Məcəlləsi, maddə 161 — vergi tutulan idxalın dəyərinə ƏDV 18 faiz dərəcə ilə tətbiq edilir; idxalda ƏDV-nin ödənildiyini göstərən sənədlər (yük gömrük bəyannaməsi) üzrə əvəzləşdirmə (ƏDV kitabçası, «Vergi tutulan dövriyyədən büdcəyə ödənilməli ƏDV»). Bəyannamə: sətir 310 (idxalda ƏDV-yə cəlb olunmuş mallara görə ödənilmiş məbləğ; təsnifat Əlavə 1 ilə).",
+    "source": "vat-booklet",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "310B"
+        },
+        {
+          "type": "tax",
+          "account": "2412",
+          "box": "310T"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "310B",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2412",
+          "box": "310T",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "AZ-P-EXEMPT",
+    "name": "ƏDV-dən azad alış (ƏDV tutulmayan əməliyyat)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Vergi Məcəlləsi, maddə 164.1 — ƏDV-dən azad edilən malların, işlərin və xidmətlərin alışında ƏDV ödənilmir və əvəzləşdirilmir; bəyannamədə ayrıca sətir yoxdur.",
+    "source": "vat-booklet",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": null
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": null
+        }
+      ]
+    }
+  }
+]

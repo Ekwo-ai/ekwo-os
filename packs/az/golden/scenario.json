@@ -1,0 +1,361 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Azərbaycanda ƏDV ödəyicisi olan ticarət və xidmət şirkətinin ili, ƏDV-ni hər ay ödəmə vaxtı ilə bəyan edir",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "2026-cı il",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    }
+  ],
+  "statements": [
+    "AZ-BS",
+    "AZ-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "mushteri-yerli",
+      "name": "Xəzər Tikinti MMC",
+      "type": "customer",
+      "country": "AZ"
+    },
+    {
+      "ref": "mushteri-ixrac",
+      "name": "Kaspian Trade Ltd",
+      "type": "customer",
+      "country": "GE"
+    },
+    {
+      "ref": "mushteri-neqliyyat",
+      "name": "Şərq Logistika MMC",
+      "type": "customer",
+      "country": "AZ"
+    },
+    {
+      "ref": "mushteri-tehsil",
+      "name": "Bilik Təlim Mərkəzi MMC",
+      "type": "customer",
+      "country": "AZ"
+    },
+    {
+      "ref": "techizatci",
+      "name": "Abşeron Topdan Satış MMC",
+      "type": "supplier",
+      "country": "AZ"
+    },
+    {
+      "ref": "xidmet-techizatci",
+      "name": "Bakı Konsaltinq MMC",
+      "type": "supplier",
+      "country": "AZ"
+    },
+    {
+      "ref": "gomruk-agenti",
+      "name": "Sərhəd Gömrük Agentliyi MMC",
+      "type": "supplier",
+      "country": "AZ"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "mushteri-yerli",
+      "date": "2026-01-12",
+      "why": "Yerli müştəriyə 18 % ƏDV ilə mal satışı, eyni ayda tam ödənilib: ƏDV 5212 hesabında gözləyir və ödənişlə yanvarın 301 sətrinə düşür.",
+      "lines": [
+        {
+          "name": "Tikinti materialları",
+          "quantity": 10,
+          "unit_price": 5000,
+          "tax": "AZ-S-18",
+          "account": "601"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "mushteri-yerli",
+      "date": "2026-01-20",
+      "why": "Fevralda yarısı ödənilən xidmət: bazanın və ƏDV-nin yalnız yarısı və fevralda (yanvarda yox) bəyan edilir — ödəmə vaxtı qaydası.",
+      "lines": [
+        {
+          "name": "Quraşdırma xidməti",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "AZ-S-18",
+          "account": "601"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "mushteri-ixrac",
+      "date": "2026-02-10",
+      "why": "Mal ixracı, maddə 165.1.3 üzrə 0 %: sətir 302, ƏDV yoxdur.",
+      "lines": [
+        {
+          "name": "İxrac olunan mallar",
+          "quantity": 8,
+          "unit_price": 5000,
+          "tax": "AZ-S-EXPORT",
+          "account": "601"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "mushteri-tehsil",
+      "date": "2026-03-03",
+      "why": "Ödənişli təhsil xidməti, maddə 164 üzrə ƏDV-dən azad: sətir 303.",
+      "lines": [
+        {
+          "name": "Ödənişli təhsil xidməti",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "AZ-S-EXEMPT",
+          "account": "601"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_credit_note",
+      "contact": "mushteri-ixrac",
+      "date": "2026-03-20",
+      "why": "V3-ün bir hissəsinin qaytarılması: kredit-nota sətir 302-ni eyni ayda azaldır və müştəri lehinə qalıq yaradır.",
+      "lines": [
+        {
+          "name": "İxrac olunmuş malların qaytarılması",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "AZ-S-EXPORT",
+          "account": "602"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "mushteri-yerli",
+      "date": "2026-03-08",
+      "why": "İl ərzində ödənilməyən 18 %-li satış: ƏDV 5212 hesabında qalır və bəyan edilmir.",
+      "lines": [
+        {
+          "name": "Tikinti materialları",
+          "quantity": 5,
+          "unit_price": 5000,
+          "tax": "AZ-S-18",
+          "account": "601"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "mushteri-neqliyyat",
+      "date": "2026-03-12",
+      "why": "Beynəlxalq yük daşınması, maddə 165.1.4 üzrə 0 %: sətir 302.",
+      "lines": [
+        {
+          "name": "Beynəlxalq yük daşınması",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "AZ-S-0",
+          "account": "601"
+        }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "techizatci",
+      "date": "2026-01-08",
+      "why": "Yerli alış 18 % ƏDV ilə, yanvarda tam ödənilib: ƏDV ödənişlə 2413-dən 2411-ə keçir və yanvarın 308 sətrində əvəzləşdirilir.",
+      "lines": [
+        {
+          "name": "Satış üçün mallar",
+          "quantity": 20,
+          "unit_price": 1500,
+          "tax": "AZ-P-18",
+          "account": "701"
+        }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "xidmet-techizatci",
+      "date": "2026-02-05",
+      "why": "Xidmət alışı, yarısı martda ödənilib: ƏDV-nin yalnız yarısı və martda əvəzləşdirilir.",
+      "lines": [
+        {
+          "name": "Konsaltinq xidməti",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "AZ-P-18",
+          "account": "721"
+        }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "gomruk-agenti",
+      "date": "2026-02-12",
+      "why": "Mal idxalı: gömrükdə ödənilən ƏDV sənəd tarixində sətir 310-a düşür (nağd əsas tətbiq edilmir).",
+      "lines": [
+        {
+          "name": "İdxal olunan mallar",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "AZ-P-IMPORT",
+          "account": "701"
+        }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "techizatci",
+      "date": "2026-03-10",
+      "why": "ƏDV-dən azad alış: ƏDV yoxdur, bəyannamədə sətir yoxdur.",
+      "lines": [
+        {
+          "name": "Dərslik komplektləri",
+          "quantity": 4,
+          "unit_price": 500,
+          "tax": "AZ-P-EXEMPT",
+          "account": "721"
+        }
+      ]
+    },
+    {
+      "ref": "C5",
+      "type": "purchase_invoice",
+      "contact": "xidmet-techizatci",
+      "date": "2026-03-15",
+      "why": "Ödənilməyən 18 %-li alış: ƏDV 2413-də qalır və əvəzləşdirilmir (ödəniş yoxdur).",
+      "lines": [
+        {
+          "name": "Konsaltinq xidməti",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "AZ-P-18",
+          "account": "721"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-01-28",
+      "amount": 59000,
+      "contact": "mushteri-yerli",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "V1-in tam ödənişi: ƏDV yanvarda hesablanır."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-15",
+      "amount": 17700,
+      "contact": "mushteri-yerli",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "V2-nin yarısının ödənişi: ƏDV-nin yarısı fevralda hesablanır."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-02-28",
+      "amount": 40000,
+      "contact": "mushteri-ixrac",
+      "journal": "BNK",
+      "match": "V3",
+      "why": "İxrac ödənişi."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-03-20",
+      "amount": 8000,
+      "contact": "mushteri-tehsil",
+      "journal": "BNK",
+      "match": "V4",
+      "why": "Təhsil xidmətinin ödənişi."
+    },
+    {
+      "ref": "E5",
+      "direction": "inbound",
+      "date": "2026-03-30",
+      "amount": 6000,
+      "contact": "mushteri-neqliyyat",
+      "journal": "BNK",
+      "match": "V7",
+      "why": "Daşıma xidmətinin ödənişi."
+    },
+    {
+      "ref": "P1",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 35400,
+      "contact": "techizatci",
+      "journal": "BNK",
+      "match": "C1",
+      "why": "C1-in tam ödənişi: ƏDV yanvarda əvəzləşdirilir."
+    },
+    {
+      "ref": "P2",
+      "direction": "outbound",
+      "date": "2026-03-12",
+      "amount": 7080,
+      "contact": "xidmet-techizatci",
+      "journal": "BNK",
+      "match": "C2",
+      "why": "C2-nin yarısının ödənişi: ƏDV-nin yarısı martda əvəzləşdirilir."
+    },
+    {
+      "ref": "P3",
+      "direction": "outbound",
+      "date": "2026-02-14",
+      "amount": 59000,
+      "contact": "gomruk-agenti",
+      "journal": "BNK",
+      "match": "C3",
+      "why": "Gömrük agentinə ödəniş."
+    },
+    {
+      "ref": "P4",
+      "direction": "outbound",
+      "date": "2026-03-22",
+      "amount": 3000,
+      "contact": "techizatci",
+      "journal": "BNK",
+      "match": null,
+      "why": "Faktura olmadan təchizatçıya avans: açıq qalan sətir, bəyannamə onu nəzərə almamalıdır."
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "AZ",
+  "name": "Azərbaycan",
+  "version": "0.1.0",
+  "schema_min": "20260929141500",
+  "seed_sequence": 129,
+  "released_at": "2026-10-09",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "tax-code",
+        "title": "Azərbaycan Respublikasının Vergi Məcəlləsi (maddələr 155, 161, 164, 165, 175, 177)",
+        "publisher": "Azərbaycan Respublikasının Ədliyyə Nazirliyi — e-qanun.az",
+        "url": "https://e-qanun.az/framework/46948",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "tax-code-extract",
+        "title": "Azərbaycan Respublikasının Vergi Məcəlləsi — maddə 164 (ƏDV-dən azadolmalar və güzəştlər) və maddə 165 (verginin sıfır (0) dərəcəsi ilə tutulması) son redaksiyada",
+        "publisher": "Azərbaycan Respublikasının Dövlət Gömrük Komitəsi — customs.gov.az",
+        "url": "https://customs.gov.az/uploads/payment/8/c779b17981504c2145340a931615c148.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "vat-booklet",
+        "title": "Əlavə dəyər vergisi (ƏDV) — məlumat kitabçası, Bakı 2025",
+        "publisher": "Azərbaycan Respublikasının İqtisadiyyat Nazirliyi yanında Dövlət Vergi Xidməti — taxes.gov.az",
+        "url": "https://www.taxes.gov.az/uploads/2025/buklet/12.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "filing-deadlines",
+        "title": "Vergilərin ödənilməsi və bəyannamələrin təqdim edilməsi müddətləri",
+        "publisher": "Azərbaycan Respublikasının İqtisadiyyat Nazirliyi yanında Dövlət Vergi Xidməti — taxes.gov.az",
+        "url": "https://www.taxes.gov.az/az/page/vergilerin-odenilmesi-ve-beyannamelerin-teqdim-edilmesi-muddetleri",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-return-form",
+        "title": "Əlavə Dəyər Vergisinin bəyannaməsi — 2026-cı il forması (Dövlət Vergi Xidmətinin 03.04.2026-cı il tarixli 2617140100317700 №-li Əmri ilə təsdiq edilmişdir)",
+        "publisher": "Azərbaycan Respublikasının İqtisadiyyat Nazirliyi yanında Dövlət Vergi Xidməti — taxes.gov.az",
+        "url": "https://www.taxes.gov.az/uploads/2026/beyanname/EDV/EDV.xlsx",
+        "consulted_on": "2026-10-09",
+        "kind": "form"
+      },
+      {
+        "key": "tax-faq-2026",
+        "title": "Vergi Məcəlləsində edilmiş dəyişikliklər üzrə suallar və cavablar (2026) — maddələr 155.1-1, 165.5",
+        "publisher": "Azərbaycan Respublikasının İqtisadiyyat Nazirliyi yanında Dövlət Vergi Xidməti — taxes.gov.az",
+        "url": "https://www.taxes.gov.az/uploads/2026/faq/FAQ2026.pdf",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "e-services",
+        "title": "Elektron xidmətlər — İnternet vergi idarəsi (e-taxes.gov.az): elektron bəyannamənin və elektron qaimə-fakturanın qəbulu",
+        "publisher": "Azərbaycan Respublikasının İqtisadiyyat Nazirliyi yanında Dövlət Vergi Xidməti — taxes.gov.az",
+        "url": "https://www.taxes.gov.az/az/page/elektron-xidmetler",
+        "consulted_on": "2026-10-09",
+        "kind": "portal"
+      },
+      {
+        "key": "accounting-law",
+        "title": "Azərbaycan Respublikasının «Mühasibat uçotu haqqında» Qanunu (maddələr 6, 9)",
+        "publisher": "Azərbaycan Respublikasının Maliyyə Nazirliyi yanında Fiskal Mühasibat Mərkəzi — frc.az",
+        "url": "https://frc.az/qanunvericilik/muhasibat-ucotu-haqqinda-qanun/19",
+        "consulted_on": "2026-10-09",
+        "kind": "law"
+      },
+      {
+        "key": "nas-status",
+        "title": "Kommersiya təşkilatları üçün Milli Mühasibat Uçotu Standartları (qüvvədən düşmüşdür)",
+        "publisher": "Azərbaycan Respublikasının Maliyyə Nazirliyi — maliyye.gov.az",
+        "url": "https://maliyye.gov.az/static/144/kommersiya-teskilatlari-ucun-milli-muhasibat-ucotu-standartlari-quvveden-dusmusdur-",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "chart-muhasib",
+        "title": "Yeni hesablar planı (Maliyyə Nazirliyinin 18 aprel 2006-cı il tarixli İ-38 saylı əmri ilə təsdiq edilmiş hesablar planının mətni)",
+        "publisher": "muhasib.az (özəl mühasibat portalı; rəsmi mətnin surəti)",
+        "url": "https://muhasib.az/Muhasibat/teshkili/hesablar_plani_yeni.php",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      },
+      {
+        "key": "chart-e-muhasib",
+        "title": "Hesablar planı (hesab 226 «ƏDV sub-uçot hesabı» daxil olmaqla, 2020-ci il redaksiyası)",
+        "publisher": "e-muhasib.az (özəl mühasibat portalı; rəsmi mətnin surəti)",
+        "url": "https://e-muhasib.az/hesablar.php?n=1",
+        "consulted_on": "2026-10-09",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "AZN",
+    "language": "az",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "211",
+      "payable": "531",
+      "suspense": "545",
+      "rounding": "731",
+      "retained_earnings": "343",
+      "sales": "601",
+      "purchase": "701",
+      "bank": "223",
+      "cash": "221",
+      "fx_gain": "611",
+      "fx_loss": "731",
+      "asset_disposal_gain": "611",
+      "asset_disposal_loss": "731",
+      "tax_payable": "521",
+      "tax_receivable": "241"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Satış jurnalı",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Alış jurnalı",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank jurnalı",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Kassa jurnalı",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "Ümumi jurnal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Açılış jurnalı",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Mühasibat uçotunun hesablar planı (Maliyyə Nazirliyinin İ-38 saylı əmri)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "AZ-BS",
+        "AZ-IS"
+      ],
+      "legal_reference": "Maliyyə Nazirliyinin 18 aprel 2006-cı il tarixli İ-38 saylı əmri ilə təsdiq edilmiş hesablar planı (üç rəqəmli hesablar; sətirlər «Yeni hesablar planı» səhifəsindən götürülüb). Kommersiya təşkilatları üçün Milli Mühasibat Uçotu Standartları Maliyyə Nazirliyinin saytında «qüvvədən düşmüşdür» kimi qeyd olunub, «Mühasibat uçotu haqqında» Qanun isə MHBS və KOS üçün MHBS-ni tələb edir və milli hesablar planı barədə müddəa saxlamır — plan MHBS ilə uçot aparan şirkətlər tərəfindən praktikada tətbiq olunur, ona görə də onun hazırkı hüquqi statusu mühasib tərəfindən təsdiqlənməlidir. 2411, 2412, 2413, 5211, 5212 alt hesabları bu pack-ın əlavəsidir (ƏDV-nin ödənişdə hesablanması və bəyannamə hesabı üçün); qalan hesablar rəsmi planın mətnidir, 226 «ƏDV sub-uçot hesabı» daxil olmaqla.",
+      "source": "chart-muhasib"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "payment_date",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Vergi Məcəlləsi, maddə 175.1 və ƏDV kitabçası — ƏDV ödəyicisi arasında əməliyyat elektron qaimə-fakturanın (EQF) vergi orqanının sistemində (e-taxes.gov.az) yazılması ilə rəsmiləşdirilir; EQF-nin seriya və nömrəsini sistem verir və kommersiya sənədinin öz nömrələnməsindən asılı deyil. Kommersiya sənədinin nömrə formatını qanun məcburi etmir — burada göstərilən ardıcıl nömrələmə nümunədir.",
+        "source": "vat-booklet"
+      },
+      "tax_point": {
+        "legal_reference": "ƏDV kitabçası, «Vergi tutulan əməliyyatın aparıldığı vaxt və idxalın vaxtı» — vergi tutulan əməliyyatın vaxtı təqdim edilən mallar (işlər və xidmətlər) üçün ödəmənin aparıldığı vaxtdır (nağd vəsaitin alındığı, nağdsız ödəmədə vəsaitin bank hesabına daxil olduğu, NKA çekinin vurulduğu, qarşılıqlı hesablaşmada öhdəliyin ləğv edildiyi vaxt); ödəmə mallar təqdim edilənədək aparılıbsa, ödəmənin vaxtıdır; iki və ya daha çox ödəmə olarsa, hər ödəniş ayrıca əməliyyatdır. Bu qaydadan ƏDV vergisinin özü nağd əsasla (`cash_basis`) hesablanır.",
+        "source": "vat-booklet"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Vergi Məcəlləsi və EQF qaydaları — təqdim edilmiş elektron qaimə-faktura silinmir, düzəliş yeni (düzəliş) EQF ilə rəsmiləşdirilir; «Mühasibat uçotu haqqında» Qanun uçot qeydlərinin izsiz dəyişdirilməsini qadağan edir. Konkret maddə nömrəsi yerli mühasib tərəfindən təsdiqlənməlidir.",
+        "source": "accounting-law"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "ƏDV kitabçası: ƏDV ödəyicisi vergi ödəyicisi olan alıcıya elektron qaimə-faktura verməlidir və alıcı yalnız alınmış elektron qaimə-faktura üzrə ƏDV-ni əvəzləşdirə bilər; EQF Dövlət Vergi Xidmətinin e-taxes.gov.az sistemində tərtib edilir və göndərilir (dövlət tərəfindən təsdiqləmə — clearance tipli sistem). Bu mexanizm EN 16931 semantik modelinə (Peppol BIS, Factur-X, XRechnung, PINT) əsaslanmır və ISO 6523 iştirakçı sxemini istifadə etmir — buna görə `profile`, `party_scheme`, `vat_scheme` boşdur. Məcburiliyin başlanğıc tarixi rəsmi mətndə təsdiqlənmədiyi üçün `obligation` və `mandatory_from` göstərilmir. Real vaxtda dövlət sisteminə yazılma, 2026-cı ildən təkrarlanan xidmətlər üçün ayda bir EQF (maddə 71-1.1.3-2) və sistemlə bağlı qalan hər şey pack-ın hüdudlarından kənardadır — README və docs/international.md «From Azerbaijan» bölməsinə bax.",
+    "source": "vat-booklet"
+  },
+  "bank": {
+    "account_scheme": "iban",
+    "statement_formats": [
+      "csv"
+    ]
+  }
+}
