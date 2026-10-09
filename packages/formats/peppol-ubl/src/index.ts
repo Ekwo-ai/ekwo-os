@@ -76,3 +76,28 @@ export function generatePeppolUbl(input: PeppolUblInput, options: PeppolUblOptio
     violations: check(model),
   };
 }
+
+// --- reading ---------------------------------------------------------------
+
+export { readUbl } from './read.js';
+export { InvoiceFileError, type InvoiceFileErrorCode } from './errors.js';
+export { CREDIT_NOTE_TYPE_CODES, checkReceived, isValidIban } from './received-checks.js';
+export type {
+  DateText,
+  DecimalText,
+  ReadOptions,
+  ReceivedAccount,
+  ReceivedAddress,
+  ReceivedAllowanceCharge,
+  ReceivedAttachment,
+  ReceivedContact,
+  ReceivedIdentifier,
+  ReceivedInvoice,
+  ReceivedInvoiceFile,
+  ReceivedLine,
+  ReceivedParty,
+  ReceivedPaymentMeans,
+  ReceivedTax,
+  ReceivedTotals,
+  ReceivedViolation,
+} from './received.js';
