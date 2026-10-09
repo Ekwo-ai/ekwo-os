@@ -2472,6 +2472,122 @@ Constraints:
 | `archive_tables()` | What an archive of one company does with each table of this module. Read by `public.company_archive_tables()`. |
 | `variance(p_company_id uuid, p_budget_id uuid, p_from date, p_to date)` | Budget against ledger, per account, over a period, at the decimals of the company's currency. Both figures are in the sign a business states them in — an income account's credit balance is flipped — and the variance is the actual less the plan. Reads posted entries of kind `normal` only: a closing or appropriation entry is not what a period earned. |
 
+## `einvoicing` — Electronic invoicing
+
+The electronic invoice of a posted sale, in the profile its country pack declares: the exact file with the rules it breaks, and every sending of it with what the service answered, word for word. Knows no country, names no provider, and writes nothing to the ledger.
+
+### Tables
+
+| Table | Purpose |
+|---|---|
+| [`issues`](#einvoicing-issues) | One electronic invoice written for one posted sale: the exact file, its SHA-256, the format it follows and every rule of that format it breaks. Written by einvoicing.record_issue(), never edited and never deleted: what was issued is evidence of what was issued. |
+| [`transmission_events`](#einvoicing-transmission_events) | Every state a transmission reached, with what the service said at that moment, word for word, and the structured answer as it came. Appended by einvoicing.record_transmission() and einvoicing.record_transmission_outcome(); never edited, never deleted. |
+| [`transmissions`](#einvoicing-transmissions) | One sending of one issued file: the channel, the service by name, the reference it gave, and a state that only moves forward. A document rejected on the way is sent again by a second row; at most one of its transmissions is ever alive or delivered. |
+
+<a id="einvoicing-issues"></a>
+
+#### `issues`
+
+One electronic invoice written for one posted sale: the exact file, its SHA-256, the format it follows and every rule of that format it breaks. Written by einvoicing.record_issue(), never edited and never deleted: what was issued is evidence of what was issued.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `document_id` | `uuid` | not null |
+| `sequence` | `integer` | not null |
+| `profile` | `text` | not null — The e-invoicing profile of the company's country pack the file was written in — `country_defaults.einvoice_profile` of its fiscal country on the day it was issued. |
+| `brick` | `text` | not null — The package of packages/formats/ that wrote the file, by its published name. |
+| `specification` | `text` | What the file itself declares it follows — the customization identifier of a UBL file, the guideline of a CII one — as the brick wrote it. |
+| `filename` | `text` | not null |
+| `media_type` | `text` | not null |
+| `content` | `text` | not null — The file, byte for byte as the brick wrote it, as UTF-8 text. A format that is not text would need a column of its own; none of the bricks this version reads writes one. |
+| `byte_size` | `integer` | not null |
+| `checksum` | `text` | not null — SHA-256 of content as UTF-8, in lower-case hexadecimal. Computed again by the database on every insert, so a file that does not match its checksum is refused rather than kept. |
+| `violations` | `jsonb` | not null — Every rule of the format the file breaks, as the brick named them: [{"code": "BR-CO-25", "message": "…", "line": "10"}]. Empty is the only state a file is sent in. |
+| `sendable` | `boolean` | not null — Whether the file breaks no rule. Derived from violations, and held to it by a constraint. |
+| `issued_at` | `timestamp with time zone` | not null |
+| `issued_by` | `uuid` |  |
+
+Constraints:
+
+- `CHECK ((checksum ~ '^[0-9a-f]{64}$'::text))`
+- `CHECK ((sendable = (jsonb_array_length(violations) = 0)))`
+- `CHECK ((byte_size = octet_length(content)))`
+- `CHECK ((jsonb_typeof(violations) = 'array'::text))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (document_id, checksum)`
+- `UNIQUE (document_id, sequence)`
+
+<a id="einvoicing-transmission_events"></a>
+
+#### `transmission_events`
+
+Every state a transmission reached, with what the service said at that moment, word for word, and the structured answer as it came. Appended by einvoicing.record_transmission() and einvoicing.record_transmission_outcome(); never edited, never deleted.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `transmission_id` | `uuid` | not null |
+| `sequence` | `integer` | not null |
+| `state` | `einvoicing.transmission_state` | not null |
+| `reference` | `text` |  |
+| `message` | `text` | What the service answered, in its own words. Not summarised: a refusal is read to know what to change. |
+| `detail` | `jsonb` |  |
+| `occurred_at` | `timestamp with time zone` |  |
+| `recorded_at` | `timestamp with time zone` | not null |
+| `recorded_by` | `uuid` |  |
+
+Constraints:
+
+- `PRIMARY KEY (id)`
+- `UNIQUE (transmission_id, sequence)`
+
+<a id="einvoicing-transmissions"></a>
+
+#### `transmissions`
+
+One sending of one issued file: the channel, the service by name, the reference it gave, and a state that only moves forward. A document rejected on the way is sent again by a second row; at most one of its transmissions is ever alive or delivered.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `document_id` | `uuid` | not null |
+| `issue_id` | `uuid` | not null |
+| `sequence` | `integer` | not null |
+| `channel` | `einvoicing.channel` | not null |
+| `service` | `text` | The name of the transmission service, where one was used — an access point, a platform. Free text: the module records what was used and holds no list of what may be, which is what keeps it uncoupled from any provider. |
+| `reference` | `text` | What the transport gave back to find this sending again: a message identifier, a tracking number, the path a file was written to. Set once. |
+| `state` | `einvoicing.transmission_state` | not null |
+| `state_at` | `timestamp with time zone` | not null |
+| `message` | `text` | What the service said last, in its own words. The full history is einvoicing.transmission_events. |
+| `prepared_at` | `timestamp with time zone` | not null |
+| `prepared_by` | `uuid` |  |
+
+Constraints:
+
+- `CHECK (((channel = 'self'::einvoicing.channel) OR (NULLIF(btrim(service), ''::text) IS NOT NULL)))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (document_id, sequence)`
+
+### Functions
+
+| Function | Purpose |
+|---|---|
+| `archive_tables()` | What an archive of one company does with each table of this module: all three travel — the files as they were issued, the sendings and what came back. Read by `public.company_archive_tables()`. |
+| `can_disable(p_company_id uuid)` | Null when the module may be turned off for a company; a sentence while a sending is still on its way. Turning it off deletes nothing: the files and the history come back with it. |
+| `guard_event()` | Refuses every update and every delete of a transmission event: the history of what came back is appended to, never rewritten. |
+| `guard_issue()` | Checks the SHA-256 of a file as it is inserted, and refuses every update and every delete of an issue: einvoice_issued. |
+| `guard_transmission()` | Holds a transmission to what it is: never deleted; its document, file, channel and service fixed; its reference set once; its state only moving forward, and never again once closed; and a reference wherever somebody took the file. |
+| `record_issue(p_document_id uuid, p_profile text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb)` | Keeps the file a brick wrote for a posted sale invoice or credit note, with the rules it breaks. Refuses a document that is not a posted sale (document_not_a_sale, document_not_posted), a company whose pack declares no profile (no_einvoicing_profile), a file written in another profile (einvoice_profile_mismatch) and a checksum that is not the SHA-256 of the text (einvoice_checksum_mismatch). The same file twice returns the first issue. Needs einvoicing.send and documents.read. |
+| `record_transmission(p_issue_id uuid, p_channel einvoicing.channel, p_service text)` | Records that an issued file is about to be sent, as prepared: the channel, and the service by name where one is used. Refuses a file that breaks a rule, repeating the rules verbatim (einvoice_not_sendable), an older file of a document issued again since (einvoice_superseded), and a document already on its way or delivered (einvoice_already_sent). Needs einvoicing.send. |
+| `record_transmission_outcome(p_transmission_id uuid, p_state einvoicing.transmission_state, p_reference text, p_message text, p_detail jsonb, p_occurred_at timestamp with time zone)` | Records what a transport or a service answered about a sending: its new state, its reference where it gave one, and its words verbatim, as one more event. A state only moves forward and a closed sending does not move (transmission_state_backwards, transmission_closed); the same answer twice records nothing. Once the file has left, writes the state and the reference on documents.peppol_status and peppol_message_id, which is what keeps unpost_document() from taking it back to draft. Needs einvoicing.send. |
+| `require(p_company_id uuid, p_capability text, p_what text)` | Raises module_not_enabled when the module is off for the company, and not_allowed when the caller does not hold the capability. The first lines of every function of this module that writes. |
+| `state_has_left(p_state einvoicing.transmission_state)` | Whether a sending in this state has left the company: everything but prepared and failed. A rejected file left, and somebody on the way read its number. |
+| `state_rank(p_state einvoicing.transmission_state)` | How far a sending has gone: prepared 0, submitted 1, accepted_by_access_point 2, and 3 for the three states that close it — delivered, rejected, failed. A state only ever moves to a higher rank. |
+
 ## `tax` — Corporate income tax
 
 Corporate income tax estimated from the books: the accounting result, the adjustments, the losses, the rates and their conditions of a country are pack data, and what a company declares about itself is its own. Writes nothing to the ledger.

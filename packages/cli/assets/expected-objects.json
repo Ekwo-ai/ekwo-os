@@ -10730,6 +10730,451 @@
       }
     },
     {
+      "code": "einvoicing",
+      "version": "1.0.0",
+      "schema": "einvoicing",
+      "tables": [
+        {
+          "name": "issues",
+          "columns": [
+            {
+              "name": "brick",
+              "type": "text"
+            },
+            {
+              "name": "byte_size",
+              "type": "integer"
+            },
+            {
+              "name": "checksum",
+              "type": "text"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "content",
+              "type": "text"
+            },
+            {
+              "name": "document_id",
+              "type": "uuid"
+            },
+            {
+              "name": "filename",
+              "type": "text"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "issued_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "issued_by",
+              "type": "uuid"
+            },
+            {
+              "name": "media_type",
+              "type": "text"
+            },
+            {
+              "name": "profile",
+              "type": "text"
+            },
+            {
+              "name": "sendable",
+              "type": "boolean"
+            },
+            {
+              "name": "sequence",
+              "type": "integer"
+            },
+            {
+              "name": "specification",
+              "type": "text"
+            },
+            {
+              "name": "violations",
+              "type": "jsonb"
+            }
+          ]
+        },
+        {
+          "name": "transmission_events",
+          "columns": [
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "detail",
+              "type": "jsonb"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "message",
+              "type": "text"
+            },
+            {
+              "name": "occurred_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "recorded_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "recorded_by",
+              "type": "uuid"
+            },
+            {
+              "name": "reference",
+              "type": "text"
+            },
+            {
+              "name": "sequence",
+              "type": "integer"
+            },
+            {
+              "name": "state",
+              "type": "einvoicing.transmission_state"
+            },
+            {
+              "name": "transmission_id",
+              "type": "uuid"
+            }
+          ]
+        },
+        {
+          "name": "transmissions",
+          "columns": [
+            {
+              "name": "channel",
+              "type": "einvoicing.channel"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "document_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "issue_id",
+              "type": "uuid"
+            },
+            {
+              "name": "message",
+              "type": "text"
+            },
+            {
+              "name": "prepared_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "prepared_by",
+              "type": "uuid"
+            },
+            {
+              "name": "reference",
+              "type": "text"
+            },
+            {
+              "name": "sequence",
+              "type": "integer"
+            },
+            {
+              "name": "service",
+              "type": "text"
+            },
+            {
+              "name": "state",
+              "type": "einvoicing.transmission_state"
+            },
+            {
+              "name": "state_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "archive_tables",
+          "arguments": ""
+        },
+        {
+          "name": "can_disable",
+          "arguments": "p_company_id uuid"
+        },
+        {
+          "name": "guard_event",
+          "arguments": ""
+        },
+        {
+          "name": "guard_issue",
+          "arguments": ""
+        },
+        {
+          "name": "guard_transmission",
+          "arguments": ""
+        },
+        {
+          "name": "record_issue",
+          "arguments": "p_document_id uuid, p_profile text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb"
+        },
+        {
+          "name": "record_transmission",
+          "arguments": "p_issue_id uuid, p_channel einvoicing.channel, p_service text"
+        },
+        {
+          "name": "record_transmission_outcome",
+          "arguments": "p_transmission_id uuid, p_state einvoicing.transmission_state, p_reference text, p_message text, p_detail jsonb, p_occurred_at timestamp with time zone"
+        },
+        {
+          "name": "require",
+          "arguments": "p_company_id uuid, p_capability text, p_what text"
+        },
+        {
+          "name": "state_has_left",
+          "arguments": "p_state einvoicing.transmission_state"
+        },
+        {
+          "name": "state_rank",
+          "arguments": "p_state einvoicing.transmission_state"
+        }
+      ],
+      "policies": [
+        {
+          "table": "issues",
+          "name": "einvoicing_issues_select",
+          "command": "select"
+        },
+        {
+          "table": "transmission_events",
+          "name": "einvoicing_transmission_events_select",
+          "command": "select"
+        },
+        {
+          "table": "transmissions",
+          "name": "einvoicing_transmissions_select",
+          "command": "select"
+        }
+      ],
+      "triggers": [
+        {
+          "table": "issues",
+          "name": "einvoicing_issues_guard"
+        },
+        {
+          "table": "transmission_events",
+          "name": "einvoicing_transmission_events_guard"
+        },
+        {
+          "table": "transmissions",
+          "name": "einvoicing_transmissions_guard"
+        }
+      ],
+      "types": [
+        {
+          "name": "channel",
+          "kind": "enum",
+          "labels": [
+            "self",
+            "service"
+          ]
+        },
+        {
+          "name": "transmission_state",
+          "kind": "enum",
+          "labels": [
+            "prepared",
+            "submitted",
+            "accepted_by_access_point",
+            "delivered",
+            "rejected",
+            "failed"
+          ]
+        }
+      ],
+      "grants": {
+        "schema": "einvoicing",
+        "usage": {
+          "anon": [
+            "usage"
+          ],
+          "authenticated": [
+            "usage"
+          ],
+          "service_role": [
+            "usage"
+          ]
+        },
+        "tables": [
+          {
+            "name": "issues",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "transmission_events",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "transmissions",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          }
+        ],
+        "views": [],
+        "sequences": [],
+        "functions": [
+          {
+            "name": "archive_tables",
+            "arguments": "",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "can_disable",
+            "arguments": "p_company_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "guard_event",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
+          },
+          {
+            "name": "guard_issue",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
+          },
+          {
+            "name": "guard_transmission",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
+          },
+          {
+            "name": "record_issue",
+            "arguments": "p_document_id uuid, p_profile text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "record_transmission",
+            "arguments": "p_issue_id uuid, p_channel einvoicing.channel, p_service text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "record_transmission_outcome",
+            "arguments": "p_transmission_id uuid, p_state einvoicing.transmission_state, p_reference text, p_message text, p_detail jsonb, p_occurred_at timestamp with time zone",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "require",
+            "arguments": "p_company_id uuid, p_capability text, p_what text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "state_has_left",
+            "arguments": "p_state einvoicing.transmission_state",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "state_rank",
+            "arguments": "p_state einvoicing.transmission_state",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          }
+        ],
+        "defaultPrivileges": []
+      }
+    },
+    {
       "code": "tax",
       "version": "1.0.0",
       "schema": "tax",

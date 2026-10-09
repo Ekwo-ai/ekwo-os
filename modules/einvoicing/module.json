@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ekwo.ai/schemas/module/1.json",
+  "code": "einvoicing",
+  "name": "Electronic invoicing",
+  "description": "The electronic invoice of a posted sale, in the profile its country pack declares: the exact file with the rules it breaks, and every sending of it with what the service answered, word for word. Knows no country, names no provider, and writes nothing to the ledger.",
+  "schema": "einvoicing",
+  "version": "1.0.0",
+  "status": "available",
+  "requires_socle_min": "20260922162500",
+  "posts": false,
+  "mcp": { "prefix": "einvoicing" }
+}

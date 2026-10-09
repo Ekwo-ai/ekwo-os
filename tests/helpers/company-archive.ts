@@ -269,6 +269,35 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     [companyId, loss.id, computation.id],
   );
 
+  // A fourth module: the electronic invoice of a posted sale and its one
+  // sending, delivered. Written by hand — which profile a pack declares is not
+  // the subject, that the file, the sending and the words that came back
+  // travel is. The checksum is the file's own, as the module's guard demands.
+  await asUser(db, ownerId, async () => {
+    await db.query(`select enable_module($1, 'einvoicing')`, [companyId]);
+  });
+  const issue = await one<{ id: string; document_id: string }>(
+    db,
+    `insert into einvoicing.issues (company_id, document_id, sequence, profile, brick, filename, media_type,
+                                    content, byte_size, checksum, violations, sendable)
+     select $1, d.id, 1, 'some-profile', 'some-brick', 'invoice.xml', 'application/xml',
+            $2, octet_length($2), encode(sha256(convert_to($2, 'UTF8')), 'hex'), '[]'::jsonb, true
+       from documents d where d.company_id = $1 and d.state = 'posted' order by d.document_date, d.id limit 1
+     returning id, document_id`,
+    [companyId, `<Invoice>${tag}</Invoice>`],
+  );
+  const transmission = await one<{ id: string }>(
+    db,
+    `insert into einvoicing.transmissions (company_id, document_id, issue_id, sequence, channel, reference, state, message)
+     values ($1, $2, $3, 1, 'self', $4, 'delivered', 'received') returning id`,
+    [companyId, issue.document_id, issue.id, `outbox/invoice-${tag}.xml`],
+  );
+  await db.query(
+    `insert into einvoicing.transmission_events (company_id, transmission_id, sequence, state, reference, message)
+     values ($1, $2, 1, 'delivered', $3, 'received')`,
+    [companyId, transmission.id, `outbox/invoice-${tag}.xml`],
+  );
+
   // A piece on a document.
   const someDocument = [...replayed.documents.values()][0] as string;
   await db.query(
