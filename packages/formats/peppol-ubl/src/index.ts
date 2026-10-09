@@ -101,3 +101,16 @@ export type {
   ReceivedTotals,
   ReceivedViolation,
 } from './received.js';
+
+// --- participants ----------------------------------------------------------
+
+export {
+  CHECKED_SCHEMES,
+  PARTICIPANT_IDENTIFIER_SCHEME,
+  ParticipantIdError,
+  SYMBOLIC_SCHEMES,
+  validateParticipantId,
+  type ParticipantIdCheck,
+  type ParticipantIdProblem,
+} from './participant.js';
+export { SML_ZONES, smlHostname, type SmlLookup } from './sml.js';
