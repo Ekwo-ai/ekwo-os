@@ -8,6 +8,9 @@
  * that is right. So nothing here is a `number`. A decimal is an integer and a
  * scale, the integer is a `bigint`, and the four operations the rules need are
  * exact.
+ *
+ * The Factur-X brick holds a copy of this file, byte for byte, for the reader
+ * of `received-checks.ts`; a test there compares the two.
  */
 
 export interface Decimal {

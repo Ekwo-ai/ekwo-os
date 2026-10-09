@@ -6,7 +6,8 @@
  * D16B. The two syntaxes carry one semantic model, EN 16931, and each field
  * below names the business term (BT-n, BG-n) it holds, so that whoever turns
  * the result into a purchase does it once for both. Neither brick imports the
- * other: this file is copied, byte for byte, and a test compares the copies.
+ * other: this file is copied, byte for byte, and a test of the Factur-X brick
+ * compares the copies.
  *
  * What it is not: a purchase. Nothing here is matched to a supplier, an
  * account or a tax code of anybody's books, nothing is recomputed and nothing
@@ -291,8 +292,10 @@ export interface ReceivedInvoice {
 export interface ReceivedViolation {
   /**
    * The identifier the rule is published under — `BR-CO-15` — where there is
-   * one; otherwise one of this reader's own: `invalid_iban`,
-   * `invalid_attachment`, `unknown_type_code`.
+   * one; otherwise one of the readers' own: `invalid_attachment` (an
+   * embedded document that is not base64), `invalid_iban` (an account the
+   * file calls an IBAN whose check digits fail), `unsupported_date_format`
+   * (a CII date in a format other than 102, returned as null).
    */
   code: string;
   /** What is wrong, in a sentence. */

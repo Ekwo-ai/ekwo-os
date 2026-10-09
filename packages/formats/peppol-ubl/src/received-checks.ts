@@ -3,7 +3,7 @@
  * helpers both readers need to read it.
  *
  * Copied, byte for byte, in the two e-invoicing bricks of this repository, as
- * `received.ts` is, and compared by a test: a UBL invoice and a CII invoice
+ * `received.ts` is, and compared by the same test: a UBL invoice and a CII invoice
  * that say the same thing are held to the same rules in the same words.
  *
  * The rules are the arithmetic of EN 16931 (BR-CO-10 to BR-CO-17), re-read
