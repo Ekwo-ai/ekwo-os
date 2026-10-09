@@ -87,20 +87,42 @@ export function fakeSupabase(pg: PGlite): FakeSupabase {
   };
 
   const rest = async (userId: string, url: URL, init: RequestInit | undefined): Promise<Response> => {
-    const path = url.pathname.replace('/rest/v1/', '');
+    // A schema other than `public` is asked for by header, as PostgREST
+    // serves a module: `Accept-Profile` to read, `Content-Profile` to write.
+    const headers = (init?.headers ?? {}) as Record<string, string>;
+    const schema = headers['Content-Profile'] ?? headers['Accept-Profile'] ?? 'public';
+    const path = `${schema}.${url.pathname.replace('/rest/v1/', '')}`.replace(`${schema}.rpc/`, `rpc/${schema}.`);
     try {
       if (path.startsWith('rpc/')) {
         const fn = path.slice(4);
+        const [, name = fn] = fn.split('.');
         const args = JSON.parse(typeof init?.body === 'string' ? init.body : '{}') as Record<string, unknown>;
         const names = Object.keys(args);
-        const call = `select * from ${fn}(${names.map((name, i) => `${name} => $${i + 1}`).join(', ')})`;
-        const { rows } = await asUser(pg, userId, () =>
-          pg.query<Record<string, unknown>>(call, names.map((name) => args[name])),
+        // A json argument is given as the JSON it is, the way PostgREST hands
+        // it over; the driver would otherwise write a list as an array literal.
+        const types = new Map(
+          (
+            await pg.query<{ name: string; type: string }>(
+              `select unnest(p.proargnames) as name, unnest(coalesce(p.proallargtypes, p.proargtypes::oid[]))::regtype::text as type
+                 from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+                where n.nspname = $1 and p.proname = $2`,
+              [schema, name],
+            )
+          ).rows.map((row) => [row.name, row.type]),
         );
-        const shape = await pg.query<{ proretset: boolean }>('select proretset from pg_proc where proname = $1', [fn]);
+        const value = (key: string): unknown =>
+          /^jsonb?$/.test(types.get(key) ?? '') && args[key] !== null ? JSON.stringify(args[key]) : args[key];
+        const call = `select * from ${fn}(${names.map((key, i) => `${key} => $${i + 1}`).join(', ')})`;
+        const { rows } = await asUser(pg, userId, () =>
+          pg.query<Record<string, unknown>>(call, names.map(value)),
+        );
+        const shape = await pg.query<{ proretset: boolean }>(
+          'select p.proretset from pg_proc p join pg_namespace n on n.oid = p.pronamespace where n.nspname = $1 and p.proname = $2',
+          [schema, name],
+        );
         // PostgREST answers a scalar function with the scalar, and a set of
         // scalars with a list of them.
-        const scalars = rows.map((row) => (Object.keys(row).length === 1 && fn in row ? row[fn] : row));
+        const scalars = rows.map((row) => (Object.keys(row).length === 1 && name in row ? row[name] : row));
         return json(200, shape.rows[0]?.proretset === true ? scalars : scalars[0] ?? null);
       }
       // A table. The query string is PostgREST's: `select`, `order`, `limit`,

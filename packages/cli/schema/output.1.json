@@ -565,6 +565,58 @@
           "settled_lines": { "type": "array", "items": { "type": "string" } }
         }
       },
+      "einvoice validate": {
+        "$comment": "The electronic invoice a posted sale would be issued as, in the profile of its company's country pack, and every rule of the format it breaks, named as the format names it. Nothing was recorded. `sendable` is false when a rule is broken, and the exit code is then 1. `written_to` is the --out path the file was written to; the file itself is never in the document.",
+        "type": "object",
+        "required": ["document_id", "profile", "brick", "filename", "checksum", "byte_size", "violations", "sendable", "note"],
+        "properties": {
+          "document_id": { "type": "string" },
+          "profile": { "type": "string" },
+          "brick": { "type": "string" },
+          "filename": { "type": "string" },
+          "checksum": { "type": "string" },
+          "byte_size": { "type": "integer" },
+          "violations": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "sendable": { "type": "boolean" },
+          "sender": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "recipient": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "written_to": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      },
+      "einvoice issue": {
+        "$comment": "The issue kept — einvoicing.issues without the file — the rules it breaks, and the sending under --send: einvoicing.transmissions as it stood after the transport answered, or null. The same file twice is one issue. `sendable` false ends on exit code 1.",
+        "type": "object",
+        "required": ["document_id", "issue", "violations", "sendable", "transmission", "note"],
+        "properties": {
+          "document_id": { "type": "string" },
+          "number": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+          "doc_type": { "type": "string" },
+          "issue": { "$ref": "#/$defs/row" },
+          "violations": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "sendable": { "type": "boolean" },
+          "transmission": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "written_to": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      },
+      "einvoice status": {
+        "$comment": "Everything known of the electronic invoice of one document: each issue, each sending with its `events` — what the service said, verbatim — and `state`: not_issued, issued, or the state of the latest sending. `refresh` says whether the transport was asked again under --refresh, and what it said.",
+        "type": "object",
+        "required": ["document_id", "issues", "transmissions", "state"],
+        "properties": {
+          "document_id": { "type": "string" },
+          "issues": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "transmissions": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "state": { "type": "string" },
+          "refresh": { "$ref": "#/$defs/row" }
+        }
+      },
+      "einvoice list": {
+        "type": "object",
+        "required": ["transmissions", "count"],
+        "properties": { "transmissions": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
+      },
       "import": {
         "oneOf": [
           {

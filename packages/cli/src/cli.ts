@@ -13,6 +13,7 @@ import { cancelCommand, docCommand, postCommand } from './commands/document.js';
 import { reverseCommand } from './commands/entry.js';
 import { IMPORT_USAGE, importCommand } from './commands/import.js';
 import { doctorCommand } from './commands/doctor.js';
+import { einvoiceCommand } from './commands/einvoice.js';
 import { initCommand, type InitDeps } from './commands/init.js';
 import { loginCommand, logoutCommand, type LoginDeps } from './commands/login.js';
 import { migrateCommand } from './commands/migrate.js';
@@ -62,6 +63,7 @@ export const COMMANDS = [
   'match',
   'import',
   'proof',
+  'einvoice',
   // An alias, last: `invoice` is what `doc` used to be called.
   'invoice',
 ] as const;
@@ -160,6 +162,11 @@ ${bold('Connecting')} ${dim('(every command)')}
               the pending proofs of the company, on a schedule. verify <file>
               [--ots <proof.ots>] — check a file against its proof and the block
               it names; --out writes the .ots for any verifier.
+  ${cyan('einvoice')}    validate | issue | status <document>, list — the electronic
+              invoice of a posted sale, in the format its country pack
+              declares, through the einvoicing module. validate writes it and
+              names the rules it breaks; issue keeps it, and with --send
+              --to <directory> writes it to that folder; status follows it.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
   --profile <name>          Which profile: a demo instance, production, one client
@@ -190,6 +197,10 @@ ${bold('Keeping books')} ${dim('(each verb is one function the MCP server calls 
                             refused by name otherwise.
   --credit                  cancel. A credit note, even where the document
                             could go back to draft.
+  --send, --to <directory>  einvoice issue. Send the file, to that folder — the
+                            one transport this release ships. --refresh --to on
+                            einvoice status reads the receipts left beside it.
+  --out <file>              einvoice validate, issue. Also write the file there.
   <document>                Its id, its number, or the --ref it was created under.
   Amounts are decimal strings, in and out: 1500.00. Nothing is computed here.
 
@@ -317,6 +328,7 @@ ${bold('Environment')}
                             nothing is read from or written to the disk: a CI job.
   EKWO_ACCESS_TOKEN         The same, with a session token already in hand.
   EKWO_PROFILE              Same as --profile.
+  EKWO_EINVOICE_DIRECTORY   Same as --to, for ekwo einvoice.
   EKWO_CONFIG_DIR           Where profiles and sessions are kept. Defaults to
                             $XDG_CONFIG_HOME/ekwo, else ~/.config/ekwo.
   EKWO_REGISTRY_URL         Where registrations are announced.
@@ -442,6 +454,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await importCommand(args, deps);
       case 'proof':
         return await proofCommand(args, deps);
+      case 'einvoice':
+        return await einvoiceCommand(args, deps);
       default:
         throw new UsageError(`unknown command: ${args.command}\nRun \`ekwo --help\` for the list.`);
     }

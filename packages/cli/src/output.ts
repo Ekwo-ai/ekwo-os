@@ -102,7 +102,7 @@ export function setResult(data: unknown): void {
   result = data;
 }
 
-const TWO_WORDS = new Set(['module', 'pack', 'company', 'contact', 'invoice', 'payment', 'doc', 'proof']);
+const TWO_WORDS = new Set(['module', 'pack', 'company', 'contact', 'invoice', 'payment', 'doc', 'proof', 'einvoice']);
 
 /** `module list`, `pack upgrade`, `status`: the words that named the command. */
 export function commandLabel(args: ParsedArgs): string {

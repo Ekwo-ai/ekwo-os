@@ -327,6 +327,7 @@ instead if the account already exists, and no key is needed.
 | `ekwo import <source> <file>…` | Books kept elsewhere — `trial-balance`, `fec`, `journal-items`, `journal-report`, `transaction-journal`, `xaf` — whole or not at all, through `import_books()`, with a correspondence of accounts and journals you save and give back; or a bank statement — `camt.053`, `coda`, `cfonb120` — as pending lines. `--dry-run` rehearses. See [taking over books](#taking-over-books-ekwo-import). |
 | `ekwo doc list` / `show` | What exists, and with `--unpaid` what is posted and still owed. See [keeping books](#keeping-books). |
 | `ekwo proof stamp` / `upgrade` / `verify` | The sha256 of a filed file — a declaration, the annual accounts of a financial year, a document — committed to Bitcoin through the public OpenTimestamps calendars; only the hash leaves. `upgrade` completes the pending proofs of the company and is made to run on a schedule; `verify` checks a file against its proof and the block it names, and `--out` writes the `.ots` file any verifier reads. See [`docs/filing-proofs.md`](../../docs/filing-proofs.md). |
+| `ekwo einvoice validate` / `issue` / `status` / `list` | The electronic invoice of a posted sale, in the format its country pack declares, through the `einvoicing` module: `validate` writes it and names the rules it breaks (exit 1 if any), `issue` keeps it and with `--send --to <directory>` writes it to that folder, `status --refresh` follows it. See [`modules/einvoicing`](../../modules/einvoicing/README.md). |
 
 There is no `eject`, because there is nothing to eject from. The schema is in
 your database, the migrations are in the repository under AGPL-3.0, and
@@ -961,6 +962,7 @@ Every command takes `--json`; see [what a command answers](#what-a-command-answe
 | `EKWO_EMAIL`, `EKWO_PASSWORD` | Sign in for one command, writing nothing. `ekwo login` reads them too. |
 | `EKWO_ACCESS_TOKEN` | The same, with a session token already in hand. It is not renewed. |
 | `EKWO_PROFILE` | `--profile` |
+| `EKWO_EINVOICE_DIRECTORY` | `--to`, for `ekwo einvoice`. The MCP server reads it too. |
 | `EKWO_CONFIG_DIR` | Where profiles and sessions are kept. |
 | `EKWO_REGISTRY_URL` | `--registry-url`. Default `https://api.ekwo.ai/v1/registrations`. |
 | `EKWO_NO_REGISTER_INVITE` | Set to `1` to hide the invitation to register that `ekwo init` and `ekwo status` show on an installation that is not registered. The MCP server reads it too. |

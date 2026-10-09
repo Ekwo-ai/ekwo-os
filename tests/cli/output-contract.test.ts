@@ -382,6 +382,9 @@ describe('every command answers --json with one document of the published shape'
     expect(upgraded.data).toMatchObject({ checked: 1, completed: [] });
     const verified = await asProver(['proof', 'verify', filed, '--offline', '--out', join(cwd, 'annual-accounts.xml.ots')]);
     expect(verified.data).toMatchObject({ proved: false, check: { matches_file: true, pending: ['https://calendar.test'] } });
+    // The electronic invoices sent: none, on a company that never turned the
+    // module on — row level security answers with nothing, not with an error.
+    expect((await asPerson(['einvoice', 'list'])).data).toMatchObject({ count: 0 });
 
     expect((await asPerson(['logout'])).data).toMatchObject({ signedOut: true });
     // The commands that install act as nobody, and carry no such field.

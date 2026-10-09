@@ -34,6 +34,7 @@ describe('reading the modules of a checkout', () => {
     expect(modules.map((m) => [basename(m.dir), m.manifest.code, m.manifest.schema])).toEqual([
       ['budgets', 'budgets', 'budgets'],
       ['corporate-tax', 'tax', 'tax'],
+      ['einvoicing', 'einvoicing', 'einvoicing'],
       ['fixed-assets', 'assets', 'fixed_assets'],
     ]);
     for (const module of modules) {
