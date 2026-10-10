@@ -27,6 +27,10 @@ const ALLOWED_DEPENDENCIES: Record<string, readonly string[]> = {
   '@ekwo-ai/xbrl-cbso': [],
   '@ekwo-ai/fec': [],
   '@ekwo-ai/factur-x': ['pdf-lib'],
+  // A visual invoice draws text in every script a customer's name may be
+  // written in: pdf-lib to draw it, and its own fork of fontkit to read the
+  // embedded Noto Sans and shape what it draws.
+  '@ekwo-ai/invoice-pdf': ['pdf-lib', '@pdf-lib/fontkit'],
   '@ekwo-ai/intra-consignment': [],
   '@ekwo-ai/des': [],
   '@ekwo-ai/ecdf': [],

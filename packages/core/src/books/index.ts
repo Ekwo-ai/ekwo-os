@@ -20,3 +20,4 @@ export * from './entries.js';
 export * from './payments.js';
 export * from './imports.js';
 export * from './statements.js';
+export * from './document-pdf.js';

@@ -12,7 +12,7 @@ import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mc
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from './backend.js';
-import { columns, relayableInvitation, type EinvoiceTransport } from '@ekwo-ai/core';
+import { columns, relayableInvitation, type EinvoiceTransport, type LogoFetch } from '@ekwo-ai/core';
 import * as read from './tools/read.js';
 import * as write from './tools/write.js';
 import { toolsetsFor } from './tools/modules.js';
@@ -81,6 +81,12 @@ export interface ServerOptions {
    * and sending is refused as no_transport.
    */
   einvoiceTransport?: EinvoiceTransport;
+  /**
+   * How `render_invoice_pdf` fetches the logo a company names by URL. Left
+   * out, the global `fetch`; a test passes its own. Only http and https, and
+   * never a local or private address, are asked for.
+   */
+  logoFetch?: LogoFetch;
 }
 
 /**
@@ -183,6 +189,34 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
     async (args) => guard(() => read.getDocument(backend, args)),
+  );
+
+  server.registerTool(
+    'render_invoice_pdf',
+    {
+      title: 'The PDF of an invoice',
+      description:
+        'The PDF of a sale invoice or a sale credit note, rendered from the books: the seller with its logo, the buyer, the lines, the tax summary, the totals and what is still due, how to pay, and the legal mentions the country requires — as the views publish them. Comes back as a PDF resource (base64) beside a JSON summary: filename, pages, whether the logo was used. factur_x: true embeds the CII XML of a posted document and returns the rules of EN 16931 it breaks. Words of the layout are English unless labels gives them in the document\'s language. Records nothing, sends nothing: the copy a customer received is not kept here.',
+      inputSchema: read.RenderInvoicePdfInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: true },
+    },
+    async (args): Promise<CallToolResult> => {
+      try {
+        const logoFetch: LogoFetch = options.logoFetch ?? ((url, init) => globalThis.fetch(url, init));
+        const { file, ...summary } = await read.renderInvoicePdf(backend, args, logoFetch);
+        return {
+          content: [
+            { type: 'text', text: JSON.stringify(summary, null, 2) },
+            {
+              type: 'resource',
+              resource: { uri: `ekwo://documents/${summary.document_id}/pdf`, mimeType: 'application/pdf', blob: read.base64Of(file) },
+            },
+          ],
+        };
+      } catch (error) {
+        return fail(error);
+      }
+    },
   );
 
   server.registerTool(

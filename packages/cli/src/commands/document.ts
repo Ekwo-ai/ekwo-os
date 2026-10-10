@@ -25,13 +25,16 @@ import {
   getDocument,
   listDocuments,
   postDocument,
+  renderDocumentPdf,
   resolveContact,
   resolveDocument,
   type CreateDocumentArgs,
   type DocType,
   type LineArgs,
+  type DocumentPdfArgs,
   type ListDocumentsArgs,
 } from '@ekwo-ai/core';
+import { readFile, writeFile } from 'node:fs/promises';
 import { UsageError, boolFlag, numberFlag, rejectUnknownFlags, stringFlag, stringFlags, type ParsedArgs } from '../args.js';
 import {
   BOOKS_FLAGS,
@@ -46,8 +49,8 @@ import {
   today,
   type BooksDeps,
 } from '../books.js';
-import { setResult } from '../output.js';
-import { dim, heading, line, note, pairs, step, table } from '../ui.js';
+import { EXIT_ERROR, EXIT_OK, setResult } from '../output.js';
+import { dim, heading, line, note, pairs, step, table, warn } from '../ui.js';
 
 type Row = Record<string, unknown>;
 
@@ -265,11 +268,13 @@ export async function docCommand(args: ParsedArgs, deps: BooksDeps = {}): Promis
   if (action === 'line' && second === 'add') return lineAdd(args, deps);
   if (action === 'list') return docList(args, deps);
   if (action === 'show') return docShow(args, deps);
+  if (action === 'pdf') return docPdf(args, deps);
   throw new UsageError(
     'usage: ekwo doc new --contact <name|id> --line "name=…,price=…,tax=…" [--type --date --ref]' +
       ' | ekwo doc line add <document> --price <amount> [--name --account --tax]' +
       ' | ekwo doc list [--unpaid --since <date> --until <date> --type --state --contact]' +
-      ' | ekwo doc show <document>',
+      ' | ekwo doc show <document>' +
+      ' | ekwo doc pdf <document> [--factur-x --out <file> --page-size A4|Letter --labels <file.json>]',
   );
 }
 
@@ -331,4 +336,62 @@ async function docShow(args: ParsedArgs, deps: BooksDeps): Promise<number> {
     printEntry({ entry: result['entry'], entry_lines: (result['entry_lines'] as Row[]).map((l) => ({ ...l, account_code: l['account_name'] })) });
   }
   return 0;
+}
+
+const PDF_FLAGS = [...BOOKS_FLAGS, 'factur-x', 'out', 'page-size', 'labels'] as const;
+
+/**
+ * `ekwo doc pdf <document>` — the PDF of a sale invoice or credit note, from
+ * the views, through `renderDocumentPdf()`; `render_invoice_pdf` is the same
+ * call. Written to `--out`, or under its own name in the current directory.
+ * The logo the company names by URL is fetched here, on this machine.
+ *
+ * `--factur-x` embeds the CII of the document; the rules of EN 16931 it
+ * breaks are listed, and end on exit code 1 like a check that found something.
+ * The file is written all the same, so that it can be looked at.
+ */
+async function docPdf(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, PDF_FLAGS);
+  const { backend, company } = await openBooks(args, deps);
+  const documentId = await resolveDocument(backend, company.id, required(args.positional[1], 'the document', '<document>'));
+  const pageSize = stringFlag(args, 'page-size');
+  if (pageSize !== undefined && pageSize !== 'A4' && pageSize !== 'Letter') {
+    throw new UsageError(`bad_value: --page-size is A4 or Letter, got "${pageSize}".`);
+  }
+  const labelsFile = stringFlag(args, 'labels');
+  let labels: Record<string, unknown> | undefined;
+  if (labelsFile !== undefined) {
+    try {
+      labels = JSON.parse(await readFile(labelsFile, 'utf8')) as Record<string, unknown>;
+    } catch (error) {
+      throw new UsageError(`bad_value: --labels names a JSON file of the words of the layout; ${labelsFile} could not be read as one (${error instanceof Error ? error.message : String(error)}).`);
+    }
+  }
+
+  const { file, ...result } = await renderDocumentPdf(
+    backend,
+    given({ document_id: documentId, factur_x: boolFlag(args, 'factur-x') ? true : undefined, page_size: pageSize, labels }) as DocumentPdfArgs,
+    { fetch: (url, init) => (deps.fetchImpl ?? globalThis.fetch)(url, init) },
+  );
+  const out = stringFlag(args, 'out') ?? result.filename;
+  await writeFile(out, file);
+  setResult({ ...result, written_to: out });
+
+  heading(`${result.title}, in ${company.name}`);
+  pairs([
+    ['file', `${out}  ${dim(`${result.byte_size} bytes, ${result.page_count} page(s)`)}`],
+    ['logo', result.logo],
+    ...(result.factur_x === null ? [] : [['factur-x', `${result.factur_x.profile}, embedded`] as [string, string]]),
+  ]);
+  const violations = result.factur_x?.violations ?? [];
+  if (violations.length > 0) {
+    line();
+    warn(`The embedded XML breaks ${violations.length} rule(s):`);
+    for (const violation of violations) {
+      line(`  ${violation.code}${violation.line === undefined ? '' : ` (line ${violation.line})`}: ${violation.message}`);
+    }
+  }
+  line();
+  note(dim('Rendered from the books, and recorded nowhere: the copy you send is yours to keep.'));
+  return violations.length > 0 ? EXIT_ERROR : EXIT_OK;
 }

@@ -180,6 +180,7 @@ reach and whether you may write; without that box ticked, you read.
 | Books kept elsewhere (FEC, journal items, a report, a trial balance) | `ekwo import <source> <files…> --dry-run --save-mapping map.json`, then `--mapping map.json` | `import_books` (`dry_run` first) |
 | A bank statement file | `ekwo import camt.053 <file>` (or `coda`, `cfonb120`) | `import_bank_statement` |
 | A link the customer opens without an account | — | `share_document` |
+| The PDF of an invoice or a credit note, with the company's logo | `ekwo doc pdf <doc> [--factur-x] [--out file]` | `render_invoice_pdf` |
 | The electronic invoice of a posted sale (module `einvoicing`) | `ekwo einvoice validate <doc>`, then `ekwo einvoice issue <doc>` | `einvoicing_validate`, then `einvoicing_issue` |
 | The VAT return of a period | — | `vat_return` |
 | Trial balance, ledger | — | `trial_balance`, `general_ledger` |

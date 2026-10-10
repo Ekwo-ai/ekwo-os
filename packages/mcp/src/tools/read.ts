@@ -25,6 +25,9 @@ import {
   moneyFields,
   namesOf,
   onlyVisible as only,
+  renderDocumentPdf,
+  type DocumentPdf,
+  type LogoFetch,
   type RegistrationInvitation,
 } from '@ekwo-ai/core';
 
@@ -201,6 +204,48 @@ export const ListDocumentsInput = z.object({
 });
 
 export const GetDocumentInput = z.object({ document_id: uuid });
+
+export const RenderInvoicePdfInput = z.object({
+  document_id: uuid.describe('A sale invoice or a sale credit note. A draft is rendered titled as a draft, without a number.'),
+  factur_x: z
+    .boolean()
+    .optional()
+    .describe('Embed the CII XML of the document, EN 16931 profile: the PDF becomes a Factur-X PDF/A-3. Only for a posted document; the rules the XML breaks come back in factur_x.violations.'),
+  page_size: z.enum(['A4', 'Letter']).optional().describe('A4 unless Letter is asked for.'),
+  labels: z
+    .record(z.string(), z.union([z.string(), z.record(z.string(), z.string())]))
+    .optional()
+    .describe('The words the layout prints, in the language of the document — invoice, creditNote, dueDate, amountDue, page ("Page {page} of {pages}"), units (a map of UN/ECE unit codes)… Every word left out is printed in English.'),
+});
+
+/** Base64 without Buffer, which a server running outside Node does not have. */
+export function base64Of(bytes: Uint8Array): string {
+  let binary = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(binary);
+}
+
+/**
+ * The PDF of a sale invoice or credit note, through `renderDocumentPdf()` of
+ * the core — the call `ekwo doc pdf` makes. The logo the company names by URL
+ * is fetched by this server, with `logoFetch`.
+ */
+export async function renderInvoicePdf(
+  backend: Backend,
+  args: z.infer<typeof RenderInvoicePdfInput>,
+  logoFetch: LogoFetch | undefined,
+): Promise<DocumentPdf> {
+  return renderDocumentPdf(
+    backend,
+    {
+      document_id: args.document_id,
+      factur_x: args.factur_x,
+      page_size: args.page_size,
+      labels: args.labels as Parameters<typeof renderDocumentPdf>[1]['labels'],
+    },
+    { fetch: logoFetch },
+  );
+}
 
 // ---------------------------------------------------------------------------
 // Bank

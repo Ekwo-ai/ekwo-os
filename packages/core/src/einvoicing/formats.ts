@@ -117,9 +117,9 @@ const PEPPOL_BIS_3: EinvoiceFormat = {
 //     group by group, and a difference is a broken rule. A file that disagrees
 //     with the ledger by a cent is worse than a file that is refused.
 //
-// The file kept is the CII XML. Embedding it in a PDF/A-3 needs the visual
-// invoice, which the books do not render; the brick's `/pdf` entry does the
-// embedding for whoever has one.
+// The file kept is the CII XML. The PDF/A-3 that carries it is rendered on
+// demand by `renderDocumentPdf()` (books/document-pdf.ts), which hands this
+// writer's XML and the visual invoice to the brick's `/pdf` entry.
 // ---------------------------------------------------------------------------
 
 /** A decimal as text without the zeros that say nothing: `100.50`, `100.5` and `100.500` are one amount. */

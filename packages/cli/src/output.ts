@@ -102,7 +102,7 @@ export function setResult(data: unknown): void {
   result = data;
 }
 
-const TWO_WORDS = new Set(['module', 'pack', 'company', 'contact', 'invoice', 'payment', 'doc', 'proof', 'einvoice']);
+const TWO_WORDS = new Set(['module', 'pack', 'company', 'contact', 'invoice', 'document', 'payment', 'doc', 'proof', 'einvoice']);
 
 /** `module list`, `pack upgrade`, `status`: the words that named the command. */
 export function commandLabel(args: ParsedArgs): string {
@@ -113,7 +113,7 @@ export function commandLabel(args: ParsedArgs): string {
   if (action === undefined) return command;
   // `doc line add`: the one verb of three words. Under either of its names, the
   // label repeats the words that were typed.
-  if ((command === 'doc' || command === 'invoice') && action === 'line' && args.positional[1] !== undefined) {
+  if ((command === 'doc' || command === 'invoice' || command === 'document') && action === 'line' && args.positional[1] !== undefined) {
     return `${command} line ${args.positional[1]}`;
   }
   return `${command} ${action}`;

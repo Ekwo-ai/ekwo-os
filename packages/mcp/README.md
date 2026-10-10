@@ -217,6 +217,7 @@ Every write names its company explicitly.
 | `search_products` | The catalogue: code, unit, price, account and tax of what is sold and bought |
 | `list_documents` | Invoices, credit notes and quotes, filtered |
 | `get_document` | One document with its lines and the entry it produced |
+| `render_invoice_pdf` | The PDF of a sale invoice or credit note, as a PDF resource (base64) beside a JSON summary, rendered from the books by [`@ekwo-ai/invoice-pdf`](../formats/invoice-pdf/README.md). `factur_x` embeds the CII of a posted sale (Factur-X, EN 16931, PDF/A-3) and returns the rules it breaks; `labels` gives the words of the layout in the document's language. The logo is fetched by the server from the company's `logo_url`, never from a local or private address. Records nothing |
 | `list_bank_accounts` | The bank accounts of a company, with the journal and ledger account behind each |
 | `list_bank_transactions` | Statement lines, pending by default |
 | `trial_balance` | Opening, movements and closing per account |

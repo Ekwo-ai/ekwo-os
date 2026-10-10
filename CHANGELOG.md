@@ -17,6 +17,21 @@ somewhere has already run it.
   the other; it lists the books of a hosted project and of the trial instance
   among what Ekwo Cloud holds, names the optional `ekwo register` and what it
   sends, and gives the retention of a hosted project.
+- **An invoice you can send: its PDF, with your logo.** A new brick,
+  `@ekwo-ai/invoice-pdf`, renders the visual PDF of a sale invoice or credit
+  note from the four views the books already publish — `document_header`,
+  `document_line_items`, `document_tax_summary`, `document_legal_mentions` —
+  in one sober layout, A4 or Letter, multi-page, with no country in it: the
+  words of the layout are English or the caller's, the sentences the books',
+  the amounts and dates `Intl`'s in the document's language. Noto Sans and
+  Noto Sans Thai are embedded (OFL); other scripts through a font the caller
+  adds; right to left is refused by name. `ekwo doc pdf <document>` (also
+  `ekwo document pdf`) and the MCP read tool `render_invoice_pdf` read the
+  views as the person signed in, fetch the logo the company names by URL —
+  from a public address only — and render it; `--factur-x` (`factur_x`)
+  embeds the CII the e-invoicing adapter writes from the same books, which
+  makes it a Factur-X PDF/A-3. Nothing is recorded: keeping the copy that was
+  sent, and sending it by e-mail, come next.
 - **The e-invoicing bricks read what they receive.** `readUbl()` of
   `@ekwo-ai/peppol-ubl` reads a received Peppol BIS Billing 3.0 invoice or
   credit note (UBL 2.1); `readCii()` and `readFacturX()` of

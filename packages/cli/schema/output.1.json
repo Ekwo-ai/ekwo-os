@@ -51,6 +51,35 @@
       "$comment": "A row as the database holds it, in the columns the MCP server reads too: snake case, amounts and dates as strings. The columns are the schema's (docs/schema.md), not this file's.",
       "type": "object"
     },
+    "documentPdf": {
+      "$comment": "The PDF of a sale invoice or credit note, rendered from the views by renderDocumentPdf() and written to `written_to`; the file itself is never in the document. `logo` is `embedded`, `none`, or why the logo the company names was not used. `factur_x` is null without --factur-x; with it, the rules of EN 16931 the embedded CII breaks, which end on exit code 1. Nothing was recorded.",
+      "type": "object",
+      "required": ["document_id", "doc_type", "filename", "title", "media_type", "byte_size", "page_count", "logo", "factur_x", "written_to"],
+      "properties": {
+        "document_id": { "type": "string" },
+        "doc_type": { "type": "string" },
+        "number": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "state": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "language": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "filename": { "type": "string" },
+        "title": { "type": "string" },
+        "media_type": { "const": "application/pdf" },
+        "byte_size": { "type": "integer" },
+        "page_count": { "type": "integer" },
+        "logo": { "type": "string" },
+        "factur_x": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "required": ["profile", "violations"],
+              "properties": { "profile": { "type": "string" }, "violations": { "type": "array", "items": { "$ref": "#/$defs/row" } } }
+            }
+          ]
+        },
+        "written_to": { "type": "string" }
+      }
+    },
     "documentAnswer": {
       "$comment": "What getDocument() of @ekwo-ai/core answers — the MCP server's get_document. Every total is the database's. `replayed` is true when the document had already been created under this --ref.",
       "type": "object",
@@ -466,6 +495,17 @@
       "invoice new": { "$ref": "#/$defs/documentAnswer" },
       "invoice line add": { "$ref": "#/$defs/documentAnswer" },
       "doc show": { "$ref": "#/$defs/documentAnswer" },
+      "document new": { "$ref": "#/$defs/documentAnswer" },
+      "document line add": { "$ref": "#/$defs/documentAnswer" },
+      "document show": { "$ref": "#/$defs/documentAnswer" },
+      "document list": {
+        "type": "object",
+        "required": ["documents", "count"],
+        "properties": { "documents": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
+      },
+      "doc pdf": { "$ref": "#/$defs/documentPdf" },
+      "document pdf": { "$ref": "#/$defs/documentPdf" },
+      "invoice pdf": { "$ref": "#/$defs/documentPdf" },
       "doc list": {
         "type": "object",
         "required": ["documents", "count"],

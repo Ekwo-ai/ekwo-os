@@ -77,6 +77,14 @@ statements read the same rows and still disagree on lines, columns, number
 formats and how a VAT number is written. Each package says, in its README,
 which official pages the format was read from.
 
+**Invoices, drawn.** It renders the visual PDF of a sale invoice or credit note
+from the rows of the `document_*` views, PDF/A-3b, with no country in its
+layout. A Factur-X PDF is made by handing it `embedFacturX`:
+
+| Package | Format |
+|---|---|
+| [`invoice-pdf`](invoice-pdf/) | The PDF of an invoice or credit note, PDF/A-3b, fonts embedded |
+
 `tests/formats.test.ts` enforces the licence, the isolation and the
 dependencies of every package in this directory, and `tests/` carries an
 end-to-end test per package, from a country pack's year of books through the
