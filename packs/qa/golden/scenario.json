@@ -1,0 +1,305 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of books of a Qatari trading and consulting company that files no periodic turnover-tax return",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "FY2026",
+      "from": "2026-01-01",
+      "to": "2026-12-31"
+    }
+  ],
+  "statements": [
+    "QA-IFRS-SFP",
+    "QA-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-a",
+      "name": "Doha Trading Company W.L.L.",
+      "type": "customer",
+      "country": "QA"
+    },
+    {
+      "ref": "cust-b",
+      "name": "West Bay Consulting W.L.L.",
+      "type": "customer",
+      "country": "QA"
+    },
+    {
+      "ref": "cust-c",
+      "name": "Pacific Rim Imports LLC",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "supp-a",
+      "name": "Salwa Office Supplies W.L.L.",
+      "type": "supplier",
+      "country": "QA"
+    },
+    {
+      "ref": "supp-b",
+      "name": "Lusail Professional Services W.L.L.",
+      "type": "supplier",
+      "country": "QA"
+    },
+    {
+      "ref": "supp-c",
+      "name": "Shenzhen Components Co., Ltd.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-02-15",
+      "why": "A domestic sale of services, QA-S-NA: the not-subject code posts the line's base and nothing else — no tax line and no declaration box, because no turnover tax is in force in Qatar.",
+      "lines": [
+        {
+          "name": "Advisory services, April 2026",
+          "unit_price": 50000,
+          "tax": "QA-S-NA",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-02-20",
+      "why": "A domestic sale of goods, QA-S-NA on the goods side too: the code draws no distinction between what is sold.",
+      "lines": [
+        {
+          "name": "Trading stock, assorted goods",
+          "quantity": 20,
+          "unit_price": 500,
+          "tax": "QA-S-NA",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cust-c",
+      "date": "2026-03-05",
+      "why": "An export of goods to a customer outside Qatar: QA-S-NA applies exactly as it does to V2, because there is no turnover tax for an export to be relieved of.",
+      "lines": [
+        {
+          "name": "Export of assorted goods",
+          "quantity": 100,
+          "unit_price": 80,
+          "tax": "QA-S-NA",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cust-a",
+      "date": "2026-03-10",
+      "why": "A credit note against V2, a partial return of goods — the golden's sale-side credit note.",
+      "lines": [
+        {
+          "name": "Return of assorted goods",
+          "quantity": 5,
+          "unit_price": 500,
+          "tax": "QA-S-NA",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-04-01",
+      "why": "A second domestic service sale, to spread the scenario over several months and leave an invoice that a part-payment settles only partly.",
+      "lines": [
+        {
+          "name": "Advisory services, May 2026",
+          "unit_price": 30000,
+          "tax": "QA-S-NA",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-05-15",
+      "why": "A third domestic goods sale, settled by nothing in this scenario — an open receivable the trial balance carries at the year end.",
+      "lines": [
+        {
+          "name": "Trading stock, assorted goods",
+          "quantity": 15,
+          "unit_price": 500,
+          "tax": "QA-S-NA",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-02-18",
+      "why": "A domestic purchase of trading inventory, QA-P-NA: the purchase side of the not-subject code, posting the base and nothing to recover.",
+      "lines": [
+        {
+          "name": "Trading stock, assorted goods",
+          "quantity": 100,
+          "unit_price": 60,
+          "tax": "QA-P-NA",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-02-25",
+      "why": "A recurring domestic expense, office rent, paid in full by E3 — the matched payment on the purchase side.",
+      "lines": [
+        {
+          "name": "Office rent, April 2026",
+          "unit_price": 20000,
+          "tax": "QA-P-NA",
+          "account": "6100"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-c",
+      "date": "2026-03-12",
+      "why": "An import of components from a supplier outside Qatar: no tax posts through this pack, because customs duty (a 5 % GCC tariff on the CIF value of general goods) is not modelled and no import VAT exists; QA-P-NA reads the same on an import as on a domestic purchase.",
+      "lines": [
+        {
+          "name": "Import of components",
+          "quantity": 200,
+          "unit_price": 25,
+          "tax": "QA-P-NA",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "PCN1",
+      "type": "purchase_credit_note",
+      "contact": "supp-a",
+      "date": "2026-03-15",
+      "why": "A credit note against P1, a partial return of defective stock — the purchase-side credit note, beside CN1 on the sale side.",
+      "lines": [
+        {
+          "name": "Return of defective stock",
+          "quantity": 10,
+          "unit_price": 60,
+          "tax": "QA-P-NA",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-04-10",
+      "why": "A purchase of a fixed asset, computer equipment, booked straight to the balance sheet — QA-P-NA posts its base wherever the line's own account sends it.",
+      "lines": [
+        {
+          "name": "Computer equipment",
+          "unit_price": 12000,
+          "tax": "QA-P-NA",
+          "account": "1640"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-04-20",
+      "why": "A recurring staff-related purchase booked to the end-of-service gratuity expense account, to exercise a Qatar-specific account of the chart.",
+      "lines": [
+        {
+          "name": "Staff end-of-service gratuity accrual, supplier-administered",
+          "unit_price": 1500,
+          "tax": "QA-P-NA",
+          "account": "6020"
+        }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-05-01",
+      "why": "A recurring administrative purchase, accounting and company secretarial fees.",
+      "lines": [
+        {
+          "name": "Accounting and company secretarial fees",
+          "unit_price": 8000,
+          "tax": "QA-P-NA",
+          "account": "6220"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-03-10",
+      "amount": 50000,
+      "contact": "cust-b",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "An inbound payment that exactly settles V1 — the golden's matched payment on the sale side."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-04-15",
+      "amount": 5000,
+      "contact": "cust-b",
+      "journal": "BNK",
+      "match": null,
+      "why": "An inbound part-payment on account, matched to nothing — the golden's unmatched payment and the open item a return computed from matchings has to survive."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-03-28",
+      "amount": 20000,
+      "contact": "supp-b",
+      "journal": "BNK",
+      "match": "P2",
+      "why": "An outbound payment that exactly settles P2 — the matched payment on the purchase side."
+    },
+    {
+      "ref": "E4",
+      "direction": "outbound",
+      "date": "2026-04-05",
+      "amount": 3000,
+      "contact": "supp-c",
+      "journal": "BNK",
+      "match": null,
+      "why": "An outbound part-payment on account to a supplier, matched to nothing — the unmatched payment on the purchase side."
+    }
+  ]
+}

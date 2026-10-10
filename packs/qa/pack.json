@@ -1,0 +1,209 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "QA",
+  "name": "Qatar",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 142,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "income-tax-law",
+        "title": "Law No. (24) of 2018 Promulgating the Income Tax Law (General Tax Authority's English text)",
+        "publisher": "General Tax Authority",
+        "url": "https://gta.gov.qa/assets/pdf/Law%20No.%20%2824%29%20of%202018%20Promulgating%20the%20Income%20Tax%20Law%20%283%29.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "income-tax-regs",
+        "title": "Income Tax Law and its Executive Regulations, 2024 edition (General Tax Authority's English text)",
+        "publisher": "General Tax Authority",
+        "url": "https://gta.gov.qa/assets/pdf/Income%20Tax%20Law%20EN%202024.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
+      },
+      {
+        "key": "excise-law",
+        "title": "Excise Tax Law (Law No. (25) of 2018) and its Executive Regulations, 2024 edition (General Tax Authority's English text)",
+        "publisher": "General Tax Authority",
+        "url": "https://gta.gov.qa/assets/pdf/Excise%20Tax%20Law%20EN%202024.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "excise-sweetened-drinks",
+        "title": "State of Qatar introduces new excise tax mechanism on sweetened drinks (Law No. (2) of 2026)",
+        "publisher": "General Tax Authority",
+        "url": "https://www.gta.gov.qa/en/media-center/news/state-of-qatar-introduces-new-excise-tax-mechanism-on-sweetened-drinks",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "pillar-two",
+        "title": "Council of Ministers Resolution No. (2) of 2026 on the Global Minimum Tax (Pillar Two) Regulations (General Tax Authority's English text)",
+        "publisher": "General Tax Authority",
+        "url": "https://gta.gov.qa/assets/pdf/EN%20Qatar%20Pillar%20Two%20Regulations%20Decision%20No%202%20of%202026.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
+      },
+      {
+        "key": "gta-laws",
+        "title": "Laws and regulations — tax laws in force",
+        "publisher": "General Tax Authority",
+        "url": "https://gta.gov.qa/en/laws",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "companies-law",
+        "title": "Law No. (11) of 2015 Promulgating the Commercial Companies Law (unofficial English translation; the official text is on almeezan.qa, which this pack's research could not open)",
+        "publisher": "Qatar legislation (unofficial translation published by a law firm)",
+        "url": "https://www.jbapartner.com/images/download/Law-No--11-of-2015---Promulgating-the-Commercial-Companies-Law---English.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "customs-guide",
+        "title": "Customs — duty tariffs and trade regulations",
+        "publisher": "Invest Qatar",
+        "url": "https://www.invest.qa/en/resources/laws-and-regulations/customs",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "einvoicing-draft",
+        "title": "Qatar approves draft e-invoicing law and implementing regulations (Council of Ministers, 6 May 2026)",
+        "publisher": "EY Tax Alerts",
+        "url": "https://www.ey.com/en_gl/technical/tax-alerts/qatar-approves-draft-e-invoicing-law-and-implementing-regulations",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "dhareeba",
+        "title": "Dhareeba — the General Tax Authority's electronic tax portal",
+        "publisher": "General Tax Authority",
+        "url": "https://dhareeba.gov.qa",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "QAR",
+    "language": "ar",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Qatar reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "QA-IFRS-SFP",
+        "QA-IFRS-IS"
+      ],
+      "legal_reference": "Qatar prescribes no chart of accounts that this pack's research found. The Income Tax Law (Law No. 24 of 2018), article 12, requires a taxpayer carrying on an activity in the State to keep accounting books, records and documents in accordance with the laws of the State and international accounting standards, and article 35 of its Executive Regulations names the general journal, the general ledger and the inventory book; article 6 of the Law requires taxable income to be determined on the accrual basis applied in commercial accounting, in accordance with international accounting standards. Neither text numbers accounts. This chart is therefore original: four digits, blocked so that each range reaches one line item of the statement of financial position and the statement of profit or loss of IFRS Accounting Standards (IAS 1). It carries an income tax provision, a withholding tax payable on payments to non-residents and an end-of-service gratuity payable, and no tax-clearing account for a turnover tax, because Qatar has none in force — see 'From Qatar' in docs/international.md. The Arabic names a Qatari accountant would use are not supplied: see i18n/README.md.",
+      "source": "income-tax-law"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Qatar has no value added tax, goods and services tax or general sales tax in force. It signed the Unified VAT Agreement of the GCC States (standard rate 5 %), adopted in December 2015, but no national VAT law has been enacted: the General Tax Authority's list of tax laws (consulted 10 October 2026) holds the Income Tax Law (Law No. 24 of 2018), the Excise Tax Law (Law No. 25 of 2018), the Global Minimum Tax Resolution (No. 2 of 2026) and a capital gains resolution (Cabinet Resolution No. 3 of 2026), and lists the VAT only as a regional agreement, not as a law. No tax invoice regime exists, so this pack's research found no Qatari statute conditioning a tax position on an invoice carrying a sequential number; what the Income Tax Law requires is that books, records and supporting documents be kept (article 12; Executive Regulations, article 35) and retained at the place of business for ten years following the year to which they relate (Executive Regulations, article 36(1)). `numbering` is therefore `free`, and `number_format` is a convention this pack proposes. This pack did not read the Commercial Code or the Civil Code for an invoice rule, and a local reviewer should confirm there is none.",
+        "source": "income-tax-regs"
+      },
+      "payment_terms": {
+        "legal_reference": "This pack's research found no Qatari text setting a payment term between two businesses in the absence of an agreement, or a statutory rate of late-payment interest on a commercial debt; it did not read the Civil Code (Law No. 22 of 2004) or the Commercial Code for one, which is a gap for a local reviewer to close. `legal_payment_days` and `late_payment_reference` are therefore empty and a seller's terms are a matter of contract.",
+        "source": "income-tax-law"
+      },
+      "tax_point": {
+        "legal_reference": "This field has no true value for Qatar: it names the day a country's general rule makes its own turnover tax chargeable, and no such tax is in force. `invoice_date` is declared as the closest commercial convention, in line with the accrual basis article 6 of the Income Tax Law (Law No. 24 of 2018) requires for taxable income — a convention, not a rule read from a text, and not a statement about when income tax, withholding tax or excise tax arises. See 'From Qatar' in docs/international.md.",
+        "source": "income-tax-law"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Qatari law in force obliges a business to issue or accept an electronic invoice (consulted 10 October 2026). On 6 May 2026 the Council of Ministers approved a DRAFT law on electronic invoicing and its implementing regulations, prepared by the Ministry of Finance with the General Tax Authority; the draft was still to pass the Shura Council and receive the Amir's assent, and this pack's research found no sign that it has been promulgated or published in the Official Gazette (the almeezan.qa legal portal could not be opened). It names no technical model, platform, scope, threshold or go-live date, and industry commentary pointing to a phased start from 1 January 2027, large taxpayers first, is expectation and not an official date. `obligation` is therefore `none` and `profile`, `party_scheme` and `vat_scheme` are null: the draft is the next change to watch, and no profile is invented for it. No Peppol Authority for Qatar was found, and no VAT identifier exists for a scheme to carry.",
+    "source": "einvoicing-draft"
+  }
+}

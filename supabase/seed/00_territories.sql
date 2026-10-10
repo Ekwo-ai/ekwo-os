@@ -2350,3 +2350,29 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Qatar
+--
+-- A third country to the common system of VAT of Directive 2006/112/EC,
+-- article 5(2), which applies only in the territory of the Community as the
+-- Treaties define it. Qatar has signed the Unified VAT Agreement of the GCC
+-- States but has enacted no national VAT law, so it levies no value added
+-- tax, goods and services tax or general sales tax of its own. `vat_prefix`
+-- is null: there is no VAT identification number to prefix. A taxpayer is
+-- identified by the tax number the General Tax Authority assigns, which
+-- carries no ISO country prefix.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('QA', 'iso_3166_1', 'Qatar', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Qatar is a third country to it. Qatar has signed the Unified VAT Agreement of the GCC States (standard rate five per cent) but, as the General Tax Authority''s list of tax laws shows, has enacted no value added tax law, so it levies no value added tax, goods and services tax or general sales tax. What it levies instead is income tax under Law No. 24 of 2018, article 9, excise tax under Law No. 25 of 2018 and customs duty under the GCC customs union.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

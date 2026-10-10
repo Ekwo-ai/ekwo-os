@@ -6559,3 +6559,40 @@ view, five-year retention.
 **Gaps in the socle, not patched.** `documents.tax_point` has no honest answer for a jurisdiction with no turnover tax; `invoice_date` is declared as a convention, as for Hong Kong. A payroll levy withheld from the employee and owed by the employer (payroll tax) has no module: the chart carries the liability accounts and nothing computes the tax. The financial return is delivered to a registered agent, not a tax authority; the format has no notion of a filing addressed to a private agent, so the portal source is the Inland Revenue Department's registration portal and the return itself is not modelled. No generic test assumed a VAT, a rate or a return for this pack.
 
 **Financial statements.** No framework is imposed; the pack follows the IFRS for SMEs layout and the contents of the financial return (BVI Business Companies Act 2004, s. 98A, with the Financial Return Order 2023, unaudited, within nine months of year end, with listed, regulated, tax-filing and liquidating companies exempt). The Order's own schedule of lines was not read.
+
+## From Qatar
+
+`packs/qa/`, `community`, seed 142, QAR. A second pack of the HK shape: a
+jurisdiction with no turnover tax, so no `tax_report.json`, no
+`tax_payable` / `tax_receivable` role and two `not_subject` codes
+(`QA-S-NA`, `QA-P-NA`). The two generic assertions that HK found assuming a
+declaration and several rates pass unchanged for this pack; no other generic
+test was found to assume a VAT.
+
+**The absence is current, not structural.** Qatar signed the Unified VAT
+Agreement of the GCC States (5 %) but the General Tax Authority's list of tax
+laws (`gta.gov.qa/en/laws`, 10 October 2026) holds no VAT law. A VAT law is
+widely expected and has no date. On 6 May 2026 the Council of Ministers
+approved a *draft* e-invoicing law and regulations; no promulgation was found.
+The pack declares `einvoicing.obligation: "none"`; the format has no way to
+say "announced, not enacted" beyond the `legal_reference` text.
+
+**`documents.tax_point` has no true value** for a country with no turnover tax
+(the same gap as "From Hong Kong"): `invoice_date` is a declared convention.
+
+**Levies outside the pack**, with their sources: income tax, 10 %, and a final
+5 % withholding tax on payments to non-residents (Law No. 24 of 2018, art. 9);
+the 15 % global minimum tax (Council of Ministers Resolution No. 2 of 2026);
+excise tax (Law No. 25 of 2018, sweetened drinks by sugar content from 6 July
+2026 under Law No. 2 of 2026); GCC customs duty at 5 % (Invest Qatar);
+zakat and social-insurance contributions were not researched. None has a tax
+code.
+
+**Records retention** is ten years following the year to which the books
+relate (Executive Regulations of the Income Tax Law, art. 36(1)); the format
+has no field for a retention period, so it is stated in `legal_reference`
+texts only.
+
+**Language.** Arabic is `defaults.language` and English is the declared
+translation, as for `packs/bh` and `packs/om`; labels are English in the data
+and the Arabic wording is left to a reviewer.

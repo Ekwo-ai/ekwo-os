@@ -1,0 +1,54 @@
+[
+  {
+    "code": "QA-S-NA",
+    "name": "Sale, not subject to any tax on turnover",
+    "description": "Every sale a Qatari business makes — domestic, exported, or delivered from outside Qatar to a place outside Qatar",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "Qatar has no value added tax, goods and services tax or general sales tax in force. It signed the Unified VAT Agreement of the GCC States (standard rate 5 %), adopted in December 2015, but no national VAT law has been enacted: the General Tax Authority's list of tax laws (consulted 10 October 2026) holds the Income Tax Law (Law No. 24 of 2018), the Excise Tax Law (Law No. 25 of 2018), the Global Minimum Tax Resolution (No. 2 of 2026) and a capital gains resolution (Cabinet Resolution No. 3 of 2026), and lists the VAT only as a regional agreement, not as a law. What Qatar levies instead is outside this pack: income tax at 10 % of taxable income, with the income of Qatari natural persons and the share of Qatari owners in wholly or partly Qatari-owned companies exempt (Law No. 24 of 2018, articles 4 and 9), a final withholding tax of 5 % on royalties, interest, commissions and fees for services paid to non-residents without a permanent establishment (article 9, clause 2), excise tax on specified goods (Law No. 25 of 2018, as amended by Law No. 2 of 2026), customs duty under the GCC customs union and the 15 % domestic top-up tax of the global minimum tax (Resolution No. 2 of 2026). None is a tax an invoice line carries and credits on the other side. There is accordingly no rate for this code to state and no box for its base: the code exists so that every sale line still carries a tax code the engine can post, as in a country with a real turnover tax, and states plainly that Qatar has none. `valid_from` is a convenience the field needed, not the date a turnover tax was absent from; the pack makes no claim about before the GCC VAT Agreement. If a VAT law is published, this code must be replaced. See 'From Qatar' in docs/international.md.",
+    "source": "gta-laws",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "QA-P-NA",
+    "name": "Purchase, not subject to any tax on turnover",
+    "description": "Every purchase a Qatari business books — domestic, imported, or delivered from outside Qatar to a place outside Qatar",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "The purchase side of QA-S-NA: qatar has no value added tax, goods and services tax or general sales tax in force. It signed the Unified VAT Agreement of the GCC States (standard rate 5 %), adopted in December 2015, but no national VAT law has been enacted: the General Tax Authority's list of tax laws (consulted 10 October 2026) holds the Income Tax Law (Law No. 24 of 2018), the Excise Tax Law (Law No. 25 of 2018), the Global Minimum Tax Resolution (No. 2 of 2026) and a capital gains resolution (Cabinet Resolution No. 3 of 2026), and lists the VAT only as a regional agreement, not as a law. Nothing a Qatari business buys carries a recoverable value added tax. An import does carry customs duty, which this pack does not model: Qatar applies the GCC customs union's 5 % ad valorem tariff on the CIF value of general goods, with higher rates for some goods and exemptions for others (Invest Qatar, Customs; legal basis Law No. 40 of 2002 and Law No. 41 of 2002 per that page, which this pack did not check against the General Authority of Customs tariff). Excise tax on specified goods (Law No. 25 of 2018; sweetened drinks by sugar content from 6 July 2026 under Law No. 2 of 2026) is likewise a levy on those goods, not a tax a purchase line can carry a code for. See 'From Qatar' in docs/international.md.",
+    "source": "gta-laws",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 20
+  }
+]
