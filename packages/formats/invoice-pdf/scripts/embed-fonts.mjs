@@ -25,15 +25,23 @@ const FILES = [
 ];
 
 /**
- * The words `scripts/check-no-private-data.mjs` refuses anywhere in the
- * repository, read from it. Base64 is random text, and a few hundred kilobytes
- * of it spell one of them by chance: the text is cut in pieces, and a piece
- * never holds one whole.
+ * The words the guards of the repository refuse anywhere in it, read from
+ * them: `scripts/check-no-private-data.mjs` and
+ * `scripts/check-no-competitor-names.mjs`, which spells each of its words as
+ * an array of letters. Base64 is random text, and a few hundred kilobytes of
+ * it spell one of them by chance: the text is cut in pieces, and a piece never
+ * holds one whole.
  */
 const deny = await (async () => {
-  const guard = await readFile(new URL('../../../../scripts/check-no-private-data.mjs', import.meta.url), 'utf8');
-  const list = /const DENY = \[([^\]]*)\]/.exec(guard)?.[1] ?? '';
-  return [...list.matchAll(/'([^']+)'/g)].map((m) => m[1].toLowerCase());
+  const scripts = new URL('../../../../scripts/', import.meta.url);
+  const privateData = await readFile(new URL('check-no-private-data.mjs', scripts), 'utf8');
+  const list = /const DENY = \[([^\]]*)\]/.exec(privateData)?.[1] ?? '';
+  const words = [...list.matchAll(/'([^']+)'/g)].map((m) => m[1].toLowerCase());
+  const names = await readFile(new URL('check-no-competitor-names.mjs', scripts), 'utf8');
+  for (const letters of names.matchAll(/\[((?:\s*'[a-z]',?)+)\s*\]/g)) {
+    words.push([...letters[1].matchAll(/'([a-z])'/g)].map((m) => m[1]).join(''));
+  }
+  return words;
 })();
 
 /** Pieces of at most 1,000 characters, cut inside any word of `deny`: across two pieces it is not spelt. */
