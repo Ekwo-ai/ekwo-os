@@ -2376,3 +2376,26 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Kuwait
+--
+-- Not a Member State and a third country of the Directive: the common system
+-- of VAT reaches a defined territory of the European Union and nowhere else.
+-- Kuwait signed the GCC framework agreement on VAT but has enacted no value
+-- added tax and no selective (excise) tax law, so `vat_prefix` is null, for
+-- the reason it is null on the Hong Kong row: there is no VAT identification
+-- number to prefix.
+-- ---------------------------------------------------------------------------
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('KW', 'iso_3166_1', 'Kuwait', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Kuwait is a third country to it. Kuwait has enacted no value added tax and no general sales tax: its four-year fiscal plan for 2026-2030 adopts none, and the GCC framework agreement on VAT it signed has never been transposed into a Kuwaiti law. Direct taxes are levied instead: the income tax on foreign corporate bodies (Decree No. 3 of 1955, as amended by Law No. 2 of 2008) and, for the multinational groups in scope, the domestic minimum top-up tax of Decree-Law No. 157 of 2024.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

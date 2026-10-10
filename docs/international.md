@@ -6596,3 +6596,40 @@ texts only.
 **Language.** Arabic is `defaults.language` and English is the declared
 translation, as for `packs/bh` and `packs/om`; labels are English in the data
 and the Arabic wording is left to a reviewer.
+
+## From Kuwait
+
+`packs/kw/`, `community`, seed 143: a second jurisdiction with no turnover
+tax, built on the format of `packs/hk/`. No tax report, no `tax_payable` role,
+two `not_subject` codes (`KW-S-NA`, `KW-P-NA`), a golden `vat_return.json`
+with empty boxes. No generic test needed a fix and no tax was invented.
+
+**The 2025 reform is a trap, not a VAT.** Decree-Law No. 157 of 2024 and
+Ministerial Decision No. 55 of 2025 create a 15% domestic minimum top-up tax
+for large multinational groups, in place of income tax, zakat and the National
+Labour Support Tax for them. It is a tax on a group's profit and has no
+invoice-level expression.
+
+**Left out of the pack, no tax code**: the 15% income tax on foreign corporate
+bodies (Decree No. 3 of 1955, Law No. 2 of 2008), the 5% retention on contract
+payments until a tax clearance, zakat (Law No. 46 of 2006), the National
+Labour Support Tax (Law No. 19 of 2000), the 1% KFAS contribution, GCC customs
+duties, social security, and the Pillar Two top-up tax itself.
+
+**Sources not opened.** `mof.gov.kw` and `kuna.net.kw` refused connection, so
+the absence of a VAT is documented from secondary sources (the 2026-2030
+fiscal plan reported by VATupdate); the four tax laws above were not opened;
+Commercial Law article 32 was read on lawskw.com, not the Gazette.
+
+**Socle gaps, as for Hong Kong**: `documents.tax_point` has no honest value in
+a country without a turnover tax (`invoice_date` is a convention); the
+languages mechanism cannot say that labels are natively English under an
+Arabic default (the Oman approach is reused: labels in English, `en.json` a
+mirror, `defaults.language` `ar`); the format has no OCI statement for full
+IFRS, so only the balance sheet and the income statement are declared.
+
+**A third decimal does not survive a document line.** KWD has three decimals
+(fils) and the currency row says so, yet a golden line priced at 42.125 posted
+as 42.13 in the trial balance. The goldens of `packs/bh/` and `packs/om/`
+never use a third digit, so the gap went unseen; the Kuwait scenario therefore
+sticks to multiples of 0.01. Not patched: the core is not this pack's to change.

@@ -1,0 +1,169 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "KW",
+  "name": "Kuwait",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 143,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "commercial-law-68-1980",
+        "title": "Commercial Law, Decree-Law No. 68 of 1980 (Arabic text, articles 31 and 32 on keeping the books and correspondence)",
+        "publisher": "Laws of Kuwait (lawskw.com), reproducing the Official Gazette text",
+        "url": "https://lawskw.com/section/%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "ifrs-kuwait-profile",
+        "title": "IFRS Standards — Application Around the World, Jurisdictional Profile: Kuwait (last updated 16 June 2016; cites Ministerial Decree No. 18 of 1990 as amended by No. 101 of 2008)",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/publications/jurisdictions/pdf-profiles/kuwait-ifrs-profile.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "dmtt-executive-regulations",
+        "title": "Domestic Minimum Top-up Tax — Executive Regulations (Decree-Law No. 157 of 2024; Ministerial Decision No. 55 of 2025)",
+        "publisher": "KPMG Kuwait (secondary source: the Ministry of Finance site could not be opened)",
+        "url": "https://kpmg.com/kw/en/insights/2025/06/domestic-minimum-top-up-tax-executive-by-laws.html",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "fiscal-plan-no-vat",
+        "title": "Kuwait keeps VAT off the table: no adoption in the 2026-2030 fiscal plan",
+        "publisher": "VATupdate (secondary source: no official statement could be opened)",
+        "url": "https://www.vatupdate.com/2026/07/24/kuwait-keeps-vat-off-the-table-no-adoption-in-the-2026-2030-fiscal-plan/",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "mof-tax-services",
+        "title": "Tax Services System (TCRS) — Ministry of Finance, Tax Department",
+        "publisher": "Ministry of Finance of Kuwait",
+        "url": "https://www.mof.gov.kw",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "KWD",
+    "language": "ar",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Kuwait reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "KW-IFRS-SFP",
+        "KW-IFRS-IS"
+      ],
+      "legal_reference": "Kuwait prescribes no chart of accounts, as far as this pack's research could establish. What is prescribed is the reporting framework: the IFRS Foundation's Jurisdictional Profile for Kuwait records Ministerial Decree No. 18 of 1990, amended by No. 101 of 2008, and states that the Standards are required of every company under the Commercial Companies Law and of other institutions, not only listed ones, and that Kuwait has not adopted the IFRS for SMEs Standard — so this chart ties into full IFRS statements. The chart is this pack's own construction: four digits, blocked so that each range reaches one line of the statement of financial position and the income statement. It carries accounts for the direct charges a Kuwaiti company bears (income tax, zakat, the National Labour Support Tax, the KFAS contribution, the 5% contract retention, the end-of-service indemnity) and no tax-clearing account, because there is no turnover tax to clear — see 'From Kuwait' in docs/international.md.",
+      "source": "ifrs-kuwait-profile"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Kuwait levies no value added tax, goods and services tax or general sales tax (the 2026-2030 fiscal plan adopts none), so no tax statute conditions anything on an invoice number. The Commercial Law (Decree-Law No. 68 of 1980), article 31, only requires a merchant to keep copies of the correspondence it sends and everything it receives, invoices included, and article 32 fixes how long: the original journal and inventory book ten years from their closing, the correspondence and documents five years. `numbering` is therefore `free`; `number_format` is a convention this pack proposes. Article 32 was read on lawskw.com, not on the Official Gazette.",
+        "source": "commercial-law-68-1980"
+      },
+      "payment_terms": {
+        "legal_reference": "No payment term between businesses and no rate of late-payment interest on a commercial debt was found in the sources this pack could open; both fields are empty and the terms are a matter of contract. A reviewer should confirm that the Civil Code's general rule on default interest was not missed.",
+        "source": "commercial-law-68-1980"
+      },
+      "tax_point": {
+        "legal_reference": "This field has nothing to describe in Kuwait: it names the day a country's general rule makes its own turnover tax chargeable, and Kuwait charges none. `invoice_date` is declared as the closest general commercial convention, not read from a text; see 'From Kuwait' in docs/international.md.",
+        "source": "commercial-law-68-1980"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Kuwaiti text this pack could open obliges a business to issue or accept an electronic invoice, and no Peppol Authority is listed for Kuwait (OpenPeppol list of Peppol Authorities, not re-opened on 2026-10-10: this rests on the pack's earlier research and should be re-checked). With no value added tax there is no tax invoice for a mandate to attach to. `profile`, `party_scheme` and `vat_scheme` are therefore null.",
+    "source": "commercial-law-68-1980"
+  }
+}

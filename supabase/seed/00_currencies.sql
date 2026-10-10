@@ -90,5 +90,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('ZMW', 'Zambian kwacha', 'K', 2),
   ('BMD', 'Bermudian dollar', '$', 2),
   ('KYD', 'Cayman Islands dollar', 'CI$', 2),
-  ('QAR', 'Qatari riyal', 'QR', 2)
+  ('QAR', 'Qatari riyal', 'QR', 2),
+  ('KWD', 'Kuwaiti dinar', E'د.ك', 3)
 on conflict (code) do nothing;

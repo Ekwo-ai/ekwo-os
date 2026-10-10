@@ -1,0 +1,54 @@
+[
+  {
+    "code": "KW-S-NA",
+    "name": "Sale, not subject to any tax on turnover",
+    "description": "Every sale a Kuwaiti business makes — domestic or exported",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "The sale side: nothing a Kuwaiti business sells carries a tax to collect. Kuwait has enacted no value added tax, goods and services tax or general sales tax: the GCC framework agreement on VAT, signed by Kuwait, has never been transposed into a Kuwaiti law, no selective (excise) tax law has been promulgated either, and the 2026-2030 fiscal plan adopts neither (VATupdate, consulted 2026-10-10 — a secondary source; mof.gov.kw could not be opened). The 2025 reform is not a VAT: Decree-Law No. 157 of 2024 creates a domestic minimum top-up tax of 15% for large multinational groups, for fiscal years opened from 1 January 2025 (Executive Regulations: Ministerial Decision No. 55 of 2025), in place of income tax, zakat and the National Labour Support Tax for those groups (KPMG Kuwait). What else is levied — income tax of 15% on foreign corporate bodies (Decree No. 3 of 1955, as amended by Law No. 2 of 2008), a 5% retention on contract payments until a tax clearance is issued, zakat of 1% (Law No. 46 of 2006), the National Labour Support Tax of 2.5% (Law No. 19 of 2000), the 1% KFAS contribution, GCC customs duties — is a tax on profit, on a payment or on the border, not on an invoice line, and none is modelled (those laws were not opened; they are cited from the lead's brief and the secondary sources above). See 'From Kuwait' in docs/international.md.",
+    "source": "fiscal-plan-no-vat",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "KW-P-NA",
+    "name": "Purchase, not subject to any tax on turnover",
+    "description": "Every purchase a Kuwaiti business books — domestic or imported",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "The purchase side of KW-S-NA: nothing a Kuwaiti business buys carries a tax to recover. Kuwait has enacted no value added tax, goods and services tax or general sales tax: the GCC framework agreement on VAT, signed by Kuwait, has never been transposed into a Kuwaiti law, no selective (excise) tax law has been promulgated either, and the 2026-2030 fiscal plan adopts neither (VATupdate, consulted 2026-10-10 — a secondary source; mof.gov.kw could not be opened). The 2025 reform is not a VAT: Decree-Law No. 157 of 2024 creates a domestic minimum top-up tax of 15% for large multinational groups, for fiscal years opened from 1 January 2025 (Executive Regulations: Ministerial Decision No. 55 of 2025), in place of income tax, zakat and the National Labour Support Tax for those groups (KPMG Kuwait). What else is levied — income tax of 15% on foreign corporate bodies (Decree No. 3 of 1955, as amended by Law No. 2 of 2008), a 5% retention on contract payments until a tax clearance is issued, zakat of 1% (Law No. 46 of 2006), the National Labour Support Tax of 2.5% (Law No. 19 of 2000), the 1% KFAS contribution, GCC customs duties — is a tax on profit, on a payment or on the border, not on an invoice line, and none is modelled (those laws were not opened; they are cited from the lead's brief and the secondary sources above). See 'From Kuwait' in docs/international.md. Customs duties on imports (GCC common customs tariff) are not modelled.",
+    "source": "fiscal-plan-no-vat",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 20
+  }
+]
