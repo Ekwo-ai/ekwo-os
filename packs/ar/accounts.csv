@@ -19,6 +19,7 @@ code,parent,type,reconcilable,name,sequence
 115,110,asset_current,false,Créditos fiscales,150
 1151,115,asset_current,false,IVA Crédito Fiscal,160
 1152,115,asset_current,true,IVA Saldo a Favor - Técnico,170
+1153,115,asset_current,false,IVA Crédito Fiscal - Prestaciones del exterior a computar,175
 116,110,asset_current,false,Bienes de cambio,180
 1161,116,asset_current,false,Materias primas,181
 1162,116,asset_current,false,Productos en proceso de elaboración,182
@@ -66,6 +67,7 @@ code,parent,type,reconcilable,name,sequence
 2132,213,liability_current,true,IVA a Pagar,350
 2133,213,liability_current,false,Impuesto a las Ganancias a pagar,360
 2134,213,liability_current,false,Ingresos Brutos a pagar,370
+2135,213,liability_current,false,IVA por prestaciones del exterior a ingresar,375
 214,210,liability_current,false,Anticipos de clientes,380
 215,210,liability_current,false,Provisiones,390
 220,200,liability_non_current,false,Pasivo no corriente,400

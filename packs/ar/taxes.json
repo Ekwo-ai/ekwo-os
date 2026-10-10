@@ -193,5 +193,30 @@
         { "type": "tax", "account": "1151", "box": "CFIMP" }
       ]
     }
+  },
+  {
+    "code": "AR-P-EXT",
+    "name": "Prestaciones realizadas en el exterior y utilizadas en el país",
+    "description": "Impuesto que el responsable inscripto prestatario liquida e ingresa por cada prestación de servicios realizada en el exterior cuya utilización o explotación efectiva se lleva a cabo en el país, y que computa como crédito fiscal recién en el período fiscal inmediato siguiente al del hecho imponible",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "1999-01-01",
+    "legal_reference": "Ley de Impuesto al Valor Agregado, art. 1, inciso d) — el impuesto se aplica sobre: \"d) Las prestaciones comprendidas en el inciso e) del artículo 3°, realizadas en el exterior cuya utilización o explotación efectiva se lleve a cabo en el país, cuando los prestatarios sean sujetos del impuesto por otros hechos imponibles y revistan la calidad de responsables inscriptos\"; art. 4, inciso g) — son sujetos pasivos del impuesto quienes, según su texto, \"Sean prestatarios en los casos previstos en el inciso d) del artículo 1º\"; art. 5, inciso h) — el hecho imponible se perfecciona \"en el momento en el que se termina la prestación o en el del pago total o parcial del precio, el que fuere anterior\"; art. 28, primer párrafo, para la alícuota del 21 %. Resolución General (AFIP) 549/1999, art. 1 — el prestatario determina el impuesto correspondiente a cada uno de esos hechos imponibles y lo ingresa \"dentro de los DIEZ (10) días hábiles administrativos siguientes a la fecha del perfeccionamiento\" de cada uno, por depósito con el concepto \"IVA por prestaciones del exterior\" (art. 2, inciso c), sustituido por la Resolución General (AFIP) 658/1999); no es un débito fiscal de la declaración jurada mensual. Ley de Impuesto al Valor Agregado, art. 12, último párrafo — el cómputo del crédito fiscal procede cuando los hechos imponibles se perfeccionaron respecto del prestador, \"excepto cuando dicho crédito provenga de las prestaciones a que se refiere el inciso d), del artículo 1º, en cuyo caso su cómputo procederá en el período fiscal inmediato siguiente a aquel en el que se perfeccionó el hecho imponible que lo origina\"; Resolución General (AFIP) 549/1999, art. 7 — el impuesto ingresado \"será computable [...] como crédito fiscal en la declaración jurada correspondiente al período fiscal inmediato siguiente a aquél en el que se haya perfeccionado el hecho imponible que lo origina\". Por eso el impuesto se debita en la cuenta 1153, a computar, y se acredita en la cuenta 2135, a ingresar, sin ninguna grilla de crédito fiscal en el período del comprobante: el formato no puede llevar el crédito a la declaración del período siguiente, y el traspaso de 1153 a 1151 en ese período es un asiento manual — ver README.md. No hay categoría EN 16931 que registrar (el comprobante del prestador del exterior no se rige por esa norma) ni código de exención",
+    "source": "liva",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "PCEXT" },
+        { "type": "tax", "account": "1153" },
+        { "type": "tax", "factor": -100, "account": "2135" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "PCEXT", "box_factor": -100 },
+        { "type": "tax", "account": "1153" },
+        { "type": "tax", "factor": -100, "account": "2135" }
+      ]
+    }
   }
 ]

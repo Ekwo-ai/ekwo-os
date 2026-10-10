@@ -159,6 +159,14 @@
       "source": "liva"
     },
     {
+      "box": "PCEXT",
+      "kind": "base",
+      "name": "Prestaciones realizadas en el exterior y utilizadas en el país (art. 1, inciso d)) — informativa",
+      "sequence": 185,
+      "legal_reference": "Ley de Impuesto al Valor Agregado, art. 1, inciso d), y art. 5, inciso h) — el precio neto de las prestaciones realizadas en el exterior cuya utilización o explotación efectiva se lleva a cabo en el país, recibidas por un responsable inscripto, en el período en que se perfeccionó el hecho imponible. Grilla informativa de este paquete, fuera de DEBFIS y de CREDFIS: el impuesto se ingresa por separado dentro de los diez días hábiles administrativos siguientes a cada hecho imponible (Resolución General (AFIP) 549/1999, arts. 1 y 2) y se computa como crédito fiscal recién en el período fiscal inmediato siguiente (art. 12, último párrafo, y Resolución General (AFIP) 549/1999, art. 7) — ver README.md",
+      "source": "liva"
+    },
+    {
       "box": "CREDFIS",
       "kind": "total",
       "name": "Crédito fiscal del período",

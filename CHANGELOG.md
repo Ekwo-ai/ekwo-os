@@ -85,6 +85,24 @@ somewhere has already run it.
   Nothing writes it yet: `docs/filing-proofs.md` evaluates it as a second,
   signed layer, with its costs.
 
+- **`packs/ar` 0.2.0: the tax on services received from abroad.** A
+  responsable inscripto who buys a service performed abroad and used in
+  Argentina owes the tax on it (Ley de IVA, art. 1, inciso d), and art. 4,
+  inciso g)), pays it within ten business days of each taxable event outside
+  the monthly return (Resolución General (AFIP) 549/1999), and computes it as
+  crédito fiscal only in the following period (art. 12, last paragraph). The
+  new `AR-P-EXT` (`foreign_services_received`, 21 %) puts the base in an
+  informational box `PCEXT`, debits the tax to a new `1153`, a credit not yet
+  computable, and credits it to a new `2135`, the tax to pay, with no box of
+  crédito fiscal in the month of the invoice. Moving the credit to `1151` in
+  the following period is a manual entry, because the format cannot date a
+  box one period after its document; the README says so, explains
+  inciso e) — digital services bought by somebody who is not a responsable
+  inscripto, where a payment intermediary perceives the tax under Resolución
+  General (AFIP) 4240/2018, which the pack does not post — and puts a
+  supplier abroad on `2112`. The golden year gains April and one such
+  purchase.
+
 ### Changed
 
 - **The privacy page says when Ekwo reads your books.** Version 1.1 of

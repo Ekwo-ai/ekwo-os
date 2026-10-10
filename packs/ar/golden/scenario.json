@@ -6,7 +6,8 @@
   "periods": [
     { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
     { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
-    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" },
+    { "code": "2026-04", "from": "2026-04-01", "to": "2026-04-30" }
   ],
   "statements": ["AR-ESP", "AR-ER"],
   "contacts": [
@@ -14,7 +15,8 @@
     { "ref": "cliente-exterior", "name": "Southern Cone Imports LLC", "type": "customer", "country": "US" },
     { "ref": "proveedor-mercaderias", "name": "Mayorista San Martín S.R.L.", "type": "supplier", "country": "AR" },
     { "ref": "proveedor-servicios", "name": "Servicios Integrales del Litoral S.A.", "type": "supplier", "country": "AR" },
-    { "ref": "despachante-aduana", "name": "Despachante de Aduana Puerto Nuevo", "type": "supplier", "country": "AR" }
+    { "ref": "despachante-aduana", "name": "Despachante de Aduana Puerto Nuevo", "type": "supplier", "country": "AR" },
+    { "ref": "proveedor-exterior", "name": "Altiplano Cloud Services Inc.", "type": "supplier", "country": "US" }
   ],
   "documents": [
     {
@@ -125,6 +127,16 @@
       "why": "Una importación definitiva de mercaderías liquidada con el despacho de importación: la base de la grilla PCIMP y el crédito fiscal de la grilla CFIMP.",
       "lines": [
         { "name": "Importación definitiva de mercaderías", "quantity": 1, "unit_price": 400000, "tax": "AR-P-IMP", "account": "511" }
+      ]
+    },
+    {
+      "ref": "C6",
+      "type": "purchase_invoice",
+      "contact": "proveedor-exterior",
+      "date": "2026-04-14",
+      "why": "Una suscripción de software prestada desde el exterior y utilizada en el país por la empresa, responsable inscripta (art. 1, inciso d)): la base de la grilla informativa PCEXT, el impuesto debitado en 1153, a computar, y acreditado en 2135, a ingresar por separado — sin débito ni crédito fiscal en la declaración de abril, porque el crédito recién se computa en el período inmediato siguiente (art. 12, último párrafo).",
+      "lines": [
+        { "name": "Suscripción mensual de servicios de software en la nube", "quantity": 1, "unit_price": 250000, "tax": "AR-P-EXT", "account": "533" }
       ]
     }
   ],
