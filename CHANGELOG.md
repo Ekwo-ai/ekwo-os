@@ -120,6 +120,23 @@ somewhere has already run it.
   right to object to the second, and the confidentiality of what is read are
   written beside it. Self-hosted Ekwo OS is unchanged: nothing reaches Ekwo.
 
+### Fixed
+
+- **A self-assessed purchase tax debits what it deducts and credits what it
+  owes** in Chile, Romania and Czechia. Six taxes booked the two halves of one
+  reverse charge on the wrong sides: the deductible VAT was credited and the
+  VAT owed debited, so both balances came out short by the tax and the balance
+  sheet by twice that. `CL-P-FSR-19` (2102/1105), `RO-P-ICG-21`, `RO-P-ICS-21`,
+  `RO-P-EXT-21` (4427/4426), `CZ-P-VOP` and `CZ-P-PN-STAVBY` (3431/3433) now
+  carry the positive factor on the asset and `-100` on the liability, like
+  `DE-P-DRITT-19`, on the invoice and on the credit note; each posting keeps
+  its box, so no return moves. The Czech credit note also stops booking both
+  halves on one side. `ekwo pack check` refuses the reversed shape: a purchase
+  tax whose two tax postings are one asset and one liability, with the
+  positive factor on the liability. Packs `cl` 0.1.1, `ro` 0.2.1, `cz` 0.2.1;
+  a company already holding one of these taxes sees the postings under
+  *review* in `ekwo pack upgrade`, and an entry already posted stays as it was.
+
 ## [0.11.1] — 2026-10-07
 
 ### Fixed

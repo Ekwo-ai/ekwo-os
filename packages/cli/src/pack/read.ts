@@ -3248,6 +3248,7 @@ function crossReferences(manifest: Manifest, charts: PackChart[], taxes: PackTax
           }
         }
       }
+      issues.push(...selfAssessedSides(tax, chart));
     }
   }
   for (const [role, code] of Object.entries(manifest.defaults.journal_roles ?? {})) {
@@ -3331,6 +3332,43 @@ function crossReferences(manifest: Manifest, charts: PackChart[], taxes: PackTax
           });
         }
       }
+    }
+  }
+  return issues;
+}
+
+/**
+ * A tax the buyer self-assesses books it twice: the tax it may deduct, an
+ * asset, and the tax it owes, a liability. On a purchase a positive factor
+ * keeps the side of the base, the debit, and a negative one takes the credit
+ * (`post_document`), so the positive posting is the asset and the negative one
+ * the liability — `+100` on the deductible account, `-100` on the one owed.
+ * Written the other way round, the books credit the deductible tax and debit
+ * the tax owed, and every return still balances, so nothing else notices.
+ *
+ * Only that paired shape is read: one tax posting on an asset account, one on
+ * a liability account, opposite signs. Some charts hold deductible tax under a
+ * liability class, and a single tax posting on one says nothing about sides.
+ */
+function selfAssessedSides(tax: PackTax, chart: PackChart): Issue[] {
+  if (tax.scope !== 'purchase') return [];
+  const types = new Map(chart.accounts.map((a) => [a.code, a.type]));
+  const issues: Issue[] = [];
+  for (const [kind, postings] of Object.entries(tax.postings)) {
+    const taxPostings = postings.filter((p) => p.type === 'tax');
+    if (taxPostings.length !== 2) continue;
+    const typeOf = (p: PackPosting) => (p.account === null ? '' : (types.get(p.account) ?? ''));
+    const asset = taxPostings.find((p) => typeOf(p).startsWith('asset_'));
+    const liability = taxPostings.find((p) => typeOf(p).startsWith('liability_'));
+    if (asset === undefined || liability === undefined) continue;
+    if (liability.factor > 0 && asset.factor < 0) {
+      issues.push({
+        path: `taxes.json ${tax.code}.${kind}`,
+        message:
+          `the positive posting is on liability ${liability.account} and the negative one on asset ${asset.account} ` +
+          `in chart ${chart.code}: a self-assessed purchase tax debits the tax it deducts and credits the tax it owes, ` +
+          'so the asset takes the positive factor and the liability the negative one',
+      });
     }
   }
   return issues;

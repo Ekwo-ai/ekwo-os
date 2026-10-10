@@ -479,6 +479,14 @@ The postings of one side share out the tax of the group, which is rounded once
 (EN 16931 BR-CO-14); the last posting of each side takes the remainder, so two
 halves of 0,63 come out as 0,32 and 0,31 rather than 0,32 twice.
 
+On a purchase a positive `factor` books on the side of the base, the debit,
+and a negative one on the other side. A tax the buyer self-assesses — a
+reverse charge, an acquisition from another Member State, a service from
+abroad — therefore puts the positive posting on the tax it deducts and `-100`
+on the tax it owes, as `DE-P-DRITT-19` does (2244 and 6813). `ekwo pack check`
+refuses the reverse: a purchase tax whose two tax postings are one asset and
+one liability account, with the positive factor on the liability.
+
 `defaults.rounding_method` and `defaults.cash_rounding_unit` belong to the same
 rule: a pack says how its country rounds, and a pack that says nothing gets the
 column's own default. The compiler writes `default` rather than a value of its
