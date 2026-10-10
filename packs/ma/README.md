@@ -13,6 +13,7 @@ whether it is right. Currency MAD, the dirham, at two decimals.
 | What | Text | Where |
 |---|---|---|
 | Rates, exemptions, deduction, fait générateur, périodicité, art. 115 | Code général des impôts, édition 2026 | `finances.gov.ma` |
+| The fait générateur (art. 95) and the birth of the right to deduct (art. 101) | Taxe sur la valeur ajoutée, fiche de synthèse du Code général des impôts | `tax.gov.ma` (Direction générale des Impôts) |
 | The six sections of the return (A to F) and the télédéclaration | Guide de la Télé déclaration TVA (SIMPL-TVA) | `portail.tax.gov.ma` |
 | The 2024-2026 convergence of the rates | Note synthétique des mesures fiscales, loi de finances pour 2026 (loi n° 50-25) | `finances.gov.ma` |
 | The chart of accounts, the two statements | Code général de normalisation comptable (CGNC), rendu obligatoire par le dahir n° 1-92-138 du 25 décembre 1992 (loi n° 9-88) | `befec.ma` (copie non officielle) |
@@ -65,11 +66,23 @@ with access to the consolidated Code should read this pack's `taxes.json` and
   that deadline exactly (108 gives the periodicity, not necessarily the
   deposit date itself) is not pinned down**, and a reader
   who has the consolidated Code to hand should confirm it.
-- **The fait générateur is encaissement by default** (art. 95); a taxpayer may
-  opt for *les débits*, invoicing standing in for collection from the moment
-  the option is filed. The pack reads `invoice_if_issued`, which is the
-  derogation and not the rule — the golden scenario does not model the option
-  itself, only its ordinary rule.
+- **The fait générateur is encaissement by default** (art. 95), and the pack
+  says so: `documents.tax_point` is `payment_date`, and the sales codes
+  `MA-S-20` and `MA-S-10-ADD` are `cash_basis`. Their tax waits on `44558`
+  "État - TVA facturée non encore encaissée" and reaches `4455` and the
+  return — base and tax — in the month of each collection, in proportion to
+  what was collected. A taxpayer that has opted for *les débits* (declared
+  before 1 January, or within thirty days of starting business) uses
+  `MA-S-20-DEB` and `MA-S-10-ADD-DEB` instead, declared on the invoice. The
+  choice is the company's and is made by the code it posts, not by the pack.
+- **The right to deduct arises on payment** (art. 101): the deductible
+  purchase codes `MA-P-20`, `MA-P-10` and `MA-P-20-IMMO` are `cash_basis`
+  too, waiting on `34558` "État - TVA récupérable sur factures non encore
+  payées" until the supplier is paid, whatever regime either party is under.
+  A credit note follows the same rule: the tax it cancels leaves the return
+  when it is settled — refunded, or matched against the invoice it credits.
+  The art. 115 self-assessment stays on the invoice, and exports and exempt
+  sales carry no tax to wait for and are declared on the invoice.
 - **The chart of accounts is the CGNC's own numbering** — classes 1 to 5 for
   the balance sheet, 6 and 7 for the income statement — but **this pack's
   `accounts.csv` groups several official postes of the passif circulant

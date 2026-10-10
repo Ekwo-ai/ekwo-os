@@ -1,6 +1,6 @@
 {
   "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
-  "name": "Deux mois de livres d'une société marocaine imposable à la TVA au régime mensuel — ventes au taux normal et au taux réduit, exportation, vente exonérée sans droit à déduction, achats déductibles et non déductible, prestation d'un fournisseur étranger non établi.",
+  "name": "Deux mois de livres d'une société marocaine imposable à la TVA au régime mensuel et au régime de l'encaissement de droit commun — ventes au taux normal et au taux réduit, exportation, vente exonérée sans droit à déduction, achats déductibles et non déductible, prestation d'un fournisseur étranger non établi.",
   "fiscal_year": { "name": "Exercice 2026", "start": "2026-01-01", "end": "2026-12-31" },
   "periods": [
     { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
@@ -22,7 +22,7 @@
       "type": "sale_invoice",
       "contact": "CUST-DOM",
       "date": "2026-01-10",
-      "why": "Vente de marchandises au taux normal de 20 %, taxe facturée sur le compte 4455.",
+      "why": "Vente de marchandises au taux normal de 20 % sous le régime de l'encaissement (art. 95) : la taxe attend sur le compte 44558 et seule la part encaissée en janvier (PAY-2026-0001) est déclarée.",
       "lines": [
         { "name": "Ordinateurs portables", "quantity": 10, "unit_price": 8000, "account": "7111", "tax": "MA-S-20" }
       ]
@@ -32,7 +32,7 @@
       "type": "sale_invoice",
       "contact": "CUST-DOM",
       "date": "2026-01-12",
-      "why": "Prestation de restauration taxée au taux réduit de 10 % avec droit à déduction (art. 99-B-1°).",
+      "why": "Prestation de restauration taxée au taux réduit de 10 % avec droit à déduction (art. 99-B-1°), non encaissée : rien n'est encore exigible.",
       "lines": [
         { "name": "Repas d'affaires", "quantity": 1, "unit_price": 5000, "account": "7124", "tax": "MA-S-10-ADD" }
       ]
@@ -62,7 +62,7 @@
       "type": "sale_credit_note",
       "contact": "CUST-DOM",
       "date": "2026-02-05",
-      "why": "Avoir sur la facture SI-2026-0001 pour deux ordinateurs portables retournés.",
+      "why": "Avoir sur la facture SI-2026-0001 pour deux ordinateurs portables retournés : il réduit une créance dont la taxe n'a pas été encaissée, et ne modifie donc aucune déclaration.",
       "lines": [
         { "name": "Ordinateurs portables retournés", "quantity": 2, "unit_price": 8000, "account": "7111", "tax": "MA-S-20" }
       ]
@@ -72,7 +72,7 @@
       "type": "purchase_invoice",
       "contact": "SUPP-BIENS",
       "date": "2026-01-08",
-      "why": "Achat de marchandises destinées à la revente, TVA déductible sur charges au taux normal (art. 101).",
+      "why": "Achat de marchandises destinées à la revente, TVA déductible sur charges au taux normal, déduite au mois de son paiement intégral (art. 101-2, PAY-2026-0002).",
       "lines": [
         { "name": "Ordinateurs portables (achat)", "quantity": 10, "unit_price": 6000, "account": "6111", "tax": "MA-P-20" }
       ]
@@ -82,7 +82,7 @@
       "type": "purchase_invoice",
       "contact": "SUPP-SERV",
       "date": "2026-01-14",
-      "why": "Achat de nuitées d'hébergement touristique, TVA déductible sur charges au taux réduit de 10 %.",
+      "why": "Achat de nuitées d'hébergement touristique au taux réduit de 10 %, non payé : la taxe attend sur le compte 34558 et n'est pas encore déductible.",
       "lines": [
         { "name": "Nuitées d'hôtel", "quantity": 1, "unit_price": 4000, "account": "6131", "tax": "MA-P-10" }
       ]
@@ -92,7 +92,7 @@
       "type": "purchase_invoice",
       "contact": "SUPP-IMMO",
       "date": "2026-01-18",
-      "why": "Achat de matériel informatique immobilisé, TVA déductible sur immobilisations (art. 101 et 104).",
+      "why": "Achat de matériel informatique immobilisé (art. 101 et 104), non payé : la TVA sur immobilisations n'est pas encore déductible.",
       "lines": [
         { "name": "Serveur informatique", "quantity": 1, "unit_price": 50000, "account": "233", "tax": "MA-P-20-IMMO" }
       ]
@@ -122,7 +122,7 @@
       "type": "purchase_credit_note",
       "contact": "SUPP-BIENS",
       "date": "2026-02-12",
-      "why": "Avoir du fournisseur sur un ordinateur portable défectueux retourné.",
+      "why": "Avoir du fournisseur sur un ordinateur portable défectueux retourné, après le paiement intégral de PI-2026-0001 : la déduction qu'il annule attend sur le compte 34558 et ne sort des déductions qu'au règlement de l'avoir, qui n'intervient pas sur ces deux mois.",
       "lines": [
         { "name": "Ordinateur portable retourné au fournisseur", "quantity": 1, "unit_price": 6000, "account": "6111", "tax": "MA-P-20" }
       ]

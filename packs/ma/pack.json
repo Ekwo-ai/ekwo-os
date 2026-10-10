@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MA",
   "name": "Maroc",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "schema_min": "20260923110000",
   "seed_sequence": 84,
   "released_at": "2026-09-25",
@@ -16,6 +16,14 @@
         "url": "https://www.finances.gov.ma/Publication/dgi/2025/CGI-2026-FR.pdf",
         "consulted_on": "2026-09-25",
         "kind": "law"
+      },
+      {
+        "key": "dgi-tva-fiche",
+        "title": "Taxe sur la valeur ajoutée — fiche de synthèse des dispositions du Code général des impôts (champ d'application, fait générateur, droit à déduction)",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://www.tax.gov.ma/wps/wcm/connect/689f3a4d-98e4-4bb2-9ba2-d5fdd37c9625/TVA.pdf?MOD=AJPERES&CACHEID=689f3a4d-98e4-4bb2-9ba2-d5fdd37c9625",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
       },
       {
         "key": "simpl-guide",
@@ -113,15 +121,15 @@
     "number_format": "{CODE}/{YYYY}/{NNNN}",
     "legal_payment_days": null,
     "late_payment_reference": null,
-    "tax_point": "invoice_if_issued",
+    "tax_point": "payment_date",
     "references": {
       "numbering": {
         "legal_reference": "Code général des impôts, art. 145-III — tout achat de biens ou de services effectué par un contribuable auprès d'un fournisseur soumis à la taxe professionnelle doit être appuyé d'une facture régulière comportant, entre autres mentions, un numéro pris dans une série continue et ininterrompue. Le paragraphe n'impose ni forme ni remise à zéro annuelle, que le format proposé ici (`{CODE}/{YYYY}/{NNNN}`) permet sans l'exiger. Le libellé exact du paragraphe III n'a pas pu être extrait du PDF officiel pour ce pack et a été recoupé sur plusieurs commentaires professionnels concordants — voir la section « From Morocco » de docs/international.md.",
         "source": "cgi2026"
       },
       "tax_point": {
-        "legal_reference": "Code général des impôts, art. 95 — le fait générateur de la taxe est constitué par l'encaissement total ou partiel du prix des marchandises, des travaux ou des services (régime de l'encaissement, applicable de plein droit) ; les redevables qui en font la déclaration avant le 1er janvier, ou dans les trente jours de leur début d'activité, sont autorisés à acquitter la taxe d'après le régime des débits, la facturation valant alors fait générateur. invoice_if_issued dit le régime des débits sur option, qui devance l'encaissement de droit commun dès qu'il est retenu ; le pack ne code pas l'option elle-même, qui est un choix de l'entreprise et non une règle du texte.",
-        "source": "cgi2026"
+        "legal_reference": "Code général des impôts, art. 95 — le fait générateur de la taxe est constitué par l'encaissement total ou partiel du prix des marchandises, des travaux ou des services : c'est le régime de droit commun, et payment_date le dit. Les redevables qui en font la déclaration avant le 1er janvier, ou dans les trente jours qui suivent le début de leur activité, sont autorisés à acquitter la taxe d'après le débit, qui coïncide avec la facturation ou l'inscription en comptabilité de la créance ; les encaissements partiels et les livraisons effectuées avant l'établissement du débit restent taxables. Les taxes de vente au taux de 20 % et de 10 % portent cash_basis (MA-S-20, MA-S-10-ADD) ; le régime des débits a ses propres codes (MA-S-20-DEB, MA-S-10-ADD-DEB), que choisit l'entreprise qui a opté. Côté achats, le droit à déduction prend naissance au paiement de la facture (art. 101), ce que portent aussi les codes d'achat déductibles. En cas de règlement par compensation ou d'échange, et pour les livraisons à soi-même, le fait générateur est la livraison ou l'exécution du service, cas que le pack ne distingue pas.",
+        "source": "dgi-tva-fiche"
       }
     }
   },

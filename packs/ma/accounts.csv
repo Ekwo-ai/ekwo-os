@@ -75,6 +75,7 @@ code,parent,type,reconcilable,name,sequence
 3455,345,asset_current,false,État - TVA récupérable,740
 34551,3455,asset_current,false,État - TVA récupérable sur immobilisations,750
 34552,3455,asset_current,false,État - TVA récupérable sur charges,760
+34558,3455,asset_current,false,État - TVA récupérable sur factures non encore payées,765
 3456,345,asset_current,true,État - crédit de TVA,770
 3458,345,asset_current,false,Autres comptes débiteurs de l'État,780
 346,34,asset_current,false,Comptes d'associés débiteurs,790
@@ -102,6 +103,7 @@ code,parent,type,reconcilable,name,sequence
 4452,445,liability_current,false,État - Impôts et taxes assimilées,1010
 4453,445,liability_current,false,État - Impôt sur les résultats,1020
 4455,445,liability_current,false,État - TVA facturée,1030
+44558,4455,liability_current,false,État - TVA facturée non encore encaissée,1035
 4456,445,liability_current,true,État - TVA due,1040
 4458,445,liability_current,false,Autres comptes créditeurs de l'État,1050
 446,44,liability_current,false,Comptes d'associés créditeurs,1060

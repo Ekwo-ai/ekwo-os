@@ -1,15 +1,17 @@
 [
   {
     "code": "MA-S-20",
-    "name": "Ventes taux normal 20 %",
+    "name": "Ventes taux normal 20 % — encaissement",
     "description": "Ventes et prestations de services imposables au taux normal",
     "rate": 20,
     "scope": "sale",
     "treatment": "domestic",
     "valid_from": "2026-01-01",
-    "legal_reference": "Code général des impôts, art. 99-A — taux normal de 20 %, taux applicable à toutes les opérations imposables que la loi ne soumet pas expressément à un autre taux. Ancien taux réduit de 14 %, encore en vigueur en 2023 sur certaines opérations, entièrement convergé vers 20 % ou 10 % par le calendrier de convergence de la loi de finances pour 2024 (loi n° 55-23), poursuivi par la loi de finances pour 2025 (loi n° 60-24) et achevé par la loi de finances pour 2026 (loi n° 50-25) : à la date de ce pack, l'article 99 ne connaît plus que le taux normal de 20 % (A) et le taux réduit de 10 % (B).",
+    "legal_reference": "Code général des impôts, art. 99-A — taux normal de 20 %, taux applicable à toutes les opérations imposables que la loi ne soumet pas expressément à un autre taux. Ancien taux réduit de 14 %, encore en vigueur en 2023 sur certaines opérations, entièrement convergé vers 20 % ou 10 % par le calendrier de convergence de la loi de finances pour 2024 (loi n° 55-23), poursuivi par la loi de finances pour 2025 (loi n° 60-24) et achevé par la loi de finances pour 2026 (loi n° 50-25) : à la date de ce pack, l'article 99 ne connaît plus que le taux normal de 20 % (A) et le taux réduit de 10 % (B). Régime de l'encaissement, de droit commun (art. 95) : la taxe est exigible à l'encaissement total ou partiel du prix ; elle attend sur le compte 44558 et passe au compte 4455 et dans la déclaration du mois de l'encaissement, à proportion de ce qui est encaissé. Pour une entreprise ayant opté pour le régime des débits, le code MA-S-20-DEB.",
     "source": "cgi2026",
     "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "44558",
     "postings": {
       "invoice": [
         { "type": "base", "box": "CA20" },
@@ -24,14 +26,64 @@
     "sequence": 10
   },
   {
+    "code": "MA-S-20-DEB",
+    "name": "Ventes taux normal 20 % — régime des débits",
+    "description": "Ventes et prestations de services imposables au taux normal",
+    "rate": 20,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Code général des impôts, art. 99-A — taux normal de 20 %, taux applicable à toutes les opérations imposables que la loi ne soumet pas expressément à un autre taux. Ancien taux réduit de 14 %, encore en vigueur en 2023 sur certaines opérations, entièrement convergé vers 20 % ou 10 % par le calendrier de convergence de la loi de finances pour 2024 (loi n° 55-23), poursuivi par la loi de finances pour 2025 (loi n° 60-24) et achevé par la loi de finances pour 2026 (loi n° 50-25) : à la date de ce pack, l'article 99 ne connaît plus que le taux normal de 20 % (A) et le taux réduit de 10 % (B). Régime des débits, sur option (art. 95, alinéa 2) : la taxe est exigible à la facturation, pour le redevable qui en a fait la déclaration avant le 1er janvier ou dans les trente jours du début de son activité. Pour le régime de l'encaissement de droit commun, le code MA-S-20.",
+    "source": "cgi2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA20" },
+        { "type": "tax", "account": "4455", "box": "TVA20" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA20", "box_factor": -100 },
+        { "type": "tax", "account": "4455", "box": "TVA20", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 15
+  },
+  {
     "code": "MA-S-10-ADD",
-    "name": "Ventes taux réduit 10 % (avec droit à déduction)",
+    "name": "Ventes taux réduit 10 % (avec droit à déduction) — encaissement",
     "description": "Opérations de restauration et autres opérations visées à l'article 99-B taxées à 10 % avec droit à déduction",
     "rate": 10,
     "scope": "sale",
     "treatment": "domestic",
     "valid_from": "2026-01-01",
-    "legal_reference": "Code général des impôts, art. 99-B-1° — taux réduit de 10 % avec droit à déduction, notamment pour les opérations de restauration. La loi de finances pour 2026 (loi n° 50-25) achève la convergence de plusieurs opérations auparavant taxées à 14 % ou à 7 % (transport, eau, sucre raffiné) vers ce taux de 10 % ; seules les catégories que le pack a pu vérifier par recoupement de plusieurs commentaires professionnels concordants sont reprises ici, faute d'avoir pu extraire le texte intégral de l'article 99 — voir la section « From Morocco » de docs/international.md.",
+    "legal_reference": "Code général des impôts, art. 99-B-1° — taux réduit de 10 % avec droit à déduction, notamment pour les opérations de restauration. La loi de finances pour 2026 (loi n° 50-25) achève la convergence de plusieurs opérations auparavant taxées à 14 % ou à 7 % (transport, eau, sucre raffiné) vers ce taux de 10 % ; seules les catégories que le pack a pu vérifier par recoupement de plusieurs commentaires professionnels concordants sont reprises ici, faute d'avoir pu extraire le texte intégral de l'article 99 — voir la section « From Morocco » de docs/international.md. Régime de l'encaissement, de droit commun (art. 95) : la taxe est exigible à l'encaissement total ou partiel du prix ; elle attend sur le compte 44558 et passe au compte 4455 et dans la déclaration du mois de l'encaissement, à proportion de ce qui est encaissé. Pour une entreprise ayant opté pour le régime des débits, le code MA-S-10-ADD-DEB.",
+    "source": "cgi2026",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "44558",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "CA10" },
+        { "type": "tax", "account": "4455", "box": "TVA10" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "CA10", "box_factor": -100 },
+        { "type": "tax", "account": "4455", "box": "TVA10", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "MA-S-10-ADD-DEB",
+    "name": "Ventes taux réduit 10 % (avec droit à déduction) — régime des débits",
+    "description": "Opérations de restauration et autres opérations visées à l'article 99-B taxées à 10 % avec droit à déduction",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Code général des impôts, art. 99-B-1° — taux réduit de 10 % avec droit à déduction, notamment pour les opérations de restauration. La loi de finances pour 2026 (loi n° 50-25) achève la convergence de plusieurs opérations auparavant taxées à 14 % ou à 7 % (transport, eau, sucre raffiné) vers ce taux de 10 % ; seules les catégories que le pack a pu vérifier par recoupement de plusieurs commentaires professionnels concordants sont reprises ici, faute d'avoir pu extraire le texte intégral de l'article 99 — voir la section « From Morocco » de docs/international.md. Régime des débits, sur option (art. 95, alinéa 2) : la taxe est exigible à la facturation, pour le redevable qui en a fait la déclaration avant le 1er janvier ou dans les trente jours du début de son activité. Pour le régime de l'encaissement de droit commun, le code MA-S-10-ADD.",
     "source": "cgi2026",
     "vat_category": "S",
     "postings": {
@@ -45,7 +97,7 @@
       ]
     },
     "kind": "vat",
-    "sequence": 20
+    "sequence": 25
   },
   {
     "code": "MA-S-EXP",
@@ -99,9 +151,11 @@
     "scope": "purchase",
     "treatment": "domestic",
     "valid_from": "2026-01-01",
-    "legal_reference": "Code général des impôts, art. 101 — la taxe dont les redevables peuvent opérer la déduction est celle qui a grevé les éléments du prix d'une opération imposable, figurant sur des factures répondant aux conditions de l'article 146 ; art. 99-A pour le taux.",
+    "legal_reference": "Code général des impôts, art. 101 — la taxe dont les redevables peuvent opérer la déduction est celle qui a grevé les éléments du prix d'une opération imposable, figurant sur des factures répondant aux conditions de l'article 146 ; art. 99-A pour le taux. Le droit à déduction prend naissance au paiement, partiel ou intégral, de la facture (art. 101-2), quel que soit le régime du fournisseur ou de l'acheteur : la taxe attend sur le compte 34558 et passe au compte de TVA récupérable et dans la déclaration du mois du paiement, à proportion de ce qui est payé.",
     "source": "cgi2026",
     "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "34558",
     "postings": {
       "invoice": [
         { "type": "tax", "account": "34552", "box": "DEDCH" }
@@ -120,9 +174,11 @@
     "scope": "purchase",
     "treatment": "domestic",
     "valid_from": "2026-01-01",
-    "legal_reference": "Code général des impôts, art. 101 pour le droit à déduction ; art. 99-B-1° pour le taux réduit de 10 % avec droit à déduction.",
+    "legal_reference": "Code général des impôts, art. 101 pour le droit à déduction ; art. 99-B-1° pour le taux réduit de 10 % avec droit à déduction. Le droit à déduction prend naissance au paiement, partiel ou intégral, de la facture (art. 101-2), quel que soit le régime du fournisseur ou de l'acheteur : la taxe attend sur le compte 34558 et passe au compte de TVA récupérable et dans la déclaration du mois du paiement, à proportion de ce qui est payé.",
     "source": "cgi2026",
     "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "34558",
     "postings": {
       "invoice": [
         { "type": "tax", "account": "34552", "box": "DEDCH" }
@@ -141,9 +197,11 @@
     "scope": "purchase",
     "treatment": "domestic",
     "valid_from": "2026-01-01",
-    "legal_reference": "Code général des impôts, art. 101 — déduction de la taxe ayant grevé les biens constituant des immobilisations ; art. 104 — la déduction est calculée dès le mois de l'acquisition, sous réserve des régularisations qu'entraîne une cession ou un changement d'affectation ; art. 99-A pour le taux.",
+    "legal_reference": "Code général des impôts, art. 101 — déduction de la taxe ayant grevé les biens constituant des immobilisations ; art. 104 — régularisations qu'entraîne une cession ou un changement d'affectation ; art. 99-A pour le taux. Le droit à déduction prend naissance au paiement, partiel ou intégral, de la facture (art. 101-2), quel que soit le régime du fournisseur ou de l'acheteur : la taxe attend sur le compte 34558 et passe au compte de TVA récupérable et dans la déclaration du mois du paiement, à proportion de ce qui est payé.",
     "source": "cgi2026",
     "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "34558",
     "postings": {
       "invoice": [
         { "type": "tax", "account": "34551", "box": "DEDIMMO" }
