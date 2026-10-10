@@ -1,0 +1,262 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "ZW",
+  "name": "Zimbabwe",
+  "version": "0.1.0",
+  "schema_min": "20260929141500",
+  "seed_sequence": 147,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act [Chapter 23:12], consolidated to Act 13 of 2023: ss. 2, 6, 8, 10, 11, 12, 13, 13A, 15, 16, 20, 21, 23, 27, 28 and 38",
+        "publisher": "Government of Zimbabwe, consolidated text published by the Zimbabwe Investment and Development Agency (ZIDA) eRegulations portal",
+        "url": "https://eregulations.zidainvest.com/media/Value%20Added%20Tax%20Act%20Chapter%202312.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "finance-act-2025",
+        "title": "Finance Act, 2025 (Act No. 7 of 2025), Part III — Value Added Tax: ss. 34 (rate of 15.5 % from 1 January 2026), 35 (fiscal tax invoice and fiscal device), 37 and 38 (zero rating and exemptions), 43 (imported services paid in US dollars), 44 (digital services withholding tax) and 45 (TIN and QR code on a tax invoice)",
+        "publisher": "Parliament of Zimbabwe, published by Veritas",
+        "url": "https://www.veritaszim.net/sites/veritas_d/files/Finance%20Act%2C%20Act%20No.%207%20of%202025.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "vat7-return",
+        "title": "VAT 7 Return — Return for Remittance of Value Added Tax (DTF 98, issue 3, version 2, 5 September 2023): Parts I to V",
+        "publisher": "Zimbabwe Revenue Authority",
+        "url": "https://www.zimra.co.zw/downloads/category/9-domestic-taxes?download=3391%3Avat-7-return",
+        "consulted_on": "2026-10-10",
+        "kind": "form"
+      },
+      {
+        "key": "public-notice-7-2026",
+        "title": "Public Notice No. 7 of 2026 — Implications of change of VAT rate on return submission in TaRMS (15 % to 15.5 % from 1 January 2026, by category)",
+        "publisher": "Zimbabwe Revenue Authority",
+        "url": "https://www.zimra.co.zw/public-notices?download=4441%3Apublic-notice-07-of-2026-change-of-vat-rate-on-submission-of-return-category-a&start=20",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "public-notice-11-2026",
+        "title": "Public Notice No. 11 of 2026 — Submission of VAT returns and payment, Categories A and C: return by the 10th and payment by the 15th under Statutory Instrument 81 of 2025; input tax only on fiscal tax invoices valid on the FDMS",
+        "publisher": "Zimbabwe Revenue Authority",
+        "url": "https://www.zimra.co.zw/public-notices?download=4447%3Apublic-notice-11-of-2026-submission-of-vat-returns-and-payment-categories-a-c-due-dates-february-2026&start=20",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "public-notice-63-2025",
+        "title": "Public Notice No. 63 of 2025 — Roll-out and implementation of the TaRMS/FDMS integration: automatic input tax schedule, the input fields still filled by hand, tax clearance conditional on fiscalisation",
+        "publisher": "Zimbabwe Revenue Authority",
+        "url": "https://www.zimra.co.zw/public-notices?download=4410%3Apublic-notice-63-of-2025-tarms-fdms-integration",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "public-notice-30-2025",
+        "title": "Public Notice No. 30 of 2025 — Upgrade of fiscal devices to transmit buyer details to the Fiscalisation Data Management System; buyer details on fiscal tax invoices, debit and credit notes",
+        "publisher": "Zimbabwe Revenue Authority",
+        "url": "https://zimra.co.zw/public-notices?download=4340%3Apublic-notice-30-of-2025-buyer-details-on-fdms-fiscal-tax-invoice",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "fdms-api",
+        "title": "Fiscal Device Gateway API Specification, v7.2 — device registration, fiscal days, receipt submission and signature, the printed fiscal invoice and its QR code",
+        "publisher": "Zimbabwe Revenue Authority",
+        "url": "https://www.zimra.co.zw/downloads/9-domestic-taxes?download=3807%3Afiscalisation-api-documentation",
+        "consulted_on": "2026-10-10",
+        "kind": "standard"
+      },
+      {
+        "key": "tarms-portal",
+        "title": "TaRMS Self-Service Portal — where the VAT 7 return is filed and the input tax schedule is selected",
+        "publisher": "Zimbabwe Revenue Authority",
+        "url": "https://mytaxselfservice.zimra.co.zw",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      },
+      {
+        "key": "fdms-portal",
+        "title": "FDMS validation portal — where a fiscal tax invoice, debit or credit note is checked as valid",
+        "publisher": "Zimbabwe Revenue Authority",
+        "url": "https://fdms.zimra.co.zw",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      },
+      {
+        "key": "si-15-2024",
+        "title": "Value Added Tax (General) (Amendment) Regulations, 2024 (No. 67), Statutory Instrument 15 of 2024 — First Schedule substituted: exemption of certain goods or services and imports",
+        "publisher": "Government of Zimbabwe, published by Veritas",
+        "url": "https://www.veritaszim.net/node/6850",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
+      },
+      {
+        "key": "si-60-2024",
+        "title": "Presidential Powers (Temporary Measures) (Amendment of Reserve Bank of Zimbabwe Act and Issue of Zimbabwe Gold Notes and Coins) Regulations, 2024, Statutory Instrument 60 of 2024 — section 44D of the Reserve Bank of Zimbabwe Act, the ZiG as legal tender",
+        "publisher": "Government of Zimbabwe, published by Veritas",
+        "url": "https://www.veritaszim.net/node/6945",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
+      },
+      {
+        "key": "iso-4217",
+        "title": "ISO 4217 currency code list, list one — ZIMBABWE, Zimbabwe Gold, ZWG, 924, two minor units",
+        "publisher": "SIX Financial Information, maintenance agency of ISO 4217",
+        "url": "https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list-one.xml",
+        "consulted_on": "2026-10-10",
+        "kind": "standard"
+      },
+      {
+        "key": "ifac-zimbabwe",
+        "title": "Zimbabwe — member profile: the Public Accountants and Auditors Board, IFRS Accounting Standards and the IFRS for SMEs Accounting Standard adopted, Statutory Instrument 137 of 2026 replacing Statutory Instrument 41 of 2019",
+        "publisher": "International Federation of Accountants",
+        "url": "https://www.ifac.org/about-ifac/membership/profile/zimbabwe",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "ZWG",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Zimbabwe reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "ZW-PAAB-SFP",
+        "ZW-PAAB-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Zimbabwe. The Companies and Other Business Entities Act [Chapter 24:31] requires accounting records and annual financial statements, and the Public Accountants and Auditors Board prescribes IFRS Accounting Standards and the IFRS for SMEs Accounting Standard for them. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-based statements, with the accounts a Zimbabwean company keeps — a ZWG current account and a US dollar foreign currency account side by side, VAT output and input tax, the net VAT settlement account, import VAT owed to ZIMRA at the border, VAT withheld by appointed agents, PAYE and AIDS levy, NSSA and ZIMDEF, withholding tax, intermediated money transfer tax and the irrecoverable VAT of s. 16(2) of the Value Added Tax Act.",
+      "source": "ifac-zimbabwe"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 20(4)(d) — a tax invoice carries an individual serialised number and its date of issue; s. 20(1), proviso (a) — no more than one tax invoice for each taxable supply. The Act asks for a serial number, not for a series without gaps restarting each year, so `numbering` is `sequential`. The fiscal device keeps its own counters (a receipt counter per fiscal day and a global number since activation, Fiscal Device Gateway API v7.2) and the accounting system's own number travels to the FDMS as `invoiceNo`, which must be unique for the taxpayer.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 8(1), as substituted by Act 1 of 2019 — a supply takes place at the earliest of the issue of an invoice, the receipt of a payment, the removal of a movable good, the taking of possession of an immovable good, and the performance of a service. That is a five-way earliest test; Ekwo's closed vocabulary expresses a two-way one, and `earliest_of_delivery_or_payment` is the nearest value. An invoice issued before delivery and payment, which s. 8(1)(a) still makes the time of supply, is recorded as a gap in the README.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "not_a_fiscal_tax_invoice",
+        "applies_when": "always",
+        "text": "This document is not a fiscal tax invoice: it was not printed by a fiscal device registered with the ZIMRA Fiscalisation Data Management System and carries no FDMS QR code or verification code. Only the fiscal tax invoice issued by the supplier's fiscal device supports a claim of input tax.",
+        "sequence": 10,
+        "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 2(1), \"tax invoice\", as substituted by the Finance Act, 2025, s. 35 — a tax invoice is a fiscal tax invoice printed by a fiscal device, whose transaction details match those transmitted to the FDMS and show valid on its validation portal; s. 20(4)(a), (h) and (i), as amended by s. 45 of the same Act from 1 January 2026 — it bears the words \"fiscal tax invoice\", the taxpayer identification number and a QR code or authentication code. Ekwo cannot sign a document with a fiscal device, so the sentence says what the document is not, rather than letting a buyer take it for one.",
+        "source": "finance-act-2025"
+      },
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Zero-rated supply under section 10 of the Value Added Tax Act [Chapter 23:12].",
+        "sequence": 20,
+        "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 10(1)(a) and (2) — exports of goods and the services the subsection lists are charged at zero per centum; s. 10(3) — the operator keeps the documentary proof the Commissioner accepts. Zimbabwe is outside the European Union's common system and carries no VATEX code, so the sentence names the section the zero rate is claimed under.",
+        "source": "vat-act"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt supply under section 11 of the Value Added Tax Act [Chapter 23:12]: no VAT is charged.",
+        "sequence": 30,
+        "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 11 — the supplies exempt from the tax of s. 6(1)(a), including financial services, residential letting, passenger transport, education, medical services and the goods and services prescribed by the First Schedule to the Value Added Tax (General) Regulations.",
+        "source": "vat-act"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Zimbabwean statute obliges a business to exchange a structured electronic invoice with another business in the sense Ekwo's vocabulary gives the word: there is no Peppol authority, no published profile and no scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What Zimbabwe has instead is fiscalisation: since the Finance Act, 2025, s. 35, a tax invoice under the Value Added Tax Act is a fiscal tax invoice printed by a fiscal device (an electronic tax register, fiscal printer, signature device, fuel device or virtual fiscal device or software application approved by the Commissioner) whose details are transmitted to and signed by ZIMRA's Fiscalisation Data Management System, and which must show valid on the FDMS validation portal. The device signs each receipt, submits it to the Fiscal Device Gateway API and prints a QR code that points to ZIMRA's verification page (Fiscal Device Gateway API Specification v7.2). That is reporting to the tax administration from a certified device, not an exchange between two businesses; the gap is recorded in the README and in docs/international.md, and the socle is not patched to fit it.",
+    "source": "fdms-api"
+  }
+}

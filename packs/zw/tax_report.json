@@ -1,0 +1,239 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "ZW-VAT7",
+  "name": "VAT 7 — Return for Remittance of Value Added Tax",
+  "period": [
+    "month",
+    "bimonth"
+  ],
+  "valid_from": "2023-09-05",
+  "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 27 — the tax period depends on the operator's category: Category A, two months ending in January, March, May, July, September and November; Category B, two months ending in February, April, June, August, October and December; Category C, one month, compulsory when taxable supplies exceed US$240,000 in twelve months or on request; Category D, farming operators with other approved periods. s. 28(1) — a return in the prescribed form, the VAT 7, is furnished for every period whether or not tax is payable. `bimonth` is anchored on January–February, which is Category B; a Category A operator (December–January, February–March…) is not expressible by this format and is recorded in the README. The category is ZIMRA's decision about the operator, so no period_default is declared and `ekwo init` asks.",
+  "source": "vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 10,
+    "legal_reference": "Finance (Due Dates for Submission of Returns and References to the Zimbabwe Dollar) Regulations, 2025 (Statutory Instrument 81 of 2025), as applied by ZIMRA Public Notice No. 11 of 2026: the VAT return is due on or before the 10th of the month after the tax period and the payment on or before the 15th. This overrides the twenty-fifth day of s. 28(1) of the Value Added Tax Act. The payment day (15th) is not carried by the format, which holds one deadline per form.",
+    "source": "public-notice-11-2026"
+  },
+  "boxes": [
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Line 9 — Supply of goods and/or services at standard rate — value of supply",
+      "sequence": 10,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part II, line 9 (office use code V09): value of supply of goods and services charged at the standard rate; credit and debit notes on those supplies are declared on line 18, not netted here.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Line 9 — Supply of goods and/or services at standard rate — output tax",
+      "sequence": 15,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part II, line 9: output tax on standard-rated supplies. Since the TaRMS configuration of the return for periods from January 2026 computes this line at 15.5 %, a period mixing 2025 and 2026 supplies is grossed up as ZIMRA Public Notice No. 7 of 2026 explains; the pack reports the tax as booked.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Line 10 — Supply of goods and/or services at 0 % — local",
+      "sequence": 20,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part II, line 10 (V12): zero-rated supplies made in Zimbabwe (Value Added Tax Act, s. 10).",
+      "source": "vat7-return"
+    },
+    {
+      "box": "10A",
+      "kind": "base",
+      "name": "Line 10(a) — Supply of goods and/or services at 0 % — exports",
+      "sequence": 25,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part II, line 10.a (V12): zero-rated exports of goods and services (Value Added Tax Act, s. 10(1)(a) and (2)).",
+      "source": "vat7-return"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Line 12 — Exempt supplies",
+      "sequence": 30,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part II, line 12 (V18): exempt supplies (Value Added Tax Act, s. 11).",
+      "source": "vat7-return"
+    },
+    {
+      "box": "13",
+      "kind": "base",
+      "name": "Line 13 — Imported services — value",
+      "sequence": 35,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part II, line 13 (V19): the value of imported services, to which the standard rate is applied (Value Added Tax Act, s. 6(1)(c) and s. 13).",
+      "source": "vat7-return"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Line 13 — Imported services — output tax",
+      "sequence": 36,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part II, line 13: the tax on imported services, at the standard rate. Section 13(1) of the Act also lets it be declared and paid within thirty days on the imported-services variant of the same form; the pack puts it on the period's return.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "18",
+      "kind": "base",
+      "name": "Line 18 — Debit/credit notes issued — value",
+      "sequence": 40,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part II, adjustments, line 18 (V30): debit and credit notes on supplies (Value Added Tax Act, s. 21). The form asks the consideration including VAT and applies the tax fraction; this row holds the value excluding VAT, so the consideration is this row plus the tax row.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "18",
+      "kind": "tax",
+      "name": "Line 18 — Debit/credit notes issued — tax",
+      "sequence": 45,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part II, line 18: the tax fraction of debit and credit notes issued; a credit note reduces output tax.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "20",
+      "kind": "total",
+      "name": "Line 20 — Total output tax [A]",
+      "sequence": 50,
+      "plus": [
+        "9:tax",
+        "13:tax",
+        "18:tax"
+      ],
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part II, line 20, total output tax [A]. The adjustments of lines 14 to 17 and 19 (sale in execution of a debt, change of use, bad debts recovered, motoring fringe benefits) are not posted by any tax of this pack and are entered by hand.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "21",
+      "kind": "base",
+      "name": "Line 21 — Domestic purchases at standard rate — value",
+      "sequence": 60,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 21 (V39): domestic goods and services purchased to make taxable supplies at the standard rate, on valid fiscal tax invoices.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "21",
+      "kind": "tax",
+      "name": "Line 21 — Domestic purchases at standard rate — input tax",
+      "sequence": 65,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 21: input tax on those purchases. From the return due 10 January 2026 TaRMS fills it from the fiscal tax invoices transmitted to the FDMS (Public Notice No. 63 of 2025).",
+      "source": "vat7-return"
+    },
+    {
+      "box": "21A",
+      "kind": "base",
+      "name": "Line 21(a) — Domestic purchases at 0 % — value",
+      "sequence": 70,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 21a (V39): domestic goods and services purchased at 0 %.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "23",
+      "kind": "base",
+      "name": "Line 23 — Imported goods at standard rate (excluding capital goods) — value",
+      "sequence": 80,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 23 (V42): imported goods to make taxable supplies, excluding capital goods, at the standard rate — the value on the bill of entry.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "23",
+      "kind": "tax",
+      "name": "Line 23 — Imported goods at standard rate — input tax",
+      "sequence": 85,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 23: import VAT paid to customs, filled by hand (Public Notice No. 63 of 2025).",
+      "source": "vat7-return"
+    },
+    {
+      "box": "24",
+      "kind": "base",
+      "name": "Line 24 — Imported capital goods — value",
+      "sequence": 90,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 24 (V45): imported capital goods to make taxable supplies.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "24",
+      "kind": "tax",
+      "name": "Line 24 — Imported capital goods — input tax",
+      "sequence": 95,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 24: input tax on imported capital goods, filled by hand (Public Notice No. 63 of 2025).",
+      "source": "vat7-return"
+    },
+    {
+      "box": "24A",
+      "kind": "base",
+      "name": "Line 24(a) — Domestic capital goods — value",
+      "sequence": 100,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 24a (V45): domestic capital goods purchased to make taxable supplies.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "24A",
+      "kind": "tax",
+      "name": "Line 24(a) — Domestic capital goods — input tax",
+      "sequence": 105,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 24a: input tax on domestic capital goods.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "25",
+      "kind": "base",
+      "name": "Line 25 — Exempt purchases — local",
+      "sequence": 110,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 25: exempt purchases made locally. Line 25a (exempt imports) is not posted by any tax of this pack.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "29",
+      "kind": "base",
+      "name": "Line 29 — Credit/debit notes received — value",
+      "sequence": 120,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, adjustments, line 29 (V57): credit and debit notes received on purchases; consideration including VAT on the form, value excluding VAT here.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "29",
+      "kind": "tax",
+      "name": "Line 29 — Credit/debit notes received — tax",
+      "sequence": 125,
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 29: the tax fraction of credit and debit notes received; a credit note received reduces input tax.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "IMS",
+      "kind": "tax",
+      "name": "VAT on imported services — input tax",
+      "sequence": 130,
+      "legal_reference": "ZIMRA Public Notice No. 63 of 2025, item 2(d): \"VAT on Imported Services\" is an input tax field of the VAT 7 return in TaRMS, filled by hand; the paper form of 2023 has no numbered line for it. Value Added Tax Act, s. 2(1), \"input tax\", (a)(iii).",
+      "source": "public-notice-63-2025"
+    },
+    {
+      "box": "30",
+      "kind": "total",
+      "name": "Line 30 — Total input tax [B]",
+      "sequence": 140,
+      "plus": [
+        "21:tax",
+        "23:tax",
+        "24:tax",
+        "24A:tax",
+        "29:tax",
+        "IMS:tax"
+      ],
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part III, line 30, total input tax [B]. Purchases by diplomats (lines 22, 23b, 24b) and the adjustments of lines 26 to 28 (change of use, bad debts written off) are not posted by this pack.",
+      "source": "vat7-return"
+    },
+    {
+      "box": "34",
+      "kind": "total",
+      "name": "Line 34 — Amount payable/refundable (A − B)",
+      "sequence": 150,
+      "plus": [
+        "20"
+      ],
+      "minus": [
+        "30"
+      ],
+      "legal_reference": "VAT 7 return (ZIMRA form DTF 98, issue 3, version 2, 5 September 2023), Part IV, lines 31 to 34: total output tax less total input tax. Line 33 (VAT withheld by appointed agents, credited on a certificate) and lines 35 to 39 (penalty, interest, credit brought forward) are entered on the return by hand; a positive amount is payable, a negative one refundable.",
+      "source": "vat7-return"
+    }
+  ]
+}

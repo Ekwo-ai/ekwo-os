@@ -1,0 +1,158 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Petty cash,10
+1010,,asset_cash,false,Current account — ZWG,20
+1020,,asset_cash,false,Fixed deposits placed for three months or less,30
+1030,,asset_cash,false,Foreign currency account — USD (nostro FCA),40
+1035,,asset_cash,false,Foreign currency account — other currencies,50
+1040,,asset_cash,false,Cash in transit — mobile money settlements,60
+1045,,asset_cash,false,Petty cash — USD,70
+1100,,asset_receivable,true,Trade receivables,80
+1110,,asset_current,false,Trade receivables — allowance for impairment,90
+1120,,asset_current,false,Other receivables,100
+1130,,asset_current,false,Amounts due from related companies,110
+1140,,asset_current,false,Deposits paid,120
+1150,,asset_current,false,VAT input tax,130
+1155,,asset_current,true,VAT refundable by ZIMRA — net of a filed return,140
+1160,,asset_current,false,Advances to staff,150
+1165,,asset_current,false,VAT withheld by customers appointed as agents — to be credited on the return,160
+1200,,asset_current,false,Inventories — goods for resale,170
+1210,,asset_current,false,Inventories — raw materials,180
+1220,,asset_current,false,Inventories — work in progress,190
+1230,,asset_current,false,Inventories — finished goods,200
+1300,,asset_current,false,Short-term investments,210
+1350,,asset_current,false,Current tax recoverable,220
+1355,,asset_current,false,Quarterly payments date (QPD) provisional tax paid,230
+1400,,asset_prepayments,false,Prepayments,240
+1410,,asset_prepayments,false,Accrued income,250
+1600,,asset_fixed,false,Land and buildings — cost,260
+1601,,asset_fixed,false,Land and buildings — accumulated depreciation,270
+1610,,asset_fixed,false,Leasehold improvements — cost,280
+1611,,asset_fixed,false,Leasehold improvements — accumulated depreciation,290
+1620,,asset_fixed,false,Plant and machinery — cost,300
+1621,,asset_fixed,false,Plant and machinery — accumulated depreciation,310
+1630,,asset_fixed,false,Office equipment — cost,320
+1631,,asset_fixed,false,Office equipment — accumulated depreciation,330
+1640,,asset_fixed,false,Computers — cost,340
+1641,,asset_fixed,false,Computers — accumulated depreciation,350
+1650,,asset_fixed,false,Furniture and fittings — cost,360
+1651,,asset_fixed,false,Furniture and fittings — accumulated depreciation,370
+1660,,asset_fixed,false,Motor vehicles — cost,380
+1661,,asset_fixed,false,Motor vehicles — accumulated depreciation,390
+1670,,asset_fixed,false,Right-of-use assets — cost,400
+1671,,asset_fixed,false,Right-of-use assets — accumulated depreciation,410
+1700,,asset_non_current,false,Investment property,420
+1750,,asset_fixed,false,Intangible assets — cost,430
+1751,,asset_fixed,false,Intangible assets — accumulated amortisation,440
+1760,,asset_fixed,false,Goodwill,450
+1800,,asset_non_current,false,Investments in associates,460
+1810,,asset_non_current,false,Investments in joint ventures,470
+1830,,asset_non_current,false,Long-term financial assets,480
+1840,,asset_non_current,false,Long-term deposits,490
+1900,,asset_non_current,false,Deferred tax assets,500
+2000,,liability_payable,true,Trade payables,510
+2010,,liability_current,false,Accrued expenses,520
+2020,,liability_current,false,Other payables,530
+2030,,liability_current,false,Amounts due to related companies,540
+2040,,liability_current,false,Deposits received from customers,550
+2100,,liability_current,false,VAT output tax,560
+2110,,liability_current,true,VAT payable to ZIMRA — net of a filed return,570
+2125,,liability_current,false,Import VAT payable to ZIMRA at the border,580
+2140,,liability_current,false,Withholding tax payable to ZIMRA,590
+2150,,liability_current,false,NSSA contributions payable,600
+2155,,liability_current,false,ZIMDEF levy payable,610
+2160,,liability_current,false,PAYE and AIDS levy payable to ZIMRA,620
+2165,,liability_current,false,VAT withheld from suppliers as an appointed agent — payable to ZIMRA,630
+2170,,liability_current,false,Excise duty payable to ZIMRA,640
+2175,,liability_current,false,Intermediated money transfer tax payable to ZIMRA,650
+2178,,liability_current,false,Digital services withholding tax payable to ZIMRA,660
+2180,,liability_current,false,Salaries payable,670
+2190,,liability_current,false,Directors' fees payable,680
+2200,,liability_current,false,Bank overdraft,690
+2210,,liability_current,false,Bank loans — current portion,700
+2220,,liability_current,false,Lease liabilities — current portion,710
+2230,,liability_current,false,Hire purchase — current portion,720
+2240,,liability_credit_card,false,Corporate credit card,730
+2250,,liability_current,false,Amounts due to directors,740
+2300,,liability_current,false,Current tax payable,750
+2350,,liability_current,false,Provision for unutilised leave,760
+2360,,liability_current,false,Other provisions — current,770
+2400,,liability_non_current,false,Bank loans — non-current portion,780
+2410,,liability_non_current,false,Lease liabilities — non-current portion,790
+2420,,liability_non_current,false,Hire purchase — non-current portion,800
+2430,,liability_non_current,false,Loans from shareholders and directors — non-current,810
+2500,,liability_non_current,false,Deferred tax liabilities,820
+2550,,liability_non_current,false,Provision for reinstatement costs,830
+2990,,liability_current,false,Suspense account,840
+3000,,equity,false,Share capital,850
+3010,,equity,false,Treasury shares,860
+3100,,equity,false,Other reserves,870
+3110,,equity,false,Foreign currency translation reserve,880
+3200,,equity_retained,false,Retained earnings,890
+3210,,equity_retained,false,Dividends paid,900
+4000,,income,false,Sales of goods,910
+4010,,income,false,Services rendered,920
+4020,,income,false,Export sales of goods,930
+4030,,income,false,Export of services,940
+4040,,income,false,Sales of goods — foreign currency,950
+4050,,income,false,Services rendered — foreign currency,960
+4500,,income_other,false,Interest income,970
+4510,,income_other,false,Dividend income,980
+4520,,income_other,false,Rental income — residential lease,990
+4530,,income_other,false,Government grants,1000
+4700,,income_other,false,Foreign exchange gains,1010
+4750,,income_other,false,Gain on disposal of property plant and equipment,1020
+4790,,income_other,false,Other income,1030
+5000,,expense_direct_cost,false,Purchases of goods for resale,1040
+5010,,expense_direct_cost,false,Freight inwards and import duties,1050
+5020,,expense_direct_cost,false,Subcontract costs,1060
+5100,,expense_direct_cost,false,Changes in inventories,1070
+6000,,expense,false,Salaries and wages,1080
+6010,,expense,false,Directors' remuneration,1090
+6020,,expense,false,Directors' fees,1100
+6030,,expense,false,NSSA contributions — employer,1110
+6040,,expense,false,ZIMDEF levy — expense,1120
+6050,,expense,false,Workers compensation insurance (NSSA),1130
+6060,,expense,false,Staff welfare,1140
+6070,,expense,false,Staff medical expenses and insurance,1150
+6080,,expense,false,Staff training,1160
+6200,,expense_depreciation,false,Depreciation of property plant and equipment,1170
+6210,,expense_depreciation,false,Depreciation of right-of-use assets,1180
+6220,,expense_depreciation,false,Amortisation of intangible assets,1190
+6300,,expense,false,Rent — short-term leases,1200
+6310,,expense,false,Utilities,1210
+6320,,expense,false,Repairs and maintenance,1220
+6330,,expense,false,Cleaning and security services,1230
+6340,,expense,false,Telephone and internet,1240
+6350,,expense,false,Software subscriptions,1250
+6360,,expense,false,Advertising and marketing,1260
+6370,,expense,false,Travelling,1270
+6380,,expense,false,Motor vehicle expenses,1280
+6390,,expense,false,Entertainment,1290
+6400,,expense,false,Subscriptions and memberships,1300
+6410,,expense,false,Insurance,1310
+6420,,expense,false,Professional fees,1320
+6430,,expense,false,Audit fees,1330
+6440,,expense,false,Company secretarial and registration fees,1340
+6450,,expense,false,Bank charges,1350
+6455,,expense,false,Intermediated money transfer tax (IMTT),1360
+6460,,expense,false,Printing and stationery,1370
+6470,,expense,false,Postage and courier,1380
+6480,,expense,false,Licences permits and local government fees,1390
+6485,,expense,false,Stamp duty,1400
+6490,,expense,false,Royalties,1410
+6500,,expense,false,Bad debts written off,1420
+6510,,expense,false,Impairment loss on trade receivables,1430
+6520,,expense,false,Irrecoverable VAT on imported services,1440
+6530,,expense,false,Irrecoverable input VAT,1450
+6900,,expense,false,Donations,1460
+6950,,expense,false,Foreign exchange losses,1470
+6960,,expense,false,Loss on disposal of property plant and equipment,1480
+6990,,expense,false,Rounding differences,1490
+7000,,expense,false,Interest on bank loans,1500
+7010,,expense,false,Interest on lease liabilities,1510
+7020,,expense,false,Hire purchase interest,1520
+7030,,expense,false,Interest on loans from related parties and others,1530
+8000,,expense,false,Current income tax expense,1540
+8005,,expense,false,AIDS levy on income tax,1550
+8010,,expense,false,Deferred tax expense,1560
+8020,,expense,false,Under or over provision of income tax in prior years,1570

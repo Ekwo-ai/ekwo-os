@@ -1,0 +1,606 @@
+[
+  {
+    "code": "ZW-S-15.5",
+    "name": "Sale, standard rate 15.5 %",
+    "description": "The general rate on a taxable supply of goods or services by a registered operator, from 1 January 2026",
+    "kind": "vat",
+    "rate": 15.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Finance Act [Chapter 23:04], Schedule to Chapter IV, Part I (\"General Rate of Value Added Tax\"), as amended by section 34 of the Finance Act, 2025 (Act No. 7 of 2025) with effect from 1 January 2026: \"fifteen comma five per centum\" replaces \"fifteen per centum\". Value Added Tax Act [Chapter 23:12], s. 6(1)(a) charges tax at the rate the Charging Act fixes on the value of every supply of goods or services by a registered operator in the course or furtherance of a trade; ZIMRA Public Notice No. 7 of 2026 applies 15.5 % to Categories A, B, C and D from 1 January 2026 and keeps 15 % for supplies whose time of supply fell on or before 31 December 2025.",
+    "source": "finance-act-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "ZW-S-15",
+    "name": "Sale, standard rate 15 % (to 31 December 2025)",
+    "description": "The general rate before 1 January 2026, for a supply whose time of supply fell in 2025 or earlier",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "valid_to": "2025-12-31",
+    "legal_reference": "Finance Act [Chapter 23:04], Schedule to Chapter IV, Part I, as it read from 1 January 2023 to 31 December 2025 — \"fifteen per centum\", replaced by fifteen comma five per centum from 1 January 2026 (Finance Act, 2025, s. 34). ZIMRA Public Notice No. 7 of 2026 confirms the 15 % for December 2025 and for any supply whose time of supply under s. 8 of the Value Added Tax Act fell on or before 31 December 2025. The 2023 start date is the Finance (No. 2) Act, 2022, which this pack did not open; it is recorded from ZIMRA's own notice on the change, and the code is closed, kept so that a document dated 2025 is taxed at the rate of its own date.",
+    "source": "public-notice-7-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 15
+  },
+  {
+    "code": "ZW-S-15-T",
+    "name": "Sale, 15 % — supply made in 2025, accounted for in 2026",
+    "description": "A supply whose time of supply fell on or before 31 December 2025, or a credit or debit note on it, booked in a 2026 period",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "ZIMRA Public Notice No. 7 of 2026, item 2, repeated in Public Notice No. 11 of 2026: a registered operator deemed by s. 8 of the Value Added Tax Act [Chapter 23:12] (time of supply) to have made a supply on or before 31 December 2025 at 15 %, and required to account for the output tax in a 2026 tax period, accounts for it at 15 % and grosses the value up on the TaRMS return, which is configured at 15.5 %. The same rate follows a credit or debit note issued in 2026 on such a supply (s. 21: the adjustment corrects the tax actually charged). The code is open because the notice sets no end; it is not a rate for a supply made in 2026.",
+    "source": "public-notice-7-2026",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 16
+  },
+  {
+    "code": "ZW-S-Z-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "Movable goods exported by the supplier, international transport, and services supplied to a non-resident outside Zimbabwe",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2004-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 10(1)(a) — movable goods supplied under a sale or instalment credit agreement and exported by the supplier are charged at zero per centum; s. 10(2)(a), (e), (k) and (l) — international transport of passengers or goods, transport and ancillary services supplied directly to a non-resident in connection with an export or import, and services supplied to a non-resident who is outside Zimbabwe when they are rendered; s. 10(3) — the operator keeps documentary proof acceptable to the Commissioner. Declared on line 10(a) of the VAT 7 return, \"Supply of goods and/or services at 0 % — Exports\". The export taxes of ss. 12B to 12J on unbeneficiated minerals, hides and similar goods are not this code and are not carried by the pack.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10A"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10A",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "ZW-S-Z-DOM",
+    "name": "Sale, zero-rated (local)",
+    "description": "A local supply the Act zero-rates without it leaving Zimbabwe: gold bars to the Reserve Bank or a registered bank, gold coins, and the services of s. 10(2) supplied locally",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2004-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 10(1)(f) — gold in bars, ingots, granules and similar unworked forms supplied to the Reserve Bank or a registered bank; s. 10(1)(i) — gold coins issued by the Reserve Bank; s. 10(2)(g)(iv) and (h) — the repair and handling of foreign-going aircraft, and the other services of s. 10(2) supplied in Zimbabwe. Declared on line 10 of the VAT 7 return, \"Supply of goods and/or services at 0 % — Local\". From 1 January 2026 the Finance Act, 2025, s. 37, repealed the zero rate of agricultural goods and services (s. 10(1)(g)), of prescribed medicines (s. 10(1)(j)) and of designated tourist facilities (s. 10(2)(q)), and narrowed the going-concern zero rate (s. 10(1)(e)) to a transfer to the Public Service Pension Fund: those supplies take ZW-S-EX (agricultural goods and medicines, now s. 11(k) and (l)) or the standard rate.",
+    "source": "finance-act-2025",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "ZW-S-EX",
+    "name": "Sale, exempt",
+    "description": "Financial services, residential letting, fare-paying passenger transport, education, medical services, and the goods the First Schedule to the VAT (General) Regulations exempts",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2004-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 11 — exempt from the tax of s. 6(1)(a): (a) financial services, other than short-term insurance commission; (c) accommodation in a dwelling let under an agreement; (d) leasehold land let for residential use; (f) transport of fare-paying passengers by road or rail; (g) pre-school, primary, secondary, university and technical education in a registered institution; (h) medical services; (i) services of an employee organisation for membership contributions; (j) the goods and services prescribed by regulations — the First Schedule to the Value Added Tax (General) Regulations, 2003, substituted by Statutory Instrument 15 of 2024, which lists the exempt basic commodities; and from 1 January 2026 (Finance Act, 2025, s. 38) (k) prescribed agricultural goods and services, (l) prescribed medicines and allied substances and (m) rural electrification funded by the Rural Electrification Fund. An exempt supply gives no right to deduct input tax. Declared on line 12 of the VAT 7 return.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "ZW-P-15.5",
+    "name": "Purchase, standard rate 15.5 %, deductible",
+    "description": "A local purchase at the general rate, acquired to make taxable supplies, on a valid fiscal tax invoice",
+    "kind": "vat",
+    "rate": 15.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 15 — the tax payable for a period is output tax less input tax; s. 2(1), \"tax invoice\", as substituted by the Finance Act, 2025, s. 35 — input tax is claimed on a fiscal tax invoice printed by a fiscal device, whose details match what was transmitted to the Fiscalisation Data Management System and which shows valid on its validation portal. Declared on line 21 of the VAT 7 return. From 1 January 2026 ZIMRA fills the input tax schedule from the FDMS (Public Notice No. 63 of 2025) and refuses an invoice that does not show \"Valid\" with the buyer's details (Public Notice No. 11 of 2026).",
+    "source": "finance-act-2025",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "21"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "21"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "29",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "29",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "ZW-P-15",
+    "name": "Purchase, standard rate 15 %, deductible (to 31 December 2025)",
+    "description": "A local purchase whose time of supply fell before 1 January 2026",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "valid_to": "2025-12-31",
+    "legal_reference": "Finance Act [Chapter 23:04], Schedule to Chapter IV, Part I, as it read from 1 January 2023 to 31 December 2025 — \"fifteen per centum\", replaced by fifteen comma five per centum from 1 January 2026 (Finance Act, 2025, s. 34). ZIMRA Public Notice No. 7 of 2026 confirms the 15 % for December 2025 and for any supply whose time of supply under s. 8 of the Value Added Tax Act fell on or before 31 December 2025. The 2023 start date is the Finance (No. 2) Act, 2022, which this pack did not open; it is recorded from ZIMRA's own notice on the change, and the code is closed, kept so that a document dated 2025 is taxed at the rate of its own date. Input tax on line 21 of the VAT 7 return.",
+    "source": "public-notice-7-2026",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "21"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "21"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "29",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "29",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 115
+  },
+  {
+    "code": "ZW-P-15-T",
+    "name": "Purchase, 15 % — supply made in 2025, accounted for in 2026",
+    "description": "A purchase whose time of supply fell on or before 31 December 2025, or a credit or debit note received on it, booked in a 2026 period",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "ZIMRA Public Notice No. 7 of 2026, item 2, repeated in Public Notice No. 11 of 2026: a registered operator deemed by s. 8 of the Value Added Tax Act [Chapter 23:12] (time of supply) to have made a supply on or before 31 December 2025 at 15 %, and required to account for the output tax in a 2026 tax period, accounts for it at 15 % and grosses the value up on the TaRMS return, which is configured at 15.5 %. The same rate follows a credit or debit note issued in 2026 on such a supply (s. 21: the adjustment corrects the tax actually charged). The code is open because the notice sets no end; it is not a rate for a supply made in 2026. Input tax on line 21, credit and debit notes on line 29.",
+    "source": "public-notice-7-2026",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "21"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "21"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "29",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "29",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 116
+  },
+  {
+    "code": "ZW-P-15.5-CAP",
+    "name": "Purchase of a capital good, 15.5 %, deductible",
+    "description": "A local purchase of a capital good used to make taxable supplies",
+    "kind": "vat",
+    "rate": 15.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 15, and the rate of the Finance Act, 2025, s. 34. The VAT 7 return declares domestic capital goods purchased to make taxable supplies on their own line, 24(a), apart from other domestic purchases (line 21).",
+    "source": "vat7-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "24A"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "24A"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "29",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "29",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 118
+  },
+  {
+    "code": "ZW-P-15.5-ND",
+    "name": "Purchase, standard rate 15.5 %, input tax not deductible",
+    "description": "Entertainment, and the other goods and services whose input tax s. 16(2) of the Act refuses",
+    "kind": "vat",
+    "rate": 15.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 16(2) — notwithstanding anything else in the Act, a registered operator may not deduct input tax on goods or services acquired for entertainment, unless it supplies entertainment for a consideration in the ordinary course of its trade, nor on the other items the subsection lists. The tax follows the expense to account 6530 and reaches no line of the return.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "ZW-P-Z",
+    "name": "Purchase, zero-rated (local)",
+    "description": "A local purchase charged at zero per centum by a registered operator",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2004-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 10 — no input tax arises on a supply charged at zero per centum. Declared on line 21(a) of the VAT 7 return, \"Domestic goods and/or services purchased to make taxable supplies at 0 %\".",
+    "source": "vat7-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "21A"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "21A",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "ZW-P-EX",
+    "name": "Purchase, exempt (local)",
+    "description": "Bank charges, insurance, residential rent and the other exempt supplies bought locally",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2004-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 11 — the supply is exempt, so there is no input tax. Declared on line 25 of the VAT 7 return, \"Exempt Purchases — Local\".",
+    "source": "vat7-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "25"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "25",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "ZW-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "VAT on goods entered for home consumption, collected by ZIMRA customs and claimed as input tax on the bill of entry",
+    "kind": "vat",
+    "rate": 15.5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 6(1)(b) and (2)(b) — tax is charged on the importation of goods and paid by the importer; s. 12(2) — on their customs value plus any duty other than surtax; s. 12(5) — collected under the Customs and Excise Act; s. 38(4)(b) — an operator who imports goods pays the tax in foreign currency. Input tax for a registered operator (s. 2(1), \"input tax\", (a)(ii)), declared on line 23 of the VAT 7 return, filled by hand from the bill of entry (Public Notice No. 63 of 2025). The tax is owed to ZIMRA at the border and not to the supplier, so it waits on 2125 until the bill of entry is paid.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "23"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "23"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "23",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "23",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "ZW-P-IMP-CAP",
+    "name": "Import of a capital good, VAT paid at the border",
+    "description": "VAT on a capital good imported to make taxable supplies",
+    "kind": "vat",
+    "rate": 15.5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 6(1)(b) and s. 12 as for ZW-P-IMP; line 24 of the VAT 7 return, \"Imported Capital Goods to make taxable supplies\", filled by hand (Public Notice No. 63 of 2025). The deferment of s. 12A for approved capital goods is not modelled.",
+    "source": "vat7-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "24"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "24"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "24",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "24",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 155
+  },
+  {
+    "code": "ZW-P-RC-SVC",
+    "name": "Imported service, tax paid by the recipient and claimed back",
+    "description": "A service supplied by a non-resident and used in Zimbabwe: the recipient declares and pays the tax, then deducts it as input tax",
+    "kind": "vat",
+    "rate": 15.5,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Value Added Tax Act [Chapter 23:12], s. 6(1)(c) and (2)(c) — tax is charged on the supply of imported services and paid by the recipient; s. 2(1), \"imported services\" — a supply by a non-resident to a resident to the extent it is used or consumed in Zimbabwe; s. 13(1) and (2) — declared and paid within thirty days of the earlier of the invoice and the payment; s. 13(6), inserted by the Finance Act, 2025, s. 43 — paid in United States dollars; s. 2(1), \"input tax\", (a)(iii), inserted by Act 3 of 2019 — the tax the operator pays on imported services is input tax. Output on line 13 of the VAT 7 return; the deduction is the TaRMS field \"VAT on Imported Services\", filled by hand (Public Notice No. 63 of 2025). Electronic services from a non-resident platform are charged under s. 13A and the digital services withholding tax, not here.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "13"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "13"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "IMS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "IMS",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 160
+  }
+]

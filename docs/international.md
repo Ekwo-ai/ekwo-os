@@ -135,3 +135,57 @@ today: **no pack is `reviewed` yet**, and some packs declare bank statement
 formats no reader in this repository parses yet — `ekwo pack check` warns about
 each one. A silence a pack cannot fill from an official text is stated as such
 rather than guessed.
+
+## From Zimbabwe
+
+**Fiscalisation is a device, not a network.** Since 1 January 2026 a tax
+invoice under the Value Added Tax Act [Chapter 23:12] is a fiscal tax invoice:
+printed by a fiscal device approved by ZIMRA, transmitted to and signed by the
+Fiscalisation Data Management System (FDMS), and shown valid on its portal
+(s. 2(1), as substituted by the Finance Act, 2025, s. 35). The device registers
+with a certificate, opens and closes fiscal days, signs every receipt (SHA-256,
+device key), submits it to the Fiscal Device Gateway API, keeps a daily counter
+and a global number, and prints a QR code built from ZIMRA's verification URL,
+the device ID, the date, the global number and a hash of the signature (API
+specification v7.2). Input tax is claimed only on such invoices, which TaRMS
+now pulls from the FDMS. The socle has no device certificate, no fiscal day,
+no signature and no QR code; the pack declares `einvoicing.obligation: none`,
+since nothing obliges an exchange between businesses, and every document
+carries a mention saying it is not a fiscal tax invoice. What would close the
+gap: a virtual fiscal device module that signs and submits each posted sale and
+credit note and stores the FDMS signature and QR code. Same family as Zambia
+(Smart Invoice), Kenya (eTIMS), Uganda (EFRIS) and Tanzania.
+
+**The buyer's telephone.** Section 20(4) and ZIMRA Public Notice No. 30 of 2025
+ask for the buyer's contact details on a fiscal tax invoice; the contact has a
+phone, the document view does not carry it.
+
+**Two currencies, one ledger.** The US dollar circulates beside the Zimbabwe
+Gold (ZWG). VAT received in foreign currency is paid in that currency, import
+VAT and the tax on imported services in foreign currency (s. 38(4), (4a),
+s. 13(6)), and Part V of the VAT 7 splits sales, purchases and the amount
+payable between foreign and local currency. A box adds up postings and cannot
+be filtered on the currency of the document, so Part V is not computed. The
+pack's default currency is ZWG and the company chooses its own at `init`. The
+golden format has no document currency either, so a scenario cannot show an
+invoice in USD beside one in ZWG.
+
+**Category A periods.** Section 27 assigns two-month periods ending in odd
+months (Category A) or even months (Category B). `bimonth` is anchored on
+January–February, which is Category B; Category A's December–January cannot be
+expressed.
+
+**Two deadlines.** The return is due on the 10th and the payment on the 15th
+(Statutory Instrument 81 of 2025); a form holds one deadline.
+
+**Credit notes on their own line.** The VAT 7 declares debit and credit notes
+as adjustments (lines 18 and 29) at the VAT-inclusive consideration. The pack
+routes credit-note postings there with the value net of tax; the form's
+consideration is value plus tax.
+
+**A time of supply of five clauses.** Section 8(1) takes the earliest of
+invoice, payment, removal, possession and performance; the format's nearest
+value is `earliest_of_delivery_or_payment`.
+
+**No TIN field.** Zimbabwe has a TIN (ten digits) and a VAT number (nine); the
+pack maps the TIN onto the registration number.

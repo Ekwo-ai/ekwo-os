@@ -1,0 +1,317 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Harare trading and services company, VAT-registered in Category C and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-08",
+      "from": "2026-08-01",
+      "to": "2026-08-31"
+    }
+  ],
+  "statements": [
+    "ZW-PAAB-SFP",
+    "ZW-PAAB-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-harare",
+      "name": "Msasa Building Supplies (Private) Limited",
+      "type": "customer",
+      "country": "ZW"
+    },
+    {
+      "ref": "cust-tenant",
+      "name": "T. Moyo",
+      "type": "customer",
+      "country": "ZW"
+    },
+    {
+      "ref": "cust-lusaka",
+      "name": "Lusaka Timber Merchants Limited",
+      "type": "customer",
+      "country": "ZM"
+    },
+    {
+      "ref": "supp-harare",
+      "name": "Southerton Wholesale (Private) Limited",
+      "type": "supplier",
+      "country": "ZW"
+    },
+    {
+      "ref": "supp-bank",
+      "name": "Samora Machel Commercial Bank Limited",
+      "type": "supplier",
+      "country": "ZW"
+    },
+    {
+      "ref": "supp-johannesburg",
+      "name": "Rand Building Materials (Pty) Ltd",
+      "type": "supplier",
+      "country": "ZA"
+    },
+    {
+      "ref": "supp-london",
+      "name": "Thames Advisory Ltd",
+      "type": "supplier",
+      "country": "GB"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-harare",
+      "date": "2026-08-04",
+      "why": "A domestic sale of goods at the standard rate of 15.5 %, in force since 1 January 2026: value and output tax on line 9 of the VAT 7. The golden runs in the company's currency (ZWG by default); a company keeping its books in US dollars would see the same lines in USD.",
+      "lines": [
+        {
+          "name": "Hardware supplies, wholesale",
+          "quantity": 10,
+          "unit_price": 2000,
+          "tax": "ZW-S-15.5",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-harare",
+      "date": "2026-08-06",
+      "why": "A domestic service at 15.5 %, invoiced to a customer who pays in foreign currency: the revenue sits on 4050, the foreign-currency services account, and the tax still lands on line 9 — the return's split by currency is Part V of the form, which the pack does not compute.",
+      "lines": [
+        {
+          "name": "Installation services, August",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "ZW-S-15.5",
+          "account": "4050"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-lusaka",
+      "date": "2026-08-10",
+      "why": "An export of goods to Zambia, zero-rated under s. 10(1)(a): line 10(a), no output tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Processed timber, export consignment",
+          "quantity": 100,
+          "unit_price": 500,
+          "tax": "ZW-S-Z-EXP",
+          "account": "4040"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-tenant",
+      "date": "2026-08-12",
+      "why": "A residential letting, exempt under s. 11(c): line 12, no output tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Monthly rent, residential flat in Avondale",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "ZW-S-EX",
+          "account": "4520"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-harare",
+      "date": "2026-08-14",
+      "why": "A credit note for one unit of INV-001 returned: it does not reduce line 9 but goes to line 18, the debit/credit note adjustment, as the VAT 7 asks.",
+      "lines": [
+        {
+          "name": "Hardware supplies, wholesale — one unit returned",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "ZW-S-15.5",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN-002",
+      "type": "sale_credit_note",
+      "contact": "cust-harare",
+      "date": "2026-08-25",
+      "why": "A volume rebate granted in August 2026 on deliveries invoiced in December 2025 at 15 %: the adjustment corrects the tax actually charged (s. 21), so it reverses at 15 % and not at 15.5 %, on line 18, as ZIMRA Public Notice No. 7 of 2026 treats 2025 supplies accounted for in 2026.",
+      "lines": [
+        {
+          "name": "Volume rebate on December 2025 deliveries",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "ZW-S-15-T",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-harare",
+      "date": "2026-08-05",
+      "why": "A domestic purchase of stock at 15.5 % on a fiscal tax invoice: line 21, value and input tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "ZW-P-15.5",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2026-08-07",
+      "why": "Bank charges, a financial service exempt under s. 11(a): line 25, exempt purchases, and no input tax.",
+      "lines": [
+        {
+          "name": "Bank service charges, August",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "ZW-P-EX",
+          "account": "6450"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-johannesburg",
+      "date": "2026-08-11",
+      "why": "An import of goods from South Africa: import VAT at 15.5 % on the customs value paid to ZIMRA at Beitbridge (s. 6(1)(b), s. 12), claimed on line 23 and held on 2125 until the bill of entry is settled.",
+      "lines": [
+        {
+          "name": "Imported building materials for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "ZW-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-london",
+      "date": "2026-08-17",
+      "why": "A consulting service from a supplier in the United Kingdom: the recipient declares the tax on line 13 (s. 6(1)(c), s. 13) and deducts it as input tax in the TaRMS field for VAT on imported services (s. 2(1), input tax, (a)(iii)), so the cost stays 6000 with no VAT in it.",
+      "lines": [
+        {
+          "name": "Advisory services from abroad",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "ZW-P-RC-SVC",
+          "account": "6420"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-harare",
+      "date": "2026-08-19",
+      "why": "Client entertainment, whose input tax s. 16(2)(a) refuses: the 15.5 % follows the expense to account 6530 and reaches no line.",
+      "lines": [
+        {
+          "name": "Client entertainment, product launch",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "ZW-P-15.5-ND",
+          "account": "6390"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-harare",
+      "date": "2026-08-20",
+      "why": "A computer bought locally as a capital good: input tax on line 24(a), apart from ordinary purchases.",
+      "lines": [
+        {
+          "name": "Laptop computers for the office",
+          "quantity": 2,
+          "unit_price": 5000,
+          "tax": "ZW-P-15.5-CAP",
+          "account": "1640"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-harare",
+      "date": "2026-08-21",
+      "why": "A credit note received for a short delivery on PINV-001: line 29, the debit/credit note adjustment of input tax.",
+      "lines": [
+        {
+          "name": "Trading stock — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "ZW-P-15.5",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-09-02",
+      "amount": 12000,
+      "contact": "cust-tenant",
+      "journal": "BNK",
+      "match": "INV-004",
+      "why": "The rent of INV-004 collected in full: a matched inbound payment on an exempt supply."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-09-04",
+      "amount": 50000,
+      "contact": "cust-lusaka",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-09-07",
+      "amount": 34650,
+      "contact": "supp-harare",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, 30000 plus 4650 of VAT: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-09-09",
+      "amount": 5000,
+      "contact": "cust-harare",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Msasa Building Supplies before its next order, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}
