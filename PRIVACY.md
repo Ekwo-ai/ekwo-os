@@ -64,7 +64,8 @@ An account is optional, free, and never required to use the software. Each
 thing below exists because it was **asked for**: linking an instance is a
 deliberate act, a backup runs on an instance you linked, and an agent reads
 your books only after you approved it in your browser. Nothing here is turned
-on by default, and what it holds is this and nothing else:
+on by default except the usage counts, which you can turn off, and what it
+holds is this and nothing else:
 
 | What | Why |
 |---|---|
@@ -76,6 +77,7 @@ on by default, and what it holds is this and nothing else:
 | A **hash** of each agent token, never the token | To recognise an agent you allowed, without being able to replay it |
 | The name and redirect address of each agent that asked for access | So you can see and revoke what is connected |
 | Your support messages and our answers | To answer you |
+| What you did in the application, **as a kind and a time** — signed in, created an invoice, a contact, a purchase, posted, imported | To see what helps, what does not, and to answer you. See below |
 
 ### The backups hold your books
 
@@ -112,6 +114,18 @@ your own instance, and only after you have approved it in your browser. Its log
 records that a call happened and which tool was called. **It does not record the
 content of your books** — not the amounts, not the names, not the documents.
 
+### What Ekwo counts of your use
+
+When you work in Ekwo Cloud, the application tells Ekwo **what kind of thing
+happened and when**: you signed in, you created an invoice, a contact or a
+purchase, you posted a document, you imported books. Each record holds the
+kind, the time, your account and the instance. **It holds nothing of your
+books** — not the amounts, not the names, not the documents, not the numbers.
+The Ekwo team reads these counts to see what helps and what gets in the way,
+and to write to you when something did not work. They are never sold, never
+shared, and never sent to a third-party tool. You can turn them off in
+Preferences, and the application keeps working the same.
+
 ## 4. What we do not do
 
 We do not sell anything about you. We do not run advertising, and nothing here
@@ -133,7 +147,8 @@ Your account and its profile stay until you ask for them to be deleted.
 Backups follow the retention shown on the instance and go when it is unlinked.
 Agent tokens expire on their own — an hour for access, sixty days for renewal —
 and a revoked one stops working at once. Support messages are kept so a
-conversation makes sense when you come back to it.
+conversation makes sense when you come back to it. Usage records are kept
+twelve months, then deleted.
 
 ## 7. What you can ask for
 
