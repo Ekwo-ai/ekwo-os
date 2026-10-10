@@ -87,5 +87,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('MUR', 'Mauritian rupee', 'Rs', 2),
   ('MZN', 'Mozambican metical', 'MT', 2),
   ('AOA', 'Angolan kwanza', 'Kz', 2),
-  ('ZMW', 'Zambian kwacha', 'K', 2)
+  ('ZMW', 'Zambian kwacha', 'K', 2),
+  ('BMD', 'Bermudian dollar', '$', 2)
 on conflict (code) do nothing;

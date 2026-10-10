@@ -6453,3 +6453,40 @@ and fully blocked purchase codes, and no apportionment, as in Nicaragua.
 browser check and `zra.org.zm` presents a certificate chain that common clients
 reject; Statutory Instrument No. 95 of 2025 (water zero-rated from 1 January
 2026) could not be read in its own words.
+
+## From Bermuda
+
+`packs/bm/`, `community`, seed 138, currency BMD (added to `00_currencies.sql`;
+territory BM added to `00_territories.sql`). Modelled on `packs/hk`: a
+jurisdiction with no general sales tax, two `not_subject` codes, no
+`tax_report.json`, no tax-settlement roles. PwC's Worldwide Tax Summaries
+(last reviewed 19 February 2026) states that Bermuda has no VAT or sales tax;
+no enacted or proposed one was found on 10 October 2026.
+
+**Levies outside the pack.** Customs duty (Customs Tariff Act 1970, 0 % to
+33.5 %, 25 % most common), payroll tax (Payroll Tax Act 1995; quarterly, due
+the 15th after the quarter; the employer rate below BMD 200,000 was cut to
+0.5 % from 1 April 2026 and the Payroll Tax Rates Amendment Act 2026 restores
+1 % from Q4 2026, per Bloomberg Tax and Orbitax), and the 15 % corporate
+income tax of the Corporate Income Tax Act 2023 for groups of EUR 750 million
+or more, from 1 January 2025, with the global minimum tax run by the same
+agency. Land tax, stamp duty and social insurance exist too. None has a tax
+code: they are levies on payroll, the border or a group's profit, not on an
+invoice line. Customs duty on an import is paid by the importer on the
+customs entry and is not on the supplier's invoice, so the format has nothing
+to carry on the purchase line.
+
+**Gaps, none patched.** `tax_point` has no true answer without a turnover
+tax (same as Hong Kong). The format has no way to record a levy paid on a
+customs entry that no document line carries; the pack books it by hand to
+`5025`. No generic test assumed a tax, a rate or a return beyond the two
+already fixed for Hong Kong.
+
+**Sources.** The Companies Act 1981 (BMA consolidated PDF), ss. 83 (five-year
+retention) and 84(1A) (GAAP named in the notes), was read in full. Every
+`gov.bm` address, including the e-Tax portal, failed to resolve from the
+author's machine, so the Payroll Tax Act, the 2026 Customs Tariff and the
+Government's budget papers were not opened; the portal URL comes from a search
+snippet. The statements follow IFRS for SMEs by the pack's choice; s. 84(1)
+also asks for a statement of retained earnings and of cash flows, which are
+not modelled.

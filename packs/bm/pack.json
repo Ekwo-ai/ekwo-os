@@ -1,0 +1,167 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BM",
+  "name": "Bermuda",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 138,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "companies-act-1981",
+        "title": "Companies Act 1981 (consolidated)",
+        "publisher": "Bermuda Monetary Authority (consolidated text of the Government of Bermuda)",
+        "url": "https://www.bma.bm/viewPDF/documents/2023-11-14-10-39-37-Companies-Act-1981.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "pwc-bm-taxes",
+        "title": "Bermuda — Corporate — Other taxes (Worldwide Tax Summaries)",
+        "publisher": "PwC",
+        "url": "https://taxsummaries.pwc.com/bermuda/corporate/other-taxes",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "ey-bm-cit",
+        "title": "Bermuda Corporate Income Tax",
+        "publisher": "EY",
+        "url": "https://www.ey.com/en_us/bbc/bermuda-corporate-income-tax",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "iasb-ifrs-sme",
+        "title": "IFRS for SMEs Accounting Standard",
+        "publisher": "IFRS Foundation / International Accounting Standards Board",
+        "url": "https://www.ifrs.org/issued-standards/ifrs-for-smes/",
+        "consulted_on": "2026-10-10",
+        "kind": "standard"
+      },
+      {
+        "key": "bm-etax",
+        "title": "e-Tax — Office of the Tax Commissioner",
+        "publisher": "Government of Bermuda, Office of the Tax Commissioner",
+        "url": "https://www.etax.gov.bm",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BMD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Bermuda reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "BM-IFRS-SME-SFP",
+        "BM-IFRS-SME-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Bermuda. Companies Act 1981, section 83 requires every company to keep proper records of account of all sums received and expended, of all sales and purchases of goods and of its assets and liabilities, for five years from the date they were prepared, and section 84 requires the directors to lay financial statements before the general meeting, the notes of which name the generally accepted accounting principles used, whether those of Bermuda or of another jurisdiction (section 84(1A)). Neither section prescribes a chart. This chart is original: four digits, blocked so that each range reaches one line of a balance sheet and income statement presented in the manner of IFRS for SMEs, which is a choice of this pack — a company that reports under full IFRS or US GAAP uses the same chart with different notes. It carries no tax-clearing account because there is no sales tax to clear; accounts for the levies Bermuda does charge (payroll tax, customs duty, land tax, corporate income tax) are ordinary payable and expense accounts. See 'From Bermuda' in docs/international.md.",
+      "source": "companies-act-1981"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Bermuda levies no value added tax, goods and services tax or general sales tax (PwC, Worldwide Tax Summaries, Bermuda, last reviewed 19 February 2026), so no tax statute conditions anything on an invoice carrying a sequential number. What a company must do is keep proper records of account of all sums received and expended and of all sales and purchases of goods, for five years from the date they were prepared (Companies Act 1981, section 83(1) and (5)) — a duty about what is kept, not about how an issued document is numbered. `numbering` is therefore `free`; `number_format` is a convention this pack proposes.",
+        "source": "companies-act-1981"
+      },
+      "payment_terms": {
+        "legal_reference": "This pack found no Bermuda statute that sets a payment term between two businesses in the absence of agreement, or a rate of interest on a commercial debt paid late; the search was not exhaustive and the primary legislation site was not read for it. `legal_payment_days` and `late_payment_reference` are empty, and a seller's terms are a matter of contract stated on the document.",
+        "source": "companies-act-1981"
+      },
+      "tax_point": {
+        "legal_reference": "This field has nothing to describe in Bermuda: it names the day a country's general rule makes its own turnover tax chargeable, and Bermuda charges none (PwC, Worldwide Tax Summaries, Bermuda). `invoice_date` is declared as the closest general commercial convention — revenue is ordinarily recognised on satisfying the performance obligation under IFRS for SMEs — and not as a rule read from a Bermuda text; see 'From Bermuda' in docs/international.md.",
+        "source": "iasb-ifrs-sme"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Bermuda statute read for this pack obliges a business to issue or accept an electronic invoice, and no Bermuda Peppol Authority turned up in a search of the OpenPeppol network on 10 October 2026 (peppol.org's own list of authorities was not opened). `profile`, `party_scheme` and `vat_scheme` are null: there is no domestic profile to name and no VAT identifier for a scheme to carry, since Bermuda levies no value added tax (PwC, Worldwide Tax Summaries, Bermuda, last reviewed 19 February 2026).",
+    "source": "pwc-bm-taxes"
+  }
+}

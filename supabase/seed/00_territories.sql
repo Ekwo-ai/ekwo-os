@@ -2301,3 +2301,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('BM', 'iso_3166_1', 'Bermuda', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State or territory outside it is a third country for every rule the Directive carries. Bermuda, a British Overseas Territory, levies no value added tax, goods and services tax or general sales tax: PwC''s Worldwide Tax Summaries for Bermuda (last reviewed 19 February 2026) records that there is no VAT or sales tax. What it charges instead is payroll tax (Payroll Tax Act 1995), customs duty on imports (Customs Tariff Act 1970) and, for large multinational groups, corporate income tax (Corporate Income Tax Act 2023) — none of them a tax on an invoice line.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

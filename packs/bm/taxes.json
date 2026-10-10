@@ -1,0 +1,54 @@
+[
+  {
+    "code": "BM-S-NA",
+    "name": "Sale, not subject to any tax on turnover",
+    "description": "Every sale a Bermuda business makes — domestic, exported, or delivered from outside Bermuda to a place outside Bermuda",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "Bermuda levies no value added tax, goods and services tax or general sales tax: PwC's Worldwide Tax Summaries for Bermuda (last reviewed 19 February 2026) states that there is no VAT or sales tax in Bermuda, and no enabling legislation exists. The 2026-27 budget material read for this pack (the Government's pre-budget report and the press coverage of the 2026 Customs Tariff and Payroll Tax amendments) proposes none either; a check of this on 10 October 2026 found no such tax in force or enacted. What a Bermuda business pays on trading instead lies outside this pack and outside any invoice line: payroll tax, charged quarterly on remuneration and split between employer and employee under the Payroll Tax Act 1995; customs duty on imported goods under the Customs Tariff Act 1970 (most commonly 25 %, ranging from 0 % to 33.5 %), paid at the border by the importer; and, for the Bermuda entities of multinational groups with consolidated revenue of EUR 750 million or more, the 15 % corporate income tax of the Corporate Income Tax Act 2023, from fiscal years beginning on or after 1 January 2025. The code exists so that every sale line still carries a tax code the engine can post, and states that this jurisdiction has none. See 'From Bermuda' in docs/international.md.",
+    "source": "pwc-bm-taxes",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "BM-P-NA",
+    "name": "Purchase, not subject to any tax on turnover",
+    "description": "Every purchase a Bermuda business books — domestic, imported, or delivered from outside Bermuda to a place outside Bermuda",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "The purchase side of BM-S-NA: no VAT, GST or general sales tax is charged on what a Bermuda business buys, whether the seller is local or abroad (PwC, Worldwide Tax Summaries, Bermuda, last reviewed 19 February 2026: there is no VAT or sales tax in Bermuda). An import does carry a tax at the border, customs duty under the Customs Tariff Act 1970, most commonly at 25 % and between 0 % and 33.5 % by tariff line. It is payable once by the importer on the goods' value, is not recoverable and is not a tax any invoice line can carry a code for, so this pack does not model it as a tax code: a business books it to inventory or cost of sales (account 5025 Customs duty on imports), and the duty paid appears on the customs entry, not on the supplier's invoice. See 'From Bermuda' in docs/international.md.",
+    "source": "pwc-bm-taxes",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 20
+  }
+]
