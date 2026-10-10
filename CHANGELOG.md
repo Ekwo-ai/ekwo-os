@@ -11,6 +11,21 @@ somewhere has already run it.
 
 ### Added
 
+- **The corporate income tax module books its provision and plans the
+  prepayments** (module `tax` 1.1.0). `tax.book_provision(computation)` books
+  what a recorded computation says as the charge of its year, on the expense
+  and payable accounts of the pack, through `post_module_entry()`: the
+  difference with what the expense account already carries for the year, so a
+  charge booked by hand is not booked twice and a later computation books only
+  what moved; one entry per computation. `tax.prepayment_plan(company,
+  fiscal_year, at, tax)` reads the schedule of the pack: each instalment on its
+  day, its share of the final tax of the year before — nothing under the
+  exemption — or, against a surcharge, the same amount at every instalment
+  still to come that leaves none, never more than the tax still unpaid. What
+  the company paid in advance is declared in a new table, `tax.prepayments`,
+  and counted towards the first instalment due on or after it. The golden
+  tests book the provision of every worked example of every pack and hold the
+  tax to the cent.
 - **The e-invoicing bricks read what they receive.** `readUbl()` of
   `@ekwo-ai/peppol-ubl` reads a received Peppol BIS Billing 3.0 invoice or
   credit note (UBL 2.1); `readCii()` and `readFacturX()` of

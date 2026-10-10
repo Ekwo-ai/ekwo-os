@@ -1732,9 +1732,10 @@ associations — cannot be estimated, and says so: `no_result_statement`.
 ### The accounts: `accounts`
 
 `expense`, `payable` and, where the chart keeps one apart, `receivable`.
-`ekwo pack check` refuses a code missing from any chart of the pack. They are
-declared for the provision entry of a later version of the module; this
-version posts nothing, and the columns say *declared, no reader yet*.
+`ekwo pack check` refuses a code missing from any chart of the pack. The
+provision of a computation is booked on `expense` against `payable`;
+`receivable` is declared and not read yet: the company books its payments in
+advance itself.
 
 ### What a company declares: `parameters`
 
@@ -1844,8 +1845,8 @@ it is refused: a reduced rate needs the ordinary one beside it.
 Losses are used oldest first. A pack that says nothing refuses a company that
 carries a loss, by name.
 
-`prepayments` is **declared, with no reader yet**: the prepayment plan is a
-later version of the module. Two methods cover the two shapes met so far —
+`prepayments` is read by the plan of prepayments of the module,
+`tax.prepayment_plan()`. Two methods cover the two shapes met so far —
 `surcharge_on_shortfall`, where nothing is compulsory and each instalment paid
 in time earns a `credit_percent` against a `surcharge_percent`, and
 `share_of_reference_tax`, where each instalment is a `share_percent` of a

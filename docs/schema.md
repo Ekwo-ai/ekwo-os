@@ -2590,7 +2590,7 @@ Constraints:
 
 ## `tax` — Corporate income tax
 
-Corporate income tax estimated from the books: the accounting result, the adjustments, the losses, the rates and their conditions of a country are pack data, and what a company declares about itself is its own. Writes nothing to the ledger.
+Corporate income tax estimated from the books: the accounting result, the adjustments, the losses, the rates and their conditions of a country are pack data, and what a company declares about itself is its own. Books the provision of a computation through post_module_entry(), and plans the prepayments of a year.
 
 ### Tables
 
@@ -2608,7 +2608,8 @@ Corporate income tax estimated from the books: the accounting result, the adjust
 | [`loss_uses`](#tax-loss_uses) | How much of one loss a final computation set against its profit. Written when the computation is finalised and removed when it is withdrawn, so the stock is always what the final computations say. |
 | [`losses`](#tax-losses) | The tax losses of a company by the year they come from. A row with no computation_id is declared: the stock a company brought in from before these books. A row with one was written when that computation was finalised. What is left of each is tax.loss_stock(). |
 | [`parameter_templates`](#tax-parameter_templates) | The facts a company of one country has to declare for its tax to be computed: a judgement (is it a small company) or an amount (what it paid its director). The conditions of a rate name them, and nothing infers one. |
-| [`prepayment_templates`](#tax-prepayment_templates) | When a company of this country pays its tax in advance, and what each payment is worth. **Declared, no reader yet**: the prepayment plan is a later version of this module, and the shape is published now so a pack can carry the figures of a year before anything reads them. |
+| [`prepayment_templates`](#tax-prepayment_templates) | When a company of this country pays its tax in advance, and what each payment is worth. Read by tax.prepayment_plan(). |
+| [`prepayments`](#tax-prepayments) | One payment a company made in advance on the corporate income tax of a financial year, on the day it made it. Declared with tax.write; read by tax.prepayment_plan(), which counts it towards the first instalment due on or after that day. |
 | [`rate_templates`](#tax-rate_templates) | One rate of a country, for the days it is in force. A rate with up_to applies to the slice of the taxable base below that amount; the one without applies to what is left. A rate whose conditions are not all met is not applied, and the estimate says which condition failed. |
 
 <a id="tax-adjustment_rule_templates"></a>
@@ -2771,9 +2772,9 @@ What one country calls its corporate income tax, which line of which income stat
 | `result_line_code` | `text` | not null — The line of result_statement_code that is the accounting result the tax starts from. A country whose statement prints a result before income tax names that line; one that prints only the net result names it and adds the tax charge back by a rule. |
 | `result_legal_reference` | `text` | not null |
 | `result_source_key` | `text` |  |
-| `expense_account_code` | `text` | not null — The account the tax charge of the year is booked on. **Declared, no reader yet**: this version posts nothing. |
-| `payable_account_code` | `text` | not null — The account the estimated tax debt is carried on. **Declared, no reader yet**: this version posts nothing. |
-| `receivable_account_code` | `text` | The account a prepayment or a refund to come is carried on, where the chart keeps one apart. **Declared, no reader yet.** |
+| `expense_account_code` | `text` | not null — The account the tax charge of the year is booked on, by tax.book_provision(). |
+| `payable_account_code` | `text` | not null — The account the estimated tax debt is carried on, against the charge tax.book_provision() books. |
+| `receivable_account_code` | `text` | The account a prepayment or a refund to come is carried on, where the chart keeps one apart. **Declared, no reader yet**: the company books its payments itself, and tax.prepayments says what they were. |
 | `accounts_legal_reference` | `text` | not null |
 | `accounts_source_key` | `text` |  |
 | `legal_reference` | `text` | not null |
@@ -2925,7 +2926,7 @@ Constraints:
 
 #### `prepayment_templates`
 
-When a company of this country pays its tax in advance, and what each payment is worth. **Declared, no reader yet**: the prepayment plan is a later version of this module, and the shape is published now so a pack can carry the figures of a year before anything reads them.
+When a company of this country pays its tax in advance, and what each payment is worth. Read by tax.prepayment_plan().
 
 | Column | Type | Notes |
 |---|---|---|
@@ -2948,6 +2949,29 @@ Constraints:
 - `CHECK ((month_basis = ANY (ARRAY['fiscal'::text, 'calendar'::text])))`
 - `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
 - `PRIMARY KEY (country, valid_from)`
+
+<a id="tax-prepayments"></a>
+
+#### `prepayments`
+
+One payment a company made in advance on the corporate income tax of a financial year, on the day it made it. Declared with tax.write; read by tax.prepayment_plan(), which counts it towards the first instalment due on or after that day.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `fiscal_year_id` | `uuid` | not null |
+| `paid_on` | `date` | not null |
+| `amount` | `numeric` | not null |
+| `entry_id` | `uuid` | The entry of the ledger that carried the payment, where the company points at it: its bank entry. Optional, and never read for the amount: the amount is the one declared here. |
+| `note` | `text` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((amount > (0)::numeric))`
+- `PRIMARY KEY (id)`
 
 <a id="tax-rate_templates"></a>
 
@@ -2987,7 +3011,8 @@ Constraints:
 |---|---|
 | `account_matches(p_account_code text, p_account_rules jsonb)` | Whether an account code is caught by the account rules of an adjustment rule. The three kinds are the ones a statement line maps accounts with, compared the same way. |
 | `accounts_in_use(p_company_id uuid)` | The accounts this module points at for one company: every account it says falls under an adjustment rule. Read by public.accounts_in_use() through the module convention. |
-| `archive_tables()` | What an archive of one company does with each table of this module: all seven travel. The seven reference tables belong to the installation and to no company. Read by `public.company_archive_tables()`. |
+| `archive_tables()` | What an archive of one company does with each table of this module: all eight travel. The seven reference tables belong to the installation and to no company. Read by `public.company_archive_tables()`. |
+| `book_provision(p_computation_id uuid)` | Books the tax of a recorded computation as a charge of its year: the difference between what the computation says and what the expense account of the pack already carries for the year up to the day of the computation, against the payable account of the pack, through post_module_entry(), dated on that day. Returns the entry, or null when there was nothing to book. The latest computation of a year, estimate or final; one entry per computation, so a second call returns the first. Needs tax.write, and the right to post entries. |
 | `condition_failure(p_condition jsonb, p_values jsonb, p_taxable_base numeric)` | Null when a condition of a rate is met by what the company declared, otherwise which parameter stands in the way and how: not_declared, or not_met. A parameter nobody declared is never assumed either way. |
 | `estimate(p_company_id uuid, p_fiscal_year_id uuid, p_at date)` | The corporate income tax of one financial year as the ledger stands on a day — the whole year when no day is given — line by line: the accounting result the country pack names, each adjustment with its rule and its article, the losses of earlier years as far as they reach, the taxable base, each rate with the slice it takes, the credits, and the figure, called estimated_tax. Reads and writes nothing. A condition the company has not declared is not met and is said so in a rate_not_applied line. No country rule lives in this function. |
 | `finalise_computation(p_computation_id uuid)` | Calls the latest computation of a financial year final: what the company holds to be the tax of the year. Only a computation of the whole year, only while the ledger, the declarations and the rules still give the same lines, and only while no later year is final. Its last line becomes tax_due, the losses it used leave the stock and the loss it made enters it. Needs tax.finalize, which the owner preset holds and the accountant preset does not. |
@@ -2995,9 +3020,13 @@ Constraints:
 | `guard_declaration()` | Holds what a company declares to the codes its country pack carries — a parameter and its type, a rule, a credit — and to a financial year of its own, and writes every declared amount at the decimals of the company's currency. |
 | `guard_loss()` | Writes a loss at the decimals of the company's currency, and refuses to change the amount or the year of one a final computation has used. |
 | `in_force(p_valid_from date, p_valid_to date, p_valid_on tax.validity_basis, p_start date, p_end date)` | Whether a dated rule applies to a financial year: its validity read on the first or on the last day of the year, as the rule itself says. The only place valid_on is read. |
+| `instalment_date(p_month_basis text, p_month integer, p_day integer, p_start date, p_end date)` | The day an instalment falls on in a financial year: the given day of the n-th month of the year (fiscal), or of the first month of that name on or after the year opens (calendar); the last day of the month where the month is shorter. Null when that day is outside the year. |
 | `line(p_kind text, p_code text, p_name text, p_base numeric, p_rate numeric, p_amount numeric, p_legal_reference text, p_source_key text)` | One line of an estimate, as tax.estimate() gathers them before returning them in order. |
 | `loss_stock(p_company_id uuid, p_before date)` | The losses of a company by year of origin: what each was, what final computations have used of it, and what is left. With a date, as the stock stood for a financial year opening on that day: losses of earlier years, less what earlier years used. |
+| `plan_instalments(p_instalments jsonb)` | The instalments tax.prepayment_plan() gathers, as rows, in the order it gathered them. |
+| `prepayment_plan(p_company_id uuid, p_fiscal_year_id uuid, p_at date, p_tax numeric)` | The prepayments of a financial year under the rule of its country pack, line by line: each instalment with its day, its percentage, what it is worth and what was paid towards it. share_of_reference_tax: each instalment is its share of the final tax of the year before, or of a reference the company states, and nothing where that tax is within the exemption. surcharge_on_shortfall: the surcharge on the tax of the latest computation of the year, or of a tax the company states, what the payments made already earn against it, and the same amount at each instalment due on or after p_at that leaves no surcharge — never more, together, than the tax still unpaid. Reads and writes nothing else. |
 | `record_computation(p_company_id uuid, p_fiscal_year_id uuid, p_at date)` | Keeps what tax.estimate() says on a day as the next computation of the year, with every line. An estimate, and called one. Refused once the year has a final computation. Needs tax.write. |
+| `round_prepayment()` | Writes a payment in advance at the decimals of the company currency, and refuses one that rounds to nothing. |
 | `withdraw_computation(p_computation_id uuid)` | Withdraws a final computation: it becomes superseded and is kept, the losses it used go back to the stock and the loss it recorded leaves it. Refused while a later financial year has a final computation: the years are taken back in the reverse of their order. Needs tax.finalize. |
 
 ---

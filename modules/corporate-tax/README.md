@@ -1,9 +1,10 @@
 # Corporate income tax — estimated from the books
 
 One Postgres schema, `tax`. It depends on the socle by foreign key, reads the
-ledger through the socle's own financial statements, and **writes nothing to
-it**: this version estimates a tax, keeps the estimate, and lets an owner call
-one final. The provision entry and the prepayment plan are a later version.
+ledger through the socle's own financial statements, estimates a tax, keeps
+the estimate and lets an owner call one final. It writes to the ledger once,
+and only through `post_module_entry()`: the **provision** of a computation.
+And it plans the **prepayments** of a year from the schedule of the pack.
 
 Corporate income tax starts from the accounting result. Everything after that
 is a rule of a country — data, in `packs/<cc>/corporate_tax.json` — plus a
@@ -21,7 +22,7 @@ the declarations of a company and its first computations.
 | schema | `tax` |
 | capabilities | `tax.read`, `tax.write`, `tax.finalize` — their area is the module code |
 | pack section | `packs/<cc>/corporate_tax.json`, with its worked examples in `packs/<cc>/golden/corporate_tax.json` |
-| posts to the ledger | no, and a test holds it to that |
+| posts to the ledger | the provision of a computation, through `post_module_entry()` and nothing else |
 
 ## What it holds
 
@@ -35,7 +36,7 @@ where it stands and never copied into a company:
 | `tax.adjustment_rule_templates` | What is added back or deducted: a percentage, or a formula of what the company states about an expense. Dated. |
 | `tax.rate_templates` | The rates, the slice each applies to and the conditions of each. Dated. |
 | `tax.loss_rule_templates` | How far a loss of an earlier year may be set against a profit. Dated. |
-| `tax.prepayment_templates` | When the tax is paid in advance and what each payment is worth. Dated. **Declared, no reader yet.** |
+| `tax.prepayment_templates` | When the tax is paid in advance and what each payment is worth. Dated. Read by the plan of prepayments. |
 | `tax.credit_templates` | The credits a company may set against the tax. Dated. |
 
 **What a company declares** — written with `tax.write`:
@@ -46,6 +47,7 @@ where it stands and never copied into a company:
 | `tax.adjustments` | What falls under a rule: an account whose balance is read from the ledger each time, or an amount stated for one year. |
 | `tax.credits` | A credit the company holds for one year. |
 | `tax.losses` | The losses by year of origin: the ones the company carried in, and the ones a final computation recorded. |
+| `tax.prepayments` | Each payment the company made in advance on the tax of a year, on the day it made it, and the entry that carried it if it points at one. |
 
 **What was computed and kept** — written by three functions and by nothing
 else; no role holds a write privilege on these tables:
@@ -71,6 +73,12 @@ select tax.withdraw_computation(computation);
 
 -- What is left of each loss.
 select * from tax.loss_stock(company);
+
+-- Book what a computation says as the charge of its year. Needs tax.write.
+select tax.book_provision(computation);
+
+-- The instalments of a year: their days, what each is worth, what was paid.
+select * from tax.prepayment_plan(company, fiscal_year, date '2026-05-01');
 ```
 
 `tax.estimate()` reads and writes nothing, and answers line by line:
@@ -122,6 +130,67 @@ company's currency. Percentages are `numeric`; nothing here is a float.
 stopped on that day. It annualises nothing and forecasts nothing: a threshold
 is the year's own, and a profit of six months is taxed as the profit of the
 year.
+
+## The provision
+
+`tax.book_provision(computation)` books the tax a computation comes to as the
+charge of its year: the **expense** account of the pack against its
+**payable** account, dated on the day the computation read the ledger up to,
+through `post_module_entry()` on the miscellaneous journal.
+
+It books **the difference** with what the expense account already carries for
+the year up to that day, read the way the income statement reads it. A charge
+the company booked by hand is counted and not booked twice; a later
+computation books only what moved, on the debit side when the tax went up and
+on the credit side when it came down; a computation that says what the books
+already say books nothing and returns null.
+
+- **One entry per computation.** The entry is named after it, so a second call
+  returns the first entry and a third does too.
+- **The latest computation of the year**, an estimate or a final one. An
+  earlier version is refused as `computation_not_latest`, a withdrawn one as
+  `computation_superseded`.
+- **It does not move the tax.** A pack starts from a result before income tax,
+  or adds the charge back by a rule on its accounts. Either way the base, the
+  rates and the tax stay where they were; the golden tests book the provision
+  of every worked example of every pack and hold the tax to the cent.
+- In a pack that starts from the **net result**, the provision moves the
+  accounting result and the rule that adds the charge back, together. A
+  computation recorded before the provision is then history: record the year
+  again before calling it final, or book the provision of the final one.
+- It needs `tax.write`, and the right to post entries: the socle checks
+  `entries.post` as it does for any entry. A closed year is refused by the
+  socle too.
+
+## The plan of prepayments
+
+`tax.prepayment_plan(company, fiscal_year, at, tax)` reads the schedule of the
+pack in force for the year and answers line by line. Each **instalment** falls
+on its day of a month — of the calendar, or of the financial year, as the pack
+says — on the last day of a month too short for it, and not at all when that
+day is outside the year. A payment the company declared in `tax.prepayments`
+counts towards the first instalment due on or after the day it was made; one
+made after the last instalment is a line of its own, `paid_late`.
+
+| Method | What the plan says |
+|---|---|
+| `share_of_reference_tax` | The **reference**: the final computation of the year before, or a tax the company states. Each instalment is its share of it. Under the pack's `exempt_up_to`, a line `exempt` and nothing asked. |
+| `surcharge_on_shortfall` | The **tax** of the year: the latest computation recorded for it, or a tax the company states. The **surcharge** on it, what the payments already made earn against it, and **the same amount at every instalment due on or after `at`** that leaves no surcharge — rounded up to the next unit of the currency, and never more, together, than the tax still unpaid. The last line, `surcharge_left`, is what remains when the time left is too short. |
+
+| `kind` | What the line says |
+|---|---|
+| `reference_tax`, `exempt` | The reference of a schedule of shares, and the exemption that applies to it. |
+| `tax`, `surcharge` | The tax a surcharge is reckoned on, and the surcharge with its percentage. |
+| `instalment` | One instalment: its sequence, its day, its percentage (share or credit), what to pay and what was paid towards it. |
+| `total` | What the plan asks, and what was paid. |
+| `surcharge_left` | The surcharge that would remain if the plan were followed. |
+| `paid_late` | A payment made after the last instalment of the year. |
+
+A year with no schedule in force is refused as `no_prepayment_rules`, a
+schedule of shares with no final year before it as `no_reference_tax`, and a
+surcharge with no computation of the year as `no_computation` — each with the
+way out in its sentence: call the year before final, record one, or state the
+tax.
 
 ## Estimate, final, superseded
 
@@ -240,7 +309,7 @@ that carries the section, by [`tests/golden.test.ts`](tests/golden.test.ts).
 
 ## For an accountant to read
 
-Seven things here are a reading of the mechanics or a limit of this version,
+Ten things here are a reading of the mechanics or a limit of this version,
 and an accountant should say whether each is acceptable for the company. What
 a country's section leaves out, and why, is in the README of its pack.
 
@@ -269,13 +338,26 @@ a country's section leaves out, and why, is in the README of its pack.
    the tax, with or without a ceiling, is not computed.
 7. **Figures are kept at the cent.** A country that files its base and its
    tax rounded to the unit says so on its form; forms are a later version.
+8. **The provision is one account against one.** The charge goes to the
+   pack's expense account and the debt to its payable account; what the
+   company paid in advance stays where it booked it, and setting the two off
+   at the close is the company's entry.
+9. **A plan of shares reads one reference: the year before.** A country whose
+   first instalment rests on an older year and is put right later, or whose
+   reference is the last year whose deadline has passed, is planned on the
+   final tax of the year just before, or on the tax the company states.
+10. **A surcharge is the pack's percentage of the tax.** A threshold under
+   which no surcharge is due, an exemption for the first years of a small
+   company, a bonus for paying more than the surcharge asks, and a day moved
+   because it falls on a holiday are outside this version; the pack cites the
+   articles.
 
 ## Rights
 
 | Capability | Holds it by default | Lets somebody |
 |---|---|---|
 | `tax.read` | viewer, client, accountant, owner | read the declarations, the estimates and the final computations, and run `tax.estimate()` |
-| `tax.write` | accountant, owner | declare parameters, adjustments, losses and credits; record an estimate |
+| `tax.write` | accountant, owner | declare parameters, adjustments, losses, credits and payments made in advance; record an estimate; book its provision |
 | `tax.finalize` | owner | call a computation final, or withdraw one |
 
 Recording and finalising run the estimate, so both need `tax.read` as well: a
@@ -298,15 +380,15 @@ Project Settings → API, or `[api] schemas` in `supabase/config.toml`. No
 migration can do that: it is a setting of the API and not of the database.
 
 An installation that already exists gets the module by upgrading as for any
-release: `ekwo migrate` applies `20260930104417_corporate_tax.sql` after the
-socle's migrations, then the seeds under
+release: `ekwo migrate` applies the migrations of the module —
+`20260930104417_corporate_tax.sql` first, then the later ones, such as
+`20261010073000_tax_provision_and_prepayments.sql` for version 1.1.0 — after
+the socle's migrations, then the seeds under
 `supabase/seed/modules/corporate_tax/`. Nothing of the socle changes, and no
 company is touched until it enables the module.
 
 ## What is not here yet
 
-- The provision entry, and the plan of prepayments: the accounts and the
-  instalments are in the pack, and nothing reads them.
 - The declaration forms.
 - MCP tools.
 - A country other than the ones whose pack carries a `corporate_tax.json`. A

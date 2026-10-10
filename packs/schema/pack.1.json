@@ -2756,7 +2756,7 @@
         },
         "prepayments": {
           "type": "array",
-          "description": "When the tax is paid in advance and what each payment is worth, for the days the figures are in force. Declared for the prepayment plan of a later version of the module; nothing reads it yet.",
+          "description": "When the tax is paid in advance and what each payment is worth, for the days the figures are in force. Read by the plan of prepayments of the corporate income tax module, tax.prepayment_plan().",
           "items": {
             "type": "object",
             "required": [

@@ -142,7 +142,7 @@ Everything the database holds about the company:
 | Declarations | `tax_filings`, the figures each was frozen with in `tax_filing_boxes`, and the proof each one went in `tax_filing_deposits`; the hashes committed to a public ledger in `filing_proofs`, with their proofs |
 | Pieces | `attachments` — the rows |
 | The trail | `audit_log` of the company, in the order of `occurred_at` and `sequence` — without its row ids, which are the installation's own counter, are not a signed-in reader's to read, and are drawn again on arrival |
-| Modules | `fixed_assets.fixed_assets`, `fixed_assets.depreciation_lines`, `fixed_assets.disposals`, `budgets.budgets`, `budgets.lines`, and what the company declared and computed for its corporate income tax: `tax.company_parameters`, `tax.adjustments`, `tax.credits`, `tax.computations`, `tax.computation_lines`, `tax.losses`, `tax.loss_uses`; and every electronic invoice issued, as the exact file, with each sending and what came back: `einvoicing.issues`, `einvoicing.transmissions`, `einvoicing.transmission_events` |
+| Modules | `fixed_assets.fixed_assets`, `fixed_assets.depreciation_lines`, `fixed_assets.disposals`, `budgets.budgets`, `budgets.lines`, and what the company declared and computed for its corporate income tax: `tax.company_parameters`, `tax.adjustments`, `tax.credits`, `tax.computations`, `tax.computation_lines`, `tax.losses`, `tax.loss_uses`, `tax.prepayments`; and every electronic invoice issued, as the exact file, with each sending and what came back: `einvoicing.issues`, `einvoicing.transmissions`, `einvoicing.transmission_events` |
 
 ## What does not, and why
 
