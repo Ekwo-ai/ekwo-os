@@ -220,6 +220,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`bh`](../packs/bh/) | البحرين | `117_pack_bh.sql` | ar, en | `community` |
 | [`bj`](../packs/bj/) | Bénin | `22_pack_bj.sql` | fr | `community` |
 | [`bm`](../packs/bm/) | Bermuda | `138_pack_bm.sql` | en | `community` |
+| [`bn`](../packs/bn/) | Brunei Darussalam | `144_pack_bn.sql` | en | `community` |
 | [`bo`](../packs/bo/) | Bolivia | `102_pack_bo.sql` | es, en | `community` |
 | [`ca`](../packs/ca/) | Canada | `58_pack_ca.sql` | en, fr | `community` |
 | [`cd`](../packs/cd/) | République démocratique du Congo | `34_pack_cd.sql` | fr | `community` |
