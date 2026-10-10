@@ -1,0 +1,400 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "KY-IFRS-SME-SFP",
+      "kind": "balance_sheet",
+      "framework": "IFRS-SME",
+      "name": "Statement of financial position",
+      "legal_reference": "Companies Act (2026 Revision), section 59(1) and (2) requires every company to keep proper books of account — contracts and invoices included — and deems them not proper unless they give a true and fair view of the company's affairs and explain its transactions; it prescribes no financial-statement format and no accounting framework. This statement follows the presentation of IFRS for SMEs (IASB): current and non-current assets and liabilities, equity, with the result for the year shown as its own unallocated line until closing. The line numbering and the ranges each line reads are original to this pack, because no legal chart exists to number against. See the README.",
+      "lines": [
+        {
+          "code": "A-NC-FIX",
+          "parent": "A-NC",
+          "name": "Property, plant and equipment",
+          "sequence": 10,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1799"
+            }
+          ]
+        },
+        {
+          "code": "A-NC-INT",
+          "parent": "A-NC",
+          "name": "Goodwill and other intangible assets",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1800",
+              "code_to": "1899"
+            }
+          ]
+        },
+        {
+          "code": "A-NC-OTH",
+          "parent": "A-NC",
+          "name": "Other non-current assets",
+          "sequence": 30,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1900",
+              "code_to": "1999"
+            }
+          ]
+        },
+        {
+          "code": "A-NC",
+          "name": "Non-current assets",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "A-NC-FIX",
+            "A-NC-INT",
+            "A-NC-OTH"
+          ]
+        },
+        {
+          "code": "A-C-REC",
+          "parent": "A-C",
+          "name": "Trade and other receivables",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1199"
+            }
+          ]
+        },
+        {
+          "code": "A-C-INV",
+          "parent": "A-C",
+          "name": "Inventories",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1299"
+            }
+          ]
+        },
+        {
+          "code": "A-C-OTH",
+          "parent": "A-C",
+          "name": "Other current assets",
+          "sequence": 70,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1399"
+            }
+          ]
+        },
+        {
+          "code": "A-C-PRE",
+          "parent": "A-C",
+          "name": "Prepayments and deposits paid",
+          "sequence": 80,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1499"
+            }
+          ]
+        },
+        {
+          "code": "A-C-CASH",
+          "parent": "A-C",
+          "name": "Cash and cash equivalents",
+          "sequence": 90,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1099"
+            }
+          ]
+        },
+        {
+          "code": "A-C",
+          "name": "Current assets",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "A-C-REC",
+            "A-C-INV",
+            "A-C-OTH",
+            "A-C-PRE",
+            "A-C-CASH"
+          ]
+        },
+        {
+          "code": "A-TOT",
+          "name": "Total assets",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "A-NC",
+            "A-C"
+          ]
+        },
+        {
+          "code": "E-CAP",
+          "parent": "E-TOT",
+          "name": "Share capital and reserves",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3199"
+            }
+          ]
+        },
+        {
+          "code": "E-RET",
+          "parent": "E-TOT",
+          "name": "Retained profits",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3299"
+            }
+          ]
+        },
+        {
+          "code": "E-RESULT",
+          "parent": "E-TOT",
+          "name": "Profit or loss for the year, not yet allocated",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4699",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "4700",
+              "code_to": "4799",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5099",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6899",
+              "sequence": 40
+            }
+          ]
+        },
+        {
+          "code": "E-TOT",
+          "name": "Total equity",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "E-CAP",
+            "E-RET",
+            "E-RESULT"
+          ]
+        },
+        {
+          "code": "L-NC",
+          "parent": "L-TOT",
+          "name": "Non-current liabilities",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2300",
+              "code_to": "2399"
+            }
+          ]
+        },
+        {
+          "code": "L-C-PAY",
+          "parent": "L-C",
+          "name": "Trade and other payables",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2069"
+            }
+          ]
+        },
+        {
+          "code": "L-C-OTH",
+          "parent": "L-C",
+          "name": "Other current liabilities",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2070",
+              "code_to": "2099",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2299",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "L-C",
+          "name": "Current liabilities",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "L-C-PAY",
+            "L-C-OTH"
+          ]
+        },
+        {
+          "code": "L-TOT",
+          "name": "Total liabilities",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "L-NC",
+            "L-C"
+          ]
+        },
+        {
+          "code": "EL-TOT",
+          "name": "Total equity and liabilities",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "E-TOT",
+            "L-TOT"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "KY-IFRS-SME-IS",
+      "kind": "income_statement",
+      "framework": "IFRS-SME",
+      "name": "Income statement",
+      "legal_reference": "Companies Act (2026 Revision), section 59 prescribes no income statement format; the Cayman Islands imposes no income, corporate or other direct tax, so this statement has no tax expense line. It presents revenue, cost of sales, other income, operating expenses and depreciation in the single-statement shape IFRS for SMEs (IASB) permits an entity with no other comprehensive income. The line numbering is original to this pack.",
+      "lines": [
+        {
+          "code": "REV",
+          "name": "Revenue",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4699"
+            }
+          ]
+        },
+        {
+          "code": "COST",
+          "name": "Cost of sales",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5099"
+            }
+          ]
+        },
+        {
+          "code": "GROSS",
+          "name": "Gross profit",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "REV"
+          ],
+          "minus": [
+            "COST"
+          ]
+        },
+        {
+          "code": "OTH-INC",
+          "name": "Other income",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4700",
+              "code_to": "4799"
+            }
+          ]
+        },
+        {
+          "code": "OPEX",
+          "name": "Administrative and other operating expenses",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6799"
+            }
+          ]
+        },
+        {
+          "code": "DEPR",
+          "name": "Depreciation and amortisation",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6800",
+              "code_to": "6899"
+            }
+          ]
+        },
+        {
+          "code": "PROFIT",
+          "name": "Profit (loss) for the year",
+          "sequence": 70,
+          "is_total": true,
+          "plus": [
+            "GROSS",
+            "OTH-INC"
+          ],
+          "minus": [
+            "OPEX",
+            "DEPR"
+          ]
+        }
+      ]
+    }
+  ]
+}

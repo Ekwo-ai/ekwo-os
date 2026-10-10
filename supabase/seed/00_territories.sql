@@ -2314,3 +2314,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('KY', 'iso_3166_1', 'Cayman Islands', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State or territory outside it is a third country for every rule the Directive carries. The Cayman Islands, a British Overseas Territory, levy no value added tax, goods and services tax or general sales tax, and no direct tax: the Tax Information Authority records that the Cayman Islands does not have direct taxes, and the 2026-2027 budget proposed no new taxes. What the territory charges instead is import duty under the Customs Tariff Act (2026 Revision), section 3, and stamp duty.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

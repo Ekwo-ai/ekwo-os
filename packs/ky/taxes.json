@@ -1,0 +1,54 @@
+[
+  {
+    "code": "KY-S-NA",
+    "name": "Sale, not subject to any sales tax",
+    "description": "Every sale a Cayman Islands business makes — domestic or exported",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "1962-01-01",
+    "legal_reference": "The Cayman Islands has no value added tax, goods and services tax or general tax on sales: the Tax Information Authority states that 'the Cayman Islands does not have direct taxes' (DITC FAQs), the government's 2026-2027 budget proposed no new taxes (KPMG Tax News Flash, 7 January 2026), and PwC's tax summary records 'no VAT' with the State's revenue coming from import duty, stamp duty and fees (all consulted 2026-10-10). The code exists so that every line still carries a tax code the engine can post, and states that this jurisdiction has none. What the jurisdiction levies instead, outside this pack, is import duty at the border — charged through Customs on goods imported and enumerated in Schedule 1 of the Customs Tariff Act (2026 Revision), section 3(1), at the rates the Schedule specifies (22 % for most headings, other rates for some) — and stamp duty. Neither is a tax a sales invoice carries. `valid_from` 1962-01-01 is a convenience, not a claim about when the absence of a sales tax began. See 'From Cayman Islands' in docs/international.md.",
+    "source": "ditc-faqs",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "KY-P-NA",
+    "name": "Purchase, not subject to any sales tax",
+    "description": "Every purchase a Cayman Islands business books — domestic or imported",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "1962-01-01",
+    "legal_reference": "The Cayman Islands has no value added tax, goods and services tax or general tax on sales: the Tax Information Authority states that 'the Cayman Islands does not have direct taxes' (DITC FAQs), the government's 2026-2027 budget proposed no new taxes (KPMG Tax News Flash, 7 January 2026), and PwC's tax summary records 'no VAT' with the State's revenue coming from import duty, stamp duty and fees (all consulted 2026-10-10). The code exists so that every line still carries a tax code the engine can post, and states that this jurisdiction has none. On the purchase side there is nothing to recover. Goods imported pay customs duty (Customs Tariff Act (2026 Revision), section 3(1), Schedule 1) as a cost of the goods, booked by the importer to account 5025, outside the tax engine; some goods enter duty-free under Schedule 2 (section 3(2)), and a package tax applies under Schedule 3 (section 3(3)). See 'From Cayman Islands' in docs/international.md.",
+    "source": "ditc-faqs",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 20
+  }
+]

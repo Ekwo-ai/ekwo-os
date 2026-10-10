@@ -6520,3 +6520,32 @@ is a convention. The Companies (Guernsey) Law, 2008 could not be opened
 
 **Statements.** FRS 102 Section 1A layout, borrowed from the United Kingdom: Guernsey law
 prescribes no format, only a true and fair view under declared GAAP.
+
+## From Cayman Islands
+
+`packs/ky/`, `community`, seed 139. A second jurisdiction with no tax on
+turnover, built on the Hong Kong shape: two `not_subject` codes, no
+`tax_report.json`, no settlement roles, an empty-`boxes` period in the golden.
+No generic test assumed a return or several rates for this pack: the two
+assertions fixed for Hong Kong held. Nothing in the core was patched.
+
+**What the territory charges instead.** No VAT/GST/sales tax and no direct tax
+(Tax Information Authority FAQs; KPMG alert on the 2026-2027 budget; PwC tax
+summary). Border levies: import duty under the Customs Tariff Act (2026
+Revision), s. 3 and Schedule 1 (22 % for most headings, other rates for some,
+duty-free goods in Schedule 2, package tax in Schedule 3); stamp duty. Not
+modelled: duty is set per tariff heading, not per invoice line, and there is
+no code kind for it. It is booked as a cost of goods (account 5025). Also out
+of the pack: payroll, pensions, work permit fees, and any Pillar Two measure,
+whose Cayman status was not established from an official source.
+
+**`tax_point` has no true answer**, as for Hong Kong: `invoice_date` is a
+convention. **A "tax" that is a border duty** has no place in `kind`, which
+suggests a possible `customs_duty` kind with a per-line rate, for import
+invoices; not attempted.
+
+**Sources.** `gov.ky/economy` carries no tax text; the absence of VAT rests on
+the DITC FAQ statement, the budget alert and PwC. The OpenPeppol list and the
+Stamp Duty Act were not opened. The Companies Act (2026 Revision) s. 59 was
+read in full: proper books including contracts and invoices, true and fair
+view, five-year retention.
