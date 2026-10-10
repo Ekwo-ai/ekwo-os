@@ -20,6 +20,33 @@ somewhere has already run it.
   the statements that the site carries no measurement tool and that no model is
   trained on the books are replaced by what holds today and what consent a
   measurement tool would ask for.
+- **Every country pack says what a service bought from abroad costs in
+  tax.** A software subscription, hosting or an API billed by a supplier
+  abroad is the most common purchase of a young company, and 44 packs that
+  tax purchases had no code for it, so such a purchase was booked with no tax
+  at all. Each of them now either carries the tax the buyer owes — a reverse
+  charge, a self-assessment, the withholding of the supplier's tax, each with
+  its boxes, its credit-note mirror, the period its credit falls in and one
+  such purchase in the golden year — or says, in the new `not_taxed` of
+  `pack.json`, with its article and source, that its country leaves the case
+  untaxed in the buyer's hands (Bolivia, the Dominican Republic, Guatemala,
+  Honduras, Sri Lanka, the United States for California, Uruguay). Taxes were
+  added for Algeria, Armenia, Azerbaijan, Benin, Bosnia and Herzegovina,
+  Cameroon, the Central African Republic, Chad, Colombia, Costa Rica, the
+  Czech Republic, the Democratic Republic of the Congo, Ecuador, El Salvador,
+  Ethiopia, Georgia, Ghana, Greece, Guinea, Kazakhstan, Korea, Latvia, Mali,
+  Mexico, Nicaragua, Niger, Nigeria, North Macedonia, Pakistan (Punjab,
+  Sindh), Panama, Paraguay, Peru, the Republic of the Congo, Taiwan, Ukraine
+  and Viet Nam; the Czech, Greek and Latvian packs carry one code for a
+  supplier of another Member State and one for a supplier outside the European Union;
+  Malaysia's imported-service tax takes the treatment
+  `foreign_services_received`. Where the credit comes a period later
+  (Kazakhstan, Nicaragua, Peru, Viet Nam, as Argentina) the tax waits on an
+  account of its own and the README says how it moves; where the buyer
+  deducts nothing (Benin, the DRC, Ghana, Korea, Taiwan) it is a cost. `ekwo
+  pack check` now refuses a pack whose taxes include a rated purchase VAT,
+  GST or sales tax and which does neither, and `docs/packs.md` says how to
+  write either.
 - **The privacy page covers the projects Ekwo hosts.** Version 1.2 of
   `PRIVACY.md` opens with the choice of where the books live — a Supabase
   project of one's own, or one Ekwo hosts — and how a project moves from one to

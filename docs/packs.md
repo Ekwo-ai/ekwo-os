@@ -504,6 +504,43 @@ always its invoice with the sign flipped. `cash_rounding_unit` is still
 declared and read by nothing: the socle has no cash-payment path to round a
 total on.
 
+### A service bought from a supplier abroad
+
+A software subscription, hosting or an API billed from abroad is the most
+common purchase of a young company, and in most countries the buyer owes the
+tax on it: a reverse charge, a self-assessment, a withholding of the
+supplier's tax. A pack that says nothing about it lets the books carry no tax
+at all. So **a pack whose taxes include a rated purchase VAT, GST or sales tax
+says something about it**, in one of two ways:
+
+- **a purchase tax with treatment `foreign_services_received`** — or, in a
+  Member State, `intracom_acquisition_services` for a supplier of another
+  Member State, the return often splitting the two — posted like
+  `DE-P-DRITT-19`: the tax owed credited, the tax deducted debited. A tax the
+  buyer may deduct only later (`AR-P-EXT`, a period after) or not at all
+  (`SN-P-NR-18-ND`, a cost) keeps the same treatment and says so in its
+  postings;
+- **or a `not_taxed` entry in `pack.json`**, where the country's law leaves
+  the case untaxed in the buyer's hands, with the article that says so and the
+  key of its text in the register:
+
+```json
+"not_taxed": [
+  { "treatment": "foreign_services_received",
+    "legal_reference": "Ley N.° 843, art. 1, inciso b) — el IVA grava [...] las prestaciones realizadas en el territorio de la Nación [...]",
+    "source": "ley-843" }
+]
+```
+
+`ekwo pack check` refuses a pack that does neither, an entry naming a
+treatment one of the pack's own purchase taxes carries, and an
+`intracom_*` treatment outside the common system of the European Union's VAT.
+`ekwo pack describe` and the MCP tool `describe_pack` return the entries
+beside the treatments the taxes carry. Where the law taxes the case only for some buyers — a business
+whose purchases all serve taxable supplies owes nothing, one with exempt
+supplies pays — the pack carries the tax for the case where it is due and
+its README says when a purchase takes no code.
+
 ### A base is written once, and printed as often as the form likes
 
 **A tax carries one `base` posting per kind of document**, so a taxable amount
@@ -1768,6 +1805,14 @@ table gives it.
 A cash-basis tax has four of its own: it names its transition account, takes
 exactly one `tax` posting per document kind and no `tax_on_base`, and its `tax`
 posting names a box.
+
+A pack whose taxes include a rated purchase VAT, GST or sales tax and that
+says nothing about a service bought from a supplier abroad — see
+[A service bought from a supplier abroad](#a-service-bought-from-a-supplier-abroad).
+A `not_taxed` entry naming a treatment one of the pack's own purchase taxes
+carries, the same treatment twice, an `intracom_*` treatment outside the
+common system of the European Union's VAT, or a `source` the register does not
+hold.
 
 A territory a tax names — in `applies_when` or `jurisdiction` — has to be a row
 of `territories`; `applies_when.seller_in` has to be inside the pack's own

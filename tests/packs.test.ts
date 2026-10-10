@@ -766,6 +766,83 @@ describe('the pack format', () => {
     await rm(dir, { recursive: true, force: true });
   });
 
+  // A service bought from a supplier abroad: every pack that taxes purchases
+  // either carries the tax a buyer owes on one, or says in `not_taxed`, with
+  // its article, that its country leaves it untaxed. Every pack of this
+  // repository is read by the helpers above, so each of them already passes;
+  // what is proved here is that a pack which says neither is refused.
+  describe('a service bought from a supplier abroad', () => {
+    const abroad = (tax: Pack['taxes'][number]) =>
+      tax.scope === 'purchase' && tax.treatment === 'foreign_services_received';
+    // A pack whose only cover is one foreign_services_received tax with no
+    // category, so that changing its treatment touches nothing else.
+    const pack = packWhere(
+      'a pack covered by one foreign_services_received purchase tax',
+      (p) =>
+        p.taxes.filter(abroad).length === 1 &&
+        p.taxes.filter(abroad)[0]!.vat_category === null &&
+        !p.taxes.some((t) => t.treatment === 'intracom_acquisition_services') &&
+        (p.manifest.not_taxed ?? []).length === 0,
+    );
+    const tax = pack.taxes.find(abroad)!;
+    const source = sourcesOf(pack.manifest.certification)[0]!.key;
+
+    async function variant(
+      edit: (taxes: Record<string, unknown>[], manifest: Record<string, unknown>) => void,
+    ): Promise<string | null> {
+      const dir = await mkdtemp(join(tmpdir(), 'ekwo-foreign-services-'));
+      await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
+      await cp(join(packs, pack.slug), join(dir, pack.slug), { recursive: true });
+      const taxesPath = join(dir, pack.slug, 'taxes.json');
+      const manifestPath = join(dir, pack.slug, 'pack.json');
+      const taxes = JSON.parse(await readFile(taxesPath, 'utf8')) as Record<string, unknown>[];
+      const manifest = JSON.parse(await readFile(manifestPath, 'utf8')) as Record<string, unknown>;
+      edit(taxes, manifest);
+      await writeFile(taxesPath, JSON.stringify(taxes), 'utf8');
+      await writeFile(manifestPath, JSON.stringify(manifest), 'utf8');
+      const error = await readPack(pack.slug, dir).then(
+        () => null,
+        (e: Error) => e.message,
+      );
+      await rm(dir, { recursive: true, force: true });
+      return error;
+    }
+    const untaxed = (manifest: Record<string, unknown>) => {
+      manifest['not_taxed'] = [
+        { treatment: 'foreign_services_received', legal_reference: 'The article that says so.', source },
+      ];
+    };
+    const reclass = (taxes: Record<string, unknown>[]) => {
+      taxes.find((t) => t['code'] === tax.code)!['treatment'] = 'self_assessed';
+    };
+
+    it('refuses a pack that taxes purchases and says nothing about a service from abroad', async () => {
+      expect(await variant((taxes) => reclass(taxes))).toMatch(
+        /taxes\.json: .* tax purchases, and no purchase tax carries foreign_services_received/,
+      );
+    });
+
+    it('accepts the same pack once it names the case in not_taxed, with its source', async () => {
+      expect(await variant((taxes, manifest) => (reclass(taxes), untaxed(manifest)))).toBeNull();
+    });
+
+    it('refuses a not_taxed entry for a treatment one of its own taxes carries', async () => {
+      expect(await variant((_, manifest) => untaxed(manifest))).toMatch(
+        new RegExp(`not_taxed\\.foreign_services_received: says the country leaves .* and ${tax.code} taxes it`),
+      );
+    });
+
+    it('refuses a not_taxed entry whose source the register does not hold', async () => {
+      const error = await variant((taxes, manifest) => {
+        reclass(taxes);
+        untaxed(manifest);
+        (manifest['not_taxed'] as Record<string, unknown>[])[0]!['source'] = 'no-such-source';
+      });
+      expect(error).toMatch(/not_taxed\.foreign_services_received/);
+      expect(error).toMatch(/no-such-source/);
+    });
+  });
+
   // -------------------------------------------------------------------
   // The register of sources.
   //

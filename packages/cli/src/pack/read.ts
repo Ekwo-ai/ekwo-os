@@ -1278,6 +1278,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     );
   }
   issues.push(...taxCodes(taxes, (tax: TaxCodes) => regimes.get(tax.code) ?? packRegime));
+  issues.push(...foreignServices(manifest, taxes, packRegime));
   issues.push(...reportReferences(report, taxes));
   issues.push(...proposedPeriod(manifest, report));
   issues.push(...statementReferences(statements, charts));
@@ -3340,6 +3341,68 @@ function crossReferences(manifest: Manifest, charts: PackChart[], taxes: PackTax
         }
       }
     }
+  }
+  return issues;
+}
+
+/**
+ * A service bought from a supplier abroad — a software subscription, hosting,
+ * an API — is the most common purchase of a young company, and a pack that
+ * says nothing about it lets the books carry no tax on it at all. So a pack
+ * whose taxes include a rated purchase VAT, GST or sales tax either holds a
+ * purchase tax for that case, or names it in `not_taxed` with the article
+ * that leaves it untaxed in the buyer's hands.
+ *
+ * The treatment that counts is `foreign_services_received`; inside the
+ * European Union's common system of VAT, `intracom_acquisition_services`
+ * counts as well, since a Member State's return may well split the two by the
+ * supplier's origin. A
+ * `not_taxed` entry that names a treatment one of the pack's own purchase taxes
+ * carries is refused — a pack cannot both tax a case and say it is untaxed —
+ * and so is an `intracom_*` treatment outside the European Union's common
+ * system, where no tax may carry it either.
+ */
+function foreignServices(manifest: Manifest, taxes: PackTax[], regime: VatRegime): Issue[] {
+  const issues: Issue[] = [];
+  const covering = regime.commonSystem
+    ? ['foreign_services_received', 'intracom_acquisition_services']
+    : ['foreign_services_received'];
+  const purchases = taxes.filter((tax) => tax.scope === 'purchase');
+  const notTaxed = manifest.not_taxed ?? [];
+  const seen = new Set<string>();
+  for (const entry of notTaxed) {
+    const path = `pack.json not_taxed.${entry.treatment}`;
+    if (seen.has(entry.treatment)) issues.push({ path, message: 'named twice' });
+    seen.add(entry.treatment);
+    const carrying = purchases.filter((tax) => tax.treatment === entry.treatment).map((tax) => tax.code);
+    if (carrying.length > 0) {
+      issues.push({
+        path,
+        message: `says the country leaves ${entry.treatment} untaxed, and ${carrying.join(', ')} taxes it`,
+      });
+    }
+    if (!covering.includes(entry.treatment)) {
+      issues.push({
+        path,
+        message: `${regime.because}, so ${entry.treatment} is not a treatment this pack can leave untaxed`,
+      });
+    }
+  }
+  const rated = purchases.filter(
+    (tax) => ['vat', 'gst', 'sales_tax'].includes(tax.kind) && tax.amount_type === 'percent' && tax.rate > 0,
+  );
+  if (rated.length === 0) return issues;
+  const covered =
+    purchases.some((tax) => covering.includes(tax.treatment)) ||
+    notTaxed.some((entry) => covering.includes(entry.treatment));
+  if (!covered) {
+    issues.push({
+      path: 'taxes.json',
+      message:
+        `${rated.map((tax) => tax.code).join(', ')} tax purchases, and no purchase tax carries ` +
+        `${covering.join(' or ')}: add the tax a buyer owes on a service from a supplier abroad, ` +
+        'or name the treatment in pack.json not_taxed with the article that leaves it untaxed',
+    });
   }
   return issues;
 }
