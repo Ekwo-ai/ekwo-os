@@ -23,7 +23,7 @@ English. This pack declares `en` alone.
 
 Every tax, box and statement line carries its own `legal_reference`, and
 beside it the key of the text that article is in. The register in
-`pack.json` holds eight texts, every one opened on 26 September 2026. The
+`pack.json` holds eight texts. The
 ones the rest of this file leans on:
 
 | What | Text | Where |
@@ -36,28 +36,19 @@ ones the rest of this file leans on:
 | The current rate, registration, filing and EFRIS in plain language | URA, *A Simplified Guide — Value Added Tax* | `thetaxman.ura.go.ug` |
 | What each row of the return holds | Form DT-2031, Monthly Value Added Tax Return, revision 07/2018 | `ura.go.ug` |
 
-ULII's site (`ulii.org`) refuses a plain HTTPS request with no browser behind
-it and returns 403; every Act cited here was instead read from the PDF
-Laws.Africa serves for ULII, reached through `media.ulii.org`, which is not
-browser-gated. `ekwo pack check ug --links` will report the three `ulii.org`
-URLs as unreachable for the same reason: it is the publisher, not a wrong
-pack. `etax.ura.go.ug`, the portal the return is filed on, did not answer a
-connection from the machine this pack was written on either; that is recorded
-rather than worked around.
+ULII's site (`ulii.org`) blocks automated requests, so `ekwo pack check ug
+--links` reports the three `ulii.org` URLs as unreachable: it is the
+publisher, not a wrong pack.
 
-**The consolidated Value Added Tax Act text this pack read is the version "as
-at 31 December 2000".** ULII's own collection note lists outstanding
-amendments through 2024 that a later, "as at 31 December 2023" consolidation
-applies and this pack's copy does not; ULII's own site could not be reached to
-compare the two. Every section this pack cites — the charge to tax (s. 4), who
-pays it (s. 5), time of supply (s. 14), taxable supply and exempt supply
-(ss. 18, 19), input tax (s. 28), tax invoices (s. 29), returns (s. 31), due
-date for payment (s. 34), and the Minister's power to set the rate (s. 78) —
-reads the same in every secondary source consulted (URA's own guidance, PwC,
-RSM, Baker McKenzie) and none of those sources describes any of them as
-renumbered or repealed, which is why this pack treats the 2000 text as
-structurally current for those provisions. The Second and Third Schedules are
-a different matter — see "What this pack does not carry" below.
+**The consolidated Value Added Tax Act text cited is the version "as at 31
+December 2000".** Amendments through 2024 are not in it. The sections this
+pack cites — the charge to tax (s. 4), who pays it (s. 5), time of supply
+(s. 14), taxable supply and exempt supply (ss. 18, 19), input tax (s. 28),
+tax invoices (s. 29), returns (s. 31), due date for payment (s. 34), and the
+Minister's power to set the rate (s. 78) — are described the same way by
+URA's own guidance and secondary sources, none of which reports them
+renumbered or repealed. The Second and Third Schedules are a different
+matter — see "What this pack does not carry" below.
 
 ## The chart of accounts, and why this one
 
@@ -69,8 +60,7 @@ Institute of Certified Public Accountants of Uganda, the standard-setting body
 the Accountants Act, 2013 recognises, has applied the IFRS Accounting
 Standards without modification since 1998 and has adopted the IFRS for SMEs
 Accounting Standard for an entity with no public accountability. So the chart
-is written, not transcribed, in the same shape as the Kenyan, Nigerian and
-South African packs:
+is written, not transcribed:
 
 - **Four digits, by class**: `1` assets, `2` liabilities, `3` equity, `4`
   revenue and other income, `5` goods and materials, `6` other expenses, `7`
@@ -104,11 +94,9 @@ reconciliation.
 the Minister fix the rate by statutory order, subject to Parliament confirming
 it within three months; the Value Added Tax (Rate of Tax) Order, 2005
 (Statutory Instrument 2005 No. 51), made 8 June 2005 and in force from 1 July
-2005, fixed it at eighteen per cent — where it has stood since. This pack
-could not open an official gazette copy of the Order itself (see "Sources"
-above on ULII's 403); the rate and its date are corroborated by URA's own
-guidance and by three independent secondary summaries (PwC, RSM, ICNL), none
-of which disagrees.
+2005, fixed it at eighteen per cent — where it has stood since. The rate and
+its date rest on URA's own guidance and secondary summaries; the gazetted
+Order itself should be checked.
 
 **What a supply can be, and where it goes on form DT-2031:**
 
@@ -140,8 +128,7 @@ the matching claim, so both the Total Tax Charged (row 10) and the Total Input
 Tax (row 22) move by the same amount on a wholly taxable purchase — netting to
 nothing on the final Section H calculation, but visible, gross, on both sides
 of the return. `UG-P-RC-SVC` is modelled with two independent `tax` postings
-for exactly that reason, rather than the single posting with a `-100` factor
-Kenya's pack uses for its own different mechanism.
+for exactly that reason.
 
 ## The return
 
@@ -173,8 +160,7 @@ and every gap is real:**
   trader status under the Income Tax Act — a status this pack's golden company
   does not hold.
 - **Section F** (rows 29 to 33), the apportionment of input tax credit between
-  taxable and exempt use, is not carried for the reason `docs/packs.md` gives
-  Singapore's Tourist Refund Scheme: this pack's `tax_report.json` vocabulary
+  taxable and exempt use, is not carried: this pack's `tax_report.json` vocabulary
   is a list to add, a list to subtract, or a rate of one box, and section F's
   own formula divides one sum of boxes by another sum of boxes — a ratio of a
   ratio no `total` box here can state. Row 20 and row 22 are therefore the
@@ -192,8 +178,8 @@ seller, crediting the seller's account; form DT-2031, Section G-I and G-II
 record what a company paid as such an agent and what was withheld from it as
 a supplier. Modelling an agent who is neither the seller nor the buyer of the
 document being posted is beyond what a `taxes.json` posting, which always
-speaks of the two parties to one document, can state. It is recorded in
-[`docs/international.md`](../../docs/international.md) under "Uganda".
+speaks of the two parties to one document, can state. See
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Electronic invoicing: EFRIS is a clearance, not an exchange
 
@@ -211,10 +197,9 @@ always sent it; what changed is that the seller's own invoice is now cleared
 with URA first, or generated on a device already linked to it. There is no
 profile to name and no ISO 6523 scheme a party is addressed by, because
 nothing is exchanged between the two businesses that a Peppol-shaped
-vocabulary would recognise. This is recorded at length in `pack.json`'s own
-`einvoicing.legal_reference` and in
-[`docs/international.md`](../../docs/international.md) under "Uganda"; the
-socle was not changed to fit it.
+vocabulary would recognise. `pack.json`'s own `einvoicing.legal_reference`
+says so; see also
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## What this pack does not carry
 
@@ -231,16 +216,16 @@ socle was not changed to fit it.
   before either is applied, and Value Added Tax Act, s. 42 governs a refund.
 - **The Second and Third Schedules beyond the paragraphs this pack cites.**
   Both schedules have been amended by Finance Acts and VAT Amendment Acts more
-  than once since the 2000 text this pack read was printed — secondary
-  guidance, for instance, describes the zero-rating of drugs and medicines as
-  now qualified "manufactured in Uganda", a qualification the base text this
-  pack could verify does not carry. `UG-S-Z-DOM` and `UG-P-Z` are written
-  against the paragraph as this pack could read it, and a reviewer should
+  than once since the 2000 text cited — secondary guidance, for instance,
+  describes the zero-rating of drugs and medicines as now qualified
+  "manufactured in Uganda", a qualification the 2000 text does not carry.
+  `UG-S-Z-DOM` and `UG-P-Z` are written against the 2000 paragraph, and a
+  reviewer should
   check the current wording of Third Schedule, paragraph 1(c) before relying
   on either code for a general zero-rated purchase.
 - **The registration threshold.** Not a fact `pack.json` states — Ekwo never
   decides who has to register — but worth recording here because it moved
-  during the writing of this pack: the Value Added Tax (Amendment) Act, 2026
+  recently: the Value Added Tax (Amendment) Act, 2026
   raised it from Shs 150 million to Shs 250 million of annual taxable turnover,
   effective 1 July 2026.
 - **Income tax withholding** other than VAT (Income Tax Act, s. 119 and
@@ -260,8 +245,8 @@ say what". The points a Ugandan chartered accountant should read first,
 roughly in the order the author is least sure of them:
 
 1. **The Second and Third Schedule paragraphs this pack cites**, against the
-   text as amended to date — this pack could only verify the "as at 31
-   December 2000" wording; see "What this pack does not carry" above.
+   text as amended to date — this pack cites the "as at 31 December 2000"
+   wording; see "What this pack does not carry" above.
 2. **`tax_point: earliest_of_delivery_or_payment`** against s. 14(1), which is
    in fact a three-way earliest test — delivery, payment, or invoice issue —
    and not the two-way test the word names; see `pack.json`'s own reference.

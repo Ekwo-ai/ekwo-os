@@ -14,26 +14,18 @@ it. The figures are replayed against a year of books by `tests/golden.test.ts`,
 which proves the pack is coherent and proves nothing about whether it is
 right.
 
-**This pack is written against Australia's and New Zealand's**: the same
-shape of chart, a value-added tax the common system of the European Union does
-not reach, and a return that reports a VAT-inclusive figure the engine grosses
-up rather than a value it sums directly. What the core could not say is
-written up in [`docs/international.md`](../../docs/international.md) under
-"From South Africa". None of it was patched for this pack's sake.
+What the core cannot yet say is listed in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Sources
 
 Every tax, box, mention and statement line carries its own `legal_reference`,
 and beside it the key of the text that article is in. The register in
-`pack.json` holds thirteen texts, opened on 25 September 2026. The one gap
-worth stating plainly: **South Africa keeps no official online consolidated
-register of its own statutes**, unlike Legilux, Légifrance or Estonia's Riigi
-Teataja — the Government Gazette is the sole medium of authentic publication
-(Interpretation Act 33 of 1957) and no free government service republishes a
-statute as amended, kept current. The Act itself is cited from Acts Online, a
-long-established private consolidation cross-checked against SARS's own
-guides wherever the two overlap; SARS's own guides, the VAT201 form and its
-external guide, are read straight from sars.gov.za.
+`pack.json` holds thirteen texts. **South Africa keeps no official online
+consolidated register of its own statutes**: the Government Gazette is the
+sole medium of authentic publication (Interpretation Act 33 of 1957). The Act
+is therefore cited from Acts Online, a private consolidation; SARS's guides,
+the VAT201 form and its external guide are cited from sars.gov.za.
 
 | What | Text | Where |
 |---|---|---|
@@ -54,12 +46,10 @@ applicable to the company. Companies Regulation 27(4) lets a company that is
 not required to be audited (Regulation 28, by its public interest score)
 prepare them under the IFRS for SMEs Accounting Standard, which the great
 majority of South African private companies and close corporations are. So
-the chart is written, not transcribed, on the same plan as `packs/au/` and
-`packs/nz/`: four digits, flat, no parent accounts, cost and accumulated
+the chart is written, not transcribed: four digits, flat, no parent accounts, cost and accumulated
 depreciation adjacent, grouped by the ranges of `statements.json` so that each
 range reaches one line item of IFRS for SMEs paragraph 4.2 or 5.5. 155
-accounts, all postable, none copied from a published chart or a commercial
-package's chart.
+accounts, all postable.
 
 **Four VAT accounts.** `2100` holds VAT output (VAT charged on sales) and
 `1150` VAT input (VAT paid on purchases and imports): the two the taxes post
@@ -79,9 +69,8 @@ arrived, so the rate never in fact left 15 %. No code in this pack carries
 African company could have posted an entry.
 
 **Field 1 is VAT-inclusive, and there is no separate box for a purchase's
-value.** Unlike Australia's BAS, which lets a filer choose to report GST
-exclusive of GST, VAT201 Field 1 prints one VAT-inclusive figure with no
-choice, the way New Zealand's GST101A does. The engine holds the VAT-exclusive
+value.** VAT201 Field 1 prints one VAT-inclusive figure with no choice. The
+engine holds the VAT-exclusive
 value of a line, so every sale-side `base` posting grosses it to the
 VAT-inclusive figure the field asks for (`box_factor: 115`), and the tax
 posting carries the real VAT amount rather than a reconstruction of Field 1 ×
@@ -90,8 +79,8 @@ directly — "the permissible VAT amount of \[…\] supplied to you" — and for
 nothing else, so every purchase-side `base` posting in this pack carries no
 box at all: there is nothing on this return to report a purchase's value in.
 
-**Zero-rated is not exempt, and the difference is the credit.** As in
-Australia and New Zealand, a zero-rated supply is a taxable supply at a nil
+**Zero-rated is not exempt, and the difference is the credit.** A zero-rated
+supply is a taxable supply at a nil
 charge — the credits on what went into it stay deductible (s. 11) — while an
 exempt supply under s. 12 carries no output tax and lets no input tax on what
 went into it be deducted (s. 17(1)):
@@ -102,8 +91,8 @@ went into it be deducted (s. 17(1)):
 | Zero-rated, exported goods (s. 11(1)(a)) | none | claimable | `ZA-S-EXPORT` | G |
 | Exempt (s. 12) | none | not claimable | `ZA-S-EXEMPT` | E |
 
-**Exported goods have their own box, Field 2A, apart from Field 2.** That is
-not a subset the way Australia's G2 sits inside G1: Field 2 is "zero rate,
+**Exported goods have their own box, Field 2A, apart from Field 2.** Field 2
+is "zero rate,
 *excluding* goods exported" and Field 2A is "zero rate, *only* exported
 goods", so the two boxes never carry the same rand.
 
@@ -129,8 +118,7 @@ supports an exempt residential letting.
 authority or a welfare organisation under the R2,5 million threshold account
 for VAT when it is paid rather than when it is invoiced. The core has no
 regime of a company, so the pack carries `ZA-S-VAT-CASH` and `ZA-P-VAT-CASH`
-beside the invoice-basis codes, exactly as `packs/au/` and `packs/nz/` do;
-nothing stops a company from mixing them, and a vendor that has made the
+beside the invoice-basis codes; nothing stops a company from mixing them, and a vendor that has made the
 election should use nothing else. The golden year uses the sale-side one only,
 to show where its VAT lands: on the transition account at the invoice's own
 date, and in Field 4 only once the payment that settles it is reconciled — in
@@ -154,7 +142,7 @@ to exercise the timing this mechanism exists for.
 **Field 4 is the ledger's own VAT, not a reconstruction.** VAT201's own
 instruction is "Field 1 × (r / (100 + r))"; this pack posts the real amount
 the engine already holds, which is the same figure at 15 %, the only rate this
-pack carries — the way `packs/nz/` reads Box 8 of GST101A.
+pack carries.
 
 **Field 20 is a subtraction, and a refund comes out negative.** The form
 prints a minus sign before a refund; the golden year's period 2026-B1, whose
@@ -170,18 +158,17 @@ offset by one month (ending January, March, May, July, September, November);
 Category D and Category F are offset the same way, and Category F's periods
 even cross a calendar year boundary (September to February); Category E
 follows the vendor's own year of assessment, not the calendar year. None of
-the four is expressible — see `docs/international.md`. `period_default` is
-left out on purpose: s. 27(4) has the Commissioner assign a vendor to Category
-A or B so as to keep the two roughly equal in number, which is not one answer
-the law gives everybody, the same reason `packs/lu/` proposes no cadence of
-its own.
+the four is expressible — see
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
+`period_default` is left out on purpose: s. 27(4) has the Commissioner assign
+a vendor to Category A or B so as to keep the two roughly equal in number,
+which is not one answer the law gives everybody.
 
 **The deadline is the statutory one, not the eFiling one almost everyone
 files on.** Section 28(1) sets the 25th of the month after the tax period;
 SARS's own guide gives a vendor who files and pays through eFiling until the
 *last business day* of that month instead, which this pack's single
-`day_of_month_after_period` rule cannot also express — see
-`docs/international.md`.
+`day_of_month_after_period` rule cannot also express.
 
 **Where the balance of the return lands.** `tax_payable` is `2110`, the VAT
 payable to SARS, and `tax_receivable` is `1155`, the refund due. Both are
@@ -215,8 +202,8 @@ no tax code for it — and no expense account for it exists, on purpose.
 **Expenses by nature.** Paragraph 5.11 allows nature or function, and a small
 company's ledger holds nature without any allocation.
 
-**No fact keys.** Nothing here was verified against a taxonomy, so `xbrl` and
-`taxonomy` are null on both statements.
+**No fact keys.** The pack carries no taxonomy, so `xbrl` and `taxonomy` are
+null on both statements.
 
 ## Closing the year
 
@@ -245,7 +232,7 @@ interest on any unpaid debt where the parties agreed none, which is not a term
 the VAT Act or company law imposes on an invoice.
 
 **The tax point is the earlier of the invoice and the first payment**
-(s. 9(1)), the same rule as Australia's and New Zealand's. `invoice_date` is
+(s. 9(1)). `invoice_date` is
 the closest word the format has: right when the invoice comes first, wrong for
 a deposit received before any invoice is issued.
 
@@ -268,7 +255,7 @@ mandatory had been introduced in Parliament at the date of this pack.
 ## What this pack does not carry
 
 - **Categories A, D, E and F of the six VAT tax-period categories** — see
-  "The return" above and `docs/international.md`.
+  "The return" above.
 - **The eFiling extension of the deadline** to the last business day of the
   month, which almost every vendor in fact files on.
 - **Commercial accommodation** (Fields 5 to 9, s. 8(13)'s 60 % apportionment).
@@ -293,9 +280,9 @@ mandatory had been introduced in Parliament at the date of this pack.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
-The section carries what was read on an official SARS page on 1 October 2026
-— the rates of tax for companies and small business corporations, their
-archive, and the Tax Guide for Small Businesses 2025/2026 — and nothing else.
+The section rests on SARS's published rates of tax for companies and small
+business corporations, their archive, and the Tax Guide for Small Businesses
+2025/2026, and on nothing else.
 It starts from line 8, profit before income tax, of `ZA-IFRSSME-PL`, so the
 tax charge on 8000 to 8020 never enters the computation. The company rate of
 27 % is dated from the years of assessment ending on or after 31 March 2023,
@@ -306,12 +293,12 @@ the small business corporation tables from those ending on or after
 |---|---|
 | The set-off of an assessed loss (section 20) | The law lets a company set off the **higher** of R1 million and 80 % of its taxable income before the set-off. The module's limit is a floor plus a share of the profit *above* it (`floor` and `percent_above`), which is another formula, so `loss_carryforward` is empty rather than approximated. A company that carries a loss is refused by name; losses of the year are still recorded. |
 | Provisional tax (Fourth Schedule) | Two payments — the first within six months of the start of the year, the second no later than the last day of the year — each a share of the company's **own estimate** of the year. `prepayments` knows only a share of a reference year's tax, or a surcharge on a shortfall; neither says that. The third top-up payment after the year end is not carried either. |
-| The small business corporation bands before the year ending 1 April 2025 | The table of the year ending 1 April 2023 to 31 March 2024 was read and is the same; the table of the year in between was not read. |
+| The small business corporation bands before the year ending 1 April 2025 | The table of the year ending 1 April 2023 to 31 March 2024 is the same; the table of the year in between is not carried and should be checked. |
 | The R18 848 and R57 698 of the SARS table | SARS prints whole rands; the section computes the 7 % band to the cent, 18 847,50, and so differs from the printed table by up to 50 cents. |
 | The exception for personal services in a small business corporation | A company with three or more full-time employees may exceed the 20 % of personal service income. The company states the percentage it reaches after the exception; the pack does not test it. |
-| Short years of assessment | No text was read on how the bands or the R20 million ceiling are reduced for a year of less than twelve months, so `up_to_prorata` is `none`. |
-| Other disallowed expenses (entertainment, donations, motor vehicles, leave pay, section 23(m)) and the allowances of section 12E(1A), 12B, 12C and 12I | Not read on an official page, or each needs a ceiling or a count the vocabulary of a rule does not carry. |
-| Dividends tax, capital gains, turnover tax, the ring-fencing of section 20A, mining and other special regimes | Outside the module, or not read. |
+| Short years of assessment | The pack cites no text on how the bands or the R20 million ceiling are reduced for a year of less than twelve months, so `up_to_prorata` is `none`. |
+| Other disallowed expenses (entertainment, donations, motor vehicles, leave pay, section 23(m)) and the allowances of section 12E(1A), 12B, 12C and 12I | Not carried from an official page, or each needs a ceiling or a count the vocabulary of a rule does not carry. |
+| Dividends tax, capital gains, turnover tax, the ring-fencing of section 20A, mining and other special regimes | Outside the module. |
 | Tax credits, foreign tax rebates | `credits` is empty: the shape is published and no credit was cited. |
 
 Interest on late payment of tax (`7030`) is added back from its account
@@ -324,8 +311,8 @@ nothing else.
 ## Fixed assets
 
 `fixed_assets.json` carries how a South African company depreciates a fixed
-asset in its books and takes it off the balance sheet. It was read on 1 October
-2026 in Sections 17, 18 and 19 of the IFRS for SMEs Standard (2015 text, as the
+asset in its books and takes it off the balance sheet. It rests on Sections
+17, 18 and 19 of the IFRS for SMEs Standard (2015 text, as the
 IFRS Foundation publishes it; the edition updated in February 2025 applies from
 1 January 2027) and in SARS Interpretation Note 47 (Issue 5) with its Annexure.
 
@@ -354,12 +341,12 @@ IFRS Foundation publishes it; the edition updated in February 2025 applies from
 | Not carried | Why |
 |---|---|
 | The wear-and-tear allowance of section 11(e), its Annexure periods and its diminishing-value method, as a schedule distinct from the book charge | The module keeps one schedule per asset. A company whose books and tax returns differ carries the difference as a tax adjustment outside the module. |
-| Other tax allowances (section 12B, 12C, 12E, 13 and 13quin, and the like) | Tax computations outside the vocabulary of a category; none was read for this pack. |
+| Other tax allowances (section 12B, 12C, 12E, 13 and 13quin, and the like) | Tax computations outside the vocabulary of a category. |
 | Declining-balance categories | IFRS for SMEs names the method but gives no usual rate; the diminishing-value method of Interpretation Note 47 is a tax method. |
 | Components of an asset (17.16) | The module has one asset, one duration. |
 | Residual value, impairment (Section 27) and revaluation | Not a pack rule. |
-| Right-of-use assets (account 1670) | Section 20 of the standard, not read for this pack. |
-| Threshold below which an asset is expensed | Not read in an official text, and the module has no such field. |
+| Right-of-use assets (account 1670) | Section 20 of the standard, not carried. |
+| Threshold below which an asset is expensed | No official text is cited, and the module has no such field. |
 | Units of production | Refused by the module. |
 | Day-by-day convention of the first period | Practice, not text; a company that prorates in days sets `prorata = 'days'` on the asset. |
 | Depreciation of assets held for sale, and capital work in progress (account 1680) | The module cannot stop depreciation on a reclassification. |
@@ -386,6 +373,6 @@ read first, roughly in the order the author is least sure of them:
 6. **The chart's mapping onto IFRS for SMEs paragraph 4.2**, especially the
    suspense account inside trade receivables and payables and VAT among them
    rather than under current tax.
-7. **`posted_edit_policy`**, left silent and so read as `reversal_only`: no
-   article of South African company law was read for this pack to say whether
+7. **`posted_edit_policy`**, left silent and so read as `reversal_only`: the
+   pack cites no article of South African company law on whether
    a posted document could instead go back to draft while untouched.

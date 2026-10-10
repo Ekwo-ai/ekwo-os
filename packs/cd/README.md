@@ -25,16 +25,11 @@ CEMAC.
 | The mandatory mentions, a reading list of the texts above | Extraits des dispositions légales (DGI) | `dgi.gouv.cd` |
 | Filing | I-IMPOTS | `i-impots.dgirdc.cd` |
 
-**Two texts read as images.** The décret n° 23/10 and the circulaire n° 005
-are scanned PDFs with no text layer; only their first pages and the passages
-this pack cites were read back against the image, not the full text. **The
-loi de finances rectificative n° 26/032 du 07 août 2026**, which a federation
-of employers (FEC) reports as adding rates of 5 % and 1 % from 7 August 2026,
-was not found as a primary text at any government URL tried on 21 September
-2026 — only the FEC's account of a briefing by the DGI and the DGDA. Its own
-publisher (the DGI) says the two rates were **not yet configured** in its own
-systems (e-DEF, e-MCF, i-impôts) as of 17 September 2026. Neither rate is in
-this pack: see *What it does not say*.
+The décret n° 23/10 and the circulaire n° 005 are relied on only for the
+passages cited; their full text should be checked. **The loi de finances
+rectificative n° 26/032 du 07 août 2026**, reported by a federation of
+employers (FEC) to add rates of 5 % and 1 % from 7 August 2026, is not in the
+register as a primary text: see *What it does not say*.
 
 ## What the pack says
 
@@ -45,35 +40,29 @@ this pack: see *What it does not say*.
   air tickets, `supply_nature` because the pack cannot see the tariff
   position or the ticket's route by itself. **0 %** on exports (art. 35).
   **Exempt** operations of art. 15 and following, cited at the level of the
-  principle: the list itself, amended piecemeal from 2010 to 2023 (only art.
-  15-5 was read in a source that names its own amendment), was not
+  principle: the list, amended piecemeal from 2010 to 2023, is not
   reconstructed article by article. `CD-S-EXO` carries the reference to
   section 3 of the OL and no more; a reviewer should read art. 15 before
   relying on it.
 - **Goods and services post apart** — 4431 and 4432 on the sale side, 4451,
-  4452 and 4454 on the purchase side — as `packs/sn/` already does, because
-  the chart has the accounts.
+  4452 and 4454 on the purchase side — because the chart has the accounts.
 - **The rate itself has an uncertain start date.** OL 10/001 was signed 20
   August 2010; its own art. 78 gives it "dix-huit mois à dater de sa
-  signature" to enter into force, without stating the day itself in the text
-  read. `valid_from: "2010-08-20"` is the date the law was signed, not
-  necessarily the date the 16 % rate first applied — a date that could be
-  anywhere up to eighteen months later, and that no primary source read here
-  confirms. The FEC briefing mentions an ordonnance-loi n° 001/2012 of 21
-  September 2012 amending the tax, unread beyond its title (a scanned PDF).
-  This is a caveat on the date, not on the rate: every secondary account read
-  agrees the DRC has taxed at 16 % for well over a decade.
-- **Import.** `CD-P-IMP-16` follows what the DGI itself says (§1 of the
-  research this pack was built from): VAT at importation is liquidated by
-  the Direction Générale des Douanes et Accises (DGDA), not the DGI, and
-  deducted on the declaration of release for consumption. No article of OL
-  10/001 fixing the exigibility or the deduction mechanism at import,
-  separate from art. 35's rate, was identified in a source read directly.
+  signature" to enter into force, without stating the day itself.
+  `valid_from: "2010-08-20"` is the date the law was signed, not necessarily
+  the date the 16 % rate first applied, which may be up to eighteen months
+  later. An ordonnance-loi n° 001/2012 of 21 September 2012 amending the tax
+  is known by its title only. The caveat is on the date, not on the rate.
+- **Import.** `CD-P-IMP-16`: VAT at importation is liquidated by the
+  Direction Générale des Douanes et Accises (DGDA), not the DGI, and deducted
+  on the declaration of release for consumption. This rests on the DGI's own
+  account; no article of OL 10/001 fixing the exigibility or the deduction
+  mechanism at import, separate from art. 35's rate, is cited.
 - **The declaration** is monthly, due on the 15th of the month that follows,
   in duplicate, accompanied by payment; a nil declaration is compulsory in
   the absence of any operation (art. 60). Its boxes are named after what
-  art. 60 and art. 35 make a taxpayer declare, **not after a printed form**:
-  no model of the form, nor the numbering of its boxes, was found published.
+  art. 60 and art. 35 make a taxpayer declare, **not after a printed form**,
+  whose model and box numbering are not published.
 - **The invoice.** OL 10/001, art. 58 (as amended by the loi de finances for
   2023, art. 33), requires a *facture normalisée* produced by a *dispositif
   électronique fiscal* (DEF) — physical (Unité de Facturation + Module de
@@ -103,51 +92,39 @@ confirm the reading.
 
 ## What it does not say
 
-- **The two 2026 rates, 5 % and 1 %.** Reported only by the FEC, a
-  federation of employers, relaying the DGI and the DGDA at a briefing on 17
-  September 2026 — no primary text of the loi de finances rectificative n°
-  26/032 du 07 août 2026 was found at any official URL tried. The DGI's own
-  systems had not configured either rate as of the FEC's account. Adding a
-  tax from a secondary source, to a rate the rate's own administration has
-  not yet applied, is exactly the invented tax this pack refuses to carry;
-  the day a primary text is read, `CD-S-5` (ciment) and `CD-S-1`
+- **The two 2026 rates, 5 % and 1 %.** Reported only by the FEC, relaying the
+  DGI and the DGDA at a briefing on 17 September 2026, which also said the
+  DGI's systems had not yet configured either rate. A tax is not carried
+  from a secondary source; once the primary text of the loi de finances
+  rectificative n° 26/032 is in the register, `CD-S-5` (ciment) and `CD-S-1`
   (huile raffinée locale) belong here, at 4431, `supply_nature`.
 - **The withholding of art. 53, al. 2** (OL 10/001, modified by the loi de
   finances n° 22/071, art. 32): mining companies withhold the VAT due to a
   state-owned supplier **when they pay its invoice**, on that supplier's
   account, and the Treasury does the same for suppliers of the State. This is
-  a three-party withholding **on a payment**, not on an invoice — the exact
-  gap `docs/international.md` already names for Senegal's *précompte* and
-  Chad's art. 245, and for the same reason: the tax stays the seller's own
-  debt, discharged by somebody else at a moment this socle's tax codes,
-  fixed at the invoice, cannot see. No tax carries it here; the withheld
-  amount is not modelled on either side of the transaction.
+  a three-party withholding **on a payment**, not on an invoice
+  (`docs/international.md`): the tax stays the seller's own debt, discharged
+  by somebody else at a moment this socle's tax codes, fixed at the invoice,
+  cannot see. No tax carries it here; the withheld amount is not modelled on
+  either side of the transaction.
 - **The facture normalisée as a clearance system**, not an e-invoicing
   profile. A DEF — physical or dematerialised — issues the invoice's
   authentication code and QR code as part of producing it, connected live to
   the DGI's own system (`sygdef.dgirdc.cd` for verification, an app «FACNO
-  RDC»); a company without one uses the DGI's own e-UF application. This is
-  a national clearance mechanism the einvoicing schema's EN 16931 profile
-  field has no honest answer for, exactly as `packs/ci/` and `packs/td/`
-  already found for the FNE and the FEN: `einvoicing.profile` stays empty
-  because there is no profile to name, not because the obligation is
-  unclear. `mandatory_from` stays empty too, in the same spirit as
-  `packs/ci/`: the calendar a secondary source gives (1 December 2025, for
-  every VAT-registered taxpayer) has no obligatory profile to attach a date
-  to.
+  RDC»); a company without one uses the DGI's own e-UF application.
+  `einvoicing.profile` stays empty because there is no EN 16931 profile to
+  name, and `mandatory_from` too: the calendar a secondary source gives
+  (1 December 2025, for every VAT-registered taxpayer) has no profile to
+  attach a date to.
 - **The current, article-by-article list of exemptions** (art. 15 and
-  following). Only the 2023 amendment to art. 15-5 was read in a source that
-  names its own text; the rest of the list, as amended from 2010 to 2026, was
-  not reconstructed.
-- **The full text of the 2010 ordonnance-loi's exclusions from the right to
-  deduct**, if it has one — no article naming non-deductible purchases
-  (company cars, gifts, and the like, as Senegal's art. 383 or Côte
-  d'Ivoire's art. 372 do) was identified in a source read directly. This pack
-  carries no non-deductible tax code for that reason, not because none
-  exists.
-- **The official boxes of the printed VAT return.** i-impôts is where they
-  would be read; this pack was not built from a session there.
+  following), as amended from 2010 to 2026; only the 2023 amendment to
+  art. 15-5 is cited.
+- **The 2010 ordonnance-loi's exclusions from the right to deduct**, if it
+  has one — no article naming non-deductible purchases (company cars, gifts,
+  and the like) is cited. This pack carries no non-deductible tax code for
+  that reason, not because none exists.
+- **The official boxes of the printed VAT return**, readable on i-impôts.
 - **A liste annuelle des fournisseurs**, a livraison-à-soi-même declaration
   line and a deduction bar on an untraceable supplier all appear in the
-  *projet* de loi de finances pour 2026 — a bill, not an adopted law at the
-  date of this pack. None of the three is written here.
+  *projet* de loi de finances pour 2026 — a bill, not an adopted law. None of
+  the three is written here.

@@ -26,16 +26,14 @@ Rate Scheme — are not what this pack posts; see "The reform of 2026" below.
 **English only.** English is the official language of Ghana and every text
 cited here is in English.
 
-What the core could not say is written up in
-[`docs/international.md`](../../docs/international.md) under "From Ghana".
-None of it was patched for this pack's sake.
+What the core cannot say yet is in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Sources
 
 Every tax, box and statement line carries its own `legal_reference`, and
 beside it the key of the text that article is in. The register in `pack.json`
-holds twelve texts, every one opened on 26 September 2026. The ones the rest
-of this file leans on:
+holds twelve texts. The ones the rest of this file leans on:
 
 | What | Text | Where |
 |---|---|---|
@@ -48,7 +46,7 @@ of this file leans on:
 | IFRS and IFRS for SMEs adopted by the Institute | ICAG publication; IFRS Foundation jurisdiction profile | `icagh.org`, `ifrs.org` |
 
 Act 1151 and the Guideline are published by GRA as scanned images, with no
-text layer: every section cited was read page by page from the image.
+text layer.
 
 ## The reform of 2026, and what this pack does with it
 
@@ -82,8 +80,7 @@ Added Tax Act, 2025 enacted it from 1 January 2026:
 
 ## How three charges become one code
 
-The stacked levies are modelled the way `packs/ca/` models Québec and
-`packs/in/` models the CGST and the SGST: **one tax code at the total rate,
+The stacked levies are modelled as **one tax code at the total rate,
 several `tax` postings with a `factor` each.** `GH-S-20` is a single 20 %
 code whose postings put 75 % of the tax (15/20) on account 2100 and in box 3,
 12.5 % (2.5/20) on account 2101 and on line ii, and 12.5 % on account 2102
@@ -206,10 +203,9 @@ Ghanaian date forward, which Ekwo does not see.
 s. 127, asks for proper accounting records and for financial statements
 prepared in compliance with the IFRS adopted by the Institute of Chartered
 Accountants, Ghana — which adopted the IFRS in 2007 and the IFRS for SMEs in
-2010. The chart is written, not transcribed, in the shape of the other
-anglophone African packs: four digits, 1 assets, 2 liabilities, 3 equity, 4
-income, 5 cost of sales, 6 to 8 expenses, each range reaching one line of
-the statements. What makes it Ghanaian: separate output and input accounts
+2010. The chart is written, not transcribed: four digits, 1 assets, 2
+liabilities, 3 equity, 4 income, 5 cost of sales, 6 to 8 expenses, each range
+reaching one line of the statements. What makes it Ghanaian: separate output and input accounts
 for the VAT, the NHIL and the GETFund Levy; one settlement account on each
 side (2110 payable, 1155 refundable) that the return is cleared into and
 that alone, with the customers and the suppliers, is reconcilable; import VAT

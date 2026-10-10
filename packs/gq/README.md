@@ -20,20 +20,17 @@ carried, see *Languages* below for why.
 
 | What | Text | Where |
 |---|---|---|
-| Rates (art. 155), exemptions (art. 140-142), invoice mentions (art. 24), the monthly declaration and its deadline (art. 167), the credit and refund (art. 170), the self-assessment for non-residents (art. 146, 167-7), electronic invoicing (art. 24-4, 1-40) | Ley n° 1/2024, de fecha 19 de noviembre, General Tributaria | fac-similé du BOE, scan OCR, hébergé par Hay Derecho en Guinea |
+| Rates (art. 155), exemptions (art. 140-142), invoice mentions (art. 24), the monthly declaration and its deadline (art. 167), the credit and refund (art. 170), the self-assessment for non-residents (art. 146, 167-7), electronic invoicing (art. 24-4, 1-40) | Ley n° 1/2024, de fecha 19 de noviembre, General Tributaria | fac-similé du BOE, hébergé par Hay Derecho en Guinea |
 | L'obligation de faire figurer la TVA sur toute facture de vente | Orden Ministerial n° 04/2025, du 5 septembre 2025 | reprise par Guinea Ecuatorial Press |
 | Le cadre communautaire des taux | Directive n° 11/22-CEMAC-UEAC-010A-CM-38 du 10 novembre 2022 | `sgg.cg` |
 | Le site du Ministerio de Hacienda et sa page de formulaires fiscaux | Ministerio de Hacienda, Planificación y Desarrollo Económico | `minhacienda-gob.com/formularios-de-declaraciones-fiscales` |
-| L'imprimé de la déclaration de TVA lui-même (cases 01 à 030) | Autoliquidación, I.V.A., Régimen Real (cod. impuesto 1220) | PDF téléchargé depuis `minhacienda-gob.com`, lu au format texte (pdftotext) |
+| L'imprimé de la déclaration de TVA lui-même (cases 01 à 030) | Autoliquidación, I.V.A., Régimen Real (cod. impuesto 1220) | PDF publié sur `minhacienda-gob.com` |
 
-**Le texte de la Ley 1/2024 n'a pu être lu que par un scan OCR** (268 pages,
-hébergé sur Google Drive par un cabinet, pas par le BOE lui-même, injoignable
-en direct) ; les articles 1, 22 à 25, 80, 94-95, 134 à 170, 176 et les
-dispositions finales ont été relus, l'un contre l'autre, page par page.
-**Aucune loi de finances 2025 ou 2026 n'a été trouvée** : rien ne dit si l'une
-d'elles modifie la TVA depuis la Ley 1/2024. La Ley 4/2004 qu'elle remplace
-(15 % et 6 %) n'a pas pu être relue au-delà de ce que la Ley 1/2024 et la
-presse en disent — son propre exposé des motifs cite la Ley 1/2024.
+**La Ley 1/2024 est citée d'après un fac-similé** hébergé par un cabinet, et
+non par le BOE lui-même. **Aucune loi de finances 2025 ou 2026 n'a été
+trouvée** : rien ne dit si l'une d'elles modifie la TVA depuis la Ley 1/2024.
+La Ley 4/2004 qu'elle remplace (15 % et 6 %) n'est citée que d'après la
+Ley 1/2024 et la presse.
 
 ## What the pack says
 
@@ -69,11 +66,8 @@ presse en disent — son propre exposé des motifs cite la Ley 1/2024.
   d'investissement particulière.
 - **L'autoliquidation pour un fournisseur non-résident** (art. 146, 167-7,
   `GQ-P-NR-15`) : l'acheteur assujetti autoliquide la taxe qu'un fournisseur
-  établi hors de Guinée équatoriale ne facture pas, sur le modèle du
-  `treatment: foreign_services_received` déjà utilisé par d'autres packs. Ces
-  deux articles ont été relus dans leur intégralité, mais la fiche de
-  recherche de ce pack n'en a pas conservé la citation littérale — voir *What
-  it does not say*.
+  établi hors de Guinée équatoriale ne facture pas
+  (`treatment: foreign_services_received`) — voir *What it does not say*.
 - **La déclaration est mensuelle**, due « a más tardar el quince (15) del
   mes siguiente a la de facturación » (art. 167-1), une déclaration
   « nula y/o negativa » étant obligatoire même sans opération (art. 167-2).
@@ -92,9 +86,8 @@ presse en disent — son propre exposé des motifs cite la Ley 1/2024.
 - **Aucune obligation de facture électronique** n'a été trouvée : le
   « Sistema de Facturación Electrónico » de l'art. 24-4 est un dispositif
   facultatif, agréé et certifié par l'administration, pas une obligation à
-  une date donnée — `einvoicing.profile` et `.mandatory_from` restent nuls,
-  comme dans `packs/td/` et `packs/ga/`.
-- **Le formulaire imprimé existe et a été trouvé** : « AUTOLIQUIDACIÓN,
+  une date donnée — `einvoicing.profile` et `.mandatory_from` restent nuls.
+- **Le formulaire imprimé existe** : « AUTOLIQUIDACIÓN,
   IMPUESTO SOBRE EL VALOR AÑADIDO, I.V.A., Régimen Real » (code impôt 1220),
   publié en PDF sur le site du Ministerio de Hacienda. Les cases de
   `tax_report.json` reprennent sa propre numérotation — `01`/`03` (base et
@@ -102,8 +95,7 @@ presse en disent — son propre exposé des motifs cite la Ley 1/2024.
   la ligne unique où l'imprimé réunit taux zéro et exonération), `022`
   (déduction sur opérations intérieures), `025` (déduction sur immobilisations),
   `021` (total dû), `028` (total déductible), `029`/`030` (net à payer ou
-  crédit) — au lieu de cases inventées par ce pack, à la différence de
-  `packs/td/` et `packs/sn/`, dont l'imprimé n'a pas été trouvé. Une partie
+  crédit) — et non des cases propres au pack. Une partie
   des cases de l'imprimé n'est pas modélisée : voir *What it does not say*.
 
 ## What it does not say
@@ -113,23 +105,21 @@ presse en disent — son propre exposé des motifs cite la Ley 1/2024.
   due par un fournisseur classé « à risque » (personne physique,
   non-résident, non-assujetti), 0 % pour une personne morale de la Unidad de
   Grandes Empresas, 40 % pour les autres — n'est modélisée par aucun code de
-  ce pack. C'est une retenue à trois parties, comme le précompte sénégalais
-  et la retenue de la CSS gabonaise : le taux dépend d'une classification du
+  ce pack. C'est une retenue à trois parties : le taux dépend d'une classification du
   vendeur que le document ne porte pas et qu'aucune liste officielle
   trouvée ne fixe, et le core n'a pas de mécanisme de « retenue au paiement »
   pour exprimer comment les livres du vendeur constatent une taxe que
-  l'acheteur retient et reverse à sa place. Le texte dit que la taxe retenue
-  est déductible ou remboursable chez le fournisseur (art. 167-4), sans dire
-  comment.
+  l'acheteur retient et reverse à sa place (voir
+  [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet)).
+  Le texte dit que la taxe retenue est déductible ou remboursable chez le
+  fournisseur (art. 167-4), sans dire comment.
 - **La retenue de 1,5 % (Cuota Mínima Fiscal, art. 80-3)** sur les services
   payés par l'État et les entités publiques est un impôt sur le revenu
-  retenu au paiement, pas une TVA ; le core n'a pas de retenue au paiement,
-  comme le BRS sénégalais qu'aucun pack ne modélise non plus.
+  retenu au paiement, pas une TVA ; le core n'a pas de retenue au paiement.
 - **Les impuestos especiales de l'art. 176** — 30 % plus un montant par
   unité sur les boissons et le tabac, 10 % sur les télécommunications et
   l'audiovisuel hors TVA, 15 FCFA par sac plastique — sont des droits
-  d'accises réels mais non systématiques sur une facture ordinaire, comme
-  les droits d'accises gabonais de l'art. 250 ; aucun n'est dans l'année
+  d'accises réels mais non systématiques sur une facture ordinaire ; aucun n'est dans l'année
   témoin.
 - **L'autoliquidation de la TVA à l'importation pour les biens d'équipement
   de plus de 100 millions de FCFA** (art. 169) est un mécanisme d'importation
@@ -155,16 +145,13 @@ presse en disent — son propre exposé des motifs cite la Ley 1/2024.
   `rounding_method: half_up`, la méthode technique de l'écriture comptable,
   sans trancher laquelle des deux règles fiscales l'administration applique
   en pratique.
-- **Le fait générateur et l'exigibilité** (par nature d'opération, comme au
-  Tchad et au Gabon) n'ont pas été trouvés dans les articles lus : ce pack
+- **Le fait générateur et l'exigibilité** (par nature d'opération) n'ont
+  pas été trouvés dans la Ley 1/2024 : ce pack
   ne déclare pas de `tax_point`.
-- **Le portugais comme troisième langue officielle**, que la fiche de
-  recherche de ce pack cite sans l'avoir trouvé ni chargé, n'est pas
-  modélisé — seul l'espagnol l'est, partiellement, voir *Languages*.
-- **La citation exacte des art. 146 et 167-7** qui fondent `GQ-P-NR-15` n'a
-  pas été conservée dans la fiche de recherche de ce pack, alors que
-  l'intervalle d'articles relus (134 à 170) les couvre : un lecteur qui
-  isolerait leur texte exact devrait vérifier que l'autoliquidation qu'ils
+- **Le portugais, langue officielle**, n'est pas modélisé, pas plus que
+  l'espagnol — voir *Languages*.
+- **Le texte exact des art. 146 et 167-7** qui fondent `GQ-P-NR-15` est à
+  vérifier : un relecteur doit confirmer que l'autoliquidation qu'ils
   décrivent est bien celle que ce code modélise, et sa déductibilité.
 
 ## Languages
@@ -173,17 +160,7 @@ presse en disent — son propre exposé des motifs cite la Ley 1/2024.
 le plan comptable est écrit en français et aucune traduction officielle n'en
 existe en espagnol. La Ley n° 1/2024 elle-même est un texte officiel en
 espagnol (« preferentemente en idioma español », art. 22-2), et ce pack ne
-porte pourtant aucun `i18n/es.json`, à la différence de ce que
-`packs/ohada/README.md#languages` envisage pour lui (« may carry pack_name,
-the taxes, the boxes and the mentions… undeclared »). Un tel fichier a été
-écrit puis retiré : `ekwo pack check` et `npm test` compilent le contenu de
-tout fichier présent dans `i18n/` dans les tables de seed (`country_defaults.
-name_i18n`, `tax_templates.name_i18n`, `legal_mention_templates.text_i18n`,
-…) sans regarder s'il est déclaré dans `languages`, alors que
-`tests/languages.test.ts` exige l'inverse (« carries no language the
-manifest does not declare ») — un désaccord entre ce que le README de
-`packs/ohada/` promet et ce que compilateur et suite de tests appliquent
-réellement, signalé au lead plutôt que contourné ici. Déclarer `es` dans
-`languages` exigerait à l'inverse de couvrir tout le plan de 1 358 comptes,
+porte pourtant aucun `i18n/es.json` : déclarer `es` dans `languages`
+exigerait de couvrir tout le plan de 1 358 comptes,
 ce qu'aucune traduction officielle ne permet (voir
 `packs/ohada/README.md#languages`).

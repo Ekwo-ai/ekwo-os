@@ -13,8 +13,8 @@ l'a relu. Les chiffres sont rejoués sur une année de comptes par
 `tests/golden.test.ts`, qui prouve que le pack est cohérent avec lui-même et
 ne prouve rien de plus.
 
-**Langue : français.** Le système comptable des entreprises n'a pas, à la
-connaissance de cette recherche, de version officielle en arabe ou en anglais
+**Langue : français.** Le système comptable des entreprises n'a pas, à notre
+connaissance, de version officielle en arabe ou en anglais
 distincte du texte français de la loi n° 96-112 et de ses normes ; ce pack
 n'écrit donc que `defaults.language: "fr"` et ne déclare aucune langue
 supplémentaire.
@@ -23,7 +23,7 @@ supplémentaire.
 
 Chaque taux, case et ligne d'état porte son propre `legal_reference`, et à
 côté la clé du texte où cet article se lit. Le registre de `pack.json` tient
-sept textes, consultés le 25 septembre 2026.
+sept textes.
 
 | Quoi | Texte | Où |
 |---|---|---|
@@ -37,14 +37,11 @@ sept textes, consultés le 25 septembre 2026.
 | Le plan comptable | Loi n° 96-112 du 30 décembre 1996 et norme comptable générale NC 01 | `cmf.tn`, `oect.org.tn` |
 | La facture électronique El Fatoora | Loi de finances pour 2016, art. 22, et décret n° 2016-1066 du 15 août 2016 | `ttn.tn` |
 
-**Ce que cette recherche n'a pas pu ouvrir en texte exploitable.** Les PDF du
-Journal officiel (Code de la TVA) et de la norme comptable générale NC 01,
-consultés dans cette session, ne se laissent pas extraire en texte par les
-outils utilisés ; leurs articles cités ici viennent de la retranscription de
-JurisiteTunisie et de recherches ciblées, jamais d'une lecture directe du
-PDF officiel page par page. Un professionnel tunisien devrait relire le texte
-source avant tout usage réel — c'est le point le plus important à faire
-relire de tout ce pack.
+**Les articles cités reposent sur une source secondaire.** Ceux du Code de la
+TVA et de la norme comptable générale NC 01 viennent de la retranscription de
+JurisiteTunisie, non des PDF du Journal officiel. Un professionnel tunisien
+devrait relire le texte source avant tout usage réel — c'est le point le plus
+important à faire relire de tout ce pack.
 
 ## Le plan comptable, et pourquoi celui-ci
 
@@ -57,11 +54,8 @@ et une douzaine de comptes précis — 101 (capital social, avec 1011/1012/1013/
 la taxe collectée et la taxe à récupérer) — sont vérifiés contre plusieurs
 sources indépendantes citées ci-dessus. **Au-delà de ce squelette vérifié, la
 numérotation fine (les sous-comptes de 436, les comptes de charges et de
-produits, par exemple) est la construction propre de ce pack**, dans le même
-esprit que `packs/sa/` lorsqu'aucune nomenclature officielle exploitable n'a
-pu être ouverte — à la différence près que la Tunisie a bien un plan comptable
-officiel : c'est l'accès à son texte intégral en clair qui a manqué à cette
-recherche, pas son existence. 116 comptes, tous imputables sauf les têtes de
+produits, par exemple) est la construction propre de ce pack**, et non la
+transcription du plan comptable officiel tunisien, qui existe. 116 comptes, tous imputables sauf les têtes de
 regroupement.
 
 ## Les taxes
@@ -106,10 +100,9 @@ impose une déclaration mensuelle unique, mais celle-ci porte aussi d'autres
 impôts que ce pack ne modélise pas (retenues à la source sur salaires et
 honoraires, taxe sur les établissements à caractère industriel, commercial ou
 professionnel, FOPROLOS…). `tax_report.json` ne porte que le volet TVA, et ses
-cases (`CA19`, `TVA19`…) sont la construction propre de ce pack : cette
-recherche n'a pas pu ouvrir le modèle chiffré de l'imprimé officiel en texte
-clair — c'est un écran du portail de télédéclaration de la DGI plutôt qu'un
-texte publié.
+cases (`CA19`, `TVA19`…) sont la construction propre de ce pack : le modèle
+chiffré de l'imprimé officiel est un écran du portail de télédéclaration de la
+DGI plutôt qu'un texte publié.
 
 **L'échéance dépend de la forme du déclarant.** Quinze premiers jours du mois
 pour une personne physique, vingt-huit premiers jours pour une personne
@@ -118,10 +111,9 @@ jour unique que la loi donnerait à tout le monde.
 
 **La retenue à la source de l'article 19** sur les prestations d'un
 non-résident sans établissement en Tunisie est portée par `TN-P-NR-19` et
-la case `TVANR`, qui nette à zéro dans la déclaration comme le fait le champ 9
-saoudien : la taxe due est immédiatement déductible. Cette recherche n'a pas
-pu vérifier si son reversement emprunte la déclaration mensuelle elle-même ou
-un imprimé séparé — voir la note de `TN-P-NR-19` dans `taxes.json`.
+la case `TVANR`, qui nette à zéro dans la déclaration : la taxe due est
+immédiatement déductible. Reste à vérifier si son reversement emprunte la
+déclaration mensuelle elle-même ou un imprimé séparé — voir la note de `TN-P-NR-19` dans `taxes.json`.
 
 ## La facturation électronique, et ce qu'Ekwo n'y fait pas
 
@@ -130,14 +122,13 @@ art. 22, et décret n° 2016-1066 du 15 août 2016), et Tunisie TradeNet (TTN) e
 est l'opérateur technique. À la date de ce pack, l'obligation ne couvre pas
 toutes les entreprises : les opérations avec les marchés publics et les
 grandes entreprises rattachées à la Direction des Grandes Entreprises sont
-concernées, sans que cette recherche ait pu ouvrir un texte daté fixant le
-périmètre exact et son calendrier d'extension. `pack.json` laisse donc
+concernées, sans texte daté connu fixant le périmètre exact et son
+calendrier d'extension. `pack.json` laisse donc
 `einvoicing.obligation` vide plutôt que d'écrire `mandatory` pour tout le
 pack.
 
-**`profile`, `mandatory_from`, `party_scheme` et `vat_scheme` restent vides**
-pour la raison que `packs/sa/`, `packs/mx/` et `packs/vn/` donnent pour leur
-propre régime : El Fatoora est un système de contrôle à la transmission
+**`profile`, `mandatory_from`, `party_scheme` et `vat_scheme` restent
+vides** : El Fatoora est un système de contrôle à la transmission
 (« clearance »), la facture est un XML au format TEIF transmis à TTN puis à
 l'administration, et aucune brique de `packages/formats/` n'écrit ce XML, ne
 le signe, ni ne dialogue avec TTN. Un document émis par Ekwo n'est donc pas
@@ -150,8 +141,8 @@ une facture électronique El Fatoora.
   commercial ou professionnel, FOPROLOS.
 - **Le régime de l'encaissement des entreprises de travaux publics et de
   bâtiment travaillant pour l'État** (Code de la TVA, art. 5) : aucune taxe de
-  ce pack ne porte `cash_basis`, faute d'avoir vérifié un compte de
-  transition.
+  ce pack ne porte `cash_basis`, le compte de transition restant à
+  établir.
 - **Les seuils et conditions du régime forfaitaire** (art. 16-17) : les
   contribuables de ce régime ne déposent pas la déclaration mensuelle et n'ont
   pas de compte dans ce pack.

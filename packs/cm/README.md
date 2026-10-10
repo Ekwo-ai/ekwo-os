@@ -22,12 +22,11 @@ right. Currency XAF, the CFA franc of the BEAC, at no decimal.
 | The frame of the rates | Directive CEMAC portant harmonisation de la TVA (10 novembre 2022) | `sgg.cg` |
 | Filing | Harmony, télédéclaration et télépaiement | `teledeclaration-dgi.cm` |
 
-**No text was found for the fait générateur article** (the equivalent of
-art. 141 of other codes of the zone): the CGI 2026 read for this pack covers
-the rate (art. 142), the deduction (art. 143) and the invoice (art. 150), never
-the date the tax falls due. `documents.tax_point` is left at `invoice_if_issued`
-by convention with the other OHADA packs, not from a cited article — see
-`documents.references.tax_point` in `pack.json`.
+**No fait générateur article is cited** (the equivalent of art. 141 of other
+codes of the zone): the CGI 2026 covers the rate (art. 142), the deduction
+(art. 143) and the invoice (art. 150), never the date the tax falls due.
+`documents.tax_point` is `invoice_if_issued` by convention, not from a cited
+article — see `documents.references.tax_point` in `pack.json`.
 
 ## What the pack says
 
@@ -37,33 +36,22 @@ by convention with the other OHADA packs, not from a cited article — see
   account for a communal surtax, so this pack routes it to **4422** « Impôts
   et taxes pour les collectivités publiques », apart from 4431/4432 where the
   principal lands, and into its own declaration box `CAC`, because C 83 makes
-  it a distinct levy affected to the communes rather than the State. This is
-  **not** the stacked-tax gap Côte d'Ivoire's README names for the AIRSI (`"a
-  tax computed on another tax is a group, which the core does not carry"`):
-  the AIRSI is computed on a base that already includes another tax (the VAT),
-  which no single tax entry can express; the CAC is a fixed 10 % of the VAT
-  amount *of the same tax entry*, split across two postings by `factor` — the
-  same mechanism `CI-P-18-95` already uses to send 95 % of one tax to a
-  recoverable account and 5 % to the cost of the line. `CM-S-1925` (goods, to
-  4431) and `CM-S-1925-SRV` (services, to 4432) both carry it; `CM-S-10`, the
-  reduced rate, does not — see *What it does not say*.
+  it a distinct levy affected to the communes rather than the State. The CAC
+  is a fixed 10 % of the VAT amount *of the same tax entry*, split across two
+  postings by `factor`, not a tax computed on another tax. `CM-S-1925` (goods,
+  to 4431) and `CM-S-1925-SRV` (services, to 4432) both carry it; `CM-S-10`,
+  the reduced rate, does not — see *What it does not say*.
   **`rate` is the displayed 19,25 %, not the 17,5 % principal**, and the
   postings split it 90,909 % / 9,091 % (≈ 10/11 and 1/11, the three decimals
   `factor_percent` allows) rather than declaring the principal at 100 % and
-  the CAC as a second `factor: 10` of it. The two are the same legal amount,
-  but not the same figure once rounded: `document_tax_summary.tax_charged`
-  (`supabase/migrations/20260918141605…`) rounds the whole computation once,
-  and `post_document()`'s postings round `tax_amount` once and then share it
-  out, the last posting of a side taking the remainder
-  (`20260921145425…`) — the ledger and the invoice agree exactly only when
-  the postings' factors sum to 100. A 17,5 % tax with a `factor: 10` CAC sums
-  its side to 110 and rounds twice (`round(round(base × 17,5 %) × 1,10)`
-  against the invoice's `round(base × 19,25 %)`), which can move a
-  single-franc CAC entry by one franc — caught on `V6` of the golden
-  (base 1 003, an amount that does not round evenly) before it shipped.
-- **Goods and services post apart** — 4431 and 4432 on the sale side — because
-  the chart has the accounts, as in `packs/sn/` and `packs/ci/`. No fait
-  générateur article was found for services, so no tax here is `cash_basis`.
+  the CAC as a second `factor: 10` of it. The ledger and the invoice agree
+  exactly only when the postings' factors sum to 100; a 17,5 % tax with a
+  `factor: 10` CAC rounds twice (`round(round(base × 17,5 %) × 1,10)` against
+  the invoice's `round(base × 19,25 %)`), which can move a single-franc CAC
+  entry by one franc.
+- **Goods and services post apart** — 4431 and 4432 on the sale side —
+  because the chart has the accounts. No fait générateur article was found
+  for services, so no tax here is `cash_basis`.
 - **The reduced rate of 10 %** (art. 142 (1) a) and (3), loi de finances pour
   2026) applies to the sale of a social home to an individual for a first home
   under fiscal quitus, to the interest of the mortgage that finances it, and to
@@ -87,8 +75,8 @@ by convention with the other OHADA packs, not from a cited article — see
   either.
 - **The declaration** carries what art. 152 says it carries — base by rate,
   tax due, deductions — under boxes named after that content and not after an
-  official form, whose name and box numbers were not found. Due on the 15th
-  of the month following (art. 152; fiche TVA), monthly.
+  official form, whose name and box numbers are not published. Due on the
+  15th of the month following (art. 152; fiche TVA), monthly.
 
 **A service bought from a supplier abroad: `CM-P-NR-1925`.** A software
 subscription, hosting or an API billed by a supplier with no establishment in
@@ -116,8 +104,7 @@ and a reviewer should confirm it.
   system generates, which lets the supplier offset what was withheld. The
   invoice itself is unaffected (it is raised for the full amount); only the
   cash collected changes, at settlement, which `post_document`'s invoice and
-  credit-note postings cannot reach — the same *retenue au paiement* gap the
-  brief names and Senegal's *précompte* runs into for the supplier's side.
+  credit-note postings cannot reach.
 - **Non-VAT withholdings that sit on the same invoice**: the 2 % (or 2,2 %
   with CAC, 5 %, 10 %) advance of income tax withheld by a public buyer
   (art. 21), the 2 %–14 % *précompte sur achats* a seller collects from its
@@ -130,19 +117,16 @@ and a reviewer should confirm it.
   Direction des grandes entreprises, and — since 2025 — a condition of VAT and
   corporate-tax deduction (art. 143 (1) b), 8 bis (2)). No arrêté fixing its
   format, its platform or a general rollout date is published: `einvoicing`
-  stays empty, as Côte d'Ivoire's FNE does for the same reason — Ekwo neither
-  generates, transmits nor certifies a document through it.
+  stays empty — Ekwo neither generates, transmits nor certifies a document
+  through it.
 - **The formulaire's own boxes.** Art. 152 says what the declaration must
   carry, never its name or its box numbering; `tax_report.json` names boxes by
-  content, as `packs/sn/` and `packs/ci/` do for the same gap.
-- **Import VAT.** The fiche found only that the CAC applies to imports "comme
-  aux importations" (art. C 82/C 83); no article on the fait générateur or the
-  deduction of import VAT itself was located, so this pack carries no import
-  tax code rather than borrow Senegal's or Côte d'Ivoire's article for a text
-  that was not read here.
+  content.
+- **Import VAT.** The CAC applies "comme aux importations" (art. C 82/C 83),
+  but no article on the fait générateur or the deduction of import VAT itself
+  is cited, so this pack carries no import tax code.
 - **Excise duties** (art. 142 (1) b), 2 % to 50 % on the goods of annexe II,
-  themselves carrying a 5 % CAC) are out of scope: a golden document taxed
-  on a base that already includes another tax is the stacked-tax gap this pack
-  avoids by not modelling excise at all, not by improvising a second posting.
+  themselves carrying a 5 % CAC) are out of scope: a tax on a base that
+  already includes another tax is a stacked tax the core does not carry.
 - **Late-payment terms between businesses**: no Cameroonian or CEMAC text
   found.

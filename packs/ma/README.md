@@ -15,17 +15,13 @@ whether it is right. Currency MAD, the dirham, at two decimals.
 | Rates, exemptions, deduction, fait générateur, périodicité, art. 115 | Code général des impôts, édition 2026 | `finances.gov.ma` |
 | The six sections of the return (A to F) and the télédéclaration | Guide de la Télé déclaration TVA (SIMPL-TVA) | `portail.tax.gov.ma` |
 | The 2024-2026 convergence of the rates | Note synthétique des mesures fiscales, loi de finances pour 2026 (loi n° 50-25) | `finances.gov.ma` |
-| The chart of accounts, the two statements | Code général de normalisation comptable (CGNC), rendu obligatoire par le dahir n° 1-92-138 du 25 décembre 1992 (loi n° 9-88) | `befec.ma` (miroir du texte, l'éditeur officiel n'en publie pas de lien stable) |
+| The chart of accounts, the two statements | Code général de normalisation comptable (CGNC), rendu obligatoire par le dahir n° 1-92-138 du 25 décembre 1992 (loi n° 9-88) | `befec.ma` (copie non officielle) |
 
-**The full text of the 2026 Code could not be read directly for this pack**:
-the PDF the Direction générale des Impôts publishes is too large for the
-tools available here to extract, and every attempt returned no content. What
-this pack says of articles 91, 92, 95, 96, 99, 101, 104, 106 and 115 was
-cross-checked across several independent professional commentaries that agree
-with each other and, where they disagree, the disagreement is written below
-rather than resolved by guessing. **A reviewer with access to the consolidated
-Code should read this pack's `taxes.json` and `tax_report.json` against it
-before it is relied on.**
+**What this pack says of articles 91, 92, 95, 96, 99, 101, 104, 106 and 115
+rests on professional commentaries, not on the consolidated 2026 Code
+itself**; where they disagree, the disagreement is written below. **A reviewer
+with access to the consolidated Code should read this pack's `taxes.json` and
+`tax_report.json` against it before it is relied on.**
 
 ## What the pack says
 
@@ -36,9 +32,9 @@ before it is relied on.**
   convergence calendar the finance laws for 2024, 2025 and 2026 (laws
   n° 55-23, 60-24 and 50-25) ran in three steps on named sectors — transport,
   electricity, water, refined sugar among them — each moved to 10 % or 20 %.
-  Every source read for this pack agrees that by 2026 article 99 states only
-  the two rates above; **the exact sector-by-sector table the convergence
-  produced could not be verified line by line**, so the pack carries one
+  The sources agree that by 2026 article 99 states only the two rates above;
+  **the exact sector-by-sector table the convergence produced is not verified
+  line by line**, so the pack carries one
   domestic tax at each of the two rates and does not attempt the list of what
   used to sit at 7 % or 14 %.
 - **Exports are exempt with a right to deduct** (art. 92-I-1°), proved by the
@@ -59,17 +55,15 @@ before it is relied on.**
   netting to zero in the ledger and appearing in both the exigible and the
   deductible section of the return, the way the SIMPL-TVA guide describes
   section C.
-- **The return has no numbered boxes to read**: the paper bordereau, if one is
-  still printed, was not found, and SIMPL-TVA presents six sections (A to F)
-  instead of a grid. The boxes this pack declares are named after those six
+- **The return has no numbered boxes to read**: no printed bordereau is
+  carried, and SIMPL-TVA presents six sections (A to F) instead of a grid. The boxes this pack declares are named after those six
   sections — `CA20`, `TVA20`, `DEDIMMO`… — and not after a printed form.
 - **Monthly for a turnover of 1 000 000 DH or more, quarterly below it**
   (art. 108); the cadence follows the company's own turnover, so the pack
-  proposes none, the way it does in every country where the same is true. The
-  return and the payment are due before the end of the month that follows the
+  proposes none. The return and the payment are due before the end of the month that follows the
   period — `last_day_of_month_after_period` — but **the article that fixes
   that deadline exactly (108 gives the periodicity, not necessarily the
-  deposit date itself) could not be pinned down from the text**, and a reader
+  deposit date itself) is not pinned down**, and a reader
   who has the consolidated Code to hand should confirm it.
 - **The fait générateur is encaissement by default** (art. 95); a taxpayer may
   opt for *les débits*, invoicing standing in for collection from the moment
@@ -118,5 +112,4 @@ before it is relied on.**
   tax (IS, IR)** are out of scope: this pack is VAT and the chart of accounts
   that books it, nothing else.
 - **Late-payment interest between businesses.** No Moroccan text setting a
-  default rate or indemnity, the way `documents.late_payment_reference` of
-  other packs cites one, was found.
+  default rate or indemnity is cited.

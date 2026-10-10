@@ -21,14 +21,12 @@ not a translation of the others. This pack is written in English and carries
 a full French translation in `i18n/fr.json`, drawn from the French column of
 those same gazettes wherever a label names a legal term (a tax, a box of the
 return, an exempted supply); an account of the chart, which the gazette does
-not name, is translated on the same terms `i18n/README.md` sets out for
-Kenya's and Serbia's own second languages. No Kinyarwanda translation is
+not name, is translated on the terms `i18n/README.md` sets out. No Kinyarwanda translation is
 carried: the accounting vocabulary the gazette's Kinyarwanda column uses has
 not been checked against the way a Rwandan bookkeeper actually speaks of a
 ledger, and inventing that correspondence is a larger claim than a
-translation of a legal term is. What the core could not say is written up in
-[`docs/international.md`](../../docs/international.md) under "Rwanda". None
-of it was patched for this pack's sake.
+translation of a legal term is. What the core could not say is in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 **Zero decimals.** The Rwandan franc (RWF) has no subunit in ordinary use,
 so `currencies.decimal_places` is `0` and every amount in this pack and its
@@ -39,7 +37,7 @@ of the return both read that from `defaults.currency`.
 
 Every tax, box and statement line carries its own `legal_reference`, and
 beside it the key of the text that article is in. The register in
-`pack.json` holds eight texts, every one opened on 26 September 2026. The
+`pack.json` holds eight texts. The
 ones the rest of this file leans on:
 
 | What | Text | Where |
@@ -49,9 +47,6 @@ ones the rest of this file leans on:
 | Accounting records, annual accounts, the balance sheet's compliance with international standards, audit | Law N° 007/2021 of 05/02/2021 governing companies, arts. 121 to 133 | `minicom.gov.rw` |
 | The statement of financial position and the profit and loss account | ICPAR's adoption of the IFRS for SMEs Accounting Standard, under Law N° 11/2008 of 06/05/2008 | `ifac.org` |
 | What each line of the return holds, filing and payment within 15 days | RRA Tax Handbook, 2nd edition, 2025; form RRA-VAT-DF1 | `rra.gov.rw`, `businessprocedures.rdb.rw` |
-
-Kenya Law's difficulty serving a plain HTTPS request has no equivalent here:
-every Rwandan gazette cited was read directly at the URL in the register.
 
 ## The chart of accounts, and why this one
 
@@ -65,7 +60,7 @@ The Institute of Certified Public Accountants of Rwanda (ICPAR), the
 standard-setting body Law N° 11/2008 establishes, has adopted the IFRS
 Accounting Standards for an entity with public accountability and the IFRS
 for SMEs Accounting Standard for other entities. So the chart is written,
-not transcribed, in the same shape as the Kenyan and Nigerian packs:
+not transcribed:
 
 - **Four digits, by class**: `1` assets, `2` liabilities, `3` equity, `4`
   revenue and other income, `5` goods and materials, `6` other expenses, `7`
@@ -141,9 +136,7 @@ local market" is not a fact this pack's ledger holds** — article 14(5) has
 the taxpayer request the Ministry's authorisation to acquire an unavailable
 service — so both reverse-charge codes carry `"conditions": ["supply_nature"]`,
 which documents the question and answers nothing: a bookkeeper decides which
-of the two codes a given imported service falls under, the way
-[`docs/packs.md`](../../docs/packs.md) describes `conditions` doing for an
-American resale certificate.
+of the two codes a given imported service falls under.
 
 ## The return
 
@@ -154,8 +147,7 @@ the quarterly cadence, article 28(3) puts one above it on the monthly
 cadence, and article 28(4) lets a taxpayer under the threshold opt into the
 monthly cadence instead. Because the cadence follows a fact about the
 company rather than a rule the law gives everybody, `tax_report.json`
-declares both cadences and no `period_default` — the same reading
-[`docs/packs.md`](../../docs/packs.md) gives Luxembourg's own eCDF return.
+declares both cadences and no `period_default`.
 Article 28(2) and (3) set the declaration due within fifteen days of the end
 of the period, and article 29(1) sets payment on the same day.
 
@@ -166,9 +158,9 @@ Institutions", record a mechanism a public body executes as a third party to
 the sale — article 3(3) obliges "a public procuring entity" to withhold VAT
 on a tender payment and remit it directly, crediting the supplier — which a
 `taxes.json` posting, always speaking of the two parties to one document,
-cannot state; it is recorded in [`docs/international.md`](../../docs/international.md)
-under "Rwanda", the way `docs/packs.md` describes Kenya's own withholding VAT
-gap. Line 75, "Credit carried from Previous Month(Not already claimed)", is
+cannot state; see
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
+Line 75, "Credit carried from Previous Month(Not already claimed)", is
 period-to-period settlement rather than a figure a document posts. Lines 90
 and 95 split line 70 between a refund claim and an amount due — an
 administrative act of the e-Tax portal on the sign of one figure this pack
@@ -183,7 +175,7 @@ already carries in full at line 70, and not a second fact.
   every EBM invoice to the Rwanda Revenue Authority in real time, which is
   a clearance and not a peer-to-peer exchange in the sense
   `einvoicing.profile` describes; see `pack.json`'s own `einvoicing.legal_reference`
-  and [`docs/international.md`](../../docs/international.md) under "Rwanda".
+  and [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 - **Income tax withholding** other than VAT: out of scope of a VAT pack.
 - **Fixed assets.** No `fixed_assets.json`: Rwanda's capital allowances are an
   income tax schedule, not a useful life the IFRS for SMEs Accounting
@@ -204,7 +196,7 @@ roughly in the order the author is least sure of them:
    removal or delivery of goods, delivery of a service, or a deregistration
    application — and not the two-way test the word names; see
    `pack.json`'s own reference and
-   [`docs/international.md`](../../docs/international.md).
+   [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 2. **The two reverse-charge codes and their `conditions`**, against how a
    Rwandan practitioner in fact tells an "available on the local market"
    service from one that is not, and whether the Ministry's article 14(5)

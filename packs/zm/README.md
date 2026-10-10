@@ -22,7 +22,7 @@ decimals, the rebased kwacha).
 
 Every tax, box and statement line carries its own `legal_reference`, and beside
 it the key of the text that article is in. The register in `pack.json` holds ten
-texts, every one opened or searched on 10 October 2026:
+texts:
 
 | What | Text | Where |
 |---|---|---|
@@ -36,26 +36,21 @@ texts, every one opened or searched on 10 October 2026:
 | Where the return is filed | ZRA Tax Online | `portal.zra.org.zm` |
 | The accounting framework | ZICA, Financial Reporting | `zica.co.zm` |
 
-**The consolidated Act read here is an old edition.** The copy the Parliament of
+**The consolidated Act is an old edition.** The copy the Parliament of
 Zambia serves still prints the rate as seventeen and a half per centum "unless
 the Minister, by statutory order, determines a lower rate" (s. 9(3)), still
 gives the First and Second Schedules as lists of exemptions and zero-ratings
 (since moved to the Exemption Order and the Zero-Rating Order), and gives twenty-one
 days for a return. The 16 % rate, the two Orders and the eighteenth of the month
 are taken from the Authority's own guides and its due-dates page, which are
-later. The amendments of 2023 are read from the Authority's practice note, not
-from a consolidated Act. The statutory order that fixed 16 % was not found; the
-earliest date the pack could evidence is 2012.
+later. The amendments of 2023 are cited from the Authority's practice note, not
+from a consolidated Act. The statutory order that fixed 16 % is not cited; the
+earliest date the pack evidences is 2012.
 
-**Two hosts refuse a plain request.** `zambialii.org` returns 403 behind a
-browser check, so Statutory Instrument No. 95 of 2025 was not read in its own
-words: the water change is recorded from the budget analyses that describe it
-and from the instrument's title and date, and must be confirmed against the
-instrument. `zra.org.zm` serves a certificate chain that `curl` and
-`WebFetch` reject; its PDFs were read with the check off, and
-`ekwo pack check zm --links` may report them for the same reason. ZRA Tax
-Online (`portal.zra.org.zm`) answers with a login page only; the e-filing form
-itself could not be opened.
+The water change rests on budget analyses and on the title and date of
+Statutory Instrument No. 95 of 2025; it should be confirmed against the
+instrument itself. `zambialii.org` and `zra.org.zm` block automated link
+checks, so `ekwo pack check zm --links` may report them unreachable.
 
 ## The chart of accounts, and why this one
 
@@ -101,10 +96,10 @@ Two choices carry the weight:
 imports of petrol and diesel for three months from 1 April 2026, extended from
 1 July to 30 September, and press reports say the VAT zero rate continues
 until December 2026 while excise returned in October. No statutory instrument
-could be opened to confirm the legal text, the scope or the closing date, so
-the pack adds no code for it, rather than one with a guessed end date. A
-company importing fuel in that window picks `ZM-P-IMP` and corrects the rate by
-hand, or adds a dated code once the instrument is read.
+is cited for the legal text, the scope or the closing date, so the pack adds
+no code for it, rather than one with a guessed end date. A company importing
+fuel in that window picks `ZM-P-IMP` and corrects the rate by hand, or adds a
+dated code once the instrument is confirmed.
 
 ## The return
 
@@ -113,8 +108,8 @@ boxes — 1 output VAT, 2 input VAT on domestic purchases, 3 input VAT on import
 4 total input VAT, 5 tax payable or repayable. The pack carries those five, in
 `tax_report.json`, plus value rows of its own (zero-rated exports and local
 supplies, exempt supplies, standard-rated supplies and purchases, zero-rated
-purchases, imported services). The e-filing form could not be opened, so the
-layout of the screen on ZRA Tax Online may differ from these rows.
+purchases, imported services). The layout of the screen on ZRA Tax Online may
+differ from these rows.
 
 **Deadline.** Day 18 of the month after the period. The Authority's due-dates
 page puts the payment of an electronically submitted return on the 18th of every
@@ -134,8 +129,8 @@ requirement under section 7A of the Act (penalties of K40,000, K80,000 and
 K120,000 or imprisonment for a first, second and later offence). It applies to
 every VAT-registered taxpayer; compliance was due from 1 July 2024, a grace
 period ran to 30 September 2024 and penalties run from 1 October 2024 (dates
-from trade commentary and the Authority's announcements, not from a text opened
-here). Input tax is claimable only against an invoice from the approved system
+from the Authority's announcements and trade commentary, not from a statutory
+text). Input tax is claimable only against an invoice from the approved system
 (s. 18(3), as substituted); trade sources date the practical restriction to
 1 January 2025 or 1 January 2026 and disagree, so the pack does not model it.
 An accounting package connects through a certified invoicing system and the

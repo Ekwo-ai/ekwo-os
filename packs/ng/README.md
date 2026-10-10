@@ -18,12 +18,10 @@ proves nothing about whether it is right.
 **This pack is written for the law in force from 1 January 2026** — the
 Nigeria Tax Act 2025 and the Nigeria Tax Administration Act 2025, both signed
 26 June 2025 — and not for the Value Added Tax Act, Cap. V1, LFN 2004, that
-they repeal. The standard rate is unchanged at the move, 7.5 %, so a company
-whose books straddle the two regimes sees no change in the figure; the
-reforms are elsewhere, in what is zero-rated and what is exempt, and in the
-registration and filing rules. `released_at` is 2026-09-25, after the new law
-took effect, so this pack does not carry the pre-2026 Act at all — a pack that
-needs it will add a `valid_to` on every tax and a second one from `2026-01-01`.
+they repeal. The standard rate is unchanged at the move, 7.5 %; the reforms
+are in what is zero-rated and what is exempt, and in the registration and
+filing rules. The pre-2026 Act is not carried; carrying it would need a
+`valid_to` on every tax and a second one from `2026-01-01`.
 
 **Language: `en`.** English is the language of the two Acts and of every text
 this pack cites; Nigeria has no other official language of legislation, so
@@ -42,25 +40,20 @@ holds seven texts; the four this file leans on most:
 | The most recent public specimen of the return | Form VAT 002 and its explanatory notes | `firs.gov.ng` |
 | The chart and the two statements | Companies and Allied Matters Act 2020, s. 374, 377, 378 and the First Schedule | `cac.gov.ng` |
 
-**One thing this pack's research could not open, and it is named rather than
-papered over: the return as TaxPro-Max shows it today.** The Nigeria Revenue
-Service (until the Nigeria Revenue Service (Establishment) Act 2025, the
-Federal Inland Revenue Service) has accepted no manual VAT return since June
-2021; every VAT return is filed on TaxPro-Max, an online portal, and this
-pack's research found no public specimen of its screens — only vendor guides
-describing a "sales schedule" upload that appears to work from values stated
-net of VAT. The only printed form this research could find, Form VAT 002, is
-dated 2020, is stated inclusive of VAT in a way that does not obviously match
-what the portal does today, and its own worked example still carries the 5 %
-rate the Finance Act 2019 superseded. Rather than transcribe that form's box
-numbers as if they were the portal's, `tax_report.json` numbers its own boxes
-against the statutory description of Nigeria Tax Administration Act 2025,
-s. 22(3) — output tax, input tax, VAT payable — the way `packs/sa/` numbers a
-return that is itself a screen. **A reviewer who files a real return on
-TaxPro-Max should check the boxes against what the portal shows**, and correct
-`tax_report.json`'s box numbers if they differ; the underlying figures — what
-counts as a standard-rated, zero-rated, exempt or imported supply, and how
-much VAT it carries — do not depend on which box they are printed in.
+**The boxes of the return are this pack's own numbering.** The Nigeria
+Revenue Service (until the Nigeria Revenue Service (Establishment) Act 2025,
+the Federal Inland Revenue Service) has accepted no manual VAT return since
+June 2021; every VAT return is filed on TaxPro-Max, an online portal with no
+public specimen of its screens. The only printed form, Form VAT 002, is dated
+2020, is stated inclusive of VAT, and its own worked example still carries the
+5 % rate the Finance Act 2019 superseded. `tax_report.json` therefore numbers
+its own boxes against the statutory description of Nigeria Tax Administration
+Act 2025, s. 22(3) — output tax, input tax, VAT payable. **A reviewer who
+files a real return on TaxPro-Max should check the boxes against what the
+portal shows**, and correct `tax_report.json`'s box numbers if they differ;
+the underlying figures — what counts as a standard-rated, zero-rated, exempt
+or imported supply, and how much VAT it carries — do not depend on which box
+they are printed in.
 
 ## The chart of accounts, and why this one
 
@@ -83,9 +76,8 @@ statements follow) and a set of recognition and measurement standards.
   Pension Reform Act and National Housing Fund contributions, the Nigeria
   Social Insurance Trust Fund and Industrial Training Fund levies, withholding
   tax credit notes and withholding tax payable, and Companies Income Tax and
-  the Development Levy of Nigeria Tax Act 2025, s. 59, apart from VAT — this
-  pack carries no code for computing either of the last two, see "What this
-  pack does not do" below.
+  the Development Levy of Nigeria Tax Act 2025, s. 59, apart from VAT — no
+  VAT code computes either of the last two, see "What this pack does not do".
 
 ## Taxes
 
@@ -100,18 +92,16 @@ agricultural inputs, live cattle, goats, sheep and poultry, electricity
 generated for or transmitted on the national grid, medical services and
 equipment, and tuition from nursery to tertiary level — and separately rates
 exported goods (other than oil and gas), services and incorporeal property at
-zero percent. This pack carries the domestic list as one code, `NG-S-ZR-DOM`,
-and the export case as another, `NG-S-ZR-EXPORT`, because the invoice mention
-and the golden scenario read differently even though both post to the same
-box of the return.
+zero percent. The domestic list is one code, `NG-S-ZR-DOM`, and the export
+case another, `NG-S-ZR-EXPORT`, because the invoice mention reads differently
+even though both post to the same box of the return.
 
 **Exempt, and the one place it stops being an ordinary opposite of
 zero-rated.** Section 185 exempts a shorter, more particular list — land and
 buildings, money and securities, government licences, baby products, locally
 manufactured sanitary towels, and, notably, **oil and gas exports**, which are
 exempt rather than zero-rated: an exporter of crude oil or gas charges no VAT
-on the export and deducts none of its own input tax against it, unlike an
-exporter of anything else.
+on the export and deducts none of its own input tax against it.
 
 **Imports.** Section 149 sets the value an import is taxed on — the price paid
 plus non-VAT duties, charges and the cost of getting the goods to the port or
@@ -147,15 +137,14 @@ sits on `2100` with the others.
 ## The VAT return
 
 **Monthly, and only monthly.** Nigeria Tax Administration Act 2025, s. 22(1):
-no cadence but the calendar month exists for the VAT return, unlike Belgium's
-or Ireland's choice of a longer period on request.
+no cadence but the calendar month exists for the VAT return.
 
 **Due, filed and paid on the 21st day of the month after the period.**
 Section 22(1) for the return; s. 49(1) sets the same day for payment. A
 different obligation, on a different person, falls due on the fourteenth: s.
 154(4), for VAT a government body or an appointed collector has withheld at
-source — this pack does not model it, see below — and for the VAT a buyer
-withholds on a supply from a non-resident (`NG-P-NRS`, above).
+source — not modelled, see below — and for the VAT a buyer withholds on a
+supply from a non-resident (`NG-P-NRS`, above).
 
 **A negative box 10 is a credit or a refund, never floored at zero.** Section
 155(1): output tax in excess of input tax is remitted; input tax in excess of
@@ -170,45 +159,35 @@ company's directors prepare each year; s. 378(1) makes them comply with the
 First Schedule "so far as applicable". `NG-CAMA-BS` and `NG-CAMA-IS` follow
 the First Schedule's Format 1 — the vertical balance sheet headed A to M, and
 the function-of-expense profit and loss account — summarised to the level of
-this chart's own account blocks rather than reproducing every sub-item the
-Schedule lists. A company preparing statutory accounts in full detail should
-treat these two as the skeleton and add the sub-analysis the Schedule and its
-notes ask for.
+this chart's own account blocks. A company preparing statutory accounts in
+full detail should treat these two as the skeleton and add the sub-analysis
+the Schedule and its notes ask for.
 
 ## What this pack does not do
 
-- **VAT the government withholds at source.** Nigeria Tax Act 2025, s. 154,
-  and its own return, FIRS Form 006, apply to a government body or an
-  appointed collector that withholds VAT from a payment instead of paying it
-  to the supplier gross. This is a different declaration on a different
-  cadence (the 14th, not the 21st) from a different filer, and this pack
-  carries no tax code or box for it.
+- **VAT the government withholds at source** (Nigeria Tax Act 2025, s. 154,
+  and its own return, FIRS Form 006): a different declaration on a different
+  cadence (the 14th, not the 21st) from a different filer; no tax code or box.
 - **Proportional input tax deduction.** Section 155(4)'s proviso restricts the
   deduction, where a purchase serves both taxable and non-taxable supplies, to
-  the taxable proportion. The socle has no column for a partly-deductible
-  tax — the same gap `packs/sa/tax_report.json` records for Saudi Arabia's own
-  proportional-deduction rule (Implementing Regulations, Articles 51–52).
+  the taxable proportion; the socle has no column for a partly-deductible tax.
 - **Petroleum products, renewable energy equipment, CNG, LPG and other gaseous
   hydrocarbons.** Nigeria Tax Act 2025, Eleventh Schedule, paragraph 1, leaves
-  the charging and collection of VAT on these items to a Ministerial order
-  this pack's research found none of — the rate could be 7.5 %, zero, or
-  nothing at all on any given day, by an instrument outside the Act. Rather
-  than guess, this pack carries no tax code for them.
-- **The Development Levy.** This pack's chart carries the accounts a company
-  would post it to (2320, 8230) and its statements carry the line it lands on,
-  but computing it is not done: see "Corporate income tax" below. The income
-  tax itself is estimated from `corporate_tax.json`.
+  the charging and collection of VAT on these items to a Ministerial order,
+  none of which is cited here; the pack carries no tax code for them.
+- **The Development Levy.** The chart carries the accounts it posts to (2320,
+  8230) and the statements the line it lands on, but it is not computed: see
+  "Corporate income tax" below. The income tax itself is estimated from
+  `corporate_tax.json`.
 - **Electronic invoicing and the Electronic Fiscal System.** The FIRS
   Merchant-Buyer Solution is a clearance platform, not an EN 16931 profile any
   brick of `packages/formats` writes, and the wider Electronic Fiscal System
   of Nigeria Tax Act 2025, s. 157, and Nigeria Tax Administration Act 2025,
-  s. 23, awaits regulations this pack's research found none of. See
-  `pack.json`'s `einvoicing` block and this pack's section of
-  [`docs/international.md`](../../docs/international.md).
-- **Bank statement and payment file formats.** This pack's research did not
-  establish which formats Nigerian banks issue and accept as a market
-  practice reliable enough to cite, so `pack.json` declares no `bank` section
-  rather than guess between `mt940`, `camt.053` and `csv`.
+  s. 23, awaits regulations. See `pack.json`'s `einvoicing` block and
+  [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
+- **Bank statement and payment file formats.** No market practice for the
+  formats Nigerian banks issue and accept is established, so `pack.json`
+  declares no `bank` section.
 
 ## Points a Nigerian accountant should check first
 
@@ -225,24 +204,24 @@ notes ask for.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
-The section carries what was read in the Nigeria Tax Act 2025 (Official
-Gazette No. 117, 26 June 2025) on 1 October 2026, and nothing else. It starts
-from line `PBT` of `NG-CAMA-IS`, and every entry is dated from 1 January 2026,
-the commencement of the Act: **a financial year opened before that date has no
-rate in the section, and the module refuses it by name rather than estimate it.**
+The section carries the Nigeria Tax Act 2025 (Official Gazette No. 117,
+26 June 2025) and nothing else. It starts from line `PBT` of `NG-CAMA-IS`,
+and every entry is dated from 1 January 2026, the commencement of the Act:
+**a financial year opened before that date has no rate in the section, and
+the module refuses it by name rather than estimate it.**
 
 | Not carried | Why |
 |---|---|
-| The regime of the Companies Income Tax Act, Cap. C21, LFN 2004, as amended by the Finance Acts (0 % up to N25,000,000 of turnover, 20 % to N100,000,000, 30 % above), and the tertiary education tax | The Act was repealed from 1 January 2026 (Nigeria Tax Act 2025, s. 195(c)). The amended text could not be opened on an official page: the administration's site did not answer, and the copy of Cap. C21 that was read is the 2004 text without the amendments. The figures are not carried, and the section has nothing for financial years 2025 and before. |
-| Which regime governs the profits of the financial year 2025 | Nigeria Tax Act 2025, s. 22(1), takes the profits of the accounting period *immediately preceding* the year of assessment, and a year of assessment is a calendar year (s. 202). Read literally, the profits of 2025 are those of the year of assessment 2026; no transitional rule was found. This is a reading for a Nigerian adviser, and the section dates by the first day of the financial year. |
+| The regime of the Companies Income Tax Act, Cap. C21, LFN 2004, as amended by the Finance Acts (0 % up to N25,000,000 of turnover, 20 % to N100,000,000, 30 % above), and the tertiary education tax | The Act was repealed from 1 January 2026 (Nigeria Tax Act 2025, s. 195(c)). The figures are not carried, and the section has nothing for financial years 2025 and before. |
+| Which regime governs the profits of the financial year 2025 | Nigeria Tax Act 2025, s. 22(1), takes the profits of the accounting period *immediately preceding* the year of assessment, and a year of assessment is a calendar year (s. 202). Read literally, the profits of 2025 are those of the year of assessment 2026; no transitional rule is cited. This is a reading for a Nigerian adviser, and the section dates by the first day of the financial year. |
 | The Development Levy, 4 % of the assessable profits (s. 59) | A separate levy with its own base, not the tax of the section: the module computes one tax per company. Booked on accounts 8230 and 2320, below line `PBT`. |
 | The minimum effective tax rate of 15 % (s. 57) | A top-up of the tax, computed on the tax itself and on the development levy, for groups of at least EUR 750 million and companies of N50,000,000,000 of turnover and above. The section has no shape for a tax on the tax. |
-| The reduction of the rate to 25 % (s. 56, proviso) | Conditional on an order of the President that was not read; the standard rate is 30 %. |
-| Capital allowances (s. 27, First Schedule, Part I) | The rates and the pools were not read; the company declares the amount under `capital-allowances`. |
-| Amortisation of intangible assets, impairment and the other items of s. 21 (capital expenditure, private expense, payments to a connected person outside the transfer pricing rules, expenses on which VAT was not charged…) | Account 7670 and 7680 are not added back by themselves because the section on intangibles was not read; the others depend on facts only the company knows. The company names an account or states an amount against `depreciation`, `fines-penalties` or `unrealised-exchange-loss`. |
-| Unrealised exchange gains | Section 21(g) refuses the deduction of an unrealised difference; whether an unrealised gain is taxed was not read. |
-| Losses limited to the trade in which they arose (s. 27(6)(b)) and losses incurred before 2026 | The module keeps one stock of losses per company. The treatment of a loss of the Companies Income Tax Act era under the new Act was not read: the third worked example assumes it carries. |
-| Prepayments and payment dates | None was read in a form the section can hold: `prepayments` is empty. |
+| The reduction of the rate to 25 % (s. 56, proviso) | Conditional on an order of the President not cited here; the standard rate is 30 %. |
+| Capital allowances (s. 27, First Schedule, Part I) | The rates and the pools are not carried; the company declares the amount under `capital-allowances`. |
+| Amortisation of intangible assets, impairment and the other items of s. 21 (capital expenditure, private expense, payments to a connected person outside the transfer pricing rules, expenses on which VAT was not charged…) | Account 7670 and 7680 are not added back by themselves, the treatment of intangibles not being carried; the others depend on facts only the company knows. The company names an account or states an amount against `depreciation`, `fines-penalties` or `unrealised-exchange-loss`. |
+| Unrealised exchange gains | Section 21(g) refuses the deduction of an unrealised difference; whether an unrealised gain is taxed is not established. |
+| Losses limited to the trade in which they arose (s. 27(6)(b)) and losses incurred before 2026 | The module keeps one stock of losses per company. The treatment of a loss of the Companies Income Tax Act era under the new Act is not established: the third worked example assumes it carries. |
+| Prepayments and payment dates | None in a form the section can hold: `prepayments` is empty. |
 | Tax credits (priority sector, economic development incentive) | `credits` is empty: no credit was cited. |
 | Companies taxed apart (petroleum, insurance, free zones, non-residents) | Different parts of the Act with their own bases. |
 
@@ -251,17 +230,15 @@ the module applies the first rate with no threshold whose conditions are met
 to the whole base, so a company that declares a turnover and fixed assets
 within the two limits is taxed at 0 % and any other at 30 %. A company that
 declares neither is not a small company for the estimate, which says
-`not_declared`. The registry entries `nta-2025` and `ntaa-2025` pointed at each
-other's file on the Tax Appeal Tribunal's site; each URL now serves the text
-its title names.
+`not_declared`.
 
 ## Fixed assets
 
 `fixed_assets.json` carries how a Nigerian company depreciates a fixed asset and
-takes it off the balance sheet. It was read on 1 October 2026 in IFRS for SMEs
-(third edition, 2025), Sections 17, 18 and 19, and in the IFRS Foundation's
-profile of Nigeria, which records that the Financial Reporting Council adopted
-that Standard for small and medium-sized entities without modification.
+takes it off the balance sheet. It rests on IFRS for SMEs (third edition,
+2025), Sections 17, 18 and 19, and on the IFRS Foundation's profile of
+Nigeria, which records that the Financial Reporting Council adopted that
+Standard for small and medium-sized entities without modification.
 
 - **Disposal is `net_result`.** Section 17, paragraphs 17.27 to 17.30, put the
   difference between the net proceeds and the carrying amount in profit or loss
@@ -274,7 +251,7 @@ that Standard for small and medium-sized entities without modification.
   in declining balance. A company that counts whole months sets
   `prorata = 'months'` on the asset.
 - **Durations are practice.** Nigeria has no legal or fiscal table of useful
-  lives for the accounting charge. The only figure read in a text is the ten
+  lives for the accounting charge. The only figure in a text is the ten
   years of goodwill and of an intangible whose life cannot be established
   (paragraphs 19.34 and 18.20), which is a ceiling and not an estimate. Every
   other category says in its `legal_reference` that its duration is common
@@ -286,12 +263,12 @@ that Standard for small and medium-sized entities without modification.
 
 | Not carried | Why |
 |---|---|
-| Capital allowances (initial and annual allowances, pools) | A tax computation distinct from the book charge. The module keeps one schedule per asset, and the rates of the Nigeria Tax Act 2025 were not read for this section. |
-| A declining-balance category | Paragraph 17.22 allows the method but no Nigerian text or rate was read, and a coefficient would be invented. An asset can still be set up in declining balance by hand. |
+| Capital allowances (initial and annual allowances, pools) | A tax computation distinct from the book charge. The module keeps one schedule per asset. |
+| A declining-balance category | Paragraph 17.22 allows the method but no Nigerian text or rate is cited, and a coefficient would be invented. An asset can still be set up in declining balance by hand. |
 | Separate depreciation of major components (paragraph 17.16) | The module has one asset and one duration. |
 | Residual value, impairment (Section 27) and its reversal | Not a pack rule. |
 | Revaluation model (paragraphs 17.15B to 17.15D) | Not carried; the module has no revaluation. |
-| Threshold below which an item is expensed | Set by the company's policy; no Nigerian text read. |
+| Threshold below which an item is expensed | Set by the company's policy; no Nigerian text cited. |
 | Construction-in-progress (account 0170) | Not depreciated until available for use. |
-| Investment property, assets held for sale, leased assets (Section 20) | Not read; the module cannot stop depreciation on a reclassification. |
+| Investment property, assets held for sale, leased assets (Section 20) | Not carried; the module cannot stop depreciation on a reclassification. |
 | Units of production | Refused by the module. |

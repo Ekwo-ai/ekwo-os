@@ -23,7 +23,7 @@ day.
 
 | What | Text | Where |
 |---|---|---|
-| Rates, exemptions, deduction, regimes, the declaration, invoicing obligations | Lei n.º 4/2022 — Código do IVA, full text | `kontaktu.mef.gw`, the DGCI's own portal, read directly (its DNS did not resolve through this session's `WebFetch`; a forced resolution over `curl` served the page) |
+| Rates, exemptions, deduction, regimes, the declaration, invoicing obligations | Lei n.º 4/2022 — Código do IVA, full text | `kontaktu.mef.gw`, the DGCI's own portal |
 | The 1 January 2025 entry into force | Despacho n.º 130/GMF/2024, 31 October 2024 | `mef.gw` |
 | Invoice content, numbering, series, the QR code, the simplified invoice | Despacho MF n.º 1/2023 — Regulamento das Faturas, taken under art. 29.º, n.º 3 of the Código do IVA | `kontaktu.mef.gw` |
 | The frame of the rates | Directive n° 02/2009/CM/UEMOA, art. 29 nouveau | AIFO-UEMOA |
@@ -46,8 +46,8 @@ day.
   symmetrical art. 14.º); art. 13.º, n.º 2 forbids any exemption the Code does
   not itself provide.
 - **Goods and services post apart** — 4431 and 4432 on the sale side, 4451,
-  4452 and 4454 on the purchase side — because the chart has the accounts, as
-  Senegal and Côte d'Ivoire already do. The tax point is the invoice: art.
+  4452 and 4454 on the purchase side — because the chart has the accounts. The
+  tax point is the invoice: art.
   11.º sets the principle (delivery, performance or import), and art. 12.º
   moves it to the invoice's own date once art. 29.º requires one — which is
   the ordinary case — or to an earlier payment. No provision read taxes a
@@ -64,11 +64,10 @@ day.
   it is not built.
 - **A foreign supplier's services** (art. 7.º, n.º 1): a supplier with no
   seat, establishment or fiscal representative (art. 33.º) in Guinea-Bissau
-  leaves the buyer as the assujetti. Unlike Senegal's TVA pour compte, the
-  Código do IVA does not exclude this tax from deduction — art. 19.º, n.º 1,
-  b) names it among what is deductible in the general terms — so
-  `GW-P-NR-19` is fully deductible, reversed through 4478 like Côte d'Ivoire's
-  own TVA pour compte de tiers.
+  leaves the buyer as the assujetti. The Código do IVA does not exclude this
+  tax from deduction — art. 19.º, n.º 1, b) names it among what is deductible
+  in the general terms — so `GW-P-NR-19` is fully deductible, reversed through
+  4478.
 - **The retention of art. 7.º**, Guinea-Bissau's own mechanism and the one
   this pack gives most weight to: a régime normal buyer must withhold the
   *entire* tax invoiced by (a) a régime simplificado supplier or (b) a régime
@@ -76,9 +75,7 @@ day.
   3). The buyer pays the supplier net of that tax, remits it directly to the
   DGCI on a field of its own monthly declaration (n.º 4, `IVARET` here), and
   the supplier's invoice carries "IVA – Retido" (n.º 5). Case (b) turns on an
-  administrative list this pack has no way to read — it is not built, the
-  same limitation Senegal and Côte d'Ivoire record for their own
-  discretionary désignations. Case (a) is `GW-P-5-RETIDO`: the régime
+  administrative list this pack has no way to read — it is not built. Case (a) is `GW-P-5-RETIDO`: the régime
   simplificado's flat 5% (art. 38.º) gives the buyer no right to deduct at
   all (art. 39.º) — so the whole tax lands on the cost of what was bought,
   exactly as `GW-P-19-ND` does — and on top of that non-deductibility the
@@ -142,16 +139,8 @@ day.
 - **A Portuguese wording of the pack's own sections** (`pack_name`, taxes, the
   declaration's boxes, the legal mentions — all in the wording of the
   Código do IVA and of the Despacho MF n.º 1/2023, both official texts in
-  Portuguese, Guinea-Bissau's official language). `packs/ohada/README.md`
-  invites exactly this, undeclared, with the chart falling back to French.
-  It is not built: the seed compiler reads any `i18n/<lang>.json` on disk and
-  writes its keys into `name_i18n` and every `text_i18n`, and the test suite
-  (`tests/languages.test.ts`) then requires those keys to match
-  `languages` exactly — so an *undeclared* file breaks the build the moment
-  it exists, regardless of how partial it is. Declaring `pt` the ordinary way
-  would in turn require translating every one of the 1,358 SYSCOHADA
-  accounts, which no official Portuguese edition of the chart exists to
-  translate from (`packs/ohada/README.md`, *Languages*) — exactly the
-  invented-translation this pack refuses to produce. The compiler does not
-  yet have a middle case for a partial, undeclared i18n file; this is a gap
-  of the core, not of this pack's data.
+  Portuguese, Guinea-Bissau's official language). Declaring `pt` would
+  require translating every one of the 1,358 SYSCOHADA accounts, for which no
+  official Portuguese edition of the chart exists
+  ([`packs/ohada/README.md`](../ohada/README.md#languages)), and the core has
+  no case yet for a partial, undeclared translation.

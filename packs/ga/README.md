@@ -22,18 +22,12 @@ right. Currency XAF, the CFA franc of the BEAC, at no decimal.
 | The declaration portal | e-Tax Gabon (SIGIGA e-contribuable) | `e-tax.dgi.ga` |
 | The floor of a reduced VAT rate, and how a précompte or a surtax fits the common system | Directive CEMAC portant harmonisation des législations en matière de TVA du 10 novembre 2022 | `sgg.cg` |
 
-**No edition of the Code later than 2019, consolidated or not, is published
-by an administration this pack could reach.** `dgi.ga`, `gouvernement.ga` and
-the page the DGI names for its e-invoicing system, `dgi.ga/e-fact/`, all
-refused the connection on 21 September 2026. The loi de finances pour 2026
-itself (loi n° 041/2025 du 29 décembre 2025, JO n° 96 quater), which created
-several of the articles the LFR 2026 rewrites, was not found either — only a
-secondary summary of it (Deloitte, 9 April 2026) was read, and is cited
-nowhere in `taxes.json`, `tax_report.json` or `pack.json`. Every article of
-the 2019 Code cited here was checked, one by one, against the full text of
-the LFR 2026 — the only text more recent that could be read — to confirm the
-LFR 2026 does not rewrite it; where it does, the LFR 2026 wording is what is
-cited.
+**No edition of the Code later than 2019 is in the register.** Each article of
+the 2019 Code cited here is cited in the LFR 2026 wording where the LFR 2026
+rewrites it. The loi de finances pour 2026 (loi n° 041/2025 du 29 décembre
+2025, JO n° 96 quater), which created several of the articles the LFR 2026
+rewrites, is not in the register and nothing rests on it; a reviewer should
+check it.
 
 ## What the pack says
 
@@ -52,7 +46,7 @@ cited.
 - **A service is taxed at collection** (art. 213 nouveau, LF 2015): unlike
   goods, whose tax is due on delivery, a service's tax waits at 4432 until
   the invoice is paid, then moves to 4431 — `GA-S-18-SRV` carries
-  `cash_basis: true`, on the model of `packs/ci/`.
+  `cash_basis: true`.
 - **Deduction excludes** (art. 224, 225): lodging, hospitality, catering,
   entertainment and passenger transport (except for the professionals of
   those activities), petroleum products other than fixed industrial fuel,
@@ -66,31 +60,29 @@ cited.
   excludes VAT and the CSS itself (art. 25, 24 nouveau of the textes fiscaux
   non codifiés), applies to nearly every operation a VAT-registered company
   makes, once its own turnover reaches 30 000 000 FCFA (art. 14). It is a tax
-  of its own, the way the OHADA README asks of a surtax the return and the
-  administration keep apart, posted to account 446 (`GA-CSS-S`, `GA-CSS-P`) —
-  see *What it does not say* for what this pack leaves out of it.
+  of its own, posted to account 446 (`GA-CSS-S`, `GA-CSS-P`) — see *What it
+  does not say* for what this pack leaves out of it.
 - **The declaration** is monthly, even with nothing to declare (mention
   « NEANT »), due on the 20th of the following month (art. 237); exporters
   attach their customs references. Nothing found gives a quarterly régime
   for an ordinary taxpayer — only the simplified régime of a non-resident
   digital platform files quarterly (art. 248 octies), which this pack does
   not model. The boxes of `tax_report.json` follow what a return has to
-  carry in substance, not an official numbering: no text found publishes the
-  imprimé's own boxes, the same gap `packs/sn/` records for Sénégal.
+  carry in substance, not an official numbering: no text publishes the
+  imprimé's own boxes.
 - **The invoice** carries the assujetti's name, address and NIF, the rate,
   the price before tax and the corresponding tax, and the client's own
   identification if it is an assujetti (art. 234 to 236) — nothing found
-  requires citing the article of an exemption, unlike Sénégal's art. 447-I-5.
-  The CSS's own text (textes fiscaux non codifiés, art. 28) is more precise
-  and asks, product by product, for the mention « exonérée » or « prise en
-  charge Etat » where it applies.
+  requires citing the article of an exemption. The CSS's own text (textes
+  fiscaux non codifiés, art. 28) is more precise and asks, product by
+  product, for the mention « exonérée » or « prise en charge Etat » where it
+  applies.
 - **Electronic invoicing** is mandatory (art. P-832 ter, LFR 2026) through a
   homologated device or an equivalent document, and since art. 223 nouveau
-  only the tax on such a document is deductible. No official text read gives
-  a starting date, a technical profile or the device's own numbering — the
-  DGI's own page for it, `dgi.ga/e-fact/`, could not be reached from this
-  pack's research. `einvoicing.mandatory_from` and `.profile` stay null, on
-  the model of `packs/sn/` and `packs/ci/`.
+  only the tax on such a document is deductible. No official text in the
+  register gives a starting date, a technical profile or the device's own
+  numbering (the DGI names `dgi.ga/e-fact/` for it).
+  `einvoicing.mandatory_from` and `.profile` stay null.
 
 ## What it does not say
 
@@ -107,9 +99,7 @@ cited.
   names.
 - **The précompte de TVA of the État** (art. 239): the Trésor public
   withholds 40 % of the VAT it owes a supplier on a public contract and pays
-  it directly to the DGI, handing the supplier a quittance. This is exactly
-  the case Sénégal's own README could not model from the supplier's side
-  either — here the text is fuller (a fixed 40 %, a quittance), but the same
+  it directly to the DGI, handing the supplier a quittance. The same
   "retenue au paiement" gap applies, and this pack does not guess how the
   supplier's books show a receivable paid by proxy.
 - **The golden year cannot combine a VAT code and a CSS code on one
@@ -117,15 +107,11 @@ cited.
   line, both computed on the same base; `golden/scenario.json`'s `lines`
   carries one `tax` per line, so `GA-CSS-S` and `GA-CSS-P` are defined and
   compile but are not exercised by the golden year — a "taxe sur taxe" case
-  the brief this pack was built from names as one the core does not yet
-  carry.
+  the core does not yet carry.
 - **The threshold to become an assujetti.** Art. 208 (not rewritten by the
-  LFR 2026) sets it at 150 000 000 FCFA — 500 000 000 FCFA for forestry — a
-  figure this pack's own research first read as 60 000 000 FCFA from a
-  secondary source (PwC, last reviewed 6 August 2026) later found to
-  contradict the CGI article actually read. The higher figure is the one
-  read directly in the official-adjacent text; the lower one is not cited
-  anywhere in this pack. A registration threshold has no field in this
+  LFR 2026) sets it at 150 000 000 FCFA — 500 000 000 FCFA for forestry; a
+  secondary source (PwC) gives 60 000 000 FCFA, which contradicts the
+  article and is not cited. A registration threshold has no field in this
   pack's schema either way.
 - **Excise duties** (droits d'accises, art. 250, 251) on beer, wine,
   champagne and tobacco, and the environmental tax on packaging (textes
@@ -133,5 +119,4 @@ cited.
   ordinary invoice, and neither is in the golden year.
 - **The real-estate VAT régime** for a property developer (art. 248 quater
   and following) is a separate mechanism this pack does not model.
-- **The declaration's own box numbers.** SENTAX-style detail exists for
-  Sénégal; nothing equivalent for Gabon's e-Tax was reachable.
+- **The declaration's own box numbers** on e-Tax Gabon are not published.

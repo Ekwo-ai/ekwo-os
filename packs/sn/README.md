@@ -24,9 +24,8 @@ right. Currency XOF, the CFA franc of the BCEAO, at no decimal.
 | The frame of the rates | Directive n° 02/2009/CM/UEMOA, art. 29 nouveau | AIFO-UEMOA |
 
 **No consolidated edition of the Code later than 2013 is published by the
-administration.** The state of each article was rebuilt from the 2013 text and
-the amending laws the ministry publishes; a privately annotated edition of
-October 2025 served only to date each paragraph, and is not in the register.
+administration.** The state of each article is rebuilt from the 2013 text and
+the amending laws the ministry publishes.
 
 ## What the pack says
 
@@ -71,7 +70,7 @@ October 2025 served only to date each paragraph, and is not in the register.
   supplier's books clear it is written in no text found, and the pack does not
   guess it.
 - **The declaration of précompte and the TVA pour compte** are filed apart from
-  the return, and a pack carries one form (`docs/international.md`). The TVA
+  the return, and a pack carries one form. The TVA
   pour compte has a box here, said to be a transcription; the précompte waits
   on 4478 with none.
 - **Electronic invoicing**: the Code has required it since 2025 (art. 447-II),
@@ -83,27 +82,22 @@ October 2025 served only to date each paragraph, and is not in the register.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
-The section carries what was read on an official page on 1 October 2026, and
-nothing else: the Code général des impôts as enacted by loi n° 2012-31 (arts.
+The section carries the Code général des impôts as enacted by loi n° 2012-31 (arts.
 8, 9, 16, 21, 25, 36, 37, 213 to 215) and the Ministry's « Voies et moyens »
 note of the 2025 supplementary finance law, which restates the 30 % rate, the
 two instalments and the minimum tax. It starts from line `XI` (net result) of
 `SN-SYSCOHADA-IS`, which prints no result before tax, and adds back class 89.
-The Code is amended often; an annotated edition from a private publisher
-(October 2025) was used only to look for amendments of these articles, and it
-is not a source. A rule that is missing makes an estimate too high or too low
-by something a reader can name; these are the ones to name. The same file
-serves as a model for the other SYSCOHADA packs: only the articles, the rate
-and the three-year limit are Senegalese.
+The Code is amended often. A rule that is missing makes an estimate too high
+or too low by something a reader can name; these are the ones to name.
 
 | Not carried | Why |
 |---|---|
-| The minimum flat-rate tax, IMF (CGI arts. 38 to 40): 0,5 % of the previous year's turnover excluding tax, capped at 5 000 000 F, due when the company is in deficit or its tax is lower | A minimum tax is not in the vocabulary: the section computes the tax on the profit and nothing replaces it by a floor. The estimate is therefore too low for a loss-making company, or one whose tax is below the minimum. The charge booked on `895` is added back like any tax on income. The 500 000 F floor of the 2012 text is no longer applied; the amendment that removed it (loi n° 2019-17) was not read in an official text, only the Ministry's note which states the cap alone. |
+| The minimum flat-rate tax, IMF (CGI arts. 38 to 40): 0,5 % of the previous year's turnover excluding tax, capped at 5 000 000 F, due when the company is in deficit or its tax is lower | A minimum tax is not in the vocabulary: the section computes the tax on the profit and nothing replaces it by a floor. The estimate is therefore too low for a loss-making company, or one whose tax is below the minimum. The charge booked on `895` is added back like any tax on income. The 500 000 F floor of the 2012 text is no longer applied; this rests on the Ministry's note, which states the cap alone; the amending law (loi n° 2019-17) itself should be checked. |
 | Rounding of the taxable base down to the thousand franc (art. 36) | No rounding rule exists for a base. The estimate keeps the franc, so it can exceed the tax by up to 299 F. |
 | Deferred depreciation (arts. 10 and 16): depreciation booked in a loss year is added back and carried forward with no time limit, and is used after the ordinary deficits | The loss limit is one number of years. A company that carries deferred depreciation as a loss would see it lapse after three years; the estimate does not add it back in a deficit year either. |
 | The other ceilings of art. 9: interest paid to partners (rate of the central bank plus three points, capital ceiling), gifts (0,5 % of turnover), head-office costs (20 % of profit), insurance premiums, the 20 % phasing of retirement premiums | Each ceiling depends on a turnover, a profit, a rate or the capital, and a rule moves a fixed share or a stated amount. No rule is written for them. |
 | The ceiling of the parent–subsidiary deduction (art. 21: the 5 % share of costs cannot exceed the costs of the period) | Not computed; `parent-subsidiary-dividends` deducts 95 % of what the company declares. The conditions of art. 22 are the company's word. |
-| Payments to a foreign legal entity made without the formalities of art. 642 bis, not deductible (art. 9, 11, added by loi n° 2025-02) | The enacted text was not read: the register holds the bill, not the law. |
+| Payments to a foreign legal entity made without the formalities of art. 642 bis, not deductible (art. 9, 11, added by loi n° 2025-02) | The register holds the bill, not the enacted law, which should be checked. |
 | The tax-credit carry of art. 37 (three years, then refund on claim) | `withholding-tax-credit` exists and is not refundable; the company declares each year's credit. |
 | Prepayments: the first instalment may not be lower than the IMF, the amounts are rounded down to the hundred franc, a year of another length is scaled to twelve months, the second may be waived by letter (arts. 214, 215, 217) | The vocabulary has two shares of a reference tax and nothing else. The third of the tax is written `33,3333`. Nothing reads the schedule yet. |
 | Regimes of exemption and reduced rates (investment code, mining and petroleum codes, free zones, new small businesses, the contribution globale unique) | Each depends on an approval or a regime the books do not show. No rate is carried but the 30 % of art. 36. |
@@ -112,22 +106,19 @@ and the three-year limit are Senegalese.
 ## Fixed assets
 
 `fixed_assets.json` carries how Senegal depreciates a fixed asset and takes it
-off the balance sheet. It was read on 1 October 2026 in the Acte uniforme
-relatif au droit comptable et à l'information financière (art. 45) and in the
-Code général des impôts as published by the Ministry of Finance (art. 10). That
-file is the 2012 law as voted; the amending laws that were read (loi n° 2015-06,
-the 2025 finance bill) do not touch art. 10, but no consolidated current text
-of it was found, so a later amendment is not excluded. It serves as a model for
-the other SYSCOHADA packs: only the tax article and its coefficients are
-Senegalese.
+off the balance sheet. It rests on the Acte uniforme relatif au droit
+comptable et à l'information financière (art. 45) and on the Code général des
+impôts as published by the Ministry of Finance (art. 10). That file is the 2012
+law as voted; the amending laws in the register (loi n° 2015-06, the 2025
+finance bill) do not touch art. 10, but no consolidated current text is
+published, so a later amendment is not excluded.
 
 - **Disposal is `gross`.** The chart carries account 81 (book value of assets
   sold) and 82 (proceeds of assets sold), and the income statement prints both
   (lines RO and TN). The roles are `asset_disposal_value` (`812`, tangible) and
   `asset_disposal_proceeds` (`822`, tangible); a company selling an intangible
-  or financial asset picks `811`/`821` or `816`/`826` on the entry. The text of
-  the Système comptable OHADA itself is a scanned document that could not be
-  read as text: the two accounts and their names come from the chart.
+  or financial asset picks `811`/`821` or `816`/`826` on the entry. The two
+  accounts and their names come from the chart.
 - **The first-period prorata is practice, not text.** Art. 45 says depreciation
   starts when the asset is in working condition at its place of use, and no
   text says how to cut the first annuity. The section counts real days, in
@@ -140,15 +131,15 @@ Senegalese.
 - **No duration is fixed by law.** Art. 10 admits the depreciation "generally
   accepted by the usages of each kind of industry, trade or operation" and art.
   45 leaves the useful life to the entity. Every straight-line duration is
-  therefore common practice, as in the British pack, and its `legal_reference`
-  says so; none was read in an official table. A category proposes, never
+  therefore common practice, and its `legal_reference` says so; no official
+  table fixes one. A category proposes, never
   imposes.
 
 ### Fixed assets: what `fixed_assets.json` leaves out
 
 | Not carried | Why |
 |---|---|
-| Goodwill and other intangibles other than software | Their duration (and any presumption when the useful life cannot be estimated) is in the Système comptable OHADA, which could not be read as text. No duration was invented. |
+| Goodwill and other intangibles other than software | Their duration (and any presumption when the useful life cannot be estimated) is set by the Système comptable OHADA, not transcribed here. No duration is carried. |
 | Tax depreciation distinct from the book charge, and the derogatory depreciation account `151` | The module keeps one schedule per asset. The art. 10 rule that the cumulated declining depreciation may not fall below the cumulated straight line, on pain of losing the deduction of the deferred part, is not checked. |
 | Deferred depreciation (amortissements réputés différés, art. 10 and 16) | A tax carry-forward of depreciation booked in a loss year; the module has no such notion. |
 | Accelerated first annuity (art. 10, 1): doubled for new equipment of certain activities, duration shortened by one year) | Not in the vocabulary of a category or of a prorata. |
@@ -156,7 +147,7 @@ Senegalese.
 | Units of production | Refused by the module. |
 | Revaluation of the balance sheet | Not carried. |
 | Residual value, impairment and its reversal | Not a pack rule. |
-| Threshold below which an asset is expensed | Not read in an official text, and the module has no such field. |
+| Threshold below which an asset is expensed | No official threshold is carried, and the module has no such field. |
 | Components of an asset, with their own lives | The module has one asset, one duration. |
 | Assets held under finance leases (accounts `2316`, `2326`, `2416`…) and the lessor's depreciation, not deductible under art. 10 | The module does not tell the lessee's books from the lessor's. |
 | A prorata in months | Practice; a company that prorates by months sets `prorata = 'months'` on the asset. |

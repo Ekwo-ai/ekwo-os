@@ -18,18 +18,15 @@ right.
 and neither the Value Added Tax Act nor ICPAK's illustrative IFRS for SMEs
 statements have a Swahili edition to transcribe labels from — Kiswahili is an
 official language of Kenya, but its accounting vocabulary has not been
-standardised the way, say, Estonian or Korean company law has. Rather than
-invent Swahili labels nobody has published, this pack declares `en` alone.
-What the core could not say is written up in
-[`docs/international.md`](../../docs/international.md) under "Kenya". None of
-it was patched for this pack's sake.
+standardised. Rather than invent Swahili labels nobody has published, this
+pack declares `en` alone. What the core cannot say yet is in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Sources
 
 Every tax, box and statement line carries its own `legal_reference`, and
 beside it the key of the text that article is in. The register in
-`pack.json` holds nine texts, every one opened on 25 September 2026. The ones
-the rest of this file leans on:
+`pack.json` holds nine texts. The ones the rest of this file leans on:
 
 | What | Text | Where |
 |---|---|---|
@@ -41,11 +38,9 @@ the rest of this file leans on:
 | The statement of financial position and the profit and loss account | ICPAK, illustrative IFRS for SMEs financial statements | `icpak.com` |
 | What each row of the return holds, filing and payment by the 20th, eTIMS on-boarding | KRA, *Value Added Tax (VAT)*; form VAT 3 workbook | `kra.go.ke` |
 
-Kenya Law's site (`new.kenyalaw.org`) refuses a plain HTTPS request with no
-browser behind it and returns 403; every Act cited here was instead read from
-the PDF it serves at `.../source.pdf` on the same URL, which is not
-browser-gated. `ekwo pack check ke --links` will report those four law URLs as
-unreachable for the same reason: it is the publisher, not a wrong link.
+`ekwo pack check ke --links` reports the four `new.kenyalaw.org` URLs as
+unreachable: the publisher refuses requests with no browser behind them (403),
+not a wrong link.
 
 ## The chart of accounts, and why this one
 
@@ -56,7 +51,7 @@ a balance sheet and a profit and loss account that give a true and fair view
 under those same standards. ICPAK, the standard-setting body the Accountants
 Act, 2008 recognises, has adopted the IFRS for SMEs Accounting Standard for an
 entity with no public accountability. So the chart is written, not
-transcribed, in the same shape as the Singaporean and Australian packs:
+transcribed:
 
 - **Four digits, by class**: `1` assets, `2` liabilities, `3` equity, `4`
   revenue and other income, `5` goods and materials, `6` other expenses, `7`
@@ -149,8 +144,7 @@ fact files; a partly exempt one needs an apportionment this pack does not
 compute. Rows 21 to 28 (credit brought forward, withholding VAT credits,
 payments already made, credit and debit adjustment vouchers, the net credit
 carried forward) are period-to-period settlement, not a figure any document
-posts, in the same way `docs/packs.md` describes Singapore's Tourist Refund
-Scheme boxes as declared and empty.
+posts.
 
 ## Withholding VAT
 
@@ -160,8 +154,8 @@ supplier's account — a mechanism a third party to the sale executes, on a rate
 Parliament has changed more than once (most recently down to 2 % in 2023).
 Modelling an agent who is neither the seller nor the buyer of the document
 being posted is beyond what a `taxes.json` posting, which always speaks of the
-two parties to one document, can state. It is recorded in
-[`docs/international.md`](../../docs/international.md) under "Kenya".
+two parties to one document, can state. See
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Electronic invoicing: eTIMS is a clearance, not an exchange
 
@@ -179,10 +173,9 @@ generated. The buyer receives whatever document the seller always sent it;
 what changed is that the seller's own system now clears the invoice with KRA
 first. There is no profile to name and no ISO 6523 scheme a party is
 addressed by, because nothing is exchanged between the two businesses that a
-Peppol-shaped vocabulary would recognise. This is recorded at length in
-`pack.json`'s own `einvoicing.legal_reference` and in
-[`docs/international.md`](../../docs/international.md) under "Kenya"; the
-socle was not changed to fit it.
+Peppol-shaped vocabulary would recognise. This is recorded in `pack.json`'s
+own `einvoicing.legal_reference` and in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## What this pack does not carry
 

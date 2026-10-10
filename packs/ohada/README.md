@@ -30,11 +30,11 @@ node scripts/ohada-packs.mjs --write    # write the common part into every membe
 node packages/cli/dist/bin.js pack build --all   # then compile: a seed carries a checksum of its pack
 ```
 
-## Adding a member — the procedure for each of the fifteen
+## Adding a member
 
-Everything the fifteen packs still to come share is already written: their
-codes are in `members` (the script reports them as *awaited* until their folder
-exists), their currencies are in `supabase/seed/00_currencies.sql` and their
+Everything the member packs share is already written: their codes are in
+`members` (the script reports a member as *awaited* until its folder exists),
+their currencies are in `supabase/seed/00_currencies.sql` and their
 territories in `supabase/seed/00_territories.sql`. **A member pack touches
 `packs/<cc>/` and nothing else by hand** — not this folder, not the seeds of
 `00_*`, not `CHANGELOG.md`. What `pack build` regenerates outside the folder
@@ -120,19 +120,14 @@ a partial translation, which the schema allows, until the member covers the rest
 and lists the language in `languages`.
 
 **None is here yet, on purpose.** The three that matter are English
-(Cameroon), Spanish (Equatorial Guinea) and Portuguese (Guinea-Bissau), and on
-21 September 2026 no official version of the revised chart could be read in
-any of them:
+(Cameroon), Spanish (Equatorial Guinea) and Portuguese (Guinea-Bissau), and no
+official version of the revised chart is publicly available in any of them:
 
-- **English.** The OHADA's official English translation of the uniform acts,
-  published online in 2016 (biblio.ohada.org, `explnum_id=3975`, text layer),
-  carries only the accounting act of 2000, without the list of accounts. The
-  official compilation of 22 November 2019 exists on paper only in the OHADA
-  library (ERSUMA, Porto-Novo), with no file.
-- **Spanish and Portuguese.** `ohada.com` lists `AUDCIF-2017_es.pdf` and
-  `AUDCIF-2017_pt.pdf` behind an account; nothing says whether they carry the
-  chart or are official. The OHADA library holds no Spanish or Portuguese
-  edition of the 2017 act.
+- **English.** The OHADA's official English translation of the uniform acts
+  (2016) carries only the accounting act of 2000, without the list of
+  accounts.
+- **Spanish and Portuguese.** No edition of the 2017 act is shown to carry the
+  chart and be official.
 - The versions circulating on document-sharing sites are unofficial.
 
 A chart of 1 358 accounts translated here would be a second rule dressed as the
@@ -151,9 +146,7 @@ transcribed into `packs/ohada/i18n/<lang>.json` with its `source`, and
 
 The *Journal officiel de l'OHADA*, numéro spécial du 15 février 2017, Titre VII,
 chapitre 2, section 3 « Liste des comptes » (printed pages 216 to 269), in the
-signed complete version the OHADA digital library serves. That edition is a
-scan with no text layer; the list was transcribed page by page from the images
-and read back against them.
+signed complete version the OHADA digital library serves.
 
 - **Classes 1 to 8 are here, class 9 is not.** The engagements off the balance
   sheet and the analytical accounts of class 9 are optional (Titre VII,
@@ -210,5 +203,5 @@ statement), with the correspondence of chapitre 7 (printed pages 1068 and
 receipts and payments, kept by bank and by cash box, with an inventory taken
 outside the books at the year end (Titre X, chapitre 1); its model names no
 account (Titre X, chapitre 2). A double-entry chart could imitate it only by
-inventing accounts the text does not have. `docs/international.md` keeps the
-point.
+inventing accounts the text does not have; see [what the packs do not say
+yet](../../docs/international.md#what-the-packs-do-not-say-yet).

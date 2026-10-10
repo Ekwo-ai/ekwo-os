@@ -22,13 +22,12 @@ other language and invents no translation.
 
 ## Sources
 
-The register in `pack.json` holds seven texts, opened on 9 October 2026. The
-Código do IVA (Lei n.º 32/2007) was read in the consolidated text that
-includes Lei n.º 10/2025; the Boletim da República itself could not be fetched,
-so the consolidated copy is cited and its footnotes name the amending laws.
-The Autoridade Tributária (AT) sites answer with an untrusted certificate to
-some clients, which is why the return is cited from the form served by the
-e-Declaração portal and the filing portal from the Portal do Contribuinte.
+The register in `pack.json` holds seven texts. The Código do IVA (Lei n.º
+32/2007) is cited in a consolidated text that includes Lei n.º 10/2025, whose
+footnotes name the amending laws; the Boletim da República itself should be
+checked. The return is cited from the form served by the e-Declaração portal
+of the Autoridade Tributária (AT), the filing portal from the Portal do
+Contribuinte.
 
 | What | Text |
 |---|---|
@@ -157,12 +156,12 @@ every month from May 2025 through e-Declaração, the file of the previous
 month's invoices (XML, XLSX or CSV), extracted from billing software certified
 by the AT. The full SAF-T (Moz) file, the software certification regulation
 and the fiscal machines tied to the AT (Regulamento das Máquinas Fiscais,
-reported as Decreto n.º 92/2014 by a search result that was not opened) are
+reportedly Decreto n.º 92/2014, not checked) are
 announced or being phased in; no real-time clearance is in force. Ekwo does not
 produce the monthly invoice file or any SAF-T (Moz) structure, does not
 certify as billing software, and does not talk to a fiscal machine. These gaps
-are written up in [`docs/international.md`](../../docs/international.md)
-under "Mozambique".
+are written up in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 Art. 27(5)(f) asks for the Bank Identification Number (NIB) on the invoice; the
 pack's `documents.mentions` is empty and carries no mention for it.

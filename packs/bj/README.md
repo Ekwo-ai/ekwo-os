@@ -38,8 +38,7 @@ right. Currency XOF, the CFA franc of the BCEAO, at no decimal.
   base to the VAT return's `EXO` box, like any other art. 229 exemption, and
   the tax itself to account 446 « État, autres taxes sur le chiffre
   d'affaires », outside `BJ-TVA` — art. 270-1 files it under the rules of
-  VAT, on a form of its own this pack does not carry (the Senegalese gap,
-  again).
+  VAT, on a form of its own this pack does not carry.
 - **A sale is taxed when the fait générateur happens, unless an invoice moves
   it forward, and a service moves further still.** Article 235-1 sets the fait
   générateur at delivery for goods (`d`) and at completion for a service or
@@ -49,11 +48,11 @@ right. Currency XOF, the CFA franc of the BCEAO, at no decimal.
   *encaissement* for every service, every construction contract and every
   public contract of the State, a local authority or a State-owned company: a
   service is taxed later than its invoice, not earlier. `BJ-S-18-SRV` is
-  `cash_basis`, the same shape Côte d'Ivoire already carries: invoiced, the
-  tax waits on 4432 « T.V.A. facturée sur prestations de services »; paid, it
-  moves to 4431, whose heading « sur ventes » already covers the services sold
-  of account 706. The golden scenario shows one service paid in full the
-  month after its invoice and one paid by half.
+  `cash_basis`: invoiced, the tax waits on 4432 « T.V.A. facturée sur
+  prestations de services »; paid, it moves to 4431, whose heading « sur
+  ventes » already covers the services sold of account 706. The golden
+  scenario shows one service paid in full the month after its invoice and one
+  paid by half.
 - **Deduction** (art. 243 to 245): 4451, 4452 and 4454 by what was bought,
   all into box `DEDBS` or `DEDIMMO`; the exclusions of art. 247 (tourism
   vehicles, their fuel, lodging and entertainment, furniture, gifts over
@@ -62,17 +61,15 @@ right. Currency XOF, the CFA franc of the BCEAO, at no decimal.
   since the finance law for 2026 (art. 247-2).
 - **The return** carries what art. 259-1 says it carries — taxable and
   exempt turnover, gross tax, deductions, net tax or credit — named after
-  that content and not after a printed form, whose current, online model
-  could not be read (see below). It is monthly for everybody: no quarterly
-  regime was found for Benin, unlike Senegal or Côte d'Ivoire. Due the 10th
-  (art. 259-1), paid spontaneously with the return (art. 259-3).
+  that content and not after a printed form (see below). It is monthly for
+  everybody: no quarterly regime was found. Due the 10th (art. 259-1), paid
+  spontaneously with the return (art. 259-3).
 - **The invoice** is a *facture normalisée*: a unique serial number and a
   date (art. 481-2-a), the rate or the word « exonéré » (art. 481-2-h), and,
   where it applies, the amount of the AIB and any other tax (art. 481-2-j).
   `documents.numbering` says `sequential` — the unique number the article
   asks for — and no more, because the number itself is not written by the
-  seller: it comes from the certified billing machine (see *einvoicing*
-  below).
+  seller: it comes from the certified billing machine (see below).
 
 **A service bought from a supplier abroad: `BJ-P-NR-18-ND`.** Intangible
 services — licences, consulting, data processing and the supply of information
@@ -99,34 +96,28 @@ code can be switched to the deductible shape if it does.
   form, homologated by the DGI — which stamps it with its own device number
   (art. 481-2-k) and an electronic code (art. 481-2-l); without them the
   invoice does not exist, and the tax it carries is not deductible for the
-  buyer (art. 244-1-d). `einvoicing.profile` names an EN 16931 profile a brick
-  of `packages/formats/` writes, and no brick here generates, certifies or
-  transmits anything to a MECeF or an e-MECeF, so `profile`, `mandatory_from`
-  and `party_scheme` stay empty — the gap Mexico's CFDI and Côte d'Ivoire's
-  FNE already name in `docs/international.md`.
+  buyer (art. 244-1-d). No brick of `packages/formats/` generates, certifies
+  or transmits anything to a MECeF or an e-MECeF, so `profile`,
+  `mandatory_from` and `party_scheme` stay empty (`docs/international.md`).
 - **The AIB (acompte sur impôt assis sur les bénéfices, art. 130 to 134) is
   not a value added tax and this pack carries none of it.** It is an advance
   on the *buyer's* own income tax, at 1 % of goods and works and 3 % of
   services bought from a supplier registered under the identifiant fiscal
   unique (art. 132-2-a, b), withheld by that supplier and imputable by the
-  buyer against their future tax (art. 133). Two reasons stopped it here,
-  not one: a purchase invoice already carries the VAT this pack does declare,
-  on the very same net price the AIB is assessed on (art. 132-1-b) — one
-  document line, one tax code, the compound-tax gap Mexico's stacked VAT and
-  ISR withholding already names — and a third category of the AIB, on every
-  payment made to a supplier by the State, a local authority or a company
-  liable to corporate tax (art. 130-3), is withheld only when the *payment* is
-  made, which is the Senegalese BRS's gap. Neither the AIB's own return, due
-  by the 10th of the month after it was invoiced or withheld (art. 134-3), is
-  a form this pack declares — a pack carries one form, the Senegalese gap.
+  buyer against their future tax (art. 133). It is assessed on the same net
+  price as the VAT (art. 132-1-b), a compound tax on one document line the
+  core does not carry; its third category, on payments by the State, a local
+  authority or a company liable to corporate tax (art. 130-3), is withheld on
+  the *payment*; and its own return, due by the 10th of the month after it
+  was invoiced or withheld (art. 134-3), is a second form, while a pack
+  carries one.
 - **The TVA withheld at source on sales to the State (art. 263) is a
   withholding on payment, the buyer's own office withholding it "au moment du
   paiement", and the deduction the supplier later claims runs on a *quittance*
-  the buyer hands them (art. 244-1-c), not on the invoice.** The Senegalese
-  précompte was close enough to model as a purchase-side tax because Senegal's
-  law ties it to the sale itself; Benin's own text ties it to the office that
-  pays, and this pack does not guess the timing it does not state plainly.
-  Rates: 100 % for the smallest taxpayers of art. 229-1, 40 % for the rest.
+  the buyer hands them (art. 244-1-c), not on the invoice.** The text ties it
+  to the office that pays, and the pack does not guess a timing it does not
+  state plainly. Rates: 100 % for the smallest taxpayers of art. 229-1, 40 %
+  for the rest.
 - **A public contract taxes a delivery of goods on collection too.** Article
   236-1-b's cash-basis exigibility reaches "les marchés publics de l'État, des
   collectivités locales et des sociétés, établissements et offices de l'État"
@@ -137,12 +128,10 @@ code can be switched to the deductible shape if it does.
   never when), so `BJ-S-18` stays the ordinary rule and this pack writes no
   separate code for a public buyer's purchase of goods.
 - **The assujettissement threshold (art. 228)** is fixed by ministerial
-  *arrêté*, not by the Code; the DGI's own page for it answered 404 on 21
-  September 2026 and no other official copy was found.
-- **The current online return.** `e-services.impots.bj` renders its form
-  dynamically and was not read; only an older paper model survives on a
-  third-party site, and this pack's boxes are named after art. 259-1's
-  content rather than copied from either.
+  *arrêté*, not by the Code; no official copy is in the register.
+- **The current online return** of `e-services.impots.bj`: the boxes are
+  named after art. 259-1's content, not copied from it or from the older
+  paper model.
 - **The exact article of the sanction for a missing facture normalisée** —
   ten times the evaded tax, a floor of 1 000 000 F per transaction, said on
   the government's own page but not traced to a numbered article in the 2026

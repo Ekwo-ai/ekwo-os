@@ -16,14 +16,11 @@ it. The figures are replayed against a month of books by
 about whether it is right.
 
 **English only.** The Value Added Tax Act and the Companies Act are both
-enacted in English, and no Swahili edition of either could be verified for
-this pack; Companies Act, 2002, s. 151(1) does let a company keep its books
+enacted in English, and no Swahili edition of either is relied on here; Companies Act, 2002, s. 151(1) does let a company keep its books
 in English or Swahili, but neither statute publishes the accounting
 vocabulary itself in Swahili the way this pack would need to transcribe
 labels from. Rather than invent Swahili wording nobody has published, this
-pack declares `en` alone. What the core could not say is written up in
-[`docs/international.md`](../../docs/international.md) under "Tanzania".
-None of it was patched for this pack's sake.
+pack declares `en` alone.
 
 **Mainland Tanzania only.** Tanzania Zanzibar administers its own value added
 tax law and its own revenue authority; this pack is the Value Added Tax Act
@@ -35,7 +32,7 @@ one be written, would be a different set of files under `packs/`.
 
 Every tax, box and statement line carries its own `legal_reference`, and
 beside it the key of the text that article is in. The register in
-`pack.json` holds six texts, every one opened on 26 September 2026. The ones
+`pack.json` holds six texts. The ones
 the rest of this file leans on:
 
 | What | Text | Where |
@@ -48,12 +45,11 @@ the rest of this file leans on:
 | Where a return is filed | IDRAS, the Integrated Domestic Revenue Administration System | `gateway.tra.go.tz` |
 | NBAA's adoption of IFRS and the IFRS for SMEs Accounting Standard | IFAC, Tanzania country profile | `ifac.org` |
 
-The Value Added Tax Act was read from the Ministry of Finance's own PDF, the
-Government Printer's edition of Chapter 148, Revised Edition 2019 (the
-mirror `tra.go.tz` also serves stopped resolving while this pack was
-written). The Companies Act, 2002 was read from TanzLII's Laws.Africa
-edition, current to 1 July 2016 with later amendments noted but not yet
-applied to the text; none of the amendments listed touches ss. 151-154.
+The Value Added Tax Act is cited from the Ministry of Finance's PDF of the
+Government Printer's edition of Chapter 148, Revised Edition 2019. The
+Companies Act, 2002 is cited from TanzLII's Laws.Africa edition, current to
+1 July 2016 with later amendments noted but not yet applied to the text; none
+of the amendments listed touches ss. 151-154.
 
 ## The chart of accounts, and why this one
 
@@ -68,8 +64,7 @@ principles of accounting. NBAA, the standard-setting body the Auditors and
 Accountants (Registration) Act recognises, has adopted the IFRS
 Accounting Standards and, for a commercial entity with no public
 accountability, the IFRS for SMEs Accounting Standard. So the chart is
-written, not transcribed, in the same shape as the Kenyan, Singaporean and
-Australian packs:
+written, not transcribed:
 
 - **Four digits, by class**: `1` assets, `2` liabilities, `3` equity, `4`
   revenue and other income, `5` goods and materials, `6` other expenses, `7`
@@ -133,11 +128,11 @@ leave Mainland Tanzania without being used or enjoyed there — the same
 shape s. 55(1) gives an export outside the United Republic, applied instead
 to a movement inside the United Republic but across the Mainland/Zanzibar
 VAT frontier. `TZ-S-ZR-ZNZ` declares `treatment: "export"` for that reason;
-the gap between this and a supply to a genuinely foreign buyer is recorded
-in [`docs/international.md`](../../docs/international.md) under "Tanzania".
+the gap between this and a supply to a genuinely foreign buyer is noted in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 **The reverse charge on an imported service reaches both an output box and
-an input box, unlike Kenya's section 10.** The definition of "taxable
+an input box.** The definition of "taxable
 supply" at s. 2(1)(b) makes the purchaser's acquisition of an imported
 service itself a taxable supply; s. 4(c) makes the purchaser the person
 liable; and s. 68(1)(a) with s. 68(2) makes the same amount both the
@@ -156,12 +151,10 @@ payable; s. 66(7) rolls that day forward to the next working day when it
 falls on a weekend or a public holiday; s. 67(3)(a) makes payment due the
 same day.
 
-**This pack's box numbers are its own, not TRA's.** The paper return this
-research started from, form ITX 240.02.B, no longer resolves at the
-`tra.go.tz` URL that used to serve it, and no public specification of the
-on-screen field layout of TRA's current electronic return — filed through
-the IDRAS portal — could be independently verified. Rather than guess at a
-field numbering this pack's author could not check, `tax_report.json`
+**This pack's box numbers are its own, not TRA's.** The paper return, form
+ITX 240.02.B, is no longer published, and TRA's current electronic return —
+filed through the IDRAS portal — has no public specification of its field
+layout. Rather than guess at a field numbering, `tax_report.json`
 numbers its own thirteen boxes directly after what ss. 66 to 68 of the Act
 themselves describe: standard, zero-rated and exempt sales; the deemed
 output and input of an imported service; standard, exempt and imported
@@ -176,14 +169,12 @@ turnover or input tax relates to zero-rated supplies); this pack's golden
 scenario, heavy with an import and a wholly zero-rated foreign trade in the
 same month, in fact produces one — box `13` comes to a negative figure in
 `golden/vat_return.json` — but nothing in `tax_report.json` carries the
-period-to-period carry-forward or refund application themselves, the same
-way `docs/packs.md` describes Singapore's Tourist Refund Scheme boxes as
-declared and empty.
+period-to-period carry-forward or refund application themselves.
 
 **Partial input tax credit is not carried.** Section 70 apportions input
 tax between taxable and exempt use for a partly exempt business; this
-pack's golden company is wholly taxable, and the formula itself was not
-read closely enough to state as a `tax_report.json` box.
+pack's golden company is wholly taxable, and the formula is not stated as a
+`tax_report.json` box.
 
 ## Withholding VAT
 
@@ -195,12 +186,11 @@ source revenue, or a VAT-registered person the Commissioner General appoints
 supplier, and to remit it directly to TRA, issuing the supplier a VAT
 Withholding Tax Certificate. This is a mechanism a third party to the sale
 executes, on rates set by government appointment rather than by the two
-parties to the document being posted, the same reason Kenya's withholding
-VAT agents are not in `packs/ke/`. It is recorded in
-[`docs/international.md`](../../docs/international.md) under "Tanzania".
-The consolidated Cap. 148 R.E. 2019 text this pack was read from predates
-the amendment, so its exact section number could not itself be checked
-against the Act.
+parties to the document being posted (see
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet)).
+The consolidated Cap. 148 R.E. 2019 text in the register predates the
+amendment; its exact section number should be checked against the amended
+Act.
 
 ## A reduced rate on cashless retail, not yet in force
 
@@ -209,8 +199,8 @@ from 1 September 2025, a standard-rated supply to a person in Mainland
 Tanzania who is not VAT-registered is taxed at sixteen per cent rather than
 eighteen when paid through a bank or an electronic payment system the
 Commissioner General approves — an incentive to reduce cash retail, not a
-change to the general rate of s. 5(1). Commentary available when this pack
-was written reported the Commissioner General's implementing notice, which
+change to the general rate of s. 5(1). At this pack's release, published
+commentary reported the Commissioner General's implementing notice, which
 would set the eligibility and scope of the approved payment systems, as not
 yet issued. A rate a business cannot yet rely on is exactly the kind of
 provision [`docs/packs.md`](../../docs/packs.md) says does not belong in a
@@ -234,10 +224,9 @@ in real time; the buyer receives whatever document the seller always sent
 it, and what changed is that the seller's own device clears the invoice
 with TRA first. There is no profile to name and no ISO 6523 scheme a party
 is addressed by, because nothing is exchanged between the two businesses
-that a Peppol-shaped vocabulary would recognise. This is recorded at length
-in `pack.json`'s own `einvoicing.legal_reference` and in
-[`docs/international.md`](../../docs/international.md) under "Tanzania";
-the socle was not changed to fit it.
+that a Peppol-shaped vocabulary would recognise. `pack.json`'s own
+`einvoicing.legal_reference` says so in full; see also
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## What this pack does not carry
 
@@ -255,7 +244,8 @@ the socle was not changed to fit it.
 - **Fixed assets.** No `fixed_assets.json`: capital allowances are an income tax
   table (the Income Tax Act's own schedule), not a useful-life the IFRS for
   SMEs Accounting Standard leaves to the entity.
-- **Bank formats.** Nothing checked says which formats Tanzanian banks send.
+- **Bank formats.** No source in the register says which formats Tanzanian
+  banks send.
 - **Filing itself.** The return is filed on IDRAS; submitting it is a
   credential, not a pack.
 
@@ -267,21 +257,20 @@ who may say what". The points a Tanzanian accountant should read first,
 roughly in the order the author is least sure of them:
 
 1. **`tax_report.json`'s box numbers against the current IDRAS return
-   screen**, since no public specification of TRA's on-screen field layout
-   could be verified when this pack was written — see "The return" above.
+   screen**, since the numbering is this pack's own — see "The return"
+   above.
 2. **`tax_point: earliest_of_delivery_or_payment`** against s. 15, which is
    in fact a three-way earliest test — invoice issued, consideration
    received, or the time of supply — and not the two-way test the word
    names; see `pack.json`'s own reference and
-   [`docs/international.md`](../../docs/international.md).
+   [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 3. **`TZ-S-ZR-ZNZ` declared `treatment: "export"`**, against whether a
    Tanzanian practitioner reads a supply to a Zanzibar-registered taxable
    person as closer to a domestic zero rate than to an export.
 4. **The reverse charge posting both an output and an input box**, against
    how a Tanzanian company in fact completes its return for an imported
    service — this pack reads ss. 2(1)(b), 4(c) and 68 as requiring both
-   sides on the face of the return, not a claim-only box the way Kenya's
-   section 10 is read.
+   sides on the face of the return, not a claim-only box.
 5. **The chart's mapping onto the statements**, especially amounts due to
    directors and the VAT, NSSF, Workers Compensation Fund and Skills
    Development Levy accounts among trade and other payables.

@@ -14,21 +14,18 @@ whether it is right.
 **English only.** The published English texts of the Proclamation and the
 Regulation are the sources, and Ethiopia keeps no official chart of accounts
 in any language. Amharic labels for the main accounts and boxes would be a
-welcome addition (an `i18n` file for the Amharic language); none is shipped,
-because no published Amharic accounting vocabulary was found to transcribe
-labels from. Ethiopia is outside the common system of VAT of Directive
+welcome addition (an `i18n` file for the Amharic language); none is shipped.
+Ethiopia is outside the common system of VAT of Directive
 2006/112/EC, so the territory row carries `eu_vat_scope` `none`. The currency
 is the birr (`ETB`, two decimals).
 
 ## Sources
 
-Nine texts are in the register of `pack.json`, each opened on 9 October 2026.
-The statute was read through a plain-text edition of the Proclamation; the
-Ministry of Finance PDF is cited as the official copy. The monthly
-declaration form on the former authority's site could not be opened from the
-build machine (connection refused), so the **box layout is this pack's own**:
-each box says what it holds and the article it comes from, not a printed line
-number. A local accountant should compare it with the form on the e-Tax portal.
+Nine texts are in the register of `pack.json`; the Ministry of Finance PDF of
+the Proclamation is cited as the official copy. The **box layout of the
+monthly declaration is this pack's own**: each box says what it holds and the
+article it comes from, not a printed line number. A local accountant should
+compare it with the form on the e-Tax portal.
 
 | What | Text |
 |---|---|
@@ -39,12 +36,12 @@ number. A local accountant should compare it with the form on the e-Tax portal.
 | Financial reporting | Financial Reporting Proclamation No. 847/2014, art. 5 (IFRS Foundation profile) |
 | Where the return is filed | e-Tax portal, `etax.mor.gov.et` |
 
-Article numbers follow the plain-text edition and differ from the numbering
-some commentaries use (the rate is in art. 8(2), the 2,000,000 birr
-registration threshold in art. 12(2)). Schedules 1 to 3 could not be read in
-full: the zero-rated and exempt lists are summarised from the Proclamation's
-articles and from secondary commentary, and each tax cites "Schedule 1" or
-"Schedule 2" without a paragraph number.
+Article numbers follow a plain-text edition of the Proclamation and differ
+from the numbering some commentaries use (the rate is in art. 8(2), the
+2,000,000 birr registration threshold in art. 12(2)). The zero-rated and
+exempt lists are summarised from the Proclamation's articles and from
+secondary commentary, and each tax cites "Schedule 1" or "Schedule 2" without
+a paragraph number; Schedules 1 to 3 themselves should be checked.
 
 ## The chart of accounts
 
@@ -141,7 +138,7 @@ Registration Number and a QR code; Proclamation No. 1434/2026 (in force
 date or rollout schedule was published, and fiscal cash registers remain in
 use. This is a clearance, not an exchange of a structured document, and the
 pack says `einvoicing.obligation: none`. The gap is in
-[`docs/international.md`](../../docs/international.md), under "Ethiopia".
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Reviewing this pack
 

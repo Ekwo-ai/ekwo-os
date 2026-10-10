@@ -3,19 +3,17 @@
 Everything Algeria adds to Ekwo, as data: the chart of accounts of the
 Système comptable financier (SCF), the value added tax of the Code des
 taxes sur le chiffre d'affaires (CTCA), the monthly declaration it is filed
-on and the two financial statements the SCF fixes. Nothing here is copied
-from another country's pack: Algeria is not a member of a regional
-accounting or tax union, and its chart, unlike its Maghreb neighbours', is
-not the French *plan comptable général* but its own nomenclature, close to
-the IFRS it was built to converge toward in 2007–2010.
+on and the two financial statements the SCF fixes. Algeria is not a member
+of a regional accounting or tax union, and its chart is not the French *plan
+comptable général* but its own nomenclature, close to the IFRS it was built
+to converge toward in 2007–2010.
 
 **Status: `community`.** Nobody has reviewed it against the law it applies.
 The golden scenario proves the pack is internally coherent and nothing about
 whether it is right. Currency DZD, the Algerian dinar, at two decimals.
 Language `fr`: French is the language the CTCA, the SCF and the DGI's own
-services are published in, and no official Arabic or English edition of
-either text was found and verified this session — a pack in Arabic, the
-country's other official language, would need one.
+services are published in; a pack in Arabic, the country's other official
+language, would need an official Arabic edition of these texts.
 
 ## Sources
 
@@ -78,16 +76,15 @@ country's other official language, would need one.
   Article 28 requires a monthly relevé of taxable and exempt operations, the
   tax due and the deductions; the DGI files it on form **série G n° 50**,
   due **between the 1st and the 20th of the month following** the operations
-  (art. 76-1). No consolidated, verified edition of the printed form's own
-  box numbers was found this session, so `tax_report.json` names its boxes
-  after what the article requires (`CA19`, `TVA19`, `DEDBS`…) and says so at
-  the manifest — a company reading its own G n° 50 will not find these
-  labels printed on it.
+  (art. 76-1). `tax_report.json` names its boxes after what the article
+  requires (`CA19`, `TVA19`, `DEDBS`…), not after the printed form's own box
+  numbers — a company reading its own G n° 50 will not find these labels
+  printed on it.
 - **The invoice** carries an uninterrupted, chronological number (décret
-  n° 05-468, art. 5) — `numbering: gapless` — and no legal payment term is
-  fixed by a text found this session between two businesses.
-- **No general obligation of electronic invoicing between businesses** was
-  found and verified: the CTCA and the décret of 2005 organise the invoice
+  n° 05-468, art. 5) — `numbering: gapless`; the pack carries no legal
+  payment term between two businesses.
+- **No general obligation of electronic invoicing between businesses** is
+  carried: the CTCA and the décret of 2005 organise the invoice
   on ordinary support, and Jibaya'tic is a portal for filing and paying, not
   a clearance or exchange platform for invoices. `einvoicing.obligation` is
   `none`.
@@ -105,9 +102,8 @@ country's other official language, would need one.
   engine; a company whose credit is not absorbed in the month it arises
   needs its accountant to track the carry-forward the CTCA describes, until
   the core itself keeps a balance across declarations.
-- **Withholdings.** No provision comparable to a précompte or a retenue à la
-  source on VAT, of the kind several sub-Saharan packs in this repository
-  carry, was found in the CTCA for a domestic transaction.
+- **Withholdings.** The pack carries no précompte or retenue à la source on
+  VAT for a domestic transaction; none is identified in the CTCA.
 - **Electronic invoicing for large accounts and public suppliers.** Some
   large taxpayers and state suppliers already exchange invoices under
   particular arrangements this pack does not model, for lack of a

@@ -18,8 +18,7 @@ the statements are in Portuguese, the language of the Diário da República.
 
 ## Sources
 
-The register in `pack.json` holds seventeen texts, every one opened on 10 October
-2026. The ones this file leans on:
+The register in `pack.json` holds seventeen texts. The ones this file leans on:
 
 | What | Text | Where |
 |---|---|---|
@@ -112,9 +111,9 @@ regimes (IFRS for banks) and are not served by this chart.
 - **Special consumption tax (IEC, Lei n.º 8/19).** It is added to the invoice
   of alcoholic and sugared drinks, tobacco, vehicles, fuels and others, and the
   VAT is computed on a base that includes it. The rates differ by product
-  (from 2 % to 50 %, Lei 16/21) and none was read from an official table, so
-  no tax code is invented; a company posts the IEC to account `342` and enters
-  it as a line of the invoice taxed at the VAT code.
+  (from 2 % to 50 %, Lei 16/21) and rest on no official table here, so no tax
+  code is invented; a company posts the IEC to account `342` and enters it as
+  a line of the invoice taxed at the VAT code.
 - **Withheld tax** (art. 21 and 31: banks and insurers retain 50 %, public
   bodies retain on imports), the **cash-accounting regime** (art. 60), the
   **pro rata deduction**, the **margin scheme** and the **advances** of field 41

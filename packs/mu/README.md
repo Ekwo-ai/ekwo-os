@@ -15,15 +15,14 @@ which proves the pack is coherent and nothing about whether it is right.
 
 **Languages.** The pack is written in English; French is declared in
 `pack.json` and complete (`i18n/fr.json`). Where each wording comes from is in
-[`i18n/README.md`](i18n/README.md). What the core could not say is written up in
-[`docs/international.md`](../../docs/international.md) under "From Mauritius";
-the core was not patched for this pack.
+[`i18n/README.md`](i18n/README.md). What the core cannot say yet is in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Sources
 
 Every tax, box and statement line carries its own `legal_reference`, and beside
 it the key of the text that article is in. The register in `pack.json` holds
-nine texts, every one opened on 9 October 2026.
+nine texts.
 
 | What | Text | Where |
 |---|---|---|
@@ -41,8 +40,7 @@ gives the Financial Reporting Council the task of issuing standards consistent
 with IFRS, and the Council's own framework page applies standards consistent
 with IFRS to the other companies as well; a company that is not a public
 interest entity may use IFRS for SMEs. The chart is therefore written, not
-transcribed, in the shape of the Kenyan and Singaporean packs: four digits by
-class (`1` assets, `2` liabilities, `3` equity, `4` income, `5` goods, `6`
+transcribed: four digits by class (`1` assets, `2` liabilities, `3` equity, `4` income, `5` goods, `6`
 other expenses, `7` finance costs, `8` income tax), flat, grouped by the ranges
 of `statements.json`. 146 accounts, all postable. It adds what a Mauritian
 company keeps: PAYE, National Pension Fund and National Savings Fund, Contribution
@@ -121,9 +119,8 @@ format cannot write that annex.
 
 ## Electronic invoicing: a fiscalisation, not an exchange
 
-`einvoicing.obligation` is `none` and `profile` is null for the reason Kenya and
-other clearance countries state: Mauritius has no Peppol profile and no
-structured-invoice standard. Section 20A of the Act and the Value Added Tax
+`einvoicing.obligation` is `none` and `profile` is null: Mauritius has no
+Peppol profile and no structured-invoice standard. Section 20A of the Act and the Value Added Tax
 (E-invoicing) Regulations 2023 oblige the businesses the Authority designates to
 send each invoice, debit note and credit note in real time to the Invoice
 Fiscalisation Platform from a certified Electronic Billing System and to print the

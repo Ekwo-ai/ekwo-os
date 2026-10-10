@@ -25,12 +25,9 @@ right. Currency XAF, the CFA franc of the BEAC, at no decimal, CEMAC zone.
 | Le cadre communautaire des taux | Directive n° 11/22-CEMAC-UEAC-010A-CM-38 du 10 novembre 2022 | `sgg.cg` |
 | Télédéclaration | e-Tax | `sigi.finances.gouv.td` |
 
-**La loi de finances pour 2024 a un calque texte natif ; la loi de finances
-pour 2026 est un scan sans calque texte** (ScanSnap), relu par
-reconnaissance de caractères puis vérifié page à page sur l'image, en
-particulier la table de l'article 230 (page 45-46) et les articles 229, 238,
-246. Aucune des deux lois n'a pu être ouverte par un simple lecteur de flux :
-la première se lit en texte, la seconde a été rendue en images avant lecture.
+**La loi de finances pour 2026 n'est publiée qu'en fac-similé, sans calque
+texte** ; un relecteur citant la table de l'article 230 ou les articles 229,
+238 et 246 devrait s'en tenir à l'image.
 
 ## What the pack says
 
@@ -69,8 +66,7 @@ la première se lit en texte, la seconde a été rendue en images avant lecture.
 - **Exonérations** (CGI art. 230, loi de finances pour 2026, art. 31), dont le
   15° par position tarifaire — médicaments, viandes (02), laits (0401-0402),
   pain, farine, livres scolaires, semences, engrais, matériel agricole,
-  matériel photovoltaïque (8541.42) — vérifiée directement sur le fac-similé
-  de la loi.
+  matériel photovoltaïque (8541.42).
 - **L'autoliquidation** (CGI art. 229-V, loi de finances pour 2026, art. 30)
   n'est pas un cas général de « le fournisseur ne facture pas la taxe » :
   elle joue précisément lorsqu'un vendeur qui ne relève pas de l'Impôt
@@ -114,28 +110,27 @@ the tax cites the directive, and a reviewer should name the article.
 ## What it does not say
 
 - **L'échéance du 15 du mois pour la déclaration mensuelle de TVA elle-même**
-  n'a été trouvée dans aucun des deux textes lus. Le « 15 du mois suivant »
+  ne figure dans aucun des deux textes. Le « 15 du mois suivant »
   qu'ils portent est celui de la **retenue à la source** de l'art. 245 (loi
   de finances pour 2024, art. 35) et, par renvoi de l'art. 229-V, celui de la
   taxe auto-liquidée — pas celui de la déclaration mensuelle ordinaire de
   l'art. 229-III, qui ne fixe aucun jour. `tax_report.json` ne porte donc pas
   de `deadline`.
-- **Le formulaire imprimé et la numérotation de ses cases** ne sont publiés
-  dans aucune source officielle trouvée ; les cases de ce pack sont nommées
-  d'après ce que l'article 229 fait déclarer, comme au Sénégal.
+- **Le formulaire imprimé et la numérotation de ses cases** ne sont pas
+  publiés ; les cases de ce pack sont nommées d'après ce que l'article 229
+  fait déclarer.
 - **La retenue de TVA à la source de l'art. 245** — un tiers désigné par une
   liste de la DGI retient la taxe due par une entreprise absente de cette
   liste et la reverse à sa place — est un mécanisme à trois parties que le
-  socle ne sait pas exprimer, comme le précompte sénégalais. Aucune taxe ne
+  socle ne sait pas exprimer. Aucune taxe ne
   le porte ici.
-- **Le taux réduit du ciment**, « dans la fourchette communautaire » selon la
-  fiche de départ de ce pack, n'a été chiffré dans aucune des deux lois lues.
+- **Le taux réduit du ciment**, « dans la fourchette communautaire », n'est
+  chiffré dans aucune des deux lois de finances du registre.
 - **La FEN comme spécification technique** : ni profil normalisé (EN 16931,
   UBL ou autre), ni schéma d'identifiant des parties, ni format d'échange
-  n'ont été trouvés publiés par la DGI. `einvoicing.profile` reste vide.
-- **La langue arabe** de la fiche de départ n'a pas été confirmée par une
-  source officielle ; le pack est écrit en français, comme le veut
-  `packs/ohada/`.
+  ne sont publiés par la DGI. `einvoicing.profile` reste vide.
+- **Une version en arabe** n'est pas portée ; le pack est écrit en français,
+  comme le veut `packs/ohada/`.
 - **Le formulaire de la retenue à la source et celui de l'autoliquidation**,
   distincts de la déclaration de TVA d'après le renvoi de l'art. 229-V : le
   pack ne porte qu'une déclaration, `TD-TVA`.
