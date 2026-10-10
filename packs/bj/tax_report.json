@@ -62,6 +62,14 @@
       "source": "cgi"
     },
     {
+      "box": "TVAPC",
+      "kind": "tax",
+      "name": "TVA due pour le compte de prestataires étrangers",
+      "sequence": 55,
+      "legal_reference": "Code général des impôts, art. 262-2 — taxe due par le bénéficiaire de la prestation d'un assujetti non domicilié au Bénin",
+      "source": "cgi"
+    },
+    {
       "box": "DEDIMMO",
       "kind": "tax",
       "name": "TVA déductible sur immobilisations",
@@ -95,7 +103,8 @@
       "name": "TVA nette à payer",
       "sequence": 90,
       "plus": [
-        "TVA18"
+        "TVA18",
+        "TVAPC"
       ],
       "minus": [
         "DEDT"
@@ -113,7 +122,8 @@
         "DEDT"
       ],
       "minus": [
-        "TVA18"
+        "TVA18",
+        "TVAPC"
       ],
       "floor_zero": true,
       "legal_reference": "Code général des impôts, art. 259-1-d — le cas échéant, le crédit de la taxe",

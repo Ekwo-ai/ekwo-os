@@ -87,6 +87,12 @@
       "name": "Distributeur Orange Money Kaloum",
       "type": "supplier",
       "country": "GN"
+    },
+    {
+      "ref": "fourn-etranger",
+      "name": "Cloud Logiciels SAS",
+      "type": "supplier",
+      "country": "FR"
     }
   ],
   "documents": [
@@ -263,6 +269,22 @@
           "unit_price": 1000000,
           "tax": "GN-P-WHT-COM-5",
           "account": "6322"
+        }
+      ]
+    },
+    {
+      "ref": "AE1",
+      "type": "purchase_invoice",
+      "contact": "fourn-etranger",
+      "date": "2026-04-15",
+      "why": "Un abonnement à un logiciel en ligne facturé par un assujetti établi hors de Guinée à l'entreprise, immatriculée à la TVA : la TVA est autoliquidée (case TVAPC, compte 4478) et déduite le même mois (case DEDBS, compte 4454).",
+      "lines": [
+        {
+          "name": "Abonnement mensuel à un logiciel en ligne",
+          "quantity": 1,
+          "unit_price": 5000000,
+          "tax": "GN-P-NR-18",
+          "account": "6343"
         }
       ]
     }

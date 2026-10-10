@@ -87,6 +87,14 @@
       "source": "cgi"
     },
     {
+      "box": "TVAPC",
+      "kind": "tax",
+      "name": "TVA et CAC dues pour le compte de prestataires non établis au Cameroun",
+      "sequence": 85,
+      "legal_reference": "Code général des impôts, art. 130-2 — taxe payée par la personne cliente pour le compte d'un prestataire sans établissement stable au Cameroun",
+      "source": "cgi"
+    },
+    {
       "box": "TVAB",
       "kind": "total",
       "name": "Total de la taxe exigible",
@@ -94,7 +102,8 @@
       "plus": [
         "TVA",
         "CAC",
-        "TVA10"
+        "TVA10",
+        "TVAPC"
       ],
       "legal_reference": "Code général des impôts, art. 152 — taxe exigible de la période",
       "source": "cgi"

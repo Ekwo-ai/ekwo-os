@@ -490,5 +490,48 @@
     },
     "kind": "vat",
     "sequence": 160
+  },
+  {
+    "code": "TD-P-NR-1925",
+    "name": "Services d'un prestataire non établi au Tchad, taux normal 19,25 %",
+    "description": "TVA payée par l'entreprise cliente pour le compte d'un prestataire sans établissement stable ni représentant au Tchad, et déduite au titre du même mois",
+    "kind": "vat",
+    "rate": 19.25,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Directive n° 1/99/CEMAC-028-CM-03, art. 10 — la TVA est établie au lieu de la prestation de service ; à défaut de représentant accrédité, « la TVA et, le cas échéant, les pénalités y afférentes doivent être payées par la personne cliente pour le compte de la personne n'ayant pas dans l'État un établissement stable » ; art. 22 — la taxe est déductible et les conditions de facture « ne sont pas exigées » des fournisseurs étrangers. L'article du Code général des impôts du Tchad qui transpose cette règle n'a pas pu être lu dans un texte publié — voir README.md. Taux normal de 19,25 % du pack",
+    "source": "directive-cemac-1999",
+    "sequence": 170,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

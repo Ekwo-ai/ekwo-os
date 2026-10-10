@@ -55,8 +55,10 @@
         "EXP:base": "1500000",
         "EXO:base": "500000",
         "CATOTAL:total": "2000000",
-        "DEDBS:tax": "192500",
-        "DEDT:total": "192500",
+        "TVAPC:tax": "96250",
+        "TVAB:total": "96250",
+        "DEDBS:tax": "288750",
+        "DEDT:total": "288750",
         "CRED:total": "192500"
       }
     }

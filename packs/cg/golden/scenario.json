@@ -69,6 +69,12 @@
       "name": "Bureautique de Mpila SA",
       "type": "supplier",
       "country": "CG"
+    },
+    {
+      "ref": "fourn-etranger",
+      "name": "Cloud Logiciels SAS",
+      "type": "supplier",
+      "country": "FR"
     }
   ],
   "documents": [
@@ -229,6 +235,22 @@
           "unit_price": 40000,
           "tax": "CG-P-5",
           "account": "6011"
+        }
+      ]
+    },
+    {
+      "ref": "AE1",
+      "type": "purchase_invoice",
+      "contact": "fourn-etranger",
+      "date": "2026-04-15",
+      "why": "Un abonnement à un logiciel en ligne facturé par un prestataire établi à l'étranger, sans représentant dans le pays : la TVA est payée par l'entreprise cliente pour le compte du prestataire (case TVAPC, compte 4478) et déduite le même mois (case DEDBS, compte 4454).",
+      "lines": [
+        {
+          "name": "Abonnement mensuel à un logiciel en ligne",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "CG-P-NR-189",
+          "account": "6343"
         }
       ]
     }

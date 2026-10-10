@@ -201,5 +201,48 @@
       "invoice": [{ "type": "tax", "account": "44566", "box": "DEDBS" }],
       "credit_note": [{ "type": "tax", "account": "44566", "box": "DEDBS", "box_factor": -100 }]
     }
+  },
+  {
+    "code": "DZ-P-AUTOLIQ-19",
+    "name": "Prestation d'un assujetti établi hors d'Algérie 19 % — TVA auto-liquidée et déductible",
+    "description": "TVA que le bénéficiaire en Algérie d'une prestation de services d'un assujetti établi hors d'Algérie auto-liquide, acquitte et déduit au titre du même mois",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 7 — une opération autre qu'une vente est réputée faite en Algérie lorsque « le service rendu, le droit cédé, l'objet loué ou les études effectuées sont utilisés ou exploités en Algérie » ; art. 83 (créé par la loi de finances pour 2011) — « lorsque la livraison des biens ou la prestation de services est effectuée par un assujetti établi hors d'Algérie, la taxe est auto-liquidée et acquittée par l'acquéreur ou le bénéficiaire de la prestation de services » ; art. 29 et 30 — la taxe ayant grevé les éléments du prix d'une opération imposable est déductible au titre du mois où elle est exigible ; art. 21 — taux normal de 19 %. La taxe auto-liquidée est portée en TVAAL (compte 44573), la taxe déduite en DEDBS (compte 44566). La retenue à la source de l'impôt sur les bénéfices des entreprises étrangères sans installation professionnelle permanente est hors de ce paquet — voir README.md",
+    "source": "ctca",
+    "sequence": 155,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "44566",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "44573",
+          "box": "TVAAL"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "44566",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "44573",
+          "box": "TVAAL",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

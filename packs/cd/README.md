@@ -86,6 +86,21 @@ this pack: see *What it does not say*.
   code, a QR code) are not legal *sentences* a mention can hold — they are
   outputs of a device this socle does not model. See *What it does not say*.
 
+**A service bought from a supplier abroad: `CD-P-NR-16-ND`.** A service is
+taxed in the DRC when *"le service rendu, le droit cédé ou l'objet loué, sont
+utilisés ou exploités au pays"* (ordonnance-loi n° 10/001, art. 22-3), and
+when the supplier domiciled abroad appointed no representant the tax *"[est]
+payée[] par la personne cliente"* (art. 23). Art. 38-1 allows a deduction only
+on an invoice *"dûment délivré[e] par un assujetti et mentionnant son numéro
+impôt"*, which a supplier abroad never issues: this pack reads the tax as not
+deductible. The tax owed is credited to `4478` and declared in the new box
+`TVAPC`; with no deduction, the same amount lands on the cost of the service
+(`tax_on_base`), as `SN-P-NR-18-ND` does in the Senegalese pack. The golden
+year buys one such subscription. SYSCOHADA has no account for suppliers
+abroad, so the supplier sits on `4011` with the others. Later finance laws
+were not searched for a rule admitting the deduction; a reviewer should
+confirm the reading.
+
 ## What it does not say
 
 - **The two 2026 rates, 5 % and 1 %.** Reported only by the FEC, a

@@ -77,6 +77,22 @@ local accountant.
 | `ET-S-EX-FIN`, `-RES`, `-UTIL` | Exempt: financial services, residential rent, the first 200 kWh / 15 m³ per month | exempt |
 | `ET-P-EX` | Purchase of an exempt supply | exempt |
 | `ET-P-IMP` | Import, VAT paid at Customs and credited | 15 % |
+| `ET-P-RC-15` | Reverse charged supply: a service from a supplier outside Ethiopia, accounted for and credited by the recipient | 15 % |
+
+**A service bought from a supplier abroad is a reverse charged supply.** A
+software subscription, hosting or an API billed by a person outside Ethiopia
+with no fixed place of business there, to a registered person, is a reverse
+charged supply (art. 6(1)): VAT at 15 % is imposed on it (art. 8(1)(c)), the
+liability arises at the time of the supply and is accounted for by the
+recipient (art. 8(8)), who prepares a recipient-created tax invoice
+(art. 52(4)). Art. 2 makes that VAT the recipient's output tax and the
+supply a *creditable acquisition*, so art. 29(1) credits it as input tax in
+the same period, to the extent the service is used for taxable supplies.
+`ET-P-RC-15` books both halves: output VAT credited to `2100` and declared in
+the pack's own box `RC` (value and VAT), which box 5 now adds; input VAT
+debited to `1150` and declared in box 6. A B2C remote service is the foreign
+supplier's to charge (arts. 24(2)(c) and 25, and Regulation No. 570/2025), not a posting of
+the buyer.
 
 The turnover tax was abolished by Proclamation No. 1395/2025 (8 July 2025) and
 is not modelled. Registration is compulsory above 2,000,000 birr of annual
@@ -87,7 +103,8 @@ turnover (art. 12(2)); that threshold is a registration test, not a tax code.
 `ET-VAT`, monthly. Boxes: taxable sales (1), zero-rated sales (2), exempt
 sales (3), total sales (4), output VAT (5), taxable purchases and imports (6),
 exempt purchases (7), total purchases (8), input VAT (9) and the net figure
-(10). The return is due on or before the last day of the month after the
+(10), and a box of this pack's own, `RC`, for reverse charged supplies
+received. The return is due on or before the last day of the month after the
 period (art. 58), and the tax is payable by the same date (art. 59).
 
 **The calendar trap.** The accounting period is a month of the Ethiopian
@@ -108,9 +125,8 @@ company's to set when it closes a period.
 - **Credit carried forward and refunds (arts. 48 to 51).** Box 10 is the month's
   figure alone; a prior-month credit, the refund after six periods, and the
   refund for mostly zero-rated suppliers are not tracked.
-- **Reverse charge on services from abroad (art. 6) and non-resident digital
-  suppliers (Regulation art. 40).** The sources read were inconsistent on the
-  input-credit treatment of reverse-charged supplies, so no tax code is shipped.
+- **Non-resident digital suppliers registered under Regulation No. 570/2025**
+  charging VAT to consumers: a supplier-side regime, not the buyer's.
 - **Mixed supplies** (credit apportioned between taxable and exempt supplies).
 - **A quantity-tiered tax.** The 200 kWh and 15 m³ allowance has its own
   exempt code; the core cannot split a bill by quantity.

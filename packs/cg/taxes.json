@@ -340,5 +340,48 @@
     },
     "kind": "vat",
     "sequence": 140
+  },
+  {
+    "code": "CG-P-NR-189",
+    "name": "Services d'un prestataire non résident, taux normal 18,9 %",
+    "description": "TVA et centimes additionnels payés par l'entreprise cliente pour le compte d'un prestataire non résident sans établissement stable ni représentant au Congo, et déduits au titre du même mois",
+    "kind": "vat",
+    "rate": 18.9,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Loi n° 12-97 du 12 mai 1997 instituant la TVA, art. 12, dans la rédaction de la loi n° 39-2023 du 29 décembre 2023 portant loi de finances pour 2024 (ancien art. 9) — le redevable non résident désigne un représentant solvable accrédité et, à défaut, la TVA et les pénalités « doivent être payées par la personne cliente pour le compte de la personne n'ayant pas dans l'État un établissement stable » ; directive n° 1/99/CEMAC-028-CM-03, art. 10 et 22 — même règle, et déduction de la taxe sans les conditions de facture « en ce qui concerne les fournisseurs étrangers ». Taux de 18 % majoré des centimes additionnels, 18,9 %. Le texte de 2023 n'a été lu qu'à travers une synthèse professionnelle — voir README.md",
+    "source": "loi-tva-1997",
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

@@ -96,6 +96,22 @@
       "sequence": 100
     },
     {
+      "box": "IS",
+      "kind": "base",
+      "name": "Supplies from non-resident suppliers, VAT withheld",
+      "sequence": 112,
+      "legal_reference": "Nigeria Tax Act, 2025, s. 150(2): taxable supplies made from outside Nigeria on which the recipient withheld the VAT. A line of this pack's own: the published specimen of the return predates the Act",
+      "source": "nta-2025"
+    },
+    {
+      "box": "IS",
+      "kind": "tax",
+      "name": "VAT withheld on supplies from non-resident suppliers, deductible",
+      "sequence": 114,
+      "legal_reference": "Nigeria Tax Act, 2025, s. 155(4): input tax on any taxable supply, including services, deducted in the tax period of the supply to the extent used for taxable supplies",
+      "source": "nta-2025"
+    },
+    {
       "box": "8",
       "kind": "tax",
       "name": "VAT paid to the Nigeria Customs Service on import, deductible",
@@ -109,7 +125,7 @@
       "name": "Total input tax deductible",
       "legal_reference": "Nigeria Tax Administration Act 2025, s. 22(3), the \"input tax paid\" component of the return.",
       "source": "ntaa-2025",
-      "plus": ["5:tax", "8:tax"],
+      "plus": ["5:tax", "8:tax", "IS:tax"],
       "sequence": 120
     },
     {

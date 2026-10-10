@@ -447,5 +447,49 @@
     "kind": "vat",
     "valid_from": "2026-01-01",
     "vat_category": null
+  },
+  {
+    "code": "GH-P-IMPSVC-ND",
+    "name": "Import of services used other than for taxable supplies — VAT 15 % + NHIL 2.5 % + GETFund 2.5 %, not recoverable",
+    "description": "VAT and levies the recipient in Ghana pays on a service supplied by a non-resident and used other than to make taxable supplies, on a service import declaration outside the monthly return; a cost, never input tax",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "recoverable": false,
+    "valid_from": "2026-01-01",
+    "legal_reference": "Value Added Tax Act, 2025 (Act 1151), s. 1(b) — the Tax is charged on the import of services; s. 2(c) — on an import of services it is paid by the recipient of the service; s. 72, definition of \"import of services\" — a service supplied by a non-resident to a resident person, taxed only to the extent it is used other than for making taxable supplies, so a fully taxable business owes nothing and books such a purchase with no tax code; s. 61(1) — the recipient provides a service import declaration and pays the Tax within twenty-one days after the tax period in which the services were imported; s. 40(2) — the time of the import. VAT 15 % with NHIL 2.5 % and GETFund 2.5 % on the same value (Administrative Guideline GRA/AG/25/002). Paid outside form DT 0135, so the amount owed waits on account 2126 and reaches no box of the monthly return; the service being used for exempt supplies, nothing is deductible and the whole tax lands on the cost of the line",
+    "source": "vat-act-2025",
+    "sequence": 145,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2126"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2126"
+        }
+      ]
+    }
   }
 ]

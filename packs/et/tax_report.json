@@ -48,6 +48,22 @@
       "source": "vat-proclamation"
     },
     {
+      "box": "RC",
+      "kind": "base",
+      "name": "Reverse charged supplies received (15 %) — value",
+      "sequence": 35,
+      "legal_reference": "Art. 6 and art. 8(1)(c): services supplied by a person outside Ethiopia with no fixed place of business there, on which the registered recipient accounts for VAT. A line of this pack's own: the published sources read do not number it",
+      "source": "vat-proclamation"
+    },
+    {
+      "box": "RC",
+      "kind": "tax",
+      "name": "Reverse charged supplies received (15 %) — output VAT",
+      "sequence": 36,
+      "legal_reference": "Art. 2 (\"Output Tax\") and art. 8(8): the VAT payable on a reverse charged supply made to a registered person is its output tax, accounted for in the return of the period of the supply",
+      "source": "vat-proclamation"
+    },
+    {
       "box": "4",
       "kind": "total",
       "name": "Total sales",
@@ -66,9 +82,10 @@
       "name": "Total output VAT",
       "sequence": 50,
       "plus": [
-        "1:tax"
+        "1:tax",
+        "RC:tax"
       ],
-      "legal_reference": "Output VAT of box 1; zero-rated and exempt sales carry none.",
+      "legal_reference": "Output VAT of box 1 and of the reverse charged supplies of box RC; zero-rated and exempt sales carry none.",
       "source": "vat-proclamation"
     },
     {

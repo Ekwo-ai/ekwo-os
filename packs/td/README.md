@@ -96,6 +96,21 @@ la première se lit en texte, la seconde a été rendue en images avant lecture.
   unitaire et hors taxe, taux et montant de la taxe ou la mention
   d'exonération, total, numéro de la machine certifiée.
 
+**A service bought from a supplier abroad: `TD-P-NR-1925`.** It is not the
+domestic *autoliquidation* of art. 229-V above. The CEMAC directive n° 1/99,
+art. 10, which Chad's code transposes, has the client pay the tax *"pour le
+compte de la personne n'ayant pas dans l'État un établissement stable"* when
+no accredited representant was appointed, and art. 22 waives the invoice
+conditions of the deduction for foreign suppliers — consistent with art.
+246-II above, which exempts a foreign supplier's invoice from the
+normalised-invoice condition. The tax owed is credited to `4478` and declared
+in the new box `TVAPC`, which the total of the tax due adds; the same amount
+is debited to `4454` and deducted in `DEDBS` the same month. The golden year
+buys one such subscription. SYSCOHADA has no account for suppliers abroad, so
+the supplier sits on `4011` with the others. The article of the Chadian code
+that transposes art. 10 of the directive was not found in a published text;
+the tax cites the directive, and a reviewer should name the article.
+
 ## What it does not say
 
 - **L'échéance du 15 du mois pour la déclaration mensuelle de TVA elle-même**

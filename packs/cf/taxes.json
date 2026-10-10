@@ -178,5 +178,48 @@
     },
     "kind": "vat",
     "sequence": 140
+  },
+  {
+    "code": "CF-P-NR-19",
+    "name": "Services d'un prestataire établi à l'étranger, taux normal 19 %",
+    "description": "TVA payée par l'entreprise cliente pour le compte d'un prestataire sans établissement stable ni représentant en Centrafrique, et déduite au titre du même mois",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Code général des impôts, art. 250-2-b — pour les prestations immatérielles (droits de licence, traitement de données et fourniture d'information, conseil…), « la taxe sur la valeur ajoutée est applicable en Centrafrique lorsque le prestataire est établi dans un pays étranger et le bénéficiaire en Centrafrique » ; art. 250 bis — à défaut de représentant accrédité, la taxe et les pénalités « doivent être payées par la personne cliente pour le compte de la personne n'ayant pas en Centrafrique un établissement stable ou une installation professionnelle permanente » ; art. 257 — taux général de 19 % ; art. 258 — la taxe ayant grevé les éléments du prix d'une opération imposable est déductible au titre du mois où le droit à déduction a pris naissance. L'art. 259 énumère les documents qui justifient la déduction sans nommer cette taxe ; la directive CEMAC, art. 22, dispense les fournisseurs étrangers des conditions de facture — voir README.md",
+    "source": "cgi",
+    "sequence": 150,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

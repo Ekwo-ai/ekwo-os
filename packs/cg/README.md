@@ -100,6 +100,21 @@ réduits, l'annexe 3 des exonérations, la confirmation du taux facturé de
   obligation générale d'émission dématérialisée à une date unique, donc
   `einvoicing.mandatory_from` reste vide.
 
+**A service bought from a supplier abroad: `CG-P-NR-189`.** Art. 12 of loi n°
+12-97 (the former art. 9), as rewritten by the loi de finances pour 2024 (loi
+n° 39-2023), has the non-resident appoint an accredited representant and,
+failing one, the tax *"doi[t] être payé[e] par la personne cliente pour le
+compte de la personne n'ayant pas dans l'État un établissement stable"* — the
+*TVA fournisseurs étrangers*; the CEMAC directive (n° 1/99, art. 10 and 22)
+says the same and waives the invoice conditions of the deduction for foreign
+suppliers. The tax owed is credited to `4478` and declared in the new box
+`TVAPC`, which the total of the tax due adds; the same amount is debited to
+`4454` and deducted in `DEDBS` the same month. The golden year buys one such
+subscription. SYSCOHADA has no account for suppliers abroad, so the supplier
+sits on `4011` with the others. The 2023 wording was read through a
+professional synthesis published by UNICONGO, not in the Journal officiel; a
+reviewer should confirm it.
+
 ## What it does not say
 
 - **L'échéance de la déclaration mensuelle de TVA elle-même.** Le texte

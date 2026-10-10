@@ -79,13 +79,22 @@
       "source": "lf2023"
     },
     {
+      "box": "TVAPC",
+      "kind": "tax",
+      "name": "TVA payée pour le compte de prestataires étrangers",
+      "sequence": 75,
+      "legal_reference": "Ordonnance-loi n° 10/001, art. 23 — taxe payée par la personne cliente d'un assujetti domicilié hors du pays sans représentant agréé",
+      "source": "ol10001"
+    },
+    {
       "box": "TVAB",
       "kind": "total",
       "name": "Total de la taxe exigible",
       "sequence": 80,
       "plus": [
         "TVA16",
-        "TVA8"
+        "TVA8",
+        "TVAPC"
       ],
       "legal_reference": "Ordonnance-loi n° 10/001, art. 60",
       "source": "ol10001"

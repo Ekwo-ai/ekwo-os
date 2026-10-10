@@ -74,6 +74,23 @@ right. Currency XOF, the CFA franc of the BCEAO, at no decimal.
   seller: it comes from the certified billing machine (see *einvoicing*
   below).
 
+**A service bought from a supplier abroad: `BJ-P-NR-18-ND`.** Intangible
+services — licences, consulting, data processing and the supply of information
+— are taxable in Benin when the customer is tax-resident there (CGI, art.
+234-2), and when the supplier has no representant in Benin *"la TVA ainsi que
+les pénalités sont dues par les destinataires ou bénéficiaires des opérations
+imposables"* (art. 262-2). A deduction, though, needs a normalised invoice
+(art. 244-1-d) and a tax *"facturée par un assujetti redevable"* (art. 244-3),
+which a supplier abroad never issues: this pack reads the tax as not
+deductible. The tax owed is credited to `4478` and declared in the new box
+`TVAPC`; with no deduction, the same amount lands on the cost of the service
+(`tax_on_base`), as `SN-P-NR-18-ND` does in the Senegalese pack. The golden
+year buys one such subscription. SYSCOHADA has no account for suppliers
+abroad, so the supplier sits on `4011` with the others. This is the reading
+most open to challenge in the pack: a reviewer should confirm whether the DGI
+admits the deduction of the tax a client paid for a foreign supplier, and the
+code can be switched to the deductible shape if it does.
+
 ## What it does not say
 
 - **The MECeF/e-MECeF is a clearance model, and Ekwo issues nothing through

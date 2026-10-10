@@ -73,6 +73,20 @@ what the 2025 law itself quotes from the 2024 one is in this pack.
   article that zero-rates or exempts the operation (art. 383-VI-10°): the two
   mentions this pack declares.
 
+**A service bought from a supplier abroad: `GN-P-NR-18`.** Guinea has a
+reverse charge in the European sense. Services are taxed in Guinea when the
+customer is established there (CGI, art. 361 Quater-I); when a taxable person
+established outside Guinea supplies one to a taxable person registered for VAT
+in Guinea, the customer is liable (*"auto liquidation"*, art. 373 Bis-II), and
+it deducts the tax once it *"a été acquittée par le preneur"* (art.
+375-I-1-d). The tax owed is credited to `4478` and declared in the new box
+`TVAPC`, which the total of the tax due adds; the same amount is debited to
+`4454` and deducted in `DEDBS` the same month, paid with the same return. The
+golden year buys one such subscription. SYSCOHADA has no account for suppliers
+abroad, so the supplier sits on `4011` with the others. A customer not
+registered for VAT pays the tax only failing a fiscal representative (art. 373
+Quinquies-VI).
+
 ## What it does not say
 
 - **The seller's side of the 50 % VAT withholding.** Article 373 Ter makes a

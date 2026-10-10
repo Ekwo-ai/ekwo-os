@@ -181,6 +181,55 @@
     "exemption_code": null
   },
   {
+    "code": "NG-P-NRS",
+    "name": "Purchase from a non-resident supplier, VAT withheld by the buyer, input tax deductible",
+    "description": "VAT at 7.5 % that the taxable person in Nigeria withholds on a taxable supply made from outside Nigeria by a non-resident that charged none, remits to the Service, and deducts as input tax in the period of the supply",
+    "kind": "vat",
+    "rate": 7.5,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Nigeria Tax Act, 2025, s. 150(2) — \"where a non-resident person is making taxable supplies from outside Nigeria to persons in Nigeria, the taxable person to whom the supply is made in Nigeria shall withhold the VAT due on the supply and remit it to the Service\"; s. 150(4) — no withholding where a collector appointed by the Service (s. 150(3)) collected it; s. 154(3) and (4) — the amount withheld is remitted with a schedule of the supplier and invoice by the 14th day of the following month; s. 155(4) — input tax on any taxable supply, \"including services\", is deducted at the end of the tax period in which the supply occurred, to the extent incurred for making taxable supplies; s. 146 — rate 7.5 %. The withholding is remitted outside the return, on account 2160; the input tax and its base are declared in box IS, which box 9 adds",
+    "source": "nta-2025",
+    "sequence": 145,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "IS"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "IS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2160"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "IS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "IS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2160"
+        }
+      ]
+    }
+  },
+  {
     "code": "NG-P-NR",
     "name": "Purchase, supplier is a small business exempt from charging VAT",
     "description": "A purchase from a supplier whose gross turnover does not exceed ₦100,000,000 a year and whose total fixed assets do not exceed ₦250,000,000 — a \"small business\", not required to register, charge VAT or file returns, unless it has opted out.",

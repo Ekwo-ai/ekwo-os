@@ -81,6 +81,12 @@
       "name": "Guangzhou Import-Export Trading Co. Ltd",
       "type": "supplier",
       "country": "CN"
+    },
+    {
+      "ref": "fourn-etranger",
+      "name": "Cloud Logiciels SAS",
+      "type": "supplier",
+      "country": "FR"
     }
   ],
   "documents": [
@@ -273,6 +279,22 @@
           "unit_price": 45000.00,
           "tax": "CD-P-IMP-16",
           "account": "6012"
+        }
+      ]
+    },
+    {
+      "ref": "AE1",
+      "type": "purchase_invoice",
+      "contact": "fourn-etranger",
+      "date": "2026-04-15",
+      "why": "Un abonnement à un logiciel en ligne facturé par un prestataire établi à l'étranger, sans représentant dans le pays : la TVA est payée par l'entreprise cliente pour le compte du prestataire (case TVAPC, compte 4478) et, faute de facture d'un assujetti, n'est pas déductible ; elle s'ajoute au coût du service.",
+      "lines": [
+        {
+          "name": "Abonnement mensuel à un logiciel en ligne",
+          "quantity": 1,
+          "unit_price": 1000000,
+          "tax": "CD-P-NR-16-ND",
+          "account": "6343"
         }
       ]
     }

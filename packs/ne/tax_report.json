@@ -87,11 +87,19 @@
       "source": "lf2024"
     },
     {
+      "box": "TVAPC",
+      "kind": "tax",
+      "name": "TVA due pour le compte de prestataires établis hors du Niger",
+      "sequence": 95,
+      "legal_reference": "Code général des impôts (édition 2012), art. 249 — taxe due par le bénéficiaire de la prestation d'un redevable établi hors du Niger",
+      "source": "cgi"
+    },
+    {
       "box": "TVAB",
       "kind": "total",
       "name": "Total de la taxe exigible",
       "sequence": 100,
-      "plus": ["TVA19", "TVA10", "TVA5"],
+      "plus": ["TVA19", "TVA10", "TVA5", "TVAPC"],
       "legal_reference": "Code général des impôts (2012), art. 256 — décompte de la taxe due",
       "source": "cgi"
     },

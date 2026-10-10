@@ -19,7 +19,8 @@
     { "ref": "client-fr", "name": "Négoce Oubangui SAS", "type": "customer", "country": "FR" },
     { "ref": "fourn-cf", "name": "Grossiste du Km5 SARL", "type": "supplier", "country": "CF" },
     { "ref": "fourn-srv", "name": "Froid Service Bangui SARL", "type": "supplier", "country": "CF" },
-    { "ref": "fourn-immo", "name": "Bureautique de la Ouaka SA", "type": "supplier", "country": "CF" }
+    { "ref": "fourn-immo", "name": "Bureautique de la Ouaka SA", "type": "supplier", "country": "CF" },
+    {"ref": "fourn-etranger", "name": "Cloud Logiciels SAS", "type": "supplier", "country": "FR"}
   ],
   "documents": [
     {
@@ -120,6 +121,22 @@
       "why": "Un achat de viande, taux réduit de 5 %, déductible : compte 4452, case DEDBS.",
       "lines": [
         { "name": "Viande", "quantity": 1, "unit_price": 50000, "tax": "CF-P-5", "account": "6011" }
+      ]
+    },
+    {
+      "ref": "AE1",
+      "type": "purchase_invoice",
+      "contact": "fourn-etranger",
+      "date": "2026-04-15",
+      "why": "Un abonnement à un logiciel en ligne facturé par un prestataire établi à l'étranger, sans représentant dans le pays : la TVA est payée par l'entreprise cliente pour le compte du prestataire (case TVAPC, compte 4478) et déduite le même mois (case DEDBS, compte 4454).",
+      "lines": [
+        {
+          "name": "Abonnement mensuel à un logiciel en ligne",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "CF-P-NR-19",
+          "account": "6343"
+        }
       ]
     }
   ],

@@ -74,6 +74,21 @@ facture normalisée et e-Impôt : il a été téléchargé mais non exploité.
   d'imposition du fournisseur et le NIF du vendeur et de l'acheteur ; une
   entreprise à l'impôt synthétique ne peut y faire figurer de TVA.
 
+**A service bought from a supplier abroad: `ML-P-NR-18`.** A service performed
+abroad but *"utilisée ou exploitée au Mali"* is taxed in Mali (CGI, art. 196),
+and when the supplier has no accredited representant the tax *"est payée par
+la personne cliente pour le compte de la personne n'ayant pas d'établissement
+au Mali"* (art. 197). Art. 213-3° excludes from deduction the tax on sums paid
+to non-residents (arts. 94 to 98) *that did not bear the income-tax
+withholding* — which reads as admitting the deduction when the withholding was
+made; art. 213-2° (the supplier's tax number on the invoice) pulls the other
+way. The tax owed is credited to `4478` and declared in the new box `TVAPC`,
+which the total of the tax due adds; the same amount is debited to `4454` and
+deducted in `DEDBS` the same month. The golden year buys one such
+subscription. SYSCOHADA has no account for suppliers abroad, so the supplier
+sits on `4011` with the others. A reviewer should confirm the deduction, and
+that the withholding of arts. 94 to 98 was made.
+
 ## What it does not say
 
 - **Le régime du réel simplifié** (Livre de procédures fiscales, art. 110-3) :

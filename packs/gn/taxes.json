@@ -261,6 +261,49 @@
     "sequence": 170
   },
   {
+    "code": "GN-P-NR-18",
+    "name": "Services d'un assujetti non établi en Guinée 18 % — autoliquidation",
+    "description": "TVA autoliquidée par l'assujetti immatriculé en Guinée qui reçoit la prestation d'un assujetti établi hors de Guinée, et déduite une fois acquittée",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts (loi L/2021/032/AN), art. 361 Quater-I — le lieu d'imposition des prestations de services est situé en Guinée lorsque le preneur y est établi ; art. 373 Bis-II — lorsque la prestation imposable en Guinée est effectuée par un assujetti établi hors de Guinée à un assujetti immatriculé à la TVA en Guinée, le preneur est le redevable de la TVA (« auto liquidation ») ; art. 375-I-1-d — la taxe est déductible lorsqu'elle « a été acquittée par le preneur lorsque ce dernier est le redevable » ; art. 373 Quinquies-VI — un preneur non immatriculé paie la taxe à défaut de représentant fiscal. Taux de 18 %",
+    "source": "cgi",
+    "sequence": 175,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
     "code": "GN-P-WHT-10",
     "name": "Prélèvement forfaitaire 10 % — fournisseur non immatriculé à la TVA",
     "description": "Retenue à la source sur un achat de biens ou de services auprès d'un fournisseur non immatriculé à la TVA, par un client désigné par l'article 251",

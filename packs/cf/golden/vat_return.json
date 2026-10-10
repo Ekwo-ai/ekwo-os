@@ -48,8 +48,11 @@
       "from": "2026-04-01",
       "to": "2026-04-30",
       "boxes": {
+        "TVAPC:tax": "95000",
+        "TVAB:total": "95000",
         "DEDIMMO:tax": "266000",
-        "DEDT:total": "266000",
+        "DEDBS:tax": "95000",
+        "DEDT:total": "361000",
         "CRED:total": "266000"
       }
     }

@@ -59,6 +59,7 @@ code,parent,type,reconcilable,name,sequence
 2102,,liability_current,false,GETFund output levy,580
 2110,,liability_current,true,VAT and levies payable to GRA — net of a filed return,590
 2125,,liability_current,false,Import VAT and levies payable to GRA Customs at the border,600
+2126,,liability_current,false,VAT and levies on imported services payable to GRA — service import declaration,605
 2130,,liability_current,false,VAT withheld from suppliers — payable to GRA,610
 2135,,liability_current,false,Communications Service Tax payable,620
 2140,,liability_current,false,Withholding tax payable to GRA,630

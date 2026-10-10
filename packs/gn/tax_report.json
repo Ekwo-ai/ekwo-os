@@ -61,12 +61,21 @@
       "source": "cgi"
     },
     {
+      "box": "TVAPC",
+      "kind": "tax",
+      "name": "TVA autoliquidée sur les prestations d'assujettis non établis en Guinée",
+      "sequence": 55,
+      "legal_reference": "Code général des impôts, art. 373 Bis-II — taxe due par le preneur immatriculé à la TVA en Guinée d'une prestation d'un assujetti établi hors de Guinée",
+      "source": "cgi"
+    },
+    {
       "box": "TVAB",
       "kind": "total",
       "name": "Total de la taxe exigible",
       "sequence": 60,
       "plus": [
-        "TVA18"
+        "TVA18",
+        "TVAPC"
       ],
       "legal_reference": "Code général des impôts, art. 373 Sexies-III — TVA collectée",
       "source": "cgi"

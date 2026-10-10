@@ -377,5 +377,46 @@
     },
     "kind": "vat",
     "sequence": 150
+  },
+  {
+    "code": "CD-P-NR-16-ND",
+    "name": "Services d'un prestataire étranger 16 %, TVA payée par le client, non déductible",
+    "description": "TVA payée par la personne cliente d'un prestataire domicilié hors de la République démocratique du Congo sans représentant agréé ; faute de facture d'un assujetti, elle n'est pas déductible et s'ajoute au coût",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2012-01-01",
+    "legal_reference": "Ordonnance-loi n° 10/001 du 20 août 2010, art. 22-3 — une prestation de services est réputée réalisée en République démocratique du Congo lorsque « le service rendu, le droit cédé ou l'objet loué, sont utilisés ou exploités au pays » ; art. 23 — l'assujetti domicilié hors du pays désigne un représentant agréé et, « en cas de non désignation d'un représentant, la taxe sur la valeur ajoutée et, le cas échéant, les pénalités y afférentes sont payées par la personne cliente » ; art. 38-1 — pour être déductible, la taxe doit figurer sur une facture « dûment délivré[e] par un assujetti et mentionnant son numéro impôt », ce qu'un prestataire étranger ne délivre pas : ce pack la lit comme non déductible et la porte au coût du service — voir README.md. Taux de 16 % (art. 35)",
+    "source": "ol10001",
+    "sequence": 155,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    },
+    "recoverable": false
   }
 ]

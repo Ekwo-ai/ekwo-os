@@ -90,6 +90,23 @@ by convention with the other OHADA packs, not from a cited article — see
   official form, whose name and box numbers were not found. Due on the 15th
   of the month following (art. 152; fiche TVA), monthly.
 
+**A service bought from a supplier abroad: `CM-P-NR-1925`.** A software
+subscription, hosting or an API billed by a supplier with no establishment in
+Cameroon is taxed there when it is used in Cameroon (CGI, art. 129-2-b; art.
+130 bis-3 for intangible services, taxed where the customer is established).
+Without an accredited representant, the tax *"est payée par la personne
+cliente pour le compte de la personne n'ayant pas au Cameroun un établissement
+stable"* (art. 130-2), at 17.5 % plus the 10 % CAC, and art. 143-1-b waives
+the invoice conditions of the deduction *"en ce qui concerne les fournisseurs
+étrangers"*. The tax owed is credited to `4478` and declared in the new box
+`TVAPC`, which the total of the tax due adds; the same amount is debited to
+`4454` and deducted in `DEDBS` the same month. The golden year buys one such
+subscription. SYSCOHADA has no account for suppliers abroad, so the supplier
+sits on `4011` with the others. Art. 143-3-b limits the deduction on services
+to those of registered suppliers under the real regime; this pack reads the
+foreign-supplier waiver of art. 143-1-b as the rule that governs this case,
+and a reviewer should confirm it.
+
 ## What it does not say
 
 - **The withholding of VAT at payment** (art. 149 (2), 143). A buyer the law

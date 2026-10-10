@@ -60,6 +60,20 @@ country's other official language, would need one.
   booked, `DZ-P-IMP-19` deducts it exactly as a domestic purchase would,
   under `DEDBS`. The pack does not model the customs declaration itself,
   only the deduction that follows from it.
+- **A service bought from a supplier abroad is auto-liquidated.** A service
+  is taxed in Algeria when it is *"utilisé[] ou exploité[] en Algérie"*
+  (art. 7), and when the supplier is a taxable person established outside
+  Algeria *"la taxe est auto-liquidée et acquittée par l'acquéreur ou le
+  bénéficiaire de la prestation de services"* (art. 83, since the loi de
+  finances pour 2011). `DZ-P-AUTOLIQ-19` books it at 19 %: the tax owed
+  credited to the new `44573` and declared in `TVAAL`, which `TVAB` now adds,
+  and the same amount deducted under `DEDBS` the same month (arts. 29 and
+  30). Art. 29 speaks of the tax *"mentionnée sur les factures, mémoires ou
+  documents"*; reading the buyer's own auto-liquidation document as one of
+  them is this pack's reading, for a reviewer to confirm. The withholding at
+  source of the income tax of foreign firms with no permanent professional
+  installation is a different tax and outside this pack. The chart has no
+  account for suppliers abroad, so a foreign supplier sits on `401`.
 - **The declaration is the CTCA's content, not the printed form's boxes.**
   Article 28 requires a monthly relevé of taxable and exempt operations, the
   tax due and the deductions; the DGI files it on form **série G n° 50**,

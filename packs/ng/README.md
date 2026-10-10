@@ -128,6 +128,22 @@ professional services, which are never a small business regardless of
 turnover, or unless it opts in under s. 22(5). `NG-P-NR` carries a purchase
 from such a supplier: no tax charged, nothing on any box.
 
+**A purchase from a supplier abroad: the buyer withholds the VAT.** A
+software subscription, hosting or an API billed from outside Nigeria by a
+non-resident that charged no VAT is still taxable, and Nigeria Tax Act 2025,
+s. 150(2), puts it on the buyer: *"the taxable person to whom the supply is
+made in Nigeria shall withhold the VAT due on the supply and remit it to the
+Service"* — unless a collector the Service appointed under s. 150(3) already
+collected it (s. 150(4)), in which case the purchase is an ordinary
+`NG-P-SR` one. The amount withheld is remitted with a schedule by the 14th
+of the following month (s. 154(3)–(4)), and s. 155(4) deducts input tax on
+any taxable supply, *"including services"*, in the period of the supply.
+`NG-P-NRS` books both halves at 7.5 %: input tax debited to `1140` and
+declared in box `IS` (a line of this pack's own, which box 9 adds), the
+withholding credited to the new `2160` and remitted outside the return. The
+chart has no payable account for suppliers abroad, so a foreign supplier
+sits on `2100` with the others.
+
 ## The VAT return
 
 **Monthly, and only monthly.** Nigeria Tax Administration Act 2025, s. 22(1):
@@ -138,7 +154,8 @@ or Ireland's choice of a longer period on request.
 Section 22(1) for the return; s. 49(1) sets the same day for payment. A
 different obligation, on a different person, falls due on the fourteenth: s.
 154(4), for VAT a government body or an appointed collector has withheld at
-source — this pack does not model it, see below.
+source — this pack does not model it, see below — and for the VAT a buyer
+withholds on a supply from a non-resident (`NG-P-NRS`, above).
 
 **A negative box 10 is a credit or a refund, never floored at zero.** Section
 155(1): output tax in excess of input tax is remitted; input tax in excess of

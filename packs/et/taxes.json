@@ -360,5 +360,63 @@
       ]
     },
     "sequence": 140
+  },
+  {
+    "code": "ET-P-RC-15",
+    "name": "Reverse charged supply of services from abroad, 15 %, creditable",
+    "description": "VAT the registered recipient accounts for on services supplied by a person outside Ethiopia with no fixed place of business there, and credits as input tax in the same accounting period",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-08-21",
+    "legal_reference": "Value Added Tax Proclamation No. 1341/2024, art. 6(1) — a reverse charged supply is a supply of services made by a person outside Ethiopia who does not carry on a taxable activity through a fixed place of business in Ethiopia, to a registered person, Government institution or large unregistered person, that would have been taxable if made from a place of business in Ethiopia; art. 8(1)(c) and (2) — VAT at 15 % on a reverse charged supply made to a registered person; art. 8(8) — the liability arises at the time of the supply and is accounted for by the registered person receiving it; art. 2 — the VAT payable on a reverse charged supply is output tax of the recipient, and a reverse charged supply is a creditable acquisition; art. 29(1) — input tax credit to the extent the acquisition is for making taxable supplies; art. 52(4) — the recipient prepares a recipient-created tax invoice at the time of the supply. Both halves are in the same return: the base in RC and 6, the output VAT in RC (added to box 5), the input VAT in box 6",
+    "source": "vat-proclamation",
+    "sequence": 145,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "RC",
+            "6"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "RC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "RC",
+            "6"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "6",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "RC",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

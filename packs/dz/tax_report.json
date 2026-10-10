@@ -72,11 +72,19 @@
       "source": "ctca"
     },
     {
+      "box": "TVAAL",
+      "kind": "tax",
+      "name": "TVA auto-liquidée sur les prestations d'assujettis établis hors d'Algérie",
+      "sequence": 75,
+      "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 83 — taxe auto-liquidée et acquittée par le bénéficiaire de la prestation d'un assujetti établi hors d'Algérie. Libellé de ce paquet : la série G n° 50 lue ne publie pas de ligne numérotée pour elle",
+      "source": "ctca"
+    },
+    {
       "box": "TVAB",
       "kind": "total",
       "name": "Total de la taxe exigible",
       "sequence": 80,
-      "plus": ["TVA19", "TVA9"],
+      "plus": ["TVA19", "TVA9", "TVAAL"],
       "legal_reference": "Code des taxes sur le chiffre d'affaires, art. 28",
       "source": "ctca"
     },

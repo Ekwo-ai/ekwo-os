@@ -48,6 +48,12 @@
       "name": "Guangzhou Trading Co.",
       "type": "supplier",
       "country": "CN"
+    },
+    {
+      "ref": "supp-cloud",
+      "name": "Highland Cloud Services Ltd",
+      "type": "supplier",
+      "country": "IE"
     }
   ],
   "documents": [
@@ -208,6 +214,22 @@
           "unit_price": 4000,
           "tax": "ET-P-15",
           "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-RC1",
+      "type": "purchase_invoice",
+      "contact": "supp-cloud",
+      "date": "2026-01-20",
+      "why": "A cloud software subscription from a supplier outside Ethiopia with no fixed place of business there: a reverse charged supply (art. 6), on which the company accounts for 15 % output VAT (box RC, added to box 5) and credits the same amount as input VAT (box 6) in the same month.",
+      "lines": [
+        {
+          "name": "Monthly cloud software subscription",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "ET-P-RC-15",
+          "account": "6350"
         }
       ]
     }

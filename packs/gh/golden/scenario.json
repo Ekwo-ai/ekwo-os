@@ -60,6 +60,12 @@
       "name": "Shenzhen Electronics Co.",
       "type": "supplier",
       "country": "CN"
+    },
+    {
+      "ref": "supp-datafeed",
+      "name": "Atlantic Commodity Data Ltd",
+      "type": "supplier",
+      "country": "GB"
     }
   ],
   "documents": [
@@ -284,6 +290,22 @@
           "unit_price": 2000,
           "tax": "GH-P-20",
           "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-datafeed",
+      "date": "2026-02-20",
+      "why": "A grain-price data subscription from a non-resident, used for the exempt maize trade (INV-004): an import of services used other than for taxable supplies (s. 72), on which the company pays VAT and levies at 20 % on a service import declaration (s. 61) — account 2126, no box of DT 0135 — and recovers nothing, so the tax lands on the cost. A subscription used for taxable supplies would carry no tax code at all.",
+      "lines": [
+        {
+          "name": "Monthly grain-price data subscription",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "GH-P-IMPSVC-ND",
+          "account": "6350"
         }
       ]
     }

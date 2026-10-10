@@ -294,5 +294,48 @@
     },
     "kind": "vat",
     "sequence": 160
+  },
+  {
+    "code": "ML-P-NR-18",
+    "name": "Services d'un prestataire non établi au Mali 18 %, TVA payée par le client",
+    "description": "TVA payée par la personne cliente pour le compte d'un prestataire établi hors du Mali sans représentant accrédité, et déduite au titre du même mois",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Code général des impôts, art. 196 — une prestation de service exécutée dans un autre pays mais « utilisée ou exploitée au Mali » est imposée au Mali ; art. 197 — le redevable établi hors du Mali fait accréditer un représentant et, à défaut, la taxe « est payée par la personne cliente pour le compte de la personne n'ayant pas d'établissement au Mali » ; art. 207 — déduction de la taxe ayant grevé les services acquis pour les besoins de l'exploitation ; art. 213-3° — n'est pas déductible la taxe sur les sommes versées à des non-résidents (art. 94 à 98) qui n'ont pas fait l'objet de la retenue de l'impôt sur les bénéfices, ce qui la rend déductible lorsque la retenue a été opérée — voir README.md. Taux de 18 %",
+    "source": "cgi",
+    "sequence": 165,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

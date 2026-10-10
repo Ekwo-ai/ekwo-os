@@ -20,7 +20,8 @@
     { "ref": "supp-apapa", "name": "Apapa Wholesale Distributors Ltd", "type": "supplier", "country": "NG" },
     { "ref": "supp-shenzhen", "name": "Shenzhen Precision Electronics Co.", "type": "supplier", "country": "CN" },
     { "ref": "supp-yaba", "name": "Yaba Print & Agro Supplies Ltd", "type": "supplier", "country": "NG" },
-    { "ref": "supp-ngozi", "name": "Mama Ngozi Catering Services", "type": "supplier", "country": "NG" }
+    { "ref": "supp-ngozi", "name": "Mama Ngozi Catering Services", "type": "supplier", "country": "NG" },
+    {"ref": "supp-cloud", "name": "Harbour Cloud Software Ltd", "type": "supplier", "country": "IE"}
   ],
   "documents": [
     {
@@ -141,6 +142,22 @@
       "why": "A second standard-rated purchase, in the third period, so every period of the scenario carries something on both sides of the return.",
       "lines": [
         { "name": "Printing and stationery supplies", "quantity": 1, "unit_price": 45000, "tax": "NG-P-SR", "account": "7220" }
+      ]
+    },
+    {
+      "ref": "PINV-2026-0007",
+      "type": "purchase_invoice",
+      "contact": "supp-cloud",
+      "date": "2026-03-16",
+      "why": "A cloud software subscription from a non-resident that charged no VAT (Nigeria Tax Act, 2025, s. 150(2)): the company withholds 7.5 % and remits it by the 14th of April (account 2160), and deducts the same amount as input tax in March (box IS, added to box 9).",
+      "lines": [
+        {
+          "name": "Monthly cloud software subscription",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "NG-P-NRS",
+          "account": "7230"
+        }
       ]
     }
   ],

@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CF",
   "name": "Centrafrique",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260929141500",
   "seed_sequence": 25,
   "released_at": "2026-09-21",

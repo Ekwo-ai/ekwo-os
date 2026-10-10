@@ -30,7 +30,8 @@
     { "ref": "fourn-auto", "name": "Automobiles du Sahel SA", "type": "supplier", "country": "NE" },
     { "ref": "fourn-cadeau", "name": "Bijouterie de la Corniche SARL", "type": "supplier", "country": "NE" },
     { "ref": "fourn-epicier", "name": "Minoterie du Niger SA", "type": "supplier", "country": "NE" },
-    { "ref": "fourn-import", "name": "Manufacture Textile de Lomé SARL", "type": "supplier", "country": "TG" }
+    { "ref": "fourn-import", "name": "Manufacture Textile de Lomé SARL", "type": "supplier", "country": "TG" },
+    {"ref": "fourn-etranger", "name": "Cloud Logiciels SAS", "type": "supplier", "country": "FR"}
   ],
   "documents": [
     {
@@ -201,6 +202,22 @@
       "why": "Une importation dont la TVA est acquittée en douane au taux normal : la taxe récupérable au compte 4452 et dans la case DEDBS.",
       "lines": [
         { "name": "Tissus importés", "quantity": 1, "unit_price": 2000000, "tax": "NE-P-IMP-19", "account": "6011" }
+      ]
+    },
+    {
+      "ref": "AE1",
+      "type": "purchase_invoice",
+      "contact": "fourn-etranger",
+      "date": "2026-04-15",
+      "why": "Un abonnement à un logiciel en ligne facturé par un prestataire établi à l'étranger, sans représentant dans le pays : la TVA est payée par l'entreprise cliente pour le compte du prestataire (case TVAPC, compte 4478) et déduite le même mois (case DEDBS, compte 4454).",
+      "lines": [
+        {
+          "name": "Abonnement mensuel à un logiciel en ligne",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "NE-P-NR-19",
+          "account": "6343"
+        }
       ]
     }
   ],

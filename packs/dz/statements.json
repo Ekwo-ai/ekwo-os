@@ -174,7 +174,7 @@
           "rules": [
             { "kind": "code_range", "code_from": "444", "code_to": "444" },
             { "kind": "code_range", "code_from": "44551", "code_to": "44551" },
-            { "kind": "code_range", "code_from": "44571", "code_to": "44572" },
+            { "kind": "code_range", "code_from": "44571", "code_to": "44573" },
             { "kind": "code_range", "code_from": "447", "code_to": "448" }
           ],
           "legal_reference": "Arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan, passif — passifs courants", "source": "scf" },

@@ -81,6 +81,19 @@ générateur or the calendar).
   buyer's (name, address, NIF) — art. 251 of the 2012 Code. The new Code's
   own article (802, by the renvoi of its art. 23) was not read.
 
+**A service bought from a supplier abroad: `NE-P-NR-19`.** The 2012 code taxes
+a service *"utilisé[] ou exploité[] au Niger"* (art. 216) and, when the
+supplier established abroad has no accredited representant, makes the tax
+*"due[] par le bénéficiaire de la prestation imposable"* (art. 249); art. 227
+lets a taxable person deduct the tax it *acquitted* on services used for
+taxable operations. The tax owed is credited to `4478` and declared in the new
+box `TVAPC`, which the total of the tax due adds; the same amount is debited
+to `4454` and deducted in `DEDBS` the same month. The golden year buys one
+such subscription. SYSCOHADA has no account for suppliers abroad, so the
+supplier sits on `4011` with the others. The 2012 code was repealed on 1
+January 2026; the article of the new code that carries the same rule was not
+read, and a reviewer should name it.
+
 ## What it does not say
 
 - **The new Code's article numbers.** Every 2012 citation above may carry a
@@ -106,9 +119,6 @@ générateur or the calendar).
 - **The printed VAT return and its box numbers.** Nothing public gives them;
   the telefiling platform is named in a secondary source only ("e-SISIC")
   and its URL was not verified, so it is not in the register.
-- **A reverse charge on services received from a non-resident.** Senegal and
-  Côte d'Ivoire have one; no Nigerien text was found that says the same, so
-  none is written here — it may exist and simply not have been read.
 - **A general numbering article, the way Senegal or Côte d'Ivoire have one.**
   No text found says, in so many words, that a Nigerien invoice carries a
   chronological and gapless number (unlike Senegal's art. 447-I-5 or Côte

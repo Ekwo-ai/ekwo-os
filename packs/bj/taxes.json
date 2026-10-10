@@ -374,5 +374,46 @@
     },
     "kind": "vat",
     "sequence": 160
+  },
+  {
+    "code": "BJ-P-NR-18-ND",
+    "name": "Services d'un prestataire étranger 18 %, TVA payée par le client, non déductible",
+    "description": "TVA due par le bénéficiaire d'une prestation immatérielle d'un prestataire étranger sans représentant au Bénin ; faute de facture normalisée d'un assujetti redevable, elle n'est pas déductible et s'ajoute au coût",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts (loi n° 2021-15), art. 234-2 — les prestations de services immatérielles (licences, conseil, traitement de données et fourniture d'information…) sont imposables au Bénin si le preneur y réside fiscalement ; art. 262 — l'assujetti non domicilié désigne un représentant et, « à défaut, la TVA ainsi que les pénalités sont dues par les destinataires ou bénéficiaires des opérations imposables » ; art. 244-1-d et 244-3 — pour être déductible, la TVA doit figurer sur une facture normalisée et être « facturée par un assujetti redevable », ce qu'un prestataire étranger n'est pas : ce pack la lit comme non déductible et la porte au coût du service — voir README.md. Taux de 18 % (art. 241)",
+    "source": "cgi",
+    "sequence": 165,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    },
+    "recoverable": false
   }
 ]

@@ -93,6 +93,7 @@ code,parent,type,reconcilable,name,sequence
 44567,445,asset_current,true,Crédit de TVA à reporter,920
 44571,445,liability_current,false,TVA collectée sur ventes,930
 44572,445,liability_current,false,TVA collectée sur les encaissements — prestations de services en attente,935
+44573,445,liability_current,false,TVA auto-liquidée — prestations d'assujettis établis hors d'Algérie,937
 447,44,liability_current,false,"Autres impôts, taxes et versements assimilés",940
 448,44,liability_current,false,État — charges à payer,950
 45,,liability_current,false,Groupe et associés,960

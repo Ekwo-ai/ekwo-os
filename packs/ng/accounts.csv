@@ -60,6 +60,7 @@ code,parent,type,reconcilable,name,sequence
 2100,,liability_payable,true,Trade creditors,590
 2110,,liability_current,false,Amounts owed to group and related companies,600
 2150,,liability_current,false,Nigeria Customs Service — import VAT payable,610
+2160,,liability_current,false,VAT withheld on supplies from non-residents — payable to the Service,615
 2200,,liability_current,false,VAT payable — output tax,620
 2210,,liability_current,true,VAT payable to the Service — net due on a filed return,630
 2220,,liability_current,false,Pay As You Earn payable,640

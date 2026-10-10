@@ -60,6 +60,12 @@
       "country": "CN",
       "vat_number": null,
       "auxiliary_code": "F0002"
+    },
+    {
+      "ref": "fourn-etranger",
+      "name": "Cloud Logiciels SAS",
+      "type": "supplier",
+      "country": "FR"
     }
   ],
   "documents": [
@@ -247,6 +253,22 @@
           "unit_price": 200000,
           "tax": "DZ-P-IMP-19",
           "account": "607"
+        }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "fourn-etranger",
+      "date": "2026-03-16",
+      "why": "Un abonnement à un logiciel en ligne facturé par un assujetti établi hors d'Algérie et utilisé en Algérie (art. 7) : la TVA est auto-liquidée par l'entreprise (art. 83, case TVAAL, compte 44573) et déduite le même mois (case DEDBS, compte 44566).",
+      "lines": [
+        {
+          "name": "Abonnement mensuel à un logiciel en ligne",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "DZ-P-AUTOLIQ-19",
+          "account": "628"
         }
       ]
     }

@@ -127,6 +127,20 @@ The taxes:
 | `GH-P-ZR` | 0 % | zero-rated purchase | — |
 | `GH-P-EX` | 0 % | exempt purchase | — |
 | `GH-P-IMP` | 20 % | import of goods, VAT and levies paid at customs | 15, 17 |
+| `GH-P-IMPSVC-ND` | 20 % | import of services used for exempt supplies, paid on a service import declaration, not recoverable | — |
+
+**A service bought from a supplier abroad is taxed only when it serves
+non-taxable supplies.** The Act charges the import of services (s. 1(b)) on
+the recipient (s. 2(c)), but its definition of an *import of services*
+(s. 72) reaches a service only to the extent it is used other than for making
+taxable supplies. A software subscription, hosting or an API that a fully
+taxable business uses for its taxable supplies therefore carries no tax and
+no code. The part used for exempt supplies is declared on a separate service
+import declaration and paid within twenty-one days after the period (s. 61),
+outside form DT 0135, and is never input tax: `GH-P-IMPSVC-ND` books VAT and
+levies at 20 % on the cost of the line and on account `2126`, with no box of
+the monthly return. The chart has no payable account for suppliers abroad, so
+a foreign supplier sits on the trade payables with the others.
 
 ## The return
 
@@ -172,12 +186,9 @@ Ghanaian date forward, which Ekwo does not see.
   the certificate as a credit in box 20. Neither side is a tax on a
   document: accounts 1156 (credits received) and 2130 (VAT withheld as an
   agent) are there to book it by hand.
-- **Import of services.** Since 2026 an imported service is taxed only to
-  the extent it is used other than to make taxable supplies (s. 72,
-  "import of services"), is declared on a separate service import
-  declaration and paid within twenty-one days (s. 61). A fully taxable
-  business owes nothing on it; a business with exempt supplies apportions
-  (Guideline § 10.3). No code carries it.
+- **Apportioning an imported service** between taxable and exempt use
+  (Guideline § 10.3): `GH-P-IMPSVC-ND` covers the part used for exempt
+  supplies, and the split is the bookkeeper's.
 - **Apportionment** of input tax for a business with both taxable and exempt
   supplies (s. 52 and the Fifth Schedule): box 23 is box 22.
 - **The Communications Service Tax and excise duty** charged into the value

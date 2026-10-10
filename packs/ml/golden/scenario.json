@@ -21,7 +21,8 @@
     { "ref": "client-sn", "name": "Négoce du Fleuve SA", "type": "customer", "country": "SN" },
     { "ref": "fourn-ml", "name": "Grossiste Bamako Informatique SARL", "type": "supplier", "country": "ML" },
     { "ref": "fourn-maint", "name": "Climatisation Services Bamako SARL", "type": "supplier", "country": "ML" },
-    { "ref": "fourn-livres", "name": "Librairie Scolaire du Mali SARL", "type": "supplier", "country": "ML" }
+    { "ref": "fourn-livres", "name": "Librairie Scolaire du Mali SARL", "type": "supplier", "country": "ML" },
+    {"ref": "fourn-etranger", "name": "Cloud Logiciels SAS", "type": "supplier", "country": "FR"}
   ],
   "documents": [
     {
@@ -142,6 +143,22 @@
       "why": "Un achat de produits agricoles non transformés hors du champ de la taxe (art. 195) : aucune taxe, aucune case atteinte — ce pack ne porte pas de code de taxe d'achat exonéré, la ligne est hors champ.",
       "lines": [
         { "name": "Mil et sorgho non transformés en gros", "quantity": 200, "unit_price": 1100, "tax": null, "account": "6011" }
+      ]
+    },
+    {
+      "ref": "AE1",
+      "type": "purchase_invoice",
+      "contact": "fourn-etranger",
+      "date": "2026-04-15",
+      "why": "Un abonnement à un logiciel en ligne facturé par un prestataire établi à l'étranger, sans représentant dans le pays : la TVA est payée par l'entreprise cliente pour le compte du prestataire (case TVAPC, compte 4478) et déduite le même mois (case DEDBS, compte 4454).",
+      "lines": [
+        {
+          "name": "Abonnement mensuel à un logiciel en ligne",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "ML-P-NR-18",
+          "account": "6343"
+        }
       ]
     }
   ],

@@ -308,5 +308,48 @@
     },
     "kind": "vat",
     "sequence": 130
+  },
+  {
+    "code": "CM-P-NR-1925",
+    "name": "Services d'un prestataire non établi au Cameroun 17,5 % + CAC (19,25 % déductible)",
+    "description": "TVA et centimes additionnels communaux payés par l'entreprise cliente pour le compte d'un prestataire sans établissement stable ni représentant au Cameroun, et déduits au titre du même mois",
+    "kind": "vat",
+    "rate": 19.25,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Code général des impôts, art. 129-2-b — une opération autre qu'une vente est réputée réalisée au Cameroun lorsque le service rendu est utilisé ou exploité au Cameroun, et art. 130 bis-3 — les prestations immatérielles sont taxables au lieu d'établissement du preneur ; art. 130-2 — à défaut de représentant accrédité, la taxe et les pénalités « sont payées par la personne cliente pour le compte de la personne n'ayant pas au Cameroun un établissement stable ou une installation professionnelle permanente » ; art. 143-1-a et b — la taxe est déductible au cours du mois auquel elle se rapporte et, « en ce qui concerne les fournisseurs étrangers », les conditions de facture « ne sont pas exigées » ; taux de 17,5 % majoré des centimes additionnels communaux, 19,25 %. La taxe due est portée en TVAPC (compte 4478), la taxe déduite en DEDBS (compte 4454)",
+    "source": "cgi",
+    "sequence": 135,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

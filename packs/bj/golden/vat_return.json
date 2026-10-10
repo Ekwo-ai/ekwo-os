@@ -37,9 +37,10 @@
         "EXO:base": "150000",
         "CAT:total": "400000",
         "TVA18:tax": "45000",
+        "TVAPC:tax": "90000",
         "DEDBS:tax": "324000",
         "DEDT:total": "324000",
-        "CRED:total": "279000"
+        "CRED:total": "189000"
       }
     }
   ]

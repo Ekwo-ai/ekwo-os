@@ -312,5 +312,48 @@
     },
     "kind": "vat",
     "sequence": 190
+  },
+  {
+    "code": "NE-P-NR-19",
+    "name": "Services d'un prestataire établi hors du Niger 19 %, TVA due par le bénéficiaire",
+    "description": "TVA due par le bénéficiaire d'une prestation d'un redevable établi hors du Niger sans représentant accrédité, et déduite au titre du même mois",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Code général des impôts (édition 2012), art. 216 — une opération autre qu'une vente est réputée faite au Niger lorsque le service rendu est utilisé ou exploité au Niger ; art. 249 — le redevable établi hors du Niger fait accréditer un représentant et, « à défaut, la taxe sur la valeur ajoutée et, le cas échéant, les pénalités qui s'y rapportent, sont dues par le bénéficiaire de la prestation imposable » ; art. 227 — l'assujetti déduit la taxe qu'il a acquittée sur les services entrant dans la réalisation d'opérations taxables. Le code de 2012 est abrogé au 1er janvier 2026 ; l'article du nouveau code qui reprend cette règle n'a pas été lu — voir README.md. Taux normal de 19 %",
+    "source": "cgi",
+    "sequence": 195,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "4454",
+          "box": "DEDBS",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4478",
+          "box": "TVAPC",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

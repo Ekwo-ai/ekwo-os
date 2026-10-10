@@ -80,6 +80,22 @@ here.
   taken from a continuous series. Art. 269 requires a partly-taxable seller to
   keep the taxable and non-taxable shares apart.
 
+**A service bought from a supplier abroad: `CF-P-NR-19`.** For intangible
+services — licences, data processing and the supply of information, consulting
+— *"la taxe sur la valeur ajoutée est applicable en Centrafrique lorsque le
+prestataire est établi dans un pays étranger et le bénéficiaire en
+Centrafrique"* (CGI, art. 250-2-b), and without an accredited representant the
+tax is paid *"par la personne cliente pour le compte de la personne n'ayant
+pas en Centrafrique un établissement stable"* (art. 250 bis), at 19 % (art.
+257). The tax owed is credited to `4478` and declared in the new box `TVAPC`,
+which the total of the tax due adds; the same amount is debited to `4454` and
+deducted in `DEDBS` the same month. The golden year buys one such
+subscription. SYSCOHADA has no account for suppliers abroad, so the supplier
+sits on `4011` with the others. Art. 259 lists the documents that support a
+deduction without naming this tax; the pack follows the CEMAC directive, art.
+22, which waives the invoice conditions for foreign suppliers, and a reviewer
+should confirm that the DGID applies it.
+
 ## What it does not say
 
 - **The 15-day deadline of art. 275 bis contradicts art. 275 bis 1** in the
@@ -115,10 +131,10 @@ here.
   withholding of art. 166 bis 1** on service fees paid abroad are both out of
   scope for the same reason: withheld at payment, or an income tax rather
   than a VAT on an invoice line.
-- **Reverse charge for non-resident suppliers**, cited by the research brief
-  only against the unadopted « PROJET DE LOI DE FINANCES 2025 » (no law
-  number, no promulgation date found): not modelled, because the source is a
-  draft, not a text in force.
+- **The 2025 draft finance law's reverse charge for non-resident suppliers**,
+  cited by the research brief only against the unadopted « PROJET DE LOI DE
+  FINANCES 2025 »: not modelled. The rule in force — the client pays for a
+  supplier with no representant (art. 250 bis) — is `CF-P-NR-19`, above.
 - **The e-Tax portal** launched, per press sources (one returning HTTP 403),
   around 24 March 2025 for télédéclaration and télépaiement. No official URL
   and no technical specification were found — a guessed subdomain

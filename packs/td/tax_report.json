@@ -98,6 +98,14 @@
       "source": "cgi"
     },
     {
+      "box": "TVAPC",
+      "kind": "tax",
+      "name": "TVA due pour le compte de prestataires non établis au Tchad",
+      "sequence": 77,
+      "legal_reference": "Directive n° 1/99/CEMAC-028-CM-03, art. 10 — taxe payée par la personne cliente pour le compte d'un prestataire sans établissement stable dans l'État",
+      "source": "directive-cemac-1999"
+    },
+    {
       "box": "TVAB",
       "kind": "total",
       "name": "Total de la taxe exigible",
@@ -106,7 +114,8 @@
         "TVA1925",
         "CAC1925",
         "TVA9",
-        "TVADUE"
+        "TVADUE",
+        "TVAPC"
       ],
       "legal_reference": "Code général des impôts, art. 229-III",
       "source": "cgi"

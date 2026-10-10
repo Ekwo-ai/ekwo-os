@@ -71,11 +71,19 @@
       "source": "cgi"
     },
     {
+      "box": "TVAPC",
+      "kind": "tax",
+      "name": "TVA payée pour le compte de prestataires non établis au Mali",
+      "sequence": 75,
+      "legal_reference": "Code général des impôts, art. 197 — taxe payée par la personne cliente pour le compte d'un prestataire sans établissement au Mali",
+      "source": "cgi"
+    },
+    {
       "box": "TVAB",
       "kind": "total",
       "name": "Total de la taxe exigible",
       "sequence": 80,
-      "plus": ["TVA18", "TVA5"],
+      "plus": ["TVA18", "TVA5", "TVAPC"],
       "legal_reference": "Code général des impôts, Livre de procédures fiscales, art. 110-2",
       "source": "cgi"
     },
