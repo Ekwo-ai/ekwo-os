@@ -112,7 +112,7 @@
         { "code": "L1.5", "parent": "L1", "name": "미지급관세등", "sequence": 400, "sign": -1,
           "rules": [{ "kind": "account_code", "code_from": "2135" }], "legal_reference": "수입 시 세관에 납부할 관세 및 부가가치세.", "source": "vat-act" },
         { "code": "L1.6", "parent": "L1", "name": "예수금", "sequence": 410, "sign": -1,
-          "rules": [{ "kind": "account_code", "code_from": "2140" }], "legal_reference": "원천징수세액 등 일시 예수액.", "source": "kasb" },
+          "rules": [{ "kind": "account_code", "code_from": "2140" }, { "kind": "account_code", "code_from": "2142" }], "legal_reference": "원천징수세액 등 일시 예수액. 대리납부 부가가치세(2142) 포함.", "source": "kasb" },
         { "code": "L1.7", "parent": "L1", "name": "부가세예수금", "sequence": 420, "sign": -1,
           "rules": [{ "kind": "account_code", "code_from": "2150" }], "legal_reference": "부가가치세법 제31조에 따라 매출 시 거래징수한 세액.", "source": "vat-act" },
         { "code": "L1.8", "parent": "L1", "name": "미지급세금", "sequence": 430, "sign": -1,

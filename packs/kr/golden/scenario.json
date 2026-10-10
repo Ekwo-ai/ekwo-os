@@ -18,7 +18,8 @@
     { "ref": "supp-kr", "name": "부산부품 주식회사", "type": "supplier", "country": "KR" },
     { "ref": "supp-entertain", "name": "한정식 청담", "type": "supplier", "country": "KR" },
     { "ref": "supp-food", "name": "청정농산 영농조합법인", "type": "supplier", "country": "KR" },
-    { "ref": "customs", "name": "인천본부세관", "type": "supplier", "country": "KR" }
+    { "ref": "customs", "name": "인천본부세관", "type": "supplier", "country": "KR" },
+    {"ref": "supp-foreign", "name": "Pacific Events Platform Inc.", "type": "supplier", "country": "US"}
   ],
   "documents": [
     {
@@ -90,6 +91,22 @@
       "ref": "P6", "type": "purchase_invoice", "contact": "supp-kr", "date": "2026-11-05",
       "why": "표준세율 10%의 국내 과세 매입.",
       "lines": [{ "name": "원재료", "quantity": 10, "unit_price": 300000, "tax": "KR-P-10", "account": "5120" }]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign",
+      "date": "2026-11-20",
+      "why": "국내사업장이 없는 외국법인의 온라인 행사 플랫폼 이용료를 거래처 접대에 사용: 제39조에 따른 불공제 대상이므로 제52조의 대리납부 대상(계정 2142), 매입세액 공제 없이 비용의 원가.",
+      "lines": [
+        {
+          "name": "거래처 초청 온라인 행사 플랫폼 이용료",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "KR-P-PROXY-10-NC",
+          "account": "6210"
+        }
+      ]
     }
   ],
   "payments": [

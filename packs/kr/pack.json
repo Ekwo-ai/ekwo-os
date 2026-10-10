@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "KR",
   "name": "대한민국",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "schema_min": "20260917170000",
   "seed_sequence": 54,
   "released_at": "2026-09-22",

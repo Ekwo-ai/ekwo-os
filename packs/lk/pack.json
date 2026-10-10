@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "LK",
   "name": "Sri Lanka",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "schema_min": "20260923110000",
   "seed_sequence": 127,
   "released_at": "2026-10-09",
@@ -30,7 +30,7 @@
         "title": "Notice SEC/PN/VAT/2026-03 of 3 July 2026 — Value Added Tax (Amendment) Act No. 14 of 2026, certified on 30 June 2026: financial services at 20.5 % for taxable periods commencing on or after 1 July 2026 and exempt from the SSCL (Item 25 of Part II of the First Schedule to the SSCL Act), registration thresholds unchanged, VAT on services supplied by non-residents through electronic platforms from 1 July 2026, schedules submitted from the first day of the period, secured point-of-sale machines",
         "publisher": "Inland Revenue Department of Sri Lanka",
         "url": "https://www.ird.gov.lk/en/Lists/Latest%20News%20%20Notices/Attachments/799/PN_VAT_2026-03_New_E.pdf",
-        "consulted_on": "2026-10-09",
+        "consulted_on": "2026-10-10",
         "kind": "guidance"
       },
       {
@@ -170,6 +170,13 @@
     }
   },
   "languages": [],
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Value Added Tax Act No. 14 of 2002, section 2(1) — the tax is charged on the supply of goods and services in Sri Lanka by a registered person and on the importation of goods; no section makes a Sri Lankan buyer account for VAT on a service a non-resident supplies from abroad. Section 25N, inserted by the Value Added Tax (Amendment) Act No. 14 of 2026 (IRD notice PN/VAT/2026-03) — from 1 July 2026, VAT \"shall not be charged on services supplied through an electronic platform by a non-resident person if the recipient of the services is a VAT-registered person in Sri Lanka\"; the non-resident registers (section 25L) and charges VAT only to customers who are not",
+      "source": "vat-amend-2026"
+    }
+  ],
   "journals": [
     {
       "code": "SAL",

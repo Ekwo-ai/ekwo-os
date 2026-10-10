@@ -108,7 +108,8 @@
     "7130": "Loss on disposal of property and equipment",
     "7140": "Miscellaneous loss",
     "7145": "Rounding difference",
-    "8100": "Corporate income tax expense"
+    "8100": "Corporate income tax expense",
+    "2142": "VAT collected for proxy payment"
   },
   "journals": {
     "SAL": "Sales journal",
@@ -126,7 +127,8 @@
     "KR-P-10": "Taxable purchase 10% (tax invoice received, general)",
     "KR-P-10-NC": "Taxable purchase 10% (input tax not creditable)",
     "KR-P-IMP-10": "Imported goods 10% (collected by customs)",
-    "KR-P-EXO": "Exempt purchase"
+    "KR-P-EXO": "Exempt purchase",
+    "KR-P-PROXY-10-NC": "Proxy payment 10% (services of a foreign corporation without a domestic place of business, input tax not deductible)"
   },
   "tax_report_boxes": {
     "1:base": "Tax invoice issued — taxable base",

@@ -232,5 +232,48 @@
       ]
     },
     "sequence": 100
+  },
+  {
+    "code": "VN-P-NN-DV-5",
+    "name": "Mua dịch vụ của tổ chức nước ngoài không có cơ sở thường trú tại Việt Nam — khấu trừ, nộp thay (tỷ lệ 5% trên doanh thu)",
+    "description": "Thuế GTGT bên Việt Nam khấu trừ, nộp thay tổ chức nước ngoài không có cơ sở thường trú tại Việt Nam khi mua dịch vụ, tính theo tỷ lệ 5% trên doanh thu, được khấu trừ đầu vào khi có chứng từ nộp thuế",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2025-07-01",
+    "legal_reference": "Luật Thuế giá trị gia tăng số 48/2024/QH15, Điều 4 khoản 3 — tổ chức sản xuất, kinh doanh tại Việt Nam mua dịch vụ của tổ chức nước ngoài không có cơ sở thường trú tại Việt Nam là người nộp thuế; khoản 4 — tổ chức kinh doanh áp dụng phương pháp khấu trừ mua dịch vụ của nhà cung cấp nước ngoài qua kênh thương mại điện tử hoặc nền tảng số thực hiện khấu trừ, nộp thay; Điều 12 khoản 2 điểm a3 và b2 — tổ chức nước ngoài chưa thực hiện đầy đủ chế độ kế toán, hóa đơn nộp thuế theo phương pháp tính trực tiếp, tỷ lệ 5% trên doanh thu đối với dịch vụ; Điều 11 khoản 1 điểm c — thuế GTGT đầu vào được khấu trừ gồm chứng từ nộp thuế đối với trường hợp mua dịch vụ quy định tại khoản 3, khoản 4 Điều 4, đáp ứng điều kiện Điều 14. Số thuế ghi Có 33313 (nộp thay, kê khai riêng) và Nợ 1333 (chờ khấu trừ), không vào chỉ tiêu nào của tờ khai 01/GTGT trong kỳ: khi có chứng từ nộp thuế, kế toán chuyển sang 1331 và chỉ tiêu [23], [24] bằng bút toán thủ công — xem README.md",
+    "source": "vat-law-48",
+    "sequence": 105,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1333"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "33313"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1333"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "33313"
+        }
+      ]
+    }
   }
 ]

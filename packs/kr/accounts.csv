@@ -47,6 +47,7 @@ code,parent,type,reconcilable,name,sequence
 2130,,liability_current,false,미지급비용,430
 2135,,liability_current,false,미지급관세등,440
 2140,,liability_current,false,예수금,450
+2142,,liability_current,false,대리납부 부가가치세,452
 2145,,liability_current,false,미지급배당금,455
 2150,,liability_current,false,부가세예수금,460
 2155,,liability_current,true,미지급세금,470

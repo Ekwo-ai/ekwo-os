@@ -131,7 +131,13 @@ a separate return this pack does not carry — `docs/packs.md` states plainly
 that a pack carries one form. The postings book the cost (`tax_on_base`) and
 the liability (a `tax` posting to `2102`, the negative `factor` flipping the
 ledger side exactly as `US-CA-P-USE-725` does for California's use tax) and
-stop there.
+stop there. Its treatment is `foreign_services_received` — a service bought from a
+supplier not established in Malaysia, the recipient accounting for the tax —
+rather than the `self_assessed` it first carried, which the format keeps for
+a use tax with no supply behind it. A software subscription, hosting or an
+API billed from abroad is exactly this case, and the golden year buys one.
+**A foreign supplier** sits on the trade payables with the others: the
+chart has no separate account for suppliers abroad.
 
 **`MY-P-IMPORT` is the same shape for goods.** Sales Tax on an import is
 assessed by the Royal Malaysian Customs Department on the customs declaration,

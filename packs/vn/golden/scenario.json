@@ -21,7 +21,8 @@
     { "ref": "supp-office", "name": "Công ty TNHH Thiết bị Văn phòng Đông Á", "type": "supplier", "country": "VN" },
     { "ref": "supp-fertilizer", "name": "Hợp tác xã Nông sản Xanh Cần Thơ", "type": "supplier", "country": "VN" },
     { "ref": "supp-bank", "name": "Ngân hàng TMCP Đầu tư và Phát triển Việt Nam", "type": "supplier", "country": "VN" },
-    { "ref": "supp-cnc", "name": "Kobayashi Machinery Co., Ltd.", "type": "supplier", "country": "JP" }
+    { "ref": "supp-cnc", "name": "Kobayashi Machinery Co., Ltd.", "type": "supplier", "country": "JP" },
+    {"ref": "supp-cloud", "name": "Mekong Cloud Software Pte. Ltd.", "type": "supplier", "country": "SG"}
   ],
   "documents": [
     {
@@ -142,6 +143,22 @@
       "why": "Trả lại một phần nhôm tấm nguyên liệu kém chất lượng thuộc hóa đơn P1, cùng thuế suất 10%: giảm 9.000.000 đồng ở chỉ tiêu [23] và 900.000 đồng ở chỉ tiêu [24].",
       "lines": [
         { "name": "Trả lại: nhôm tấm nguyên liệu kém chất lượng", "quantity": 100, "unit_price": 90000, "tax": "VN-P-10", "account": "152" }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_invoice",
+      "contact": "supp-cloud",
+      "date": "2026-06-18",
+      "why": "Thuê bao phần mềm đám mây của tổ chức nước ngoài không có cơ sở thường trú tại Việt Nam (Điều 4 khoản 3, 4): bên Việt Nam khấu trừ, nộp thay 5% trên doanh thu (Có 33313) và chờ chứng từ nộp thuế để khấu trừ đầu vào (Nợ 1333), không vào tờ khai 01/GTGT quý này.",
+      "lines": [
+        {
+          "name": "Thuê bao phần mềm đám mây hằng tháng",
+          "quantity": 1,
+          "unit_price": 20000000,
+          "tax": "VN-P-NN-DV-5",
+          "account": "642"
+        }
       ]
     }
   ],

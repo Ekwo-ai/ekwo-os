@@ -166,6 +166,50 @@
     "sequence": 70
   },
   {
+    "code": "KR-P-PROXY-10-NC",
+    "name": "대리납부 10%(국내사업장이 없는 외국법인 등의 용역, 매입세액 불공제분)",
+    "description": "국내사업장이 없는 비거주자·외국법인으로부터 공급받은 용역을 면세사업 또는 매입세액 불공제 대상에 사용하는 경우, 대가를 지급하는 때에 징수하여 대리납부하는 부가가치세. 매입세액으로 공제되지 아니하므로 해당 비용의 원가가 된다",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "recoverable": false,
+    "valid_from": "2013-07-01",
+    "legal_reference": "VAT Act (부가가치세법), art. 52(1) — a person who is supplied in Korea with services or rights by a non-resident or foreign corporation without a domestic place of business collects the VAT when paying the consideration and pays it on the supplier's behalf (대리납부), except where the services are used for a taxable business — but including, even then, services whose input tax is not deductible under art. 39; the proxy payment is reported on its own return (대리납부신고서) by the filing deadline of the period in which the consideration was paid, not on form 21. A taxable business that uses such a service for its taxable supplies owes nothing and books it with no tax code. Here the tax is a cost of the line (tax_on_base) and a liability on account 2142, on no box",
+    "source": "vat-act",
+    "sequence": 75,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2142"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2142"
+        }
+      ]
+    }
+  },
+  {
     "code": "KR-P-EXO",
     "name": "면세 매입",
     "description": "면세 사업자로부터 계산서를 받고 매입하는 재화·용역",

@@ -237,6 +237,50 @@
     "sequence": 100
   },
   {
+    "code": "TW-P-36-5-NC",
+    "name": "購買國外勞務 5%（第三十六條，買受人繳納，不得扣抵）",
+    "description": "向在中華民國境內無固定營業場所之外國事業購買勞務，買受人依第三十六條按給付額計算繳納之營業稅；不得扣抵，列為勞務之成本",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "recoverable": false,
+    "valid_from": "2001-07-09",
+    "legal_reference": "Value-added and Non-value-added Business Tax Act, article 36(1) — a purchaser of services sold by a foreign enterprise with no fixed place of business in Taiwan \"shall, prior to the fifteenth day of the period following the period in which the payment is made, compute the business tax based on the payment amount in accordance with the tax rate provided in Article 10 and pay the tax\"; however, a purchaser computing its tax under Chapter 4, Section 1, whose purchased services \"are used solely in conducting business in taxable goods or services\", is exempted — such a purchase takes no tax code — and a purchaser concurrently engaged in exempt business pays the proportion determined by the Ministry of Finance. Article 36-1 — schools and research institutions are not required to pay. Paid on its own, outside form 401 (box 74 is a memo line): the tax is a cost of the line (tax_on_base) and a liability on 2195 應付稅捐－其他, on no box. For a concurrent business, the line carries the share the Ministry's proportion makes payable — see README.md",
+    "source": "bt-act",
+    "sequence": 105,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2195"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2195"
+        }
+      ]
+    }
+  },
+  {
     "code": "TW-P-EXO",
     "name": "向免稅事業或小規模營業人進貨",
     "description": "供應商屬免稅或未使用統一發票，未載明營業稅額",

@@ -71,6 +71,24 @@ The taxes:
 | `PK-P-EX` | 0 % | exempt purchase | — |
 | `PK-P-IMP-18` | 18 % | import, tax paid at Customs | 3, 3T |
 | `PK-P-PRA-16`, `-SRB-15`, `-KPRA-15`, `-BRA-15`, `-ICT-15` | 15–16 % | services bought, one input account per authority | — |
+| `PK-P-PRA-16-NR`, `PK-P-SRB-15-NR` | 16 %, 15 % | service from a non-resident, reverse charge on the recipient (Punjab, Sindh) | — |
+
+**A service bought from a supplier abroad is a provincial reverse charge.**
+The federal Sales Tax Act taxes goods; a software subscription, hosting or an
+API billed by a non-resident is a *service*, and it is the province where it
+is received that taxes it. The Punjab Sales Tax on Services Act, 2012, and the
+Sindh Sales Tax on Services Act, 2011, both make a service provided to a
+resident person by a non-resident person in the course of an economic
+activity a taxable service (s. 3(2) of each), treat an office inside the
+province and one outside it as separate persons (s. 3(3)), and put the
+liability on *"the person receiving the service"* (Punjab s. 11(2), formerly
+s. 9(2); Sindh s. 9(2)). `PK-P-PRA-16-NR` and `PK-P-SRB-15-NR` book the tax
+owed on the province's payable account (`2103`, `2104`) and the same amount
+on its input account (`1151`, `1152`), adjustable like the other provincial
+inputs, on no box of the federal STR-7. Khyber Pakhtunkhwa, Balochistan and
+the Islamabad Capital Territory have services statutes of the same shape; their
+reverse-charge sections were not read for this pack, so no code carries them
+yet. A foreign supplier sits on the trade payables with the others.
 
 ## The federal return
 

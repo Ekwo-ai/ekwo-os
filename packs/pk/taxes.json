@@ -965,5 +965,91 @@
       ]
     },
     "sequence": 340
+  },
+  {
+    "kind": "sales_tax",
+    "code": "PK-P-PRA-16-NR",
+    "name": "Service from a non-resident, Punjab sales tax on services 16 % (PRA), reverse charge",
+    "description": "A service provided by a non-resident person to the company's office in the Punjab: the company, as recipient, pays the Punjab sales tax on services and adjusts it like any other PRA input",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2025-07-01",
+    "legal_reference": "Punjab Sales Tax on Services Act, 2012, s. 3(2) — a service not provided by a registered person is a taxable service if it is provided to a resident person by a non-resident person in the course of an economic activity, whether or not the resident person is an end consumer; s. 3(3) — an office in the Punjab and one outside it are separate persons; s. 11(2) (as renumbered, formerly s. 9(2)) — the liability to pay the tax is on the person receiving the service; s. 4 — a registered recipient deducts the whole amount of tax and pays it to the Government. Rate 16 %. The tax owed is booked on 2103 and the input on 1151, adjustable against the tax collected for the same authority like PK-P-PRA-16; neither reaches a box of the federal return, the provincial return not being carried",
+    "source": "pra-act",
+    "sequence": 350,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1151"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2103"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1151"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2103"
+        }
+      ]
+    }
+  },
+  {
+    "kind": "sales_tax",
+    "code": "PK-P-SRB-15-NR",
+    "name": "Service from a non-resident, Sindh sales tax on services 15 % (SRB), reverse charge",
+    "description": "A service provided by a non-resident person to the company's office in Sindh: the company, as recipient, pays the Sindh sales tax on services and adjusts it like any other SRB input",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2025-07-01",
+    "legal_reference": "Sindh Sales Tax on Services Act, 2011, s. 3(2) — a service not provided by a registered person is a taxable service if it is provided to a resident person by a non-resident person in the course of an economic activity (Explanation: whether or not the resident person is an end consumer); s. 3(3) — an office in Sindh and one outside it are separate persons; s. 9(2) — where a service is taxable by virtue of s. 3(2), \"the liability to pay the tax shall be on the person receiving the service\". Rate 15 %. The tax owed is booked on 2104 and the input on 1152, adjustable like PK-P-SRB-15 within the limits of s. 15A and the rules; neither reaches a box of the federal return",
+    "source": "srb-act",
+    "sequence": 360,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1152"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2104"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1152"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2104"
+        }
+      ]
+    }
   }
 ]

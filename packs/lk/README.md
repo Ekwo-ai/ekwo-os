@@ -87,6 +87,11 @@ by non-residents through electronic platforms, with a registration threshold of
 LKR 15 million a quarter or 60 million over twelve months, and no VAT on them
 when the recipient is VAT-registered (new s. 25N). The supplier registers and
 charges; the buyer has no reverse charge, so no purchase code exists for it.
+The same is true of any other service bought from abroad: the Act charges
+supplies made in Sri Lanka by a registered person and imports of goods
+(s. 2(1)), and no section makes the Sri Lankan buyer account for the tax on a
+service a non-resident supplies from abroad. `pack.json` says so in
+`not_taxed`; such a purchase is booked with no tax code.
 
 ## The Social Security Contribution Levy (SSCL)
 

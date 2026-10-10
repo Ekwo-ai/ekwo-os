@@ -95,6 +95,12 @@
       "name": "Gulberg Law Associates",
       "type": "supplier",
       "country": "PK"
+    },
+    {
+      "ref": "supp-cloud",
+      "name": "Indus Cloud Software Inc.",
+      "type": "supplier",
+      "country": "US"
     }
   ],
   "documents": [
@@ -479,6 +485,22 @@
           "unit_price": 100000,
           "tax": "PK-P-18",
           "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-009",
+      "type": "purchase_invoice",
+      "contact": "supp-cloud",
+      "date": "2026-10-14",
+      "why": "A cloud software subscription from a non-resident, used by the Lahore office: a taxable service under s. 3(2) of the Punjab Act, the company liable as recipient — 16 % owed to the PRA (2103) and the same amount as PRA input (1151), on no box of the federal STR-7.",
+      "lines": [
+        {
+          "name": "Monthly cloud software subscription",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "PK-P-PRA-16-NR",
+          "account": "6350"
         }
       ]
     }

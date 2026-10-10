@@ -98,10 +98,23 @@ non-creditable purchase and an import.
 since 1 July 2024) computes the tax as a rate of turnover rather than an
 invoice-by-invoice credit mechanism, files annually and is a different
 scheme end to end — like Japan's 簡易課税, it is a form this pack does not
-declare. 대리납부 (제52조, a domestic buyer paying the VAT of a foreign
-digital-service supplier on that supplier's behalf) is not modelled either;
-it is the closest thing this pack could have carried to a reverse charge and
-is left for a future pack to add with its own golden coverage.
+declare.
+
+**A service bought from a supplier abroad: 대리납부 (제52조).** A software
+subscription, hosting or an API supplied in Korea by a non-resident or a
+foreign corporation without a domestic place of business is taxed through
+the buyer, who collects the VAT when it pays the consideration and pays it on
+the supplier's behalf — *except* when the service is used for a taxable
+business, since the tax would only be credited back; services whose input tax
+is not deductible under 제39조 are caught again. So a taxable business using
+such a service for its taxable supplies owes nothing and books it with no
+tax code. `KR-P-PROXY-10-NC` carries the other case — a service used for an
+exempt business or for a 제39조 purpose such as 기업업무추진비: the 10 % is a
+cost of the line (`tax_on_base`) and a liability on the new `2142` 대리납부
+부가가치세, reported on the separate 대리납부신고서 by the deadline of the
+period in which the consideration was paid, on no box of form 21. The golden
+year buys one such service for client entertainment. A foreign supplier
+sits on `2110` 외상매입금 with the others.
 
 ## The return
 

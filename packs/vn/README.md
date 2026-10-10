@@ -88,14 +88,26 @@ Ekwo's profiles (`peppol-bis-3`, `factur-x-en16931`, `pint-*`) describe that.
 Declaring one anyway would make `describePack()` tell an installer that Ekwo
 writes and transmits a compliant Vietnamese e-invoice, which it does not.
 
-**The foreign contractor withholding (thuế nhà thầu nước ngoài) is not
-modelled.** Thông tư 103/2014/TT-BTC, the text that has governed it for over
-a decade, appears from several convergent professional sources to lose effect
-on 1 July 2026, superseded by a text this pack's research could not identify
-with certainty — two different circular numbers were found in secondary
-sources, neither confirmed on an official page. Rather than code a withholding
-tax against a citation that might be wrong on 22 September 2026, the pack
-carries none, and the gap is recorded in `docs/international.md`.
+**A service bought from a supplier abroad: the VAT part of the foreign
+contractor regime, from the 2024 VAT Law itself.** Luật 48/2024/QH15 makes a
+business in Vietnam that buys a service from a foreign organisation without
+a permanent establishment the taxpayer (Điều 4 khoản 3), and has a business
+on the deduction method that buys through an e-commerce channel or a digital
+platform withhold and pay on the supplier's behalf (khoản 4). A foreign
+organisation without full accounting pays on the direct method, 5 % of the
+revenue for a service (Điều 12 khoản 2 điểm a3, b2), and the buyer deducts
+that tax as input once it holds the tax payment document (Điều 11 khoản 1
+điểm c, with Điều 14). `VN-P-NN-DV-5` books it: 5 % of the line credited to
+the new `33313` (paid on the separate foreign-contractor declaration) and
+debited to the new `1333`, awaiting the payment document, on no line of form
+01/GTGT in the period of the invoice; when the tax is paid, the bookkeeper
+moves it to `1331` and to lines [23]/[24] by a manual entry — the limit
+`packs/ar/` documents for a credit dated after its document. The corporate
+income tax part of the foreign contractor regime, and whatever circular
+replaced Thông tư 103/2014/TT-BTC on 1 July 2026, are still not modelled:
+two circular numbers were found in secondary sources, neither confirmed on an
+official page, and the gap is recorded in `docs/international.md`. A
+foreign supplier sits on the trade payables with the others.
 
 **Import VAT is carried for the standard rate only** (`VN-P-IMP-10`). A
 complete pack would want one code per rate, the way `packs/jp` does for its
@@ -127,4 +139,6 @@ least once.
    Circular 99/2025/TT-BTC confirming that numbering is largely carried
    forward — not checked account by account.
 4. Whether the successor to Thông tư 103/2014/TT-BTC (foreign contractor
-   withholding) is now in force, and its rates.
+   withholding) is now in force, and its rates — `VN-P-NN-DV-5` rests on the
+   2024 VAT Law alone (5 % of revenue for a service, deduction on the tax
+   payment document).

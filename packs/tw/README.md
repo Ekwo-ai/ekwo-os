@@ -111,6 +111,20 @@ taxpayer does, each is a different taxpayer classification filed on a
 different form, and none is modelled here. See "What this pack does not
 carry".
 
+**Services bought from a foreign entity (article 36).** A software
+subscription, hosting or an API sold by a foreign enterprise with no fixed
+place of business in Taiwan puts the business tax on the purchaser, who
+computes it on the payment and pays it by the 15th of the following period —
+*except* a general-method taxpayer whose purchased services are used solely
+for its taxable business, which is exempted and books such a purchase with
+no tax code. `TW-P-36-5-NC` carries the case where the tax is due: 5 % paid
+on its own, outside form 401 (whose box 74, 購買國外勞務, is a memo line), a
+cost of the line (`tax_on_base`) and a liability on `2195` 應付稅捐－其他. A
+business that also makes exempt supplies pays the proportion the Ministry of
+Finance determines, whose formula this pack's research could not source: the
+line then carries that payable share, computed by the bookkeeper. A foreign
+supplier sits on `2171` 應付帳款 with the others.
+
 **The zero rate keeps the deduction; an exemption does not.** Article 7
 zero-rates the export of goods (`TW-S-0-GOODS`) and, on a separate item, a
 service related to export or a service supplied within Taiwan but used
@@ -340,17 +354,11 @@ profile. Written up in full under "From Taiwan" in
   raised from 1 January 2025 under article 26 — cited for context in the
   source register, and not modelled, because this pack carries no
   small-scale tax code at all.
-- **The pro-rata reverse charge of article 36** on a service bought from a
-  foreign entity with no fixed place of business in Taiwan. A general-method
-  taxpayer whose purchased services are used solely for its own taxable
-  operations is exempt from the self-assessment article 36 otherwise
-  imposes; one with a concurrent exempt operation owes it on a proportion
-  "決定" (set) by the Ministry of Finance, whose formula this pack's
-  research could not source. Rather than assume the wholly-taxable case —
-  which the golden company's own exempt land sale would make inaccurate —
-  this pack carries no code for article 36 at all. Form 401's own box 74
-  (購買國外勞務) is the memo line such a purchase would otherwise be
-  reported against.
+- **The Ministry of Finance's proportion under article 36** for a business
+  that concurrently makes exempt supplies: `TW-P-36-5-NC` (above, *Services
+  bought from a foreign entity*) takes the amount it is given, and the share
+  is the bookkeeper's to compute; for the same reason the golden year, whose
+  company sells exempt land, buys no such service.
 - **Assets.json.** No fixed-asset depreciation module: this pack could not
   verify a Taiwanese accounting convention for useful lives distinct from
   the Ministry of Finance's own depreciation schedules for income-tax

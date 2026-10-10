@@ -158,7 +158,8 @@
     "TW-P-5-NC": "Purchases and expenses 5% (non-deductible)",
     "TW-P-IMP-5": "Import of goods 5% (levied by Customs)",
     "TW-P-EXO": "Purchase from an exempt or small-scale entity",
-    "TW-P-NA": "Purchase outside the scope of business tax"
+    "TW-P-NA": "Purchase outside the scope of business tax",
+    "TW-P-36-5-NC": "Services bought from a foreign entity 5% (article 36, paid by the purchaser, not creditable)"
   },
   "tax_report_boxes": {
     "21": "Taxable sales base, total",

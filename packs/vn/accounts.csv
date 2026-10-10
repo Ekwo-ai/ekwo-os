@@ -12,6 +12,7 @@ code,parent,type,reconcilable,name,sequence
 133,,asset_current,true,Thuế giá trị gia tăng được khấu trừ,70
 1331,133,asset_current,false,"Thuế GTGT được khấu trừ của hàng hóa, dịch vụ",71
 1332,133,asset_current,false,Thuế GTGT được khấu trừ của tài sản cố định,72
+1333,133,asset_current,false,Thuế GTGT nộp thay nhà cung cấp nước ngoài chờ khấu trừ,73
 136,,asset_current,false,Phải thu nội bộ,80
 138,,asset_current,false,Phải thu khác,90
 1381,138,asset_current,false,Tài sản thiếu chờ xử lý,91
@@ -53,6 +54,7 @@ code,parent,type,reconcilable,name,sequence
 3331,333,liability_current,true,Thuế giá trị gia tăng phải nộp,271
 33311,3331,liability_current,false,Thuế giá trị gia tăng đầu ra,272
 33312,3331,liability_current,false,Thuế giá trị gia tăng hàng nhập khẩu,273
+33313,3331,liability_current,false,Thuế GTGT khấu trừ nộp thay nhà cung cấp nước ngoài,273
 3332,333,liability_current,false,Thuế tiêu thụ đặc biệt,274
 3333,333,liability_current,false,"Thuế xuất, nhập khẩu",275
 3334,333,liability_current,false,Thuế thu nhập doanh nghiệp,276
