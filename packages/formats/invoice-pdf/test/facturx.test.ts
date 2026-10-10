@@ -5,40 +5,16 @@
  * never imports it, and the caller passes `embedFacturX` in.
  */
 
-import { generateCiiXml, type Invoice } from '@ekwo-ai/factur-x';
+import { generateCiiXml } from '@ekwo-ai/factur-x';
 import { embedFacturX, extractFacturX, readFacturX } from '@ekwo-ai/factur-x/pdf';
 import { PDFDocument, PDFName, PDFRawStream, decodePDFRawStream } from 'pdf-lib';
 import { describe, expect, it } from 'vitest';
 import { renderFacturXPdf, renderInvoicePdf } from '../src/index.js';
-import { englishInvoice, pngLogo } from './fixtures.js';
-
-/** The same invoice as the fixture, as the Factur-X brick takes it. */
-const cii: Invoice = {
-  number: 'INV-2026-0042',
-  issueDate: '2026-03-31',
-  dueDate: '2026-04-30',
-  deliveryDate: '2026-03-28',
-  currency: 'EUR',
-  seller: {
-    name: 'Example Consulting Limited',
-    vatId: 'IE1234567T',
-    address: { line1: '1 Example Street', postalCode: 'D02 X285', city: 'Dublin', country: 'IE' },
-  },
-  buyer: {
-    name: 'Fictional Customer GmbH',
-    vatId: 'DE123456789',
-    address: { line1: 'Teststraße 10', postalCode: '10115', city: 'Berlin', country: 'DE' },
-  },
-  lines: [
-    { id: '2', name: 'Consulting days', quantity: 2, unitCode: 'DAY', unitPrice: 950, vatRate: 21, vatCategory: 'S' },
-    { id: '3', name: 'Travel', quantity: 1, unitPrice: 250, vatRate: 21, vatCategory: 'S' },
-  ],
-  payment: { meansCode: '58', iban: 'IE29AIBK93115212345678' },
-};
+import { englishCii, englishInvoice, pngLogo } from './fixtures.js';
 
 describe('the Factur-X chain', () => {
   it('renders the PDF, embeds the CII, and the Factur-X reader reads the same invoice back', async () => {
-    const xml = generateCiiXml(cii, { profile: 'en16931' });
+    const xml = generateCiiXml(englishCii(), { profile: 'en16931' });
     const date = new Date('2026-03-31T12:00:00Z');
     const rendered = await renderFacturXPdf(englishInvoice({ logo: pngLogo() }), { xml, profile: 'en16931', embed: embedFacturX, date });
 

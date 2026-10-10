@@ -122,9 +122,18 @@ export function refuseRightToLeft(text: string, where: string): void {
   }
 }
 
-export function typesetter(doc: PDFDocument, extra: readonly ExtraFont[], locale: string): Typesetter {
+/**
+ * `first`, the typeface of the theme, is tried before the embedded fonts;
+ * `extra`, the fonts of `options.fonts`, after them.
+ */
+export function typesetter(doc: PDFDocument, extra: readonly ExtraFont[], locale: string, first: ExtraFont | null = null): Typesetter {
   doc.registerFontkit(fontkit);
   const families: Family[] = [];
+  if (first !== null) {
+    const regular = face(bytesOf(first.regular), 'theme.font.regular');
+    const bold = first.bold === undefined ? regular : face(bytesOf(first.bold), 'theme.font.bold');
+    families.push({ name: 'theme.font', regular, bold });
+  }
   const lazy = (base64: string, name: string): Face => {
     let built: Face | undefined;
     return {

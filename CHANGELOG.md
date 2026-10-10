@@ -32,6 +32,12 @@ somewhere has already run it.
   embeds the CII the e-invoicing adapter writes from the same books, which
   makes it a Factur-X PDF/A-3. Nothing is recorded: keeping the copy that was
   sent, and sending it by e-mail, come next.
+- **The invoice PDF is a PDF/A-3b by veraPDF's measure**, plain or as
+  Factur-X: no failed rule of the PDF/A-3b profile in the examples of
+  `@ekwo-ai/invoice-pdf`. `embedFacturX()` of `@ekwo-ai/factur-x` now writes
+  an XMP packet that says what the PDF's information dictionary says. The
+  layout gains a small theme — accent colour, typeface, side of the logo — and
+  the figures it prints are tested equal to the CII embedded beside them.
 - **The e-invoicing bricks read what they receive.** `readUbl()` of
   `@ekwo-ai/peppol-ubl` reads a received Peppol BIS Billing 3.0 invoice or
   credit note (UBL 2.1); `readCii()` and `readFacturX()` of

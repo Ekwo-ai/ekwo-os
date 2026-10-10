@@ -8,11 +8,12 @@
  * it wrote for the same document. The PDF is rendered here, then given to it
  * unchanged.
  *
- * What makes the rendered PDF acceptable to it: every font is embedded (as a
- * subset), nothing is drawn with transparency, the colours are DeviceRGB under
- * an sRGB output intent, and the trailer carries an identifier. The embedding
- * adds the XML, the PDF/A-3 declaration and its XMP packet. No validator of
- * PDF/A is run here.
+ * The rendered PDF is already a PDF/A-3b — every font embedded as a subset,
+ * nothing transparent, DeviceRGB under an sRGB output intent, an identifier,
+ * an XMP packet that agrees with the information dictionary — and
+ * `embedFacturX` adds the XML and its own packet, written from the same
+ * dictionary. veraPDF finds no failed rule of PDF/A-3b in the result; the
+ * README records the run, which `npm run verapdf` repeats.
  */
 
 import { renderInvoicePdf } from './render.js';
