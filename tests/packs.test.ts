@@ -17,6 +17,7 @@ import {
   sourcesOf,
   seedFileNames,
   validate,
+  type Pack,
 } from '../packages/cli/src/index.js';
 import { freshDatabase, repoRoot, rows } from './helpers/db.js';
 import {
@@ -719,6 +720,46 @@ describe('the pack format', () => {
     expect(validate({ ...report, boxes: [quiet] }, defs['tax_report']!, schema)).toEqual([
       { path: 'boxes[0]', message: 'missing "legal_reference"' },
     ]);
+  });
+
+  it('refuses a self-assessed purchase tax that debits what it owes and credits what it deducts', async () => {
+    // The shape every self-assessed tax is written in: on a purchase, the
+    // positive posting on the asset it deducts and the negative one on the
+    // liability it owes. A pack holding one is broken by swapping the signs.
+    const typed = (pack: Pack, code: string | null) =>
+      pack.charts.map((chart) => chart.accounts.find((a) => a.code === code)?.type ?? '');
+    const pairOf = (pack: Pack, tax: Pack['taxes'][number]) => {
+      const postings = tax.postings.invoice.filter((p) => p.type === 'tax');
+      if (tax.scope !== 'purchase' || postings.length !== 2) return null;
+      const asset = postings.find((p) => typed(pack, p.account).every((t) => t.startsWith('asset_')));
+      const liability = postings.find((p) => typed(pack, p.account).every((t) => t.startsWith('liability_')));
+      if (asset === undefined || liability === undefined || asset.factor <= 0 || liability.factor >= 0) return null;
+      return { asset: asset.account!, liability: liability.account! };
+    };
+    const pack = packWhere('a self-assessed purchase tax', (p) => p.taxes.some((t) => pairOf(p, t) !== null));
+    const tax = pack.taxes.find((t) => pairOf(pack, t) !== null)!;
+    const { asset, liability } = pairOf(pack, tax)!;
+
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-self-assessed-'));
+    await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(join(packs, pack.slug), join(dir, pack.slug), { recursive: true });
+    const path = join(dir, pack.slug, 'taxes.json');
+    const taxes = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>[];
+    const raw = taxes.find((t) => t['code'] === tax.code)!;
+    const invoice = (raw['postings'] as Record<string, Record<string, unknown>[]>)['invoice']!;
+    for (const posting of invoice) {
+      if (posting['account'] === asset) posting['factor'] = -100;
+      if (posting['account'] === liability) delete posting['factor'];
+    }
+    await writeFile(path, JSON.stringify(taxes), 'utf8');
+
+    const error = await readPack(pack.slug, dir).catch((e: Error) => e.message);
+    expect(error).toMatch(
+      new RegExp(
+        `${tax.code}\\.invoice: the positive posting is on liability ${liability} and the negative one on asset ${asset}`,
+      ),
+    );
+    await rm(dir, { recursive: true, force: true });
   });
 
   // -------------------------------------------------------------------

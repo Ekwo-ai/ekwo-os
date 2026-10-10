@@ -180,10 +180,10 @@ a service from a supplier neither domiciled nor resident in Chile is itself
 the taxpayer of the VAT on that service — not the supplier, who issues no
 document Chilean law governs. `CL-P-FSR-19` books this the way the framework
 already books an EU intra-Community acquisition: one `base` posting and two
-`tax` postings, one crediting the same account and box a domestic sale's
-débito fiscal would (`2102`, Cód. 502) and one, at `factor: -100`, debiting
-the crédito fiscal account and box a domestic purchase would (`1105`, Cód.
-520) — so the self-assessed VAT appears in both the débitos and the créditos
+`tax` postings, one debiting the crédito fiscal account and box a domestic
+purchase would (`1105`, Cód. 520) and one, at `factor: -100`, crediting the
+same account and box a domestic sale's débito fiscal would (`2102`, Cód.
+502) — so the self-assessed VAT appears in both the débitos and the créditos
 of the Formulario 29, netting to zero, the same way the standard's own
 Estonian intra-Community-acquisition example nets two sides of one
 operation. It carries no `vat_category`: no invoice EN 16931 governs exists

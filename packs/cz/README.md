@@ -103,9 +103,10 @@ ordinaires**, plutôt que sur des comptes dédiés — à la différence du mod�
 estonien que `docs/packs.md` prend pour exemple (`EE-P-ICG-24`, qui utilise
 deux comptes séparés). Le montant autoliquidé (řádek 3 pour une acquisition
 intracommunautaire, řádek 10 pour un sous-traitant du bâtiment en régime
-national de l'article 92e) est intégralement déductible dans ce pack : une
-seconde jambe `tax` de facteur −100, sans case, solde le compte de TVA
-déductible 3433 pour le même montant, exactement comme le réclame l'article
+national de l'article 92e) est intégralement déductible dans ce pack : la
+jambe `tax` de facteur −100 crédite la TVA collectée 3431 dans sa case, une
+seconde jambe, sans case, débite le compte de TVA déductible 3433 pour le
+même montant, exactement comme le réclame l'article
 73 odst. 1 písm. b) pour un bien ou un service affecté à une activité
 économique imposable.
 

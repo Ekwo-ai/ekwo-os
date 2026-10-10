@@ -183,13 +183,13 @@
     "postings": {
       "invoice": [
         { "type": "base" },
-        { "type": "tax", "account": "2102", "box": "502" },
-        { "type": "tax", "factor": -100, "account": "1105", "box": "520" }
+        { "type": "tax", "factor": -100, "account": "2102", "box": "502" },
+        { "type": "tax", "account": "1105", "box": "520" }
       ],
       "credit_note": [
         { "type": "base", "box_factor": -100 },
-        { "type": "tax", "account": "2102", "box": "502", "box_factor": -100 },
-        { "type": "tax", "factor": -100, "account": "1105", "box": "520", "box_factor": -100 }
+        { "type": "tax", "factor": -100, "account": "2102", "box": "502", "box_factor": -100 },
+        { "type": "tax", "account": "1105", "box": "520", "box_factor": -100 }
       ]
     }
   }
