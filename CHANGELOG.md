@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.12.0] — 2026-10-10
+
 ### Added
 
 - **The privacy page says the agents of Ekwo Cloud may learn from the books.**
@@ -119,6 +121,16 @@ somewhere has already run it.
   Nothing writes it yet: `docs/filing-proofs.md` evaluates it as a second,
   signed layer, with its costs.
 
+- **23 more country packs**, bringing the set to 130: am (Armenia), ao
+  (Angola), az (Azerbaijan), bd (Bangladesh), bm (Bermuda), bn (Brunei
+  Darussalam), et (Ethiopia), gg (Guernsey), hn (Honduras), je (Jersey), kw
+  (Kuwait), ky (Cayman Islands), lk (Sri Lanka), mo (Macao), mu (Mauritius),
+  mz (Mozambique), ni (Nicaragua), pk (Pakistan), qa (Qatar), sv (El
+  Salvador), vg (British Virgin Islands), zm (Zambia) and zw (Zimbabwe). Each
+  carries its own chart of accounts, its taxes and the return its country
+  files, as data rather than as code, and each arrives at the status
+  `community` — nobody has reviewed it, and the pack says so itself.
+
 - **`packs/ar` 0.2.0: the tax on services received from abroad.** A
   responsable inscripto who buys a service performed abroad and used in
   Argentina owes the tax on it (Ley de IVA, art. 1, inciso d), and art. 4,
@@ -138,6 +150,13 @@ somewhere has already run it.
   purchase.
 
 ### Changed
+
+- **The schema of this release is 0.12.0, and the packages refuse an older
+  database by name** (`20261010181201`). `@ekwo-ai/core` and `ekwo proof`
+  call `record_filing_proof()` and `upgrade_filing_proof()`, which a 0.11.1
+  database does not have — so the floor of `ekwo-os`, `@ekwo-ai/core` and
+  `@ekwo-ai/mcp` rises to 0.12.0, and an installation left behind is told to
+  run `ekwo migrate` rather than failing in a call nobody can place.
 
 - **The privacy page says when Ekwo reads your books.** Version 1.1 of
   `PRIVACY.md` replaces the statement that nobody opens an Ekwo Cloud backup
@@ -4492,7 +4511,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.1...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.0...HEAD
+[0.12.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.1...v0.12.0
 [0.11.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.9.0...v0.10.0

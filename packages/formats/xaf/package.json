@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/xaf",
-  "version": "0.11.1",
+  "version": "0.12.0",
   "description": "Reads an XML Audit File Financial (XAF, versions 3.2 and 4.0) — the accounts, the parties, the opening balance and every transaction of a year — into plain objects in TypeScript: amounts as decimal strings, the file's own totals checked, and what does not add up. A strict XML reader, no DOCTYPE, no entities. Zero dependencies.",
   "keywords": [
     "xaf",
