@@ -21,7 +21,7 @@ declares `en` alone.
 
 Every tax, line and statement carries its own `legal_reference`, and beside it
 the key of the text that article is in. The register in `pack.json` holds
-fourteen texts, every one opened on 10 October 2026:
+fourteen texts:
 
 | What | Text | Where |
 |---|---|---|
@@ -38,17 +38,14 @@ fourteen texts, every one opened on 10 October 2026:
 | The currency | Statutory Instrument 60 of 2024; ISO 4217 list one | `veritaszim.net`, `six-group.com` |
 | The accounting framework | IFAC member profile of Zimbabwe | `ifac.org` |
 
-**The consolidated Act is to Act 13 of 2023.** The amendments of the Finance
-Act, 2025 are read in that Act's own words, not in a consolidation. The 2024
-Finance Acts were not opened; nothing in this pack rests on them. The rate of
-15 % from 1 January 2023 is recorded from ZIMRA's notice on the 2026 change, not
-from the Finance (No. 2) Act, 2022. Statutory Instrument 15 of 2024 was opened
-on its Veritas page, which gives its title and purpose and not the list itself;
-the list of exempt basic goods (maize meal, standard bread, fresh milk, salt,
-cooking oil and others, according to commentary) must be checked against the
-instrument. Statutory Instrument 81 of 2025 is read through ZIMRA's notices,
-not in its own text. `www.rbz.co.zw` answers a plain request with a captcha, so
-no Reserve Bank page is cited.
+**The consolidated Act is to Act 13 of 2023**; the amendments of the Finance
+Act, 2025 rest on that Act's own words, and nothing rests on the 2024 Finance
+Acts. Points a reviewer should check against the primary text: the 15 % rate
+from 1 January 2023 rests on ZIMRA's notice on the 2026 change, not on the
+Finance (No. 2) Act, 2022; the list of exempt basic goods (maize meal, standard
+bread, fresh milk, salt, cooking oil and others, according to commentary) must
+be checked against Statutory Instrument 15 of 2024 itself; Statutory Instrument
+81 of 2025 rests on ZIMRA's notices. No Reserve Bank page is cited.
 
 ## Currency: ZWG, US dollars, and how to choose
 
@@ -257,8 +254,8 @@ this pack, not something the socle validates.
 
 - **Corporate income tax**: 24 % of taxable income plus the AIDS levy of 3 % of
   the tax (an effective 24.72 %), paid in quarterly payment dates (QPDs).
-  Accounts 8000, 8005 and 1355. Not computed; rates from general knowledge of
-  the Income Tax Act [Chapter 23:06], not from a text opened for this pack.
+  Accounts 8000, 8005 and 1355. Not computed; the rates should be checked
+  against the Income Tax Act [Chapter 23:06].
 - **Intermediated money transfer tax (IMTT)**: 2 % on electronic transfers,
   withheld by the bank; the cost goes to 6455. Not a tax code.
 - **PAYE, AIDS levy on PAYE, NSSA contributions, ZIMDEF levy**: accounts 2150,
@@ -282,9 +279,8 @@ and annual financial statements. The Public Accountants and Auditors Board
 prescribes IFRS Accounting Standards for publicly accountable entities and the
 IFRS for SMEs Accounting Standard for eligible entities (Statutory Instrument
 137 of 2026, replacing Statutory Instrument 41 of 2019, per IFAC). The two
-statements, `ZW-PAAB-SFP` and `ZW-PAAB-IS`, follow the presentation of the
-Zambian pack: a statement of financial position and a statement of profit or
-loss by nature of expense, IAS 1 / sections 4 and 5 of IFRS for SMEs. No
+statements, `ZW-PAAB-SFP` and `ZW-PAAB-IS`, are a statement of financial
+position and a statement of profit or loss by nature of expense, IAS 1 / sections 4 and 5 of IFRS for SMEs. No
 statutory layout exists. Hyperinflation accounting (IAS 29), which Zimbabwean
 companies applied for years, is not modelled.
 
@@ -295,16 +291,14 @@ rule; `ekwo init --fiscal-year` takes another.
 
 One month, August 2026, of a Harare company in Category C, in the company's
 currency: two standard-rated sales, an export, an exempt letting, a credit note
-at 15.5 % and a rebate at 15 % on 2025 deliveries, a local purchase, an exempt bank charge, an import with VAT at the border, an
-imported service, a blocked entertainment cost, a capital good, a purchase
+at 15.5 % and a rebate at 15 % on 2025 deliveries, a local purchase, an exempt
+bank charge, an import with VAT at the border, an imported service, a blocked entertainment cost, a capital good, a purchase
 credit note, three matched payments and one advance left open. The return comes
-to total output tax 4,360.00, total input tax 13,175.00, a refund of 8,815.00;
-every line was computed by hand before the runner checked it.
+to total output tax 4,360.00, total input tax 13,175.00, a refund of 8,815.00.
 
 The golden format has no document currency, so it cannot show one invoice in
 US dollars and another in ZWG: the scenario runs in the company's currency and
-the revenue account 4050 stands for a foreign-currency service. This is a gap
-of the golden format, recorded here.
+the revenue account 4050 stands for a foreign-currency service.
 
 ## What this pack does not carry
 

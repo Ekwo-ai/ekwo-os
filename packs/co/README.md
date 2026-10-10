@@ -240,10 +240,6 @@ and the second bimonthly period is deliberately built so its purchases
 outweigh its sales, to exercise a saldo a favor (casilla 83) rather than only
 a saldo a pagar.
 
-Every figure of `golden/vat_return.json`, `golden/statements.json` and
-`golden/trial_balance.json` was checked by hand against the scenario before
-this pack was committed — not only replayed by `tests/golden.test.ts`.
-
 ## What the core could not say
 
 The Colombian section of [`docs/international.md`](../../docs/international.md)

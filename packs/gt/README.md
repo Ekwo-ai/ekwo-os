@@ -201,9 +201,8 @@ to a university exempt under arts. 8-9, exports twice; it buys at 12 % with
 a full credit, buys furniture destined to the exempt sale (no credit, art.
 16), buys from an exempt cooperative twice, imports merchandise once,
 receives one purchase credit note, and settles four of the invoices while
-leaving one collection unmatched, on account. Every figure of
-`golden/vat_return.json` was checked by hand against the postings before the
-runner confirmed it: January owes 19.20 (96.00 débito fiscal less 76.80
+leaving one collection unmatched, on account. In `golden/vat_return.json`, January
+owes 19.20 (96.00 débito fiscal less 76.80
 crédito fiscal), February owes 9.60 (a purchase credit note reversing more
 crédito fiscal than the period's own débito fiscal), and March carries a
 remanente de crédito fiscal of 144.00 (240.00 débito fiscal less 144.00 and

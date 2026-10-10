@@ -96,7 +96,7 @@ no tax code. `TW-P-36-5-NC` carries the case where the tax is due: 5 % paid
 on its own, outside form 401 (whose box 74, 購買國外勞務, is a memo line), a
 cost of the line (`tax_on_base`) and a liability on `2195` 應付稅捐－其他. A
 business that also makes exempt supplies pays the proportion the Ministry of
-Finance determines, whose formula this pack's research could not source: the
+Finance determines, whose formula is not sourced here: the
 line then carries that payable share, computed by the bookkeeper. A foreign
 supplier sits on `2171` 應付帳款 with the others.
 

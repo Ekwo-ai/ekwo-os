@@ -245,11 +245,6 @@ destined exclusively to the book sale with no credit, and buys again at 13 %
 in the closing month, leaving a saldo a favor del contribuyente. Four
 payments settle a document exactly (one of them net of a purchase credit
 note); one is an advance with no invoice yet, left open and unreconciled.
-Every figure of `golden/vat_return.json`, `golden/trial_balance.json` and
-`golden/statements.json` was checked by hand against the postings — the
-"por dentro" arithmetic above, worked line by line — before the golden test
-runner confirmed it.
-
 ## What the core could not say
 
 1. **Clearance-adjacent e-invoicing.** `einvoicing` can only say "mandatory,
