@@ -11,6 +11,12 @@ somewhere has already run it.
 
 ### Added
 
+- **The privacy page covers the projects Ekwo hosts.** Version 1.2 of
+  `PRIVACY.md` opens with the choice of where the books live — a Supabase
+  project of one's own, or one Ekwo hosts — and how a project moves from one to
+  the other; it lists the books of a hosted project and of the trial instance
+  among what Ekwo Cloud holds, names the optional `ekwo register` and what it
+  sends, and gives the retention of a hosted project.
 - **The e-invoicing bricks read what they receive.** `readUbl()` of
   `@ekwo-ai/peppol-ubl` reads a received Peppol BIS Billing 3.0 invoice or
   credit note (UBL 2.1); `readCii()` and `readFacturX()` of
