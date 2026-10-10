@@ -81,6 +81,16 @@ is half done is worse than one that is not cut.
    releases install into at once. Run it with several packs, including ones with
    a non-calendar year and a non-monthly return.
 
+   **The last run: 10 October 2026, for `0.12.0`**, on a throwaway project in
+   `eu-central-1` (session pooler `aws-1`), `--reset` between runs. AR, CL, BE
+   (`default` chart, `fr`), FR (`fr`), GB (year opening 1 April), EE (`et`),
+   LU (`fr`, quarterly), SG and ZA (monthly), each upgraded from
+   `ekwo-os@0.11.1` on npm: 22 steps each, all green, about 125 s a run; AR
+   moved its pack from 0.1.0 to 0.2.0 and CL from 0.1.0 to 0.1.1 on the way.
+   ZW, which 0.11.1 does not carry, installed fresh (year opening 1 January,
+   monthly): 19 steps, all green. Then `--multi-country` with FR and ZW: 12
+   steps, all green. No load run.
+
 ## Cutting it
 
 1. Open a pull request with all of the above. The CI job *Migrations are
