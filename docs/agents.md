@@ -108,7 +108,9 @@ of the books and 2 for a call to change.
 Every post, cancellation, reversal, payment and lock is confirmed by the
 person, for that specific action. A tax rule, a rate, an account or a deadline
 always comes from the pack; where the pack does not cover the case, the agent
-says so and suggests a qualified professional in the country.
+says so and brings in the person's accountant, who works in the same books —
+or, for a person without one, the accountants who work with Ekwo at
+[ekwo.ai/partners/directory](https://ekwo.ai/partners/directory/).
 
 ## Registering the installation
 

@@ -1,7 +1,8 @@
 # Ekwo OS
 
-**Ekwo OS** is free and open source data infrastructure for accounting, finance and tax, under AGPL-3.0: a schema, the rules of each country as data, and tools, for businesses and their accountants. Install it on your own Supabase project and own your accounting data, forever. It is software — not an accounting firm, and not accounting, tax or financial advice ([DISCLAIMER.md](DISCLAIMER.md)).
-Built and maintained by **Ekwo**. A fully managed edition — your own instance, operated for you, with the AI agents you configure acting on your instructions — is available at **[ekwo.ai](https://ekwo.ai)**.
+**Ekwo** is open source accounting, ready to use on **[Ekwo Cloud](https://cloud.ekwo.ai)**: the web application for your invoices, your bank statements, your VAT returns and the electronic invoices your country uses, in your own instance, with an account opened in a minute. **Ekwo OS** is the free and open source core it runs on, under AGPL-3.0: install it on your own Supabase project and own your accounting data, forever.
+
+Built and maintained by **Ekwo**. Ekwo OS is a schema, the rules of each country as data, and the tools — a command line and an MCP server — with which you, your accountant and the AI agent you choose work in the same books, each with their own access. Ekwo reads any supplier invoice, in any language, with the AI model you choose, and every entry is posted on your confirmation. What Ekwo is, and its limits: [DISCLAIMER.md](DISCLAIMER.md).
 
 ![An empty Supabase project, npx ekwo-os init, ekwo status, a company, a sale invoice posted and its VAT return prepared, for two countries side by side](docs/demo/install.gif)
 
