@@ -73,80 +73,38 @@ What they share, and why:
 {
   "version": 1,
   "source": "fec",
-  "accounts": { "411000": "411000", "401ACME": null, "471200": null },
+  "accounts": { "411000": "411000", "401ACME": null },
   "journals": { "VE": "SAL", "AN": "@opening", "*": "MISC" },
   "suggested": {
-    "401ACME": { "target": "401000", "reason": "the longest beginning of the code the chart has; its name, \"Acme, supplier\", says a payable account, and 401000 Suppliers is a payable account" }
+    "401ACME": { "target": "401000", "reason": "…" }
   }
 }
 ```
 
-**How an account is proposed.** The codes give a candidate — never the
-country:
+Each account of the old books is matched to an account of the company's chart,
+and each old journal to a journal. Ekwo proposes a candidate from the codes and
+then checks it against what the files say about the account — its type, its
+name, the side of its balance — because two charts can give the same digits to
+different things. Each proposal is marked:
 
-1. the same code, where the chart has it;
-2. the same digits once the zeros a chart pads with on the right are set
-   aside: `411` and `411000`;
-3. the account of the chart whose digits are the longest beginning of the old
-   code, three digits at least: `401ACME` and `401000`.
+- **`exact`** — taken without asking;
+- **`suggested`** — written under `suggested`, with its reason, for the user to
+  confirm;
+- **`none`** — nothing to suggest, and why;
+- **`given`** — the caller's own answer, flagged `doubtful` where the files
+  contradict it.
 
-A tie is no answer, two digits are no answer, a deprecated account is never
-proposed.
+**Nothing is posted while an account the books use is only suggested**
+(`import_unconfirmed_accounts`). The user confirms a suggestion by writing it
+under `accounts`, or accepts all of them after reading them
+(`--accept-suggestions`). A dry run prints what to read first.
 
-**Then the files are held against it**, because two charts give the same
-digits to different things: `610` is the receivable of one chart and `6100`
-an expense of another, and a correspondence made from the digits alone would
-post customers to carriage costs without a word. What the files say of the
-old account, strongest first:
+`@opening` turns the entries of a journal into the opening entry of the year —
+what the *à-nouveaux* of a FEC are. `*` stands for the entries of a source with
+no journal.
 
-1. the type the export gives it (`Accounts Receivable`, `Expenses`,
-   `asset_receivable`…), where it gives one;
-2. a name that is the candidate's own name in the chart;
-3. a receivable, a payable or a bank named in its name, in whatever language
-   the books were kept — `Clients`, `Debiteuren`, `Suppliers`, `Banque` — and
-   not when the name turns it (`advances from customers`, `bank charges`);
-4. the side its balance is on in the files. The weakest: it confirms, and
-   where it disagrees — an accumulated depreciation, an overdrawn bank — it
-   leaves the candidate to the user rather than dropping it.
-
-Each is compared with the type of the candidate in the chart. Each proposal
-carries its `basis`, its `match` — `same-code`, `same-digits`, `prefix`,
-`kind` — and its `reason`:
-
-- **`exact`**: the same code, and the files say the same kind of account, or
-  its own name. Only this is taken without asking.
-- **`suggested`**: any other candidate, and the same code where the files say
-  nothing. It stays out of `accounts` and is written under `suggested`, with
-  its reason. A candidate the files contradict is dropped, and the one account
-  of the chart of the kind they say — the only receivable, the only payable,
-  the only bank — is suggested in its place (`kind`).
-- **`none`**: nothing to suggest, and the reason why.
-- **`given`**: the caller's answer. It is used as it is; where the files
-  contradict it, it is still marked `doubtful`, with the reason, so a
-  correspondence saved from an earlier proposal is not trusted blind.
-
-**Nothing is posted while a line the books use is only suggested**
-(`import_unconfirmed_accounts`). The user confirms a suggestion by writing its
-code under `accounts`, or accepts all of them at once after reading them
-(`--accept-suggestions`, `accept_suggestions`). A dry run prints the lines to
-read first, each with its reason.
-
-**How a journal is proposed**: the company's journal of the same code; the
-opening, `@opening`, for the journal whose code is the one the pack opens its
-years on; otherwise the company's general journal. `*` stands for the entries
-of a source that has no journal — a trial balance, a report without a Source
-column.
-
-**`@opening`** turns the entries of that journal into the opening entry of the
-year they are dated on: their lines go to `opening_balance()`, not to entries of
-their own. That is what the *à-nouveaux* of a FEC are. The entries mapped to it
-have to share one date, the first day of a fiscal year.
-
-**Given back, it wins.** The caller saves the correspondence
-(`--save-mapping`), answers the nulls, corrects what is wrong, and gives it back
-(`--mapping`). What it answers is used as it is; what it does not answer is
-proposed again; `suggested` is never read back. Nothing is posted while a used
-account or journal is null.
+**Given back, it wins.** Save the correspondence (`--save-mapping`), answer the
+nulls, correct what is wrong, and give it back (`--mapping`).
 
 ## `import_books()`
 
@@ -157,40 +115,17 @@ import_books(p_company_id uuid, p_books jsonb,
              p_allow_result_accounts boolean default false) returns jsonb
 ```
 
-Invoker, so everything the caller may not do is refused to them — it needs
-`entries.write` and `entries.post`, and says so by name. In one transaction:
+It runs as the caller and needs `entries.write` and `entries.post`. In one
+transaction it opens the fiscal years the books need (with `p_open_years`),
+finds or creates the parties, checks every account code before writing
+anything, posts each entry through `post_entry()`, writes the opening balance
+through `opening_balance()`, and records the import in `book_imports`. The same
+files imported twice are refused (`import_already_done`), with what the first
+import wrote.
 
-1. **The years.** A date that falls in no fiscal year is refused
-   (`import_outside_fiscal_year`), or, with `p_open_years`, opened by
-   `import_fiscal_year_for()` as a year of the same length and on the same first
-   day as the company's earliest — the one thing the books say about how the
-   company counts its years.
-2. **The parties**, by the code the source gave them (`contacts.auxiliary_code`),
-   then by their name, or created. The core says what each is from where its
-   lines are booked: on a receivable a customer, on a payable a supplier, on
-   both, both.
-3. **The accounts**: every code the lines name is looked up before anything is
-   written, and the missing ones are refused together (`unknown_account`).
-4. **The entries**, each inserted as a draft and posted by `post_entry()`, which
-   numbers it on its journal — or keeps the old number, with `keep_numbers`,
-   where the country allows a number chosen by hand or the caller holds
-   `entries.import`. The old number is otherwise kept as the reference.
-5. **The opening**, through `opening_balance()`, which refuses an income or
-   expense account unless `p_allow_result_accounts` — books taken over in the
-   middle of a year — and refuses a second opening in the same year.
-6. **The record**, one row of `book_imports`: the source, the checksum of the
-   files, the counts, the first and last number. The checksum is unique per
-   company, so the same files a second time are refused
-   (`import_already_done`) rather than counted twice. The refusal says what
-   the first import was: the files, the source, the minute (UTC), and what it
-   wrote — its entries and their numbers, its opening entry, its lines.
-
-**The rehearsal** is the same function with `p_dry_run`: it runs all six steps
-inside a block that it then leaves by an exception, which rolls every one of
-them back — the way `rehearse_post_document()` does. The answer is a variable,
-not part of the transaction, and survives. So a rehearsal is refused exactly as
-the import would be, and the numbers it shows are the ones the entries would
-take now.
+**The rehearsal** is the same function with `p_dry_run`: everything runs and is
+rolled back, so a rehearsal is refused exactly as the import would be and shows
+the numbers the entries would take.
 
 ## What an import does not do
 

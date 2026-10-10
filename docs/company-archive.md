@@ -83,49 +83,19 @@ empty file.
 
 ## What the checksums answer
 
-Two questions, and each checksum answers one of them.
-
-**`sha256` is the file.** The sha256 of `data/<table>.jsonl`, byte for byte, as
-the database wrote it: one row per line, the columns in the order the schema
-documents them, decimals as strings, timestamps in UTC.
+**`sha256` is the file**, byte for byte, as the database wrote it.
 `shasum -a 256 data/*.jsonl` checks an archive on any machine, with no Ekwo and
-no database. `ekwo company export` verifies it as it writes each file, and
-`ekwo company import` verifies it again before handing the archive over — so a
-file damaged in transit is a finding of the command line and never a refusal of
-the books.
+no database; `ekwo company export` and `ekwo company import` both verify it, so
+a file damaged in transit is caught by the command line before the database
+sees it.
 
-**`values_sha256` is the rows.** The same rows with every number they hold, at
-any depth, re-rendered in a canonical form. It is what `import_company()`
-checks, and the reason is that a program which is not the command line reads an
-archive by parsing it, and prints it again to store it, stream it or hand it to
-another service. That changes the file without changing one value: PostgreSQL
-keeps the trailing zeros of `1230.00` inside a `jsonb` column, and a JSON parser
-hands back `1230`. The rule that decimals leave as strings was written for that
-hazard and it reaches the `numeric` columns, which are converted on the way
-out; it cannot reach inside a `jsonb` one, and `audit_log.old_values` and
-`new_values` are full of amounts. Before `values_sha256`, such a reader was told
-`archive_corrupt` on the audit trail, with the same row count and another
-checksum — which reads like a damaged archive and is not one.
-
-**What `values_sha256` guarantees.** A value that changed, a row added, a row
-removed, a row of another company: all refused, exactly as before. The
-canonical form normalises how a number is *written* and never what it is, so
-`1230.00` and `1230.01` remain two different archives, and so do `1230` and
-`12300`.
-
-**What it does not guarantee.** That a reader may lose precision for free. A
-number with more significant digits than a double carries does not survive a
-JSON parser, and an archive that went through one is refused — the value really
-did change. No column of this schema keeps such a number inside a `jsonb`, and
-the refusal is there for the day one does. It also says nothing about the bytes:
-two files that differ in whitespace, in key order, or in the notation of a
-number have the same `values_sha256` on purpose. When the question is "is this
-the file that left", that is `sha256`.
-
-**An archive written before 0.9.0 carries `sha256` alone**, and
-`import_company()` checks that one for it. Such an archive has to arrive as the
-database wrote it; one that has been printed again is refused, and the refusal
-says so and tells you to export it again.
+**`values_sha256` is the rows**: the same rows with every number re-rendered in
+a canonical form. It is what `import_company()` checks, so that an archive read
+and printed again by another program — which may turn `1230.00` into `1230`
+inside a `jsonb` value — is still accepted. It normalises how a number is
+*written*, never what it is: a changed value, an added or removed row, a row of
+another company are all refused. An archive written before 0.9.0 carries
+`sha256` alone and has to arrive as the database wrote it.
 
 ## What travels
 
@@ -197,13 +167,9 @@ member. Three conditions, all checked by the database:
    off with rows in it stops the export too, until it is turned back on.
 
 **One snapshot.** `export_company()` reads the manifest and every table in one
-statement, through `export_company_archive()`: the right, the sweep of the
-catalogue and the list of tables are asked once per archive, and each table is
-read once for its row count, both checksums and its rows.
-`export_company_manifest()` and `export_company_table()` are stable and read
-the snapshot of whatever calls them: called one after the other — to stream a
-large company, as the CLI does — they belong in one `repeatable read`
-transaction, or the tables may disagree with each other and with the manifest.
+statement. A tool that streams a large company table by table with
+`export_company_manifest()` and `export_company_table()`, as the CLI does,
+runs them in one `repeatable read` transaction.
 
 An export is recorded: `export_company()` and the CLI write `company_exported`
 on the audit trail of the company, with who did it. It is a record and not a

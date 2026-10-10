@@ -6,7 +6,7 @@
 
 A pack transcribes the regulation, so charts run from about a hundred to over
 a thousand accounts. Somebody looking for the account of a purchase invoice, or
-an assistant reading the chart before every question, is handed hundreds of
+an agent reading the chart before every question, is handed hundreds of
 rows, while an ordinary company uses a small fraction of them — and different
 companies use a different fraction.
 
@@ -48,7 +48,7 @@ draft documents (an undated draft would be in use in every period).
 
 ## Consequences
 
-- The chart keeps its legal depth while the list offered to a person or an assistant stays short.
+- The chart keeps its legal depth while the list offered to a person or an agent stays short.
 - Nothing restricts what may be booked.
 
 ## See also

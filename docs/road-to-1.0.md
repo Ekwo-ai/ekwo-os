@@ -183,7 +183,7 @@ Each item is done when its evidence is published where it says.
 - [ ] **I. The international gaps closed or named.** Every open line of the
   gap table in [`international.md`](international.md#what-an-international-core-needs-and-does-not-have)
   — the revaluation of open items in a foreign currency, cash accounting as a
-  ledger, stacked taxes on one line, the cash-flow statement — and of
+  ledger, the cash-flow statement, consolidation across companies — and of
   [What the packs do not say yet](international.md#what-the-packs-do-not-say-yet)
   is either closed or listed below as a known limit of 1.0.
   *Evidence: a "Known limits of 1.0" section on this page.*

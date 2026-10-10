@@ -109,10 +109,10 @@ A country derecognises an asset one of two ways, and neither is a variant of
 the other. `fixed_assets.country_rules.disposal_style` says which, and the accounts
 are roles of the chart, in `country_defaults`:
 
-- **`net_result`** (Belgium) — clear the asset and its accumulated
+- **`net_result`** (Belgium, for instance) — clear the asset and its accumulated
   depreciation, book the proceeds, and put the difference on one account:
   `asset_disposal_gain` (763) or `asset_disposal_loss` (663).
-- **`gross`** (France) — the same clearing, plus the net book value in full on
+- **`gross`** (France, for instance) — the same clearing, plus the net book value in full on
   `asset_disposal_value` (675) and the proceeds in full on
   `asset_disposal_proceeds` (775). The income statement prints both.
 
@@ -121,7 +121,7 @@ run the depreciation first. What the schedule still planned after the disposal
 date is deleted; what the ledger already knows is kept.
 
 **The disposal books no VAT, and `proceeds` is stated net of it.** Selling a
-fixed asset is a taxable supply in both countries, and the tax on it belongs on
+fixed asset is usually a taxable supply, and the tax on it belongs on
 a sales invoice — which the socle already knows how to post, with the right
 tax, the right box and the right account. Booking a second VAT path inside a
 module would be a second answer to a question `post_document` answers. So the
@@ -130,7 +130,7 @@ asset against the same receivable, for the amount excluding tax.
 
 ## For an accountant to read
 
-Four things here are our reading of the mechanics, and an accountant should
+Four things here are a reading of the mechanics, and an accountant should
 say whether they are right.
 
 1. **A prorata in days counts the day of entry into service.** A Belgian asset

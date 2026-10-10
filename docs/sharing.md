@@ -31,10 +31,8 @@ preset: publishing a company's invoice stays with whoever issues it.
 
 `document_shares` is the table under them. Members of the company read it —
 `documents.read`, which every preset holds — and nobody writes it through the
-API: the two functions above are the only way in. That is why there is no
-fourth function called `list_shares`: the list is a `select` that row level
-security already answers correctly, and a function producing it a second way
-would be a second place where the rule is written.
+API: the two functions above are the only way in. Listing the links of a
+company is a plain `select` on it.
 
 ## Creating a link
 
@@ -130,23 +128,14 @@ other party actually pays — zero where the tax self-assesses — so the breakd
 adds up to `totals.amount_tax`.
 
 **A line says which price it is showing.** `unit_price` is the price as it was
-keyed, and on a line whose tax prices with the tax in it — a retail sale in a
-country that quotes gross — that is the gross price, while `amount_untaxed` is
-net. `unit_price_includes_tax` says which world the line is in and
-`amount_incl_tax` is the gross the line was quoted at, `null` everywhere else.
-A renderer prints a till receipt from the gross or an EN 16931 invoice from the
-net, and neither has to divide anything to find out which it has. The net unit
-price itself, BT-146, is not in the object yet; `docs/international.md` says
-why.
+keyed — gross on a line whose tax is included in the price, net otherwise —
+and `unit_price_includes_tax` says which. `amount_incl_tax` is the gross the
+line was quoted at, `null` everywhere else, so a renderer never has to divide
+anything to know what it holds.
 
-**The legal mentions come out in the document's own language**, which is
-`documents.language` — taken from the customer, else the company, else the
-country pack when the document was created, and frozen when it was posted. It
-is what `document.language` in the object above reports. A customer who
-switches language afterwards switches what they are sent next: the link keeps
-showing the invoice as it was sent, sentences included. They are the sentences
-`document_legal_mentions` produces, which is what a printed invoice carries, so
-a link and a PDF cannot come to disagree.
+**The legal mentions come out in the document's own language**, frozen when
+the document was posted. They are the sentences `document_legal_mentions`
+produces for a printed invoice, so a link and a PDF cannot disagree.
 
 ## The same answer for every kind of no
 
@@ -175,10 +164,7 @@ presenting a token would be an agent somebody hands a token to.
 
 ## Why there is no access code
 
-The token is the secret. A second factor — a code the sender reads out over the
-phone, the customer's own VAT number, a one-time password by e-mail — is a
-useful option and is not the floor: it turns every link into a conversation,
-and most invoices are sent to somebody who is expected to open them. It belongs
-on the share, as something the sender chooses, the day somebody needs it. The
-shape here does not stand in its way: a column on `document_shares` and a
-second argument to `shared_document` is the whole of it.
+The token is the secret. A second factor — a code read out over the phone, a
+one-time password by e-mail — turns every link into a conversation, and most
+invoices are sent to somebody who is expected to open them. It can be added to
+a share as an option the sender chooses, without changing the shape above.

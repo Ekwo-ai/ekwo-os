@@ -42,9 +42,10 @@ somebody checked it, and that check is the company's to make.
 
 **The One-Stop Shop.** Not implemented. The scheme asks in which Member State
 tax had to be charged, at what rate, for consumers; it needs a rate per State
-of consumption, and a rate is a tax and lives in a pack. The reasoning is
-written up in [`docs/international.md`](../international.md), so that whoever
-builds it starts from the shape and not from nothing.
+of consumption, and a rate is a tax and lives in a pack. It is read from the
+same two facts as the recapitulative statement — the treatment of the tax and
+the country of the customer — and is listed under what comes next in
+[`docs/international.md`](../international.md#what-comes-next).
 
 **EN 16931 and Peppol.** The European standard for the semantic model of an
 electronic invoice, and the profile most Member State packs name in
@@ -54,7 +55,9 @@ supply, `AE` for a domestic reverse charge) and its exemption reason codes
 standard writes them. Which Member State makes the format obligatory, and from
 when, is each pack's `einvoicing.obligation` and `mandatory_from`, cited to its
 own law. The Peppol invoice reader and writer are in
-[`packages/formats/peppol-ubl`](../../packages/formats/peppol-ubl/).
+[`packages/formats/peppol-ubl`](../../packages/formats/peppol-ubl/), and the
+[`einvoicing`](../../modules/einvoicing/) module writes the file of a posted
+sale in the profile the pack declares and records every time it is sent.
 
 ## What is not in the zone
 

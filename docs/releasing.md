@@ -2,41 +2,25 @@
 
 A release of Ekwo OS is one tag carrying the migrations, the country packs and
 the npm packages together. There is no "down": a database that has run a
-migration cannot be walked back, so every release is forward, and the version
-a database answers with is what a client decides on.
-
-`v0.2.0`, on 14 September 2026, is the first published release. `0.1.0` was the
-first schema of this repository and was never tagged.
+migration cannot be walked back, so every release moves forward, and the
+version a database answers with is what a client decides on.
 
 The criteria for `1.0.0` — what the 1.x line promises and the proofs required
-before the tag, several of which are runs of the procedure below — are in
-[`road-to-1.0.md`](road-to-1.0.md).
+before the tag — are in [`road-to-1.0.md`](road-to-1.0.md).
 
-## What has to move, and in which order
+## What has to move
 
-Nothing below is optional. Each step fails a test or the build when it is
-skipped, which is deliberate: a release that is half done is worse than one
-that is not cut.
+Each step below fails a test or the build when it is skipped: a release that
+is half done is worse than one that is not cut.
 
 1. **The schema version.** A migration
    `supabase/migrations/<YYYYMMDDHHMMSS>_schema_version_<x_y_z>.sql` that
-   redefines `ekwo_schema_version()` to return the new number, keeping the
-   comment and ending with the revoke every migration ends with. It is the
-   only thing that migration does. `instance.schema_version` follows on its
-   own: the column default and `init_instance()` both call the function, and
-   `ekwo migrate` writes it back onto an installation that already exists.
+   redefines `ekwo_schema_version()` to return the new number, and does nothing
+   else. Bump it when the release adds anything a package reads — a table, a
+   column, a function. `tests/cli/schema-version.test.ts` carries the numbers
+   written out by hand; move them in the same commit.
 
-   Bump it when the release adds anything a package of this release reads — a
-   table, a column, a function. A release that touches no schema keeps the
-   number and needs no migration.
-
-   `tests/cli/schema-version.test.ts` writes the three numbers out by hand —
-   `RELEASE`, `PREVIOUS` and `BUMP`, the name of the migration that carries
-   nothing else — because a test that asks the code what it says proves
-   nothing. Move them in the same commit.
-
-2. **The package versions.** Every workspace manifest, the private root
-   included:
+2. **The package versions**, in every workspace manifest:
 
    ```sh
    npm version <x.y.z> --workspaces --include-workspace-root --no-git-tag-version
@@ -44,53 +28,23 @@ that is not cut.
    npm ci     # this must pass before anything else is run
    ```
 
-   Check the dependency ranges between the workspaces afterwards —
-   `@ekwo-ai/core` on `@ekwo-ai/fec`, on the three statement readers,
-   `@ekwo-ai/camt053`, `@ekwo-ai/coda` and `@ekwo-ai/cfonb120`, and on the
-   five book readers, `@ekwo-ai/trial-balance`, `@ekwo-ai/journal-items`,
-   `@ekwo-ai/journal-report`, `@ekwo-ai/transaction-journal` and
-   `@ekwo-ai/xaf`; `ekwo-os` on `@ekwo-ai/core`; `@ekwo-ai/mcp` on
-   the core and on `@ekwo-ai/fec` — and the
-   formatting of the manifests, which npm rewrites. The final `npm install`
-   `npm version` runs on its own fails until those ranges name the new number,
-   because a workspace at `0.3.0` no longer answers a range of `^0.2.0` and npm
-   goes looking on the registry for a package that is not there.
-
-   `SERVER_VERSION` in `packages/mcp/src/server.ts` follows the manifest, for
-   the reason `SCHEMA_MIN` does: a bundle that ships no manifest still has to
-   say what it is in the MCP handshake. A test keeps the two equal.
-
-   `packages/mcp/server.json` follows it too — its `version` and the
-   `version` of its npm package — because it is what the MCP registry lists.
-   `tests/mcp/surface.test.ts` keeps it equal to the manifest, and its `name`
-   equal to `mcpName`.
+   Then check the dependency ranges between workspaces, `SERVER_VERSION` in
+   `packages/mcp/src/server.ts` and `packages/mcp/server.json`; tests keep each
+   equal to the manifest.
 
 3. **The schema floor.** `ekwo.schemaMin` in the manifests of `ekwo-os`,
-   `@ekwo-ai/core` and `@ekwo-ai/mcp`, and the `SCHEMA_MIN` constant in each
-   package's `src/schema.ts`. A test keeps the manifest and the constant
-   equal, and another refuses a floor newer than the schema the release
-   defines.
+   `@ekwo-ai/core` and `@ekwo-ai/mcp`, and `SCHEMA_MIN` in each package's
+   `src/schema.ts`. Raise it when the packages read something an older database
+   does not have; the packages refuse a database below it by name and say to
+   run `ekwo migrate`.
 
-   Raise it when the packages of the release read something an older database
-   does not have. It is a floor, not the version: a release that adds nothing
-   a package reads leaves it where it is. The MCP server refuses a database
-   below it by name, and says to run `ekwo migrate`.
+4. **The changelog.** `[Unreleased]` becomes `## [x.y.z] — YYYY-MM-DD` under
+   [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), with a fresh empty
+   `[Unreleased]` above it. Read `git log` against it before closing the
+   section.
 
-4. **The changelog.** `CHANGELOG.md` follows
-   [Keep a Changelog](https://keepachangelog.com/en/1.1.0/): `[Unreleased]`
-   becomes `## [x.y.z] — YYYY-MM-DD`, a fresh empty `[Unreleased]` goes above
-   it, and a link reference at the bottom points at the release. Group the
-   entries Added / Changed / Removed / Fixed / Security, once each. Read
-   `git log` against it before you close the section; what shipped without a
-   line is what nobody will find later.
-
-5. **The generated documentation.** `npm run docs:schema`, because the version
-   migration changes a function body and `docs/schema.md` is the output of the
-   migrations. `npm run inventory` is in the list below for the same reason:
-   `packages/cli/assets/expected-objects.json` carries the objects this
-   release defines and the privileges it grants on them, and it travels inside
-   the published package for `ekwo doctor` to read. CI compares both committed
-   files with what the generators produce.
+5. **The generated files.** `npm run docs:schema` and `npm run inventory`; the
+   CI compares both with what the generators produce.
 
 6. **The checks.**
 
@@ -100,208 +54,37 @@ that is not cut.
    node packages/cli/dist/bin.js --version    # prints the new number
    ```
 
-7. **The end-to-end run, against a real project.** `tests/e2e/` proves the
-   whole story against PGlite — the same release installed through the CLI and
-   the way `supabase db push` and `psql -f` do, compared row by row, then a
-   company brought from 1.0.0 through an opening balance, two invoices, the VAT
-   return, both financial statements, a close, a re-opening and a close again.
-   PGlite is real Postgres and four things it is not, and they are the four
-   that break a release:
-
-   - the published binary, over a pooler connection string;
-   - PostgREST — a function that exists and was never granted to
-     `authenticated` passes every test in this repository and answers
-     "permission denied" to the first user;
-   - GoTrue, so row level security judged on a real JWT rather than on a
-     session variable a test set;
-   - the extensions, roles and defaults a hosted project has;
-   - the `authenticator` role and `pgrst.db_pre_request`, so a machine key sent
-     in `X-Ekwo-Api-Key` is read by PostgREST rather than by a test that set a
-     session variable. The step *a machine key reaches the API over HTTP* is
-     the only one that can say the transport works, and its failure names the
-     two statements `ekwo doctor` prints when a project would not let the
-     migration write that setting.
+7. **The end-to-end run, against a real Supabase project.** The test suite
+   runs on PGlite; this run covers what PGlite does not — the published binary
+   over a pooler, PostgREST and its grants, real JWTs, a hosted project's roles
+   and extensions, and a machine key read by PostgREST.
 
    ```sh
    npm run build
-   npm run e2e:supabase
+   npm run e2e:supabase                    # one country; see the variables below
+   npm run e2e:supabase -- --multi-country # two companies in two countries
    ```
 
    It reads everything from the environment and writes no secret anywhere:
+   `EKWO_DB_URL`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`,
+   `SUPABASE_SERVICE_ROLE_KEY`, `EKWO_E2E_COUNTRY` (no default — a default
+   country is a chart nobody chose), and where a pack needs them
+   `EKWO_E2E_CHART`, `EKWO_E2E_LANGUAGE`, `EKWO_E2E_FISCAL_YEAR_START`,
+   `EKWO_E2E_VAT_PERIOD`. **Set `EKWO_E2E_PREVIOUS=ekwo-os@<last tag>`** so the
+   run upgrades an installation, which is what users actually do.
+   `EKWO_E2E_LOAD_DOCUMENTS` adds the load paths of [`load.md`](load.md).
 
-   | Variable | What |
-   |---|---|
-   | `EKWO_DB_URL` | the pooler connection string of the project |
-   | `SUPABASE_URL` | `https://<ref>.supabase.co` |
-   | `SUPABASE_ANON_KEY` | the anon key — what a real client sends |
-   | `SUPABASE_SERVICE_ROLE_KEY` | used once, by `ekwo init`, to create the administrator |
-   | `EKWO_E2E_COUNTRY` | the pack to install. No default: a default country is a chart of accounts nobody chose |
-   | `EKWO_E2E_CHART` / `EKWO_E2E_LANGUAGE` | required whenever the pack carries more than one of either — `ekwo init` refuses to pick for you when there is nobody to ask, which is the right answer and the first thing this script found |
-   | `EKWO_E2E_FISCAL_YEAR_START` | required for a pack that names no month to open the year on (GB): the first day of the 2026 year |
-   | `EKWO_E2E_VAT_PERIOD` | required for a pack whose periodic return is filed monthly or quarterly depending on the company (LU): `month` or `quarter` |
-   | `EKWO_E2E_ADMIN_EMAIL` / `EKWO_E2E_ADMIN_PASSWORD` | the administrator it creates and signs in as |
-   | `EKWO_E2E_PREVIOUS` | optional: install that release first, so the run upgrades an installation instead of creating one. Left out, those steps are skipped rather than passed |
-   | `EKWO_E2E_LOAD_DOCUMENTS` | optional: multiply the books to that many documents and time the six hot paths, over SQL and over PostgREST |
-   | `EKWO_E2E_SECOND_COUNTRY` | `--multi-country` only: the pack of the second company, another country than `EKWO_E2E_COUNTRY`. `EKWO_E2E_SECOND_CHART`, `EKWO_E2E_SECOND_LANGUAGE` and `EKWO_E2E_SECOND_FISCAL_YEAR_START` as for the first |
-
-   **Point `EKWO_E2E_PREVIOUS` at the last tag.** It is the only way the run
-   exercises what a user will actually do. It takes a path to a built binary of
-   an older checkout:
-
-   ```sh
-   git worktree add /tmp/prev v0.2.0
-   (cd /tmp/prev && npm ci && npm run build)
-   EKWO_E2E_PREVIOUS=/tmp/prev/packages/cli/dist/bin.js npm run e2e:supabase
-   ```
-
-   From `0.4.1` on the CLI is on npm, and `ekwo-os@<x.y.z>` works in the same
-   variable — the script runs it with `npx --package` from an empty directory,
-   because from inside this repository the workspace called `ekwo-os` answers
-   for the name and `npx` finds no `ekwo` to run. A release older than that was
-   never published under that name, so for those the path is the only form
-   that works.
-
-   **`--multi-country`** runs the other installation: `ekwo init --no-company`,
-   then `ekwo company new` in two countries, checked in the database and
-   through PostgREST as the administrator. It books nothing, and needs its own
-   empty project or `--reset`. First run on 22 September 2026, before any
-   release carried it, on a throwaway project in `eu-west-3`, deleted
-   afterwards: BE (`default` chart, `nl`) and FR (`fr`), 11 steps, all green,
-   62 s, the install alone 43 s. Played again the same day on a second throwaway
-   project, once with the new keys (`sb_secret_…` for the install,
-   `sb_publishable_…` for the client) and once with the legacy JWTs after
-   `--reset`: all green both times, about 58 s each. Run it with both forms of
-   key: a new project hands out the new ones first.
-
-   **The last run: 7 October 2026, for `0.11.1`**, on a throwaway project in
-   `eu-west-3`, deleted afterwards: BE (`default` chart, `fr`) and FR, each
-   upgraded from `ekwo-os@0.11.0` on npm, `--reset` between runs: 22 steps
-   each, all green, about 178 s a run. No load run.
-
-   The run before, on 7 October 2026, for `0.11.0`, on a throwaway project in
-   `eu-west-3` (Postgres 17.11, session pooler `aws-1`), deleted afterwards.
-   BE (`default` chart, `fr`), EE (`et`), FR, GB (year opening 1 April) and
-   US, each upgraded from `ekwo-os@0.10.0` on npm, with `--reset` between
-   runs: 22 steps each, all green, 123 to 140 s a run. Then `--multi-country`,
-   EE and SG: 12 steps, all green, 87 s. The first run stopped at *the audit
-   trail recorded the acts*: the script ordered the trail by `id`, which this
-   release no longer grants to clients (decision 0065); it now orders by
-   `occurred_at, sequence`, as `read_audit_log` does. No load run.
-
-   The run before, on 2 October 2026, for `0.10.0`, on a throwaway project in
-   `eu-west-3` (Postgres 17.11, session pooler `aws-1`), deleted afterwards.
-   AE, BE, EE (`et`), FR, GB (year opening 1 April), LU (quarterly), SG, SN
-   (monthly), US and ZA (monthly), each upgraded from `ekwo-os@0.9.0` on npm —
-   9 migrations pending, applied by `ekwo migrate` in 21 to 27 s — and
-   `--reset` between runs: 21 steps each, all green, about 155 s a run, the
-   install of `0.9.0` alone taking 61 to 72 s of it. MX (`es`) installs,
-   upgrades and signs in, then stops at the sale invoice: the script takes the
-   first plain domestic sale tax at the standard rate and finds none it can
-   post in that pack, as it did with JP at `0.5.0`. That is the script's
-   reading of a pack and it is still to be taught. Then `--multi-country`
-   with `sb_publishable_…` as the anon key and the legacy `service_role` key
-   for `ekwo init`: `init --no-company` installed 104 packs and no company,
-   twice with nothing created the second time, `ekwo company new` made an
-   Estonian and a Singaporean company on their own packs, and the
-   administrator saw both through PostgREST — 12 steps, all green, 112 s. The
-   `sb_secret_…` key was not tried: the Supabase command line prints it
-   masked, and the run that was handed the masked value was refused at the
-   first administrator with `Invalid API key`, which is the right answer. No
-   load run.
-
-   The run before, on 22 September 2026, for `0.7.0`, on a throwaway project in
-   `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,
-   EE, FR, GB (year opening 1 April), LU (quarterly) and US, each upgraded from
-   `ekwo-os@0.6.0` on npm — 3 migrations pending — and `--reset` between runs:
-   21 steps each, all green, about 75 s a run. Then `--multi-country` with the
-   newer keys, `sb_publishable_…` as the anon key and `sb_secret_…` for
-   `ekwo init`: `init --no-company` installed 44 packs and no company, twice
-   with nothing created the second time, `ekwo company new` made an Estonian
-   and a British company (year opening 1 April) on their own packs, and the
-   administrator saw both through PostgREST — 12 steps, all green, 58 s. No
-   load run.
-
-   The run before, on 22 September 2026, for `0.6.0`, on a throwaway project in
-   `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,
-   EE, FR, GB (year opening 1 April), LU (quarterly) and US, each upgraded from
-   `ekwo-os@0.5.0` on npm — 2 migrations pending — and `--reset` between runs:
-   21 steps each, all green, about 78 s a run, the install of `0.5.0` alone
-   taking 40 s of it. Four packs new in this release installed fresh: AT
-   (`de`), CH (`fr`, quarterly), PL and SA (quarterly), 18 steps each, all
-   green. On the FR run, `ekwo import fec` of the brick's own sample over
-   PostgREST as the administrator: `--dry-run --open-years --save-mapping`
-   wrote nothing and proposed eight accounts `exact`; the import with
-   `--mapping` opened 2025 and posted five entries, 7 852.00 each side, with
-   one `book_imports` row; the same file again was refused as
-   `import_already_done`. No load run.
-
-   The run before, on 22 September 2026, for `0.5.0`, on a throwaway project in
-   `eu-west-3` (Postgres 17.6, session pooler `aws-1`), deleted afterwards. BE,
-   EE, FR, GB (year opening 1 April), LU (quarterly) and US, each upgraded from
-   `ekwo-os@0.4.1` on npm — 24 migrations pending, applied by `ekwo migrate` in
-   about 10.5 s — and `--reset` between runs: 21 steps each, all green, about
-   67 s a run. Three packs new in this release installed fresh, since `0.4.1`
-   never carried them: IE, ES (`EKWO_E2E_LANGUAGE=es`) and SN (monthly), 18
-   steps each, all green. JP stops at the sale invoice: the script takes the
-   first plain domestic sale tax without reading its dates, and the plain one
-   of that pack is the 3 % of 1989 to 1997 — the standard rate splits into a
-   national and a local share, which the script does not yet book. No load
-   run this time.
-
-   The run before, on 19 September 2026, for `0.4.1`: the same six packs, 21
-   steps each. What it found and what was fixed: `ekwo init` left the modules
-   out, so `ekwo status` called a fresh installation sixteen migrations behind;
-   the script posted a New York sales tax on a supply it placed nowhere, found
-   no purchase tax in a pack whose purchase tax is not recoverable, and asked
-   a quarterly filer for a yearly return; `npx ekwo-os@…` ran from the
-   repository found no binary; the load steps timed the return of an empty
-   month. At 10 000 documents (FR, 90 000 ledger lines) every path is inside
-   its budget over SQL, the slowest being `suggest_contacts` at 1.1 s; over
-   PostgREST `suggest_contacts` is OVER, at 15 s — one HTTP call per bank line,
-   167 of them, from a client in Belgium. The project had self sign-up turned
-   off and PostgREST's row cap raised to 100 000 through the Management API.
-
-   **Read the times, not only the marks.** Every step of the table carries how
-   long it took and the run carries its total. What is worth noticing is which
-   step holds the release: a migration set that doubled since the last tag, a
-   first query waiting on a cold project, a close that got slower as the ledger
-   grew. A number that moved between two releases is the question; the total on
-   its own answers nothing.
-
-   **The project has to be empty, and has to be one nobody minds losing.** The
-   script installs an instance, an administrator and a company, books into them
-   and closes a financial year, so it refuses a database that already holds an
-   `instance` row. It deletes nothing on its own: what is left behind is the
-   evidence. It is not in the CI and never will be — it costs money, and a
-   shared throwaway project would be a project two releases install into at
-   once.
-
-   **`--reset` empties the project so a failed run can be replayed.** It drops
-   the module schemas, `public` and `supabase_migrations`, and recreates the
-   schema with the default privileges a Supabase project has. Since
-   `20260914151207` the migrations no longer need that — they grant their own
-   rights, by name — and the reset restores the defaults anyway, on purpose: a
-   real project has them, and a reset that left them out would be a reset that
-   quietly stopped exercising what that migration does about them. What the run
-   should then find is the revoke working, which is the step named "the
-   anonymous role reaches no table". Before all this, a reset that forgot the
-   defaults left an installation `ekwo doctor` called healthy and PostgREST
-   answered `permission denied for table companies` on.
-
-   ```sh
-   npm run e2e:supabase -- --reset
-   ```
-
-   It is as destructive as it sounds and it is deliberately not an `ekwo`
-   command: an installer that can empty a database is one somebody points at
-   the wrong connection string. For a throwaway project and nothing else.
+   The project has to be empty and one nobody minds losing: the script installs,
+   books and closes a year, and deletes nothing on its own. `--reset` empties it
+   so a failed run can be replayed — for a throwaway project and nothing else.
+   It is not in the CI: it costs money, and a shared project would be one two
+   releases install into at once. Run it with several packs, including ones with
+   a non-calendar year and a non-monthly return.
 
 ## Cutting it
 
 1. Open a pull request with all of the above. The CI job *Migrations are
-   additive* compares the branch against `main` and, on a push, against the
-   latest tag: a published migration that was modified or deleted fails the
-   build whatever route it took.
+   additive* refuses a published migration that was modified or deleted.
 2. Merge it.
 3. Tag `main`, annotated, and push the tag:
 
@@ -310,152 +93,61 @@ that is not cut.
    git push origin v<x.y.z>
    ```
 
-   The tag is what the additive-migrations job compares against from then on,
-   which is why it is never moved and never deleted. It also starts the
-   **Release** workflow that publishes the packages to npm, see *npm* below.
-4. Publish a GitHub Release on that tag, with the changelog section of the
-   version as its body.
+   A tag is never moved and never deleted. It starts the **Release** workflow,
+   see *npm* below.
+4. Publish a GitHub Release on that tag, with the changelog section as its
+   body.
 
 ## npm
 
-The packages live on npm under the `ekwo-ai` organisation, and the command line
-as `ekwo-os`. Publishing is part of the release and comes with the tag, so a
-version on npm is always a version someone can read the source of. It runs in
-GitHub Actions, through npm **trusted publishing**: the workflow
-`.github/workflows/release.yml` proves its identity to npm with a GitHub OIDC
-token (`permissions: id-token: write`), npm exchanges it for a short-lived
-credential per package, and every package is published with a **provenance**
-statement linking the tarball to the commit and the workflow run that built it.
-No npm token and no two-factor approval is involved: one tag publishes all the
-packages.
+The libraries are published as `@ekwo-ai/*` and the command line as `ekwo-os`
+(installed, its binary is `ekwo`). Publishing comes with the tag, so every
+version on npm is a version whose source can be read. The workflow
+`.github/workflows/release.yml` publishes through npm **trusted publishing**
+(GitHub OIDC, no npm token), with a **provenance** statement linking each
+tarball to the commit and the run that built it.
 
 ### One-time setup, on npmjs.com
 
-A maintainer with publish rights does this once for **each** public package —
-the list is `npm run release:publish`, one line per package (twenty at
-`0.10.0`; a package added later needs the same step before its first release):
-
-1. Open `https://www.npmjs.com/package/<name>/access` (Settings → *Trusted
-   Publisher*).
-2. Choose **GitHub Actions** and fill in: organisation or user and repository
-   of this project, workflow filename `release.yml` (the file name only, with
-   its extension), and leave *Environment* empty unless the workflow is later
-   given one.
-3. Save. Optionally, under *Publishing access*, choose *Require two-factor
-   authentication and disallow tokens*, which closes every other route.
-
-A package that has never been published has no settings page yet: publish its
-first version by hand once (`npm login --auth-type=web`, then
-`npm run release:publish -- --for-real` on the tag), then add the trusted
-publisher. Trusted publishing needs npm 11.5.1 or later and Node 22.14 or later
-on the runner; the workflow pins `npm@11.21.0`.
-
-The trusted publisher can also be set from a terminal, one package at a time:
-`npm trust github <name> --repo <owner>/<repo> --file release.yml --allow-publish`,
-signed in with `npm login --auth-type=web`. The registry now requires the
-relation to say what it allows, so it needs npm 11.21 or later: an older npm
-sends no permission and is answered `400 Bad Request`.
+For each public package (the list is `npm run release:publish`): open
+`https://www.npmjs.com/package/<name>/access`, add a *Trusted Publisher* of
+type **GitHub Actions** naming this repository and the workflow file
+`release.yml`. A package never published before is published once by hand
+(`npm login --auth-type=web`, then `npm run release:publish -- --for-real` on
+the tag) before its trusted publisher can be set.
 
 ### Releasing
 
-1. Merge the release pull request, then tag `main` and push the tag (see
-   *Cutting it* above). The tag starts the **Release** workflow, which runs
-   `npm ci`, the typecheck and the build, then `npm run release:publish --
-   --for-real`.
-2. Follow the run under *Actions*. A package whose version the registry already
-   holds is skipped, so a run that stopped half way — a network error, a
-   package whose trusted publisher was not set — is started again from the
-   *Actions* tab (*Re-run failed jobs*) and finishes the rest.
-3. Check a package: its npm page shows *Built and signed on GitHub Actions*,
-   and `npm audit signatures` verifies it.
+Pushing the tag runs `npm ci`, the typecheck, the build and
+`npm run release:publish -- --for-real`. A version the registry already holds
+is skipped, so a run that stopped half way is simply re-run. A package's npm
+page then shows *Built and signed on GitHub Actions*, and
+`npm audit signatures` verifies it.
 
-**Dry run, on any branch.** *Actions → Release → Run workflow*, pick the
-branch, leave *Publish for real* unticked: the workflow builds and runs
-`npm publish --dry-run` for each package, which packs the tarball and lists its
-files without sending anything. The same locally:
-
-```sh
-npm run build
-npm run release:publish                 # the plan, and a dry run of every pack
-```
-
-The workflow cannot publish from a pull request or from a branch: a real
-publish needs a run on a `v*` tag, whether it was started by the tag itself or
-by hand with *Publish for real* ticked, and the script refuses `--for-real` in a
-pull-request run on its own.
-
-`scripts/publish.mjs` **reads the list from the workspaces**: whatever is a
-workspace and is not `private` is published, after every package of this
-repository it depends on. For real, it refuses a working tree that is not
-clean and a HEAD that no tag names, and it skips a version the registry already
-holds. The order is the dependency order: a package is published after
-everything it depends on. The root workspace is `private` and is never
-published.
-
-### From a terminal, as a fallback
-
-The same script publishes from a maintainer's machine when the workflow cannot
-run:
-
-```sh
-npm login --auth-type=web               # a person, in a browser: no token lives here
-npm run release:publish -- --for-real   # on the tag
-```
-
-An account with two-factor authentication on writes is asked to approve each
-`npm publish` in a browser, and the script needs a real terminal for that: npm
-only waits for the approval when it has one, and ends on `EOTP` when it does
-not. Count one approval per package. An approval that is not given in time
-ends the run on a 404 from the registry's `done` address — run the script
-again, it skips what is already there.
-
-**The command line is `ekwo-os` on npm and `ekwo` once installed.** The
-registry refuses the unscoped name `ekwo` as too close to two existing
-packages, which a scoped name is never judged for — so the libraries go out as
-`@ekwo-ai/*` and the CLI under the name of the repository. `npx ekwo-os init`
-runs it without installing anything; `npm install -g ekwo-os` puts a binary
-called `ekwo` on the path, and every example that starts with `ekwo ` assumes
-that.
+**Dry run, on any branch**: *Actions → Release → Run workflow* with *Publish
+for real* unticked, or locally `npm run build && npm run release:publish`. A
+real publish needs a `v*` tag; the script refuses one from a pull request, a
+dirty tree or an untagged HEAD, and publishes in dependency order.
 
 ## The MCP registry
 
-`@ekwo-ai/mcp` is described to the official registry
-(registry.modelcontextprotocol.io) by `packages/mcp/server.json`, under the
-name `ai.ekwo/mcp`. The registry holds metadata only; the package stays on npm,
-and the registry proves the two belong together by reading `mcpName` out of the
-**published** manifest — so this step comes after `npm`, never before, and a
-version published without `mcpName` (0.4.1 and older) cannot be listed.
-
-The `ai.ekwo` namespace is proved by a TXT record on the apex of `ekwo.ai` —
-not on a sub-label, where the registry does not look — set once. It needs
-OpenSSL 3: the `openssl` of macOS is LibreSSL and has no Ed25519, so there use
-`$(brew --prefix openssl@3)/bin/openssl`.
+`@ekwo-ai/mcp` is listed on the official MCP registry under `ai.ekwo/mcp`,
+described by `packages/mcp/server.json`. The registry reads `mcpName` from the
+**published** manifest, so this step comes after npm. The `ai.ekwo` namespace
+is proved by a DNS TXT record on `ekwo.ai`. On every release, from
+`packages/mcp`:
 
 ```sh
-openssl genpkey -algorithm Ed25519 -out ekwo-mcp-registry.pem   # kept out of this repository
-echo "ekwo.ai. IN TXT \"v=MCPv1; k=ed25519; p=$(openssl pkey -in ekwo-mcp-registry.pem -pubout -outform DER | tail -c 32 | base64)\""
-```
-
-Then, on every release, from `packages/mcp`:
-
-```sh
-brew install mcp-publisher        # or the binary from the registry's GitHub releases
 mcp-publisher validate
-mcp-publisher login dns --domain ekwo.ai \
-  --private-key "$(openssl pkey -in ekwo-mcp-registry.pem -noout -text | grep -A3 'priv:' | tail -n +2 | tr -d ' :\n')"
+mcp-publisher login dns --domain ekwo.ai --private-key "<key>"
 mcp-publisher publish
 ```
-
-The registry is in preview: its own documentation warns that data may be
-reset before general availability. Check the listing after a publish with
-`curl 'https://registry.modelcontextprotocol.io/v0/servers?search=ai.ekwo'`.
 
 ## After a release
 
 `[Unreleased]` is empty and the next change starts a new section under it. A
-published migration is never edited from `v0.2.0` on — not to fix a typo in a
-comment, not to correct a value. It has run on databases nobody here controls,
-and the correction is a new file.
+published migration is never edited, not even a comment: it has run on
+databases nobody here controls, and a correction is a new file.
 
 ## Names that change before 1.0
 

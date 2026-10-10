@@ -25,7 +25,7 @@ would hide the difference at the next run. A patch release with an empty
 difference does move the version.
 
 **The rules live in the schema** — `pack_upgrade_diff()` and `pack_upgrade()`
-— so an application, a module or an assistant gets the same answer as the CLI.
+— so an application, a module or an agent gets the same answer as the CLI.
 `ekwo pack status` is the read-only half. `pack_upgrade()` is `security
 definer`, checks `company.write` first, and records itself in the audit trail.
 

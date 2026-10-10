@@ -86,9 +86,6 @@ than a default the software picked. `label_for` walks the list and returns the
 first language that has a label, falling back to `name` when none of them does.
 
 That is the whole mechanism, and it is deliberately the only spelling of it.
-The expression used to be written out wherever it was needed —
-`coalesce(nullif(x.name_i18n ->> lang, ''), x.name)` — and a formula written
-twice is a formula that will one day disagree with itself.
 
 ## The chain starts where the caller says
 
@@ -103,13 +100,10 @@ falls back to the company and then to the pack exactly as above.
 `preferred_languages(company)` is one line on top of it, supplying the
 signed-in reader's preference as that first link.
 
-The distinction matters the moment a reader has no session. Somebody holding
-the link to an invoice has no `user_preferences` row and no membership, so a
-chain that begins at `auth.uid()` begins at null for them — and the one
-published way of choosing a language was unavailable to the one reader who is
-outside the installation. The chain was never about a *user*; it was about
-where it starts. A person reading their own books starts at their preference,
-and a document being rendered starts at its own language.
+It serves a reader with no session — somebody opening the shared link to an
+invoice has no preference and no membership. A person reading their own books
+starts at their preference; a document being rendered starts at its own
+language.
 
 ## A document knows what it was written in
 

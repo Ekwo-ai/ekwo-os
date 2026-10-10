@@ -3,7 +3,7 @@
 The [Model Context Protocol](https://modelcontextprotocol.io) server for
 [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os). It lets an AI agent work on
 the books in your own Postgres: read the ledger, raise an invoice, post it, match
-a payment, pull the VAT return or the French FEC — **as you**, under the row
+a payment, prepare the VAT return — **as you**, under the row
 level security of your own installation.
 
 There are two ways to reach it, and they are the same server.
@@ -29,7 +29,9 @@ An agent reading this without a browser can start from
 [`/.well-known/oauth-protected-resource`](https://mcp.ekwo.ai/.well-known/oauth-protected-resource).
 
 The books stay where they are: the hosted server holds none, and connects to
-the instance the person names when they approve it.
+the instance the person chooses when they approve it. On the same screen they decide
+whether the agent may write; otherwise it reads. The hosted server is operated
+by [Ekwo Cloud](https://cloud.ekwo.ai), and signing in there needs an account.
 
 ## Locally, over stdio
 
@@ -38,14 +40,10 @@ npx -y @ekwo-ai/mcp@latest
 ```
 
 For a client that launches its own servers — Claude Desktop, Claude Code, any
-editor that reads `.mcp.json`. It speaks MCP over stdio and is started by a
-client, never by hand. Keep the
-version in the command: run from inside a clone of the Ekwo repository, a bare
-`npx @ekwo-ai/mcp` finds the workspace package of the same name, which has no
-built command, and answers `ekwo-mcp: command not found`. With `@latest`, `npx`
-fetches the published server wherever it is started. To run the server of the
-clone itself, build it (`npm run build`) and start
-`node packages/mcp/dist/bin.js`.
+editor that reads `.mcp.json` — against any installation, with no account.
+Keep `@latest` in the command: from inside a clone of the repository, a bare
+`npx @ekwo-ai/mcp` finds the unbuilt workspace package and answers
+`ekwo-mcp: command not found`.
 
 ## What it is, and what it is not
 
@@ -58,14 +56,14 @@ decide, and this server reports what they answered.
 
 Three things it will never do:
 
-- **Write a ledger line.** Every entry comes out of `post_document`,
-  `post_payment`, `post_entry` or `reconcile`, which carry the accounting
-  rules. Direct inserts are for the objects a person types: contacts, draft
-  documents and their lines, payments, bank transactions.
-- **Delete or edit a posted entry.** There is no unpost, and no tool that
-  removes one. A mistake is corrected with a credit note, which is how
-  accounting has always worked. `unreconcile` is the only undo here, and
-  matching changes no account.
+- **Write a ledger line.** Every entry comes out of the schema's own
+  functions, which carry the accounting rules. Direct inserts are for the
+  objects a person types: contacts, draft documents and their lines, payments,
+  bank transactions.
+- **Delete or edit a posted entry.** No tool removes one. A posted invoice is
+  undone the one way its country allows — back to draft where nothing about it
+  has left, otherwise by the credit note that names it — and an entry keyed by
+  hand by its reversal.
 - **Use a `service_role` key.** It would work, and that is the objection: it
   bypasses every policy, so the agent would answer for companies its user
   was never invited to. The server refuses to start with one.
@@ -163,9 +161,8 @@ with no session id and nothing kept — so it runs on a function platform,
 behind a load balancer, or in one process. A `GET` is answered `405`: this
 server never speaks first, so there is no stream to open.
 
-What it does not do is decide who is calling. That is the host's job, and the
-whole of it: the host authenticates the request its own way, then hands in
-**the connection that request may use**.
+It does not decide who is calling: the host authenticates the request its own
+way, then hands in **the connection that request may use**.
 
 ```ts
 import { handleHttpRequest } from '@ekwo-ai/mcp';
@@ -198,30 +195,14 @@ connection, { origin })` is the same handler.
 
 ### Putting it in front of people: authorization
 
-A remote MCP client — Claude and the others — expects the server to follow
-the [authorization part of the MCP
+A remote MCP client expects the server to follow the [authorization part of
+the MCP
 specification](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization):
-OAuth 2.1 with PKCE. That belongs to the host, not to this package, and a
-host that wants the clients to connect on their own serves:
-
-1. **`401` with `WWW-Authenticate: Bearer resource_metadata="…"`** on the MCP
-   endpoint when there is no valid token.
-2. **Protected resource metadata** (RFC 9728) at
-   `/.well-known/oauth-protected-resource`, naming the endpoint as the
-   `resource` and the authorization server.
-3. **Authorization server metadata** (RFC 8414) at
-   `/.well-known/oauth-authorization-server`, with `S256` in
-   `code_challenge_methods_supported`.
-4. **Dynamic client registration** (RFC 7591), or client metadata documents,
-   so a client registers itself.
-5. **An authorization page** where the person signs in the host's way and
-   chooses what the client may reach; then a token endpoint that issues short
-   access tokens and rotating refresh tokens.
-
-Each access token the host issues maps to a connection — for instance to a
-key of Ekwo OS the person issued on their own installation for this purpose,
-held by the host encrypted and opened in memory for the one request. The
-database stays the only place that decides what may be read or written.
+OAuth 2.1 with PKCE, protected resource metadata (RFC 9728), authorization
+server metadata (RFC 8414) and dynamic client registration (RFC 7591). That
+belongs to the host, not to this package: the host signs the person in, issues
+its own tokens, and maps each one to a connection above. The database stays
+the only place that decides what may be read or written.
 
 ## The tools
 
@@ -246,7 +227,7 @@ Every write names its company explicitly.
 | `portfolio_upcoming_filings` | *Portfolio* = the companies you may read: for an accounting firm, its clients ([`docs/firms.md`](../../docs/firms.md)). What falls due between two dates in every company you hold `filings.read` on. One row per company at least: a pack that names no deadline is listed without a date, and says so |
 | `portfolio_filings_touched_since` | Declarations that have gone and whose period received entries afterwards, across the same companies, with the company named |
 | `list_statements` / `financial_statement` | The schemes a company can be presented on, and one statement |
-| `generate_fec` | The French FEC as text, with its checks and its filename |
+| `generate_fec` | The French FEC as text, with its checks and its filename, for a company that keeps French books |
 | `read_audit_log` | Who changed what and when: the configuration of a company, and the acts that change a state. Append-only for every client; only the database writes it |
 | `get_preferences` | What you prefer, and the language chain to read labels with |
 | `list_invitations` | Who has been invited into a company and not yet joined |
@@ -259,7 +240,7 @@ Every write names its company explicitly.
 | `pin_accounts` | Adds accounts to the working chart a company sees first, or takes one back out with `pinned: false` |
 | `create_document` | A draft invoice, credit note or quote, with its lines. With `client_ref`, calling twice creates once |
 | `update_document_lines` | Replaces the lines of a **draft** |
-| `post_document` | Books it. There is no unpost. `dry_run: true` returns the entry the database would write, and writes nothing |
+| `post_document` | Books it. `dry_run: true` returns the entry the database would write, and writes nothing |
 | `cancel_document` | Undoes a posted invoice, and says how in `undone_by`: back to `draft` where its country's `posted_edit_policy` allows it and nothing about it has left (`unpost_document()`), otherwise a `credit_note` that names it, posted and matched against it, and the invoice cancelled (`cancel_document()`), with `why` the draft was ruled out. A credit note is dated on the invoice's day while that period is open; otherwise the caller gives a date. A date, or `credit_note: true`, asks for the credit note |
 | `reverse_entry` | Undoes a posted entry keyed by hand: its mirror, posted under the next number and matched against it. Same rule for the date |
 | `record_payment` | Books money in or out and matches it against open invoices — or, with `document_id`, against that document alone, which then names the contact and the direction. With `client_ref`, recording twice records once |
@@ -277,24 +258,19 @@ Every write names its company explicitly.
 | `invite_member` / `revoke_invitation` | Invites an address into a company, or withdraws the invitation. The token is shown once |
 | `remove_member` / `set_member_role` | Takes a member out of a company — leaving oneself needs no `members.manage` — or moves them to another preset, clearing their per-member adjustments. The last owner is neither removed nor demoted |
 | `create_api_key` / `revoke_api_key` | A key for a machine, scoped to one company and a list of capabilities |
+| `share_document` / `list_shares` / `revoke_share` | Publishes a posted sales document behind a link the customer opens without an account, lists the links with how often each was opened, or withdraws one ([`docs/sharing.md`](../../docs/sharing.md)) |
 
 **`list_accounts` answers with the working chart, not the whole one.** A
-country pack transcribes the regulation — hundreds of accounts, and more than
-a thousand in the Luxembourg PCN or the SYSCOHADA — and a company works with a few dozen of them, so the default is
-what `accounts_in_use()` returns: the accounts carrying posted entries, those
-the company's own settings or an enabled module point at, and those somebody
-pinned, minus the deprecated ones. Every answer carries a `scope` field saying
-which it used. `in_use_from` and `in_use_to` narrow the movements to a period;
-`include_all` returns the whole chart; `include_deprecated` returns it with the
-retired accounts too; and `ekwo://companies/{id}/chart` was already the
-resource that carries everything. None of this restricts anything: a document
-line may name any account of the chart that is not deprecated, and every write
-tool still accepts one.
+country pack transcribes the regulation — sometimes more than a thousand
+accounts — and a company works with a few dozen. The default is the accounts
+with posted entries, those the company's settings or an enabled module point
+at, and those somebody pinned with `pin_accounts`. `include_all` returns the
+whole chart, and every write tool still accepts any account of it.
 
 `post_document`, `cancel_document`, `reverse_entry`, `record_payment`,
 `update_document_lines`, `unreconcile`, `lock_period`, `opening_balance`, `import_books`,
 `close_fiscal_year`, `reopen_fiscal_year`, `revoke_invitation`, `remove_member`,
-`set_member_role` and `revoke_api_key` are annotated destructive in the protocol, so a client can ask
+`set_member_role`, `revoke_api_key` and `revoke_share` are annotated destructive in the protocol, so a client can ask
 before calling them.
 
 **What a tool may do is the capability the user holds**, not the tool's own
@@ -309,12 +285,9 @@ startup to know which: `fixed_assets_list`, `fixed_assets_create`,
 `fixed_assets_schedule`, `fixed_assets_run_depreciation`,
 `fixed_assets_dispose`, `budgets_list`, `budgets_upsert_lines`,
 `budgets_variance`, `einvoicing_validate`, `einvoicing_issue`,
-`einvoicing_status`, `einvoicing_list`. The fixed assets tools were called `assets_*` until
-0.10.0; from 0.11.0 only the `fixed_assets_*` names are registered. A module
-that is not installed is not offered, because a tool a model cannot use is worse than a tool it cannot
-see. PostgREST serves a module's schema only once the project exposes it, and
-the refusal it answers with is a profile error that says nothing useful — so
-every module tool turns it into the sentence that names the setting.
+`einvoicing_status`, `einvoicing_list`. A module that is not installed is not
+offered. When the project does not expose a module's schema yet, the tool says
+which setting to change.
 
 The electronic invoicing tools send through a transport the server is given,
 never one a model chooses: the folder of `EKWO_EINVOICE_DIRECTORY`, or a
@@ -374,41 +347,27 @@ server's environment leaves the line out, and the hosted server never adds it.
 ## Testing it by hand
 
 The automated tests run every tool against the real schema in Postgres
-compiled to WebAssembly (`tests/mcp/`), including the refusals. Two things
-they cannot run: PostgREST and GoTrue. To exercise those, on a project you can
-throw away:
-
-```sh
-npx -y ekwo-os@latest init --country BE --org "Scratch" --company "Scratch BV" …   # a real project
-```
-
-Then point a client at it — in Claude Desktop, the JSON block above — and:
+compiled to WebAssembly (`tests/mcp/`), refusals included. To exercise
+PostgREST and Supabase Auth too, install on a project you can throw away
+(`npx -y ekwo-os@latest init`), point a client at it with the block above, and
+try a first session:
 
 1. **"List my companies."** The company you created, with `your_role: owner`.
-2. **"What are the journals and the lock dates?"** `get_company`.
-3. **"Create a customer called Dumont, then invoice them 1 000 € plus 21 %
-   VAT for consulting."** `create_contact`, then `create_document`; the answer
-   carries `amount_total: "1210.00"` computed by the database.
-   Or with a catalogue: **"add a product CONS-JOUR, a consulting day at 500 €
-   on 704000 at 21 %, then invoice Dumont two of them"** — `create_product`,
-   then `create_document` with `product_code` and nothing else on the line.
-4. **"Post it."** `post_document`. The entry books 704 / 451 / 400 and takes a
-   number like `SAL/2026/0001`.
-5. **"They paid 500 € on the 10th."** `record_payment`, which books the bank
-   line and matches it; the invoice becomes partially paid.
-6. **"Show me the trial balance and the VAT for the quarter."**
+2. **"Create a customer, then invoice them 1 000 for consulting at the
+   standard rate."** `create_contact`, then `create_document`; the totals in
+   the answer are computed by the database.
+3. **"Post it."** `post_document`, which takes the next number of the sales
+   journal.
+4. **"They paid 500 on the 10th."** `record_payment`; the invoice becomes
+   partially paid.
+5. **"Show me the trial balance and the VAT for the quarter."**
    `trial_balance` and `vat_return`.
-7. **"Lock June."** `lock_period`, then try to post something dated in June:
-   the refusal comes back as `period_locked:`.
+6. **"Lock June."** `lock_period`; anything dated in June is then refused with
+   `period_locked:`.
 
-A payment needs somewhere to book the bank side. On a company installed from a
-country model the bank and cash journals already point at their account
-(`550000` and `570000` in Belgium, `512000` and `530000` in France), so
-`record_payment` works with nothing else set up. `create_bank_account` names
-the real account — its identifier is the one thing nobody can derive — and wires it
-to the journal; `bank_account_id` on the payment then says which one the money
-moved on, which is what you need with several accounts in one journal. Until a
-company has one, `ekwo doctor` says so.
+A company installed from its country pack has bank and cash journals already
+wired to their accounts, so `record_payment` works with nothing else set up;
+`create_bank_account` registers the real account.
 
 ## Licence
 

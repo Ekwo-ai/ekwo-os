@@ -1,7 +1,7 @@
 # The United States
 
-The United States is not a zone anybody else belongs to, and it is the first
-country of the repository with **no value added tax**. Its rules are those of
+The United States is not a zone anybody else belongs to, and it levies **no
+value added tax**. Its rules are those of
 one pack, `packs/us/`, and this page reads what that pack does. It is a
 description of the data, not tax advice; the pack's status is `community`:
 nobody who files an American return has reviewed it.

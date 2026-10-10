@@ -4,7 +4,7 @@
 
 ## Context
 
-An assistant connected to the books must see exactly what its user may see,
+An agent connected to the books must see exactly what its user may see,
 and must not become a second place where accounting rules are decided.
 
 ## Decision
@@ -43,7 +43,7 @@ test can exercise) and over parameterised SQL.
 
 **It refuses an older database.** Each package declares a `schema_min`; the
 server checks `ekwo_schema_version()` before offering a tool, because an
-assistant improvising around a missing column improvises an entry.
+agent improvising around a missing column improvises an entry.
 
 **The shared bookkeeping layer lives in the core.** The functions between a
 tool and the database (codes to ids, product pre-fill, two-step creations)
@@ -52,7 +52,7 @@ input schemas, descriptions, `explain()` and its backends.
 
 ## Consequences
 
-- An assistant cannot see or do more than its user.
+- An agent cannot see or do more than its user.
 - Accounting rules live in the schema, not in the server.
 
 ## See also

@@ -4,8 +4,7 @@
 about what is **not** in it, so that you know before you buy — and so that you
 know what you never have to buy.*
 
-Ekwo Cloud is a set of optional services operated by **Ekwo (Karuna Co OÜ)**,
-Estonia. They are not part of this repository, they carry no licence of this
+Ekwo Cloud is a set of optional services operated by **Ekwo**. They are not part of this repository, they carry no licence of this
 repository, and **nothing here needs them.** An installation that never hears
 of Ekwo Cloud keeps its books, computes its statements, prepares its returns
 and exports everything, for as long as its database runs.
@@ -30,8 +29,8 @@ If no, it is a service, because something has to be kept alive for it to work:
 | Service | What has to be kept alive |
 |---|---|
 | Bank connections | a PSD2 aggregator contract |
-| Peppol sending and receiving | a certified access point and a certificate |
-| Transmission to Intervat, Teledec, the NBB | transmission credentials and a channel kept running — the return itself stays the business's |
+| Peppol sending and receiving | an access point and its certificate — the open `einvoicing` module writes and checks the file, and records every sending |
+| Transmission to tax administrations and business registers | transmission credentials and a channel kept running — the return itself stays the business's |
 | The AI agents that book, match and check | models trained, run and supervised |
 | A portfolio across installations, for an accounting firm | a control plane above installations that do not see each other |
 | Operating instances: monitoring, upgrades, backups | a fleet watched over time |
@@ -57,17 +56,9 @@ list of what may be.
 - **Exporting your own data.** `pg_dump` works, and it is the same schema on
   both sides. That is the whole argument for installing this at all.
 
-## Why there is no `ee/` directory
+## Why there is no "enterprise edition" folder
 
-There used to be one: an empty folder with its own licence, waiting for
-commercial code that would have shipped alongside the core.
-
-It is gone, and the reason says something about the shape of the thing. **None
-of the services above is a feature that could sit in this repository behind a
-flag.** Every one of them is a contract, a certificate, a credential or a
-machine somebody keeps running. They live where they are operated, not in the
-source of what you install.
-
-So the packaging rule is simpler than a second licence in a subdirectory:
-**what you get from this repository is the whole of it**, and the services are
-somewhere else entirely, run by a company with a name and an address.
+None of the services above is a feature that could sit in this repository
+behind a flag: each is a contract, a certificate, a credential or a machine
+somebody keeps running. **What you get from this repository is the whole of
+it**, and the services live where they are operated.

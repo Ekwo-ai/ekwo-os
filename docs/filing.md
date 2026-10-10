@@ -1,10 +1,9 @@
 # `docs/filing.md` — the life of a declaration
 
-A VAT return is not a report. A report is asked for and answers; a declaration
+A tax return is not a report. A report is asked for and answers; a declaration
 **leaves the building**, an administration keeps a copy, money follows it, and
-six months later somebody asks what was sent. This page is the whole cycle in
-one place: what each step does, which function does it, and — for every step —
-what is free and what is operated.
+months later somebody asks what was sent. This page is the whole cycle: what
+each step does, which function does it, and what is free and what is operated.
 
 The short version: **everything up to the transmission is open core, and
 everything that comes back is too.** What Ekwo sells in the middle is holding
@@ -23,7 +22,7 @@ the only one this cycle needs.
 | 3 | Produce the file | a brick of `packages/formats/` | ✅ | |
 | 4 | Send | — | ✅ by hand on the portal | the credentials and the deadline |
 | 5 | Record what came back | `file_filing()`, `record_filing_outcome()` | ✅ | |
-| 6 | Archive | `attachments`, `tax_filing_deposits` | ✅ | |
+| 6 | Archive, and prove | `attachments`, `tax_filing_deposits`, `ekwo proof stamp` | ✅ | |
 | 7 | Settle and pay | `settle_filing()`, `auto_settle()` | ✅ | the bank connection |
 | 8 | Correct | `reopen_filing()`, `supersede_filing()` | ✅ | |
 
@@ -56,10 +55,12 @@ declares no rule answers null rather than a date that would be wrong.
 ### 3. Produce the file
 
 A brick of [`packages/formats/`](../packages/formats/) turns the **frozen**
-figures into the file one administration takes. `@ekwo-ai/vat-consignment`
-writes the XML Intervat accepts; the form says which brick writes it, in
-`tax_report_templates.file_format`, named after the format and never after the
-country.
+figures into the file one administration takes. The form says which brick
+writes it, in `tax_report_templates.file_format`, named after the format and
+never after the country. Bricks exist today for a periodic VAT return
+(`vat-consignment`) and for recapitulative statements of supplies within the
+European Union (`intra-consignment`, `des`, `ecdf`, `vd`), fed by
+`ec_sales_list()`.
 
 Most forms have no brick, and that is not a blocker: **filing by hand on a
 portal is complete and free**, and `file_format` stays null until somebody
@@ -102,7 +103,12 @@ proof of having sent.
 They leave with it, too. A company that moves to another installation
 ([`company-archive.md`](company-archive.md)) arrives with its declarations in
 the state they were in, the figures each was frozen with and the deposits that
-prove it went; the two files are listed in the manifest to be carried across.
+prove it went.
+
+A company may also **prove** a filed file existed on a given day:
+`ekwo proof stamp <file> --filing` commits its SHA-256 to a public timestamp
+ledger, and anybody holding the file can check it later without an account.
+Only the hash leaves. [`filing-proofs.md`](filing-proofs.md) is the detail.
 
 ### 7. Settle and pay
 
@@ -177,32 +183,21 @@ filing — BE-VAT-PERIODIC (31 boxes) · cadence: month · deadline: in the pack
          file: vat-consignment · settles to: 451900
 ```
 
-Every "no" is printed rather than left out. A return filed by hand on the
-administration's portal, with no file written for it, is the ordinary state of
-most of them; a deadline a pack has not declared is printed `not declared`. A
-listing that showed only what works would be a brochure.
-
-The same five answers are asserted end to end, pack by pack, in
-`tests/filing_golden.test.ts`: the golden year is replayed, the return is
-computed and frozen, the file is written and **read back to the cent** where a
-brick exists, and the settlement is posted where the pack names an account. How
-far each pack got is the assertion, and the suite refuses a repository where
-nobody can do each of the three — and, since Belgium does, one where no country
-walks the whole chain.
+Every "no" is printed rather than left out: a return filed by hand on the
+portal, with no file written for it, is the ordinary state of most packs, and a
+deadline a pack has not declared is printed `not declared`. The same answers
+are asserted end to end, pack by pack, by the test suite: the golden year is
+replayed, the return computed and frozen, the file written and read back to the
+cent where a brick exists, and the settlement posted where the pack names an
+account.
 
 ---
 
-## What is deliberately not modelled
+## Not modelled yet
 
 - **What a country does with a correction** — a replacement return, an
   adjustment carried on the next period, a threshold below which nothing is
-  filed. Three mechanisms, none universal, and the texts have not been read.
-- **Rounding the debt to the whole unit**, which some administrations do. A rule
-  of a country, and no pack carries it.
+  filed. None of these is universal.
+- **Rounding the debt to the whole unit**, which some administrations do.
 - **A working-day shift on a deadline**, which needs a calendar of public
-  holidays: national, sometimes regional, amended by law.
-- **The guard that refuses a pack naming a file format nobody can write.** Owed
-  here and to `bank_statement_formats` alike — one guard over the three.
-
-Each of those is a gap that is written down. A gap nobody wrote down is the one
-that gets discovered by an administration.
+  holidays.

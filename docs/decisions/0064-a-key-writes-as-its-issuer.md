@@ -6,7 +6,7 @@
 
 [0053](0053-the-mcp-server-acts-as-the-user.md) says the MCP server acts as the
 user. Since [0062](0062-a-key-reaches-the-api.md) a machine key reaches the
-API, and an assistant operated for somebody — a hosted MCP server answering
+API, and an agent operated for somebody — a hosted MCP server answering
 for a person who connected it — presents a key rather than a session.
 
 A key is not a session: `auth.uid()` is null for it, by design, so the
@@ -15,7 +15,7 @@ author from `auth.uid()` therefore recorded nobody. `audit_log` wrote
 `api_key_id` beside a null `actor_id`; `enabled_by`, `invited_by`, `filed_by`,
 `uploaded_by`, `unposted_by`, `recorded_by` and the rest stayed empty. The
 trail said that a machine acted and never for whom, which is the opposite of
-what 0053 promises an assistant does.
+what 0053 promises an agent does.
 
 Two answers were possible: record the key as the actor and say so wherever a
 key is issued, or record the person the key is a delegation from. The
@@ -47,7 +47,7 @@ ignores it as well, so it is recorded against nobody either.
 
 **The key stays on the trail.** `audit_log.api_key_id` keeps naming the key, so
 a row says both for whom and through what. A person who wants to know what an
-assistant did on their behalf reads the rows that carry their id and a key.
+agent did on their behalf reads the rows that carry their id and a key.
 
 **Ownership is not attribution.** `create_company()` and `import_company()`
 take their owner from `auth.uid()` and keep doing so: who owns a company is a
@@ -56,7 +56,7 @@ membership, and a key does not choose it. The functions that demand a session �
 
 ## Consequences
 
-- 0053 holds for a hosted assistant connected through a key: what it writes is
+- 0053 holds for a hosted agent connected through a key: what it writes is
   recorded as its user's, and it can do no more than its key and its user both
   allow.
 - An issuer answers for the keys they issue. Withdrawing a key is how a person

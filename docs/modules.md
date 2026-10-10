@@ -136,15 +136,9 @@ test refuses any other arrangement.
 **The capability is the module's own**, declared in the module's own migration
 with `capabilities.area` set to the module code — `assets.read` /
 `assets.write` / `assets.post`, `budgets.read` / `budgets.write` — and added to
-the presets there too, because the socle filled the owner preset with
-`select 'owner', code from capabilities` at its own migration time and a code
-that arrives later has to name itself. A `.read` goes to `viewer` **and to
-`client`**, which holds what a viewer holds; a module that may be applied on a
-socle older than 18 September 2026 reads the label from `pg_enum` rather than
-writing `'client'::member_role`, the way the fixed assets module and `budgets` do. Borrowing the socle's
-`can_write_company()` is what these two did until 13 September 2026, and it
-meant whoever could draft a journal entry could also rewrite the fixed asset
-register. A test refuses a module policy that tests it.
+the presets there too, since a code that arrives after the socle has to name
+itself. A `.read` goes to `viewer` **and to `client`**. A test refuses a module
+policy that borrows the socle's `can_write_company()` instead.
 
 **4. A module does its own grants.** `public` gets them from Supabase's default
 privileges; a schema a migration created gets nothing at all. Every module
@@ -183,14 +177,10 @@ only, row level security in the file that creates the table, no transaction of
 their own. Two rules are theirs alone:
 
 - **A module's timestamps sort after the socle migration its manifest
-  declares it needs** (`requires_socle_min`), which is what guarantees the
-  objects it builds on already exist. A test refuses one that does not. They
-  are *not* asked to sort after every socle migration ever written: the socle
-  gains one the week after a module ships, and renaming a published module
-  migration to restore a total order is what rule 1 of
-  `supabase/migrations/README.md` forbids. `ekwo migrate` applies the socle
-  first and the modules after, so the applied order is right whatever the
-  timestamps say.
+  declares it needs** (`requires_socle_min`), which guarantees the objects it
+  builds on already exist. A test refuses one that does not. `ekwo migrate`
+  applies the socle first and the modules after, so the applied order is right
+  whatever the timestamps say.
 - **They are recorded in the same history**, `supabase_migrations.schema_migrations`,
   with the plain timestamp as `version` and the module in the `name`:
   `assets/assets`. That is what keeps `ekwo migrate` and `supabase db push`
@@ -276,33 +266,12 @@ entry does not move. The fixed assets module is the worked example: its schema
 was `assets` and is `fixed_assets` since version 2.0.0, its code is `assets`
 still.
 
-The rename is a migration like any other, and three things make it safe:
-
-- **It renames in place.** `alter schema … rename` and `alter table … rename`
-  keep the rows, the keys, the policies and the privileges, which belong to the
-  objects and not to their names.
-- **It writes every function again.** A function body is text, and text that
-  says `assets.depreciation_lines` still says it after the rename. Each one is
-  re-created with the new names and nothing else changed.
-- **It is idempotent**, each step looking for the old name first, so a fresh
-  installation — which applies it after the others — and an upgraded one reach
-  the same catalogue. `modules/fixed-assets/tests/rename_upgrade.test.ts`
-  proves both, and the figures to the cent.
-
-An archive a company left with before the rename names its tables the old
-way. The module says what they were called in
-`<schema>.archive_former_names()`, returning `(former_name, current_name)`, and
-`import_company()` reads the archive under the names of today:
-
-```sql
-create or replace function fixed_assets.archive_former_names()
-returns table (former_name text, current_name text)
-language sql immutable as $$
-  values ('assets.assets'::text,       'fixed_assets.fixed_assets'::text),
-         ('assets.depreciation_lines', 'fixed_assets.depreciation_lines'),
-         ('assets.disposals',          'fixed_assets.disposals');
-$$;
-```
+The rename is a migration that renames in place (rows, keys, policies and
+privileges follow the objects), re-creates every function whose body names the
+old objects, and is idempotent, so a fresh installation and an upgraded one
+reach the same catalogue. An archive written before the rename is read under
+today's names through `<schema>.archive_former_names()`, returning
+`(former_name, current_name)`.
 
 What no migration can do is the API setting: the exposed schemas of the
 project have to name the new schema, and the old one taken out.

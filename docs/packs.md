@@ -168,21 +168,16 @@ and `supabase/seed/`, and say so plainly when there is none — a published
 installation carries the compiled seeds and no `packs/` folder, and there is
 nothing there to build.
 
-`--links` is the one thing under `packs/` that reaches the network, which is
-why it is an option and why the CI never passes it. It opens every URL of
+`--links` is the one option that reaches the network: it opens every URL of
 every [source register](#the-register-of-sources) and names the ones that did
-not answer, and **it never changes the exit code**. A link that is quiet today
-is not a wrong pack: Légifrance refuses a request with no browser behind it —
-all four of its entries come back `403` here — Riigi Teataja serves the same
-page for a text and for a typo, and a ministry moves a form the week before a
-deadline. A gate on any of that would fail a contributor's pull request for
-something nobody in it did, and the cheapest way to make it green would be to
-delete the link. So it reports a reading, and a maintainer decides.
+not answer. It reports and **never changes the exit code** — official sites
+move pages and turn away requests with no browser behind them — so the CI never
+passes it and a maintainer reads the result.
 
 `ekwo pack list` prints every pack of the checkout — the framework first,
 then each country with its version, its charts and their accounts, its taxes,
 its statements, its languages, its certification and its golden scenario. An
-excerpt, as it read on the day this was written:
+excerpt:
 
 ```
 Packs (…)
@@ -346,11 +341,8 @@ published**: the seeds are applied in file-name order and listed by name in
 installation already holds — harmless, because the seeds upsert, and baffling
 to anyone reading the list a year later.
 
-It used to be the pack's rank in the alphabetical list of slugs, which is
-stable exactly until a country is added in the middle of it: inserting `ee`
-between `be` and `fr` moved France and Luxembourg one place each. Nothing sorts
-anything now. `ekwo pack check` refuses a pack that declares no number, and
-`ekwo pack build` refuses two packs claiming the same one.
+`ekwo pack check` refuses a pack that declares no number, and `ekwo pack build`
+refuses two packs claiming the same one.
 
 **Five kinds of file are generated, and `check` compares all five.**
 
@@ -371,10 +363,7 @@ The compiler writes `chart_templates`, `account_templates`,
 seven reference tables of the `tax` schema, and **nothing that
 belongs to a company**. Every insert upserts on the natural key —
 `(country, chart_code, code)` for an account, `(country, code)` for the rest —
-which matters more than it sounds: the seeds used to say
-`on conflict do nothing`, so an instance installed last month received no
-correction at all — not even for a company created afterwards, since a company
-copies the templates when it is installed.
+so an installation that applies a newer seed receives its corrections.
 
 What an upsert cannot do is remove. A template deleted from a pack stays in
 the database, which is the rule anyway: **nothing is ever deleted from a
@@ -514,43 +503,14 @@ the same base twice is therefore never a tax with two base postings, and it is
 printed twice in one of two ways: **by a total when the second place is a sum**,
 and **by the posting itself when it is not**.
 
-Luxembourg is the case to read, because the eCDF return asks for the taxable
-amount of a sale twice: as turnover in section I, and in the rate breakdown of
-section II. The pack defines it in the breakdown, where the rate makes it
-unambiguous:
+**By a total**, when the second place is a sum: a return that asks for a
+sale's taxable amount both in a rate breakdown and in a turnover line defines it
+once in the breakdown, and declares the turnover line a `total` adding up the
+breakdown boxes.
 
-```json
-{ "code": "LU-S-17", "rate": 17, "scope": "sale",
-  "postings": { "invoice": [ { "type": "base", "box": "701" },
-                             { "type": "tax", "account": "461411", "box": "702" } ] } }
-```
-
-Section I then reads that box instead of being posted to. `472` is declared a
-total, not a base:
-
-```json
-{ "box": "472", "kind": "total", "name": "b) Autres ventes / recettes", "sequence": 170,
-  "plus": ["701", "901", "703", "903", "705", "905", "031",
-           "457", "014", "015", "016", "017", "481", "482", "226",
-           "018", "423", "424", "019", "419"] }
-```
-
-— the seven rate bases of section II, then the exemptions, the franchise
-regimes and the operations taxed elsewhere — and `454` adds `471` and `472`,
-and `012` adds `454` to the two private-use boxes. One figure is posted, and
-every line of the form that shows it again is derived from that one.
-
-That is the first way, and it is the one to reach for: the second place is a
-sum of things the postings already wrote, so it is written down as a sum.
-
-The second way is for a parent that is **not** a sum. Form KMD reports an
-acquisition of goods from another Member State of the European Union in box 6.1, in box 6 around it and in box
-1 around that — and box 6 is not the total of the boxes printed under it,
-because the rest of box 6 is services received, which the form never prints on
-its own. The British VAT Return does the same sideways: the value of a service
-received from a supplier established abroad goes in box 6, which is outputs,
-and in box 7, which is inputs, and neither box contains the other. There is no
-total to write in either case, so the posting **names every box it prints in**:
+**By the posting itself**, when the second place is not a sum — a box printed
+inside a parent box that also holds other things, or one amount reported both
+as an output and as an input. The posting **names every box it prints in**:
 
 ```json
 { "code": "EE-P-ICG-24", "rate": 24, "scope": "purchase",
@@ -560,14 +520,10 @@ total to write in either case, so the posting **names every box it prints in**:
                              { "type": "tax", "factor": -100, "account": "2310", "box": "4" } ] } }
 ```
 
-One amount, printed in three boxes, and still one `base` posting and one
-definition. `box` takes a string or a list of strings; the first of the list is
-the box the posting is known by, and `box_factor` is the share reported — the
-same share in each, because a form that prints one figure in three places
-prints the same figure in all three. `ekwo pack check` refuses an empty list, a
-box named twice by one posting, a box the form does not carry, and a box the
-form declares a `total`: a total is added up from the boxes below it, so an
-amount written straight into one would be counted twice.
+`box` takes a string or a list; the first is the box the posting is known by,
+and `box_factor` applies to each. `ekwo pack check` refuses an empty list, a box
+named twice, a box the form does not carry, and a box the form declares a
+`total`.
 
 **When you meet it**, ask whether the second place is a sum. If it is — the
 turnover line above a rate breakdown, the box that adds the four boxes printed
@@ -575,11 +531,6 @@ under it — declare a `total` naming what the postings wrote. If it is not,
 name both boxes on the posting. What is never right is two base postings: two
 definitions of one figure, kept in step by whoever reads the pack next, and
 `pack check` refuses them before that can start.
-
-A `hidden` box has one use left after this, and it is the Belgian one: an
-intermediate `total` the form works out inside a formula and does not print. A
-hidden box that a posting writes into is the old workaround for exactly the
-shape above, and there is no longer a reason for one.
 
 ## What a tax says on the invoice: treatment, category and reason
 
@@ -591,23 +542,12 @@ declaration — they are read by whoever renders the invoice — so until
 `ekwo pack check` learned the correspondence, a pack could declare an export
 taxed at the standard rate and every test in this repository would pass.
 
-Three published sources decide the whole table, and nothing here is anybody's
-opinion:
-
-- **UNCL5305 (UN/CEFACT D.16B, the OpenPEPPOL subset)** for what each code
-  means. `K` is *VAT exempt for EEA intra-community supply of goods **and
-  services***, which settles a question the Ekwo vocabulary asks twice.
-- **Technical guidance for tax codes in EN 16931, version 1** (European
-  Commission, Technical Advisory Group on Electronic Invoicing, use cases
-  dated 1 July 2024), whose six use cases give the pair for each case. Its
-  fourth is the export of goods to a place outside the European Union, which is that zone's border because the
-  seller it addresses is established in a Member State; what UNCL5305 itself
-  says of `G` is *free export item, VAT not charged*, so the border is the one
-  of whoever levies the tax.
-- **The VATEX code list itself**, which carries the pairing as a remark on
-  eight of its codes: `VATEX-EU-AE` *only use with category code AE*,
-  `VATEX-EU-IC` with `K`, `VATEX-EU-G` with `G`, `VATEX-EU-O` with `O`, and
-  `VATEX-EU-D`, `-F`, `-I`, `-J` with `E`.
+Three published sources decide the table, and nothing in it is anybody's
+opinion: **UNCL5305** (the OpenPEPPOL subset) for what each category means, the
+European Commission's **technical guidance for tax codes in EN 16931** for the
+pair each use case takes, and the **VATEX code list**, which states the pairing
+on its own codes (`VATEX-EU-AE` only with `AE`, `VATEX-EU-IC` with `K`, and so
+on).
 
 | `treatment` | Side | `vat_category` | `exemption_code` |
 |---|---|---|---|
@@ -625,180 +565,60 @@ opinion:
 | `exempt` | either | `E` | the article claimed, from the VATEX list |
 | `not_subject` | either | `O` | `VATEX-EU-O` |
 
-**That table is the European Union's, and the last column applies where the European Union's VAT
-does.** EN 16931 is a European standard and the VATEX list is published by the
-European Commission: its own codes name articles of Directive 2006/112/EC, and
-its national codes — `VATEX-FR-CGI261-1` and the rest — belong to Member States
-that publish them. So a pack for a country the common system of VAT does not
-reach reads the table with two changes:
+**The last column applies where the European Union's VAT does.** The VATEX list
+names articles of Directive 2006/112/EC, so for a country the common system
+does not reach:
 
-- **`exemption_code` is null**, and the article the line is exempt under goes in
-  `legal_reference`, where it was going to go anyway — and is required there
-  wherever the category asks for a reason, because it is what the invoice
-  states instead of a code. A VATEX code is refused by name, the national
-  spelling included: `VATEX-EU-G` on an export from a third country claims an
-  article of a Directive that does not bind the seller.
-- **The five `intracom_*` treatments are refused outright.** An intra-Community
-  supply is an operation of the common system, and a country outside it makes
-  none.
-- **`vat_category` is no longer required, unless the pack declares an
-  e-invoicing profile.** BT-151 is a term of an invoice governed by EN 16931.
-  A country the common system does not reach whose sellers issue no such
-  invoice has no category of anybody's to record, and asking for one is a
-  European standard asking a question nobody reads the answer to: the first
-  pack of a country with no value added tax at all had to write `S`, `E` and
-  `O` on codes no American invoice carries the field for. So the requirement
-  follows the invoice. Where `einvoicing.profile` names a profile —
-  `peppol-bis-3`, `factur-x-en16931`, `xrechnung`, a PINT, each built on the
-  semantic model of EN 16931 and each carrying BT-151 — a tax that can reach a
-  sale still has to name a category. Where the pack names no profile, the
-  column is free, the way it already is on a purchase-only tax.
+- **`exemption_code` is null**, and the article the line is exempt under goes
+  in `legal_reference` — required wherever the category asks for a reason.
+- **The five `intracom_*` treatments are refused.** A country outside the
+  common system makes no intra-Community supply.
+- **`vat_category` is required only if the pack declares an e-invoicing
+  profile** (`einvoicing.profile`: `peppol-bis-3`, `factur-x-en16931`, a PINT…),
+  since BT-151 is a term of an invoice built on EN 16931. A category a pack does
+  name is still held to its treatment, its reason and its rate.
 
-Everything else holds: the column being free is not the column being unchecked.
-A category a pack *does* name is still held to the treatment, to its reason and
-to its rate, everywhere. The categories are UNCL5305, a UN/CEFACT list: `E`, `G`,
-`O` and `AE` keep their meanings, a sale still has to name one, and the rate
-rules of EN 16931 still fix what it may be charged at.
+Should such a country publish reason codes of its own, the pack's register
+declares that list on one `standard` entry with `"reason_codes": true`, and
+the column takes its codes.
 
-Should a country outside the European Union one day publish reason codes of its own —
-none has, and PINT is where it would surface — the column takes them, on one
-condition: the pack's register declares that list, as the entry of
-`certification.sources` that says so of itself with `"reason_codes": true`.
-What is checked is that a list is named and that the value is a code rather
-than a sentence, never that the code is in the list.
+Which side of that line a pack is on is never written in code: it is the row of
+`territories` for the pack's country (`eu_vat_scope`) on the day of the pack's
+`released_at`. `ekwo pack check` reads it from
+`supabase/seed/00_territories.sql`, the file the database is seeded from.
 
-**It is the entry that says so, and not the first `standard` in the register.**
-That flag exists because `standard` means "a technical norm or code list", which
-the FASB Accounting Standards Codification and FRS 102 are as much as VATEX is:
-reading the first one found made a pack that cites its country's accounting
-standards declare a list of exemption reason codes without knowing it, and
-silently authorised a code on any of its taxes. At most one entry of a register
-may carry the flag, and it has to be a `standard`, because a published list of
-codes is one; `ekwo pack check` refuses a second and refuses the flag on any
-other kind. That is exactly what is checked of a VATEX code inside
-the European Union, where the check holds no copy of the list either.
+A few decisions behind the table are worth knowing before filling a column in:
 
-Which side of that line a pack is on is **not** written anywhere in the code.
-It is a row of `territories`, the reference table of the framework that
-`ec_sales_list()` already reads — `eu_vat_scope` at the pack's `released_at`,
-with `full` meaning the common system reaches the country. `ekwo pack check`
-runs on a checkout with no database, so it parses
-`supabase/seed/00_territories.sql`, which is the file the database itself is
-seeded from; `tests/vat_codes.test.ts` holds its answer against
-`eu_vat_scope_of()` for every territory on every date the table names. Two
-consequences worth knowing:
-
-- **The day is `released_at`, not today.** A pack is a transcription of a law
-  and `released_at` is the day it says that transcription is true. Asking today
-  would make a pack pass in the morning and fail in the evening with nothing
-  committed in between, on the day a State acceded or left. Asking a tax's own
-  `valid_from` would be worse: the taxes of a pack span decades, so one pack
-  would speak two regimes and a British rate of 1994 would be asked for a code
-  from a list that did not exist.
-- **A country `territories` carries no row for is held to the table above.**
-  Every rule in this section narrows what a pack may say, and narrowing on a
-  missing row would refuse a valid pack for a country nobody has added to the
-  reference data yet. Silence is not a no. A pack of this repository never
-  reaches that fallback, because the test suite refuses one whose country is
-  not in the table.
-
-Three more things in that table are decisions, and all three are worth reading
-before filling a column in.
-
-**A category is a term of the invoice, so on a purchase it is the
-supplier's.** A purchase tax describes how the buyer books and declares
-somebody else's invoice, and BT-151 on that invoice was chosen by the seller.
-An intra-Community acquisition is therefore `K`: the supplier made an
-intra-Community supply, and rule BR-IC-10 binds them to `K` and
-`VATEX-EU-IC`. It is not `AE`, which the guidance gives for a reverse charge
-*within* one Member State — the case where the supplier is established in the
-buyer's country and national law moves the liability. A pack that does not
-want to record the seller's answer may leave the column null on a
-purchase-only tax; a value that contradicts the treatment is refused either
-way, and a tax that can reach a sale has to name one.
-
-**Where no invoice governed by the standard exists, the category is absent.**
-Import tax is assessed on a customs document, and a service received from a
-supplier the European Union's rules do not reach arrives on an invoice the Directive
-does not govern. There is no seller's category to record, so `import` and
-`foreign_services_received` carry none. `S` there would claim the supplier
-levied the standard rate, which is the one thing that certainly did not
-happen.
-
-**A triangular supply is `K`, not `AE`.** `intracom_triangular` is the middle
-supply of a triangular arrangement — A sells to B, B sells to C, the goods go
-straight from A to C — that is, B's sale to C, relieved by article 141 of
-Directive 2006/112/EC and reverse-charged to C by article 197. A's supply is an
-ordinary `intracom_goods` and C's purchase an ordinary
-`intracom_acquisition_goods`, so there is one value to add and not three. `AE`
-is the guidance's case for a reverse charge *within* one Member State, where
-the supplier is established in the buyer's country; this is the opposite shape,
-the goods leaving the seller's State, and what the line is — in the words of
-UNCL5305 — is *VAT exempt for EEA intra-community supply of goods and
-services*. On the invoice it is the **reverse-charge** sentence that comes out
-and not the intra-Union exemption: the supply is not exempt under article 138,
-and article 226(11a) requires the mention that says the customer owes the tax.
-A pack that declares such a tax gets `triangular` out of `ec_sales_list()` for
-free, and the four recapitulative-statement bricks already have a column and a
-code for it.
-
-`self_assessed` is the treatment for **a tax a buyer owes directly to an
-administration under that administration's own law**, and computes and declares
-themselves. American use tax is the case it was written for: section 6201 of
-California's Revenue and Taxation Code imposes the tax on the storage, use or
-consumption of property bought from a retailer, and section 6202(a) makes the
-buyer liable for it. Mechanically it looks like the reverse charge above, and
-it is not one — there is no exempt supply behind it, no supplier who was
-relieved of anything, no recapitulative statement, and nothing at all is
-recovered at the other end, which is why such a tax usually carries a
-`tax_on_base` posting as well. It carries no category and no reason code, for
-the reason `import` and `foreign_services_received` carry none: a buyer
-assessing a tax on themselves holds no invoice EN 16931 governs, and there may
-be no supplier the levying State can reach at all. It is **not** refused inside
-the common system — a Member State levying a duty of its own that a buyer
-self-assesses would be describing this and not article 194 — and what tells the
-two apart is the law each tax cites.
-
-`foreign_services_received` is the treatment for a service bought from a
-supplier who is not established in the buyer's country and charges no tax on
-it, the buyer accounting for it themselves under the general
-business-to-business rule — articles 44 and 196 of Directive 2006/112/EC. It
-is the sibling of `intracom_acquisition_services` for a supplier the
-intra-Union rules do not reach, and it says nothing about where that supplier
-is: the rule turns on **establishment**, which is why the name is not
-`import_services`. It is also why it is not `import`, which in this vocabulary
-means goods declared to customs — a different mechanism behind a different
-document. On the invoice, it is the reverse-charge sentence that comes out:
-the same mechanism as a domestic reverse charge, under a different article.
-
-The rate is checked on sales only. There the pack's `rate` is the BT-152 the
-seller prints, and the business rules of EN 16931 fix it per category —
-BR-S-05 wants a standard-rated line above zero, and BR-Z-05, BR-E-05,
-BR-AE-05, BR-IC-05, BR-G-05 and BR-O-05 want zero. On a purchase the rate is
-the one the buyer self-assesses at, 21 % on a line the supplier invoiced at
-zero, so the same rule there would refuse every reverse charge ever written.
-
-What the check does **not** hold is a copy of the VATEX list. The list grows,
-two published renderings of it already disagree on which codes it carries, and
-a code it has not heard of is not a contradiction. So a reason code is checked
-for its shape — `VATEX-EU-<article>`, or `VATEX-<country>-<article>` for a
-national one — and for the pairings the list itself states.
+- **On a purchase, the category is the supplier's.** It is the BT-151 the
+  seller's invoice carries, so an intra-Community acquisition is `K`, not `AE`
+  (`AE` is a reverse charge *within* one Member State). A purchase-only tax may
+  leave it null; a contradicting value is refused either way.
+- **Where no invoice governed by the standard exists, there is no category**:
+  `import` (a customs document), `foreign_services_received` and
+  `self_assessed` carry none.
+- **A triangular supply is `K`.** `intracom_triangular` is the middle supply of
+  an A → B → C arrangement; on the invoice it is the reverse-charge sentence
+  that comes out.
+- **`self_assessed`** is a tax a buyer owes directly under the levying
+  authority's own law — a use tax, for example — with no relieved supply behind
+  it. **`foreign_services_received`** is a service from a supplier not
+  established in the buyer's country, reverse-charged under the general
+  business-to-business rule.
+- **The rate is checked on sales only**, against the EN 16931 rules for each
+  category (`S` above zero; `Z`, `E`, `AE`, `K`, `G`, `O` at zero). On a
+  purchase the rate is the one the buyer self-assesses at.
+- **A reason code is checked for its shape** (`VATEX-EU-<article>` or
+  `VATEX-<country>-<article>`) and for the pairings the list states, not
+  against a copy of the list.
 
 ## What an exemption depends on
 
 A tax code is the answer. Sometimes the *question* is not in the books either,
 and `conditions` is where a pack says which question it was.
 
-Three exemptions of one American pack make the case. A sale for resale is
-untaxed because the seller holds a resale certificate — section 6091 of
-California's Revenue and Taxation Code presumes every receipt taxable until
-they take one from the purchaser, and Regulation 1668 says what it has to
-contain. A sale of food is untaxed under section 6359 unless it is hot, or
-carbonated, or alcoholic, or eaten where admission was charged. And a seller
-collects in a State at all only once a running total of sales into it has been
-crossed, which since *South Dakota v. Wayfair* is what economic nexus is. None
-of the three is a fact the ledger holds, and before this field a reader of the
-chart saw three zero-rated codes and one long sentence each.
+A sale for resale is untaxed because the buyer handed over a certificate; a
+seller collects in a territory only once its sales there cross a threshold.
+Neither is a fact the ledger holds.
 
 ```json
 { "code": "US-CA-S-RESALE", "rate": 0, "scope": "sale", "treatment": "exempt",
@@ -833,13 +653,9 @@ does — this is the pack's transcription of a country's rule, not a property of
 the tax a company went on to edit, and `taxes` carries `country` and `code`,
 which is the join.
 
-**What it does not record is the evidence itself.** There is still no place on
-a contact for a certificate and its validity, and no place anywhere for a
-rolling total per territory. Both are larger than the pack format — one is
-document management, the other is reporting — and
-[`international.md`](international.md) keeps them on the list. A pack states
-the code a bookkeeper reaches for once the answer is known, says what the
-question was, and invents no rule that would pretend to know it.
+**What it does not record is the evidence itself** — a certificate held on a
+contact, a running total per territory. A pack states the code a bookkeeper
+reaches for once the answer is known, and says what the question was.
 
 ## Which declaration a box belongs to
 
@@ -874,29 +690,17 @@ cadences it accepts — `["month", "quarter"]` in Belgium, France and Luxembourg
 no default for it. Six cadences exist, each a whole number of months anchored on
 1 January: `month`, `bimonth` (January–February, March–April…), `quarter`,
 `four_month` (from January, May, September), `half_year` (from January, July)
-and `year`. A form lists only the ones a text of its register allows: a pack that names none is refused, because
-the column this compiles to used to default to "monthly or quarterly" and a
-country that had never thought about its cadence filed on Belgium's without
-anybody deciding that. A single string is still read, `month_or_quarter`
-meaning the two cadences it names, so a pack written before the list keeps
-working.
+and `year`. A form lists only the ones a text of its register allows, and a pack that
+names none is refused.
 
 **What the form is filed on unless the company has asked for something else**
 is `period_default`, one of the cadences `period` lists. Declare it where the
 law of that country gives one answer **to everybody**, and say which text does
 in `legal_reference`; leave it out where the cadence depends on a fact about the
 company, because proposing one of several lawful answers there is choosing a
-filing deadline for somebody the pack knows nothing about. The two are a reading
-of the law and not a count of the list: the United Kingdom files its return
-monthly, quarterly or annually and reg. 25(1) of the Value Added Tax
-Regulations 1995 still makes three months the prescribed accounting period for
-everybody, a month and a year being what the Commissioners allow or direct on
-application. So `packs/gb` proposes `quarter` on a form filed on three cadences.
-Belgium and France propose `month` for the same reason in reverse — each
-country's code makes the monthly return the rule and the quarterly one an
-authorisation granted on turnover — and Luxembourg proposes nothing, because
-there the cadence follows turnover with no answer the law gives everybody.
-Estonia's form is filed on one cadence and proposes it.
+filing deadline for somebody the pack knows nothing about. The United Kingdom, for example, proposes `quarter` on a form filed on three
+cadences, because its regulations make three months the prescribed period for
+everybody; a country where the cadence follows turnover proposes nothing.
 
 **When the form is due** is `deadline`, a rule rather than a date, in a closed
 vocabulary of three words, each with the text that sets it in
@@ -935,10 +739,8 @@ its own exact figure, and `filing_drift()` compares at the same unit, so the
 cents a ledger holds are not a drift. A frozen box has no scale of its own: a
 return in a currency without decimals freezes `1000000`, not `1000000.00`.
 
-`defaults.vat_period` is where this used to be said, on the country rather than
-on the form. It is still read, so a pack written before the move keeps working,
-and a pack that says both and says two different things is refused: one fact,
-one place.
+`defaults.vat_period`, the former place for this, is still read; a pack that
+says both and says two different things is refused.
 
 Which cadence a given company files a given declaration on is a row of
 `company_filing_periods`, settled at install — one row per form, because a
@@ -1027,12 +829,10 @@ worked out from itself, or two worked out from each other — is refused by
 
 ## Which province a party is in
 
-`defaults.region` is the other half of the same story: Canadian tax follows
-the buyer's province, so `companies.region` and `contacts.region` exist (ISO
-3166-2 without the country prefix — `QC`, `BC`). Nothing reads them before the
-Canadian pack; the declarative rules that turn a region into a *suggested*
-tax, and the group tax that puts GST and QST on one line, are phase 1. The
-core never chooses a tax for anyone, in any country.
+`defaults.region` is the other half of the same story: where tax follows the
+buyer's province or state, `companies.region` and `contacts.region` hold it
+(ISO 3166-2 without the country prefix). The core never chooses a tax for
+anyone, in any country.
 
 ## Where a tax applies: `applies_when` on a tax
 
@@ -1119,11 +919,9 @@ refuses a code the table does not carry, and so does the column — the three ar
 foreign keys. It refuses a `jurisdiction` the table does not carry for the same
 reason, now that there is a table to check it against, and it refuses a
 `seller_in` outside the pack's own country, because a pack is keyed on the
-country its companies file under. This is the second time `docs/packs.md`'s
-"adding a country touches `packs/<cc>/` and nothing else" is not quite true: a
-pack outside the common system adds a row to
-[`supabase/seed/00_territories.sql`](../supabase/seed/00_territories.sql), and
-so does a pack that conditions a tax on a territory below the country.
+country its companies file under. A pack outside the common system, or one that conditions a tax on a territory
+below the country, therefore adds rows to
+[`supabase/seed/00_territories.sql`](../supabase/seed/00_territories.sql).
 
 **The regime a tax is held to follows the territory too.** Whether the VATEX
 list of EN 16931 reaches a tax used to be a question about the pack's country;
@@ -1136,8 +934,7 @@ stated as a check.
 **What it cannot say.** A tax cannot name a place a party is *not* in. A supply
 the contract requires to be shipped **out of** the taxing territory is therefore
 still written as an ordinary exemption with the article in `legal_reference`;
-the condition exists, the word for it does not. `docs/international.md` carries
-that gap under the United States, where it belongs.
+the condition exists, the word for it does not.
 
 ## What a country puts on an invoice
 
@@ -1253,8 +1050,8 @@ engine consumes a format it produces the same numbers it always did.
 counter, or with two.
 
 **Whether the profile is obligatory** is `einvoicing.obligation`, in a closed
-vocabulary of three words, because a null `mandatory_from` used to say two
-different things — "there is no obligation" and "nobody looked up the date":
+vocabulary of three words, so that "no obligation" and "nobody looked up the
+date" are never confused:
 
 | Value | Says | `mandatory_from` |
 |---|---|---|
@@ -1282,15 +1079,8 @@ five words:
 | `invoice_if_issued` | the supply is the principle, and an invoice displaces it where the country requires one |
 | `earliest_of_delivery_or_payment` | whichever of a supply and a payment came first |
 
-The last two exist because most of Europe is one of them and neither could be
-said in a single word before. Belgium puts the fait générateur at the supply
-(art. 16, § 1er and art. 22, § 1er) and derogates to the invoice (art. 17, § 1er
-and art. 22bis, § 1er); Luxembourg is art. 21 and art. 24, par. 1er in the same
-shape; the United Kingdom is VATA 1994 s. 6(2)–(3) and s. 6(4)–(5). All three
-had declared `invoice_date`, which is the derogation given as if it were the
-principle — and all three said so in their own citation, which is how it was
-found. Estonia keeps the first of a supply and a payment (KMS § 11 lg 1, two
-branches) and had declared `delivery_date`, which is the first branch alone.
+The last two exist because many countries put the tax point at the supply
+and let an invoice displace it, or take the earlier of a supply and a payment.
 
 **Declare the principle and its derogation together, not the derogation
 alone.** A word that names half a rule reads exactly like one that names all of
@@ -1310,11 +1100,8 @@ keeps the day it counts for a return in `entry_lines.declared_on` — its tax
 point, or its entry's date where it has none — and `vat_return()` reads the
 period on that column, so a figure lands in the period its tax fell due in
 rather than the period its entry was booked in. A document that says nothing new answers
-exactly as it did: null means the entry's own date. Two limits are written down
-in [`docs/international.md`](international.md): the payment branch is honoured
-only through `cash_basis`, because Ekwo has no prepayment document, and the
-recapitulative statement still reads the entry date, because the moment an
-supply between Member States of the European Union arises is a different article in every country.
+exactly as it did: null means the entry's own date. The payment branch of a rule is honoured
+through `cash_basis`, and the recapitulative statement reads the entry date.
 
 **The schemes** are ISO 6523 identifier codes, four digits, and there are two
 because they are not the same identifier: `party_scheme` is how a party is
@@ -1337,13 +1124,8 @@ sentence to print rather than a citation), and `tax_point` for the tax point.
 profile, because the section is one rule. All four pairs compile into
 `country_defaults`, beside the rule each belongs to.
 
-Where the value declared is a derogation rather than the country's principle,
-say so in the reference — and, since `invoice_if_issued` and
-`earliest_of_delivery_or_payment` exist, prefer a value that does not need the
-excuse. The Luxembourg pack declares `invoice_if_issued` and its citation names
-art. 21 as the principle and art. 24, par. 1er as the derogation, with the two
-cases the derogation does not reach; a reader who opens the text is then not
-left wondering whether the pack read the wrong article.
+Where the value declared is a derogation rather than the country's
+principle, say so in the reference.
 
 **Whether a posted document goes back to draft** is `posted_edit_policy`, and
 it is the one document rule that loosens rather than binds. `reversal_only`:
@@ -1357,9 +1139,7 @@ as `reversal_only`. Declare `unpost_if_untouched` only with the article that
 allows it under `references.posted_edit_policy` — `ekwo pack check` refuses it
 without one, on every status — and say in it why the irreversibility your own
 accounting law gives a recorded entry does not reach a document nobody
-received. Belgium and France declare `reversal_only`, and cite why: both make
-a validated entry irreversible (Code de droit économique, art. III.87, § 2;
-PCG, art. 921-3), and France numbers its invoices continuously.
+received.
 
 **The bank formats** are a known list rather than free text — `camt.052`,
 `camt.053`, `camt.054`, `mt940`, `mt942`, `coda`, `cfonb120`, `ofx`, `qif`,
@@ -1919,8 +1699,7 @@ carries. The second pass compiles and compares the committed seeds. A pack that
 fails the first never reaches the second.
 
 The list below is the whole of it. It is long because a pack is data somebody
-will file a return with, and every line of it exists because the alternative
-was a figure that is wrong and looks right.
+will file a return with.
 
 **The manifest, and the charts.** A chart whose `accounts` file does not
 exist. No chart marked `"default": true`, or more than one — `ekwo init` would
@@ -1960,56 +1739,31 @@ is a misunderstanding worth stopping. An account, or a
 names several — an empty list of them, the same box named twice by one posting,
 or a box the form declares a `total`.
 
-The three code lists a tax tells one fact in have seven of their own, all of
-them from the table under "What a tax says on the invoice", and every message
-names the tax, its treatment, what it says, what the source says instead and
-which source. A `vat_category` the treatment contradicts — an export that is
-not `G`, an intra-Community acquisition that is `AE` rather than `K`. A
-category on `import` or on `foreign_services_received`, where no invoice
-governed by EN 16931 exists and there is nothing of a supplier's to record. No
-category at all on a tax that can reach a sale, wherever an invoice of that
-country carries BT-151. An `exemption_code` the VATEX list reserves for another category, and
-one on a line that is taxed, which is exempt under nothing. A category that
-asks for a reason and names none. A reason that is not shaped like a VATEX
-code. And, on the sale side only, a rate the category forbids: a standard rate
-of zero, or an exempt line at 21 %. A treatment declared on the side it does
-not happen on — an `import` that is a sale, an `export` that is a purchase —
-is refused in the same pass, because that is what makes the expected category
-knowable.
+`treatment`, `vat_category` and `exemption_code` are held to the table under
+[What a tax says on the invoice](#what-a-tax-says-on-the-invoice-treatment-category-and-reason):
+a category the treatment contradicts, a category where no invoice governed by
+EN 16931 exists, a missing category on a tax that can reach a sale, a reason
+code reserved for another category or shaped wrongly, a reason missing where
+the category asks for one, a rate the category forbids on a sale, and a
+treatment declared on the side it does not happen on. Every message names the
+tax, what it says, what the source says instead and which source.
 
-Five more of them turn on one fact that is in `territories` and not in the
-pack: whether the common system of VAT reaches the country on the day the
-manifest's `released_at` names. Where it does not, an `exemption_code` taken
-from the VATEX list is refused, because that list belongs to a system this
-country is not in; a reason code from any other list is refused unless the
-pack's register declares that list with `"reason_codes": true`, and refused
-again if it is a sentence rather than a code; a line whose category asks for a
-reason and that names neither a code nor a `legal_reference` is refused, because
-the article is what the invoice states there; any of the five `intracom_*`
-treatments is refused outright; and the requirement to name a `vat_category` at
-all is lifted, unless the pack declares an e-invoicing profile whose invoices
-carry BT-151. Every one of those messages names the country,
-the day and the `eu_vat_scope` the table gives it, so a reader is never left
-wondering why a code they read in the standard was turned down.
+Where the common system of VAT does not reach the country (per `territories`,
+on the day of `released_at`), the rules of that section apply: a VATEX code is
+refused, another list's code only with a register entry declaring
+`"reason_codes": true`, an exempt line needs a code or a `legal_reference`, the
+`intracom_*` treatments are refused, and a category is asked for only with an
+e-invoicing profile. Every message names the country, the day and the scope the
+table gives it.
 
-A cash-basis tax has four of its own: it has to name its transition account; it
-takes exactly one `tax` posting per document kind; it takes no `tax_on_base`
-posting, because a share nobody gets back is a cost and a cost is not deferred
-to a payment; and its `tax` posting has to name a box, or the amount waits on
-the transition account for ever.
+A cash-basis tax has four of its own: it names its transition account, takes
+exactly one `tax` posting per document kind and no `tax_on_base`, and its `tax`
+posting names a box.
 
-The territories a tax names have three more, and the first two are the reason
-those fields are foreign keys rather than strings. A code — in any key of
-`applies_when`, or in `jurisdiction` — that `territories` carries no row for: a
-territory nobody can look up is a place two packs can spell two ways. An
-`applies_when.seller_in` outside the pack's own country, because a pack is keyed
-on the country its companies file under and its taxes are the ones their seller
-owes; the buyer and the place of supply are deliberately unconstrained, since a
-supply is taxed where it lands. And the four refusals above move with the
-territory: where a tax names `seller_in`, the regime it is held to is the one of
-**that territory** on the day the manifest speaks of, so a tax applying where
-`eu_vat_scope` is `goods` is inside the common system for a supply or an
-acquisition of goods and outside it for everything else.
+A territory a tax names — in `applies_when` or `jurisdiction` — has to be a row
+of `territories`; `applies_when.seller_in` has to be inside the pack's own
+country; and where a tax names `seller_in`, the regime it is held to is that
+territory's.
 
 **The declaration form.** The same box declared twice with the same kind. A
 formula on a `base` or a `tax` box, which is summed from the ledger. A
@@ -2228,14 +1982,11 @@ not in a section of one.** The Belgian `asbl` chart is the case — it declares
 the Code des sociétés et des associations, which the rest of the pack does not
 need.
 
-The register compiles into `country_packs.sources`, so an application can
-answer "where do these rules come from" without reading the pack, and the key
-travels with the rule it belongs to in `tax_templates.source_key` and
-`tax_report_box_templates.source_key`. The MCP tool `describe_pack` returns
-all of it. What a register entry is **not** is a foreign key: a pack is
-upserted one statement at a time and the register lives in a jsonb column, so
-the check that a key resolves is `ekwo pack check`'s, before the seed is
-written.
+The register compiles into `country_packs.sources`, and the key travels with
+each rule in `tax_templates.source_key` and
+`tax_report_box_templates.source_key`, so an application can answer "where do
+these rules come from" without reading the pack. The MCP tool `describe_pack`
+returns all of it.
 
 ## Certification, and who may say what
 
@@ -2263,8 +2014,8 @@ claims:
 The third row is the substance of a review. A professional who reads a pack
 against the law reads *something*, and a status that let them leave that
 unsaid would be a signature rather than a review. The second is a warning
-rather than a refusal because the register landed after four packs did, and a
-missing link is a link that is missing — never a figure that is wrong.
+rather than a refusal: a missing link is a link that is missing, never a figure
+that is wrong.
 
 **The manifest says out loud how much anyone has read it**, and `ekwo init`
 prints it in as many words before anyone books anything:
@@ -2279,13 +2030,10 @@ A pack with no `certification` block at all compiles as `community`, which is
 the safe reading of silence.
 
 **There is deliberately no status that means "certified by Ekwo".** Writing a
-pack and testing that it holds together is not reviewing it. *Certified*
-describes a professional reading a pack against the law, and nothing else. The
-value `ekwo` that used to exist is deprecated, refused by the schema, and moved
-to `maintained` by migration `20260912081015`. **Belgium and France are
-`maintained`; every other pack is `community`** — the
+pack and testing that it holds together is not reviewing it: only a
+professional reading a pack against the law is. The
 [table of packs](#the-packs-of-this-checkout) is generated from the manifests
-and says it pack by pack.
+and gives the status of each.
 
 ### What a reviewer signs
 
@@ -2725,7 +2473,8 @@ is genuinely right, one comment says so and why:
 The engine: posting, matching, the returns, the installer. Also deliberately
 out — the rates of American sales tax (thousands of jurisdictions, monthly
 changes; the form belongs here, a maintained rate feed does not), the XML of
-the filing formats, analytics, fixed assets, payroll, and the translation of
-the application itself. A handful of stable rates published by the
+the filing formats (format libraries in `packages/formats/`), analytics,
+payroll, and the translation of the application itself. Fixed assets and
+corporate income tax are optional pack sections read by their modules. A handful of stable rates published by the
 administration *is* data and belongs in the pack — Canada's fifteen GST/HST
 combinations would be — and a feed that moves every month is not.

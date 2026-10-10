@@ -13,7 +13,9 @@ It is the normal case of this schema and not an edition of it. There is no
 ## The model in four sentences
 
 1. **One installation belongs to one customer** — here, the firm. `instance` is
-   that fact, in one row.
+   that fact, in one row. (An operator may also share one installation between
+   unrelated people, each with companies of their own and blind to the others:
+   `share_instance()`. A firm does not need it.)
 2. **Every client of the firm is a `companies` row** inside it, with its own
    chart, its own journals, its own locks and its own country pack. Forty
    clients in six countries is forty rows and six packs.
@@ -81,6 +83,8 @@ select * from invite_member(:company, 'owner@client.example', 'client');
 The ledger is included on purpose: the books are the client's, and the firm is
 the guest who keeps them. A firm that wants to show less revokes a capability
 on that member; see *Who may do what* in the [README](../README.md).
+`set_member_role()` moves a member to another preset, `remove_member()` takes
+them off a company, and `company_members_list()` reads who is on it.
 
 A client is never counted, licensed or charged for in the open core.
 
@@ -130,34 +134,23 @@ it revokes it for that member, and the revocation is on the audit trail of the
 company.
 
 What stays in the firm's installation: who was a member, the invitations, the
-machine keys, the shared links — and the company itself, since nothing deletes
-one yet. What the archive does not carry: the files the attachments point at,
-which the manifest lists for somebody to copy.
+machine keys and the shared links. The files the attachments point at are
+listed in the manifest for somebody to copy.
 
-## What is missing, in the order it matters
+## Not there yet
 
-- **Carrying the files of the attachments**, and **removing a company** once it
-  has left. A company can now be extracted and imported elsewhere
-  ([`company-archive.md`](company-archive.md)); the bytes of its pieces are
-  listed and not moved, and the original stays where it was.
+- **Carrying the files of the attachments** inside the archive, and
+  **removing a company** once it has left.
 - **The mandate as an object**: who may file for whom, with which
-  administration, from when to when. `tax_filing_deposits.sent_by` says who
-  sent; nothing says in what capacity. The brick that writes the representative
-  does not check that one exists.
+  administration, from when to when.
 - **Groups of collaborators.** Giving somebody forty companies is forty rows of
   `company_members` today.
 - **Separation of duties** between whoever prepares a return and whoever files
-  it: the `ready` state exists for it, the rule that forbids one person both
-  gestures does not.
-- ~~**An API key has no portfolio.**~~ Delivered: a key is on the company it
-  was minted on, so its portfolio is that company
-  ([`machine-access.md`](machine-access.md)). What is still missing is a key
-  across a firm's whole portfolio, which is one key on several companies and
-  therefore a different object.
+  it.
+- **A machine key across a firm's whole portfolio.** A key belongs to the
+  company it was issued on ([`machine-access.md`](machine-access.md)).
 - **The portfolio across installations** (arrangement B), which is a control
-  plane somebody operates ([`cloud-services.md`](cloud-services.md)), not a
-  table of this schema.
+  plane somebody operates ([`cloud-services.md`](cloud-services.md)).
 
-What is deliberately not here: billing a firm's clients and tracking its time
-(the firm's trade, not its accounting), and a `tenant_id` that would let several
-firms share a database.
+Billing a firm's clients and tracking its time are the firm's trade, not its
+accounting, and are not here.
