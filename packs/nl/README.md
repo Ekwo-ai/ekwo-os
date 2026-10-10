@@ -116,7 +116,7 @@ falls on a weekend does not move.
 **The ICP statement** (*opgaaf intracommunautaire prestaties*, article 37a) is
 what `ec_sales_list()` computes: the lines of box 3b, per customer and per
 nature. It is not declared as a form, because a pack declares one form — see
-[`../../docs/international.md`](../../docs/international.md) — and no brick
+[`../../docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet) — and no brick
 writes its file yet.
 
 ## The financial statements
@@ -260,15 +260,13 @@ nothing here approximates it.
 | **Discretionary depreciation, extraordinary depreciation, revaluation, impairment** | Willekeurige afschrijving for environmental assets, a write-down to a lower value in use, and a revaluation have no mechanism in the module. |
 | **Units of production** | Refused by the module itself, which does not record the units of a period. |
 
-The text of articles 3.30 and 2:386 was read on a consolidation of the
-Wettenbank published by a third party, because the official page served only its
-table of contents to the tool that read it; the register cites the official
-address. A reviewer should read both on the Wettenbank.
+The register cites the official Wettenbank address of articles 3.30 and
+2:386; the reading rests on a third-party consolidation, and a reviewer should
+read both on the Wettenbank.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
-The section carries what was read on an official page on 1 October 2026, and
-nothing else: the Wet op de vennootschapsbelasting 1969 and the Wet
+The section rests on official texts only: the Wet op de vennootschapsbelasting 1969 and the Wet
 inkomstenbelasting 2001 on the Wettenbank, and two pages of the Belastingdienst.
 It starts from line **E19**, *Resultaat voor belastingen*, of model E, so the tax
 charge never enters the computation. A rule that is missing makes an estimate too
@@ -277,18 +275,18 @@ high or too low by something a reader can name; these are the ones to name.
 | Not carried | Why |
 |---|---|
 | Carry-back of a loss to the preceding year (Wet Vpb art. 20, lid 2) | The law sets the loss against the profit of the year before first, and the section's vocabulary has loss carry-forward only. A company that carried a loss back declares what is left as a prior loss. The loss must also have been fixed by the inspector (*vastgesteld bij beschikking*); nothing checks it. |
-| Rates before 2023, and the years before 2022 for losses | Only the rates of 2023 to 2026 (Belastingdienst page) and the loss rule from 2022 were read. Earlier versions of article 22 and article 20 were not. |
-| Whether a rule of 2025 still reads the same in 2027 | Article 8 and article 22 were read in the text in force on 1 January 2025 and on 1 January 2026; the Wettenbank flags changes without a date. Nothing later was read. |
+| Rates before 2023, and the years before 2022 for losses | Only the rates of 2023 to 2026 (Belastingdienst page) and the loss rule from 2022 are carried. Earlier versions of article 22 and article 20 are not. |
+| Whether a rule of 2025 still reads the same in 2027 | Article 8 and article 22 are carried in the text in force on 1 January 2025 and on 1 January 2026; the Wettenbank flags changes without a date, so a later version should be checked. |
 | The amount of the mixed costs | A company that has employees leaves out of the deduction the larger of EUR 5,700 and 0.4 % of its wage bill (art. 8, lid 5 Wet Vpb, art. 3.15 Wet IB), or elects 73.5 % deduction. The wage bill is the taxable wage of the Wet LB 1964 and the books do not hold it, and the choice is made on the return, so neither rule names an account: the company declares under `mixed-costs-fixed` the lower of its costs and the threshold, or under `mixed-costs-elected` the costs themselves. Declaring both on the same costs counts them twice. A company with no employees is outside article 3.15 by article 8, lid 5, and declares nothing. |
 | Fines booked elsewhere than `WBedAdlBev` | The rule `fines` reads the whole balance of the RGS account *Boetes en verhogingen belastingen en premies sociale verzekeringen*, taking its content to be the administrative fines of art. 3.14, lid 1, onderdeel c. A criminal fine or another fine booked on a different account is named by the company in `tax.adjustments`. |
 | The other exclusions of art. 3.14 (a *zekere staat*, offences, weapons, bribes, penalty payments, foreign taxes, dividend tax) | Each depends on a fact of the company, not on a share of an account; no flat rule could be cited. |
 | The participation exemption, the interest limitation (*earningsstripping*), the innovation box, investment allowances, the fiscal unity, the minimum tax | Each needs a base, a threshold or a test the vocabulary of a rule cannot hold. Line E21, the result of participations, is not part of E19 either. |
 | Loss relief after a change of ownership, holding losses (art. 20a and following) | A test on the history of the company, not a limit on an amount. |
-| Prepayments (*voorlopige aanslag*) | The Belastingdienst page says the inspector sets a provisional assessment from the data of earlier years, and a company may ask for it to be changed. No fixed schedule of instalments or percentages was read, so `prepayments` is empty. |
+| Prepayments (*voorlopige aanslag*) | The Belastingdienst page says the inspector sets a provisional assessment from the data of earlier years, and a company may ask for it to be changed. No fixed schedule of instalments or percentages is published, so `prepayments` is empty. |
 | Tax credits and the offset of withholding taxes | `credits` is empty: the shape is published and no credit was cited. |
-| Rounding of the base and of the tax to the euro | Not read. The estimate is kept at the cent. |
+| Rounding of the base and of the tax to the euro | Not covered. The estimate is kept at the cent. |
 
 The two brackets are art. 22 as the table prints them: 19 % up to EUR 200,000
 and EUR 38,000 plus 25.8 % of the part above, which is 19 % and 25.8 % on the
 slices. The brackets are not shared out over a shorter or longer year: no text
-was read that does so.
+cited does so.

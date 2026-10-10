@@ -27,181 +27,158 @@ register holds fifteen texts.
 | What | Text | Publisher |
 |---|---|---|
 | Rates, exemptions, reverse charge, split payment, invoice particulars, tax point | Ustawa z dnia 11 marca 2004 r. o podatku od towarów i usług (tekst jednolity Dz. U. 2025 poz. 775) | isap.sejm.gov.pl |
-| Seuil de la franchise en base porté à 240 000 zł au 1er janvier 2026 | Ustawa z dnia 24 czerwca 2025 r. (Dz. U. 2025 poz. 896) | isap.sejm.gov.pl |
-| Obligation de facturation structurée dans le KSeF | Ustawa z dnia 16 czerwca 2023 r. (Dz. U. 2023 poz. 1598), modifiée par la loi du 5 août 2025 (Dz. U. 2025 poz. 1203) | isap.sejm.gov.pl |
-| Structure du JPK_VAT z deklaracją et de ses cases P_xx | Rozporządzenie du 15 octobre 2019 (Dz. U. 2019 poz. 1988, z późn. zm.) et sa brochure officielle, version (3), janvier 2026 | isap.sejm.gov.pl, podatki.gov.pl |
-| Bilan et compte de résultat | Ustawa z dnia 29 września 1994 r. o rachunkowości, załącznik nr 1 (tekst jednolity Dz. U. 2026 poz. 522) | isap.sejm.gov.pl |
-| Délai de paiement, intérêt de retard, indemnité de recouvrement | Ustawa z dnia 8 marca 2013 r. o przeciwdziałaniu nadmiernym opóźnieniom w transakcjach handlowych (tekst jednolity Dz. U. 2023 poz. 1790) | isap.sejm.gov.pl |
-| Taux d'intérêt de retard en vigueur (second semestre 2026) | Obwieszczenie du 22 juin 2026 (M.P. 2026 poz. 642) | isap.sejm.gov.pl |
-| Le KSeF lui-même : bases légales, calendrier, format FA(3) | Portails officiels du Krajowy System e-Faktur | ksef.podatki.gov.pl |
-| Split payment (MPP) | Poradnik officiel du mécanisme | podatki.gov.pl |
-| Codes de la facture électronique | EN 16931, UNCL5305, VATEX | European Commission (docs.peppol.eu) |
+| Small-business exemption threshold raised to 240 000 zł from 1 January 2026 | Ustawa z dnia 24 czerwca 2025 r. (Dz. U. 2025 poz. 896) | isap.sejm.gov.pl |
+| Obligation to issue structured invoices in KSeF | Ustawa z dnia 16 czerwca 2023 r. (Dz. U. 2023 poz. 1598), amended by the act of 5 August 2025 (Dz. U. 2025 poz. 1203) | isap.sejm.gov.pl |
+| Structure of the JPK_VAT z deklaracją and its P_xx fields | Rozporządzenie of 15 October 2019 (Dz. U. 2019 poz. 1988, z późn. zm.) and its official brochure, version (3), January 2026 | isap.sejm.gov.pl, podatki.gov.pl |
+| Balance sheet and profit and loss account | Ustawa z dnia 29 września 1994 r. o rachunkowości, załącznik nr 1 (tekst jednolity Dz. U. 2026 poz. 522) | isap.sejm.gov.pl |
+| Payment term, late-payment interest, recovery compensation | Ustawa z dnia 8 marca 2013 r. o przeciwdziałaniu nadmiernym opóźnieniom w transakcjach handlowych (tekst jednolity Dz. U. 2023 poz. 1790) | isap.sejm.gov.pl |
+| Late-payment interest rate in force (second half of 2026) | Obwieszczenie of 22 June 2026 (M.P. 2026 poz. 642) | isap.sejm.gov.pl |
+| KSeF itself: legal bases, timetable, FA(3) format | Official portals of the Krajowy System e-Faktur | ksef.podatki.gov.pl |
+| Split payment (MPP) | Official guide to the mechanism | podatki.gov.pl |
+| Electronic invoice codes | EN 16931, UNCL5305, VATEX | European Commission (docs.peppol.eu) |
 
-## Le plan comptable, et pourquoi celui-ci
+## The chart of accounts, and why this one
 
-**La Pologne ne prescrit aucun plan de comptes.** L'art. 10 ust. 1 pkt 3 lit.
-a de l'ustawa o rachunkowości oblige chaque entité à documenter son propre
-« zakładowy plan kont », et rien de plus. Le plan à neuf groupes (zespoły 0 à
-9) que la pratique comptable polonaise enseigne largement est un usage
-professionnel et non une obligation légale ; ce pack ne le reprend pas.
+**Poland prescribes no chart of accounts.** Art. 10 ust. 1 pkt 3 lit. a of
+the ustawa o rachunkowości requires each entity to document its own
+"zakładowy plan kont", and nothing more. The nine-group chart (zespoły 0 to
+9) widely taught in Polish practice is a professional custom, not a legal
+obligation; this pack does not use it.
 
-Ce qu'il fait à la place est suivre la structure de la loi elle-même : un
-plan à quatre chiffres, écrit pour ce pack, dont le premier chiffre renvoie
-directement à la lettre de la section du bilan ou du compte de résultat
-(załącznik nr 1) : `1` Aktywa trwałe (A), `2` Aktywa obrotowe (B), `3` Należne
-wpłaty et udziały własne (C, D), `4` Kapitał własny (A des pasywów), `5`
-Rezerwy na zobowiązania (B.I), `6` Zobowiązania długoterminowe (B.II), `7`
-Zobowiązania krótkoterminowe et rozliczenia międzyokresowe bierne (B.III,
-B.IV), `8` et `9` les postes du rachunek zysków i strat en wariant
-porównawczy. Chaque compte reçoit ainsi, par construction, le poste légal
-auquel le rattache le libellé de son nom.
+Instead it follows the structure of the law itself: a four-digit chart,
+written for this pack, whose first digit points directly to the letter of
+the section of the balance sheet or profit and loss account (załącznik nr 1):
+`1` Aktywa trwałe (A), `2` Aktywa obrotowe (B), `3` Należne wpłaty and
+udziały własne (C, D), `4` Kapitał własny (A of the pasywa), `5` Rezerwy na
+zobowiązania (B.I), `6` Zobowiązania długoterminowe (B.II), `7` Zobowiązania
+krótkoterminowe and rozliczenia międzyokresowe bierne (B.III, B.IV), `8` and
+`9` the lines of the rachunek zysków i strat in the wariant porównawczy. Each
+account thus reaches, by construction, the statutory line its name refers to.
 
-**Le compte de résultat est en wariant porównawczy** (par nature de charge),
-l'un des deux variantes que l'annexe autorise ; le choix appartient à
-l'entité et le wariant kalkulacyjny (par fonction) n'est pas modélisé ici.
+**The profit and loss account is in the wariant porównawczy** (expenses by
+nature), one of the two variants the annex allows; the choice belongs to the
+entity, and the wariant kalkulacyjny (by function) is not modelled.
 
-**Les postes détaillés par nature de contrepartie** (jednostki powiązane,
-jednostki w których jednostka posiada zaangażowanie w kapitale) que
-l'annexe 1 prévoit pour les créances et les dettes ne sont pas repris comme
-comptes séparés : ce pack retient un seul compte par nature de poste, celui
-d'une société sans lien de participation avec ses clients ou fournisseurs,
-qui est le cas courant d'une PME. Un groupe qui a besoin de la ventilation
-complète ajoute les comptes et les lignes de statement correspondantes.
+**The lines broken down by counterparty** (jednostki powiązane, jednostki w
+których jednostka posiada zaangażowanie w kapitale) that annex 1 provides for
+receivables and payables are not separate accounts: the pack keeps one
+account per kind of line, that of a company with no shareholding link to its
+customers or suppliers, the usual case of an SME. A group that needs the full
+breakdown adds the matching accounts and statement lines.
 
-L'amortissement est porté directement en réduction de la valeur brute de
-l'immobilisation (pas de compte d'amortissement cumulé distinct), à l'image
-de la pratique déjà retenue par d'autres packs de ce dépôt pour un pays sans
-plan de comptes prescrit.
+Depreciation is booked directly against the gross value of the asset (no
+separate accumulated-depreciation account).
 
-## Les taxes
+## Taxes
 
-Dix-huit codes. Le taux normal est de 23 % et le taux réduit principal de
-8 % depuis le 1er janvier 2011 — **mais ce ne sont pas les taux nominaux de
-l'art. 41** (22 % et 7 %) : l'art. 146ef les porte à 23 % et 8 % tant que les
-dépenses de défense dépassent 3 % du PIB, une période ouverte depuis le
-1er janvier 2024 et prorogée chaque année par obwieszczenie du ministre. Le
-taux de 5 % (art. 41 ust. 2a, załącznik nr 10) n'est pas concerné par cette
-surcharge.
+Eighteen codes. The standard rate is 23 % and the main reduced rate 8 % since
+1 January 2011 — **but these are not the nominal rates of art. 41** (22 % and
+7 %): art. 146ef raises them to 23 % and 8 % while defence spending exceeds
+3 % of GDP, a period open since 1 January 2024 and extended each year by the
+minister's obwieszczenie. The 5 % rate (art. 41 ust. 2a, załącznik nr 10) is
+not affected.
 
-Le taux zéro couvre l'export (`PL-S-EXPORT`) et la livraison
-intracommunautaire (`PL-S-WDT`) ; une prestation de services à un assujetti
-d'un autre État membre sous la règle générale B2B (`PL-S-USLUGI-UE`) n'est
-pas une opération taxée à 0 % mais une opération hors du champ territorial
-polonais, déclarée en P_11/P_12. Une exonération domestique est illustrée par
-la location d'un local à usage d'habitation (`PL-S-ZW-NAJEM`, art. 43 ust. 1
-pkt 36).
+The zero rate covers exports (`PL-S-EXPORT`) and intra-Community supplies
+(`PL-S-WDT`); a service to a taxable person in another Member State under the
+general B2B rule (`PL-S-USLUGI-UE`) is not taxed at 0 % but falls outside
+Polish territorial scope, reported in P_11/P_12. A domestic exemption is
+illustrated by the letting of residential premises (`PL-S-ZW-NAJEM`, art. 43
+ust. 1 pkt 36).
 
-Côté achat, sept codes couvrent les mécanismes d'autoliquidation que compte
-la loi polonaise aujourd'hui : l'acquisition intracommunautaire de biens
-(WNT), l'import de services d'un prestataire établi dans l'Union (art. 28b)
-et d'un prestataire qui ne l'est pas, l'import de biens sous la procédure
-simplifiée de l'art. 33a, et la livraison domestique par un fournisseur sans
-établissement en Pologne (art. 17 ust. 1 pkt 5). Chacun poste sa base une
-seule fois, répétée dans la case de la taxe due et dans le panier de
-déduction (`P_42`), suivant exactement le mécanisme que
-[`docs/packs.md`](../../docs/packs.md) décrit pour l'acquisition
-intracommunautaire estonienne. `PL-P-23-POJAZD` illustre la déduction
-partielle à 50 % de l'art. 86a sur les frais de véhicule à usage mixte, sur
-le modèle de la taxe belge sur les véhicules déjà écrite dans le format.
-L'ancienne autoliquidation domestique généralisée (biens de l'annexe 11) a
-été abrogée et remplacée par le split payment obligatoire ; elle n'est donc
-pas reprise ici.
+On the purchase side, seven codes cover the self-assessment mechanisms Polish
+law has today: intra-Community acquisition of goods (WNT), services imported
+from a supplier established in the Union (art. 28b) and from one that is
+not, imports of goods under the simplified procedure of art. 33a, and a
+domestic supply by a supplier with no establishment in Poland (art. 17 ust. 1
+pkt 5). Each posts its base once, repeated in the box of tax due and in the
+deduction basket (`P_42`). `PL-P-23-POJAZD` illustrates the 50 % partial
+deduction of art. 86a on mixed-use vehicle costs. The former general
+domestic reverse charge (goods of annex 11) was repealed and replaced by
+mandatory split payment, so it is not carried.
 
-## La déclaration
+## The return
 
-`PL-JPK-V7` transcrit la partie « Deklaracja — Pozycje szczegółowe » du
-JPK_VAT z deklaracją, dans sa version (3) en vigueur depuis les périodes de
-février 2026 — d'où `valid_from: 2026-02-01`, et pourquoi le scénario golden
-commence en février plutôt qu'en janvier. Chaque case P_xx porte le libellé
-exact de la brochure officielle du ministère des Finances. `P_38` et `P_51`
-sont les deux cases obligatoires que la brochure signale explicitement
-(valeur « 0 » à défaut). L'échéance est le 25 du mois suivant la période
-(art. 99 ust. 1 pour la déclaration, art. 103 ust. 1 pour le paiement) ;
-`period_default` propose le mois, qui est la règle générale — le trimestre
-(art. 99 ust. 2-3) reste une option pour le petit contribuable ayant opté
-pour la méthode de caisse ou dont le chiffre d'affaires ne dépasse pas
-l'équivalent de 2 000 000 EUR, une qualité que le pack ne devine pas.
+`PL-JPK-V7` transcribes the "Deklaracja — Pozycje szczegółowe" part of the
+JPK_VAT z deklaracją, in its version (3) in force from the February 2026
+periods — hence `valid_from: 2026-02-01`, and why the golden scenario starts
+in February rather than January. Each P_xx field carries the exact label of
+the Ministry of Finance's official brochure. `P_38` and `P_51` are the two
+mandatory fields the brochure flags explicitly (value "0" by default). The
+due date is the 25th of the month after the period (art. 99 ust. 1 for the
+return, art. 103 ust. 1 for payment); `period_default` proposes the month,
+the general rule — the quarter (art. 99 ust. 2-3) remains an option for a
+small taxpayer who opted for the cash method or whose turnover does not
+exceed the equivalent of EUR 2 000 000, a status the pack does not guess.
 
-## Ce que le socle ne sait pas faire
+## What the core cannot do
 
-**Le KSeF est une clearance en temps réel, pas un échange décentralisé.**
-Une faktura ustrukturyzowana est réputée émise au moment de son envoi au
-Krajowy System e-Faktur (art. 106na ust. 1) et reçue seulement lorsque **le
-système lui-même** lui attribue un numéro KSeF (art. 106na ust. 3) — un
-numéro que le vendeur ne choisit pas et qui n'existe qu'après validation par
-l'administration. `einvoicing.profile` du format suppose un échange entre
-pairs conforme au modèle sémantique EN 16931 (Peppol, Factur-X, XRechnung,
-un PINT) ; il ne prévoit ni ce mécanisme de clearance, ni la numérotation
-attribuée par le système plutôt que par l'émetteur, ni les quatre modes
-dégradés de la loi (awaria, awaria totale, offline24, indisponibilité) qui
-changent le marqueur porté dans le JPK. `packs/pl/pack.json` documente ce
-choix dans le `legal_reference` du bloc `einvoicing`, et ce README le
-consigne aussi ici : le socle n'offre aujourd'hui aucun champ pour porter un
-numéro attribué par l'administration plutôt que par l'émetteur.
+**KSeF is real-time clearance, not a decentralised exchange.** A faktura
+ustrukturyzowana is deemed issued when sent to the Krajowy System e-Faktur
+(art. 106na ust. 1) and received only when **the system itself** assigns it
+a KSeF number (art. 106na ust. 3) — a number the seller does not choose and
+which exists only after the administration validates it. The format's
+`einvoicing.profile` assumes a peer exchange on the EN 16931 semantic model
+(Peppol, Factur-X, XRechnung, a PINT); it provides neither for this clearance
+mechanism, nor for numbering assigned by the system rather than the issuer,
+nor for the law's four degraded modes (awaria, total awaria, offline24,
+unavailability) that change the marker carried in the JPK. `pack.json`
+documents this in the `legal_reference` of the `einvoicing` block.
 
-**Le split payment (MPP) est une règle de paiement, pas une règle de
-facturation.** L'obligation (art. 108a ust. 1a) se déclenche par la
-combinaison d'un total TTC supérieur à 15 000 zł **et** de la présence d'au
-moins un bien ou service du załącznik nr 15 (150 postes classés par PKWiU) —
-une condition qu'aucune valeur du vocabulaire fermé `applies_when` des
-mentions légales ne peut exprimer (`always`, `reverse_charge`,
-`intra_eu_goods`, `intra_eu_services`, `export`, `exempt`, `late_payment`,
-`cash_basis`, `small_business`). Ce pack ne patche pas le socle avec une
-valeur inventée : la mention obligatoire « mécanisme podzielonej płatności »
-n'est donc pas générée automatiquement. Le compte `2321` (rachunek VAT) est
-néanmoins prévu dans le plan de comptes pour qu'une entité puisse y tracer
-manuellement les paiements soumis au mécanisme.
+**Split payment (MPP) is a payment rule, not an invoicing rule.** The
+obligation (art. 108a ust. 1a) is triggered by a gross total above 15 000 zł
+**and** at least one good or service of załącznik nr 15 (150 items classed by
+PKWiU) — a condition no value of the closed `applies_when` vocabulary of
+legal mentions can express (`always`, `reverse_charge`, `intra_eu_goods`,
+`intra_eu_services`, `export`, `exempt`, `late_payment`, `cash_basis`,
+`small_business`). The mandatory mention "mechanizm podzielonej płatności" is
+therefore not generated automatically. Account `2321` (rachunek VAT) is
+nevertheless in the chart so that an entity can trace payments subject to the
+mechanism by hand.
 
-**La correction pour créances impayées (ulga na złe długi, art. 89a/89b)
-n'est pas modélisée.** C'est une correction statutaire déclenchée par
-l'écoulement de 90 jours après l'échéance de paiement, indépendante de toute
-décision du vendeur, et réversible si la créance est finalement payée — ce
-n'est ni une note de crédit ni un document que le socle connaît. Les cases
-`P_46`, `P_47`, `P_68` et `P_69` sont déclarées dans `tax_report.json` et
-jamais postées.
+**The bad-debt relief (ulga na złe długi, art. 89a/89b) is not modelled.** It
+is a statutory correction triggered 90 days after the payment due date,
+independent of any decision by the seller, and reversible if the debt is
+finally paid — neither a credit note nor a document the core knows. Fields
+`P_46`, `P_47`, `P_68` and `P_69` are declared in `tax_report.json` and never
+posted.
 
-**Le report d'un solde d'une déclaration à l'autre n'est pas modélisé.**
-`P_39` (excédent déductible reporté de la période précédente) et `P_62`
-(excédent à reporter sur la période suivante) sont des cases à somme
-formelle dans le formulaire, mais leur valeur dépend de la déclaration
-précédente et du choix du contribuable quant au sort de l'excédent
-(remboursement total, partiel, ou report) — un choix que `P_53`, `P_54` et
-`P_60` expriment et que ce pack, comme `P_39`/`P_62`, laisse à zéro plutôt
-que de le deviner.
+**Carrying a balance from one return to the next is not modelled.** `P_39`
+(excess deductible carried from the previous period) and `P_62` (excess to
+carry to the next period) are formal sum fields on the form, but their value
+depends on the previous return and on the taxpayer's choice of what to do
+with the excess (full refund, partial refund, or carry-forward) — a choice
+`P_53`, `P_54` and `P_60` express and that this pack, like `P_39`/`P_62`,
+leaves at zero rather than guessing.
 
-**Non modélisés, faute d'un cas dans le scénario ou d'une portée
-raisonnable pour un pack `community` :** la méthode de caisse du petit
-contribuable (art. 21, mention « metoda kasowa ») ; le régime de la marge
-(agences de voyage art. 119, biens d'occasion art. 120) ; l'or
-d'investissement (art. 122) ; la transaction triangulaire simplifiée
-(art. 136) ; le rabais de l'art. 108d pour paiement anticipé depuis le
-rachunek VAT ; le spis z natury de cessation d'activité (art. 14 ust. 5) ; le
-crédit sur achat de caisses enregistreuses (art. 111 ust. 6) ; la consigne
-sur emballages de boissons (P_360, art. 17b) ; la déclaration récapitulative
-VAT-UE (`ec_sales_list()` existe dans le socle mais n'est pas câblée à ce
-pack) ; l'impôt sur les sociétés (CIT), hors du périmètre de ce pack qui ne
-couvre que la TVA et la comptabilité.
+**Not modelled, for want of a case in the scenario or a reasonable scope for
+a `community` pack:** the small taxpayer's cash method (art. 21, mention
+"metoda kasowa"); the margin schemes (travel agents art. 119, second-hand
+goods art. 120); investment gold (art. 122); simplified triangulation
+(art. 136); the art. 108d discount for early payment from the rachunek VAT;
+the spis z natury on cessation of business (art. 14 ust. 5); the credit for
+buying cash registers (art. 111 ust. 6); the deposit on beverage packaging
+(P_360, art. 17b); the VAT-UE recapitulative statement (`ec_sales_list()`
+exists in the core but is not wired to this pack); corporate income tax
+(CIT), outside the scope of this pack, which covers only VAT and accounting.
 
-## Avant que ce pack soit `reviewed`
+## Before this pack is `reviewed`
 
-Un relecteur devrait d'abord regarder :
+A reviewer should look first at:
 
-1. **Le plan de comptes.** S'il est réellement utilisable par un comptable
-   polonais qui pense plutôt en zespoły, et quels comptes manquent à une
-   petite société.
-2. **La liste des taux et des exonérations.** Dix-huit codes ne couvrent
-   qu'un sous-ensemble des załączniki 3, 10 et 15 et de l'art. 43 ust. 1 (qui
-   compte plus de quarante points) ; c'est le premier endroit où le pack
-   devra grandir.
-3. **Le rachat de la période de janvier 2026.** Le formulaire JPK_V7(3) ne
-   vaut qu'à compter de février 2026 ; une entreprise qui clôture un exercice
-   à cheval sur cette date file la version (2) puis la version (3), ce que ce
-   pack, à une seule version du formulaire, ne représente pas encore.
-4. **`PL-P-23-POJAZD`.** La déduction à 50 % est la règle par défaut ; un
-   véhicule dont le registre de kilométrage prouve un usage exclusivement
-   professionnel (art. 86a ust. 3-4) donne droit à 100 %, un cas que ce pack
-   ne code pas séparément.
-5. **`legal_payment_days` laissé vide.** Voir `documents.references.payment_terms`
-   dans `pack.json` : la loi polonaise plafonne à 60 jours le délai que les
-   parties peuvent convenir entre elles, ce qui n'est pas le même fait qu'un
-   délai supplétif en l'absence d'accord.
+1. **The chart of accounts.** Whether it is really usable by a Polish
+   accountant who thinks in zespoły, and which accounts a small company
+   lacks.
+2. **The list of rates and exemptions.** Eighteen codes cover only a subset
+   of załączniki 3, 10 and 15 and of art. 43 ust. 1 (which has more than
+   forty points); this is the first place the pack will need to grow.
+3. **The January 2026 period.** The JPK_V7(3) form applies only from
+   February 2026; a company whose financial year straddles that date files
+   version (2) then version (3), which this pack, with a single version of
+   the form, does not yet represent.
+4. **`PL-P-23-POJAZD`.** The 50 % deduction is the default rule; a vehicle
+   whose mileage log proves exclusively business use (art. 86a ust. 3-4) is
+   entitled to 100 %, a case this pack does not code separately.
+5. **`legal_payment_days` left empty.** See `documents.references.payment_terms`
+   in `pack.json`: Polish law caps at 60 days the term the parties may agree
+   between themselves, which is not the same fact as a default term in the
+   absence of agreement.

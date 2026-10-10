@@ -76,20 +76,20 @@ Réunion" is not something the format can say, and each department is a row of
 operation located there is outside French VAT altogether. What the pack cannot
 do is *refuse* a metropolitan code for such an operation: `FR-S-20` names no
 territory, and a condition cannot say "not in GF". The core work on
-territories that sit outside their parent's tax is where that belongs;
-[`docs/international.md`](../../docs/international.md) says so under France.
+territories that sit outside their parent's tax is where that belongs (see
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet)).
 
 Not carried either: the special DOM rates of lines **T1** (1,75 %) and **T2**
 (1,05 %), and the imports into a department,
 which the customs administration pre-fills on lines **I1 to I6**.
 
-`FR-P-021`, the metropolitan purchase at 2,1 %, arrived with the same version:
-the sale side had it and the purchase side did not.
+`FR-P-021`, the metropolitan purchase at 2,1 %, is carried since the same
+version.
 
 ## Form 3310-CA3, line by line
 
-Compared with the form in force, millésime 2026 (cerfa n° 10963*31) and its
-notice 3310-NOT-SD, on 21 September 2026.
+Against the form in force, millésime 2026 (cerfa n° 10963*31), and its
+notice 3310-NOT-SD.
 
 ### Lines the pack carries since 1.15.0
 
@@ -131,18 +131,17 @@ force: the rates it used to gather from an annex are lines T1 to T7 now.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
-The section carries what was read on an official page on 30 September 2026,
-and nothing else. A rule that is missing makes an estimate too high or too low
+The section carries only rules cited to an official source. A rule that is missing makes an estimate too high or too low
 by something a reader can name; these are the ones to name.
 
 | Not carried | Why |
 |---|---|
 | The ceilings on the depreciation of passenger vehicles (CGI art. 39, 4: 30 000, 20 300, 18 300 and 9 900 € by CO2 band, with different bands for WLTP and NEDC registrations and by year of acquisition) | The excess depends on two figures of each vehicle — its price and its emission — and the formula vocabulary of a rule takes one. The company declares the excess under `excess-depreciation`. |
 | The account of fines since the 2025 chart | The pack's chart still carries `671200`; règlement ANC n° 2022-06 moves fines to `6582` for financial years opened from 1 January 2025. The rule `fines-penalties` names the account the chart has, and a company that books on another names it in `tax.adjustments`. |
-| An account for the annual taxes on vehicles | The chart carries none (`63514` in the plan), so `vehicle-taxes` applies to what the company names. The rule is dated from 1 January 2024, the version of CGI art. 39, 1, 4° that was read; the same taxes were non-deductible before under art. 213. |
+| An account for the annual taxes on vehicles | The chart carries none (`63514` in the plan), so `vehicle-taxes` applies to what the company names. The rule is dated from 1 January 2024, the version of CGI art. 39, 1, 4° cited; the same taxes were non-deductible before under art. 213. |
 | The social contribution of 3,3 % (CGI art. 235 ter ZC) and the exceptional contribution on the profits of large companies | Both are a tax on the tax, above a turnover of 7 630 000 € and of 1 billion € respectively. The section has no shape for one yet. |
 | Carry-back of a loss (CGI art. 220 quinquies) | An option, not a rule: nothing computes it. |
-| Rounding of the base and of the tax to the euro | Not read. The estimate is kept at the cent. |
+| Rounding of the base and of the tax to the euro | No rule cited. The estimate is kept at the cent. |
 | Tax credits | `credits` is empty: the shape is published and no credit was cited. |
 | Excess interest, personal benefits, non-deductible provisions (form 2058-A, lines SU, XZ, WD, WI) | No flat rule could be cited for any of them. |
 

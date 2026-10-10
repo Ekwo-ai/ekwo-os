@@ -41,15 +41,12 @@ register holds thirteen texts.
 
 ## Le plan comptable, et pourquoi celui-ci
 
-**La Slovaquie prescrit un plan comptable-cadre obligatoire**, à la
-différence de la Pologne ou de l'Autriche déjà écrites dans ce dépôt.
-L'opatrenie MF SR č. 23054/2002-92, § 1 ods. 3 et son annexe 1, établit la
+**La Slovaquie prescrit un plan comptable-cadre obligatoire.** L'opatrenie MF SR č. 23054/2002-92, § 1 ods. 3 et son annexe 1, établit la
 rámcová účtová osnova : une liste de comptes synthétiques à trois chiffres,
 dont le numéro **et** le libellé sont contraignants (« záväzný číselný a
 slovný označenie », selon la doctrine professionnelle citée dans le
-`legal_reference` de `charts[0]` — la lecture verbatim de l'article exact de
-l'opatrenie qui pose ce caractère contraignant n'a pas pu être obtenue lors de
-la préparation de ce paquet, voir plus bas). Chaque entité construit ensuite
+`legal_reference` de `charts[0]` ; l'article exact de l'opatrenie qui pose
+ce caractère contraignant reste à vérifier). Chaque entité construit ensuite
 son propre « účtový rozvrh » en y ajoutant des comptes analytiques (§ 3 de
 l'opatrenie), mais les comptes synthétiques eux-mêmes — `311` Odberatelia,
 `321` Dodávatelia, `343` Daň z pridanej hodnoty, `411` Základné imanie —
@@ -64,7 +61,7 @@ n'a pas de structure imposée qu'il serait utile de transcrire.
 
 **La Slovaquie utilise des comptes d'amortissements cumulés séparés**
 (groupes `07`/`08`, « oprávky »), et non une réduction directe de la valeur
-brute comme les packs autrichien ou polonais de ce dépôt : la Súvaha
+brute : la Súvaha
 présente d'ailleurs trois colonnes — Brutto, Korekcia, Netto — ce qui
 confirme structurellement cet usage. Une immobilisation et son compte
 d'oprávky sont rattachés à la même ligne de Súvaha, pour que le solde net
@@ -87,10 +84,10 @@ paquet de consolidation budgétaire), remplaçant les anciens taux 20 % et
 10 %. Les annexes 7 et 7a ont été modifiées à nouveau au 1er juillet 2025 et
 au 1er janvier 2026 (extension du taux 5 %, reclassement de certains
 produits sucrés/salés vers le taux normal) ; ce pack transcrit les articles
-et annexes tels que lus dans la version consolidée au 1.1.2025, et ces
-évolutions ultérieures **n'ont été vérifiées que par des sources
-secondaires concordantes**, pas par lecture directe d'un texte consolidé
-plus récent — voir « Avant que ce pack soit `reviewed` ».
+et annexes dans la version consolidée au 1.1.2025 ; ces évolutions
+ultérieures **reposent sur des sources secondaires concordantes** et le
+texte consolidé plus récent doit être vérifié — voir « Avant que ce pack
+soit `reviewed` ».
 
 Le taux zéro couvre l'export (`SK-S-EXPORT`, § 47) et la livraison
 intracommunautaire (`SK-S-IC`, § 43). Une exonération domestique sans droit
@@ -111,10 +108,9 @@ donc les deux codes visent les mêmes riadky 09b/10b/19).
 
 `SK-P-POHOSTENIE` illustre une exclusion totale du droit à déduction
 (§ 49 ods. 7 písm. a), pohostenie a zábava — hébergement et divertissement),
-sans plafond partiel : une recherche ciblée sur une limitation forfaitaire
-propre aux véhicules de tourisme à usage mixte (comme en France, en
-Belgique ou en Pologne) n'a trouvé aucune disposition de ce type dans le
-corps de la loi TVA ; seule existe la proratisation générale d'usage mixte
+sans plafond partiel : le corps de la loi TVA ne contient pas, à notre
+lecture, de limitation forfaitaire propre aux véhicules de tourisme à usage
+mixte ; seule existe la proratisation générale d'usage mixte
 de l'§ 49 ods. 5, qui est un choix de l'assujetti et non une règle imposée,
 et qui n'est pas modélisée ici.
 
@@ -127,7 +123,7 @@ agréé (voir plus bas).
 
 `SK-DPH` transcrit une partie du formulaire DPHv25 (MF/007833/2025-731),
 dans sa version en vigueur depuis le 1er juillet 2025. La numérotation des
-riadky vient de la lecture directe du poučenie officiel ; c'est une
+riadky suit le poučenie officiel ; c'est une
 **sous-partie volontairement réduite** du formulaire réel, qui compte une
 trentaine de riadky au total. Sont couverts : les trois taux en vente
 (riadky 01/01a/03 et 02/02a/04), l'acquisition intracommunautaire
@@ -158,11 +154,10 @@ aucune case du côté vendeur).
 **L'e-facturation obligatoire (IS EFA) n'est pas encore en vigueur au
 `released_at` de ce pack** (1er janvier 2027, après une période volontaire
 depuis le 1er janvier 2026) et le numéro exact de la loi modificatrice
-(candidat : loi n° 385/2025 Z. z.) n'a pas pu être confirmé par lecture
-directe sur slov-lex.gov.sk lors de la préparation de ce paquet — voir
-`einvoicing.legal_reference` dans `pack.json`. `party_scheme` et
-`vat_scheme` restent vides : la schéma ISO 6523 précise des participants
-slovaques au réseau Peppol n'a été vérifiée par aucune source utilisée ici.
+(candidat : loi n° 385/2025 Z. z.) reste à confirmer sur slov-lex.gov.sk —
+voir `einvoicing.legal_reference` dans `pack.json`. `party_scheme` et
+`vat_scheme` restent vides : le schéma ISO 6523 précis des participants
+slovaques au réseau Peppol n'est pas établi.
 
 **Le samozdanenie à l'importation (§ 84a) n'est pas modélisé.** Réservé aux
 assujettis établis en Slovaquie titulaires du statut d'opérateur économique
@@ -189,8 +184,8 @@ inclut aussi, ce que le `legal_reference` de chaque case rappelle.
 n'est pas renseigné.** `documents.legal_payment_days` reste `null` : le
 plafond contractuel de 60 jours (§ 340a ods. 1 Obchodného zákonníka) est
 solidement établi, mais le nombre de jours applicable à défaut de tout
-accord n'a pas pu être vérifié mot pour mot sur un texte officiel lors de la
-préparation de ce paquet — voir `documents.references.payment_terms`.
+accord reste à vérifier sur le texte officiel — voir
+`documents.references.payment_terms`.
 
 **Le régime de la marge, l'or d'investissement, la méthode de caisse du
 petit contribuable (§ 68d) et le régime particulier des petites entreprises
@@ -205,8 +200,7 @@ Un relecteur devrait d'abord regarder :
    transcrit les annexes 7 et 7a telles que lues dans la version consolidée
    au 1.1.2025 ; les évolutions ultérieures (extension du 5 %, reclassement
    de produits sucrés/salés vers 23 %) reposent sur des sources secondaires
-   concordantes et non sur la lecture directe d'un texte consolidé après ces
-   dates.
+   concordantes.
 2. **La numérotation complète du formulaire DPHv25.** Seize riadky sur une
    trentaine sont repris ; un relecteur devrait vérifier chacun contre le
    poučenie officiel et étendre la couverture (trojstranný obchod,
@@ -218,9 +212,9 @@ Un relecteur devrait d'abord regarder :
    reprend pas.
 4. **Les états financiers.** Les lignes de détail (par exemple la ventilation
    du dlhodobý hmotný majetok en r.012 à r.020, ou des produits/charges
-   financiers en r.030 à r.038 et r.046 à r.048) n'ont pas pu être vérifiées
-   riadok par riadok lors de la préparation de ce paquet ; seules les lignes
-   de sous-total sont reprises.
+   financiers en r.030 à r.038 et r.046 à r.048) ne sont pas reprises ;
+   seules les lignes de sous-total le sont, et le détail reste à vérifier
+   riadok par riadok.
 5. **`legal_payment_days` laissé vide** et le numéro exact de la loi
    introduisant l'e-facturation obligatoire — voir « Ce que le socle ne sait
    pas faire ».

@@ -6,10 +6,8 @@ businesses on 1 January 2026.
 
 ## Status: `community`
 
-Written from the official texts listed below and checked for internal
-consistency by the golden scenario (`ekwo pack check hr`). No accountant has
-read it yet — the checklist at the end of this file is what to look at before
-that changes.
+Checked for internal consistency by the golden scenario (`ekwo pack check
+hr`). No accountant has read it yet — see the checklist at the end.
 
 ## Sources
 
@@ -25,8 +23,7 @@ that changes.
 | E-invoice format and channel | Fiskalizacija 2.0 — rječnik | Porezna uprava |
 
 `ekwo pack check hr --links` opens every URL above; a `403` from Narodne
-novine or Zakon.hr to a request with no browser behind it is not a wrong
-pack, the way the framework's own docs already say of Légifrance.
+novine or Zakon.hr to an automated request does not mean the link is wrong.
 
 ## The chart of accounts, and why this one
 
@@ -36,16 +33,13 @@ financial statements under HSFI or IFRS, and leaves the numbering to the
 company. In practice almost every firm follows the "Računski plan za
 poduzetnike" that RRiF (Hrvatska zajednica računovođa i financijskih
 djelatnika) republishes every year — a work under RRiF's own copyright,
-whose numbers and names this pack does not reproduce, exactly as
-`packs/at/` does not reproduce the Austrian chamber's EKR.
+whose numbers and names this pack does not reproduce.
 
 `accounts.csv` is therefore an independent four-digit numbering: `0xxx`
 non-current assets, `1xxx` current assets (receivables, inventory, cash and
 the VAT control accounts), `4xxx` equity, `5xxx` provisions and long-term
 liabilities, `6xxx` current liabilities, `7xxx` expenses, `8xxx` income,
-`9xxx` off-balance. It carries only the eighteen account types the
-framework itself defines, and reports through the chart-specific statement
-below rather than through `packs/generic/`.
+`9xxx` off-balance, reported through the chart-specific statements below.
 
 **`6400` (Obveza za PDV) never carries a tax line.** Output VAT — on a
 domestic sale or on the self-assessed half of a reverse charge, an
@@ -54,35 +48,25 @@ supplier without a Croatian establishment — posts to `6401`; input VAT,
 including the deducted half of those same self-assessed transactions,
 posts to `1400` (Pretporez). `6400` is `defaults.roles.tax_payable` alone,
 the account `settle_filing()` clears the period's net into; `tax_receivable`
-is left unset so a credit settles into that same account rather than a
-second one this chart has no use for, which is the schema's own fallback
-"for a chart that keeps one control account for both signs." A control
-account that also carried the tax lines it settles would net a period's
-movements into themselves and post an empty entry — see `packs/cz/`, split
-the same way for the same reason.
+is left unset so a credit settles into that same account.
 
 **`statements.json` carries the skraćeni (abridged) Bilanca and Račun
 dobiti i gubitka** that Zakon o računovodstvu čl. 19. st. 4. lets a mikro or
 mali poduzetnik file instead of the full, numbered Prilog I of the
 Pravilnik o strukturi i sadržaju godišnjih financijskih izvještaja (NN
 95/16, 144/20, 158/23) — the same annex FINA compiles into its GFI-POD form.
-The full form breaks every position down to Arapski-numbered line items
-(over two hundred AOP positions across the two statements); the abridged
-one a mali poduzetnik is entitled to file stops one level higher, at the
-lettered and Roman-numeral positions (`HR-PSFI-BS`, `HR-PSFI-IS`), which is
-what this pack's own chart — with no group-company, joint-venture or
-discontinued-operation accounts to begin with — can honestly fill in line
-by line, each carrying its own AOP code in `legal_reference`. A mikro
-poduzetnik may go shorter still, to the lettered positions alone; this pack
-keeps the Roman numerals too, because they cost it nothing extra and read
-closer to the statutory Prilog. See "Before this pack is `reviewed`" below.
+The abridged statements stop at the lettered and Roman-numeral positions
+(`HR-PSFI-BS`, `HR-PSFI-IS`) rather than the two hundred-odd AOP line items
+of the full form, each carrying its own AOP code in `legal_reference`. A
+mikro poduzetnik may go shorter still, to the lettered positions alone; this
+pack keeps the Roman numerals too, closer to the statutory Prilog. See
+"Before this pack is `reviewed`" below.
 
 ## Single language
 
-`languages` is empty, like `packs/pl/`. Every label — account names, tax
-names, mentions, box names — is written once, in Croatian, which is the
-pack's own `defaults.language`. Nothing here needed an English label that
-could not be read directly from the law, so none was invented.
+`languages` is empty. Every label — account names, tax names, mentions, box
+names — is written once, in Croatian, which is the pack's own
+`defaults.language`.
 
 ## The taxes
 
@@ -106,16 +90,13 @@ Every self-assessed purchase tax posts the same base into **two** boxes at
 once — the output box of section II and the input box of section III — and
 two `tax` postings, one to the output account (`6401`) in box II and one to
 the input account (`1400`) in box III: the return states the tax as due and
-deducts it in the same line, which is exactly what Croatian VAT does with a
-reverse charge, and the two boxes are not a sum of one another so neither
-can carry the amount alone (`docs/packs.md`, "A base is written once").
+deducts it in the same line, and the two boxes are not a sum of one another
+so neither can carry the amount alone (`docs/packs.md`, "A base is written
+once").
 
-**Article numbers not yet pinned to a sub-point.** The general
-self-assessment mechanism for an intra-Community acquisition of goods, and
-several of the boxes of section I that this pack could source only to the
-form's own user guide rather than to a specific article (I.2, I.5, I.6,
-I.10), are cited at the paragraph level this pack could verify and no
-finer. A local reviewer should tighten these before `reviewed`.
+The intra-Community acquisition of goods and boxes I.2, I.5, I.6 and I.10
+are cited at paragraph level, partly to the form's user guide rather than to
+a specific article; see the checklist below.
 
 ## The return: Obrazac PDV
 
@@ -126,50 +107,38 @@ and not something `period_default` proposes for everybody.
 
 **Filed by the last day of the month following the period** — moved there
 from the 20th by the law that took effect on 1 January 2026 (NN 151/25);
-today's filing deadline is `last_day_of_month_after_period`, and a pack
-built before that date would have said `day_of_month_after_period` with
-`day: 20` instead.
+the deadline is `last_day_of_month_after_period`.
 
-Seventy-one boxes, transcribed from the form itself rather than from a
-secondary summary: eleven base-only boxes of section I (exempt, zero-rated
+Seventy-one boxes: eleven base-only boxes of section I (exempt, zero-rated
 and reverse-charged-out supplies), fifteen paired base/tax lines of section
 II (output VAT, one pair per rate and per mechanism), fifteen paired
 base/tax lines of section III (input VAT, mirroring II), and the final box
 IV, `II − III`, which is what is owed — positive — or refundable —
-negative. `floor_zero` is deliberately **not** set on IV: unlike Belgium's
-71/72 pair, Croatia states the one figure with its sign, and a company in
-credit settles into the same `6400` a company that owes money does.
+negative. `floor_zero` is deliberately **not** set on IV: Croatia states the
+one figure with its sign, and a company in credit settles into the same
+`6400` a company that owes money does.
 
 **Not modelled**: sections V (the annual pro-rata deduction percentage),
 VI (other information — acquisitions and disposals of immovable property,
 vehicles and other non-current assets, services exchanged with
 non-established persons, triangular transactions, cash accounting) and VII
-(food donations, added to the form from 1 January 2026). None of the three
-is a box the periodic liability is computed from; all three are
-disclosure annexes of the same form, and belong in a filing brick rather
-than in `tax_report.json`.
+(food donations, added to the form from 1 January 2026). None is a box the
+periodic liability is computed from; all three are disclosure annexes.
 
 ## E-invoicing
 
 `einvoicing.profile` is `peppol-bis-3`: Croatia's own technical guidance
 describes the domestic B2B/B2G eRačun as UBL 2.1 with a Croatian CIUS
 extension (`HR-EXT`) over Peppol BIS Billing 3.0, which is itself built on
-EN 16931 — unlike Italy's FatturaPA or Poland's KSeF FA(3), both proprietary
-national schemas that the neighbouring packs of this repository leave
-unnamed for exactly that reason. `mandatory_from` is 1 January 2026, the
-day reception binds every VAT-registered taxpayer at once (Zakon o
-fiskalizaciji, NN 89/25); issuance for a taxpayer outside the VAT system
-only starts a year later and is not separately modelled. The older B2G-only
-obligation, in force since 2018–2019 under a different law (NN 94/18) and
-routed through FINA's own platform rather than an accredited intermediary,
-is folded into the same `mandatory` word rather than given one of its own,
-because the 2026 obligation already covers every company.
+EN 16931. `mandatory_from` is 1 January 2026, the day reception binds every
+VAT-registered taxpayer at once (Zakon o fiskalizaciji, NN 89/25); issuance
+for a taxpayer outside the VAT system only starts a year later and is not
+separately modelled. The older B2G-only obligation (NN 94/18, since
+2018–2019) is folded into the same `mandatory` word.
 
 **Not modelled**: the Croatian CIUS extension (`HR-EXT`) itself, and the
 exchange through an accredited "informacijski posrednik" or FINA's
-platform — this pack names the base European profile and stops there,
-exactly where `packages/formats/` stops. See `docs/international.md`,
-"From Croatia".
+platform — this pack names the base European profile only.
 
 ## Before this pack is `reviewed`
 
@@ -180,13 +149,10 @@ exactly where `packages/formats/` stops. See `docs/international.md`,
    i zajedničkim pothvatima) read zero rather than being guessed at.
 2. Several sub-point citations of section I of the return (I.2, I.5, I.6,
    I.10) and of the intra-Community acquisition of goods should be
-   checked against the consolidated Zakon o PDV rather than this pack's
-   secondary reading.
+   checked against the consolidated Zakon o PDV.
 3. The quarterly-filing threshold (€110,000 of the previous year's VAT-
    inclusive turnover) and the small-business threshold (€60,000) change by
-   law from time to time; both are cited to the article, not hardcoded
-   into a check, but a reviewer should confirm the figure in force is
-   still the one this pack states.
+   law from time to time; confirm the figures in force.
 4. `HR-P-CAR-25` leaves the non-deductible 50 % off every box of the
    return, on the ledger account of the car alone; whether the return
    expects that half anywhere else (a control total, an annex) has not

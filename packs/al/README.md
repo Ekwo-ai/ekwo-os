@@ -6,8 +6,7 @@ përjashtuara, deklarata e TVSH-së në përmbajtjen që kërkon Ligji Nr. 92/20
 dhe Bilanci me Pasqyrën e të ardhurave dhe shpenzimeve sipas Standardit
 Kombëtar të Kontabilitetit Nr. 2 (SKK 2). Formati përshkruhet në
 [`docs/packs.md`](../../docs/packs.md); ky skedar thotë nga vjen çdo rresht
-dhe mbi çfarë vendimi qëndron, që një kontabilist që e njeh Shqipërinë të
-mund të kundërshtojë një fjali të vetme dhe jo gjithë paketimin.
+dhe mbi çfarë vendimi qëndron.
 
 **Statusi: `community`.** Asnjë kontabilist apo auditor i praktikuar ende nuk
 e ka lexuar këtë paketim. Shifrat e riprodhuara nga `tests/golden.test.ts`
@@ -17,16 +16,14 @@ saktësinë e tij ligjore.
 **Paketimi është shkruar në shqip** (`defaults.language: "sq"`), sepse çdo
 tekst mbi të cilin mbështetet — Ligji Nr. 92/2014, Ligji Nr. 25/2018,
 SKK 2 — është zyrtarisht në gjuhën shqipe. `i18n/en.json` është një
-**përkthim pune i vetë paketimit** për një lexues që nuk lexon shqip, jo
-versioni zyrtar anglisht i ndonjërit prej këtyre teksteve: asnjëri prej tyre
-nuk ka një version të tillë. Burimi i çdo etikete anglisht është vetë
-paketimi; shih [`i18n/README.md`](i18n/README.md).
+**përkthim pune i vetë paketimit**, jo versioni zyrtar anglisht i ndonjërit
+prej këtyre teksteve: asnjëri prej tyre nuk ka një version të tillë. Shih
+[`i18n/README.md`](i18n/README.md).
 
 ## Burimet
 
 Çdo tatim, kuti (box), pikë e nenit dhe rresht tabele mban `legal_reference`
-dhe çelësin e burimit nga i cili është marrë. `pack.json.certification.sources`
-mban shtatë tekste, të gjitha të konsultuara më 26.9.2026:
+dhe çelësin e burimit nga i cili është marrë (`pack.json.certification.sources`):
 
 | Çfarë | Teksti | Ku |
 |---|---|---|
@@ -44,28 +41,22 @@ mban shtatë tekste, të gjitha të konsultuara më 26.9.2026:
 **Asnjë tekst zyrtar shqiptar nuk boton një plan kontabël me kode numerike
 fikse.** Ligji Nr. 25/2018 detyron mbajtjen e kontabilitetit sipas SKK-ve, por
 SKK-të përcaktojnë njohjen, matjen dhe paraqitjen e zërave — jo numërtimin e
-llogarive, siç bën udhëzimi francez apo ai rumun. `accounts.csv` i këtij
-paketimi transkripton numërtimin kontinental me shtatë klasa (1 kapitalet,
-2 aktivet afatgjata, 3 inventari, 4 të tretët, 5 thesari, 6 shpenzimet,
-7 të ardhurat) që praktika kontabël shqiptare e përdor prej reformës së
-1993-shit dhe që literatura e IEKA-s (Institutit të Ekspertëve Kontabël të
-Autorizuar të Shqipërisë) e mëson ende sot. **Kjo është një konvencion i
-këtij paketimi, jo një detyrim ligjor i numrave të saktë** — një kontabilist
-mund të mbajë të njëjtat llogari me kode të tjera pa shkelur asnjë ligj. Kush
-e rishikon këtë paketim duhet ta konfirmojë numërtimin kundrejt praktikës që
-njeh vetë.
+llogarive. `accounts.csv` transkripton numërtimin kontinental me shtatë klasa
+(1 kapitalet, 2 aktivet afatgjata, 3 inventari, 4 të tretët, 5 thesari,
+6 shpenzimet, 7 të ardhurat) që praktika kontabël shqiptare e përdor prej
+reformës së 1993-shit dhe që literatura e IEKA-s e mëson ende sot. **Kjo është
+një konvencion i këtij paketimi, jo një detyrim ligjor i numrave të saktë**;
+rishikuesi duhet ta konfirmojë kundrejt praktikës që njeh vetë.
 
 **Nën-llogaritë e TVSH-së (`4423`-`4456`) janë shpikje e këtij paketimi mbi
-llogarinë zyrtare `442`,** ndarë sipas mësimit të pakos SK: llogaria mbi të
-cilën "ulet" shuma e deklaratës (`4423` për t'u paguar, `4424` për t'u
-rimbursuar, të dyja `reconcilable`) nuk mund të jetë e njëjta llogari mbi të
-cilën postohen vetë tatimet (`4426` TVSH e zbritshme, `4427` TVSH e mbledhur,
-`4456` TVSH e importit, `44281`/`44282` vetëngarkimi).
+llogarinë zyrtare `442`:** llogaria mbi të cilën "ulet" shuma e deklaratës
+(`4423` për t'u paguar, `4424` për t'u rimbursuar) nuk mund të jetë e njëjta
+llogari mbi të cilën postohen vetë tatimet (`4426` TVSH e zbritshme, `4427`
+TVSH e mbledhur, `4456` TVSH e importit, `44281`/`44282` vetëngarkimi).
 
 **Vetëm klientët (`411`), furnitorët (`401`) dhe llogaritë e règullimit të
 TVSH-së (`4423`, `4424`) janë `reconcilable`.** As banka, as arka, as llogaria
-e pritjes (`473`) nuk janë — mësimi i rasteve SE dhe NO, dokumentuar në
-`~/ekwo-tools/brief-pack.md`.
+e pritjes (`473`) nuk janë.
 
 ## Tatimet
 
@@ -88,38 +79,32 @@ zero për eksportet.
 
 Shqipëria është **jashtë sistemit të përbashkët të TVSH-së** të Bashkimit
 Evropian (Direktiva 2006/112/KE, neni 5(2)); `supabase/seed/00_territories.sql`
-mban një rresht të ri për `AL` me `eu_vat_scope = 'none'`, në fund të
-skedarit. `vat_category` dhe `exemption_code` mbeten bosh në çdo tatim — asnjë
-profil e-faturimi i ndërtuar mbi EN 16931 nuk deklarohet (shih «Fiskalizimi»
-më poshtë) — dhe asnjë nga pesë trajtimet `intracom_*` nuk zbatohet, siç
-thotë docs/packs.md për vendet jashtë BE-së.
+mban një rresht për `AL` me `eu_vat_scope = 'none'`. `vat_category` dhe
+`exemption_code` mbeten bosh në çdo tatim — asnjë profil e-faturimi mbi
+EN 16931 nuk deklarohet — dhe asnjë nga trajtimet `intracom_*` nuk zbatohet.
 
 **Shkalla e reduktuar e librave ka një datë të pasigurt.** Neni 53, shkronja
 «j», i tekstit origjinal të vitit 2014 e trajtonte furnizimin e librave si të
 **përjashtuar**; Buletini Fiskal 2024 e vendos sot te shkalla e reduktuar 6%.
-Kërkimi i këtij paketimi nuk ka gjetur numrin e saktë të ligjit ndryshues që
-e ka kaluar librin nga një regjim në tjetrin, as datën e tij të hyrjes në
-fuqi; `AL-S-6-BOOKS.valid_from` (2021-01-01) është një supozim i arsyeshëm
-dhe duhet verifikuar me një kontabilist vendas përpara se t'i besohet një
-periudhe të hershme.
+Ligji ndryshues dhe data e hyrjes në fuqi nuk janë identifikuar;
+`AL-S-6-BOOKS.valid_from` (2021-01-01) është një supozim i arsyeshëm dhe
+duhet verifikuar përpara se t'i besohet një periudhe të hershme.
 
 **Shkalla e reduktuar 10% për inputet bujqësore nuk është modeluar.** Buletini
 Fiskal 2024, pika II.1.1, konfirmon një shkallë 10% për plehrat kimike,
 pesticidet, farat dhe fidanët (përveç hormoneve të kodit 2937 NKM); asnjë
-dokument i `golden/` nuk e kërkon, dhe ky paketim nuk shpik një kod tatimi pa
-një skenar që ta provojë.
+dokument i `golden/` nuk e kërkon.
 
 **Kategoria e deklarimit tremujor për tatimpagues me qarkullim 2-5 milionë
-lekë nuk është modeluar.** Një dokument administrativ i DPT-së e përmend këtë
-kategori, e lidhur me pragun e vjetër të regjistrimit (2 milionë lekë, para
-VKM 576/2020); pragu aktual (10 milionë lekë) e ka lënë pa objekt shumicën e
-rasteve, por ky paketim nuk e ka verifikuar nëse kategoria mbetet ende në
-fuqi për dikë. `tax_report.json.period` mban vetëm `month`.
+lekë nuk është modeluar.** Një dokument administrativ i DPT-së e lidh me
+pragun e vjetër të regjistrimit (2 milionë lekë, para VKM 576/2020); pragu
+aktual (10 milionë lekë) e ka lënë pa objekt shumicën e rasteve, por nëse
+kategoria mbetet ende në fuqi duhet verifikuar. `tax_report.json.period` mban
+vetëm `month`.
 
 **Vetëngarkimi i TVSH-së mbi shërbimet nga jashtë (`AL-P-REVCHG-20`) përdor
 dy postime tatimi mbi dy nën-llogari të veçanta (`44281`/`44282`),** sipas
-nenit 86, pika 2 — i njëjti mekanizëm dypostimesh si shembulli i Estonisë në
-docs/packs.md, jo si autoliquidimi bazë i Bashkimit Evropian.
+nenit 86, pika 2.
 
 ## Deklarata
 
@@ -127,12 +112,10 @@ docs/packs.md, jo si autoliquidimi bazë i Bashkimit Evropian.
 (neni 106) — vlerën e tatueshme dhe TVSH-në sipas shkallës, shitjet e
 përjashtuara, eksportet, blerjet e zbritshme brenda vendit e në import,
 vetëngarkimin, dhe totalet e TVSH-së për t'u paguar/për t'u bartur — dhe jo
-numra kutish të një ekrani të verifikueshëm drejtpërdrejt. Kërkimi i këtij
-paketimi ka gjetur vetëm kategoritë me emra të Librit të Shitjes dhe Librit
-të Blerjes (burimi «deklarata-tvsh-librat»), të cilat Formulari i Deklarimit
-dhe Pagesës (FDP) i mbledh; asnjë kopje e drejtpërdrejtë dhe e verifikueshme
-e vetë ekranit FDP nuk është gjetur — e njëjta gjendje si me ekranin turk të
-e-Beyanname (shih `packs/tr/README.md`).
+numra kutish të një ekrani. Kutitë mbështeten te kategoritë me emra të Librit
+të Shitjes dhe Librit të Blerjes (burimi «deklarata-tvsh-librat»), të cilat
+Formulari i Deklarimit dhe Pagesës (FDP) i mbledh; vetë ekrani FDP duhet
+krahasuar.
 
 **Një periudhë e vetme raportimi — muaji kalendarik**, dhe një afat i vetëm —
 14 ditë pas mbylljes së periudhës (neni 107, pika 1 dhe 2; neni 89 e lidh
@@ -142,19 +125,19 @@ pagesën me të njëjtën datë).
 e mban tepricën e zbritshme si kredi për periudhën pasardhëse; neni 77 e lejon
 rimbursimin vetëm pas 3 muajsh radhazi me tepricë dhe kur shuma tejkalon
 400 000 lekë (me kushte të veçanta për eksportuesit dhe disa financime të
-huaja). `TVSH-PER-BARTJE` e këtij paketimi mban vetëm mekanizmin e mbartjes;
-procedura e rimbursimit nuk është një kuti e formularit dhe nuk modelohet.
+huaja). `TVSH-PER-BARTJE` mban vetëm mekanizmin e mbartjes; procedura e
+rimbursimit nuk është një kuti e formularit dhe nuk modelohet.
 
 ## Fiskalizimi — çfarë rrënja (socle) nuk di të bëjë
 
 Ligji Nr. 87/2019 detyron çdo tatimpagues të lëshojë fatura elektronike, të
 transmetuara në kohë reale te Platforma Qendrore e Faturave (CIS) e DPT-së,
 e cila u kthen një Numër Identifikues i Vlefshmërisë së Faturës (NIVF) —
-një model *clearance*, jo shkëmbim i drejtpërdrejtë ndërmjet palëve, dhe jo
-i ndërtuar mbi modelin semantik EN 16931. Zbatimi u bë me faza (2021-01-01
-B2G, 2021-07-01 B2B, 2021-09-01 çdo transaksion me para në dorë). Asnjë
-komponent i `packages/formats/` nuk e shkruan, nënshkruan apo transmeton këtë
-skemë sot — shih seksionin «From Albania» në fund të `docs/international.md`.
+një model *clearance*, jo i ndërtuar mbi modelin semantik EN 16931. Zbatimi u
+bë me faza (2021-01-01 B2G, 2021-07-01 B2B, 2021-09-01 çdo transaksion me
+para në dorë). Asnjë komponent i `packages/formats/` nuk e shkruan, nënshkruan
+apo transmeton këtë skemë sot — shih
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Nota e kreditit dhe nota e debitit — kujdes te emërtimi i kundërt
 
@@ -162,26 +145,20 @@ Neni 95, shkronja «c», i Ligjit Nr. 92/2014 i jep vetë ligji shqiptar një
 kuptim **të kundërt** të asaj që një lexues i Belgjikës apo i Francës do të
 priste: «nota e kreditit» (i) **RRIT** detyrimin e TVSH-së, dhe «nota e
 debitit» (ii) e **ZBRET**. Dokumenti `credit_note` i Ekwo-s (që zvogëlon një
-shitje të postuar, siç e kupton çdo pako tjetër e këtij depozitimi) korrespondon
-pra me «notën e debitit» të nenit 95(c)(ii), jo me «notën e kreditit» të tij.
-Kjo nuk ndryshon asgjë në postimet e `taxes.json` (të cilat përdorin fjalën
-inglisht neutrale `credit_note` të vetë formatit), por meriton vëmendjen e
-parë të çdo kontabilisti që lexon këtë paketim krahas ligjit shqiptar.
+shitje të postuar) korrespondon pra me «notën e debitit» të nenit 95(c)(ii),
+jo me «notën e kreditit» të tij. Kjo nuk ndryshon asgjë në postimet e
+`taxes.json`, por meriton vëmendjen e parë të çdo kontabilisti.
 
 ## Bilanci dhe pasqyra e të ardhurave e shpenzimeve
 
 `statements.json` mban Formatin 1 të Shtojcës 2 të SKK 2 (pasqyra sipas
-natyrës së shpenzimit); SKK 2 lejon vetëm njërin nga dy formatet dhe ky
-paketim zgjedh Formatin 1 sepse është ai që përputhet drejtpërdrejt me klasat
-6 dhe 7 të planit kontabël, pa pasur nevojë të ndajë koston e shitur sipas
-funksionit (prodhim, shpërndarje, administrim), ndarje që ky paketim nuk e
-mban në llogaritë e veta. Aktivet afatgjata materiale paraqiten **neto**
-(vlerë kontabël minus amortizimi i akumuluar) në një rresht të vetëm, në
-vend të kolonave të veçanta «kosto» / «amortizim» që SKK 2 i lë në shënimet
-shpjeguese. Zërat e pasqyrave të konsoliduara (aksionet e pakicës, metoda e
-kapitalit) nuk transkriptohen — asnjë llogari e këtij paketimi nuk i kërkon.
-`xbrl` mbetet bosh kudo: nëse Shqipëria mban një taksonomi XBRL për këto
-forma, ky kërkim nuk e ka verifikuar.
+natyrës së shpenzimit), sepse përputhet drejtpërdrejt me klasat 6 dhe 7 të
+planit kontabël pa ndarë koston sipas funksionit. Aktivet afatgjata materiale
+paraqiten **neto** (vlerë kontabël minus amortizimi i akumuluar) në një rresht
+të vetëm, në vend të kolonave të veçanta «kosto» / «amortizim» që SKK 2 i lë
+në shënimet shpjeguese. Zërat e pasqyrave të konsoliduara nuk transkriptohen.
+`xbrl` mbetet bosh kudo: ekzistenca e një taksonomie XBRL shqiptare për këto
+forma nuk është verifikuar.
 
 ## Në faturë
 
@@ -190,34 +167,31 @@ vetme e lejuar.** Neni 99 kërkon vetëm që fatura të lëshohet në momentin e
 furnizimit; asnjë nen i ligjit nuk detyron një format të caktuar numrash.
 
 **Momenti i kërkueshmërisë ndjek furnizimin, me faturën e lëshuar më parë si
-përjashtim** (neni 32, neni 33 pikat 3-4) — e njëjta strukturë si neni
-16/17 i ligjit belg. `documents.tax_point` mban `invoice_if_issued`.
+përjashtim** (neni 32, neni 33 pikat 3-4). `documents.tax_point` mban
+`invoice_if_issued`.
 
 **`posted_edit_policy` — `reversal_only`,** mbi bazën e nenit 95(c): një
 korrigjim bëhet me një dokument që i referohet shprehimisht faturës
 fillestare, jo duke fshirë apo ndryshuar atë.
 
-**Afati ligjor i pagesës mes ndërmarrjeve nuk është konfirmuar** nga ky
-kërkim; `documents.legal_payment_days` mbetet `null`.
+**Afati ligjor i pagesës mes ndërmarrjeve nuk është konfirmuar**;
+`documents.legal_payment_days` mbetet `null`.
 
 ## Çfarë nuk mban ky paketim
 
-- **Fiskalizimi (CIS, NIVF, certifikata elektronike e AKSHI-t).** Asnjë fushë
-  e `einvoicing` nuk e përshkruan një model *clearance* jo-EN16931 — shih
-  «Fiskalizimi» më sipër dhe docs/international.md, seksioni «From Albania».
-- **Shkalla e reduktuar 10% për inputet bujqësore.** E dokumentuar në
-  Buletinin Fiskal 2024, por asnjë skenar i `golden/` nuk e provon.
+- **Fiskalizimi (CIS, NIVF, certifikata elektronike e AKSHI-t)** — model
+  *clearance* jo-EN16931; shih «Fiskalizimi» më sipër.
+- **Shkalla e reduktuar 10% për inputet bujqësore** — asnjë skenar i
+  `golden/` nuk e provon.
 - **Kategoria e deklarimit tremujor për qarkullim 2-5 milionë lekë**, nëse
   ende ekziston pas rritjes së pragut të regjistrimit në 2020.
 - **Skema e kompensimit të fermerëve (neni 55 e mëposhtme, norma 20%)** dhe
-  regjimi i biznesit të vogël (nenet 117-119) nuk modelohen: asnjë kontakt i
-  `golden/` nuk është fermer apo biznes nën pragun e regjistrimit.
+  regjimi i biznesit të vogël (nenet 117-119) — asnjë kontakt i `golden/` nuk
+  i kërkon.
 - **Rimbursimi i TVSH-së** (neni 77) si procedurë — vetëm mbartja e tepricës
   (neni 76) është një kuti e formularit.
-- **Aktivet afatgjata.** `fixed_assets.json` mungon; normat e amortizimit tatimor
-  dhe kontabël janë jashtë këtij kërkimi.
-- **Formatet bankare.** Asnjë format i pasqyrës bankare apo pagesës shqiptare
-  nuk është konfirmuar; seksioni `bank` mungon në `pack.json`.
+- **Aktivet afatgjata** — `fixed_assets.json` mungon.
+- **Formatet bankare** — seksioni `bank` mungon në `pack.json`.
 
 ## Rishikimi i këtij paketimi
 

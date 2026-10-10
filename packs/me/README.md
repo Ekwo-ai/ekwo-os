@@ -27,15 +27,15 @@ verzija bilo kog od ovih tekstova; vidjeti [`i18n/README.md`](i18n/README.md).
 (`packs/schema/pack.1.json`, `$defs/language`) još ne nosi poseban ISO 639
 kôd za crnogorski jezik kao takav; ovaj paket koristi `sr` (srpski), kôd
 najbliži po pisanoj formi (crnogorska ijekavica, latinica), umjesto da
-izmišlja kôd koji format ne priznaje. Ovo je ograničenje socle-a, ne izbor
-ovog paketa; vidjeti docs/international.md, odjeljak «From Montenegro».
+izmišlja kôd koji format ne priznaje. Ovo je ograničenje formata, ne izbor
+ovog paketa; vidjeti
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Izvori
 
 Svaki porez, red prijave, član zakona i red finansijskog iskaza nosi svoj
 `legal_reference` i ključ izvora iz kog je taj tekst uzet.
-`pack.json.certification.sources` nosi osam tekstova, svi provjereni
-26.09.2026: prečišćeni tekst Zakona o porezu na dodatu vrijednost objavljen
+`pack.json.certification.sources` nosi osam tekstova: prečišćeni tekst Zakona o porezu na dodatu vrijednost objavljen
 na sajtu Uprave prihoda i carina, koji uključuje izmjenu iz "Sl. list CG", br.
 094/24 od 30.09.2024 (u primjeni od 01.01.2025, kojom je uvedena treća stopa
 od 15%); Obrazac PR PDV-2 sa uputstvom; portal ePorezi za podnošenje prijava;
@@ -60,25 +60,22 @@ ovog paketa:
   i još sedam kategorija (autorska prava iz obrazovanja/nauke/umjetnosti,
   ulaznice za kulturne i sportske priredbe, sportski objekti u neprofitne
   svrhe, usluge u marinama, solarni paneli, frizerske usluge) koje ovaj paket
-  ne transkribuje posebnim poreskim kôdom jer golden scenario ne prolazi kroz
-  njih — isti kôd `ME-S-15`/`ME-P-15` pokriva sve njih po istoj stopi.
+  ne transkribuje posebnim poreskim kôdom — isti kôd `ME-S-15`/`ME-P-15` pokriva sve njih po istoj stopi.
   **Prije 01.01.2025. usluge smještaja bile su oporezovane po stopi od 7%** —
   paket ne nosi istorijski poreski kôd za period prije te izmjene.
 - **7%** — snižena stopa (član 24a stav 1), za osnovne proizvode za ljudsku
   ishranu, lijekove, udžbenike, vodu za piće, dnevnu štampu, javni prevoz,
   higijenske i pogrebne usluge, hranu za životinje, menstrualne proizvode i
-  pelene za bebe — dvanaest tačaka, od kojih paket transkribuje samo prvu
-  (osnovni proizvodi za ishranu) posebnim kôdom u golden scenariju; ostalih
-  jedanaest dijeli isti kôd `ME-S-7`/`ME-P-7`.
+  pelene za bebe — dvanaest tačaka koje dijele isti kôd `ME-S-7`/`ME-P-7`;
+  golden scenario koristi prvu (osnovni proizvodi za ishranu).
 - **0%** — nulta stopa (član 25), prije svega izvoz proizvoda; paket
   transkribuje samo tačku 1 (izvoz proizvoda koji prodavac ili neko za
   njegov račun iznosi iz Crne Gore) — ostalih trideset sedam tačaka člana 25
   i 28 (diplomatska predstavništva, brodovi, NATO snage, slobodne zone…) nije
-  transkribovano, jer nijedan dokument golden scenarija ne prolazi kroz njih;
-  vidjeti README dio "Čega ovaj paket ne nosi" niže.
+  transkribovano.
 
 Prag registracije za PDV je 30.000 eura prometa u posljednjih dvanaest
-mjeseci (član 42) — socle ovog izdanja nema polje za prag registracije po
+mjeseci (član 42) — format ovog izdanja nema polje za prag registracije po
 državi, pa ovaj podatak postoji samo ovdje, u README-u, a ne u
 `pack.json`-u.
 
@@ -95,7 +92,7 @@ sreću). Golden scenario transkribuje samo dugoročni zakup stambenog prostora
 Crna Gora je van zajedničkog sistema PDV Evropske unije — kandidat je za
 pristupanje, ali pristupanje nije isto što i članstvo (Direktiva
 2006/112/EZ, član 5 stav 2, veže samo države članice). Prema tabeli u
-[`docs/packs.md`](../../docs/packs.md#što-jedan-porez-kaže-na-računu-tretman-kategorija-i-razlog),
+[`docs/packs.md`](../../docs/packs.md#what-a-tax-says-on-the-invoice-treatment-category-and-reason),
 zemlja van zajedničkog sistema ne pripisuje `exemption_code` (VATEX kôd):
 članak koji obrazlaže oslobođenje ide u `legal_reference`, gdje je i inače
 bio; nijedan od pet tretmana `intracom_*` se ne koristi jer Crna Gora nema
@@ -146,8 +143,7 @@ Kontnog okvira. Na toj osnovi ovaj paket dodaje:
 
 `tax_payable` (479) i `tax_receivable` (279) su konta razlike obračunatog i
 prethodnog poreza — odvojena od konta na koja se knjiže pojedinačne stope PDV
-(270-276, 470-476), kako zahtijeva pravilo naučeno na SK paketu (vidjeti brif
-pripremljen za ovaj rad): red obrasca se mora moći saldirati na jedan konto.
+(270-276, 470-476): red obrasca se mora moći saldirati na jedan konto.
 `retained_earnings` pokazuje na `341` (neraspoređeni dobitak tekuće godine),
 a ne na `340` (ranijih godina), jer je "tekuća godina" konto na koji
 `close_fiscal_year()` direktno knjiži rezultat perioda pod stilom zatvaranja
@@ -181,7 +177,7 @@ semantičkom modelu EN 16931 (Peppol BIS, Factur-X, XRechnung, PINT) —
 ne opis fiskalizacije. Ovo izdanje Ekwo OS-a nema modul koji bi račun u
 trenutku izdavanja prijavio državnom serveru u realnom vremenu; poslovanje
 preko fiskalne kase ili POS uređaja ostaje van dometa ovog paketa. Vidjeti
-docs/international.md, odjeljak «From Montenegro».
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Čega ovaj paket ne nosi
 
@@ -191,14 +187,13 @@ docs/international.md, odjeljak «From Montenegro».
   član 42a) — posebna šema van obima ovog paketa.
 - **Promet prirodnog gasa, električne energije i energije za grijanje ili
   hlađenje sa prenosom poreske obaveze** (redni brojevi 15 i 23) — uska
-  energetska šema koju golden scenario ne pokriva.
+  energetska šema.
 - **Srazmjerni odbitak ulaznog PDV** (član 38, redni brojevi 26-27) — paket
   pretpostavlja puno pravo na odbitak; obveznik koji dijelom obavlja
   oslobođeni promet treba računovođu da izračuna srazmjerni dio.
 - **Rok plaćanja poreza na dobit i mjesečnih akontacija** — ovaj paket nosi
   samo PDV; porez na dobit pravnih lica nije transkribovan.
-- **Registar poreskih faktura ili slično** — Crna Gora, za razliku od
-  Ukrajine, ne vodi poseban državni registar računa; svaki račun ostaje kod
+- **Registar poreskih faktura ili slično** — Crna Gora ne vodi poseban državni registar računa; svaki račun ostaje kod
   izdavaoca i primaoca, uz obavezu fiskalizacije opisanu iznad.
 
 ## Provjera ovog paketa

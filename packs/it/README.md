@@ -25,21 +25,18 @@ electronic invoicing.
 
 ## The chart of accounts
 
-**Italy publishes no official numbered chart of accounts.** Unlike Spain's
-Plan General de Contabilidad, Belgium's PCMN or France's PCG, the Codice
+**Italy publishes no official numbered chart of accounts.** The Codice
 civile fixes the *captions* a balance sheet and an income statement must
 carry — art. 2424 and art. 2425 — and says nothing about how a company
 numbers the accounts that feed them. The numbering of `accounts.csv` is
 therefore this pack's own convention, built to read onto those captions
 cleanly, and not a text to cite: a reviewer should read the *statement
 lines* against the law and the *account codes* against nothing but internal
-consistency. This is said once here rather than on every account.
+consistency.
 
-Language: the pack is written in Italian (`defaults.language: it`), the
-language the Codice civile and the Agenzia delle Entrate publish in. No
-administration publishes an English piano dei conti to translate from, so
-the English labels of `i18n/en.json` are a translation for a reader and
-never a filing — see `i18n/README.md`.
+Language: the pack is written in Italian (`defaults.language: it`). The
+English labels of `i18n/en.json` are a translation for a reader and never a
+filing — see `i18n/README.md`.
 
 ## The statements
 
@@ -89,8 +86,7 @@ columns, VE35's construction and cleaning columns — this pack spells them
 with a letter instead of a colon.
 
 **One posting, two rows.** An intra-Community acquisition and a reverse
-charge on services are declared once — as EN 16931's Estonian example in
-`docs/packs.md` already shows — with a `base` posting naming both the VJ row
+charge on services are declared once, with a `base` posting naming both the VJ row
 (the tax due) and the VF row (the tax deducted) as a list, and two `tax`
 postings, one to each side. The pack's VAT control accounts (1110
 deductible, 2200 output) carry both legs, so the two amounts, being equal,
@@ -99,26 +95,19 @@ happened.
 
 **The liquidazione clears into accounts of its own.** 1110 and 2200 accrue,
 invoice by invoice, the VAT a period deducts and the VAT it collects; they
-are never the account a return settles into, since clearing a period's tax
-into the same account that period posted to would net the accrual against
-itself and post nothing. `defaults.roles.tax_payable` (2201, Erario c/IVA da
-versare) and `tax_receivable` (1111, Erario c/IVA a credito da riportare)
-are separate accounts that only the liquidazione touches, carrying what a
-period owes or the credit it carries forward until the payment or the next
-declaration clears them in turn — the same split as `packs/fr`'s 445710/
-445660 against 445510/445670.
+are never the account a return settles into. `defaults.roles.tax_payable`
+(2201, Erario c/IVA da versare) and `tax_receivable` (1111, Erario c/IVA a
+credito da riportare) are separate accounts that only the liquidazione
+touches, carrying what a period owes or the credit it carries forward until
+the payment or the next declaration clears them.
 
 **What is not here, and why:**
 
 - **Split payment (scissione dei pagamenti, art. 17-ter).** A sale to a
   public administration is invoiced with VAT shown, and the administration
-  pays the price to the seller and the VAT directly to the Treasury. This is
-  the exact three-party shape `docs/international.md` already names for
-  Senegal's *précompte*, Côte d'Ivoire's *TVA pour compte de tiers* and
-  Chad's art. 245 and 229-V: a debt that stays the seller's while a third
-  party remits it, which no posting of this core expresses for the party
-  who never touches the remittance. No tax code of this pack claims to
-  model it; see `docs/international.md`.
+  pays the price to the seller and the VAT directly to the Treasury — a
+  three-party shape no posting of this core expresses; see
+  [`docs/international.md`](../../docs/international.md#what-an-international-core-needs-and-does-not-have).
 - **Real-time clearance through the Sistema di Interscambio.** See
   "E-invoicing" below.
 - **The regime forfettario** (flat-rate scheme for small businesses, legge
@@ -131,7 +120,6 @@ declaration clears them in turn — the same split as `packs/fr`'s 445710/
 - **Esterometro.** Abolished from 1 July 2022 (D.L. 73/2022): cross-border
   operations are reported through the ordinary electronic invoice and the
   self-invoicing document types (TD17, TD18, TD19), not a separate filing.
-  Nothing in this pack needed to change for that.
 
 ## The annual VAT return
 
@@ -146,11 +134,8 @@ column of VE24 and VF25, which no box downstream of this pack reads.
 **No `deadline` is declared.** The return is due between 1 February and 30
 April of the following year (D.P.R. 322/1998, art. 8, comma 1) — the last
 day of the *second* month after the period, not the first, which is all the
-three deadline rules of the format can express. A constant number of days
-added to "the last day of the following month" drifts by one day across a
-leap year's February, so no approximation was written down that could land
-after the legal date in some years and not others. See "From Italy" in
-`docs/international.md`.
+three deadline rules of the format can express, and no approximation is
+written that could land after the legal date in some years.
 
 ## Invoices
 
@@ -171,18 +156,14 @@ after the legal date in some years and not others. See "From Italy" in
 
 B2B and B2C electronic invoicing through the Sistema di Interscambio (SdI)
 has been mandatory since 1 January 2019 (legge 205/2017, art. 1, commi
-909-910, amending D.Lgs. 127/2015) — unlike Spain, where the equivalent
-obligation this pack's neighbour describes has not yet come into force. But
-`einvoicing.profile` and `mandatory_from` are left null all the same,
-because the two packs are empty for different reasons. The SdI does not
+909-910, amending D.Lgs. 127/2015). But `einvoicing.profile` and
+`mandatory_from` are left null all the same. The SdI does not
 exchange an EN 16931 profile between two parties in the sense the format
 asks about: it is the state's own **clearance** step — the invoice (in the
 FatturaPA format) is validated, sealed and delivered by the Agenzia delle
 Entrate, or rejected, and no brick of `packages/formats/` generates,
 validates or transmits one today. Declaring a profile would say the
-opposite of that. This is the same shape `docs/international.md` already
-names for Mexico's CFDI: "Italy's SdI, India's IRN and most of Latin America
-are the same shape." `vat_scheme` is `0211` (AGID's Peppol Italia scheme for
+opposite of that. `vat_scheme` is `0211` (AGID's Peppol Italia scheme for
 the partita IVA); `party_scheme` is null because the domestic Codice
 Destinatario is a seven-character SdI address, not an ISO 6523 identifier.
 
@@ -202,5 +183,4 @@ Destinatario is a seven-character SdI address, not an ISO 6523 identifier.
    letter C, which art. 2424 gives it.
 5. **Numbering `gapless_per_year`**: common practice, not a requirement
    since the 2013 reform of art. 21.
-6. **No deadline on the annual return**: deliberate, see above — not an
-   unresearched gap.
+6. **No deadline on the annual return**: deliberate, see above.

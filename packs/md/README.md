@@ -36,23 +36,17 @@ portal itself; the order approving the Planul general de conturi contabile;
 the accounting law (Legea nr. 287/2017); S.N.C. 5, "Prezentarea situațiilor
 financiare"; and the Civil Code's late-payment interest article.
 
-**One residual gap in the register, disclosed rather than guessed around:**
-`legis.md`, the Ministry of Justice's own legislative portal, refuses a
-request from a client with no browser behind it — the same behaviour
-`docs/packs.md` already documents for Légifrance — so this pack's research
-could not open the consolidated Codul fiscal directly for a final check of
-art. 115 alin. (1)'s exact current wording (the filing deadline). An older
-consolidated copy read through a different channel showed "the last day of
-the month following the period", while every 2024-2025 secondary source
-consulted — the State Tax Service's own communications, the reporting
-portal's practice, professional accounting outlets — agrees on the 25th, the
-date this pack declares. A reviewer with access to the current consolidated
-text should confirm the article's wording directly.
+**The filing deadline rests on secondary sources.** An older consolidated
+copy of art. 115 alin. (1) reads "the last day of the month following the
+period", while the State Tax Service's own communications, the reporting
+portal's practice and professional accounting outlets agree on the 25th, the
+date this pack declares. A reviewer should confirm the article's current
+wording. `legis.md` blocks automated requests, so `pack check --links` may
+report it unreachable.
 
 ## The chart of accounts
 
-**Moldova publishes an official numbered chart of accounts**, like Romania and
-unlike Turkey: Ordinul Ministerului Finanțelor nr. 119 din 06.08.2013, in
+**Moldova publishes an official numbered chart of accounts**: Ordinul Ministerului Finanțelor nr. 119 din 06.08.2013, in
 force from 1 January 2014 and mandatory from 1 January 2015 for every entity
 keeping double-entry books that is not a public institution and does not apply
 IFRS, fixes nine classes (1-9). This pack transcribes classes 1-7 — long-term
@@ -72,8 +66,7 @@ of the VAT taxes from `534`'s child `5344`, "Datorii privind taxa pe valoarea
 adăugată", which the order carries as a single grade-II account with no
 posting subdivision of its own. `5344` is kept as the reconcilable settlement
 account the VAT return is closed against (`defaults.roles.tax_payable`) —
-distinct from the accounts the taxes post to, the rule learned on `packs/sk/`
-— and `7148`, "Alte cheltuieli operaționale", an existing official account, is
+distinct from the accounts the taxes post to — and `7148`, "Alte cheltuieli operaționale", an existing official account, is
 this pack's choice for the rounding role rather than an invented one.
 
 ## The taxes
@@ -89,13 +82,13 @@ restaurant/catering services classified under section I of the Moldovan
 economic activity classifier (the HORECA sector, which paid 12% before the
 state of emergency of 2022-2023 and was set permanently at 8% by Legea nr.
 212/2023 once that emergency ended). `MD-S-8` carries one rate for all of
-them, the same choice `packs/ro/` makes for its own reduced-rate bracket.
+them.
 
 Zero rate covers export and international transport (`MD-S-0-EXPORT`, art. 104
 lit. a)). An exemption without the right of deduction is illustrated by the
 lease of housing and land (`MD-S-EXE`, art. 103 alin. (1) pct. 1)) — one line
-of a much longer list at art. 103, not transcribed in full: see "What the
-socle cannot do" below.
+of a much longer list at art. 103, not transcribed in full: see "What this
+pack does not model" below.
 
 Purchase-side, four codes: domestic purchases at both rates (`MD-P-20`,
 `MD-P-8`), an ordinary import of goods (`MD-P-IMPORT`, valued at customs value
@@ -113,13 +106,12 @@ still the form and instructions in force. Only the rows this pack's taxes
 reach are declared, together with the four totals that can be computed from a
 single period's postings (rows 10, 11, 18, 19, 20); the informational
 sub-rows (1.1, 2.1, 11.1) and the rows that carry a balance across fiscal
-periods (17, 21, 22) are not — see "What the socle cannot do" below. The
+periods (17, 21, 22) are not — see "What this pack does not model" below. The
 fiscal period is the calendar month (art. 114 alin. (1)); art. 114 alin. (1¹)
 sets a calendar quarter for the narrower category of taxpayers named at art.
-94 lit. d), a fact about the company this pack's scenario has no reason to
-carry, so `period_default` proposes the month, the rule for everyone else.
-The deadline is the 25th of the month following the period — see the
-residual gap on art. 115 alin. (1) noted above.
+94 lit. d), a fact about the company, so `period_default` proposes the month,
+the rule for everyone else. The deadline is the 25th of the month following
+the period — see the note on art. 115 alin. (1) above.
 
 ## Invoices
 
@@ -134,11 +126,11 @@ residual gap on art. 115 alin. (1) noted above.
   (1)), displaced by an earlier invoice or an earlier payment, whichever comes
   first (art. 108 alin. (4)-(5)). The payment branch, when no invoice was
   issued first, is a second derogation this field cannot carry beside the
-  first — see "What the socle cannot do" below.
+  first — see "What this pack does not model" below.
 - **Payment terms**: no statutory default term between professionals (Codul
   fiscal is silent, unlike the EU's own Directive 2011/7/EU); once a term is
-  missed, legal interest runs under Codul civil art. 942, at a rate this
-  pack's research could not reduce to one figure — see below.
+  missed, legal interest runs under Codul civil art. 942, at a rate not
+  reduced here to one figure.
 - **Mentions**: a reverse-charge sentence for an imported service, the
   zero-rate wording for an export, and the exemption wording for an exempt
   supply.
@@ -155,19 +147,17 @@ have no fiscal relationship with Moldova's budgetary system, and goods or
 services financed by grants or international treaties. `einvoicing.profile`
 stays null: SIA "e-Factura" is a State Tax Service platform that generates
 and transmits the electronic factura fiscală directly inside a government
-system, and this pack's research found no official confirmation that the
-document exchanged follows an interoperable semantic model of the EN 16931
-kind (Peppol BIS, Factur-X, XRechnung, a PINT) — nor does any brick of
-`packages/formats/` write, validate or transmit one today. `party_scheme` and
+system, and no official source confirms that the document exchanged follows
+an interoperable semantic model of the EN 16931 kind (Peppol BIS, Factur-X,
+XRechnung, a PINT) — nor does Ekwo write, validate or transmit one today. `party_scheme` and
 `vat_scheme` stay null as well: a Moldovan taxpayer is addressed by its
-fiscal code (IDNO/IDNP), not by a registered ISO 6523 scheme. See "From
-Moldova" in `docs/international.md`.
+fiscal code (IDNO/IDNP), not by a registered ISO 6523 scheme. See
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
-## What the socle cannot do
+## What this pack does not model
 
-**A state e-invoicing platform this repository has no writer for**, for the
-scope Codul fiscal art. 117 alin. (12) currently reaches. Documented above and
-in `docs/international.md`.
+**A state e-invoicing platform Ekwo has no writer for**, for the scope Codul
+fiscal art. 117 alin. (12) currently reaches. Documented above.
 
 **A second derogation to one tax point, and the field carries one.** Codul
 fiscal art. 108 alin. (4)-(5) has two branches for services: an invoice issued
@@ -177,15 +167,13 @@ of collection. `tax_point` is a single word for the country's general rule,
 and `invoice_if_issued` already states the first branch honestly; the second
 would need `cash_basis` declared on a specific tax, which would misstate an
 advance payment as that tax's whole regime rather than as one operation among
-many — the same limit `docs/packs.md` records for Belgium and Estonia, and
-`packs/ro/` for its own two-branch rule.
+many.
 
 **The carry-forward of a period's credit is outside a return that only sums
 what the ledger posted.** Rows 17 (the balance carried in from the previous
 period), 21 (the balance to carry to the next one) and 22 (the amount claimed
 for refund) all depend on a fact `vat_return()` cannot read from a single
-period's postings — the same gap `docs/international.md` already records for
-Poland's `P_39`/`P_62` and for Romania's rows 38/39/41/42. `MD-TVA12`'s row 18
+period's postings. `MD-TVA12`'s row 18
 therefore sums rows 13, 15 and 16 only, and row 19 is floored at zero rather
 than turning negative into a row-21/22 pair.
 
@@ -204,17 +192,15 @@ budgetary system, and the postponed accounting of any deferred import VAT
 regime.** The instructions to rows 7 and 14 both mention "persoane rezidente
 ... care nu au relații fiscale cu sistemul ei bugetar" as a source of
 self-assessed VAT, once for services (row 7, alongside imported services) and
-once for goods (row 14, alongside imported goods) — this pack's research could
-not establish with confidence, from the sources it reached, whether the goods
-case additionally self-assesses an output-side liability the way the services
-case plainly does through row 20, or whether it is a deduction-only
-adjustment. Rather than guess at a mechanism it could not verify, this pack
-models only the plain import of goods and the plain import of services.
+once for goods (row 14, alongside imported goods). Whether the goods case
+additionally self-assesses an output-side liability the way the services case
+plainly does through row 20, or is a deduction-only adjustment, is not
+settled; this pack models only the plain import of goods and the plain import
+of services.
 
 ## What a reviewer should look at first
 
-1. **The deadline of art. 115 alin. (1)** — the residual gap in "Sources"
-   above, from a text this pack's research could not open directly.
+1. **The deadline of art. 115 alin. (1)** — see "Sources" above.
 2. **`MD-S-8`'s single rate for nine different categories** — an accountant
    should confirm no category listed has since moved to a different rate or
    been withdrawn, and that the HORECA scope (section I of the CAEM) still

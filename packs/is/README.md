@@ -30,21 +30,19 @@ IX of the EEA Agreement does not carry Directive 2006/112/EC: Iceland has
 never acceded to the Union and levies its own VSK under Lög nr. 50/1988,
 unrelated to the common system. This pack therefore reads
 [`docs/packs.md`](../../docs/packs.md#what-a-tax-says-on-the-invoice-treatment-category-and-reason)
-the way `packs/ch/` does: `exemption_code` is null on every tax (the VATEX
+as for any country outside it: `exemption_code` is null on every tax (the VATEX
 list belongs to a system Iceland is not in) and the article is in
 `legal_reference` instead; the five `intracom_*` treatments are never used —
 there is no intra-Community acquisition to or from a country outside the
 Union, VSK on an imported good is assessed at the border like a third
-country's, not deferred like a Member State's. `IS` is added to
-`supabase/seed/00_territories.sql` with `eu_vat_scope = 'none'`, exactly as
-`docs/packs.md`'s "adding a country" guide asks of a country outside the
-common system.
+country's, not deferred like a Member State's. `IS` is a territory with
+`eu_vat_scope = 'none'`.
 
 ## Sources
 
 Every rate, box and mention carries its own `legal_reference` and names the
 entry of `certification.sources` its article is in. The register holds twelve
-texts; the two load-bearing ones were read article by article:
+texts:
 
 | What | Text | Publisher |
 |---|---|---|
@@ -58,13 +56,13 @@ texts; the two load-bearing ones were read article by article:
 | B2G electronic invoicing | Reglugerð nr. 44/2019 | Fjármála- og efnahagsráðuneytið |
 | Import VAT collection | Tollalög nr. 88/2005 | Alþingi |
 
-Lög nr. 50/1988 was read in its current consolidated text on althingi.is —
-articles 1–2 (scope and exemptions), 12 (zero-rated turnover), 13 (the
+The articles of Lög nr. 50/1988 relied on, in its current consolidated text,
+are 1–2 (scope and exemptions), 12 (zero-rated turnover), 13 (the
 delivery rule), 14 (the rates), 15–16 (input tax and its restriction), 20
 (invoicing), 24 (periods and deadlines), 28 (surcharge and default interest)
-and 35 (self-assessment of VAT on services bought from abroad) — together
-with the worked examples of `rsk_1119` (19th edition, 2022) and the RSK 10.01
-specimen form for the exact wording of every box.
+and 35 (self-assessment of VAT on services bought from abroad); the worked
+examples are those of `rsk_1119` (19th edition, 2022), and the wording of
+every box is the RSK 10.01 specimen form's.
 
 ## The chart of accounts, and why this one
 
@@ -76,10 +74,8 @@ statements must show — fastafjármunir before veltufjármunir on the assets
 side, eigið fé, langtímaskuldir and skammtímaskuldir on the other, and an
 income statement of twelve lines by nature of expense — and takes no position
 on account numbers. This pack's chart is original, written directly against
-that structure the way `packs/ch/` is written against Art. 959/959b of the
-Swiss Code of Obligations: a reader will find a similar shape to whatever
-convention an Icelandic accountant already uses, and different account
-numbers throughout.
+that structure: a reader will find a similar shape to whatever convention an
+Icelandic accountant already uses, and different account numbers throughout.
 
 Four-digit codes, one range per item of the regulation's article 3 (balance
 sheet) or article 5 (income statement), so that every account reaches exactly
@@ -90,10 +86,9 @@ receivable/payable ranges, `1600`–`1699` and `2500`–`2699`, because the
 regulation gives them no line of their own.
 
 `closing_style` is `retained_earnings`: article 3, 3. tölul. gives no separate
-"result of the year" item the way Belgium's appropriation accounts do, so the
-result closes straight into `2090`, óráðstafað eigið fé.
+"result of the year" item, so the result closes straight into `2090`, óráðstafað eigið fé.
 
-Per the "Ajout 25/09 — comptes lettrables" rule, only `1500` (viðskiptakröfur),
+Only `1500` (viðskiptakröfur),
 `1501`, `2410`–`2411` (viðskiptaskuldir) and the two VSK settlement accounts —
 `1690` (tax_receivable) and `2590` (tax_payable), each distinct from every
 account a tax posts to — are `reconcilable`. Neither the bank (`1910`), the
@@ -103,11 +98,10 @@ cash drawer (`1900`) nor the suspense account (`2650`) is.
 
 Ten codes. Five on the sale side: the standard rate (24 %), the reduced rate
 (11 %), an export of goods (Art. 12, 1. tölul., zero-rated with full input
-deduction — this pack's "taux zéro/export" case), a sale of services to a
+deduction), a sale of services to a
 foreign business with no establishment here (Art. 12, 2. tölul., the same
 zero rating extended to services), and a real property lease (Art. 2, 3. mgr.,
-genuinely exempt with **no** input deduction — this pack's "exonération" case,
-and the opposite of the two zero-rated codes in exactly the way Art. 2 and
+genuinely exempt with **no** input deduction — the opposite of the two zero-rated codes in exactly the way Art. 2 and
 Art. 12 are opposites in the law itself: RSK 10.01's own instructions for
 reitur C state, in as many words, that an Art. 2 exemption is never reported
 there).
@@ -117,16 +111,13 @@ Art. 15–16), a non-deductible purchase used for the exempt letting above
 (`tax_on_base`, Art. 16 — no box, because the amount becomes part of the cost
 of the line it taxes, not a figure the return asks for), the self-assessment
 of VSK on a service bought from a supplier with no establishment here (Art.
-35 — a genuinely non-EU mechanic, since Iceland has no domestic reverse
-charge the way several EU States have one for construction or gold), and an
+35; Iceland has no domestic reverse charge), and an
 import of goods (VSK collected by customs under Tollalög nr. 88/2005,
-independently of this return — only the resulting input deduction appears,
-on RSK 10.01 exactly as `packs/ch/` books its own import VAT: the tax posting
-carries no `base`).
+independently of this return — only the resulting input deduction appears
+on RSK 10.01: the tax posting carries no `base`).
 
 **RSK 10.01 carries no dedicated box for a self-assessed or reverse-charged
-amount** the way the Swiss form's Ziffer 383 or the British return's box 1
-does. Reading the form's own eight boxes (A–H) literally, `IS-P-FOREIGN-24`
+amount.** Reading the form's own eight boxes (A–H) literally, `IS-P-FOREIGN-24`
 posts the self-assessed amount into `D` (útskattur) exactly as an ordinary
 output tax, and its matching input deduction into `E` (innskattur) exactly as
 an ordinary input tax — which is what Art. 35 asks of a taxpayer with full
@@ -136,8 +127,7 @@ or who finds a Skatturinn ruling that assigns it a different box, should
 correct this first.
 
 `exemption_code` is null on every tax, for the reason given above.
-`vat_category` is filled in anyway, the way `packs/ch/` and `packs/gb/` fill
-it in: UNCL5305 is a UN/CEFACT list, not an EU one, and it reads the same
+`vat_category` is filled in anyway: UNCL5305 is a UN/CEFACT list, not an EU one, and it reads the same
 whether or not `einvoicing.profile` asks for it — this pack declares none.
 
 ## The return's boxes are lettered, not numbered
@@ -161,12 +151,11 @@ every golden document this pack replays.
 everybody — six two-month periods anchored on January — and the two named
 exceptions (a monthly period for a taxpayer with a material input surplus,
 an annual one under a turnover threshold, both granted on request) are
-authorisations against that rule rather than a second rule of their own,
-exactly the reasoning `packs/be/` and `packs/fr/` give for proposing `month`.
+authorisations against that rule rather than a second rule of their own.
 
 **No `deadline` is declared**, and that is a gap in the format rather than in
 this pack's reading of the law — see
-[`docs/international.md`](../../docs/international.md#from-iceland).
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## What this pack does not model, and why
 

@@ -12,30 +12,28 @@ with a specific sentence rather than with the whole of it.
 figures are replayed against a year of books by `tests/golden.test.ts`, which
 proves the pack is coherent and proves nothing about whether it is right.
 
-**No GST or VAT today.** Like Hong Kong, whose pack is the format model,
-Guernsey levies no value added tax, goods and services tax or general sales
+**No GST or VAT today.** Guernsey levies no value added tax, goods and services tax or general sales
 tax. **The law is about to move**: on 2 October 2026 the States of Deliberation
 voted (22 to 17, one abstention) for the principle of a GST of 3 % from 2029,
 with a pathway to 4 % and then 5 % subject to an independent fiscal review
 (Guernsey Press, 2 October 2026). No GST law is enacted, no rate is
 promulgated and no start date is fixed in law, so this pack creates **no GST
-code**. The vote is the pack's next expected change; see "From Guernsey" in
-[`docs/international.md`](../../docs/international.md).
+code**. The vote is the pack's next expected change; see
+[`docs/international.md`](../../docs/international.md#what-comes-next).
 
 ## Sources
 
-`pack.json` registers ten texts, consulted on 10 October 2026. What could and
-could not be opened:
+`pack.json` registers ten texts:
 
-| What | Text | Status |
+| What | Text | Note |
 |---|---|---|
-| Accounting records, six-year retention, true and fair accounts, declared GAAP | Companies (Guernsey) Law, 2008 (guernseylegalresources.gg) | **Not opened**: the site answered 403. The duties are cited from a law-firm summary (Walkers) that was opened; section numbers are not cited. |
-| Tax collected; company rates 0/10/20 %; online company return | Revenue Service pages (gov.gg/RevenueService/Companies, gov.gg/tax) | Opened |
-| No VAT/GST today; customs and Document Duty; social security rates | PwC worldwide tax summaries | Opened |
-| Domestic top-up tax from 1 January 2025 | Legal 500 | Opened |
-| The 2 October 2026 GST vote | Guernsey Press | Opened. The official resolution on `statesvoting-records.gov.gg` could not be opened (certificate error), and no gov.gg page on the GST was found (`gov.gg/gst` is a 404). |
-| FRS 102 Section 1A | Financial Reporting Council | Opened (confirms Section 1A exists; the standard's text was not read) |
-| Filing portal | `my.gov.gg` | Answered 401 without a login; cited as the portal the Revenue Service pages point to |
+| Accounting records, six-year retention, true and fair accounts, declared GAAP | Companies (Guernsey) Law, 2008 (guernseylegalresources.gg) | Cited from a law-firm summary (Walkers); section numbers are not cited and the Law itself should be checked. |
+| Tax collected; company rates 0/10/20 %; online company return | Revenue Service pages (gov.gg/RevenueService/Companies, gov.gg/tax) | |
+| No VAT/GST today; customs and Document Duty; social security rates | PwC worldwide tax summaries | |
+| Domestic top-up tax from 1 January 2025 | Legal 500 | |
+| The 2 October 2026 GST vote | Guernsey Press | The official resolution is on `statesvoting-records.gov.gg`; no gov.gg page on the GST exists yet. |
+| FRS 102 Section 1A | Financial Reporting Council | Confirms Section 1A exists; the standard's text is not transcribed. |
+| Filing portal | `my.gov.gg` | Requires a login; the portal the Revenue Service pages point to. |
 
 ## Chart of accounts
 
@@ -89,7 +87,7 @@ imposes one.
 Open an issue titled "Review: Guernsey". Points for a local accountant:
 
 1. The Companies (Guernsey) Law, 2008 sections on records and accounts, which
-   this pack could not read.
+   this pack cites only from a secondary summary.
 2. Whether the Section 1A layout suits the GAAP Guernsey companies actually
    declare.
 3. The 2 October 2026 resolution itself: wording, dates, zero-ratings

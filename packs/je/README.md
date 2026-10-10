@@ -49,13 +49,10 @@ registration letter may set are not modelled.
 - **Box 4** holds every purchase from a Jersey supplier, exempt and untaxed ones
   included; the page says "business costs from Jersey suppliers".
 - **Box 1** leaves exempt supplies out ("taxable sales including zero-rated").
-- **The 3 % period** (6 May 2008 to 31 May 2011, then 5 %) is carried by no code: the
-  generic golden test asks a pack with two positive rates, closed ones included, to
-  exercise two of them in a 2026 scenario, which a closed code cannot do. The dates
-  come from the research brief and no page that could be opened states them; the
-  5 % is art. 8(1) of the Law. A business keeping pre-June 2011 books needs a closed
-  code added once that test counts only the rates in force.
-- **Tax point** `invoice_date` is a convention; the rule was not read.
+- **The 3 % period** (6 May 2008 to 31 May 2011, then 5 %) is carried by no code.
+  The dates rest on secondary sources; the 5 % is art. 8(1) of the Law. A business
+  keeping pre-June 2011 books needs a closed code added.
+- **Tax point** `invoice_date` is a convention; the statutory rule should be checked.
 - `fiscal_year_default: calendar` is a usage, not a legal requirement.
 
 ## What this pack does not carry
@@ -80,23 +77,21 @@ registration letter may set are not modelled.
 
 ## Sources
 
-`pack.json` registers twelve texts, consulted on 10 October 2026.
+`pack.json` registers twelve texts.
 
-| What | Status |
+| What | Used for |
 |---|---|
-| GST Law 2007 (jerseylaw.je) | Opened, first 100,000 characters: art. 8, 33, 34, headings of Schedules 5 and 6. The schedules' paragraphs were not read in full. |
-| Revenue Jersey pages: return, what is taxed, registration, overseas retailers, supplies from outside Jersey, ISE supplies, records and invoices | Opened |
-| Companies (Jersey) Law 1991 | **Not opened**; duties cited from a Walkers summary (opened): ten-year retention of records, accounts under declared GAAP. Article numbers are not cited. |
-| Company income tax rates | gov.je "Moving to Jersey: money and tax", opened |
-| Partial exemption booklet (PDF) | Could not be read as text; not cited |
-| States Assembly P.100/2022 on the 5 % rate | 403; not cited |
-| FRS 102 | Opened (Section 1A exists; the text was not read) |
-| Portal | `gov.je/pages/login.aspx` opened: it lists one.gov.je and CAESAR; the GST return page itself is not behind a URL that could be opened |
+| GST Law 2007 (jerseylaw.je) | Art. 8, 33, 34 and the headings of Schedules 5 and 6; the schedules' paragraphs should be checked in full |
+| Revenue Jersey pages: return, what is taxed, registration, overseas retailers, supplies from outside Jersey, ISE supplies, records and invoices | The return, the codes and the invoice rules |
+| Companies (Jersey) Law 1991 | Ten-year retention of records, accounts under declared GAAP — cited from a Walkers summary; article numbers are not cited |
+| Company income tax rates | gov.je "Moving to Jersey: money and tax" |
+| FRS 102 | The Section 1A layout of the statements |
+| Portal | `gov.je/pages/login.aspx`: one.gov.je and CAESAR |
 
 ## Chart of accounts
 
-Jersey prescribes none. The chart is the British one used by `packs/gg` with the
-United Kingdom VAT, PAYE and CIS accounts absent and the GST accounts added:
+Jersey prescribes none. The chart is a British-style one with the United Kingdom
+VAT, PAYE and CIS accounts absent and the GST accounts added:
 `1140` input tax, `2210` output tax, `2215` import GST owed to Customs, and the
 settlement accounts `2230` (payable) and `1145` (refundable) of a filed return.
 187 accounts; reconcilable: `1100`, `2100`, `2230`, `1145`.

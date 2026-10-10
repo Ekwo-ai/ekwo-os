@@ -16,15 +16,10 @@ proves the pack is coherent and proves nothing about whether it is right.
 ## Sources
 
 Every rate, box, mention and statement line carries its own `legal_reference`
-and the key of the text it is in. The register in `pack.json` holds 39 texts,
-36 opened on 21 September 2026 and the three of the corporate income tax
-section on 1 October 2026: the consolidated texts on the BOE (by ELI where the
-BOE gives one), the forms and instructions on the Sede electrónica of the
-Agencia Tributaria, and the ICAC pages.
-
-The BOE answers `200` for a page that does not exist and says so only in the
-title (`Error 404`), so a link checker that reads status codes alone will call
-a wrong ELI good. Every URL of the register was checked by its title.
+and the key of the text it is in. The register in `pack.json` holds 39 texts:
+the consolidated texts on the BOE (by ELI where the BOE gives one), the forms
+and instructions on the Sede electrónica of the Agencia Tributaria, and the
+ICAC pages.
 
 ## The chart of accounts
 
@@ -34,15 +29,12 @@ names. 220 accounts of groups 1 to 7, 162 of them postable: the two-digit
 subgroups are headings, a three-digit account is postable unless the PGC gives
 it four-digit subaccounts that the pack carries (4300, 4000, 4700, 4750…).
 Groups 8 and 9 — income and expense recognised directly in equity — are left
-out, because the pack carries no statement of changes in equity for them to
-reach. The PGC for SMEs (Real Decreto 1515/2007) uses the same codes.
-
-Two deliberate choices:
+out: the pack carries no statement of changes in equity for them to reach. The
+PGC for SMEs (Real Decreto 1515/2007) uses the same codes.
 
 - **Receivables and payables are the four-digit accounts.** `4300 Clientes
-  (euros)` and `4000 Proveedores (euros)` are the roles, because that is the
-  level Spanish practice posts on, and the foreign-currency subaccounts sit
-  beside them.
+  (euros)` and `4000 Proveedores (euros)` are the roles, the level Spanish
+  practice posts on; the foreign-currency subaccounts sit beside them.
 - **The VAT accounts are the PGC's.** `472` input VAT, `477` output VAT, and
   the balance of the period is settled to `4750` when it is owed and to `4700`
   when it is a credit — the two accounts the PGC's own *definiciones y
@@ -57,8 +49,7 @@ line: no range is inferred. Where one account appears on both sides (551,
 5523, 5524, 5525), the rule is split by side, a debit balance being an asset
 and a credit balance a liability. Accounts 678 and 778 do not appear in the
 abridged profit and loss account and the pack carries neither. `xbrl` is null
-on every line: the ICAC publishes a taxonomy (PGC2007) and nobody has mapped
-it here.
+on every line: the ICAC publishes a taxonomy (PGC2007), not mapped here.
 
 ## Taxes
 
@@ -90,17 +81,15 @@ acquisitions (10/11 and 36/37), services from suppliers outside the Union
 and the 50 % presumption for passenger cars of art. 95.Tres.2.ª.
 
 **Spanish VAT stops at the Canary Islands, Ceuta and Melilla** (Ley 37/1992,
-art. 3). Since version 0.2.0 the domestic sale taxes — the rates, the
-temporary food rates, the domestic reverse charge and the exemptions of art.
-20 — say `applies_when: { "supply_in": "ES" }`, and the reference table marks
-`ES-CN`, `ES-CE` and `ES-ML` as outside the parent's tax. So `post_document()`
-refuses `ES-S-21` on a supply delivered in Las Palmas, and the same sale posts
-as `ES-S-EXP`, which is what the golden scenario does with its Canarian
-customer. Where the place of supply is Spain and the goods or the customer are
-abroad — a service to a consumer under art. 69, a distance sale under the
-threshold of art. 68 — the document says so in `supply_territory_code`, and
-the refusal names that column. The purchase taxes carry no condition: a
-foreign supplier may lawfully charge Spanish VAT.
+art. 3). The domestic sale taxes (rates, temporary food rates, domestic
+reverse charge, art. 20 exemptions) say `applies_when: { "supply_in": "ES" }`,
+and `ES-CN`, `ES-CE` and `ES-ML` are outside the parent's tax: `post_document()`
+refuses `ES-S-21` on a supply delivered in Las Palmas, which posts as
+`ES-S-EXP`, as in the golden scenario. Where the place of supply is Spain but
+the goods or the customer are abroad (art. 69 services to consumers, art. 68
+distance sales under the threshold), the document says so in
+`supply_territory_code`. Purchase taxes carry no condition: a foreign supplier
+may lawfully charge Spanish VAT.
 
 **Credit notes go where the form puts them.** A *factura rectificativa* issued
 is declared with a minus sign in boxes 14 and 15, not netted into the rate
@@ -108,17 +97,13 @@ row; one received goes to boxes 40 and 41.
 
 **What is not here, and why:**
 
-- **Recargo de equivalencia.** A wholesaler selling to a retailer in the
-  scheme charges VAT and the surcharge (5,2 %, 1,4 %, 0,5 %, 1,75 %) on the
-  same line. The core carries one tax per line and refuses `group`, so the
-  surcharge cannot be posted. Its boxes (156–158, 168–170, 16–26) are declared
-  and empty so that box 27 is the form's own formula.
-- **IGIC and IPSI.** The Canary Islands, Ceuta and Melilla are outside the
-  territory of Spanish VAT (Ley 37/1992, art. 3) and levy IGIC and IPSI
-  instead, which no tax here carries.
-
-- **Régimen especial del criterio de caja.** Optional, and the PGC names no
-  transition account for the deferred VAT. Not modelled; its mention is.
+- **Recargo de equivalencia** (5,2 %, 1,4 %, 0,5 %, 1,75 %): charged on the
+  same line as VAT, and the core carries one tax per line. Its boxes (156–158,
+  168–170, 16–26) are declared and empty so that box 27 is the form's formula.
+- **IGIC and IPSI**, levied instead of VAT in the Canary Islands, Ceuta and
+  Melilla: no tax here carries them.
+- **Régimen especial del criterio de caja**: optional, and the PGC names no
+  transition account for the deferred VAT. Its mention is carried.
 - **The simplified regime (módulos)**, agriculture, travel agencies, second-hand
   goods, the prorrata, and the foral territories (Basque Country, Navarre).
 
@@ -132,15 +117,13 @@ quarter of 2024; Orden HAC/27/2026 replaced its annex from the second quarter
 of 2026 without changing any box transcribed here.
 
 Filed quarterly by default (Reglamento del IVA, art. 71.3), monthly above
-6 010 121,04 € of turnover and for the other cases the same article lists. Due
-on the 20th of the following month (art. 71.4). The same article gives the
-fourth quarter until 30 January and the SII filers thirty days; the deadline
-rule has one shape for all periods and cannot say either.
+6 010 121,04 € of turnover and in the other cases that article lists; due on
+the 20th of the following month (art. 71.4). The fourth quarter (30 January)
+and SII filers (thirty days) are not expressed: the deadline rule has one shape.
 
-**Form 349** (recapitulative statement) is what `ec_sales_list()` answers: the
-treatments give the keys E (goods), S (services) and A/I on the purchase side.
-No brick of `packages/formats` writes its file. **Form 390**, the annual
-summary, is not transcribed; it is a different form with its own boxes.
+**Form 349** is what `ec_sales_list()` answers (keys E, S, and A/I on the
+purchase side); no brick of `packages/formats` writes its file. **Form 390**,
+the annual summary, is not transcribed.
 
 ## Invoices
 
@@ -159,7 +142,7 @@ core can write today.
 
 | Obligation | Text | Who, and from when |
 |---|---|---|
-| **B2B e-invoice** | Ley 18/2022, art. 12; Real Decreto 238/2026 | EN 16931 in UBL, CII, EDIFACT or Facturae. Twelve months after the ministerial order on the public solution for companies above 8 M€, twenty-four for the rest. The order was not found in the BOE on 21 September 2026, so there is no date, and `mandatory_from` is null |
+| **B2B e-invoice** | Ley 18/2022, art. 12; Real Decreto 238/2026 | EN 16931 in UBL, CII, EDIFACT or Facturae. Twelve months after the ministerial order on the public solution for companies above 8 M€, twenty-four for the rest. Without that order there is no date, and `mandatory_from` is null |
 | **SII** — invoice records sent to the Agencia Tributaria within four days | Real Decreto 596/2016; Reglamento del IVA, art. 62.6 | Everyone on a monthly return, since 1 July 2017; optional for others |
 | **VERI*FACTU** — certified invoicing software | Real Decreto 1007/2023, as amended by Real Decreto-ley 15/2025 | Corporate income taxpayers before 1 January 2027, everyone else before 1 July 2027 |
 
@@ -179,44 +162,41 @@ party and the VAT number.
 4. **The account types** of 407, 438 and 555, and 551 split by side.
 5. **Numbering `gapless_per_year`**: one series per year is common practice
    and not a requirement of the regulation.
-6. **The 0 % row** (150/152): the 2026 instructions keep it; which supplies
-   are at 0 % in 2026, if any, was not established.
+6. **The 0 % row** (150/152): the 2026 instructions keep it; which supplies,
+   if any, are at 0 % in 2026 is to be checked.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
-The section carries what was read on an official page on 1 October 2026 — the
-consolidated text of Ley 27/2014 on the BOE (last update published on
-2 September 2026) and two pages of the Agencia Tributaria — and nothing else.
-It starts from line C of the profit and loss account, *Resultado antes de
-impuestos*, so the tax charge (account 630) never enters; it is booked on 6300,
-with 4752 for the debt and 4709 for a refund. Rates are those of tax periods
-opened from 1 January 2025: 25 %, 15 % for new entities, 24 % for
-reduced-size entities and the 21 % / 22 % scale for micro-enterprises, each
-dated up to the final rates of the law. What the company states — turnover of
-the previous period, reduced size, asset-holding entity, new entity — is its own
-word and nothing checks it against the books.
+The section rests on the consolidated Ley 27/2014 on the BOE (last update
+published on 2 September 2026) and two pages of the Agencia Tributaria. It
+starts from line C, *Resultado antes de impuestos*, so the tax charge (630)
+never enters; it is booked on 6300, with 4752 for the debt and 4709 for a
+refund. Rates are those of periods opened from 1 January 2025: 25 %, 15 % for
+new entities, 24 % for reduced-size entities and the 21 % / 22 % scale for
+micro-enterprises, each dated up to the law's final rates. What the company
+states (previous turnover, reduced size, asset-holding, new entity) is its own
+word; nothing checks it against the books.
 
 | Not carried | Why |
 |---|---|
-| Set-off of negative tax bases (art. 26) | The limit is the larger of 70 % of the base and 1 000 000 €. `loss_carryforward` says a floor plus a share of the profit above it, which is a different figure (1 000 000 + 70 % of the excess), and no approximation was made. The list is empty: a company that carries a loss is refused by name. The exemption of new entities for their first three profitable periods, the cut-off at extinction and the restrictions on acquired companies (art. 26.3 and 26.4) are not carried either. |
+| Set-off of negative tax bases (art. 26) | The limit is the larger of 70 % of the base and 1 000 000 €; `loss_carryforward` can only say 1 000 000 + 70 % of the excess, so the list is empty and a company that carries a loss is refused by name. Art. 26.3 and 26.4 (new entities, extinction, acquired companies) are not carried either. |
 | Minimum net tax (art. 30.1) | A floor of 15 % (10 %, 18 % or a reduced percentage in some cases) of the base for entities of 20 million € of turnover or more and for tax groups. The section has no minimum. |
 | The Complementary Tax (Ley 7/2024) | A tax on top of the tax, outside the vocabulary of the section. |
-| Reserva de capitalización (art. 25) and reserva de nivelación (art. 105) | Reductions of the base that depend on the company's own reserves and on a five-year commitment; not carried. |
-| Entertainment of clients and suppliers (art. 15.e) | Deductible up to 1 % of net turnover: a ceiling on the year's turnover, which a rule of the section cannot say. |
-| The other lines of art. 15 (retribution of equity, tax-haven services, intra-group debt for acquisitions, severance above the limit, impairment of holdings, interest limit of art. 16) | Each depends on facts or ceilings not in a flat rule, or was not read in full. |
-| Exemption of dividends and of gains on holdings (art. 21) | Read only in part; not carried. |
-| Depreciation tables, impairment, free depreciation and tax credits (art. 12, 13, 102, 35 onwards) | Not read. `credits` is empty. |
-| The proration of the first slice of the micro-enterprise scale | The law shares 50 000 € by days over 365; the section can only share by months, so a short period is estimated within a fraction of a percent of that figure. A full year is exact. |
-| Cooperatives, non-profit entities (10 %), investment funds (1 %), credit institutions and hydrocarbon companies (30 %), and groups of tax consolidation | Other rates of art. 29 and special regimes; the pack does not carry them. |
-| Rates of periods opened before 2025 | Not read. A year before 2025 is refused with `no_rate_in_force`. |
+| Reserva de capitalización (art. 25) and reserva de nivelación (art. 105) | Depend on the company's own reserves and a five-year commitment. |
+| Entertainment of clients and suppliers (art. 15.e) | Deductible up to 1 % of net turnover: a ceiling a rule of the section cannot say. |
+| The other lines of art. 15 (retribution of equity, tax-haven services, intra-group debt for acquisitions, severance above the limit, impairment of holdings, interest limit of art. 16) | Each depends on facts or ceilings not in a flat rule. |
+| Exemption of dividends and of gains on holdings (art. 21) | Not carried. |
+| Depreciation tables, impairment, free depreciation and tax credits (art. 12, 13, 102, 35 onwards) | Not carried. `credits` is empty. |
+| The proration of the first slice of the micro-enterprise scale | The law shares 50 000 € by days over 365; the section shares by months, so a short period is within a fraction of a percent. A full year is exact. |
+| Cooperatives, non-profit entities (10 %), investment funds (1 %), credit institutions and hydrocarbon companies (30 %), and groups of tax consolidation | Other rates of art. 29 and special regimes. |
+| Rates of periods opened before 2025 | Not carried. A year before 2025 is refused with `no_rate_in_force`. |
 
 The instalments are the three of art. 40.1 and 40.2 at 18 % of the reference
-tax: the first twenty days of April, October and December. The reference tax
-is the gross tax of the last period whose filing deadline had passed, less
-deductions, allowances and withholdings, and the instalments are declared with
-no reader yet. The method of art. 40.3 (on the base of the first 3, 9 or 11
-months, compulsory above 6 million € of turnover) and the percentage the
-budget act may change (art. 40.4) are not carried.
+tax (the gross tax of the last period whose deadline had passed, less
+deductions, allowances and withholdings), in the first twenty days of April,
+October and December, declared with no reader yet. Art. 40.3 (base of the
+first 3, 9 or 11 months, compulsory above 6 million € of turnover) and art.
+40.4 (the percentage the budget act may change) are not carried.
 
 Four things for a Spanish tax adviser to read: the reading that the
 micro-enterprise scale of 2027 and later and the 20 % rate of reduced-size
@@ -228,11 +208,11 @@ proration above.
 
 ## Fixed assets
 
-`fixed_assets.json` carries how Spain depreciates a fixed asset and takes it off
-the balance sheet. It was read on 1 October 2026 in the consolidated Ley 27/2014
-(art. 12, the table of maximum linear coefficients, the constant-percentage
-method and the intangibles) and in the PGC (rules of recognition and
-measurement 2.ª, 5.ª and 6.ª).
+`fixed_assets.json` carries how Spain depreciates a fixed asset and takes it
+off the balance sheet. It rests on the consolidated Ley 27/2014 (art. 12, the
+table of maximum linear coefficients, the constant-percentage method and the
+intangibles) and the PGC (rules of recognition and measurement 2.ª, 5.ª and
+6.ª).
 
 - **Disposal is `net_result`**: PGC rule 2.ª, 3 books one gain or loss on 771 or
   671, and the abridged profit and loss account prints it as one line
@@ -244,14 +224,13 @@ measurement 2.ª, 5.ª and 6.ª).
   `legal_reference`.
 - **Durations.** The PGC fixes four: goodwill ten years (presumed), capitalised
   development and software five years at most (presumed), other intangibles ten
-  years when the life cannot be estimated. For tangible assets the law gives
-  only ceilings: a maximum linear coefficient and a maximum period per kind of
-  element. A straight-line category proposes the shortest life whose annual rate
-  stays within the coefficient (12 × 100 / coefficient months), and the
-  `legal_reference` of each prints the coefficient and the maximum period it
-  came from. A constant-percentage category takes the table's maximum period and
-  the factor of art. 12.1.b (1.5, 2 or 2.5 by that period). Buildings and
-  furniture have no such category, as the article forbids it.
+  years when the life cannot be estimated. For tangible assets the law gives a
+  maximum linear coefficient and maximum period per kind of element: a
+  straight-line category proposes the shortest life within the coefficient
+  (12 × 100 / coefficient months), and its `legal_reference` prints both. A
+  constant-percentage category takes the maximum period and the factor of art.
+  12.1.b (1.5, 2 or 2.5 by that period); buildings and furniture have none, as
+  the article forbids it.
 - **A category proposes, never imposes**: the useful life is the company's
   estimate (rule 2.ª, 2.1).
 
@@ -259,22 +238,21 @@ measurement 2.ª, 5.ª and 6.ª).
 
 | Not carried | Why |
 |---|---|
-| Tax depreciation distinct from the book charge | The module keeps one schedule per asset. A company whose accounting life differs from the tax table (goodwill at ten years against the 1/20 limit of art. 12.2, a faster book life than the table) carries the difference as a tax adjustment outside the module. |
-| The 11 % floor of the constant percentage (art. 12.1.b) | No field says a minimum rate. It does not bite on any category here (the lowest is 13.9 %, machinery), but an asset set up with a longer period would need it. |
+| Tax depreciation distinct from the book charge | One schedule per asset; a difference from the tax table (goodwill at ten years against the 1/20 limit of art. 12.2, a faster book life) is a tax adjustment outside the module. |
+| The 11 % floor of the constant percentage (art. 12.1.b) | No field says a minimum rate. It does not bite on any category here (the lowest is 13.9 %, machinery). |
 | Sum-of-digits method (art. 12.1.c) | The module has no such method. |
-| Free depreciation (art. 12.3: R&D assets, assets of up to 300 € within 25 000 € a year, labour companies) and accelerated depreciation of other regimes | Outside the vocabulary of a category. Not read beyond art. 12.3. |
+| Free depreciation (art. 12.3: R&D assets, assets of up to 300 € within 25 000 € a year, labour companies) and accelerated depreciation of other regimes | Outside the vocabulary of a category. |
 | Depreciation plans agreed with the tax administration (art. 12.1.d) and justified depreciation (12.1.e) | Case by case, no table. |
 | Separate depreciation of the components of an asset (rule 2.ª, 2.1) | The module has one asset, one duration. |
 | Residual value, impairment and its reversal | Not a pack rule. |
-| Threshold below which an asset is expensed | Not read in an official text, and the module has no such field. |
+| Threshold below which an asset is expensed | The module has no such field. |
 | Revaluations and legal updates | Not carried. |
-| Other element kinds of the art. 12 table (civil works, power plants, rolling stock, ships and aircraft, glassware, linen, moulds, audiovisual productions) | Unusual for the first company; the table is in the law and a category can be added. |
-| Investment property (accounts 220/221, 282) | Not read in rule 4.ª. |
+| Other element kinds of the art. 12 table (civil works, power plants, rolling stock, ships and aircraft, glassware, linen, moulds, audiovisual productions) | Unusual for a first company; a category can be added. |
+| Investment property (accounts 220/221, 282) | Not carried (rule 4.ª). |
 | Assets held for sale (rule 7.ª) | The module cannot stop depreciation on a reclassification. |
 | Units of production | Refused by the module. |
 | Day-by-day convention of the first period | Practice, not text (see above); a company that prorates by months sets `prorata = 'months'` on the asset. |
 
-The declining-balance categories also inherit the module's switch to the
-straight line when it is the larger annuity, which art. 12.1.b does not provide
-for: the text applies a constant percentage on the remaining value, and the
-module needs the switch for the schedule to end.
+Declining-balance categories also inherit the module's switch to straight
+line when it is the larger annuity, which art. 12.1.b (a constant percentage
+on the remaining value) does not provide for; the schedule needs it to end.

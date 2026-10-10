@@ -26,8 +26,7 @@ tekstova — nijedan od njih takvu verziju nema; vidi
 
 Svaki porez, kutija, pravilo dokumenta i red tabele nosi sopstveni
 `legal_reference` i ključ izvora iz kog je ta odredba uzeta.
-`pack.json.certification.sources` nosi deset tekstova, svi provereni
-26.09.2026:
+`pack.json.certification.sources` nosi deset tekstova:
 
 | Šta | Tekst | Gde |
 |---|---|---|
@@ -53,8 +52,8 @@ račune, na osnovu čega ovaj paket dodaje:
 
 - **`4999`** — pod zvaničnim računom `469` («Ostale obaveze») ovaj paket
   dodaje prelazni račun za sume čije se poreklo utvrđuje
-  (`defaults.roles.suspense`): Pravilnik ne propisuje poseban «compte
-  d'attente» kao francuski ili belgijski kontni plan; ovo je odluka paketa,
+  (`defaults.roles.suspense`): Pravilnik ne propisuje poseban prelazni
+  račun; ovo je odluka paketa,
   označena za proveru knjigovođe.
 - **`279`/`479`** su, za razliku od 4999, **zvanični** trocifreni računi
   Kontnog okvira («Potraživanja za više plaćeni porez na dodatu vrednost» i
@@ -123,10 +122,10 @@ putnika, voda za piće, komunalne usluge i dr.).
 
 **Van zajedničkog sistema PDV Evropske unije, dakle bez VATEX kodova.**
 Srbija je zemlja kandidat, ne država članica; prema Direktivi 2006/112/EZ,
-član 5(2), zajednički sistem PDV se ne prostire na kandidate (vidi novi red
+član 5(2), zajednički sistem PDV se ne prostire na kandidate (vidi
 `supabase/seed/00_territories.sql`). `exemption_code` je zato ostavljen
 prazan na svakom porezu, a član zakona pod koji potpada oslobođenje je
-zapisan u `legal_reference` — kao što je uradio paket `tr` i `ae`.
+zapisan u `legal_reference`.
 
 **Autoliquidacija u građevinarstvu (član 10. stav 2. tačka 3)) je
 modelovana na obe strane, sa jednom nesigurnošću koju treba proveriti sa
@@ -135,8 +134,8 @@ kutiju za promet za koji je primalac poreski dužnik — kutija 003/103 je
 opisana samo kao „promet po opštoj stopi”. Ovaj paket pretpostavlja da se
 samoobračunati promet (i na strani prodavca, informativno bez PDV, i na
 strani primaoca, sa PDV-om) prijavljuje u istoj kutiji kao redovna prodaja
-po toj stopi, jer obrazac POPDV — čiji zbir PPPDV kutija 003/103 preuzima —
-nije nezavisno proveren do nivoa pojedinačnih polja unutar te kutije.
+po toj stopi; pojedinačna polja Obrasca POPDV — čiji zbir PPPDV kutija
+003/103 preuzima — unutar te kutije treba proveriti.
 Isto važi za `RS-P-RC-FOREIGN` (usluga stranog lica koje nije evidentirani
 obveznik PDV u Republici, član 10. stav 1. tačka 3)).
 
@@ -182,8 +181,7 @@ format koji propisuje Ministarstvo finansija svojim Pravilnikom o
 elektronskom fakturisanju. Format `einvoicing.obligation`/`mandatory_from`
 pretpostavlja tačno takav profil („a statute obliges companies to exchange
 **the profile**”); pošto ovaj paket ne deklariše profil, ta dva polja ostaju
-nepopunjena (kao što je uradio paket `ua` za Jedinstveni registar poreskih
-faktura), a stvarni datumi i obaveza su ispisani u `legal_reference`, gore i
+nepopunjena, a stvarni datumi i obaveza su ispisani u `legal_reference`, gore i
 u README-u.
 
 **Elektronsko evidentiranje obračuna PDV u sistemu e-Faktura (član 4. Zakona
@@ -193,7 +191,7 @@ zbirna ili pojedinačna, po transakciji — je detaljniji zapis od kutija
 Obrasca PPPDV koje ovaj paket modeluje kao `tax_report.json`, i socle nema
 mesto za nju: nijedno polje formata ne opisuje obavezu evidentiranja u
 državnom sistemu koja je odvojena od same deklaracije. Vidi
-docs/international.md, odeljak „From Serbia”.
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Bilans stanja i Bilans uspeha
 
@@ -207,7 +205,7 @@ AOP šiframa na nivou pojedinačnog arapskog broja, nije transkribovan — vidi
 **Forma razlikuje za svaki međuzbir poseban red „dobitak” i poseban red
 „gubitak”** (npr. V./G. Poslovni dobitak/gubitak, E./Ž. Dobitak/gubitak iz
 finansiranja, Ć./U. Neto dobitak/gubitak), od kojih se u svakom periodu
-popunjava samo jedan. Ovaj paket, kao i paket za Ukrajinu, svaki takav par
+popunjava samo jedan. Ovaj paket svaki takav par
 svodi u jedan red sa znakom (pozitivna vrednost — dobitak, negativna —
 gubitak).
 
@@ -218,8 +216,8 @@ dospeća je pitanje procene, ne koda računa; redovi „V. Dugoročna AVR” i
 važi za „1. Kratkoročna rezervisanja” na strani pasive: Kontni okvir ima
 samo dugoročna rezervisanja (grupa 40).
 
-`xbrl` fact key-jevi su svuda prazni: da li Srbija ima XBRL taksonomiju za
-ove obrasce nije predmet ovog istraživanja.
+`xbrl` fact key-jevi su svuda prazni: nijedna XBRL taksonomija za ove
+obrasce nije mapirana.
 
 ## Na računu (fakturi)
 
@@ -256,9 +254,9 @@ izdatog računa.
 - **Paušalna nadoknada PDV poljoprivrednicima** (kutija 007/107, član 34.
   Zakona) — kutija postoji, nijedan porez je ne dostiže.
 - **Osnovna sredstva.** `fixed_assets.json` ne postoji; stope amortizacije za
-  poreske i računovodstvene svrhe su van ovog istraživanja.
+  poreske i računovodstvene svrhe su van obima ovog paketa.
 - **Bankarski formati.** Nijedan format izvoda ili naloga za plaćanje
-  srpskih banaka nije proveren ovim istraživanjem; odeljak `bank` u
+  srpskih banaka nije obuhvaćen; odeljak `bank` u
   `pack.json` ne postoji.
 - **XML fakture SEF-a.** Nijedna komponenta `packages/formats/` ne piše,
   ne potpisuje i ne šalje taj dokument u SEF.
@@ -275,9 +273,8 @@ najmanje izvesne:
 
 1. **Kutija PPPDV obrasca u koju se prijavljuje samoobračunati promet iz
    autoliquidacije** (građevinarstvo, usluge stranog lica) — ovaj paket
-   pretpostavlja istu kutiju kao redovna prodaja po istoj stopi, jer
-   pojedinačna polja Obrasca POPDV nisu nezavisno provere na — vidi
-   „Porezi” gore.
+   pretpostavlja istu kutiju kao redovna prodaja po istoj stopi; pojedinačna
+   polja Obrasca POPDV treba proveriti — vidi „Porezi” gore.
 2. **Skraćeni (mikro) obim Bilansa stanja/uspeha** — da li je dovoljan za
    konkretno pravno lice, ili treba puni obrazac.
 3. **Prelazni račun 4999** — dodatak van slova Kontnog okvira, dozvoljen

@@ -40,8 +40,7 @@ and names the entry of `certification.sources` its article is in.
 **Latvia prescribes no chart of accounts.** Grāmatvedības likuma 11. panta
 pirmā daļa obliges every accounting entity to keep a set of internal
 documents that includes its own "grāmatvedības kontu plāns", and nothing
-more; there is no ministerial chart to transcribe, the way there is a form
-for the declaration.
+more; there is no ministerial chart to transcribe.
 
 What this pack does instead is follow the structure of the law that *is*
 prescriptive: the balance sheet and income statement schemes of the Gada
@@ -60,20 +59,17 @@ digit names the side of the scheme it belongs to:
 - `8` Finanšu ieņēmumi, finanšu izmaksas un uzņēmumu ienākuma nodoklis (items
   9–15 of annex 2)
 
-`statements.json` maps each `code_range` straight onto the annex it was
-written from — a reviewer reads one law article per group of accounts rather
-than reverse-engineering a mapping. Small and micro companies are entitled
-by 56.–58. pantu to combine minor balance sheet items into one line; this
-pack takes that same right at the account level, and presents each of the
-annexes' top-level groups (I–IV of the assets side, the four blocks of the
-liabilities side) as one statement line rather than reproducing every one of
-their sub-items.
+`statements.json` maps each `code_range` straight onto its annex. Small and
+micro companies are entitled by 56.–58. pantu to combine minor balance sheet
+items into one line; this pack takes that same right, and presents each of
+the annexes' top-level groups (I–IV of the assets side, the four blocks of
+the liabilities side) as one statement line rather than every sub-item.
 
 The two VAT posting accounts a rate uses (`5080` sales VAT, `2170` purchase
 VAT, and their intra-Community pair `5085`/`2175`) are deliberately **not**
 the accounts a company's PVN deklarācija is settled from: `5090`
 (`tax_payable`) and `2180` (`tax_receivable`) are separate, reconcilable
-accounts, per the rule the project follows since the Slovak pack.
+accounts.
 
 ## The taxes
 
@@ -91,15 +87,12 @@ pirmā daļa) and an intra-Community supply of goods (43. panta ceturtā daļa);
 the freeport, new-means-of-transport, chain-transaction and humanitarian-aid
 branches of the same article are not. The exemption (52. pants) is modelled
 for the sale of used immovable property (52. panta pirmās daļas 24. punkts,
-Directive 2006/112/EC art. 135(1)(j)) — the same article's insurance and
-financial-services exemptions (points 20–22) are cited in `docs/packs.md`
-research but not turned into a tax code here, for lack of a golden document
-that would exercise them.
+Directive 2006/112/EC art. 135(1)(j)); the same article's insurance and
+financial-services exemptions (points 20–22) are not turned into a tax code.
 
 The intra-Community acquisition of goods (5. panta pirmās daļas 3. punkts) is
-modelled with the same three-posting shape the framework's own documentation
-uses for Estonia: a base, a payable leg and a fully offsetting deductible
-leg, landing on boxes 50, 55 and 64.
+modelled with three postings: a base, a payable leg and a fully offsetting
+deductible leg, landing on boxes 50, 55 and 64.
 
 A service bought from a supplier abroad — a software subscription, hosting,
 an API — is supplied where the Latvian taxable person carries on its
@@ -167,9 +160,7 @@ later, economy-wide one in `einvoicing.mandatory_from`:
 Structured-invoice **data reporting** to VID is a separate, later obligation
 again: 1 January 2026 for B2G, 1 January 2028 for everyone else (pārejas
 noteikumu 10. punkts). `country_defaults` carries no column for that third
-date; it is recorded here because a reader comparing this pack against a
-secondary source will otherwise find three different 2026/2028 dates and no
-way to tell which is which.
+date; it is recorded here so the three 2026/2028 dates can be told apart.
 
 ## What this pack does not do yet
 
@@ -183,9 +174,7 @@ way to tell which is which.
   `tax_report.json` is simply row 60.
 - **Advance payments** are not specially handled: `documents.tax_point` is
   declared `delivery_date` (31. un 32. pantu), and Ekwo has no prepayment
-  document through which a payment-first tax point could be exercised — the
-  same limit `docs/packs.md` already records for every pack that declares a
-  cash-basis tax.
+  document through which a payment-first tax point could be exercised.
 - **Corporate income tax on distributed profit** (Uzņēmumu ienākuma nodokļa
   likums) is out of scope of a PVN pack; account `8210` exists in the chart
   for the day a company distributes a dividend, and nothing in this pack

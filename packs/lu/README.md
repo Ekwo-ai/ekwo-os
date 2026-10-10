@@ -23,8 +23,7 @@ accounts over the seven classes, of which **747 are `comptes d'imputation`** —
 the accounts a business posts to — and 279 are `comptes de regroupement`, which
 aggregate and carry no entries. The regulation itself draws that line, in
 article 7: *« Les entreprises ne peuvent renseigner leurs opérations qu'au sein
-des comptes d'imputation. »* A grouping account is therefore a heading here,
-with children and nothing posted to it.
+des comptes d'imputation. »*
 
 **There is no abridged chart.** What Luxembourg abridges for a small company is
 the *presentation* — the balance sheet and the profit and loss account, below —
@@ -34,9 +33,9 @@ day-to-day books on a chart of its own still reports the balances of the PCN at
 the year end, which article 6 of the regulation allows and article 8 lets it
 extend with accounts of its own beneath an imputation account.
 
-Sources of the account names: French from the regulation itself; German and
-English from the eCDF deposit form for the PCN, which the State publishes in the
-three languages.
+Account names: French from the regulation itself; German and English from the
+eCDF deposit form for the PCN, which the State publishes in the three
+languages.
 
 ## The taxes
 
@@ -49,32 +48,26 @@ that attaches each reduced rate to its goods and services: annex A for the
 **The 2023 rates are here as history.** The law of 26 October 2022 (Mémorial A
 n° 534) cut three of the four rates by two points for the year 2023 alone:
 16 %, 13 % and 7 %; the super-reduced rate did not move. A document dated in
-2023 therefore has its own tax codes, in force from 1 January to 31 December of
-that year, and the periodic return carries its own boxes for them — the form
-prints seven rate rows, not four. The codes without a year suffix are the ones
-in force today.
+2023 has its own tax codes, in force from 1 January to 31 December of that
+year, and the periodic return carries its own boxes for them — the form prints
+seven rate rows, not four. The codes without a year suffix are in force today.
 
-Beyond the rates, the pack carries what a Luxembourg company books without
-being anything but an ordinary taxable person: the intra-Union supply of goods
-and of services, the export, the intra-Union acquisition of goods and of
-services, the domestic reverse charge on both sides, and an exempt operation of
+Beyond the rates, the pack carries the intra-Union supply of goods and of
+services, the export, the intra-Union acquisition of goods and of services,
+the domestic reverse charge on both sides, and an exempt operation of
 article 44.
 
 **No partly deductible VAT.** Luxembourg prescribes no fixed share of
-non-deductibility — no Belgian-style fifty per cent on a car, no French eighty
-per cent on fuel. What restricts a deduction is article 49 (the input tax on an
-exempt output is not deductible at all) and article 50 (a *prorata* computed
-from the undertaking's own turnover, year by year). Neither is a number a
-country pack can hold: the first is all of it, the second belongs to the
-company. The two boxes the form provides for them — 094 and 095 — are declared
-so that a future feature can fill them, and no tax of this pack posts to them.
+non-deductibility. What restricts a deduction is article 49 (the input tax on
+an exempt output is not deductible at all) and article 50 (a *prorata*
+computed from the undertaking's own turnover, year by year) — neither a number
+a country pack can hold. The two boxes the form provides for them — 094 and
+095 — are declared, and no tax of this pack posts to them.
 
 **No cash accounting either.** Article 25 lets an undertaking below 500 000
-euros of turnover ask to be taxed on what it collects. It is an option a
-company exercises, not the general rule — the general rule is article 24, the
-tax falls due when the invoice is issued — so v1 leaves it out. Adding it would
-be a set of tax codes with `cash_basis` and a transition account, the way the
-French pack carries the ordinary rule for services.
+euros of turnover ask to be taxed on what it collects. It is an option, not the
+general rule — article 24, the tax falls due when the invoice is issued — so v1
+leaves it out.
 
 ## The declaration
 
@@ -86,39 +79,32 @@ covers both, and the manifest declares the period as `month_or_quarter`.
 
 Which of the two an undertaking files follows its turnover: annual only up to
 112 000 euros, quarterly from there to 620 000, monthly above. **The core has
-no company-level parameter for that** — `vat_return()` is given two dates — so
-the pack says what the form allows and the caller says which period it is
+no company-level parameter for that**, so the caller says which period it is
 filing. The **annual return** (`TVA_DECA`, and the simplified `TVA_DECAS`) is a
-different form with fields of its own and is not in this pack.
+different form and is not in this pack.
 
-**Two numbers worth checking against the form.** Compared with the official
-form on 21 September 2026: 033 is the base of the first free-rate row of
-section II.A, and is now declared (point 8 of the review list below). **096 is
-not a field of this form**: no version of `TVA_DECM` published on eCDF from
-2015 to 2026 prints it — section III.B stops at 094 and 095, and 097 is their
-sum. The pack follows the form, and declares nothing under 096.
+**Two fields worth checking against the form.** 033 is the base of the first
+free-rate row of section II.A, and is declared (point 8 below). **096 is not a
+field of this form**: section III.B of `TVA_DECM` stops at 094 and 095, and 097
+is their sum; the pack declares nothing under 096.
 
-One field is computed rather than summed, and it is worth knowing why. The
-Luxembourg form reports the taxable amount of a sale **twice** — once as
-turnover in section I and once in the rate breakdown of section II — and a tax
-of a pack takes one `base` posting per kind of document. Field **472**, *Autres
-ventes / recettes*, is therefore a total of the rate boxes and the exemption
-boxes rather than a box the postings fill. The figures come out the same and
-there is one definition instead of two; the cost is that the boxes of section I
-are ordered by what they depend on rather than by where they print.
+One field is computed rather than summed. The form reports the taxable amount
+of a sale **twice** — once as turnover in section I and once in the rate
+breakdown of section II — and a tax takes one `base` posting per kind of
+document. Field **472**, *Autres ventes / recettes*, is therefore a total of
+the rate boxes and the exemption boxes; the boxes of section I are ordered by
+what they depend on rather than by where they print.
 
-**When it is due.** Since pack version 1.8.0 the form declares a deadline:
-`day_of_month_after_period`, day **14**. Article 64, paragraph 6, of the law
-says the monthly return "doit être déposée **avant** le quinzième jour du mois
-qui suit la période imposable", the tax being paid before the same date, and
-the AED gives the quarterly return the same wording for the month after the
-quarter. The pack reads *avant* as *before*: the same law writes "au plus tard
-le quinzième jour" where it means to include the fifteenth (article 63,
-paragraph 5, for issuing an invoice), and the annual return is due "avant le
-premier mai", which nobody reads as the first of May. A return filed on the
-fourteenth is on time under either reading. The text was read in the AED's
-coordinated version of 1 January 2026, which is not opposable; Legilux serves
-the official one.
+**When it is due.** The form declares `day_of_month_after_period`, day **14**.
+Article 64, paragraph 6, says the monthly return "doit être déposée **avant**
+le quinzième jour du mois qui suit la période imposable", the tax being paid
+before the same date, and the AED gives the quarterly return the same wording.
+The pack reads *avant* as *before*: the same law writes "au plus tard le
+quinzième jour" where it means to include the fifteenth (article 63,
+paragraph 5), and the annual return is due "avant le premier mai". A return
+filed on the fourteenth is on time under either reading. The text cited is the
+AED's coordinated version of 1 January 2026, which is not opposable; Legilux
+serves the official one.
 
 ## The financial statements
 
@@ -130,37 +116,30 @@ the official one.
 | `LU-ECDF-PL-ABR` | *Compte de profits et pertes abrégé* — annex IV of the same regulation, eCDF form `CA_COMPPABR` |
 
 **Every line is keyed by the eCDF field identifier of the current-year column** —
-`203` for the debtors falling due within one year, `651` for the gross result —
-so a filing brick that writes the XML of either form maps a line to a field
-without a table in between. The totals are the ones the form's own validation
-rules state: field 201 is 101 + 107 + 109 + 151 + 199, field 667 is the sum of
-the eleven lines above it, and so on.
+`203` for the debtors falling due within one year, `651` for the gross result.
+The totals are the ones the form's own validation rules state: field 201 is
+101 + 107 + 109 + 151 + 199, field 667 is the sum of the eleven lines above
+it, and so on.
 
-**The mapping is the State's own, account by account.** The same annex that
+**The mapping is the State's own, account by account.** The annex that
 publishes the chart publishes the *tableau de passage* — which item of the
-abridged balance sheet or of the abridged profit and loss account each account
-reports in. All 747 imputation accounts are mapped, each to exactly one line,
-by an `account_code` rule naming the code. A range would have been shorter and
-would have been an inference; this is a transcription, and a reviewer checking
-one account finds one line.
+abridged statements each account reports in. All 747 imputation accounts are
+mapped, each to exactly one line, by an `account_code` rule naming the code; a
+reviewer checking one account finds one line.
 
 Every line of the profit and loss account reads credit minus debit, because the
 form takes a charge as a negative figure and **adds** every line — field 667 is
-the sum of the eleven above it, charges included, which the validation rules
-state in those terms.
+the sum of the eleven above it, charges included.
 
 ## The close
 
 `closing_style` is `result_accounts`: the result of the year lands on account
 **142, *Résultat de l'exercice***, which the abridged balance sheet prints on
 its own line (field 321) and which stays there until a general meeting
-allocates it. That is the Luxembourg scheme, and it is France's rather than
-Belgium's — the abridged profit and loss account ends on *18. Résultat de
-l'exercice* and has no appropriation section.
-
-Luxembourg keeps **one** account for the result of the year, whichever sign it
-has, so `current_year_result_profit` and `current_year_result_loss` both name
-142. Belgium and France keep two.
+allocates it; the abridged profit and loss account ends on *18. Résultat de
+l'exercice* and has no appropriation section. Luxembourg keeps **one** account
+for the result, whichever sign it has, so `current_year_result_profit` and
+`current_year_result_loss` both name 142.
 
 ## The invoice
 
@@ -174,9 +153,8 @@ ou plusieurs séries, qui identifie la facture de façon unique »*.
 Electronic invoicing is Peppol and EN 16931. Public bodies have received
 electronic invoices since 18 May 2019; the obligation to **send** them reached
 large undertakings on 18 May 2022, medium ones on 18 October 2022 and small and
-new ones on 18 March 2023, which is the date the manifest carries because it is
-the one from which the obligation no longer depends on a size the core cannot
-hold.
+new ones on 18 March 2023, the date the manifest carries because from then the
+obligation no longer depends on a size the core cannot hold.
 
 ## The golden scenario
 
@@ -184,8 +162,7 @@ hold.
 quarterly: the four positive rates, a credit note, an intra-Union supply, an
 export, an intra-Union acquisition of goods and one of services, two matched
 payments and one on account. The three files beside it are what the engine
-makes of that year, to the cent, and they are generated —
-`UPDATE_GOLDEN=1 npm test -- tests/golden.test.ts`.
+makes of that year, to the cent.
 
 The balance sheet of that year does not balance, and that is not a defect: the
 result of an open financial year is not on the balance sheet until
@@ -194,14 +171,13 @@ exactly the result of the profit and loss account — 16 300 euros here.
 
 ## What a Luxembourg reviewer should look at first
 
-Eleven points where the reading could go another way. None is a known error; each
-is a place where the text allows more than one answer, or where no text was
-found.
+Eleven points where the text allows more than one answer, or where no text was
+found. None is a known error.
 
 1. **Numbering.** Article 63, paragraph 8, point 2°, asks for a *sequential*
-   number unique to the invoice, based on one or several series. It does not
-   say in so many words that the sequence may not have a hole. The pack
-   declares `gapless_per_year`; `sequential` would also be defensible.
+   number unique to the invoice, based on one or several series, without
+   saying the sequence may not have a hole. The pack declares
+   `gapless_per_year`; `sequential` would also be defensible.
 2. **The payment term.** 30 days and the interest of the amended law of
    18 April 2004 — the ECB rate plus eight points, and the fixed 40 euros. The
    article numbers cited should be checked against the consolidated text.
@@ -214,30 +190,27 @@ found.
    where the result sits between the close and the meeting.
 5. **The account types.** Each of the 1 026 accounts carries one of the
    eighteen types of the core, derived from the side of the *tableau de
-   passage* it reports on. The third-party accounts are narrower: only the
-   customer and supplier balances are receivable or payable.
+   passage* it reports on. Only the customer and supplier balances are
+   receivable or payable.
 6. **The domestic reverse charge.** Article 61, paragraphs 2 and 3, is narrow
-   in Luxembourg — emission allowances, gas and electricity certificates, and
-   the supplies of article 18, paragraph 4. The pack offers a code for it on
-   both sides; whether it is worth offering at all is a question for somebody
-   who meets it.
+   — emission allowances, gas and electricity certificates, and the supplies
+   of article 18, paragraph 4. Whether a code on both sides is worth offering
+   is a question for somebody who meets it.
 7. **Section F of the return carries no 16 % row**, where section E.3 does. A
    domestic reverse charge on goods in 2023 therefore has no box at the rate of
-   that year. The pack routes its reverse-charge purchase through section E.3,
+   that year; the pack routes its reverse-charge purchase through section E.3,
    which has both rates.
 8. **The free-rate rows of section II.A** — fields 033/042, 416/417 and
-   451/452 — are declared since pack version 1.9.0, and 037 and 046 add them,
-   so the two totals are the form's. The rate of each row is what the
-   declarant types in field 403, 418 or 453, and a rate is not an amount the
-   format can hold: no tax of the pack posts to these rows, and a declarant
-   who needs one fills it in by hand, as the form expects.
+   451/452 — are declared, and 037 and 046 add them, so the two totals are
+   the form's. The rate of each row is what the declarant types in field 403,
+   418 or 453, which the format cannot hold: no tax posts to these rows, and a
+   declarant fills them in by hand, as the form expects.
 9. **Article 25**, the taxation on collection, and **article 50**, the
-   *prorata*, are both out of v1. Both are options or company parameters rather
-   than country rules; both are expressible if a reviewer says they belong.
+   *prorata*, are both out of v1 as options or company parameters rather than
+   country rules; both are expressible if a reviewer says they belong.
 10. **The German and the English labels** are the versions the State itself
-    publishes, on the eCDF forms. They are not a translation made here, and
-    where the French and the German of a form differ, the French is the
-    reference — `i18n/README.md` says so at length.
+    publishes, on the eCDF forms; where the French and the German of a form
+    differ, the French is the reference — see `i18n/README.md`.
 11. **The deadline's day.** Fourteen, from "avant le quinzième jour", under
     "The declaration". Practitioners commonly write "by the 15th"; a reviewer
     who knows how the AED treats a return filed on the fifteenth will know

@@ -22,7 +22,7 @@ engelska etiketter vore Ekwos egen översättning och inte en källas.
 
 Varje sats, ruta, mening och kontonummer bär sin egen `legal_reference` och
 namnger vilken post i `certification.sources` artikeln finns i. Registret
-håller fjorton texter, alla öppnade den dag som står bredvid dem:
+håller fjorton texter:
 
 | Vad | Text | Utgivare |
 |---|---|---|
@@ -43,8 +43,8 @@ håller fjorton texter, alla öppnade den dag som står bredvid dem:
 bokföringen är systematisk (5 kap. 1 §) men namnger inga kontonummer. Det
 vidast spridda referensverket i svensk praxis är BAS-kontoplanen, utgiven av
 Bas-intressenternas Förening, vars fullständiga kontolista och kontonummer
-inte publiceras under en öppen licens. Precis som det tyska paketet inte
-återger DATEVs SKR, återger detta paket inte BAS-kontoplanens kontolista.
+inte publiceras under en öppen licens. Detta paket återger därför inte
+BAS-kontoplanens kontolista.
 
 Vad den gör i stället är att följa den kontoklassindelning som är svensk
 allmän praxis och som beskrivs i lärobok efter lärobok, utan att vara någons
@@ -61,9 +61,8 @@ upphovsrättsligt skyddade verk:
 | `8` | Finansiella och andra inkomster och utgifter |
 
 166 konton, platt struktur utan rubrikkonton: varje konto är postningsbart och
-når exakt en rad i den generiska ramen `packs/generic/` via sin
-`account_type`, eftersom detta paket inte deklarerar någon egen
-`statements.json` (se nedan).
+når en post i årsredovisningens uppställningsformer via sitt kontointervall
+(se nedan).
 
 **Skattekontot, inte två konton.** Skatteförfarandelagen (2011:1244) samlar
 ett företags alla skatter och avgifter — moms, arbetsgivaravgifter,
@@ -80,9 +79,8 @@ här illustrerad med restaurang- och cateringtjänster) och 6 procent (9 kap.
 8–19 §§, här illustrerad med böcker och tidningar). **Livsmedel är inte
 kodifierat i detta paket.** Livsmedel beskattas normalt med 12 procent men
 tillfälligt med 6 procent från den 1 april 2026 till den 31 december 2027
-(Prop. 2025/26:55) — en tidsbegränsad regeländring med ett `valid_from` och
-`valid_to` som denna körning inte har verifierat tillräckligt noga för att
-kodifiera; en granskare bör lägga till `SE-S-12-LIVSMEDEL` (giltig till och
+(Prop. 2025/26:55) — en tidsbegränsad regeländring vars `valid_from` och
+`valid_to` ännu inte är kodifierade; en granskare bör lägga till `SE-S-12-LIVSMEDEL` (giltig till och
 med 2026-03-31) och `SE-S-06-LIVSMEDEL` (giltig från och med 2026-04-01) efter
 att ha läst propositionen och dess ikraftträdandebestämmelser.
 
@@ -108,10 +106,9 @@ och 37–38 (trepartshandel), 40 (övriga tjänster utanför Sverige) samt 61 oc
 62 (import till 12 och 6 procent) är deklarerade för att blanketten ska vara
 komplett men bär ingen skattekod i detta paket — se avsnittet om luckor nedan.
 
-**Ingen `deadline` är deklarerad**, och det är ett medvetet val, inte en
-glömska: se avsnittet "From Sweden" i
-[`docs/international.md`](../../docs/international.md) för varför formatets
-tre regler för `deadline` inte kan uttrycka den svenska förfallodagen.
+**Ingen `deadline` är deklarerad**, och det är ett medvetet val: formatets
+tre regler för `deadline` kan inte uttrycka den svenska förfallodagen (se
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet)).
 
 **Ingen `period_default` är deklarerad** av samma skäl som `deadline`: vilken
 period ett företag redovisar på beror på dess egen omsättning och val, inte

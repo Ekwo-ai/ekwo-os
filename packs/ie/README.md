@@ -18,12 +18,10 @@ about whether it is right.
 
 Every rate, box, mention and statement carries its own `legal_reference`, and
 beside it the key of the text that article is in. The register in `pack.json`
-holds thirty-six texts, and every one of them was opened on 21 September 2026 —
-the statutes on the electronic Irish Statute Book and on the Law Reform
-Commission's Revised Acts (the Value-Added Tax Consolidation Act 2010 there is
-"updated to 1 January 2026" and "up to date with all changes known to be in
-force" as of 17 September 2026), the guidance on revenue.ie. The ones the rest
-of this file leans on:
+holds thirty-six texts — the statutes on the electronic Irish Statute Book and
+on the Law Reform Commission's Revised Acts (the Value-Added Tax Consolidation
+Act 2010 as revised to 1 January 2026), the guidance on revenue.ie. The ones
+the rest of this file leans on:
 
 | What | Text | Where |
 |---|---|---|
@@ -37,11 +35,6 @@ of this file leans on:
 | The accounting standards behind them | FRS 102 (section 1A for small entities) and FRS 105, Financial Reporting Council | `frc.org.uk` |
 | Payment terms and late payment | European Communities (Late Payment in Commercial Transactions) Regulations 2012 (S.I. No. 580 of 2012) | `irishstatutebook.ie/eli/2012/si/580` |
 | Electronic invoicing | European Union (Electronic Invoicing in Public Procurement) Regulations 2019; Revenue's VAT Modernisation timeline | `irishstatutebook.ie`, `revenue.ie` |
-
-The Companies Registration Office (`cro.ie`) is not in the register: its site
-answers every request that has no browser behind it with a Cloudflare
-challenge, and a link nobody could open is not written as if somebody had. The
-Act it applies is there instead.
 
 ## The chart of accounts
 
@@ -57,8 +50,7 @@ administration, `8` finance and tax — and each block reaches one item of
 Schedule 3A Format 1. 209 accounts, every one of them postable.
 
 Schedule 3A is not the British Schedule 1, although both come from Directive
-2013/34/EU, and the differences are in the statements rather than in a
-footnote:
+2013/34/EU:
 
 - **Called-up share capital not paid is a debtor** (item B.II.5), not item A
   at the head of the balance sheet.
@@ -102,11 +94,10 @@ codes with `valid_to`, never an edit:
 | Livestock 4.8 % | `IE-S-048`, `IE-P-048` | since 1 November 2010 |
 | Flat-rate addition 4.5 % | `IE-P-FRA-45` | since 1 January 2026 (Finance Act 2025 s. 73) |
 
-The three 9 % reliefs are codes of their own although the rate is the same as
-`IE-S-09`, so that a sale says which relief it was taxed under and the code
-closes when the relief does. Rates before the 2010 Act (the 21.5 % of December
-2008 to December 2009 among them) are not carried: they were charged under the
-Value-Added Tax Act 1972, which this pack does not cite. Revenue's
+The three 9 % reliefs are codes of their own, so that a sale says which
+relief it was taxed under and the code closes when the relief does. Rates
+before the 2010 Act (the 21.5 % of December 2008 to December 2009 among them)
+were charged under the Value-Added Tax Act 1972 and are not carried; Revenue's
 historical-rates page is in the register for anyone extending it.
 
 What each of the rest is for:
@@ -142,27 +133,23 @@ accounting.
 
 **The VAT3 has no box for the value of a domestic sale or purchase.** That
 figure goes on the annual Return of Trading Details, broken down by rate, so
-the base postings of the domestic taxes name no box at all. The RTD is a
-second declaration with its own period — the company's accounting year — and a
-pack carries one form, so it is not here; see below.
+the base postings of the domestic taxes name no box. The RTD is a second
+declaration with its own period and is out of scope.
 
-**The cadence the Act gives everybody is the one proposed.** A taxable period
-is two months beginning on 1 January, 1 March, 1 May… (s. 2), which is the
-format's `bimonth`, and the form proposes it. Beside it the form declares
-`month` and `year` — the monthly return Revenue authorises on request and the
-annual accounting period of s. 77. The golden scenario files on the two-month
-periods of the Act.
+**The cadence proposed is the Act's.** A taxable period is two months
+beginning on 1 January, 1 March, 1 May… (s. 2), the format's `bimonth`. The
+form also declares `month` and `year` — the monthly return Revenue authorises
+on request and the annual accounting period of s. 77. The golden scenario
+files on two-month periods.
 
 **The deadline** is the 19th of the month after the period (s. 76(1): "within
 9 days immediately after the 10th day"). Revenue grants four more days, to the
-23rd, to a return filed and paid through ROS; the pack does not add them yet,
-because `plus_days` on a day-of-month rule is not exercised by the repository's
-filing-calendar test, and a deadline four days early is never a late return.
+23rd, to a return filed and paid through ROS; the pack does not add them,
+and a deadline four days early is never a late return.
 
-**The financial year** is proposed as the calendar year. That is a convenience
-and not the law: Companies Act 2014, s. 288 lets the directors fix the year end,
-and the first financial year may run up to eighteen months from incorporation.
-An operator names the first day of the year where it is anything else.
+**The financial year** is proposed as the calendar year, a convenience:
+Companies Act 2014, s. 288 lets the directors fix the year end, and the first
+financial year may run up to eighteen months from incorporation.
 
 ## Invoices
 

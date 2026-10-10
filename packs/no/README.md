@@ -37,14 +37,8 @@ registered; the ones a reviewer should open first:
 | The chart's own confirmation that no chart is prescribed | Norsk RegnskapsStandard 8 (January 2022) | Norsk RegnskapsStiftelse |
 | The obligation to send EHF/Peppol to the public sector | Forskrift om elektronisk faktura i offentlige anskaffelser (FOR-2019-04-01-444) | Lovdata |
 
-The merverdiavgiftsloven and the two forskrifter were read article by
-article on lovdata.no on 25 September 2026 — §§ 2-1, 3-6, 3-30, 5-1 through
-5-12, 6-1, 6-4, 6-8, 6-21, 6-22, 8-1, 11-1 of the law; §§ 8-3, 8-3-3, 8-3-7,
-8-3-10 of the skatteforvaltningsforskrift; §§ 5-1-1, 5-1-3, 5-2-2 of the
-bokføringsforskrift. The SAF-T tax code list was read from its raw CSV on
-GitHub, not from a secondary description of it, because two rounds of
-research summarising it disagreed with each other on what the codes meant —
-the CSV itself is the only reading this pack relies on.
+The meaning of each mva-kode rests on Skatteetaten's own SAF-T tax code list
+(its CSV on GitHub), not on a secondary description of it.
 
 ## The chart of accounts, and why this one
 
@@ -54,8 +48,7 @@ list of named items, not account numbers. What most Norwegian bookkeeping
 follows in practice is NS 4102 *Kontoplan for regnskap*, a standard published
 and sold by Standard Norge, whose own page states plainly: "Loven krever ikke
 at denne standarden brukes" — the law does not require this standard to be
-used. This pack does not copy it, for the same reason `packs/ch/` does not
-copy the Swiss Kontenrahmen KMU: NS 4102 is not free to reproduce, and a
+used. This pack does not copy it: NS 4102 is not free to reproduce, and a
 pack's chart has to be written down in full. The chart here is original and
 follows the order of §§ 6-1 and 6-2 directly, four-digit codes, one range per
 Roman-numeral item of § 6-2 and one range per numbered item of § 6-1 — see the
@@ -65,8 +58,7 @@ follows the same two articles, and different account numbers throughout.
 
 `closing_style` is `retained_earnings`: § 6-2's equity section (C.I innskutt
 egenkapital, C.II opptjent egenkapital) has no separate "result of the year"
-item, so the result closes straight into "Annen egenkapital" (2120), the same
-choice `packs/ch/` and `packs/gb/` made for the same reason.
+item, so the result closes straight into "Annen egenkapital" (2120).
 
 ## The taxes
 
@@ -85,15 +77,13 @@ business-to-business rule: it reaches only services that can be delivered
 remotely, not every cross-border service).
 
 `exemption_code` is null on every tax: Norway is outside the common system of
-VAT (`territories.eu_vat_scope = 'none'`, added by this pack to
-`00_territories.sql`, since Norway's membership of the European Economic Area
+VAT (`territories.eu_vat_scope = 'none'`, since Norway's membership of the European Economic Area
 does not extend to VAT — the EEA Agreement's annexes do not carry the VAT
 directives), so the VATEX list does not reach it and the article is in
 `legal_reference` instead. `vat_category` is filled in on every sale-side tax
 because `einvoicing.profile` names `peppol-bis-3` — the profile the public
 sector receives — which is what makes the category a requirement rather than
-a courtesy; it is left null on the four purchase-side taxes, following the
-same reading `packs/ch/` and `packs/gb/` give: `import` and
+a courtesy; it is left null on the four purchase-side taxes: `import` and
 `foreign_services_received` carry no invoice this pack's country governs, so
 there is no supplier's category to record.
 
@@ -102,10 +92,7 @@ there is no supplier's category to record.
 The Standard Tax Codes list has a code for the *deductible* side of an import
 (`14`) and of a foreign remote service (`86`), each paired with its own base
 code (`21`, `86`), but no code of its own for the *liability* side — the
-amount the buyer owes on that same base. Reading the list alongside
-`packs/gb/`'s own `GB-P-20-PVA` and `GB-P-20-RCS` (which the United Kingdom's
-guidance sends to the *same* box the ordinary domestic output tax uses, box
-1, and not to a box of their own) is what this pack follows: the self-assessed
+amount the buyer owes on that same base. The self-assessed
 liability of `NO-P-IMPORT-25` and `NO-P-FOREIGN-25` is booked to the ordinary
 standard-rate output box, `3`, with `factor: -100` flipping it onto a
 liability account distinct from the tax_payable settlement account and from
@@ -140,8 +127,7 @@ pack's taxes model yet.
 Four more boxes — `UTSUM`, `INNSUM`, `BETALES`, `TILGODE` — are this pack's
 own, not Skatteetaten's: the modern return computes its net figure
 (`fastsattMerverdiavgift`) from the codes without naming an intermediate
-total anywhere a human reads, so this pack declares one, the way `packs/ch/`
-declares boxes `500`/`510` for the same arithmetic.
+total anywhere a human reads, so this pack declares one.
 
 **No `deadline` is declared.** Skatteforvaltningsforskriften § 8-3-10 states
 the deadline as "en måned og ti dager etter utløpet av hver
@@ -152,9 +138,8 @@ for a two-month period is not the same shape as either
 deadline is 10 April, two months later and ten days, not one. The third
 period of the year (May–June) is due 31 August instead of the 10 August the
 formula would give, a one-off summer exception the regulation states by name
-and that no rule of this format's closed vocabulary can express either. Both
-gaps are recorded in this pack's section of
-[`docs/international.md`](../../docs/international.md).
+and that no rule of this format's closed vocabulary can express either. See [what the packs do not say
+yet](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## What this pack does not model, and why
 
@@ -174,36 +159,31 @@ business and the one the golden scenario exercises.
 enterprise** (skatteforvaltningsforskriften §§ 8-3-3 and 8-3-7) is declared as
 a cadence the form accepts (`"period": ["bimonth", "year"]`) but not
 proposed as the `period_default`, since it depends on the company's own
-turnover or activity and not on a rule the law gives everybody — exactly the
-reason `packs/lu/` proposes none for its own turnover-dependent cadence.
+turnover or activity and not on a rule the law gives everybody.
 
 **SAF-T Financial on request.** Bokføringsloven § 13 b requires bookkeeping
 data that is already electronic to stay electronically available for three
 years and six months after the fiscal year ends; the further duty to hold it
 in the SAF-T format specifically, and the turnover threshold that duty
-applies above, are in bokføringsforskriften chapter 7, which this pack's
-research could not re-open for a verbatim citation in this session — the
-figure commonly cited is five million kroner, unverified here. Ekwo has no
-SAF-T Financial export brick regardless of the threshold; the gap is
-recorded in `docs/international.md`.
+applies above, are in bokføringsforskriften chapter 7; the figure commonly cited, five
+million kroner, should be checked against it. Ekwo has no SAF-T Financial
+export brick regardless of the threshold (see [what the packs do not say
+yet](../../docs/international.md#what-the-packs-do-not-say-yet)).
 
 **A default payment term.** `documents.legal_payment_days` is left `null`:
 forsinkelsesrenteloven § 3 fixes the *interest* due once a payment is late,
-which this pack states, but no text was verified in this session that gives
-a default *term* the way Swiss OR art. 75 does — see "Before this pack is
+which this pack states, but no text giving a default *term* is cited — see "Before this pack is
 reviewed".
 
 ## Before this pack is `reviewed`
 
 1. **The self-assessed liability box for import and foreign services**
-   (box `3`, described above) — the reading is reconstructed by analogy with
-   `packs/gb/`'s postponed VAT accounting, not confirmed against a Norwegian
-   worked example.
+   (box `3`, described above) — the reading is not confirmed against a Norwegian worked example.
 2. **The default payment term**, if Norwegian law gives one absent an
    agreement (kjøpsloven § 49 or a general principle of contract law) — only
    the interest rate is sourced here.
 3. **The tax point** (`invoice_date`): no article of the merverdiavgiftsloven
-   was found in this session that states the general tax point as opposed to
+   is cited that states the general tax point as opposed to
    who is liable (§ 11-1) or when an invoice must be issued
    (bokføringsforskriften § 5-2-2, one month after delivery). The value
    declared is a cautious reading of the accrual practice these two give

@@ -4,10 +4,9 @@ Everything Germany adds to Ekwo, as data: a chart of accounts, the journals,
 the VAT rates and where each one posts, the Kennzahlen of the
 Umsatzsteuer-Voranmeldung, the balance sheet of § 266 HGB and the income
 statement of § 275 HGB, and the sentences the law puts on an invoice. The
-format is [`docs/packs.md`](../../docs/packs.md); this file says where the
-content came from and which decisions it rests on, so that a German accountant
-or Steuerberater reading the pack can disagree with a specific sentence rather
-than with the whole of it.
+format is [`docs/packs.md`](../../docs/packs.md); this file gives the sources
+and the decisions, so that a German accountant or Steuerberater can disagree
+with a specific sentence.
 
 **Status: `community`.** Nobody has reviewed it against the law they apply. The
 figures are replayed against a year of books by `tests/golden.test.ts`, which
@@ -17,7 +16,7 @@ proves the pack is coherent and proves nothing about whether it is right.
 
 Every rate, box, mention and statement line carries its own `legal_reference`
 and names the entry of `certification.sources` its article is in. The register
-holds twenty texts, every one opened on the day recorded beside it:
+holds twenty texts, each with its consultation date:
 
 | What | Text | Publisher |
 |---|---|---|
@@ -35,22 +34,20 @@ holds twenty texts, every one opened on the day recorded beside it:
 | Corporate income tax: the rate, what is not deductible, the limit on losses | Körperschaftsteuergesetz (KStG) §§ 7, 8, 10, 23; Einkommensteuergesetz (EStG) §§ 4, 7, 10d, 37, 52 | gesetze-im-internet.de |
 | Useful lives of the usual fixed assets | AfA-Tabelle für die allgemein verwendbaren Anlagegüter ("AV"), BMF-Schreiben of 15 December 2000 | bundesfinanzministerium.de |
 
-The form was read from the BMF's own PDF: the Kennzahlen, the line numbers, the
-three unnumbered sums and the instructions quoted in the box references are
-that edition's.
+The Kennzahlen, the line numbers, the three unnumbered sums and the
+instructions quoted in the box references are those of the BMF's PDF edition
+of the form.
 
 ## The chart of accounts, and why this one
 
 **Germany prescribes no chart of accounts.** § 238 HGB obliges a merchant to
 keep books and says nothing about their accounts. What most German bookkeeping
 runs on is SKR 03 or SKR 04, the standard charts of **DATEV eG**. They are
-DATEV's documents, published under DATEV's copyright and no open licence, and
-whether a chart of accounts is protectable at all is a question this repository
-is not the place to settle. So this pack does not copy them — neither their
-numbers nor their labels — and nobody should read it as an SKR.
+published under DATEV's copyright and no open licence, so this pack copies
+neither their numbers nor their labels, and nobody should read it as an SKR.
 
-What it does instead is follow the law's own structure. The chart is written
-for this pack, four digits, flat, and every digit means something in the HGB:
+Instead the chart follows the law's own structure: four digits, flat, and
+every digit means something in the HGB:
 
 | First digit | Is |
 |---|---|
@@ -64,14 +61,14 @@ for this pack, four digits, flat, and every digit means something in the HGB:
 | `8` | Items 1 to 8 of § 275 Abs. 2 — the second digit is the item, the third the letter (`8520` is 5 b) |
 | `9` | Items 9 to 16 of § 275 Abs. 2 — the second digit is the item less eight |
 
-That is why every account reaches exactly one statement line by the head of its
-code, with four exceptions that are split by side: the bank accounts, which are
+So every account reaches exactly one statement line by the head of its code,
+with four exceptions that are split by side: the bank accounts, which are
 an asset in debit and a liability to the bank in credit; the VAT settlement
 account `6820`; the clearing account `2249`; and the shareholder current
 account `6860`.
 
-Depreciation is booked directly on the asset, which is German practice under
-the HGB, so there are no accumulated-depreciation accounts.
+Depreciation is booked directly on the asset (German practice under the
+HGB): there are no accumulated-depreciation accounts.
 
 ## The taxes
 
@@ -122,86 +119,69 @@ A reviewer should look at these first:
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
-The section carries what was read on gesetze-im-internet.de on 1 October 2026
-and nothing else. It estimates the **Körperschaftsteuer alone**. It starts
-from the Jahresüberschuss (item 17 of § 275 Abs. 2 HGB), because the income
-statement of the pack prints no result before tax, and adds back the accounts
-`9610` to `9620`. Dates are the earliest year the pack carries, not the day a
-rule came into force. A rule that is missing makes an estimate too high or too
-low by something a reader can name; these are the ones to name.
+The section estimates the **Körperschaftsteuer alone**, from the
+Jahresüberschuss (item 17 of § 275 Abs. 2 HGB, since the income statement
+prints no result before tax), adding back the accounts `9610` to `9620`. Dates
+are the earliest year the pack carries, not the day a rule came into force.
+Each rule missing below makes an estimate too high or too low.
 
 | Not carried | Why |
 |---|---|
-| The Solidaritätszuschlag (5,5 % of the tax) and the Gewerbesteuer (the Hebesatz of the municipality) | Both are taxes of their own. The first is a tax on the tax and the second depends on a local rate the company would have to declare; the section has a shape for neither. Their accounts are added back, and no figure for them is computed. |
+| The Solidaritätszuschlag (5,5 % of the tax) and the Gewerbesteuer (the Hebesatz of the municipality) | Taxes of their own (a tax on the tax; a local rate) the section has no shape for. Their accounts are added back; no figure is computed. |
 | Rounding of the tax to the euro (KStG § 31 Abs. 1 Satz 2) | The estimate is kept at the cent. |
-| The instalments (KStG § 31, EStG § 37: 10 March, 10 June, 10 September and 10 December) | The dates are read; the share of each is not. The law has the Finanzamt set every instalment by notice from the last assessment and says nothing of a quarter, so `prepayments` is empty. The minimum of 400 euro a year and 100 euro an instalment (§ 37 Abs. 5) is not expressible either. |
-| Deferred taxes, account `9630` | Booked in item 14 with the other taxes on income, but no article was read that removes them from the base; a company names the account in `tax.adjustments` under `income-taxes`. |
-| Dividends and gains on shares, 95 % exempt (KStG § 8b) | Needs the holding thresholds of § 8b Abs. 4 and the conditions of Abs. 1 to 5, not read in full. |
-| A change of the limit on losses after 2027 | None was found: the consolidated text of § 10d Abs. 2 EStG carries 70 % with no end date, so the section carries one entry from 2024. The years before (60 %, and other thresholds) are not carried. |
-| Loss forfeiture on a change of shareholders (KStG § 8c), the carry-back (EStG § 10d Abs. 1), the interest barrier (EStG § 4h), the group taxation of an Organschaft (KStG §§ 14 ff.) | Not read, and nothing here computes them. |
-| Business entertainment, gifts, fines, supervisory board remuneration | Fixed rules, read, but the chart holds restaurant bills with staff entertainment on `8841` and every gift on `8842`, and has no account for fines, so none of them names an account: the company states the amount. |
-| Private use of vehicles, non-deductible interest, hidden profit distributions, related-party rules | No flat rule could be cited. |
-| Tax credits | `credits` is empty: none was cited. |
+| The instalments (KStG § 31, EStG § 37: 10 March, 10 June, 10 September and 10 December) | The Finanzamt sets every instalment by notice from the last assessment, so `prepayments` is empty. The minimum of 400 euro a year and 100 euro an instalment (§ 37 Abs. 5) is not expressible either. |
+| Deferred taxes, account `9630` | Booked in item 14 with the other taxes on income; no article is cited that removes them from the base, so a company names the account in `tax.adjustments` under `income-taxes`. |
+| Dividends and gains on shares, 95 % exempt (KStG § 8b) | Needs the holding thresholds of § 8b Abs. 4 and the conditions of Abs. 1 to 5. |
+| A change of the limit on losses after 2027 | The consolidated text of § 10d Abs. 2 EStG carries 70 % with no end date, so the section carries one entry from 2024. The years before (60 %, and other thresholds) are not carried. |
+| Loss forfeiture on a change of shareholders (KStG § 8c), the carry-back (EStG § 10d Abs. 1), the interest barrier (EStG § 4h), the group taxation of an Organschaft (KStG §§ 14 ff.) | Nothing here computes them. |
+| Business entertainment, gifts, fines, supervisory board remuneration | Fixed rules, but the chart holds restaurant bills with staff entertainment on `8841` and every gift on `8842`, and has no account for fines, so none of them names an account: the company states the amount. |
+| Private use of vehicles, non-deductible interest, hidden profit distributions, related-party rules | No flat rule is cited. |
+| Tax credits | `credits` is empty: none is cited. |
 
 ## Fixed assets: what `fixed_assets.json` leaves out
 
-The section carries what was read on gesetze-im-internet.de and on the BMF's
-own copy of the AfA-Tabelle AV on 1 October 2026, and nothing else.
-
-**What it says.** The first-year charge is prorated in **months**, for the
-straight line and the declining balance alike: § 7 Abs. 1 Satz 4 EStG takes
-away one twelfth for every full month before the month of acquisition, so the
-month of acquisition counts whole, and § 7 Abs. 2 Satz 3 applies the same rule
-to the declining balance. The switch to the straight line is allowed by § 7
-Abs. 3 (the module makes it as soon as the straight line is larger, which the
-law permits and does not oblige). Disposal is `net_result`: § 275 Abs. 2 HGB
-has no item for the book value or the proceeds of an asset that leaves, so the
-result is one figure on `8410` (gain, item 4) or `8880` (loss, item 8). The
+**What it says.** The first-year charge is prorated in **months**, straight
+line and declining balance alike: § 7 Abs. 1 Satz 4 EStG takes away one
+twelfth for every full month before the month of acquisition, which counts
+whole, and § 7 Abs. 2 Satz 3 applies the same rule to the declining balance.
+§ 7 Abs. 3 allows the switch to the straight line (made as soon as it is
+larger, which the law permits and does not oblige). Disposal is `net_result`:
+§ 275 Abs. 2 HGB has no item for the book value or the proceeds, so the result
+is one figure on `8410` (gain, item 4) or `8880` (loss, item 8). The
 categories are goodwill (15 years, § 7 Abs. 1 Satz 3 EStG), business buildings
 (3 % a year, § 7 Abs. 4 Satz 1 Nr. 1), passenger cars (6 years), lorries (9),
 office furniture (13) and computers (3), the last four from the AfA-Tabelle AV.
-Every category is a proposal: the accountant sets the duration and the method
-of each asset, and HGB § 253 Abs. 3 bases the commercial life on the expected
-use, not on a table.
+Every category is a proposal: the accountant sets each asset's duration and
+method, and HGB § 253 Abs. 3 bases the commercial life on expected use.
 
-**Declining balance.** § 7 Abs. 2 EStG allows it, for movable fixed assets
+**Declining balance.** § 7 Abs. 2 EStG allows it for movable fixed assets
 acquired after 30 June 2025 and before 1 January 2028 only, at a fixed
-percentage of the book value that is at most three times the straight-line
-rate and at most 30 %. The module caps an annuity as a share of the
-*acquisition value*, which is not the same thing after the first year, so
-`declining_cap_percent` is empty and the cap is written into each declining
-category's coefficient (1.8 for a six-year car, 3 for office furniture: 30 %
-and 23.08 %). The acquisition window is stated in the category's reference and
-not enforced: nothing in the module refuses a declining balance on a machine
-bought in 2024, and the accountant has to know.
+percentage of the book value of at most three times the straight-line rate
+and at most 30 %. The module caps an annuity as a share of the *acquisition
+value*, so `declining_cap_percent` is empty and the cap is written into each
+declining category's coefficient (1.8 for a six-year car, 3 for office
+furniture: 30 % and 23.08 %). The acquisition window is stated in the
+category's reference and not enforced: the accountant has to know.
 
-What is **not** in the file, because it was not read on an official page or
-because the module has no word for it:
+What is **not** in the file:
 
-- **A tax depreciation distinct from the commercial one.** The module carries
-  one schedule per asset; the Steuerbilanz and the Handelsbilanz of a German
-  company often differ (HGB duration against AfA-Tabelle, § 6b, special
-  depreciation).
-- **Computer hardware and software at one year.** A BMF-Schreiben lets a
-  company apply a useful life of one year to computer hardware and to software
-  for data entry and processing. The BMF site did not answer an automated
-  request, so the text was not read and the computer category keeps the three
-  years of the table. No category is declared for software: the table has no
-  line for it.
-- **Machines and technical plant** and the other branch tables of the BMF:
-  the AV table has no generic line for them and the branch tables were not
-  read.
+- **A tax depreciation distinct from the commercial one.** One schedule per
+  asset; the Steuerbilanz and the Handelsbilanz often differ (HGB duration
+  against AfA-Tabelle, § 6b, special depreciation).
+- **Computer hardware and software at one year** (a BMF-Schreiben not among
+  the cited texts): the computer category keeps the table's three years, and
+  no category is declared for software, which the table does not list.
+- **Machines and technical plant** and the BMF's branch tables: the AV table
+  has no generic line for them.
 - **Geringwertige Wirtschaftsgüter and the Sammelposten** (§ 6 Abs. 2 and
-  2a EStG): a threshold under which an asset is expensed, or pooled and
-  written off over five years, is not a notion of the module. The chart has
-  account `1234` and `8712`, and a company books them by hand.
+  2a EStG): not a notion of the module; the chart has accounts `1234` and
+  `8712`, booked by hand.
 - **Buildings other than business ones** (dwellings, § 7 Abs. 4 Nr. 2), the
-  other building rates of § 7 Abs. 5 and the special depreciation of the Act (not read), the 75 % depreciation
-  of electric vehicles (§ 7 Abs. 2a, a fixed percentage table), and the
-  unscheduled depreciation of § 253 Abs. 3 Satz 5 HGB and § 7 Abs. 1 Satz 7
-  EStG: the module has no unscheduled, accelerated, special or percentage-table
-  depreciation.
+  other building rates of § 7 Abs. 5 and the special depreciation of the Act,
+  the 75 % depreciation of electric vehicles (§ 7 Abs. 2a, a fixed percentage
+  table), and the unscheduled depreciation of § 253 Abs. 3 Satz 5 HGB and § 7
+  Abs. 1 Satz 7 EStG: the module has no unscheduled, accelerated, special or
+  percentage-table depreciation.
 - **Components** of a building or a machine, depreciated over their own lives.
-- **Accumulated depreciation accounts.** The chart is net: it has no account
-  for accumulated depreciation, which `create_fixed_asset` asks for. A company
-  adds one to its own chart.
+- **Accumulated depreciation accounts**, which `create_fixed_asset` asks for:
+  the chart is net, and a company adds one to its own chart.

@@ -16,5 +16,5 @@
       "14": "met:am2|bas:m44|ntr:m4"
     }
   },
-  "facts_note": "The two sides of the balance sheet share every dimension member but part:, so met:am1|bas:m25 alone was both totals at once and met:am1|bas:m24 both regularisation lines. 22/27 is the tangible nature of the fixed-assets base, 24 a base of its own and 26 the remainder of that base: three rubrics nobody can tell apart from the reporting code. The result carried forward is one fact, shown on the balance sheet and again at the foot of the appropriation section, so both schemes name the same key. Sources: Ekwo-ai/xbrl-cbso, docs/sources.md."
+  "facts_note": "The two sides of the balance sheet share every dimension member but part:, so met:am1|bas:m25 alone was both totals at once and met:am1|bas:m24 both regularisation lines. 22/27 is the tangible nature of the fixed-assets base, 24 a base of its own and 26 the remainder of that base: three rubrics nobody can tell apart from the reporting code. The result carried forward is one fact, shown on the balance sheet and again at the foot of the appropriation section, so both schemes name the same key. Sources: packages/formats/xbrl-cbso, docs/sources.md."
 }

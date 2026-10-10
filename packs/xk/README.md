@@ -18,8 +18,7 @@ konsistencën e brendshme të paketës, jo saktësinë e saj ligjore.
 në të cilën botohet çdo tekst mbi të cilin mbështetet — Ligji Nr. 05/L-037
 për TVSH-në dhe Ligji Nr. 06/L-032 për Kontabilitet botohen zyrtarisht në
 shqip dhe serbisht (dhe, për këto dy ligje të veçanta, edhe në një version
-anglisht të Gazetës Zyrtare, që është përdorur këtu për kërkim paralelisht me
-tekstin shqip). `i18n/en.json` është **përkthimi i punës i paketës** për
+anglisht të Gazetës Zyrtare). `i18n/en.json` është **përkthimi i punës i paketës** për
 lexuesin që nuk njeh shqip, jo version zyrtar anglisht i ndonjë prej këtyre
 teksteve — asnjëri prej tyre nuk ka një version të tillë përveç vetë Gazetës
 Zyrtare; shih [`i18n/README.md`](i18n/README.md).
@@ -28,8 +27,7 @@ Zyrtare; shih [`i18n/README.md`](i18n/README.md).
 
 Çdo tatim, kuti, rregull dokumenti dhe rresht tabele mban `legal_reference`-n
 dhe çelësin e vet të burimit prej nga është marrë ajo dispozitë.
-`pack.json.certification.sources` mban gjashtë tekste, të gjitha të
-verifikuara më 26.09.2026:
+`pack.json.certification.sources` mban gjashtë tekste:
 
 | Çka | Teksti | Ku |
 |---|---|---|
@@ -49,16 +47,13 @@ Raportim Financiar dhe Auditim, neni 7 dhe neni 8, përcakton se cilin standard
 raportimi (IFRS-të e plota, ose IFRS for SMEs) duhet ta zbatojë një subjekt
 sipas madhësisë (neni 5), dhe i jep KKRF-së kompetencën për t'i miratuar këto
 standarde dhe për të rregulluar raportimin e mikro-ndërmarrjeve (neni 9) — por
-asnjëri prej këtyre teksteve nuk përcakton kode zyrtare llogarish. Kërkimi për
-këtë paketë nuk gjeti ndonjë plan kontabël të publikuar nga KKRF me kode
-specifike. Ky paket ofron prandaj **planin e vet**, të organizuar sipas
+asnjëri prej këtyre teksteve nuk përcakton kode zyrtare llogarish. Ky paket ofron prandaj **planin e vet**, të organizuar sipas
 terminologjisë ndërkombëtare të IFRS (klasa 0 aktive afatgjata, 1 aktive
 afatshkurtra, 2 detyrime, 3 kapital, 4 të hyra, 5 kosto direkte, 6–7
-shpenzime, 9 llogari jashtë bilancit), jo një plan të miratuar me ligj — i
-njëjti vendim si te paketa e Gjeorgjisë (`packs/ge`), për të njëjtën arsye.
+shpenzime, 9 llogari jashtë bilancit), jo një plan të miratuar me ligj.
 
 **Llogaritë e TVSH-së ndahen mes llogarive të postimit dhe llogarisë së
-shlyerjes**, sipas mësimit të nxjerrë nga paketa e Sllovakisë: `1458`
+shlyerjes**: `1458`
 (tepricë e arkëtueshme) dhe `2108` (detyrim për pagesë) janë llogaritë e
 `defaults.roles.tax_receivable`/`tax_payable`, të vetmet lettrueshme
 (`reconcilable`) të TVSH-së, të ndara nga llogaritë ku vetë normat postohen
@@ -91,10 +86,9 @@ dhe për personat me aftësi të kufizuara).
 **Jashtë sistemit të përbashkët të TVSH-së të Bashkimit Evropian.** Kosova
 nuk është shtet anëtar i Bashkimit Evropian; sipas Direktivës 2006/112/KE,
 neni 5, paragrafi 2, sistemi i përbashkët i TVSH-së nuk shtrihet jashtë
-territorit të Komunitetit (shih rreshtin e ri në
-`supabase/seed/00_territories.sql`). `exemption_code` mbetet prandaj bosh te
-çdo tatim i kësaj paketa; neni i ligjit nën të cilin bie lirimi është
-shkruar te `legal_reference`, ashtu siç kanë bërë paketat `rs`, `ba` dhe `tr`.
+territorit të Komunitetit. `exemption_code` mbetet prandaj bosh te çdo tatim
+i kësaj paketa; neni i ligjit nën të cilin bie lirimi është shkruar te
+`legal_reference`.
 
 **E drejta e zbritjes ndahet qartë mes lirimeve.** Neni 36, paragrafi 3,
 nën-paragrafi 3.2 e ruan të drejtën e zbritjes për transaksionet e liruara
@@ -120,8 +114,8 @@ Ndryshe nga dispozita përkatëse serbe (neni 10 i ligjit serb, e vendosur
 drejtpërdrejt në ligj) dhe ajo boshnjake, dispozita kosovare është **e
 kushtëzuar**: neni 52, paragrafi 1, nën-paragrafi 1.4 thotë „Ministri i
 Financave **mund** të nxjerr akt nënligjor” që ta bëjë pranuesin person të
-obliguar për punën ndërtimore, mbeturinat, dhe disa raste të tjera. Ky
-kërkim nuk gjeti dhe nuk verifikoi një akt të tillë nënligjor në fuqi; sipas
+obliguar për punën ndërtimore, mbeturinat, dhe disa raste të tjera. Paketa
+nuk mbështetet në ndonjë akt të tillë nënligjor në fuqi; sipas
 rregullit „asnjëherë mos shpik një rregull tatimor”, kjo paketë nuk mban
 asnjë tatim nën këtë trajtim. Nëse një akt i tillë ekziston, kjo është pika
 e parë për t'u verifikuar nga një kontabilist vendor — shih „Çka nuk mbulon
@@ -149,12 +143,12 @@ Supplies”, rreshti 11 „Exports … 0% Rated Supplies”, rreshti 12 „Taxab
 Supplies at Normal Rate” me një normë të vetme prej 15 %) nuk përputhet më
 me ligjin në fuqi. Kjo paketë e ndërton skemën e kutive nga vetë neni 54 dhe
 nga struktura e librit të shitjeve/blerjeve që ATK-ja ende e referon
-(kolonat për vlerë të liruar, të eksportuar dhe të tatueshme), por **nuk e
-ka verifikuar numërimin ekzakt të fushave siç shfaqen sot në EDI** — kjo
-është pika e dytë për verifikim nga një kontabilist vendor.
+(kolonat për vlerë të liruar, të eksportuar dhe të tatueshme). **Numërimi
+ekzakt i fushave siç shfaqen sot në EDI** është pika e dytë për verifikim nga
+një kontabilist vendor.
 
 **Nuk ekziston teprica e bartur nga periudha paraprake si kuti më vete**,
-njësoj si te paketa serbe: kutia „13” (shuma neto) llogaritet vetëm nga
+kutia „13” (shuma neto) llogaritet vetëm nga
 obligimi dhe zbritja e periudhës korrente, jo nga një gjendje kredie e
 bartur — motori i Ekwo-s nuk mban gjendje ndër-periudhash si kuti e
 deklaratës.
@@ -176,8 +170,7 @@ kur pagesa bëhet para dorëzimit, TVSH-ja bëhet e ngarkueshme në pagesë; ky
 është një **përjashtim i tretë** që fjalori `invoice_if_issued` nuk e mban
 veçmas (ai mban vetëm çiftin parim/faturë). Ky paket zgjedh
 `invoice_if_issued` si vlerën më të afërt të ligjit dhe e dokumenton
-boshllëkun këtu — të njëjtën zgjidhje ka bërë paketa e Bosnjë-Hercegovinës
-(`packs/ba`) për një strukturë analoge neni-nga-neni.
+boshllëkun këtu.
 
 **`posted_edit_policy: reversal_only`.** Neni 2, paragrafët 1.33–1.34 —
 korrigjimi i shumës pas lëshimit të faturës bëhet me notë krediti ose notë
@@ -185,7 +178,7 @@ debiti, kurrë duke fshirë faturën origjinale.
 
 ## Faturimi elektronik dhe Pajisja Elektronike Fiskale — ajo që socle-ja nuk e mban
 
-**Nuk u gjet asnjë ligj apo akt nënligjor që të detyrojë shkëmbimin e
+**Paketa nuk njeh asnjë ligj apo akt nënligjor që të detyrojë shkëmbimin e
 faturave elektronike të strukturuara mes subjekteve private në Kosovë**, as
 një platformë shtetërore vërtetimi (clearance) si SEF-i serb apo
 e-Faktura shqiptare. Neni 44, paragrafi 1 i Ligjit për TVSH lejon që fatura
@@ -200,8 +193,8 @@ arka fiskale të licencuara nga Ministria e Financave (neni 2, paragrafi
 1.17) — për regjistrimin dhe lëshimin e kuponëve fiskal të shitjeve me
 pakicë, veçanërisht ndaj konsumatorit fundor. Ky është mekanizëm tjetër (kupon
 arke, jo faturë e strukturuar e shkëmbyer ndërmjet palëve) që asnjë format i
-`packages/formats/` nuk e mban sot. Shih docs/international.md, seksioni
-«From Kosovo».
+`packages/formats/` nuk e mban sot. Shih
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Pasqyrat financiare
 
@@ -209,14 +202,14 @@ arke, jo faturë e strukturuar e shkëmbyer ndërmjet palëve) që asnjë format
 Ardhurave Gjithëpërfshirëse sipas zërave minimalë të seksioneve 4 dhe 5 të
 IFRS for SMEs (Ligji Nr. 06/L-032, neni 8, për organizatat e vogla dhe të
 mesme; neni 7, IFRS-të e plota, për organizatat e mëdha). Rregullat janë
-diapazone të kodeve të llogarive të vetë këtij paketi (si te `packs/ge`), jo
+diapazone të kodeve të llogarive të vetë këtij paketi, jo
 kode të një formulari zyrtar — sepse asnjë formular i tillë nuk ekziston me
 rreshta të miratuara me ligj.
 
 **Rregjimi i mikro-ndërmarrjeve (neni 5, paragrafi 2: bilanc ≤ 350.000 €,
 qarkullim ≤ 700.000 €, ≤ 10 punonjës) nuk është modeluar veçmas.** Neni 9 ia
-lë KKRF-së rregullimin e raportimit të tyre me akt nënligjor; ky kërkim nuk
-gjeti një akt të tillë të publikuar me zëra pasqyre specifikë për
+lë KKRF-së rregullimin e raportimit të tyre me akt nënligjor; paketa nuk
+njeh një akt të tillë të publikuar me zëra pasqyre specifikë për
 mikro-ndërmarrjet. Shumica e shoqërive tregtare të vogla e të mesme, që
 zbatojnë IFRS for SMEs sipas nenit 8, mbeten të mbuluara nga skema aktuale.
 
@@ -228,15 +221,14 @@ zbatojnë IFRS for SMEs sipas nenit 8, mbeten të mbuluara nga skema aktuale.
 - **Numërimi ekzakt i kutive të ekranit aktual EDI** — kutitë e kësaj
   pakete janë organizimi i vet paketit i përmbajtjes së nenit 54; shih
   „Deklarata e TVSH-së” më lart.
-- **Rregjimi i mikro-ndërmarrjeve** i KKRF-së (neni 9) — asnjë akt i
-  publikuar nuk u gjet me zëra pasqyre specifikë.
+- **Rregjimi i mikro-ndërmarrjeve** i KKRF-së (neni 9) — paketa nuk njeh
+  akt të publikuar me zëra pasqyre specifikë.
 - **Pajisja Elektronike Fiskale (PEF)** dhe kuponi fiskal i shitjeve me
   pakicë — shih „Faturimi elektronik” më lart.
 - **Aktive themelore.** `fixed_assets.json` nuk ekziston; normat e amortizimit
-  për qëllime tatimore dhe kontabël janë jashtë këtij kërkimi.
-- **Formatet bankare.** Asnjë format i deklaratave bankare kosovare nuk
-  është verifikuar nga ky kërkim; seksioni `bank` te `pack.json` nuk
-  ekziston.
+  për qëllime tatimore dhe kontabël nuk përfshihen në paketë.
+- **Formatet bankare.** Paketa nuk mban format të deklaratave bankare
+  kosovare; seksioni `bank` te `pack.json` nuk ekziston.
 - **Pragu i regjistrimit për TVSH** — vendim regjistrimi që socle-ja nuk e
   modelon (asnjë paket nuk zgjedh statusin tatimor të shoqërisë).
 
