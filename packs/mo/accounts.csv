@@ -1,0 +1,110 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,庫存現金,10
+1010,,asset_cash,false,銀行活期存款,20
+1020,,asset_cash,false,銀行儲蓄存款,30
+1030,,asset_cash,false,外幣銀行存款,40
+1040,,asset_cash,false,支付平台及信用卡結算,50
+1050,,asset_cash,false,三個月內定期存款,60
+1060,,asset_cash,false,在途現金,70
+1100,,asset_receivable,true,應收賬款,80
+1105,,asset_current,false,預期信用損失準備,90
+1110,,asset_current,false,應收關聯公司款項,100
+1120,,asset_current,false,其他應收款,110
+1130,,asset_current,false,應計收入,120
+1140,,asset_current,false,員工墊款及貸款,130
+1150,,asset_current,false,預繳稅款及印花稅,140
+1160,,asset_current,false,應收退還稅款,150
+1200,,asset_current,false,存貨 — 原材料及消耗品,160
+1210,,asset_current,false,存貨 — 在製品,170
+1220,,asset_current,false,存貨 — 製成品及商品,180
+1230,,asset_current,false,在途貨物,190
+1300,,asset_current,false,三個月以上定期存款,200
+1310,,asset_current,false,持作買賣的上市投資,210
+1320,,asset_current,false,應收關聯公司款項 — 非貿易,220
+1400,,asset_prepayments,false,預付費用,230
+1410,,asset_prepayments,false,已付租金及公用事業按金,240
+1420,,asset_prepayments,false,已付供應商按金,250
+1600,,asset_fixed,false,租賃土地及樓宇,260
+1610,,asset_fixed,false,租賃物業裝修,270
+1620,,asset_fixed,false,傢俬及固定裝置,280
+1630,,asset_fixed,false,辦公設備,290
+1640,,asset_fixed,false,電腦設備及軟件,300
+1650,,asset_fixed,false,汽車,310
+1660,,asset_fixed,false,廠房及機器,320
+1670,,asset_fixed,false,使用權資產,330
+1690,,asset_fixed,false,累計折舊 — 物業、廠房及設備,340
+1695,,asset_fixed,false,累計折舊 — 使用權資產,350
+1800,,asset_non_current,false,商譽,360
+1810,,asset_non_current,false,其他無形資產,370
+1820,,asset_non_current,false,累計攤銷 — 無形資產,380
+1900,,asset_non_current,false,附屬公司投資,390
+1910,,asset_non_current,false,聯營公司投資,400
+1920,,asset_non_current,false,其他長期投資,410
+1930,,asset_non_current,false,租金及公用事業按金 — 非流動,420
+1990,,asset_non_current,false,遞延稅項資產,430
+2000,,liability_payable,true,應付賬款,440
+2010,,liability_current,false,應付關聯公司款項,450
+2020,,liability_current,false,應計費用,460
+2030,,liability_current,false,客戶按金及預收款項,470
+2040,,liability_current,false,應付薪金及工資,480
+2050,,liability_current,false,應付社會保障供款,490
+2060,,liability_current,false,所得補充稅準備,500
+2070,,liability_current,false,其他應付稅款及政府費用,510
+2080,,liability_current,false,租賃負債 — 流動部分,520
+2090,,liability_current,false,暫記賬戶,530
+2100,,liability_current,false,銀行透支及短期借款,540
+2200,,liability_credit_card,false,應付公司信用卡,550
+2300,,liability_non_current,false,銀行借款 — 非流動,560
+2310,,liability_non_current,false,租賃負債 — 非流動,570
+2320,,liability_non_current,false,應付股東款項 — 非流動,580
+2390,,liability_non_current,false,遞延稅項負債,590
+3000,,equity,false,已發行股本,600
+3100,,equity,false,股份溢價,610
+3110,,equity,false,法定公積金,620
+3120,,equity,false,其他儲備,630
+3200,,equity_retained,false,保留溢利,640
+4000,,income,false,銷售貨品,650
+4010,,income,false,提供服務,660
+4700,,income_other,false,已實現匯兌收益,670
+4710,,income_other,false,未實現匯兌收益,680
+4720,,income_other,false,利息收入,690
+4730,,income_other,false,雜項收入,700
+4740,,income_other,false,政府資助及補貼,710
+4750,,income_other,false,出售固定資產收益,720
+5000,,expense_direct_cost,false,銷售成本,730
+5010,,expense_direct_cost,false,採購,740
+5020,,expense_direct_cost,false,進貨運費,750
+5030,,expense_direct_cost,false,直接人工,760
+6000,,expense,false,董事酬金,770
+6010,,expense,false,員工薪金及工資,780
+6020,,expense,false,社會保障供款,790
+6030,,expense,false,員工福利,800
+6100,,expense,false,租金及差餉,810
+6110,,expense,false,管理費及樓宇支出,820
+6115,,expense,false,房屋稅,830
+6120,,expense,false,水電費,840
+6200,,expense,false,商業登記及牌照費,850
+6205,,expense,false,營業稅及印花稅,860
+6210,,expense,false,核數師酬金,870
+6220,,expense,false,會計及公司秘書費,880
+6230,,expense,false,法律及專業費用,890
+6300,,expense,false,維修及保養,900
+6310,,expense,false,保險費,910
+6320,,expense,false,汽車費用,920
+6330,,expense,false,差旅費,930
+6340,,expense,false,交際費,940
+6350,,expense,false,廣告及宣傳費,950
+6360,,expense,false,印刷、文具及郵費,960
+6370,,expense,false,電訊費,970
+6380,,expense,false,銀行手續費,980
+6390,,expense,false,雜項辦公費用,990
+6400,,expense,false,預期信用損失準備支出,1000
+6410,,expense,false,銀行借款利息支出,1010
+6420,,expense,false,租賃負債利息支出,1020
+6450,,expense,false,已實現匯兌虧損,1030
+6455,,expense,false,未實現匯兌虧損,1040
+6460,,expense,false,出售固定資產虧損,1050
+6470,,expense,false,所得補充稅支出,1060
+6480,,expense,false,遞延稅項支出,1070
+6490,,expense,false,湊整差額,1080
+6800,,expense_depreciation,false,折舊及攤銷,1090

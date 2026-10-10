@@ -1,0 +1,638 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "MO-NSRF-BS",
+      "kind": "balance_sheet",
+      "framework": "NSRF",
+      "name": "資產負債表",
+      "legal_reference": "Regulamento Administrativo n.º 25/2005, article 1(4) and article 2(4), approves the Accounting Standards (Normas de Contabilidade) with, as their accounting statements, the balance sheet and the income statement (balanço, demonstração de resultados) — the two statements this file carries. The General Financial Reporting Standards (一般財務報告準則, Normas Sucintas de Relato Financeiro, NSRF) are the framework of every entity the Financial Reporting Standards (IFRS) do not reach: article 4(1) of the same regulation lists the entities that must apply the IFRS-based Financial Reporting Standards (concessionaires, insurers, institutions under the financial-system regime, offshore institutions, public limited companies and partnerships limited by shares), and article 4(2) lets an entity that is bound by special law to keep properly organised accounts choose, for each whole financial year, between the two. Regulamento Administrativo n.º 42/2020, article 25, revoked that regulation but keeps it applicable until the Professional Accountants Committee approves new Accounting Standards (article 25(2)). The Committee republished the NSRF unchanged by Aviso n.º 2/2024/CPC (adopted 18 December 2024; the Financial Reporting Standards move to the 2021 IFRS suite, optional from 1 January 2026 and mandatory from 1 January 2028, per the Committee's 2024 work report). The line structure below follows the model financial statements of the Committee's 'Guia para a Aplicação das Normas Sucintas de Relato Financeiro': non-current assets (tangible, intangible, long-term investments), current assets (inventories, trade and other receivables, prepayments, cash), equity (capital, legal reserves, other reserves, retained results) and non-current and current liabilities (bank borrowings, lease obligations, trade and other payables, amounts due to shareholders and related parties, income tax, short-term borrowings and overdrafts). One deviation: the model shows the current year's result inside retained results, whereas this pack keeps it on its own line until it is allocated. The ranges each line reads are original to this pack: Macao publishes no chart of accounts, so there is no legal code to group by. An entity under the IFRS-based Financial Reporting Standards presents more (a statement of comprehensive income, a cash-flow statement, extensive notes) than these two statements: see README.md.",
+      "lines": [
+        {
+          "code": "A-NC-FIX",
+          "parent": "A-NC",
+          "name": "固定資產",
+          "sequence": 10,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1799"
+            }
+          ]
+        },
+        {
+          "code": "A-NC-INT",
+          "parent": "A-NC",
+          "name": "無形資產",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1800",
+              "code_to": "1899"
+            }
+          ]
+        },
+        {
+          "code": "A-NC-INV",
+          "parent": "A-NC",
+          "name": "長期投資及其他非流動資產",
+          "sequence": 30,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1900",
+              "code_to": "1999"
+            }
+          ]
+        },
+        {
+          "code": "A-NC",
+          "name": "非流動資產",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "A-NC-FIX",
+            "A-NC-INT",
+            "A-NC-INV"
+          ]
+        },
+        {
+          "code": "A-C-INV",
+          "parent": "A-C",
+          "name": "存貨",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1299"
+            }
+          ]
+        },
+        {
+          "code": "A-C-REC",
+          "parent": "A-C",
+          "name": "應收賬款及其他應收款",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1199",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1399",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "A-C-PRE",
+          "parent": "A-C",
+          "name": "預付款項",
+          "sequence": 70,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1499"
+            }
+          ]
+        },
+        {
+          "code": "A-C-CASH",
+          "parent": "A-C",
+          "name": "現金及現金等價物",
+          "sequence": 80,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1099"
+            }
+          ]
+        },
+        {
+          "code": "A-C",
+          "name": "流動資產",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "A-C-INV",
+            "A-C-REC",
+            "A-C-PRE",
+            "A-C-CASH"
+          ]
+        },
+        {
+          "code": "A-TOT",
+          "name": "資產總額",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "A-NC",
+            "A-C"
+          ]
+        },
+        {
+          "code": "E-CAP",
+          "parent": "E-TOT",
+          "name": "股本",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3099"
+            }
+          ]
+        },
+        {
+          "code": "E-LEG",
+          "parent": "E-TOT",
+          "name": "法定公積金",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3110",
+              "code_to": "3119"
+            }
+          ]
+        },
+        {
+          "code": "E-OTH",
+          "parent": "E-TOT",
+          "name": "其他儲備",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3109",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "3120",
+              "code_to": "3199",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "E-RET",
+          "parent": "E-TOT",
+          "name": "保留溢利",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3299"
+            }
+          ]
+        },
+        {
+          "code": "E-RESULT",
+          "parent": "E-TOT",
+          "name": "本年度溢利或虧損（尚未分配）",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4799",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5099",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6899",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "E-TOT",
+          "name": "權益總額",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "E-CAP",
+            "E-LEG",
+            "E-OTH",
+            "E-RET",
+            "E-RESULT"
+          ]
+        },
+        {
+          "code": "L-NC-BANK",
+          "parent": "L-NC",
+          "name": "銀行借款",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2300",
+              "code_to": "2309"
+            }
+          ]
+        },
+        {
+          "code": "L-NC-LEASE",
+          "parent": "L-NC",
+          "name": "租賃負債",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2310",
+              "code_to": "2319"
+            }
+          ]
+        },
+        {
+          "code": "L-NC-OTH",
+          "parent": "L-NC",
+          "name": "其他非流動負債",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2320",
+              "code_to": "2399"
+            }
+          ]
+        },
+        {
+          "code": "L-NC",
+          "name": "非流動負債",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "L-NC-BANK",
+            "L-NC-LEASE",
+            "L-NC-OTH"
+          ]
+        },
+        {
+          "code": "L-C-PAY",
+          "parent": "L-C",
+          "name": "應付賬款及其他應付款",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2009",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2020",
+              "code_to": "2059",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "L-C-REL",
+          "parent": "L-C",
+          "name": "應付股東及關聯方款項",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2010",
+              "code_to": "2019"
+            }
+          ]
+        },
+        {
+          "code": "L-C-TAX",
+          "parent": "L-C",
+          "name": "所得稅",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2060",
+              "code_to": "2069"
+            }
+          ]
+        },
+        {
+          "code": "L-C-BORR",
+          "parent": "L-C",
+          "name": "短期借款及銀行透支",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2100",
+              "code_to": "2199"
+            }
+          ]
+        },
+        {
+          "code": "L-C-LEASE",
+          "parent": "L-C",
+          "name": "租賃負債",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2080",
+              "code_to": "2089"
+            }
+          ]
+        },
+        {
+          "code": "L-C-OTH",
+          "parent": "L-C",
+          "name": "其他流動負債",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2070",
+              "code_to": "2079",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2090",
+              "code_to": "2099",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2299",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "L-C",
+          "name": "流動負債",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "L-C-PAY",
+            "L-C-REL",
+            "L-C-TAX",
+            "L-C-BORR",
+            "L-C-LEASE",
+            "L-C-OTH"
+          ]
+        },
+        {
+          "code": "L-TOT",
+          "name": "負債總額",
+          "sequence": 280,
+          "is_total": true,
+          "plus": [
+            "L-NC",
+            "L-C"
+          ]
+        },
+        {
+          "code": "EL-TOT",
+          "name": "權益及負債總額",
+          "sequence": 290,
+          "is_total": true,
+          "plus": [
+            "E-TOT",
+            "L-TOT"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "MO-NSRF-IS",
+      "kind": "income_statement",
+      "framework": "NSRF",
+      "name": "損益表",
+      "legal_reference": "Regulamento Administrativo n.º 25/2005, article 2(4): the accounting statements are the balance sheet and the income statement (demonstração de resultados). The line structure follows the model income statement of the Professional Accountants Committee's 'Guia para a Aplicação das Normas Sucintas de Relato Financeiro' (Aviso n.º 2/2024/CPC): revenue, cost of sales, gross profit, other operating income, personnel expenses, depreciation and amortisation, other operating expenses, operating profit, finance costs, investment income, other income, profit before tax, income tax, profit for the period. Foreign-exchange gains are read as other income and foreign-exchange losses as finance costs, the usual reading of the model's lines for a business with no separate exchange line; a Macao accountant should confirm it. The numbering is this pack's own.",
+      "lines": [
+        {
+          "code": "REV",
+          "name": "收益",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4699"
+            }
+          ]
+        },
+        {
+          "code": "COST",
+          "name": "銷售成本",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5099"
+            }
+          ]
+        },
+        {
+          "code": "GROSS",
+          "name": "毛利",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "REV"
+          ],
+          "minus": [
+            "COST"
+          ]
+        },
+        {
+          "code": "OTH-OPI",
+          "name": "其他營運收入",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4730",
+              "code_to": "4799"
+            }
+          ]
+        },
+        {
+          "code": "PERS",
+          "name": "員工費用",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6099"
+            }
+          ]
+        },
+        {
+          "code": "DEPR",
+          "name": "折舊及攤銷",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6800",
+              "code_to": "6899"
+            }
+          ]
+        },
+        {
+          "code": "OTH-OPX",
+          "name": "其他營運費用",
+          "sequence": 70,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6100",
+              "code_to": "6409",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6460",
+              "code_to": "6469",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6490",
+              "code_to": "6499",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "OP",
+          "name": "營運溢利",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "GROSS",
+            "OTH-OPI"
+          ],
+          "minus": [
+            "PERS",
+            "DEPR",
+            "OTH-OPX"
+          ]
+        },
+        {
+          "code": "FIN-EXP",
+          "name": "融資成本",
+          "sequence": 90,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6410",
+              "code_to": "6459"
+            }
+          ]
+        },
+        {
+          "code": "INV-INC",
+          "name": "投資收入",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4720",
+              "code_to": "4729"
+            }
+          ]
+        },
+        {
+          "code": "OTH-INC",
+          "name": "其他收入",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4700",
+              "code_to": "4719"
+            }
+          ]
+        },
+        {
+          "code": "PBT",
+          "name": "除稅前溢利",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "OP",
+            "INV-INC",
+            "OTH-INC"
+          ],
+          "minus": [
+            "FIN-EXP"
+          ]
+        },
+        {
+          "code": "TAX",
+          "name": "所得稅",
+          "sequence": 130,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6470",
+              "code_to": "6489"
+            }
+          ]
+        },
+        {
+          "code": "PROFIT",
+          "name": "本年度溢利（虧損）",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "PBT"
+          ],
+          "minus": [
+            "TAX"
+          ]
+        }
+      ]
+    }
+  ]
+}

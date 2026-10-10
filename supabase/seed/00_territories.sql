@@ -2422,3 +2422,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('MO', 'iso_3166_1', 'Macao', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a territory outside it is a third country for every rule the Directive carries. The Macao Special Administrative Region of the People''s Republic of China levies no value added tax, goods and services tax or general sales tax: the Código Fiscal approved by Lei n.º 24/2024, in force since 1 January 2026, lists the taxes it brings together (industrial contribution, professional tax, urban property contribution, complementary income tax, stamp tax, property transfer and inheritance taxes, tourism tax, consumption tax, motor vehicle tax) and none is a tax on turnover. The consumption tax (Lei n.º 4/99/M) is selective, reaching only spirits of 30 % alcohol or more and tobacco. What the territory charges on a business''s income is the complementary income tax (Lei n.º 21/78/M) — a tax on a year''s profit, not on a transaction.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

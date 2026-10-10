@@ -1,0 +1,54 @@
+[
+  {
+    "code": "MO-S-NA",
+    "name": "銷售，不課徵任何營業額稅",
+    "description": "澳門企業的所有銷售 — 本地銷售、出口，以及自境外運往境外的銷售",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "1999-12-20",
+    "legal_reference": "Macao levies no value added tax, goods and services tax or general sales tax, and this was re-checked on 10 October 2026. The Código Fiscal (Lei n.º 24/2024, published in Boletim Oficial n.º 53/2024 and in force since 1 January 2026, per its article on entry into force and the Government's announcement of 7 January 2026) brings together the territory's tax laws, and the taxes it lists as related legislation are the industrial contribution (Lei n.º 15/77/M), professional tax (Lei n.º 2/78/M), urban property contribution (Lei n.º 19/78/M), complementary income tax (Lei n.º 21/78/M), stamp tax (Lei n.º 17/88/M), property transfer and inheritance taxes, tourism tax (Lei n.º 19/96/M), consumption tax (Lei n.º 4/99/M) and motor vehicle tax — none of them a tax on turnover. What a Macao business pays on its trading is, instead, complementary income tax (called Profits Tax on the Financial Services Bureau's English pages) on a year's net profit, assessed once for the whole business — not a tax any invoice carries, collects on the seller's behalf or is credited against on the buyer's. The consumption tax is selective and falls on the product at import or production, not on the sale: its table, as amended, reaches only spirits of 30 % alcohol or more and tobacco (the beer and wine group and the fuel group have no product subject to it). There is accordingly no rate for this code to state and no box for its base: the code exists so that every sale line still carries a tax code the engine can post, and states plainly that this jurisdiction has none. 20 December 1999 is the establishment of the Special Administrative Region and is a convenience for `valid_from`, not a claim about when the absence of a turnover tax began. See 'From Macao' in docs/international.md.",
+    "source": "cod-fiscal",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "MO-P-NA",
+    "name": "購貨，不課徵任何營業額稅",
+    "description": "澳門企業的所有購貨 — 本地採購、進口，以及自境外運往境外的採購",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "1999-12-20",
+    "legal_reference": "The purchase side of MO-S-NA: nothing a Macao business buys carries a value added tax, goods and services tax or general sales tax to recover, because none is charged on the sale that supplies it, whether the seller is in Macao or abroad. The only indirect levy on goods is the consumption tax of Lei n.º 4/99/M, charged on the products of its table when they are produced in or enter the territory — spirits of 30 % alcohol or more (10 % ad valorem on the CIF value plus MOP 20 per litre) and tobacco (specific amounts per unit or kilogram), as the table stands after Lei n.º 8/2008, Lei n.º 7/2009, Lei n.º 11/2011 and Lei n.º 9/2015. It is a duty on those specific goods that the importer or producer pays, not a general tax any invoice line can carry a code for, and this pack does not model it. Customs duties are not modelled either (secondary sources describe Macao as a free port that levies none on imports; the primary text was not opened). See 'From Macao' in docs/international.md.",
+    "source": "imposto-consumo",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 20
+  }
+]

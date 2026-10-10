@@ -6684,3 +6684,57 @@ Act. The OpenPeppol list was read for the absence of a Brunei authority.
 **Statements.** BDAS NON-PIE asks for a cash flow statement as well as a
 balance sheet and an income statement; the pack carries the first two. The
 standard does not state which framework it is based on.
+
+## From Macao
+
+`packs/mo/`, `community`, seed 145. Macao has no tax on turnover, so the pack
+has the shape of [`packs/hk/`](../packs/hk/README.md) (two `not_subject` codes,
+no `tax_report.json`, no tax-clearing account, a golden whose `vat_return.json`
+has empty `boxes`). The two generic tests that assumed a declaration and
+several rates were already corrected for Hong Kong; no other generic test
+needed to change for Macao. What the format could not say, none patched:
+
+**`documents.tax_point` has nothing to describe, again.** The field names the
+day a country's general turnover-tax rule makes the tax chargeable. Macao has no
+such rule; `invoice_date` is declared as a commercial convention, not a
+citation, as for Hong Kong. A "not applicable" value would be a change to every
+pack's reader.
+
+**A framework tier the statements cannot express.** Macao has two accounting
+tiers: the IFRS-based Financial Reporting Standards for concessionaires,
+financial institutions and public limited companies, and the General Financial
+Reporting Standards (*Normas Sucintas de Relato Financeiro*, NSRF) for the rest
+(Regulamento Administrativo n.º 25/2005, art. 4). `statements.json` can name one
+`framework` per statement but not the scope that decides which entity uses
+which; the pack ships the NSRF balance sheet and income statement, and an IFRS
+tier (comprehensive income, cash flows) is not modelled. The tiers' timetable
+moves: Aviso n.º 2/2024/CPC makes the 2021 IFRS suite mandatory from 1 January
+2028, optional from 1 January 2026.
+
+**The commissioned facts that the texts corrected.** The code is the *Código
+Fiscal* (Lei n.º 24/2024), in force since 1 January 2026, and it prescribes no
+retention period; the Código Comercial, art. 49, as amended by Lei n.º
+16/2009, sets five years, not ten; the MOP 600,000 exemption of Lei n.º 13/2025,
+art. 22, is for 2025 income and is renewed annually.
+
+**Levies not modelled**, with their sources: complementary income tax (Lei
+n.º 21/78/M; exemption limit in Lei n.º 13/2025, art. 22), stamp tax (Lei n.º
+17/88/M), industrial contribution (Lei n.º 15/77/M), professional tax (Lei n.º
+2/78/M), urban property contribution (Lei n.º 19/78/M), tourism tax (Lei n.º
+19/96/M), the selective consumption tax on spirits of 30 % alcohol or more and
+tobacco (Lei n.º 4/99/M), social security contributions, customs duties,
+gaming levies and the global minimum tax (no Macao statute found on 10 October
+2026; status unverified). None has a tax code.
+
+**The Hong Kong dollar.** It circulates widely in Macao; the pack documents it
+(account `1030`, README) and builds no mechanics. The Código Comercial, art.
+46(2), allows books in any currency provided amounts are also stated in
+patacas, which the core's currency support covers.
+
+**Primary texts that rendered.** `bo.dsaj.gov.mo` served Lei n.º 24/2024, Lei
+n.º 13/2025, Lei n.º 4/99/M, the Código Comercial and both Regulamentos
+Administrativos to a plain HTTP client (not to the page-reading tool), so
+article numbers were checked against the text. The DSF's English pages render
+partly; the filing portal redirects to a login page, and the standards' Annex
+III could not be extracted, so the statement lines follow the Portuguese model
+financial statements.

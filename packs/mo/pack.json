@@ -1,0 +1,226 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MO",
+  "name": "澳門",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 145,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "cod-fiscal",
+        "title": "Lei n.º 24/2024 — Código Fiscal (Fiscal Code)",
+        "publisher": "Direcção dos Serviços de Assuntos de Justiça — Boletim Oficial da RAEM",
+        "url": "https://bo.dsaj.gov.mo/bo/i/2024/53/lei24.asp",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "cod-fiscal-news",
+        "title": "The Fiscal Code has fully entered into force (7 January 2026)",
+        "publisher": "Macao SAR Government Information Bureau",
+        "url": "https://www.gov.mo/pt/noticias/809035/",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "orcamento-2026",
+        "title": "Lei n.º 13/2025 — Budget Law of the Macao SAR for 2026",
+        "publisher": "Direcção dos Serviços de Assuntos de Justiça — Boletim Oficial da RAEM",
+        "url": "https://bo.dsaj.gov.mo/bo/i/2025/52/lei13.asp",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "cod-comercial",
+        "title": "Decreto-Lei n.º 40/99/M — Código Comercial (Commercial Code)",
+        "publisher": "Direcção dos Serviços de Assuntos de Justiça — Boletim Oficial da RAEM",
+        "url": "https://bo.dsaj.gov.mo/bo/i/99/31/codcompt/codcom0001.asp",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "imposto-consumo",
+        "title": "Lei n.º 4/99/M — Regulamento do Imposto de Consumo (Consumption Tax Regulation)",
+        "publisher": "Direcção dos Serviços de Assuntos de Justiça — Boletim Oficial da RAEM",
+        "url": "https://bo.dsaj.gov.mo/bo/i/99/50/lei04.asp",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "ra-25-2005",
+        "title": "Regulamento Administrativo n.º 25/2005 — Normas de Contabilidade (Accounting Standards)",
+        "publisher": "Direcção dos Serviços de Assuntos de Justiça — Boletim Oficial da RAEM",
+        "url": "https://bo.dsaj.gov.mo/bo/i/2005/52/regadm25.asp",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
+      },
+      {
+        "key": "ra-42-2020",
+        "title": "Regulamento Administrativo n.º 42/2020 — Comissão Profissional dos Contabilistas",
+        "publisher": "Direcção dos Serviços de Assuntos de Justiça — Boletim Oficial da RAEM",
+        "url": "https://bo.dsaj.gov.mo/bo/i/2020/48/regadm42.asp",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
+      },
+      {
+        "key": "cpc-nsrf-guide",
+        "title": "Guia para a Aplicação das Normas Sucintas de Relato Financeiro (Aviso n.º 2/2024/CPC)",
+        "publisher": "Comissão Profissional dos Contabilistas",
+        "url": "https://www.cpc.gov.mo/uploads/dsf/20241217/Guia%20Para%20a%20Aplica%C3%A7%C3%A3o%20das%20Normas%20Sucintas%20de%20Relato%20Financeiro.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "standard"
+      },
+      {
+        "key": "cpc-report-2024",
+        "title": "會計師專業委員會 2024 年度工作簡報 (Professional Accountants Committee 2024 work report)",
+        "publisher": "Comissão Profissional dos Contabilistas",
+        "url": "https://www.cpc.gov.mo/uploads/dsf/20250210/004WEB2025_anexoC.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "dsf-profits-tax",
+        "title": "Profits Tax (Complementary Tax) — Group A",
+        "publisher": "Direcção dos Serviços de Finanças (Financial Services Bureau)",
+        "url": "https://www.dsf.gov.mo/en/tax/tax_introduction/profits_tax_a",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "dsf-eservices",
+        "title": "DSF electronic services (login)",
+        "publisher": "Direcção dos Serviços de Finanças (Financial Services Bureau)",
+        "url": "https://tax.fi.dsf.gov.mo/",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      },
+      {
+        "key": "peppol-authorities",
+        "title": "Peppol Authorities",
+        "publisher": "OpenPeppol",
+        "url": "https://peppol.org/about/peppol-authorities/",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "MOP",
+    "language": "zh",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "pt",
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "銷售日記賬",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "採購日記賬",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "銀行",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "備用現金",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "普通日記賬",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "期初餘額",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "澳門參考會計科目表",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "MO-NSRF-BS",
+        "MO-NSRF-IS"
+      ],
+      "legal_reference": "Macao prescribes no chart of accounts. The Código Comercial, article 38, obliges every commercial entrepreneur to keep mercantile accounts made in accordance with the law and adequate to its business, and article 46(2) lets them be kept in a language other than the official ones where there is serious interest, with values in any currency provided they are also stated in patacas; neither prescribes a chart. For tax, Regulamento Administrativo n.º 25/2005, article 7, defines 'properly organised accounts' (contabilidade devidamente organizada) as accounts organised in accordance with the Accounting Standards — the Financial Reporting Standards or the General Financial Reporting Standards — and the Código Fiscal, article 97(2), presumes the declarations and the accounts of a taxpayer true when they are organised according to the accounting standards. This chart is original: four digits, blocked so that each range reaches one line of the balance sheet and the income statement of the General Financial Reporting Standards' model financial statements, and it ties into the same statements for an entity reporting under the IFRS-based Financial Reporting Standards. It carries no tax-clearing account of any kind, because no tax is collected or paid on an invoice — see 'From Macao' in docs/international.md.",
+      "source": "cod-comercial"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Macao has no value added tax, goods and services tax or general sales tax (see MO-S-NA), so no tax statute conditions the deductibility of anything on an invoice carrying a sequential number, and no text consulted for this pack prescribes how a commercial invoice is numbered. What the law does require is a bookkeeping: the commercial entrepreneur must keep mercantile accounts, made in accordance with the law and adequate to the business, that allow all its operations and its financial position and performance to be known (Código Comercial, article 38), every ledger being kept clearly, in chronological order, without blanks, interpolations or erasures (article 46(1)); and the Código Fiscal lists among the accessory obligations of a taxpayer the holding, writing up and keeping of the books of account and of other tax-relevant books and documents, including financial statements, contracts and invoices (article 36(2)(2)). `numbering` is therefore `free`, not a gap left for someone else to fill: `number_format` is a convention this pack proposes. No text about invoice content (a taxpayer number, a mandatory mention) was found in the sources opened; if one exists, it is a gap of this pack, see 'From Macao' in docs/international.md.",
+        "source": "cod-comercial"
+      },
+      "payment_terms": {
+        "legal_reference": "No text consulted for this pack sets a payment term between two businesses in the absence of an agreement, or a rate of interest on a commercial debt paid late: the Código Comercial and the Código Fiscal were searched for the bookkeeping and tax provisions this pack needs, and the general rules of Macao's civil and commercial law on default interest were not read. `legal_payment_days` and `late_payment_reference` are therefore empty — a gap of research, not a statement that none exists — and a seller's own terms are a matter of contract, stated on the document. See 'From Macao' in docs/international.md.",
+        "source": "cod-comercial"
+      },
+      "tax_point": {
+        "legal_reference": "This field has nothing to describe in Macao: it names the day a country's general rule makes its own turnover tax chargeable, and Macao charges none (see MO-S-NA). `invoice_date` is declared as the closest general commercial convention — revenue is ordinarily invoiced at or shortly after the point the accounting standards recognise it — and not as a rule read from a text; see 'From Macao' in docs/international.md, which sets this out as a gap in what the field can honestly say of a territory with no transaction tax at all.",
+        "source": "cpc-nsrf-guide"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No text consulted for this pack obliges a business in Macao to issue or accept an electronic invoice — the Código Fiscal's accessory obligations (article 36(2)) speak of invoices without prescribing a format, and no mandate was found — and no Peppol Authority is listed for Macao: OpenPeppol's list of Peppol Authorities (consulted 10 October 2026) names, in the Asia-Pacific region, Australia, Japan, Malaysia, New Zealand, Singapore and Taiwan, and not Macao. `profile`, `party_scheme` and `vat_scheme` are therefore null: there is no domestic profile to name, and no VAT identifier for a scheme to carry since Macao levies no value added tax.",
+    "source": "peppol-authorities"
+  }
+}
