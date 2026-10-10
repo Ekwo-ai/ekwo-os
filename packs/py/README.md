@@ -99,16 +99,16 @@ Four decisions:
 
 | Code | Rate | Treatment | Declaration fields |
 |---|---|---|---|
-| `PY-V-10` | 10 % | domestic sale | 10/22, 15/23 (credit note) |
-| `PY-V-5` | 5 % | domestic sale (canasta básica, inmuebles, medicamentos, pecuarios, vivienda) | 151/157, 16/20 (credit note) |
+| `PY-V-10` | 10 % | domestic sale | 10/22; credit note 37/42 (Rubro 3, inciso e) |
+| `PY-V-5` | 5 % | domestic sale (canasta básica, inmuebles, medicamentos, pecuarios, vivienda) | 151/157; credit note 34/42 (Rubro 3, inciso e) |
 | `PY-V-EXP` | 0 % | export of goods | 14 |
-| `PY-V-EXO` | — | exempt sale (art. 100) | 12, 17 (credit note) |
-| `PY-C-10` | 10 % | domestic purchase, with input tax credit | 35/38 (credit note: same boxes, negative) |
-| `PY-C-5` | 5 % | domestic purchase, with input tax credit | 32/38 (credit note: same boxes, negative) |
+| `PY-V-EXO` | — | exempt sale (art. 100) | 12 (credit note: same box, negative) |
+| `PY-C-10` | 10 % | domestic purchase, with input tax credit | 35/38; credit note 15/23 (Rubro 1, inciso h) |
+| `PY-C-5` | 5 % | domestic purchase, with input tax credit | 32/38; credit note 155/159 (Rubro 1, inciso j) |
 | `PY-C-10-NOCRED` | 10 %, non-deductible | purchase destined to an exempt sale | 59, tax on cost (65) |
 | `PY-C-5-NOCRED` | 5 %, non-deductible | purchase destined to an exempt sale | 60, tax on cost (66) |
-| `PY-C-EXO` | — | domestic purchase, not taxed | 62 |
-| `PY-C-10-EXT` | 10 % | service from a supplier abroad, used in Paraguay, 100 % withheld by the buyer | 35 / 38 |
+| `PY-C-EXO` | — | domestic purchase, not taxed | 62; credit note 17 (Rubro 1, inciso k) |
+| `PY-C-10-EXT` | 10 % | service from a supplier abroad, used in Paraguay, 100 % withheld by the buyer | 35 / 38; credit note 15/23 |
 
 **The 5 % rate does not distinguish agricultural products in their natural
 state.** Ley N.° 6.380/2019, art. 90, sets 5 % for five different incisos —
@@ -162,10 +162,15 @@ account, so its supplier abroad lands on `2011`.
 
 `PY-F120` is the Formulario N.° 120, filed monthly on the Sistema de Gestión
 Tributaria Marangatú. The pack names the casillas its tax codes need (see
-*Taxes*) plus 43/44/45/47/48/50, which determine the result of the period. A
-purchase credit note declares a negative amount on the original invoice's
-boxes (32/35/38), not on Rubro 3, inciso e) (34/37/42), whose instructivo
-describes it as concerning "ventas ya declaradas" rather than purchases.
+*Taxes*) plus 43/44/45/47/48/50, which determine the result of the period.
+
+A credit note is declared on the side of the form the instructivo gives it.
+**A credit note issued to a customer** goes to Rubro 3, inciso e): its base to
+casilla 34 (5 %) or 37 (10 %), its IVA to casilla 42, which casilla 43 adds to
+the crédito fiscal. **A credit note received from a supplier** goes to Rubro 1:
+casillas 15/23 at 10 % (inciso h), 155/159 at 5 % (inciso j), 17 for an exempt
+purchase (inciso k); casilla 44 adds 23 and 159 to the débito fiscal. In the
+ledger both reverse the original posting on `2031` or `1041`.
 
 **Not declared**: the Anexo del Exportador and the Hoja de Cálculo (casillas
 148 to 220), the proportional recovery of IVA Crédito attributable to exports
@@ -204,9 +209,7 @@ turnover ratio rather than a document's postings; a deadline shifted by a
 digit of the RUC; the third leg of the tax point (art. 83, numeral 1, inciso
 c); the agricultural products of art. 90, inciso d) (casillas 150/156, and
 152 on export); retenciones and percepciones of the IVA, and the
-carry-forward of a prior saldo a favor; casillas 34, 37 and 42 of Rubro 3
-(crédito fiscal por ajustes, inciso e), worded as "ventas ya declaradas"
-inside a rubro about compras.
+carry-forward of a prior saldo a favor.
 
 ## For a reviewer
 

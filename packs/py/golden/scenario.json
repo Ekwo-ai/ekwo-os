@@ -29,7 +29,7 @@
     },
     {
       "ref": "V3", "type": "sale_credit_note", "contact": "client-py", "date": "2026-01-20",
-      "why": "Una devolución parcial de V1: reduce la base y el débito fiscal en las casillas 15 y 23, distintas de las 10 y 22.",
+      "why": "Una devolución parcial de V1: su base va a la casilla 37 y su IVA a la casilla 42 (Rubro 3, inciso e), que suma al crédito fiscal del período en lugar de tocar las casillas 10 y 22.",
       "lines": [{ "name": "Devolución de Mercadería A", "quantity": 2, "unit_price": 100000, "tax": "PY-V-10", "account": "411" }]
     },
     {
@@ -69,7 +69,7 @@
     },
     {
       "ref": "C5", "type": "purchase_credit_note", "contact": "supplier-py", "date": "2026-02-25",
-      "why": "Una nota de crédito de compra: reduce, en las casillas 37 y 42, la base y el crédito fiscal ya declarados por C1.",
+      "why": "Una nota de crédito de compra: devuelve al débito fiscal, en las casillas 15 y 23 (Rubro 1, inciso h), el crédito ya deducido por C1.",
       "lines": [{ "name": "Devolución de Mercadería A", "quantity": 1, "unit_price": 80000, "tax": "PY-C-10", "account": "511" }]
     },
     {

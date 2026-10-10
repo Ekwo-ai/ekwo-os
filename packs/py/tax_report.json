@@ -32,15 +32,15 @@
     {
       "box": "15",
       "kind": "base",
-      "name": "Ajustes de precios, devoluciones y descuentos, ventas a la tasa del 10 %",
+      "name": "Ajustes de precios, devoluciones realizadas y descuentos obtenidos, por compras gravadas con IVA Crédito al 10 %",
       "sequence": 30,
-      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 1, inciso f) — ajustes de precios, devoluciones realizadas, descuentos obtenidos y recupero de impuestos por operaciones incobrables, declaradas a la tasa del 10 %",
+      "legal_reference": "Instructivo del Formulario N.° 120, Versión 4, Rubro 1, inciso h) — «En la casilla 15 se debe consignar la base imponible de los ajustes de precios, devoluciones realizadas y descuentos obtenidos, por compras gravadas con IVA Crédito al 10%, así como el recupero de impuestos por operaciones incobrables»: la nota de crédito recibida de un proveedor devuelve al débito fiscal el crédito ya deducido",
       "source": "f120-instructivo"
     },
     {
       "box": "23",
       "kind": "tax",
-      "name": "IVA Débito — ajustes de ventas al 10 %",
+      "name": "IVA Débito — ajustes de compras al 10 %",
       "sequence": 40,
       "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 23 se debe consignar el IVA Débito correspondiente» a la casilla 15",
       "source": "f120-instructivo"
@@ -62,19 +62,19 @@
       "source": "f120-instructivo"
     },
     {
-      "box": "16",
+      "box": "155",
       "kind": "base",
-      "name": "Ajustes de precios, devoluciones y descuentos, ventas a la tasa del 5 %",
+      "name": "Ajustes de precios, devoluciones realizadas y descuentos obtenidos, por compras de otros bienes y servicios gravadas con IVA Crédito al 5 %",
       "sequence": 70,
-      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 1, inciso g) — ajustes de precios, devoluciones realizadas, descuentos obtenidos y recupero de impuestos por operaciones incobrables, declaradas a la tasa del 5 %",
+      "legal_reference": "Instructivo del Formulario N.° 120, Versión 4, Rubro 1, inciso j) — «En la casilla 155 se debe consignar la base imponible de los ajustes de precios, devoluciones realizadas y descuentos obtenidos, por las adquisiciones de otros bienes y servicios no señalados en el inciso anterior, gravadas con IVA Crédito al 5%»",
       "source": "f120-instructivo"
     },
     {
-      "box": "20",
+      "box": "159",
       "kind": "tax",
-      "name": "IVA Débito — ajustes de ventas al 5 %",
+      "name": "IVA Débito — ajustes de compras de otros bienes y servicios al 5 %",
       "sequence": 80,
-      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 1 — columna IVA Débito al 5 % de la fila de ajustes del inciso g)",
+      "legal_reference": "Instructivo del Formulario N.° 120, Versión 4, Rubro 1, inciso j) — «En la casilla 159 se debe consignar el IVA Débito correspondiente» a la casilla 155",
       "source": "f120-instructivo"
     },
     {
@@ -88,9 +88,9 @@
     {
       "box": "17",
       "kind": "base",
-      "name": "Ajustes de precios, devoluciones y descuentos, ventas exoneradas o no alcanzadas",
+      "name": "Ajustes de precios, devoluciones realizadas y descuentos obtenidos, por compras exoneradas o no alcanzadas",
       "sequence": 100,
-      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 17 se debe consignar el monto de los ajustes de precios, devoluciones realizadas y descuentos obtenidos, por operaciones exoneradas o no alcanzadas por el impuesto»",
+      "legal_reference": "Instructivo del Formulario N.° 120, Versión 4, Rubro 1, inciso k) — «En la casilla 17 se debe consignar el monto de los ajustes de precios, devoluciones realizadas y descuentos obtenidos, por compras exoneradas o no alcanzadas por el impuesto»",
       "source": "f120-instructivo"
     },
     {
@@ -126,12 +126,36 @@
       "source": "f120-instructivo"
     },
     {
+      "box": "34",
+      "kind": "base",
+      "name": "Ajustes de precios, devoluciones, descuentos otorgados y operaciones declaradas incobrables, por ventas ya declaradas a la tasa del 5 %",
+      "sequence": 150,
+      "legal_reference": "Instructivo del Formulario N.° 120, Versión 4, Rubro 3, inciso e) — «En las casillas 34 y 37 se deben consignar los montos imponibles por los ajustes de precios, devoluciones, descuentos otorgados y operaciones declaradas incobrables, por ventas ya declaradas a las tasas del 5% y/o 10%, respectivamente»: la nota de crédito emitida a un cliente",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "37",
+      "kind": "base",
+      "name": "Ajustes de precios, devoluciones, descuentos otorgados y operaciones declaradas incobrables, por ventas ya declaradas a la tasa del 10 %",
+      "sequence": 160,
+      "legal_reference": "Instructivo del Formulario N.° 120, Versión 4, Rubro 3, inciso e) — casilla 37, columna de la tasa del 10 %",
+      "source": "f120-instructivo"
+    },
+    {
+      "box": "42",
+      "kind": "tax",
+      "name": "IVA Crédito por ajustes de ventas ya declaradas",
+      "sequence": 170,
+      "legal_reference": "Instructivo del Formulario N.° 120, Versión 4, Rubro 3, inciso e) — «En la casilla 42 se debe consignar la suma del IVA Crédito resultante de la aplicación de dichas tasas» a las casillas 34 y 37",
+      "source": "f120-instructivo"
+    },
+    {
       "box": "43",
       "kind": "total",
       "name": "Total de crédito fiscal para operaciones en el mercado interno",
       "sequence": 180,
-      "plus": ["38"],
-      "legal_reference": "Instructivo del Formulario N.° 120 — «En la casilla 43 se debe consignar el total del IVA Crédito atribuido a operaciones gravadas en el mercado interno, resultante de la suma de las casillas 38, 164, 165 y 42». Este paquete no atribuye crédito de forma indistinta ni proporcional, ni declara los ajustes de la casilla 42 (Rubro 3, inciso e — cuyo propio instructivo los describe, de forma inconsistente con el resto del Rubro 3, como referidos a «ventas ya declaradas»), por lo que la suma se limita a la casilla 38 y las notas de crédito de compra se declaran con signo negativo sobre las mismas casillas 32/35/38 de la factura original — véase el README",
+      "plus": ["38", "42"],
+      "legal_reference": "Instructivo del Formulario N.° 120, Versión 4, Rubro 3, inciso f) — «En la casilla 43 se debe consignar el total del IVA Crédito atribuido a operaciones gravadas en el mercado interno, resultante de la suma de las casillas 38, 164, 165 y 42». Este paquete no atribuye crédito de forma indistinta ni proporcional (casillas 164 y 165), por lo que la suma se limita a las casillas 38 y 42",
       "source": "f120-instructivo"
     },
     {
@@ -188,8 +212,8 @@
       "kind": "total",
       "name": "Débito fiscal",
       "sequence": 250,
-      "plus": ["22", "157", "23", "20"],
-      "legal_reference": "Formulario N.° 120, Versión 3, Rubro 4, inciso a) — débito fiscal, proveniente del Rubro 1, columnas II y III del inciso «Total»",
+      "plus": ["22", "157", "23", "159"],
+      "legal_reference": "Instructivo del Formulario N.° 120, Versión 4, Rubro 4, inciso a) — «En la casilla 44 se debe consignar el IVA Débito, proveniente de la suma de las casillas 21 y 24 del Rubro 1», es decir de las columnas del IVA Débito al 5 % y al 10 %: las operaciones gravadas y los ajustes de compras de los incisos h) y j). Las casillas 156 y 158 (productos agrícolas en estado natural) no se modelan",
       "source": "f120-instructivo"
     },
     {

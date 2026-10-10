@@ -17,8 +17,8 @@
         { "type": "tax", "account": "2031", "box": "22" }
       ],
       "credit_note": [
-        { "type": "base", "box": "15" },
-        { "type": "tax", "account": "2031", "box": "23" }
+        { "type": "base", "box": "37" },
+        { "type": "tax", "account": "2031", "box": "42" }
       ]
     }
   },
@@ -40,8 +40,8 @@
         { "type": "tax", "account": "2031", "box": "157" }
       ],
       "credit_note": [
-        { "type": "base", "box": "16" },
-        { "type": "tax", "account": "2031", "box": "20" }
+        { "type": "base", "box": "34" },
+        { "type": "tax", "account": "2031", "box": "42" }
       ]
     }
   },
@@ -85,7 +85,7 @@
         { "type": "base", "box": "12" }
       ],
       "credit_note": [
-        { "type": "base", "box": "17" }
+        { "type": "base", "box": "12", "box_factor": -100 }
       ]
     }
   },
@@ -107,8 +107,8 @@
         { "type": "tax", "account": "1041", "box": "38" }
       ],
       "credit_note": [
-        { "type": "base", "box": "35", "box_factor": -100 },
-        { "type": "tax", "account": "1041", "box": "38", "box_factor": -100 }
+        { "type": "base", "box": "15" },
+        { "type": "tax", "account": "1041", "box": "23" }
       ]
     }
   },
@@ -130,8 +130,8 @@
         { "type": "tax", "account": "1041", "box": "38" }
       ],
       "credit_note": [
-        { "type": "base", "box": "32", "box_factor": -100 },
-        { "type": "tax", "account": "1041", "box": "38", "box_factor": -100 }
+        { "type": "base", "box": "155" },
+        { "type": "tax", "account": "1041", "box": "159" }
       ]
     }
   },
@@ -167,14 +167,12 @@
       "credit_note": [
         {
           "type": "base",
-          "box": "35",
-          "box_factor": -100
+          "box": "15"
         },
         {
           "type": "tax",
           "account": "1041",
-          "box": "38",
-          "box_factor": -100
+          "box": "23"
         },
         {
           "type": "tax",
@@ -249,7 +247,7 @@
         { "type": "base", "box": "62" }
       ],
       "credit_note": [
-        { "type": "base", "box": "62", "box_factor": -100 }
+        { "type": "base", "box": "17" }
       ]
     }
   }
