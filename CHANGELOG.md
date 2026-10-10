@@ -214,6 +214,22 @@ somewhere has already run it.
   a company already holding one of these taxes sees the postings under
   *review* in `ekwo pack upgrade`, and an entry already posted stays as it was.
 
+### Security
+
+- **The file of a declaration is read as a declaration**
+  (`20261010203452`; decision
+  [0039](docs/decisions/0039-a-deposit-is-an-event.md)). The deposits of a
+  declaration asked `filings.read`, and the two files they name — what was
+  sent and the receipt — asked `documents.read`, like every attachment: a
+  member whose `filings.read` was withdrawn and who kept `documents.read`
+  read them, within their own company. An attachment of a declaration, or
+  one a deposit names, is now read with `filings.read` and written with
+  `filings.write`, by a person and by a machine key alike; every other
+  attachment keeps `documents.read` and `documents.write`. The policy finds
+  the deposit through `attachment_is_filing_deposit_file()`, a definer
+  function, because the deposits are hidden from precisely the member this
+  is about.
+
 ## [0.11.1] — 2026-10-07
 
 ### Fixed

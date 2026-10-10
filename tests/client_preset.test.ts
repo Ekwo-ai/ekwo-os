@@ -615,10 +615,13 @@ describe('a client hands a piece over', () => {
 
   it('works for somebody who may deposit and may not read, and shows them only their own', async () => {
     const scannerId = await newUser(db, 'scanner@lune.example.test');
+    // Neither reading: the receipt of a filing is read with filings.read
+    // since `20261010203452`, and a viewer holds it.
     await db.query(
       `insert into company_members (company_id, user_id, role, capabilities_granted,
                                     capabilities_revoked)
-       values ($1, $2, 'viewer', array['documents.deposit'], array['documents.read'])`,
+       values ($1, $2, 'viewer', array['documents.deposit'],
+               array['documents.read', 'filings.read'])`,
       [mine.companyId, scannerId],
     );
     const row = await asUser(db, scannerId, () =>

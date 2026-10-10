@@ -60,8 +60,12 @@ list of providers.
 
 ## Consequences
 
-- The proof of a filing is an attachment and is read through `documents.read`;
-  aligning it with `filings.read` is an open item.
+- The proof of a filing is an attachment, read with `filings.read` and
+  written with `filings.write`, like the deposit that names it
+  (`20261010203452`): an attachment of a declaration, or one a deposit names
+  as the file sent or the receipt. Every other attachment is read with
+  `documents.read` and written with `documents.write`, so a member who books
+  without reading the declarations sees neither the deposits nor their files.
 
 ## See also
 

@@ -1,7 +1,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { expectError, freshDatabase, one, rows } from './helpers/db.js';
-import { newCompany, newContact, newDocument, type Fixture } from './helpers/factory.js';
+import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
+import { newCompany, newContact, newDocument, newUser, type Fixture } from './helpers/factory.js';
 import { packWhere } from './helpers/packs.js';
 
 /**
@@ -19,7 +19,10 @@ import { packWhere } from './helpers/packs.js';
  *   4. an accepted declaration is not reopened: that one is a corrective;
  *   5. the administration's own words are kept, not summarised;
  *   6. what was sent and what came back are files of the declaration, and the
- *      deposit is what tells the two apart.
+ *      deposit is what tells the two apart;
+ *   7. those files are read with `filings.read` and written with
+ *      `filings.write`, like the deposit, by a person and by a machine key —
+ *      every other attachment keeps `documents.read` and `documents.write`.
  */
 
 const pack = packWhere(
@@ -48,6 +51,7 @@ const [FROM, TO] = PERIODS[pack.report?.period_default ?? 'month'] ?? PERIODS['m
 let db: PGlite;
 let fx: Fixture;
 let customerId: string;
+let documentId: string;
 
 interface Filing {
   id: string;
@@ -96,7 +100,7 @@ beforeAll(async () => {
     name: 'Client',
     country: pack.manifest.country,
   });
-  const documentId = await newDocument(db, fx.companyId, {
+  documentId = await newDocument(db, fx.companyId, {
     docType: 'sale_invoice',
     number: 'DEP-1',
     contactId: customerId,
@@ -298,5 +302,170 @@ describe('the two files of a deposit', () => {
       [filing.id],
     );
     expect(held.map((a) => a.file_name)).toEqual(['acknowledgement.pdf', 'declaration.xml']);
+  });
+});
+
+describe('the files of a declaration are read as a declaration', () => {
+  // `filings.read` is granted apart from `documents.read`: what a company
+  // declared is not the same secret as what it books. The deposit already
+  // asked it; the files it names asked `documents.read` until
+  // `20261010203452`.
+  let sentId: string;
+  let receiptId: string;
+  let invoiceFileId: string;
+  let pinnedId: string;
+  let withoutFilings: string;
+  let reader: string;
+
+  async function member(capabilities: { granted?: string[]; revoked?: string[] }): Promise<string> {
+    const id = await newUser(db);
+    await db.query(
+      `insert into company_members (company_id, user_id, role, capabilities_granted,
+                                    capabilities_revoked)
+       values ($1, $2, 'viewer', $3, $4)`,
+      [fx.companyId, id, capabilities.granted ?? [], capabilities.revoked ?? []],
+    );
+    return id;
+  }
+
+  async function seen(as: string): Promise<string[]> {
+    return asUser(db, as, async () =>
+      (
+        await rows<{ id: string }>(db, `select id from attachments where id = any($1::uuid[])`, [
+          [sentId, receiptId, invoiceFileId, pinnedId],
+        ])
+      ).map((a) => a.id),
+    );
+  }
+
+  /** What a machine holding a key reads, inside one transaction. */
+  async function seenWithKey(capabilities: string[]): Promise<string[]> {
+    await db.query(`insert into auth.users (id, email) values ($1, $2) on conflict do nothing`, [
+      fx.ownerId,
+      'owner@deposit.test',
+    ]);
+    const key = await asUser(db, fx.ownerId, () =>
+      one<{ secret: string }>(db, `select secret from create_api_key($1, $2, $3::jsonb)`, [
+        fx.companyId,
+        `Lecture ${capabilities.join(' ')}`,
+        JSON.stringify(capabilities),
+      ]),
+    );
+    await db.exec(`set role authenticated;`);
+    await db.query(`begin`);
+    try {
+      await db.query(`select * from use_api_key($1)`, [key.secret]);
+      return (
+        await rows<{ id: string }>(db, `select id from attachments where id = any($1::uuid[])`, [
+          [sentId, receiptId, invoiceFileId, pinnedId],
+        ])
+      ).map((a) => a.id);
+    } finally {
+      await db.query(`commit`);
+      await db.exec(`reset role;`);
+    }
+  }
+
+  beforeAll(async () => {
+    const named = await one<{ sent_file_id: string; acknowledgement_id: string }>(
+      db,
+      `select d.sent_file_id, d.acknowledgement_id
+         from tax_filing_deposits d join tax_filings f on f.id = d.filing_id
+        where f.company_id = $1 and d.sent_file_id is not null`,
+      [fx.companyId],
+    );
+    sentId = named.sent_file_id;
+    receiptId = named.acknowledgement_id;
+    invoiceFileId = (
+      await one<{ id: string }>(
+        db,
+        `insert into attachments (company_id, entity_type, entity_id, file_name, storage_path)
+         values ($1, 'document', $2, 'invoice.pdf', 'documents/invoice.pdf') returning id`,
+        [fx.companyId, documentId],
+      )
+    ).id;
+    // A receipt pinned on a document and named by a deposit: the deposit is
+    // what makes it proof of filing, wherever it was pinned.
+    pinnedId = (
+      await one<{ id: string }>(
+        db,
+        `insert into attachments (company_id, entity_type, entity_id, file_name, storage_path)
+         values ($1, 'document', $2, 'receipt-on-a-document.pdf', 'documents/receipt.pdf')
+         returning id`,
+        [fx.companyId, documentId],
+      )
+    ).id;
+    const bare = await one<{ id: string }>(
+      db,
+      `select d.id from tax_filing_deposits d join tax_filings f on f.id = d.filing_id
+        where f.company_id = $1 and d.acknowledgement_id is null limit 1`,
+      [fx.companyId],
+    );
+    await db.query(`update tax_filing_deposits set acknowledgement_id = $2 where id = $1`, [
+      bare.id,
+      pinnedId,
+    ]);
+    withoutFilings = await member({ revoked: ['filings.read'] });
+    reader = await member({});
+  });
+
+  it('are hidden from a member who reads the documents and not the declarations', async () => {
+    const ids = await seen(withoutFilings);
+    expect(ids).toEqual([invoiceFileId]);
+    // …who sees no deposit either, which is the rule the files now follow.
+    const deposits = await asUser(db, withoutFilings, () =>
+      rows(db, `select id from tax_filing_deposits`),
+    );
+    expect(deposits).toEqual([]);
+  });
+
+  it('are read by a member who reads the declarations', async () => {
+    expect((await seen(reader)).sort()).toEqual(
+      [sentId, receiptId, invoiceFileId, pinnedId].sort(),
+    );
+  });
+
+  it('follow the same rule for a machine key', async () => {
+    expect(await seenWithKey(['documents.read'])).toEqual([invoiceFileId]);
+    expect((await seenWithKey(['documents.read', 'filings.read'])).sort()).toEqual(
+      [sentId, receiptId, invoiceFileId, pinnedId].sort(),
+    );
+  });
+
+  it('are written with filings.write, and every other file with documents.write', async () => {
+    const filing = await one<{ id: string }>(
+      db,
+      `select filing_id as id from tax_filing_deposits where sent_file_id = $1`,
+      [sentId],
+    );
+    const bookkeeper = await newUser(db);
+    await db.query(
+      `insert into company_members (company_id, user_id, role, capabilities_revoked)
+       values ($1, $2, 'accountant', array['filings.write'])`,
+      [fx.companyId, bookkeeper],
+    );
+    const message = await asUser(db, bookkeeper, () =>
+      expectError(
+        db,
+        `insert into attachments (company_id, entity_type, entity_id, file_name, storage_path)
+         values ($1, 'tax_filing', $2, 'forged.xml', 'filings/forged.xml')`,
+        [fx.companyId, filing.id],
+      ),
+    );
+    expect(message).toMatch(/row-level security/);
+    // The receipt is read — the bookkeeper holds filings.read — and not removed.
+    const removed = await asUser(db, bookkeeper, () =>
+      db.query(`delete from attachments where id = any($1::uuid[])`, [[receiptId, pinnedId]]),
+    );
+    expect(removed.affectedRows).toBe(0);
+    const kept = await asUser(db, bookkeeper, () =>
+      one<{ id: string }>(
+        db,
+        `insert into attachments (company_id, entity_type, entity_id, file_name, storage_path)
+         values ($1, 'document', $2, 'quote.pdf', 'documents/quote.pdf') returning id`,
+        [fx.companyId, documentId],
+      ),
+    );
+    expect(kept.id).toBeTruthy();
   });
 });
