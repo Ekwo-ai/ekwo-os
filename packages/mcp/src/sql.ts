@@ -100,6 +100,12 @@ export interface SqlBackendOptions {
  * turns an array of objects into `{"[object Object]"}`. So the value is
  * stringified here and the placeholder carries an explicit `::jsonb`, which
  * makes the two routes agree instead of agreeing by accident on one driver.
+ *
+ * The cast goes through `text`. A driver that asks the server for the type
+ * of each parameter — `postgres`, the one `connect()` opens — is told `jsonb`
+ * for `$1::jsonb` and serialises the value as JSON a second time: the string
+ * arrives as a JSON string, and `p_books ->> 'source'` reads null. Told
+ * `text`, every driver sends the string as it is.
  */
 function callOf(
   fn: string,
@@ -111,7 +117,7 @@ function callOf(
   const parts = entries.map(([name, value], index) => {
     const json = typeof value === 'object' && value !== null;
     params.push(json ? JSON.stringify(value) : value);
-    return `${identifier(name)} => $${index + 1}${json ? '::jsonb' : ''}`;
+    return `${identifier(name)} => $${index + 1}${json ? '::text::jsonb' : ''}`;
   });
   return { call: `${qualified(schema, fn)}(${parts.join(', ')})`, params };
 }
