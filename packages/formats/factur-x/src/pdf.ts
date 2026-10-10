@@ -42,10 +42,15 @@ export interface EmbedOptions {
 /**
  * Returns a copy of `pdf` carrying `xml` as `factur-x.xml`.
  *
- * The visual PDF itself is left untouched: fonts, colour profiles and output
- * intents are the responsibility of the producer of the original file. Strict
- * PDF/A-3 validators may still flag those; the invoice data is embedded and
- * readable, which is what e-invoicing platforms check.
+ * The XMP packet it writes declares PDF/A-3 and says what the document
+ * information dictionary says — title, author, subject, keywords, creator,
+ * producer, creation and modification dates — read from `pdf` where the
+ * options do not give them, because PDF/A wants the two to agree. The rest of
+ * the visual PDF is left untouched, and whether the result conforms to PDF/A-3
+ * depends on it: every font embedded, an output intent, no transparency PDF/A
+ * forbids. A PDF that has them, such as the one `@ekwo-ai/invoice-pdf`
+ * renders, passes veraPDF's PDF/A-3b profile once embedded; another may not,
+ * and only a validator says which.
  */
 export async function embedFacturX(
   pdf: Uint8Array | ArrayBuffer,
@@ -64,14 +69,29 @@ export async function embedFacturX(
     afRelationship: AFRelationship.Alternative,
   });
 
-  const xmp = new TextEncoder().encode(buildXmpMetadata({ profile, ...options, date }));
-  const stream = doc.context.stream(xmp, { Type: 'Metadata', Subtype: 'XML', Length: xmp.length });
-  doc.catalog.set(PDFName.of('Metadata'), doc.context.register(stream));
-
   if (options.title) doc.setTitle(options.title);
   if (options.creator) doc.setCreator(options.creator);
   doc.setProducer(options.producer ?? '@ekwo-ai/factur-x');
+  const creationDate = doc.getCreationDate() ?? date;
+  doc.setCreationDate(creationDate);
   doc.setModificationDate(date);
+
+  // The XMP says what the information dictionary now says, entry for entry.
+  const xmp = new TextEncoder().encode(
+    buildXmpMetadata({
+      profile,
+      title: doc.getTitle(),
+      author: doc.getAuthor(),
+      subject: doc.getSubject(),
+      keywords: doc.getKeywords(),
+      creator: doc.getCreator(),
+      producer: doc.getProducer(),
+      date,
+      creationDate,
+    }),
+  );
+  const stream = doc.context.stream(xmp, { Type: 'Metadata', Subtype: 'XML', Length: xmp.length });
+  doc.catalog.set(PDFName.of('Metadata'), doc.context.register(stream));
 
   return doc.save({ useObjectStreams: false });
 }

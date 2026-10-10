@@ -18,6 +18,18 @@ All notable changes to this project are documented here. The format follows
   invoice.
 - `extractFacturX()` also finds `xrechnung.xml`, the name ZUGFeRD gives the
   XML of its XRECHNUNG profile.
+- `buildXmpMetadata()` takes `author`, `subject`, `keywords` and
+  `creationDate`, written as `dc:creator`, `dc:description`, `pdf:Keywords`
+  and `xmp:CreateDate`. Without them it writes what it wrote before.
+
+### Fixed
+- **The XMP of `embedFacturX()` now says what the information dictionary
+  says.** It wrote the tool as `dc:creator` beside an `Author` naming the
+  seller, the time of embedding as `xmp:CreateDate` beside the PDF's own
+  `CreationDate`, and nothing for `Subject` or `Keywords`; PDF/A wants each
+  entry of the dictionary and its XMP counterpart to agree. The packet is now
+  written from the dictionary of the PDF it is given, after the title, creator,
+  producer and dates of the options are set in it.
 
 ## [0.2.0] — 2026-09-14
 

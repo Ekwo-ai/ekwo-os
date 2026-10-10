@@ -102,8 +102,11 @@ back to `C62` (unit). See `UNIT_CODES` and `toUnitCode`.
 
 - Allowances and charges (BG-20, BG-21, BG-27, BG-28), gross prices with discounts and
   multiple deliveries are not modelled yet.
-- The PDF part embeds the data and declares PDF/A-3; it does not convert the visual PDF to
-  PDF/A (fonts, colour profiles, output intent). Validate the result with the tool of your
+- The PDF part embeds the data, declares PDF/A-3 and writes an XMP packet that agrees with
+  the document information dictionary; it does not convert the visual PDF to PDF/A (fonts,
+  colour profiles, output intent). A PDF rendered by
+  [`@ekwo-ai/invoice-pdf`](../invoice-pdf/README.md#pdfa-3) has them, and veraPDF finds no
+  failed rule of PDF/A-3b in it once embedded; validate any other PDF with the tool of your
   platform before going live.
 - No XSD or Schematron validation is performed. Test against a validator such as the FNFE
   Factur-X validator or the Mustang project.

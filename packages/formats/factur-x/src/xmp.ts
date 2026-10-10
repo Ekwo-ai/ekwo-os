@@ -11,11 +11,22 @@ export const CONFORMANCE_LEVELS: Readonly<Record<Profile, string>> = {
 
 export interface XmpOptions {
   profile: Profile;
+  /** `dc:title`, the `Title` of the document information dictionary. */
   title?: string;
+  /** `dc:creator`, the `Author` of the document information dictionary. Defaults to {@link creator}. */
+  author?: string;
+  /** `dc:description`, the `Subject` of the document information dictionary. */
+  subject?: string;
+  /** `pdf:Keywords`, the `Keywords` of the document information dictionary. */
+  keywords?: string;
+  /** `xmp:CreatorTool`, the `Creator` of the document information dictionary. */
   creator?: string;
+  /** `pdf:Producer`. */
   producer?: string;
-  /** Timestamp written to the metadata. Defaults to now. */
+  /** `xmp:ModifyDate`, and `xmp:CreateDate` unless {@link creationDate} is given. Defaults to now. */
   date?: Date;
+  /** `xmp:CreateDate`, the `CreationDate` of the document information dictionary. Defaults to {@link date}. */
+  creationDate?: Date;
 }
 
 function escapeXml(s: string): string {
@@ -25,12 +36,23 @@ function escapeXml(s: string): string {
 /**
  * XMP packet declaring a PDF/A-3 document with the Factur-X extension schema,
  * as required by the Factur-X specification (§ 6.2).
+ *
+ * PDF/A wants every entry of the document information dictionary to say the
+ * same as its XMP counterpart; give the same values to both.
  */
 export function buildXmpMetadata(options: XmpOptions): string {
-  const date = (options.date ?? new Date()).toISOString();
+  const modified = options.date ?? new Date();
+  const date = modified.toISOString();
+  const created = (options.creationDate ?? modified).toISOString();
   const title = escapeXml(options.title ?? 'Invoice');
   const creator = escapeXml(options.creator ?? '@ekwo-ai/factur-x');
+  const author = options.author === undefined ? creator : escapeXml(options.author);
   const producer = escapeXml(options.producer ?? '@ekwo-ai/factur-x');
+  const description =
+    options.subject === undefined
+      ? ''
+      : `\n      <dc:description><rdf:Alt><rdf:li xml:lang="x-default">${escapeXml(options.subject)}</rdf:li></rdf:Alt></dc:description>`;
+  const keywords = options.keywords === undefined ? '' : `\n      <pdf:Keywords>${escapeXml(options.keywords)}</pdf:Keywords>`;
   const property = (name: string, description: string) =>
     `<rdf:li rdf:parseType="Resource"><pdfaProperty:name>${name}</pdfaProperty:name><pdfaProperty:valueType>Text</pdfaProperty:valueType><pdfaProperty:category>external</pdfaProperty:category><pdfaProperty:description>${description}</pdfaProperty:description></rdf:li>`;
   return `<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
@@ -42,14 +64,14 @@ export function buildXmpMetadata(options: XmpOptions): string {
     </rdf:Description>
     <rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/">
       <dc:title><rdf:Alt><rdf:li xml:lang="x-default">${title}</rdf:li></rdf:Alt></dc:title>
-      <dc:creator><rdf:Seq><rdf:li>${creator}</rdf:li></rdf:Seq></dc:creator>
+      <dc:creator><rdf:Seq><rdf:li>${author}</rdf:li></rdf:Seq></dc:creator>${description}
     </rdf:Description>
     <rdf:Description rdf:about="" xmlns:pdf="http://ns.adobe.com/pdf/1.3/">
-      <pdf:Producer>${producer}</pdf:Producer>
+      <pdf:Producer>${producer}</pdf:Producer>${keywords}
     </rdf:Description>
     <rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/">
       <xmp:CreatorTool>${creator}</xmp:CreatorTool>
-      <xmp:CreateDate>${date}</xmp:CreateDate>
+      <xmp:CreateDate>${created}</xmp:CreateDate>
       <xmp:ModifyDate>${date}</xmp:ModifyDate>
     </rdf:Description>
     <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#">
