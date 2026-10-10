@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "AR",
   "name": "Argentina",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "schema_min": "20260921084143",
   "seed_sequence": 45,
   "released_at": "2026-09-25",
@@ -14,7 +14,7 @@
         "title": "Ley de Impuesto al Valor Agregado — texto ordenado en 1997 y sus modificaciones (Decreto 280/1997)",
         "publisher": "Ministerio de Justicia y Derechos Humanos — InfoLeg, Información Legislativa",
         "url": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/40000-44999/42701/texact.htm",
-        "consulted_on": "2026-09-25",
+        "consulted_on": "2026-10-10",
         "kind": "law"
       },
       {
@@ -63,6 +63,22 @@
         "publisher": "Administración Federal de Ingresos Públicos (hoy Agencia de Recaudación y Control Aduanero) — Boletín Oficial",
         "url": "https://www.argentina.gob.ar/normativa/nacional/resoluci%C3%B3n-4291-2018-313088/actualizacion",
         "consulted_on": "2026-09-25",
+        "kind": "regulation"
+      },
+      {
+        "key": "rg549",
+        "title": "Resolución General (AFIP) 549/1999 — Impuesto al Valor Agregado. Prestaciones realizadas en el exterior, que se utilicen o exploten en el país. Ley del impuesto, artículo 1°, inciso d). Norma complementaria; modificada por las Resoluciones Generales (AFIP) 585/1999 y 658/1999",
+        "publisher": "Ministerio de Justicia y Derechos Humanos — InfoLeg, Información Legislativa",
+        "url": "https://servicios.infoleg.gob.ar/infolegInternet/anexos/55000-59999/56995/norma.htm",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
+      },
+      {
+        "key": "rg4240",
+        "title": "Resolución General (AFIP) 4240/2018 — Impuesto al Valor Agregado. Ley N° 27.430. Servicios digitales prestados por un sujeto residente o domiciliado en el exterior. Ingreso del gravamen. Formas, plazos y condiciones",
+        "publisher": "Administración Federal de Ingresos Públicos (hoy Agencia de Recaudación y Control Aduanero) — Boletín Oficial",
+        "url": "https://www.argentina.gob.ar/normativa/nacional/resoluci%C3%B3n-4240-2018-310227/texto",
+        "consulted_on": "2026-10-10",
         "kind": "regulation"
       },
       {

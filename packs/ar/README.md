@@ -3,7 +3,8 @@
 Everything Argentina adds to Ekwo, as data: a chart of accounts built around
 the minimum disclosure of the Ley General de Sociedades, the journals, the
 value added tax at its three positive rates with exports at tasa cero and the
-exemptions of art. 7, the boxes of the monthly IVA declaration, a minimal
+exemptions of art. 7, the tax a responsable inscripto liquidates itself on
+services received from abroad, the boxes of the monthly IVA declaration, a minimal
 balance sheet and income statement, and the sentences an invoice needs. The
 format is [`docs/packs.md`](../../docs/packs.md); this file says where the
 content came from and which decisions it rests on, so that an Argentine
@@ -66,13 +67,18 @@ not say* below.
 ## Sources
 
 Every rate, box, mention and statement carries its own `legal_reference` and
-the key of the text it is in. The register in `pack.json` holds **12 texts**,
-every one opened on 25 September 2026: the Ley de Impuesto al Valor Agregado
-(texto ordenado 1997) and its Decreto Reglamentario 692/1998 on InfoLeg; the
+the key of the text it is in. The register in `pack.json` holds **14 texts**,
+opened on 25 September 2026 unless said otherwise: the Ley de Impuesto al
+Valor Agregado (texto ordenado 1997), read again on 10 October 2026 for
+art. 1, incisos d) and e), art. 5, inciso h), and art. 12, and its Decreto
+Reglamentario 692/1998 on InfoLeg; the
 Ley General de Sociedades 19.550 and the Código Civil y Comercial (Ley
 26.994), also on InfoLeg; Decreto 953/2024, which dissolved AFIP and created
 ARCA; Resoluciones Generales (AFIP) 4290/2018 and 4291/2018, on electronic
-invoicing; Resolución General (ARCA) 5705/2025, which created the "IVA
+invoicing; Resoluciones Generales (AFIP) 549/1999, on the tax due on
+services performed abroad and used in Argentina, and 4240/2018, on digital
+services bought from abroad by somebody who is not a responsable inscripto,
+both opened on 10 October 2026; Resolución General (ARCA) 5705/2025, which created the "IVA
 Simple" system and Form F. 2051; Resolución General (AFIP) 4172/2017, the
 Agenda General de Vencimientos; two ARCA portal pages (the IVA declaration and
 the electronic-invoice subjects page); and the FACPCE, named as the source of
@@ -90,7 +96,7 @@ non-current liabilities, equity; revenue by type of activity, cost of sales,
 administrative and selling expenses, financial and holding results — but
 still names rubros, not accounts.
 
-This pack's 128 accounts are therefore **original**: a convention of its own,
+This pack's 130 accounts are therefore **original**: a convention of its own,
 three to five digits deep depending on how far a rubro is broken down by
 nature, in which the first digit is Activo (1), Pasivo (2), Patrimonio Neto
 (3), Ingresos (4) or Costos y Gastos (5), and every block of three-digit
@@ -113,7 +119,12 @@ Four decisions:
   `2131` *IVA Débito Fiscal* and `1151` *IVA Crédito Fiscal* are where every
   tax posts; `2132` *IVA a Pagar* and `1152` *IVA Saldo a Favor - Técnico* are
   the reconcilable settlement accounts `settle_filing()` carries the net of a
-  period to, distinct from the posting accounts as the format requires.
+  period to, distinct from the posting accounts as the format requires. The
+  tax on services received from abroad has a pair of its own, `1153` *IVA
+  Crédito Fiscal - Prestaciones del exterior a computar* and `2135` *IVA por
+  prestaciones del exterior a ingresar*, because it is paid outside the
+  monthly return and becomes crédito fiscal only a period later — see
+  *Services received from abroad*.
 - **The suspense account is `117`** *Partidas pendientes de imputación*, not
   reconcilable, and never the bank or the cash account.
 - **`receivable` and `payable` name one subaccount each** — `1131` *Deudores
@@ -157,6 +168,7 @@ see *From Argentina* in `docs/international.md`.
 | `AR-P-105` | 10.5 % | purchase | domestic | PC105 / CF105 |
 | `AR-P-EXE` | — | purchase | exempt | PCEXE |
 | `AR-P-IMP` | 21 % | purchase | import | PCIMP / CFIMP |
+| `AR-P-EXT` | 21 % | purchase | foreign_services_received | PCEXT (base only) |
 
 **The general rate is 21 %** (Ley de Impuesto al Valor Agregado, art. 28,
 first paragraph). **The increased rate, 27 %**, applies to metered gas,
@@ -199,11 +211,98 @@ as crédito fiscal. `AR-P-IMP` carries the general rate; a good whose domestic
 sale would be reduced or exempt pays the tax at that rate instead, which this
 pack does not model as a separate code.
 
+**Services received from abroad are taxed in the hands of the responsable
+inscripto who uses them** (art. 1, inciso d)): `AR-P-EXT`, explained in the
+next section.
+
 **Not here:** withholdings and perceptions of VAT, of Impuesto a las
-Ganancias and of Ingresos Brutos, the digital-services tax on services
-received from abroad, and the region-conditioned discount Mexico's border
-decrees carry, which Argentina's law does not have an equivalent of; see
-*What the core could not say* below.
+Ganancias and of Ingresos Brutos — including the perception a payment
+intermediary makes on digital services bought from abroad by somebody who is
+not a responsable inscripto (art. 1, inciso e), below) — and the
+region-conditioned discount Mexico's border decrees carry, which Argentina's
+law does not have an equivalent of; see *What the core could not say* below.
+
+## Services received from abroad
+
+A company that is a responsable inscripto and buys a service from a supplier
+abroad — a software subscription, hosting, an API billed from the United
+States or Singapore — receives an invoice with no Argentine tax on it, and
+still owes the tax. The rules, as InfoLeg's texto actualizado of the law and
+the text of Resolución General (AFIP) 549/1999 read on 10 October 2026:
+
+- **What is taxed.** Art. 1, inciso d): *"Las prestaciones comprendidas en el
+  inciso e) del artículo 3°, realizadas en el exterior cuya utilización o
+  explotación efectiva se lleve a cabo en el país, cuando los prestatarios
+  sean sujetos del impuesto por otros hechos imponibles y revistan la calidad
+  de responsables inscriptos."* The use is in Argentina where the service is
+  first used or disposed of (art. 1, last paragraphs).
+- **Who pays.** The buyer — the prestatario is the taxpayer (art. 4,
+  inciso g): *"Sean prestatarios en los casos previstos en el inciso d) del
+  artículo 1º"*). The supplier abroad charges nothing and files nothing.
+- **When.** The taxable event happens *"en el momento en el que se termina la
+  prestación o en el del pago total o parcial del precio, el que fuere
+  anterior"* (art. 5, inciso h)). Ekwo dates the tax on the document's own
+  date; a bookkeeper whose payment or service end falls in another month
+  dates the document accordingly.
+- **How it is paid.** Not through the monthly return. Resolución General
+  (AFIP) 549/1999, art. 1: the prestatario determines the tax of *each*
+  taxable event and pays it *"dentro de los DIEZ (10) días hábiles
+  administrativos siguientes a la fecha del perfeccionamiento"* of that event;
+  art. 2, inciso c), as replaced by Resolución General (AFIP) 658/1999, names
+  the concept *"IVA por prestaciones del exterior"*. Where the price is paid
+  through a financial entity governed by Ley 21.526, arts. 4 and 5 (as
+  replaced by Resolución General (AFIP) 585/1999) make that entity collect
+  the tax from the prestatario instead. Either way the rate is the general
+  21 % of art. 28.
+- **When it becomes crédito fiscal.** Not in the month of the event. Art. 12,
+  last paragraph: the credit is computable when the taxable event has
+  happened for the supplier, *"excepto cuando dicho crédito provenga de las
+  prestaciones a que se refiere el inciso d), del artículo 1º, en cuyo caso
+  su cómputo procederá en el período fiscal inmediato siguiente a aquel en el
+  que se perfeccionó el hecho imponible que lo origina"*. Resolución General
+  (AFIP) 549/1999, art. 7, says the same of the tax actually paid: *"será
+  computable, para los sujetos aludidos en el artículo 1°, como crédito
+  fiscal en la declaración jurada correspondiente al período fiscal inmediato
+  siguiente a aquél en el que se haya perfeccionado el hecho imponible que lo
+  origina"*. Both texts count from the taxable event, not from the payment.
+
+What `AR-P-EXT` posts, on a service of 1 000 at 21 %: 1 000 on the expense
+account of the line and in the informational box `PCEXT`; 210 debited to
+`1153`, a credit not yet computable; 210 credited to `2135`, the tax to pay
+within ten business days; 1 000 owed to the supplier. Neither `DEBFIS` nor
+`CREDFIS` moves in the month of the invoice, and the saldo técnico of that
+month is exactly what it would have been without the purchase. A credit note
+from the same supplier posts the mirror. The payment of the tax is an
+ordinary bank entry against `2135`.
+
+**One step is manual.** The format of this repository dates every box a
+document writes on the document's own tax point, and has no way to say "this
+credit counts in the period after" — so `AR-P-EXT` writes no crédito fiscal
+box at all rather than one in the wrong month. In the following period the
+bookkeeper moves the amount from `1153` to `1151` with a journal entry, and
+adds it to the crédito fiscal of that period's return when filing: the
+`CREDFIS` and `SALDOTEC` that `vat_return()` computes for that period do not
+include it. See *What the core could not say*, point 6.
+
+**A supplier abroad belongs on `2112` *Proveedores - Exterior*,** not on the
+`payable` role `2111` *Proveedores - Mercado interno*: set it as the
+contact's own payable account. (The golden scenario cannot name a contact's
+account, so its supplier abroad lands on `2111`; the tax postings are what it
+proves.)
+
+**Inciso e) is a different tax, and not this one.** Art. 1, inciso e),
+added by Ley 27.430, taxes *"los servicios digitales [...] prestados por un
+sujeto residente o domiciliado en el exterior cuya utilización o explotación
+efectiva se lleve a cabo en el país, en tanto el prestatario no resulte
+comprendido en las disposiciones previstas en el inciso anterior"* — that
+is, a buyer who is **not** a responsable inscripto: a consumer, a
+monotributista, an exempt entity. There the tax is collected by the payment
+intermediary — the card issuer or the payment aggregator — as a perception
+agent (the article added after art. 27; Resolución General (AFIP) 4240/2018,
+arts. 2 and 3), or paid by the buyer where no intermediary acts (art. 7 of
+the same resolution). It is a perception on somebody else's purchase, not a
+tax this pack posts; a responsable inscripto buying a digital service is
+under inciso d) and uses `AR-P-EXT`.
 
 ## The declaration
 
@@ -234,6 +333,11 @@ therefore acronyms of its own over the substance the law fixes in arts. 11,
   below), so `tax_receivable` here always means the confined, non-refundable
   saldo técnico and never the freely disponible one. The format has no way to
   state that restriction on a credit balance; see *From Argentina*.
+- `PCEXT` is informational: the net price of services received from abroad
+  under art. 1, inciso d), in the period of their taxable event. It is in no
+  total, because the tax on it is paid separately and becomes crédito fiscal
+  only in the following period — see *Services received from abroad*. The
+  acronym is this pack's own, like the others.
 - **Due date**: art. 27 gives no fixed day; the return and its balance are
   due on the schedule of the Agenda General de Vencimientos (Resolución
   General (AFIP) 4172/2017 and its amendments), one business day per C.U.I.T.
@@ -260,13 +364,15 @@ holding them is best placed to map.
 
 ## The golden year
 
-A trading company, responsable inscripta, filing monthly, January to March
-2026: 11 documents and 4 payments. It sells at 21 % with a partial credit
+A trading company, responsable inscripta, filing monthly, January to April
+2026: 12 documents and 4 payments. It sells at 21 % with a partial credit
 note against the same invoice, sells electricity to a shop at 27 %, sells
 grain at 10.5 %, exports and is paid for it, sells books exempt under art. 7;
 it buys merchandise at 21 %, buys electricity for its plant at 27 %,
 buys agricultural inputs at 10.5 %, buys exempt technical books, and imports
-merchandise with a despacho de importación at 21 %. One payment is left
+merchandise with a despacho de importación at 21 %, and in April buys a
+software subscription from a supplier in the United States (`AR-P-EXT`), which
+fills `PCEXT` and leaves April's débito and crédito fiscal empty. One payment is left
 unmatched, an advance from a customer with no invoice against it yet.
 
 ## What the core could not say
@@ -293,6 +399,15 @@ as a change to the core. In short:
 5. **A rate conditioned on the buyer's registration and the address of the
    supply**, for the 27 % rate of art. 28, second paragraph — the bookkeeper
    picks the code, as for Mexico's border region.
+6. **A credit the law makes computable only in the period after its event.**
+   The tax on a service received from abroad (art. 1, inciso d)) is crédito
+   fiscal in the period immediately following its taxable event (art. 12,
+   last paragraph; Resolución General (AFIP) 549/1999, art. 7). A posting
+   writes its box in the period of the document's tax point, and
+   `cash_basis` moves a tax on a payment, not on a calendar: neither says
+   "one period later". `AR-P-EXT` therefore parks the amount on `1153` with
+   no box, and the move to `1151` — and into that period's crédito fiscal —
+   is the bookkeeper's.
 
 ## For a reviewer
 
