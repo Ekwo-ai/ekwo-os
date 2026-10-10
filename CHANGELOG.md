@@ -9,17 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
-## [0.12.0] — 2026-10-10
-
 ### Added
 
-- **The privacy page says the agents of Ekwo Cloud may learn from the books.**
-  Version 1.3 of `PRIVACY.md` adds the improvement of the agents, including
-  training on examples drawn from the books, to the purposes for which Ekwo
-  reads them, under the same legitimate interest and the same right to object;
-  the statements that the site carries no measurement tool and that no model is
-  trained on the books are replaced by what holds today and what consent a
-  measurement tool would ask for.
 - **Every country pack says what a service bought from abroad costs in
   tax.** A software subscription, hosting or an API billed by a supplier
   abroad is the most common purchase of a young company, and 44 packs that
@@ -47,6 +38,18 @@ somewhere has already run it.
   pack check` now refuses a pack whose taxes include a rated purchase VAT,
   GST or sales tax and which does neither, and `docs/packs.md` says how to
   write either.
+
+## [0.12.0] — 2026-10-10
+
+### Added
+
+- **The privacy page says the agents of Ekwo Cloud may learn from the books.**
+  Version 1.3 of `PRIVACY.md` adds the improvement of the agents, including
+  training on examples drawn from the books, to the purposes for which Ekwo
+  reads them, under the same legitimate interest and the same right to object;
+  the statements that the site carries no measurement tool and that no model is
+  trained on the books are replaced by what holds today and what consent a
+  measurement tool would ask for.
 - **The privacy page covers the projects Ekwo hosts.** Version 1.2 of
   `PRIVACY.md` opens with the choice of where the books live — a Supabase
   project of one's own, or one Ekwo hosts — and how a project moves from one to
