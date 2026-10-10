@@ -9,11 +9,6 @@ and income statement, and the sentences an invoice needs. The format is
 from and which decisions it rests on, so that a Mexican accountant reading the
 pack can disagree with a specific sentence rather than with the whole of it.
 
-It is the first pack of Latin America. The sections below follow the order a
-pack of the region will need — chart, electronic invoice, tax, declaration,
-statements — and the last one lists what the core could not say, most of
-which the next country of the region will meet again.
-
 **Status: `community`.** Nobody who files a Mexican return has reviewed it.
 The figures are replayed against a year of books by `tests/golden.test.ts`,
 which proves the pack is coherent and proves nothing about whether it is
@@ -31,34 +26,28 @@ Anexo 20 to the SAT or to an authorised certification provider (PAC, article
 Ekwo writes no Anexo 20 XML, talks to no PAC and stamps nothing. So:
 
 - `einvoicing` names **no profile and no date**, although the obligation
-  exists. `profile` is a profile built on EN 16931 that a brick of
-  `packages/formats/` writes, and the CFDI is neither; the format refuses an
-  obligation with a date and no profile, and has no word for "valid only once
-  a third party certifies it". Its legal reference says what the law requires
-  and says in capitals that Ekwo neither generates, stamps nor transmits a
-  CFDI. Declaring `cfdi-4.0` would have made the country page promise a
-  writer brick and Peppol transmission for Mexico — Spain and Côte d'Ivoire
-  leave the profile empty for the same reason.
+  exists. A `profile` is an EN 16931 profile a brick of `packages/formats/`
+  writes, and the CFDI is neither; the format has no word for "valid only
+  once a third party certifies it". The legal reference states the
+  requirement and says in capitals that Ekwo neither generates, stamps nor
+  transmits a CFDI.
 - Every document carries the mention `cfdi_not_stamped`: *this document is not
   a CFDI; only the stamped CFDI supports the transaction for tax purposes.*
 - The number a document gets in Ekwo is the number of the accounting entry,
   not the fiscal folio, which only the SAT assigns (`numbering: sequential`).
 
 What a company does today: stamp the CFDI with a PAC or with the SAT's free
-service, and record the transaction in Ekwo. The format of this repository
-cannot yet say "mandatory, by clearance"; see *What the core could not say*.
+service, and record the transaction in Ekwo.
 
 ## Sources
 
 Every rate, field, mention and statement carries its own `legal_reference` and
-the key of the text it is in. The register in `pack.json` holds **27 texts**,
-23 of them opened on 21 September 2026 and the four articles of the Income Tax
-Act of the corporate tax section on 1 October 2026:
+the key of the text it is in. The register in `pack.json` holds **27 texts**:
 
 - the consolidated federal laws on the Cámara de Diputados site (LIVA, its
   Reglamento, CFF, LISR, Código de Comercio, LGSM);
-- articles 9, 14, 28 and 57 of the LISR as the SAT portal serves them, one page
-  per article (the Cámara's site did not answer on 1 October 2026);
+- articles 9, 14, 28 and 57 of the LISR on the SAT portal, one page per
+  article;
 - the *Resolución Miscelánea Fiscal para 2026* and its Anexo 24 on the SAT's
   normative minisite;
 - the three border-region decrees and the 2013 compiling decree in the Diario
@@ -69,15 +58,9 @@ Act of the corporate tax section on 1 October 2026:
   complement and the PACs;
 - the CINIF, for the NIF, named and not transcribed.
 
-Two notes for whoever checks the links. `www.sat.gob.mx` answers `403` to a
-request without a browser for its portal pages; the same pages are served on
-`wwwmat.sat.gob.mx`, which is where the register points, and every one was
-checked by its title (a wrong path there answers `404`). `omawww.sat.gob.mx`
-serves the Anexo 20 page over plain HTTP only, which the register refuses. The
-guides themselves are PDF files behind a query string with several
-parameters; the register points at the page that links each one, and the
-Diario Oficial notes by their `codigo` alone, which the DOF redirects to the
-dated note.
+SAT portal pages are cited on `wwwmat.sat.gob.mx`, which serves the same pages
+as `www.sat.gob.mx`; PDF guides are cited by the page that links them, and
+Diario Oficial notes by their `codigo`.
 
 ## The chart of accounts
 
@@ -90,36 +73,32 @@ of that code and to send the catalogue and a monthly trial balance to the SAT.
 The pack uses the grouping code itself as the catalogue: **280 codes, 197 of
 them postable**, with the official numbers and names of the 2026 Anexo 24.
 The rubros (`100`, `100.01`, `200`…) and the major accounts (`101`, `102`…)
-are headings; the first-level subaccounts (`101.01`, `102.01`…) are where
-entries post. The association the SAT asks for
-is then the identity, and a company that needs a finer account opens a
-second-level subaccount under the code — which the SAT leaves to it.
+are headings; entries post to the first-level subaccounts (`101.01`,
+`102.01`…). The association the SAT asks for is then the identity; a finer
+account is a second-level subaccount under the code.
 
 Selected: cash, banks, customers, sundry debtors, prepayments, the tax
 accounts, inventory, the usual fixed assets and their depreciation, suppliers,
 the payroll provisions, the withheld taxes, equity, revenue by tax treatment,
-costs, the general expenses a trading or services company books, and the
-financing result. Left out: sector accounts (railways, aircraft, biological
-assets), the related-party variants beyond customers and suppliers, groups
-602 to 606 (selling, administrative and manufacturing expenses, which repeat
-most of the subaccounts of 601 — 84 under 602, 82 under 603 and 604), and the
-memorandum accounts (800).
+costs, general expenses and the financing result. Left out: sector accounts
+(railways, aircraft, biological assets), related-party variants beyond
+customers and suppliers, groups 602 to 606 (which repeat most of the
+subaccounts of 601 — 84 under 602, 82 under 603 and 604), and the memorandum
+accounts (800).
 
 Four decisions:
 
 - **The IVA accounts are the SAT's cash-basis pairs.** `209.01` *IVA
   trasladado no cobrado* and `208.01` *IVA trasladado cobrado* on the sale
   side, `119.01` *IVA pendiente de pago* and `118.01` *IVA acreditable pagado*
-  on the purchase side. The grouping code is built for the timing of the law,
-  and the pack's cash-basis taxes move the tax from the first to the second
-  when the invoice is collected or paid.
+  on the purchase side; the cash-basis taxes move the tax from the first to
+  the second when the invoice is collected or paid.
 - **The declaration settles to `213.01` *IVA por pagar*** (`tax_payable`) or to
-  `113.01` *IVA a favor* (`tax_receivable`). A balance in favour is a claim on
-  the administration under LIVA article 6: credited against the following
-  months or refunded.
+  `113.01` *IVA a favor* (`tax_receivable`), a claim credited against the
+  following months or refunded (LIVA article 6).
 - **The suspense account is `121.01` *Otros activos a corto plazo*.** The
-  grouping code has no suspense account; a debit balance is reported as an
-  asset and a credit balance on line 218, other current liabilities.
+  grouping code has none; a debit balance is reported as an asset and a
+  credit balance on line 218, other current liabilities.
 - **The result of the year goes to `305.01` / `305.02`**, and the close carries
   it to `304.01` / `304.02` (`closing_style: result_accounts`).
 
@@ -136,11 +115,10 @@ Four decisions:
 | Payment in one instalment (PUE) or deferred (PPD), form of payment | CFF art. 29-A, fr. VII (b) and (c); RMF 2026 rule 2.7.1.32 (payment complement) |
 | Cancellation only with the receiver's acceptance | CFF art. 29-A, fourth paragraph; RMF 2026 rule 2.7.1.35 for the exceptions |
 
-These are fields of the CFDI XML, not sentences. The pack carries them in this
-table and in the legal references; the core has no column for the use of the
-CFDI or the tax regime of a party (see the gaps below). The mentions it does
-print are the stamping warning, the PPD sentence for a cash-basis line, the
-export article and the exempt articles.
+These are fields of the CFDI XML, not sentences; the core has no column for
+the use of the CFDI or a party's tax regime. The mentions the pack prints are
+the stamping warning, the PPD sentence for a cash-basis line, the export
+article and the exempt articles.
 
 ## Taxes
 
@@ -179,18 +157,16 @@ regions, to a business registered in the SAT's list of beneficiaries, for
 goods delivered or services rendered in its establishments in the region.
 Both decrees run until 31 December 2026 (DOF 31-12-2025), which is the
 `valid_to`; an extension is a new code, never an edit. The regions are lists
-of municipalities, not states, and the pack cannot condition the code on
-them: the bookkeeper chooses it.
+of municipalities, so the bookkeeper chooses the code.
 
-**Withholding, and why it is on the invoice.** A *persona moral* withholds
-two thirds of the IVA an individual charges it for professional services,
-rent or commissions (LIVA art. 1o.-A, fr. II (a) and (d); RLIVA art. 3o.,
-fr. I), and 4 % of the value of road freight (fr. II (c); RLIVA art. 3o.,
-fr. II). The pack carries both as a purchase tax whose third posting sends
-the withheld share to `216.10` *Impuestos retenidos de IVA*, where it waits
-for the separate *IVA retenciones* declaration, and the freight case on the
-sale side, where the carrier's withheld 4 % lands in the field *IVA
-retenido*. Three limits, all written in the taxes themselves:
+**Withholding.** A *persona moral* withholds two thirds of the IVA an
+individual charges it for professional services, rent or commissions (LIVA
+art. 1o.-A, fr. II (a) and (d); RLIVA art. 3o., fr. I), and 4 % of the value
+of road freight (fr. II (c); RLIVA art. 3o., fr. II). The pack carries both as
+a purchase tax whose third posting sends the withheld share to `216.10`
+*Impuestos retenidos de IVA*, for the separate *IVA retenciones* declaration,
+and the freight case on the sale side, where the carrier's withheld 4 % lands
+in the field *IVA retenido*. Three limits:
 
 - the law withholds **on payment**, and a cash-basis tax in this format takes
   exactly one tax posting, so the withholding codes are booked on the invoice
@@ -226,23 +202,23 @@ contact's payable account; the golden scenario cannot name a contact's
 account, so its supplier abroad lands on `201.01`.
 
 **Not here:** IEPS (the special tax on production and services), the import
-of intangibles (LIVA art. 24, fr. II and III), the proportional crediting of articles 5o., fraction V, and 5o.-B for a
-business with exempt activities, the *RESICO* and the other regimes of individuals,
-and every ISR computation.
+of intangibles (LIVA art. 24, fr. II and III), the proportional crediting of
+articles 5o., fraction V, and 5o.-B for a business with exempt activities, the
+*RESICO* and the other regimes of individuals, and every ISR computation.
 
 ## The declaration
 
 `MX-IVA-PM` is the monthly *pago definitivo* of IVA of a *persona moral*,
 filed on the SAT's platform "Presenta tu declaración de pagos definitivos de
-IVA del ejercicio 2024 en adelante". It has no numbered lines: the fields are
-named, and the pack gives each an acronym of its own (`G16`, `C16`, `P16`,
-`A16`, `RET`, `CAC`, `SAF`…) with the field's exact name. The sections are the
-guide's: *IVA a cargo*, *IVA acreditable*, *Determinación*.
+IVA del ejercicio 2024 en adelante". Its fields are named, not numbered; the
+pack gives each an acronym (`G16`, `C16`, `P16`, `A16`, `RET`, `CAC`, `SAF`…)
+with the field's exact name. The sections are the guide's: *IVA a cargo*,
+*IVA acreditable*, *Determinación*.
 
 - The form computes the tax fields as value × rate; the pack posts the tax
-  the ledger recorded, which is the same figure to the rounding of each CFDI.
-  The two "not collected / not paid because of the incentive" fields are the
-  one place the pack writes the multiplication (`rate: 8`).
+  the ledger recorded, the same figure to the rounding of each CFDI. The two
+  "not collected / not paid because of the incentive" fields are the one
+  place the pack writes the multiplication (`rate: 8`).
 - *Cantidad a cargo* = total IVA due − IVA withheld − creditable IVA − other
   amounts in favour + other amounts due. The guide's sentence omits the
   creditable IVA; LIVA article 5o.-D subtracts it and the section shows the
@@ -254,8 +230,8 @@ guide's: *IVA a cargo*, *IVA acreditable*, *Determinación*.
   5.1 of the 2013 compiling decree moves it by one to five working days
   according to the sixth digit of the RFC, except for the taxpayers it lists.
   The rule is therefore `depends_on_taxpayer`.
-- The SAT pre-fills the declaration from the CFDI it stamped. The values Ekwo
-  computes are what to compare them with, not a substitute for them.
+- The SAT pre-fills the declaration from the CFDI it stamped; Ekwo's values
+  are what to compare them with, not a substitute.
 
 **Not transcribed**: the *IVA retenciones* declaration (a second form, filed
 with the same monthly payment), the **DIOT** (LIVA art. 32, fr. VIII; RMF rule
@@ -294,87 +270,81 @@ nobody matches would wait on its transition account for ever.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
-The section carries what was read on an official page on 1 October 2026 —
-articles 9, 14, 28 and 57 of the *Ley del Impuesto sobre la Renta* as the SAT
-portal serves them — and nothing else. It starts from *Utilidad (pérdida)
-antes de impuestos a la utilidad* (`UAI`, printed above the ISR account 611),
-applies 30 % (art. 9) to the base left after the adjustments and the losses,
-and lets a loss be applied for ten years (art. 57). It is an estimate from the
-books, not the accounting-to-tax reconciliation the law describes, which
-starts from income and authorised deductions and not from the accounting
-result.
+The section carries articles 9, 14, 28 and 57 of the *Ley del Impuesto sobre
+la Renta* and nothing else. It starts from *Utilidad (pérdida) antes de
+impuestos a la utilidad* (`UAI`, printed above the ISR account 611), applies
+30 % (art. 9) to the base left after the adjustments and the losses, and lets
+a loss be applied for ten years (art. 57). It is an estimate from the books,
+not the accounting-to-tax reconciliation the law describes, which starts from
+income and authorised deductions.
 
-Two things to know about the dates. The rules are dated from the first day of
-2025, the year the worked examples cover, and not from the day the law
-adopted them, which was not read. And the portal pages carry no reform date:
-the pack's `lisr` entry names a text last reformed on 1 April 2024, and a
-2026 summary of the tax package that was read does not list articles 9, 28 or
-57 among the ones it changed. A reviewer should check that against the text
-in force.
+The rules are dated from 1 January 2025, the year the worked examples cover,
+not from the day the law adopted them. The `lisr` entry names a text last
+reformed on 1 April 2024; a reviewer should check articles 9, 28 and 57
+against the text in force.
 
 | Not carried | Why |
 |---|---|
-| The monthly provisional payments (art. 14) | They are the profit coefficient of the last year times the income of the year so far, less the profit sharing and the losses, at the rate of article 9, paid by the 17th of the following month. That is neither of the two methods of `prepayments` (a surcharge on a shortfall, a share of a reference tax), so `prepayments` is empty. |
-| The annual adjustment for inflation (art. 44) and the restatement of losses (art. 57) | Article 57 restates a loss by an updating factor before it is applied, and the section has no index. Losses are applied at their nominal amount, which understates what a company may apply. Article 44 was not read. |
-| Taxes on the tax | None is carried: nothing read said there was one, and the vocabulary has no shape for it. |
-| The share of restaurant consumption that is deductible, and its conditions | The rule adds back 91.5 % of the amount the company declares (art. 28, fr. XX). The company declares only what falls outside fraction V, whose limits were not read; bar consumption, never deductible, is the company's to leave in the amount. |
-| Fines: the exceptions | Article 28, fr. VI has limited exceptions (objective liability, force majeure). The company declares the amount that is not covered by one. No account of the chart holds fines alone, so the rule names none. |
-| Account 601.83 *Gastos no deducibles (sin requisitos fiscales)* | An expense that lacks the requirements of article 27 is not deductible, but article 27 was not read, so no rule names the account. A company that books on it declares the amount under a rule of its own. |
-| Employee profit sharing: the reading | The rule adds back the whole of account 607 and deducts what the company declares it paid in the year (art. 9, fr. I). A company that books the profit sharing only when it pays it gets the same figure either way. The reading that the book expense is not the deduction is the pack's, and a local accountant should confirm it. |
-| Other non-deductible items of article 28 and the limits of authorised deductions | Not read one by one: payments to related parties, gifts, vehicles, interest and the rest need a rule only where a flat percentage can be cited. |
-| RESICO for legal entities and the other special regimes | Another regime with other rates; not read. A company in one of them does not use this section. |
-| Tax credits and incentives (the border-region decrees, film projects…) | `credits` is empty: the shape is published and none was read in its text. |
-| Rounding of the tax | Not read. The estimate is kept at the cent. |
+| The monthly provisional payments (art. 14) | The profit coefficient of the last year times the income of the year so far, less the profit sharing and the losses, at the rate of article 9, paid by the 17th of the following month — neither of the two methods of `prepayments`, so `prepayments` is empty. |
+| The annual adjustment for inflation (art. 44) and the restatement of losses (art. 57) | The section has no index: losses are applied at their nominal amount, which understates what a company may apply. |
+| Taxes on the tax | None is known, and the vocabulary has no shape for one. |
+| The share of restaurant consumption that is deductible, and its conditions | The rule adds back 91.5 % of the amount the company declares (art. 28, fr. XX), i.e. what falls outside fraction V; bar consumption, never deductible, is the company's to leave in the amount. |
+| Fines: the exceptions | Article 28, fr. VI has limited exceptions (objective liability, force majeure). The company declares the amount not covered by one; no account holds fines alone. |
+| Account 601.83 *Gastos no deducibles (sin requisitos fiscales)* | An expense lacking the requirements of article 27 is not deductible; no rule names the account, so a company declares the amount under a rule of its own. |
+| Employee profit sharing: the reading | The rule adds back the whole of account 607 and deducts what the company declares it paid in the year (art. 9, fr. I). The reading that the book expense is not the deduction is the pack's, and a local accountant should confirm it. |
+| Other non-deductible items of article 28 and the limits of authorised deductions | Payments to related parties, gifts, vehicles, interest and the rest need a rule only where a flat percentage can be cited. |
+| RESICO for legal entities and the other special regimes | Another regime with other rates; a company in one of them does not use this section. |
+| Tax credits and incentives (the border-region decrees, film projects…) | `credits` is empty. |
+| Rounding of the tax | The estimate is kept at the cent. |
 
 The loss limit in the data is the one article 57 states: ten following years,
 no ceiling on the profit, oldest first. Nothing the pack says is tax advice.
 
 ## Fixed assets: what `fixed_assets.json` leaves out
 
-The section carries what was read on an official page on 1 October 2026 —
-articles 31 and 34 of the *Ley del Impuesto sobre la Renta* as the SAT portal
-serves them — and nothing else. Five categories, each a straight line over
-twelve months divided by the maximum annual percentage of article 34:
-constructions 5 % (240 months), office furniture and equipment 10 % (120),
-vessels 6 % (200), cars, buses, cargo trucks, forklifts and trailers 25 % (48),
-computers, servers and printers 30 % (40). Disposal is `net_result`, on
-`704.23` for a gain and `703.21` for a loss.
+The section carries articles 31 and 34 of the *Ley del Impuesto sobre la
+Renta* and nothing else. Five categories, each a straight line over twelve
+months divided by the maximum annual percentage of article 34: constructions
+5 % (240 months), office furniture and equipment 10 % (120), vessels 6 %
+(200), cars, buses, cargo trucks, forklifts and trailers 25 % (48), computers,
+servers and printers 30 % (40). Disposal is `net_result`, on `704.23` for a
+gain and `703.21` for a loss.
 
 **These are the tax ceilings used as accounting practice, not accounting
 rules.** The percentages of article 34 are the most the law lets a company
-deduct each year on the original amount of the investment. The accounting
-standard, NIF C-6, is named and not transcribed here: the CINIF sells its text
-and no free copy was read, so no duration, method or first-year convention is
-attributed to it. The first period is prorated in months because article 31
-prorates irregular fiscal years in months of use; whether a Mexican company
-books the month of entry in service in full is practice, and a reviewer should
-say so. Article 31 lets the taxpayer start deducting in the year of use or the
-following one, at its option, which the module cannot express.
+deduct each year on the original amount of the investment. NIF C-6 is named
+and not transcribed (its text is not freely available), so no duration,
+method or first-year convention is attributed to it. The first period is
+prorated in months because article 31 prorates irregular fiscal years in
+months of use; whether a Mexican company books the month of entry in service
+in full is practice, and a reviewer should say so. Article 31 lets the
+taxpayer start deducting in the year of use or the following one, which the
+module cannot express.
 
 | Not carried | Why |
 |---|---|
-| Machinery and equipment by activity (art. 35: 5 %, 10 % for other activities, 35 %, 50 %) | Not read on an official page; the portal pages for the article could not be reached. No machinery category is declared rather than a guessed one. |
-| Deferred expenses, deferred charges, pre-operating expenses, software and other intangibles (art. 33: 5 %, 10 %, 15 %, and the concession term in fr. IV) | Not read on an official page. Goodwill is not a deductible investment under these articles and has no category. |
-| Leasehold improvements | Article 34 gives no rate for them that was read. |
+| Machinery and equipment by activity (art. 35: 5 %, 10 % for other activities, 35 %, 50 %) | No machinery category is declared rather than a guessed one; to be checked against the statute. |
+| Deferred expenses, deferred charges, pre-operating expenses, software and other intangibles (art. 33: 5 %, 10 %, 15 %, and the concession term in fr. IV) | Not carried. Goodwill is not a deductible investment under these articles and has no category. |
+| Leasehold improvements | Article 34 gives no known rate for them. |
 | Dies, moulds and tooling (art. 34, fr. VIII, 35 %) | 12 months ÷ 35 % is 34.29 months and `duration_months` is an integer; rounding it would change the rate. |
-| Aircraft, railways, telephone and satellite communications, bicycles and motorcycles, usufruct, and the 100 % items (livestock, accessibility, renewable energy) | Read in the list, not carried: a specialised asset the company states itself. The 100 % items are a deduction, not a depreciation period. |
-| Tax depreciation distinct from the accounting one | The module keeps one schedule per asset. A Mexican company that applies the article 34 percentage for tax and another one in its books keeps two figures; the module carries one. |
+| Aircraft, railways, telephone and satellite communications, bicycles and motorcycles, usufruct, and the 100 % items (livestock, accessibility, renewable energy) | A specialised asset the company states itself. The 100 % items are a deduction, not a depreciation period. |
+| Tax depreciation distinct from the accounting one | The module keeps one schedule per asset. |
 | The restatement by the INPC (*actualización*) of the undeducted balance and of the original amount | The module has no index. |
-| The cap on the deduction for cars (the fixed amount of article 36) and the rules for non-deductible investments | Not read. |
+| The cap on the deduction for cars (the fixed amount of article 36) and the rules for non-deductible investments | Not carried. |
 | The deduction of the undeducted balance on a sale or when an asset stops being useful (art. 31) | A tax rule of the year of the sale; the disposal books the accounting difference only. |
-| Residual value, components, impairment, revaluation, small-value expensing | Not read, and several are outside the vocabulary of the module. |
+| Residual value, components, impairment, revaluation, small-value expensing | Not carried; several are outside the vocabulary of the module. |
 
-Account `704.23` *Otros productos* and `703.21` *Otros gastos* are general
-accounts of the grouping code. `703.21` is also the rounding account; the SAT
-code has specific *Pérdida/Ganancia en venta y/o baja* accounts only for some
-kinds of asset (`703.05`, `704.05` for office furniture, `703.06`, `704.06` for
+`704.23` *Otros productos* and `703.21` *Otros gastos* are general accounts of
+the grouping code; `703.21` is also the rounding account. The SAT code has
+specific *Pérdida/Ganancia en venta y/o baja* accounts only for some kinds of
+asset (`703.05`, `704.05` for office furniture, `703.06`, `704.06` for
 computers) and a disposal names one account per pack, so the pack names the
 general ones.
 
 ## What the core could not say
 
-The Mexican section of [`docs/international.md`](../../docs/international.md)
-states each of these as a change to the core. In short:
+See [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
+In short:
 
 1. **Clearance.** `einvoicing` can say "mandatory" only for a profile, and
    has no way to say "valid only once a third party certifies it"; the

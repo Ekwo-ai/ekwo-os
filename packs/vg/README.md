@@ -4,25 +4,25 @@ Everything the British Virgin Islands add to Ekwo, as data: a chart of accounts,
 
 **Status: `community`.** Nobody who practises in the Virgin Islands has reviewed it. The golden scenario replays a year of books and proves the pack is coherent, not that it is right.
 
-**A jurisdiction with no tax on sales.** Like [`packs/hk`](../hk/README.md), this pack declares no periodic return: no `tax_report.json`, no `tax_payable` / `tax_receivable` roles, no tax-settlement account. `vat_return.json` in the golden carries the fiscal year with empty `boxes`, as Hong Kong's does.
+**A jurisdiction with no tax on sales.** This pack declares no periodic return: no `tax_report.json`, no `tax_payable` / `tax_receivable` roles, no tax-settlement account. `vat_return.json` in the golden carries the fiscal year with empty `boxes`.
 
 ## Sources
 
-Consulted on 10 October 2026 (`certification.sources`):
+The register (`certification.sources`):
 
-| What | Text | Opened? |
-|---|---|---|
-| Taxes administered: payroll tax, stamp duty, self-drive motor vehicle tax, hotel accommodation tax, land and house tax, liquor licence, cheque duty, service charges; no tax on sales | Inland Revenue Department, `gov.vg/inland-revenue-department` | yes |
-| "The BVI does not levy VAT or sales tax"; companies generally exempt from income tax; payroll tax 2% / 6% employer, 8% employee, above USD 10,000; social security and NHI; stamp duty; land and house tax; no Pillar Two announcement | Deloitte, *British Virgin Islands Highlights 2025* | yes |
-| Financial return: balance sheet and income statement, unaudited, nine months, no mandated framework, exemptions, five-year retention by the registered agent | Maples; Mourant; Vistra (practitioner notes on BVI Business Companies Act s. 98A and the Financial Return Order 2023) | yes |
-| Online registration and mandatory e-filing of payroll, self-drive and hotel tax returns from 1 December 2023 | Orbitax; `eregisterfortax.gov.vg` named as the registration portal | the news item yes, the portal itself no |
-| The statutes | `laws.gov.vg` (statute index) | **no** |
+| What | Text |
+|---|---|
+| Taxes administered: payroll tax, stamp duty, self-drive motor vehicle tax, hotel accommodation tax, land and house tax, liquor licence, cheque duty, service charges; no tax on sales | Inland Revenue Department, `gov.vg/inland-revenue-department` |
+| "The BVI does not levy VAT or sales tax"; companies generally exempt from income tax; payroll tax 2% / 6% employer, 8% employee, above USD 10,000; social security and NHI; stamp duty; land and house tax; no Pillar Two announcement | Deloitte, *British Virgin Islands Highlights 2025* |
+| Financial return: balance sheet and income statement, unaudited, nine months, no mandated framework, exemptions, five-year retention by the registered agent | Maples; Mourant; Vistra (practitioner notes on BVI Business Companies Act s. 98A and the Financial Return Order 2023) |
+| Online registration and mandatory e-filing of payroll, self-drive and hotel tax returns from 1 December 2023 | Orbitax; `eregisterfortax.gov.vg` named as the registration portal |
+| The statutes | `laws.gov.vg` (statute index) |
 
-**What could not be read.** The statute texts (BVI Business Companies Act 2004, ss. 98 and 98A; the Financial Return Order 2023; the Payroll Taxes Act 2004; the Income Tax Act) were not opened on `laws.gov.vg`; their content is taken from the Inland Revenue Department page and from the law-firm and advisory summaries above. The P6 payroll return form (`gov.vg`, 21-day deadline) returned an error, so that deadline is reported from secondary summaries. The `eregisterfortax.gov.vg` portal was not opened. The Order's schedule of lines was not read; the statement lines follow the headings the summaries list. Every `legal_reference` says which of these applies.
+The statutes themselves (BVI Business Companies Act 2004, ss. 98 and 98A; the Financial Return Order 2023 and its schedule of lines; the Payroll Taxes Act 2004; the Income Tax Act) and the P6 21-day deadline rest on the Inland Revenue Department page and the summaries above; they should be checked against `laws.gov.vg`. Every `legal_reference` says which source applies.
 
 ## No VAT, GST or sales tax
 
-Checked on 2026-10-10: the Inland Revenue Department lists the taxes it administers and none is a tax on sales; Deloitte (2025) states the territory levies no VAT or sales tax. Had a general consumption tax been found in force, the pack would have stopped. Income tax is legislated but at a zero rate. `VG-S-NA` (sales) and `VG-P-NA` (purchases) are therefore `not_subject`, `kind: other`, rate 0, `vat_category: O`, base posting only. No exemption code or VATEX: the list names articles of an EU directive.
+The Inland Revenue Department lists the taxes it administers and none is a tax on sales; Deloitte (2025) states the territory levies no VAT or sales tax. Income tax is legislated but at a zero rate. `VG-S-NA` (sales) and `VG-P-NA` (purchases) are therefore `not_subject`, `kind: other`, rate 0, `vat_category: O`, base posting only. No exemption code or VATEX: the list names articles of an EU directive.
 
 ## Chart of accounts
 

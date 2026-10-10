@@ -41,8 +41,8 @@ Ekwo writes no CFE XML, requests no CAE and signs nothing. So:
   2025-01-01`). `profile` is a profile built on EN 16931 that a brick of
   `packages/formats/` writes, and the CFE is neither; the format has no word
   for "signed by the issuer and reported to an administration under its own
-  numbering authorisation" — see *What the core could not say* below and
-  Chile's own pack, which reads the same way for the same reason.
+  numbering authorisation" — see *What this pack does not transcribe*
+  below.
 - Every document carries the mention `cfe_not_issued`: *this document is not
   a CFE; only a CFE with a CAE supports the transaction for tax purposes in
   Uruguay.*
@@ -58,7 +58,7 @@ transaction in Ekwo.
 
 Every rate, field, mention and statement carries its own `legal_reference`
 and the key of the text it is in. The register in `pack.json` holds ten
-texts, every one opened on 26 September 2026: the **Texto Ordenado 2023**
+texts: the **Texto Ordenado 2023**
 (Decreto N° 101/024, of 4 April 2024), Título 10, in the version the DGI
 itself keeps current — it replaced the 1996 Texto Ordenado after twenty-seven
 years and renumbered every article, so this pack cites the 2023 numbering
@@ -71,16 +71,12 @@ pages confirming the 2025 universal date; two DGI pages transcribing the
 Formulario 1376; the DGI's own 2026 deadlines calendar; and the DGI's e-Factura
 portal.
 
-One note for whoever checks the links: the two Formulario 1376 pages are the
-DGI's own written guides to its online PADI application, not a printable
-form with pre-numbered boxes the way Chile's Formulario 29 is — the line
+The two Formulario 1376 pages are the DGI's own written guides to its online
+PADI application, not a printable form with pre-numbered boxes. The line
 numbers this pack transcribes (8, 9, 11, 12, 14, 15, 16, 18, 19, 22, 43) are
-the ones the DGI's own guides name in the running text (*"línea 8"*, *"línea
-17"*, *"línea 27"*) and the ones the PADI screens themselves print beside
-each field, confirmed against a training reproduction of those screens by a
-university-adjacent accounting course (not cited in `certification.sources`,
-because it is not itself an official text — only used here to read numbers
-the DGI's own prose names but does not lay out as a table).
+the ones those guides name in the running text (*"línea 8"*, *"línea 17"*,
+*"línea 27"*) and the PADI screens print beside each field; a reviewer
+should check them against the screens.
 
 ## The chart of accounts
 
@@ -90,10 +86,8 @@ general within four months of the close of the fiscal year, and art. 89
 refers to "normas contables adecuadas" — today the International Financial
 Reporting Standards the Decreto N° 291/014 adopts, or the simplified regime
 that same decree opens to smaller companies — without naming a single code
-or a single account, the same position Chile's own Código Tributario, art.
-17, takes and for the same reason this pack gives it: an "adequate
-accounting" duty that a chart of accounts satisfies rather than a chart the
-law hands down.
+or a single account: an "adequate accounting" duty that a chart of
+accounts satisfies rather than a chart the law hands down.
 
 This pack's `accounts.csv` is therefore **Ekwo's own numbering**, classes 1
 to 5 with no official correlate, built so that every account reaches a line
@@ -108,8 +102,7 @@ of the balance sheet or the income statement below. Four decisions:
   the one thing the postings of the period never touch themselves.
 - **The suspense account is `1150` *Partidas Pendientes de
   Identificación*.** No text asks for one; a debit balance is reported as an
-  asset and a credit balance as a liability, the solution Chile's and
-  Mexico's own packs use for the same reason.
+  asset and a credit balance as a liability.
 - **The result of the year goes to `3105` / `3106`**, and the close carries
   it to `3103` / `3104` (`closing_style: result_accounts`) — the shape art.
   87 of the Ley N° 16.060 implies, since the balance the administrators
@@ -151,8 +144,7 @@ on, rather than entering it and being relieved of the rate. What an exporter
 keeps is the ordinary right of art. 14, inciso quinto, to deduct the tax
 that integrates, directly or indirectly, the cost of what it exported — the
 same mechanism `UY-P-22` and `UY-P-10` already give on every purchase,
-regardless of what it is destined for, the way Chile's own pack reads its
-art. 36. The list of what counts as an exported service is Decreto N°
+regardless of what it is destined for. The list of what counts as an exported service is Decreto N°
 220/998, art. 34, a taxative enumeration of twenty-seven numerals (call
 centres, software, hotels for non-residents, international transport, and
 more); this pack transcribes one, software development (numeral 11, literal
@@ -186,8 +178,7 @@ tax.
   it publishes every year, a day between the 22nd and the 24th of the month
   following the one declared, by the last digit of the taxpayer's Registro
   Único Tributario (RUT) — this pack declares `depends_on_taxpayer` and cites
-  the 2026 calendar, the same choice `docs/packs.md` records for France's own
-  CA3.
+  the 2026 calendar.
 - **Box 19 is a simplification of two official lines.** The Formulario 1376
   splits the period's deductible input credit between line 19 (attributable
   to taxable domestic sales) and line 27 (attributable to exports), through
@@ -242,9 +233,8 @@ difference of lines 18 and 19, floored at zero.
 
 ## What this pack does not transcribe
 
-The Uruguayan section of
-[`docs/international.md`](../../docs/international.md) states each of these
-as a gap of the core rather than a choice of this pack. In short:
+Each of these is a gap of the core rather than a choice of this pack; see
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 1. **The CFE itself.** No component of `packages/formats/` writes a
    Uruguayan CFE's XML, requests a CAE or signs anything; see *Ekwo does not
@@ -260,7 +250,7 @@ as a gap of the core rather than a choice of this pack. In short:
    the CEDE group and the División Grandes Contribuyentes, with monthly
    provisional advances and an annual settlement — a different form, on a
    different cadence, that this pack's single monthly report does not
-   represent; see `docs/international.md`.
+   represent.
 5. **Any withholding of VAT** a private party is made to practise, and the
    tax on digital services a foreign, non-resident supplier is itself made
    to register and pay (Ley N° 19.535; Título 10, art. 5, fourth paragraph;

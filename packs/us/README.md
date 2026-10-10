@@ -14,24 +14,18 @@ against the law they apply. The figures are replayed against a year of books by
 `tests/golden.test.ts`, which proves the pack is coherent and proves nothing
 about whether it is right.
 
-**This is the first pack of a country with no value added tax**, and that is
-most of what is interesting about it. The United Kingdom was the first pack
-outside the European Union and still levied a VAT: a tax the buyer reclaims, on
-a national form, under a national law. Here there is none of that. The tax is
-levied by the states and by thousands of districts under them, the buyer never
-gets a cent of it back, there is no national return and no legal chart of
-accounts. What the core could not say precisely is written up in
-[`docs/international.md`](../../docs/international.md) under "From the United
-States". None of it was patched for this pack's sake: a gap the core has
-is a core issue, and patching the core for one country is what the pack format
-exists not to do.
+The United States levies no value added tax. The sales tax is levied by the
+states and by thousands of districts under them, the buyer never gets a cent of
+it back, and there is no national return and no legal chart of accounts. What
+the core cannot yet say precisely is listed in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Sources
 
 Every rate, box, statement line, document rule and asset category carries its
 own `legal_reference`, and beside it the key of the text that article is in. The
-register in `pack.json` holds twenty texts and every one of them was opened on
-16 September 2026. The ones the rest of this file leans on:
+register in `pack.json` holds twenty texts. The ones the rest of this file leans
+on:
 
 | What | Text | Where |
 |---|---|---|
@@ -49,21 +43,17 @@ register in `pack.json` holds twenty texts and every one of them was opened on
 | A state with no sales tax | Sales tax in Oregon, Oregon Department of Revenue | `oregon.gov/dor` |
 | Electronic invoicing | Digital Business Networks Alliance | `dbnalliance.org` |
 
-One thing a reviewer should know about the register. The Codification at
-`asc.fasb.org` serves its landing page to anybody and its content behind a free
-registration, so what was read there is the identity of the text and not its
-paragraphs. Every accounting rule this pack states is stated a second time by a
-text that is open — Regulation S-X for the presentation, Publication 946 for
-what the tax computation is — and where the two do not overlap the pack says
-that the duration or the method is common practice rather than law.
+The Codification at `asc.fasb.org` is behind a free registration. Every
+accounting rule this pack states is also stated by an open text — Regulation
+S-X for the presentation, Publication 946 for the tax computation — and where
+the two do not overlap the pack says that the duration or the method is common
+practice rather than law.
 
 ## The chart of accounts, and why this one
 
 **The United States prescribes no chart of accounts**, and no statute
 prescribes the form of the accounts of a company that does not file with the
-Securities and Exchange Commission. Nothing here could be transcribed from a
-statute the way the Luxembourg chart was, and nothing could be mapped onto a
-statutory format the way the British one was.
+Securities and Exchange Commission.
 
 What does exist, and what this chart is laid out on, is **Regulation S-X**.
 Rule 5-02 names the captions of a balance sheet and fixes their order; rule 5-03
@@ -85,9 +75,7 @@ The chart follows it:
 - **Cost and accumulated depreciation are far apart, not adjacent.** Rule 5-02
   gives accumulated depreciation a caption of its own — caption 14 for property
   and caption 16 for intangibles — so the pack keeps them in their own blocks
-  and the statement prints the two lines the rule prints. That is the opposite
-  of what the British pack does, and it is the rule's doing rather than a
-  preference.
+  and the statement prints the two lines the rule prints.
 
 234 accounts, all of them postable.
 
@@ -118,29 +106,28 @@ shows and not for its size.
 | `US-OR-S-0` | 0 % | a state that levies no sales tax at all |
 | `US-CA-P-725` | 7.25 % | the buyer's side: the tax is a cost and never a claim |
 | `US-CA-P-USE-725` | 7.25 % | the buyer assesses the tax themselves, and it is still a cost |
+| `US-P-0` | 0 % | the ordinary untaxed purchase, which no return hears about |
 
-**Every code says where it applies**, since 16 September 2026, and a bookkeeper
-can no longer reach the wrong state's. `applies_when` on a tax names one
-territory per party: `US-CA-S-725` wants a Californian seller and a Californian
-delivery, `US-NY-S-8875` wants a delivery to New York, `US-OR-S-0` a delivery to
-Oregon, and the two purchase codes want a Californian buyer. `post_document()`
-refuses a document that contradicts one of them, by name, before anything
-reaches the ledger — so the Californian rate on goods shipped to New York is now
-an error and not a quiet 7.25 per cent on the wrong return. Where each party is
-comes from `companies.territory_code`, `contacts.territory_code` and
+**Every code says where it applies**, so a bookkeeper cannot reach the wrong
+state's. `applies_when` on a tax names one territory per party: `US-CA-S-725`
+wants a Californian seller and a Californian delivery, `US-NY-S-8875` wants a
+delivery to New York, `US-OR-S-0` a delivery to Oregon, and the two purchase
+codes want a Californian buyer. `post_document()` refuses a document that
+contradicts one of them, by name, before anything reaches the ledger — so the
+Californian rate on goods shipped to New York is an error and not a quiet 7.25
+per cent on the wrong return. Where each party is comes from
+`companies.territory_code`, `contacts.territory_code` and
 `documents.supply_territory_code`, and the golden year sets all three.
 
-`US-CA-S-SHIPPED` names the seller and, since version 0.7.0, where the goods
-went against it: `"supply_vs_seller": "other"` says the sale is shipped *out of*
-the seller's state, which is what section 6396 exempts — so the code is refused
-on a delivery inside California, where it used to book. It is a relation
-between the place of supply and the seller, not a negation of a territory, and
-it needs the company's `territory_code`: a seller known only as `US` is refused
-by name. One code deliberately says less than it could: `US-P-0` names nothing
-at all, because it is the code for a purchase no state taxes, and constraining
-it would refuse the out-of-state service it exists for. Both are in
-[`docs/international.md`](../../docs/international.md).
-| `US-P-0` | 0 % | the ordinary untaxed purchase, which no return hears about |
+`US-CA-S-SHIPPED` names the seller and where the goods went against it:
+`"supply_vs_seller": "other"` says the sale is shipped *out of* the seller's
+state, which is what section 6396 exempts — so the code is refused on a
+delivery inside California. It is a relation between the place of supply and
+the seller, not a negation of a territory, and it needs the company's
+`territory_code`: a seller known only as `US` is refused by name. One code
+deliberately says less than it could: `US-P-0` names nothing at all, because it
+is the code for a purchase no state taxes, and constraining it would refuse the
+out-of-state service it exists for.
 
 **`recoverable: false` on every one of them, and it is not decoration.** A
 purchaser in the United States has no input tax credit: the Sales and Use Tax
@@ -149,9 +136,7 @@ is imposed once, on the retail sale, and not at each stage. So a purchase tax is
 booked by a `tax_on_base` posting at the full amount, which lands it on the
 accounts of the lines it taxes. In the golden year a 5,000.00 instrument bought
 from an out-of-state seller is capitalised at 5,362.50, and 8,000.00 of stock
-bought locally costs 8,580.00. That posting type was added for a Belgian car at
-50 % and a French fuel bill at 80 %; this is the country it was described for,
-and it is the first pack where it is the ordinary case rather than the exception.
+bought locally costs 8,580.00.
 
 **Use tax is the buyer charging themselves, and it is not a reverse charge.**
 Section 6201 taxes the storage, use or consumption in California of property
@@ -159,14 +144,9 @@ bought from a retailer, and section 6202 makes the buyer liable for it until
 somebody has paid it to the State. Where an out-of-state seller collected
 nothing, the buyer declares it on line 2 of their own return. The pack says
 `self_assessed` — a tax a buyer owes directly to an administration under that
-administration's own law, and computes and declares themselves. It said
-`domestic_reverse_charge` on the day it landed, because that was the only word
-the vocabulary had for a liability sitting with the buyer, and the README had
-to say in as many words that it was not article 196 of Directive 2006/112/EC.
-The word arrived on 16 September 2026 and the pack no longer denies another
-mechanism in order to describe its own: there is still no supplier exemption
-behind it, no recapitulative statement, and nothing recovered at the other end,
-and now the treatment says so rather than the prose.
+administration's own law, and computes and declares themselves. There is no
+supplier exemption behind it, no recapitulative statement, and nothing
+recovered at the other end.
 
 **A service bought from a supplier abroad carries no tax in California.**
 The United States has no value added tax, and the Sales and Use Tax Law
@@ -188,49 +168,41 @@ move every quarter. This pack carries the statewide 7.25 per cent and **one**
 district combination as a worked example — the City of Oakland, 3.50 per cent
 under reporting code D10 effective 1 October 2025, which makes 10.75 per cent.
 It carries no others and it never will: choosing between them is a question
-about a delivery address, which is a feed and not a pack, and
-`docs/international.md` has always said so.
+about a delivery address, which is a feed and not a pack.
 
-**Two exemptions the pack states and cannot check — and now says so.** A sale
-for resale is untaxed because the buyer gave the seller a resale certificate —
-section 6091 presumes every receipt taxable until they do — and a seller has to
-collect in a state where they have economic nexus, which since *South Dakota v.
-Wayfair* is a threshold of sales into that state and not a warehouse in it.
-California's is 500,000 dollars of sales in the preceding or current calendar
-year. Both are facts about a document in a drawer and about a running total
-across a year, and the pack carries the code a bookkeeper reaches for once the
-answer is known. Since 16 September 2026 it also carries **which question** the
-code answers, in `conditions`: `buyer_certificate` on `US-CA-S-RESALE`,
-`seller_threshold` on `US-NY-S-8875`, and three more where the answer is
-likewise not in the books — `supply_nature` on the food exemption, whose
-carve-outs for hot, carbonated and alcoholic items no ledger holds,
-`buyer_status` on the sale to the United States, and `transport_evidence` on the
-sale shipped out of state. Five words and not one figure: there is no threshold
-amount and no certificate number anywhere in this pack, because a field that
-could carry the test would be a pack that executes. What is still nowhere is the
-evidence itself — no place on a contact for a certificate and its validity, no
-place anywhere for a rolling total per territory — and that stays on the list in
-`docs/international.md`.
+**Two exemptions the pack states and cannot check.** A sale for resale is
+untaxed because the buyer gave the seller a resale certificate — section 6091
+presumes every receipt taxable until they do — and a seller has to collect in a
+state where they have economic nexus, which since *South Dakota v. Wayfair* is
+a threshold of sales into that state and not a warehouse in it. California's is
+500,000 dollars of sales in the preceding or current calendar year. Both are
+facts about a document in a drawer and about a running total across a year, and
+the pack carries the code a bookkeeper reaches for once the answer is known. It
+also carries **which question** the code answers, in `conditions`:
+`buyer_certificate` on `US-CA-S-RESALE`, `seller_threshold` on `US-NY-S-8875`,
+and three more where the answer is likewise not in the books — `supply_nature`
+on the food exemption, whose carve-outs for hot, carbonated and alcoholic items
+no ledger holds, `buyer_status` on the sale to the United States, and
+`transport_evidence` on the sale shipped out of state. Five words and not one
+figure: there is no threshold amount and no certificate number anywhere in this
+pack, because a field that could carry the test would be a pack that executes.
+What is still nowhere is the evidence itself — no place on a contact for a
+certificate and its validity, no place anywhere for a rolling total per
+territory — and that is on the list in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
-**The EN 16931 categories are the part of this pack that means least, and they
-are now this pack's own choice.** The standard is European and the invoice of an
-American company is governed by no standard at all. On the day the pack landed,
-`ekwo pack check` required a category on every tax that could reach a sale: the
-reason codes were already gone — that was the British fix and it works here —
-but the category stayed, which was a European standard asking an American pack a
-question nobody would read the answer to. Since 16 September 2026 the
-requirement follows the invoice: it holds inside the common system, and outside
-it where the pack declares an `einvoicing.profile` whose invoices carry BT-151.
-This pack declares none, so the column is free.
+**The EN 16931 categories are the part of this pack that means least.** The
+standard is European and the invoice of an American company is governed by no
+standard at all. `ekwo pack check` requires a category inside the common system,
+and outside it only where the pack declares an `einvoicing.profile` whose
+invoices carry BT-151. This pack declares none, so the column is free.
 
 It is still filled. `S` on a taxed sale, `E` on an exempt one and `O` on a sale
 into Oregon are true statements about the operation — `S`, `E` and `O` come from
 UNCL5305, a UN/CEFACT list, and a sale is taxed, or exempt, or outside the
-scope, in California as in Belgium — and nothing is ever deleted from a pack.
-What is free is not what is unchecked: a category this pack names is still held
-to its treatment, its reason and its rate. What has changed is that these three
-values are here because the pack means them, and no longer because a standard
-the United States is not in demanded them.
+scope, in California as in Belgium. What is free is not what is unchecked: a
+category this pack names is still held to its treatment, its reason and its
+rate.
 
 ## The return
 
@@ -251,71 +223,54 @@ The first three are said the way the form says them — `"rate": 6.0, "rate_of":
 fields and no expression. The fourth is not a rate of anything: a district tax
 is owed on the sales made in that district and not on the period's whole taxable
 total, so line 16 stays summed from the ledger, out of the `tax` posting the one
-district code makes to it.
-
-Until this pack's second version all four were summed from the ledger, out of
-one posting per line whose share of the combined rate was that line's rate. The
-two answers agreed to the cent in all three quarters of the golden year, and
-they were never guaranteed to: the form multiplies a period's taxable total
-once, the apportionment shared a tax that had been rounded document by document.
-The form's own arithmetic is what the pack now carries, and the golden year did
-not move by a cent when it changed. What the postings still do is split the
-liability across the state, county and local accounts of the chart, which is a
-question about the ledger and not about the return.
+district code makes to it. The postings also split the liability across the
+state, county and local accounts of the chart, which is a question about the
+ledger and not about the return.
 
 **Every sale is on line 1, and an untaxed sale is on line 1 twice.** Line 1 is
 total sales, taxable and not; the deductions come afterwards, in Section A. So a
 sale for resale posts its base to line 1 *and* to box 32, an exempt food sale to
 line 1 and box 33, a federal sale to line 1 and box 35, and an interstate sale
 to line 1 and box 36 — one `base` posting naming two boxes, neither of them a
-sum of the other, which is the mechanism Estonia and the United Kingdom asked
-for and which four American codes now use at once.
+sum of the other.
 
 **The form prints line 11 on page 1 and computes it on page 3.** Line 11 is the
 total of Sections A and B, which are printed two pages later. Every box of this
 form therefore carries a `print_sequence` — where CDTFA prints it — beside the
-`sequence` this pack declares it in, which is still the dependency order the
-form was first transcribed in. Neither of them is the order the boxes are worked
-out in: that is the boxes each one names, and it always was. `sequence` meaning
-both at once was the Luxembourg gap, met for the third time here, and it is
-closed.
+`sequence` this pack declares it in, which is the dependency order. Neither of
+them is the order the boxes are worked out in: that is the boxes each one names.
 
 **Boxes nothing posts to are declared all the same.** Line 18, excess tax
 collected, is a figure a person establishes. Lines 20a to 20d are credits that
 come off schedules this pack does not carry — and 20a in particular is Sections
-C and D, the partial exemptions, a base multiplied by 0.05 or by 0.039375. That
-shape is sayable now; what is missing is the eight deduction lines those sections
-carry and the taxes that would reach them, which is a pack gap and no longer a
-format one.
-Lines 22, 24 and 25 are prepayments, penalty and interest, which are not ledger
-figures. Line 34, nontaxable labor, line 37, sales tax included in line 1, line
-38, other deductions, and the four lines of Section B are transactions this
-pack's codes do not produce. A return with twenty-five boxes would not be
-CDTFA-401-A, so they are declared and empty.
+C and D, the partial exemptions, a base multiplied by 0.05 or by 0.039375. What
+is missing is the eight deduction lines those sections carry and the taxes that
+would reach them. Lines 22, 24 and 25 are prepayments, penalty and interest,
+which are not ledger figures. Line 34, nontaxable labor, line 37, sales tax
+included in line 1, line 38, other deductions, and the four lines of Section B
+are transactions this pack's codes do not produce. A return with twenty-five
+boxes would not be CDTFA-401-A, so they are declared and empty.
 
 **The cadence.** Section 6452(a) makes the return quarterly for everybody, and
 section 6455(a) lets the Department require another period, which is how a
 monthly or an annual filer arrives. So California's law gives one default and
-the form is filed on three cadences — the British case exactly, in another
-language. The form says so itself: `period_default` is `quarter`, which is the
-field a proposal belongs on now that a company records a cadence per
-declaration rather than one named after the return. A company that has asked
-CDTFA for nothing files quarterly, and `ekwo init` proposes that.
+the form is filed on three cadences. `period_default` is `quarter`: a company
+that has asked CDTFA for nothing files quarterly, and `ekwo init` proposes that.
 
-**Where a filed return's balance lands.** Since pack version 0.6.0,
-`defaults.roles` names `2208` for `tax_payable` and `1185` for
-`tax_receivable`. There is no value added tax here and no input tax to net, but
-a sales and use tax return is settled the same way: section 6452(a) makes the
-tax due together with the return, so `settle_filing()` clears the state,
-county, local and district accounts the period posted to (`2200` to `2206`)
-into one reconcilable account, against which the payment to CDTFA is matched.
-A return rarely ends in the company's favour, and when it does — a credit
-note that outweighs the quarter's sales, a prepayment larger than the tax —
-section 6901 has the overpayment credited against amounts due and the balance
-refunded, which is a claim on the administration and an asset: `1185`, on
-caption 3 of rule 5-02 with the other receivables. Both accounts carry every
-state the company files in; a company that files in New York too tells the two
-debts apart by the administration the payment goes to, not by the account.
+**Where a filed return's balance lands.** `defaults.roles` names `2208` for
+`tax_payable` and `1185` for `tax_receivable`. There is no value added tax here
+and no input tax to net, but a sales and use tax return is settled the same
+way: section 6452(a) makes the tax due together with the return, so
+`settle_filing()` clears the state, county, local and district accounts the
+period posted to (`2200` to `2206`) into one reconcilable account, against which
+the payment to CDTFA is matched. A return rarely ends in the company's favour,
+and when it does — a credit note that outweighs the quarter's sales, a
+prepayment larger than the tax — section 6901 has the overpayment credited
+against amounts due and the balance refunded, which is a claim on the
+administration and an asset: `1185`, on caption 3 of rule 5-02 with the other
+receivables. Both accounts carry every state the company files in; a company
+that files in New York too tells the two debts apart by the administration the
+payment goes to, not by the account.
 
 ## The accounts
 
@@ -326,12 +281,12 @@ line codes and the rule's own wording as the names.
 Three decisions a reviewer should weigh.
 
 **Captions 15 to 17 of the income statement are reserved in the rule itself**
-and are absent here for that reason, the way the British format's items 15 to 18
-are. Captions 19, 20, 23, 24 and 25 — the noncontrolling-interest allocations
-and the earnings per share — are not sums of ledger accounts and the pack does
-not state them. Captions 27 and 31 of the balance sheet, redeemable preferred
-stock and noncontrolling interests, are declared with an account each so that a
-chart that needs them has somewhere to post.
+and are absent here for that reason. Captions 19, 20, 23, 24 and 25 — the
+noncontrolling-interest allocations and the earnings per share — are not sums of
+ledger accounts and the pack does not state them. Captions 27 and 31 of the
+balance sheet, redeemable preferred stock and noncontrolling interests, are
+declared with an account each so that a chart that needs them has somewhere to
+post.
 
 **Accumulated depreciation is a line, not a deduction.** Rule 5-02 gives it
 caption 14, so the statement prints property at cost on caption 13 and the
@@ -343,13 +298,12 @@ presentation from the one the rule prescribes.
 Caption 21 of rule 5-03 is there and two accounts reach it, but
 `close_fiscal_year()` closes every income account to retained earnings, and
 generally accepted accounting principles close those two to accumulated other
-comprehensive income instead. The gap is on the list; until it is closed, a
-company with foreign currency translation adjustments should not use `8400` and
-`8410`.
+comprehensive income instead. Until the core handles it, a company with foreign
+currency translation adjustments should not use `8400` and `8410`.
 
 **No fact keys.** A registrant files in Inline XBRL against the taxonomy the
-Financial Accounting Standards Board publishes, and nothing here was verified
-against it, so `xbrl` and `taxonomy` are null on both statements. A wrong key is
+Financial Accounting Standards Board publishes, and this pack carries no keys
+from it, so `xbrl` and `taxonomy` are null on both statements. A wrong key is
 worse than no key.
 
 ## Closing the year
@@ -358,10 +312,7 @@ worse than no key.
 Retained earnings`. There is no current-year result account on an American
 balance sheet — rule 5-02 has captions 27 to 31 under equity and not one of them
 is "result of the year" — so the manifest names no `current_year_result_profit`
-and no `current_year_result_loss`, which is what that style is for. It is the
-same answer as the United Kingdom's and for the same structural reason, and it
-is the opposite of France's, where 120 and 129 hold the result until a meeting
-allocates it.
+and no `current_year_result_loss`.
 
 A dividend is not part of a close in any country: `3410 Dividends declared` sits
 beside the reserve and is booked by hand.
@@ -402,13 +353,9 @@ prescribes a sentence, a number, a payment term or a delay, and California's
 Sales and Use Tax Law prescribes none either. So `documents.mentions` is absent
 — not empty for want of research, absent because there is nothing to print — and
 `document_legal_mentions` returns nothing for an American invoice, which is
-correct. Every pack before this one carried between one and six sentences that
-an article of law requires; this one carries none, and that is the sharpest
-contrast in the file.
+correct.
 
-**Numbering is `free`.** Regulation 14(1)(a) of the British VAT Regulations
-requires a sequential number; article 5 of the Belgian royal decree number 1
-requires a gapless one per year; the United States requires no number at all.
+**Numbering is `free`.** The United States requires no number at all.
 `{CODE}-{NNNN}` is a convention this pack proposes so that a renderer has
 something to follow, and a company may do anything else.
 
@@ -429,21 +376,19 @@ VAT directives grant, and a company that invoices a month after delivery still
 reports the sale in the quarter of the delivery.
 
 **`documents.references` carries two entries and not three.** Numbering and the
-tax point are answered; payment terms are not declared, so they cite nothing.
-That is what "fill in what exists and leave empty what does not" looks like in
-this format, and a reader who asks this pack for a payment term is told the
-value is missing rather than given Belgium's thirty days.
+tax point are answered; payment terms are not declared, so they cite nothing,
+and a reader who asks this pack for a payment term is told the value is
+missing.
 
 **Electronic invoicing is not obligatory and there is no national profile.**
 Nothing in American law compels anybody to issue or receive one, and no date has
 been set. The Digital Business Networks Alliance runs an open exchange network
 for business documents that its members join voluntarily, and naming it as this
 country's profile would report an industry initiative as a legal requirement. So
-`profile` and `mandatory_from` are both empty, `obligation` says `none` since
-pack version 0.6.0 — so the country page prints an answer and not a gap — and
-the reason is in the legal reference. `party_scheme` and `vat_scheme` are empty too: there is no VAT
-identifier in a country with no VAT, and nothing prescribes which registration
-identifier an American party is addressed by.
+`profile` and `mandatory_from` are both empty, `obligation` says `none`, and the
+reason is in the legal reference. `party_scheme` and `vat_scheme` are empty too:
+there is no VAT identifier in a country with no VAT, and nothing prescribes
+which registration identifier an American party is addressed by.
 
 ## The fiscal year
 
@@ -454,13 +399,12 @@ Internal Revenue Service publishes all three, and the last is what most American
 retail keeps.
 
 The golden scenario is a 52-week year, 28 June 2026 to 26 June 2027, which is
-364 days ending on the last Saturday of June. It works: `fiscal_years` has taken
-arbitrary bounds since the schema was written. What does not work is
-`defaults.fiscal_year_default`, whose vocabulary is `calendar`, `april`, `july`
-and `october` — four opening months, where the law allows twelve and then allows
-a year that does not begin on the first of a month at all. The pack declares
-`calendar`, which is the ordinary American corporate answer, and the gap is on
-the list.
+364 days ending on the last Saturday of June. It works: `fiscal_years` takes
+arbitrary bounds. What does not work is `defaults.fiscal_year_default`, whose
+vocabulary is `calendar`, `april`, `july` and `october` — four opening months,
+where the law allows twelve and then allows a year that does not begin on the
+first of a month at all. The pack declares `calendar`, which is the ordinary
+American corporate answer.
 
 The scenario also shows what falls out of it: California's reporting period is
 the calendar quarter, so a 52-week year contains **three** whole quarters and two
@@ -475,9 +419,9 @@ document that is in both statements and in no return it files.
   — or, more honestly, the thing that says an American localisation is a
   different shape of problem from a European one.
 - **Any other state's return.** New York's ST-100 is named in the register and
-  is not modelled; the New York tax posts to the ledger and to no box. It now
-  says which state it belongs to and is refused on a Californian delivery, which
-  is half the answer — the other half is a pack carrying a list of forms with a
+  is not modelled; the New York tax posts to the ledger and to no box. It says
+  which state it belongs to and is refused on a Californian delivery, which is
+  half the answer — the other half is a pack carrying a list of forms with a
   territory on each, and a pack carries one form.
 - **District rates by address.** One worked combination, and the rest is a feed.
 - **Local sales taxes below the state that are not California districts** —
@@ -497,9 +441,8 @@ document that is in both statements and in no return it files.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
-The section carries what was read on an official page on 1 October 2026, and
-nothing else. It is the **federal** tax: the rate is 21 percent on all of the
-base (26 U.S.C. § 11(b)), the computation starts from line 10 of the income
+The section carries the **federal** tax only: the rate is 21 percent on all of
+the base (26 U.S.C. § 11(b)), the computation starts from line 10 of the income
 statement, income before income tax expense, and the tax is named
 `US-FCIT`, federal corporate income tax. It adds back meals at 50 percent
 (§ 274(n)), entertainment (§ 274(a)), and fines (§ 162(f)), deducts the current
@@ -518,11 +461,11 @@ high or too low by something a reader can name; these are the ones to name.
 | The base of the 80 percent limit | § 172(a)(2)(B)(ii) reads taxable income before the deduction of section 250. The estimate takes the fiscal result as the base, and no deduction under section 250 is computed. |
 | The deductions of sections 163(j), 168 and 179, 174, 170 and the others | Each rests on facts the books do not hold. Only what a flat rule could be cited for is in the section. |
 | The corporate alternative minimum tax (§ 55, § 59A) and the base erosion tax | A tax on a different base, above a threshold of income; the section has no shape for a second tax or for a minimum. |
-| Tax on the tax: the excise tax on repurchases (§ 4501) and the other chapter 1 and 4 taxes | Not read, and the section has no shape for them. |
+| Tax on the tax: the excise tax on repurchases (§ 4501) and the other chapter 1 and 4 taxes | The section has no shape for them. |
 | Tax credits | `credits` is empty: the shape is published and no credit was cited. |
 | The estimated tax: its reference, its annualised method, the $500 exception, the first installment of a large corporation | The four dates and the 25 percent are in the data; § 6655(d), (e), (f) and (g)(2) decide on the tax of which year they are taken and whether any is due, and the data says one thing only. Nothing reads the schedule yet. |
-| Dates before 2018 | The rate, the rules on meals and fines and the instalments are dated from the Tax Cuts and Jobs Act and the text read; the earlier law was not read. |
-| Rounding to the dollar | Not read. The estimate is kept at the cent. |
+| Dates before 2018 | The rate, the rules on meals and fines and the instalments are dated from the Tax Cuts and Jobs Act; the earlier law is not carried. |
+| Rounding to the dollar | Not carried. The estimate is kept at the cent. |
 
 The state income tax is stated and not read from 8020: the module reads a
 deduction as an income the books carry, so a deduction rule that names an
@@ -545,14 +488,14 @@ the order the author is least sure of them:
    tax is not owed on the period's whole taxable total. A reviewer who files
    CDTFA-401-A will know whether line 17 then still ties to the sales tax payable
    account of the ledger, which apportions the same tax document by document —
-   the form is filed in whole dollars, which may be the whole answer. Since
-   0.8.0 the form says so (`rounding.unit: 1`): each line is frozen rounded to
-   the dollar from its own exact figure, and the ledger keeps the cents.
+   the form is filed in whole dollars, which may be the whole answer. The form
+   says so (`rounding.unit: 1`): each line is frozen rounded to the dollar from
+   its own exact figure, and the ledger keeps the cents.
 2. **Whether `quarter` is the right proposal.** Section 6452(a) reads as a
    default given to everybody and section 6455(a) as the Department's power to
    direct otherwise, which is what `period_default` states. A reviewer who reads
    the monthly regime as the rule for anyone above a threshold would want the
-   field empty and `ekwo init` to ask, which is the Luxembourg answer.
+   field empty and `ekwo init` to ask.
 3. **Whether use tax belongs on the same four accounts as sales tax.** The
    pack posts both to `2200` to `2204`, because the return combines them on
    lines 13 to 15 and the liability is to one administration. A practice that
@@ -573,10 +516,8 @@ the order the author is least sure of them:
 6. **The fixed asset durations**, every one of which is practice and says so,
    and the goodwill category, which is the private company accounting
    alternative of topic 350 and is wrong for a public business entity.
-7. **Whether California's use tax is one operation or two.** The core gained
-   `self_assessed` for it on 16 September 2026, which ends the European word for
-   an American mechanism. What the word cannot settle is the split: section
-   6202(a) says the buyer's liability is not extinguished until the tax has been
+7. **Whether California's use tax is one operation or two.** Section 6202(a)
+   says the buyer's liability is not extinguished until the tax has been
    paid to the State **or to a retailer who collects it**, and this pack puts
    the first case on `US-CA-P-USE-725` (`self_assessed`, declared on line 2) and
    the second on `US-CA-P-725` (`domestic`, the seller's reimbursement, invisible

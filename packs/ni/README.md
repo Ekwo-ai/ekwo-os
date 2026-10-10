@@ -50,12 +50,10 @@ deadline follows the text:
 
 So `tax_report.json` declares `day_of_month_after_period` with `day: 5`. The
 format holds one date per return and has no word for "the payment of some filers
-is ten days later"; the 15th is written in the rule's `legal_reference`. The
-DGI's own site refused every automated request from the machine this pack was
-written on, so no current DGI notice could be read to confirm the 2019 reform has
-not itself been replaced: **this is the first point for a local accountant to
-check.** The text of the law and of the Reglamento was read in a private
-compilation of La Gaceta (see Sources).
+is ten days later"; the 15th is written in the rule's `legal_reference`. Whether a
+current DGI notice has replaced the 2019 reform **is the first point for a local
+accountant to check.** The text of the law and of the Reglamento rests on a
+private compilation of La Gaceta (see Sources).
 
 ## Electronic invoicing: none is mandatory
 
@@ -68,10 +66,9 @@ system is an authorisation to use software; it is neither a structured format no
 a clearance regime, and the printed copy remains the document. The DGI's
 Plan Estratégico Institucional 2022-2026 says it will develop an electronic
 invoicing system, and a project funded by the Inter-American Development Bank was
-announced in 2016: an announced project is not a statute, and this pack found no
-open source for a resolution that imposes electronic invoicing on anybody.
-Commercial pages that say otherwise were not corroborated. The DGI's web servers
-could not be read, so re-check before relying on this.
+announced in 2016: an announced project is not a statute, and no resolution imposing electronic
+invoicing on anybody is cited here. Re-check against the DGI before relying on
+this.
 
 Every document therefore carries the mention `dgi_invoice_not_authorized`: an
 Ekwo document supports the operation for tax purposes only if the company's
@@ -79,18 +76,15 @@ billing system is itself authorised by the DGI.
 
 ## Sources
 
-Eight texts are in the register of `pack.json`, each opened on 9 October 2026
-unless noted: the Ley de Concertación Tributaria (Ley No. 822) with its reforms
-and its Reglamento (a private compilation of La Gaceta, since the official
-repository of the Asamblea Nacional serves only plain `http` and the original,
-unreformed text); the DGI's Disposición Administrativa General No. 04-2013 (the
+Eight texts are in the register of `pack.json`: the Ley de Concertación
+Tributaria (Ley No. 822) with its reforms and its Reglamento (a private
+compilation of La Gaceta, since the official repository of the Asamblea Nacional
+carries only the original, unreformed text); the DGI's Disposición Administrativa General No. 04-2013 (the
 pre-reform deadlines); the Disposición Técnica No. 09-2007 (computerised
 billing); the Plan de Arbitrios of Managua (Decreto No. 10-91); two pages on the
 Colegio de Contadores Públicos de Nicaragua (CCPN) and its adoption of the NIIF
-for SMEs; and the DGI's VET portal and Plan Estratégico, whose servers refused
-every automated request, so the portal page could not be read and the plan was
-read as a search-engine excerpt. The pack states this in the title of those two
-entries.
+for SMEs; and the DGI's VET portal and Plan Estratégico. The DGI's site blocks
+automated requests, so `pack check --links` reports those two unreachable.
 
 ## The chart of accounts
 
@@ -114,7 +108,7 @@ Two decisions:
 - **Only customers, suppliers and the IVA settlement accounts are
   `reconcilable`.** Never the bank, the cash or the suspense account.
 
-The manifest names every role the neighbouring packs name (receivable, payable,
+The manifest names the usual roles (receivable, payable,
 suspense, rounding, retained earnings and loss, the two current-year results,
 sales, purchase, bank, cash, `fx_gain`, `fx_loss`, `tax_payable`,
 `tax_receivable`) and `fiscal_year_default: calendar`: the ordinary fiscal
@@ -142,8 +136,8 @@ The export is **a taxable supply at 0 %**, not an exempt one (art. 107, numeral
 3, lists exports among the taxed acts), so the IVA paid on its inputs stays
 creditable and a surplus can be offset or refunded (arts. 121, 140).
 
-Exemptions are declared as **one code for the whole of articles 127 and 136**,
-as the neighbouring Central American packs do: the objective exemptions of
+Exemptions are declared as **one code for the whole of articles 127 and 136**:
+the objective exemptions of
 article 127 are lists drawn by ministerial agreements and published in La
 Gaceta, which this pack did not transcribe, and the exact numeral of an exempt
 supply belongs in the entry, not in the code.
@@ -178,8 +172,7 @@ withheld on the same payment (art. 53) is outside this pack.
 ## The return
 
 `NI-DGI-IVA`: monthly, filed through the DGI's Ventanilla Electrónica Tributaria
-(VET). The VET's own screens and field numbers were not readable (see above), so
-the boxes carry **acronyms of this pack's own** and the name of the concept the
+(VET). The VET's own field numbers are not reproduced, so the boxes carry **acronyms of this pack's own** and the name of the concept the
 law has the taxpayer declare, never invented field numbers. `TOTAL` is the
 débito fiscal minus the crédito fiscal (art. 117); a negative result is a
 surplus carried to the following periods (art. 140).
@@ -192,8 +185,8 @@ statement layout of its own.
 
 ## What the core could not say
 
-None of these is patched in the core; each is also written up in
-[`docs/international.md`](../../docs/international.md) under *From Nicaragua*.
+See also [what the packs do not say
+yet](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 - **Taxes on turnover that are not invoice taxes.** The *pago mínimo definitivo*
   (Ley 822, art. 61: 3 % for large, 2 % for principal and 1 % for other
@@ -208,7 +201,7 @@ None of these is patched in the core; each is also written up in
   paid by the 5th calendar day of the following month (Reglamento, art. 44 as
   amended in 2019). The format has no withholding mechanism at the line of a
   tax; the accounts `1144`, `2135` and `2136` exist, and the amounts are booked
-  by hand. Whether and when IVA itself is withheld was not researched, and no
+  by hand. Whether and when IVA itself is withheld is not covered, and no
   rule for it is modelled.
 - **Proportional credit** (art. 121). A company with taxable and exempt supplies
   credits only the proportional part of IVA that cannot be assigned to either.
@@ -231,8 +224,8 @@ None of these is patched in the core; each is also written up in
 1. The filing date (5th) and its relation to the payment date (15th), after the
    2019 reform, against the DGI's current notices and the VET calendar.
 2. The 1 % IMI rate outside Managua: the original Plan de Arbitrios (Decreto No.
-   455) set 2 %, and the reductions to 1 % come from later reforms this pack read
-   only through secondary summaries.
+   455) set 2 %, and the reductions to 1 % come from later reforms cited through
+   secondary summaries.
 3. Whether the *pago mínimo definitivo* and the IR/IVA withholding accounts match
    how a company in the reader's municipality and taxpayer category books them.
 4. The chart of accounts, which is an original construction.

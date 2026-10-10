@@ -6,24 +6,19 @@ journals, the Impuesto al Valor Agregado (IVA) with its export and tasa cero
 codes, the fields of the Formulario 200 mensual, a balance general and an
 estado de resultados, and the sentences an invoice needs. The format is
 [`docs/packs.md`](../../docs/packs.md); this file says where the content came
-from and which decisions it rests on, so that a Bolivian accountant reading
-the pack can disagree with a specific sentence rather than with the whole of
-it.
+from and which decisions it rests on.
 
 Language: Spanish (`es`), the language of the law and of the Formulario 200.
 
 **Status: `community`.** Nobody who files a Bolivian IVA return has reviewed
-it. The figures are replayed against a quarter of books by
-`tests/golden.test.ts`, which proves the pack is coherent and proves nothing
-about whether it is right.
+it. `tests/golden.test.ts` replays a quarter of books, which proves the pack
+coherent, not right.
 
-Bolivia is outside the common system of VAT of Directive 2006/112/EC, so
-`supabase/seed/00_territories.sql` carries a row for `BO` with `eu_vat_scope`
-`none`: no `exemption_code`, no `intracom_*` treatment, and `vat_category` is
-not required since this pack declares no e-invoicing profile — see
-[What a tax says on the invoice](../../docs/packs.md#what-a-tax-says-on-the-invoice-treatment-category-and-reason).
-This pack still fills `vat_category` where a value is free to give, the way
-Peru's and Argentina's do.
+Bolivia is outside Directive 2006/112/EC: `BO` has `eu_vat_scope` `none` — no
+`exemption_code`, no `intracom_*` treatment, and `vat_category` is not
+required since no e-invoicing profile is declared (see
+[What a tax says on the invoice](../../docs/packs.md#what-a-tax-says-on-the-invoice-treatment-category-and-reason));
+the pack still fills it where a value is free to give.
 
 ## The IVA is calculated "por dentro": the effective rate is not 13 %
 
@@ -33,63 +28,49 @@ separately."** A Bolivian invoice states one total, and that total already
 holds the tax; art. 15° then applies the "13 %" to that same total, not to a
 price computed without the tax first. On an invoice of 1.000,00 Bs, the
 débito fiscal is **130,00 Bs, exactly 13 % of the 1.000,00 Bs facturados** —
-never 13 % of a base of 870,00 Bs, which would give 113,10 Bs. This is
-confirmed by the Formulario 200's own instructions, casilla 39: "Débito
-Fiscal correspondiente a: (C13 \* 13 %)", where C13 is "el importe total
-Facturado."
+never 13 % of a base of 870,00 Bs, which would give 113,10 Bs. The
+Formulario 200's instructions, casilla 39, say so: "Débito Fiscal
+correspondiente a: (C13 \* 13 %)", where C13 is "el importe total Facturado."
 
-`docs/packs.md`'s `price_include` field is built for exactly this shape — a
-price the seller keys in that already holds the tax, the way a British or
-Australian retail price does — except that its formula there **removes the
-tax by dividing the gross by `1 + rate/100`** (`tax = gross - gross /
-(1.13)`), which is the ordinary gross-up of a rate stated on the *net* price.
-Applying that formula with `rate: 13` would compute a tax of 13/113 of the
-gross (11,50 %), not the 13/87 (14,94 %) that Bolivian law actually charges
-on the gross. So this pack declares `price_include: true` with an **effective
-rate of `14.9425`** — the four decimals `tax_templates.rate` can hold of
-13/87 = 14,942528735632…% — which makes the same formula land on the right
-number: `tax = gross - gross / 1.149425 = gross × 0,13000…`, to the cent, for
-every invoice this pack's golden quarter uses. The gap between 14,9425 and
-the exact fraction is under two ten-millionths of the gross, far below a cent
-on any invoice a real business would issue.
+`docs/packs.md`'s `price_include` formula **removes the tax by dividing the
+gross by `1 + rate/100`** (`tax = gross - gross / (1.13)`), the gross-up of a
+rate stated on the *net* price: with `rate: 13` it would compute 13/113 of
+the gross (11,50 %), not the 13/87 (14,94 %) Bolivian law charges. So this
+pack declares `price_include: true` with an **effective rate of `14.9425`**
+— 13/87 = 14,942528735632…% to the four decimals `tax_templates.rate` holds
+— so that `tax = gross - gross / 1.149425 = gross × 0,13000…`, to the cent on
+every invoice of the golden quarter. The gap to the exact fraction is under
+two ten-millionths of the gross, far below a cent on any real invoice.
 
-**BO-V-13 and BO-C-13 both use this effective rate**, on the sale side and on
-the purchase side: the Formulario 200 computes the crédito fiscal the same
-way it computes the débito fiscal, casilla 114 being "(C26+C27+C28) \* 13 %"
-of the *compra facturada*, not of a net price. `BO-V-EXP` and `BO-V-CERO` are
-zero-rated, so the gross/net distinction never arises for them.
+**BO-V-13 and BO-C-13 both use this effective rate**: casilla 114 computes
+the crédito fiscal as "(C26+C27+C28) \* 13 %" of the *compra facturada*, the
+same way as the débito fiscal. `BO-V-EXP` and `BO-V-CERO` are zero-rated, so
+the gross/net distinction never arises for them.
 
 **Casilla 13 and casilla 26 want the gross figure, and the engine's `base`
-posting always holds the net one.** A `base` posting is, by construction, the
-net amount that lands on the revenue or expense account (`docs/packs.md`,
-"What a tax says, and where its postings land") — the opposite of what the
-Formulario 200 asks these two boxes to hold. Rather than declare a box the
-form does not carry, this pack posts the net amount to a hidden bookkeeping
-box of its own (`BASE13`, `BASE26` — not casillas of the form, and said so in
-their own `legal_reference`) and declares the real casillas 13 and 26 as
-**totals**: casilla 13 = `BASE13 + 39`, casilla 26 = `BASE26 + 114`. That is
-the "second base is a sum" pattern of `docs/packs.md` (the base and the tax
-of one operation, added back together), read in the direction the ledger
-actually produces the figures rather than the direction the form prints them
-in — the two ways of getting to 13 % of a gross figure agree to the cent, and
-`ekwo pack check`'s dependency check accepts a total computed from boxes
-declared after it.
+posting always holds the net one** (`docs/packs.md`, "What a tax says, and
+where its postings land"). The pack posts the net amount to hidden
+bookkeeping boxes of its own (`BASE13`, `BASE26` — not casillas of the form,
+as their `legal_reference` says) and declares the real casillas as
+**totals**: casilla 13 = `BASE13 + 39`, casilla 26 = `BASE26 + 114` — the
+"second base is a sum" pattern of `docs/packs.md`. Both ways of getting to
+13 % of a gross figure agree to the cent, and `ekwo pack check` accepts a
+total computed from boxes declared after it.
 
 ## Sources
 
 Every rate, box, mention and statement line carries its own `legal_reference`
 and the key of the text it is in. The register in `pack.json` holds eleven
-texts, every one opened on 26 September 2026: Ley N.° 843 and the Código
-Tributario Boliviano (Ley N.° 2492), both on the Servicio de Impuestos
-Nacionales' own legislation pages; the Reglamento del IVA (Decreto Supremo
-N.° 21530), on LexiVox's compilation of the Gaceta Oficial; the Ley del Libro
-y la Lectura (Ley N.° 366) and the tasa cero del transporte internacional de
-carga (Ley N.° 3249); the Código de Comercio, on the OAS's own mirror of the
-Bolivian text; the Resolución CTNAC N.° 01/2012, through a professional
-firm's summary of the accounting framework it establishes; the Formulario 200
-v.5 Extendido and the Calendario Tributario 2026, both on the SIN's own site;
-the Resolución Normativa de Directorio N.° 102100000011 (Sistema de
-Facturación); and the SIN's own Oficina Virtual as the filing portal.
+texts: Ley N.° 843 and the Código Tributario Boliviano (Ley N.° 2492), on the
+Servicio de Impuestos Nacionales' legislation pages; the Reglamento del IVA
+(Decreto Supremo N.° 21530), from the Gaceta Oficial; the Ley del Libro y la
+Lectura (Ley N.° 366) and the tasa cero del transporte internacional de carga
+(Ley N.° 3249); the Código de Comercio; the Resolución CTNAC N.° 01/2012; the
+Formulario 200 v.5 Extendido and the Calendario Tributario 2026, on the SIN's
+site; the Resolución Normativa de Directorio N.° 102100000011 (Sistema de
+Facturación); and the SIN's Oficina Virtual as the filing portal. The CTNAC
+resolution rests on a professional firm's summary; its text itself should be
+checked.
 
 ## The chart of accounts
 

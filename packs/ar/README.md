@@ -4,25 +4,19 @@ Everything Argentina adds to Ekwo, as data: a chart of accounts built around
 the minimum disclosure of the Ley General de Sociedades, the journals, the
 value added tax at its three positive rates with exports at tasa cero and the
 exemptions of art. 7, the tax a responsable inscripto liquidates itself on
-services received from abroad, the boxes of the monthly IVA declaration, a minimal
-balance sheet and income statement, and the sentences an invoice needs. The
-format is [`docs/packs.md`](../../docs/packs.md); this file says where the
-content came from and which decisions it rests on, so that an Argentine
-accountant reading the pack can disagree with a specific sentence rather than
-with the whole of it.
+services received from abroad, the boxes of the monthly IVA declaration, a
+minimal balance sheet and income statement, and the sentences an invoice
+needs. The format is [`docs/packs.md`](../../docs/packs.md); this file says
+which sources and decisions the content rests on.
 
 **Status: `community`.** Nobody who files an Argentine return has reviewed
-it. The figures are replayed against a year of books by
-`tests/golden.test.ts`, which proves the pack is coherent and proves nothing
-about whether it is right.
+it. `tests/golden.test.ts` replays the figures against a year of books, which
+proves the pack is coherent, not that it is right.
 
-**Language: `es`.** Every label of this pack is written in Spanish, which is
-the language of the law it transcribes. No second language is declared: the
-chart is original (see below) and has no official wording in any language to
-carry as `i18n`, so a translation would be this pack's own words translated a
-second time rather than a text somebody can check against a source. A
-contributor is welcome to add `i18n/en.json` one section at a time without
-declaring it, exactly as `docs/packs.md` describes.
+**Language: `es`.** Every label is in Spanish, the language of the law. No
+second language is declared: the chart is original and has no official
+wording to carry as `i18n`. A contributor may add `i18n/en.json` one section
+at a time without declaring it, as `docs/packs.md` describes.
 
 ## Ekwo does not issue an Argentine invoice
 
@@ -40,49 +34,38 @@ alike.
 Ekwo writes no ARCA invoice XML, calls no web service and requests no CAE. So:
 
 - `einvoicing` names **no profile and no date**, although the obligation
-  exists. `profile` names a profile built on EN 16931 that a brick of
+  exists: `profile` names an EN 16931 profile that a brick of
   `packages/formats/` writes, and a comprobante electrónico with CAE is
-  neither; the format refuses an obligation with a date and no profile, and
-  has no word for "valid only once a third party authorises it". Its legal
-  reference says what the law requires and says in capitals that Ekwo neither
-  generates, requests authorisation for, nor transmits comprobantes to ARCA.
-  Declaring a profile anyway would have made the country page promise a
-  writer brick and Peppol transmission Argentina does not have — Mexico,
-  Vietnam, South Korea and Saudi Arabia leave the same fields empty for the
-  same reason; see *From Argentina* in
-  [`docs/international.md`](../../docs/international.md).
+  neither. Its legal reference says what the law requires and says in
+  capitals that Ekwo neither generates, requests authorisation for, nor
+  transmits comprobantes to ARCA.
 - Every document carries the mention `no_cae`: *this document does not carry
   ARCA's Código de Autorización Electrónico and is not valid as an invoice for
   tax purposes until authorised.*
 - The number a document gets in Ekwo is the number of the accounting entry —
-  correlative per journal, without a year in it (`numbering: gapless`) —
-  and not the fiscal comprobante number, which only ARCA authorises through
-  Resolución General 4291/2018.
+  correlative per journal, without a year (`numbering: gapless`) — not the
+  fiscal comprobante number, which only ARCA authorises (RG 4291/2018).
 
 What a company does today: request the CAE through ARCA's web service or its
-own billing software, and record the operation in Ekwo. The format of this
-repository cannot yet say "mandatory, by clearance"; see *What the core could
-not say* below.
+own billing software, and record the operation in Ekwo. See *What the core
+could not say* below.
 
 ## Sources
 
 Every rate, box, mention and statement carries its own `legal_reference` and
-the key of the text it is in. The register in `pack.json` holds **14 texts**,
-opened on 25 September 2026 unless said otherwise: the Ley de Impuesto al
-Valor Agregado (texto ordenado 1997), read again on 10 October 2026 for
-art. 1, incisos d) and e), art. 5, inciso h), and art. 12, and its Decreto
-Reglamentario 692/1998 on InfoLeg; the
-Ley General de Sociedades 19.550 and the Código Civil y Comercial (Ley
-26.994), also on InfoLeg; Decreto 953/2024, which dissolved AFIP and created
-ARCA; Resoluciones Generales (AFIP) 4290/2018 and 4291/2018, on electronic
-invoicing; Resoluciones Generales (AFIP) 549/1999, on the tax due on
-services performed abroad and used in Argentina, and 4240/2018, on digital
-services bought from abroad by somebody who is not a responsable inscripto,
-both opened on 10 October 2026; Resolución General (ARCA) 5705/2025, which created the "IVA
-Simple" system and Form F. 2051; Resolución General (AFIP) 4172/2017, the
-Agenda General de Vencimientos; two ARCA portal pages (the IVA declaration and
-the electronic-invoice subjects page); and the FACPCE, named as the source of
-the professional accounting standards this pack does not transcribe.
+the key of the text it is in. The register in `pack.json` holds **14 texts**:
+the Ley de Impuesto al Valor Agregado (texto ordenado 1997) and its Decreto
+Reglamentario 692/1998; the Ley General de Sociedades 19.550 and the Código
+Civil y Comercial (Ley 26.994), all on InfoLeg; Decreto 953/2024, which
+dissolved AFIP and created ARCA; Resoluciones Generales (AFIP) 4290/2018 and
+4291/2018, on electronic invoicing; Resoluciones Generales (AFIP) 549/1999,
+on the tax due on services performed abroad and used in Argentina, and
+4240/2018, on digital services bought from abroad by somebody who is not a
+responsable inscripto; Resolución General (ARCA) 5705/2025, which created the
+"IVA Simple" system and Form F. 2051; Resolución General (AFIP) 4172/2017,
+the Agenda General de Vencimientos; two ARCA portal pages (the IVA
+declaration and the electronic-invoice subjects page); and the FACPCE, named
+as the source of the professional standards this pack does not transcribe.
 
 ## The chart of accounts
 
@@ -96,22 +79,19 @@ non-current liabilities, equity; revenue by type of activity, cost of sales,
 administrative and selling expenses, financial and holding results — but
 still names rubros, not accounts.
 
-This pack's 130 accounts are therefore **original**: a convention of its own,
-three to five digits deep depending on how far a rubro is broken down by
-nature, in which the first digit is Activo (1), Pasivo (2), Patrimonio Neto
-(3), Ingresos (4) or Costos y Gastos (5), and every block of three-digit
-codes corresponds to exactly one line of `AR-ESP` or of `AR-ER`, so the chart
-reads straight off the two statements it feeds; the four- and five-digit
-accounts underneath a block — bienes de uso by nature with their own
-amortización acumulada, bienes de cambio by stage, cargas sociales, gastos by
-nature — are that block's own detail and do not move the statement line they
-roll up to. The professional presentation
-standard is the FACPCE's Resoluciones Técnicas — chiefly RT 8 (normas
-generales de exposición) and RT 9 (normas particulares para entes
+This pack's 130 accounts are therefore **original**, three to five digits
+deep: the first digit is Activo (1), Pasivo (2), Patrimonio Neto (3),
+Ingresos (4) or Costos y Gastos (5), and every three-digit block corresponds
+to exactly one line of `AR-ESP` or of `AR-ER`; the four- and five-digit
+accounts underneath — bienes de uso by nature with their own amortización
+acumulada, bienes de cambio by stage, cargas sociales, gastos by nature — are
+that block's detail and roll up to the same statement line. The professional
+presentation standard is the FACPCE's Resoluciones Técnicas — chiefly RT 8
+(normas generales de exposición) and RT 9 (normas particulares para entes
 comerciales, industriales y de servicios) — but the Federación is a
-professional body and not an organ of the State, and its text is not
-transcribed here; a reviewer who holds the RT is the one who can say whether
-this chart's rubros line up with theirs.
+professional body, not an organ of the State, and its text is not
+transcribed; a reviewer who holds the RT can say whether these rubros line
+up with theirs.
 
 Four decisions:
 
@@ -119,40 +99,32 @@ Four decisions:
   `2131` *IVA Débito Fiscal* and `1151` *IVA Crédito Fiscal* are where every
   tax posts; `2132` *IVA a Pagar* and `1152` *IVA Saldo a Favor - Técnico* are
   the reconcilable settlement accounts `settle_filing()` carries the net of a
-  period to, distinct from the posting accounts as the format requires. The
-  tax on services received from abroad has a pair of its own, `1153` *IVA
-  Crédito Fiscal - Prestaciones del exterior a computar* and `2135` *IVA por
-  prestaciones del exterior a ingresar*, because it is paid outside the
-  monthly return and becomes crédito fiscal only a period later — see
-  *Services received from abroad*.
+  period to. The tax on services received from abroad has its own pair,
+  `1153` *IVA Crédito Fiscal - Prestaciones del exterior a computar* and
+  `2135` *IVA por prestaciones del exterior a ingresar* — see *Services
+  received from abroad*.
 - **The suspense account is `117`** *Partidas pendientes de imputación*, not
   reconcilable, and never the bank or the cash account.
 - **`receivable` and `payable` name one subaccount each** — `1131` *Deudores
   por ventas - Mercado interno* and `2111` *Proveedores - Mercado interno* —
   although both headings (`113`, `211`) and every subaccount under them are
-  reconcilable: the database itself requires an `asset_receivable` or
-  `liability_payable` account to be reconcilable, whether or not it is a
-  heading nothing is ever posted to.
+  reconcilable, as the database requires of any `asset_receivable` or
+  `liability_payable` account.
 - **The result of the year goes to `351` / `352`**, and the close carries it
-  to `341` / `342` (`closing_style: result_accounts`), the same mechanism
-  France uses (120/129): the result sits on its own line of the balance sheet
-  until the asamblea decides its allocation (LGS arts. 68 and 70, not
-  transcribed as a rule of this pack since no tax or statement line depends
-  on it).
+  to `341` / `342` (`closing_style: result_accounts`): the result sits on its
+  own line of the balance sheet until the asamblea decides its allocation
+  (LGS arts. 68 and 70, not transcribed as a rule since no tax or statement
+  line depends on it).
 
 **No inflation adjustment, and no RECPAM.** Ley 27.468 reinstated *ajuste por
 inflación contable* (art. 62, LGS, and RT 6 of the FACPCE) for a fiscal year
-whose cumulative inflation crosses the thresholds the law sets, which
-Argentina's has for every year this pack could check. That restatement
-produces the *Resultado por Exposición al Cambio en el Poder Adquisitivo de
-la Moneda* (RECPAM) — the gain or loss a company books from holding monetary
-assets and liabilities while the currency loses value — as a line of its own
-in the estado de resultados. Restating a chart of accounts for the loss of
-purchasing power of the currency is a computation over a whole year of
-balances, not a fact one document or one tax can carry, and `docs/packs.md`
-has no mechanism for it anywhere in the format: this pack carries no RECPAM
-account and no inflation adjustment, on any account, in any golden document;
-see *From Argentina* in `docs/international.md`.
+whose cumulative inflation crosses the thresholds the law sets. That
+restatement produces the *Resultado por Exposición al Cambio en el Poder
+Adquisitivo de la Moneda* (RECPAM) — the gain or loss from holding monetary
+items while the currency loses value — as a line of the estado de
+resultados. It is a computation over a whole year of balances, which the
+format of `docs/packs.md` has no mechanism for: this pack carries no RECPAM
+account and no inflation adjustment, in any golden document.
 
 ## Taxes
 
@@ -228,7 +200,7 @@ A company that is a responsable inscripto and buys a service from a supplier
 abroad — a software subscription, hosting, an API billed from the United
 States or Singapore — receives an invoice with no Argentine tax on it, and
 still owes the tax. The rules, as InfoLeg's texto actualizado of the law and
-the text of Resolución General (AFIP) 549/1999 read on 10 October 2026:
+the text of Resolución General (AFIP) 549/1999:
 
 - **What is taxed.** Art. 1, inciso d): *"Las prestaciones comprendidas en el
   inciso e) del artículo 3°, realizadas en el exterior cuya utilización o
@@ -315,7 +287,7 @@ filed through "IVA Simple" and Form F. 2051, which replaced Forms F. 731, F.
 already authorised and presents no numbered fields of its own, unlike the
 forms it replaced — this pack's box codes (`G21`, `C21`, `CF21`…) are
 therefore acronyms of its own over the substance the law fixes in arts. 11,
-12 and 24, and not the wording of a screen this pack could not verify.
+12 and 24, not the wording of a screen.
 
 - `DEBFIS` sums the débito fiscal of every positive rate (art. 11): the tax
   applying the rate to the net price of every taxed sale.

@@ -5,32 +5,22 @@ built on the NIIF for SMEs the country's accounting profession has adopted,
 the journals, the Impuesto al Valor Agregado (IVA) at its single rate with
 exports and the general exemptions of the law, the fields of the monthly
 Formulario SAT-2237, a balance sheet and an income statement, and the
-sentences an invoice needs. The format is [`docs/packs.md`](../../docs/packs.md);
-this file says where the content came from and which decisions it rests on,
-so that a Guatemalan accountant reading the pack can disagree with a specific
-sentence rather than with the whole of it.
+sentences an invoice needs. The format is [`docs/packs.md`](../../docs/packs.md).
 
-It is the sixth pack of Latin America, after Mexico, Chile, Colombia, Peru
-and Argentina, and the first of Central America. **Language: `es`.** Every
-label of this pack is written in Spanish, the language of the law and of the
-Superintendencia de Administración Tributaria's (SAT) own forms. No second
-language is declared: Guatemala prescribes no catalogue of accounts (see
-below), so the chart is this pack's own and has no official wording in any
-other language to carry as `i18n` — a translation would be this pack's own
-words translated a second time, not a text a reader can check against a
-source. A contributor is welcome to add `i18n/en.json` one section at a time,
-exactly as `docs/packs.md` describes.
+**Language: `es`**, the language of the law and of the Superintendencia de
+Administración Tributaria's (SAT) own forms. No second language is
+declared: the chart is this pack's own and has no official wording in any
+other language. A contributor is welcome to add `i18n/en.json` one section
+at a time, as `docs/packs.md` describes.
 
 **Status: `community`.** Nobody who files a Guatemalan return has reviewed
-it. The figures are replayed against a quarter of books by
-`tests/golden.test.ts`, which proves the pack is coherent and proves nothing
-about whether it is right.
+it. `tests/golden.test.ts` replays a quarter of books, which proves the pack
+is coherent, not that it is right.
 
-Guatemala is outside the common system of VAT of Directive 2006/112/EC, so
-`supabase/seed/00_territories.sql` carries a row for `GT` with `eu_vat_scope`
-`none`: no `exemption_code`, no `intracom_*` treatment, and `vat_category` is
-not declared on any tax of this pack, since it declares no e-invoicing
-profile — see [What a tax says on the invoice](../../docs/packs.md#what-a-tax-says-on-the-invoice-treatment-category-and-reason).
+Guatemala is outside Directive 2006/112/EC: `GT` has `eu_vat_scope` `none`
+in `supabase/seed/00_territories.sql` (no `exemption_code`, no `intracom_*`
+treatment, no `vat_category`, since no e-invoicing profile is declared — see
+[What a tax says on the invoice](../../docs/packs.md#what-a-tax-says-on-the-invoice-treatment-category-and-reason)).
 `GTQ` (Guatemalan quetzal, two decimals) is added to `00_currencies.sql`.
 
 ## Ekwo does not issue a Guatemalan Documento Tributario Electrónico
@@ -38,55 +28,43 @@ profile — see [What a tax says on the invoice](../../docs/packs.md#what-a-tax-
 **A Guatemalan invoice is a Documento Tributario Electrónico (DTE), and it
 exists only once a Certificador authorised by the SAT — or the SAT itself —
 has certified it.** Acuerdo de Directorio Número 13-2018 created the Régimen
-de Factura Electrónica en Línea (FEL): the issuer generates the DTE, signs it
-and transmits it to a Certificador, which validates the rules of the régimen
-and applies its own certification before the document exists as a
-comprobante for tax purposes — a clearance model, not a direct exchange
-between the two parties to the sale. Adoption was staged by each taxpayer's
-volume of invoicing and reached every taxpayer of the country, including
-those of the Régimen de Pequeño Contribuyente, by March 2023.
+de Factura Electrónica en Línea (FEL): the issuer signs the DTE and
+transmits it to a Certificador, which validates and certifies it — a
+clearance model. Adoption reached every taxpayer, including the Régimen de
+Pequeño Contribuyente, by March 2023.
 
-Ekwo writes no DTE XML, talks to no Certificador and certifies nothing with
-the SAT. So:
+Ekwo writes no DTE XML, talks to no Certificador and certifies nothing. So:
 
 - `einvoicing` names **no profile and no date**, although the obligation
-  exists in substance. `profile` names a profile built on EN 16931 that a
-  brick of `packages/formats/` writes and transmits over Peppol, and the
-  Guatemalan DTE is neither; the format has no word for "valid only once a
-  Certificador has certified it". Mexico, Peru and Argentina leave the same
-  fields empty for the same reason; see *From Guatemala* in
-  [`docs/international.md`](../../docs/international.md).
+  exists: `profile` names an EN 16931 profile sent over Peppol, and the
+  format has no word for "valid only once a Certificador has certified it"
+  (see [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet)).
 - Every document carries the mention `dte_not_issued`: *this document is not
   a Documento Tributario Electrónico; only the certified one supports the
   operation for tax purposes.*
-- The number a document gets in Ekwo is the number of the accounting entry,
-  correlative per journal (`numbering: gapless`), and not the number of
-  authorisation (a UUID) the Certificador assigns to the DTE itself, nor the
-  serie-número the issuer's own system carries.
+- A document's number is the accounting entry's, correlative per journal
+  (`numbering: gapless`), not the Certificador's authorisation UUID nor the
+  issuer's serie-número.
 
 What a company does today: issue the DTE through a certified billing system
-or the SAT's own free facility, and record the transaction in Ekwo. See
-*What the core could not say* below.
+or the SAT's own free facility, and record the transaction in Ekwo.
 
 ## Sources
 
 Every rate, box, mention and statement line carries its own `legal_reference`
 and the key of the text it is in. The register in `pack.json` holds ten
-texts, every one opened on 26 September 2026: the consolidated Ley del
-Impuesto al Valor Agregado (Decreto Número 27-92) on the Congreso's own
-legislative repository; Decreto Número 4-2012, which reformed the régimen of
-Pequeño Contribuyente and the documentation of the crédito fiscal, on the
-same repository; the current Reglamento of the IVA law, Acuerdo Gubernativo
-Número 5-2013, on the Ministerio de Finanzas Públicas — it replaced Acuerdo
-Gubernativo Número 311-97, which this pack does **not** cite, since it was
-superseded before this pack's `released_at`; the Código de Comercio de
-Guatemala (Decreto Número 2-70), also on the Congreso's repository; the
-Colegio de Contadores Públicos y Auditores de Guatemala's own resolution
-adopting the NIIF for SMEs; and four pages of the SAT's own portal — the
-Cumplimiento Tributario guidance on the monthly IVA declaration, the
-Declaraguate filing portal, the Acuerdo de Directorio that creates the FEL
-régime, the eFactura information page, and the Pequeño Contribuyente page of
-the Libro Electrónico Tributario.
+texts: the consolidated Ley del Impuesto al Valor Agregado (Decreto Número
+27-92) and Decreto Número 4-2012 (régimen of Pequeño Contribuyente,
+documentation of the crédito fiscal), on the Congreso's legislative
+repository; the current Reglamento of the IVA law, Acuerdo Gubernativo
+Número 5-2013, on the Ministerio de Finanzas Públicas (it replaced Acuerdo
+Gubernativo Número 311-97, not cited, superseded before `released_at`); the
+Código de Comercio de Guatemala (Decreto Número 2-70); the Colegio de
+Contadores Públicos y Auditores de Guatemala's resolution adopting the NIIF
+for SMEs; and SAT pages — the Cumplimiento Tributario guidance on the
+monthly IVA declaration, the Declaraguate portal, the Acuerdo de Directorio
+creating the FEL régime, the eFactura page, and the Pequeño Contribuyente
+page of the Libro Electrónico Tributario.
 
 ## The chart of accounts
 

@@ -5,23 +5,16 @@ nomenclature of the Plan Único de Cuentas, the journals, the value added tax
 (impuesto sobre las ventas — IVA) at its general and reduced rates, an export
 exemption and an exclusion, the fields of Formulario 300, a minimal balance
 sheet and income statement, and the sentences an invoice needs. The format is
-[`docs/packs.md`](../../docs/packs.md); this file says where the content came
-from and which decisions it rests on, so that a Colombian accountant reading
-the pack can disagree with a specific sentence rather than with the whole of
-it.
+[`docs/packs.md`](../../docs/packs.md).
 
 **Status: `community`.** Nobody who files a Colombian return has reviewed it.
-The figures are replayed against a year of books by `tests/golden.test.ts`,
-which proves the pack is coherent and proves nothing about whether it is
-right.
+`tests/golden.test.ts` replays the figures against a year of books, which
+proves the pack coherent, not right.
 
-**Language.** The pack's own labels are written in Spanish (`defaults.language:
-"es"`), and `languages` is empty: no second wording is declared yet. The two
-official reference texts this pack builds its statements on — Decreto 2650 de
-1993 and Decreto 2706 de 2012 — have no English translation of their own, so
-an English label, the day one is contributed, would be a translation Ekwo
-makes rather than a wording the law itself carries; the accounts and boxes
-below are numbered and named exactly as those decrees number and name them.
+**Language.** Labels are in Spanish (`defaults.language: "es"`); `languages`
+is empty. Decreto 2650 de 1993 and Decreto 2706 de 2012 have no official
+English text, so an English label would be Ekwo's translation; accounts and
+boxes are numbered and named exactly as those decrees do.
 
 ## Ekwo does not issue a Colombian electronic invoice
 
@@ -31,78 +24,66 @@ Resolución DIAN 000165 de 2023: before it can be issued, the document is sent
 to the DIAN — or to an authorised technology provider — for validación previa,
 which checks it against the technical annex and assigns the Código Único de
 Factura Electrónica (CUFE), a 96-character cryptographic digest. It is a
-clearance regime, like the CFDI of the Mexican pack, and not a peer-to-peer
-exchange built on the semantic model of EN 16931.
+clearance regime, not a peer-to-peer exchange built on EN 16931.
 
 Ekwo writes no UBL XML of the Colombian invoice, talks to no DIAN endpoint and
 computes no CUFE. So:
 
 - `einvoicing` names **no profile and no date**, although the obligation
-  exists. `profile` is a profile built on EN 16931 that a brick of
-  `packages/formats/` writes (`peppol-bis-3`, `factur-x-en16931`, `xrechnung`,
-  a PINT), and the Colombian factura electrónica is none of them; the format
-  also has no word for "valid only once a third party validates it". Its
-  legal reference says what the law requires and says in capitals that Ekwo
-  neither generates, computes the CUFE for, nor transmits a Colombian
-  electronic invoice.
+  exists: `profile` is an EN 16931 profile a brick of `packages/formats/`
+  writes (`peppol-bis-3`, `factur-x-en16931`, `xrechnung`, a PINT), and the
+  format has no word for "valid only once a third party validates it". The
+  legal reference says in capitals that Ekwo neither generates, computes the
+  CUFE for, nor transmits a Colombian electronic invoice.
 - Every document carries the mention `cufe_not_assigned`: *this document is
   not an electronic invoice; only the DIAN-validated invoice, carrying its
   CUFE, supports the operation for tax purposes.*
-- The number a document gets in Ekwo is the consecutive of the accounting
-  entry — a real requirement of art. 617, literal d), and of the numbering
-  ranges Resolución 000165 authorises — and not the CUFE, which only a
-  validation assigns.
+- A document's number in Ekwo is the consecutive of the accounting entry (art.
+  617, literal d), and the numbering ranges Resolución 000165 authorises), not
+  the CUFE, which only a validation assigns.
 - The Número de Identificación Tributaria (NIT) has no ISO 6523 scheme
-  registered, so `party_scheme` and `vat_scheme` stay null, for the same
-  reason as in the Mexican pack.
+  registered, so `party_scheme` and `vat_scheme` stay null.
 
 What a company does today: validate the invoice through the DIAN's free
 service or an authorised technology provider, and record the transaction in
-Ekwo. See *What the core could not say* below.
+Ekwo.
 
 ## Sources
 
 Every rate, box, mention and statement carries its own `legal_reference` and
-the key of the text it is in. The register in `pack.json` holds ten texts,
-every one opened on 25 September 2026: the DIAN's own compilation of the
-Estatuto Tributario Nacional; Decreto 1625 de 2016, the Decreto Único
-Reglamentario that fixes the tax calendar; Formulario 300 and its
-instructivo; Resolución DIAN 000165 de 2023 and its Anexo Técnico of
-Documento Equivalente Electrónico; the DIAN's own pages on validación previa
-and on the tax calendar; and, for the chart and the statements, Decreto 2650
-de 1993 (Superintendencia de Sociedades), Decreto 2420 de 2015 and Decreto
-2706 de 2012 (Función Pública — Gestor Normativo).
-
-The DIAN's `normograma.dian.gov.co` and the Función Pública `gestornormativo`
-are the two consolidated legal databases of the Colombian government; this
-register cites them the way the Mexican pack cites the Cámara de Diputados
-and the SAT.
+the key of its text. The register in `pack.json` holds ten texts: the DIAN's
+compilation of the Estatuto Tributario Nacional; Decreto 1625 de 2016, the
+Decreto Único Reglamentario that fixes the tax calendar; Formulario 300 and
+its instructivo; Resolución DIAN 000165 de 2023 and its Anexo Técnico of
+Documento Equivalente Electrónico; the DIAN's pages on validación previa and
+on the tax calendar; and, for the chart and the statements, Decreto 2650 de
+1993 (Superintendencia de Sociedades), Decreto 2420 de 2015 and Decreto 2706
+de 2012 (Función Pública — Gestor Normativo). The DIAN's
+`normograma.dian.gov.co` and the Función Pública `gestornormativo` are the
+two consolidated legal databases of the Colombian government.
 
 ## The chart of accounts
 
 **Colombia does not, since 2015, impose a single chart of accounts on every
 company.** Decreto 2650 de 1993 made the Plan Único de Cuentas (PUC)
 compulsory for every merchant, but Ley 1314 de 2009 and Decreto 2420 de 2015
-converged Colombian accounting to the International Financial Reporting
-Standards: a preparer of Groups 1 and 2 defines its own chart, and the
-Consejo Técnico de la Contaduría Pública has said it is not competent to rule
-on whether Decreto 2650 remains in force for anyone else. What has not
-changed is practice: almost every Colombian accounting package, and the
-DIAN's own reporting of información exógena, still keys its accounts to the
-PUC numbering. This pack uses that numbering as its own catalogue — a
-selection of 129 codes, headings included — exactly as the Mexican pack uses
-the SAT's código agrupador: the identity of code and of name is the
-association, not a legal obligation to use precisely this numbering.
+converged Colombian accounting to IFRS: a preparer of Groups 1 and 2 defines
+its own chart, and the Consejo Técnico de la Contaduría Pública has said it
+is not competent to rule on whether Decreto 2650 remains in force for anyone
+else. In practice almost every Colombian accounting package, and the DIAN's
+reporting of información exógena, still keys accounts to the PUC numbering.
+This pack uses that numbering as its catalogue — 129 codes, headings
+included; the identity of code and name is the association, not a legal
+obligation to use precisely this numbering.
 
 Selected: cash, banks, customers, sundry debtors, the IVA control accounts,
 inventory, the usual fixed assets and their accumulated depreciation,
 suppliers, payroll provisions, retained earnings and the current year's
-result apart from it, revenue by kind, the direct costs and purchases of a
-trading company, and the general expenses it needs. Left out: the sector and
-related-party variants the PUC carries for financial, insurance and
-cooperative entities (which keep their own charts by special legislation),
-the manufacturing cost classes 7, and the cuentas de orden of classes 8 and 9,
-which are memorandum accounts outside any financial statement.
+result, revenue by kind, a trading company's direct costs and purchases, and
+general expenses. Left out: the PUC's variants for financial, insurance and
+cooperative entities (own charts by special legislation), the manufacturing
+cost class 7, and the cuentas de orden of classes 8 and 9 (memorandum
+accounts outside any statement).
 
 Four decisions:
 

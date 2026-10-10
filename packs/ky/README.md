@@ -5,16 +5,13 @@ journals, the two "not subject" tax codes that carry every sale and purchase a
 Cayman business books, and a statement of financial position and an income
 statement in the style of IFRS for SMEs. The format is
 [`docs/packs.md`](../../docs/packs.md); this file says where the content came
-from and which decisions it rests on. It follows the shape of the Hong Kong
-pack, the other jurisdiction of this repository with no tax on turnover.
+from and which decisions it rests on.
 
 **Status: `community`.** Nobody who practises in the Cayman Islands has
 reviewed it. The golden scenario proves the pack is coherent, not that it is
 right.
 
 ## Sources
-
-All texts were opened on 10 October 2026.
 
 | What | Text | Where |
 |---|---|---|
@@ -30,9 +27,7 @@ The absence of VAT is established from the Tax Information Authority's
 statement that there are no direct taxes, the budget alert and PwC's summary;
 the Customs Tariff Act shows the border duty is the transaction-level levy. No
 Cayman statute *saying* "there is no VAT" exists to cite, since a tax that was
-never enacted has no repeal. The government's own `gov.ky/economy` page was
-opened and carries no tax text; its tax statement was only seen in a search
-snippet. The OpenPeppol list of authorities was not opened.
+never enacted has no repeal.
 
 ## The chart of accounts
 
@@ -65,7 +60,7 @@ payroll tax; the 2026-2027 budget created none.
   heading of the goods, not on the invoice line, so it is booked as a cost of
   the goods (account 5025) and not through a tax code.
 - **Stamp duty** (about 7.5 % on property transfers per secondary sources; the
-  Stamp Duty Act was not opened).
+  Stamp Duty Act itself should be checked).
 - **Work permit and licence fees, pension contributions.** Fees are booked
   to expense accounts; no payroll or pension module exists.
 - **Pillar Two / global minimum tax.** The status of any Cayman domestic
@@ -99,8 +94,8 @@ text read requires any on an invoice. See `pack.json` for each reference.
 ## Electronic invoicing
 
 `obligation` is `none`: no statute read requires it and no Peppol Authority
-for the Cayman Islands was found (the OpenPeppol list was not opened, so this
-needs confirming).
+for the Cayman Islands is known; this should be confirmed against the
+OpenPeppol list of authorities.
 
 ## What this pack does not carry
 

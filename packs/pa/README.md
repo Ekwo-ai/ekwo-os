@@ -31,8 +31,7 @@ obligation reached new taxpayers from 2022, government suppliers from
 October 2023, independent professionals from 2024, and — under Resolución
 N.° 201-6299 de 29 de julio de 2025, in force from 1 January 2026 — every
 taxpayer above B/.36,000 of annual gross income or 100 monthly documents must
-use a PAC exclusively. It is a clearance regime, like the CFDI of the Mexican
-pack and the factura electrónica of the Colombian one, and not a peer-to-peer
+use a PAC exclusively. It is a clearance regime, not a peer-to-peer
 exchange built on the semantic model of EN 16931.
 
 Ekwo writes no XML of the Panamanian invoice, talks to no PAC or DGI endpoint
@@ -52,8 +51,7 @@ and computes no Código Único de Factura Electrónica (CUFE). So:
 - The number a document gets in Ekwo is the consecutive of the accounting
   entry, and not the CUFE, which only a validation assigns.
 - The Registro Único de Contribuyente (RUC) has no ISO 6523 scheme
-  registered, so `party_scheme` and `vat_scheme` stay null, for the same
-  reason as in the Mexican and Colombian packs.
+  registered, so `party_scheme` and `vat_scheme` stay null.
 
 What a company does today: validate the invoice through a PAC or the DGI's
 free tool, and record the transaction in Ekwo. See *What the core could not
@@ -63,7 +61,7 @@ say* below.
 
 Every rate, box, mention and statement carries its own `legal_reference` and
 the key of the text it is in. The register in `pack.json` holds fourteen
-texts, every one opened on 26 September 2026: the Código Fiscal itself (Ley
+texts: the Código Fiscal itself (Ley
 8 de 1956) and the six laws that added or reformed article 1057-V — Ley 75 de
 1976, Ley 61 de 2002, Ley 6 de 2005, Ley 49 de 2009, Ley 8 de 2010 and Ley 33
 de 2010, all hosted by the DGI's own `Normativa` page; the DGI's
@@ -74,27 +72,20 @@ chart and the statements, the Colegio de Contadores Públicos Autorizados de
 Panamá's own account of Resolución N.° 03-2010 of the Junta Técnica de
 Contabilidad.
 
-**One reading could not be verified against the primary Gaceta Oficial
-text.** Resolución N.° 03-2010 de 28 de octubre de 2010, which the Junta
-Técnica de Contabilidad used to adopt the NIIF para las PYMES, is cited here
-through the Colegio de Contadores Públicos Autorizados de Panamá's own
-article rather than through the Ministerio de Comercio e Industrias' Gaceta
-Oficial text, which this pack's author could not locate online. A reviewer
-who holds the primary text is asked to replace the citation.
+**One citation rests on a secondary source.** Resolución N.° 03-2010 de 28
+de octubre de 2010, which adopted the NIIF para las PYMES, is cited through
+the Colegio de Contadores Públicos Autorizados de Panamá's article rather
+than the Gaceta Oficial text; the primary text should be checked.
 
 ## The chart of accounts
 
-**Panama imposes no chart of accounts.** No statute or regulation found for
-this pack fixes an account numbering for a Panamanian company; the Junta
-Técnica de Contabilidad's Resolución N.° 03-2010 fixes only the reporting
-*framework* — the NIIF para las PYMES — for a general-purpose financial
-statement, the way Decreto 2420 de 2015 does in Colombia and the SAT's código
-agrupador does in Mexico. This pack therefore uses, as its own catalogue, a
-selection of 151 codes (headings included) grouped by the sections of that
-framework — current and non-current assets, current and non-current
-liabilities, equity, income and expense by function — exactly as the Mexican
-and Colombian packs use their own reference numbering: the grouping is this
-pack's own, not a legal obligation to use precisely this numbering.
+**Panama imposes no chart of accounts.** The Junta Técnica de Contabilidad's
+Resolución N.° 03-2010 fixes only the reporting *framework* — the NIIF para
+las PYMES — for a general-purpose financial statement. This pack therefore
+uses, as its own catalogue, a selection of 151 codes (headings included)
+grouped by the sections of that framework — current and non-current assets,
+current and non-current liabilities, equity, income and expense by function:
+the grouping is this pack's own, not a legal obligation.
 
 Four decisions:
 
@@ -109,8 +100,7 @@ Four decisions:
   and suppliers (`220501`) reconcile against — see the note on `reconcilable`
   in [`docs/packs.md`](../../docs/packs.md).
 - **The suspense account is `280501`**, a dedicated *cuenta de orden* this
-  pack's own catalogue carries for exactly this: nothing in the sources read
-  names an official one.
+  pack's own catalogue carries for exactly this: no official one is named.
 - **`629905`**, under *Gastos de venta*, is the rounding account, for the
   same reason.
 
@@ -119,11 +109,10 @@ Four decisions:
 `PA-NIIFPYME-ESF` (estado de situación financiera) and `PA-NIIFPYME-ERI`
 (estado de resultado integral) are not a transcription of the full NIIF para
 las PYMES presentation, whose disclosure notes belong to a professional who
-prepares them. They group this pack's own catalogue by the sections sections
+prepares them. They group this pack's own catalogue by the sections
 4 and 5 of that standard define — current and non-current assets and
 liabilities, equity, revenue, cost of sales and expense by function — in an
-abridged shape comparable to the one the Colombian pack uses for a Group 3
-microempresa. A company that needs the full NIIF para las PYMES presentation
+abridged shape. A company that needs the full NIIF para las PYMES presentation
 has a chart and a figure to start from, not a finished filing. `xbrl` is null
 everywhere: no Panamanian taxonomy is mapped.
 
@@ -160,9 +149,8 @@ carries the two on different casillas (13 and 14), because the numerals of
 parágrafos 1 and 6 of article 1057-V that set them are different rules of
 law, not one rate applied to two goods.
 
-**Recoverable and not.** `PA-P-7-NOCRED` mirrors the Peruvian pack's
-`PE-C-18-NOCRED`: a purchase taxed at 7 % but destined directly to an exempt
-operation gives no credit (parágrafo 12), and the tax is booked with a
+**Recoverable and not.** With `PA-P-7-NOCRED`, a purchase taxed at 7 % but
+destined directly to an exempt operation gives no credit (parágrafo 12), and the tax is booked with a
 `tax_on_base` posting, which carries no account of its own and lands on the
 cost of the line it taxes — Formulario 430's casilla 34 has no paired tax
 casilla for exactly that reason.
@@ -220,8 +208,8 @@ needs any of these has a base to start from, not a finished return.
   article 1057-V, parágrafo 11, charges a 10 % surcharge on a return with tax
   due filed more than fifteen days after the period ends, which fixes the
   ordinary filing day at the fifteenth of the following month.
-- **Rounding.** Not declared: nothing read states the form is filed in a
-  coarser unit than the cent of the balboa/US dollar.
+- **Rounding.** Not declared: the pack works in the cent of the
+  balboa/US dollar.
 
 ## The golden year
 
@@ -238,20 +226,14 @@ one is an advance with no invoice to match, left open on purpose, and two
 settle purchases, one of them the non-recoverable one, whose ITBMS stayed in
 the cost paid.
 
-Every figure of `golden/vat_return.json`, `golden/statements.json` and
-`golden/trial_balance.json` was checked by hand against the scenario before
-this pack was committed — not only replayed by `tests/golden.test.ts`.
-
 ## What the core could not say
 
-The Panamanian section of
-[`docs/international.md`](../../docs/international.md) states each of these
-as a change to the core. In short:
+See [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 1. **Clearance.** `einvoicing` can say "mandatory" only for a profile built
    on EN 16931, and has no way to say "valid only once a PAC or the DGI
    validates it"; the pack leaves the fields empty and says why in the
-   reference, exactly as the Mexican and Colombian packs do.
+   reference.
 2. **A service tax point with a third anchor.** `tax_point` names one word
    for the whole country; article 1057-V, parágrafo 2, gives goods two
    anchors (invoice or delivery, whichever comes first — `invoice_if_issued`)
@@ -264,14 +246,14 @@ as a change to the core. In short:
    divided by a box.
 4. **Withholding, on its own annex.** The retention mechanisms of ITBMS and
    the Anexo 95 credit they feed are a different mechanism from a tax a
-   document posts, the same gap the Colombian pack states for ReteIVA.
+   document posts.
 
 ## For a reviewer
 
 The first things to read against practice: whether `PA-S-10-ALC` and
 `PA-S-10-HOSP` should stay two codes at one rate, rather than one; the choice
 of a dedicated `280501` for suspense and `629905` for rounding, where no
-source read names an official account for either; whether `PA-P-7-NOCRED`
+official account is named for either; whether `PA-P-7-NOCRED`
 reads article 1057-V, parágrafo 12, correctly; and the citation of
 Resolución N.° 03-2010 through a secondary source rather than the Gaceta
 Oficial text — see *Sources* above.

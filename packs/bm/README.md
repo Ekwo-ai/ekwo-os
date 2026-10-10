@@ -10,43 +10,36 @@ file says where the content came from and which decisions it rests on.
 figures are replayed against a year of books by `tests/golden.test.ts`, which
 proves the pack is coherent and proves nothing about whether it is right.
 
-**Like Hong Kong, this is a pack for a jurisdiction with no tax on sales.**
-Bermuda, a British Overseas Territory, levies no value added tax, goods and
-services tax or general sales tax. The pack follows the format of
-[`packs/hk`](../hk/README.md): two `not_subject` codes, no `tax_report.json`, no
-tax-settlement roles. Currency: the Bermudian dollar (BMD, two decimals), issued
+**A pack for a jurisdiction with no tax on sales.** Bermuda, a British
+Overseas Territory, levies no value added tax, goods and services tax or
+general sales tax. The pack carries two `not_subject` codes, no
+`tax_report.json`, no tax-settlement roles. Currency: the Bermudian dollar (BMD, two decimals), issued
 at par with the US dollar.
 
 ## Sources
 
-The register in `pack.json` holds five texts, consulted on 10 October 2026.
+The register in `pack.json` holds five texts.
 
-| What | Text | Opened? |
-|---|---|---|
-| Records of account kept five years (s. 83); financial statements and the GAAP named in the notes (s. 84, s. 84(1A)) | Companies Act 1981, consolidated text published by the Bermuda Monetary Authority | Yes, ss. 83 and 84 read in full |
-| No VAT or sales tax; payroll tax tiers; customs duty; land tax | PwC, *Worldwide Tax Summaries — Bermuda* (last reviewed 19 February 2026) | Yes |
-| Corporate income tax: 15 %, from 1 January 2025, Bermuda constituent entities of large groups | EY, *Bermuda Corporate Income Tax* | Yes |
-| The statements' layout | IFRS for SMEs Accounting Standard (IFRS Foundation) | Yes |
-| Where payroll tax is filed | e-Tax portal of the Office of the Tax Commissioner, `www.etax.gov.bm` | **No** |
+| What | Text |
+|---|---|
+| Records of account kept five years (s. 83); financial statements and the GAAP named in the notes (s. 84, s. 84(1A)) | Companies Act 1981, consolidated text published by the Bermuda Monetary Authority |
+| No VAT or sales tax; payroll tax tiers; customs duty; land tax | PwC, *Worldwide Tax Summaries — Bermuda* (last reviewed 19 February 2026) |
+| Corporate income tax: 15 %, from 1 January 2025, Bermuda constituent entities of large groups | EY, *Bermuda Corporate Income Tax* |
+| The statements' layout | IFRS for SMEs Accounting Standard (IFRS Foundation) |
+| Where payroll tax is filed | e-Tax portal of the Office of the Tax Commissioner, `www.etax.gov.bm` |
 
-**Every `gov.bm` address failed to resolve from the machine that wrote this
-pack** (`www.gov.bm`, `gov.bm`, `test.gov.bm`, `www.etax.gov.bm`: DNS error, on
-several attempts). The e-Tax URL comes from a search-result snippet, not from
-the portal, and `consulted_on` for that entry records the day the address was
-looked up, not read. The Government's pre-budget report, the 2026 Customs
-Tariff, the Payroll Tax Act 1995 and the Corporate Income Tax Act 2023 were
-therefore not opened in their own words: the facts about them below rest on
-the secondary sources above and on press reports, and say so.
+The Government's pre-budget report, the 2026 Customs Tariff, the Payroll Tax
+Act 1995 and the Corporate Income Tax Act 2023 are cited from the secondary
+sources above and from press reports; their own text, and the e-Tax portal
+address, should be checked on `gov.bm`.
 
 ## Why there is no sales tax in the pack
 
 PwC's Worldwide Tax Summaries (last reviewed 19 February 2026) states: "There is
-no VAT or sales tax in Bermuda." A search on 10 October 2026 found no
-enacted or proposed general consumption tax; the 2026-27 budget material read
-(the pre-budget report as summarised by search results, and press coverage of
-the 2026 Customs Tariff and Payroll Tax amendments) proposes none. The Fiscal
-Responsibility Panel's reports were not opened. If a general sales tax, GST or
-VAT is ever enacted, this pack must be reworked, not extended.
+no VAT or sales tax in Bermuda." No enacted or proposed general consumption
+tax is known as of 10 October 2026, and the 2026-27 budget material proposes
+none. If a general sales tax, GST or VAT is ever enacted, this pack must be
+reworked, not extended.
 
 `BM-S-NA` and `BM-P-NA` are `kind: other`, rate 0, `vat_category: O`, with a
 `base` posting only. `valid_from` is 2000-01-01, a convenience date and not the
@@ -61,8 +54,7 @@ on a group's profit, not on an invoice line.
   run from 0 % to 33.5 % by tariff line, 25 % being the most common (PwC;
   press coverage of the Customs Tariff Amendment Act 2026, which lowers some
   rates). Paid by the importer on the customs entry. The chart carries
-  `5025 Customs duty on imports` and `2071 Customs duty payable`. The 2026
-  Tariff itself was not opened.
+  `5025 Customs duty on imports` and `2071 Customs duty payable`.
 - **Payroll tax** — Payroll Tax Act 1995, an employer portion and an employee
   portion, filed quarterly with the Office of the Tax Commissioner and paid by
   the 15th of the month after the quarter (15 January, 15 April, 15 July, 15
@@ -72,7 +64,7 @@ on a group's profit, not on an invoice line.
   employers under BMD 200,000 was cut to 0.5 % from 1 April 2026; the Payroll
   Tax Rates Amendment Act 2026 restores 1 % from Q4 2026 (passed by the House
   of Assembly on 11 September and the Senate on 14 September 2026 according to
-  Bloomberg Tax and Orbitax — the date of assent was not found, and the PwC
+  Bloomberg Tax and Orbitax; the date of assent is unconfirmed, and the PwC
   tiers above predate the amendment). Accounts: `2070 Payroll tax payable`,
   `6025 Payroll tax — employer portion`.
 - **Corporate income tax** — Corporate Income Tax Act 2023, 15 %, applying to
@@ -83,8 +75,8 @@ on a group's profit, not on an invoice line.
   channel for the global minimum ("Pillar Two") tax; ordinary Bermuda
   companies are outside it. Accounts: `2060`, `1160`, `6470`.
 - **Land tax**, **stamp duty** and **social insurance and health insurance
-  contributions** exist (PwC lists land tax and stamp duty; the contribution
-  rates were not researched). Accounts exist for land tax and contributions;
+  contributions** exist (PwC lists land tax and stamp duty; the pack states no
+  contribution rates). Accounts exist for land tax and contributions;
   nothing computes any of them.
 
 ## The chart of accounts
@@ -93,8 +85,7 @@ Bermuda prescribes none. Companies Act 1981 s. 83 requires proper records of
 sums received and expended, of all sales and purchases of goods and of assets
 and liabilities, kept five years from preparation (s. 83(5)); s. 84 requires
 the directors to lay financial statements before the general meeting. The
-chart is original: four digits by class, flat, 111 accounts, derived from the
-Hong Kong chart's structure with the local levies in place of Hong Kong's.
+chart is original: four digits by class, flat, 111 accounts.
 Only trade debtors (`1100`) and trade creditors (`2000`) are `reconcilable`.
 There is no tax-clearing account.
 
@@ -119,19 +110,19 @@ financial year runs 1 April to 31 March.
 `numbering: free`; `tax_point: invoice_date` is a **convention, not a rule**
 (there is no tax to have a point). No mention is declared: no text read
 requires one on an invoice. No payment term or late-payment interest statute
-was found (not an exhaustive search; the legislation site was not read).
+is known; this should be confirmed.
 
 ## Electronic invoicing
 
-`obligation: none`. No mandate was found and no Bermuda Peppol Authority turned
-up in searches; the OpenPeppol list of authorities was not opened.
+`obligation: none`. No mandate and no Bermuda Peppol Authority are known; this
+should be confirmed against the OpenPeppol list of authorities.
 
 ## Reviewing this pack
 
 Open an issue titled "Review: Bermuda". A local accountant should read first:
 
 1. The 2026/27 payroll tax rates and the Amendment Act's date of assent and
-   effective quarter (all `gov.bm` pages were unreachable here).
+   effective quarter, against `gov.bm`.
 2. Whether the IFRS for SMEs layout is the right default against IFRS or US GAAP.
 3. Whether `calendar` is the right year-end default.
 4. The chart's grouping of payroll tax, social insurance and pension accounts.

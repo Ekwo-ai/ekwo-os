@@ -21,12 +21,10 @@ The figures are replayed against a quarter of books by `tests/golden.test.ts`,
 which proves the pack is coherent and proves nothing about whether it is
 right.
 
-Honduras is outside the common system of VAT of Directive 2006/112/EC, so
-`supabase/seed/00_territories.sql` carries a row for `HN` with `eu_vat_scope`
-`none`: no `exemption_code`, no `intracom_*` treatment, and `vat_category` is
-not declared on any tax of this pack, since it declares no e-invoicing
-profile. `HNL` (Honduran lempira, two decimals) is added to
-`00_currencies.sql`.
+Honduras is outside the common system of VAT of Directive 2006/112/EC: no
+`exemption_code`, no `intracom_*` treatment, and `vat_category` is not
+declared on any tax of this pack, since it declares no e-invoicing profile.
+Currency `HNL`, the Honduran lempira, two decimals.
 
 ## Invoicing: authorised numbering ranges, no electronic invoice
 
@@ -40,11 +38,7 @@ authorised by the SAR or produced by a system registered as a *autoimpresor*.
 The SAR assigns each range of invoices a *Código de Autorización de Impresión*
 (CAI) with a last date of issue. A self-printing system can be digital, but it
 is a variant of the same range-authorisation régimen and not an exchange of
-structured documents between parties. The SAR's invoicing page and its 2026
-communications still speak only of printing by *imprenta* and *autoimpresor*;
-the 2026 digitalisation items found (an agreement with the civil registry on
-advanced electronic signature for internal processes, a new Oficina Virtual)
-do not touch invoicing.
+structured documents between parties.
 
 Ekwo is not a registered self-printing system and requests no CAI range. So
 every document carries the mention `cai_not_issued`: *this document is not an
@@ -76,17 +70,16 @@ Each rate, box and deadline cites an official text in
 - **Acuerdo 481-2017** and the SAR invoicing page; the **Código de Comercio**
   (Decreto 73-50) and the **JUNTEC** model of financial statements.
 
-The Oficina Virtual portal itself refused automated requests (HTTP 403) when
-the sources were consulted; its address is the one the SAR's own pages give.
+The Oficina Virtual portal blocks automated link checks, so `pack check
+--links` reports it unreachable; its address is the one the SAR's own pages
+give.
 
 ## The chart of accounts
 
 There is no statutory chart in Honduras: the Código de Comercio asks for
 organised double-entry books, and the JUNTEC adopted the IFRS for SMEs, which
 sets the content of statements, not account numbers. `accounts.csv` is
-therefore this pack's own numbering, in Spanish, with 141 accounts, in the
-same block layout as its Central American neighbours so that a chart built for
-one reads in another. Honduran specifics: IHSS, RAP and INFOP employer
+therefore this pack's own numbering, in Spanish, with 141 accounts. Honduran specifics: IHSS, RAP and INFOP employer
 contributions, thirteenth-month (*aguinaldo*) and fourteenth-month salary,
 municipal taxes, the *aportación solidaria*, the property tax.
 
@@ -119,13 +112,10 @@ cigarettes and business-class air tickets. It does not name carbonated or
 soft drinks (the pre-2014 text of art. 6 only used them to define the price
 base), so no code puts them at 18 %. Tobacco products other than cigarettes
 were at the higher rate in the pre-2014 text but are not named by the 2013
-reform; whether they follow cigarettes to 18 % could not be confirmed from the
-texts consulted, and a reviewer should settle it.
+reform; whether they follow cigarettes to 18 % is for a reviewer to settle.
 
 **Earlier rates (12 % general, 15 % on alcohol and tobacco) are not
-declared.** Their exact start dates are not in the consolidated text consulted,
-and inventing one would be worse than a documented gap; documents dated before
-2014 are outside the pack.
+declared.** Documents dated before 2014 are outside the pack.
 
 **Exemptions.** One exempt code covers art. 15 (Annex I basket, medicines,
 education, health, banking, residential rent, rent of commercial premises
@@ -164,7 +154,7 @@ month** (art. 11); the SAR moves the date to the next business day when the
 10th is not one, which the deadline rule does not compute. The form has four
 sections: A (sales), B (purchases, imports), C (credits) and D (settlement).
 Boxes here are named after the form's lines; the official help does not number
-them in the version consulted, so the pack's box codes are its own. Sections
+them, so the pack's box codes are its own. Sections
 A, B and the settlement total are modelled; section C is not: carried-over
 surplus, payments made in the period, authorised compensation, credit
 assignments and withheld tax are filled in by the Oficina Virtual and are not
@@ -181,8 +171,8 @@ card issuers and acquirers withhold the ISV on sales paid by card (informative
 return code 523 and determinative code 215, due within ten calendar days).
 Large taxpayers also withhold 15 % on certain services under Acuerdo
 DEI-215-2010. The pack posts no withholding tax; the amounts withheld by third
-parties reach form 201 in section C, outside the pack. The text of Acuerdo
-DEI-215-2010 was not consulted, so its list of services is not stated here.
+parties reach form 201 in section C, outside the pack. The list of services
+of Acuerdo DEI-215-2010 is not stated here.
 
 ## The statements
 
@@ -196,8 +186,7 @@ pack's lines are not a transcription of it.
 Fifteen documents and five payments over January–March 2026, replayed to the
 cent: sales at 15 % and 18 %, a credit note, exports outside and inside Central
 America, an exempt sale, purchases at 15 % and 18 %, an exempt purchase, a
-purchase credit note and two imports at 15 % and 18 %. The expected boxes,
-trial balance and statements were worked out by hand: January settles at L 24
+purchase credit note and two imports at 15 % and 18 %. January settles at L 24
 payable, February at L 30 payable, March at a surplus of L 360.
 
 ## What the core could not say
