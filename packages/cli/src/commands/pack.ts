@@ -471,6 +471,10 @@ function describeToTerminal(description: PackDescription): void {
         description.taxes.rates.length === 0 ? 'none' : description.taxes.rates.join(', ')
       } · ${description.taxes.treatments.join(', ')}`,
     ],
+    ...description.taxes.notTaxed.map((entry): [string, string] => [
+      'not taxed',
+      `${entry.treatment} — ${entry.legalReference}`,
+    ]),
   ];
   for (const declaration of description.declarations) {
     rows.push([

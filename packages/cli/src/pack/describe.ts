@@ -61,6 +61,8 @@ export interface DescribedTaxes {
   treatments: string[];
   /** `vat`, `gst`, `sales_tax`, `withholding`, `other` — whichever the pack uses. */
   kinds: string[];
+  /** What the country leaves untaxed in a buyer's hands, and the article that says so (`not_taxed`). */
+  notTaxed: { treatment: string; legalReference: string }[];
 }
 
 /** When a declaration is due, flattened to what a reader prints. */
@@ -365,6 +367,10 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
       rates: [...new Set(pack.taxes.map((tax) => tax.rate))].sort((a, b) => a - b),
       treatments: [...new Set(pack.taxes.map((tax) => tax.treatment))].sort(),
       kinds: [...new Set(pack.taxes.map((tax) => tax.kind))].sort(),
+      notTaxed: (pack.manifest.not_taxed ?? []).map((entry) => ({
+        treatment: entry.treatment,
+        legalReference: entry.legal_reference,
+      })),
     },
     invoicing: invoicingOf(pack),
     declarations,

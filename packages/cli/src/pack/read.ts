@@ -842,6 +842,8 @@ export interface Manifest {
     journal_roles?: Record<string, string | undefined>;
     [key: string]: unknown;
   };
+  /** What the country leaves untaxed in a buyer's hands, with the article; see `foreignServices`. */
+  not_taxed?: { treatment: string; legal_reference: string; source: string }[];
   /** Zones the country belongs to, e.g. `european-union`; each has a page under docs/zones/. */
   zones?: string[];
   languages?: string[];
@@ -1464,6 +1466,11 @@ function sourceRegister(
         kind: 'rule' as const,
       })),
     ...charts.map((chart) => ({ path: `pack.json charts.${chart.code}`, source: chart.source, kind: 'other' as const })),
+    ...(manifest.not_taxed ?? []).map((entry) => ({
+      path: `pack.json not_taxed.${entry.treatment}`,
+      source: entry.source,
+      kind: 'rule' as const,
+    })),
     ...taxes.map((tax) => ({ path: `taxes.json ${tax.code}`, source: tax.source, kind: 'tax' as const })),
     ...(report === null ? [] : [{ path: `tax_report.json ${report.code}`, source: report.source, kind: 'other' as const }]),
     ...(report?.rounding ? [{ path: `tax_report.json ${report.code} rounding`, source: report.rounding.source, kind: 'other' as const }] : []),
