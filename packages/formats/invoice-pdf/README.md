@@ -157,6 +157,10 @@ on — and the hook for a theme read from one later.
 A colour that is not `#rrggbb` or a side that is neither is refused,
 `invalid_value`. Nothing in the theme changes what is printed, only how.
 
+Ekwo OS keeps the accent and the side per company, in
+`companies.invoice_accent_color` and `companies.invoice_logo_position`;
+`ekwo doc pdf` and the MCP tool `render_invoice_pdf` pass them as the theme.
+
 ## The layout
 
 The order of the page, top to bottom: the seller and the document's title,

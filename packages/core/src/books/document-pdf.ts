@@ -7,7 +7,8 @@
  * `document_line_items`, `document_tax_summary`, `document_legal_mentions` —
  * and hands the rows to `@ekwo-ai/invoice-pdf`, which renders them and knows
  * nothing of a database. Here is what only a client can do: read the views,
- * fetch the logo the company names by URL, and, when asked, write the CII of
+ * fetch the logo the company names by URL, apply the accent colour and the
+ * side of the logo the company chose, and, when asked, write the CII of
  * the same document with the Factur-X adapter of the e-invoicing formats and
  * embed it, so that the PDF is a Factur-X invoice.
  *
@@ -27,6 +28,7 @@ import {
   type DocumentTaxRow,
   type InvoiceLabels,
   type InvoicePdfInput,
+  type InvoiceTheme,
   type PageSize,
 } from '@ekwo-ai/invoice-pdf';
 import { EINVOICE_FORMATS, type EinvoiceViolation } from '../einvoicing/formats.js';
@@ -105,6 +107,24 @@ export async function readDocumentForPdf(
     lines: lines as unknown as DocumentLineRow[],
     taxes: taxes as unknown as DocumentTaxRow[],
     mentions: mentions as unknown as DocumentLegalMentionRow[],
+  };
+}
+
+/**
+ * The accent colour and the side of the logo the company chose, as the
+ * brick's theme; a column left null keeps the brick's default.
+ */
+export async function readInvoiceTheme(backend: Backend, companyId: string): Promise<InvoiceTheme> {
+  const [company] = await backend.select<Row>({
+    table: 'companies',
+    columns: ['invoice_accent_color', 'invoice_logo_position'],
+    where: [{ column: 'id', op: 'eq', value: companyId }],
+  });
+  const accent = company?.['invoice_accent_color'];
+  const side = company?.['invoice_logo_position'];
+  return {
+    ...(typeof accent === 'string' ? { accent } : {}),
+    ...(side === 'left' || side === 'right' ? { logoPosition: side } : {}),
   };
 }
 
@@ -231,6 +251,7 @@ export async function renderDocumentPdf(
   }
 
   const options = {
+    theme: await readInvoiceTheme(backend, String(header.company_id)),
     ...(args.page_size === undefined ? {} : { pageSize: args.page_size }),
     ...(args.labels === undefined ? {} : { labels: args.labels }),
     producer: '@ekwo-ai/core',

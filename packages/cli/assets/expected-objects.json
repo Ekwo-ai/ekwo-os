@@ -794,6 +794,14 @@
             "type": "uuid"
           },
           {
+            "name": "invoice_accent_color",
+            "type": "text"
+          },
+          {
+            "name": "invoice_logo_position",
+            "type": "text"
+          },
+          {
             "name": "language",
             "type": "character(2)"
           },

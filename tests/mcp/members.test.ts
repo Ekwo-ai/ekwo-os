@@ -214,6 +214,30 @@ describe('the company profile through the server', () => {
     ).rejects.toThrow(/company\.write/);
   });
 
+  it('stores the colour and the logo side of the invoices, and refuses a colour that is not #rrggbb', async () => {
+    const updated = record(
+      await writeTools.updateCompanyProfile(asOwner, {
+        company_id: fx.companyId,
+        invoice_accent_color: '#7A1F2B',
+        invoice_logo_position: 'right',
+      }),
+    );
+    expect(record(updated['company'])).toMatchObject({ invoice_accent_color: '#7A1F2B', invoice_logo_position: 'right' });
+
+    const input = writeTools.UpdateCompanyProfileInput;
+    expect(input.safeParse({ company_id: fx.companyId, invoice_accent_color: 'navy' }).success).toBe(false);
+    expect(input.safeParse({ company_id: fx.companyId, invoice_logo_position: 'center' }).success).toBe(false);
+
+    const reset = record(
+      await writeTools.updateCompanyProfile(asOwner, {
+        company_id: fx.companyId,
+        invoice_accent_color: null,
+        invoice_logo_position: null,
+      }),
+    );
+    expect(record(reset['company'])).toMatchObject({ invoice_accent_color: null, invoice_logo_position: null });
+  });
+
   it('refuses a call that names nothing to change', async () => {
     await expect(
       writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId }),

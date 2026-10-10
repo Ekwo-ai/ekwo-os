@@ -77,6 +77,14 @@ somewhere has already run it.
   an XMP packet that says what the PDF's information dictionary says. The
   layout gains a small theme — accent colour, typeface, side of the logo — and
   the figures it prints are tested equal to the CII embedded beside them.
+- **An invoice wears the colour of its company.** Two nullable columns on
+  `companies`, `invoice_accent_color` (`#rrggbb`) and `invoice_logo_position`
+  (`left` or `right`), checked by the database, written by
+  `update_company_profile` with `company.write` and read back by
+  `get_company`. `ekwo doc pdf` and `render_invoice_pdf` read them and hand
+  them to `@ekwo-ai/invoice-pdf` as its theme, with no new argument; null is
+  the brick's default. The packages now read columns a 0.11.1 database does
+  not have: the release that carries this migration raises the schema floor.
 - **The e-invoicing bricks read what they receive.** `readUbl()` of
   `@ekwo-ai/peppol-ubl` reads a received Peppol BIS Billing 3.0 invoice or
   credit note (UBL 2.1); `readCii()` and `readFacturX()` of

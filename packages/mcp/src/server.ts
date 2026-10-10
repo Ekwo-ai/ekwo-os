@@ -196,7 +196,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'The PDF of an invoice',
       description:
-        'The PDF of a sale invoice or a sale credit note, rendered from the books: the seller with its logo, the buyer, the lines, the tax summary, the totals and what is still due, how to pay, and the legal mentions the country requires — as the views publish them. Comes back as a PDF resource (base64) beside a JSON summary: filename, pages, whether the logo was used. factur_x: true embeds the CII XML of a posted document and returns the rules of EN 16931 it breaks. Words of the layout are English unless labels gives them in the document\'s language. Records nothing, sends nothing: the copy a customer received is not kept here.',
+        'The PDF of a sale invoice or a sale credit note, rendered from the books: the seller with its logo, the buyer, the lines, the tax summary, the totals and what is still due, how to pay, and the legal mentions the country requires — as the views publish them, in the accent colour and on the logo side the company set with update_company_profile. Comes back as a PDF resource (base64) beside a JSON summary: filename, pages, whether the logo was used. factur_x: true embeds the CII XML of a posted document and returns the rules of EN 16931 it breaks. Words of the layout are English unless labels gives them in the document\'s language. Records nothing, sends nothing: the copy a customer received is not kept here.',
       inputSchema: read.RenderInvoicePdfInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
@@ -646,7 +646,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Change the company itself',
       description:
-        'Changes what a company says about itself on its documents: the names it goes by, its address and identifiers, its logo, its stated capital, its activity code and the bank account customers are asked to pay into. Only the fields you name change. It touches nothing in the ledger, and it needs company.write — the owner preset, not the accountant one.',
+        'Changes what a company says about itself on its documents: the names it goes by, its address and identifiers, its logo and the colour and logo side of its invoice PDF, its stated capital, its activity code and the bank account customers are asked to pay into. Only the fields you name change. It touches nothing in the ledger, and it needs company.write — the owner preset, not the accountant one.',
       inputSchema: write.UpdateCompanyProfileInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
