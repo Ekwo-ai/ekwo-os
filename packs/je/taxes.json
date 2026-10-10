@@ -1,0 +1,646 @@
+[
+  {
+    "code": "JE-S-SR",
+    "name": "Sale, standard-rated, GST 5 %",
+    "description": "A taxable supply made in Jersey",
+    "kind": "gst",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2011-06-01",
+    "legal_reference": "Goods and Services Tax (Jersey) Law 2007, art. 8(1): 'GST shall be charged at the rate of 5%' (jerseylaw.je, consulted 2026-10-10). Revenue Jersey, GST taxed on goods and services: standard rate 5 %, applied to most goods and services, and no reduced rate. The GST charged on the sale is output tax: box 6 of the GST return, and the value without GST is in box 1.",
+    "source": "je-gst-law",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2210",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2210",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "JE-S-SR-INC",
+    "name": "Retail sale, standard-rated, GST 5 %, the price includes the GST",
+    "description": "A taxable retail supply whose displayed price includes the GST",
+    "kind": "gst",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "price_include": true,
+    "valid_from": "2011-06-01",
+    "legal_reference": "Goods and Services Tax (Jersey) Law 2007, art. 8(1): 'GST shall be charged at the rate of 5%' (jerseylaw.je, consulted 2026-10-10). Revenue Jersey, GST taxed on goods and services: standard rate 5 %, applied to most goods and services, and no reduced rate. A price that includes the GST is the way a shop shows it; the engine takes the GST out of the gross. The simplified invoice Revenue Jersey allows for a retail sale up to £250 states the gross amount and the rate (Keeping records and accounts for GST, consulted 2026-10-10).",
+    "source": "je-gst-records",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2210",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2210",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "JE-S-ZR-EXP",
+    "name": "Export of goods, zero-rated",
+    "description": "An export of goods from Jersey",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2008-05-06",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Goods and Services Tax (Jersey) Law 2007, Schedule 6 ('Zero-rating of exports'; jerseylaw.je, consulted 2026-10-10), and Revenue Jersey, GST taxed on goods and services: exports of goods are zero-rated. The sale is a taxable supply at 0 %: box 1 and box 2 of the return both take its value, so that box 3 (sales subject to GST) leaves it out. The supplier must hold evidence that the goods left Jersey.",
+    "source": "je-gst-law",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "2"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "JE-S-ZR-INTL",
+    "name": "International service, zero-rated",
+    "description": "A service supplied under a contract with a person who belongs outside Jersey and benefits a person who belongs outside Jersey",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2008-05-06",
+    "conditions": [
+      "supply_nature",
+      "buyer_status"
+    ],
+    "legal_reference": "Goods and Services Tax (Jersey) Law 2007, Schedule 6, paragraph 5 ('Supply of international services zero-rated'; the paragraph's wording was not read in full, see the README): services supplied to a person who belongs outside Jersey and that benefit a person who belongs outside Jersey are zero-rated, with those relating to land or goods situated in Jersey left out (Revenue Jersey, GST taxed on goods and services, consulted 2026-10-10: 'international services'). Boxes 1 and 2.",
+    "source": "je-gst-law",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "2"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "JE-S-ZR-ISE",
+    "name": "Remitted supply to an International Services Entity, zero-rated",
+    "description": "A supply to an approved International Services Entity for the purpose of its business, on the entity's end user relief certificate",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2008-05-06",
+    "conditions": [
+      "buyer_certificate"
+    ],
+    "legal_reference": "Revenue Jersey, GST on goods and services supplied to an ISE (consulted 2026-10-10): supplies to an approved ISE for the purpose of a business carried on through it are 'remitted supplies', treated as zero-rated for the return and shown in box 2 with the value of zero-rated supplies; the page tells the supplier to use the GST code used for zero-rated sales such as exports. A retailer may charge GST on an individual sale to an ISE under £1,000, which the ISE reclaims. The ISE regime itself (annual fee instead of GST) is not in this pack: see the README.",
+    "source": "je-gst-ise-supplies",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "2"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "JE-S-ZR-DW",
+    "name": "Supply of a dwelling, zero-rated",
+    "description": "The supply of a dwelling, and the other zero-rated supplies of land",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2008-05-06",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax (Jersey) Law 2007, Schedule 6 ('Supply of dwelling, and zero-rated supplies of land, services or material'; jerseylaw.je, consulted 2026-10-10) and Revenue Jersey, GST taxed on goods and services: housing is zero-rated. Which supplies of land fall in the Part is a classification the ledger cannot see; the wording of the Part was not read in full.",
+    "source": "je-gst-law",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "2"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "JE-S-ZR-RX",
+    "name": "Medicine on prescription, zero-rated",
+    "description": "A medicine supplied on prescription",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2008-05-06",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax (Jersey) Law 2007, Schedule 6 ('Zero-rating of medicines on prescription'; jerseylaw.je, consulted 2026-10-10) and Revenue Jersey, GST taxed on goods and services: 'medical prescriptions' are zero-rated.",
+    "source": "je-gst-law",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "2"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "1",
+            "2"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "JE-S-ES",
+    "name": "Exempt supply",
+    "description": "An exempt supply listed in Schedule 5: finance, insurance, postal services, medical and paramedical supplies, supplies by charities, child care, education, burial and cremation",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2008-05-06",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax (Jersey) Law 2007, Schedule 5, Groups 1 to 8: finance, insurance, postal services, medical and paramedical supplies, supplies by charities, child care, education, burial and cremation (jerseylaw.je, consulted 2026-10-10; the conditions of each Group were not read in full). An exempt supply carries no GST, is not a taxable supply and is in no box of the return; the input tax on what went into it is restricted by the partial exemption rules, which the pack does not compute. No exemption reason code: the VATEX list names articles of the European Union VAT Directive, which does not bind a Jersey supplier.",
+    "source": "je-gst-law",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "JE-S-NS",
+    "name": "Sale outside the scope of GST",
+    "description": "A supply made outside Jersey by a Jersey business, or one that is not a supply for GST",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2008-05-06",
+    "legal_reference": "Revenue Jersey, Supplying goods and services from outside Jersey (consulted 2026-10-10) says a service can be supplied in Jersey even when the supplier belongs outside it; a supply whose place is outside Jersey is outside the scope of Jersey GST and is in no box. The United Kingdom's VAT does not apply to a sale between Jersey and the United Kingdom, Jersey being outside the UK VAT system.",
+    "source": "je-gst-place-of-supply",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "JE-P-TX",
+    "name": "Purchase, standard-rated, GST 5 %",
+    "description": "A purchase with GST charged by a GST-registered supplier in Jersey",
+    "kind": "gst",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2011-06-01",
+    "legal_reference": "Goods and Services Tax (Jersey) Law 2007, art. 8(1): 'GST shall be charged at the rate of 5%' (jerseylaw.je, consulted 2026-10-10). Revenue Jersey, GST taxed on goods and services: standard rate 5 %, applied to most goods and services, and no reduced rate. Input tax is the GST charged on goods and services used in the business; the law credits it against the output tax of the period and the excess is refundable as a GST credit (art. 33 and 34, as read in the part of the Law that was opened). Box 4 takes the value, box 7 the GST.",
+    "source": "je-gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "JE-P-BL",
+    "name": "Purchase, GST 5 %, input tax not recoverable",
+    "description": "A purchase whose input tax the business cannot credit, for instance because it makes exempt supplies",
+    "kind": "gst",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "recoverable": false,
+    "valid_from": "2011-06-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Goods and Services Tax (Jersey) Law 2007, art. 33 and 34 (input tax credited against output tax) and the partial exemption rules for a business that also makes exempt supplies (Revenue Jersey, partial exemption booklet: the PDF could not be read as text, see the README). The GST lands on the cost; no box takes it. Box 4 takes the value.",
+    "source": "je-gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "JE-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A purchase of zero-rated goods or services from a Jersey supplier",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2008-05-06",
+    "legal_reference": "Revenue Jersey, GST taxed on goods and services (consulted 2026-10-10): zero-rated supplies are taxed at 0 %. Box 4 takes the value.",
+    "source": "je-gst-taxed",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "JE-P-ES",
+    "name": "Purchase, exempt",
+    "description": "A purchase of an exempt supply",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2008-05-06",
+    "legal_reference": "Goods and Services Tax (Jersey) Law 2007, Schedule 5: an exempt supply carries no GST and gives no credit. Box 4 takes the value, which is a business cost from a Jersey supplier.",
+    "source": "je-gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "JE-P-NR",
+    "name": "Purchase with no GST — supplier not registered",
+    "description": "A purchase from a supplier that does not charge GST",
+    "kind": "gst",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2008-05-06",
+    "legal_reference": "A business below the registration threshold of £300,000 of taxable supplies in twelve months need not register (Revenue Jersey, GST registration thresholds, consulted 2026-10-10) and charges no GST. Box 4 takes the value; there is no input tax.",
+    "source": "je-gst-registration",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "JE-P-IMP",
+    "name": "Import of goods, GST 5 % paid to Customs",
+    "description": "Goods imported into Jersey, the GST paid to Customs at the border",
+    "kind": "gst",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2011-06-01",
+    "legal_reference": "Revenue Jersey, Supplying goods and services from outside Jersey (consulted 2026-10-10): goods imported into Jersey are subject to GST; a GST-registered importer that pays at the border recovers it as input tax. Box 5 takes the value of the imports without GST and box 7 the GST paid. The supplier is owed the value alone: the GST is owed to Customs and waits on 2215 until it is paid.",
+    "source": "je-gst-place-of-supply",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2215"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2215"
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "JE-P-IMP-DEF",
+    "name": "Import of goods, GST deferred by an approved customs trader",
+    "description": "Goods imported by a GST-registered importer approved as a customs trader, GST accounted for on the return",
+    "kind": "gst",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2011-06-01",
+    "legal_reference": "Revenue Jersey, Supplying goods and services from outside Jersey (consulted 2026-10-10): a GST-registered importer approved as a customs trader can defer payment; it excludes the GST at import and includes the goods' value in box 5 of the return instead. The page does not say how the tax is shown in boxes 6 and 7; this code assumes the importer accounts for the GST as output tax (box 6) and claims it as input tax (box 7) in the same return, so the net is nil. A point for Revenue Jersey to confirm: see the README.",
+    "source": "je-gst-place-of-supply",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2210",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2210",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "JE-P-RC",
+    "name": "Service from abroad, reverse charge, GST 5 %, recoverable",
+    "description": "A service supplied by a person belonging outside Jersey and received in Jersey",
+    "kind": "gst",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2008-05-06",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Revenue Jersey, Supplying goods and services from outside Jersey (consulted 2026-10-10): a service can be supplied in Jersey even when supplied by someone belonging outside Jersey, and the Jersey customer receiving certain services from abroad self-assesses the GST by including the value in box 5 of the return. Same assumption on boxes 6 and 7 as JE-P-IMP-DEF.",
+    "source": "je-gst-place-of-supply",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2210",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1140",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2210",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 170
+  }
+]

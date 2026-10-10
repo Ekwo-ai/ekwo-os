@@ -1,0 +1,472 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a GST-registered Jersey trading company that also lets a flat, filing quarterly, for the year 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-Q1",
+      "from": "2026-01-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-Q2",
+      "from": "2026-04-01",
+      "to": "2026-06-30"
+    },
+    {
+      "code": "2026-Q3",
+      "from": "2026-07-01",
+      "to": "2026-09-30"
+    },
+    {
+      "code": "2026-Q4",
+      "from": "2026-10-01",
+      "to": "2026-12-31"
+    }
+  ],
+  "statements": [
+    "JE-FRS102-1A-BS",
+    "JE-FRS102-1A-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-je",
+      "name": "Grouville Interiors Ltd",
+      "type": "customer",
+      "country": "JE"
+    },
+    {
+      "ref": "cust-counter",
+      "name": "Counter sales",
+      "type": "customer",
+      "country": "JE"
+    },
+    {
+      "ref": "cust-us",
+      "name": "Cascade Outfitters Inc.",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "cust-ise",
+      "name": "Esplanade Fund Services Ltd (International Services Entity)",
+      "type": "customer",
+      "country": "JE"
+    },
+    {
+      "ref": "cust-gb",
+      "name": "Harrowgate Research Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "tenant",
+      "name": "Residential tenant — La Rue du Port flat",
+      "type": "customer",
+      "country": "JE"
+    },
+    {
+      "ref": "supp-je",
+      "name": "Bonne Nuit Wholesale Ltd",
+      "type": "supplier",
+      "country": "JE"
+    },
+    {
+      "ref": "supp-gb",
+      "name": "Thames Trade Supply Ltd",
+      "type": "supplier",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-us",
+      "name": "Keystone Software Inc.",
+      "type": "supplier",
+      "country": "US"
+    },
+    {
+      "ref": "supp-ins",
+      "name": "St Helier Insurance Brokers Ltd",
+      "type": "supplier",
+      "country": "JE"
+    },
+    {
+      "ref": "supp-small",
+      "name": "Corbière Cleaning (not GST-registered)",
+      "type": "supplier",
+      "country": "JE"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-je",
+      "date": "2026-01-12",
+      "why": "A standard-rated sale: box 1 takes the value without GST and box 6 the 5 %, 600.00 on 12,000.00.",
+      "lines": [
+        {
+          "name": "Home furnishings",
+          "quantity": 10,
+          "unit_price": 1200,
+          "tax": "JE-S-SR",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-je",
+      "date": "2026-01-15",
+      "why": "A taxable purchase of trading stock: box 4 takes the value and box 7 the input tax, 375.00 on 7,500.00.",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 7500,
+          "tax": "JE-P-TX",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-counter",
+      "date": "2026-01-28",
+      "why": "A retail sale on a price that includes the GST: 50.00 comes out of 1,050.00 and box 1 takes 1,000.00.",
+      "lines": [
+        {
+          "name": "Shop takings",
+          "quantity": 1,
+          "unit_price": 1050,
+          "tax": "JE-S-SR-INC",
+          "account": "4070"
+        }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2026-02-10",
+      "why": "An export of goods, zero-rated: boxes 1 and 2 take the value, so box 3 leaves it out.",
+      "lines": [
+        {
+          "name": "Furnishings shipped to Portland",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "JE-S-ZR-EXP",
+          "account": "4050"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-gb",
+      "date": "2026-02-20",
+      "why": "An import: box 5 takes the value without GST and box 7 the 5 % paid to Customs, 1,000.00 on 20,000.00, which waits on 2215 while the supplier is owed the value alone.",
+      "lines": [
+        {
+          "name": "Imported display fittings for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "JE-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2026-03-05",
+      "why": "An international service to a client belonging outside Jersey, zero-rated under Schedule 6: boxes 1 and 2. No United Kingdom VAT is charged: Jersey is outside the UK VAT system.",
+      "lines": [
+        {
+          "name": "Market research for a client in London",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "JE-S-ZR-INTL",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "tenant",
+      "date": "2026-04-06",
+      "why": "An exempt supply (Schedule 5): in no box of the return.",
+      "lines": [
+        {
+          "name": "Insurance mediation fee, April to June",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "JE-S-ES",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_invoice",
+      "contact": "cust-ise",
+      "date": "2026-04-20",
+      "why": "A remitted supply to an International Services Entity: zero-rated, boxes 1 and 2.",
+      "lines": [
+        {
+          "name": "Fitting-out of the entity's office",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "JE-S-ZR-ISE",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-ins",
+      "date": "2026-05-12",
+      "why": "A purchase whose input tax cannot be credited: the 100.00 of GST lands on 7330 and only box 4 moves.",
+      "lines": [
+        {
+          "name": "Client entertainment",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "JE-P-BL",
+          "account": "7330"
+        }
+      ]
+    },
+    {
+      "ref": "S7",
+      "type": "sale_invoice",
+      "contact": "cust-je",
+      "date": "2026-05-04",
+      "why": "A standard-rated sale of services: 300.00 of GST on 6,000.00.",
+      "lines": [
+        {
+          "name": "Design services",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "JE-S-SR",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-06-02",
+      "why": "A service received from a supplier belonging outside Jersey, reverse charge: box 5 takes the value, and the 260.00 is output tax in box 6 and input tax in box 7.",
+      "lines": [
+        {
+          "name": "Software subscription billed from the United States",
+          "quantity": 1,
+          "unit_price": 5200,
+          "tax": "JE-P-RC",
+          "account": "7230"
+        }
+      ]
+    },
+    {
+      "ref": "S8",
+      "type": "sale_credit_note",
+      "contact": "cust-je",
+      "date": "2026-06-10",
+      "why": "A credit note on S1 for two returned units: box 1 and box 6 go down in the quarter it is issued, by 2,400.00 and 120.00.",
+      "lines": [
+        {
+          "name": "Returned home furnishings",
+          "quantity": 2,
+          "unit_price": 1200,
+          "tax": "JE-S-SR",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_credit_note",
+      "contact": "supp-je",
+      "date": "2026-06-15",
+      "why": "A credit note from the supplier of P1 for part of the goods: box 4 and box 7 go down, by 1,000.00 and 50.00.",
+      "lines": [
+        {
+          "name": "Goods returned to the supplier",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "JE-P-TX",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_invoice",
+      "contact": "supp-gb",
+      "date": "2026-07-14",
+      "why": "An import by an approved customs trader with the GST deferred: box 5 takes the value; the pack accounts for the 500.00 as output tax (box 6) and input tax (box 7), net nil. The assumption is flagged in the README.",
+      "lines": [
+        {
+          "name": "Imported stock, GST deferred",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "JE-P-IMP-DEF",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "S9",
+      "type": "sale_invoice",
+      "contact": "tenant",
+      "date": "2026-08-10",
+      "why": "The supply of a dwelling, zero-rated: boxes 1 and 2, so that box 3 and the net amount are nil in the quarter.",
+      "lines": [
+        {
+          "name": "Rent of the La Rue du Port flat, August",
+          "quantity": 1,
+          "unit_price": 2400,
+          "tax": "JE-S-ZR-DW",
+          "account": "4210"
+        }
+      ]
+    },
+    {
+      "ref": "S10",
+      "type": "sale_invoice",
+      "contact": "cust-je",
+      "date": "2026-11-03",
+      "why": "A standard-rated sale in the last quarter: 450.00 on 9,000.00.",
+      "lines": [
+        {
+          "name": "Home furnishings",
+          "quantity": 1,
+          "unit_price": 9000,
+          "tax": "JE-S-SR",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P8",
+      "type": "purchase_invoice",
+      "contact": "supp-je",
+      "date": "2026-11-10",
+      "why": "A taxable purchase of stock in the last quarter: 200.00 on 4,000.00.",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "JE-P-TX",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "P9",
+      "type": "purchase_invoice",
+      "contact": "supp-ins",
+      "date": "2026-11-20",
+      "why": "An exempt purchase (insurance premium): box 4 takes the value and there is no GST.",
+      "lines": [
+        {
+          "name": "Premises insurance",
+          "quantity": 1,
+          "unit_price": 600,
+          "tax": "JE-P-ES",
+          "account": "7140"
+        }
+      ]
+    },
+    {
+      "ref": "P10",
+      "type": "purchase_invoice",
+      "contact": "supp-small",
+      "date": "2026-12-05",
+      "why": "A purchase from a supplier that charges no GST (below the registration threshold): box 4, no input tax.",
+      "lines": [
+        {
+          "name": "Cleaning",
+          "quantity": 1,
+          "unit_price": 300,
+          "tax": "JE-P-NR",
+          "account": "7260"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "inbound",
+      "date": "2026-02-11",
+      "amount": 12600,
+      "contact": "cust-je",
+      "journal": "BNK",
+      "match": "S1",
+      "why": "A receipt that settles S1 exactly, GST included."
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2026-02-02",
+      "amount": 1050,
+      "contact": "cust-counter",
+      "journal": "BNK",
+      "match": "S2",
+      "why": "A receipt that settles the retail sale S2 exactly."
+    },
+    {
+      "ref": "D1",
+      "direction": "outbound",
+      "date": "2026-02-14",
+      "amount": 7875,
+      "contact": "supp-je",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles P1 exactly."
+    },
+    {
+      "ref": "D2",
+      "direction": "outbound",
+      "date": "2026-03-10",
+      "amount": 20000,
+      "contact": "supp-gb",
+      "journal": "BNK",
+      "match": "P2",
+      "why": "The supplier of P2 is paid the value alone: the import GST is owed to Customs and stays on 2215."
+    },
+    {
+      "ref": "R3",
+      "direction": "inbound",
+      "date": "2026-05-10",
+      "amount": 3000,
+      "contact": "cust-je",
+      "journal": "BNK",
+      "match": null,
+      "why": "An inbound payment on account, matched to nothing: an open item the return must survive."
+    },
+    {
+      "ref": "D3",
+      "direction": "outbound",
+      "date": "2026-07-05",
+      "amount": 1500,
+      "contact": "supp-je",
+      "journal": "BNK",
+      "match": null,
+      "why": "An outbound payment on account, matched to nothing."
+    }
+  ]
+}

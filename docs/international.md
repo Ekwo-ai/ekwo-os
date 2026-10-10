@@ -6738,3 +6738,60 @@ article numbers were checked against the text. The DSF's English pages render
 partly; the filing portal redirects to a login page, and the standards' Annex
 III could not be extracted, so the statement lines follow the Portuguese model
 financial statements.
+
+### From Jersey
+
+`packs/je/`, `community`, seed 146, currency GBP (Jersey issues its own pound,
+at par with sterling; the code is already in `00_currencies.sql`, and the
+territory JE already exists, outside the European Union VAT system). A single-rate GST on
+the model of `packs/nz` and `packs/sg`: 17 tax codes, an eight-box
+`tax_report.json`, `tax_payable` and `tax_receivable` roles distinct from the
+posting accounts, and the FRS 102 Section 1A statements of `packs/gg`.
+
+**The tax.** GST under the Goods and Services Tax (Jersey) Law 2007, art. 8(1):
+5 % (since 1 June 2011; the 3 % of 6 May 2008 to 31 May 2011 has no code, see
+below), no reduced rate. Schedule 6 zero-rates exports, international
+services, dwellings and prescription medicines; Schedule 5 exempts finance,
+insurance, postal services, medical supplies, charities, child care, education
+and burial. Mandatory registration from £300,000 of taxable supplies in twelve
+months. Returns are quarterly, due the last day of the month after the quarter,
+online with Revenue Jersey. Jersey is outside the UK VAT system: no UK VAT
+applies between Jersey and the UK.
+
+**The return** has eight boxes, not the UK's nine: 1 sales excluding GST
+(zero-rated included), 2 zero-rated and remitted sales, 3 sales subject to GST
+(1 − 2), 4 purchases excluding imports, 5 imports, 6 GST on sales, 7 GST on
+purchases, 8 payable or refundable (6 − 7).
+
+**Left out of the pack.** Income tax on companies (0 % standard, 10 % financial
+services, 20 % utilities and Jersey property, up to 20 % for large retailers),
+social security contributions, stamp duty, and the global minimum tax of the
+Multinational Corporate Income Tax (Jersey) Law 2025. The International
+Services Entity regime, where an entity pays an annual fee instead of
+accounting for GST (GST Law arts. 56A to 66), is not modelled; only the
+supplier's side, the zero-rated "remitted supply" to an ISE, is (`JE-S-ZR-ISE`).
+Overseas retailers selling goods to Jersey consumers must register above
+£300,000 from 1 July 2023 and charge GST at the point of sale; imports of
+parcels over £60 carry GST at the border. That regime is documented and not
+modelled as a separate code.
+
+**Gaps in the format, none patched.** (0) `tests/golden.test.ts` asks a pack
+with more than one positive rate in `pack.taxes`, closed codes included, to use two
+of them in its scenario; a closed 3 % code can never be used in a 2026 year, so the
+historical rate is left out of the pack. (1) The return form could not be read
+beyond its box list: whether GST self-assessed on deferred imports and
+reverse-charged services appears in boxes 6 and 7, whether box 4 includes
+exempt and untaxed costs, and how box 5 relates to import GST paid at the
+border are assumptions, flagged in the pack README. (2) The format has no way to
+say that a tax point is the earlier of the invoice and the payment, nor to
+express the £250 simplified-invoice ceiling. (3) Partial exemption (a business
+making taxable and exempt supplies) is a restriction of input tax the ledger
+does not compute; `JE-P-BL` books the non-recoverable amount by hand. (4) No
+VATEX code applies to an exemption outside the European Union, so exempt codes carry none, as in
+`packs/nz`. No generic test needed a change.
+
+**Sources.** The GST Law was opened on jerseylaw.je but only its first 100,000
+characters (art. 8, art. 33 and 34 and the headings of Schedules 5 and 6); the
+Companies (Jersey) Law 1991 was not opened and is cited through a law-firm
+summary. The partial-exemption booklet is a PDF that could not be read as text,
+and the States Assembly proposition on the 5 % rate answered 403.

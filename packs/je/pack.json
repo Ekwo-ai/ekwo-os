@@ -1,0 +1,250 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "JE",
+  "name": "Jersey",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 146,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "je-gst-law",
+        "title": "Goods and Services Tax (Jersey) Law 2007",
+        "publisher": "Jersey Law (Jersey Legal Information Board)",
+        "url": "https://www.jerseylaw.je/laws/current/l_27_2007",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "je-gst-return",
+        "title": "Submit your GST return",
+        "publisher": "Government of Jersey — Revenue Jersey",
+        "url": "https://www.gov.je/TaxesMoney/GST/Businesses/SubmittingReturn/Pages/Return.aspx",
+        "consulted_on": "2026-10-10",
+        "kind": "form"
+      },
+      {
+        "key": "je-gst-taxed",
+        "title": "GST taxed on goods and services",
+        "publisher": "Government of Jersey — Revenue Jersey",
+        "url": "https://www.gov.je/TaxesMoney/GST/Businesses/Introduction/pages/whattaxed.aspx",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "je-gst-registration",
+        "title": "GST registration thresholds",
+        "publisher": "Government of Jersey — Revenue Jersey",
+        "url": "https://www.gov.je/TaxesMoney/GST/Businesses/Registration/pages/shouldibe.aspx",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "je-gst-overseas",
+        "title": "Overseas retailers' GST guidance notes",
+        "publisher": "Government of Jersey — Revenue Jersey",
+        "url": "https://www.gov.je/TaxesMoney/GST/Businesses/Industry/pages/overseasretailersgst.aspx",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "je-gst-place-of-supply",
+        "title": "Supplying goods and services from outside Jersey (GST)",
+        "publisher": "Government of Jersey — Revenue Jersey",
+        "url": "https://www.gov.je/TaxesMoney/GST/Businesses/Introduction/pages/placesupply.aspx",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "je-gst-ise-supplies",
+        "title": "GST on goods and services supplied to an ISE",
+        "publisher": "Government of Jersey — Revenue Jersey",
+        "url": "https://www.gov.je/TaxesMoney/GST/InternationalServiceEntities/Pages/Supplies.aspx",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "je-gst-records",
+        "title": "Keeping records and accounts for GST",
+        "publisher": "Government of Jersey — Revenue Jersey",
+        "url": "https://www.gov.je/taxesmoney/gst/businesses/submittingreturn/pages/keepingbooksrecords.aspx",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "je-money-tax",
+        "title": "Moving to Jersey: money and tax",
+        "publisher": "Government of Jersey",
+        "url": "https://www.gov.je/LifeEvents/MovingToJersey/LivingInJersey/Pages/MoneyTax.aspx",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "je-companies-walkers",
+        "title": "Jersey Company Law Series: records, accounts, annual confirmation statement and audit requirements",
+        "publisher": "Walkers",
+        "url": "https://www.walkersglobal.com/en/Insights/2024/10/Jersey-Company-Law-Series---records-accounts-annual-confirmation-statement-and-audit-requirements",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "frs-102",
+        "title": "FRS 102 The Financial Reporting Standard applicable in the UK and Republic of Ireland (Section 1A Small Entities)",
+        "publisher": "Financial Reporting Council",
+        "url": "https://www.frc.org.uk/library/standards-codes-policy/accounting-and-reporting/uk-accounting-standards/frs-102/",
+        "consulted_on": "2026-10-10",
+        "kind": "standard"
+      },
+      {
+        "key": "je-login",
+        "title": "Gov.je login services — one.gov.je and CAESAR",
+        "publisher": "Government of Jersey",
+        "url": "https://www.gov.je/pages/login.aspx",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "GBP",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2100",
+      "suspense": "2400",
+      "rounding": "7710",
+      "retained_earnings": "3400",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1300",
+      "cash": "1330",
+      "fx_gain": "4240",
+      "fx_loss": "7700",
+      "asset_disposal_gain": "4230",
+      "asset_disposal_loss": "7690",
+      "tax_payable": "2230",
+      "tax_receivable": "1145"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales day book",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchase day book",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Cash book",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Jersey reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "JE-FRS102-1A-BS",
+        "JE-FRS102-1A-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Jersey. The Companies (Jersey) Law 1991 requires a company to keep accounting records sufficient to show and explain its transactions and to disclose its financial position with reasonable accuracy, to preserve them for at least ten years from the date they are made, and to have its directors prepare accounts in accordance with generally accepted accounting principles that the accounts state (Walkers, consulted 2026-10-10; the text of the Law itself was not opened, see the README). The Law prescribes no chart and no format. This chart is original and follows British bookkeeping practice, because the principles most Jersey companies declare are UK GAAP (FRS 102), with IFRS the other common choice: four digits, blocked so that each range reaches one line of the balance sheet and the profit and loss account of FRS 102 Section 1A (small entities) in the layout statements.json carries. It has no United Kingdom value added tax, PAYE or CIS account, because Jersey is outside the United Kingdom VAT system; it carries the accounts of the Jersey goods and services tax instead: input tax (1140), output tax (2210), import GST owed to Customs (2215), and the two settlement accounts a filed return clears (2230 payable, 1145 refundable), which are the only accounts besides trade debtors and creditors that can be reconciled.",
+      "source": "je-companies-walkers"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Revenue Jersey, Keeping records and accounts for GST (consulted 2026-10-10): a GST invoice carries an individual serial number. The page asks that each invoice be identified and does not say the series may have no gap, so the style is `sequential` and not a gapless one; the pattern in number_format is one a business may choose.",
+        "source": "je-gst-records"
+      },
+      "payment_terms": {
+        "legal_reference": "No Jersey statute was found that sets a payment term between two businesses in the absence of an agreement, or a rate of interest on a commercial debt paid late; the Late Payment of Commercial Debts (Interest) Act 1998 is a United Kingdom statute and no source consulted says it extends to Jersey. `legal_payment_days` and `late_payment_reference` are therefore empty. This is an absence of a source found, not a proof of absence: a Jersey lawyer should confirm it.",
+        "source": "je-gst-records"
+      },
+      "tax_point": {
+        "legal_reference": "The invoice carries a 'tax point date (the date on which the transaction took place)' and a date of issue where it differs (Revenue Jersey, Keeping records and accounts for GST, consulted 2026-10-10). The rule that fixes the tax point of a supply in the Goods and Services Tax (Jersey) Law 2007 was not read in the part of the Law that was opened, so `invoice_date` is declared as the common convention and not as a rule read from the text; see the README.",
+        "source": "je-gst-records"
+      }
+    },
+    "mentions": [
+      {
+        "code": "tax_invoice",
+        "applies_when": "always",
+        "text": "Tax invoice",
+        "sequence": 10,
+        "legal_reference": "Revenue Jersey, Keeping records and accounts for GST (consulted 2026-10-10): a GST invoice carries the words 'tax invoice' in a prominent place, together with the supplier's name, address and GST registration number, the tax point date, a serial number, a description, the selling price, the GST charged, the price including GST and an indication whether GST is chargeable.",
+        "source": "je-gst-records"
+      },
+      {
+        "code": "zero_rated",
+        "applies_when": "export",
+        "text": "Zero-rated supply: GST is chargeable at 0 %.",
+        "sequence": 20,
+        "legal_reference": "Revenue Jersey, Keeping records and accounts for GST (consulted 2026-10-10): the invoice indicates whether GST is chargeable on the supply; Goods and Services Tax (Jersey) Law 2007, Schedule 6, zero-rates exports of goods and international services.",
+        "source": "je-gst-records"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt supply: GST is not chargeable.",
+        "sequence": 30,
+        "legal_reference": "Revenue Jersey, Keeping records and accounts for GST (consulted 2026-10-10): the invoice indicates whether GST is chargeable on the supply; Goods and Services Tax (Jersey) Law 2007, Schedule 5, lists the exempt supplies.",
+        "source": "je-gst-records"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Jersey statute or Revenue Jersey page was found that obliges a business to issue or accept an electronic invoice (Revenue Jersey, Keeping records and accounts for GST, consulted 2026-10-10: it asks for tax invoices and six years of records and says nothing of an electronic format), and no Peppol Authority is listed for Jersey as far as the author knows (not re-checked against the OpenPeppol list). `profile`, `party_scheme` and `vat_scheme` are null: there is no domestic profile to name, and Jersey is outside the European Union and United Kingdom VAT systems.",
+    "source": "je-gst-records"
+  }
+}

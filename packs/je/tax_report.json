@@ -1,0 +1,95 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "JE-GST",
+  "name": "GST return (Revenue Jersey)",
+  "period": [
+    "quarter"
+  ],
+  "period_default": "quarter",
+  "valid_from": "2008-05-06",
+  "legal_reference": "Revenue Jersey, Submit your GST return and GST registration thresholds (consulted 2026-10-10): GST returns are quarterly (January to March, April to June, July to September, October to December) unless the registration letter says otherwise, and are completed online with the business's Tax Identification Number and GST reference. The return has eight boxes, not the nine of the United Kingdom VAT return. Monthly returns and other cadences the registration letter may set are not declared: no page opened says so.",
+  "source": "je-gst-return",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Revenue Jersey, Submit your GST return (consulted 2026-10-10): 'Your return is due for submission no later than the last day of the month following the return period', so 30 April for January to March; the registration page adds that payment is due within one month of quarter-end. Penalties and surcharges for late filing are not modelled.",
+    "source": "je-gst-return"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Total sales excluding GST",
+      "sequence": 10,
+      "legal_reference": "Revenue Jersey, Submit your GST return (consulted 2026-10-10), box 1 — the net value of all taxable sales, zero-rated sales included; exempt supplies are not taxable supplies and are left out. Credit notes reduce it.",
+      "source": "je-gst-return"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Zero-rated and remitted sales",
+      "sequence": 20,
+      "legal_reference": "Revenue Jersey, Submit your GST return (consulted 2026-10-10), box 2 — zero-rated sales and the remitted supplies to International Services Entities, included in box 1. Exports, international services, dwellings, prescription medicines and ISE supplies.",
+      "source": "je-gst-return"
+    },
+    {
+      "box": "3",
+      "kind": "total",
+      "name": "Total sales subject to GST",
+      "sequence": 30,
+      "plus": [
+        "1"
+      ],
+      "minus": [
+        "2"
+      ],
+      "legal_reference": "Revenue Jersey, Submit your GST return (consulted 2026-10-10), box 3 — calculated by the form: box 1 less box 2.",
+      "source": "je-gst-return"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Purchases and expenses excluding imports",
+      "sequence": 40,
+      "legal_reference": "Revenue Jersey, Submit your GST return (consulted 2026-10-10), box 4 — business costs from Jersey suppliers, without GST. The pack carries every purchase from a Jersey supplier here, taxed, zero-rated, exempt, with GST not recoverable or with no GST; the page does not say whether exempt or untaxed costs belong in it, which is a point to confirm (see the README).",
+      "source": "je-gst-return"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Total value of imports",
+      "sequence": 50,
+      "legal_reference": "Revenue Jersey, Submit your GST return (consulted 2026-10-10), box 5 — all imports without GST: goods, and certain services received from outside Jersey that the customer self-assesses (Supplying goods and services from outside Jersey, consulted 2026-10-10).",
+      "source": "je-gst-return"
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "GST on sales",
+      "sequence": 60,
+      "legal_reference": "Revenue Jersey, Submit your GST return (consulted 2026-10-10), box 6 — the output tax charged to customers, net of credit notes, and the GST the pack self-assesses on deferred imports and reverse-charged services.",
+      "source": "je-gst-return"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "GST on purchases",
+      "sequence": 70,
+      "legal_reference": "Revenue Jersey, Submit your GST return (consulted 2026-10-10), box 7 — the deductible input tax: GST on domestic purchases, GST paid to Customs on imports, and the self-assessed GST of box 6 on deferred imports and reverse-charged services, net of credit notes.",
+      "source": "je-gst-return"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Amount payable or refundable",
+      "sequence": 80,
+      "plus": [
+        "6"
+      ],
+      "minus": [
+        "7"
+      ],
+      "legal_reference": "Revenue Jersey, Submit your GST return (consulted 2026-10-10), box 8 — calculated by the form: box 6 less box 7; a negative amount is a refund. The GST (Jersey) Law 2007, art. 34, credits input tax against output tax and refunds the excess as a GST credit.",
+      "source": "je-gst-return"
+    }
+  ]
+}

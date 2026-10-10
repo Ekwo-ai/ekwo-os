@@ -266,6 +266,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`in`](../packs/in/) | India | `108_pack_in.sql` | en | `community` |
 | [`is`](../packs/is/) | Ísland | `81_pack_is.sql` | is | `community` |
 | [`it`](../packs/it/) | Italia | `37_pack_it.sql` | it, en | `community` |
+| [`je`](../packs/je/) | Jersey | `146_pack_je.sql` | en | `community` |
 | [`jp`](../packs/jp/) | 日本 | `51_pack_jp.sql` | ja, en | `community` |
 | [`ke`](../packs/ke/) | Kenya | `89_pack_ke.sql` | en | `community` |
 | [`km`](../packs/km/) | Comores | `26_pack_km.sql` | fr | `community` |

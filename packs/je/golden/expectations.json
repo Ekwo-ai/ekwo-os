@@ -1,0 +1,27 @@
+{
+  "note": "Claims about this pack that no other pack can make, and that the pack's own files cannot check themselves against. Read by the tests through tests/helpers/packs.ts. Like the rest of golden/ beside scenario.json, this file is outside the pack checksum: it is evidence about the pack, not part of it.",
+  "report_arithmetic": [
+    {
+      "box": "3",
+      "kind": "total",
+      "plus": [
+        "1"
+      ],
+      "minus": [
+        "2"
+      ]
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "plus": [
+        "6"
+      ],
+      "minus": [
+        "7"
+      ]
+    }
+  ],
+  "arithmetic_note": "Two boxes of the Revenue Jersey GST return are an arithmetic the form prints rather than an amount anybody books. Revenue Jersey, Submit your GST return, says box 3 is calculated automatically as box 1 less box 2 and box 8 as the amount payable or refundable once the other boxes are filled. A negative box 8 is a refund.",
+  "facts_note": "No statement_facts: nothing in this pack was verified against an XBRL taxonomy, and a wrong fact key is worse than none."
+}
