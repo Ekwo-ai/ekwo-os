@@ -230,7 +230,7 @@ describe('the Belgian abbreviated scheme on the demo company', () => {
     // A declaration drops a nil box; a statement is read top to bottom and
     // tied out, so it prints its frame whole.
     const lines = await statement(demo, 'BE-BNB-ABBR-BS', from, to);
-    expect(lines).toHaveLength(31);
+    expect(lines).toHaveLength(65);
     expect(lines.filter((l) => n(l.amount) === 0).length).toBeGreaterThan(10);
     expect(lines.map((l) => l.sequence)).toEqual([...lines.map((l) => l.sequence)].sort((a, b) => a - b));
     expect(lines[0]?.line_code).toBe('20');
@@ -583,6 +583,38 @@ describe('the French chart carries the accounts its liasse reads', () => {
     const left = await rows(db, 'select * from unmapped_accounts($1, $2, $3, $4)', [
       companyId,
       'FR-2050',
+||||||| parent of 5a7bdb78 (feat(packs/be): the abbreviated balance sheet carries the detail lines of the filed form)
+describe('the Belgian abbreviated balance sheet, line by line of the filed form', () => {
+  it('prints the detail of receivables, capital and debts the form carries', async () => {
+    const { companyId } = await newCompany(db, { country: 'BE', name: 'Détail SA' });
+    const entry = await one<{ id: string }>(
+      db,
+      `insert into entries (company_id, journal_id, entry_date, description, state)
+       select $1, id, date '2026-01-01', 'Reprise des soldes', 'draft' from journals
+        where company_id = $1 and code = 'MISC' returning id`,
+      [companyId],
+    );
+    await db.query(
+      `insert into entry_lines (entry_id, company_id, account_id, sequence, debit, credit)
+       values ($1, $2, account_id_by_code($2, '400000'), 10, 1000, 0),
+              ($1, $2, account_id_by_code($2, '416000'), 20, 300, 0),
+              ($1, $2, account_id_by_code($2, '101'), 30, 500, 0),
+              ($1, $2, account_id_by_code($2, '550000'), 40, 550, 0),
+              ($1, $2, account_id_by_code($2, '100000'), 50, 0, 2000),
+              ($1, $2, account_id_by_code($2, '440000'), 60, 0, 200),
+              ($1, $2, account_id_by_code($2, '451000'), 70, 0, 100),
+              ($1, $2, account_id_by_code($2, '455000'), 80, 0, 50)`,
+      [entry.id, companyId],
+    );
+    await db.query('select post_entry($1)', [entry.id]);
+
+    const bs = await amounts(companyId, 'BE-BNB-ABBR-BS', '2026-01-01', '2026-12-31');
+    expect([bs['40'], bs['41'], bs['40/41']]).toEqual([1000, 300, 1300]);
+    expect([bs['100'], bs['101'], bs['10'], bs['10/11']]).toEqual([2000, -500, 1500, 1500]);
+    expect([bs['440/4'], bs['44'], bs['450/3'], bs['454/9'], bs['45'], bs['42/48']]).toEqual([200, 200, 100, 50, 150, 350]);
+    expect(bs['20/58']).toBeCloseTo(bs['10/49']!, 2);
+    const left = await rows(db, `select * from unmapped_accounts($1, 'BE-BNB-ABBR-BS', $2, $3)`, [
+      companyId,
       '2026-01-01',
       '2026-12-31',
     ]);

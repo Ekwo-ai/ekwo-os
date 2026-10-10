@@ -126,7 +126,7 @@ afterAll(async () => {
 
 describe('the demo books, filed with the National Bank', () => {
   it('presents every line of the three schemes, each one naming its fact', () => {
-    expect(lines).toHaveLength(53);
+    expect(lines).toHaveLength(87);
     expect(lines.filter((line) => line.xbrl_element === null)).toEqual([]);
   });
 
@@ -135,7 +135,7 @@ describe('the demo books, filed with the National Bank', () => {
     // the appropriation section shows it again. Two rows, one code, and the
     // resolver refuses them only if the two figures disagree.
     const values = valuesFromFactKeys(lines, CBSO_26_M01F);
-    expect(Object.keys(values)).toHaveLength(52);
+    expect(Object.keys(values)).toHaveLength(86);
     expect(values['14']).toEqual(values['9905']);
   });
 

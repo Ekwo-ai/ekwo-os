@@ -213,11 +213,37 @@
           "parent": "29/58",
           "name": "Créances à un an au plus",
           "sequence": 150,
-          "xbrl": "met:am1|bas:m9|rst:m2",
+          "is_total": true,
+          "plus": [
+            "40",
+            "41"
+          ],
+          "xbrl": "met:am1|bas:m9|rst:m2"
+        },
+        {
+          "code": "40",
+          "parent": "40/41",
+          "name": "Créances commerciales",
+          "sequence": 160,
+          "xbrl": "met:am1|bas:m9|rst:m2|typ:m3",
           "rules": [
             {
               "kind": "code_range",
               "code_from": "40",
+              "code_to": "40"
+            }
+          ]
+        },
+        {
+          "code": "41",
+          "parent": "40/41",
+          "name": "Autres créances",
+          "sequence": 170,
+          "xbrl": "met:am1|bas:m9|rst:m2|typ:m1",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "41",
               "code_to": "41",
               "sequence": 10
             },
@@ -234,7 +260,7 @@
           "code": "50/53",
           "parent": "29/58",
           "name": "Placements de trésorerie",
-          "sequence": 160,
+          "sequence": 180,
           "xbrl": "met:am1|bas:m22",
           "rules": [
             {
@@ -248,7 +274,7 @@
           "code": "54/58",
           "parent": "29/58",
           "name": "Valeurs disponibles",
-          "sequence": 170,
+          "sequence": 190,
           "xbrl": "met:am1|bas:m23",
           "rules": [
             {
@@ -262,7 +288,7 @@
           "code": "490/1",
           "parent": "29/58",
           "name": "Comptes de régularisation",
-          "sequence": 180,
+          "sequence": 200,
           "xbrl": "met:am1|bas:m24|part:m1",
           "rules": [
             {
@@ -275,7 +301,7 @@
         {
           "code": "20/58",
           "name": "TOTAL DE L'ACTIF",
-          "sequence": 190,
+          "sequence": 210,
           "is_total": true,
           "plus": [
             "20",
@@ -288,7 +314,7 @@
           "code": "10/15",
           "parent": "10/49",
           "name": "CAPITAUX PROPRES",
-          "sequence": 200,
+          "sequence": 220,
           "is_total": true,
           "plus": [
             "10/11",
@@ -303,14 +329,109 @@
           "code": "10/11",
           "parent": "10/15",
           "name": "Apport",
-          "sequence": 210,
+          "sequence": 230,
+          "is_total": true,
+          "plus": [
+            "10",
+            "11"
+          ],
+          "xbrl": "met:am1|bas:m38|ntr:m4"
+        },
+        {
+          "code": "10",
+          "parent": "10/11",
+          "name": "Capital",
+          "sequence": 240,
+          "is_total": true,
+          "plus": [
+            "100",
+            "101"
+          ],
+          "xbrl": "met:am1|bas:m39|ntr:m4"
+        },
+        {
+          "code": "100",
+          "parent": "10",
+          "name": "Capital souscrit",
+          "sequence": 250,
           "sign": -1,
-          "xbrl": "met:am1|bas:m38|ntr:m4",
+          "xbrl": "met:am1|bas:m39|ntr:m4|sts:m3",
           "rules": [
             {
               "kind": "code_range",
-              "code_from": "10",
-              "code_to": "11"
+              "code_from": "100",
+              "code_to": "100"
+            }
+          ]
+        },
+        {
+          "code": "101",
+          "parent": "10",
+          "name": "Capital non appelé",
+          "sequence": 260,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m39|ntr:m4|sts:m4",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "101",
+              "code_to": "101"
+            }
+          ]
+        },
+        {
+          "code": "11",
+          "parent": "10/11",
+          "name": "En dehors du capital",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "1100/10",
+            "1109/19"
+          ],
+          "xbrl": "met:am1|bas:m40|ntr:m4"
+        },
+        {
+          "code": "1100/10",
+          "parent": "11",
+          "name": "Primes d'émission",
+          "sequence": 280,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m41|ntr:m4",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1108",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1110",
+              "code_to": "1118",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "1109/19",
+          "parent": "11",
+          "name": "Autres",
+          "sequence": 290,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m40|ntr:m4|typ:m2",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1109",
+              "code_to": "1109",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1119",
+              "code_to": "1119",
+              "sequence": 20
             }
           ]
         },
@@ -318,7 +439,7 @@
           "code": "12",
           "parent": "10/15",
           "name": "Plus-values de réévaluation",
-          "sequence": 220,
+          "sequence": 300,
           "sign": -1,
           "xbrl": "met:am1|bas:m42|ntr:m4",
           "rules": [
@@ -333,14 +454,139 @@
           "code": "13",
           "parent": "10/15",
           "name": "Réserves",
-          "sequence": 230,
+          "sequence": 310,
+          "is_total": true,
+          "plus": [
+            "130/1",
+            "132",
+            "133"
+          ],
+          "xbrl": "met:am1|bas:m43|ntr:m4"
+        },
+        {
+          "code": "130/1",
+          "parent": "13",
+          "name": "Réserves indisponibles",
+          "sequence": 320,
+          "is_total": true,
+          "plus": [
+            "130",
+            "1311",
+            "1312",
+            "1313",
+            "1319"
+          ],
+          "xbrl": "met:am1|bas:m43|ntr:m4|sts:m5"
+        },
+        {
+          "code": "130",
+          "parent": "130/1",
+          "name": "Réserve légale",
+          "sequence": 330,
           "sign": -1,
-          "xbrl": "met:am1|bas:m43|ntr:m4",
+          "xbrl": "met:am1|bas:m43|ntr:m4|rsn:m1|sts:m5",
           "rules": [
             {
               "kind": "code_range",
-              "code_from": "13",
-              "code_to": "13"
+              "code_from": "130",
+              "code_to": "130"
+            }
+          ]
+        },
+        {
+          "code": "1311",
+          "parent": "130/1",
+          "name": "Réserves statutairement indisponibles",
+          "sequence": 340,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m43|ntr:m4|rsn:m2|sts:m5",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1311",
+              "code_to": "1311"
+            }
+          ]
+        },
+        {
+          "code": "1312",
+          "parent": "130/1",
+          "name": "Acquisition d'actions propres",
+          "sequence": 350,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m43|ntr:m4|rsn:m3|sts:m5",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1312",
+              "code_to": "1312"
+            }
+          ]
+        },
+        {
+          "code": "1313",
+          "parent": "130/1",
+          "name": "Soutien financier",
+          "sequence": 360,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m43|ntr:m4|rsn:m4|sts:m5",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1313",
+              "code_to": "1313"
+            }
+          ]
+        },
+        {
+          "code": "1319",
+          "parent": "130/1",
+          "name": "Autres",
+          "sequence": 370,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m43|ntr:m4|spec:m1|sts:m5",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1310",
+              "code_to": "1310",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "1314",
+              "code_to": "1319",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "132",
+          "parent": "13",
+          "name": "Réserves immunisées",
+          "sequence": 380,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m43|ntr:m4|sts:m6",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "132",
+              "code_to": "132"
+            }
+          ]
+        },
+        {
+          "code": "133",
+          "parent": "13",
+          "name": "Réserves disponibles",
+          "sequence": 390,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m43|ntr:m4|sts:m7",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "133",
+              "code_to": "139"
             }
           ]
         },
@@ -348,7 +594,7 @@
           "code": "14",
           "parent": "10/15",
           "name": "Bénéfice (Perte) reporté(e)",
-          "sequence": 240,
+          "sequence": 400,
           "sign": -1,
           "xbrl": "met:am2|bas:m44|ntr:m4",
           "rules": [
@@ -363,7 +609,7 @@
           "code": "15",
           "parent": "10/15",
           "name": "Subsides en capital",
-          "sequence": 250,
+          "sequence": 410,
           "sign": -1,
           "xbrl": "met:am1|bas:m45|ntr:m4",
           "rules": [
@@ -378,7 +624,7 @@
           "code": "16",
           "parent": "10/49",
           "name": "PROVISIONS ET IMPÔTS DIFFÉRÉS",
-          "sequence": 260,
+          "sequence": 420,
           "sign": -1,
           "xbrl": "met:am1|bas:m47",
           "rules": [
@@ -393,7 +639,7 @@
           "code": "17/49",
           "parent": "10/49",
           "name": "DETTES",
-          "sequence": 270,
+          "sequence": 430,
           "is_total": true,
           "plus": [
             "17",
@@ -406,14 +652,107 @@
           "code": "17",
           "parent": "17/49",
           "name": "Dettes à plus d'un an",
-          "sequence": 280,
+          "sequence": 440,
+          "is_total": true,
+          "plus": [
+            "170/4",
+            "175",
+            "176",
+            "178/9"
+          ],
+          "xbrl": "met:am1|bas:m50|rst:m1"
+        },
+        {
+          "code": "170/4",
+          "parent": "17",
+          "name": "Dettes financières",
+          "sequence": 450,
+          "is_total": true,
+          "plus": [
+            "172/3",
+            "174/0"
+          ],
+          "xbrl": "met:am1|bas:m50|ntr:m3|rst:m1"
+        },
+        {
+          "code": "172/3",
+          "parent": "170/4",
+          "name": "Etablissements de crédit, dettes de location-financement et dettes assimilées",
+          "sequence": 460,
           "sign": -1,
-          "xbrl": "met:am1|bas:m50|rst:m1",
+          "xbrl": "met:am1|bas:m50|ntr:m3|rst:m1|spec:m94",
           "rules": [
             {
               "kind": "code_range",
-              "code_from": "17",
-              "code_to": "17"
+              "code_from": "172",
+              "code_to": "173"
+            }
+          ]
+        },
+        {
+          "code": "174/0",
+          "parent": "170/4",
+          "name": "Autres emprunts",
+          "sequence": 470,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m51|ntr:m3|rst:m1|typ:m1",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "170",
+              "code_to": "171",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "174",
+              "code_to": "174",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "175",
+          "parent": "17",
+          "name": "Dettes commerciales",
+          "sequence": 480,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m50|rst:m1|typ:m3",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "175",
+              "code_to": "175"
+            }
+          ]
+        },
+        {
+          "code": "176",
+          "parent": "17",
+          "name": "Acomptes sur commandes",
+          "sequence": 490,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m20|rst:m1|spec:m5",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "176",
+              "code_to": "176"
+            }
+          ]
+        },
+        {
+          "code": "178/9",
+          "parent": "17",
+          "name": "Autres dettes",
+          "sequence": 500,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m50|rst:m1|typ:m1",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "177",
+              "code_to": "179"
             }
           ]
         },
@@ -421,13 +760,192 @@
           "code": "42/48",
           "parent": "17/49",
           "name": "Dettes à un an au plus",
-          "sequence": 290,
+          "sequence": 510,
+          "is_total": true,
+          "plus": [
+            "42",
+            "43",
+            "44",
+            "46",
+            "45",
+            "47/48"
+          ],
+          "xbrl": "met:am1|bas:m50|rst:m2"
+        },
+        {
+          "code": "42",
+          "parent": "42/48",
+          "name": "Dettes à plus d'un an échéant dans l'année",
+          "sequence": 520,
           "sign": -1,
-          "xbrl": "met:am1|bas:m50|rst:m2",
+          "xbrl": "met:am1|bas:m50|rst:m3",
           "rules": [
             {
               "kind": "code_range",
               "code_from": "42",
+              "code_to": "42"
+            }
+          ]
+        },
+        {
+          "code": "43",
+          "parent": "42/48",
+          "name": "Dettes financières",
+          "sequence": 530,
+          "is_total": true,
+          "plus": [
+            "430/8",
+            "439"
+          ],
+          "xbrl": "met:am1|bas:m50|ntr:m3|rst:m2"
+        },
+        {
+          "code": "430/8",
+          "parent": "43",
+          "name": "Etablissements de crédit",
+          "sequence": 540,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m50|ntr:m3|rst:m2|spec:m2",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "430",
+              "code_to": "438"
+            }
+          ]
+        },
+        {
+          "code": "439",
+          "parent": "43",
+          "name": "Autres emprunts",
+          "sequence": 550,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m51|ntr:m3|rst:m2|typ:m1",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "439",
+              "code_to": "439"
+            }
+          ]
+        },
+        {
+          "code": "44",
+          "parent": "42/48",
+          "name": "Dettes commerciales",
+          "sequence": 560,
+          "is_total": true,
+          "plus": [
+            "440/4",
+            "441"
+          ],
+          "xbrl": "met:am1|bas:m50|rst:m2|typ:m3"
+        },
+        {
+          "code": "440/4",
+          "parent": "44",
+          "name": "Fournisseurs",
+          "sequence": 570,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m50|rst:m2|spec:m3|typ:m3",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "440",
+              "code_to": "440",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "442",
+              "code_to": "449",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "441",
+          "parent": "44",
+          "name": "Effets à payer",
+          "sequence": 580,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m50|rst:m2|spec:m4|typ:m3",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "441",
+              "code_to": "441"
+            }
+          ]
+        },
+        {
+          "code": "46",
+          "parent": "42/48",
+          "name": "Acomptes sur commandes",
+          "sequence": 590,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m20|rst:m2|spec:m5",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "46",
+              "code_to": "46"
+            }
+          ]
+        },
+        {
+          "code": "45",
+          "parent": "42/48",
+          "name": "Dettes fiscales, salariales et sociales",
+          "sequence": 600,
+          "is_total": true,
+          "plus": [
+            "450/3",
+            "454/9"
+          ],
+          "xbrl": "met:am1|bas:m50|rst:m2|spec:m6"
+        },
+        {
+          "code": "450/3",
+          "parent": "45",
+          "name": "Impôts",
+          "sequence": 610,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m50|rst:m2|spec:m7",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "450",
+              "code_to": "453"
+            }
+          ]
+        },
+        {
+          "code": "454/9",
+          "parent": "45",
+          "name": "Rémunérations et charges sociales",
+          "sequence": 620,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m50|rst:m2|spec:m8",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "454",
+              "code_to": "459"
+            }
+          ]
+        },
+        {
+          "code": "47/48",
+          "parent": "42/48",
+          "name": "Autres dettes",
+          "sequence": 630,
+          "sign": -1,
+          "xbrl": "met:am1|bas:m50|rst:m2|typ:m1",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "47",
               "code_to": "48",
               "sequence": 10
             },
@@ -444,7 +962,7 @@
           "code": "492/3",
           "parent": "17/49",
           "name": "Comptes de régularisation",
-          "sequence": 300,
+          "sequence": 640,
           "sign": -1,
           "xbrl": "met:am1|bas:m24|part:m3",
           "rules": [
@@ -458,7 +976,7 @@
         {
           "code": "10/49",
           "name": "TOTAL DU PASSIF",
-          "sequence": 310,
+          "sequence": 650,
           "is_total": true,
           "plus": [
             "10/15",

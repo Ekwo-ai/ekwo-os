@@ -95,7 +95,7 @@ income line.
 
 `xbrl` is the **fact key** of the line in the taxonomy the country files in,
 and it is optional: null where nothing could be verified. The three Belgian
-schemes name all fifty-three of theirs. A taxonomy such as
+schemes name all eighty-seven of theirs. A taxonomy such as
 the Belgian CBSO has no element per reporting code — it is dimensional, so a
 line is a metric plus a set of domain members, written metric first and
 separated by `|`. One key, one fact, therefore **one line**: `ekwo pack check`
