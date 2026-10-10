@@ -588,6 +588,8 @@ Legal entities kept in this instance. One instance may hold several.
 | `peppol_scheme` | `text` | Scheme of the electronic address this company receives and sends under (EN 16931 BT-34-1): a code of the Electronic Address Scheme list, e.g. 0088 for a GLN. A fact of the company's registration with its access point, never derived from its VAT or registration number. Null together with peppol_identifier. |
 | `peppol_identifier` | `text` | The electronic address itself (EN 16931 BT-34), in the scheme peppol_scheme names. |
 | `created_by` | `uuid` | The person who created the company — acting_user() when it was written — or null when the installation did (the installer, a migration, an archive brought in). Written once and never changed: it is what companies_per_person counts on a shared installation, whoever owns the company today (decision 0065). No foreign key: it outlives the account, like the trail. |
+| `invoice_accent_color` | `text` | The accent colour of this company's invoice PDF, written #rrggbb: the title, the rules and the bands of the layout. Null is the default of @ekwo-ai/invoice-pdf. |
+| `invoice_logo_position` | `text` | The side of this company's invoice PDF its logo is printed on: left or right. Null is the default of @ekwo-ai/invoice-pdf (left). |
 
 Constraints:
 
@@ -595,6 +597,8 @@ Constraints:
 - `CHECK ((currency_code ~ '^[A-Z]{3}$'::text))`
 - `CHECK (((peppol_scheme IS NULL) = (peppol_identifier IS NULL)))`
 - `CHECK ((fiscal_country ~ '^[A-Z]{2}$'::text))`
+- `CHECK ((invoice_accent_color ~ '^#[0-9A-Fa-f]{6}$'::text))`
+- `CHECK ((invoice_logo_position = ANY (ARRAY['left'::text, 'right'::text])))`
 - `CHECK (((share_capital IS NULL) OR (share_capital_currency IS NOT NULL)))`
 - `CHECK (((share_capital IS NULL) OR (share_capital >= (0)::numeric)))`
 - `PRIMARY KEY (id)`

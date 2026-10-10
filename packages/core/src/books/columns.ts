@@ -33,6 +33,8 @@ export const COMPANY = [
   'activity_code',
   'activity_scheme',
   'document_template',
+  'invoice_accent_color',
+  'invoice_logo_position',
   'default_bank_account_id',
   'language',
   'currency_code',

@@ -143,7 +143,7 @@ ${bold('Connecting')} ${dim('(every command)')}
               <document> — what exists, and what is still owed. One object: a
               sale invoice, a bill, a quote or a credit note, with --type. A
               draft books nothing. pdf <document> — the PDF of a sale invoice
-              or credit note, from the books. ${dim('ekwo invoice is the old name of doc, kept; ekwo document is its whole word.')}
+              or credit note, from the books, in its company's colour. ${dim('ekwo invoice is the old name of doc, kept; ekwo document is its whole word.')}
   ${cyan('post')}        <document> — book it, through post_document(). --dry-run shows
               the entry the database would write, and writes nothing.
   ${cyan('cancel')}      <document> — undo a posted invoice, and say how: back to draft

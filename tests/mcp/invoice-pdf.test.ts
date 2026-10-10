@@ -13,7 +13,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import type { PGlite } from '@electric-sql/pglite';
 import { readFacturX } from '@ekwo-ai/factur-x/pdf';
-import { PDFDocument, PDFName, PDFRawStream } from 'pdf-lib';
+import { PDFArray, PDFDocument, PDFName, PDFRawStream, decodePDFRawStream, type PDFStream } from 'pdf-lib';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { buildServer } from '../../packages/mcp/src/index.js';
 import type { LogoFetch } from '../../packages/core/src/index.js';
@@ -52,6 +52,12 @@ async function images(file: Uint8Array): Promise<number> {
     if (object instanceof PDFRawStream && object.dict.get(PDFName.of('Subtype')) === PDFName.of('Image')) n++;
   }
   return n;
+}
+
+async function contentOf(file: Uint8Array): Promise<string> {
+  const contents = (await PDFDocument.load(file)).getPage(0).node.Contents();
+  const streams: PDFStream[] = contents instanceof PDFArray ? Array.from({ length: contents.size() }, (_, i) => contents.lookup(i) as PDFStream) : [contents as PDFStream];
+  return streams.map((s) => new TextDecoder('latin1').decode(s instanceof PDFRawStream ? decodePDFRawStream(s).decode() : s.getContents())).join('\n');
 }
 
 beforeAll(async () => {
@@ -123,6 +129,31 @@ describe('render_invoice_pdf', () => {
     const refused = await render({ document_id: draft, factur_x: true });
     expect(refused.isError).toBe(true);
     expect(refused.content[0]?.text).toMatch(/^document_not_posted: /);
+  });
+
+  it('prints in the accent colour and on the logo side the company chose, and in the default once they are cleared', async () => {
+    const documentId = await sale(db, s);
+    const accent = `${0x7a / 255} ${0x1f / 255} ${0x2b / 255} rg`;
+    const navy = `${0x1f / 255} ${0x3a / 255} ${0x5f / 255} rg`;
+    // The logo, 120 points wide, against the right margin of an A4 page.
+    const onTheRight = new RegExp(`q\\n1 0 0 1 ${595.28 - 48 - 120} [\\d.]+ cm\\n[^Q]*\\/Image`);
+
+    await db.query(
+      `update companies set invoice_accent_color = '#7A1F2B', invoice_logo_position = 'right' where id = $1`,
+      [s.companyId],
+    );
+    const themed = await contentOf(pdfOf((await render({ document_id: documentId })).content));
+    expect(themed).toContain(accent);
+    expect(themed).not.toContain(navy);
+    expect(themed).toMatch(onTheRight);
+
+    await db.query(
+      `update companies set invoice_accent_color = null, invoice_logo_position = null where id = $1`,
+      [s.companyId],
+    );
+    const plain = await contentOf(pdfOf((await render({ document_id: documentId })).content));
+    expect(plain).toContain(navy);
+    expect(plain).not.toMatch(onTheRight);
   });
 
   it('never fetches a logo from a local or private address, and renders without it', async () => {

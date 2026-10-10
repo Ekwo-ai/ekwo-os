@@ -240,3 +240,42 @@ describe('who may change the profile', () => {
     expect(changed.trade_name).toBe('Profil & Cie');
   });
 });
+
+describe('the colour and the logo side of its invoices', () => {
+  it('are null until chosen, and keep a colour written #rrggbb and a side', async () => {
+    const before = await one<{ invoice_accent_color: string | null; invoice_logo_position: string | null }>(
+      db,
+      `select invoice_accent_color, invoice_logo_position from companies where id = $1`,
+      [companyId],
+    );
+    expect(before).toEqual({ invoice_accent_color: null, invoice_logo_position: null });
+
+    await db.query(
+      `update companies set invoice_accent_color = '#7a1F2b', invoice_logo_position = 'right' where id = $1`,
+      [companyId],
+    );
+    const after = await one<{ invoice_accent_color: string; invoice_logo_position: string }>(
+      db,
+      `select invoice_accent_color, invoice_logo_position from companies where id = $1`,
+      [companyId],
+    );
+    expect(after).toEqual({ invoice_accent_color: '#7a1F2b', invoice_logo_position: 'right' });
+    await db.query(
+      `update companies set invoice_accent_color = null, invoice_logo_position = null where id = $1`,
+      [companyId],
+    );
+  });
+
+  it('refuse a colour that is not #rrggbb and a side that is not one', async () => {
+    for (const colour of ['navy', '#fff', '7A1F2B', '#7A1F2G', '#7A1F2B00']) {
+      expect(
+        await expectError(db, `update companies set invoice_accent_color = $2 where id = $1`, [companyId, colour]),
+      ).toMatch(/companies_invoice_accent_color_hex/);
+    }
+    for (const side of ['center', 'Left', '']) {
+      expect(
+        await expectError(db, `update companies set invoice_logo_position = $2 where id = $1`, [companyId, side]),
+      ).toMatch(/companies_invoice_logo_position_side/);
+    }
+  });
+});

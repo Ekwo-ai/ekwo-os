@@ -755,6 +755,17 @@ export const UpdateCompanyProfileInput = z.object({
     .optional()
     .describe('Fills the payee IBAN of a sales document that names none. list_bank_accounts says what exists.'),
   document_template: z.string().nullable().optional().describe('A code the renderer interprets.'),
+  invoice_accent_color: z
+    .string()
+    .regex(/^#[0-9A-Fa-f]{6}$/, 'a colour written #rrggbb')
+    .nullable()
+    .optional()
+    .describe('The accent colour of its invoice PDF, #rrggbb: the title, the rules and the bands. Null puts back the default.'),
+  invoice_logo_position: z
+    .enum(['left', 'right'])
+    .nullable()
+    .optional()
+    .describe('The side of its invoice PDF the logo is printed on. Null puts back the default, left.'),
 });
 
 export async function updateCompanyProfile(
