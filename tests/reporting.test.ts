@@ -95,7 +95,7 @@ describe('vat_return on the demo company', () => {
     expect(byBox['49']).toBeCloseTo(300, 2); // credit note issued
     expect(byBox['54']).toBeCloseTo(969, 2); // 4500 x 21 % + 400 x 6 %
     expect(byBox['64']).toBeCloseTo(63, 2); // VAT on the credit note
-    expect(byBox['82']).toBeCloseTo(2650, 2); // services purchased
+    expect(byBox['82']).toBeCloseTo(3640, 2); // services purchased, the European Union service of 88 included
     expect(byBox['83']).toBeCloseTo(2400, 2); // capital goods
     expect(byBox['88']).toBeCloseTo(990, 2); // European Union services received
     expect(byBox['55']).toBeCloseTo(207.9, 2); // self-assessed on box 88

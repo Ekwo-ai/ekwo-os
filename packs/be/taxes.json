@@ -516,7 +516,7 @@
       "invoice": [
         {
           "type": "base",
-          "box": "86"
+          "box": ["86", "81"]
         },
         {
           "type": "tax",
@@ -566,7 +566,7 @@
       "invoice": [
         {
           "type": "base",
-          "box": "88"
+          "box": ["88", "82"]
         },
         {
           "type": "tax",

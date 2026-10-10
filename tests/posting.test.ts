@@ -212,6 +212,35 @@ describe('post_document — Belgian purchases', () => {
     expect(boxes).toEqual(['88', '59', '55', null]);
   });
 
+  it('prints a self-assessed purchase in its grid of nature too: 86 in 81, 88 in 82', async () => {
+    const supplier = await newContact(db, fx.companyId, { name: 'Fournisseur UE', type: 'supplier', country: 'NL' });
+    for (const [number, taxCode, unitPrice, accountCode] of [
+      ['ACH-NAT-G', 'BE-P-ICG-21', 700, '604000'],
+      ['ACH-NAT-S', 'BE-P-ICS-21', 300, '612400'],
+    ] as const) {
+      const doc = await newDocument(db, fx.companyId, {
+        docType: 'purchase_invoice',
+        number,
+        contactId: supplier,
+        date: '2026-11-12',
+        lines: [{ unitPrice, taxCode, accountCode }],
+      });
+      await db.query(`select post_document($1)`, [doc]);
+    }
+
+    const bases = await rows<{ box: string; amount: string }>(
+      db,
+      `select box, amount::text from vat_return($1, '2026-11-01', '2026-11-30') where kind = 'base' and amount <> 0 order by box`,
+      [fx.companyId],
+    );
+    expect(bases).toEqual([
+      { box: '81', amount: '700.00' },
+      { box: '82', amount: '300.00' },
+      { box: '86', amount: '700.00' },
+      { box: '88', amount: '300.00' },
+    ]);
+  });
+
   it('sends capital goods to box 83', async () => {
     const supplier = await newContact(db, fx.companyId, { name: 'Materiel', type: 'supplier' });
     const doc = await newDocument(db, fx.companyId, {

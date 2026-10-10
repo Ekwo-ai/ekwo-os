@@ -8,6 +8,21 @@ disagree with one line rather than with the whole pack.
 `tests/golden.test.ts`, which proves the pack is coherent and not that it is
 right.
 
+## The VAT return: a purchase is printed by its nature and by who owes the tax
+
+Grids 81, 82 and 83 hold every purchase by its nature — *le montant (TVA
+déductible non comprise) des achats* — wherever the supplier is; grids 86, 87
+and 88 say, besides, that the declarant owes the tax (Intervat help, cadre
+III). An intra-Community acquisition of goods is therefore printed in 86 and
+81, and a service received from another Member State in 88 and 82: since pack
+1.17.1, `BE-P-ICG-21` and `BE-P-ICS-21` name both boxes on their base.
+
+| Not carried | Why |
+|---|---|
+| The second grid of `BE-P-CC-21` and `BE-P-IMP-21` (87) | Works and imports may be goods, services or investment: the code does not say which of 81, 82 or 83, and a code per nature is not written yet. |
+| An acquisition of investment goods or of goods for 82 | `BE-P-ICG-21` prints in 81, the grid of goods bought for resale or production. |
+| The credit notes of 86 and 88 in 85 | The help gives 84 to them and 85 to *the other* operations of the frame: they stay in 84 only. |
+
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
 The section carries what was read on an official page on 30 September 2026 —
