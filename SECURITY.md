@@ -20,6 +20,10 @@ reproduces everything a real one does.
 Please do not open a public issue for a vulnerability, and please do not test
 against an instance you do not own.
 
+The same holds for the maintainers: a weakness found here is fixed through a
+private advisory first, and the decision record that explains it is written
+once the fix has shipped (see [`docs/decisions/README.md`](docs/decisions/README.md)).
+
 ## What to expect
 
 - An acknowledgement within three working days.

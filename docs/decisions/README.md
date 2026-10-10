@@ -13,6 +13,15 @@ A record has five parts: **Status**, **Context**, **Decision**,
 **Consequences** and **See also** (the files, migrations, tests and other
 records it relies on). New records take the next free number.
 
+**A weakness that is still open is not written here.** The records are public,
+and a record describing a gap an attacker could still use would be a recipe.
+A security issue goes first through a private advisory, as
+[`SECURITY.md`](../../SECURITY.md) describes; the record that tells its story
+is written, or rewritten, once the fix has shipped, and names the release that
+carries it. A limit that is accepted by design — stated, reasoned and not
+exploitable beyond what the design allows — belongs in a record like any other
+consequence.
+
 ## The instance and who may act
 
 - [0001](0001-one-installation-is-one-customer.md) — One installation belongs to one customer
