@@ -1,0 +1,191 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "VG",
+  "name": "British Virgin Islands",
+  "version": "0.1.0",
+  "schema_min": "20260929141500",
+  "seed_sequence": 140,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ird-vg",
+        "title": "Inland Revenue Department",
+        "publisher": "Government of the Virgin Islands",
+        "url": "https://gov.vg/inland-revenue-department",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "vg-laws",
+        "title": "Laws of the Virgin Islands (statute index: BVI Business Companies Act 2004, Payroll Taxes Act 2004, Income Tax Act)",
+        "publisher": "Government of the Virgin Islands",
+        "url": "https://laws.gov.vg",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "maples-fr",
+        "title": "BVI Business Companies Requirements for New Annual Returns",
+        "publisher": "Maples Group",
+        "url": "https://maples.com/en/knowledge-centre/2023/9/bvi-business-companies-requirements-for-new-annual-returns",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "mourant-fr",
+        "title": "BVI Business Companies — Financial reporting rules",
+        "publisher": "Mourant",
+        "url": "https://www.mourant.com/guides/bvi-business-companies-financial-reporting-rules/",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "vistra-fr",
+        "title": "Preparing and filing an annual return in the BVI",
+        "publisher": "Vistra",
+        "url": "https://www.vistra.com/insights/preparing-and-filing-annual-return-bvi-what-companies-need-know",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "deloitte-vg-2025",
+        "title": "British Virgin Islands Highlights 2025",
+        "publisher": "Deloitte",
+        "url": "https://www.deloitte.com/content/dam/assets-shared/docs/services/tax/2025/dttl-tax-britishvirginislandshighlights-2025.pdf",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "orbitax-vg-etax",
+        "title": "British Virgin Islands Requires Electronic Filing Using New Tax System from December 2023",
+        "publisher": "Orbitax",
+        "url": "https://orbitax.com/news/archive.php/British-Virgin-Islands-Require-54174",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "ird-eregister",
+        "title": "Tax administration system — online tax registration (eregisterfortax.gov.vg)",
+        "publisher": "Inland Revenue Department, Government of the Virgin Islands",
+        "url": "https://www.eregisterfortax.gov.vg",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "USD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "British Virgin Islands reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "VG-FR-BS",
+        "VG-FR-IS"
+      ],
+      "legal_reference": "The British Virgin Islands prescribe no chart of accounts. BVI Business Companies Act 2004, section 98 requires a company to keep records that explain its transactions and enable its financial position to be determined, and section 98A with the BVI Business Companies (Financial Return) Order 2023 requires a company that is not exempt to give its registered agent an annual financial return — a balance sheet and an income statement — within nine months of its financial year end, with no audit and no mandated accounting framework (Maples, Mourant, Vistra; the statutory text itself was not opened). This chart is original: four digits, blocked so that each range reaches one line of an IFRS for SMEs balance sheet and income statement, the form the financial return can be filled in from. Its only government-levy accounts are those for payroll tax and social contributions, which are payroll liabilities and not a tax on sales; see 'From British Virgin Islands' in docs/international.md.",
+      "source": "maples-fr"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "The Virgin Islands levy no value added tax, goods and services tax or general sales tax (Inland Revenue Department, gov.vg, which lists payroll tax, stamp duty, hotel accommodation tax and land and house tax among the taxes it administers and no tax on sales; Deloitte, British Virgin Islands Highlights 2025: 'The BVI does not levy VAT or sales tax'), so no tax statute conditions anything on an invoice carrying a sequential number. The record-keeping duty of the BVI Business Companies Act 2004, section 98 concerns what a company keeps, not how an issued invoice is numbered. `numbering` is therefore `free` and `number_format` is a convention this pack proposes, not a rule it read.",
+        "source": "ird-vg"
+      },
+      "payment_terms": {
+        "legal_reference": "This pack found no Virgin Islands statute that sets a payment term between two businesses or a rate of interest on a late commercial debt; the search covered the Inland Revenue Department's pages and the practitioner summaries listed in the register, not a clause-by-clause read of the statute book (laws.gov.vg), so this is an absence of finding and not a proven absence of law. `legal_payment_days` and `late_payment_reference` are empty and a seller's terms are a matter of contract.",
+        "source": "vg-laws"
+      },
+      "tax_point": {
+        "legal_reference": "This field has nothing to describe in the Virgin Islands: it names the day a country's general rule makes its own turnover tax chargeable, and the territory charges none. `invoice_date` is declared as the closest general commercial convention (revenue is ordinarily invoiced at or shortly after the point IFRS for SMEs section 23 recognises it), not as a rule read from a text; see 'From British Virgin Islands' in docs/international.md.",
+        "source": "ird-vg"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Virgin Islands statute found by this pack obliges a business to issue or accept an electronic invoice, and no Peppol Authority for the territory appeared in the OpenPeppol authority lists as retrieved on 2026-10-10 (partial snippets; a few BVI-registered participants do appear in the Peppol Directory, which does not imply a local authority or mandate). `profile`, `party_scheme` and `vat_scheme` are therefore null: there is no domestic profile to name and no VAT identifier to carry, since no value added tax is levied. Taxpayers do file payroll tax, self-drive motor vehicle tax and hotel accommodation tax returns electronically through the Inland Revenue Department's tax system since 1 December 2023 (Orbitax), but those are periodic returns, not invoices.",
+    "source": "orbitax-vg-etax"
+  }
+}

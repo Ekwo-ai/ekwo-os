@@ -1,0 +1,54 @@
+[
+  {
+    "code": "VG-S-NA",
+    "name": "Sale, not subject to any tax on turnover",
+    "description": "Every sale a Virgin Islands business makes — domestic, exported, or delivered from outside the territory to a place outside it",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2005-01-01",
+    "legal_reference": "The Virgin Islands levy no value added tax, goods and services tax or general sales tax: the Inland Revenue Department (gov.vg, consulted 2026-10-10) lists the taxes it administers — payroll tax, stamp duty, self-drive motor vehicle tax, hotel accommodation tax, land and house tax, liquor licence, cheque duty and service charges — and no tax on sales, and Deloitte's British Virgin Islands Highlights 2025 states that the territory does not levy VAT or sales tax. Income tax is legislated but set at a zero rate (practitioner summaries; the statute was not opened), and a BVI business company is generally exempt from income taxation (Deloitte). What the territory takes instead lies outside this pack: payroll tax under the Payroll Taxes Act 2004 (employer 2% or 6% by employer class, employee 8% withheld by the employer, on remuneration above USD 10,000 a year, monthly return P6 due within 21 days of month end — rates and deadline from Deloitte and registered-agent summaries; the P6 form itself could not be opened), stamp duty, hotel accommodation tax and import duties. None is a tax an invoice line carries. There is accordingly no rate for this code to state and no box for its base: it exists so that every sale line carries a tax code the engine can post. `valid_from` 2005-01-01 is a convenience (the year income tax was set at zero and payroll tax introduced), not a claim about when the absence began. See 'From British Virgin Islands' in docs/international.md.",
+    "source": "ird-vg",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "VG-P-NA",
+    "name": "Purchase, not subject to any tax on turnover",
+    "description": "Every purchase a Virgin Islands business books — domestic, imported, or delivered from outside the territory to a place outside it",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2005-01-01",
+    "legal_reference": "The purchase side of VG-S-NA: nothing a Virgin Islands business buys carries a value added tax or general sales tax to recover, because none is levied on the sale that supplies it (Inland Revenue Department, gov.vg; Deloitte, British Virgin Islands Highlights 2025). Imported goods are subject to customs import duty at ad valorem rates (practitioner summaries; the tariff was not opened), a duty on goods crossing the border and not a tax an invoice line can carry a recoverable code for, which this pack does not model. See 'From British Virgin Islands' in docs/international.md.",
+    "source": "ird-vg",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 20
+  }
+]

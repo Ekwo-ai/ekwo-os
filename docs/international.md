@@ -6549,3 +6549,13 @@ the DITC FAQ statement, the budget alert and PwC. The OpenPeppol list and the
 Stamp Duty Act were not opened. The Companies Act (2026 Revision) s. 59 was
 read in full: proper books including contracts and invoices, true and fair
 view, five-year retention.
+
+## From British Virgin Islands
+
+`packs/vg/`, `community`, seed 140, USD. A second jurisdiction with no tax on sales, built on the format of `packs/hk`: two `not_subject` codes, no `tax_report.json`, no settlement roles, an empty `vat_return.json`. Checked on 2026-10-10 against the Inland Revenue Department's list of taxes (`gov.vg`) and Deloitte's 2025 highlights; no general consumption tax is in force.
+
+**Levies left outside the pack, with no tax code.** Payroll tax under the Payroll Taxes Act 2004 (employer 2% or 6%, employee 8% withheld, above USD 10,000 a year; monthly P6 within 21 days; electronic filing since 1 December 2023); social security and National Health Insurance contributions; stamp duty; land and house tax; hotel accommodation tax; customs import duty; income tax at a zero rate. Pillar Two: no announced implementation per Deloitte (2025), conflicting secondary sources. The sources are in the pack's register; the statutes on `laws.gov.vg` and the P6 form were not readable in this session.
+
+**Gaps in the socle, not patched.** `documents.tax_point` has no honest answer for a jurisdiction with no turnover tax; `invoice_date` is declared as a convention, as for Hong Kong. A payroll levy withheld from the employee and owed by the employer (payroll tax) has no module: the chart carries the liability accounts and nothing computes the tax. The financial return is delivered to a registered agent, not a tax authority; the format has no notion of a filing addressed to a private agent, so the portal source is the Inland Revenue Department's registration portal and the return itself is not modelled. No generic test assumed a VAT, a rate or a return for this pack.
+
+**Financial statements.** No framework is imposed; the pack follows the IFRS for SMEs layout and the contents of the financial return (BVI Business Companies Act 2004, s. 98A, with the Financial Return Order 2023, unaudited, within nine months of year end, with listed, regulated, tax-filing and liquidating companies exempt). The Order's own schedule of lines was not read.
