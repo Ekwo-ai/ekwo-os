@@ -8,7 +8,7 @@ module.
 |---|---|---|---|---|
 | `assets` | [`fixed-assets`](fixed-assets/) | `fixed_assets` | yes, through `post_module_entry()` | `packs/<cc>/fixed_assets.json` |
 | `budgets` | [`budgets`](budgets/) | `budgets` | no | none |
-| `tax` | [`corporate-tax`](corporate-tax/) | `tax` | not yet: this version estimates and keeps, the provision entry is a later one | `packs/<cc>/corporate_tax.json` |
+| `tax` | [`corporate-tax`](corporate-tax/) | `tax` | the provision of a computation, through `post_module_entry()` | `packs/<cc>/corporate_tax.json` |
 | `einvoicing` | [`einvoicing`](einvoicing/) | `einvoicing` | no: it issues the electronic file of a posted sale and records every sending | the profile the pack declares |
 
 `schema/module.1.json` is the published shape of a `module.json`, and

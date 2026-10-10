@@ -1,8 +1,18 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { freshDatabase } from '../../../tests/helpers/db.js';
+import { asUser, freshDatabase, one } from '../../../tests/helpers/db.js';
 import { allPacks } from '../../../tests/helpers/packs.js';
-import { book, declare, decimal, estimate, figures, goldenOf, taxCompany } from './helpers.js';
+import {
+  book,
+  declare,
+  decimal,
+  estimate,
+  figures,
+  goldenOf,
+  taxCompany,
+  type EstimateLine,
+  type GoldenLine,
+} from './helpers.js';
 
 // The worked examples of every pack that carries a `corporate_tax` section.
 //
@@ -151,6 +161,42 @@ for (const pack of packs) {
         // Every adjustment and every rate names the article it comes from.
         for (const line of lines.filter((l) => l.kind === 'adjustment' || l.kind === 'rate' || l.kind === 'loss_used')) {
           expect(line.legal_reference, `${line.kind} ${line.code ?? ''}`).toBeTruthy();
+        }
+
+        // The provision of that figure is booked on the pack's accounts, and
+        // the tax does not move: the computation starts from a result before
+        // income tax, or adds the charge back — in which case the result and
+        // the rule that adds it back move together, and nothing after them.
+        // Booked twice, it is one entry.
+        const booked = await asUser(db, fixture.ownerId, async () => {
+          const recorded = await one<{ id: string }>(db, `select tax.record_computation($1, $2) as id`, [
+            fixture.companyId,
+            fixture.fiscalYearId,
+          ]);
+          const first = await one<{ entry: string | null }>(db, `select tax.book_provision($1) as entry`, [recorded.id]);
+          const second = await one<{ entry: string | null }>(db, `select tax.book_provision($1) as entry`, [recorded.id]);
+          expect(second.entry).toBe(first.entry);
+          return first.entry;
+        });
+        const after = (lines: (EstimateLine | GoldenLine)[]) =>
+          lines.filter((l) => l.kind !== 'accounting_result' && l.kind !== 'adjustment').map(figures);
+        expect(after(await estimate(db, fixture)), worked).toEqual(after(company.expected.lines));
+        const charge = await one<{ balance: string }>(
+          db,
+          `select coalesce(sum(l.debit - l.credit), 0)::text as balance
+             from entry_lines l join entries e on e.id = l.entry_id
+            where e.company_id = $1 and e.state = 'posted'
+              and l.account_id = account_id_by_code($1, $2)`,
+          [fixture.companyId, pack.corporateTax?.accounts.expense],
+        );
+        expect(decimal(charge.balance), worked).toBe(decimal(company.expected.tax));
+        if (booked !== null) {
+          const entry = await one<{ module_code: string; state: string }>(
+            db,
+            `select module_code, state::text from entries where id = $1`,
+            [booked],
+          );
+          expect(entry).toEqual({ module_code: 'tax', state: 'posted' });
         }
       }, 120_000);
     }

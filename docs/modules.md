@@ -57,12 +57,13 @@ one of them.
 |---|---|---|---|---|
 | `assets` | `fixed-assets` | its own section, `fixed_assets` | yes | clients, under its policies, and `post_module_entry()` |
 | `budgets` | `budgets` | none | no | clients, under its policies |
-| `tax` | `corporate-tax` | its own section, `corporate_tax` — the most of the four | no, in its first version | `security definer` functions, and no role |
+| `tax` | `corporate-tax` | its own section, `corporate_tax` — the most of the four | the provision of a computation, since version 1.1.0 | `security definer` functions, and no role; its declarations, clients under its policies |
 | `einvoicing` | `einvoicing` | none of its own: the `einvoicing` section every pack already carries, read where the socle compiled it | no | `security definer` functions, and no role; the file itself is written in TypeScript, by a brick |
 
 `fixed-assets` has country data and posts. `budgets` has neither.
-`corporate-tax` — code `tax` — has the most country data and, in its first
-version, posts nothing: every table that holds a result is written by a
+`corporate-tax` — code `tax` — has the most country data and posts one
+thing, the provision of a computation, on the accounts its pack names: every
+table that holds a result is written by a
 `security definer` function and by no role, which is how "only an owner calls
 a computation final" holds for psql and PostgREST alike. `einvoicing` is the
 same shape with one more side: what it keeps is produced outside the database
