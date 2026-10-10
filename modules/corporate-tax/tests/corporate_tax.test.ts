@@ -794,6 +794,7 @@ describe('row level security', () => {
     'computation_lines',
     'losses',
     'loss_uses',
+    'prepayments',
   ];
 
   async function populated(name: string): Promise<Awaited<ReturnType<typeof taxCompany>>> {
@@ -818,6 +819,10 @@ describe('row level security', () => {
     await asUser(db, fixture.ownerId, async () => {
       await db.query(
         `insert into tax.credits (company_id, fiscal_year_id, credit_code, amount) values ($1, $2, 'test-rls', 5)`,
+        [fixture.companyId, fixture.fiscalYearId],
+      );
+      await db.query(
+        `insert into tax.prepayments (company_id, fiscal_year_id, paid_on, amount) values ($1, $2, date '2025-04-10', 100)`,
         [fixture.companyId, fixture.fiscalYearId],
       );
       // A final loss year, then a final year that uses it: every table holds a row.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.11.1",
-  "migration": "20261009213006",
+  "migration": "20261010073000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -11176,7 +11176,7 @@
     },
     {
       "code": "tax",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "schema": "tax",
       "tables": [
         {
@@ -11805,6 +11805,47 @@
           ]
         },
         {
+          "name": "prepayments",
+          "columns": [
+            {
+              "name": "amount",
+              "type": "numeric"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "entry_id",
+              "type": "uuid"
+            },
+            {
+              "name": "fiscal_year_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "note",
+              "type": "text"
+            },
+            {
+              "name": "paid_on",
+              "type": "date"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        },
+        {
           "name": "rate_templates",
           "columns": [
             {
@@ -11881,6 +11922,10 @@
           "arguments": ""
         },
         {
+          "name": "book_provision",
+          "arguments": "p_computation_id uuid"
+        },
+        {
           "name": "condition_failure",
           "arguments": "p_condition jsonb, p_values jsonb, p_taxable_base numeric"
         },
@@ -11909,6 +11954,10 @@
           "arguments": "p_valid_from date, p_valid_to date, p_valid_on tax.validity_basis, p_start date, p_end date"
         },
         {
+          "name": "instalment_date",
+          "arguments": "p_month_basis text, p_month integer, p_day integer, p_start date, p_end date"
+        },
+        {
           "name": "line",
           "arguments": "p_kind text, p_code text, p_name text, p_base numeric, p_rate numeric, p_amount numeric, p_legal_reference text, p_source_key text"
         },
@@ -11917,8 +11966,20 @@
           "arguments": "p_company_id uuid, p_before date"
         },
         {
+          "name": "plan_instalments",
+          "arguments": "p_instalments jsonb"
+        },
+        {
+          "name": "prepayment_plan",
+          "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_at date, p_tax numeric"
+        },
+        {
           "name": "record_computation",
           "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_at date"
+        },
+        {
+          "name": "round_prepayment",
+          "arguments": ""
         },
         {
           "name": "withdraw_computation",
@@ -12012,6 +12073,16 @@
           "command": "select"
         },
         {
+          "table": "prepayments",
+          "name": "tax_prepayments_select",
+          "command": "select"
+        },
+        {
+          "table": "prepayments",
+          "name": "tax_prepayments_write",
+          "command": "all"
+        },
+        {
           "table": "rate_templates",
           "name": "tax_rate_templates_select",
           "command": "select"
@@ -12049,6 +12120,14 @@
         {
           "table": "losses",
           "name": "tax_losses_set_updated_at"
+        },
+        {
+          "table": "prepayments",
+          "name": "tax_prepayments_round"
+        },
+        {
+          "table": "prepayments",
+          "name": "tax_prepayments_set_updated_at"
         }
       ],
       "types": [
@@ -12255,6 +12334,22 @@
             ]
           },
           {
+            "name": "prepayments",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
             "name": "rate_templates",
             "anon": [],
             "authenticated": [
@@ -12293,6 +12388,17 @@
           {
             "name": "archive_tables",
             "arguments": "",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "book_provision",
+            "arguments": "p_computation_id uuid",
             "anon": [],
             "authenticated": [
               "execute"
@@ -12373,6 +12479,17 @@
             ]
           },
           {
+            "name": "instalment_date",
+            "arguments": "p_month_basis text, p_month integer, p_day integer, p_start date, p_end date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "line",
             "arguments": "p_kind text, p_code text, p_name text, p_base numeric, p_rate numeric, p_amount numeric, p_legal_reference text, p_source_key text",
             "anon": [],
@@ -12395,6 +12512,28 @@
             ]
           },
           {
+            "name": "plan_instalments",
+            "arguments": "p_instalments jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "prepayment_plan",
+            "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_at date, p_tax numeric",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "record_computation",
             "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_at date",
             "anon": [],
@@ -12404,6 +12543,14 @@
             "service_role": [
               "execute"
             ]
+          },
+          {
+            "name": "round_prepayment",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
           },
           {
             "name": "withdraw_computation",

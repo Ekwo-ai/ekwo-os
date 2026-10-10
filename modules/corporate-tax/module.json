@@ -2,11 +2,11 @@
   "$schema": "https://ekwo.ai/schemas/module/1.json",
   "code": "tax",
   "name": "Corporate income tax",
-  "description": "Corporate income tax estimated from the books: the accounting result, the adjustments, the losses, the rates and their conditions of a country are pack data, and what a company declares about itself is its own. Writes nothing to the ledger.",
+  "description": "Corporate income tax estimated from the books: the accounting result, the adjustments, the losses, the rates and their conditions of a country are pack data, and what a company declares about itself is its own. Books the provision of a computation through post_module_entry(), and plans the prepayments of a year.",
   "schema": "tax",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "available",
   "requires_socle_min": "20260922162500",
-  "posts": false,
+  "posts": true,
   "pack": { "section": "corporate_tax" }
 }

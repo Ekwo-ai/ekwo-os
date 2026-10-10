@@ -1058,6 +1058,11 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select tax.withdraw_computation(gen_random_uuid())`,
         params: [],
       },
+      // Booking the provision is tax.write, and posting.
+      'tax.book_provision': {
+        sql: `select tax.book_provision(gen_random_uuid())`,
+        params: [],
+      },
     };
   });
 

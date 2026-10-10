@@ -268,6 +268,11 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     `insert into tax.loss_uses (company_id, loss_id, computation_id, amount) values ($1, $2, $3, 1000)`,
     [companyId, loss.id, computation.id],
   );
+  await db.query(
+    `insert into tax.prepayments (company_id, fiscal_year_id, paid_on, amount)
+     select $1, f.id, f.start_date, 250 from fiscal_years f where f.company_id = $1 order by f.start_date limit 1`,
+    [companyId],
+  );
 
   // A fourth module: the electronic invoice of a posted sale and its one
   // sending, delivered. Written by hand — which profile a pack declares is not
