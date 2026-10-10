@@ -51,6 +51,7 @@
     "test:watch": "vitest",
     "fonts": "node scripts/embed-fonts.mjs",
     "examples": "tsx examples/generate.ts",
+    "verapdf": "node scripts/verapdf.mjs",
     "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
   "dependencies": {

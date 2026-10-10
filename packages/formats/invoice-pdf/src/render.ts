@@ -1,28 +1,31 @@
 /**
  * The layout: one sober page design, A4 or Letter, as many pages as the lines
- * need.
+ * need, in the colour, typeface and logo position of the theme.
  *
- * Top of the first page, the seller — a logo when one is given, its name
- * otherwise — and the title, the number, the dates and the references; under
- * them the buyer and, where the goods went elsewhere, the delivery address.
- * Then the lines, whose column headings are repeated on every page they run
- * onto; the tax summary, one row per tax as the books grouped it, with the
- * sentence that says why a group charges nothing; the totals and what is
- * still due; how to pay; the note; and the legal mentions the country
- * requires, as the books gave them. Every page carries the seller's identity
- * and its number at the foot.
+ * Top of the first page, the seller — its logo, left or right, and its name —
+ * and the title, the number, the dates and the references, closed by a rule
+ * of the accent colour; under them the buyer and, where the goods went
+ * elsewhere, the delivery address, each on a shaded panel. Then the lines,
+ * under a band of column headings repeated on every page they run onto; the
+ * tax summary, one row per tax as the books grouped it, with the sentence that
+ * says why a group charges nothing; the totals, ending on a band with what is
+ * still due, and beside them how to pay, framed; the note; and the legal
+ * mentions the country requires, as the books gave them. Every page carries
+ * the seller's identity and its number at the foot.
  *
  * Nothing printed is computed here. Every figure is a column of a view,
  * formatted by `Intl`; every sentence is a label of the caller or a row of the
  * books.
  */
 
-import { PDFDocument, PDFHexString, PDFName, PDFString, rgb, type PDFImage, type PDFPage, type RGB } from 'pdf-lib';
+import { PDFDocument, rgb, type PDFPage, type RGB } from 'pdf-lib';
+import { prepareForArchive } from './archive.js';
 import { InvoicePdfError } from './errors.js';
 import { decimal, formatterFor, groupIban, isZero, type Formatter } from './format.js';
-import SRGB_ICC from './fonts/srgb-icc.js';
 import { labelsWith } from './labels.js';
-import { clean, decodeBase64, refuseRightToLeft, typesetter, type Typesetter } from './text.js';
+import { embedLogo } from './logo.js';
+import { clean, refuseRightToLeft, typesetter, type Typesetter } from './text.js';
+import { INK, resolveTheme } from './theme.js';
 import type {
   DocumentHeaderRow,
   InvoiceLabels,
@@ -35,7 +38,6 @@ import type {
 const SIZES: Record<PageSize, [number, number]> = { A4: [595.28, 841.89], Letter: [612, 792] };
 const MARGIN = 48;
 
-const INK = rgb(0.1, 0.1, 0.12);
 const MUTED = rgb(0.38, 0.38, 0.42);
 const RULE = rgb(0.78, 0.78, 0.8);
 const SHADE = rgb(0.94, 0.94, 0.95);
@@ -121,8 +123,12 @@ class Canvas {
     this.page.drawLine({ start: { x: from, y }, end: { x: to, y }, thickness, color });
   }
 
-  shade(x: number, y: number, width: number, height: number): void {
-    this.page.drawRectangle({ x, y, width, height, color: SHADE });
+  shade(x: number, y: number, width: number, height: number, color: RGB = SHADE): void {
+    this.page.drawRectangle({ x, y, width, height, color });
+  }
+
+  frame(x: number, y: number, width: number, height: number): void {
+    this.page.drawRectangle({ x, y, width, height, borderColor: RULE, borderWidth: 0.6 });
   }
 }
 
@@ -189,23 +195,6 @@ function required(value: unknown, what: string): string {
   return t;
 }
 
-const bytesOf = (data: Uint8Array | ArrayBuffer): Uint8Array => (data instanceof Uint8Array ? data : new Uint8Array(data));
-
-async function embedLogo(doc: PDFDocument, logo: Uint8Array | ArrayBuffer): Promise<PDFImage> {
-  const bytes = bytesOf(logo);
-  const png = bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47;
-  const jpeg = bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
-  if (!png && !jpeg) throw new InvoicePdfError('unsupported_logo', 'the logo is neither a PNG nor a JPEG');
-  try {
-    return png ? await doc.embedPng(bytes) : await doc.embedJpg(bytes);
-  } catch (error) {
-    throw new InvoicePdfError(
-      'unsupported_logo',
-      `the logo cannot be read as a ${png ? 'PNG' : 'JPEG'}: ${error instanceof Error ? error.message : String(error)}`,
-    );
-  }
-}
-
 /** Every string the document would print, refused at once if one of them reads right to left. */
 function refuseRightToLeftAnywhere(input: InvoicePdfInput, labels: InvoiceLabels): void {
   const check = (value: unknown, where: string): void => {
@@ -220,30 +209,6 @@ function refuseRightToLeftAnywhere(input: InvoicePdfInput, labels: InvoiceLabels
   });
   (input.mentions ?? []).forEach((mention, i) => check(mention.text, `document_legal_mentions[${i}].text`));
   for (const [key, value] of Object.entries(labels)) check(value, `labels.${key}`);
-}
-
-/** PDF/A wants a colour space to say what DeviceRGB means, and an identifier in the trailer. */
-function prepareForArchive(doc: PDFDocument, locale: string, seed: string): void {
-  const icc = decodeBase64(SRGB_ICC);
-  const profile = doc.context.register(doc.context.flateStream(icc, { N: 3 }));
-  const intent = doc.context.obj({
-    Type: 'OutputIntent',
-    S: 'GTS_PDFA1',
-    OutputConditionIdentifier: PDFString.of('sRGB IEC61966-2.1'),
-    Info: PDFString.of('sRGB IEC61966-2.1'),
-    DestOutputProfile: profile,
-  });
-  doc.catalog.set(PDFName.of('OutputIntents'), doc.context.obj([doc.context.register(intent)]));
-  doc.catalog.set(PDFName.of('Lang'), PDFString.of(locale));
-  // A stable identifier: the same document rendered twice is the same document.
-  let h1 = 0x811c9dc5;
-  let h2 = 0x01000193;
-  for (let i = 0; i < seed.length; i++) {
-    h1 = Math.imul(h1 ^ seed.charCodeAt(i), 0x01000193) >>> 0;
-    h2 = Math.imul(h2 ^ seed.charCodeAt(seed.length - 1 - i), 0x811c9dc5) >>> 0;
-  }
-  const id = [h1, h2, h1 ^ h2, Math.imul(h1, 31) >>> 0].map((n) => n.toString(16).padStart(8, '0')).join('');
-  doc.context.trailerInfo.ID = doc.context.obj([PDFHexString.of(id), PDFHexString.of(id)]);
 }
 
 interface Column {
@@ -302,20 +267,24 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   const number = header.state === 'draft' ? null : text(header.number);
   const fullTitle = number === null ? title : `${title} ${number}`;
 
+  const theme = resolveTheme(options.theme);
   const doc = await PDFDocument.create();
-  const date = options.date ?? new Date();
-  doc.setTitle(fullTitle, { showInWindowTitleBar: true });
   const seller = text(header.seller_legal_name) ?? text(header.seller_name);
-  if (seller !== null) doc.setAuthor(seller);
-  doc.setSubject(fullTitle);
-  doc.setCreator('@ekwo-ai/invoice-pdf');
-  doc.setProducer(options.producer ?? '@ekwo-ai/invoice-pdf');
-  doc.setCreationDate(date);
-  doc.setModificationDate(date);
-  doc.setLanguage(f.locale);
-  prepareForArchive(doc, f.locale, `${fullTitle}|${documentDate}|${text(header.document_id) ?? ''}`);
+  prepareForArchive(
+    doc,
+    {
+      title: fullTitle,
+      author: seller,
+      subject: fullTitle,
+      creator: '@ekwo-ai/invoice-pdf',
+      producer: options.producer ?? '@ekwo-ai/invoice-pdf',
+      date: options.date ?? new Date(),
+    },
+    f.locale,
+    `${fullTitle}|${documentDate}|${text(header.document_id) ?? ''}`,
+  );
 
-  const ts = typesetter(doc, options.fonts ?? [], f.locale);
+  const ts = typesetter(doc, options.fonts ?? [], f.locale, theme.font);
   const [width, height] = SIZES[options.pageSize ?? 'A4'];
   const canvas = new Canvas(doc, ts, width, height);
   const contentWidth = canvas.right - canvas.left;
@@ -342,22 +311,29 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   const leftWidth = contentWidth * 0.55;
   const rightWidth = contentWidth * 0.4;
   let leftY = canvas.y;
-  if (input.logo !== undefined && input.logo !== null) {
-    const image = await embedLogo(doc, input.logo);
-    const scale = Math.min(170 / image.width, 60 / image.height, 1);
-    const w = image.width * scale;
-    const h = image.height * scale;
-    canvas.page.drawImage(image, { x: canvas.left, y: leftY - h, width: w, height: h });
-    leftY -= h + 8;
-    if (text(header.seller_name) !== null) {
-      leftY -= await paragraph(canvas, await ts.wrap(text(header.seller_name) as string, 11, leftWidth, true), canvas.left, leftY, { size: 11, bold: true });
+  let rightY = canvas.y;
+  const logo = input.logo === undefined || input.logo === null ? null : await embedLogo(doc, input.logo);
+  const sellerName = text(header.seller_name);
+  if (logo !== null) {
+    const scale = Math.min(170 / logo.width, 60 / logo.height, 1);
+    const w = logo.width * scale;
+    const h = logo.height * scale;
+    if (theme.logoPosition === 'right') {
+      canvas.page.drawImage(logo, { x: canvas.right - w, y: rightY - h, width: w, height: h });
+      rightY -= h + 8;
+    } else {
+      canvas.page.drawImage(logo, { x: canvas.left, y: leftY - h, width: w, height: h });
+      leftY -= h + 8;
     }
-  } else if (text(header.seller_name) !== null) {
-    leftY -= await paragraph(canvas, await ts.wrap(text(header.seller_name) as string, 16, leftWidth, true), canvas.left, leftY, { size: 16, bold: true });
+  }
+  // Beside a logo the name is a line of the address; alone, it stands for the logo.
+  const nameSize = logo !== null && theme.logoPosition === 'left' ? 11 : 16;
+  if (sellerName !== null) {
+    leftY -= await paragraph(canvas, await ts.wrap(sellerName, nameSize, leftWidth, true), canvas.left, leftY, { size: nameSize, bold: true });
   }
   const sellerLines: string[] = [];
   const legal = [text(header.seller_legal_name), text(header.seller_legal_form)].filter((v): v is string => v !== null).join(' ');
-  if (legal !== '' && text(header.seller_legal_name) !== text(header.seller_name)) sellerLines.push(legal);
+  if (legal !== '' && text(header.seller_legal_name) !== sellerName) sellerLines.push(legal);
   sellerLines.push(
     ...addressLines(f, header.seller_address_line1, header.seller_address_line2, header.seller_postal_code, header.seller_city, header.seller_region, header.seller_country),
   );
@@ -379,10 +355,9 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   leftY -= 2 + (await paragraph(canvas, wrappedSeller, canvas.left, leftY - 2, { size: 8.5, color: MUTED }));
 
   const rightX = canvas.right - rightWidth;
-  let rightY = canvas.y;
   for (const line of await ts.wrap(title, 18, rightWidth, true)) {
     rightY -= lineHeight(18);
-    await canvas.text(line, canvas.right, rightY + 5, { size: 18, bold: true }, 'right');
+    await canvas.text(line, canvas.right, rightY + 5, { size: 18, bold: true, color: theme.accent }, 'right');
   }
   if (header.state === 'cancelled') {
     rightY -= lineHeight(10);
@@ -411,10 +386,14 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
       await canvas.text(line, canvas.right, rightY + 2.5, { bold: true }, 'right');
     }
   }
-  canvas.y = Math.min(leftY, rightY) - 14;
+  canvas.y = Math.min(leftY, rightY) - 10;
+  canvas.rule(canvas.y, canvas.left, canvas.right, theme.accent, 0.8);
+  canvas.y -= 12;
 
-  // --- the buyer, and where the goods went
-  const partyWidth = contentWidth * 0.46;
+  // --- the buyer, and where the goods went: each on a shaded panel, side by side
+  const panelPad = 8;
+  const partyWidth = contentWidth * 0.48;
+  const partyText = partyWidth - 2 * panelPad;
   const buyerLines: string[] = addressLines(
     f,
     header.buyer_address_line1,
@@ -437,23 +416,25 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   if (buyerScheme !== null && buyerEndpoint !== null) buyerLines.push(`${labels.electronicAddress}: ${buyerScheme}:${buyerEndpoint}`);
   const delivery = addressLines(f, header.delivery_address_line1, null, header.delivery_postal_code, header.delivery_city, null, header.delivery_country);
 
-  const partyTop = canvas.y;
-  let buyerY = partyTop;
-  buyerY -= await paragraph(canvas, [labels.billTo], canvas.left, buyerY, { size: SMALL, bold: true, color: MUTED });
-  const buyerName = text(header.buyer_name);
-  if (buyerName !== null) buyerY -= await paragraph(canvas, await ts.wrap(buyerName, 10.5, partyWidth, true), canvas.left, buyerY, { size: 10.5, bold: true });
-  const wrappedBuyer: string[] = [];
-  for (const line of buyerLines) wrappedBuyer.push(...(await ts.wrap(line, BODY, partyWidth, false)));
-  buyerY -= await paragraph(canvas, wrappedBuyer, canvas.left, buyerY);
-  let deliveryY = partyTop;
-  if (delivery.length > 0) {
-    const x = canvas.left + contentWidth * 0.54;
-    deliveryY -= await paragraph(canvas, [labels.deliverTo], x, deliveryY, { size: SMALL, bold: true, color: MUTED });
+  /** A party: its heading, its name in bold, its lines — measured, so that the panel is drawn under them first. */
+  const party = async (heading: string, name: string | null, lines: readonly string[]): Promise<[string[], string[], string[]]> => {
     const wrapped: string[] = [];
-    for (const line of delivery) wrapped.push(...(await ts.wrap(line, BODY, partyWidth, false)));
-    deliveryY -= await paragraph(canvas, wrapped, x, deliveryY);
+    for (const line of lines) wrapped.push(...(await ts.wrap(line, BODY, partyText, false)));
+    return [[heading], name === null ? [] : await ts.wrap(name, 10.5, partyText, true), wrapped];
+  };
+  const panels = [await party(labels.billTo, text(header.buyer_name), buyerLines)];
+  if (delivery.length > 0) panels.push(await party(labels.deliverTo, null, delivery));
+  const panelHeight =
+    Math.max(...panels.map(([h, n, l]) => h.length * lineHeight(SMALL) + n.length * lineHeight(10.5) + l.length * lineHeight(BODY))) + 2 * panelPad;
+  for (const [i, [heading, name, lines]] of panels.entries()) {
+    const x = canvas.left + i * (contentWidth - partyWidth);
+    canvas.shade(x, canvas.y - panelHeight, partyWidth, panelHeight);
+    let y = canvas.y - panelPad;
+    y -= await paragraph(canvas, heading, x + panelPad, y, { size: SMALL, bold: true, color: MUTED });
+    y -= await paragraph(canvas, name, x + panelPad, y, { size: 10.5, bold: true });
+    await paragraph(canvas, lines, x + panelPad, y);
   }
-  canvas.y = Math.min(buyerY, deliveryY) - 14;
+  canvas.y -= panelHeight + 16;
 
   // --- the lines
   const products = input.lines.filter((l) => (text(l.line_type) ?? 'product') === 'product');
@@ -475,13 +456,15 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   const pad = 5;
   const headerHeight = 18;
 
+  // The headings of a table on a band of the accent colour.
+  const headingStyle: Style = { size: SMALL, bold: true, color: theme.onAccent };
   const tableHeader = async (): Promise<void> => {
-    canvas.shade(canvas.left, canvas.y - headerHeight, contentWidth, headerHeight);
+    canvas.shade(canvas.left, canvas.y - headerHeight, contentWidth, headerHeight, theme.accent);
     let x = canvas.left;
     for (const column of columns) {
       const lines = await ts.wrap(column.title, SMALL, column.width - 2 * pad, true);
       const label = lines[0] ?? '';
-      await canvas.text(label, column.align === 'right' ? x + column.width - pad : x + pad, canvas.y - headerHeight + 6, { size: SMALL, bold: true, color: MUTED }, column.align);
+      await canvas.text(label, column.align === 'right' ? x + column.width - pad : x + pad, canvas.y - headerHeight + 6, headingStyle, column.align);
       x += column.width;
     }
     canvas.y -= headerHeight + 2;
@@ -587,10 +570,10 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
     canvas.y -= lineHeight(BODY);
     await canvas.text(labels.taxSummary, canvas.left, canvas.y + 2.5, { bold: true });
     canvas.y -= 4;
-    canvas.shade(canvas.left, canvas.y - headerHeight, contentWidth, headerHeight);
+    canvas.shade(canvas.left, canvas.y - headerHeight, contentWidth, headerHeight, theme.accent);
     let x = canvas.left + nameWidth;
     for (const label of [labels.taxRate, labels.taxBase, labels.taxCharged]) {
-      await canvas.text(label, x + numberWidth - pad, canvas.y - headerHeight + 6, { size: SMALL, bold: true, color: MUTED }, 'right');
+      await canvas.text(label, x + numberWidth - pad, canvas.y - headerHeight + 6, headingStyle, 'right');
       x += numberWidth;
     }
     canvas.y -= headerHeight;
@@ -617,10 +600,10 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
       canvas.y -= 4;
       canvas.rule(canvas.y);
     }
-    canvas.y -= 6;
+    canvas.y -= 10;
   }
 
-  // --- the totals, and what is still due
+  // --- the totals and what is still due, on the right; how to pay, in a framed panel on their left
   const paid = decimal(header.amount_paid ?? null, 'amount_paid');
   const residual = decimal(header.amount_residual ?? null, 'amount_residual');
   const totals: [string, string, boolean][] = [
@@ -630,8 +613,34 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   ];
   if (paid !== null && !isZero(paid)) totals.push([labels.amountPaid, f.amount(paid), false]);
   const totalsWidth = 230;
-  await canvas.ensure(totals.length * lineHeight(10) + (residual === null ? 0 : 30) + 10);
   const totalsX = canvas.right - totalsWidth;
+  const totalsHeight = totals.length * lineHeight(10) + (residual === null ? 0 : 30);
+
+  const payment: string[] = [];
+  const paymentWidth = contentWidth - totalsWidth - 16;
+  if (!credit) {
+    for (const [label, value] of [
+      [labels.paymentTerms, text(header.payment_terms)],
+      [labels.dueDate, text(header.due_date) === null ? null : f.date(text(header.due_date) as string)],
+      [labels.iban, text(header.payee_iban) === null ? null : groupIban(text(header.payee_iban) as string)],
+      [labels.bic, text(header.payee_bic)],
+      [labels.paymentReference, text(header.payment_reference)],
+    ] as const) {
+      if (value !== null) payment.push(...(await ts.wrap(`${label}: ${value}`, BODY, paymentWidth - 2 * panelPad, false)));
+    }
+  }
+  const panel = payment.length === 0 ? 0 : lineHeight(BODY) * (payment.length + 1) + 2 + 2 * panelPad;
+  // A panel taller than a page would be cut: its lines then flow under the totals instead.
+  const framed = panel > 0 && panel < canvas.height - MARGIN - canvas.bottom - 80;
+
+  await canvas.ensure(Math.max(totalsHeight, framed ? panel : 0) + 10);
+  const top = canvas.y;
+  if (framed) {
+    canvas.frame(canvas.left, top - panel, paymentWidth, panel);
+    let y = top - panelPad;
+    y -= 2 + (await paragraph(canvas, [labels.payment], canvas.left + panelPad, y, { bold: true }));
+    await paragraph(canvas, payment, canvas.left + panelPad, y);
+  }
   for (const [label, value, strong] of totals) {
     canvas.y -= lineHeight(10);
     if (strong) canvas.rule(canvas.y + lineHeight(10) - 1, totalsX, canvas.right, INK, 0.6);
@@ -640,13 +649,14 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   }
   if (residual !== null) {
     canvas.y -= 30;
-    canvas.shade(totalsX, canvas.y, totalsWidth, 22);
-    await canvas.text(credit ? labels.amountCredited : labels.amountDue, totalsX + pad, canvas.y + 7.5, { size: 10.5, bold: true });
-    await canvas.text(f.amount(residual), canvas.right - pad, canvas.y + 7.5, { size: 10.5, bold: true }, 'right');
+    canvas.shade(totalsX, canvas.y, totalsWidth, 22, theme.accent);
+    const due: Style = { size: 10.5, bold: true, color: theme.onAccent };
+    await canvas.text(credit ? labels.amountCredited : labels.amountDue, totalsX + pad, canvas.y + 7.5, due);
+    await canvas.text(f.amount(residual), canvas.right - pad, canvas.y + 7.5, due, 'right');
   }
-  canvas.y -= 16;
+  canvas.y = Math.min(canvas.y, framed ? top - panel : canvas.y) - 18;
 
-  // --- how to pay, the note, the mentions: blocks of text that flow from page to page
+  // --- the note and the mentions, and how to pay when it did not fit a panel: blocks of text that flow from page to page
   const flow = async (lines: readonly string[], style: Style = {}): Promise<void> => {
     const size = style.size ?? BODY;
     for (const l of lines) {
@@ -661,22 +671,10 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
     canvas.y -= 2;
   };
 
-  if (!credit) {
-    const payment: string[] = [];
-    for (const [label, value] of [
-      [labels.paymentTerms, text(header.payment_terms)],
-      [labels.dueDate, text(header.due_date) === null ? null : f.date(text(header.due_date) as string)],
-      [labels.iban, text(header.payee_iban) === null ? null : groupIban(text(header.payee_iban) as string)],
-      [labels.bic, text(header.payee_bic)],
-      [labels.paymentReference, text(header.payment_reference)],
-    ] as const) {
-      if (value !== null) payment.push(...(await ts.wrap(`${label}: ${value}`, BODY, contentWidth, false)));
-    }
-    if (payment.length > 0) {
-      await heading(labels.payment);
-      await flow(payment);
-      canvas.y -= 12;
-    }
+  if (payment.length > 0 && !framed) {
+    await heading(labels.payment);
+    await flow(payment);
+    canvas.y -= 12;
   }
 
   const note = text(header.note);

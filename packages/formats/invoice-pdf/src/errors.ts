@@ -4,7 +4,7 @@ export type InvoicePdfErrorCode =
   | 'not_a_sale_document'
   /** A field without which nothing honest can be printed: the currency, the date, an amount. */
   | 'missing_field'
-  /** An amount or a rate that is not a decimal. */
+  /** An amount or a rate that is not a decimal; a colour or a logo position of the theme that is not one. */
   | 'invalid_value'
   /** A language tag `Intl` does not accept. */
   | 'invalid_language'
@@ -12,9 +12,9 @@ export type InvoicePdfErrorCode =
   | 'glyph_not_covered'
   /** Hebrew, Arabic and the other scripts written right to left: refused rather than drawn reversed. */
   | 'right_to_left_text'
-  /** A logo that is neither PNG nor JPEG, or that cannot be read as one. */
+  /** A logo that is neither PNG nor JPEG, that cannot be read as one, or a CMYK JPEG. */
   | 'unsupported_logo'
-  /** A font of `options.fonts` that cannot be read. */
+  /** A font of `options.fonts` or of the theme that cannot be read. */
   | 'unsupported_font';
 
 export class InvoicePdfError extends Error {

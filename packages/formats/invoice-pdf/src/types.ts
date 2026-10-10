@@ -252,13 +252,35 @@ export interface ExtraFont {
   bold?: Uint8Array | ArrayBuffer;
 }
 
+/**
+ * The look of the page, and only what a customer's own invoice usually sets:
+ * a colour, a typeface, which side the logo is on. Every field is optional;
+ * {@link DEFAULT_THEME} is the sober default. Nothing in it changes what is
+ * printed, only how.
+ */
+export interface InvoiceTheme {
+  /**
+   * `#rrggbb`. The title, the band of the column headings and the band of the
+   * amount due. The text on a band is white, or ink where the colour is light.
+   */
+  accent?: string;
+  /**
+   * The typeface of every word: `Noto Sans`, which the package embeds, or a
+   * font of the caller's, TrueType or OpenType — embedded as a subset like
+   * the others, with Noto Sans drawing any character it does not have.
+   */
+  font?: 'Noto Sans' | ExtraFont;
+  /** `left`: the logo above the seller's address (default). `right`: above the title, the seller's name on the left. */
+  logoPosition?: 'left' | 'right';
+}
+
 /** What {@link renderInvoicePdf} reads: the four views of one document, and the bytes of a logo. */
 export interface InvoicePdfInput {
   header: DocumentHeaderRow;
   lines: readonly DocumentLineRow[];
   taxes: readonly DocumentTaxRow[];
   mentions?: readonly DocumentLegalMentionRow[];
-  /** PNG or JPEG bytes. Never a URL: this package fetches nothing. */
+  /** PNG, or RGB or grey JPEG, bytes; a PNG's transparency is flattened on white. Never a URL: this package fetches nothing. */
   logo?: Uint8Array | ArrayBuffer | null;
 }
 
@@ -271,6 +293,8 @@ export interface InvoicePdfOptions {
   locale?: string;
   /** Fonts tried after the embedded ones, in order, for a character those do not have. */
   fonts?: readonly ExtraFont[];
+  /** The colour, the typeface and the side of the logo. Defaults to {@link DEFAULT_THEME}. */
+  theme?: InvoiceTheme;
   /** The date the PDF says it was made. Defaults to now. */
   date?: Date;
   /** Written in the PDF's metadata. Defaults to `@ekwo-ai/invoice-pdf`. */
