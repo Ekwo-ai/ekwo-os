@@ -307,6 +307,11 @@ describe('every command answers --json with one document of the published shape'
     // An amount is a decimal string, never a JSON number: the rule of the
     // contract finally has a command that could break it.
     expect(total).toMatch(/^\d+\.\d+$/);
+    // The PDF of the same invoice, under the whole word of the verb: the file is written, the document says where.
+    const pdf = await asPerson(['document', 'pdf', 'd-1', '--out', join(cwd, 'd-1.pdf')]);
+    expect(pdf.command).toBe('document pdf');
+    expect(pdf.exitCode).toBe(0);
+    expect(pdf.data).toMatchObject({ media_type: 'application/pdf', page_count: 1, written_to: join(cwd, 'd-1.pdf') });
     const bank = await root.query<{ id: string }>(
       `insert into bank_accounts (company_id, name, currency_code, account_id, journal_id)
        select c.id, 'Bank', c.currency_code,

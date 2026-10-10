@@ -117,8 +117,9 @@ is not given. The adapter holds it to the books: everything it would default —
 a delivery date, an exemption sentence, a payment means — is given from the
 books or reported as a broken rule, and every total and every VAT group it
 would write is compared with what was posted; a difference of a cent is a
-broken rule. The file kept is the CII XML. Embedding it in a PDF/A-3 needs the
-visual invoice, which the books do not render.
+broken rule. The file kept is the CII XML. The PDF/A-3 that carries it is
+rendered on demand, from the same books, by `ekwo doc pdf --factur-x` and
+`render_invoice_pdf`, and is not kept here.
 
 ## Transports
 
@@ -205,7 +206,10 @@ to do.
   kept where they run.
 - **The profiles without a brick**: every PINT, XRechnung, the national
   formats of platforms. Refused by name until a brick writes them.
-- **PDF/A-3** for Factur-X, and any visual rendering of an invoice.
+- **Keeping a PDF/A-3** for Factur-X. The visual invoice is rendered by
+  [`@ekwo-ai/invoice-pdf`](../../packages/formats/invoice-pdf/README.md), and
+  `ekwo doc pdf --factur-x` (`render_invoice_pdf` with `factur_x`) embeds the
+  CII in it; what this module keeps is still the XML alone, not the PDF.
 - **Lookup** of a recipient on a network: the folder cannot tell, and says so.
 
 ## What an accountant should check

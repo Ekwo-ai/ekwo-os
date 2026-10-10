@@ -27,6 +27,7 @@ const READ_TOOLS = [
   'search_products',
   'list_documents',
   'get_document',
+  'render_invoice_pdf',
   'list_bank_accounts',
   'list_bank_transactions',
   'get_preferences',

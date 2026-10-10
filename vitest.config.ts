@@ -32,6 +32,10 @@ export default defineConfig({
       '@ekwo-ai/peppol-ubl': fileURLToPath(
         new URL('./packages/formats/peppol-ubl/src/index.ts', import.meta.url),
       ),
+      // Before the package itself: an alias matches a prefix, and the first that matches wins.
+      '@ekwo-ai/factur-x/pdf': fileURLToPath(
+        new URL('./packages/formats/factur-x/src/pdf.ts', import.meta.url),
+      ),
       '@ekwo-ai/factur-x': fileURLToPath(
         new URL('./packages/formats/factur-x/src/index.ts', import.meta.url),
       ),
@@ -55,6 +59,9 @@ export default defineConfig({
         new URL('./packages/formats/transaction-journal/src/index.ts', import.meta.url),
       ),
       '@ekwo-ai/xaf': fileURLToPath(new URL('./packages/formats/xaf/src/index.ts', import.meta.url)),
+      '@ekwo-ai/invoice-pdf': fileURLToPath(
+        new URL('./packages/formats/invoice-pdf/src/index.ts', import.meta.url),
+      ),
     },
   },
   test: {

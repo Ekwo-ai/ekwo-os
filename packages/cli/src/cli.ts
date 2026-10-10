@@ -64,8 +64,9 @@ export const COMMANDS = [
   'import',
   'proof',
   'einvoice',
-  // An alias, last: `invoice` is what `doc` used to be called.
+  // Aliases, last: `invoice` is what `doc` used to be called, and `document` is its whole word.
   'invoice',
+  'document',
 ] as const;
 
 /** What a test may hand a command instead of the network, the disk and the environment. */
@@ -141,7 +142,8 @@ ${bold('Connecting')} ${dim('(every command)')}
   ${cyan('doc')}         new | line add <document> — a draft and its lines; list | show
               <document> — what exists, and what is still owed. One object: a
               sale invoice, a bill, a quote or a credit note, with --type. A
-              draft books nothing. ${dim('ekwo invoice is the old name of doc, kept.')}
+              draft books nothing. pdf <document> — the PDF of a sale invoice
+              or credit note, from the books. ${dim('ekwo invoice is the old name of doc, kept; ekwo document is its whole word.')}
   ${cyan('post')}        <document> — book it, through post_document(). --dry-run shows
               the entry the database would write, and writes nothing.
   ${cyan('cancel')}      <document> — undo a posted invoice, and say how: back to draft
@@ -201,6 +203,14 @@ ${bold('Keeping books')} ${dim('(each verb is one function the MCP server calls 
                             one transport this release ships. --refresh --to on
                             einvoice status reads the receipts left beside it.
   --out <file>              einvoice validate, issue. Also write the file there.
+                            doc pdf. Write the PDF there rather than under its
+                            own name in the current directory.
+  --factur-x                doc pdf. Embed the CII of a posted sale: the PDF is
+                            a Factur-X (EN 16931) PDF/A-3; the rules it breaks
+                            end on exit code 1.
+  --page-size A4|Letter     doc pdf. A4 unless Letter is asked for.
+  --labels <file.json>      doc pdf. The words of the layout in the document's
+                            language; what the file leaves out is English.
   <document>                Its id, its number, or the --ref it was created under.
   Amounts are decimal strings, in and out: 1500.00. Nothing is computed here.
 
@@ -438,6 +448,7 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
       case 'contact':
         return await contactCommand(args, deps);
       case 'invoice':
+      case 'document':
       case 'doc':
         return await docCommand(args, deps);
       case 'post':
