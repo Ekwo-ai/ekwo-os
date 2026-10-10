@@ -112,7 +112,10 @@ carries today: intra-Community acquisition of goods (`BG-P-VOP-20`, чл. 84)
 and a service received under the general rule from a supplier established in
 another Member State (`BG-P-USLUGI-ES-20`, чл. 82, ал. 2, т. 3). Each posts its
 base once, repeated in the box of the tax due and in the box of the
-deductible credit (see [`docs/packs.md`](../../docs/packs.md)). `BG-P-EXEMPT`
+deductible credit (see [`docs/packs.md`](../../docs/packs.md)). In the ledger, the
+tax owed (чл. 84 and чл. 86, ал. 1–2) is credited to `6831` with factor
+`-100` and the same amount is debited to `2241` as the deductible credit, so
+the supplier's account carries only the price it invoiced. `BG-P-EXEMPT`
 illustrates a purchase with no credit right (an insurance premium, чл. 47).
 
 ## The declaration
