@@ -1,6 +1,6 @@
 -- Ekwo OS — France: the rules of this country's corporate income tax.
 --
--- Generated from packs/fr/corporate_tax.json at version 1.17.0, do not edit.
+-- Generated from packs/fr/corporate_tax.json at version 1.17.1, do not edit.
 -- Change the pack and run `ekwo pack build fr`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --

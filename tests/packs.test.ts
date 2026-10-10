@@ -231,10 +231,14 @@ describe('the compiled packs against the seeds they replace', () => {
     // what it is owed back, apart from the accounts the taxes themselves post
     // to, because a period cannot be cleared into an account it is still
     // posting on. Then the two a French cash-basis tax waits on, under the 4458
-    // head the PCG calls "à régulariser ou en attente".
+    // head the PCG calls "à régulariser ou en attente". Then the two French
+    // accounts the liasse reads and the chart lacked: the other reserves of
+    // line DG, and the amortisation of the development costs of line CX.
     expect(added('account_templates').map((r) => `${r['country']}/${r['code']}`)).toEqual([
       'BE/411900',
       'BE/451900',
+      'FR/106800',
+      'FR/280300',
       'FR/445860',
       'FR/445870',
     ]);

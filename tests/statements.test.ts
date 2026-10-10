@@ -558,6 +558,38 @@ describe('a year that has been closed', () => {
   });
 });
 
+describe('the French chart carries the accounts its liasse reads', () => {
+  it('nets development costs of their amortisation, and prints the other reserves', async () => {
+    const { companyId } = await newCompany(db, { country: 'FR', name: 'Recherche SAS' });
+    const entry = await one<{ id: string }>(
+      db,
+      `insert into entries (company_id, journal_id, entry_date, description, state)
+       select $1, id, date '2026-01-01', 'Reprise des soldes', 'draft' from journals
+        where company_id = $1 and code = 'MISC' returning id`,
+      [companyId],
+    );
+    await db.query(
+      `insert into entry_lines (entry_id, company_id, account_id, sequence, debit, credit)
+       values ($1, $2, account_id_by_code($2, '203'), 10, 9000, 0),
+              ($1, $2, account_id_by_code($2, '280300'), 20, 0, 4000),
+              ($1, $2, account_id_by_code($2, '106800'), 30, 0, 5000)`,
+      [entry.id, companyId],
+    );
+    await db.query('select post_entry($1)', [entry.id]);
+
+    const bs = await amounts(companyId, 'FR-2050', '2026-01-01', '2026-12-31');
+    expect(bs['CX']).toBeCloseTo(5000, 2);
+    expect(bs['DG']).toBeCloseTo(5000, 2);
+    const left = await rows(db, 'select * from unmapped_accounts($1, $2, $3, $4)', [
+      companyId,
+      'FR-2050',
+      '2026-01-01',
+      '2026-12-31',
+    ]);
+    expect(left).toEqual([]);
+  });
+});
+
 describe('an account the pack never heard of', () => {
   it('is named rather than silently dropped from the statement', async () => {
     const { companyId } = await newCompany(db, { country: 'BE', name: 'Hors plan SRL' });

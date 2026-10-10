@@ -8,6 +8,7 @@ code,parent,type,reconcilable,name,sequence
 106,10,equity,false,Réserves,70
 106100,106,equity,false,Réserve légale,80
 106300,106,equity,false,Réserves statutaires ou contractuelles,90
+106800,106,equity,false,Autres réserves,95
 108,10,equity,false,Compte de l'exploitant,100
 11,,equity_retained,false,Report à nouveau,110
 110,11,equity_retained,false,Report à nouveau (solde créditeur),120
@@ -87,6 +88,7 @@ code,parent,type,reconcilable,name,sequence
 28,,asset_fixed,false,Amortissements des immobilisations,860
 280,28,asset_fixed,false,Amortissements des immobilisations incorporelles,870
 280100,280,asset_fixed,false,Amortissements des frais d'établissement,880
+280300,280,asset_fixed,false,Amortissements des frais de recherche et de développement,885
 280500,280,asset_fixed,false,"Amortissements des concessions, brevets et logiciels",890
 281,28,asset_fixed,false,Amortissements des immobilisations corporelles,900
 281300,281,asset_fixed,false,Amortissements des constructions,910
