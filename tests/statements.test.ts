@@ -583,7 +583,13 @@ describe('the French chart carries the accounts its liasse reads', () => {
     const left = await rows(db, 'select * from unmapped_accounts($1, $2, $3, $4)', [
       companyId,
       'FR-2050',
-||||||| parent of 5a7bdb78 (feat(packs/be): the abbreviated balance sheet carries the detail lines of the filed form)
+      '2026-01-01',
+      '2026-12-31',
+    ]);
+    expect(left).toEqual([]);
+  });
+});
+
 describe('the Belgian abbreviated balance sheet, line by line of the filed form', () => {
   it('prints the detail of receivables, capital and debts the form carries', async () => {
     const { companyId } = await newCompany(db, { country: 'BE', name: 'Détail SA' });
