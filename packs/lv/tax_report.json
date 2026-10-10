@@ -120,12 +120,20 @@
       "source": "pvn-metodika"
     },
     {
+      "box": "54",
+      "kind": "tax",
+      "name": "Nodokļa summa par saņemtajiem pakalpojumiem",
+      "sequence": 125,
+      "legal_reference": "Metodiskā materiāla 54. rindas skaidrojums — nodoklis, ko pakalpojumu saņēmējs aprēķina par pakalpojumiem, kas saņemti no citas dalībvalsts vai trešās valsts nodokļa maksātāja (Pievienotās vērtības nodokļa likuma 88. un 89. pants)",
+      "source": "pvn-metodika"
+    },
+    {
       "box": "60",
       "kind": "total",
       "name": "Priekšnodoklis",
       "sequence": 140,
-      "plus": ["62", "64"],
-      "legal_reference": "Metodiskā materiāla 60. rindas skaidrojums — 60. rindu veido 61., 62., 63., 64. un 65. rindas kopsumma. Šī paka modelē tikai 62. un 64. rindu (iekšzemē un Eiropas Savienības teritorijā saņemto preču un pakalpojumu priekšnodoklis); importa, pakalpojumu pašaprēķina un lauksaimniecības kompensācijas priekšnodoklis (61., 63., 65. rinda) šajā pakā nav modelēts — sk. docs/international.md.",
+      "plus": ["62", "63", "64"],
+      "legal_reference": "Metodiskā materiāla 60. rindas skaidrojums — 60. rindu veido 61., 62., 63., 64. un 65. rindas kopsumma. Šī paka modelē 62., 63. un 64. rindu (iekšzemē saņemto preču un pakalpojumu, pakalpojumu pašaprēķina un Eiropas Savienības teritorijā iegādāto preču priekšnodoklis); importa un lauksaimniecības kompensācijas priekšnodoklis (61., 65. rinda) šajā pakā nav modelēts — sk. docs/international.md.",
       "source": "pvn-metodika"
     },
     {
@@ -134,6 +142,14 @@
       "name": "Priekšnodoklis par iekšzemē saņemtajām precēm un pakalpojumiem",
       "sequence": 150,
       "legal_reference": "Metodiskā materiāla 62. rindas skaidrojums; Pievienotās vērtības nodokļa likuma 92. pants",
+      "source": "pvn-metodika"
+    },
+    {
+      "box": "63",
+      "kind": "tax",
+      "name": "Priekšnodoklis par saņemtajiem pakalpojumiem",
+      "sequence": 155,
+      "legal_reference": "Metodiskā materiāla 63. rindas skaidrojums — priekšnodoklis par saņemtajiem pakalpojumiem, par kuriem nodokli aprēķinājis pakalpojumu saņēmējs (Pievienotās vērtības nodokļa likuma 92. pants)",
       "source": "pvn-metodika"
     },
     {
@@ -158,8 +174,8 @@
       "kind": "total",
       "name": "Nodokļa summa, ko aprēķina",
       "sequence": 180,
-      "plus": ["52", "53", "53a", "55"],
-      "legal_reference": "Metodiskā materiāla (S) rindas skaidrojums — 52. + 53. + 53.1 + 54. + 55. + 56. + 56.1 + 57. rinda. Šī paka nemodelē 54., 56., 56.1 un 57. rindu (pakalpojumu pašaprēķins, samazināto likmju iegādes Eiropas Savienības teritorijā un iepriekšējo periodu korekcijas) — sk. docs/international.md.",
+      "plus": ["52", "53", "53a", "54", "55"],
+      "legal_reference": "Metodiskā materiāla (S) rindas skaidrojums — 52. + 53. + 53.1 + 54. + 55. + 56. + 56.1 + 57. rinda. Šī paka nemodelē 56., 56.1 un 57. rindu (samazināto likmju iegādes Eiropas Savienības teritorijā un iepriekšējo periodu korekcijas) — sk. docs/international.md.",
       "source": "pvn-metodika"
     },
     {

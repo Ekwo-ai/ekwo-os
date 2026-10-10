@@ -54,6 +54,7 @@ code,parent,type,reconcilable,name,sequence
 2010,,liability_payable,true,დაკავშირებულ მხარეებთან კრედიტორული დავალიანება,530
 2020,,liability_payable,true,მყიდველებისგან მიღებული ავანსები,540
 2100,,liability_current,false,დარიცხული დღგ რეალიზაციაზე,550
+2105,,liability_current,false,უკუდაბეგვრით დარიცხული დღგ,535
 2110,,liability_current,true,ბიუჯეტთან ანგარიშსწორება — გადასახდელი დღგ,560
 2120,,liability_current,false,მოგების გადასახადის ვალდებულება,570
 2130,,liability_current,false,ხელფასის ვალდებულება პერსონალის წინაშე,580

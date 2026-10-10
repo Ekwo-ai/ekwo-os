@@ -109,15 +109,22 @@
 медициналық көрсету, білім беру, дінге қатысты заттар және т.б.) бұл дестеде
 транскрипцияланбаған.
 
-**Резидент еместің қызметтерін өзін-өзі салық салу моделі жоқ.** Салық
-кодексі резидент еместен алынған жұмыстар мен қызметтер бойынша айналымды
-алушыға есептеу мен төлеу міндетін жүктейді — бұл `docs/packs.md`
-файлындағы Эстонияның ішкі одақтық сатып алу мысалына ұқсас қос жазба
-тетігі, және бұл дестенің алғашқы `community` нұсқасы мұндай `self_assessed`
-немесе `foreign_services_received` тәртібіндегі салықты әлі алып жүрмейді —
-`pack.json`-дағы `reverse_charge` ескертуі тек ескерту ретінде беріледі,
-нақты салық коды жоқ. Қараңыз docs/international.md, «From Kazakhstan»
-бөлімі.
+**VAT for a non-resident: `KZ-P-16-NR`.** *(Written in English: the
+contributor of this section does not write Kazakh.)* A software
+subscription, hosting or an API bought from a non-resident is a taxable
+turnover of the Kazakh buyer: Tax Code No. 214-VIII, art. 449(1), with
+art. 454, has the payer of VAT calculate the tax when it acquires works or
+services from a non-resident. That VAT is paid separately (budget
+classification code 105104) by the 25th day of the second month after the
+quarter, and art. 481 lets it be offset only once paid, on the electronic
+invoice the buyer issues to itself — a date the government announced in
+2026 it would move to the date of payment, an amendment this pack has not
+read in the Code. `KZ-P-16-NR` books the 16 % on the new `3133` (owed) and
+the new `1423` (awaiting offset), on no line of form 300.00 in the quarter
+of the purchase. Once the tax is paid, the bookkeeper moves it from `1423`
+to `1421` and adds it to line 013 of that period by hand — the format cannot
+date a box on a payment that is not the document's, the limit `packs/ar/`
+documents.
 
 **Еуроодақтың ортақ ҚҚС жүйесінен тыс, демек VATEX кодтарынсыз.** Қазақстан
 Еуразиялық экономикалық одақтың мүшесі, бірақ Еуропалық Одақтың мүшесі емес;
@@ -213,8 +220,9 @@ docs/international.md, «From Kazakhstan» бөлімі.
 
 ## Бұл десте алып жүрмейтіні
 
-- **Резидент еместің қызметтеріне өзін-өзі салық салу.** Қос жазба тетігі
-  модельденбеген — жоғарыдағы «Салықтар» бөлімін қараңыз.
+- **Резидент емес үшін ҚҚС-ты кейінгі кезеңде есепке жатқызу** —
+  `KZ-P-16-NR` оны 1423-шотта қалдырады, көшіру қолмен жасалады
+  (жоғарыдағы «Салықтар» бөлімін қараңыз).
 - **300.00 нысанының мөлшерлеме бойынша бөлек жолдары (16 %/5 %/10 %).**
   Барлық оң мөлшерлемелер бір ғана 001-торға жиналған — жоғарыдағы
   «Салықтар» бөлімін қараңыз.
@@ -245,7 +253,8 @@ docs/international.md, «From Kazakhstan» бөлімі.
 1. **300.00 нысанының 001-жолының мөлшерлеме бойынша бөлінуі** — бұл десте
    барлық оң мөлшерлемені бір торға жинайды, № 695 бұйрықтың толық мәтіні
    бөлек жолдарды көздеуі мүмкін.
-2. **Резидент еместің қызметтеріне өзін-өзі салық салудың болмауы.**
+2. **Резидент емес үшін ҚҚС-тың есепке жатқызылу күні** (481-бап) — ЭШФ
+   күні ме, әлде төлеу күні ме; `KZ-P-16-NR` оны қолмен көшіреді.
 3. **474-баптың 48 санатының ішінен тек екеуінің таңдалуы** (кітап басып
    шығару, несие сыйақысы — соңғысы golden-де қолданылмайды, тек README-де
    аталған).

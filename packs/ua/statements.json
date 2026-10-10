@@ -96,6 +96,7 @@
         { "code": "1620", "name": "Поточна кредиторська заборгованість за розрахунками з бюджетом", "sequence": 360, "sign": -1,
           "rules": [ { "kind": "account_code", "code_from": "6411" },
                      { "kind": "account_code", "code_from": "6413" },
+                     { "kind": "account_code", "code_from": "6415" },
                      { "kind": "account_code", "code_from": "642" },
                      { "kind": "account_code", "code_from": "643" } ] },
         { "code": "1625", "name": "Поточна кредиторська заборгованість за розрахунками зі страхування", "sequence": 370, "sign": -1,

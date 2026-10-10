@@ -155,7 +155,9 @@
     "GR-P-13": "Purchase — reduced rate 13%",
     "GR-P-6": "Purchase — super-reduced rate 6%",
     "GR-P-ICG-24": "Intra-Community acquisition of goods — self-assessed at 24%",
-    "GR-P-IMPORT": "Import of goods from outside the European Union"
+    "GR-P-IMPORT": "Import of goods from outside the European Union",
+    "GR-P-ICS-24": "Intra-Community acquisition of services — reverse charge 24%",
+    "GR-P-3RD-24": "Services from a third-country supplier — reverse charge 24%"
   },
   "tax_report_boxes": {
     "301": "Outputs, Category I (rest of Greece) — taxable amount at 13%",
@@ -180,7 +182,11 @@
     "367": "Total taxable inputs",
     "387": "Total deductible input VAT",
     "480": "Debit balance — VAT payable",
-    "470": "Credit balance to carry forward or claim back"
+    "470": "Credit balance to carry forward or claim back",
+    "365": "Intra-Community acquisitions of services, article 18.2.a",
+    "385": "Deductible VAT on intra-Community acquisitions of services",
+    "366": "Other transactions where the recipient is liable",
+    "386": "Deductible VAT on other transactions where the recipient is liable"
   },
   "statement_lines": {
     "GR-ELP-BS:ANC": "Non-current assets",

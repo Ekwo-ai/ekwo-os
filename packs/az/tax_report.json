@@ -73,6 +73,22 @@
       "source": "vat-return-form"
     },
     {
+      "box": "306R",
+      "kind": "base",
+      "name": "Sətir 306.1 — ƏDV-nin məqsədləri üçün qeydiyyata alınmayan qeyri-rezidentin göstərdiyi xidmətlər üzrə vergiyə cəlb olunan əməliyyatlar: ödənilmiş məbləğ",
+      "sequence": 62,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 306.1, birinci sütun; Vergi Məcəlləsi, maddə 169",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "306T",
+      "kind": "tax",
+      "name": "Sətir 306.1 — vergi agenti kimi hesablanmış ƏDV məbləği",
+      "sequence": 64,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 306.1, ikinci sütun; Vergi Məcəlləsi, maddə 169.3 və 169.4",
+      "source": "vat-return-form"
+    },
+    {
       "box": "308B",
       "kind": "base",
       "name": "Sətir 308 — elektron qaimə-fakturalar üzrə nağdsız qaydada ödənilmiş məbləğ (ƏDV nəzərə alınmadan)",
@@ -105,13 +121,30 @@
       "source": "vat-return-form"
     },
     {
+      "box": "312B",
+      "kind": "base",
+      "name": "Sətir 312 — VM 169.4-cü maddəsinə əsasən qeyri-rezidentə ödənilmiş məbləğ",
+      "sequence": 102,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 312, birinci sütun",
+      "source": "vat-return-form"
+    },
+    {
+      "box": "312T",
+      "kind": "tax",
+      "name": "Sətir 312 — qeyri-rezidentin xidmətləri üzrə ödənilmiş və əvəzləşdirilən ƏDV",
+      "sequence": 104,
+      "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 312, ikinci sütun; Vergi Məcəlləsi, maddə 169.4 və 175",
+      "source": "vat-return-form"
+    },
+    {
       "box": "317T",
       "kind": "total",
       "name": "Sətir 317 — Əməliyyatlar üzrə CƏMİ: əvəzləşdirilən ƏDV",
       "sequence": 110,
       "plus": [
         "308T",
-        "310T"
+        "310T",
+        "312T"
       ],
       "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 317, ikinci sütun = sətir 308 + 309 + 310 + 312 − 313 − 315 (modelləşdirilən sətirlər)",
       "source": "vat-return-form"
@@ -122,7 +155,8 @@
       "name": "Sətir 326 — BÜDCƏYƏ ÖDƏNİLMƏLİDİR",
       "sequence": 120,
       "plus": [
-        "305T"
+        "305T",
+        "306T"
       ],
       "minus": [
         "317T"
@@ -140,7 +174,8 @@
         "317T"
       ],
       "minus": [
-        "305T"
+        "305T",
+        "306T"
       ],
       "floor_zero": true,
       "legal_reference": "ƏDV bəyannaməsi (2026-cı il forması), sətir 327 = 317 + 319 − 305 − 306 − 318 − 324 (modelləşdirilən sətirlər)",

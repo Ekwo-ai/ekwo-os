@@ -52,6 +52,14 @@
       "source": "vat-return-order"
     },
     {
+      "box": "RC",
+      "kind": "tax",
+      "name": "უკუდაბეგვრით დარიცხული დღგ (დაუფუძნებელი პირის მომსახურება)",
+      "sequence": 45,
+      "legal_reference": "Tax Code of Georgia, art. 161(1)(a) and 176(1)(c): the reverse-charged VAT a VAT payer includes in its VAT declaration. A box of this pack's own: the declaration's line for it was not confirmed",
+      "source": "tax-code"
+    },
+    {
       "box": "9",
       "kind": "tax",
       "name": "დღგ გადახდილი ადგილობრივი მომწოდებლებისათვის (ჩასათვლელი)",
@@ -68,11 +76,19 @@
       "source": "vat-return-order"
     },
     {
+      "box": "RCD",
+      "kind": "tax",
+      "name": "უკუდაბეგვრით დარიცხული დღგ (ჩასათვლელი)",
+      "sequence": 65,
+      "legal_reference": "Tax Code of Georgia, art. 175(1)(d) and 176(1)(c): the reverse-charged VAT included in the declaration is at the same time the ground for its deduction. A box of this pack's own",
+      "source": "tax-code"
+    },
+    {
       "box": "8",
       "kind": "total",
       "name": "ჩასათვლელი (შესამცირებელი) დღგ-ის ჯამური თანხა",
       "sequence": 70,
-      "plus": ["9", "10"],
+      "plus": ["9", "10", "RCD"],
       "legal_reference": "დეკლარაციის ფორმა, განაყოფი III, ხაზი 8.",
       "source": "vat-return-order"
     },
@@ -81,7 +97,7 @@
       "kind": "total",
       "name": "დარიცხული დღგ-ის ჯამი",
       "sequence": 80,
-      "plus": ["1"],
+      "plus": ["1", "RC"],
       "legal_reference": "დეკლარაციის ფორმა, განაყოფი III, ხაზი 16.",
       "source": "vat-return-order"
     },

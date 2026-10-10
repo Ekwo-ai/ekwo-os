@@ -89,12 +89,12 @@ rozvaha pour les deux signes, d'où `current_year_result_profit` et
 
 ## Les taxes
 
-Dix codes : deux taux positifs (21 %, 12 %, en vigueur depuis le 1er janvier
+Douze codes : deux taux positifs (21 %, 12 %, en vigueur depuis le 1er janvier
 2024 — zákon č. 349/2023 Sb. a fusionné les deux anciens taux réduits de 10 %
 et 15 % en un seul), trois opérations exonérées avec droit à déduction
 (livraison intracommunautaire de biens, prestation de services
 intracommunautaire B2B, export), une exonération sans droit à déduction (bail
-immobilier, § 56a), et quatre codes côté achat dont deux autoliquidés par
+immobilier, § 56a), et six codes côté achat dont quatre autoliquidés par
 l'acquéreur.
 
 **L'autoliquidation, à l'achat, s'écrit en deux jambes sur le même compte de
@@ -109,6 +109,22 @@ seconde jambe, sans case, débite le compte de TVA déductible 3433 pour le
 même montant, exactement comme le réclame l'article
 73 odst. 1 písm. b) pour un bien ou un service affecté à une activité
 économique imposable.
+
+**Un service acheté à un prestataire étranger est autoliquidé par le
+preneur, et le formulaire distingue l'origine du prestataire.** Un abonnement
+logiciel, un hébergement ou une API facturé par un prestataire non établi en
+République tchèque a son lieu au siège du preneur assujetti (§ 9 odst. 1), et
+le preneur est redevable de la taxe (§ 108 odst. 1 písm. c)), qu'il déduit
+dans la même déclaration (§ 73 odst. 1 písm. b)). `CZ-P-SLUZBY-EU`
+(`intracom_acquisition_services`, article 196 de la directive 2006/112/CE)
+porte le service d'un assujetti identifié dans un autre État membre au
+řádek 5 ; `CZ-P-SLUZBY-3Z` (`foreign_services_received`) porte celui d'un
+prestataire établi hors de l'Union au řádek 12, « ostatní zdanitelná plnění,
+u kterých je povinnost přiznat daň při jejich přijetí ». Les deux s'écrivent
+comme `CZ-P-VOP` : la jambe −100 crédite 3431 dans sa case, une seconde
+jambe débite 3433, et le řádek 43 reporte la même taxe côté déduction. Le
+plan ne porte pas de compte de fournisseurs étrangers, si bien qu'un
+prestataire étranger reste sur le compte fournisseurs avec les autres.
 
 **Un seul reverse charge national est modélisé : les travaux de construction
 et de montage de l'article 92e.** La loi en porte d'autres (§ 92b déchets et

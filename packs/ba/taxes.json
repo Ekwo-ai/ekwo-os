@@ -94,5 +94,55 @@
         { "type": "tax", "account": "271", "box": "42", "box_factor": -100 }
       ]
     }
+  },
+  {
+    "code": "BA-P-17-NONRES",
+    "name": "PDV 17 % — usluge stranog lica bez poreskog zastupnika, obračun primaoca usluge (kupovina)",
+    "description": "PDV koji primalac usluge, obveznik PDV-a, obračunava na uslugu nabavljenu u poslovne svrhe od lica bez sjedišta u BiH koje nije imenovalo poreskog zastupnika, i odbija kao ulazni porez istog poreskog perioda",
+    "rate": 17,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2006-01-01",
+    "legal_reference": "Law on Value Added Tax, art. 13, point 3 — liable to pay VAT is \"a recipient of services purchased in furtherance of business purposes, if the provider of the services, not based in BiH, [...] has not appointed a tax representative\"; art. 15, paragraph 2, point 4 — the transfer of rights and licences, consultancy, data processing and data supply, telecommunications and the other services listed are supplied where the recipient has its seat; art. 32 — the taxpayer deducts the VAT \"which they are obliged to pay, or have paid, on the purchase of goods or services\" used for taxable supplies; rate 17 %. The VAT owed is posted to 474 and declared with the output VAT (field 51), the input tax to 273 and declared in fields 21 and 41 of the P PDV form — see README.md",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "21"
+        },
+        {
+          "type": "tax",
+          "account": "273",
+          "box": "41"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "474",
+          "box": "51"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "21",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "273",
+          "box": "41",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "474",
+          "box": "51",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

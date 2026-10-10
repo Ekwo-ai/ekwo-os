@@ -44,6 +44,7 @@ code,parent,type,reconcilable,name,sequence
 23,,liability_current,false,"Краткорочни обврски за даноци, придонеси и други давачки",430
 230,23,liability_current,false,Обврски за данокот на додадена вредност,440
 2300,230,liability_current,false,ДДВ — пресметан (излезен данок),450
+2302,230,liability_current,false,ДДВ — пресметан од примателот на прометот (член 32 точка 4),455
 2301,230,liability_current,true,ДДВ — обврска по даночна пријава,460
 234,23,liability_current,false,Обврски за даноци и придонеси на плата и надоместоци на плата,470
 235,23,liability_current,false,Обврски за персонален данок на доход,480

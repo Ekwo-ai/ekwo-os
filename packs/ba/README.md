@@ -111,6 +111,7 @@ zemalja Evropske unije.
 | Oslobođeno — usluge obrazovanja, čl. 24(1)(4) (prodaja) | `BA-S-EXEMPT-EDU` | — | 13 |
 | Standardna stopa (kupovina, odbitni ulazni porez) | `BA-P-17` | 17 % | 21 (osnovica), 41 (porez) |
 | Uvoz dobara (kupovina) | `BA-P-IMPORT` | 17 % | 22 (osnovica), 42 (porez) |
+| Usluga stranog lica bez poreskog zastupnika (kupovina) | `BA-P-17-NONRES` | 17 % | 21 (osnovica), 41 (ulazni porez), 51 (obaveza) |
 
 **Prag za registraciju PDV-a povećan je s 50.000 na 100.000 KM od
 02.12.2023.** (Zakon o izmjeni Zakona o PDV-u, "Sl. glasnik BiH" 80/23,
@@ -132,9 +133,20 @@ građevinske radove čija ukupna vrijednost prelazi 25.000 KM — stvaran
 mehanizam obrnutog terećenja unutar zemlje, koji ovaj prvi `community` paket
 ne nosi — vidjeti "Čega ovaj paket nema" niže.
 
-**Samostalni obračun PDV-a od strane primaoca usluga nerezidenta (čl. 13,
-stav 1, tačka 3) nije modelovan** — isti obrazac propusta kao paket `ua` za
-svoj član 208.
+**Usluga nabavljena od stranog lica: `BA-P-17-NONRES`.** Pretplata na
+softver, hosting ili API koji fakturiše lice bez sjedišta u BiH oporezuje se
+u BiH kada primalac ima sjedište u BiH (član 15, stav 2, tačka 4: prenos
+prava i licenci, usluge konsultanata, obrada i isporuka podataka,
+telekomunikacije…). Ako strano lice nije imenovalo poreskog zastupnika,
+PDV duguje primalac usluge nabavljene u poslovne svrhe (član 13, tačka 3), a
+član 32 mu dopušta da isti iznos odbije kao ulazni porez ako uslugu koristi
+za oporezivi promet. `BA-P-17-NONRES` knjiži obje strane po stopi od 17 %:
+obavezu na kontu 474 *PDV obračunat na usluge stranih lica* i u polju 51,
+ulazni porez na kontu 273 i u poljima 21 i 41, u istom poreskom periodu.
+Upisivanje samostalno obračunatog PDV-a u polja 51 i 41 (a ne u neko
+posebno polje) čitanje je ovog paketa, koje treba da potvrdi lokalni
+računovođa. Kontni okvir nema poseban konto za strane dobavljače, pa strani
+dobavljač ostaje na kontu dobavljača kao i ostali.
 
 **Paušalna naknada za poljoprivrednike (čl. 45) nije modelovana.** Kutije 23
 i 43 Obrasca P PDV su transkribovane, ali nijedan porez ovog paketa ne
@@ -221,8 +233,6 @@ izmirenja novčanih obaveza; `documents.legal_payment_days` ostaje `null`.
   kontni okvir Federacije BiH; Republika Srpska ima vlastiti, zasebno
   propisan pravilnik koji ovo istraživanje nije obuhvatilo.
 - **Poseban sistem za promet u vezi s izgradnjom nekretnina (čl. 40-43).**
-- **Samostalni obračun PDV-a od strane primaoca usluga nerezidenta
-  (čl. 13, stav 1, tačka 3).**
 - **Paušalna naknada za poljoprivrednike (čl. 45).**
 - **Porez na dobit** i njegov uticaj na Bilans uspjeha.
 - **Rok plaćanja između preduzeća** u odsustvu ugovora.

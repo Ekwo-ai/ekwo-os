@@ -14,7 +14,8 @@
     { "ref": "klients-us", "name": "Prairie Import LLC", "type": "customer", "country": "US" },
     { "ref": "pircejs-ipasums", "name": "Rīgas Nekustamie Īpašumi SIA", "type": "customer", "country": "LV" },
     { "ref": "piegadatajs-lv", "name": "Vidzemes Ražotne SIA", "type": "supplier", "country": "LV" },
-    { "ref": "piegadatajs-ee", "name": "Tallinn Tarvikud OÜ", "type": "supplier", "country": "EE", "vat_number": "EE999999999" }
+    { "ref": "piegadatajs-ee", "name": "Tallinn Tarvikud OÜ", "type": "supplier", "country": "EE", "vat_number": "EE999999999" },
+    {"ref": "piegadatajs-us", "name": "Baltic Cloud Software Inc.", "type": "supplier", "country": "US"}
   ],
   "documents": [
     {
@@ -115,6 +116,38 @@
       "why": "Preču iegāde Eiropas Savienības teritorijā, pašaprēķins (5. panta pirmās daļas 3. punkts) — testē 50., 55. un 64. rindu, un reverse_charge mentions abās pusēs vienlaicīgi.",
       "lines": [
         { "name": "Iekārtu detaļas", "quantity": 1, "unit_price": 3000, "tax": "LV-P-IC-GOODS-21", "account": "7010" }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "piegadatajs-ee",
+      "date": "2026-05-11",
+      "why": "Programmatūras abonements no Igaunijas nodokļa maksātāja: pašaprēķins (88. pants) — testē 54. un 63. rindu.",
+      "lines": [
+        {
+          "name": "Programmatūras abonements — mēnesis",
+          "quantity": 1,
+          "unit_price": 400,
+          "tax": "LV-P-IC-SERV-21",
+          "account": "7020"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "piegadatajs-us",
+      "date": "2026-05-13",
+      "why": "Mākoņa mitināšana no ASV nodokļa maksātāja: pašaprēķins (89. pants) — 54. un 63. rinda.",
+      "lines": [
+        {
+          "name": "Mākoņa mitināšana — mēnesis",
+          "quantity": 1,
+          "unit_price": 300,
+          "tax": "LV-P-3C-SERV-21",
+          "account": "7020"
+        }
       ]
     }
   ],

@@ -98,6 +98,7 @@ code,parent,type,reconcilable,name,sequence
 64,,liability_current,false,Розрахунки за податками й платежами,970
 641,64,liability_current,false,Розрахунки за податками,980
 6411,641,liability_current,false,Податкові зобов'язання з ПДВ (нараховані),990
+6415,641,liability_current,false,Податкові зобов'язання з ПДВ за послугами нерезидентів (стаття 208),1005
 6412,641,asset_current,false,Податковий кредит з ПДВ (вхідний),1000
 6413,641,liability_current,true,Розрахунки з бюджетом за ПДВ до сплати,1010
 6414,641,asset_current,true,Розрахунки з бюджетом за ПДВ до відшкодування,1020

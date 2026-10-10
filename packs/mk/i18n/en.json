@@ -141,7 +141,8 @@
     "951": "Profit for the current year",
     "96": "Losses carried forward and loss for the current year",
     "960": "Losses carried forward from previous years",
-    "961": "Loss for the current year"
+    "961": "Loss for the current year",
+    "2302": "VAT calculated by the recipient (article 32 point 4)"
   },
   "journals": {
     "SAL": "Sales journal",
@@ -159,7 +160,8 @@
     "MK-S-EXEMPT-EDU": "Exempt without right to deduct — educational services (sale)",
     "MK-P-18": "VAT 18% — standard rate (purchase)",
     "MK-P-10": "VAT 10% — reduced rate, catering and accommodation services (purchase)",
-    "MK-P-5": "VAT 5% — reduced rate (purchase)"
+    "MK-P-5": "VAT 5% — reduced rate (purchase)",
+    "MK-P-18-RC": "VAT 18% — service from a taxable person not established in the country, self-assessed by the recipient (purchase)"
   },
   "tax_report_boxes": {
     "01": "Taxable supply at the standard rate — base",
@@ -174,7 +176,11 @@
     "21": "Input supply with right to deduct input tax",
     "22": "Input tax for deduction",
     "29": "Input taxes for deduction (total)",
-    "31": "Net amount owed or receivable"
+    "31": "Net amount owed or receivable",
+    "12": "Supplies by taxable persons not established in the country, tax calculated by the recipient — standard rate",
+    "13": "VAT calculated by the recipient — standard rate",
+    "23": "Inbound supplies with right of deduction, tax calculated by the recipient (art. 32 points 4 and 5)",
+    "24": "Input tax deductible, calculated by the recipient (art. 32 points 4 and 5)"
   },
   "statement_lines": {
     "MK-BS:100": "Intangible assets",

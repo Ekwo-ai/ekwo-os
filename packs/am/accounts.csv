@@ -104,6 +104,7 @@ code,parent,type,reconcilable,name,sequence
 5242,524,liability_current,false,Պարտքեր եկամտահարկի գծով,1030
 5243,524,liability_current,true,Պարտքեր ավելացված արժեքի հարկի գծով,1040
 52431,5243,liability_current,false,Իրացման գործարքների գծով հաշվարկված ԱԱՀ,1050
+52432,5243,liability_current,false,ԱԱՀ՝ որպես հարկային գործակալ ոչ ռեզիդենտի փոխարեն հաշվարկված,1055
 5244,524,liability_current,false,Պարտքեր ակցիզային հարկի գծով,1060
 5245,524,liability_current,false,Պարտքեր գույքահարկի գծով,1070
 5248,524,liability_current,false,"Պարտքեր հարկերի դիմաց հաշվարկված տույժերի, տուգանքների գծով",1080

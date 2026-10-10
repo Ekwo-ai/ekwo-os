@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CZ",
   "name": "Czechia",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "schema_min": "20260929141500",
   "seed_sequence": 68,
   "released_at": "2026-09-25",

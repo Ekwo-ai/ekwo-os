@@ -99,11 +99,22 @@ that would exercise them.
 The intra-Community acquisition of goods (5. panta pirmās daļas 3. punkts) is
 modelled with the same three-posting shape the framework's own documentation
 uses for Estonia: a base, a payable leg and a fully offsetting deductible
-leg, landing on boxes 50, 55 and 64. Reverse-charged services received from
-an EU or third-country supplier (88. un 89. pants, boxes 54/63) are **not**
-modelled — no golden document exercises them, and adding the tax codes
-without one would be exactly the untested shape `docs/packs.md` warns
-against.
+leg, landing on boxes 50, 55 and 64.
+
+A service bought from a supplier abroad — a software subscription, hosting,
+an API — is supplied where the Latvian taxable person carries on its
+business (19. panta pirmā daļa), and the recipient calculates and pays the
+tax: 88. pants for a supplier that is a taxable person of another Member
+State, 89. pants for one of a third country or territory. It declares it in
+the return of the period in which the service was received (122. pants) and
+deducts it as input tax (92. pants). Two codes carry it, because the
+treatment differs even though the boxes do not: `LV-P-IC-SERV-21`
+(`intracom_acquisition_services`, article 196 of Directive 2006/112/EC) and
+`LV-P-3C-SERV-21` (`foreign_services_received`), both crediting the new
+`5086` and declaring row 54 (added to `S`), and debiting the new `2156` and
+declaring row 63 (added to 60). The golden year buys one of each. The chart
+has no payable account for suppliers abroad, so a foreign supplier sits on
+the trade payables with the others.
 
 ## The declaration
 
@@ -114,10 +125,11 @@ of the two applies is a fact about the company, not something the law
 answers the same way for everybody). The deadline is the 20th of the month
 following the period, in every case (118. panta pirmā daļa).
 
-This pack models 20 of the form's boxes: the three taxable-base rows (41,
+This pack models 22 of the form's boxes: the three taxable-base rows (41,
 42, 42a for the law's 42.¹), the 0%-rate total and its two components (43,
 45, 48a for the law's 48.¹), the exemption row (49), the intra-Community
-acquisition base and its two tax rows (50, 55, 64), the three tax rows on
+acquisition base and its two tax rows (50, 55, 64), the reverse-charged
+services rows (54, 63), the three tax rows on
 domestic sales (52, 53, 53a for the law's 53.¹), the two deductible-input
 rows this pack uses (60 as their sum, 62, 64), and the final rows (P, S, 70,
 80). Row identifiers with a decimal point in the official form (42.¹, 48.¹,
@@ -127,8 +139,7 @@ this format is `[0-9A-Za-z]` only.
 **Not modelled**, and left as a gap rather than guessed at: row 41.¹ (the
 margin-scheme value for used goods, art works, collectors' items and
 antiques), row 48.² (services whose place of supply is outside Latvia), the
-freeport and new-means-of-transport rows (44, 46, 47), row 54 and 63
-(reverse-charged services), rows 56/56.¹ (reduced-rate intra-Community
+freeport and new-means-of-transport rows (44, 46, 47), rows 56/56.¹ (reduced-rate intra-Community
 acquisitions), row 57 and rows 66/67 (the non-deductible input proportion
 and bad-debt corrections — meaning `(P)` in this pack is simply row 60, with
 no proportion or correction applied), and the annexes PVN 1 through PVN 7,
@@ -165,8 +176,6 @@ way to tell which is which.
 - **Domestic reverse charge** (construction services, 142. panta ceturtā
   daļa; and the timber, mobile-phone/electronics and cereals regimes of
   143.¹–143.⁴) is not modelled: no tax code, no box.
-- **Services reverse-charged from an EU or third-country supplier** (88. and
-  89. pants, boxes 54/63) — same reason.
 - **The margin scheme** for used goods, art works, collectors' items and
   antiques (138. pants, row 41.¹) is not modelled.
 - **The non-deductible input VAT proportion** (98. pants) and **bad-debt

@@ -188,7 +188,8 @@
     "751": "Income tax expense (income)",
     "911": "Fixed assets accepted under operating leases",
     "912": "Goods accepted for safekeeping",
-    "915": "Goods accepted under commission and consignment contracts"
+    "915": "Goods accepted under commission and consignment contracts",
+    "52432": "VAT calculated as tax agent instead of a non-resident"
   },
   "journals": {
     "SAL": "Sales journal",
@@ -204,7 +205,8 @@
     "AM-S-0-SERVICES": "VAT 0% — international transport and services supplied outside Armenia (sale)",
     "AM-S-EXEMPT": "VAT-exempt transaction (sale)",
     "AM-P-20": "VAT 20% — acquisition in Armenia (purchase)",
-    "AM-P-IMPORT": "VAT 20% — import of goods (purchase)"
+    "AM-P-IMPORT": "VAT 20% — import of goods (purchase)",
+    "AM-P-20-NONRES": "VAT 20% — services from a non-resident, paid as tax agent (purchase)"
   },
   "tax_report_boxes": {
     "7A": "Tax base — transactions taxed at the 20% VAT rate (line 7, box A)",
@@ -223,7 +225,8 @@
     "191B": "Adjusting tax invoices on acquisitions — reduction (VAT debit) (line 19.1, box B)",
     "21A": "Total VAT debit (line 21, box A, positive)",
     "23A": "VAT payable to the State budget (line 23, box A)",
-    "23B": "VAT refundable from the State budget (line 23, box B)"
+    "23B": "VAT refundable from the State budget (line 23, box B)",
+    "10": "Other VAT liabilities, including VAT paid as tax agent (line 10)"
   },
   "statement_lines": {
     "AM-BS:A-NC-FIX": "Fixed assets, investment property and intangible assets",

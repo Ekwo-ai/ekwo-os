@@ -195,6 +195,104 @@
     "sequence": 90
   },
   {
+    "code": "CZ-P-SLUZBY-EU",
+    "name": "Přijetí služby od osoby registrované k dani v jiném členském státě",
+    "description": "Prestation de services reçue d'un assujetti identifié dans un autre État membre, autoliquidée par le preneur, base standard",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 9 odst. 1 — le lieu d'une prestation de services fournie à une personne assujettie est le lieu de son siège ; § 108 odst. 1 písm. c) — l'assujetti pour qui une prestation de services ayant son lieu en République tchèque est fournie par une personne non établie dans le pays est redevable de la taxe ; § 24 — la taxe devient exigible à la date de la prestation ou du paiement, la première des deux ; § 73 odst. 1 písm. b) — il déduit la même somme dans la même déclaration si le service est affecté à son activité économique imposable. Le prestataire est identifié à la TVA dans un autre État membre (article 196 de la directive 2006/112/CE) : řádek 5 côté sortie, řádek 43 côté déduction",
+    "source": "zakon-dph",
+    "kind": "vat",
+    "sequence": 92,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3431",
+          "box": "5"
+        },
+        {
+          "type": "tax",
+          "account": "3433"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3431",
+          "box": "5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "3433"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CZ-P-SLUZBY-3Z",
+    "name": "Přijetí služby od osoby neusazené v Evropské unii",
+    "description": "Prestation de services reçue d'un prestataire établi hors de l'Union, autoliquidée par le preneur, base standard",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 9 odst. 1 — le lieu d'une prestation de services fournie à une personne assujettie est le lieu de son siège ; § 108 odst. 1 písm. c) — l'assujetti pour qui une prestation de services ayant son lieu en République tchèque est fournie par une personne non établie dans le pays est redevable de la taxe ; § 73 odst. 1 písm. b) — il déduit la même somme dans la même déclaration. Le prestataire est établi hors de l'Union : řádek 12 (« ostatní zdanitelná plnění, u kterých je povinnost přiznat daň při jejich přijetí ») côté sortie, řádek 43 côté déduction",
+    "source": "zakon-dph",
+    "kind": "vat",
+    "sequence": 94,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3431",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "3433"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3431",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "3433"
+        }
+      ]
+    }
+  },
+  {
     "code": "CZ-P-PN-STAVBY",
     "name": "Stavební nebo montážní práce v režimu přenesení daňové povinnosti",
     "description": "Reverse charge domestique du secteur du bâtiment, base standard",

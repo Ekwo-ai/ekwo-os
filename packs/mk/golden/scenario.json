@@ -11,7 +11,8 @@
   "contacts": [
     { "ref": "client-mk", "name": "Трговско друштво Вардар ДООЕЛ Скопје", "type": "customer", "country": "MK" },
     { "ref": "client-foreign", "name": "Rheinbau Handels GmbH", "type": "customer", "country": "DE" },
-    { "ref": "supplier-mk", "name": "Трговско друштво Пелагонија ДОО Битола", "type": "supplier", "country": "MK" }
+    { "ref": "supplier-mk", "name": "Трговско друштво Пелагонија ДОО Битола", "type": "supplier", "country": "MK" },
+    {"ref": "supplier-nonres", "name": "Vardar Cloud Services Ltd", "type": "supplier", "country": "IE"}
   ],
   "documents": [
     {
@@ -122,6 +123,22 @@
       "why": "Набавка на услуга по општата стапка во второто тримесечје — претходен данок на 2026-Q2.",
       "lines": [
         { "name": "Консултантска услуга", "quantity": 1, "unit_price": 2000, "tax": "MK-P-18", "account": "419" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supplier-nonres",
+      "date": "2026-05-12",
+      "why": "Месечна претплата на софтвер во облак од даночен обврзник без седиште во земјата: данокот го пресметува примателот (член 32 точка 4, полиња 12 и 13, сметка 2302) и го одбива во истиот период (полиња 23 и 24, сметка 1300).",
+      "lines": [
+        {
+          "name": "Месечна претплата на софтвер во облак",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "MK-P-18-RC",
+          "account": "419"
+        }
       ]
     }
   ],

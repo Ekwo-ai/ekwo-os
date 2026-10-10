@@ -47,6 +47,12 @@
       "name": "Istanbul Textile Import Co.",
       "type": "supplier",
       "country": "TR"
+    },
+    {
+      "ref": "supplier-nonres",
+      "name": "Ararat Cloud Services Ltd",
+      "type": "supplier",
+      "country": "IE"
     }
   ],
   "documents": [
@@ -271,6 +277,22 @@
           "unit_price": 200000,
           "tax": "AM-P-20",
           "account": "2161"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-NR1",
+      "type": "purchase_invoice",
+      "contact": "supplier-nonres",
+      "date": "2026-02-20",
+      "why": "A cloud software subscription from a non-resident without a permanent establishment in Armenia: the company calculates the VAT as tax agent (art. 70(2), line 10, account 52432) and offsets it in the same month (art. 71(1)(4), line 18).",
+      "lines": [
+        {
+          "name": "Monthly cloud software subscription",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "AM-P-20-NONRES",
+          "account": "7139"
         }
       ]
     }

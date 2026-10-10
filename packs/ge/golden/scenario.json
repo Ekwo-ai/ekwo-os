@@ -12,7 +12,8 @@
     { "ref": "client-ge", "name": "შპს „თბილისის სავაჭრო სახლი“", "type": "customer", "country": "GE" },
     { "ref": "client-export", "name": "Gulf Anatolia Trading LLC", "type": "customer", "country": "AE" },
     { "ref": "supplier-ge", "name": "შპს „კავკასიის მომწოდებელი“", "type": "supplier", "country": "GE" },
-    { "ref": "supplier-import", "name": "Shenzhen Textile Import Co.", "type": "supplier", "country": "CN" }
+    { "ref": "supplier-import", "name": "Shenzhen Textile Import Co.", "type": "supplier", "country": "CN" },
+    {"ref": "supplier-nonres", "name": "Kartli Cloud Services Ltd", "type": "supplier", "country": "IE"}
   ],
   "documents": [
     {
@@ -133,6 +134,22 @@
       "why": "კომუნალური მომსახურების შესყიდვა მეორე პერიოდში — ადმინისტრაციული ხარჯი.",
       "lines": [
         { "name": "ელექტროენერგია და წყალი", "quantity": 1, "unit_price": 800, "tax": "GE-P-18", "account": "6030" }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supplier-nonres",
+      "date": "2026-02-18",
+      "why": "საქართველოში დაუფუძნებელი პირის ღრუბლოვანი პროგრამული უზრუნველყოფის გამოწერა: დღგ ითვლება უკუდაბეგვრით (მუხლი 161, ანგარიში 2105, ველი RC) და იმავე დეკლარაციაში ჩაითვლება (მუხლი 176(1)(გ), ველი RCD).",
+      "lines": [
+        {
+          "name": "ღრუბლოვანი პროგრამული უზრუნველყოფის თვიური გამოწერა",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "GE-P-18-RC",
+          "account": "6050"
+        }
       ]
     }
   ],

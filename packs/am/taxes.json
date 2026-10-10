@@ -177,5 +177,53 @@
         }
       ]
     }
+  },
+  {
+    "code": "AM-P-20-NONRES",
+    "name": "ԱԱՀ 20 % — ոչ ռեզիդենտից ստացված ծառայություններ (հարկային գործակալ)",
+    "description": "ԱԱՀ, որը ԱԱՀ վճարողը հաշվարկում և վճարում է որպես հարկային գործակալ՝ Հայաստանում մշտական հաստատություն չունեցող ոչ ռեզիդենտ կազմակերպության մատուցած ծառայությունների համար, և հաշվանցում է նույն հաշվետու ժամանակաշրջանում",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Tax Code of the Republic of Armenia, art. 70(2) — the obligation to calculate and pay VAT on services provided in Armenia by a non-resident organisation lacking a permanent establishment in Armenia \"shall be borne by VAT payers acting as a party to contractual relations, instead of that non-resident organisation [...] as a tax agent\", the place of supply being determined under art. 39; art. 56(7) — the VAT payer issues the tax invoice on the supplier's behalf; art. 71(1)(4) — the VAT in such tax invoices is offset (reduced) by the unified calculation report of the reporting period that includes the day the services were received. VAT form instruction, item 14 — the liability under art. 70(2) is declared in line 10 (other VAT liabilities); the offset with the acquisitions in Armenia, line 18. Rate 20 % (art. 63)",
+    "source": "tax-code",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "18A"
+        },
+        {
+          "type": "tax",
+          "account": "2261",
+          "box": "18B"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "52432",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "191A"
+        },
+        {
+          "type": "tax",
+          "account": "2261",
+          "box": "191B"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "52432",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

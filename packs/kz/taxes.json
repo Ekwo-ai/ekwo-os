@@ -198,5 +198,46 @@
         { "type": "tax", "account": "1421", "box": "013", "box_factor": -100 }
       ]
     }
+  },
+  {
+    "code": "KZ-P-16-NR",
+    "name": "ҚҚС 16 % — резидент емес үшін (жұмыстар, қызметтер сатып алу)",
+    "description": "Резидент еместен жұмыстар, қызметтер сатып алған кезде сатып алушы есептейтін және бюджетке жеке төлейтін, төленгеннен кейін ғана есепке жатқызылатын қосылған құн салығы",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Tax Code of the Republic of Kazakhstan No. 214-VIII of 18 July 2025, in force on 1 January 2026, art. 449(1) — the taxable turnover includes the turnover a payer of VAT makes when acquiring works and services from a non-resident, under art. 454; the VAT for the non-resident is paid separately (budget classification code 105104) by the 25th day of the second month after the quarter; art. 481 — it is offset only after it is paid, on the electronic invoice the buyer issues to itself (or, under the amendment announced in 2026, on the date of payment). Rate 16 %. The tax owed waits on 3133 and the credit on 1423, on no line of form 300.00 in the quarter of the purchase: moving it to 1421 and to line 013 in the period of payment is a manual entry — see README.md",
+    "source": "tax-code-2026",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1423"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3133"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1423"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3133"
+        }
+      ]
+    }
   }
 ]

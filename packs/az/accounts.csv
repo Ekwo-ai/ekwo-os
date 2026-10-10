@@ -121,6 +121,7 @@ code,parent,type,reconcilable,name,sequence
 521,,liability_current,true,Vergi öhdəlikləri,1200
 5211,521,liability_current,false,ƏDV üzrə hesablanmış vergi,1210
 5212,521,liability_current,false,Ödənişi gözlənilən hesablanmış ƏDV,1220
+5213,521,liability_current,false,ƏDV — qeyri-rezidentin xidmətləri üzrə vergi agenti kimi hesablanmış vergi,1225
 522,,liability_current,false,Sosial sığorta və təminat üzrə öhdəliklər,1230
 523,,liability_current,false,Digər məcburi ödənişlər üzrə öhdəliklər,1240
 531,,liability_payable,true,Malsatan və podratçılara qısamüddətli kreditor borcları,1250

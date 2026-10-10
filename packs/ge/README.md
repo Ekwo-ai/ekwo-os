@@ -120,14 +120,21 @@ II-III კატეგორიისთვის, ბუღალტრულ�
 ავტომატური პროპორციული განაწილების მექანიზმი არცერთი პაკეტისთვის; იხ.
 docs/international.md, განყოფილება «From Georgia».
 
-**უკუდაბეგვრა (176-ე მუხლი) ამ პაკეტში არ არის მოდელირებული.**
-არარეზიდენტისგან მიღებულ მომსახურებაზე მიმღები თავად ერიცხება და თავადვე
-ითვლის დღგ-ს (ორმაგი გატარება ერთსა და იმავე დოკუმენტზე, ესტონეთის
-`EE-P-ICG-24`-ის მსგავსად `docs/packs.md`-ში) — ეს არის რეალური და
-გავრცელებული მექანიზმი, მაგრამ დეკლარაციის ფორმის ზუსტი ხაზის ნომერი
-(ამჟამინდელი რედაქციით) ამ კვლევას არ დაუდასტურებია საკმარისი
-სანდოობით, ამიტომ ეს პირველი `community` ვერსია მას არ ატარებს — იხ.
-docs/international.md, განყოფილება «From Georgia».
+**Reverse charge on a service from a person not established in Georgia:
+`GE-P-18-RC`.** *(Written in English: the contributor of this section does
+not write Georgian.)* A software subscription, hosting or an API billed by a
+taxable person not established in Georgia is subject to VAT reverse charge
+(Tax Code, art. 161(1)(a), in the English version on matsne.gov.ge — the
+reverse charge is art. 161 there, not art. 176 as this README said before):
+the Georgian business is the tax agent (art. 161(2)(a)) and assesses 18 % on
+the sum to be paid (art. 161(3)(a)). Art. 175(1)(d) makes that VAT
+deductible, and art. 176(1)(c) makes *"the amount of reverse charged VAT
+assessed by a person registered as a VAT taxpayer [...] and included in the
+VAT declaration"* at the same time the ground for the deduction — both
+halves in one declaration. `GE-P-18-RC` books the tax assessed on the new
+`2105` and the deduction on `1450`, in two boxes of this pack's own, `RC`
+(added to line 16) and `RCD` (added to line 8): the exact line of the
+current declaration was still not confirmed.
 
 **„მცირე ბიზნესის სტატუსი“ (1 %/3 % ბრუნვის გადასახადი) ამ პაკეტში
 საერთოდ არ არის.** კოდექსის 84-93 მუხლები ადგენენ საშემოსავლო
@@ -241,9 +248,6 @@ docs/international.md, განყოფილება «From Georgia».
 
 ## რისი გაკეთებაც ამ პაკეტს არ შეუძლია
 
-- **უკუდაბეგვრა არარეზიდენტისგან მიღებულ მომსახურებაზე** (176-ე
-  მუხლი) — ორმაგი გატარების მექანიზმი მოდელირებული არ არის; იხ.
-  «გადასახადები» ზემოთ.
 - **გათავისუფლებულ ბრუნვასთან დაკავშირებული შესყიდვის დღგ-ის
   პროპორციული განაწილება** (174-ე მუხლის მე-6-მე-7 ნაწილები) და
   დეკემბრის წლიური გადაანგარიშება — Ekwo-ს ბირთვს ავტომატური
@@ -270,8 +274,8 @@ docs/international.md, განყოფილება «From Georgia».
 who may say what». პუნქტები, რომლებიც პრაქტიკოს ბუღალტერს ან აუდიტორს
 ჯერ უნდა წაეკითხა, ყველაზე ნაკლებად დადასტურებულიდან დაწყებული:
 
-1. **უკუდაბეგვრის დეკლარაციის ხაზის ზუსტი ნომერი** (176-ე მუხლი) —
-   ამჟამინდელი რედაქციით.
+1. **უკუდაბეგვრის დეკლარაციის ხაზის ზუსტი ნომერი** (161-ე და 176(1)(გ)
+   მუხლები) — `GE-P-18-RC` ველებს `RC` და `RCD` იყენებს.
 2. **„მცირე ბიზნესის სტატუსის“ ბრუნვის ზღვრის ზუსტი, მოქმედი თანხა**
    (90-ე მუხლი) — პროფესიულმა წყაროებმა დაასახელეს 500 000 ლარი, თუმცა
    ეს კვლევა ვერ ადასტურებს ზუსტ მოქმედ მუხლს.

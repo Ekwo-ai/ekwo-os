@@ -11,7 +11,8 @@
   "contacts": [
     { "ref": "client-ua", "name": "ТОВ «Дніпровська торгівля»", "type": "customer", "country": "UA" },
     { "ref": "client-foreign", "name": "Baltic Trading OÜ", "type": "customer", "country": "EE" },
-    { "ref": "supplier-ua", "name": "ТОВ «Карпатський постачальник»", "type": "supplier", "country": "UA" }
+    { "ref": "supplier-ua", "name": "ТОВ «Карпатський постачальник»", "type": "supplier", "country": "UA" },
+    {"ref": "supplier-nonres", "name": "Dnipro Cloud Services Ltd", "type": "supplier", "country": "IE"}
   ],
   "documents": [
     {
@@ -122,6 +123,22 @@
       "why": "Оренда офісу за основною ставкою у другому періоді — адміністративні витрати.",
       "lines": [
         { "name": "Оренда офісного приміщення", "quantity": 1, "unit_price": 2000, "tax": "UA-P-20", "account": "92" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supplier-nonres",
+      "date": "2026-02-16",
+      "why": "Хмарна підписка на програмне забезпечення від нерезидента: отримувач нараховує ПДВ (пункт 208.2, рядок 6.1, рахунок 6415) і включає його до податкового кредиту того самого періоду за власною зареєстрованою накладною (рядок 13.1, рахунок 6412).",
+      "lines": [
+        {
+          "name": "Місячна підписка на хмарне програмне забезпечення",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "UA-P-20-NR",
+          "account": "92"
+        }
       ]
     }
   ],

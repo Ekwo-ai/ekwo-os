@@ -235,7 +235,8 @@
     "BA-S-EXPORT": "VAT 0% — export of goods from Bosnia and Herzegovina",
     "BA-S-EXEMPT-EDU": "Exempt from VAT — education services",
     "BA-P-17": "VAT 17% — purchases from registered VAT payers in Bosnia and Herzegovina",
-    "BA-P-IMPORT": "VAT 17% — import of goods into Bosnia and Herzegovina"
+    "BA-P-IMPORT": "VAT 17% — import of goods into Bosnia and Herzegovina",
+    "BA-P-17-NONRES": "VAT 17% — services of a foreign person with no tax representative, self-assessed by the recipient (purchase)"
   },
   "tax_report_boxes": {
     "11:base": "Supplies (including for non-business purposes), other than fields 12 and 13 — value excluding VAT",

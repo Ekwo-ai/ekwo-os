@@ -141,6 +141,25 @@ secondary sources, to be confirmed by a local accountant:
 - A special regime for gold (Law HO-200-N of 26 June 2023 amended article 88 of
   the Code): not read in detail, and nothing in this pack models it.
 
+## Services bought from a non-resident
+
+A software subscription, hosting or an API billed by a non-resident
+organisation with no permanent establishment in Armenia is VAT-able in
+Armenia when the place of supply (art. 39) is Armenia, and the Armenian VAT
+payer that receives it carries the tax: art. 70(2) puts the obligation to
+calculate and pay it on *"VAT payers acting as a party to contractual
+relations, instead of that non-resident organisation [...] as a tax agent"*,
+and art. 56(7) has the buyer issue the tax invoice on the supplier's behalf.
+Art. 71(1)(4) offsets the VAT of that invoice in the unified calculation of
+the reporting period that includes the day the service was received.
+`AM-P-20-NONRES` books both halves in the same month: the liability credited
+to the new `52432` and declared in line 10 (*other VAT liabilities*, which
+the form's instructions say includes the art. 70(2) liability; line 16 now
+adds it), the offset debited to `2261` and declared with the acquisitions in
+Armenia, line 18. Art. 70(2)(5) leaves the tax with the non-resident when the
+buyer is a micro-enterprise or a turnover-tax payer, and for electronic
+services to individuals.
+
 ## What the core does not do
 
 - The State clearance system (issue, electronic signature and confirmation of tax
@@ -149,10 +168,8 @@ secondary sources, to be confirmed by a local accountant:
 - Non-deductible input VAT on purchases used for exempt transactions
   (article 72(1) point 2): the core has no partial-deduction mechanism, so the
   accountant posts those purchases without input VAT by hand.
-- VAT on services bought from a non-resident without an establishment, borne by
-  the Armenian recipient who issues the tax invoice on the supplier's behalf
-  (articles 56(7) and 70(2)-(3); lines 10 and 11 of the form). No reverse-charge
-  tax is declared.
+- The adjusting tax invoices of a tax agent (line 11 of the form): a credit
+  note against `AM-P-20-NONRES` reduces lines 10 and 19.1 instead.
 - The 16.67 % calculated rate (line 9) and the adjustment lines 8.2, 15, 20, 22.
 - The turnover tax regime (articles 254-258) and excise (section 2 of the form).
 - Conversion of foreign-currency invoices at the previous working day's rate.

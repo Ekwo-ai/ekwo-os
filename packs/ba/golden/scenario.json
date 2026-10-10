@@ -12,7 +12,8 @@
     { "ref": "client-ba", "name": "Trgovina Vrbas d.o.o. Banja Luka", "type": "customer", "country": "BA" },
     { "ref": "client-foreign", "name": "Alpen Technik GmbH", "type": "customer", "country": "DE" },
     { "ref": "supplier-ba", "name": "Usluge Sarajevo d.o.o.", "type": "supplier", "country": "BA" },
-    { "ref": "supplier-foreign", "name": "Nordmaschinen AG", "type": "supplier", "country": "DE" }
+    { "ref": "supplier-foreign", "name": "Nordmaschinen AG", "type": "supplier", "country": "DE" },
+    {"ref": "supplier-cloud", "name": "Adriatic Cloud Services Ltd", "type": "supplier", "country": "IE"}
   ],
   "documents": [
     {
@@ -113,6 +114,22 @@
       "why": "Naknadno odobreno sniženje cijene na P4 (član 55, stav 6) — umanjuje osnovicu i ulazni porez istog perioda u polju 21 i 41.",
       "lines": [
         { "name": "Sniženje cijene usluga održavanja", "quantity": 1, "unit_price": 200, "tax": "BA-P-17", "account": "532" }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supplier-cloud",
+      "date": "2026-02-16",
+      "why": "Mjesečna pretplata na softver u oblaku od stranog lica bez poreskog zastupnika u BiH (član 13, tačka 3): primalac obračunava PDV od 17 % (konto 474, polje 51) i odbija ga kao ulazni porez istog perioda (konto 273, polja 21 i 41).",
+      "lines": [
+        {
+          "name": "Mjesečna pretplata na softver u oblaku",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "BA-P-17-NONRES",
+          "account": "559"
+        }
       ]
     }
   ],

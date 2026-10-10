@@ -11,7 +11,8 @@
     { "ref": "client-us", "name": "Aegean Imports LLC", "type": "customer", "country": "US" },
     { "ref": "supplier-gr", "name": "Θεσσαλική Βιοτεχνία Ε.Π.Ε.", "type": "supplier", "country": "GR" },
     { "ref": "supplier-de", "name": "Bayern Komponenten GmbH", "type": "supplier", "country": "DE", "vat_number": "DE888888888" },
-    { "ref": "supplier-cn", "name": "Shenzhen Trading Co.", "type": "supplier", "country": "CN" }
+    { "ref": "supplier-cn", "name": "Shenzhen Trading Co.", "type": "supplier", "country": "CN" },
+    {"ref": "supplier-us", "name": "Aegean Cloud Software Inc.", "type": "supplier", "country": "US"}
   ],
   "documents": [
     {
@@ -154,6 +155,38 @@
       "why": "Εισαγωγή αγαθών από τρίτη χώρα: πεδία 363 και 383, ΦΠΑ εκπιπτόμενο επί της δασμολογητέας αξίας.",
       "lines": [
         { "name": "Εξαρτήματα από Κίνα", "quantity": 1, "unit_price": 1200, "tax": "GR-P-IMPORT", "account": "2002" }
+      ]
+    },
+    {
+      "ref": "C6",
+      "type": "purchase_invoice",
+      "contact": "supplier-de",
+      "date": "2026-02-10",
+      "why": "Συνδρομή λογισμικού από πάροχο εγκατεστημένο στη Γερμανία: αντίστροφη επιβάρυνση (άρθρο 40, παρ. 1, περ. στ)), πεδία 303/333 και 365/385.",
+      "lines": [
+        {
+          "name": "Μηνιαία συνδρομή λογισμικού",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "GR-P-ICS-24",
+          "account": "6430"
+        }
+      ]
+    },
+    {
+      "ref": "C7",
+      "type": "purchase_invoice",
+      "contact": "supplier-us",
+      "date": "2026-02-12",
+      "why": "Φιλοξενία στο νέφος από πάροχο εγκατεστημένο στις ΗΠΑ: αντίστροφη επιβάρυνση, πεδία 303/333 και 366/386 «λοιπές πράξεις λήπτη».",
+      "lines": [
+        {
+          "name": "Μηνιαία φιλοξενία στο νέφος",
+          "quantity": 1,
+          "unit_price": 300,
+          "tax": "GR-P-3RD-24",
+          "account": "6430"
+        }
       ]
     }
   ],

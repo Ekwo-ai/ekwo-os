@@ -17,7 +17,8 @@
     { "ref": "najemce-cz", "name": "Moravský Obchodní Dům a.s.", "type": "customer", "country": "CZ" },
     { "ref": "dodavatel-cz", "name": "Kancelářské Potřeby Novák s.r.o.", "type": "supplier", "country": "CZ" },
     { "ref": "dodavatel-de", "name": "Sachsen Rohstoffe GmbH", "type": "supplier", "country": "DE", "vat_number": "DE888888888" },
-    { "ref": "dodavatel-stavby", "name": "Stavební Práce Horák s.r.o.", "type": "supplier", "country": "CZ" }
+    { "ref": "dodavatel-stavby", "name": "Stavební Práce Horák s.r.o.", "type": "supplier", "country": "CZ" },
+    {"ref": "dodavatel-us", "name": "Prairie Cloud Software Inc.", "type": "supplier", "country": "US"}
   ],
   "documents": [
     {
@@ -74,6 +75,38 @@
       "ref": "Z4", "type": "purchase_invoice", "contact": "dodavatel-stavby", "date": "2026-02-20",
       "why": "Des travaux de construction en régime national d'autoliquidation (§ 92e) : řádek 10 côté sortie et řádek 43 côté déduction.",
       "lines": [{ "name": "Stavební práce — oprava provozovny", "quantity": 1, "unit_price": 25000, "tax": "CZ-P-PN-STAVBY", "account": "511" }]
+    },
+    {
+      "ref": "Z5",
+      "type": "purchase_invoice",
+      "contact": "dodavatel-de",
+      "date": "2026-03-10",
+      "why": "Un abonnement logiciel facturé par un assujetti identifié en Allemagne : autoliquidé par l'entreprise (§ 108 odst. 1 písm. c)), řádek 5 côté sortie et řádek 43 côté déduction.",
+      "lines": [
+        {
+          "name": "Předplatné softwaru — měsíční",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "CZ-P-SLUZBY-EU",
+          "account": "5185"
+        }
+      ]
+    },
+    {
+      "ref": "Z6",
+      "type": "purchase_invoice",
+      "contact": "dodavatel-us",
+      "date": "2026-03-12",
+      "why": "Un hébergement en nuage facturé par un prestataire établi aux États-Unis : autoliquidé par l'entreprise, řádek 12 côté sortie et řádek 43 côté déduction.",
+      "lines": [
+        {
+          "name": "Cloudový hosting — měsíční",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "CZ-P-SLUZBY-3Z",
+          "account": "5185"
+        }
+      ]
     }
   ],
   "payments": [

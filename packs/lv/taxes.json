@@ -210,5 +210,103 @@
     },
     "kind": "vat",
     "sequence": 90
+  },
+  {
+    "code": "LV-P-IC-SERV-21",
+    "name": "Pakalpojumi no citas dalībvalsts nodokļa maksātāja 21% (pašaprēķins)",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Pievienotās vērtības nodokļa likums, 19. panta pirmā daļa — pakalpojuma sniegšanas vieta nodokļa maksātājam ir tā saimnieciskās darbības vieta; 88. panta pirmā daļa — par pakalpojumiem, kuru sniegšanas vietu nosaka saskaņā ar 19. panta pirmo daļu un kuri saņemti no citas dalībvalsts nodokļa maksātāja, nodokli aprēķina un valsts budžetā maksā pakalpojumu saņēmējs, kurš ir nodokļa maksātājs; 122. pants — nodokli norāda tā taksācijas perioda deklarācijā, kad saņemts pakalpojums; 92. pants — aprēķinātais nodoklis ir atskaitāms priekšnodoklis. Deklarācijā: 54. rinda (aprēķinātais nodoklis) un 63. rinda (priekšnodoklis). Direktīvas 2006/112/EK 196. pants",
+    "source": "pvn-likums",
+    "sequence": 92,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2156",
+          "box": "63"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "5086",
+          "box": "54"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2156",
+          "box": "63",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "5086",
+          "box": "54",
+          "box_factor": -100
+        }
+      ]
+    },
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC"
+  },
+  {
+    "code": "LV-P-3C-SERV-21",
+    "name": "Pakalpojumi no trešās valsts nodokļa maksātāja 21% (pašaprēķins)",
+    "kind": "vat",
+    "rate": 21,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Pievienotās vērtības nodokļa likums, 19. panta pirmā daļa — pakalpojuma sniegšanas vieta nodokļa maksātājam ir tā saimnieciskās darbības vieta; 89. panta pirmā daļa — par pakalpojumiem, kuri saņemti no trešās valsts vai trešās teritorijas nodokļa maksātāja, nodokli aprēķina un valsts budžetā maksā pakalpojumu saņēmējs, kurš ir nodokļa maksātājs; 122. pants — nodokli norāda tā taksācijas perioda deklarācijā, kad saņemts pakalpojums; 92. pants — atskaitāms priekšnodoklis. Deklarācijā: 54. rinda un 63. rinda. Nav EN 16931 kategorijas (trešās valsts sniedzēja rēķins nav pakļauts standartam)",
+    "source": "pvn-likums",
+    "sequence": 94,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2156",
+          "box": "63"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "5086",
+          "box": "54"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "2156",
+          "box": "63",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "5086",
+          "box": "54",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

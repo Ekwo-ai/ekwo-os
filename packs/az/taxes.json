@@ -199,6 +199,64 @@
     }
   },
   {
+    "code": "AZ-P-18-NONRES",
+    "name": "ƏDV 18 % — qeyri-rezidentin xidmətləri (vergi agenti kimi hesablanma və əvəzləşdirmə)",
+    "description": "ƏDV-nin məqsədləri üçün qeydiyyatda olmayan qeyri-rezidentin göstərdiyi xidmətlər üzrə vergi agentinin hesabladığı, bəyannamə ilə ödədiyi və eyni ayda əvəzləşdirdiyi ƏDV",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2020-01-01",
+    "legal_reference": "Tax Code of the Republic of Azerbaijan, art. 169.1 — services of a non-resident not registered for VAT, supplied in Azerbaijan to a tax agent, are taxed under art. 169, and every VAT-registered person is a tax agent for its purposes; art. 169.3 — the tax agent calculates the VAT at the rate of art. 173.1 (18 %) on the amount payable to the non-resident; art. 169.4 — a VAT-registered agent pays it with the VAT return of the month of the operation, and the payment document stands for the electronic tax invoice of art. 175 for its offset. VAT return (2026 form): line 306.1 for the tax calculated, line 312 (\"VM 169.4-cü maddəsinə əsasən qeyri-rezidentə ödənilmiş məbləğ\") for its offset, inside line 317. Since 1 January 2020 the operation occurs when the amount is paid to the non-resident, and the tax is declared and offset in the return of that month",
+    "source": "tax-code",
+    "sequence": 65,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "306R",
+            "312B"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "2411",
+          "box": "312T"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "5213",
+          "box": "306T"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "306R",
+            "312B"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2411",
+          "box": "312T",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "5213",
+          "box": "306T",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
     "code": "AZ-P-EXEMPT",
     "name": "ƏDV-dən azad alış (ƏDV tutulmayan əməliyyat)",
     "kind": "vat",

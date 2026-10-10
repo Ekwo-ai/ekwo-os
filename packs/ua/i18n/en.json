@@ -159,7 +159,8 @@
     "951": "Interest expense",
     "97": "Other expenses",
     "971": "Cost of financial investments sold",
-    "98": "Income tax expense"
+    "98": "Income tax expense",
+    "6415": "VAT liabilities on services of non-residents (article 208)"
   },
   "journals": {
     "SAL": "Sales journal",
@@ -177,7 +178,8 @@
     "UA-S-EXEMPT-EDU": "VAT exempt — education services (sale)",
     "UA-P-20": "VAT 20% — domestic purchase",
     "UA-P-14": "VAT 14% — selected agricultural products (purchase)",
-    "UA-P-7": "VAT 7% — medicines, hotel and cultural services (purchase)"
+    "UA-P-7": "VAT 7% — medicines, hotel and cultural services (purchase)",
+    "UA-P-20-NR": "VAT 20% — services of a non-resident supplied in Ukraine, charged by the recipient"
   },
   "tax_report_boxes": {
     "11:base": "Domestic supply at the standard rate — base",
@@ -197,7 +199,11 @@
     "103:tax": "Domestic purchase at 14% — tax",
     "17": "Total tax credit",
     "18": "VAT payable to the budget",
-    "19": "Negative value of the difference"
+    "19": "Negative value of the difference",
+    "61:base": "Row 6.1 — services acquired from a non-resident, place of supply in Ukraine, standard rate — volume",
+    "61:tax": "Row 6.1 — services acquired from a non-resident, place of supply in Ukraine, standard rate — tax",
+    "131:base": "Row 13.1 — services supplied by a non-resident in Ukraine, standard rate — volume",
+    "131:tax": "Row 13.1 — services supplied by a non-resident in Ukraine, standard rate — tax credit"
   },
   "statement_lines": {
     "UA-NPSBO1-BS:1000": "Intangible assets",

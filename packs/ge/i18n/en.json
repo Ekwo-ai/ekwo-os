@@ -138,7 +138,8 @@
     "7060": "Rounding difference",
     "9000": "Assets held under lease (off-balance)",
     "9010": "Inventory held on behalf of third parties",
-    "9020": "Guarantees and sureties given"
+    "9020": "Guarantees and sureties given",
+    "2105": "VAT assessed by reverse charge"
   },
   "journals": {
     "SAL": "Sales journal",
@@ -153,7 +154,8 @@
     "GE-P-18": "VAT 18% — purchase in Georgia (local supplier)",
     "GE-P-IMPORT": "VAT 18% — import of goods (customs operation)",
     "GE-S-EXPORT": "VAT 0% — export of goods",
-    "GE-S-EXEMPT": "VAT exempt — without the right to deduct"
+    "GE-S-EXEMPT": "VAT exempt — without the right to deduct",
+    "GE-P-18-RC": "VAT 18% — reverse charge on a service from a person not established in Georgia"
   },
   "tax_report_boxes": {
     "1": "VAT charged on turnover during the reporting period",
@@ -166,7 +168,9 @@
     "16": "Total VAT charged",
     "17": "Total VAT deductible",
     "18": "Amount payable to the budget (line 16 > line 17)",
-    "19": "Amount to be credited (line 17 > line 16)"
+    "19": "Amount to be credited (line 17 > line 16)",
+    "RC": "VAT assessed by reverse charge (services of a non-established person)",
+    "RCD": "VAT assessed by reverse charge (deductible)"
   },
   "statement_lines": {
     "GE-IFRS-BS:A-NC-FIX": "Property, plant, equipment and intangible assets",

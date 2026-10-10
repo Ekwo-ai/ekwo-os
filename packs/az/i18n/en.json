@@ -161,7 +161,8 @@
     "801": "Gross profit (closing account)",
     "811": "Share of profit of associates and joint ventures",
     "901": "Current profit tax expense",
-    "902": "Deferred profit tax expense"
+    "902": "Deferred profit tax expense",
+    "5213": "VAT calculated as tax agent on services of non-residents"
   },
   "journals": {
     "SAL": "Sales journal",
@@ -178,7 +179,8 @@
     "AZ-S-EXEMPT": "VAT exempt — paid education services (sale)",
     "AZ-P-18": "VAT 18% — domestic purchase (deduction on the electronic tax invoice)",
     "AZ-P-IMPORT": "VAT 18% — import of goods (customs declaration)",
-    "AZ-P-EXEMPT": "VAT-exempt purchase (no VAT charged)"
+    "AZ-P-EXEMPT": "VAT-exempt purchase (no VAT charged)",
+    "AZ-P-18-NONRES": "VAT 18% — services of a non-resident, calculated and offset as tax agent"
   },
   "tax_report_boxes": {
     "301R": "Line 301 — operations taxed at 18%: amount received (excluding VAT)",
@@ -193,7 +195,11 @@
     "310T": "Line 310 — VAT paid on import and deductible",
     "317T": "Line 317 — TOTAL deductible VAT",
     "326": "Line 326 — PAYABLE TO THE BUDGET",
-    "327": "Line 327 — REFUNDABLE FROM THE BUDGET"
+    "327": "Line 327 — REFUNDABLE FROM THE BUDGET",
+    "306R": "Line 306.1 — taxable services of a non-resident not registered for VAT: amount paid",
+    "306T": "Line 306.1 — VAT calculated as tax agent",
+    "312B": "Line 312 — amount paid to a non-resident under Tax Code art. 169.4",
+    "312T": "Line 312 — VAT paid and offset on services of a non-resident"
   },
   "statement_lines": {
     "AZ-BS:A-NC-INT": "Intangible assets",

@@ -60,6 +60,53 @@
     }
   },
   {
+    "code": "GE-P-18-RC",
+    "name": "დღგ 18 % — უკუდაბეგვრა საქართველოში დაუფუძნებელი პირის მიერ გაწეულ მომსახურებაზე",
+    "description": "დღგ, რომელსაც საგადასახადო აგენტი, დღგ-ის გადამხდელად რეგისტრირებული პირი, ითვლის უკუდაბეგვრით საქართველოში დაუფუძნებელი პირის მიერ გაწეულ მომსახურებაზე და იმავე დეკლარაციაში ჩაითვლის",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2021-01-01",
+    "legal_reference": "Tax Code of Georgia (English version on matsne.gov.ge), art. 161(1)(a) — \"provision of a service to a tax agent in the territory of Georgia by a taxable person who is not established or does not normally live in Georgia, or who has no fixed establishment in Georgia which participates in providing this service\" is subject to VAT reverse charge; art. 161(2)(a) — any person established in Georgia (other than a non-entrepreneur natural person and a FIZ enterprise) is the tax agent; art. 161(3)(a) — VAT is assessed on the sum to be paid for the service; art. 165²(2)(b) — the tax agent calculates and pays it; art. 175(1)(d) — the VAT assessed in the case of reverse charge is deductible; art. 176(1)(c) — for a VAT payer, \"the amount of reverse charged VAT [...] included in the VAT declaration [...] at the same [time] is a ground for obtaining deduction\". Both halves are therefore in the same monthly declaration: the boxes RC and RCD are this pack's own, the form's exact line not having been confirmed — see README.md",
+    "source": "tax-code",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1450",
+          "box": "RCD"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2105",
+          "box": "RC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1450",
+          "box": "RCD",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2105",
+          "box": "RC",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
     "code": "GE-S-EXPORT",
     "name": "დღგ 0 % — საქონლის ექსპორტი",
     "rate": 0,

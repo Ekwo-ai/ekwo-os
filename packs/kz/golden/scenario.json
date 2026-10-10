@@ -11,7 +11,8 @@
   "contacts": [
     { "ref": "client-kz", "name": "«Алатау сауда» ЖШС", "type": "customer", "country": "KZ" },
     { "ref": "client-foreign", "name": "Muster Handels GmbH", "type": "customer", "country": "DE" },
-    { "ref": "supplier-kz", "name": "«Есіл жеткізу» ЖШС", "type": "supplier", "country": "KZ" }
+    { "ref": "supplier-kz", "name": "«Есіл жеткізу» ЖШС", "type": "supplier", "country": "KZ" },
+    {"ref": "supplier-nonres", "name": "Steppe Cloud Services Ltd", "type": "supplier", "country": "IE"}
   ],
   "documents": [
     {
@@ -122,6 +123,22 @@
       "why": "Екінші кезеңдегі кеңсе жалдау ақысы, негізгі мөлшерлеме.",
       "lines": [
         { "name": "Кеңсе үй-жайын жалдау", "quantity": 1, "unit_price": 8000, "tax": "KZ-P-16", "account": "7200" }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supplier-nonres",
+      "date": "2026-05-14",
+      "why": "Резидент еместен бұлттық бағдарламалық қамтамасыз етуге жазылу: ҚҚС сатып алушы есептейді (449-бап, 3133-шот) және тек төленгеннен кейін есепке жатқызады (481-бап) — осы тоқсанда 300.00 нысанының ешбір жолына түспейді, 1423-шотта күтеді.",
+      "lines": [
+        {
+          "name": "Бұлттық бағдарламалық қамтамасыз етуге айлық жазылу",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "KZ-P-16-NR",
+          "account": "7200"
+        }
       ]
     }
   ],

@@ -142,6 +142,24 @@ obligation began. From 2026 a recurring service needs one invoice per calendar
 month (art. 71-1.1.3-2); this rests on secondary sources only, because the
 article's text was not found on an official page.
 
+## Services bought from a non-resident
+
+A software subscription, hosting or an API billed by a non-resident not
+registered for VAT in Azerbaijan is taxed in the hands of the buyer: art. 169.1
+of the Tax Code makes every VAT-registered person a tax agent for those
+services, art. 169.3 has it calculate VAT at 18 % (art. 173.1) on the amount
+payable to the non-resident, and art. 169.4 has it pay that VAT with the
+return of the month, the payment document standing for the electronic tax
+invoice of art. 175 so that the same amount is offset. Since 1 January 2020
+the operation occurs when the amount is paid to the non-resident, and the tax
+is declared and offset in the return of that month. `AZ-P-18-NONRES` books
+both halves: the tax calculated, credited to the new `5213` and declared in
+line 306.1 (which line 326 adds), the offset, debited to `2411` and declared
+in line 312 (inside line 317). Unlike the domestic purchase codes it is not
+cash-based — a cash-basis tax takes one posting, and this one has two — so a
+bookkeeper whose payment falls in another month dates the document on the
+payment.
+
 ## What this pack cannot do
 
 - **VAT deposit account (ƏDV depozit hesabı, art. 175).** A buyer may deduct
@@ -162,8 +180,9 @@ article's text was not found on an official page.
 - **Partial deduction.** Art. 175.2–175.4 restrict deduction (exempt-only
   activity, mixed activity pro rata, entertainment). The form carries them as
   lines 313–315; the pack has no partly-recoverable tax for them.
-- **Non-resident services (lines 306, 312)**: VAT withheld by the buyer as a tax
-  agent on payments to non-residents is not modelled.
+- **Payment-dated tax on non-resident services.** `AZ-P-18-NONRES` (below)
+  dates the tax on the document; the law dates it on the payment to the
+  non-resident.
 - **Agricultural trade margin (301.2, 301-2)**, increases and decreases of
   turnover (318–324), receivables movements (307), and the annexes to the
   return.

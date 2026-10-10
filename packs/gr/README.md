@@ -98,6 +98,21 @@ acquisition of goods (`GR-P-ICG-24`, one `base` posting on the two boxes it
 prints in, exactly as the Estonian example of `docs/packs.md` shows), and
 import VAT deducted at the rate assessed by customs (`GR-P-IMPORT`).
 
+**A service bought from a supplier abroad is reverse-charged on the
+customer.** A software subscription, hosting or an API billed by a taxable
+person not established in Greece is supplied where the Greek business is
+established (Ν.5144/2024, άρθρο 18 παρ. 2 α)), and the customer is liable for
+the tax (άρθρο 40 παρ. 1 στ)), charging and deducting it at once. The Φ2
+splits the input side by the supplier's origin, so the pack does too:
+`GR-P-ICS-24` (`intracom_acquisition_services`, article 196 of Directive
+2006/112/EC) for a supplier established in another Member State, in boxes
+303/333 and 365/385; `GR-P-3RD-24` (`foreign_services_received`) for a
+supplier established outside the Union, in boxes 303/333 and 366/386 (*λοιπές
+πράξεις λήπτη*), with no recapitulative statement. Both post like
+`GR-P-ICG-24`: deductible VAT debited to `5401`, VAT owed credited to `5400`.
+The chart has no payable account for suppliers abroad, so a foreign supplier
+sits on the trade payables with the others.
+
 **The 30 % reduced rate on certain Aegean islands is documented and not
 modelled as a tax code.** Ν.5144/2024, άρθρο 26, as amended by Ν.5246/2025 and
 read by the AADE circular Ε.2113/31.12.2025, reduces the three rates above by
@@ -132,8 +147,8 @@ and export boxes (310, 342, 345, 348) and the turnover total (311), the
 domestic, import and intra-Community-acquisition input boxes (361/381,
 363/383, 364/384) and their total (367/387), and the two clearance boxes
 (480 payable, 470 credit). It does not yet carry every box the real form
-does — the island rates, the fixed-asset purchase box (362), reverse-charged
-services received (365/366) and the carry-forward/refund mechanics
+does — the island rates, the fixed-asset purchase box (362) and the
+carry-forward/refund mechanics
 (401-404, 502-523) are all named in the box `legal_reference`s as not
 modelled, rather than guessed at.
 
@@ -226,10 +241,11 @@ and should be re-confirmed at `aade.gr` before anyone relies on them.
    cached copy rather than a live fetch; a reviewer who can open the form
    directly should confirm the box numbers before this pack is relied on for
    a real filing.
-5. **No purchase-side reverse charge besides intra-Community goods** is
-   modelled — a domestic reverse charge (construction subcontracting,
-   precious metals) or a reverse-charged service received from abroad both
-   need their own box wiring a future version should add once confirmed.
+5. **No domestic purchase-side reverse charge** is modelled (construction
+   subcontracting, precious metals). Reverse-charged services received from
+   abroad are (`GR-P-ICS-24`, `GR-P-3RD-24`, boxes 365/385 and 366/386);
+   their article numbers (18 παρ. 2 α), 40 παρ. 1 στ)) were read in
+   professional summaries of the 2024 code, not in the ΦΕΚ.
 6. **No `deadline` on the Φ2 return**: deliberate, see above — not an
    unresearched gap.
 7. **The exemption reason code of `GR-S-EXE`** (`VATEX-EU-132`) matches the

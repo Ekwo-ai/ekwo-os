@@ -133,7 +133,9 @@
     "7440": "Impairment loss on receivables",
     "7460": "Rounding differences",
     "7490": "Other operating expenses",
-    "7700": "Corporate income tax expense"
+    "7700": "Corporate income tax expense",
+    "1423": "VAT paid for a non-resident (awaiting offset)",
+    "3133": "VAT for a non-resident (payable)"
   },
   "journals": {
     "SAL": "Sales journal",
@@ -153,7 +155,8 @@
     "KZ-S-EXEMPT-BOOKS": "VAT exempt — domestically published books and book-publishing services (sale)",
     "KZ-P-16": "VAT 16% — standard rate (purchase)",
     "KZ-P-12": "VAT 12% — standard rate (purchase, in force until 2026, closed code)",
-    "KZ-P-MED-5": "VAT 5% — medicines and medical devices (purchase, transitional 2026 rate)"
+    "KZ-P-MED-5": "VAT 5% — medicines and medical devices (purchase, transitional 2026 rate)",
+    "KZ-P-16-NR": "VAT 16% — paid for a non-resident (works and services acquired)"
   },
   "tax_report_boxes": {
     "001:base": "Turnover taxed at a rate other than zero — turnover amount",

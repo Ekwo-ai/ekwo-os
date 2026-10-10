@@ -58,6 +58,22 @@
       "source": "priznani-dph-tiskopis"
     },
     {
+      "box": "5",
+      "kind": "base",
+      "name": "Přijetí služby od osoby registrované k dani v jiném členském státě (§ 9 odst. 1) — základní sazba",
+      "sequence": 62,
+      "legal_reference": "Tiskopis 25 5401, řádek 5 (základ daně) ; zákon č. 235/2004 Sb., § 9 odst. 1 a § 108 odst. 1 písm. c).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "5",
+      "kind": "tax",
+      "name": "Přijetí služby od osoby registrované k dani v jiném členském státě (§ 9 odst. 1) — základní sazba — daň",
+      "sequence": 64,
+      "legal_reference": "Tiskopis 25 5401, řádek 5 (daň).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
       "box": "3",
       "kind": "tax",
       "name": "Pořízení zboží z jiného členského státu — základní sazba — daň",
@@ -71,6 +87,22 @@
       "name": "Režim přenesení daňové povinnosti — příjemce — základní sazba",
       "sequence": 70,
       "legal_reference": "Tiskopis 25 5401, řádek 10 (základ daně) ; zákon č. 235/2004 Sb., § 92a a § 92e.",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Ostatní zdanitelná plnění, u kterých je povinnost přiznat daň při jejich přijetí (§ 108) — základní sazba",
+      "sequence": 82,
+      "legal_reference": "Tiskopis 25 5401, řádek 12 (základ daně) — notamment les services reçus d'une personne établie hors de l'Union ; zákon č. 235/2004 Sb., § 108 odst. 1 písm. c).",
+      "source": "priznani-dph-tiskopis"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "Ostatní zdanitelná plnění, u kterých je povinnost přiznat daň při jejich přijetí (§ 108) — základní sazba — daň",
+      "sequence": 84,
+      "legal_reference": "Tiskopis 25 5401, řádek 12 (daň).",
       "source": "priznani-dph-tiskopis"
     },
     {
@@ -148,13 +180,15 @@
     {
       "box": "43",
       "kind": "total",
-      "name": "Zdanitelná plnění řádků 3 a 10 — základní sazba (nárok na odpočet)",
+      "name": "Zdanitelná plnění řádků 3 až 13 — základní sazba (nárok na odpočet)",
       "sequence": 170,
       "plus": [
         "3:tax",
-        "10:tax"
+        "5:tax",
+        "10:tax",
+        "12:tax"
       ],
-      "legal_reference": "Tiskopis 25 5401, řádek 43 — reporte, côté déduction, la taxe autoliquidée déjà déclarée aux lignes 3 à 13 côté sortie ; ce pack ne pose que les lignes 3 et 10, la somme se limite donc à elles deux. Zákon č. 235/2004 Sb., § 73 odst. 1 písm. b).",
+      "legal_reference": "Tiskopis 25 5401, řádek 43 — reporte, côté déduction, la taxe autoliquidée déjà déclarée aux lignes 3 à 13 côté sortie ; ce pack pose les lignes 3, 5, 10 et 12, la somme se limite donc à elles. Zákon č. 235/2004 Sb., § 73 odst. 1 písm. b).",
       "source": "priznani-dph-tiskopis"
     },
     {
@@ -179,9 +213,11 @@
         "1:tax",
         "2:tax",
         "3:tax",
-        "10:tax"
+        "5:tax",
+        "10:tax",
+        "12:tax"
       ],
-      "legal_reference": "Tiskopis 25 5401, řádek 62 — součet řádků 1 až 13, snížený o řádek 61 ; ce pack ne pose que les lignes 1, 2, 3 et 10, et ne modélise pas la ligne 61 (vrácení daně, § 84).",
+      "legal_reference": "Tiskopis 25 5401, řádek 62 — součet řádků 1 až 13, snížený o řádek 61 ; ce pack ne pose que les lignes 1, 2, 3, 5, 10 et 12, et ne modélise pas la ligne 61 (vrácení daně, § 84).",
       "source": "priznani-dph-tiskopis"
     },
     {

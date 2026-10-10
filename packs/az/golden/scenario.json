@@ -70,6 +70,12 @@
       "name": "Sərhəd Gömrük Agentliyi MMC",
       "type": "supplier",
       "country": "AZ"
+    },
+    {
+      "ref": "qeyri-rezident",
+      "name": "Caspian Cloud Services Ltd",
+      "type": "supplier",
+      "country": "IE"
     }
   ],
   "documents": [
@@ -261,6 +267,22 @@
           "quantity": 1,
           "unit_price": 3000,
           "tax": "AZ-P-18",
+          "account": "721"
+        }
+      ]
+    },
+    {
+      "ref": "C6",
+      "type": "purchase_invoice",
+      "contact": "qeyri-rezident",
+      "date": "2026-03-18",
+      "why": "Qeyri-rezidentin bulud proqram təminatı abunəsi: ƏDV vergi agenti kimi hesablanır (VM 169, sətir 306.1, hesab 5213) və eyni ayın bəyannaməsində əvəzləşdirilir (sətir 312, hesab 2411).",
+      "lines": [
+        {
+          "name": "Aylıq bulud proqram təminatı abunəsi",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "AZ-P-18-NONRES",
           "account": "721"
         }
       ]
