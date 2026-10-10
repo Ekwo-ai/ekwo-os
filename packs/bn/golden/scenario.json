@@ -1,0 +1,305 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of books of a Brunei Darussalam trading and consulting company that files no periodic return on sales",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "FY2026",
+      "from": "2026-01-01",
+      "to": "2026-12-31"
+    }
+  ],
+  "statements": [
+    "BN-BDAS-BS",
+    "BN-BDAS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-a",
+      "name": "Muara Trading Sdn Bhd",
+      "type": "customer",
+      "country": "BN"
+    },
+    {
+      "ref": "cust-b",
+      "name": "Bandar Consulting Sdn Bhd",
+      "type": "customer",
+      "country": "BN"
+    },
+    {
+      "ref": "cust-c",
+      "name": "Pacific Rim Imports LLC",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "supp-a",
+      "name": "Kiulap Office Supplies Sdn Bhd",
+      "type": "supplier",
+      "country": "BN"
+    },
+    {
+      "ref": "supp-b",
+      "name": "Gadong Professional Services Sdn Bhd",
+      "type": "supplier",
+      "country": "BN"
+    },
+    {
+      "ref": "supp-c",
+      "name": "Kuching Components Sdn Bhd",
+      "type": "supplier",
+      "country": "MY"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-04-15",
+      "why": "A domestic sale of services, BN-S-NA: the not-subject code posts the line's base and nothing else — no tax line, no declaration box.",
+      "lines": [
+        {
+          "name": "Advisory services, April 2026",
+          "unit_price": 50000,
+          "tax": "BN-S-NA",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-04-20",
+      "why": "A domestic sale of goods, BN-S-NA on the goods side too: the code draws no distinction the way a real turnover tax would between what is sold.",
+      "lines": [
+        {
+          "name": "Trading stock, assorted goods",
+          "quantity": 20,
+          "unit_price": 500,
+          "tax": "BN-S-NA",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cust-c",
+      "date": "2026-05-05",
+      "why": "An export of goods to a customer outside Brunei Darussalam: BN-S-NA applies exactly as it does to V2's domestic sale, because there is no turnover tax to zero-rate. The one percent tax on approved exports (Income Tax Act, section 8A) is an income tax assessed on the exporter's gross proceeds, not a charge on this invoice, so it posts nothing here.",
+      "lines": [
+        {
+          "name": "Export of assorted goods",
+          "quantity": 100,
+          "unit_price": 80,
+          "tax": "BN-S-NA",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cust-a",
+      "date": "2026-05-10",
+      "why": "A credit note against V2, a partial return of goods — the golden's sale-side credit note.",
+      "lines": [
+        {
+          "name": "Return of assorted goods",
+          "quantity": 5,
+          "unit_price": 500,
+          "tax": "BN-S-NA",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-06-01",
+      "why": "A second domestic service sale, to spread the scenario across more than one month and leave an invoice a part-payment settles only partly.",
+      "lines": [
+        {
+          "name": "Advisory services, May 2026",
+          "unit_price": 30000,
+          "tax": "BN-S-NA",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-07-15",
+      "why": "A third domestic goods sale, settled by nothing in this scenario — an open receivable the trial balance has to carry at the year end.",
+      "lines": [
+        {
+          "name": "Trading stock, assorted goods",
+          "quantity": 15,
+          "unit_price": 500,
+          "tax": "BN-S-NA",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-04-18",
+      "why": "A domestic purchase of trading inventory, BN-P-NA: the purchase side of the not-subject code, posting the base and nothing to recover.",
+      "lines": [
+        {
+          "name": "Trading stock, assorted goods",
+          "quantity": 100,
+          "unit_price": 60,
+          "tax": "BN-P-NA",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-04-25",
+      "why": "A recurring domestic expense, office rent, paid in full by E3 — the golden's matched payment on the purchase side.",
+      "lines": [
+        {
+          "name": "Office rent, April 2026",
+          "unit_price": 20000,
+          "tax": "BN-P-NA",
+          "account": "6100"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-c",
+      "date": "2026-05-12",
+      "why": "An import of components from a supplier outside Brunei Darussalam: BN-P-NA posts the base and nothing else. Customs import duty, where the goods are dutiable, is a duty on specified goods paid at the border and is not modelled; the goods in this scenario are taken as not dutiable.",
+      "lines": [
+        {
+          "name": "Import of components",
+          "quantity": 200,
+          "unit_price": 25,
+          "tax": "BN-P-NA",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "PCN1",
+      "type": "purchase_credit_note",
+      "contact": "supp-a",
+      "date": "2026-05-15",
+      "why": "A credit note against P1, a partial return of defective stock — the golden's purchase-side credit note, beside CN1 on the sale side.",
+      "lines": [
+        {
+          "name": "Return of defective stock",
+          "quantity": 10,
+          "unit_price": 60,
+          "tax": "BN-P-NA",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-06-10",
+      "why": "A purchase of a fixed asset, computer equipment, booked straight to the balance sheet rather than to an expense account — proof BN-P-NA posts its base wherever the document line's own account sends it, and nowhere of its own choosing.",
+      "lines": [
+        {
+          "name": "Computer equipment",
+          "unit_price": 12000,
+          "tax": "BN-P-NA",
+          "account": "1640"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-06-20",
+      "why": "A recurring administrative purchase booked to the retirement fund contributions account: a service fee for administering the employee retirement fund contributions, posting its base and nothing else.",
+      "lines": [
+        {
+          "name": "Retirement fund contributions administration fee",
+          "unit_price": 1500,
+          "tax": "BN-P-NA",
+          "account": "6020"
+        }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-07-01",
+      "why": "A recurring administrative purchase, accounting and company secretarial fees — the audited accounts a company files with its income tax return depend on one.",
+      "lines": [
+        {
+          "name": "Accounting and company secretarial fees",
+          "unit_price": 8000,
+          "tax": "BN-P-NA",
+          "account": "6220"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-05-10",
+      "amount": 50000,
+      "contact": "cust-b",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "An inbound payment that exactly settles V1 — the golden's matched payment on the sale side."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-06-15",
+      "amount": 5000,
+      "contact": "cust-b",
+      "journal": "BNK",
+      "match": null,
+      "why": "An inbound part-payment on account, matched to nothing — the golden's unmatched payment and the open item a return computed from matchings has to survive."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-05-28",
+      "amount": 20000,
+      "contact": "supp-b",
+      "journal": "BNK",
+      "match": "P2",
+      "why": "An outbound payment that exactly settles P2 — the matched payment on the purchase side."
+    },
+    {
+      "ref": "E4",
+      "direction": "outbound",
+      "date": "2026-06-05",
+      "amount": 3000,
+      "contact": "supp-c",
+      "journal": "BNK",
+      "match": null,
+      "why": "An outbound part-payment on account to a supplier, matched to nothing — the unmatched payment on the purchase side."
+    }
+  ]
+}

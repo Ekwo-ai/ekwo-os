@@ -1,0 +1,54 @@
+[
+  {
+    "code": "BN-S-NA",
+    "name": "Sale, not subject to any tax on turnover",
+    "description": "Every sale a Brunei Darussalam business makes — domestic, exported, or delivered from outside Brunei Darussalam to a place outside it",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "Brunei Darussalam has no value added tax, goods and services tax or general tax on the sale of goods or the supply of services. The Revenue Division of the Ministry of Finance and Economy lists the taxes it administers as income tax (Income Tax Act, Chapter 35, and Income Tax (Petroleum) Act, Chapter 119), withholding tax and stamp duty (Stamp Act, Chapter 34), and its FAQ on corporate tax names only the tax on companies' chargeable income; a text search of the Income Tax Act for goods and services tax, sales tax and value added tax finds none. Checked on 2026-10-10; secondary summaries found in the same research agree and no announced project to introduce one was found, though no official statement ruling one out was found either. What the jurisdiction charges instead, all outside this pack: income tax on companies incorporated or registered under the Companies Act (Chapter 39) at 18.5 per cent of chargeable income from the year of assessment 2015 (Income Tax Act, section 35(1)(f), with a threshold under section 35(4) taxing only 25 per cent of the first $100,000 and 50 per cent of the next $150,000), while sole proprietorships and partnerships registered as business names are not taxed (Revenue Division, corporate tax FAQ); petroleum income tax at 55 per cent on oil and gas exploration and production profits (Revenue Division, income tax page); withholding tax on payments to non-residents (section 35(2) and (2A): 2.5 per cent, and 10 per cent on royalties and the other payments section 9(5) lists, and 10 per cent on non-resident directors' remuneration under section 35(2B)); stamp duty on instruments (Stamp Act, Chapter 34); and customs and excise duties on goods, restructured with effect from 1 April 2017 (Ministry of Finance press release). Section 8A of the Income Tax Act imposes a tax of one per cent on the gross proceeds of approved exports; it is a tax on the income of an exporter the authorities have approved, assessed under the Act, and not a charge any invoice line carries, so it is not modelled. The code exists so that every sale line still carries a tax code the engine can post, and states plainly that this jurisdiction has none. `valid_from` is a convenience the pack needed, not a claim about when the absence began. See 'From Brunei Darussalam' in docs/international.md.",
+    "source": "itax-cap35",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "BN-P-NA",
+    "name": "Purchase, not subject to any tax on turnover",
+    "description": "Every purchase a Brunei Darussalam business books — domestic, imported, or delivered from outside Brunei Darussalam to a place outside it",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "The purchase side of BN-S-NA: nothing a Brunei Darussalam business buys carries a value added tax, a goods and services tax or a general sales tax to recover, because none is charged on the sale that supplies it, whether the seller is in Brunei Darussalam or abroad. Imported goods can carry customs import duty and excise duty under the Customs Import Duties Order and the Excise Duties Order (amended with effect from 1 April 2017, Ministry of Finance press release), which are duties on specified goods levied at the border and not a general tax any invoice line can carry a code for: this pack does not model them, and an importer books the duty in the cost of the goods or the expense account it chooses. See 'From Brunei Darussalam' in docs/international.md.",
+    "source": "itax-cap35",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 20
+  }
+]

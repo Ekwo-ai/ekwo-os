@@ -6633,3 +6633,54 @@ IFRS, so only the balance sheet and the income statement are declared.
 as 42.13 in the trial balance. The goldens of `packs/bh/` and `packs/om/`
 never use a third digit, so the gap went unseen; the Kuwait scenario therefore
 sticks to multiples of 0.01. Not patched: the core is not this pack's to change.
+
+### From Brunei Darussalam
+
+A second jurisdiction with no tax on sales, following the Hong Kong pack
+(`packs/bn`), and the first where that absence sits beside a real rule about
+how a sale is documented.
+
+**No value added tax, goods and services tax or general sales tax**
+(checked 10 October 2026). The Revenue Division of the Ministry of Finance and
+Economy lists income tax, withholding tax and stamp duty; the Income Tax Act
+(Cap. 35) has no tax on supplies. Secondary summaries agree and no project to
+introduce one was found, but no official statement ruling one out was found.
+The pack has two `not_subject` codes, no `tax_report.json` and no
+`tax_payable` / `tax_receivable` role. No generic test failed for it: the two
+assertions Hong Kong fixed already cover this case.
+
+**Left out of the pack, with the source of each:** corporate income tax at
+18.5 % (Income Tax Act s. 35(1)(f), threshold s. 35(4)); petroleum income tax
+at 55 % (Income Tax (Petroleum) Act, Cap. 119); withholding tax at 2.5 % and
+10 % on payments to non-residents (s. 35(2), (2A), (2B)); a 1 % tax on the
+gross proceeds of approved exports (s. 8A, an income tax on the exporter);
+customs and excise duties (Ministry of Finance press release, 1 April 2017);
+stamp duty (Stamp Act, Cap. 34; Revenue Division); the employee retirement
+contributions (TAP and SCP), not researched; and Pillar Two, for which no
+Brunei measure could be confirmed. None has a tax code.
+
+**`documents.numbering` is `sequential`, a real rule.** Income Tax Act s.
+56A(1)(b) requires a printed receipt serially numbered for every sum received
+and a retained duplicate; s. 56A(1)(a) requires records for 7 years. The
+format's `numbering` enum has no value for "serial, printed, per receipt":
+`sequential` is the nearest, and nothing in the format says that the number
+must be printed rather than generated, or that the duty attaches to the
+receipt for a payment rather than to the invoice. The Revenue Division's
+ruling PR No. 01/2021 applies it to invoices as well. Whether a generated
+number satisfies "printed" is for a local accountant to confirm.
+
+**`documents.tax_point`** has the same gap as in Hong Kong: no turnover tax,
+no answer; `invoice_date` is a convention.
+
+**A mention the format cannot express.** The ruling asks an invoice paid in
+cash to show that payment was received and its date; `documents.mentions`
+has no condition on how an invoice was settled.
+
+**Not opened.** The Companies Act (Cap. 39), the Record Keeping (Business)
+Act (Cap. 249; its PDF returned an error), the Accounting Standards Act (Cap.
+267; the PDF has no text layer), the Excise Duties Order 2012 and the Stamp
+Act. The OpenPeppol list was read for the absence of a Brunei authority.
+
+**Statements.** BDAS NON-PIE asks for a cash flow statement as well as a
+balance sheet and an income statement; the pack carries the first two. The
+standard does not state which framework it is based on.

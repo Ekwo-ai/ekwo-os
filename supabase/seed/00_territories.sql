@@ -2399,3 +2399,26 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Brunei Darussalam
+--
+-- A third country to the common system of VAT of Directive 2006/112/EC,
+-- article 5(2), and not one with a value added tax of its own either:
+-- Brunei Darussalam levies no value added tax, no goods and services tax and
+-- no general sales tax. `vat_prefix` is null for the reason it is null on the
+-- Hong Kong row: there is no VAT identification number to prefix.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('BN', 'iso_3166_1', 'Brunei Darussalam', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Brunei Darussalam has no value added tax, goods and services tax or general sales tax: the Revenue Division of the Ministry of Finance and Economy administers income tax (Income Tax Act, Chapter 35, and Income Tax (Petroleum) Act, Chapter 119), withholding tax and stamp duty (Stamp Act, Chapter 34), and customs and excise duties are levied on specified goods at the border, none of them a tax on the general supply of goods or services. Income tax is charged on companies at 18.5 per cent of chargeable income (Income Tax Act, section 35(1)(f)) — a tax on a year''s profit, not on a transaction.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
