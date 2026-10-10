@@ -49,6 +49,7 @@
     "273": "Deferred expenses",
     "274": "Deferred income",
     "278": "Other debtors and creditors",
+    "2781": "Other creditors - import VAT payable to the Tax and Customs Authority",
     "279": "Accumulated impairment losses",
     "3": "Inventories and biological assets",
     "32": "Goods for resale",
@@ -159,7 +160,8 @@
     "PT-P-ICG-23": "Intra-Community acquisition of goods at the standard rate (23 %)",
     "PT-P-ISP-23": "Domestic purchase under the reverse charge, at the standard rate (23 %)",
     "PT-P-EXT-23": "Service received from a supplier not established in the Union, at the standard rate (23 %)",
-    "PT-P-IMP-23": "Import at the standard rate (23 %), assessed by customs",
+    "PT-P-IMP-23": "Import at the standard rate (23 %), VAT paid to customs",
+    "PT-P-IMP-23-DP": "Import at the standard rate (23 %), tax paid on the periodic return (art. 27, para. 8)",
     "PT-P-EXC-23": "Expense excluded from the right to deduct, at the standard rate (23 %)"
   },
   "tax_report_boxes": {
@@ -176,8 +178,8 @@
     "13": "Intra-Community acquisitions of goods and assimilated transactions — tax charged",
     "16": "Services received from suppliers not established in the European Union — taxable amount",
     "17": "Services received from suppliers not established in the European Union — tax charged",
-    "18": "Imports of goods — taxable amount",
-    "19": "Imports of goods — tax charged",
+    "18": "Imports of goods whose tax is paid on the periodic return (art. 27, para. 8) — taxable amount",
+    "19": "Imports of goods whose tax is paid on the periodic return (art. 27, para. 8) — tax charged",
     "91": "Total tax charged",
     "20": "Deductible VAT on non-current assets",
     "21": "Deductible VAT on inventories at the reduced rate",

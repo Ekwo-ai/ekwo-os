@@ -485,15 +485,39 @@
   },
   {
     "code": "PT-P-IMP-23",
-    "name": "Importação à taxa normal (23 %), liquidada pela alfândega",
+    "name": "Importação à taxa normal (23 %), IVA pago à alfândega",
     "kind": "vat",
     "rate": 23,
     "scope": "purchase",
     "treatment": "import",
     "valid_from": "2011-01-01",
-    "legal_reference": "Código do IVA, arts. 5.º e 17.º — sujeição das importações; art. 27.º — liquidação e cobrança pelos serviços aduaneiros; art. 19.º, n.º 1, alínea b) — o documento de importação justifica a dedução. Declaração periódica: campo 18/19",
-    "source": "civa-art18",
+    "legal_reference": "Código do IVA, arts. 5.º e 17.º — sujeição das importações; art. 19.º, n.º 1, alínea b) — dedução do imposto devido pela importação de bens; art. 19.º, n.º 2, alínea b) — confere direito à dedução o imposto mencionado no recibo de pagamento do IVA que faz parte das declarações de importação. O imposto liquidado e cobrado pelos serviços aduaneiros não é liquidado na declaração periódica: só a dedução lá figura, no campo 24 (instruções da declaração periódica, campos 20 a 24). O montante a pagar à alfândega fica na conta 2781 até ser pago. Os campos 18/19 são os da opção do art. 27.º, n.º 8 — código PT-P-IMP-23-DP",
+    "source": "civa-art19",
     "sequence": 240,
+    "postings": {
+      "invoice": [
+        { "type": "base" },
+        { "type": "tax", "account": "2432", "box": "24" },
+        { "type": "tax", "factor": -100, "account": "2781" }
+      ],
+      "credit_note": [
+        { "type": "base" },
+        { "type": "tax", "account": "2432", "box": "24", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2781" }
+      ]
+    }
+  },
+  {
+    "code": "PT-P-IMP-23-DP",
+    "name": "Importação à taxa normal (23 %), imposto pago na declaração periódica (art. 27.º, n.º 8)",
+    "kind": "vat",
+    "rate": 23,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2018-03-01",
+    "legal_reference": "Código do IVA, art. 27.º, n.º 8 — os sujeitos passivos podem optar pelo pagamento do imposto devido pelas importações de bens nos termos do n.º 1, desde que se encontrem no regime de periodicidade mensal (art. 41.º, n.º 1, alínea a)), tenham a situação fiscal regularizada e pratiquem exclusivamente operações que conferem direito à dedução; a opção exerce-se nos termos da portaria prevista no n.º 9. Declaração periódica: base no campo 18 e imposto liquidado no campo 19 («quando tenha optado pelo pagamento do correspondente imposto na declaração periódica, nos termos do n.º 8 do artigo 27.º»), dedução no campo 24 (art. 19.º, n.º 1, alínea b))",
+    "source": "civa-art27",
+    "sequence": 245,
     "postings": {
       "invoice": [
         { "type": "base", "box": "18" },

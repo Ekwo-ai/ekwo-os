@@ -41,6 +41,7 @@ code,parent,type,reconcilable,name,sequence
 273,27,asset_prepayments,false,Devedores por diferimentos,390
 274,27,liability_current,false,Credores por diferimentos,400
 278,27,asset_current,true,Outros devedores e credores,410
+2781,278,liability_current,false,Outros credores - IVA das importações a pagar à Autoridade Tributária e Aduaneira,415
 279,27,asset_current,false,Perdas por imparidade acumuladas,420
 3,,asset_current,false,Inventários e ativos biológicos,430
 32,3,asset_current,false,Mercadorias,440

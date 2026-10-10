@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "PT",
   "name": "Portugal",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "schema_min": "20260929141500",
   "seed_sequence": 43,
   "released_at": "2026-09-22",
@@ -55,6 +55,22 @@
         "publisher": "Autoridade Tributária e Aduaneira",
         "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/ra/Pages/iva18ra_202503.aspx",
         "consulted_on": "2026-09-22",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art19",
+        "title": "Código do IVA, artigo 19.º — Direito à dedução",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva19.aspx",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art27",
+        "title": "Código do IVA, artigo 27.º — Pagamento do imposto apurado pelo sujeito passivo",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva27.aspx",
+        "consulted_on": "2026-10-10",
         "kind": "law"
       },
       {

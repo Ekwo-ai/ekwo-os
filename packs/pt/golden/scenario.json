@@ -17,7 +17,8 @@
     { "ref": "cliente-ao", "name": "Comercial Kianda, Lda.", "type": "customer", "country": "AO" },
     { "ref": "fornecedor-pt", "name": "Distribuidora do Douro, Lda.", "type": "supplier", "country": "PT" },
     { "ref": "fornecedor-equip", "name": "Equipamentos Vouga, S.A.", "type": "supplier", "country": "PT" },
-    { "ref": "fornecedor-de", "name": "Nordwind Maschinen GmbH", "type": "supplier", "country": "DE", "vat_number": "DE999999999" }
+    { "ref": "fornecedor-de", "name": "Nordwind Maschinen GmbH", "type": "supplier", "country": "DE", "vat_number": "DE999999999" },
+    { "ref": "fornecedor-cn", "name": "Ningbo Haitong Trading Co., Ltd.", "type": "supplier", "country": "CN" }
   ],
   "documents": [
     {
@@ -94,6 +95,11 @@
       "ref": "C6", "type": "purchase_credit_note", "contact": "fornecedor-pt", "date": "2026-07-15", "due_date": null,
       "why": "Uma nota de crédito recebida sobre a compra de mercadorias: a regularização a favor do Estado vai para o campo 41 e reduz o que foi deduzido, sem tocar no campo 23.",
       "lines": [{ "name": "Abatimento sobre mercadorias", "quantity": 1, "unit_price": 500, "tax": "PT-P-BENS-23", "account": "32" }]
+    },
+    {
+      "ref": "C7", "type": "purchase_invoice", "contact": "fornecedor-cn", "date": "2026-10-12", "due_date": "2026-11-11",
+      "why": "Uma importação de mercadorias cujo IVA foi pago à alfândega: o imposto do recibo da declaração de importação deduz-se no campo 24, nada é liquidado nos campos 18/19, e o fornecedor chinês só é credor do preço das mercadorias.",
+      "lines": [{ "name": "Mercadorias importadas da China", "quantity": 1, "unit_price": 2000, "tax": "PT-P-IMP-23", "account": "32" }]
     }
   ],
   "payments": [

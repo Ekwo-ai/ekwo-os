@@ -34,7 +34,8 @@
             { "kind": "code_range", "code_from": "263", "code_to": "264", "sequence": 40 },
             { "kind": "code_range", "code_from": "271", "code_to": "271", "sequence": 50 },
             { "kind": "code_range", "code_from": "273", "code_to": "273", "sequence": 60 },
-            { "kind": "code_range", "code_from": "278", "code_to": "279", "sequence": 70 },
+            { "kind": "code_range", "code_from": "278", "code_to": "278", "side": "debit", "sequence": 70 },
+            { "kind": "code_range", "code_from": "279", "code_to": "279", "sequence": 75 },
             { "kind": "code_range", "code_from": "46", "code_to": "46", "sequence": 80 }
           ] },
         { "code": "AC.4", "parent": "AC", "name": "Caixa e depósitos bancários", "sequence": 90, "sign": 1,
@@ -76,7 +77,8 @@
           "rules": [
             { "kind": "code_range", "code_from": "268", "code_to": "268", "sequence": 10 },
             { "kind": "code_range", "code_from": "272", "code_to": "272", "sequence": 20 },
-            { "kind": "code_range", "code_from": "274", "code_to": "274", "sequence": 30 }
+            { "kind": "code_range", "code_from": "274", "code_to": "274", "sequence": 30 },
+            { "kind": "code_range", "code_from": "278", "code_to": "278", "side": "credit", "sequence": 40 }
           ] },
         { "code": "PT", "parent": null, "name": "TOTAL DO PASSIVO", "sequence": 250, "is_total": true,
           "plus": ["PNC", "PC"] },

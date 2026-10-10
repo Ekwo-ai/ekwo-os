@@ -114,17 +114,17 @@
     {
       "box": "18",
       "kind": "base",
-      "name": "Importações de bens — base tributável",
+      "name": "Importações de bens cujo imposto é pago na declaração periódica (art. 27.º, n.º 8) — base tributável",
       "sequence": 140,
-      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 18 — Código do IVA, art. 27.º",
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 18 — «o valor total das importações de bens, quando tenha optado pelo pagamento do correspondente imposto na declaração periódica, nos termos do n.º 8 do artigo 27.º do Código do IVA». O IVA pago à alfândega não entra neste campo",
       "source": "portaria-221-2017"
     },
     {
       "box": "19",
       "kind": "tax",
-      "name": "Importações de bens — imposto liquidado",
+      "name": "Importações de bens cujo imposto é pago na declaração periódica (art. 27.º, n.º 8) — imposto liquidado",
       "sequence": 150,
-      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 19",
+      "legal_reference": "Declaração periódica do IVA, quadro 06, campo 19 — «o valor total do imposto liquidado nas importações de bens referidas no campo 18»",
       "source": "portaria-221-2017"
     },
     {

@@ -110,11 +110,22 @@ overlapping rate schedules in one country need (see
 **Beside the rates:** intra-Community supplies and acquisitions of goods and
 services, exports, the domestic reverse charge of art. 2.º, n.º 1 (waste,
 scrap, construction services and the goods of the Código's Anexo I), a
-service received from a supplier outside the Union, an import assessed by
-customs, and the exclusions from the right to deduct of art. 21.º
-(passenger vehicles, fuel, travel and entertainment expenses), modelled as a
-wholly non-deductible tax rather than declared on the return at all, because
-nothing in the Declaração Periódica do IVA reports what art. 21.º excludes.
+service received from a supplier outside the Union, imports, and the
+exclusions from the right to deduct of art. 21.º (passenger vehicles, fuel,
+travel and entertainment expenses), modelled as a wholly non-deductible tax
+rather than declared on the return at all, because nothing in the Declaração
+Periódica do IVA reports what art. 21.º excludes.
+
+**Imports.** The VAT on an import is ordinarily assessed and collected by
+customs; the importer deducts what the customs receipt shows (art. 19.º, n.º 1,
+alínea b), and n.º 2, alínea b)) and declares nothing as liquidated.
+`PT-P-IMP-23` therefore puts the tax in campo 24 alone, and credits it to
+`2781`, the amount owed to the Autoridade Tributária e Aduaneira until the
+customs receipt is paid; the foreign supplier is owed the price of the goods
+only. Campos 18/19 belong to the option of art. 27.º, n.º 8 — a monthly filer
+with its tax affairs in order and only deductible operations may pay import
+VAT on the periodic return instead — and `PT-P-IMP-23-DP` is that case: the
+base in 18, the tax liquidated in 19 and deducted in 24.
 
 **What is not here, and why:**
 
