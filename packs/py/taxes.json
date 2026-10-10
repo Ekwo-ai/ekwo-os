@@ -136,6 +136,55 @@
     }
   },
   {
+    "code": "PY-C-10-EXT",
+    "name": "Servicio prestado desde el exterior, tasa general 10 %, IVA retenido al 100 % y computado como crédito fiscal",
+    "description": "IVA que el contribuyente retiene en su totalidad al pagar un servicio prestado desde el exterior y utilizado en el país por una persona domiciliada en el exterior sin establecimiento en Paraguay, y que integra su IVA Crédito",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2020-01-01",
+    "legal_reference": "Ley N.° 6380/2019, art. 84, numeral 1 — «la asistencia técnica y los demás servicios realizados en el exterior se considerarán desarrollados en el territorio nacional, cuando sean utilizados o aprovechados en el país»; art. 83, numeral 6 — la obligación nace al pago o al vencimiento del pago, lo que ocurra primero; art. 88, numeral 3 — integran el IVA Crédito «las retenciones o percepciones del impuesto efectuadas a los beneficiarios radicados en el exterior, por la realización de operaciones gravadas en territorio paraguayo»; art. 90 — tasa general del 10 %. Decreto N.° 3107/2019, art. 35, numeral 6 — son agentes de retención quienes paguen o acrediten retribuciones por operaciones gravadas prestadas por personas domiciliadas en el exterior; art. 41 — retienen el 100 % del IVA. La retención se documenta con el comprobante de retención del sistema Tesakã y se ingresa como agente de retención, fuera del Formulario N.° 120 (cuenta 2034); el crédito se declara con las compras gravadas al 10 % (casillas 35 y 38). Sin categoría EN 16931 ni código de exención",
+    "source": "ley-6380",
+    "sequence": 125,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "35"
+        },
+        {
+          "type": "tax",
+          "account": "1041",
+          "box": "38"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2034"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "35",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1041",
+          "box": "38",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2034"
+        }
+      ]
+    }
+  },
+  {
     "code": "PY-C-10-NOCRED",
     "name": "Compra gravada, tasa general 10 %, sin derecho a crédito fiscal",
     "description": "Adquisición gravada a la tasa general, destinada exclusivamente a operaciones exoneradas o no alcanzadas por el impuesto",

@@ -292,6 +292,55 @@
     }
   },
   {
+    "code": "SV-P-13-SERVEXT",
+    "name": "Importación de servicios al 13 %, IVA retenido al sujeto no domiciliado y deducido como crédito fiscal",
+    "description": "IVA del 13 % que el contribuyente retiene al pagar un servicio prestado desde el exterior por un sujeto no domiciliado, entera con mandamiento de ingreso y deduce como crédito fiscal en el mismo período",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2004-12-24",
+    "legal_reference": "Ley del Impuesto a la Transferencia de Bienes Muebles y a la Prestación de Servicios, art. 14 — constituye hecho generador la importación e internación de servicios; «existe importación o internación de servicios cuando la actividad que generan los servicios se desarrolla en el exterior y son prestados a un usuario domiciliado en el país que los utiliza en él, tales como: asesorías o asistencias técnicas, marcas, patentes, modelos, informaciones, programas de computación y arrendamiento de bienes muebles corporales»; art. 65 — «las cantidades retenidas de conformidad al artículo 161 del Código Tributario, constituirán crédito fiscal para los agentes de retención, amparados por el mandamiento de ingreso donde conste el pago del impuesto [...] siempre y cuando se declare y entere íntegramente en el mismo período de emisión de los referidos documentos». Código Tributario, art. 161 — retención del 13 % sobre las sumas pagadas a sujetos no domiciliados. La retención se entera con mandamiento de ingreso, fuera del formulario F07 (cuenta 210506); la base y el crédito se declaran en las casillas 77 y 127 del F07. Sin categoría EN 16931 ni código de exención",
+    "source": "liva",
+    "sequence": 95,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "77"
+        },
+        {
+          "type": "tax",
+          "account": "210502",
+          "box": "127"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "210506"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "77",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "210502",
+          "box": "127",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "210506"
+        }
+      ]
+    }
+  },
+  {
     "code": "SV-P-0",
     "name": "Compras internas exentas o no sujetas",
     "description": "Adquisición local de bienes o servicios que no causan impuesto trasladable",

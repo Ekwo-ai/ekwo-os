@@ -180,7 +180,9 @@
     "7721": "Deposits with financial institutions",
     "6291": "Length-of-service compensation (CTS)",
     "776": "Foreign exchange gain",
-    "772": "Earned income"
+    "772": "Earned income",
+    "401115": "IGV – Input tax awaiting application (non-residents)",
+    "40113": "IGV – Services supplied by non-residents"
   },
   "journals": {
     "VEN": "Sales register",
@@ -196,7 +198,8 @@
     "PE-V-EXO": "Sale, exempt",
     "PE-C-18": "Purchase, taxed, 18 %, with input tax credit",
     "PE-C-18-NOCRED": "Purchase, taxed, 18 %, without input tax credit",
-    "PE-C-EXO": "Purchase, not taxed"
+    "PE-C-EXO": "Purchase, not taxed",
+    "PE-C-18-NODOM": "Use in Peru of services supplied by non-residents, 18 %"
   },
   "tax_report_boxes": {
     "100": "Net taxed sales",

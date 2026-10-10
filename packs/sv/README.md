@@ -34,14 +34,35 @@ with it, so every tax is paid in dollars.
 | Exempt services (housing rent, education, public road passenger transport, …) | exempt | art. 46 |
 | Exempt imports | exempt | art. 45 |
 
-Ten taxes: two sale codes at 13% (`SV-S-13-CCF` to a contributor with a
+Eleven taxes: two sale codes at 13% (`SV-S-13-CCF` to a contributor with a
 comprobante de crédito fiscal, `SV-S-13-FAC` to a final consumer with a
 factura), `SV-S-EXE` (exempt), `SV-S-NS` (not subject), three zero-rated export
 codes (goods outside Central America, goods to the Central American region,
 services), `SV-P-13` (domestic purchase, recoverable), `SV-P-13-IMP` (import
-settled at customs, recoverable) and `SV-P-0` (exempt or not-subject purchase).
+settled at customs, recoverable), `SV-P-13-SERVEXT` (service from a
+non-domiciled supplier, withheld and recoverable) and `SV-P-0` (exempt or
+not-subject purchase).
 The two 13% sale codes exist because the return reports the two document types
 in different boxes.
+
+**A service bought from a supplier abroad is an import of services.** Art. 14
+says so in terms that cover a software subscription, hosting or an API:
+*"existe importación o internación de servicios cuando la actividad que
+generan los servicios se desarrolla en el exterior y son prestados a un
+usuario domiciliado en el país que los utiliza en él, tales como: [...]
+programas de computación"*. The buyer withholds 13 % of what it pays the
+non-domiciled supplier (Código Tributario, art. 161) and pays it in with a
+mandamiento de ingreso; art. 65 of the law makes that amount crédito fiscal
+of the withholding agent *"siempre y cuando se declare y entere
+íntegramente en el mismo período de emisión de los referidos documentos"*.
+`SV-P-13-SERVEXT` books both halves in the same month: the credit debited to
+`210502` and declared in boxes 77 (*Importaciones gravadas de servicios*) and
+127 (*Crédito por importación de servicios*), which `PAGAR` and `REMAN` now
+count; the withholding credited to the new `210506` *IVA retenido a sujetos no
+domiciliados por pagar (13 %)*, paid with the mandamiento, outside the F07.
+**A foreign supplier belongs on `210102` *Proveedores del exterior*,** set as
+the contact's payable account; the golden scenario cannot name a contact's
+account, so its supplier abroad lands on `210101`.
 
 ## The return: Formulario F07
 
@@ -65,6 +86,7 @@ every number must be checked against the live form before relying on it.
 | 105, 150 | Total sales, total output tax |
 | 80 → 130 | Domestic purchases → input tax |
 | 75 → 125 | Imports of goods → input tax |
+| 77 → 127 | Imports of services → input tax (read from a version 14 sample of the form, not from the Ministry's copy) |
 | `PAGAR`, `REMAN` | Tax payable / credit carried forward |
 
 `PAGAR` and `REMAN` are the two results the form prints, but their box numbers

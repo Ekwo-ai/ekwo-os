@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "SV",
   "name": "El Salvador",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "schema_min": "20260923110000",
   "seed_sequence": 131,
   "released_at": "2026-10-09",
@@ -14,7 +14,7 @@
         "title": "Ley de Impuesto a la Transferencia de Bienes Muebles y a la Prestación de Servicios (Decreto Legislativo No. 296 del 24 de julio de 1992), con sus reformas — art. 8 y 18 (momento en que se causa el impuesto), 45 y 46 (exenciones), 54 (tasa del 13 %, Decreto Legislativo No. 370 del 8 de junio de 1995), 74 y 75 (exportaciones a tasa cero), 93 y 94 (declaración mensual y plazo)",
         "publisher": "Asamblea Legislativa de la República de El Salvador (texto publicado en el portal de Transparencia Fiscal del Ministerio de Hacienda)",
         "url": "https://www.transparenciafiscal.gob.sv/downloads/pdf/DC9226_Ley_del_Impuesto_a_la_Transferencia_de_Bienes_Muebles_y_a_la_Prestacion_de_Servicios.pdf",
-        "consulted_on": "2026-10-09",
+        "consulted_on": "2026-10-10",
         "kind": "law"
       },
       {

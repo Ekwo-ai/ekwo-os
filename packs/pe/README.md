@@ -105,7 +105,11 @@ Four decisions:
   two have to be distinct accounts in Ekwo (see
   [Ajout 25/09 (2)](../../docs/packs.md) on the format side, and this is the
   same shape Slovakia's pack met on its own single-account 343). Every
-  company may still read its IGV position as the sum of the four.
+  company may still read its IGV position as the sum of the four. A fifth,
+  `401115`, holds the input tax on services from non-residents until it is
+  paid, and the PCGE's own `40113` *IGV – Servicios prestados por no
+  domiciliados* holds the tax owed on them — see *Services used in Peru and
+  supplied by a non-resident*.
 - **Only the customer, supplier and IGV-settlement accounts are
   `reconcilable`.** Peru's `account_templates_third_party_reconcilable`
   constraint requires every account typed `asset_receivable` or
@@ -132,6 +136,7 @@ Four decisions:
 | `PE-C-18` | 18 % | domestic purchase, with input tax credit | 107/108 |
 | `PE-C-18-NOCRED` | 18 %, non-deductible | domestic purchase destined to a non-taxed sale | 113, tax on cost |
 | `PE-C-EXO` | — | domestic purchase, not taxed | 120 |
+| `PE-C-18-NODOM` | 18 % | service supplied by a non-resident, used in Peru | none in the month — paid on Formulario 1662, credited once paid |
 
 **The combined 18 % is one tax code, not two.** The IGV proper (art. 17 of
 the consolidated VAT Act) and the Impuesto de Promoción Municipal (art. 76 of
@@ -166,6 +171,26 @@ no credit and its IGV becomes part of the cost, under art. 69° of the same
 Act. The Formulario Virtual N.° 621 has a box for the base of such a purchase
 (113) and none for the IGV itself, which the pack mirrors with a
 `tax_on_base` posting that carries no box.
+
+**Services used in Peru and supplied by a non-resident.** A software
+subscription, hosting or an API billed from abroad is a *utilización de
+servicios en el país* (IGV Act, art. 1°, inciso b); art. 3°, inciso d)),
+and the Peruvian user is the taxpayer (art. 9°). The obligation is born when
+the supplier's invoice is entered in the Registro de Compras or the fee is
+paid, whichever comes first (art. 4°, inciso c)). The user pays the tax on
+its own, with the boleta of Formulario Virtual N.° 1662, not through
+Formulario 621, and art. 21° allows the credit *"únicamente cuando el
+Impuesto correspondiente hubiera sido pagado"*; art. 6°, numeral 11, of the
+Reglamento places it in the period in which the invoice and the payment
+document are both entered. `PE-C-18-NODOM` books both halves at 18 %: the
+tax owed credited to `40113`, the credit debited to `401115`, awaiting
+application, and no box of Formulario 621 in the month of the invoice. When
+the tax is paid, the bookkeeper moves the amount from `401115` to `401112`
+by a manual entry and declares it in boxes 107 and 108 of that period's
+return — the format cannot date a box on a payment that is not the
+document's, the same limit `packs/ar/` documents. The chart carries no
+account for suppliers abroad (group 42 is not split by residence), so a
+foreign supplier sits on `4212` with the others.
 
 ## The declaration
 
@@ -203,12 +228,13 @@ taxonomy of a Peruvian filing is mapped here.
 
 ## The golden quarter
 
-A trading company, January to March 2026, filing monthly: twelve documents
+A trading company, January to March 2026, filing monthly: thirteen documents
 and five payments. It sells at 18 % with a partial return, exports twice,
 sells one exempt line (books, Apéndice I); it buys at 18 % with a full
 credit, buys a good destined to the exempt sale (no credit, art. 18°,
 inciso b)), buys from an exempt supplier twice, receives one purchase credit
-note, and settles four of the invoices while leaving one payment
+note, subscribes to a cloud service from a non-resident (IGV left awaiting
+payment on `401115`), and settles four of the invoices while leaving one payment
 unmatched, on account. Every figure of `golden/vat_return.json` was checked
 by hand against the postings before the runner confirmed it; see the
 worked figures in the pull request that introduced this pack.

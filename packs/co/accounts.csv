@@ -46,6 +46,7 @@ code,parent,type,reconcilable,name,sequence
 23,,liability_current,false,Cuentas por pagar,450
 2335,23,liability_current,false,Costos y gastos por pagar,460
 2365,23,liability_current,false,Retención en la fuente,470
+2367,23,liability_current,false,Impuesto a las ventas retenido,475
 2370,23,liability_current,false,Retenciones y aportes de nómina,480
 2380,23,liability_current,false,Acreedores varios,490
 24,,liability_current,false,Impuestos gravámenes y tasas,500

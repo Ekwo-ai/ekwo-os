@@ -182,6 +182,11 @@
               "kind": "account_code",
               "code_from": "401114",
               "sequence": 20
+            },
+            {
+              "kind": "account_code",
+              "code_from": "401115",
+              "sequence": 30
             }
           ],
           "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara. El plan contable no separa cuentas de dos dígitos para el crédito fiscal y el saldo a favor: 401112 y 401114 son subcuentas de la cuenta 40111 «IGV – Cuenta propia» abiertas por este paquete — véase el README.",
@@ -325,6 +330,11 @@
               "kind": "code_prefix",
               "code_from": "403",
               "sequence": 40
+            },
+            {
+              "kind": "account_code",
+              "code_from": "40113",
+              "sequence": 50
             }
           ],
           "legal_reference": "Resolución N.° 002-2019-EF/30 del Consejo Normativo de Contabilidad — Plan Contable General Empresarial modificado 2019, cuyas cuentas de mayor (dos dígitos) agrupan los elementos 1 a 7; la correspondencia con las líneas del estado es la que aquí se declara. 401111 y 401113 son subcuentas de 40111 abiertas por este paquete; 40171 y 403 son cuentas del propio agrupador (impuesto a la renta de tercera categoría, ESSALUD, ONP).",

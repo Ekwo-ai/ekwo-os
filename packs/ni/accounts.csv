@@ -21,6 +21,7 @@ code,parent,type,reconcilable,name,sequence
 1142,114,asset_current,true,IVA - Saldo a favor por cobrar,200
 1143,114,asset_current,false,Anticipos de IR y pago mínimo definitivo,210
 1144,114,asset_current,false,IR retenido por terceros,220
+1145,114,asset_current,false,IVA autotrasladado por acreditar,225
 115,110,asset_prepayments,false,Gastos pagados por anticipado,230
 116,110,asset_current,false,Inventarios,240
 1161,116,asset_current,false,Mercaderías,250

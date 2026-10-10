@@ -57,6 +57,14 @@
       "source": "form300"
     },
     {
+      "box": "49",
+      "kind": "base",
+      "name": "Importaciones de servicios",
+      "sequence": 55,
+      "legal_reference": "Formulario 300, casilla 49 — valor de los servicios importados en el período, entre ellos los prestados desde el exterior a un usuario en el país (Estatuto Tributario, art. 420, parágrafo 3)",
+      "source": "form300"
+    },
+    {
       "box": "50",
       "kind": "base",
       "name": "De bienes gravados a la tarifa del 5 %",
@@ -147,12 +155,20 @@
       "source": "form300"
     },
     {
+      "box": "78",
+      "kind": "tax",
+      "name": "IVA retenido por servicios prestados en Colombia por no domiciliados o no residentes",
+      "sequence": 165,
+      "legal_reference": "Formulario 300, casilla 78 — el IVA contabilizado como descontable que proviene de la retención asumida al contratar servicios gravados con personas no domiciliadas o no residentes (Estatuto Tributario, arts. 437-2, numeral 3, y 485, literal b))",
+      "source": "form300"
+    },
+    {
       "box": "81",
       "kind": "total",
       "name": "Total impuestos descontables",
       "sequence": 170,
-      "plus": ["77"],
-      "legal_reference": "Formulario 300, casilla 81 — suma de la casilla 77 (total impuesto pagado o facturado), la casilla 78 (IVA retenido por servicios de no domiciliados) y la casilla 79 (IVA de devoluciones en ventas), menos la casilla 80 (ajuste por pérdidas, hurto o castigo de inventarios); este paquete no declara las casillas 78, 79 y 80",
+      "plus": ["77", "78"],
+      "legal_reference": "Formulario 300, casilla 81 — suma de la casilla 77 (total impuesto pagado o facturado), la casilla 78 (IVA retenido por servicios de no domiciliados) y la casilla 79 (IVA de devoluciones en ventas), menos la casilla 80 (ajuste por pérdidas, hurto o castigo de inventarios); este paquete no declara las casillas 79 y 80",
       "source": "form300"
     },
     {

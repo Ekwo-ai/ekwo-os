@@ -136,6 +136,7 @@ electricity of Ley No. 971 ended in 2020 and is not modelled.
 | `NI-C-15-NOCRED` | 15 % | purchase, not creditable | `CNOCRED` | art. 120 |
 | `NI-C-EXO` | 0 % | exempt or untaxed purchase | `CEXO` | arts. 127, 136 |
 | `NI-C-IMP-15` | 15 % | import | `IMP` / `CFIMP` | arts. 107, 128-130 |
+| `NI-C-NR-15` | 15 % | service from a non-resident, self-assessed (*autotraslación*) | `SNR` / `AUTOTRAS`; credit the following month | arts. 115, 134; Reglamento art. 79 |
 
 The export is **a taxable supply at 0 %**, not an exempt one (art. 107, numeral
 3, lists exports among the taxed acts), so the IVA paid on its inputs stays
@@ -146,6 +147,33 @@ as the neighbouring Central American packs do: the objective exemptions of
 article 127 are lists drawn by ministerial agreements and published in La
 Gaceta, which this pack did not transcribe, and the exact numeral of an exempt
 supply belongs in the entry, not in the code.
+
+### Services bought from a non-resident
+
+A software subscription, hosting or an API billed by a supplier abroad that
+is not a *responsable recaudador* in Nicaragua carries no Nicaraguan IVA on
+its invoice, and the buyer owes it: art. 115 of Ley 822 has whoever pays the
+service *autotrasladar* the tax, and art. 134, third paragraph, says the same
+of general, professional and technical services of a non-resident. The
+Reglamento, art. 79, settles the rest: the rate applies *"al valor total de
+la contraprestación"* (before the income-tax withholding), the tax is
+declared and paid *"en el mismo formulario y plazo otorgado para sus demás
+operaciones gravadas"*, and it is *"un débito fiscal para el mes en que lo
+autotraslade y [...] un crédito fiscal para el mes siguiente en que se pagó
+el débito fiscal"*.
+
+`NI-C-NR-15` books it that way. In the month of the document the tax is
+credited to `2131` *IVA - Débito fiscal* and declared in `AUTOTRAS`, which
+`TOTAL` adds to the débito fiscal, with the base in `SNR`; it is debited to
+the new `1145` *IVA autotrasladado por acreditar*, with no crédito fiscal box
+that month. The format cannot date a box one period after its document — the
+same limit `packs/ar/` meets with the tax on services from abroad — so in the
+month after the débito was paid, the bookkeeper moves the amount from `1145`
+to `1141` by a manual entry and adds it to the crédito fiscal of that return
+by hand. **A foreign supplier belongs on `2112` *Proveedores del exterior*,**
+set as the contact's payable account; the golden scenario cannot name a
+contact's account, so its supplier abroad lands on `2111`. The income tax
+withheld on the same payment (art. 53) is outside this pack.
 
 ## The return
 
@@ -186,6 +214,10 @@ None of these is patched in the core; each is also written up in
   credits only the proportional part of IVA that cannot be assigned to either.
   The pack offers the two extremes (`NI-C-15` and `NI-C-15-NOCRED`) and no
   ratio.
+- **A credit one period after its document.** The IVA autotrasladado on a
+  service from a non-resident becomes crédito fiscal only in the month after
+  its débito was paid (Reglamento, art. 79); `NI-C-NR-15` parks it on `1145`
+  and the move to `1141` is a manual entry.
 - **The refund procedure** for zero-rated exports (art. 140) is an
   administrative claim, not a rate or a box.
 - **Tax point.** The law takes the first of the invoice, the payment and the

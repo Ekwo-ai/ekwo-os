@@ -12,7 +12,8 @@
   "contacts": [
     { "ref": "client-pa", "name": "Distribuidora Istmeña, S.A.", "type": "customer", "country": "PA" },
     { "ref": "client-us", "name": "Coastal Trading LLC", "type": "customer", "country": "US" },
-    { "ref": "supplier-pa", "name": "Suministros del Pacífico, S.A.", "type": "supplier", "country": "PA" }
+    { "ref": "supplier-pa", "name": "Suministros del Pacífico, S.A.", "type": "supplier", "country": "PA" },
+    {"ref": "supplier-exterior", "name": "Isthmus Cloud Services Inc.", "type": "supplier", "country": "US"}
   ],
   "documents": [
     {
@@ -74,6 +75,22 @@
       "ref": "C5", "type": "purchase_invoice", "contact": "supplier-pa", "date": "2026-03-15",
       "why": "Una compra exenta, sin ITBMS facturado por el proveedor: la base de la casilla 39.",
       "lines": [{ "name": "Alimentos exentos", "quantity": 1, "unit_price": 300, "tax": "PA-P-EXE", "account": "6170" }]
+    },
+    {
+      "ref": "C6",
+      "type": "purchase_invoice",
+      "contact": "supplier-exterior",
+      "date": "2026-03-18",
+      "why": "Una suscripción de software prestada por una entidad del exterior sin establecimiento en Panamá: el receptor retiene el 100 % del ITBMS (cuenta 240502, a enterar con el Formulario 4331) y lo usa como crédito fiscal en el mes de la retención (casillas 222 y 223).",
+      "lines": [
+        {
+          "name": "Suscripción mensual de software en la nube",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "PA-P-7-EXT",
+          "account": "6170"
+        }
+      ]
     }
   ],
   "payments": [

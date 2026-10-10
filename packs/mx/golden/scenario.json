@@ -87,6 +87,12 @@
       "name": "Fletes Rápidos del Centro, S.A. de C.V.",
       "type": "supplier",
       "country": "MX"
+    },
+    {
+      "ref": "proveedor-extranjero",
+      "name": "Sierra Cloud Services Inc.",
+      "type": "supplier",
+      "country": "US"
     }
   ],
   "documents": [
@@ -343,6 +349,22 @@
           "unit_price": 60,
           "tax": "MX-P-0",
           "account": "502.01"
+        }
+      ]
+    },
+    {
+      "ref": "C9",
+      "type": "purchase_invoice",
+      "contact": "proveedor-extranjero",
+      "date": "2026-04-20",
+      "why": "Una suscripción de software en la nube prestada por un residente en el extranjero y aprovechada en México (Ley del IVA, art. 24, fracción V): el IVA de la importación de servicios se causa en «IVA a cargo a la tasa del 16%» y se acredita en el campo de importación de la misma declaración de abril (Reglamento, art. 50), sin efecto neto.",
+      "lines": [
+        {
+          "name": "Suscripción mensual de software en la nube",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "MX-P-IMPSERV-16",
+          "account": "601.60"
         }
       ]
     }

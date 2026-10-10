@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GT",
   "name": "Guatemala",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "schema_min": "20260929141500",
   "seed_sequence": 106,
   "released_at": "2026-09-26",
@@ -123,6 +123,13 @@
     "fiscal_year_default": "calendar"
   },
   "languages": [],
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Ley del Impuesto al Valor Agregado (Decreto 27-92), art. 3, numeral 2) — el impuesto es generado por «la prestación de servicios en el territorio nacional»: un servicio que un no domiciliado presta íntegramente desde el exterior, como una suscripción de software o un alojamiento en la nube, no es hecho generador, y la Superintendencia de Administración Tributaria lo concluye así en su Criterio 4-2017. Sólo cuando el no domiciliado presta el servicio en Guatemala es sujeto pasivo «el beneficiario del servicio, si el que efectúa la prestación no está domiciliado en Guatemala» (art. 6, numeral 3)); ese caso, que no es una compra al exterior sino un servicio prestado en el país, no tiene código en este paquete",
+      "source": "ley-iva"
+    }
+  ],
   "journals": [
     { "code": "VEN", "type": "sales", "name": "Ventas", "sequence": 10 },
     { "code": "COM", "type": "purchase", "name": "Compras", "sequence": 20 },

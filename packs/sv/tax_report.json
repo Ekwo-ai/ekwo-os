@@ -148,17 +148,34 @@
       "source": "f07"
     },
     {
+      "box": "77",
+      "kind": "base",
+      "name": "Importaciones gravadas de servicios",
+      "sequence": 152,
+      "legal_reference": "Formulario F07, casilla 77 — servicios importados en el sentido del art. 14 de la Ley del IVA, prestados desde el exterior a un usuario domiciliado que los utiliza en el país",
+      "source": "f07"
+    },
+    {
+      "box": "127",
+      "kind": "tax",
+      "name": "Crédito por importación de servicios",
+      "sequence": 154,
+      "legal_reference": "Formulario F07, casilla 127 — crédito fiscal de las importaciones de servicios de la casilla 77; Ley del IVA, art. 65 — lo retenido conforme al art. 161 del Código Tributario es crédito fiscal del agente en el mismo período, enterado con mandamiento de ingreso",
+      "source": "f07"
+    },
+    {
       "box": "PAGAR",
       "kind": "total",
       "name": "Impuesto a pagar",
       "sequence": 160,
-      "legal_reference": "Diferencia entre el total de débitos fiscales (150) y el crédito fiscal del período (125 más 130), cuando es mayor que cero (Ley del IVA, art. 93, inciso segundo — la declaración liquida el impuesto a pagar). El formulario F07 imprime este resultado; la numeración de su casilla no pudo verificarse en una fuente oficial legible, por lo que este paquete lo identifica con un código mnemotécnico y no inventa un número. No modela el remanente de períodos anteriores, las retenciones y percepciones sufridas (art. 162 y 163 del Código Tributario) ni el anticipo del 2 % por pagos con tarjeta: véase el README",
+      "legal_reference": "Diferencia entre el total de débitos fiscales (150) y el crédito fiscal del período (125, 127 y 130), cuando es mayor que cero (Ley del IVA, art. 93, inciso segundo — la declaración liquida el impuesto a pagar). El formulario F07 imprime este resultado; la numeración de su casilla no pudo verificarse en una fuente oficial legible, por lo que este paquete lo identifica con un código mnemotécnico y no inventa un número. No modela el remanente de períodos anteriores, las retenciones y percepciones sufridas (art. 162 y 163 del Código Tributario) ni el anticipo del 2 % por pagos con tarjeta: véase el README",
       "source": "liva",
       "plus": [
         "150"
       ],
       "minus": [
         "125",
+        "127",
         "130"
       ],
       "floor_zero": true
@@ -168,10 +185,11 @@
       "kind": "total",
       "name": "Remanente de crédito fiscal",
       "sequence": 170,
-      "legal_reference": "Diferencia entre el crédito fiscal del período (125 más 130) y el total de débitos fiscales (150), cuando es mayor que cero (Ley del IVA, arts. 67 y 76 — el remanente se deduce en los períodos siguientes o, en el caso del exportador, puede acreditarse o reintegrarse). La numeración de su casilla en el formulario F07 no pudo verificarse; este paquete lo identifica con un código mnemotécnico",
+      "legal_reference": "Diferencia entre el crédito fiscal del período (125, 127 y 130) y el total de débitos fiscales (150), cuando es mayor que cero (Ley del IVA, arts. 67 y 76 — el remanente se deduce en los períodos siguientes o, en el caso del exportador, puede acreditarse o reintegrarse). La numeración de su casilla en el formulario F07 no pudo verificarse; este paquete lo identifica con un código mnemotécnico",
       "source": "liva",
       "plus": [
         "125",
+        "127",
         "130"
       ],
       "minus": [

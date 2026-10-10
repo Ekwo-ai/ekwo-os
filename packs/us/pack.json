@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "US",
   "name": "United States",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "schema_min": "20260929141500",
   "seed_sequence": 15,
   "released_at": "2026-10-01",
@@ -240,6 +240,14 @@
         "url": "https://www.irs.gov/instructions/i1120",
         "consulted_on": "2026-10-01",
         "kind": "form"
+      },
+      {
+        "key": "cdtfa-reg-1502",
+        "title": "Sales and Use Tax Regulation 1502, Computers, Programs, and Data Processing — title 18, division 2, chapter 4, article 2 of the California Code of Regulations; subdivision (f)(1)(D), a prewritten program transferred by remote telecommunications",
+        "publisher": "California Department of Tax and Fee Administration — Business Taxes Law Guide",
+        "url": "https://www.cdtfa.ca.gov/lawguides/vol1/sutr/1502.html",
+        "consulted_on": "2026-10-10",
+        "kind": "regulation"
       }
     ]
   },
@@ -358,5 +366,12 @@
       "ach",
       "csv"
     ]
-  }
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "The United States levies no value added tax, and California's Sales and Use Tax Law taxes tangible personal property: section 6051 the retail sale of it, section 6201 its storage, use or consumption in the State. A service is not tangible personal property, and Regulation 1502, subdivision (f)(1)(D), adds that \"the sale or lease of a prewritten program is not a taxable transaction if the program is transferred by remote telecommunications from the seller's place of business, to or through the purchaser's computer and the purchaser does not obtain possession of any tangible personal property\". A Californian business buying a service, hosting or a software subscription from a supplier abroad therefore owes neither sales tax nor use tax on it; goods it buys from a seller who collected nothing take US-CA-P-USE-725, which is a use tax and not a reverse charge",
+      "source": "ca-rtc"
+    }
+  ]
 }

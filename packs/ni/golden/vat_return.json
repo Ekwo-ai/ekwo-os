@@ -18,12 +18,14 @@
       "from": "2026-02-01",
       "to": "2026-02-28",
       "boxes": {
+        "SNR:base": "5000.00",
+        "AUTOTRAS:tax": "750.00",
         "VEXO:base": "5000.00",
         "CG:base": "-600.00",
         "CF:tax": "-90.00",
         "CNOCRED:base": "3000.00",
         "CEXO:base": "2500.00",
-        "TOTAL:total": "90.00"
+        "TOTAL:total": "840.00"
       }
     },
     {

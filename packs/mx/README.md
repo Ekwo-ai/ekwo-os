@@ -158,6 +158,7 @@ export article and the exempt articles.
 | `MX-P-16-RET23` | 16 %, two thirds withheld | fees, rent, commissions from individuals | from 1.1.2010 | P16 / A16 |
 | `MX-P-16-RET4` | 16 %, 4 % withheld | road freight received | from 1.1.2010 | P16 / A16 |
 | `MX-P-IMP-16` | 16 % | import, paid with the *pedimento* | from 1.1.2010 | PIM / AIM |
+| `MX-P-IMPSERV-16` | 16 % | services from a non-resident, caused and credited in one return | from 1.1.2010 | PIM / AIM / C16 |
 | `MX-P-0` | 0 % | | from 1.1.2010 | P0 |
 | `MX-P-EXE` | — | exempt | from 1.1.2010 | PEX |
 
@@ -199,9 +200,33 @@ retenido*. Three limits, all written in the taxes themselves:
 - the **ISR** withheld on the same payments (10 %, LISR articles 106 and 116)
   cannot sit on the same line, because a line carries one tax.
 
+**Services bought from a non-resident.** A software subscription, hosting or
+an API billed from abroad is an import of services: LIVA art. 24, fr. V,
+treats as one *"el aprovechamiento en territorio nacional de los servicios a
+que se refiere el artículo 14, cuando se presten por no residentes en el
+país"*, art. 1o., fr. IV, makes the company that imports pay the tax, and
+art. 26, fr. IV, with art. 17, dates it on the actual payment of the price. The
+company causes the tax and, under article 50 of the Regulation, may credit it
+*"en la misma declaración de pago mensual a que correspondan dichas
+importaciones"* — the so-called *IVA virtual*, neutral for a business whose
+activities are all taxed. `MX-P-IMPSERV-16` books both halves: 16 % debited to
+`118.02` *IVA acreditable de importación pagado* and credited to `208.01` *IVA
+trasladado cobrado*. On the return, the base and the credit go to the import
+fields (`PIM`, `AIM`, which the form names *importación de bienes y
+servicios*), and the tax caused to *IVA a cargo a la tasa del 16%* (`C16`),
+where the platform takes it through the *DETALLE* button. Two limits: Ekwo
+dates the tax on the document, so a bookkeeper whose payment falls in another
+month dates the document on the payment; and the field the caused tax lands
+in is read from professional commentary on the 2024 application, not from the
+SAT's own filling guide — a reviewer should confirm it. A foreign supplier of
+digital services registered with the SAT under Chapter III Bis charges the
+IVA on its own receipt: that purchase is `MX-P-16`, not this code. **A foreign
+supplier belongs on `201.02` *Proveedores extranjeros*,** set as the
+contact's payable account; the golden scenario cannot name a contact's
+account, so its supplier abroad lands on `201.01`.
+
 **Not here:** IEPS (the special tax on production and services), the import
-of intangibles and services from non-residents (LIVA art. 24, fr. II, III and
-V), the proportional crediting of articles 5o., fraction V, and 5o.-B for a
+of intangibles (LIVA art. 24, fr. II and III), the proportional crediting of articles 5o., fraction V, and 5o.-B for a
 business with exempt activities, the *RESICO* and the other regimes of individuals,
 and every ISR computation.
 
@@ -254,13 +279,14 @@ declaration and the ISSIF have their own formats, none mapped.
 ## The golden year
 
 A trading company, *persona moral*, filing monthly, January to April 2026:
-16 documents and 11 payments. It sells at 16 % with one invoice collected in
+17 documents and 11 payments. It sells at 16 % with one invoice collected in
 halves, sells from a Tijuana establishment at 8 %, exports, sells at 0 % and
 takes back part of it, invoices freight to a customer who withholds 4 %,
 leaves one invoice uncollected; it buys at 16 %, rents premises from an
 individual and withholds two thirds, imports with a *pedimento*, buys at 8 %
 and pays two months later, receives freight and withholds 4 %, buys exempt
-and 0 % goods, receives a credit note and pays an advance with no invoice.
+and 0 % goods, subscribes to a cloud service from a non-resident, receives a
+credit note and pays an advance with no invoice.
 
 Credit notes carry non-cash-basis taxes on purpose: the scenario format
 refuses to match a refund to a credit note, and a cash-basis credit note

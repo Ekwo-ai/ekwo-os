@@ -83,6 +83,7 @@ code,parent,type,reconcilable,name,sequence
 210503,2105,liability_current,true,IVA por pagar del período,820
 210504,2105,liability_current,false,IVA retenido a proveedores por pagar (1 %),830
 210505,2105,liability_current,false,IVA percibido a clientes por pagar (1 %),840
+210506,2105,liability_current,false,IVA retenido a sujetos no domiciliados por pagar (13 %),845
 2106,21,liability_current,false,Otras cuentas por pagar,850
 210601,2106,liability_current,false,Anticipos de clientes,860
 210602,2106,liability_current,false,Dividendos por pagar,870

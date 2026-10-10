@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EC",
   "name": "Ecuador",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "schema_min": "20260923110000",
   "seed_sequence": 101,
   "released_at": "2026-09-26",
@@ -71,6 +71,14 @@
         "publisher": "Servicio de Rentas Internas (SRI) — SRinforma",
         "url": "https://www.sri.gob.ec/o/sri-portlet-biblioteca-alfresco-internet/descargar/e48abc39-3dee-49d2-93d7-3cbe5d01c704/Art.+19+Contabilidad+y+Estados+Financieros.pdf",
         "consulted_on": "2026-09-26",
+        "kind": "guidance"
+      },
+      {
+        "key": "instructivo104",
+        "title": "Instructivo Formulario 104 — Declaración del Impuesto al Valor Agregado (septiembre de 2017)",
+        "publisher": "Servicio de Rentas Internas",
+        "url": "https://www.sri.gob.ec/o/sri-portlet-biblioteca-alfresco-internet/descargar/6485dd98-aff4-40bd-a612-1f7948f2db7a/Instructivo+Formulario+104.pdf",
+        "consulted_on": "2026-10-10",
         "kind": "guidance"
       }
     ]

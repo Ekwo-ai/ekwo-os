@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "HN",
   "name": "Honduras",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "schema_min": "20260929141500",
   "seed_sequence": 130,
   "released_at": "2026-10-09",
@@ -115,6 +115,13 @@
     "fiscal_year_default": "calendar"
   },
   "languages": [],
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Ley del Impuesto sobre Ventas (Decreto-Ley 24), art. 1 — el impuesto grava «las ventas realizadas en todo el territorio de la República» y se aplica en la etapa de importación y en cada etapa de venta de las mercaderías o servicios; la importación que la ley grava en aduana es la de mercaderías, y ningún artículo hace responsable al comprador hondureño de un servicio prestado íntegramente desde el exterior por un no domiciliado, como una suscripción de software o un alojamiento en la nube. Lo que alcanza al pago es la retención del Impuesto sobre la Renta a no residentes (Ley del Impuesto sobre la Renta, art. 5), fuera de este paquete",
+      "source": "ley-isv"
+    }
+  ],
   "journals": [
     {
       "code": "VEN",

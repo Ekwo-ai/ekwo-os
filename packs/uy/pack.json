@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "UY",
   "name": "Uruguay",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "schema_min": "20260923110000",
   "seed_sequence": 100,
   "released_at": "2026-09-26",
@@ -14,7 +14,7 @@
         "title": "Texto Ordenado 2023 (Decreto N° 101/024, de 4 de abril de 2024), Título 10 — Impuesto al Valor Agregado (IVA), actualizado a diciembre de 2025",
         "publisher": "Dirección General Impositiva — Centro de Información Oficial (IMPO)",
         "url": "https://www.impo.com.uy/bases/todgi-2023/10-2024",
-        "consulted_on": "2026-09-26",
+        "consulted_on": "2026-10-10",
         "kind": "law"
       },
       {
@@ -124,6 +124,13 @@
     }
   },
   "languages": [],
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Texto Ordenado DGI 2023, Título 10, art. 5 — «estarán gravadas las entregas de bienes y las prestaciones de servicios realizadas en el territorio nacional»: un servicio que un no residente presta desde el exterior, como un asesoramiento o un servicio técnico, no es objeto del impuesto, y ningún artículo hace contribuyente al receptor uruguayo; la Dirección General Impositiva lo responde así en la Consulta N.° 6217. La excepción del cuarto inciso del mismo artículo — los servicios prestados a través de Internet o plataformas que se consumen o utilizan económicamente en el país, reglamentados por el Decreto N.° 144/018 — hace contribuyente al prestador no residente, no al comprador; la retención que ese decreto impone a quien los paga no es un impuesto del comprador y no tiene código en este paquete",
+      "source": "to2023-t10"
+    }
+  ],
   "journals": [
     { "code": "VEN", "type": "sales", "name": "Libro de Ventas", "sequence": 10 },
     { "code": "COM", "type": "purchase", "name": "Libro de Compras", "sequence": 20 },

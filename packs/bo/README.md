@@ -185,6 +185,21 @@ enter the crédito fiscal computation and it does not enter casilla 11
 (compras totales), which this pack does not declare because nothing in the
 Formulario 200's own formulas reads it.
 
+**A service bought from a supplier abroad carries no Bolivian IVA, and this
+pack has no code for it — by the law, not by omission.** Ley N.° 843,
+art. 1°, inciso b), taxes *"los contratos de obras, de prestación de servicios
+y toda otra prestación, cualquiera fuere su naturaleza, realizadas en el
+territorio de la Nación"*; a software subscription or hosting rendered from
+abroad is not performed in the territory, and no article makes the Bolivian
+buyer the taxpayer of it. `pack.json` says so in `not_taxed`, with that
+article. What does reach the payment is the Impuesto sobre las Utilidades de
+las Empresas for beneficiaries abroad (IUE-BE), which the payer withholds
+under art. 51° — an income tax outside this pack. A 2021 bill to extend the
+IVA to digital services supplied from abroad passed the Cámara de Diputados
+and was never enacted, as far as the sources read on 10 October 2026 show;
+a reviewer should confirm that nothing has replaced it since. The purchase is
+booked with no tax code.
+
 **The Impuesto a las Transacciones (IT) is not a code of this pack.** Ley
 N.° 843, Título VI (arts. 72° to 79°), levies a 3 % tax on the gross income
 of virtually every economic activity, cumulative at every stage — it is not

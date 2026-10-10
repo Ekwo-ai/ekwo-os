@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "PY",
   "name": "Paraguay",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "schema_min": "20260923110000",
   "seed_sequence": 103,
   "released_at": "2026-09-26",
@@ -14,7 +14,7 @@
         "title": "Ley N° 6.380/2019, De Modernización y Simplificación del Sistema Tributario Nacional — Libro III, Impuesto al Valor Agregado (IVA), arts. 80 a 103",
         "publisher": "Dirección Nacional de Ingresos Tributarios (DNIT)",
         "url": "https://www.dnit.gov.py/documents/20123/399318/LEY+6380-2019.pdf/7437353b-7f7e-28e6-c41a-da57f1af1439?t=1708599743388",
-        "consulted_on": "2026-09-26",
+        "consulted_on": "2026-10-10",
         "kind": "law"
       },
       {
@@ -71,6 +71,14 @@
         "publisher": "Dirección Nacional de Ingresos Tributarios (DNIT)",
         "url": "https://www.dnit.gov.py/en/web/portal-institucional/w/resolucion-general-n-38-20",
         "consulted_on": "2026-09-26",
+        "kind": "regulation"
+      },
+      {
+        "key": "decreto-3107",
+        "title": "Decreto N.° 3107/2019 — Por el cual se reglamenta el Impuesto al Valor Agregado (IVA) establecido en la Ley N.° 6380/2019",
+        "publisher": "Poder Ejecutivo — texto en BaseLegal",
+        "url": "https://baselegal.com.py/docs/7286dcf5-2988-11ea-a1fb-525400c761ca",
+        "consulted_on": "2026-10-10",
         "kind": "regulation"
       }
     ]

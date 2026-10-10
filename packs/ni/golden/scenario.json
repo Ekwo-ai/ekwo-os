@@ -64,6 +64,12 @@
       "name": "Agencia Aduanera Corinto, S.A.",
       "type": "supplier",
       "country": "NI"
+    },
+    {
+      "ref": "supplier-exterior",
+      "name": "Lakeside Cloud Software Inc.",
+      "type": "supplier",
+      "country": "US"
     }
   ],
   "documents": [
@@ -272,6 +278,22 @@
           "unit_price": 20000,
           "tax": "NI-C-IMP-15",
           "account": "511"
+        }
+      ]
+    },
+    {
+      "ref": "C8",
+      "type": "purchase_invoice",
+      "contact": "supplier-exterior",
+      "date": "2026-02-12",
+      "why": "Una suscripción de software prestada por un no residente (Ley No. 822, art. 115): el IVA autotrasladado es débito fiscal de febrero (casilla AUTOTRAS) y espera en la cuenta 1145 hasta el mes siguiente al pago de ese débito (Reglamento, art. 79), sin crédito fiscal en febrero.",
+      "lines": [
+        {
+          "name": "Suscripción mensual de software en la nube",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "NI-C-NR-15",
+          "account": "5315"
         }
       ]
     }

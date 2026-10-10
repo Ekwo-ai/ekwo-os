@@ -71,6 +71,12 @@
       "name": "Servicios Exentos, S.A. de C.V.",
       "type": "supplier",
       "country": "SV"
+    },
+    {
+      "ref": "sup-exterior",
+      "name": "Volcano Cloud Software Inc.",
+      "type": "supplier",
+      "country": "US"
     }
   ],
   "documents": [
@@ -295,6 +301,22 @@
           "unit_price": 9000.0,
           "tax": "SV-P-13",
           "account": "5102"
+        }
+      ]
+    },
+    {
+      "ref": "C5",
+      "type": "purchase_invoice",
+      "contact": "sup-exterior",
+      "date": "2026-02-10",
+      "why": "Una suscripción de software prestada desde el exterior a la empresa, que la utiliza en el país (Ley del IVA, art. 14): el 13 % se retiene al no domiciliado (cuenta 210506, a enterar con mandamiento de ingreso) y se deduce como crédito fiscal del mismo período (art. 65; casillas 77 y 127).",
+      "lines": [
+        {
+          "name": "Suscripción mensual de software en la nube",
+          "quantity": 1,
+          "unit_price": 400.0,
+          "tax": "SV-P-13-SERVEXT",
+          "account": "5208"
         }
       ]
     }

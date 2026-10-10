@@ -70,6 +70,7 @@ reasoning above for why an original chart was the honest choice instead.
 | `EC-P-15` | 15 % | domestic purchase, goods and services | 500 / 520 |
 | `EC-P-15-FIJO` | 15 % | domestic purchase, fixed assets | 501 / 521 |
 | `EC-P-0` | 0 % | domestic purchase | 507 |
+| `EC-P-15-IMPSERV` | 15 % | import of a service from a non-resident, 100 % withheld by the buyer | 503 / 523 / 731 |
 
 **Tarifa cero is not one bucket, and the format tells the two halves of it
 apart by treatment.** LRTI arts. 55 and 56 tax a long list of goods and
@@ -104,6 +105,25 @@ for a fixed asset) carries a domestic purchase of either a good or a service
 at the general rate: the box a purchase reaches depends on whether it is a
 fixed asset, not on what was bought. `EC-P-15` therefore serves a purchased
 service as much as a purchased good.
+
+**A service bought from a supplier abroad is an import of services.** A
+software subscription, hosting or an API billed by a non-resident is one in
+the sense of LRTI art. 70, third paragraph. The buyer issues a *liquidación
+de compra de bienes y prestación de servicios*, withholds **all** of the IVA
+as a withholding agent (art. 63), and takes the same IVA as crédito
+tributario (art. 66). The SRI's instructions for Formulario 104 (September
+2017) put the import in boxes 503 and 523 and say: *"Recuerde consignar en
+la casilla 731 la totalidad del impuesto que debió ser retenido en estos
+pagos"*. `EC-P-15-IMPSERV` books exactly that, in the same month: the
+credit debited to `2.1.04.02` and declared in 523, which box 564 now adds,
+and the withholding credited to `2.1.03.02` *Retenciones en la fuente de IVA
+por pagar* and declared in 731. The withholding is paid with the return
+whatever the balance of boxes 601/602, since a withholding is never offset by
+the withholder's own credit. **A foreign supplier belongs on `2.1.01.02`
+*Proveedores del exterior*,** set as the contact's payable account; the
+golden scenario cannot name a contact's account, so its supplier abroad
+lands on `2.1.01.01`. Box 731 is the only withholding box this pack
+declares; the withholding regimes below remain outside it.
 
 **Not here: the withholding regimes.** Ecuador layers two withholding
 mechanisms on top of the taxes above, and neither is modelled:
@@ -161,12 +181,14 @@ boxes: the ones its taxes actually reach.
 ## The golden year
 
 A trading company (comercializadora), filing monthly, January and February
-2026: eleven documents and five payments. It sells general merchandise at
+2026: twelve documents and five payments. It sells general merchandise at
 15 %, bread at tarifa cero with no right to credit, office supplies to a
 municipal government at tarifa cero with a right to credit, and exports
 goods at tarifa cero; it credits back part of the 15 % sale. It buys general
 merchandise and bread for resale, a computer as a fixed asset, all at the
-general rate except the bread; it credits back part of a purchase. The first
+general rate except the bread; it credits back part of a purchase, and in February subscribes to a cloud
+service from a non-resident, with the IVA withheld in full (boxes 503, 523
+and 731). The first
 period ends owing tax (box 601); the second period is built so its purchases
 outweigh its sales, to exercise box 602 (crédito tributario, saldo a favor)
 rather than only box 601.

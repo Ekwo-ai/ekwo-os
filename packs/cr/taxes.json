@@ -182,6 +182,58 @@
     }
   },
   {
+    "code": "CR-P-NODOM-13",
+    "name": "Servicios e intangibles de un prestador no domiciliado — inversión del sujeto pasivo",
+    "description": "IVA a la tarifa general que el contribuyente destinatario se autorrepercute al comprar un servicio o un bien intangible a un prestador no domiciliado en Costa Rica, y que acredita como cualquier compra a la tarifa general",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2019-07-01",
+    "legal_reference": "Ley del Impuesto sobre el Valor Agregado, art. 4, párrafos segundo y tercero — en la prestación de servicios y la transferencia de bienes intangibles por un prestador no domiciliado en el territorio nacional, el contribuyente es el destinatario, que aplica la inversión del sujeto pasivo; Reglamento, art. 1, inciso 30), y art. 25, párrafo segundo, inciso 1) — el contribuyente emite el comprobante electrónico de compra y se autorrepercute el impuesto. Resolución MH-DGT-RES-0033-2025, Anexo 1, sección IV — el impuesto se declara en «Débito por autorepercusión del impuesto», que se suma al «Total monto del impuesto» para llegar al impuesto determinado; la compra entra en la sección de compras a la tarifa del 13 % como cualquier compra con derecho a crédito fiscal en el mismo período. Una compra pagada con tarjeta a un proveedor de servicios digitales transfronterizos sobre la que el emisor ya percibió el IVA (art. 30) no lleva este código. Sin categoría EN 16931 (el comprobante del prestador no domiciliado no se rige por esa norma) ni código de exención",
+    "source": "liva",
+    "sequence": 85,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "CB13"
+        },
+        {
+          "type": "tax",
+          "account": "1151",
+          "box": "CF13"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2131",
+          "box": "AUTOREP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "CB13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1151",
+          "box": "CF13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2131",
+          "box": "AUTOREP",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
     "code": "CR-P-EXE",
     "name": "Compras de bienes y servicios exentos",
     "description": "Adquisición de bienes y servicios exentos del impuesto, sin derecho a crédito fiscal",

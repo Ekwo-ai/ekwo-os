@@ -93,6 +93,22 @@
       "source": "form104"
     },
     {
+      "box": "503",
+      "kind": "base",
+      "name": "Importaciones de servicios y/o derechos gravados tarifa diferente de cero",
+      "sequence": 102,
+      "legal_reference": "Formulario 104, casillero 503 — importaciones de servicios en el sentido del art. 70, inciso tercero, de la Ley de Régimen Tributario Interno, por las que el importador emite la liquidación de compra y retiene el 100 % del IVA",
+      "source": "instructivo104"
+    },
+    {
+      "box": "523",
+      "kind": "tax",
+      "name": "IVA en importaciones de servicios y/o derechos gravados tarifa diferente de cero",
+      "sequence": 104,
+      "legal_reference": "Formulario 104, casillero 523 — impuesto generado en las importaciones de servicios del casillero 503, que da derecho a crédito tributario (Ley de Régimen Tributario Interno, art. 66)",
+      "source": "instructivo104"
+    },
+    {
       "box": "507",
       "kind": "base",
       "name": "Adquisiciones y pagos (incluye activos fijos) gravados con tarifa 0%",
@@ -105,8 +121,8 @@
       "kind": "total",
       "name": "Crédito tributario aplicable en este período",
       "sequence": 120,
-      "plus": ["520", "521"],
-      "legal_reference": "Formulario 104, casillero 564 — de acuerdo al factor de proporcionalidad o a la contabilidad del sujeto pasivo, conforme los arts. 66 de la Ley de Régimen Tributario Interno y 153 y 157 de su Reglamento. Este paquete simplifica el casillero al total del impuesto pagado en las adquisiciones que dan derecho a crédito tributario (520 más 521): el factor de proporcionalidad del art. 66, inciso segundo, para quien no puede atribuir directamente sus adquisiciones a una actividad gravada o a una gravada con tarifa cero sin derecho a crédito, no está modelado — véase el README de este paquete",
+      "plus": ["520", "521", "523"],
+      "legal_reference": "Formulario 104, casillero 564 — de acuerdo al factor de proporcionalidad o a la contabilidad del sujeto pasivo, conforme los arts. 66 de la Ley de Régimen Tributario Interno y 153 y 157 de su Reglamento. Este paquete simplifica el casillero al total del impuesto pagado en las adquisiciones que dan derecho a crédito tributario (520 más 521 más 523): el factor de proporcionalidad del art. 66, inciso segundo, para quien no puede atribuir directamente sus adquisiciones a una actividad gravada o a una gravada con tarifa cero sin derecho a crédito, no está modelado — véase el README de este paquete",
       "source": "form104"
     },
     {
@@ -130,6 +146,14 @@
       "floor_zero": true,
       "legal_reference": "Formulario 104, casillero 602 — diferencia entre el crédito tributario aplicable (564) y el total del impuesto generado (429), cuando esa diferencia es mayor que cero; el Formulario 104 exige que, si el casillero 601 tiene un valor, el casillero 602 quede en blanco, y viceversa",
       "source": "form104"
+    },
+    {
+      "box": "731",
+      "kind": "tax",
+      "name": "Retención del 100 %",
+      "sequence": 150,
+      "legal_reference": "Formulario 104, casillero 731 — retenciones del 100 % del IVA efectuadas como agente de retención, entre ellas «el impuesto retenido en la importación de servicios» (Ley de Régimen Tributario Interno, arts. 63 y 70; Reglamento, arts. 146, 147 y 158). Este paquete no declara las demás retenciones (casilleros 721 a 729)",
+      "source": "instructivo104"
     }
   ]
 }

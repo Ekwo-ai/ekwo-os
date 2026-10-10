@@ -133,6 +133,7 @@ Four decisions:
 | `PY-C-10-NOCRED` | 10 %, non-deductible | purchase destined to an exempt sale | 59, tax on cost (65) |
 | `PY-C-5-NOCRED` | 5 %, non-deductible | purchase destined to an exempt sale | 60, tax on cost (66) |
 | `PY-C-EXO` | — | domestic purchase, not taxed | 62 |
+| `PY-C-10-EXT` | 10 % | service from a supplier abroad, used in Paraguay, 100 % withheld by the buyer | 35 / 38 |
 
 **The 5 % rate does not distinguish agricultural products in their natural
 state from the pack's other 5 % goods.** Ley N.° 6.380/2019, art. 90, sets 5
@@ -168,6 +169,29 @@ boxes for both the base and the IVA of such a purchase (59/65 at 10 %,
 60/66 at 5 %), which this pack mirrors with a `tax_on_base` posting that
 carries a box, unlike Peru's equivalent code, whose form has no box for the
 tax itself.
+
+**A service bought from a supplier abroad is taxed through a 100 %
+withholding that becomes the buyer's credit.** Ley N.° 6380/2019, art. 84,
+numeral 1: *"la asistencia técnica y los demás servicios realizados en el
+exterior se considerarán desarrollados en el territorio nacional, cuando
+sean utilizados o aprovechados en el país"* — a software subscription,
+hosting or an API used by the company is taxed. The obligation is born on
+payment or on the due date, whichever comes first (art. 83, numeral 6).
+Decreto N.° 3107/2019 makes whoever pays a supplier domiciled abroad a
+withholding agent (art. 35, numeral 6) for 100 % of the IVA (art. 41), and
+the law counts *"las retenciones o percepciones del impuesto efectuadas a los
+beneficiarios radicados en el exterior"* in the IVA Crédito (art. 88,
+numeral 3). `PY-C-10-EXT` books both halves in the same month: the credit
+debited to `1041` and declared with the purchases at 10 % (boxes 35 and 38),
+the withholding credited to `2034` *Retenciones a pagar*. The withholding is
+documented by a comprobante de retención through Tesakã and paid as a
+withholding agent, outside Formulario N.° 120, so it reaches no box here; and
+Ekwo dates it on the document rather than on the payment. Digital services
+paid by card are a different mechanism: the card issuer collects the IVA
+(art. 97) and, for a taxpayer, that perception is also IVA Crédito. **A
+foreign supplier belongs on `2012` *Proveedores del exterior*,** set as the
+contact's payable account; the golden scenario cannot name a contact's
+account, so its supplier abroad lands on `2011`.
 
 ## The declaration
 
@@ -212,12 +236,13 @@ Paraguayan filing is mapped here.
 
 ## The golden quarter
 
-A trading company, January to March 2026, filing monthly: twelve documents
+A trading company, January to March 2026, filing monthly: thirteen documents
 and five payments. It sells at 10 % with a partial return, sells at 5 %
 (medicines), sells one exempt line (a recognised training service), exports
 once; it buys at 10 % and at 5 % with a full credit, buys a good destined to
 the exempt sale (no credit, art. 89), buys from an exempt supplier once,
-receives one purchase credit note, and settles three of the invoices while
+receives one purchase credit note, subscribes to a cloud service from a
+supplier abroad and withholds its IVA in full, and settles three of the invoices while
 leaving one payment unmatched, on account. Every figure of
 `golden/vat_return.json` was checked by hand against the postings before the
 runner confirmed it.

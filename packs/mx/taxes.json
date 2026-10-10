@@ -497,6 +497,58 @@
     }
   },
   {
+    "code": "MX-P-IMPSERV-16",
+    "name": "Importación de servicios de no residentes al 16 %",
+    "description": "IVA que la persona moral causa y acredita en la misma declaración mensual por el aprovechamiento en territorio nacional de servicios prestados por residentes en el extranjero («IVA virtual»)",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Ley del IVA, art. 1o., fracción IV — están obligadas al pago del impuesto las personas morales que importen bienes o servicios; art. 24, fracción V — se considera importación de servicios «el aprovechamiento en territorio nacional de los servicios a que se refiere el artículo 14, cuando se presten por no residentes en el país»; art. 25 — el valor es el que correspondería en territorio nacional; art. 26, fracción IV, con el art. 17 — la importación se efectúa en el momento en que se paga efectivamente la contraprestación. Reglamento de la Ley del IVA, art. 50 — quien importe servicios por los que deba pagar el impuesto «podrá efectuar el acreditamiento [...] en la misma declaración de pago mensual a que correspondan dichas importaciones». El impuesto se acredita en la subcuenta 118.02 y se causa en la 208.01; en la declaración «IVA personas morales» la base y el acreditamiento van a los campos de importación de bienes y servicios, y el impuesto causado a «IVA a cargo a la tasa del 16%» — ver README.md. Un prestador extranjero de servicios digitales inscrito en el RFC (Capítulo III Bis) traslada el IVA él mismo: esa compra lleva MX-P-16, no este código. Sin categoría EN 16931 (el comprobante del prestador extranjero no se rige por esa norma) ni código de exención",
+    "source": "liva",
+    "sequence": 155,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "PIM"
+        },
+        {
+          "type": "tax",
+          "account": "118.02",
+          "box": "AIM"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "208.01",
+          "box": "C16"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "PIM",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "118.02",
+          "box": "AIM",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "208.01",
+          "box": "C16",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
     "code": "MX-P-0",
     "name": "Compras a la tasa del 0 %",
     "description": "Actos o actividades pagados a la tasa del 0 %",

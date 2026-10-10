@@ -13,7 +13,8 @@
     { "ref": "client-pe", "name": "Bazar El Sol S.A.C.", "type": "customer", "country": "PE" },
     { "ref": "client-us", "name": "Rocky Mountain Imports LLC", "type": "customer", "country": "US" },
     { "ref": "supplier-pe", "name": "Distribuidora Lima S.A.C.", "type": "supplier", "country": "PE" },
-    { "ref": "supplier-exo", "name": "Cooperativa Agraria Valle Verde", "type": "supplier", "country": "PE" }
+    { "ref": "supplier-exo", "name": "Cooperativa Agraria Valle Verde", "type": "supplier", "country": "PE" },
+    {"ref": "supplier-exterior", "name": "Andean Cloud Services LLC", "type": "supplier", "country": "US"}
   ],
   "documents": [
     {
@@ -75,6 +76,22 @@
       "ref": "C6", "type": "purchase_invoice", "contact": "supplier-exo", "date": "2026-03-20",
       "why": "Una segunda compra no gravada, para que la casilla 120 tenga movimiento en dos períodos.",
       "lines": [{ "name": "Productos agropecuarios", "quantity": 1, "unit_price": 150, "tax": "PE-C-EXO", "account": "6011" }]
+    },
+    {
+      "ref": "C7",
+      "type": "purchase_invoice",
+      "contact": "supplier-exterior",
+      "date": "2026-03-10",
+      "why": "Una suscripción de software prestada por un no domiciliado y utilizada en el país (Ley del IGV, art. 1, inciso b)): el IGV se acredita a la cuenta 40113, a pagar con el Formulario 1662, y espera en la 401115 hasta que se paga (art. 21), sin casilla del Formulario 621 en marzo.",
+      "lines": [
+        {
+          "name": "Suscripción mensual de software en la nube",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "PE-C-18-NODOM",
+          "account": "6365"
+        }
+      ]
     }
   ],
   "payments": [

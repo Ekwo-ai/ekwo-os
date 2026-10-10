@@ -186,6 +186,55 @@
     }
   },
   {
+    "code": "CO-P-19-NODOM",
+    "name": "Servicios prestados por no domiciliados o no residentes — IVA asumido a la tarifa general",
+    "description": "IVA del 19 % que el responsable retiene en su totalidad al contratar servicios con una persona sin residencia o domicilio en el país, declara y paga en la declaración de retenciones y descuenta en la casilla 78 del Formulario 300",
+    "kind": "vat",
+    "rate": 19,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2017-01-01",
+    "legal_reference": "Estatuto Tributario, art. 420, parágrafo 3 — los servicios prestados desde el exterior se entienden prestados en el territorio nacional y causan el impuesto cuando el usuario directo o destinatario tiene su residencia fiscal, domicilio, establecimiento permanente o la sede de su actividad económica en el país; art. 437-2, numeral 3 — actúan como agentes de retención los responsables que contraten con personas o entidades sin residencia o domicilio en el país la prestación de servicios gravados en el territorio nacional; art. 437-1, parágrafo 1 — en ese caso «la retención será equivalente al ciento por ciento (100%) del valor del impuesto»; art. 468 — tarifa general del 19 %; art. 485, literal b) — el impuesto retenido conforme al art. 437-2 es descontable. La retención se declara y paga en el Formulario 350, que este paquete no lleva (cuenta 2367); el descuento va a la casilla 78 del Formulario 300, «IVA retenido por servicios prestados en Colombia por no domiciliados o no residentes», y la base a la casilla 49, importaciones de servicios. Sin categoría EN 16931 (la factura del prestador del exterior no se rige por esa norma) ni código de exención",
+    "source": "et",
+    "sequence": 85,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "49"
+        },
+        {
+          "type": "tax",
+          "account": "240815",
+          "box": "78"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2367"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "49",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "240815",
+          "box": "78",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2367"
+        }
+      ]
+    }
+  },
+  {
     "code": "CO-P-EXC",
     "name": "Compras de bienes y servicios excluidos, exentos y no gravados",
     "description": "Adquisición de papa y demás bienes o servicios excluidos, exentos o no gravados",

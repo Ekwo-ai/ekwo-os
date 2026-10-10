@@ -14,7 +14,8 @@
     { "ref": "cust-export", "name": "Tropical Fresh Imports LLC", "type": "customer", "country": "US" },
     { "ref": "sup-mercancia", "name": "Proveedora Nacional de Mercancías S.A.", "type": "supplier", "country": "CR" },
     { "ref": "sup-farmaceutica", "name": "Distribuidora Farmacéutica S.A.", "type": "supplier", "country": "CR" },
-    { "ref": "sup-donacion", "name": "Fundación Cultural Costarricense", "type": "supplier", "country": "CR" }
+    { "ref": "sup-donacion", "name": "Fundación Cultural Costarricense", "type": "supplier", "country": "CR" },
+    {"ref": "sup-exterior", "name": "Pacific Cloud Services LLC", "type": "supplier", "country": "US"}
   ],
   "documents": [
     {
@@ -66,6 +67,22 @@
       "ref": "C3", "type": "purchase_invoice", "contact": "sup-donacion", "date": "2026-01-08",
       "why": "Una compra de libros exentos, sin derecho a crédito fiscal: prueba la casilla \"Bienes y servicios exentos\" de la sección de compras sin IVA soportado o no acreditable.",
       "lines": [{ "name": "Libros para reventa", "quantity": 1, "unit_price": 40000, "tax": "CR-P-EXE", "account": "511" }]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "sup-exterior",
+      "date": "2026-01-20",
+      "why": "Una suscripción de software prestada por un proveedor no domiciliado (Ley del IVA, art. 4, párrafo tercero): la empresa se autorrepercute el 13 % en «Débito por autorepercusión del impuesto» y lo acredita en las compras a 13 % del mismo mes, sin efecto neto.",
+      "lines": [
+        {
+          "name": "Suscripción mensual de software en la nube",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "CR-P-NODOM-13",
+          "account": "533"
+        }
+      ]
     }
   ],
   "payments": [

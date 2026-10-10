@@ -33,6 +33,22 @@
       "source": "ley-822"
     },
     {
+      "box": "SNR",
+      "kind": "base",
+      "name": "Servicios de no residentes con autotraslación — base",
+      "sequence": 22,
+      "legal_reference": "Ley No. 822, arts. 115 y 134; Reglamento, art. 79 — el valor total de la contraprestación pagada al no residente, antes de la retención del IR",
+      "source": "ley-822"
+    },
+    {
+      "box": "AUTOTRAS",
+      "kind": "tax",
+      "name": "IVA autotrasladado (débito fiscal)",
+      "sequence": 24,
+      "legal_reference": "Reglamento de la Ley No. 822, art. 79 — el IVA autotrasladado es débito fiscal del mes en que se autotraslada, declarado en el mismo formulario que las demás operaciones gravadas",
+      "source": "ley-822"
+    },
+    {
       "box": "VEXP",
       "kind": "base",
       "name": "Exportaciones a alícuota 0 %",
@@ -102,13 +118,14 @@
       "name": "IVA a pagar o saldo a favor",
       "sequence": 110,
       "plus": [
-        "DF"
+        "DF",
+        "AUTOTRAS"
       ],
       "minus": [
         "CF",
         "CFIMP"
       ],
-      "legal_reference": "Ley No. 822, art. 117 — el IVA a pagar es el débito fiscal menos el crédito fiscal; art. 140 — el saldo a favor se imputa a los períodos subsiguientes y, en las exportaciones a alícuota cero, puede ser objeto de compensación o devolución",
+      "legal_reference": "Ley No. 822, art. 117 — el IVA a pagar es el débito fiscal menos el crédito fiscal; Reglamento, art. 79 — el IVA autotrasladado es débito fiscal del mes; art. 140 — el saldo a favor se imputa a los períodos subsiguientes y, en las exportaciones a alícuota cero, puede ser objeto de compensación o devolución",
       "source": "ley-822"
     }
   ]

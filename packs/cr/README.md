@@ -151,6 +151,7 @@ mapped, and none is imposed by the State.
 | `CR-P-13` | 13% | domestic purchase, recoverable | Total importe/Impuesto soportado a 13% |
 | `CR-P-2` | 2% | domestic purchase, recoverable | Total importe/Impuesto soportado a 2% |
 | `CR-P-EXE` | 0% | exempt purchase, not recoverable | Bienes y servicios exentos |
+| `CR-P-NODOM-13` | 13% | service or intangible from a non-domiciled supplier, self-assessed | Total importe/Impuesto soportado a 13%, Débito por autorepercusión del impuesto |
 
 **An export is not an ordinary exemption, and the Reglamento tells the two
 apart by the right to credit.** The general rule of art. 30, numeral 1, of
@@ -168,6 +169,27 @@ derecho a crédito", and its purchase-side mirror, `CR-P-EXE`, is declared
 `recoverable: false`. Getting the two the wrong way round would have been the
 easiest mistake this pack could make, so it is written out here for whoever
 reviews it next.
+
+**A service bought from a supplier abroad is taxed in the buyer's hands.**
+A software subscription, hosting or an API billed by a supplier with no
+domicile in Costa Rica carries no Costa Rican IVA on its invoice, and the Law,
+art. 4, second and third paragraphs, makes the recipient that is an IVA
+taxpayer the contribuyente: the *inversión del sujeto pasivo*, which the
+Reglamento defines in art. 1, inciso 30), and organises in art. 25, second
+paragraph, inciso 1) — the buyer issues the electronic purchase voucher and
+charges itself the tax. `CR-P-NODOM-13` books both halves at 13%: the credit
+debited to `1151` and declared with the other purchases at 13% (the
+voucher is a purchase like any other), and the tax owed credited to `2131`
+and declared in the field *Débito por autorepercusión del impuesto* of
+section IV, which Resolución MH-DGT-RES-0033-2025 adds to the tax of the
+period before the credit is taken off. For a business with only taxed sales
+the two cancel in the same month; the proportionality rule of art. 34 of the
+Reglamento, which this pack does not apply, would cut the credit and not the
+debit. A digital service paid by card to a foreign platform on which the
+card issuer already collected the IVA (art. 30 of the Law) takes no such
+entry. **A foreign supplier belongs on `2112` *Proveedores del exterior*,**
+set as the contact's payable account; the golden scenario cannot name a
+contact's account, so its supplier abroad lands on `2111`.
 
 **Costa Rica is outside the common system of VAT.** `supabase/seed/00_territories.sql`
 carries a row for `CR` with `eu_vat_scope: none`. Consequently `exemption_code`
@@ -197,16 +219,15 @@ Reglamento, art. 40).
 
 This pack declares the fields its taxes reach: the base and the tax at each
 of the four rates, the two exempt-sale totals, the debit they add up to, the
-purchase-side base and credit at 13% and 2%, and `Impuesto determinado` /
+purchase-side base and credit at 13% and 2%, the *Débito por autorepercusión
+del impuesto*, and `Impuesto determinado` /
 `Saldo a favor`, exactly the pair Colombia's Formulario 300 calls casilla 82
 and 83. **Not modelled**: the proportionality mechanism of the form's section
 II and III (a business with both taxed and exempt sales credits only the
 share of its input tax that the proportion allows, computed provisionally
 each month and settled definitively in December), the special régimen for
 used goods, the special régimen for agriculture, the tax on casinos and games
-of chance, the deferred payment of tax on credit sales, the self-assessment
-("autorrepercusión") of tax on services bought from a non-domiciled supplier,
-and the refund of IVA on card-paid private health services. Every one of them
+of chance, the deferred payment of tax on credit sales, and the refund of IVA on card-paid private health services. Every one of them
 depends on a fact a single period's ledger cannot answer by itself — a
 proportion carried from prior months, a special registration, a card
 payment's own record — the same reasoning Colombia's pack gives for the boxes
@@ -214,13 +235,14 @@ it leaves for the company to complete by hand.
 
 ## The golden month
 
-A trading company, filing monthly, January 2026: nine documents and four
+A trading company, filing monthly, January 2026: eleven documents and four
 payments. It sells general merchandise at 13%, a private health service at
 4%, medicines at 2%, a Canasta Básica Tributaria product at 1%, exports
 specialty coffee exempt with full credit, and sells books exempt without it;
 it credits back part of the 13% sale. It buys general merchandise and
-medicines for resale, both with the right to deduct, and buys books for
-resale, exempt and non-deductible. One payment matches a sale exactly, one
+medicines for resale, both with the right to deduct, buys books for
+resale, exempt and non-deductible, and subscribes to a cloud service from a
+supplier abroad, self-assessed. One payment matches a sale exactly, one
 collects the export, one pays a supplier, and one is a customer's advance
 with no invoice to match, left open on purpose, the way a real ledger holds
 one.
@@ -229,9 +251,10 @@ Every figure of `golden/vat_return.json`, `golden/statements.json` and
 `golden/trial_balance.json` was checked by hand against the scenario before
 this pack was committed — not only replayed by `tests/golden.test.ts`. By
 hand: `V13` net of the credit note is ₡450,000 and `T13` is ₡58,500; `DEBITO`
-is ₡70,500 (₡58,500 + ₡8,000 + ₡3,000 + ₡1,000); `CFTOTAL` is ₡40,600
-(₡39,000 + ₡1,600); `Impuesto determinado` is ₡29,900 and `Saldo a favor` is
-zero.
+is ₡70,500 (₡58,500 + ₡8,000 + ₡3,000 + ₡1,000); `CFTOTAL` is ₡53,600
+(₡52,000, of which ₡13,000 on the service from abroad, + ₡1,600);
+`AUTOREP` is ₡13,000; `Impuesto determinado` is ₡29,900 (₡70,500 − ₡53,600 +
+₡13,000) and `Saldo a favor` is zero.
 
 ## What the core could not say
 

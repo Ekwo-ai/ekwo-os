@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "DO",
   "name": "Dominican Republic",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "schema_min": "20260929141500",
   "seed_sequence": 104,
   "released_at": "2026-09-26",
@@ -108,6 +108,13 @@
     "fiscal_year_default": "calendar"
   },
   "languages": [],
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Código Tributario (Ley No. 11-92), Título III, art. 335 — el ITBIS grava la transferencia de bienes industrializados, la importación de bienes industrializados y la prestación y locación de servicios; la importación grava sólo bienes, y ninguna disposición hace sujeto pasivo al adquiriente dominicano de un servicio prestado desde el exterior por un no residente. La Dirección General de Impuestos Internos lo responde así en su portal de ayuda (arts. 335 y 336). Lo que alcanza al pago al exterior es la retención del Impuesto Sobre la Renta del art. 305, fuera de este paquete. El Decreto 30-25, que habría hecho percibir el ITBIS a los proveedores extranjeros de servicios digitales, fue derogado en marzo de 2025 antes de entrar en vigor",
+      "source": "ct-titulo3"
+    }
+  ],
   "journals": [
     { "code": "VEN", "type": "sales", "name": "Diario de ventas", "sequence": 10 },
     { "code": "COM", "type": "purchase", "name": "Diario de compras", "sequence": 20 },

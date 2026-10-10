@@ -152,6 +152,7 @@ Colombian taxonomy is mapped.
 | `CO-P-19-SERV` | 19 % | domestic purchase, services | 53 / 75 |
 | `CO-P-5` | 5 % | domestic purchase, goods (art. 468-1) | 50 / 71 |
 | `CO-P-EXC` | — | excluded/exempt/untaxed purchase | 54 |
+| `CO-P-19-NODOM` | 19 % | service from a non-domiciled supplier, 100 % withheld by the buyer | 49 / 78 |
 
 **Exento is not excluido, and the format tells the two apart by treatment.**
 A bien exento (art. 477 — the pack's example is fresh milk, tariff heading
@@ -187,14 +188,38 @@ carries one box.
 already invoiced, Estatuto Tributario arts. 437-1 and 437-2), ReteFuente
 (income-tax withholding, a different tax base entirely) and ICA (Impuesto de
 Industria y Comercio, a municipal tax with a rate set by each of Colombia's
-more than one thousand municipalities) — and the 100 % self-withholding on
-services received from a non-domiciled supplier (art. 437-2, numeral 3),
-which Formulario 300 itself declares through casilla 78 as a *retención
-asumida*, i.e. computed and paid through the separate retention mechanism
-(Formulario 350) that this pack does not model. A company that practises any
+more than one thousand municipalities) — A company that practises any
 of the three needs a professional's help until a later version of this pack,
 or a dedicated retention pack, carries them. See *What the core could not
 say*.
+
+## Services bought from a supplier abroad
+
+A software subscription, hosting or an API billed from abroad is taxed in
+Colombia: Estatuto Tributario, art. 420, parágrafo 3, treats services
+rendered from abroad as rendered in the national territory when their direct
+user has its residence, domicile, permanent establishment or seat in
+Colombia. The supplier charges nothing; the Colombian buyer that is
+*responsable* withholds the tax itself (art. 437-2, numeral 3), and the
+withholding is *"equivalente al ciento por ciento (100%) del valor del
+impuesto"* (art. 437-1, parágrafo 1), at the general 19 % of art. 468. It
+declares and pays that withholding on Formulario 350 and takes the same amount
+as descontable (art. 485, literal b)) on Formulario 300, casilla 78, in the
+period of the withholding.
+
+`CO-P-19-NODOM` books both halves: the descontable debited to `240815`, the
+withholding owed credited to the new `2367` *Impuesto a las ventas retenido*
+(PUC account 2367), the base in casilla 49 (imports of services) and the
+descontable in casilla 78, which casilla 81 now adds. The withholding itself
+reaches no box here because Formulario 350 is not in this pack; `2367` holds
+it until it is paid. Two limits: the law withholds on payment or credit to
+the account, whichever comes first (art. 437-1), and Ekwo dates it on the
+document; and the casilla numbers are those of the 2025 version of the form,
+which moves them from one version to the next. The chart carries no account
+for suppliers abroad, so a foreign supplier sits on `2205` with the others.
+A foreign provider of digital services registered under art. 437,
+parágrafo 2, charges the tax to an individual consumer; a *responsable*
+buyer still applies the withholding above.
 
 ## The declaration
 
@@ -204,7 +229,7 @@ the taxpayer's revenue in the preceding year (Estatuto Tributario, art. 600)
 declares no `period_default`, the same reasoning as the Luxembourg pack. The
 pack states nineteen of the form's boxes: the ones its taxes actually reach.
 The prior-period carry-forward (casilla 84), third-party withholdings
-(85, 78), penalties (87) and the refund/offset control section (90–93) are
+(85), penalties (87) and the refund/offset control section (90–93) are
 not modelled — they depend on facts outside a single period's ledger, a
 figure from a previous declaration, a certificate a customer issued, an
 amount the taxpayer computes — and are left for the company to add by hand
@@ -221,12 +246,13 @@ are left everywhere else in this repository.
 ## The golden year
 
 A trading company (comercializadora), filing bimonthly, January to April
-2026: twelve documents and five payments. It sells general merchandise at
+2026: thirteen documents and five payments. It sells general merchandise at
 19 %, roasted coffee at 5 %, potatoes excluded from the tax, exports goods
 exempt with a right to refund, and sells fresh milk exempt with the same
 right; it credits back part of the 19 % sale. It buys general merchandise and
 roasted coffee for resale, a warehousing service at the general rate — which
-lands in the services box rather than the goods one — and potatoes excluded.
+lands in the services box rather than the goods one — and potatoes excluded,
+and subscribes to a cloud service from a supplier abroad (casillas 49 and 78).
 One payment matches its invoice exactly, one settles an export, one pays a
 supplier, one is an advance with no invoice to match, left open on purpose,
 and the second bimonthly period is deliberately built so its purchases
@@ -249,7 +275,8 @@ states each of these as a change to the core. In short:
 2. **A retention paid on a different form.** Casilla 78 of Formulario 300 is
    fed by a withholding computed and paid through the separate retention
    return (Formulario 350), which this repository has no second declaration
-   for.
+   for: `CO-P-19-NODOM` declares the descontable and leaves the withholding on
+   account `2367`.
 3. **A municipal tax the core has no place for.** ICA is a value set by each
    municipality, in the hundreds — the same reason American sales tax rates
    are not in a pack.

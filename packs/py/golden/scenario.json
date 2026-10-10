@@ -13,7 +13,8 @@
     { "ref": "client-py", "name": "Comercial Ñandutí S.A.", "type": "customer", "country": "PY" },
     { "ref": "client-us", "name": "Rio Plate Trading LLC", "type": "customer", "country": "US" },
     { "ref": "supplier-py", "name": "Distribuidora Asunción S.A.", "type": "supplier", "country": "PY" },
-    { "ref": "supplier-exo", "name": "Cooperativa Yvy Porã", "type": "supplier", "country": "PY" }
+    { "ref": "supplier-exo", "name": "Cooperativa Yvy Porã", "type": "supplier", "country": "PY" },
+    {"ref": "supplier-exterior", "name": "Chaco Cloud Software Inc.", "type": "supplier", "country": "US"}
   ],
   "documents": [
     {
@@ -75,6 +76,22 @@
       "ref": "C6", "type": "purchase_invoice", "contact": "supplier-py", "date": "2026-03-14",
       "why": "Una compra de marzo, para comprobar el crédito fiscal de un período distinto al de enero.",
       "lines": [{ "name": "Mercadería A, compra", "quantity": 15, "unit_price": 80000, "tax": "PY-C-10", "account": "511" }]
+    },
+    {
+      "ref": "C7",
+      "type": "purchase_invoice",
+      "contact": "supplier-exterior",
+      "date": "2026-03-20",
+      "why": "Una suscripción de software prestada desde el exterior y utilizada en el país (Ley N.° 6380/2019, art. 84, numeral 1): el 100 % del IVA se retiene (cuenta 2034) y la retención integra el IVA Crédito del mes (art. 88, numeral 3; casillas 35 y 38).",
+      "lines": [
+        {
+          "name": "Suscripción mensual de software en la nube",
+          "quantity": 1,
+          "unit_price": 700000,
+          "tax": "PY-C-10-EXT",
+          "account": "533"
+        }
+      ]
     }
   ],
   "payments": [

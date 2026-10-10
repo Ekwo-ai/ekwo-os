@@ -249,5 +249,54 @@
         }
       ]
     }
+  },
+  {
+    "code": "NI-C-NR-15",
+    "name": "Servicio de un no residente, 15 % — IVA autotrasladado",
+    "description": "IVA que el responsable recaudador se autotraslada al pagar un servicio prestado por un no residente que no es responsable recaudador: débito fiscal del mes, crédito fiscal del mes siguiente al pago de ese débito",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Ley No. 822, art. 115 — cuando un no residente que no es responsable recaudador presta un servicio, quien lo paga autotraslada el IVA; art. 134, párrafo tercero — en los servicios generales, profesionales o técnicos de un no residente, el usuario inscrito como responsable recaudador autotraslada y entera el impuesto. Reglamento (Decreto No. 01-2013), art. 79 — la autotraslación es la alícuota aplicada «al valor total de la contraprestación»; el responsable «liquidará, declarará y pagará el IVA autotrasladado [...] en el mismo formulario y plazo otorgado para sus demás operaciones gravadas», y el IVA autotrasladado es «un débito fiscal para el mes en que lo autotraslade y [...] un crédito fiscal para el mes siguiente en que se pagó el débito fiscal». Por eso el impuesto se acredita a la cuenta 2131 y se declara en AUTOTRAS en el mes del comprobante, y se debita en la 1145, por acreditar, sin casilla de crédito fiscal en ese mes: el formato no puede llevar el crédito a la declaración siguiente, y el traspaso de 1145 a 1141 en ese mes es un asiento manual — ver README.md. Sin categoría EN 16931 ni código de exención",
+    "source": "ley-822",
+    "sequence": 145,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "SNR"
+        },
+        {
+          "type": "tax",
+          "account": "1145"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2131",
+          "box": "AUTOTRAS"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "SNR",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1145"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2131",
+          "box": "AUTOTRAS",
+          "box_factor": -100
+        }
+      ]
+    }
   }
 ]

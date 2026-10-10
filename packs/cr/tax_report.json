@@ -170,14 +170,22 @@
       "source": "res0033-2025"
     },
     {
+      "box": "AUTOREP",
+      "kind": "tax",
+      "name": "Débito por autorepercusión del impuesto",
+      "sequence": 195,
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección IV — «el impuesto sobre el importe de las compras de servicios y de bienes intangibles, cuyo prestador no se encuentra domiciliado en el territorio nacional y cuando el destinatario es el contribuyente del impuesto al valor agregado» (Ley del IVA, art. 4, párrafos segundo y tercero; Reglamento, art. 1, inciso 30), y art. 25, párrafo segundo, inciso 1))",
+      "source": "res0033-2025"
+    },
+    {
       "box": "IMPDET",
       "kind": "total",
       "name": "Impuesto determinado",
       "sequence": 200,
-      "plus": ["DEBITO"],
+      "plus": ["DEBITO", "AUTOREP"],
       "minus": ["CFTOTAL"],
       "floor_zero": true,
-      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección IV — resultado de restar del \"Total monto del impuesto\" el \"Total crédito fiscal para el IVA\"; si el resultado es negativo se completa la casilla \"Saldo a favor\" y no esta",
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección IV — resultado de restar del \"Total monto del impuesto\" el \"Total crédito fiscal para el IVA\" y sumar el \"Débito por autorepercusión del impuesto\"; si el resultado es negativo se completa la casilla \"Saldo a favor\" y no esta",
       "source": "res0033-2025"
     },
     {
@@ -186,9 +194,9 @@
       "name": "Saldo a favor",
       "sequence": 210,
       "plus": ["CFTOTAL"],
-      "minus": ["DEBITO"],
+      "minus": ["DEBITO", "AUTOREP"],
       "floor_zero": true,
-      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección IV — cuando el crédito fiscal supera el débito del período, la diferencia se declara en esta casilla y no en \"Impuesto determinado\"",
+      "legal_reference": "Resolución MH-DGT-RES-0033-2025, Anexo 1, sección IV — cuando el crédito fiscal supera el débito del período más el débito por autorepercusión, la diferencia se declara en esta casilla y no en \"Impuesto determinado\"",
       "source": "res0033-2025"
     }
   ]

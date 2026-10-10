@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "NI",
   "name": "Nicaragua",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "schema_min": "20260929141500",
   "seed_sequence": 132,
   "released_at": "2026-10-09",

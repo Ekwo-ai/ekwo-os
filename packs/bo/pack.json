@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BO",
   "name": "Bolivia",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "schema_min": "20260921084143",
   "seed_sequence": 102,
   "released_at": "2026-09-26",
@@ -132,6 +132,13 @@
     "fiscal_year_default": "calendar"
   },
   "languages": ["en"],
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Ley N.° 843, art. 1, inciso b) — el IVA grava «los contratos de obras, de prestación de servicios y toda otra prestación, cualquiera fuere su naturaleza, realizadas en el territorio de la Nación»: un servicio prestado desde el exterior por quien no está en el país no es objeto del impuesto, y la ley no hace sujeto pasivo al comprador. Lo que alcanza al pago es el Impuesto sobre las Utilidades de las Empresas – Beneficiarios del Exterior, que el pagador retiene (art. 51), un impuesto sobre la renta fuera de este paquete",
+      "source": "ley-843"
+    }
+  ],
   "journals": [
     { "code": "VEN", "type": "sales", "name": "Diario de ventas", "sequence": 10 },
     { "code": "COM", "type": "purchase", "name": "Diario de compras", "sequence": 20 },

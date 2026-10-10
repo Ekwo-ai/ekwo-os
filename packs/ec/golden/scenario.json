@@ -14,7 +14,8 @@
     { "ref": "cust-export", "name": "Andes Trading LLC", "type": "customer", "country": "US" },
     { "ref": "sup-distribuidora", "name": "Distribuidora Nacional S.A.", "type": "supplier", "country": "EC" },
     { "ref": "sup-panaderia", "name": "Panificadora San Jorge S.A.", "type": "supplier", "country": "EC" },
-    { "ref": "sup-tecnologia", "name": "Tecnología y Equipos del Ecuador S.A.", "type": "supplier", "country": "EC" }
+    { "ref": "sup-tecnologia", "name": "Tecnología y Equipos del Ecuador S.A.", "type": "supplier", "country": "EC" },
+    {"ref": "sup-exterior", "name": "Equator Cloud Services LLC", "type": "supplier", "country": "US"}
   ],
   "documents": [
     {
@@ -71,6 +72,22 @@
       "ref": "C4", "type": "purchase_invoice", "contact": "sup-distribuidora", "date": "2026-02-15",
       "why": "Una compra grande en el segundo período, mayor que las ventas de ese mismo período: deja el período en crédito tributario, para probar el casillero 602 junto con V4 y V5.",
       "lines": [{ "name": "Mercadería general", "quantity": 1, "unit_price": 6000.00, "tax": "EC-P-15", "account": "5.1.02" }]
+    },
+    {
+      "ref": "C5",
+      "type": "purchase_invoice",
+      "contact": "sup-exterior",
+      "date": "2026-02-10",
+      "why": "Una suscripción de software prestada por un no residente: importación de servicios (art. 70 de la Ley); el IVA del 15 % se retiene en su totalidad (casillero 731) y se toma como crédito tributario en la misma declaración (casilleros 503 y 523).",
+      "lines": [
+        {
+          "name": "Suscripción mensual de software en la nube",
+          "quantity": 1,
+          "unit_price": 500.0,
+          "tax": "EC-P-15-IMPSERV",
+          "account": "5.2.07"
+        }
+      ]
     }
   ],
   "payments": [

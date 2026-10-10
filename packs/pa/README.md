@@ -143,6 +143,7 @@ everywhere: no Panamanian taxonomy is mapped.
 | `PA-P-15` | 15 % | domestic purchase, with credit | 242 / 243 |
 | `PA-P-7-NOCRED` | 7 % | domestic purchase, without credit | 34 |
 | `PA-P-EXE` | 0 % | domestic purchase, exempt | 39 |
+| `PA-P-7-EXT` | 7 % | service from a supplier abroad, 100 % withheld by the buyer | 222 / 223 |
 
 **Panama is outside the common system of VAT.**
 `supabase/seed/00_territories.sql` carries a row for `PA` with
@@ -166,7 +167,26 @@ operation gives no credit (parágrafo 12), and the tax is booked with a
 cost of the line it taxes — Formulario 430's casilla 34 has no paired tax
 casilla for exactly that reason.
 
-**Not here:** the retention mechanisms the DGI has progressively widened
+**A service bought from a supplier abroad is taxed through a 100 %
+withholding.** A software subscription, hosting or an API billed by a person
+domiciled or incorporated abroad with no branch, agency or establishment in
+Panama carries no ITBMS on its invoice. Since January 2016 the Panamanian
+payer withholds all of it: Código Fiscal, art. 1057-V, parágrafo 4, lets the
+regulation designate withholding agents, and Decreto Ejecutivo 84 de 2005,
+art. 19, as amended by Decretos Ejecutivos 463 and 470 de 2015, names among
+them whoever pays such a supplier abroad. Art. 25 of the same decree makes
+the amount withheld a crédito fiscal of the withholding taxpayer *in the
+month the withholding is made*. `PA-P-7-EXT` books that: the credit debited
+to `139501` and declared with the purchases at 7 % (casillas 222 and 223),
+the withholding credited to the new `240502` *ITBMS retenido por pagar*. The
+withholding is declared and paid on Formulario 4331, which this pack does
+not carry, so it reaches no box here; casilla 52 of Formulario 430 is the
+credit of a supplier *whose* tax was withheld, not this one. **A foreign
+supplier belongs on `220502` *Proveedores del exterior*,** set as the
+contact's payable account; the golden scenario cannot name a contact's
+account, so its supplier abroad lands on `220501`.
+
+**Not here:** the other retention mechanisms the DGI has progressively widened
 since 2016 (Resolución 201-8066 de 2023 and its predecessors, government and
 large-taxpayer agents that withhold a share of the ITBMS invoiced to them,
 credited through Anexo 95 of Formulario 430) and the income-tax withholding
@@ -205,14 +225,15 @@ needs any of these has a base to start from, not a finished return.
 
 ## The golden year
 
-A trading company, filing monthly, January to March 2026: twelve documents
+A trading company, filing monthly, January to March 2026: thirteen documents
 and five payments. It sells general merchandise at 7 %, alcoholic beverages
 at 10 %, a night's lodging at 10 %, cigarettes at 15 %, exports goods at 0 %,
 and sells an exempt health service; it credits back part of the 7 % sale. It
 buys general merchandise, drink supplies and cigarettes for resale with a
 right to credit at each of the three rates, buys taxed medical supplies
 destined directly to the exempt health service — without a right to credit —
-and buys an exempt good outright. Two payments settle their invoice exactly,
+buys an exempt good outright, and subscribes to a cloud service from a
+supplier abroad, withholding its ITBMS in full. Two payments settle their invoice exactly,
 one is an advance with no invoice to match, left open on purpose, and two
 settle purchases, one of them the non-recoverable one, whose ITBMS stayed in
 the cost paid.

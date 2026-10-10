@@ -227,6 +227,55 @@
     }
   },
   {
+    "code": "PA-P-7-EXT",
+    "name": "Servicio prestado desde el exterior al 7 %, ITBMS retenido al 100 % por el receptor",
+    "description": "ITBMS que el contribuyente panameño retiene en su totalidad al pagar un servicio a una persona domiciliada o constituida en el exterior sin sucursal, agencia ni establecimiento en Panamá, entera con el Formulario 4331 y utiliza como crédito fiscal en el mes de la retención",
+    "kind": "vat",
+    "rate": 7,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2016-01-01",
+    "legal_reference": "Código Fiscal, art. 1057-V — impuesto del 7 % sobre la prestación de servicios; parágrafo 4 — se designan agentes de retención a quienes intervengan en operaciones en las que deben retener el tributo. Decreto Ejecutivo 84 de 2005, art. 19, modificado por los Decretos Ejecutivos 463 y 470 de 2015 — son agentes de retención quienes paguen o acrediten retribuciones por operaciones gravadas realizadas por personas naturales domiciliadas o entidades constituidas en el exterior que no posean sucursal, agencia o establecimiento en Panamá, por el 100 % del impuesto, desde enero de 2016; art. 25 — el importe retenido es crédito fiscal del agente contribuyente en la liquidación del mes en que practica la retención. La retención se declara y paga con el Formulario 4331, que este paquete no lleva (cuenta 240502); el crédito se declara con las compras gravadas al 7 % del Formulario 430 (casillas 222 y 223). Sin categoría EN 16931 (la factura del proveedor del exterior no se rige por esa norma) ni código de exención",
+    "source": "codigo-fiscal",
+    "sequence": 135,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "222"
+        },
+        {
+          "type": "tax",
+          "account": "139501",
+          "box": "223"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "240502"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "222",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "139501",
+          "box": "223",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "240502"
+        }
+      ]
+    }
+  },
+  {
     "code": "PA-P-7-NOCRED",
     "name": "Compra gravada al 7 %, sin derecho a crédito fiscal",
     "description": "Adquisición gravada al 7 %, destinada directamente a una operación exenta o no gravada",

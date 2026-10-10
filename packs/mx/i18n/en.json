@@ -310,7 +310,8 @@
     "MX-P-16-RET4": "Road freight at 16 %, with 4 % withheld",
     "MX-P-IMP-16": "Imports of goods at 16 %",
     "MX-P-0": "Purchases at the 0 % rate",
-    "MX-P-EXE": "Exempt purchases"
+    "MX-P-EXE": "Exempt purchases",
+    "MX-P-IMPSERV-16": "Import of services from non-residents at 16 %"
   },
   "tax_report_boxes": {
     "G16": "Value of acts or activities taxed at 16%",

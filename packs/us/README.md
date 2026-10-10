@@ -168,6 +168,19 @@ mechanism in order to describe its own: there is still no supplier exemption
 behind it, no recapitulative statement, and nothing recovered at the other end,
 and now the treatment says so rather than the prose.
 
+**A service bought from a supplier abroad carries no tax in California.**
+The United States has no value added tax, and the Sales and Use Tax Law
+reaches tangible personal property only — its retail sale (section 6051) and
+its storage, use or consumption in the State (section 6201). A service is not
+tangible personal property, and Regulation 1502, subdivision (f)(1)(D), takes
+a prewritten program out of the tax when it is *"transferred by remote
+telecommunications [...] and the purchaser does not obtain possession of any
+tangible personal property"*. So a software subscription, hosting or an API
+billed from abroad is booked with no tax code, and `pack.json` says so in
+`not_taxed`; `US-CA-P-USE-725` stays what it is, the use tax on goods. Other
+States differ — several tax software as a service or digital products — and
+this pack, which carries California's return only, says nothing about them.
+
 **Three rates and no rate engine.** California has one statewide rate and, on
 top of it, district taxes that CDTFA-531-A2 lists county by county and city by
 city, at rates from 0.10 to 2.00 per cent, with effective and sunset dates that

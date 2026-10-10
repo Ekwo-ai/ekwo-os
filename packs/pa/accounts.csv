@@ -66,6 +66,7 @@ code,parent,type,reconcilable,name,sequence
 24,,liability_current,false,IMPUESTOS POR PAGAR,650
 2405,24,liability_current,false,ITBMS,660
 240501,2405,liability_current,false,ITBMS débito fiscal (ventas),670
+240502,2405,liability_current,false,ITBMS retenido por pagar,675
 2410,24,liability_current,false,Impuesto sobre la renta por pagar,680
 2415,24,liability_current,false,ITBMS por pagar,690
 241501,2415,liability_current,true,ITBMS por pagar al Tesoro Nacional,700

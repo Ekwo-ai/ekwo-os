@@ -134,6 +134,58 @@
     }
   },
   {
+    "code": "EC-P-15-IMPSERV",
+    "name": "Importación de servicios a la tarifa general, con retención del 100 % y derecho a crédito tributario",
+    "description": "IVA que el importador de un servicio prestado por un no residente liquida en la liquidación de compra, retiene en su totalidad como agente de retención y utiliza como crédito tributario en la misma declaración",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-04-01",
+    "legal_reference": "Ley de Régimen Tributario Interno, art. 70, inciso tercero — define la importación de servicios; art. 63 — quien importa servicios gravados actúa como agente de retención de la totalidad del IVA causado en ellos; art. 66 — el IVA pagado en la importación de servicios da derecho a crédito tributario; Reglamento, arts. 146, 147 y 158. Tarifa general del 15 % desde el 1 de abril de 2024 (Decreto Ejecutivo 198). Instructivo del Formulario 104 — el importador emite la liquidación de compra de bienes y prestación de servicios, declara la importación en los casilleros 503 y 523 y consigna en el 731 «la totalidad del impuesto que debió ser retenido en estos pagos». Sin categoría EN 16931 (el comprobante del prestador del exterior no se rige por esa norma) ni código de exención",
+    "source": "lrti",
+    "sequence": 65,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "503"
+        },
+        {
+          "type": "tax",
+          "account": "2.1.04.02",
+          "box": "523"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2.1.03.02",
+          "box": "731"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "503",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2.1.04.02",
+          "box": "523",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2.1.03.02",
+          "box": "731",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
     "code": "EC-P-0",
     "name": "Adquisiciones y pagos gravados con tarifa cero",
     "description": "Adquisición de bienes (incluidos activos fijos) o de servicios gravados con tarifa cero del impuesto al valor agregado",

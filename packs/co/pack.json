@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CO",
   "name": "Colombia",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "schema_min": "20260923110000",
   "seed_sequence": 47,
   "released_at": "2026-09-25",

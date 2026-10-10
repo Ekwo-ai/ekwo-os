@@ -140,6 +140,21 @@ date or delivery (art. 5-A(a)); for services the earliest of invoice,
 performance or payment (art. 5-A(b)), which the format cannot distinguish at
 this level.
 
+**A service bought from a supplier abroad carries no ISV in the buyer's
+hands.** Art. 1 levies the tax on *"las ventas realizadas en todo el
+territorio de la República"*, at import and at each stage of sale; the import
+it taxes is the customs import of goods, and no article makes the Honduran
+buyer liable for a service a non-domiciled supplier renders wholly from
+abroad — a software subscription, hosting, an API. `pack.json` says so in
+`not_taxed`, and such a purchase is booked with no tax code. The income tax
+withheld on payments to non-residents (Income Tax Law, art. 5) is outside this
+pack. The text read was the consolidated version of 2004 on the Secretaría
+de Finanzas' site; the territorial rule for services that later reforms
+added (art. 17, as reported by secondary sources: a service *partly*
+performed in Honduras is performed there) was not read in an official copy,
+and a reviewer should confirm that no reform since makes the buyer
+self-assess.
+
 ## The declaration
 
 `HN-SAR-201` is the monthly *Declaración Jurada del Impuesto Sobre Ventas*,

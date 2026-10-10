@@ -217,6 +217,22 @@ no hay ninguna casilla del formulario en la que deba aparecer — el mismo
 razonamiento que ya usan, por ejemplo, la tasa `US-P-0` de Estados Unidos o
 la tasa `SK-P-DOVOZ-23` de Eslovaquia.
 
+**Un servicio comprado a un proveedor del exterior no lleva ITBIS, y este
+paquete no tiene código para él — por la ley, no por omisión.** El Código
+Tributario, art. 335, grava la transferencia y la importación de bienes
+industrializados y la prestación y locación de servicios; la importación que
+grava es la de bienes, y ningún artículo hace contribuyente al comprador
+dominicano de un servicio prestado desde el exterior por un no residente — una
+suscripción de software, un alojamiento en la nube. La DGII lo responde así en
+su portal de ayuda, citando los arts. 335 y 336. `pack.json` lo dice en
+`not_taxed`. Lo que sí alcanza al pago es la retención del Impuesto Sobre la
+Renta a los pagos al exterior (art. 305), con su comprobante de pagos al
+exterior, fuera de este paquete. El Decreto 30-25, que obligaba a los
+proveedores extranjeros de servicios digitales a percibir el ITBIS, fue
+derogado en marzo de 2025 antes de entrar en vigor; en mayo de 2026 la DGII
+anunció una nueva propuesta, que al 10 de octubre de 2026 este paquete no ha
+encontrado publicada. La compra se registra sin código de impuesto.
+
 **No aquí:** las retenciones — ReteISR sobre honorarios y alquileres
 (Norma General 02-05), la retención del 2 % del ITBIS facturado en pagos con
 tarjeta de crédito o débito (Norma General 08-04), la retención del 100 %

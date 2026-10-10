@@ -15,7 +15,8 @@
     { "ref": "sup-oficina", "name": "Suministros de Oficina S.A.S.", "type": "supplier", "country": "CO" },
     { "ref": "sup-tueste", "name": "Tueste Andino S.A.S.", "type": "supplier", "country": "CO" },
     { "ref": "sup-logistica", "name": "Almacenamiento y Logística S.A.S.", "type": "supplier", "country": "CO" },
-    { "ref": "sup-cultivos", "name": "Cultivos La Vega S.A.S.", "type": "supplier", "country": "CO" }
+    { "ref": "sup-cultivos", "name": "Cultivos La Vega S.A.S.", "type": "supplier", "country": "CO" },
+    {"ref": "sup-exterior", "name": "Andes Cloud Platform Inc.", "type": "supplier", "country": "US"}
   ],
   "documents": [
     {
@@ -77,6 +78,22 @@
       "ref": "C5", "type": "purchase_invoice", "contact": "sup-oficina", "date": "2026-03-15",
       "why": "Una compra grande en el segundo período bimestral, que deja ese período en saldo a favor: prueba la casilla 83.",
       "lines": [{ "name": "Mercancía general", "quantity": 1, "unit_price": 5000000, "tax": "CO-P-19", "account": "6205" }]
+    },
+    {
+      "ref": "C6",
+      "type": "purchase_invoice",
+      "contact": "sup-exterior",
+      "date": "2026-04-10",
+      "why": "Una suscripción de software prestada desde el exterior a la empresa en Colombia (Estatuto Tributario, art. 420, parágrafo 3): el 100 % del IVA se retiene y se lleva a la cuenta 2367, a pagar con la declaración de retenciones, y se descuenta en la casilla 78; la base va a la casilla 49.",
+      "lines": [
+        {
+          "name": "Suscripción mensual de software en la nube",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "CO-P-19-NODOM",
+          "account": "5135"
+        }
+      ]
     }
   ],
   "payments": [

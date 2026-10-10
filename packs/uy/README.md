@@ -263,9 +263,17 @@ as a gap of the core rather than a choice of this pack. In short:
    represent; see `docs/international.md`.
 5. **Any withholding of VAT** a private party is made to practise, and the
    tax on digital services a foreign, non-resident supplier is itself made
-   to register and pay (Ley N° 19.535, art. 4) — neither is a reverse charge
-   the local buyer books, and this pack invents no posting for either
-   without a verified mechanism to transcribe.
+   to register and pay (Ley N° 19.535; Título 10, art. 5, fourth paragraph;
+   Decreto N° 144/018) — neither is a reverse charge the local buyer books,
+   and this pack invents no posting for either without a verified mechanism
+   to transcribe. A service bought from a supplier abroad outside that
+   digital regime is not taxed at all: Título 10, art. 5, taxes *"las
+   prestaciones de servicios realizadas en el territorio nacional"*, no
+   article makes the Uruguayan recipient the taxpayer, and the DGI answered
+   so in Consulta N.° 6217. `pack.json` says so in `not_taxed`; such a
+   purchase is booked with no tax code. Whether a given cloud or software
+   subscription falls inside the digital regime of Decreto N° 144/018 (and
+   so under the payer's withholding) is a question for a reviewer.
 6. **The other twenty-six numerals of Decreto N° 220/998, art. 34** (export
    services beyond software development) and the other literals of arts. 36
    and 38 (minimum-rate goods and exemptions beyond rice and real-estate

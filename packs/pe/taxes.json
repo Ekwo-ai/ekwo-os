@@ -139,5 +139,48 @@
         { "type": "base", "box": "120", "box_factor": -100 }
       ]
     }
+  },
+  {
+    "code": "PE-C-18-NODOM",
+    "name": "Utilización en el país de servicios prestados por no domiciliados, 18 %",
+    "description": "IGV que el usuario de un servicio prestado por un no domiciliado determina y paga con el Formulario Virtual N.° 1662 y aplica como crédito fiscal recién en el período en que lo paga y anota en el Registro de Compras",
+    "kind": "vat",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Ley del IGV (TUO, D.S. N.° 055-99-EF), art. 1, inciso b) — grava la prestación o utilización de servicios en el país; art. 3, inciso d) — el servicio prestado por un no domiciliado se utiliza en el país cuando es consumido o empleado en el territorio nacional; art. 4, inciso c) — la obligación nace en la fecha en que se anota el comprobante en el Registro de Compras o en que se paga la retribución, lo que ocurra primero; art. 9 — el usuario es el sujeto del impuesto; art. 21 — «tratándose de la utilización de servicios prestados por no domiciliados, el crédito fiscal podrá aplicarse únicamente cuando el Impuesto correspondiente hubiera sido pagado»; Reglamento, art. 6, numeral 11 — se deduce en el período en que se anotan el comprobante del no domiciliado y el documento que acredita el pago del impuesto. Tasa del 16 % de IGV más 2 % de Impuesto de Promoción Municipal. El impuesto se paga con la boleta del Formulario Virtual N.° 1662, fuera del Formulario 621: por eso se acredita a la cuenta 40113 y se debita en la 401115, por aplicar, sin casilla en el período del comprobante; el traspaso a 401112 y a las casillas 107 y 108 en el período del pago es un asiento manual — ver README.md. Sin categoría EN 16931 ni código de exención",
+    "source": "ley-igv",
+    "sequence": 125,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "401115"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "40113"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "401115"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "40113"
+        }
+      ]
+    }
   }
 ]

@@ -67,6 +67,8 @@ code,parent,type,reconcilable,name,sequence
 401112,40111,asset_current,false,IGV – Crédito fiscal (IGV de compras),660
 401113,40111,liability_current,true,IGV – Tributo por pagar,670
 401114,40111,asset_current,true,IGV – Saldo a favor del IGV,680
+401115,40111,asset_current,false,IGV – Crédito fiscal por aplicar (no domiciliados),685
+40113,4011,liability_current,false,IGV – Servicios prestados por no domiciliados,688
 4017,401,liability_current,false,Impuesto a la renta,690
 40171,4017,liability_current,false,Renta de tercera categoría,700
 403,40,liability_current,false,Instituciones públicas,710
