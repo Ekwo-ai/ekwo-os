@@ -1,0 +1,54 @@
+[
+  {
+    "code": "GG-S-NA",
+    "name": "Sale, not subject to any tax on turnover",
+    "description": "Every sale a Guernsey business makes — domestic, exported, or delivered from outside Guernsey to a place outside Guernsey",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "Guernsey levies no value added tax, goods and services tax or general tax on the sale of goods or services today: the States of Guernsey Revenue Service describes its taxes as income tax and social security contributions (https://www.gov.gg/tax, consulted 2026-10-10), and the PwC worldwide tax summaries state that 'Guernsey does not currently operate a VAT or goods and service tax (GST)' (consulted 2026-10-10). On 2 October 2026 the States of Deliberation voted, 22 to 17, for the principle of a GST of 3 % from 2029, with a pathway to 4 % and then 5 % subject to an independent fiscal review (Guernsey Press, consulted 2026-10-10); no GST law is enacted or in force and no rate is promulgated, so this pack creates no GST code. The official resolution on the States voting records site (statesvoting-records.gov.gg) could not be opened from the environment that wrote this pack. What a Guernsey company pays on its trading is income tax at 0 % (standard), 10 % (banking, domestic insurance, fiduciary and similar regulated activities) or 20 % (property, utilities, retail with taxable profits over £500,000, hydrocarbon oil and gas) under the Income Tax (Guernsey) Law, 1975, filed online (https://gov.gg/RevenueService/Companies); a domestic top-up tax for in-scope multinational groups since 1 January 2025; and social security contributions. None of them is a tax any single invoice carries, so the code exists only so that every sale line carries a tax code the engine can post, and states plainly that this jurisdiction has none. See 'From Guernsey' in docs/international.md.",
+    "source": "gg-tax",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "GG-P-NA",
+    "name": "Purchase, not subject to any tax on turnover",
+    "description": "Every purchase a Guernsey business books — domestic, imported, or delivered from outside Guernsey to a place outside Guernsey",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "The purchase side of GG-S-NA: nothing a Guernsey business buys carries a value added tax, goods and services tax or general sales tax to recover today, whether the seller is in Guernsey or abroad (States of Guernsey Revenue Service and PwC worldwide tax summaries, consulted 2026-10-10). Imports carry customs duty at rates from 0 % to 22 % by commodity under the customs rules Guernsey applies (PwC worldwide tax summaries, consulted 2026-10-10), plus excise duties on specific goods; these are duties on goods and not a general tax an invoice line can carry a code for, and this pack does not model them. Document Duty is charged on transfers of real property (same source) and is not modelled either. The GST voted in principle on 2 October 2026 for 2029 is not enacted; no purchase-side code exists for it. See 'From Guernsey' in docs/international.md.",
+    "source": "gg-pwc-other-taxes",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 20
+  }
+]

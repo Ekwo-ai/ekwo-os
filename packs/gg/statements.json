@@ -1,0 +1,553 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "GG-FRS102-1A-BS",
+      "kind": "balance_sheet",
+      "framework": "UK-FRS102",
+      "name": "Balance sheet — FRS 102 Section 1A, Format 1",
+      "legal_reference": "FRS 102 The Financial Reporting Standard applicable in the UK and Republic of Ireland, Section 1A (Small Entities), is the framework this statement follows: the Companies (Guernsey) Law, 2008 requires accounts including a balance sheet that give a true and fair view and state the generally accepted accounting principles adopted (Walkers, consulted 2026-10-10), and names no format; UK GAAP is one of the principles a Guernsey company may declare. The layout is the one Section 1A shows for small entities, the Format 1 balance sheet (fixed assets, current assets, creditors due within and after one year, provisions, capital and reserves) in its summarised form. It is a layout borrowed from the United Kingdom standard, not a format Guernsey law imposes, and the lines are the pack's own groupings of its original chart. Line K.IV carries the year's result not yet closed to retained earnings, so that the statement ties to the cent on an open year. The text of the Law itself could not be opened; see the README.",
+      "source": "frs-102",
+      "lines": [
+        {
+          "code": "A",
+          "name": "Called up share capital not paid",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "0000"
+            }
+          ]
+        },
+        {
+          "code": "B.I",
+          "parent": "B",
+          "name": "Intangible assets",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0010",
+              "code_to": "0041"
+            }
+          ]
+        },
+        {
+          "code": "B.II",
+          "parent": "B",
+          "name": "Tangible assets",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0100",
+              "code_to": "0161"
+            }
+          ]
+        },
+        {
+          "code": "B.III",
+          "parent": "B",
+          "name": "Investments",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0200",
+              "code_to": "0230"
+            }
+          ]
+        },
+        {
+          "code": "B",
+          "name": "Fixed assets",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "B.I",
+            "B.II",
+            "B.III"
+          ]
+        },
+        {
+          "code": "C.I",
+          "parent": "C",
+          "name": "Stocks",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1030"
+            }
+          ]
+        },
+        {
+          "code": "C.II",
+          "parent": "C",
+          "name": "Debtors",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1160"
+            }
+          ]
+        },
+        {
+          "code": "C.III",
+          "parent": "C",
+          "name": "Investments",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1210"
+            }
+          ]
+        },
+        {
+          "code": "C.IV",
+          "parent": "C",
+          "name": "Cash at bank and in hand",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1350"
+            }
+          ]
+        },
+        {
+          "code": "C",
+          "name": "Current assets",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "C.I",
+            "C.II",
+            "C.III",
+            "C.IV"
+          ]
+        },
+        {
+          "code": "D",
+          "name": "Prepayments and accrued income",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1420"
+            }
+          ]
+        },
+        {
+          "code": "E.1",
+          "parent": "E",
+          "name": "Bank loans and overdrafts",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2020"
+            }
+          ]
+        },
+        {
+          "code": "E.2",
+          "parent": "E",
+          "name": "Trade creditors",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2100"
+            }
+          ]
+        },
+        {
+          "code": "E.3",
+          "parent": "E",
+          "name": "Amounts owed to group undertakings",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2110"
+            }
+          ]
+        },
+        {
+          "code": "E.4",
+          "parent": "E",
+          "name": "Other creditors including taxation and social security",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2400"
+            }
+          ]
+        },
+        {
+          "code": "E",
+          "name": "Creditors: amounts falling due within one year",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "E.1",
+            "E.2",
+            "E.3",
+            "E.4"
+          ]
+        },
+        {
+          "code": "J",
+          "name": "Accruals and deferred income",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3210"
+            }
+          ]
+        },
+        {
+          "code": "F",
+          "name": "Net current assets (liabilities)",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "C",
+            "D"
+          ],
+          "minus": [
+            "E",
+            "J"
+          ]
+        },
+        {
+          "code": "G",
+          "name": "Total assets less current liabilities",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "A",
+            "B",
+            "F"
+          ]
+        },
+        {
+          "code": "H",
+          "name": "Creditors: amounts falling due after more than one year",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3050"
+            }
+          ]
+        },
+        {
+          "code": "I",
+          "name": "Provisions for liabilities",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3110"
+            }
+          ]
+        },
+        {
+          "code": "NET",
+          "name": "Net assets (liabilities)",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "G"
+          ],
+          "minus": [
+            "H",
+            "I"
+          ]
+        },
+        {
+          "code": "K.I",
+          "parent": "K",
+          "name": "Called up share capital",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "3300"
+            }
+          ]
+        },
+        {
+          "code": "K.II",
+          "parent": "K",
+          "name": "Share premium account and other reserves",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3310",
+              "code_to": "3340"
+            }
+          ]
+        },
+        {
+          "code": "K.III",
+          "parent": "K",
+          "name": "Profit and loss account brought forward",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3400",
+              "code_to": "3410"
+            }
+          ]
+        },
+        {
+          "code": "K.IV",
+          "parent": "K",
+          "name": "Profit or loss for the year, not yet allocated",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "8399"
+            }
+          ]
+        },
+        {
+          "code": "K",
+          "name": "Capital and reserves",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "K.I",
+            "K.II",
+            "K.III",
+            "K.IV"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "GG-FRS102-1A-IS",
+      "kind": "income_statement",
+      "framework": "UK-FRS102",
+      "name": "Profit and loss account — FRS 102 Section 1A, Format 1",
+      "legal_reference": "FRS 102 Section 1A (Small Entities): the profit and loss account in the Format 1 layout (turnover, cost of sales, gross profit, distribution costs, administrative expenses, other operating income, investment income, interest, tax). Guernsey law requires a profit and loss account that gives a true and fair view and names no format (Companies (Guernsey) Law, 2008, per Walkers, consulted 2026-10-10); the layout is borrowed from the United Kingdom standard. The tax line carries Guernsey income tax on the company's profit (0 %, 10 % or 20 %, States of Guernsey Revenue Service, consulted 2026-10-10), booked by the company: nothing in this pack computes it.",
+      "source": "frs-102",
+      "lines": [
+        {
+          "code": "1",
+          "name": "Turnover",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4110"
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "name": "Cost of sales",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5240"
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "name": "Gross profit or loss",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "1"
+          ],
+          "minus": [
+            "2"
+          ]
+        },
+        {
+          "code": "4",
+          "name": "Distribution costs",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6500"
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "name": "Administrative expenses",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7000",
+              "code_to": "7710"
+            }
+          ]
+        },
+        {
+          "code": "6",
+          "name": "Other operating income",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4200",
+              "code_to": "4240"
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "name": "Income from investments",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4300",
+              "code_to": "4320"
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "name": "Other interest receivable and similar income",
+          "sequence": 80,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4330"
+            }
+          ]
+        },
+        {
+          "code": "9",
+          "name": "Amounts written off investments",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "8100"
+            }
+          ]
+        },
+        {
+          "code": "10",
+          "name": "Interest payable and similar expenses",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8040"
+            }
+          ]
+        },
+        {
+          "code": "11",
+          "name": "Tax on profit or loss",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8200",
+              "code_to": "8220"
+            }
+          ]
+        },
+        {
+          "code": "12",
+          "name": "Other taxes not shown under the above items",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "8300"
+            }
+          ]
+        },
+        {
+          "code": "13",
+          "name": "Profit or loss for the financial year",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "3",
+            "6",
+            "7",
+            "8"
+          ],
+          "minus": [
+            "4",
+            "5",
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -6490,3 +6490,33 @@ Government's budget papers were not opened; the portal URL comes from a search
 snippet. The statements follow IFRS for SMEs by the pack's choice; s. 84(1)
 also asks for a statement of retained earnings and of cash flows, which are
 not modelled.
+
+### From Guernsey
+
+Guernsey follows the Hong Kong format: no turnover tax today, two `not_subject`
+codes (`GG-S-NA`, `GG-P-NA`), no `tax_report.json`, no settlement roles, an
+empty `boxes` golden. No generic test needed a change.
+
+**The law is moving.** On 2 October 2026 the States of Deliberation voted 22 to
+17 (one abstention) for the principle of a GST of 3 % from 2029, with a pathway
+to 4 % then 5 % subject to an independent fiscal review (Guernsey Press, 2
+October 2026). It is not enacted, no rate is promulgated, so the pack carries
+no GST code. The official resolution (`statesvoting-records.gov.gg`) could not
+be opened (certificate error) and no gov.gg page on the GST was found. When a
+GST law exists, the pack needs real codes, a return, `tax_payable` and
+`tax_receivable`, and a revised `tax_point`.
+
+**Levies left outside the pack**, with their sources: company income tax at
+0 % / 10 % / 20 % under the Income Tax (Guernsey) Law, 1975, filed online at
+`my.gov.gg` (Revenue Service, gov.gg/RevenueService/Companies); the Pillar Two
+domestic top-up tax from 1 January 2025 (Legal 500); social security
+contributions; customs and excise duty and Document Duty on property (PwC
+worldwide tax summaries). None has a tax code.
+
+**Socle gaps** (as for Hong Kong): `documents.tax_point` has no true value for a
+country with no turnover tax; `valid_from` on a tax that was never introduced
+is a convention. The Companies (Guernsey) Law, 2008 could not be opened
+(403); its duties are cited through Walkers, without section numbers.
+
+**Statements.** FRS 102 Section 1A layout, borrowed from the United Kingdom: Guernsey law
+prescribes no format, only a true and fair view under declared GAAP.

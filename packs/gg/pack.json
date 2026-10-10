@@ -1,0 +1,207 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "GG",
+  "name": "Guernsey",
+  "version": "0.1.0",
+  "schema_min": "20260917170000",
+  "seed_sequence": 141,
+  "released_at": "2026-10-10",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "gg-companies-law",
+        "title": "Companies (Guernsey) Law, 2008",
+        "publisher": "Guernsey Legal Resources (Law Officers of the Crown)",
+        "url": "https://guernseylegalresources.gg/laws/guernsey-bailiwick/c/companies-and-commercial/companies-guernsey-law-2008/",
+        "consulted_on": "2026-10-10",
+        "kind": "law"
+      },
+      {
+        "key": "gg-rs-companies",
+        "title": "Tax information for companies",
+        "publisher": "States of Guernsey — Revenue Service",
+        "url": "https://gov.gg/RevenueService/Companies",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "gg-tax",
+        "title": "Understanding income tax",
+        "publisher": "States of Guernsey — Revenue Service",
+        "url": "https://www.gov.gg/tax",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "gg-revenue-service",
+        "title": "Revenue Service",
+        "publisher": "States of Guernsey — Revenue Service",
+        "url": "https://www.gov.gg/revenueservice",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "gg-pwc-other-taxes",
+        "title": "Guernsey — Corporate — Other taxes (worldwide tax summaries)",
+        "publisher": "PwC",
+        "url": "https://taxsummaries.pwc.com/guernsey/corporate/other-taxes",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "gg-pillar-two",
+        "title": "Pillar Two in Guernsey",
+        "publisher": "Legal 500",
+        "url": "https://www.legal500.com/intelligence/guernsey/tax/pillar-two-in-guernsey",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "gg-gst-vote",
+        "title": "GST is agreed at 3% but soon rising to 5%",
+        "publisher": "Guernsey Press",
+        "url": "https://guernseypress.com/news/2026/10/02/gst-is-agreed-at-3percent-but-soon-rising-to-5percent",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "gg-walkers-accounts",
+        "title": "Guernsey Company Law Series: Financial Records, Accounts, Annual Validations and Audit Requirements",
+        "publisher": "Walkers",
+        "url": "https://www.walkersglobal.com/en/Insights/2024/10/Guernsey-Company-Law-Series--Financial-Records--Accounts-Annual-Validations-and-Audit-Requirements",
+        "consulted_on": "2026-10-10",
+        "kind": "guidance"
+      },
+      {
+        "key": "frs-102",
+        "title": "FRS 102 The Financial Reporting Standard applicable in the UK and Republic of Ireland (Section 1A Small Entities)",
+        "publisher": "Financial Reporting Council",
+        "url": "https://www.frc.org.uk/library/standards-codes-policy/accounting-and-reporting/uk-accounting-standards/frs-102/",
+        "consulted_on": "2026-10-10",
+        "kind": "standard"
+      },
+      {
+        "key": "gg-my-gov",
+        "title": "my.gov.gg — online tax services (company income tax return)",
+        "publisher": "States of Guernsey — Revenue Service",
+        "url": "https://my.gov.gg",
+        "consulted_on": "2026-10-10",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "GBP",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2100",
+      "suspense": "2400",
+      "rounding": "7710",
+      "retained_earnings": "3400",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1300",
+      "cash": "1330",
+      "fx_gain": "4240",
+      "fx_loss": "7700",
+      "asset_disposal_gain": "4230",
+      "asset_disposal_loss": "7690"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales day book",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchase day book",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Cash book",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Guernsey reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "GG-FRS102-1A-BS",
+        "GG-FRS102-1A-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Guernsey. The Companies (Guernsey) Law, 2008 requires every company to keep accounting records sufficient to show and explain its transactions, to preserve them for at least six years from the date they are made, and to have its directors prepare, for each financial year, accounts that include a balance sheet and a profit and loss account, give a true and fair view, and are prepared in accordance with generally accepted accounting principles that the accounts state (Walkers, consulted 2026-10-10; the text of the Law itself could not be opened, see the README). The Law prescribes no chart and no format. This chart is original and follows British bookkeeping practice, as the pack for the United Kingdom does, because the generally accepted accounting principles most Guernsey companies declare are UK GAAP (FRS 102), with IFRS or US GAAP the other options: four digits, blocked so that each range reaches one line of the balance sheet and the profit and loss account of FRS 102 Section 1A (small entities) in the layout statements.json carries. It has no value added tax, goods and services tax or sales tax account of any kind, because Guernsey levies none today; the States of Deliberation voted on 2 October 2026 for a GST from 2029, which is enacted nowhere yet — see 'From Guernsey' in docs/international.md.",
+      "source": "gg-companies-law"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Guernsey levies no value added tax, goods and services tax or general sales tax today (States of Guernsey Revenue Service, consulted 2026-10-10: income tax and social security contributions are the taxes it collects; PwC worldwide tax summaries: 'Guernsey does not currently operate a VAT or goods and service tax (GST)'), so no tax statute conditions anything on an invoice carrying a sequential number. The only record-keeping duty found is that of the Companies (Guernsey) Law, 2008: accounting records sufficient to show and explain the company's transactions, kept for at least six years (Walkers, consulted 2026-10-10) — a duty about what is kept and not about how a document already issued is numbered. `numbering` is therefore `free`; `number_format` is a convention this pack proposes. A GST, if it is enacted, will probably bring its own invoice rules; none exists to cite.",
+        "source": "gg-companies-law"
+      },
+      "payment_terms": {
+        "legal_reference": "No Guernsey statute was found that sets a payment term between two businesses in the absence of an agreement, or a rate of interest on a commercial debt paid late; the Late Payment of Commercial Debts (Interest) Act 1998 is a United Kingdom statute and no source consulted says it extends to Guernsey. `legal_payment_days` and `late_payment_reference` are therefore empty, and a seller's own terms are a matter of contract. This is an absence of a source found, not a proof of absence: a Guernsey lawyer should confirm it.",
+        "source": "gg-companies-law"
+      },
+      "tax_point": {
+        "legal_reference": "This field has nothing to describe in Guernsey today: it names the day a country's general rule makes its own turnover tax chargeable, and Guernsey charges none. `invoice_date` is declared as the closest general commercial convention — revenue is ordinarily invoiced at or shortly after the point FRS 102 recognises it — and not as a rule read from a text. If the GST voted in principle on 2 October 2026 is enacted, its own time-of-supply rule will replace this convention; see 'From Guernsey' in docs/international.md.",
+        "source": "frs-102"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Guernsey statute was found that obliges a business to issue or accept an electronic invoice, and no Peppol Authority is listed for Guernsey (OpenPeppol list of Peppol Authorities, not re-opened for this pack: the absence is as of the author's knowledge and must be re-checked). `profile`, `party_scheme` and `vat_scheme` are null: there is no domestic profile to name and no VAT identifier for a scheme to carry, since Guernsey levies no value added tax or goods and services tax today (States of Guernsey Revenue Service and PwC worldwide tax summaries, consulted 2026-10-10).",
+    "source": "gg-pwc-other-taxes"
+  }
+}
