@@ -19,7 +19,7 @@ a project of its own, and the move is checked by comparing both trial balances,
 to the cent. A company can also be exported from one installation and imported
 into another, wherever each one runs.
 
-*Version 1.2 — 10 October 2026. This page covers the software of this
+*Version 1.3 — 10 October 2026. This page covers the software of this
 repository, the site at ekwo.ai and the hosted service at cloud.ekwo.ai,
 including the MCP server at mcp.ekwo.ai. Each section says which one it is
 about.*
@@ -45,8 +45,8 @@ to its own provider is governed by that provider's terms.
 
 ## 2. The site, ekwo.ai
 
-The pages carry **no analytics script, no tag manager and no cookie**. The site
-sets nothing in your browser.
+Today the pages set no cookie in your browser. If the site uses a measurement
+tool that needs one, it asks for your consent first, and this page says so.
 
 The host that serves the site counts requests from its own logs: pages
 viewed, the country a request came from, the address that referred it. It is
@@ -105,15 +105,16 @@ for two purposes:**
   to tell you about an error it notices. This is part of the service you asked
   for (Article 6(1)(b) GDPR).
 - **To improve the service** — to find where the software, an importer or a
-  country pack gets something wrong, and correct it for everybody. This rests
+  country pack gets something wrong, and correct it for everybody, and to
+  improve the agents of Ekwo Cloud, including by training them on examples
+  drawn from the books. This rests
   on Ekwo's legitimate interest in a service that keeps correct books
   (Article 6(1)(f) GDPR), and you can object to it by writing to the address
   in §8.
 
-Only people working for Ekwo do this, and they are bound to keep what they
-read confidential. Your figures are never published, sold or handed to anyone,
-and §4 still holds: your books do not train a model. You can ask what was read
-and when, as §7 describes.
+Only Ekwo, and the people working for it, do this, bound to keep what they
+read confidential. Your figures are never published, sold or handed to anyone.
+You can ask what was read and when, as §7 describes.
 
 ### What the MCP server sees
 
@@ -125,9 +126,8 @@ content of your books** — not the amounts, not the names, not the documents.
 ## 4. What we do not do
 
 We do not sell anything about you. We do not run advertising, and nothing here
-is shared with an advertising network. We do not build a profile of you, and we
-do not use your books to train a model — ours or anyone's. There is no
-third-party tracker on the site or in the application.
+is shared with an advertising network. We do not build a profile of you, and
+your books are never handed to another company to train its models.
 
 ## 5. Who else is involved
 

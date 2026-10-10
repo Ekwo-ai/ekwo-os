@@ -11,6 +11,13 @@ somewhere has already run it.
 
 ### Added
 
+- **The privacy page says the agents of Ekwo Cloud may learn from the books.**
+  Version 1.3 of `PRIVACY.md` adds the improvement of the agents, including
+  training on examples drawn from the books, to the purposes for which Ekwo
+  reads them, under the same legitimate interest and the same right to object;
+  the statements that the site carries no measurement tool and that no model is
+  trained on the books are replaced by what holds today and what consent a
+  measurement tool would ask for.
 - **The privacy page covers the projects Ekwo hosts.** Version 1.2 of
   `PRIVACY.md` opens with the choice of where the books live — a Supabase
   project of one's own, or one Ekwo hosts — and how a project moves from one to
