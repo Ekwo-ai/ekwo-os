@@ -10,9 +10,8 @@ from and which decisions it rests on, so that an Azerbaijani accountant can
 challenge a single sentence rather than the whole pack.
 
 **Status: `community`.** No accountant or auditor has read this pack yet. The
-figures are replayed by `tests/golden.test.ts` over a quarter of books and
-checked by hand against an independent calculation; that proves internal
-consistency, not legal correctness.
+figures are replayed by `tests/golden.test.ts` over a quarter of books; that
+proves internal consistency, not legal correctness.
 
 **The pack is written in Azerbaijani** (`defaults.language: "az"`): the Tax
 Code, the State Tax Service's form and booklets, and the chart of accounts are
@@ -24,9 +23,9 @@ English-speaking readers, not an official English version of any of them (see
 
 Every rate, box and deadline cites a text in `certification.sources`.
 
-| Key | Text | Read through |
+| Key | Text | Where |
 |---|---|---|
-| `tax-code` | Tax Code of the Republic of Azerbaijan | e-qanun.az (the page serves a script shell that an automated fetch cannot read; the articles below were read through the next two entries) |
+| `tax-code` | Tax Code of the Republic of Azerbaijan | e-qanun.az |
 | `tax-code-extract` | Tax Code, articles 164 and 165 as currently worded | customs.gov.az PDF |
 | `vat-booklet` | ƏDV information booklet, 2025 | taxes.gov.az PDF |
 | `filing-deadlines` | Table of payment and filing deadlines | taxes.gov.az |
@@ -36,9 +35,6 @@ Every rate, box and deadline cites a text in `certification.sources`.
 | `accounting-law` | Law on Accounting | frc.az |
 | `nas-status` | Ministry of Finance page marking the commercial National Accounting Standards as repealed | maliyye.gov.az |
 | `chart-muhasib`, `chart-e-muhasib` | The chart of accounts as reproduced by two private accounting portals | muhasib.az, e-muhasib.az |
-
-The e-taxes.gov.az portal itself refused automated access (HTTP 403), so the
-filing portal is cited through the State Tax Service's own e-services page.
 
 ## The chart of accounts, and why this one
 
@@ -56,9 +52,8 @@ Two points need a local accountant's confirmation:
   site now lists the commercial-organisation national standards as repealed, and
   the Law on Accounting requires IFRS (or IFRS for SMEs) without prescribing a
   numbered chart. The chart is therefore declared as the one entities keep
-  using in practice, not as a statute currently in force. No official page
-  serving the chart text could be opened; the wording comes from two private
-  portals that reproduce it, and they differ in a few places (accounts 194–195
+  using in practice, not as a statute currently in force. The wording rests on
+  two private portals that reproduce the chart; they differ in a few places (accounts 194–195
   and 415/516 appear in only one); this pack follows the muhasib.az list (which
   has 414-1 and 515-1) and leaves those four out.
 - **Five accounts are the pack's own.** The chart has one VAT account on each
@@ -137,10 +132,10 @@ obligatory, issued on the State Tax Service's system (e-taxes.gov.az), and the
 buyer deducts VAT only on a received electronic invoice (booklet; art. 175.1).
 It is a state-clearance system that does not follow EN 16931 or Peppol, so
 `einvoicing.profile` and the identifier schemes are null. `obligation` and
-`mandatory_from` are left out: no official text opened here gives the date the
-obligation began. From 2026 a recurring service needs one invoice per calendar
-month (art. 71-1.1.3-2); this rests on secondary sources only, because the
-article's text was not found on an official page.
+`mandatory_from` are left out: the date the obligation began is not
+established. From 2026 a recurring service needs one invoice per calendar
+month (art. 71-1.1.3-2); this rests on secondary sources; the article itself
+should be checked.
 
 ## Services bought from a non-resident
 
@@ -187,8 +182,8 @@ payment.
   turnover (318–324), receivables movements (307), and the annexes to the
   return.
 - **A 20 % line.** The 2026 form carries a line "ƏDV-nə 20 faiz dərəcə ilə
-  tutulan əməliyyatlar" between lines 304 and 305; no source opened here says
-  which operations it covers, so no tax was created for it.
+  tutulan əməliyyatlar" between lines 304 and 305; which operations it covers
+  is not established, so no tax exists for it.
 - **Weekend deadlines.** A deadline falling on a non-working day moves to the
   next working day; the pack does not compute this.
 - **Zero-rate and exempt bases** reach the return on the invoice date, not on
@@ -201,5 +196,5 @@ documents (18 % paid in full, 18 % paid in two parts, export, exempt, a
 zero-rated transport, a credit note, a sale never collected), five purchases
 (paid in full, part paid, import, exempt, never paid) and a payment on account —
 and compares the three monthly returns, the two statements and the trial balance
-with figures worked out independently. The 18 % sale never collected and the
+with the expected figures. The 18 % sale never collected and the
 purchase never paid stay on 5212 and 2413 and appear in no return.

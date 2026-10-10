@@ -19,8 +19,7 @@ Every rate, box and deadline cites an official text in `certification.sources`:
   is `arlis.am/en/acts/205620`): articles 56, 60, 63-65, 67-72, 75 and 254-258.
 - Order No. 298-N of 30 December 2016 of the Chairman of the State Revenue
   Committee: the form of the unified VAT and excise tax calculation and its
-  filling instructions (the text read is the incorporated version in force from
-  1 April 2023).
+  filling instructions (incorporated version in force from 1 April 2023).
 - Order No. 353-N of 17 April 2012 of the Minister of Finance: the chart of
   accounts and its application instruction.
 - Order No. 1016-N of 21 November 2012: the chart for small and medium
@@ -54,9 +53,8 @@ two VAT settlement accounts are `reconcilable`; the bank (2521) and the cash
 (2511) are not.
 
 The small and medium organisations chart (Order No. 1016-N) keeps the structure
-of Order No. 353-N with fewer accounts. It is not carried as a second chart
-because its text was not transcribed; a company on it can use the accounts of
-this chart that exist in both.
+of Order No. 353-N with fewer accounts. It is not carried as a second chart; a
+company on it can use the accounts of this chart that exist in both.
 
 Year-end closing uses `result_accounts`: 331 (profit or loss) is the closing
 account of the official chart, 343 (net profit or loss of the year) takes the
@@ -127,19 +125,19 @@ purpose: the manifest accepts `obligation: mandatory` only with a
 `mandatory_from`, and a `mandatory_from` only with a profile that says what
 becomes obligatory. Online cash registers (e-HDM) are outside the core.
 
-Recent changes, read from the amendment history of the Tax Code and from
+Recent changes, resting on the amendment history of the Tax Code and on
 secondary sources, to be confirmed by a local accountant:
 
 - Law HO-234-N of 6 May 2026 (listed in the amendment history of the Tax Code):
   the rate used to convert a foreign-currency invoice is the Central Bank rate of
-  the **previous working day** from 1 July 2026. The consolidated text retrieved
+  the **previous working day** from 1 July 2026. The consolidated text
   still shows the 16:00 same-day wording of article 16(2). The core takes the
   rate from the document, so the pack does not carry it.
 - Law HO-309-N of 3 July 2026: the settlement document is issued before the goods
   are supplied and at the completion of work or services from 1 September 2026;
   the extension of electronic cash registers applies mostly from 1 January 2027.
 - A special regime for gold (Law HO-200-N of 26 June 2023 amended article 88 of
-  the Code): not read in detail, and nothing in this pack models it.
+  the Code): nothing in this pack models it.
 
 ## Services bought from a non-resident
 
@@ -179,11 +177,11 @@ services to individuals.
 
 ## To be reviewed by a local accountant
 
-The Armenian wording written by the contributor (the names of the five added
+The Armenian wording (the names of the five added
 accounts, of the taxes, boxes and statement lines, and the legal references);
 the exempt list of article 64(2); the tax point (`invoice_if_issued` approximates
 article 56(4), which ties the document to the supply and to completion of work);
-the version of the return form in force today (the text read is the 2023
+the version of the return form in force today (the pack follows the 2023
 incorporation); the status of HO-234-N and HO-309-N; the payment deadline of the
 VAT (the filing deadline is verified, a payment on the same day is reported by
 secondary sources only).

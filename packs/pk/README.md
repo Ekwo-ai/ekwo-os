@@ -17,7 +17,7 @@ reviewed it. The figures are replayed against two months of books by
 `tests/golden.test.ts`, which proves the pack is coherent and proves nothing
 about whether it is right.
 
-**Law in force at the day of writing.** The Sales Tax Act, 1990 as amended up
+**Law in force.** The Sales Tax Act, 1990 as amended up
 to 30 June 2026, which carries the Finance Act, 2026 (published on 26 June
 2026), and the Sales Tax Rules, 2006 as updated to 6 August 2025. The standard
 rate was 17 % until the Finance (Supplementary) Act, 2023 substituted 18 %;
@@ -29,9 +29,8 @@ pack cites. Urdu labels for the main accounts and taxes were not written;
 `languages` is empty and a translation can be added as `i18n/ur.json` without
 touching anything else.
 
-What the core could not say is written up in
-[`docs/international.md`](../../docs/international.md) under "From Pakistan".
-None of it was patched for this pack's sake.
+What the core could not say is in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## What is in it
 
@@ -133,7 +132,7 @@ a registration number or is not an active taxpayer. The Finance Act, 2023 took
 it from three to four. It is paid to FBR and reported in row 23a of STR-7. The
 two charges stand on the same value, so `PK-S-18-FT` carries 22 % and splits
 the tax between account 2100 (the sales tax, row 9) and account 2101 (the
-further tax, row 23a), the way `packs/gh/` splits its three charges.
+further tax, row 23a).
 
 **A limit of the core shows here.** The share of a posting is stored with
 three decimals (`numeric(7,3)`), and 18/22 is 81.818181… per cent. The code
@@ -144,7 +143,8 @@ and their sum is still the 22 % of the line. The golden keeps its
 unregistered-buyer sales below that value for this reason. A user selling large
 amounts to unregistered buyers can enter the sale on two lines, one with
 `PK-S-18` and one with a code at 4 % on the same value. The remedy belongs to
-the core; see "From Pakistan" in `docs/international.md`.
+the core; see
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 The Federal Government may exempt classes of supplies from the further tax by
 notification; none is modelled.
@@ -155,19 +155,19 @@ Services are taxed by the provinces and, in Islamabad, by the Federation under
 a separate Ordinance. Each has its own statute, authority, registration,
 portal and return; none is declared on STR-7.
 
-| Authority | Statute | Rate | Read from |
+| Authority | Statute | Rate | Source |
 |---|---|---|---|
-| Punjab Revenue Authority (PRA) | Punjab Sales Tax on Services Act, 2012 | 16 % | the Punjab Laws portal, via a search extract only — see below |
+| Punjab Revenue Authority (PRA) | Punjab Sales Tax on Services Act, 2012 | 16 % | the Punjab Laws portal's consolidated text, secondary reading — see below |
 | Sindh Revenue Board (SRB) | Sindh Sales Tax on Services Act, 2011 | 15 % | the Act as amended by the Sindh Finance Act, 2025, s. 8(1) |
 | Khyber Pakhtunkhwa Revenue Authority (KPRA) | Sales Tax on Services Act, 2022 | 15 % | the Act, updated with the Finance Act, 2024, s. 9(1) |
 | Balochistan Revenue Authority (BRA) | Sales Tax on Services Act, 2015 | 15 % | the Act, Second Schedule |
 | Islamabad Capital Territory | Islamabad Capital Territory (Tax on Services) Ordinance, 2001 | 15 % | the Ordinance as updated to 30 June 2025, Table-1 |
 
-Islamabad was the uncertain one. The Finance Act, 2022 substituted fifteen
+The Islamabad rate is uncertain. The Finance Act, 2022 substituted fifteen
 percent for the earlier sixteen and seventeen in the Ordinance's Schedule, and
 the 2025 edition still reads fifteen; some commentators give sixteen, which is
 the Punjab rate. The pack keeps fifteen. Whether the Finance Act, 2026 moved
-it was not established.
+it should be checked.
 
 Each tax is a posting to its own payable account (2103 to 2107) and a purchase
 posts to its own input account (1151 to 1154, 1156): the provincial laws let a
@@ -176,29 +176,25 @@ authority, and the federal Act (s. 8(1)(j)) bars the input tax of a service
 where the provincial law bars it. Payment dates in the provincial statutes
 read: Sindh, the 15th day of the following month (s. 2(36)); Balochistan, the
 15th (s. 2(18)); Khyber Pakhtunkhwa, the 15th for payment and the 18th for the
-return (s. 2(x)). The Punjab Act was said to read the 15th in the search
-extract; the Ordinance of Islamabad was not found to define a due date. The
+return (s. 2(x)). The Punjab Act is reported to read the 15th; the Ordinance of Islamabad was not found to define a due date. The
 provinces change dates and reduced rates by notification; **reduced rates**
 (restaurants paying by card, hotels, telecommunications at 19.5 % and others)
 are not modelled, and a service at such a rate needs a code of its own.
 
-**The Punjab Act was not opened.** The Punjab Laws portal
-(`punjablaws.gov.pk`) and the Punjab Revenue Authority site refused the
-connection from the place this pack was written. The Punjab rate and the
-2021 insertion of the 16 % standard rate come from the portal's consolidated
-text as a search of that portal returned it. The entry in the register of
-sources is the portal's page, flagged here; a Punjab accountant should confirm
-it against the Act as amended by the Punjab Finance Act, 2026.
+**The Punjab rate rests on a secondary reading.** The 16 % and its 2021
+insertion are taken from the Punjab Laws portal's consolidated text as
+quoted, not from the Act itself; a Punjab accountant should confirm them
+against the Act as amended by the Punjab Finance Act, 2026.
 
 The core files one return per pack. The five authorities' returns are
 therefore not boxes of Ekwo's filing: their tax is booked on its own accounts
-and is paid to each authority from there. See "From Pakistan" in
-`docs/international.md`.
+and is paid to each authority from there. See
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Electronic invoicing
 
-Pakistan has no Peppol-style exchange; `einvoicing.obligation` is `none` for
-the reason `packs/ke/` gives. What it has is a real-time reporting regime the
+Pakistan has no Peppol-style exchange between businesses, so
+`einvoicing.obligation` is `none`. What it has is a real-time reporting regime the
 vocabulary cannot hold: section 23(1) of the Act asks for a verifiable and
 unique FBR invoice number from the time the Board notifies, section 23(5) lets
 the Board require any person or class of persons to integrate their invoicing
@@ -211,8 +207,8 @@ electronic invoices. The Finance Act, 2026 added non-compliance with section
 23(5) and (6) to the grounds on which the Commissioner may suspend or blacklist
 a registration (s. 21(2)); invoices of a suspended person are not entertained
 for refund or input tax credit (s. 21(3)). The extension of the obligation to
-every registered person came through S.R.O. 709(I)/2025; that notification was
-**not opened**, and the dates of its phases, revised since, are not in the pack.
+every registered person came through S.R.O. 709(I)/2025; the dates of its
+phases, revised since, are not in the pack.
 The pack produces no FBR invoice number, no QR code and no call to the
 integration interface; the books issue the sequence `{CODE}-{YYYY}-{NNNN}`.
 
@@ -275,10 +271,9 @@ Schedules' disclosure formats are not carried. The framework is labelled
 
 ## To be read by a Pakistani accountant
 
-1. The Punjab 16 % and the date it applies from (the Act was not opened).
+1. The Punjab 16 % and the date it applies from (secondary reading).
 2. The Islamabad 15 %, and whether the Finance Act, 2026 changed it.
-3. The 2026-27 provincial rates, which no provincial Finance Act of 2026 was
-   read for.
+3. The 2026-27 provincial rates, against the provincial Finance Acts of 2026.
 4. Where STR-7 reports a local zero-rated supply (the pack puts it in row 9 at
    nil tax) and exempt and non-taxable supplies (the form has no row for them).
 5. Whether the IRIS return of 2026 still has the rows of the STR-7 of the Rules

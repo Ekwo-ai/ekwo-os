@@ -16,10 +16,10 @@ proves nothing about whether it is right.
 
 **Language.** `defaults.language` is `ar`, the language the Value Added Tax
 Law's Executive Regulations and the Tax Authority's own portal are written
-in first. This pack's research did not extend to verified Arabic accounting
-terminology, so every label — the chart, the journals, the taxes, the boxes
-of the return, the statement lines — is written in English directly, with
-`en.json` an exact mirror rather than a second language. See
+in first. Every label — the chart, the journals, the taxes, the boxes of the
+return, the statement lines — is written in English, with `en.json` an exact
+mirror rather than a second language, because no verified Arabic accounting
+terminology is carried. See
 [`i18n/README.md`](i18n/README.md) for why, and for what a reviewer fluent
 in Omani Arabic should do about it.
 
@@ -27,36 +27,31 @@ in Omani Arabic should do about it.
 
 Every tax, box and statement line carries its own `legal_reference`, and
 beside it the key of the text that article is in. The register in
-`pack.json` holds eight texts, every one of them opened on 26 September
-2026. The four the rest of this file leans on most:
+`pack.json` holds eight texts. The four the rest of this file leans on most:
 
 | What | Text | Where |
 |---|---|---|
 | The rate, zero-rating, exemptions, registration, tax invoices, the tax point | Value Added Tax Law, Royal Decree No. 121/2020 (Tax Authority's own English translation) | `tms.taxoman.gov.om` |
-| Detail behind those articles — invoice content, blocked input tax, the reverse charge | Executive Regulations, Decision No. 53/2021, as amended (Arabic official text; this pack's research found no Tax Authority English translation of the Regulations, unlike the Law itself) | `tms.taxoman.gov.om` |
+| Detail behind those articles — invoice content, blocked input tax, the reverse charge | Executive Regulations, Decision No. 53/2021, as amended (Arabic official text; no Tax Authority English translation) | `tms.taxoman.gov.om` |
 | The mandatory and voluntary registration thresholds | Chairman's Decision Determining the Mandatory and Voluntary Registration Thresholds | `tms.taxoman.gov.om` |
-| The live boxes of the quarterly return | VAT Taxpayer Guide — VAT Return Filing, Version 1, June 2021, whose own screenshot of "Content of VAT return" this pack's `tax_report.json` transcribes box for box | `tms.taxoman.gov.om` |
+| The live boxes of the quarterly return | VAT Taxpayer Guide — VAT Return Filing, Version 1, June 2021, whose "Content of VAT return" `tax_report.json` follows box for box | `tms.taxoman.gov.om` |
 
-**This pack leans on a secondary reading for one framework fact: that full
-IFRS, not the IFRS for SMEs Standard, is what an Omani company not trading
-publicly actually prepares under.** The IFRS Foundation's own Jurisdictional
-Profile for Oman states it in as many words ("For those SMEs that are not
-required to use the IFRS for SMEs Accounting Standard, what other
-accounting framework do they use? Full IFRS Standards"), but the three
-Omani texts the Profile cites — Article 282 of the Executive Regulation of
-the Capital Market Law, Article 30 of the Law of Organising the Accountancy
-and Auditing Profession, and Article 79 of the Income Tax Law with Article
-61 of its own Executive Regulations — this pack's research could not open
-at a directly-fetchable primary source in this pass. See "The statements"
-below.
+**One framework fact rests on a secondary source: that full IFRS, not the
+IFRS for SMEs Standard, is what an Omani company not trading publicly
+prepares under.** The IFRS Foundation's Jurisdictional Profile for Oman
+states it ("Full IFRS Standards"), citing Article 282 of the Executive
+Regulation of the Capital Market Law, Article 30 of the Law of Organising the
+Accountancy and Auditing Profession, and Article 79 of the Income Tax Law
+with Article 61 of its Executive Regulations; those texts themselves should
+be checked. See "The statements" below.
 
 ## The chart of accounts, and why this one
 
-**This pack's research found no chart of accounts an Omani company is
-legally required to use.** Neither the Tax Authority nor the Capital Market
+**No chart of accounts is known that an Omani company is legally required
+to use.** Neither the Tax Authority nor the Capital Market
 Authority publishes one.
 
-- **Four digits, by class**, the same shape as `packs/ae` and `packs/sa`:
+- **Four digits, by class**:
   `1` assets, `2` liabilities, `3` equity, `4` revenue and other income, `5`
   cost of sales, `6` other expenses, `7` finance costs, `8` income tax.
 - **Flat**, every account a leaf, grouped by the ranges `statements.json`
@@ -65,10 +60,9 @@ Authority publishes one.
   tax, the amount payable to and refundable by the Tax Authority, import
   VAT self-assessed under the postponed-accounting Article 86 of the Law
   permits, income tax under the Income Tax Law (Royal Decree 28/2009,
-  standard rate 15%, outside this VAT-focused pack's own research), and an
-  end-of-service benefits provision every Omani employer owes under the
-  Labour Law — this research pass did not trace the provision to a
-  specific article and a reviewer should check that citation.
+  standard rate 15%, not modelled), and an end-of-service benefits provision
+  every Omani employer owes under the Labour Law — the article is not cited
+  and a reviewer should check it.
 
 113 accounts, all postable. None was copied from a published chart.
 
@@ -104,13 +98,10 @@ publication, under its own Article Four).
 reduced rate.** A supply not on that list and not zero-rated under Article
 51–53 is standard-rated; this pack invents no further exemption.
 
-**The blocked-input-tax codes carry a citation gap.** Secondary compliance
-guidance describes input tax on entertainment and on a personal-use motor
-vehicle as blocked from deduction, matching the restriction `packs/ae`
-Article 53(1) and `packs/sa` Article 50 of their own Executive Regulations
-carry, but this pack's research could not open the equivalent article number
-of Oman's own Executive Regulations at a directly-fetchable text. A
-reviewer with access to Decision No. 53/2021 should locate and cite it.
+**The blocked-input-tax codes carry a citation gap.** The block on input
+tax for entertainment and a personal-use motor vehicle rests on secondary
+compliance guidance; the article of Decision No. 53/2021 should be located
+and cited by a reviewer.
 
 **An import of goods models only the postponed-accounting path.** Article
 86 lets a taxable person defer the import VAT to the return of the period
@@ -126,9 +117,8 @@ not drive; see "What this pack does not carry".
 
 `tax_report.json` files quarterly, with no other cadence: the VAT Taxpayer
 Guide states the Tax Period for VAT as "three months i.e., a quarter of a
-year", and this pack's research found no text assigning any Omani taxpayer
-a shorter period the way the Federal Tax Authority does for larger UAE
-taxpayers (`packs/ae`).
+year", and no text assigning any Omani taxpayer a shorter period is
+known.
 
 **The deadline is 30 days after the end of the quarter, for filing and for
 payment alike.** Value Added Tax Law, Article 72 (filing) and Article 82
@@ -150,15 +140,13 @@ period; box 7(c) is signed accordingly.
 
 `statements.json` carries the statement of financial position and the
 income statement built on the minimum line items of **IAS 1** — not the
-IFRS for SMEs Accounting Standard `packs/ae` and `packs/sa` use for the
-same GCC mechanics — because the IFRS Foundation's own Jurisdictional
+IFRS for SMEs Accounting Standard — because the IFRS Foundation's own Jurisdictional
 Profile for Oman records that the Sultanate has not adopted that Standard
 and that every company outside it prepares under full IFRS. See "Sources"
 for the citation gap behind that reading.
 
 **VAT is a receivable and a payable, not current tax.** Current tax is
-income tax under the Income Tax Law, outside this VAT-focused pack's
-research; the accounts (`1350`, `2130`, `8000`) exist for a company to book
+income tax under the Income Tax Law, not modelled; the accounts (`1350`, `2130`, `8000`) exist for a company to book
 the charge by hand.
 
 **No fact keys.** Nothing checked here says which taxonomy, if any, an
@@ -166,29 +154,24 @@ Omani filing uses, so `xbrl` and `taxonomy` are null throughout.
 
 ## Closing the year
 
-`fiscal_year_default` is `calendar`, a proposal and nothing more: this
-pack's research found no statute fixing an Omani company's financial year
-end. `closing_style` is `retained_earnings`: the chart carries no
+`fiscal_year_default` is `calendar`, a proposal and nothing more: no statute
+fixing an Omani company's financial year end is cited. `closing_style` is `retained_earnings`: the chart carries no
 current-year result account.
 
 ## On the invoice
 
 **Numbering is `sequential`.** Executive Regulations, Article 144(3) — a
 Tax Invoice carries the sequential number of the invoice, a running,
-identifying number and not, in the text this pack's research could open, an
-explicit no-gap rule.
+identifying number and not an explicit no-gap rule.
 
 **No default payment term and no late-payment interest** are declared:
-this research pass found no Omani statute setting either between
-businesses absent an agreement, and did not look long enough to say there
-is none.
+no Omani statute setting either between businesses absent an agreement is
+cited, and a reviewer should confirm there is none.
 
 **One invoice mention: the reverse charge, Article 151 of the Executive
 Regulations.** The customer liable for the tax must record its value in
-Omani Rial on the invoice issued in the non-resident supplier's favour; this
-research pass found no article requiring a specific printed sentence,
-unlike the Saudi Implementing Regulations `packs/sa` cites for the same
-case, so the wording in `pack.json`'s `documents.mentions` is this pack's
+Omani Rial on the invoice issued in the non-resident supplier's favour; no
+article requiring a specific printed sentence is known, so the wording in `pack.json`'s `documents.mentions` is this pack's
 own, addressed to whoever reads the invoice.
 
 **The tax point is an approximation of a three-way rule.** Article 26: tax
@@ -196,9 +179,7 @@ is due on the earliest of the date of supply, the date of the tax invoice,
 or the date of payment — three triggers, where the closed vocabulary of
 `tax_point` has room for two. `earliest_of_delivery_or_payment` is the
 nearest value and what the rule reduces to whenever no invoice is issued
-ahead of delivery or payment, the same gap `packs/ae` and `packs/sa` record
-for the same three-way wording in the Common VAT Agreement and Federal
-Decree-Law No. 8 of 2017.
+ahead of delivery or payment.
 
 ## Electronic invoicing
 
@@ -213,8 +194,8 @@ and the other three fields stay null.
 OpenPeppol Authority and published the PINT OM technical specification in
 2026, a five-corner Peppol model with an accredited Service Provider
 validating and exchanging the invoice and reporting tax data to the
-Authority. The FAQ's own words are narrower than the four-phase calendar
-this pack's research found repeated on unofficial tax-technology sites:
+Authority. The FAQ's own words are narrower than the four-phase calendar unofficial
+sites repeat:
 "The first rollout is in August 2026. Subsequent rollouts will follow
 according to the timeline that will be prescribed in the legislation." That
 first rollout is a named, individually-notified group of about 100 large
@@ -248,33 +229,31 @@ Added Tax Identification Number (VATIN)" — named in
   mandatory, OMR 19,250 voluntary — the Chairman's Decision this pack cites
   in `certification.sources`. The core has no registration threshold of its
   own to enforce in any country.
-- **Fixed assets.** No `fixed_assets.json`: whether a usual depreciation duration
-  is prescribed by a text this research pass could open was not
-  established.
+- **Fixed assets.** No `fixed_assets.json`: no text prescribing a usual
+  depreciation duration is cited.
 - **Bank formats.** Nothing checked here says which formats Omani banks
   send.
 - **Filing.** The return is filed and paid on the Tax Authority's own
   portal; submitting it is a credential, not a pack.
-- **Fawtara e-invoicing** — see "Electronic invoicing" above and
-  [`docs/international.md`](../../docs/international.md), "From Oman."
+- **Fawtara e-invoicing** — see "Electronic invoicing" above and [what the
+  packs do not say yet](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Reviewing this pack
 
 Open an issue titled "Review: Oman". What a review is, and what it is not,
 is in [`docs/packs.md`](../../docs/packs.md) under "Certification, and who
 may say what". The points an Omani-qualified accountant should read first,
-roughly in the order the author is least sure of them:
+least certain first:
 
-1. **The blocked-input-tax article number**, cited here from secondary
-   guidance rather than a directly-fetchable text — see "Taxes".
+1. **The blocked-input-tax article number**, resting on secondary guidance —
+   see "Taxes".
 2. **Full IFRS rather than the IFRS for SMEs Standard** as the reporting
-   framework, resting on the IFRS Foundation's own secondary reading of
-   three Omani articles this pack's research could not open — see
-   "Sources" and "The statements".
+   framework, resting on the IFRS Foundation's reading of three Omani
+   articles — see "Sources" and "The statements".
 3. **The statutory reserve line (`EQ.2`)**, whose Commercial Companies Law
-   article this research pass did not trace.
-4. **The end-of-service benefits provision**, whose Labour Law article this
-   research pass did not trace.
+   article is not cited.
+4. **The end-of-service benefits provision**, whose Labour Law article is
+   not cited.
 5. **`earliest_of_delivery_or_payment` as the tax point**, which drops the
    invoice-date trigger Article 26 also names.
 6. **The Fawtara timeline**, carried with only the Tax Authority's own FAQ

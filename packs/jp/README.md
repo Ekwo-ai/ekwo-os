@@ -5,35 +5,28 @@ consumption tax and the local consumption tax and where each code posts, the
 general-method consumption tax return with its schedules 付表1-3 and 付表2-3,
 the balance sheet and the income statement of the Ordinance on Company
 Accounting, and the sentences a qualified invoice needs. The format is
-[`docs/packs.md`](../../docs/packs.md); this file says where the content came
-from and which decisions it rests on, so that a 税理士 reading the pack can
-disagree with a specific sentence rather than with the whole of it.
+[`docs/packs.md`](../../docs/packs.md); this file says where the content comes
+from and which decisions it rests on.
 
 **Status: `community`.** Nobody who files a Japanese consumption tax return has
-reviewed it. The figures are replayed against a year of books by
-`tests/golden.test.ts`, which proves the pack is coherent and proves nothing
-about whether it is right.
+reviewed it. `tests/golden.test.ts` replays a year of books, which proves the
+pack is coherent, not that it is right.
 
-**This is the first pack of Asia**, and the first whose own labels are not in a
-Latin script. The pack is written in Japanese — accounts, journals, taxes, the
-boxes of the return and the statement lines carry the wording a Japanese
-bookkeeper reads — and `i18n/en.json` gives all of it in English. The legal
-references are written in English with the Japanese title of each text, so that
-a reviewer on either side can follow them. What the core could not say is
-written up in [`docs/international.md`](../../docs/international.md) under
-"Japan". None of it was patched for this pack's sake.
+**Japanese, with English.** Accounts, journals, taxes, the boxes of the return
+and the statement lines carry the wording a Japanese bookkeeper reads, and
+`i18n/en.json` gives all of it in English. The legal references are written in
+English with the Japanese title of each text. What the core cannot say yet is
+in [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Sources
 
-Every tax, box, mention and statement line carries its own `legal_reference`,
-and beside it the key of the text that article is in. The register in
-`pack.json` holds twenty-four texts, all opened on 21 September 2026. The laws
-and orders were read in their consolidated text on e-Gov (the Consumption Tax
-Act as amended to Act No. 12 of 2026); the return was read in the NTA's guide
-to filling it in, because the form itself is published as an image; the 2026
-reform of the transitional deduction was read in the NTA's leaflet, because
-e-Gov does not consolidate an amendment into the supplementary provisions of an
-amending act.
+Every tax, box, mention and statement line carries its own `legal_reference`
+and the key of the text it is in. The register in `pack.json` holds
+twenty-four texts. The laws and orders are cited in their consolidated text on
+e-Gov (the Consumption Tax Act as amended to Act No. 12 of 2026); the return
+follows the NTA's guide to filling it in. The 2026 reform of the transitional
+deduction rests on the NTA's leaflet; the supplementary provisions of the
+amending act should be checked.
 
 | What | Text | Where |
 |---|---|---|
@@ -63,8 +56,7 @@ liabilities, `3` net assets, `4` revenue and gains, `5` cost of sales, `6`
 selling and administrative expenses, `7` non-operating and extraordinary
 expenses, `8` income taxes — flat, every account postable, the ranges cut so
 that each reaches one item of the Ordinance. The names are the ones Japanese
-bookkeeping uses: 売掛金, 仮払消費税等, 繰越利益剰余金. 125 accounts. None was
-copied from a published chart, official or commercial.
+bookkeeping uses: 売掛金, 仮払消費税等, 繰越利益剰余金. 125 accounts.
 
 **Tax-exclusive books, and four consumption tax accounts.** The ledger keeps
 the tax apart from the price (税抜経理): `2170` 仮受消費税等 holds the tax on
@@ -89,8 +81,8 @@ of art. 29 (7.8 %, 6.24 % at the reduced rate) and the local consumption tax of
 is the combined one, the tax is computed and rounded once per invoice and per
 rate as 消費税法施行令 art. 70-10 requires, and two postings share it out 78/22.
 The 78 % is the national tax the return asks for; the 22 % is the local share,
-kept on a working box, marked （計算用）, because the return works the local tax out from the
-national one rather than printing it.
+kept on a working box marked （計算用）, because the return works the local tax
+out from the national one rather than printing it.
 
 **The return is computed by accumulation (積上げ計算).** The law gives two
 ways: multiply the period's tax-inclusive sales by 100/110 and then by 7.8 %
@@ -107,8 +99,8 @@ be dealt with once per invoice and per rate and lets the business choose how;
 JP PINT asks only that the result lie between the floor and the ceiling. The
 pack declares `rounding_method: down` — truncation, which is how the State
 itself rounds the taxable amount and the tax (国税通則法 arts. 118 and 119) and
-how the NTA's schedules are filled in — and it is the first pack to do so. A
-business that rounds half up changes one word.
+how the NTA's schedules are filled in. A business that rounds half up changes
+one word.
 
 **The rates since 1989.** Each is a code with a validity, never an edit:
 
@@ -122,14 +114,13 @@ business that rounds half up changes one word.
 
 The former rates post to the former-rate columns of 付表1-1 and 2-1 (boxes
 `F11X`, `F2X`, `G10X`). The codes without a rate (exports, non-taxable supplies)
-start on 1 October 2019: their earlier history was not traced.
+start on 1 October 2019.
 
 **Not in the pack, deliberately: the food rate of 1 %.** On 15 September 2026
 the Cabinet adopted an outline lowering the rate on food to 1 % from 1 April
-2027 to 31 March 2029; the NTA and the Ministry of Finance publish it with the
-words "if the bill is passed". A rate that is not law is not a code. The day it
-is enacted, `JP-S-8R` and its siblings get a `valid_to` of 2027-03-31 and a
-1 % code starts the next day.
+2027 to 31 March 2029, published "if the bill is passed"; a rate that is not
+law is not a code. Once enacted, `JP-S-8R` and its siblings get a `valid_to`
+of 2027-03-31 and a 1 % code starts the next day.
 
 **The reduced rate.** Food and drink other than alcohol and eating out, and
 newspapers published at least twice a week on subscription (別表第一), at 8 %;
@@ -164,8 +155,8 @@ business below 95 %, and it posts both sides: the base to 付表1-3 ①-2 and
 付表2-3 ⑬, the tax owed to ②, the tax deducted to ⑭. That business is also the
 one whose deduction is apportioned, which the pack does not compute (see "The
 95 % rule is assumed" below), so the code is right on the tax owed and
-overstates the tax deducted. The golden year does not use it: its company is
-above 95 %, where the purchase is simply not taxed.
+overstates the tax deducted. The golden company is above 95 %, where the
+purchase is simply not taxed.
 
 **Imports** carry the tax customs assesses: `JP-P-IMP-10` and `-8R` post it
 to 仮払消費税等 and to `2175`, owed to customs, rather than to the supplier.
@@ -184,16 +175,15 @@ which line of the NTA's guide it transcribes.
   28th is never later.
 - **Interim returns are out.** A business whose tax for the previous year
   exceeded 480,000 yen pays one, three or eleven interim instalments on that
-  figure (art. 42). They are a separate form filed on last year's figure; what
-  they paid is entered at ⑩ and ㉑, which the pack declares and leaves empty.
+  figure (art. 42), on a separate form; what they paid is entered at ⑩ and ㉑,
+  which the pack declares and leaves empty.
 - **The 95 % rule is assumed.** Line ④ is the whole of the tax on purchases
   where taxable sales are 500 million yen or less and the taxable sales ratio
   is 95 % or more (art. 30(2)). Below that it is apportioned, by the individual
   or the proportional method (個別対応方式, 一括比例配分方式), which the pack does
-  not compute: for a company below 95 %, line ④ would be the full deduction,
-  and too high. This is a gap of the core, written down in
-  docs/international.md. The golden company is kept above 95 % (95.8 %), where
-  the full deduction is the law.
+  not compute: for a company below 95 %, line ④ would be too high. This is a
+  gap of the core, written down in docs/international.md. The golden company
+  is kept above 95 % (95.8 %), where the full deduction is the law.
 - **The truncations of the form are not applied.** The 課税標準額 is truncated
   to the thousand yen, ⑨ and ⑳ to the hundred. The pack reports the yen.
 - **The local tax is summed, not multiplied.** The form computes ⑳ as ⑱ ×
@@ -213,7 +203,7 @@ a 株式会社 under the 会社計算規則, with the Ordinance's own items and 
 売上総利益 (art. 89), 営業利益 (art. 90), 経常利益 (art. 91), 税引前当期純利益
 (art. 92), 当期純利益 (art. 94). Accumulated depreciation is deducted from each
 asset and the net shown, as art. 79(2) allows. 株式引受権 has no account in the
-chart and no line. No `xbrl` key: nothing was verified against a taxonomy.
+chart and no line. No `xbrl` key.
 
 ## The qualified invoice
 
@@ -244,8 +234,8 @@ down.
 ## The golden year
 
 A 株式会社 with a year to 31 March, April 2026 to March 2027, filing once: 16
-documents and 5 payments, in whole yen. Every figure of `golden/vat_return.json`
-was checked by hand against the postings; the ones worth reading first:
+documents and 5 payments, in whole yen, every figure of
+`golden/vat_return.json` worked out by hand. The ones worth reading first:
 
 - S2 puts both rates on one invoice and rounds each once: 48,063 × 8 % =
   3,845.04 → 3,845; 28,140 × 10 % = 2,814.
@@ -267,12 +257,12 @@ an invoice can come to a yen less than its tax; the ledger keeps the whole tax.
 1. The accumulation method on both sides, and truncation as the rounding.
 2. The 78/22 split per invoice instead of the form's ⑱ × 22/78.
 3. The seven codes of the 2026 transitional schedule, read against the amending
-   act itself, which this pack read only through the NTA's leaflet.
+   act itself rather than the NTA's leaflet.
 4. The reverse charge limited to the business below 95 %, and the full deduction
    assumed at ④: correct for the golden company (95.8 %), too high for any
    company below 95 %, which is exactly the one the reverse charge reaches.
 5. The deadline of the 28th of the second month.
 6. The proposal of an April year (`fiscal_year_default`): the law chooses nothing
    (法人税法 art. 13 leaves the business year to the articles); the pack proposes
-   April because the State's own fiscal year starts then (財政法 art. 11), and
-   says so rather than claiming it is the most common.
+   April because the State's own fiscal year starts then (財政法 art. 11), not
+   because it is the most common.

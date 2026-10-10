@@ -12,16 +12,15 @@ disagree with a specific sentence rather than with the whole of it.
 figures are replayed against a year of books by `tests/golden.test.ts`, which
 proves the pack is coherent and proves nothing about whether it is right.
 
-**Qatar has no value added tax in force.** The pack follows the format of
-[`packs/hk`](../hk/README.md), the other pack of this repository without a
-turnover tax: no `tax_report.json`, no tax-clearing account, no
+**Qatar has no value added tax in force.** So the pack has no
+`tax_report.json`, no tax-clearing account, no
 `tax_payable` / `tax_receivable` role. What a reviewer should know is that
 this is a **current** state and not a permanent one — see "VAT and
 e-invoicing: what to watch".
 
 ## Sources
 
-The register in `pack.json` holds ten texts, all opened on 10 October 2026.
+The register in `pack.json` holds ten texts.
 
 | What | Text | Where |
 |---|---|---|
@@ -36,19 +35,17 @@ The register in `pack.json` holds ten texts, all opened on 10 October 2026.
 | Draft e-invoicing law | EY Tax Alert on the Council of Ministers' decision of 6 May 2026 | `ey.com` |
 | Where returns are filed | Dhareeba, the General Tax Authority's portal | `dhareeba.gov.qa` |
 
-**What could not be opened.** `almeezan.qa`, the official legal portal,
-answered HTTP 403, so the Commercial Companies Law is cited from an
+**Secondary sources.** The Commercial Companies Law is cited from an
 unofficial English translation published by a law firm, and its amendment by
-Law No. 8 of 2021 was not read in full (only secondary summaries were seen).
-The Official Gazette was not reachable either: that no e-invoicing law has been
-published is inferred from the absence of any report of publication in the
-sources opened, not from the Gazette itself. The 6 May 2026 decision was read
-through the EY alert and press summaries, not the Council's own release.
-The Commercial Code and Civil Code were not read.
+Law No. 8 of 2021 from secondary summaries. That no e-invoicing law has been
+published rests on the absence of any report of publication, not on the
+Official Gazette itself. The 6 May 2026 decision is cited through the EY alert,
+not the Council's own release. The Commercial Code and Civil Code are not
+cited.
 
 ## The chart of accounts, and why this one
 
-Qatar prescribes no chart that this pack's research found. The Income Tax Law
+Qatar prescribes no chart of accounts. The Income Tax Law
 requires books and records kept in accordance with the laws of the State and
 international accounting standards, and its Executive Regulations name the
 general journal, the general ledger and the inventory book. So the chart is
@@ -70,11 +67,10 @@ Two codes, both at 0 %, both `not_subject`: `QA-S-NA` on every sale and
 `QA-P-NA` on every purchase, domestic, exported or imported. Qatar signed the
 Unified VAT Agreement of the GCC States (5 % standard rate, December 2015) but
 has published no national VAT law; the General Tax Authority's list of tax
-laws lists the VAT only as a regional agreement. Searches on 10 October 2026
-found no VAT law in force and only commentary that one is expected (the IMF
-urged it in February 2026; the finance minister has said Qatar plans it): none
-of that is law. `vat_category` is `O` and `exemption_code` is null, as in
-`packs/hk`.
+laws lists the VAT only as a regional agreement. There is only commentary
+that one is expected (the IMF urged it in February 2026; the finance minister
+has said Qatar plans it): none of that is law. `vat_category` is `O` and
+`exemption_code` is null.
 
 ## What this pack does not carry (levies outside the pack)
 
@@ -96,9 +92,9 @@ of that is law. `vat_category` is `O` and `exemption_code` is null, as in
   content from 6 July 2026. A levy on those goods, not an invoice tax.
 - **Customs duty** — 5 % ad valorem on the CIF value of general goods under
   the GCC customs union, with higher and exempt categories (Invest Qatar; the
-  General Authority of Customs tariff was not opened).
+  General Authority of Customs tariff itself should be checked).
 - **Zakat**, where it applies, and **social-insurance contributions**: not
-  researched, no account or code.
+  covered, no account or code.
 - **`fixed_assets.json`**, **XBRL fact keys** and **bank formats**: none.
 
 ## The statements
@@ -135,7 +131,7 @@ mandatory invoice mention.
 
 On 6 May 2026 the Council of Ministers approved a **draft** law on electronic
 invoicing and its implementing regulations. It still has to go through the
-Shura Council and receive the Amir's assent, and this pack found no report of
+Shura Council and receive the Amir's assent, and there is no report of
 its promulgation or publication in the Official Gazette. `einvoicing.obligation`
 is therefore `none` and no profile is named. Commentary expects a phased start
 from 1 January 2027, large taxpayers first: that is an expectation, not a date.

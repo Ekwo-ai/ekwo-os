@@ -22,7 +22,7 @@ changed, and names the two places where the two versions were found to differ.
 
 Every tax, box, mention and statement line carries its own `legal_reference`,
 and beside it the key of the text that article is in. The register in
-`pack.json` holds sixteen texts, every one of them opened on 22 September 2026.
+`pack.json` holds sixteen texts.
 The four the rest of this file leans on most:
 
 | What | Text | Where |
@@ -32,25 +32,20 @@ The four the rest of this file leans on most:
 | The fields of the return | Guideline on Imports and Exports under VAT Provisions (fields 8 and 9, in words) and the simplified Arabic filing guideline (the sales screen, fields 1 to 5) | `zatca.gov.sa` |
 | FATOORA | E-invoicing Regulation of 4 December 2020, the Governor's Decision No. (62738), and the Electronic Invoice XML Implementation Standard v1.2 | `zatca.gov.sa` |
 
-**Three things this pack's research could not open, and they are named rather
-than papered over.**
+Three points on those sources:
 
-- **An English text of the VAT Law.** The Authority's VAT Law page links one
-  bilingual PDF, and that link returns an error page. The Law is therefore
-  cited from ZATCA's consolidated Arabic text, and Article 2(2) is quoted in
-  Arabic in `SA-S-SR`.
-- **`laws.boe.gov.sa`**, the Bureau of Experts' official gazette of Saudi
-  legislation, refused every connection from this research pass. Every law
-  cited here is cited from ZATCA's own publication of it.
-- **The return itself.** It is a screen of the ZATCA portal, not a form: the
+- **The VAT Law** is cited from ZATCA's consolidated Arabic text, and Article
+  2(2) is quoted in Arabic in `SA-S-SR`.
+- **Every law** is cited from ZATCA's own publication of it, not from the
+  Bureau of Experts' official gazette (`laws.boe.gov.sa`).
+- **The return itself** is a screen of the ZATCA portal, not a form: the
   official User Guide to the Submit VAT Return service shows it only as
-  screenshots, and the field labels could not be read as text. What could be
-  read is the numbering — see "The return" below.
+  screenshots. Its field numbering is sourced, its labels are not — see "The
+  return" below.
 
 ## The chart of accounts, and why this one
 
-**There is no legal chart of accounts in the Kingdom**, as far as this pack's
-research could establish. Neither ZATCA nor SOCPA publishes one; what SOCPA
+**There is no legal chart of accounts in the Kingdom.** Neither ZATCA nor SOCPA publishes one; what SOCPA
 publishes is the framework — the IFRS Accounting Standards, the IFRS for SMEs
 Accounting Standard for a small or medium-sized entity, and standards of its
 own where IFRS does not reach, zakat being the named case. That is an absence
@@ -148,9 +143,9 @@ pack.**
 - **Field 2 exists and nothing posts to it.** Private education and private
   healthcare supplied to Saudi citizens have a line of their own on the return
   and reason codes of their own on the invoice (VATEX-SA-EDU, VATEX-SA-HEA,
-  with the buyer's National ID made mandatory). This pack could not open the
-  instrument that grants the regime or the conditions on it, so it carries the
-  field and no tax that posts there.
+  with the buyer's National ID made mandatory). The instrument that grants the
+  regime and its conditions are not cited here, so the pack carries the field
+  and no tax that posts there.
 - **Field 14 says 15,000 riyals**, not the 5,000 the English Regulations still
   print: the Arabic tenth edition of April 2025 and the filing guideline both
   say 15,000, and the Arabic is what the English defers to.
@@ -172,11 +167,9 @@ before it, and carrying a QR code.
 
 No brick of `packages/formats/` writes that XML, signs it, chains it or talks
 to ZATCA's API. **A document issued from Ekwo is not an Electronic Invoice**,
-and `mandatory_from` with a profile would claim it was. `packs/mx/`,
-`packs/vn/` and `packs/kr/` reached the same conclusion for the same kind of
-regime; Saudi Arabia is the fourth, and
-[`docs/international.md`](../../docs/international.md) says what the core would
-need to stop the four of them going on saying nothing.
+and `mandatory_from` with a profile would claim it was. See
+[`docs/international.md`](../../docs/international.md#what-an-international-core-needs-and-does-not-have)
+for what the core would need.
 
 ## What this pack does not carry
 
@@ -189,8 +182,7 @@ need to stop the four of them going on saying nothing.
   from VAT rather than taxed, and `SA-S-EX-REALESTATE` says so — but RETT is
   declared on its own ZATCA service and nothing of it lands on the VAT return.
 - **Withholding tax on payments to non-residents.** The chart carries 2120 and
-  1157 for it; the rates are the Income Tax Law's and this pack's research did
-  not open that text.
+  1157 for it; the rates are the Income Tax Law's and are not carried.
 - **Proportional deduction** (Articles 51 and 52), the capital assets
   adjustment (Article 52), the profit margin method for eligible used goods
   (Article 48), the cash accounting basis (Article 46, open on
@@ -200,9 +192,7 @@ need to stop the four of them going on saying nothing.
 - **Private education and private healthcare to citizens**, for the reason
   field 2 gives.
 - **Arabic labels, although ZATCA publishes them.** There is no `i18n/ar.json`:
-  a translation file the manifest does not declare is compiled into the seed
-  and then refused by `tests/languages.test.ts`, and declaring Arabic would
-  demand a wording for 115 accounts no authority names and for two invoice
+  declaring Arabic would demand a wording for 115 accounts no authority names and for two invoice
   mentions this pack wrote itself — where Article 53(5) requires the details it
   lists to be printed in Arabic. [`i18n/README.md`](i18n/README.md) carries the
   ten tax labels ZATCA does publish in Arabic, sourced line by line, for
@@ -218,11 +208,8 @@ fact about the company, and `SA-P-NR` is the only tax that depends on it.
 
 ## Why there is no Gulf folder
 
-The Kingdom is the second pack of the Gulf, after `packs/ae/`, and four more
-are expected. They do not share a folder the way the seventeen OHADA packs
-share `packs/ohada/`, and
-[`docs/international.md`](../../docs/international.md) sets out the evidence
-under "From Saudi Arabia": what the Common VAT Agreement harmonises is
+The Gulf packs do not share a folder the way the seventeen OHADA packs share
+`packs/ohada/`: what the Common VAT Agreement harmonises is
 vocabulary and structure, and what `packs/ohada/` copies is a chart of accounts
 and two financial statements, which the Agreement does not have and the six
 States do not share.

@@ -22,22 +22,20 @@ carries `MY` with `eu_vat_scope: none`) and levies no value added tax of its
 own either. It levies two single-stage taxes instead — Sales Tax on the
 manufacture or importation of taxable goods, Service Tax on a taxable service —
 and **neither Act contains a mechanism for a registered buyer to deduct the tax
-a supplier charged them**, the whole difference from a value added tax and from
-the Singapore and Thai packs beside this one. Every code of this pack is
-therefore `kind: sales_tax` and `recoverable: false`: a purchase tax lands on
-the cost of the line it taxes by a `tax_on_base` posting, exactly as it does in
-`packs/us/`, and nowhere in this chart is there an input-tax asset account of
-the kind `packs/sg/` and `packs/th/` carry. What a Sales Tax registered
-manufacturer has instead of a credit is a set of **exemptions at the point of
-purchase** — `MY-P-RAWMAT-EXEMPT`, below — which relieve a raw material of the
-tax rather than refunding it afterwards.
+a supplier charged them**. Every code of this pack is therefore
+`kind: sales_tax` and `recoverable: false`: a purchase tax lands on the cost of
+the line it taxes by a `tax_on_base` posting, and nowhere in this chart is
+there an input-tax asset account. What a Sales Tax registered manufacturer has
+instead of a credit is a set of **exemptions at the point of purchase** —
+`MY-P-RAWMAT-EXEMPT`, below — which relieve a raw material of the tax rather
+than refunding it afterwards.
 
 ## Sources
 
 Every rate, item, statement line and document rule carries its own
 `legal_reference`, and beside it the key of the text that article is in. The
-register in `pack.json` holds thirteen texts, all of them opened on
-25 September 2026. The ones the rest of this file leans on:
+register in `pack.json` holds thirteen texts. The ones the rest of this file
+leans on:
 
 | What | Text | Where |
 |---|---|---|
@@ -52,19 +50,13 @@ register in `pack.json` holds thirteen texts, all of them opened on
 | The phased mandatory dates and the MyInvois validation flow | LHDNM e-Invoice Guideline | `hasil.gov.my` |
 | The Peppol channel and its identifier scheme | PINT MY, OpenPeppol / MDEC | `docs.peppol.eu` |
 
-**What this session could not read as a primary, machine-readable text**, and
-said so at the rule rather than pretending otherwise: the numbered provisions
-of the Sales Tax (Rates of Tax) Order 2018 and the Sales Tax (Goods Exempted
-From Sales Tax) Order 2018 (both served this session only as RMCD's own prose
-guides, never as the Order's own gazetted text); the Service Tax Regulations
-2018's First Schedule, group by group, at the current 2025 scope; the exact
-item numbers of SST-02 that compute the amount of tax due on each rate band
-and the totals that sum them (RMCD's own PDF guideline resisted extraction as
-text, twice, from two different mirrors — the same failure mode
-[`packs/th/`](../../docs/international.md#from-thailand) records for a Royal
-Gazette PDF); and MASB's own MFRS and MPERS paragraphs, served to registered
-users only. Every rule built on one of these is flagged in its own
-`legal_reference`, not only here.
+Several rules rest on RMCD's prose guides rather than on the primary text: the
+numbered provisions of the Sales Tax (Rates of Tax) Order 2018 and the Sales
+Tax (Goods Exempted From Sales Tax) Order 2018, the Service Tax Regulations
+2018's First Schedule at the current 2025 scope, and the SST-02 items that
+compute the amount of tax due. MASB's own MFRS and MPERS paragraphs are served
+to registered users only. Every rule built on one of these says so in its own
+`legal_reference`, and the primary text should be checked.
 
 ## The chart of accounts, and why this one
 
@@ -74,22 +66,17 @@ accounting standards — MFRS, which converges with IFRS, or MPERS, which
 converges with the IFRS for SMEs Accounting Standard, both issued by MASB —
 and neither standard prescribes a ledger.
 
-The chart follows the numbering the sibling Asian packs use — four digits, one
-class per leading digit, no parent accounts — with the accounts a Malaysian
-company's books actually hold: Sales Tax and Service Tax payable kept on
-**three separate posting accounts** (`2100` output Sales Tax, `2101` output
-Service Tax, `2102` self-assessed Service Tax on an imported service) and a
-**fourth, distinct settlement account** (`2110`) that a filed SST-02 return
-clears to — the posting accounts are never reconcilable, `2110` is, and the
-two roles it fills (`tax_payable`, `tax_receivable`) are kept apart from the
-role Sales Tax and Service Tax post to, exactly as the format's own note on
-tax settlement accounts asks. EPF, SOCSO and EIS contributions and the HRD
-Corp levy stand in for Singapore's CPF, the Skills Development Levy and the
-foreign worker levy. 142 accounts, all of them postable.
+The chart uses four-digit accounts, one class per leading digit, no parent
+accounts, with the accounts a Malaysian company's books actually hold: Sales
+Tax and Service Tax payable kept on **three separate posting accounts** (`2100`
+output Sales Tax, `2101` output Service Tax, `2102` self-assessed Service Tax
+on an imported service) and a **fourth, distinct settlement account** (`2110`)
+that a filed SST-02 return clears to — the posting accounts are never
+reconcilable, `2110` is. EPF, SOCSO and EIS contributions and the HRD Corp
+levy have their own accounts. 142 accounts, all of them postable.
 
 **There is no input tax account anywhere in this chart**, for the reason given
-above — the same sentence `packs/us/` opens its own chart section with, and
-true for the same reason: neither Malaysian tax is a value added tax.
+above: neither Malaysian tax is a value added tax.
 
 ## Taxes
 
@@ -119,10 +106,8 @@ with its own registration threshold (RM500,000 general, RM1,000,000 for
 leasing and financial services, RM1,500,000 for construction and private
 healthcare). This pack carries one 8 % sale code and one 8 % purchase code and
 does not model construction, private healthcare or education, which the same
-expansion taxes at 6 % under their own thresholds. The shape is exactly
-`packs/us/`'s "one worked district combination and not the hundreds that
-exist": a threshold is a running total across a year, which is a feed and not
-a pack.
+expansion taxes at 6 % under their own thresholds: a threshold is a running
+total across a year, which is a feed and not a pack.
 
 **`MY-P-SVT-IMPORT` posts a liability and reaches no box of SST-02.** Section
 26A of the Service Tax Act 2018 makes a person in Malaysia who acquires an
@@ -130,14 +115,12 @@ imported taxable service account for the tax themselves, on **form SST-02A**,
 a separate return this pack does not carry — `docs/packs.md` states plainly
 that a pack carries one form. The postings book the cost (`tax_on_base`) and
 the liability (a `tax` posting to `2102`, the negative `factor` flipping the
-ledger side exactly as `US-CA-P-USE-725` does for California's use tax) and
-stop there. Its treatment is `foreign_services_received` — a service bought from a
-supplier not established in Malaysia, the recipient accounting for the tax —
-rather than the `self_assessed` it first carried, which the format keeps for
-a use tax with no supply behind it. A software subscription, hosting or an
-API billed from abroad is exactly this case, and the golden year buys one.
-**A foreign supplier** sits on the trade payables with the others: the
-chart has no separate account for suppliers abroad.
+ledger side) and stop there. Its treatment is `foreign_services_received` —
+a service bought from a supplier not established in Malaysia, the recipient
+accounting for the tax. A software subscription, hosting or an API billed
+from abroad is exactly this case, and the golden year buys one. **A foreign
+supplier** sits on the trade payables with the others: the chart has no
+separate account for suppliers abroad.
 
 **`MY-P-IMPORT` is the same shape for goods.** Sales Tax on an import is
 assessed by the Royal Malaysian Customs Department on the customs declaration,
@@ -157,40 +140,39 @@ its guidelines. Items 11(d) (the general 8 % band) and every item that computes
 the **amount of tax** from a value already declared (12(a) to 12(d), and the
 total 12) are this pack's own placement: the arithmetic — a percentage of the
 value already on the return — is not in doubt, RMCD's own item numbers for it
-could not be confirmed against a machine-readable text this session. A
-reviewer with the live SST-02 form open should check every box code before
-relying on it; the pack's `legal_reference` says so at each one.
+are not confirmed. A reviewer with the live SST-02 form open should check
+every box code before relying on it; the pack's `legal_reference` says so at
+each one.
 
 **Bad debt relief, the credit-note deduction item, penalties and a carried
 credit are not modelled.** SST-02 carries items for all four; this pack
 reverses a credit note by negating the same item the invoice filled
 (`box_factor: -100`, the pattern every pack of this repository uses), which is
 not what RMCD's own item 13 does, and carries no penalty or prepayment line at
-all — the same gap `packs/us/` names for CDTFA-401-A's lines 20a to 25.
+all.
 
 ## The chart of accounts becomes the statements
 
-`MY-BS` and `MY-IS` in `statements.json` are original, like `packs/th/`'s: they
-group this chart's own accounts by the code ranges `accounts.csv` gives them —
-current and non-current, receivables and payables split from other balances —
-the classification MFRS 101 and MPERS Section 4 both use, without transcribing
-either standard's own line items or paragraph numbers, which this session
-could not read (see "Sources"). No `xbrl` fact keys: nothing here was verified
-against a Malaysian filing taxonomy.
+`MY-BS` and `MY-IS` in `statements.json` are original: they group this chart's
+own accounts by the code ranges `accounts.csv` gives them — current and
+non-current, receivables and payables split from other balances — the
+classification MFRS 101 and MPERS Section 4 both use, without transcribing
+either standard's own line items or paragraph numbers (see "Sources"). No
+`xbrl` fact keys: nothing here was verified against a Malaysian filing
+taxonomy.
 
 `closing_style` is `retained_earnings`: the Companies Act prescribes no
 current-year-result account, so net income closes straight to `3200 Retained
-earnings`, the same answer `packs/sg/`, `packs/th/` and `packs/us/` give for
-the same structural reason.
+earnings`.
 
 ## On the invoice
 
 **Numbering is `sequential`.** The Sales Tax Regulations 2018 and the Service
 Tax Regulations 2018 prescribe the particulars an invoice states, a serial
-number among them; this session could not read either regulation's own
-numbered provision as a primary text, only RMCD's prose description of it, so
-the pack records that a number is required and not, in so many words, that the
-series may carry no gap.
+number among them. This rule rests on RMCD's prose description of those
+regulations, so the pack records that a number is required and not, in so
+many words, that the series may carry no gap; the regulations themselves
+should be checked.
 
 **The tax point is one value for two different rules, and fits neither
 exactly.** Sales Tax falls due at sale, disposal or first use of the goods —
@@ -198,8 +180,7 @@ closer to delivery; Service Tax falls due generally at payment, or twelve
 months after the invoice if no payment comes first — closer to payment. There
 is one `documents.tax_point` per country, so this pack declares
 `earliest_of_delivery_or_payment`, the closest of the five values to both
-halves and exact for neither; `docs/international.md` records the
-approximation.
+halves and exact for neither.
 
 **Electronic invoicing is mandatory, phased by turnover, and is a
 pre-issuance clearance the core cannot model.** Income Tax Act 1967, s. 82C,
@@ -208,24 +189,22 @@ duty in from 1 August 2024 (above RM100 million) to 1 January 2026 (above
 RM1 million), while the exemption threshold below which a taxpayer need not
 yet comply has itself been raised twice since — to RM1,000,000 in December
 2025 and to RM3,000,000 by version 4.8 of LHDNM's own guideline, dated
-30 August 2026, four weeks before this pack's own `released_at`. The format
-has no field for an exemption threshold that moves by administrative
-guideline; this pack states the day the duty first bound anyone. More
-fundamentally: MyInvois validates an invoice **before** it reaches the buyer —
-LHDNM returns a Unique Identifier Number and a QR code, and the invoice is not
-legally the taxpayer's without them. Ekwo has no document status for a step
-that happens between posting and delivery and waits on an external answer;
-`docs/international.md` records the gap under "From Malaysia", and this pack
-declares the profile (`pint-my`) and the scheme (`0230`, the SSM number)
-without attempting to model the UIN, the QR code, or the 72-hour rejection
-window.
+30 August 2026. The format has no field for an exemption threshold that moves
+by administrative guideline; this pack states the day the duty first bound
+anyone. More fundamentally: MyInvois validates an invoice **before** it
+reaches the buyer — LHDNM returns a Unique Identifier Number and a QR code, and
+the invoice is not legally the taxpayer's without them. Ekwo has no document
+status for a step that happens between posting and delivery and waits on an
+external answer (see
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet));
+this pack declares the profile (`pint-my`) and the scheme (`0230`, the SSM
+number) without attempting to model the UIN, the QR code, or the 72-hour
+rejection window.
 
 **No withholding tax.** Income Tax Act 1967, s. 107A and s. 109 impose
 withholding on payments to a non-resident — contract payments, interest,
-royalties, technical fees — which `packs/sg/` carries for its own country's
-equivalent article. This pack carries none: the SST codes and the withholding
-codes are two different questions, and the brief this pack was written to
-scoped the second one out. It stays on the list below.
+royalties, technical fees. This pack carries none: the SST codes and the
+withholding codes are two different questions. It stays on the list below.
 
 ## Language
 
@@ -236,12 +215,9 @@ English — the Companies Act 2016 is enacted in English, MASB publishes MFRS
 and MPERS in English, and RMCD's own SST-02 guidelines and forms this pack
 transcribes are the English versions of a bilingual administration — and no
 official Bahasa Malaysia chart of accounts or SST-02 exists for this pack to
-transcribe instead. `packs/th/` faced the same choice in reverse and wrote its
-own labels in Thai because that is the language its sources were in; this pack
-writes English labels under an `ms` default for the same reason held up to a
-mirror. No second `i18n/` file is declared: a Bahasa Malaysia translation is
-future work and welcome, one file, one contributor, per `docs/packs.md`,
-"Languages".
+transcribe instead. No second `i18n/` file is declared: a Bahasa Malaysia
+translation is future work and welcome, one file, one contributor, per
+`docs/packs.md`, "Languages".
 
 ## What this pack does not carry
 
@@ -249,11 +225,10 @@ future work and welcome, one file, one contributor, per `docs/packs.md`,
   6 % code stand for a First Schedule with many more groups than this pack
   transcribes — construction, private healthcare, education and the groups the
   2025 expansion added each keep their own rate and their own threshold.
-- **Form SST-02A**, the return for an imported taxable service. `MY-P-SVT-IMPORT`
-  books the cost and the liability and reaches no box, as `packs/us/`'s
-  `US-NY-S-8875` does for a state whose form it does not carry.
-- **The item numbers of SST-02 that compute the amount of tax due**, named
-  above, this session's own placement and not a confirmed reading of the form.
+- **Form SST-02A**, the return for an imported taxable service.
+  `MY-P-SVT-IMPORT` books the cost and the liability and reaches no box.
+- **Confirmed item numbers of SST-02 for the amount of tax due**, named above:
+  the pack's own placement, not a confirmed reading of the form.
 - **Bad debt relief, the credit-note deduction item (13), penalties, interest
   and a carried-forward credit** — SST-02 items this pack declares nowhere.
 - **Group relief and the B2B exemption facility**, items 18(c)(1) and 18(c)(2)

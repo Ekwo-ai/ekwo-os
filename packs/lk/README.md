@@ -21,16 +21,11 @@ one (s. 84), but no translation is shipped: a label in either language
 deserves a native reader, and a partial file would only suggest otherwise. They
 can be added under `i18n/` without touching the rest of the pack.
 
-What the core could not say is written up in
-[`docs/international.md`](../../docs/international.md) under "From Sri Lanka".
-None of it was patched for this pack's sake.
-
 ## Sources
 
 Every tax, box and statement line carries its own `legal_reference`, and beside
 it the key of the text that article is in. The register in `pack.json` holds
-sixteen texts, every one opened on 9 October 2026. The ones the rest of this file
-leans on:
+sixteen texts. The ones the rest of this file leans on:
 
 | What | Text | Where |
 |---|---|---|
@@ -45,10 +40,10 @@ leans on:
 | Accounting records and financial statements | Companies Act No. 7 of 2007, ss. 148–151; CA Sri Lanka; IFRS Foundation profile | `parliament.lk`, `slaasc.lk`, `ifrs.org` |
 
 The IRD publishes no consolidation of the VAT Act after the one that stops in
-2014. The sections cited here (2, 4, 5, 7, 8, 20, 21, 26, 83) were read in an
-unofficial consolidation to 2024 and the rates were checked against the IRD page
-on VAT; the amendments of 2025 and 2026 were read in the IRD's own notices. A
-reviewer should check section numbers against the Gazette versions.
+2014. The sections cited here (2, 4, 5, 7, 8, 20, 21, 26, 83) follow an
+unofficial consolidation to 2024, the rates the IRD page on VAT, and the
+amendments of 2025 and 2026 the IRD's own notices. A reviewer should check
+section numbers against the Gazette versions.
 
 ## Taxes
 
@@ -113,9 +108,7 @@ readings of the text settle how it is modelled:
    chargeable under the VAT Act, so what a seller prices in to recover it is
    still inside the consideration and the VAT is charged on it. The invoice
    therefore shows one price, one VAT at 18 %, and nothing for the levy: there
-   is no stacked posting to model, unlike the National Health Insurance Levy
-   and the GETFund Levy in `packs/gh`, which are charged beside the VAT on the
-   same value and are lines of the invoice and of the return.
+   is no stacked posting to model.
 3. *Return and payment.* Section 8 asks for a quarterly return on or before the
    20th day of the month after the quarter; s. 17 requires the levy of the first
    and second months to be paid on the 20th of the second and third month and
@@ -127,8 +120,8 @@ adding a code would put the levy on the customer's invoice, which is not what th
 law says. It gives the chart the two accounts the levy needs — `2130` *SSCL
 payable* and `6700` *SSCL expense* — and leaves the quarterly accrual to a
 journal entry the company posts. The return itself is a second declaration
-(own form, own cadence, own deadline), and the core carries one declaration per
-pack: written up in `docs/international.md`.
+(own form, own cadence, own deadline), and Ekwo carries one declaration per
+pack: see [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 **Threshold.** The registration threshold of the SSCL is the one point on which
 the sources disagree today, and the pack does not carry it. The consolidated Act
@@ -164,8 +157,7 @@ carries those cages and these decisions:
 - **Totals.** `16` (net VAT payable, output less input, floored at zero) and
   `15` (excess input, carried forward or claimed under the Risk-Based Refund
   Scheme) come from Circular 2011/07, which describes an older layout of the
-  form; the cage numbers are kept in the current e-form but could not be checked
-  there. `OUT` and `IN` are hidden intermediate totals.
+  form; that the current e-form keeps these cage numbers should be checked. `OUT` and `IN` are hidden intermediate totals.
 - **Not carried.** Cage 4 (VAT deferred on imports), cage 8 (disallowed input),
   the wholesale and retail deemed input of J4 / R3 (Schedule 05, not applicable
   from 1 June 2021) and the exempt-supply cage, which the quick guide does not
@@ -174,8 +166,8 @@ carries those cages and these decisions:
   the taxable period** (s. 21(1)(b); IRD page on VAT); the tax is due earlier,
   on or before the **20th of the month following the period** (s. 26(1)), and a
   quarterly filer pays the first two months of the quarter on the 20th of the
-  following two months. The core holds one deadline per return, so only the
-  filing date is encoded; the payment date is here and in `docs/international.md`.
+  following two months. Ekwo holds one deadline per return, so only the
+  filing date is encoded; the payment date is recorded here.
   The taxable period is a month for the persons the Act names and a quarter for
   everybody else, who may ask for monthly returns; no default is declared and
   `ekwo init` asks.
@@ -212,11 +204,9 @@ SMEs, which the SLFRS for SMEs adopts; a full-SLFRS company expands them.
 ## What the golden does not exercise
 
 The golden replays a month of a first financial period beginning on 1 July 2026,
-because the generic test reads the rates in force at the first day of the year
-and two positive rates are asked for: a year beginning on 1 April 2026 would see
-18 % alone. The closed codes `LK-S-15` and `LK-S-FIN-18` therefore have no
-document in it, and so have the year-end settlement of the SSCL accounts and the
-non-resident services.
+so that both the 18 % and the 20.5 % rates are in force. The closed codes
+`LK-S-15` and `LK-S-FIN-18` have no document in it, nor have the year-end
+settlement of the SSCL accounts and the non-resident services.
 
 ## For a local accountant to read
 

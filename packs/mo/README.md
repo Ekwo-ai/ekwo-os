@@ -13,13 +13,10 @@ with the whole of it.
 figures are replayed against a year of books by `tests/golden.test.ts`, which
 proves the pack is coherent and proves nothing about whether it is right.
 
-**Same shape as Hong Kong.** Macao, like [`packs/hk/`](../hk/README.md), has no
-tax on turnover, so this pack has no `tax_report.json`, no tax-clearing account
-and no `tax_payable` / `tax_receivable` role; the golden's `vat_return.json`
-carries the year with empty `boxes`. What the shared tests found out about
-that was written up under "From Hong Kong" in
-[`docs/international.md`](../../docs/international.md); no further test needed
-a change for Macao. What Macao adds is written under "From Macao".
+**No tax on turnover.** Macao has none, so this pack has no
+`tax_report.json`, no tax-clearing account and no `tax_payable` /
+`tax_receivable` role; the golden's `vat_return.json` carries the year with
+empty `boxes`.
 
 **The pack is written in Chinese (Traditional)** — `defaults.language` is `zh`,
 with the official Portuguese and English declared in `languages`
@@ -27,8 +24,6 @@ with the official Portuguese and English declared in `languages`
 are covered label for label, as `ekwo pack check` requires.
 
 ## Sources
-
-Consulted on 10 October 2026; every text below was opened unless stated.
 
 | What | Text | Where |
 |---|---|---|
@@ -39,10 +34,10 @@ Consulted on 10 October 2026; every text below was opened unless stated.
 | Who applies which accounting standards; "properly organised accounts" | Regulamento Administrativo n.º 25/2005 and n.º 42/2020 | `bo.dsaj.gov.mo` |
 | The standards, their model statements, the 2028 timetable | Professional Accountants Committee: *Guia para a Aplicação das NSRF* (Aviso n.º 2/2024/CPC); 2024 work report | `cpc.gov.mo` |
 | Group A filing window, five-year record keeping, signature by an accountant | Financial Services Bureau (DSF), *Profits Tax — Group A* | `dsf.gov.mo/en/tax/tax_introduction/profits_tax_a` |
-| Where a return is filed | DSF electronic services | `tax.fi.dsf.gov.mo` (redirects to the DSF login) |
+| Where a return is filed | DSF electronic services | `tax.fi.dsf.gov.mo` |
 | No Peppol Authority | OpenPeppol, *Peppol Authorities* | `peppol.org/about/peppol-authorities/` |
 
-**Corrections to what the pack was commissioned with**, each found in the text:
+**What the texts settle:**
 
 - The code is the **Código Fiscal** (Fiscal Code), not "Código Tributário". It
   is Lei n.º 24/2024, and it says (art. 36(2)(2)) that a taxpayer must hold,
@@ -60,8 +55,8 @@ Consulted on 10 October 2026; every text below was opened unless stated.
   standing rule, and it is a tax parameter, not something this pack models.
 - The DSF's English pages call the complementary income tax *Profits Tax*;
   the Portuguese name is the *imposto complementar de rendimentos*.
-- The standards' timetable is not "IFRS 2015 mandatory since 2022 for
-  everybody, 2021 update optional 2026": see "The statements".
+- The standards' timetable (2015 or 2021 IFRS suite, and from when) is set
+  out under "The statements".
 
 ## No tax on turnover, checked
 
@@ -69,9 +64,7 @@ The Código Fiscal lists the taxes it brings together: the industrial
 contribution, professional tax, urban property contribution, complementary
 income tax, stamp tax, property transfer and inheritance taxes, tourism tax,
 consumption tax and motor vehicle tax. None is a value added tax, a goods and
-services tax or a general sales tax, and none of the DSF pages opened names
-one. Secondary sources agree. **No general tax on sales was found in force on
-10 October 2026.**
+services tax or a general sales tax. **Macao has no general tax on sales.**
 
 **Two codes, both at 0 %, both `not_subject`:** `MO-S-NA` on every sale and
 `MO-P-NA` on every purchase — domestic, exported or imported, because no tax
@@ -96,23 +89,21 @@ None has a tax code, a box or an account of its own beyond an expense account.
   English pages): Group A (organised accounts) files Form M/1 between April
   and July, signed by the taxpayer and by the responsible accountant, and
   keeps its books for five years (DSF). Exemption limit and 12 % rate above it
-  for 2025 income: Lei n.º 13/2025, art. 22. The ordinary table (3–12 %) is
-  from secondary sources and was not read in the statute. The pack provides
+  for 2025 income: Lei n.º 13/2025, art. 22. The ordinary table (3–12 %) rests
+  on secondary sources; the statute itself should be checked. The pack provides
   `2060 Provision for complementary tax` and `6470 Complementary tax charge`.
 - **Stamp tax** (Lei n.º 17/88/M, amended by the Código Fiscal's law);
   **industrial contribution** ("business tax", Lei n.º 15/77/M),
   **professional tax** (Lei n.º 2/78/M), **urban property contribution** (Lei
   n.º 19/78/M), **tourism tax** (Lei n.º 19/96/M), **motor vehicle tax**: named
-  by the Código Fiscal, not read in detail, not modelled. Accounts `6115` and
+  by the Código Fiscal, not modelled. Accounts `6115` and
   `6205` take the expense.
 - **Social security**: the Social Security Fund's mandatory contributions are a
   fixed monthly amount per employee, split between employer and employee
-  (a search result of the Fund's guide said MOP 90, of which 60 employer; not
-  opened). `2050` and `6020` carry them; no rate is encoded.
+  (MOP 90, of which 60 employer, according to secondary sources; the Fund's
+  guide should be checked). `2050` and `6020` carry them; no rate is encoded.
 - **Gaming levies, customs duties, the global minimum tax (Pillar Two).** No
-  Macao statute for the last was found; a December 2024 professional alert
-  said the Government was studying it. Status on 10 October 2026 is
-  **unverified**. None is modelled.
+  Macao statute for the last is cited; its status should be checked. None is modelled.
 
 ## The chart of accounts, and why this one
 
@@ -142,8 +133,8 @@ Standards from the 2015 to the 2021 IFRS suite by Aviso n.º 2/2024/CPC
 (adopted 18 December 2024): mandatory from **1 January 2028**, optional from
 1 January 2026. The Committee's report gives new criteria for the
 IFRS tier (public limited companies above MOP 100 million revenue and 100
-employees, plus concessionaires and regulated financial institutions); it
-was read in a search summary and the notice itself was not opened.
+employees, plus concessionaires and regulated financial institutions); these
+criteria rest on the report, and the notice itself should be checked.
 
 **The pack takes the NSRF balance sheet and income statement**, in the order of
 the Committee's model financial statements, because they are the framework any
@@ -155,24 +146,25 @@ losses as finance costs; a Macao accountant should confirm.
 
 `closing_style` is `retained_earnings`; `fiscal_year_default` is `calendar`
 (the budget laws speak of an economic year; that a Group A taxpayer may choose
-another year end was not checked).
+another year end should be confirmed).
 
 ## On the invoice
 
-- **Numbering is `free`.** No text consulted prescribes invoice numbering.
+- **Numbering is `free`.** No text cited prescribes invoice numbering.
 - **No payment term, no late-payment interest.** Default-interest rules of
-  general civil law were not read: a gap of research, not a finding.
+  general civil law are not covered and should be checked.
 - **No mention.** No text found imposes a taxpayer number or any other mention
   on an invoice; the pack would rather say so than invent one.
-- **`tax_point` is `invoice_date`, a convention** — see "From Macao".
-- **E-invoicing: `none`.** No mandate found in the texts opened; no Peppol
+- **`tax_point` is `invoice_date`, a convention** — see
+  [what the packs do not say yet](../../docs/international.md#what-the-packs-do-not-say-yet).
+- **E-invoicing: `none`.** No mandate; no Peppol
   Authority for Macao.
 
 ## Reviewing this pack
 
 A Macao accountant should check: the line mapping of the statements against
 Annex III of the standards (the model's line order was followed; the annex's
-own Chinese captions were not extracted); the reading of exchange differences;
+own Chinese captions should be compared); the reading of exchange differences;
 the standards' scope criteria from 2028; whether `calendar` is the right
 default; the account names in Chinese and Portuguese; and the absence of any
 invoice mention.

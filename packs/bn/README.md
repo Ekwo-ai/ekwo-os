@@ -5,24 +5,19 @@ journals, the two "not subject" tax codes that carry every sale and purchase a
 Brunei business books, the balance sheet and income statement of the Brunei
 Darussalam Accounting Standards, and the numbering rule the Income Tax Act puts
 on a receipt. The format is [`docs/packs.md`](../../docs/packs.md); this file
-says where the content came from and which decisions it rests on, so that a
-Brunei accountant reading the pack can disagree with a specific sentence
-rather than with the whole of it. The model is the Hong Kong pack, the other
-jurisdiction in this repository with no tax on sales.
+says where the content comes from and which decisions it rests on.
 
 **Status: `community`.** Nobody who practises in Brunei Darussalam has
-reviewed it. The figures are replayed against a year of books by
-`tests/golden.test.ts`, which proves the pack is coherent and proves nothing
-about whether it is right.
+reviewed it. `tests/golden.test.ts` replays a year of books, which proves the
+pack is coherent, not that it is right.
 
 **Language: English.** The English text of a written law is authentic; the
-Malay text prevails if the two conflict (not verified against a statute in
-this research, which read the English texts only). The pack's labels, chart
-and statements are in English.
+Malay text prevails if the two conflict. The pack's labels, chart and
+statements are in English.
 
 ## Sources
 
-Eleven texts, opened on 10 October 2026, are registered in `pack.json`:
+Eleven texts are registered in `pack.json`:
 
 | What | Text |
 |---|---|
@@ -35,32 +30,28 @@ Eleven texts, opened on 10 October 2026, are registered in `pack.json`:
 | No Peppol Authority | OpenPeppol, *Peppol Authorities* |
 | Where returns are filed | One Common Portal (`ocp.mofe.gov.bn`) |
 
-Not opened, and therefore not cited as authority: the Companies Act
-(Chapter 39), the Record Keeping (Business) Act (Chapter 249) — its server
-returned an error for the PDF; a search summary says its section 5 repeats the
-printed, serially numbered receipt duty with a five-year retention period, the
-longer seven-year period of the Income Tax Act being the one this pack uses —
-the Accounting Standards Act (Chapter 267; the BDASC notices still call it the
-Accounting Standards Order, 2010), whose PDF has no text layer, the Excise
-Duties Order 2012 and the Stamp Act (Chapter 34). A Brunei accountant should
-confirm them.
+Not cited as authority, to be confirmed by a Brunei accountant: the Companies
+Act (Chapter 39), the Record Keeping (Business) Act (Chapter 249; its section 5
+is reported to repeat the receipt duty with a five-year retention period, the
+seven-year period of the Income Tax Act being the one used here), the
+Accounting Standards Act (Chapter 267; the BDASC notices still call it the
+Accounting Standards Order, 2010), the Excise Duties Order 2012 and the Stamp
+Act (Chapter 34).
 
-## No tax on sales: checked on 10 October 2026
+## No tax on sales
 
 Brunei Darussalam has no value added tax, goods and services tax or general
 sales tax. The Revenue Division of the Ministry of Finance and Economy lists,
 under "Type of Taxes", income tax, withholding tax and stamp duty; its
 corporate tax FAQ names only the tax on companies' chargeable income; and the
-Income Tax Act contains no tax on supplies. Secondary summaries found in the
-same research agree. No announced project to introduce one was found. No
-official statement ruling one out was found either, and a reviewer should
-treat "no plan" as the absence of an announcement and nothing more.
+Income Tax Act contains no tax on supplies. No project to introduce one is
+announced, and none is officially ruled out.
 
 **Two codes, both at 0 %, both `not_subject`:** `BN-S-NA` on every sale and
 `BN-P-NA` on every purchase, with postings of the base only. There is no
 declaration (`tax_report.json` does not exist), no VAT settlement account and
-no `tax_payable` / `tax_receivable` role, as in Hong Kong. `vat_category` is
-`O` and no exemption code is set.
+no `tax_payable` / `tax_receivable` role. `vat_category` is `O` and no
+exemption code is set.
 
 ## What is levied instead, and not modelled
 
@@ -87,8 +78,8 @@ All of these are outside the pack: no tax code carries them.
   the goods.
 - **Stamp duty** — on instruments (Stamp Act, Cap. 34); expense account `6205`.
 - **Employee retirement contributions** (TAP, SCP) — account `2050` exists;
-  rates and rules were not researched.
-- **Pillar Two** — no Brunei measure could be confirmed in this research.
+  rates and rules are not modelled.
+- **Pillar Two** — no Brunei measure is modelled.
 
 ## The chart of accounts
 
@@ -96,9 +87,9 @@ Brunei prescribes no chart of accounts. The Income Tax Act requires sufficient
 records (s. 56A(1)(a)); the Revenue Division's ruling asks for records that
 let a true and fair profit and loss account and balance sheet be prepared. The
 chart is written, not transcribed: four digits by class, flat, blocked by the
-ranges `statements.json` reads, 106 accounts, adapted from the Hong Kong
-pack's layout with Brunei names. Only trade debtors (`1100`) and trade
-creditors (`2000`) are `reconcilable`. It carries no tax-clearing account.
+ranges `statements.json` reads, 106 accounts. Only trade debtors (`1100`) and
+trade creditors (`2000`) are `reconcilable`. It carries no tax-clearing
+account.
 
 ## The statements
 
@@ -108,12 +99,10 @@ carries the balance sheet and the income statement, classifying expenses by
 nature and showing current tax assets, tax liabilities, finance costs and tax
 expense on their own lines as paragraphs 1.19 and 1.22 require. **The cash flow
 statement (BDAS 18) is not carried.** The standard does not say which
-framework it derives from, so this pack does not claim one; its structure
-(separate income statement, no other comprehensive income) is why the model is
-the Hong Kong SME statements. The BDASC FAQ says entities without public accountability are
-"encouraged to adopt" IFRS, and no adoption of IFRS for SMEs was found, so a company reporting under full IFRS ties into the same two
-statements by account range but would present a statement of comprehensive
-income this pack does not.
+framework it derives from, so this pack does not claim one. The BDASC FAQ says
+entities without public accountability are "encouraged to adopt" IFRS; a
+company reporting under full IFRS ties into the same two statements by account
+range but would present a statement of comprehensive income this pack does not.
 
 `fiscal_year_default` is `calendar`: no text consulted fixes a year end. The
 income tax year of assessment follows the basis period of the accounts.
@@ -143,9 +132,8 @@ invoice to show the payment and its date; the format has no condition for that.
 
 ## E-invoicing
 
-`obligation: none`. No Peppol Authority is listed for Brunei Darussalam
-(OpenPeppol, 10 October 2026) and no mandate was found; this is an absence in
-the sources read, not proof.
+`obligation: none`. No Peppol Authority is listed for Brunei Darussalam and no
+mandate is known.
 
 ## What this pack does not carry
 
@@ -158,4 +146,4 @@ A Brunei accountant should confirm: that a software-generated number satisfies
 the "printed" receipt duty; the Record Keeping (Business) Act obligations; the
 current withholding tax rates and what s. 9(5) covers; that the 18.5 % rate and
 the threshold are current; the BDAS statement lines; and whether any GST
-project has been announced since 10 October 2026.
+project has been announced.

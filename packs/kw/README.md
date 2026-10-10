@@ -11,13 +11,11 @@ with a specific sentence.
 figures are replayed against a year of books by `tests/golden.test.ts`, which
 proves the pack is coherent and proves nothing about whether it is right.
 
-Like the Hong Kong pack, this is a jurisdiction **without a turnover tax**: no
+This is a jurisdiction **without a turnover tax**: no
 `tax_report.json`, no `tax_payable`/`tax_receivable` role, no tax-clearing
 account, and a `vat_return.json` golden whose boxes are empty.
 
-## Sources, and what could not be opened
-
-Consulted on 10 October 2026:
+## Sources
 
 | What | Text | Where |
 |---|---|---|
@@ -27,19 +25,15 @@ Consulted on 10 October 2026:
 | Keeping the books: journal and inventory book ten years, correspondence and documents five years | Commercial Law, Decree-Law No. 68 of 1980, articles 31-32 | `lawskw.com` (reproduction of the Gazette text) |
 | Where a taxpayer registers and files | Ministry of Finance, Tax Services System | `mof.gov.kw` |
 
-**`mof.gov.kw` and `kuna.net.kw` refused every connection** from the machine
-that wrote this pack (connection refused), so no official Ministry text was
-read. The absence of a VAT therefore rests on secondary sources (and on the
-lead's own check of 10 October 2026); the portal is listed as a `portal`
-source but its pages were not opened. The Commercial Law was read on a
-legal-information site, not in the Official Gazette. The text of Law No. 46 of
-2006, Law No. 19 of 2000, Decree No. 3 of 1955 and Law No. 2 of 2008 was not
-opened. The IFRS profile is dated 2016 and was not confirmed against the
-current Ministerial Decrees.
+The absence of a VAT rests on secondary sources, not on an official Ministry
+text. The Commercial Law is cited from a legal-information reproduction, not
+the Official Gazette. Law No. 46 of 2006, Law No. 19 of 2000, Decree No. 3 of
+1955 and Law No. 2 of 2008 are cited, not quoted. The IFRS profile dates from
+2016 and should be checked against the current Ministerial Decrees.
 
 ## The chart of accounts
 
-Kuwait prescribes no chart. This one is original: four digits, flat, blocked so
+Kuwait prescribes no chart. This one has four digits, flat, blocked so
 that every range reaches one line of the statements, 113 accounts. It carries
 the charges a Kuwaiti company books: provisions for income tax, zakat, the
 National Labour Support Tax and the KFAS contribution (2060-2063), the 5%
@@ -69,7 +63,7 @@ contributions; payroll. None has a tax code.
 `KW-IFRS-SFP` and `KW-IFRS-IS`, built on the IAS 1 headings; no statement of
 other comprehensive income (no OCI account in the chart). `fiscal_year_default`
 is `calendar`: the Companies Law (No. 1 of 2016) leaves the year to the
-articles; calendar is the usual choice (not re-read in the text).
+articles; calendar is the usual choice.
 `numbering` is `free`; retention periods are those of Commercial Law article
 32. `tax_point: invoice_date` is a convention, not a rule. No mention is
 declared: no text found requires one. `einvoicing.obligation` is `none`, with

@@ -5,32 +5,22 @@ the goods and services tax and where each code posts, the business activity
 statement, the statement of financial position and the statement of profit or
 loss of the Tier 2 simplified disclosures, and the sentences the law puts on a
 tax invoice. The format is [`docs/packs.md`](../../docs/packs.md); this file
-says where the content came from and which decisions it rests on, so that an
-Australian accountant reading the pack can disagree with a specific sentence
-rather than with the whole of it.
+says which sources and decisions the content rests on, so that an Australian
+accountant can disagree with a specific sentence rather than with the whole.
 
 **Status: `community`.** Nobody who lodges an Australian activity statement has
 reviewed it. The figures are replayed against a year of books by
 `tests/golden.test.ts`, which proves the pack is coherent and proves nothing
-about whether it is right.
-
-**This is the first pack of Oceania**, and the second, after the United
-Kingdom, of a country whose tax is a value added tax that owes nothing to the
-Directive. The New Zealand pack is meant to be read against this one: the same
-shape of chart, the same Peppol profile, the same way of writing a return that
-is filed on three cadences. What the core could not say is written up in
-[`docs/international.md`](../../docs/international.md) under "From Australia".
-None of it was patched for this pack's sake.
+about whether it is right. What the core cannot say yet is in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Sources
 
 Every tax, box, mention and statement line carries its own `legal_reference`,
 and beside it the key of the text that article is in. The register in
-`pack.json` holds forty-one texts, and every one of them was opened between
-21 September and 1 October 2026: the Commonwealth texts on the Federal Register of
-Legislation, the ATO's instructions on ato.gov.au, the standard on the register
-too, where the AASB's standards are legislative instruments. The ones the rest
-of this file leans on:
+`pack.json` holds forty-one texts: the Commonwealth texts on the Federal
+Register of Legislation, the ATO's instructions on ato.gov.au, and the AASB
+standard as a legislative instrument. The main ones:
 
 | What | Text | Where |
 |---|---|---|
@@ -43,38 +33,31 @@ of this file leans on:
 | The form of the statements | AASB 1060, paragraphs 35 to 58 | `legislation.gov.au/F2020L00288` |
 | Electronic invoicing | PINT A-NZ Billing, OpenPeppol; ATO, *eInvoicing for government*, *Tax invoices* | `docs.peppol.eu`, `ato.gov.au` |
 
-`ekwo pack check au --links` found all thirty-five answering on the day of
-writing. The ATO's site serves a page to a browser and often refuses a script
-that asks for its text, so every `ato.gov.au` entry was also read in a browser;
-the statement itself is a PDF the ATO serves under a content identifier rather
-than a readable path, and is the entry most likely to move.
+The statement itself is a PDF the ATO serves under a content identifier, and
+is the entry most likely to move.
 
 ## The chart of accounts, and why this one
 
 **Australia prescribes no chart of accounts.** The Corporations Act 2001,
 s. 286, requires a company to keep written financial records that correctly
 record and explain its transactions and would let true and fair statements be
-prepared, and says nothing about a ledger. What it does govern is who prepares
-statements: s. 292 makes every public company and every large proprietary
-company prepare a financial report each year, and a small proprietary company
-only when shareholders with 5 % of the votes (s. 293) or ASIC (s. 294) direct
-it. A proprietary company is large when it meets two of the s. 45A thresholds,
-which ASIC gives as $50 million of consolidated revenue, $25 million of gross
-assets and 100 employees for years from 1 July 2019. Most Australian
-companies are small and lodge no accounts with anybody; their books still feed
-the income tax return and the activity statement, which is what this pack is
-mostly for.
+prepared, and says nothing about a ledger. Section 292 makes every public
+company and every large proprietary company prepare a financial report each
+year, and a small proprietary company only when shareholders with 5 % of the
+votes (s. 293) or ASIC (s. 294) direct it. A proprietary company is large when
+it meets two of the s. 45A thresholds, which ASIC gives as $50 million of
+consolidated revenue, $25 million of gross assets and 100 employees for years
+from 1 July 2019. Most Australian companies are small and lodge no accounts;
+their books still feed the income tax return and the activity statement.
 
-So the chart is written, not transcribed, and it follows what an Australian
-ledger looks like:
+So the chart is written, not transcribed:
 
 - **Four digits, by class.** `1` assets, `2` liabilities, `3` equity, `4`
   revenue and other income, `5` goods and materials used, `6` other expenses,
-  `7` finance costs, `8` income tax. No legal code and no class per caption:
-  the classes are the order a trial balance is read in.
-- **Flat.** No parent accounts. Every account is a leaf and the grouping is
-  done by the ranges of `statements.json`, cut so that each range reaches one
-  line item of paragraph 35 of AASB 1060.
+  `7` finance costs, `8` income tax.
+- **Flat.** No parent accounts; the grouping is done by the ranges of
+  `statements.json`, cut so that each range reaches one line item of
+  paragraph 35 of AASB 1060.
 - **Cost and accumulated depreciation are adjacent**, `1630` and `1631`, so
   one range reaches the carrying amount.
 - **The accounts the law asks about have names an Australian bookkeeper
@@ -82,26 +65,22 @@ ledger looks like:
   payroll tax, fringe benefits tax, annual and long service leave, the ATO's
   own activity statement.
 
-156 accounts, all postable. None of them was copied from a published chart,
-and no commercial package's chart was used as a model.
+156 accounts, all postable.
 
-**Five GST accounts, and why five.** `2100` holds the GST on sales and `1150`
-the GST credits on purchases: the two the taxes post to. `2105` and `1152` hold
-the GST of documents accounted for on a cash basis until they are paid. `2115`
-holds deferred GST on imports until the statement that carries it. None of them
-is where a lodged statement's balance lands — see "Where the balance of a
-statement lands" below.
+**Five GST accounts.** `2100` holds the GST on sales and `1150` the GST credits
+on purchases. `2105` and `1152` hold the GST of documents accounted for on a
+cash basis until they are paid. `2115` holds deferred GST on imports until the
+statement that carries it. None of them is where a lodged statement's balance
+lands — see "Where the balance of a statement lands" below.
 
 ## Taxes
 
 **One rate, since 1 July 2000.** Section 9-70 has put GST at 10 % of the value
-of a taxable supply since the Act commenced (s. 1-2), and nothing has moved it,
-so every code starts on that day and none has a `valid_to`. The one code that
-starts later is the withholding below.
+of a taxable supply since the Act commenced (s. 1-2), so every code starts on
+that day and none has a `valid_to`, except the withholding below.
 
 **GST-free is not input taxed, and the difference is the credit.** Australia
-has no "exempt" supply in the European sense; it has two kinds of supply that
-carry no GST and treat the supplier's own purchases differently:
+has no "exempt" supply in the European sense:
 
 | | GST on the sale | Credits on what went into it | Codes | Category |
 |---|---|---|---|---|
@@ -109,14 +88,13 @@ carry no GST and treat the supplier's own purchases differently:
 | Input taxed (Division 40) | none | not claimable (s. 11-15(2)(a)) | `AU-S-ITS-FIN`, `AU-S-ITS-RES` | E |
 
 The food, health and education codes are separate so that a reviewer can check
-each against its Subdivision; they post identically. The purchase that a
-business makes to produce an input-taxed supply carries `AU-P-GST-ITS`, whose
-GST lands on the account of the line.
+each against its Subdivision; they post identically. A purchase made to produce
+an input-taxed supply carries `AU-P-GST-ITS`, whose GST lands on the account
+of the line.
 
 **Every base is a value without GST.** See "The statement" for why.
 
-**Five things a purchase can be besides a plain credit**, and the statement
-treats each differently:
+**Five things a purchase can be besides a plain credit:**
 
 | Code | What it is | Labels |
 |---|---|---|
@@ -128,30 +106,25 @@ treats each differently:
 
 **The reverse charge of Division 84 is not the European one.** A registered
 business buying a service from abroad for a fully creditable purpose owes no
-GST on it at all: s. 84-5(1A)(b) reaches only a recipient who does *not*
-acquire it solely for a creditable purpose. The pack therefore carries the
-reverse charge as the business that *pays* it meets it — one that makes
-input-taxed supplies and gets no credit back — and the golden year books the
-tenancy software of a company that lets a flat. A partly creditable
-acquisition, which is the common case, needs an apportionment no code can
-hold.
+GST on it: s. 84-5(1A)(b) reaches only a recipient who does *not* acquire it
+solely for a creditable purpose. The pack carries the reverse charge as a
+business that makes input-taxed supplies meets it, and the golden year books
+the tenancy software of a company that lets a flat. A partly creditable
+acquisition, the common case, needs an apportionment no code can hold.
 
 **Withholding where no ABN is quoted is on the purchase, at 47 %.** Section
 12-190 of Schedule 1 to the Taxation Administration Act 1953 makes the payer
 withhold from a supplier who does not quote an ABN, and the ATO sets the amount
 at 47 % of the invoice from 1 July 2017. It is a tax of kind `withholding` with
 one posting, `-100` to `2120`, so the supplier is owed 53 % and the rest waits
-for the statement, where it is label W4. The earlier rates are not carried.
+for the statement, at label W4. The earlier rates are not carried.
 
 **Cash accounting is a regime of the business, carried as codes.** Section
 29-40 lets a small business entity — below $10 million of aggregated turnover,
 as the ATO puts it — account for GST when it is paid rather than when it is
-invoiced, for everything it sells and buys. The core has no regime of a
-company, so the pack carries `AU-S-GST-CASH` and `AU-P-GST-CASH` beside the
-accruals codes, as the Irish pack does; nothing stops a company from mixing
-them, and a company that has made the choice should use nothing else for
-taxable supplies. The golden year uses both only to show where their figures
-land.
+invoiced. The core has no regime of a company, so the pack carries
+`AU-S-GST-CASH` and `AU-P-GST-CASH` beside the accruals codes; a company that
+has made the choice should use nothing else for taxable supplies.
 
 ## The statement
 
@@ -159,19 +132,13 @@ land.
 prints it in September 2025, and label 7A from the monthly statement of an
 importer approved for deferred GST.
 
-**The accounts method, with GST-exclusive amounts.** The ATO offers two ways
-of completing the GST labels. The calculation worksheet method reports every
-label with GST in it and derives 1A and 1B by dividing by eleven. The accounts
-method takes 1A and 1B straight from the records, and lets G1 be reported
-without GST, a choice the filer marks under G1 and that then governs every
-other label. A ledger holds exactly that: bases without GST and GST posted
-document by document. So this pack reports on the accounts method, GST
-excluded, and every figure it produces is the ledger's own. A business that
-completes the worksheet method does its arithmetic on the side; the worksheet
-labels G4 to G9 and G12 to G20 are kept in its records and not reported, and
-the pack does not carry them.
-
-**What is on the form, and what is summed from the ledger.**
+**The accounts method, with GST-exclusive amounts.** The calculation worksheet
+method reports every label with GST in it and derives 1A and 1B by dividing by
+eleven. The accounts method takes 1A and 1B straight from the records and lets
+G1 be reported without GST, a choice marked under G1 that then governs every
+other label. A ledger holds exactly that, so this pack reports on the accounts
+method, GST excluded. The worksheet labels G4 to G9 and G12 to G20 are not
+carried.
 
 | Labels | How |
 |---|---|
@@ -185,34 +152,30 @@ a positive figure and asks whether 8A is more than 8B. In the golden year the
 December quarter, whose GST on a credit note and whose deferred GST outweigh
 its sales, comes to −50.00.
 
-**Three cadences, one default.** Section 27-5 of the Act makes a quarter the
-tax period for everybody, unless the business elects months (s. 27-10) or the
-Commissioner determines them, as s. 27-15 requires above $20 million of GST
-turnover. Division 151 provides annual periods, which the ATO offers to a
-business registered voluntarily below $75,000. So `period` lists the three and
-`period_default` is `quarter`.
+**Three cadences, one default.** Section 27-5 makes a quarter the tax period,
+unless the business elects months (s. 27-10) or the Commissioner determines
+them, as s. 27-15 requires above $20 million of GST turnover. Division 151
+provides annual periods, which the ATO offers to a business registered
+voluntarily below $75,000. `period` lists the three; `period_default` is
+`quarter`.
 
 **The deadline is the monthly one, on purpose.** A monthly statement is due on
 the 21st of the following month (s. 31-10); a quarterly one on 28 October,
-28 February, 28 April and 28 July (s. 31-8), with up to two more weeks for a
-statement lodged online except for the December quarter. A form carries one
-rule, so the pack declares the 21st: never later than the law, seven days early
-for a quarterly filer, five weeks early for the December quarter.
+28 February, 28 April and 28 July (s. 31-8), with up to two more weeks online
+except for the December quarter. A form carries one rule, so the pack declares
+the 21st: never later than the law.
 
 **Cents, not whole dollars.** The ATO asks for whole dollars with the cents
-dropped and no negative figure. `tax_report.json` can now say a form is filed
-in whole units (`rounding.unit`), and this pack deliberately does not: the core
-rounds a frozen box half up, at the country's rounding method, and the statement
-rounds every label down, so 1,170.60 would be frozen as 1,171 where the ATO
-wants 1,170. The pack reports what the ledger holds, to the cent and signed,
-until a unit can carry its direction.
+dropped and no negative figure. The pack does not set `rounding.unit`: the core
+rounds a frozen box half up, and the statement rounds every label down, so
+1,170.60 would be frozen as 1,171 where the ATO wants 1,170. The pack reports
+the ledger to the cent and signed, until a unit can carry its direction.
 
 **Where the balance of a statement lands.** `tax_payable` is `2110`, the
 activity statement payable to the ATO, and `tax_receivable` is `1155`, the
-refund due. Both are reconcilable, because the payment to the ATO or its refund
-is matched against them, and no tax posts to either. Label 9 nets
-the PAYG withheld at W4 with the GST, so the settlement carries both to the
-same account.
+refund due. Both are reconcilable and no tax posts to either. Label 9 nets the
+PAYG withheld at W4 with the GST, so the settlement carries both to the same
+account.
 
 ## The accounts
 
@@ -222,39 +185,35 @@ disclosures, which an entity preparing general purpose financial statements
 without public accountability may apply.
 
 **The lines are the paragraph 35 items, in the order Australian practice
-prints them.** Paragraph 42 prescribes neither the order nor the format, so the
-lines are the minimum items of paragraph 35 — cash, receivables, inventories,
+prints them.** Paragraph 42 prescribes neither order nor format, so the lines
+are the minimum items of paragraph 35 — cash, receivables, inventories,
 financial assets, current tax, property, plant and equipment, investment
 property, intangibles, associates, joint ventures, deferred tax, payables,
 financial liabilities, provisions, equity — split current and non-current under
 paragraphs 37 to 41, with "other current assets" and "net assets" as the
 additional lines paragraph 36 allows. Biological assets, non-controlling
-interests and assets held for sale are not lines, because the chart holds no
-account for them.
+interests and assets held for sale are not lines: the chart has no account for
+them.
 
 **GST is a receivable and a payable, not current tax.** Paragraph 35(m) is
-about current tax, which in Australia is income tax, so GST collected, GST
-credits and the activity statement balance report among trade and other
-receivables and payables. A reviewer who presents the GST net as a single
-figure changes nothing in the ledger.
+about current tax, which in Australia is income tax, so GST balances report
+among trade and other receivables and payables.
 
 **Expenses by nature.** Paragraph 58 allows nature or function, and a small
 company's ledger holds nature without any allocation.
 
-**No fact keys.** Nothing here was verified against a taxonomy, so `xbrl` and
-`taxonomy` are null on both statements.
+**No fact keys.** `xbrl` and `taxonomy` are null on both statements.
 
 ## Closing the year
 
 `fiscal_year_default` is `july`: the financial year of the Commonwealth's
-statutes is twelve months starting on 1 July (Acts Interpretation Act 1901,
-s. 2B), and it is the income year of the income tax. A company may fix another
-under s. 323D of the Corporations Act; the default is a proposal.
+statutes starts on 1 July (Acts Interpretation Act 1901, s. 2B), and it is the
+income year of the income tax. A company may fix another under s. 323D of the
+Corporations Act; the default is a proposal.
 
 `closing_style` is `retained_earnings`: the result goes straight into `3200
-Retained earnings`. An Australian statement of financial position carries no
-current-year result line and paragraph 44(f) names retained earnings as a class
-of equity. `3210 Dividends paid` sits beside it and is booked by hand.
+Retained earnings`; paragraph 44(f) names retained earnings as a class of
+equity. `3210 Dividends paid` sits beside it and is booked by hand.
 
 No income tax provision is booked by the close. The chart carries `8000` to
 `8020`, `2300` and the deferred tax accounts so that it can be.
@@ -269,29 +228,26 @@ be clearly intended as a tax invoice. A buyer needs one to claim a credit
 (s. 29-10(3)) unless the value is $75 or less before GST (s. 29-80 and reg.
 29-80.01) — $82.50 with it, as the ATO says.
 
-**Numbering is `free`.** The particulars include no invoice number, so the pack
-claims none; `number_format` is a pattern a business may use.
+**Numbering is `free`.** The particulars include no invoice number;
+`number_format` is a pattern a business may use.
 
 **Two mentions.** An export and an input-taxed supply each carry a sentence
-saying why no GST is charged, which is the "extent to which each supply is
-taxable" of s. 29-70(1)(c)(iv). A GST-free domestic supply, the food, health and
-education codes, has no mention of its own: `applies_when` resolves `export`
-and `exempt` from the treatment, and a GST-free domestic supply has treatment
-`domestic` like a taxable one. Its line shows no GST, which is what the
-particular asks.
+saying why no GST is charged, the "extent to which each supply is taxable" of
+s. 29-70(1)(c)(iv). A GST-free domestic supply has treatment `domestic` like a
+taxable one and no mention of its own; its line shows no GST, which is what
+the particular asks.
 
 **The words "Tax invoice" are not a mention.** They are the title of the
-document and belong on an invoice and not on an adjustment note, and a mention
-cannot depend on the kind of document. A renderer prints them.
+document, not of an adjustment note, and a mention cannot depend on the kind of
+document. A renderer prints them.
 
 **No payment term and no late payment interest.** No Commonwealth statute sets
 either between businesses; the Payment Times Reporting Act 2020 makes large
 businesses report their terms to small suppliers and imposes none.
 
 **The tax point is the earlier of the invoice and the first payment**
-(s. 29-5(1)), and delivery plays no part in it. `invoice_date` is the closest
-word the format has: right when the invoice comes first, wrong for a deposit
-received before any invoice.
+(s. 29-5(1)). `invoice_date` is the closest word the format has: wrong for a
+deposit received before any invoice.
 
 ## Electronic invoicing
 
@@ -300,8 +256,8 @@ with New Zealand on the Peppol network, of which the ATO is the Australian
 authority. Both identifiers are the ABN, ICD `0151`. `obligation` is `none`: no
 statute obliges a business to send or to accept an electronic invoice.
 Non-corporate Commonwealth entities have had to be able to receive them since
-2022, and are moving to eInvoicing as their default under a policy the ATO
-describes and no statute enacts; both bind the buyer and not the supplier.
+2022, and are moving to eInvoicing as their default under a policy no statute
+enacts; both bind the buyer and not the supplier.
 
 ## What this pack does not carry
 
@@ -309,98 +265,86 @@ describes and no statute enacts; both bind the buyer and not the supplier.
 - **GST instalments** (G21 to G24) and the annual GST return.
 - **PAYG withholding from wages** (W1, W2), **PAYG income tax instalments**
   (T1 to T11, 5A, 5B), fringe benefits tax, luxury car tax (1E, 1F), wine
-  equalisation tax (1C, 1D) and fuel tax credits: each is a label of the
-  statement and none is a tax a document carries.
-- **Adjustments** other than a credit note, and the
-  apportionment of a partly creditable acquisition.
+  equalisation tax (1C, 1D) and fuel tax credits: none is a tax a document
+  carries.
+- **Adjustments** other than a credit note, and the apportionment of a partly
+  creditable acquisition.
 - **The margin scheme** for real property, GST at settlement, the simplified
   accounting methods for food retailers, GST groups and branches.
-- **Taxable importations paid at the border**, where the ABF collects the GST
-  on an import declaration rather than on the supplier's invoice.
-- **Fixed assets.** Carried by `fixed_assets.json`; what it leaves out is under
-  "Fixed assets: what `fixed_assets.json` leaves out".
-- **Bank formats.** No statement format is declared: Ekwo reads camt.053, and
-  nothing checked says which Australian banks send it.
-- **Standard Business Reporting.** The statement is lodged through Online
-  services for business or SBR-enabled software; submitting it is a format
-  library and a credential, not a pack.
+- **Taxable importations paid at the border**, collected by the ABF on an
+  import declaration.
+- **Fixed assets.** Carried by `fixed_assets.json`; see below.
+- **Bank formats.** Ekwo reads camt.053; which Australian banks send it is not
+  established.
+- **Standard Business Reporting.** Lodging is a format library and a
+  credential, not a pack.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
-The section carries what was read on an official page on 1 October 2026, and
-nothing else: the rates of the Income Tax Rates Act 1986 as compiled on
+The section carries the rates of the Income Tax Rates Act 1986 as compiled on
 1 July 2026, and sections 26-5, 32-5, 36-17 and 165-10 to 165-13 of the Income
-Tax Assessment Act 1997 as compiled on 1 January 2025, the latest compilation
-read. It starts from line 8, « Profit before income tax », of
-`AU-AASB1060-PL`. The ATO's own pages could not be fetched; the figures below
-are those of the Acts. A rule that is missing makes an estimate too high or too
-low by something a reader can name; these are the ones to name.
+Tax Assessment Act 1997 as compiled on 1 January 2025. It starts from line 8,
+« Profit before income tax », of `AU-AASB1060-PL`. The figures are those of
+the Acts; the ATO's guidance should be checked against them. A missing rule
+makes an estimate too high or too low by something a reader can name:
 
 | Not carried | Why |
 |---|---|
-| The continuity of ownership test and the business continuity test (ITAA 1997, s. 165-10 to s. 165-13) | A loss is deductible only if the company meets one of them, and the loss rules of a pack take no condition. The company enters in `tax.losses` only the losses it may deduct; the estimate sets them all off. |
-| The company's choice of how much loss to deduct (s. 36-17(2)) | The computation sets off as much as it can, oldest first; a company that would rather deduct less cannot say so. |
-| PAYG instalments | The instalment amount is the instalment income times a rate set by the Commissioner, or a GDP-adjusted notional tax, and the due dates were not read on an official page. `prepayments` is empty. |
-| Franking credits and other offsets | No credit was read and cited; `credits` is empty. The company's franking account is not modelled. |
-| The exceptions to the entertainment rule (ITAA 1997, Subdivision 32-B) and the interaction with fringe benefits tax | The company states the amount that falls under s. 32-5, net of what an exception covers; the reference chart books entertainment on `6390` together with amounts that may be deductible. |
+| The continuity of ownership test and the business continuity test (ITAA 1997, s. 165-10 to s. 165-13) | A loss is deductible only if the company meets one of them, and the loss rules of a pack take no condition. The company enters in `tax.losses` only the losses it may deduct. |
+| The company's choice of how much loss to deduct (s. 36-17(2)) | The computation sets off as much as it can, oldest first. |
+| PAYG instalments | The amount is the instalment income times a rate set by the Commissioner, or a GDP-adjusted notional tax; the due dates are not carried. `prepayments` is empty. |
+| Franking credits and other offsets | `credits` is empty. The franking account is not modelled. |
+| The exceptions to the entertainment rule (ITAA 1997, Subdivision 32-B) and the interaction with fringe benefits tax | The company states the amount that falls under s. 32-5; the reference chart books entertainment on `6390` together with amounts that may be deductible. |
 | Penalties on an account of their own | The chart has none (they fall under `6490`), so the company states the amount under `penalties`. |
-| Other non-deductible amounts (for example bribes, s. 26-52 and s. 26-53, and illegal activities, s. 26-54) | Not read; none applies to an ordinary company. |
-| Tax on a company that is not a company in the ordinary sense: RSA providers, pooled development funds, non-profit companies, credit unions, life insurers (Income Tax Rates Act 1986, s. 23(3) to (5) and s. 23A) | Different rates, not read for a company of the reference chart. |
-| Income years before the one starting on 1 July 2024 | The rates are dated from that day: only the compilation of 1 July 2026 could be read, and it states 25 % and 30 % without the transition of earlier years. |
-| Aggregated turnover and the passive income share | Both are declared by the company: the first is worked out over connected entities and affiliates and as at the end of the year, the second is a share of assessable income, and the books know neither. |
-| Capital gains, deferred tax and accounting-to-tax differences other than the two add-backs | Taxable income is not the accounting profit; only the two fixed rules are carried, and any other difference is the company's to state. |
-| Rounding to the dollar | Not read. The estimate is kept at the cent. |
+| Other non-deductible amounts (for example bribes, s. 26-52 and s. 26-53, and illegal activities, s. 26-54) | None applies to an ordinary company. |
+| Tax on a company that is not a company in the ordinary sense: RSA providers, pooled development funds, non-profit companies, credit unions, life insurers (Income Tax Rates Act 1986, s. 23(3) to (5) and s. 23A) | Different rates. |
+| Income years before the one starting on 1 July 2024 | The rates are dated from that day: the compilation of 1 July 2026 states 25 % and 30 % without the transition of earlier years. |
+| Aggregated turnover and the passive income share | Both are declared by the company; the books know neither. |
+| Capital gains, deferred tax and accounting-to-tax differences other than the two add-backs | Any other difference is the company's to state. |
+| Rounding to the dollar | The estimate is kept at the cent. |
 
 ## Fixed assets: what `fixed_assets.json` leaves out
 
-The section carries what was read on 1 October 2026 in AASB 116 (compiled
-December 2022), in sections 40-65 to 40-75, 40-95 and 43-25 of the Income Tax
-Assessment Act 1997 (compilation No. 256) and in Table B of the Commissioner's
-Effective Life Determination 2025 as made. The ATO's own pages could not be
-fetched; the lives are those of the legislative instrument.
+The section rests on AASB 116 (compiled December 2022), sections 40-65 to
+40-75, 40-95 and 43-25 of the Income Tax Assessment Act 1997 (compilation
+No. 256) and Table B of the Commissioner's Effective Life Determination 2025
+as made. The lives are those of the legislative instrument.
 
 **What it says.** The first-year charge is prorated in **days**, for the
 straight line and the diminishing value alike, as sections 40-70, 40-72 and
 40-75 do (days held over 365): AASB 116 prescribes no proration, so this is the
-Australian convention rather than a rule of the standard. The diminishing value
-is the 200 % of section 40-72 (coefficient 2), uncapped, switching to the
-straight line when that is larger. Disposal is `net_result`: AASB 116,
-paragraphs 68 and 71, give one gain or loss, on `4750` or `6960`. The
-categories are buildings (2.5 % a year, section 43-25), in-house software (5
-years) and standard patents (20 years) from the Act, and office furniture,
-desktop computers, laptops, cars (straight line and 200 % diminishing value) and
-light commercial vehicles from Table B. Every category is a proposal.
+Australian convention. The diminishing value is the 200 % of section 40-72
+(coefficient 2), uncapped, switching to the straight line when that is larger.
+Disposal is `net_result`: AASB 116, paragraphs 68 and 71, give one gain or
+loss, on `4750` or `6960`. The categories are buildings (2.5 % a year, section
+43-25), in-house software (5 years) and standard patents (20 years) from the
+Act, and office furniture, desktop computers, laptops, cars (straight line and
+200 % diminishing value) and light commercial vehicles from Table B. Every
+category is a proposal.
 
 Differences to know about: the module divides by the days of the real year, so
 366 in a leap year where the Act divides by 365; it counts the day of entry into
 service; and Division 40 never switches to the straight line, where the module
 must.
 
-What is **not** in the file, because it was not read on an official page or
-because the module has no word for it:
+Not in the file:
 
 - **A tax depreciation distinct from the accounting one.** The module keeps one
-  schedule per asset; the lives above are tax lives, and an Australian company's
-  depreciation for AASB 116 and for Division 40 often differ.
-- **Goodwill.** Not carried: it is not amortised under the standards for a
-  for-profit entity and is not a depreciating asset under Division 40, and
-  neither text was read for this pack.
+  schedule per asset; the lives above are tax lives.
+- **Goodwill**: not amortised under the standards for a for-profit entity and
+  not a depreciating asset under Division 40.
 - **Leasehold improvements, plant and equipment generally, and the other assets
-  of the industry tables.** Table B has no generic line for them and the
-  Table A industry lives were not selected. Software that is not in-house, and
-  licences (their term), are not carried either.
+  of the industry tables**: Table B has no generic line for them. Software that
+  is not in-house, and licences, are not carried either.
 - **The instant asset write-off, simplified depreciation, small business
-  pooling and low-value pools** (low-value pools are Subdivision 40-E; no threshold was read):
-  a threshold under which an asset is expensed or pooled is not a notion of the
-  module, and the thresholds change by year.
+  pooling and low-value pools** (Subdivision 40-E): expensing or pooling under
+  a threshold is not a notion of the module.
 - **The capped life of section 40-102 and the 4 % capital works rate**
-  (Table 43-145): not read; the 2.5 % rate is the one carried.
+  (Table 43-145); the 2.5 % rate is the one carried.
 - **Residual value for tax, balancing adjustments, recalculation of effective
   life and non-taxable use reductions** (sections 40-285, 40-110 and 40-290).
-- **Components** of a building or a machine, depreciated over their own lives,
-  and revaluation under the AASB 116 revaluation model.
-- **Right-of-use assets** (AASB 16): their term is the lease's and is no
-  category.
+- **Components** and revaluation under the AASB 116 revaluation model.
+- **Right-of-use assets** (AASB 16): their term is the lease's.
 
 ## Reviewing this pack
 

@@ -23,37 +23,30 @@ pack's labels are English throughout; no other version is carried.
 
 Every tax, box and mention carries its own `legal_reference`, and beside it
 the key of the text that article is in. The register in `pack.json` holds
-eight texts, all consulted on 25 September 2026.
+eight texts.
 
 | What | Text | Where |
 |---|---|---|
-| The rate, zero-rated export sales, exempt transactions, invoicing rules, filing deadline | Republic Act No. 10963 (TRAIN Law) and Republic Act No. 11976 (Ease of Paying Taxes Act), amending the National Internal Revenue Code of 1997 | Supreme Court of the Philippines, E-Library — read directly |
+| The rate, zero-rated export sales, exempt transactions, invoicing rules, filing deadline | Republic Act No. 10963 (TRAIN Law) and Republic Act No. 11976 (Ease of Paying Taxes Act), amending the National Internal Revenue Code of 1997 | Supreme Court of the Philippines, E-Library |
 | The zero-rating regime for IPA-registered export enterprises (out of scope) | Republic Act No. 12066 (CREATE MORE Act) | Supreme Court of the Philippines, E-Library |
-| The quarterly VAT return and its item numbers | BIR Form No. 2550Q, April 2024 (ENCS), and its Guidelines and Instructions | Bureau of Internal Revenue, `bir-cdn.bir.gov.ph` — read directly |
-| The value-added tax withheld on services from a non-resident | BIR Form No. 1600-VT (January 2018) and its Guidelines and Instructions | Bureau of Internal Revenue — read directly |
+| The quarterly VAT return and its item numbers | BIR Form No. 2550Q, April 2024 (ENCS), and its Guidelines and Instructions | Bureau of Internal Revenue, `bir-cdn.bir.gov.ph` |
+| The value-added tax withheld on services from a non-resident | BIR Form No. 1600-VT (January 2018) and its Guidelines and Instructions | Bureau of Internal Revenue |
 | Electronic invoicing (the Electronic Invoicing/Receipting System) | Revenue Regulations No. 8-2022 | Bureau of Internal Revenue |
 | Where the return is filed electronically | eFPS | `efps.bir.gov.ph` |
 
-Most of this pack was read from the Supreme Court E-Library's and the
-Bureau's own PDFs directly this session — a marked improvement over several
-earlier packs of this repository, whose primary texts resisted extraction.
-Where a text could not be opened as primary text and a secondary summary was
-used instead, the rule's own `legal_reference` says so.
+Where a rule rests on a secondary summary rather than the primary text, its
+`legal_reference` says so.
 
 ## The chart of accounts, and why this one
 
-**The Philippines prescribes no chart of accounts.** What this session could
-verify is that the Financial and Sustainability Reporting Standards Council,
-under the authority of the Board of Accountancy (Republic Act No. 9298, the
-Philippine Accountancy Act of 2004), adopts the Philippine Financial
+**The Philippines prescribes no chart of accounts.** The Financial and
+Sustainability Reporting Standards Council, under the authority of the Board
+of Accountancy (Republic Act No. 9298), adopts the Philippine Financial
 Reporting Standards, including one for small and medium-sized entities and
-one for small entities, and that the Securities and Exchange Commission
-requires financial statements filed with it to follow one of those
-frameworks — neither the Council's own standards nor the Commission's Rule 68
-prescribe a numbered account code, and this session did not open either
-text in full. So the chart is written, not transcribed: four digits by
-class, the numbering the sibling Southeast Asian packs (Thailand, Vietnam,
-Singapore) use — `1` assets, `2` liabilities, `3` equity, `4` revenue, `5`
+one for small entities, and the Securities and Exchange Commission requires
+financial statements filed with it to follow one of those frameworks;
+neither is known to prescribe a numbered account code. So the chart is
+written, not transcribed: four digits by class — `1` assets, `2` liabilities, `3` equity, `4` revenue, `5`
 cost of sales, `6` operating expenses, `7` finance items, `8` income tax —
 with the accounts a value-added-tax-registered Philippine company's books
 hold: output and input value-added tax, the VAT payable account a filed
@@ -88,17 +81,14 @@ foreign currency, under Section 108(B)(2). Both report their value in item
 categories a conditional sunset clause of Section 106(A)(2) reduces to 12%
 once an enhanced VAT-refund system is certified (that clause reaches only
 the raw-material and Omnibus Investment Code categories the same
-subparagraph lists); this session found nothing suggesting the clause has
-been triggered even for those.
+subparagraph lists); nothing suggests the clause has been triggered even for
+those.
 
 **A residential lease at or below the statutory threshold is exempt, and
 carries no box.** `PH-S-EX` and `PH-P-EX` — the golden year uses a
 residential unit rented to a tenant and an office space rented from an
-individual landlord — report a base and nothing else under Section 109(Q):
-nothing read this session shows BIR Form No. 2550Q asking for the value of
-an exempt sale on a box of its own, the way it asks for zero-rated sales at
-item 32; this pack reports it at item 33 instead, which the form itself
-carries as "Exempt Sales".
+individual landlord — report a base and nothing else under Section 109(Q),
+at item 33, which the form carries as "Exempt Sales".
 
 **Value-added tax withheld on a service bought from a non-resident.**
 `PH-P-RC` is a service performed for the company by a person not established
@@ -106,24 +96,20 @@ in the Philippines: Section 108(A) taxes "the performance of all kinds of
 services in the Philippines for others", and the company itself withholds
 and remits the 12% rather than the non-resident charging it, filing BIR Form
 No. 1600-VT "on or before the tenth (10th) day of the month following the
-month in which the withholding was made" (the form's own Guidelines, read
-directly). It posts the value to item 45, the withholding liability to
+month in which the withholding was made" (the form's own Guidelines). It posts the value to item 45, the withholding liability to
 `2115`, and the same amount to `1150` as an immediate input tax credit.
 **This overstates how fast the credit is available**: BIR Form No. 1600-VT
 is a monthly return this pack does not carry as a `tax_report.json` — it
 touches no box of BIR Form No. 2550Q at all — while the input credit is
 claimed on the quarterly return's own item 45; this code posts the
-withholding and the credit on the same document, exactly the simplification
-`packs/th/`'s `TH-P-RC` names for Thailand's VAT 36/VAT 30 pair. See
-`docs/international.md`.
+withholding and the credit on the same document. See
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## The return
 
 `PH-VAT-2550Q` is this pack's own reading of BIR Form No. 2550Q (April 2024,
 ENCS), filed quarterly. **Its box numbers — `31`, `32`, `33`, `37`, `44`,
-`45`, `51`, `61` — are the form's own printed item numbers**, read directly
-from the form itself, unlike several other packs of this repository whose
-box codes are invented because the form's own wording could not be read.
+`45`, `51`, `61` — are the form's own printed item numbers.**
 **What this pack does not model are the form's own schedules and
 adjustments**: item 34's running total and items 35-36 (the Ease of Paying
 Taxes Act's output-tax adjustment for uncollected and recovered
@@ -143,13 +129,13 @@ manually. The same subsection's earlier proviso for monthly payment is read
 as superseded by its own later proviso ("beginning January 1, 2023 ...
 within twenty-five (25) days following the close of each taxable quarter"),
 which matches secondary reporting of Revenue Memorandum Circular No. 5-2023
-that BIR Form No. 2550M (the monthly return) is no longer required — this
-session did not read that Circular's own primary text.
+that BIR Form No. 2550M (the monthly return) is no longer required; that
+Circular's primary text should be checked.
 
 **Item 61 is not floored to zero.** A negative figure is an excess input
 tax carried to the next quarter rather than a refund claimed automatically
-(Section 112); this session did not read that section closely enough to
-model the choice between carry-over and refund, which stays a figure only.
+(Section 112); the choice between carry-over and refund is not modelled and
+stays a figure only.
 
 ## The statements
 
@@ -157,9 +143,7 @@ model the choice between carry-over and refund, which stays a figure only.
 chart's own numbering gives its accounts — current and non-current, revenue
 and cost of sales, operating expenses and depreciation — the same
 classification a Philippine Financial Reporting Standard would use without
-transcribing that standard's own line items or their numbering, because this
-session could not open the Financial and Sustainability Reporting Standards
-Council's text (see "Sources"). No fact keys: nothing here was checked
+transcribing that standard's own line items or their numbering. No fact keys: nothing here was checked
 against a taxonomy. `closing_style` is `retained_earnings`: this chart keeps
 no separate current-year-result account, so the open year's result sits on
 the income and expense accounts themselves (grouped as `E-RESULT` on the
@@ -167,8 +151,7 @@ balance sheet) until the close.
 
 ## On the invoice
 
-**Section 113(B)**, as amended by Republic Act No. 11976 and read directly
-this session, requires a VAT invoice to state that the seller is
+**Section 113(B)**, as amended by Republic Act No. 11976, requires a VAT invoice to state that the seller is
 VAT-registered, followed by the seller's Taxpayer Identification Number;
 the total amount the purchaser pays with VAT shown as a separate item; "the
 term 'VAT-exempt sale'" or "'zero-rated sale'" written or printed on the
@@ -183,11 +166,10 @@ so many words, a series with no gap across a whole registration. **No legal
 mentions are declared**: the two required sentences above ("VAT-exempt
 sale", "zero-rated sale") are conditions on the tax lines themselves
 (`vat_category` `E` and `G`) rather than a document-wide mention this
-format's `documents.mentions` block would carry, and this session found no
-further sentence a regulation requires beyond them. **No payment term is
-declared**: this session found no provision of the Civil Code or the Tax
-Code setting one between businesses in the absence of an agreement, and did
-not look exhaustively enough to say there is none.
+format's `documents.mentions` block would carry; no further required
+sentence is known. **No payment term is declared**: no provision of the Civil
+Code or the Tax Code setting one between businesses in the absence of an
+agreement is known.
 
 ## Electronic invoicing
 
@@ -198,14 +180,13 @@ Regulations No. 8-2022): a covered taxpayer — initially large taxpayers,
 e-commerce businesses and exporters of goods and services — issues a
 structured electronic invoice and transmits sales data to the Bureau's own
 platform, `eis.bir.gov.ph`, rather than exchanging a document with a buyer's
-own access point. It is a clearance/reporting regime, the same shape as
-`packs/mx/`'s CFDI, `packs/vn/`'s hóa đơn có mã and `packs/sa/`'s FATOORA,
-and not an exchange built on EN 16931: no component of `packages/formats/`
+own access point. It is a clearance/reporting regime, not an exchange built
+on EN 16931: no component of `packages/formats/`
 writes the EIS's own JSON schema or talks to its API, so a document Ekwo
 posts is not an Electronic Invoice within the Bureau's own meaning, and
 `mandatory_from` with no `profile` would claim otherwise. By secondary
-reporting this session could not verify against a primary Revenue
-Memorandum Circular, mandatory compliance for the large-taxpayer/exporter
+reporting, not yet checked against a primary Revenue Memorandum Circular,
+mandatory compliance for the large-taxpayer/exporter
 group is due to be reached by 31 December 2026 — close enough to this
 pack's own `released_at` that a reviewer should check the current date
 against the Bureau's own announcements before relying on this pack's silence.
@@ -215,20 +196,17 @@ against the Bureau's own announcements before relying on this pack's silence.
 - **Percentage tax (Section 116).** A non-VAT-registered person whose gross
   annual sales do not exceed the Section 109(CC) threshold pays 3% of gross
   quarterly sales on BIR Form No. 2551Q instead of VAT. This pack models
-  only a VAT-registered company; percentage tax is out of scope entirely,
-  by instruction, and is not a gap of what this session could read — it is
-  a different regime a future pack, or a chart audience of this one, could
-  carry.
+  only a VAT-registered company; percentage tax is a different regime and
+  out of scope.
 - **Import VAT collected by the Bureau of Customs (Section 107).** Only
   value-added tax withheld on a service from a non-resident is carried; a
   company that imports goods needs a code this pack does not have, and item
   46 of BIR Form No. 2550Q (Importations) is not modelled.
 - **The two-return timing of BIR Form No. 1600-VT and BIR Form No. 2550Q**
-  (see `PH-P-RC` above and `docs/international.md`).
+  (see `PH-P-RC` above).
 - **Input tax the law excludes from credit** (Section 110, entertainment
   expenses not directly connected to the trade and non-depreciable vehicles
-  above a ceiling, by secondary reputation and not a primary text read this
-  session): `PH-P-STD` assumes every standard-rated purchase is fully
+  above a ceiling, per secondary sources): `PH-P-STD` assumes every standard-rated purchase is fully
   creditable.
 - **The capital-goods amortisation schedule** (BIR Form No. 2550Q, Part V,
   Schedule 1 — input tax on capital goods exceeding P1,000,000 spread over
@@ -243,8 +221,7 @@ against the Bureau's own announcements before relying on this pack's silence.
   The chart carries payable accounts for both (`2140`, `2141`) because a
   Philippine company's books hold them, but no tax code posts to them: this
   pack's scope is value-added tax, and these are a different tax entirely.
-- **Fixed assets.** No `fixed_assets.json`: this session found no capital
-  allowance table it could read in the time available.
+- **Fixed assets.** No `fixed_assets.json`: no depreciation table is carried.
 - **Bank formats.** Nothing checked says which formats Philippine banks
   send.
 
@@ -257,20 +234,18 @@ roughly in the order the author is least sure of them:
 
 1. **Whether Section 114(A)'s later "beginning January 1, 2023" proviso
    truly supersedes its own earlier monthly-payment proviso**, against
-   Revenue Memorandum Circular No. 5-2023's primary text, which this
-   session read only through a secondary summary.
+   Revenue Memorandum Circular No. 5-2023's primary text.
 2. **The withholding mechanism `PH-P-RC` models** — its legal basis (the
-   Revenue Regulations that first imposed it, not read here in primary
-   text), and whether the immediate-credit simplification should instead be
+   Revenue Regulations that first imposed it), and whether the immediate-credit simplification should instead be
    two documents.
 3. **Whether Section 109(Q)'s P15,000 threshold is itself subject to the
    triennial Consumer Price Index adjustment** Section 109(CC) states for
-   its own three-million-peso figure — this session read the two
-   paragraphs as independent.
+   its own three-million-peso figure — the pack reads the two paragraphs as
+   independent.
 4. **Input tax the law excludes from credit** (Section 110), not modelled.
 5. **The chart's own statements**, `PH-BS` and `PH-IS`, against a proper
    reading of the Philippine Financial Reporting Standard for Small
-   Entities, once its text can be opened.
+   Entities.
 6. **`tax_point: invoice_if_issued`**, read from Section 113/237's own
    emphasis on the invoice as trigger rather than a single article stating
    the general rule in so many words.

@@ -19,10 +19,10 @@ about whether it is right.
 the language of every law, regulation, notice and form it transcribes;
 `i18n/en.json` gives all of it in English. No administration publishes an
 official English version of any of those texts, so every English label is this
-pack's own translation — see [`i18n/README.md`](i18n/README.md). The language
-code is the same `zh` the Taiwan pack uses for Traditional Chinese: the format
-has a two-letter language and no script subtag, which is noted in
-[`docs/international.md`](../../docs/international.md) under "From China".
+pack's own translation — see [`i18n/README.md`](i18n/README.md). The format
+has a two-letter language and no script subtag, so `zh` does not say which
+script; see
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Ekwo does not issue a Chinese invoice
 
@@ -52,7 +52,7 @@ date its booking accordingly.
 
 Every tax, box and statement line carries its own `legal_reference`, and
 beside it the key of the text that article is in. The register in `pack.json`
-holds fifteen texts, all opened on 26 September 2026: the VAT Law and its
+holds fifteen texts: the VAT Law and its
 Implementing Regulations (国务院令第826号); the two notices that carry the
 reliefs and their administration into 2026 (财政部 税务总局公告2026年第10号,
 国家税务总局公告2026年第4号); the return (its page on the 12366 service
@@ -63,12 +63,11 @@ Guidance; the VAT accounting rules (财会〔2016〕22号); the 2019 statement
 formats (财会〔2019〕6号); and the three texts of the surcharges.
 
 Two of them are served by a publisher other than their author: the 2006
-Application Guidance is read on the Ministry of Commerce's legal database,
-which reproduces the Ministry of Finance notice in full (the Ministry of
-Finance's own site does not serve the appendix), and the digital-invoice
-notice on www.gov.cn. The electronic tax bureau answers a script with a
-challenge page and no content; it is the address the State Taxation
-Administration's home page links to.
+Application Guidance on the Ministry of Commerce's legal database, which
+reproduces the Ministry of Finance notice in full, and the digital-invoice
+notice on www.gov.cn. The electronic tax bureau blocks automated link checks,
+so `pack check --links` reports it unreachable; it is the address the State
+Taxation Administration's home page links to.
 
 ## The chart of accounts
 
@@ -158,8 +157,8 @@ or earlier has no code here to post them with.
 | CN-P-FS-6 | 6 %, withheld | Law art. 15; Regulations art. 12 (3) | 12 |
 | CN-P-EXO / CN-P-NA | — | Law art. 23–24 / art. 6 | none |
 
-**The 1 % small-scale rate is valid.** The prompt that started this pack asked
-whether the temporary reduction survived the Law. It does: 财政部 税务总局公告
+**The 1 % small-scale rate is valid.** The temporary reduction survived the
+Law: 财政部 税务总局公告
 2026年第10号 第三条第（三）项第6点 keeps it from 1 January 2026 to 31 December
 2027 for every small-scale transaction taxable at 3 % except the sale or
 lease of immovable property and the transfer of land use rights, and
@@ -214,7 +213,8 @@ and a `rate_of` — and this pack does not, for two reasons: the rate of the
 first depends on where the taxpayer is, which is not a fact the pack knows,
 and reliefs for small taxpayers apply to all three, which this pack has not
 transcribed. They are booked by hand: debit 6403 税金及附加, credit 222112,
-222113 and 222114. See docs/international.md, "From China".
+222113 and 222114. See
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## The declaration
 
@@ -282,8 +282,7 @@ Three readings follow the texts rather than the account codes:
 ## The golden quarter
 
 `golden/scenario.json` is the first quarter of 2026 of a general taxpayer
-filing monthly: thirteen documents and four payments. Its figures were worked
-out by hand before they were generated:
+filing monthly: thirteen documents and four payments:
 
 | Period | Lines | Why |
 |---|---|---|

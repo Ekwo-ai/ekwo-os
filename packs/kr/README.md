@@ -26,15 +26,14 @@ not a second source.
 
 Every tax, box and statement line carries its own `legal_reference`, and
 beside it the key of the text it is read from. The register in `pack.json`
-holds thirteen sources, all consulted on 22 September 2026: 부가가치세법 and
-its Enforcement Decree on 국가법령정보센터 (law.go.kr); the return form itself,
-별지 제21호서식 of the Enforcement Rule, read from the PDF law.go.kr publishes
-under that annex; the Commercial Act and the Corporate Tax Act for the
+holds thirteen sources: 부가가치세법 and its Enforcement Decree on
+국가법령정보센터 (law.go.kr); the return form itself, 별지 제21호서식 of the
+Enforcement Rule, as law.go.kr publishes it under that annex; the Commercial Act and the Corporate Tax Act for the
 financial-statement duty and the business year; the National Tax Service's
 own pages for filing deadlines, the mandatory e-invoice issuers and their
 transmission deadlines and penalties; the Korea Accounting Standards Board
-(KASB) for the absence of a legal chart of accounts; and OpenPeppol's own
-list of Peppol Authorities to support the claim that South Korea is not one.
+(KASB) for the absence of a legal chart of accounts; and OpenPeppol's list
+of Peppol Authorities, on which South Korea does not appear.
 
 ## The chart of accounts, and why this one
 
@@ -44,18 +43,15 @@ financial year; it names no account. A company that does not apply K-IFRS
 follows 일반기업회계기준, published by KASB, which fixes the current /
 non-current split of a balance sheet and the five-step structure of an
 income statement (gross profit, operating profit, profit before income tax,
-net profit) — and, like Japan's 会社計算規則 and Hong Kong's SME-FRF & SME-FRS,
-fixes no chart of accounts underneath those totals. This chart is original:
-four digits by class, cut so that each range reaches one line of the
-statements below. No published chart, official or commercial, was copied.
+net profit) — and fixes no chart of accounts underneath those totals. This
+chart is original: four digits by class, cut so that each range reaches one
+line of the statements below.
 
 **Two VAT clearing accounts, kept apart from the accounts a tax posts to.**
 `1250` 부가세대급금 holds the input tax a purchase carries until a return
 settles it, `2150` 부가세예수금 the output tax a sale carries. Once a return is
 filed, the net lands on `2155` 미지급세금 (`tax_payable`) or, where it is a
-refund, on `1255` 미수금(부가세환급세액) (`tax_receivable`) — the same
-mechanism Belgium's 451900 and 445670 give a European return, adapted to a
-country with no legal chart to read it off.
+refund, on `1255` 미수금(부가세환급세액) (`tax_receivable`).
 
 **The result closes to retained earnings** (`closing_style:
 retained_earnings`): Korean practice carries the year's result straight to
@@ -90,8 +86,7 @@ non-creditable purchase and an import.
 - `KR-P-IMP-10` — 제50조: the tax customs collects on an imported good, which
   is fully creditable once the 수입세금계산서 is issued (제35조), and whose
   counter-posting is a liability to customs (`2135`) rather than to the
-  foreign supplier, exactly as Japan's own import code does with its own
-  authority.
+  foreign supplier.
 
 **Not carried, deliberately.** 간이과세자 (the simplified regime of
 제61조 and following, for a business under 104,000,000 원 of annual supplies
@@ -139,8 +134,7 @@ refuses a box a tax cannot post to and does not ask for a box nothing needs.
   a preliminary return at all: the NTS assesses and collects half of the
   prior period's tax by notice (제48조제3항) instead. That is a payment on
   account, not a declaration, and this pack — whose chart targets a company —
-  does not model it; a note is kept in
-  [`docs/international.md`](../../docs/international.md).
+  does not model it.
 
 ## The e-tax invoice, and why `einvoicing` is empty
 
@@ -154,10 +148,9 @@ no Peppol Authority, so there is no PINT-KR or equivalent built on EN 16931;
 the electronic tax invoice is the NTS's own XML, submitted to its own
 Hometax portal, and no brick of `packages/formats/` writes it or talks to
 Hometax. `profile`, `mandatory_from`, `party_scheme`, `vat_scheme` and
-`obligation` are therefore all left out, exactly as Mexico's CFDI clearance
-left them out: declaring a profile here would claim a brick of this
-repository produces a valid Korean tax invoice, which none does. The gap is
-recorded in full in [`docs/international.md`](../../docs/international.md).
+`obligation` are therefore all left out: declaring a profile here would
+claim Ekwo produces a valid Korean tax invoice, which it does not. See
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## The golden year
 
@@ -169,8 +162,7 @@ an exempt resale of unprocessed rice (`S5`), a non-creditable business
 promotion expense (`P2`), an exempt purchase from a farming cooperative
 (`P4`) and an import cleared through customs (`P5`) each appear once. Three
 payments: one inbound and one outbound settling a document exactly, and one
-inbound payment matching nothing, an advance the golden test needs to prove
-an unmatched settlement still balances.
+inbound payment matching nothing, an advance.
 
 ## For a reviewer, in this order
 
@@ -179,14 +171,11 @@ an unmatched settlement still balances.
    a filing.
 2. The eight tax codes against 부가가치세법 제21조, 22조, 23조, 26조, 30조,
    39조, 50조 — in particular whether 제26조제1항 1호 (unprocessed food) is the
-   right illustration of the exemption, since this pack did not verify every
-   item of that list against the primary text.
-3. The chart of accounts and the two statements: original, not a transcription
-   of a KASB table this pack could fetch in full — the detailed line-by-line
-   presentation of 일반기업회계기준 was not independently verified past its
-   current/non-current principle, and a Korean accountant should confirm the
-   statement lines against a filed 재무제표.
-4. The `einvoicing` gap and its reasoning against Mexico's own CFDI section
-   of `docs/international.md`.
+   right illustration of the exemption, and every item of that list against
+   the primary text.
+3. The chart of accounts and the two statements: original, following the
+   current/non-current principle of 일반기업회계기준; a Korean accountant
+   should confirm the statement lines against a filed 재무제표.
+4. The `einvoicing` gap and its reasoning.
 5. The rounding rule (`down`, at the won, citing 국고금 관리법 제47조) against
    how a Korean accounting package actually truncates a VAT computation.

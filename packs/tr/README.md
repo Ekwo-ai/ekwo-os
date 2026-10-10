@@ -18,17 +18,15 @@ olduğunu kanıtlar, doğru olduğunu değil.
 **Pack tamamen Türkçe yazılmıştır** (`defaults.language: "tr"`), çünkü
 kaynak aldığı her metin — 3065 sayılı Kanun, Katma Değer Vergisi Genel
 Uygulama Tebliği, 1 Sıra No'lu Muhasebe Sistemi Uygulama Genel Tebliği —
-zaten resmî Türkçedir. Diğer paketlerin İngilizce etiketlere başvurduğu
-durum (referans planın yerel dilde resmî bir sürümü olmaması) burada söz
-konusu değildir: Tekdüzen Hesap Planı'nın kendisi Türkçe bir devlet
-tebliğidir. Bu yüzden bu ilk sürümde `languages: []` bırakılmıştır ve
+zaten resmî Türkçedir; Tekdüzen Hesap Planı'nın kendisi Türkçe bir devlet
+tebliğidir. Bu yüzden `languages: []` bırakılmıştır ve
 `i18n/` altında yalnızca bir [`README.md`](i18n/README.md) vardır.
 
 ## Kaynaklar
 
 Her vergi, kutu, ibare ve tablo satırı kendi `legal_reference`'ını taşır ve
 yanında hangi metnin bu maddeyi içerdiğini gösteren anahtarı. `pack.json`
-kayıt defteri yedi metin taşır, hepsi 25 Eylül 2026'da açılmıştır. En çok
+kayıt defteri yedi metin taşır. En çok
 dayanılan üçü:
 
 | Ne | Metin | Nerede |
@@ -39,8 +37,8 @@ dayanılan üçü:
 
 ## Hesap planı, ve neden bu hesaplar
 
-**Tekdüzen Hesap Planı, Saudi Arabia ya da UAE paketlerinin aksine, isteğe
-bağlı bir seçim değil, kanuni bir zorunluluktur.** Bilânço esasına göre
+**Tekdüzen Hesap Planı isteğe bağlı bir seçim değil, kanuni bir
+zorunluluktur.** Bilânço esasına göre
 defter tutan her gerçek ve tüzel kişi, 1 Sıra No'lu Muhasebe Sistemi
 Uygulama Genel Tebliği'nin belirlediği üç haneli ana hesapları 1/1/1994'ten
 beri aynen kullanmak zorundadır — bir işletme dördüncü haneden itibaren
@@ -56,8 +54,8 @@ aynı adla yer alır, iki istisna dışında —
 - **`3600` (Ödenecek Katma Değer Vergisi)**, `360 Ödenecek Vergi ve
   Fonlar`'ın altına eklenen bir alt hesaptır: beyannamenin sonucunun
   yattığı, `391`/`191`'den ayrı ve lettrable (`defaults.roles.tax_payable`)
-  bir hesap — SK pack'inin öğrettiği kural, KDV'nin hesaplandığı hesapla
-  beyannamenin sonucunun yattığı hesap aynı olamaz.
+  bir hesap — KDV'nin hesaplandığı hesapla beyannamenin sonucunun yattığı
+  hesap aynı olamaz.
 
 Tebliğ'in ayrıntılı alt gruplarının tamamı bu ilk sürümde yoktur — menkul
 kıymetler, mali duran varlıklar, sermaye yedekleri, yıllara yaygın inşaat
@@ -89,16 +87,14 @@ Hangi malın ya da hizmetin hangi listede olduğu 2007/13033 sayılı Kararın
 ekinde okunmalıdır; bu pack yalnızca oranın kendisini ve hangi maddenin onu
 belirlediğini taşır.
 
-**İthalat, Körfez paketlerinin (`ae`, `sa`) aksine bir sorumluluk
-(reverse charge) değildir.** Madde 46/2 açıktır: "İthalde alınan katma
+**İthalat bir sorumluluk (reverse charge) değildir.** Madde 46/2 açıktır: "İthalde alınan katma
 değer vergisi, gümrük vergisi ile birlikte ve aynı zamanda ödenir." Gümrük
 vergisine tabi olmayan ithalatta ise gümrük beyannamesinin tescili anında
 ödenir (madde 10/ı, madde 40/2). Matrah madde 21'e göre malın gümrük
 vergisi tarhına esas kıymeti (bulunmadığında CİF değeri) artı ithalat
 sırasında ödenen her türlü vergi, resim, harç ve paydır. `TR-P-IMP` bu
 yüzden bir kendi kendine beyan (self-assessment) hilesi kullanmaz: KDV
-doğrudan `191`'e (indirilecek KDV) yazılır, aynı `sa`/`ae` paketlerinde
-`box g2` üzerinden yapılan ters çevirme burada yoktur.
+doğrudan `191`'e (indirilecek KDV) yazılır.
 
 **Yurt dışından alınan hizmet ayrı bir mekanizmadır.** Türkiye'de ikametgâhı,
 işyeri, kanuni ve iş merkezi bulunmayan bir satıcıdan alınan ve Türkiye'de
@@ -114,8 +110,7 @@ bu pack'te modellenmemiştir.**
 ## Beyanname
 
 `tax_report.json`, GİB'in canlı e-Beyanname ekranının kutu numaralarını
-değil — bu araştırma sırasında böyle bir metne tek başına erişilebilir bir
-biçimde ulaşılamamıştır — 3065 sayılı Kanun'un ve Katma Değer Vergisi Genel
+değil, 3065 sayılı Kanun'un ve Katma Değer Vergisi Genel
 Uygulama Tebliği'nin beyannameden istediği **içeriği** taşır: oran bazında
 matrah ve hesaplanan KDV, istisna kapsamındaki bedeller, indirilecek KDV'nin
 üç kaynağı (yurtiçi alış, ithalat, sorumlu sıfatıyla indirilen pay) ve
@@ -158,7 +153,7 @@ kayıt yapmaz. `370` (Dönem Karı Vergi ve Diğer Yasal Yükümlülük
 Karşılıkları) gerçek bir hesaptır ama bu pack'in hiçbir vergi kodu ona
 kayıt yapmaz; bir şirketin kurumlar vergisi karşılığını elle kaydetmesi
 için vardır. Fact key'ler (`xbrl`) her yerde null'dur: Türkiye'nin bir XBRL
-taksonomisi kullanıp kullanmadığı bu araştırmada doğrulanmamıştır.
+taksonomisi kullanıp kullanmadığı doğrulanmamıştır.
 
 ## Faturada
 
@@ -172,9 +167,8 @@ haneli sayaçtan oluşan on altı karakterlik bir biçimde üretilir.
 **Vergiyi doğuran olay iki aşamalıdır.** Madde 10(a) kural olarak malın
 teslimini veya hizmetin ifasını esas alır; (b) bendi, teslim veya ifadan
 önce fatura düzenlenmişse, vergiyi bu belgenin düzenlenmesi anına — belgede
-gösterilen miktarla sınırlı olmak üzere — ileri çeker. Bu, Belçika'nın
-madde 16/22 - 17/22bis'i ve Lüksemburg'un madde 21 - 24, par. 1'i gibi bir
-kural-ve-istisna çiftidir, bu yüzden `invoice_if_issued` olarak
+gösterilen miktarla sınırlı olmak üzere — ileri çeker. Bu bir kural-ve-istisna
+çiftidir, bu yüzden `invoice_if_issued` olarak
 kodlanmıştır.
 
 **`posted_edit_policy` `reversal_only`'dir.** 6102 sayılı Türk Ticaret
@@ -184,16 +178,15 @@ sayılı Kanun'un 231'inci maddesi fatura numaralarının teselsülünü ister.
 İşlenmiş bir belgeyi taslağa geri döndürmek her ikisini de ihlal eder;
 düzeltme bir alacak dekontu iledir.
 
-**Ödeme vadesi ve gecikme faizi bu pack'te yoktur.** Bu araştırma, işletmeler
-arası bir işlemde anlaşma yokluğunda uygulanacak kanuni bir vadeyi (6102
-sayılı Türk Ticaret Kanunu'nun geç ödeme hükümleri dâhil) doğrulamadı; bu
-`docs/international.md`'de Türkiye bölümünde ayrıca kaydedilmiştir.
+**Ödeme vadesi ve gecikme faizi bu pack'te yoktur.** İşletmeler arası bir
+işlemde anlaşma yokluğunda uygulanacak kanuni bir vade (6102 sayılı Türk
+Ticaret Kanunu'nun geç ödeme hükümleri dâhil) doğrulanmamıştır (bkz.
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet)).
 
 ## e-Fatura ve e-Arşiv Fatura
 
-`einvoicing.profile` ve `party_scheme`/`vat_scheme` boş bırakılmıştır — bu
-`sa`, `mx`, `vn` ve `kr` paketlerinin aynı alanları boş bırakma nedeniyle
-aynıdır: e-Fatura ve e-Arşiv Fatura bir EN 16931 profili
+`einvoicing.profile` ve `party_scheme`/`vat_scheme` boş bırakılmıştır:
+e-Fatura ve e-Arşiv Fatura bir EN 16931 profili
 (Peppol BIS, Factur-X, XRechnung, bir PINT) üzerinden iki tarafın kendi
 erişim noktaları arasında bir değişim değil, belgenin GİB'in kendi platformu
 ya da GİB onaylı bir özel entegratör üzerinden idareye iletildiği bir teyit
@@ -202,7 +195,7 @@ GİB'e ulaştırmaz. `obligation` de bu yüzden boş bırakılmıştır: yüküm
 gerçek ve süreklidir (509 Sıra No'lu Vergi Usul Kanunu Genel Tebliği ve
 sonraki değişiklikleri, 213 sayılı Kanun'un mükerrer 257'nci maddesindeki
 yetkiye dayanarak), ama tek bir tarihe değil, mükellefin bir önceki yıl
-brüt satış hasılatına bağlıdır — bu araştırmanın ulaştığı en güncel eşik,
+brüt satış hasılatına bağlıdır — bilinen en güncel eşik,
 3.000.000 TL (genel), e-ticaret/gayrimenkul/motorlu taşıt ticareti için
 500.000 TL'dir, ve 1 Ocak 2026'dan itibaren bilanço esasına göre defter
 tutan hiçbir mükellef kâğıt fatura düzenleyemez.
@@ -225,9 +218,9 @@ tutan hiçbir mükellef kâğıt fatura düzenleyemez.
 - **Kurumlar vergisi.** `370` hesabı elle kayıt için vardır, hiçbir vergi
   kodu ona kayıt yapmaz.
 - **Sabit kıymetler.** `fixed_assets.json` yoktur; VUK'un amortisman oranları ve
-  faydalı ömürleri bu araştırmanın dışındadır.
+  faydalı ömürleri bu pack'in kapsamı dışındadır.
 - **Banka formatları.** Türk bankalarının hangi dosya biçimini
-  gönderdiği bu araştırmada doğrulanmamıştır; `pack.json`'da `bank` bölümü
+  gönderdiği doğrulanmamıştır; `pack.json`'da `bank` bölümü
   hiç yoktur.
 - **Ödeme vadesi ve gecikme faizi**, "Faturada" bölümünde anlatıldığı gibi.
 
@@ -237,17 +230,16 @@ tutan hiçbir mükellef kâğıt fatura düzenleyemez.
 olmadığı [`docs/packs.md`](../../docs/packs.md)'de "Certification, and who
 may say what" başlığı altındadır. Türkiye'de yeminli mali müşavirlik ya da
 serbest muhasebeci mali müşavirlik yapan birinin önce okuması gereken
-noktalar, yazarın en az emin olduğu sıraya göre:
+noktalar, en az emin olunan sıraya göre:
 
 1. **1 No'lu KDV Beyannamesinin kutuları**, GİB'in canlı e-Beyanname
    ekranının box numaraları değil, kanunun içeriğidir.
-2. **`TR-P-IMP`'nin gümrükte doğrudan ödeme varsayımı** — Article 50'nin
-   (UAE) ya da benzer bir "özel ithalat" hâlinin karşılığı burada
-   modellenmemiştir.
+2. **`TR-P-IMP`'nin gümrükte doğrudan ödeme varsayımı** — bir "özel ithalat"
+   hâli burada modellenmemiştir.
 3. **(I) ve (II) sayılı listelerin kapsamı**, bu pack'te madde madde
    verilmemiştir.
 4. **Yurtiçi kısmi tevkifat listesinin tamamının eksikliği.**
 5. **`invoice_if_issued` tax point'i**, madde 10'un üç bendinin (a, b, ı)
    tek bir olağan durum yaklaşımıdır.
 6. **e-Fatura/e-Arşiv eşiklerinin güncelliği** — bu tebliğ sık sık
-   değiştirilir, bu pack'in araştırması tek bir tarihte durur.
+   değiştirilir, bu pack'teki eşikler tek bir tarihe aittir.

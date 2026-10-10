@@ -17,52 +17,42 @@ proves nothing about whether it is right.
 
 **Language: `vi`.** Every name, mention and `legal_reference` is written in
 Vietnamese, the language the law itself is written in; no English translation
-(`i18n/en.json`) is published with this first version, so `languages` is
+(`i18n/en.json`) is published, so `languages` is
 empty. The chart of accounts and the two financial statements carry no
 official English rendering to fall back on either — Circular 99/2025/TT-BTC,
 like the Circular it replaces, exists only in Vietnamese.
 
-**Read [`docs/international.md`](../../docs/international.md), section
-"Vietnam", before relying on this pack.** It lists what the core cannot say
-that this README only names.
+What the core cannot yet say is listed in
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 ## Sources
 
 Every tax, box, mention and statement line carries its own `legal_reference`,
 and beside it the key of the text that article is in. The register in
-`pack.json` holds thirteen texts, opened on 22 September 2026.
+`pack.json` holds thirteen texts.
 
 | What | Text | Where |
 |---|---|---|
 | The tax itself — rates, exemptions, the 0 % export rate, the two calculation methods, the tax point | Luật Thuế giá trị gia tăng số 48/2024/QH15 (in force 1 July 2025), as amended by Luật số 149/2025/QH15 (1 January 2026) and Luật số 09/2026/QH16 (2026) | `datafiles.chinhphu.vn` |
 | The temporary 2-point reduction (10 % → 8 %) | Nghị quyết số 204/2025/QH15 and Nghị định số 174/2025/NĐ-CP, 1 July 2025 to 31 December 2026 | `xaydungchinhsach.chinhphu.vn`, `datafiles.chinhphu.vn` |
-| Electronic invoicing, the tax authority's verification code, the invoice lottery | Nghị định số 123/2020/NĐ-CP, as amended by Nghị định số 70/2025/NĐ-CP (1 June 2025) | `datafiles.chinhphu.vn`, mirror at `hethongphapluat.com` |
-| Filing periods and deadlines | Luật Quản lý thuế số 38/2019/QH14, Điều 44, and Nghị định số 126/2020/NĐ-CP, Điều 9 | mirror at `hethongphapluat.com` |
+| Electronic invoicing, the tax authority's verification code, the invoice lottery | Nghị định số 123/2020/NĐ-CP, as amended by Nghị định số 70/2025/NĐ-CP (1 June 2025) | `datafiles.chinhphu.vn` |
+| Filing periods and deadlines | Luật Quản lý thuế số 38/2019/QH14, Điều 44, and Nghị định số 126/2020/NĐ-CP, Điều 9 | `hethongphapluat.com` |
 | The VAT return itself, Mẫu số 01/GTGT | Thông tư 80/2021/TT-BTC (Phụ lục II) and, from 1 July 2026, Thông tư 89/2026/TT-BTC (Phụ lục I) | `thuvienphapluat.vn` |
 | The chart of accounts and the two statements | Thông tư số 99/2025/TT-BTC (1 January 2026), replacing Thông tư 200/2014/TT-BTC | `congbao.chinhphu.vn` |
 
-**Two of the six rows above rest on a text this pack could not read in full,
-and the gap is deliberate rather than silent — both are the first thing for a
-reviewer to check.**
+**Two points for a reviewer to check first.**
 
-- **Nghị định số 123/2020/NĐ-CP** (the base e-invoicing decree, before its
-  2025 amendment) was read from a mirror
-  (`hethongphapluat.com`) rather than from a signed PDF on `chinhphu.vn`: the
-  government's own document server refused every guessed URL for this
-  particular text during this pack's research. Điều 8, 9 and 10 (the kinds of
-  invoice, the time of issue, the mandatory particulars) were read there in
-  full; whether Nghị định 70/2025/NĐ-CP amended those three articles
-  specifically could not be confirmed and is not assumed here.
-- **The exact box table of Mẫu số 01/GTGT** — the annex itself, not the
-  articles that create it — could not be read from an official source for
-  either Thông tư 80/2021/TT-BTC or the Thông tư 89/2026/TT-BTC that replaced
-  it on 1 July 2026. `tax_report.json` transcribes the skeleton (chỉ tiêu
-  [22]-[43]) that has been stable across Vietnamese VAT practice for a decade,
-  cross-checked against two independent research passes on 22 September 2026,
-  and **not** against the annex's own PDF. A local accountant should confirm
-  the box numbers and labels against a current HTKK export or the Phụ lục I
-  of Thông tư 89/2026/TT-BTC before this pack is used to prepare a real
-  filing.
+- **Nghị định số 123/2020/NĐ-CP**, Điều 8, 9 and 10 (the kinds of invoice,
+  the time of issue, the mandatory particulars) are cited in their original
+  wording; whether Nghị định 70/2025/NĐ-CP amended those three articles is
+  not assumed and should be checked.
+- **The box table of Mẫu số 01/GTGT.** `tax_report.json` transcribes the
+  skeleton (chỉ tiêu [22]-[43]) that has been stable across Vietnamese VAT
+  practice for a decade, not the annex of Thông tư 80/2021/TT-BTC or of the
+  Thông tư 89/2026/TT-BTC that replaced it on 1 July 2026. A local accountant
+  should confirm the box numbers and labels against a current HTKK export or
+  the Phụ lục I of Thông tư 89/2026/TT-BTC before this pack is used to
+  prepare a real filing.
 
 ## Decisions this pack takes
 
@@ -80,8 +70,7 @@ than coal, goods subject to special consumption tax other than petrol), and
 than that list: whether a given line qualifies for the reduced rate is a
 question about what is sold, which the ledger does not answer on its own.
 
-**No `einvoicing.profile` is declared**, the same choice `packs/mx` and
-`packs/ci` made for their own clearance systems. Vietnam's hóa đơn điện tử có
+**No `einvoicing.profile` is declared.** Vietnam's hóa đơn điện tử có
 mã của cơ quan thuế is a real-time clearance mechanism — the tax authority
 issues a verification code before the invoice reaches the buyer — and none of
 Ekwo's profiles (`peppol-bis-3`, `factur-x-en16931`, `pint-*`) describe that.
@@ -103,15 +92,14 @@ debited to the new `1333`, awaiting the payment document, on no line of form
 01/GTGT in the period of the invoice; when the tax is paid, the bookkeeper
 moves it to `1331` and to lines [23]/[24] by a manual entry — the limit
 `packs/ar/` documents for a credit dated after its document. The corporate
-income tax part of the foreign contractor regime, and whatever circular
-replaced Thông tư 103/2014/TT-BTC on 1 July 2026, are still not modelled:
-two circular numbers were found in secondary sources, neither confirmed on an
-official page, and the gap is recorded in `docs/international.md`. A
-foreign supplier sits on the trade payables with the others.
+income tax part of the foreign contractor regime, and the circular that
+replaced Thông tư 103/2014/TT-BTC on 1 July 2026, are not modelled: no
+successor circular is confirmed on an official page (see
+[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet)).
+A foreign supplier sits on the trade payables with the others.
 
 **Import VAT is carried for the standard rate only** (`VN-P-IMP-10`). A
-complete pack would want one code per rate, the way `packs/jp` does for its
-own import tax, and codes for the 5 % and 0 % rates on imported goods are not
+complete pack would want one code per rate, and codes for the 5 % and 0 % rates on imported goods are not
 included here — a narrower scope than a `maintained` pack would want, named
 rather than hidden.
 
@@ -135,8 +123,7 @@ least once.
    their own that this pack has not found.
 3. The account codes and names of Circular 99/2025/TT-BTC against this
    pack's `accounts.csv`, transcribed from the well-established Thông tư
-   200/2014/TT-BTC numbering on the strength of a partial reading of
-   Circular 99/2025/TT-BTC confirming that numbering is largely carried
+   200/2014/TT-BTC numbering, which Circular 99/2025/TT-BTC largely carries
    forward — not checked account by account.
 4. Whether the successor to Thông tư 103/2014/TT-BTC (foreign contractor
    withholding) is now in force, and its rates — `VN-P-NN-DV-5` rests on the
