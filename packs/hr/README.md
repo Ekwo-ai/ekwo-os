@@ -82,20 +82,21 @@ st. 1. t. l), and — on the purchase side — the three intra-EU / third-countr
 self-assessment mechanisms the return keeps apart (intra-Community
 acquisition of goods, a service received from an EU supplier under čl. 75.
 st. 1. t. 6., a service received from a supplier established outside the
-EU under čl. 75. st. 2.), import VAT assessed on the customs declaration
-(čl. 32.), and the 50 % non-deductible share of the VAT on a passenger car
+EU under čl. 75. st. 2.), import VAT that the taxpayer, on its request in
+the customs declaration, reports as a liability in the return instead of
+paying it to customs (čl. 32. and čl. 76. st. 8.), and the 50 % non-deductible share of the VAT on a passenger car
 (čl. 61. st. 2.).
 
 Every self-assessed purchase tax posts the same base into **two** boxes at
 once — the output box of section II and the input box of section III — and
-two `tax` postings, one to the output account (`6401`) in box II and one to
-the input account (`1400`) in box III: the return states the tax as due and
-deducts it in the same line, and the two boxes are not a sum of one another
+two `tax` postings, one credited to the output account (`6401`, factor
+-100) in box II and one debited to the input account (`1400`) in box III:
+the return states the tax as due and deducts it in the same line, the
+supplier account carries only the price invoiced, and the two boxes are not a sum of one another
 so neither can carry the amount alone (`docs/packs.md`, "A base is written
 once").
 
-The intra-Community acquisition of goods and boxes I.2, I.5, I.6 and I.10
-are cited at paragraph level, partly to the form's user guide rather than to
+Boxes I.2, I.5, I.6 and I.10 are cited at paragraph level, partly to the form's user guide rather than to
 a specific article; see the checklist below.
 
 ## The return: Obrazac PDV
@@ -148,8 +149,7 @@ platform — this pack names the base European profile only.
    rezerve fer vrijednosti, manjinski interes, udjeli u povezanim društvima
    i zajedničkim pothvatima) read zero rather than being guessed at.
 2. Several sub-point citations of section I of the return (I.2, I.5, I.6,
-   I.10) and of the intra-Community acquisition of goods should be
-   checked against the consolidated Zakon o PDV.
+   I.10) should be checked against the consolidated Zakon o PDV.
 3. The quarterly-filing threshold (€110,000 of the previous year's VAT-
    inclusive turnover) and the small-business threshold (€60,000) change by
    law from time to time; confirm the figures in force.
