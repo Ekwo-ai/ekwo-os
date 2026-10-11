@@ -112,6 +112,23 @@
       "sequence": 50,
       "legal_reference": "Code général des impôts, art. 39, 4 — dépenses et charges ayant trait à l'exercice de la chasse et à l'exercice non professionnel de la pêche, et charges des résidences de plaisance ou d'agrément ; formulaire n° 2058-A-SD, ligne WF",
       "source": "cgi"
+    },
+    {
+      "code": "research-tax-credit",
+      "name": "Crédit d'impôt recherche constaté en produit",
+      "direction": "deduction",
+      "percent": 100,
+      "accounts": [
+        {
+          "kind": "account_code",
+          "code_from": "699100"
+        }
+      ],
+      "valid_from": "2022-01-01",
+      "valid_on": "period_start",
+      "sequence": 60,
+      "legal_reference": "BOI-BIC-RICI-10-10-50, § 510 — la créance de crédit d'impôt recherche est enregistrée au débit du compte 444 « État - impôt sur les bénéfices » par le crédit du compte 699 « Produits - Crédit d'impôt recherche » ; elle ne constitue pas un produit imposable pour la détermination du résultat fiscal de l'exercice au titre duquel elle est constatée, et son montant en est déduit extra-comptablement (CGI, art. 244 quater B)",
+      "source": "boi-bic-rici-10-10-50"
     }
   ],
   "rates": [

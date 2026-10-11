@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.17.1",
+  "version": "1.17.2",
   "schema_min": "20260929141500",
   "seed_sequence": 11,
   "released_at": "2026-09-30",
@@ -143,6 +143,14 @@
         "publisher": "Direction générale des finances publiques — BOFiP-Impôts",
         "url": "https://bofip.impots.gouv.fr/bofip/3558-PGP.html/identifiant=BOI-IS-DECLA-20-10-20200610",
         "consulted_on": "2026-09-30",
+        "kind": "guidance"
+      },
+      {
+        "key": "boi-bic-rici-10-10-50",
+        "title": "BOI-BIC-RICI-10-10-50 — BIC, réductions et crédits d'impôt : crédit d'impôt recherche, utilisation du crédit d'impôt",
+        "publisher": "Direction générale des finances publiques — BOFiP-Impôts",
+        "url": "https://bofip.impots.gouv.fr/bofip/4669-PGP.html/identifiant=BOI-BIC-RICI-10-10-50-20250813",
+        "consulted_on": "2026-10-11",
         "kind": "guidance"
       },
       {

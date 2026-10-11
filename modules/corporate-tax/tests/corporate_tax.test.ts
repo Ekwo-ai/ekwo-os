@@ -278,6 +278,30 @@ describe('an estimate', () => {
     expect(inUse.map((a) => a.code)).toEqual([expense]);
   });
 
+  it('takes out of the result an income the pack names by its account, read on the credit side', async () => {
+    // A tax credit booked as income is not taxable: a deduction on an account
+    // of the chart reads that account's credit balance, as an add-back reads
+    // an expense's debit balance.
+    const withAccount = packs.find((p) => p.corporateTax!.adjustment_rules.some((r) => r.direction === 'deduction' && r.accounts.some((a) => a.kind === 'account_code')))!;
+    const rule = withAccount.corporateTax!.adjustment_rules.find((r) => r.direction === 'deduction' && r.accounts.some((a) => a.kind === 'account_code'))!;
+    const credited = rule.accounts.find((a) => a.kind === 'account_code')!.code_from;
+    const fixture = await taxCompany(db, withAccount.manifest.country, 'Deduction on an account', YEAR);
+    await earn(db, withAccount, fixture.companyId, '2025-02-01', '50000.00');
+    await book(db, fixture.companyId, {
+      date: '2025-06-30',
+      description: 'Tax credit',
+      lines: [
+        { account: leafAccount(withAccount, 'asset_cash'), debit: '3000.00' },
+        { account: credited, credit: '3000.00' },
+      ],
+    });
+    const lines = await estimate(db, fixture);
+    expect(amountOf(lines, 'accounting_result')).toBe('53000');
+    const deducted = lines.filter((l) => l.kind === 'adjustment' && l.code === rule.code);
+    expect(deducted.map((l) => [decimal(l.base), decimal(l.amount)])).toEqual([['3000', decimal(`-${share('3000.00', rule.percent!)}`)]]);
+    expect(amountOf(lines, 'fiscal_result')).toBe(decimal(String(53000 - Number(share('3000.00', rule.percent!)))));
+  });
+
   it('says so when a rule or a credit the company named is not in force for the year', async () => {
     // Reference rows a test owns: a rule and a credit that begin in a far year.
     await db.query(

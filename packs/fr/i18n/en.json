@@ -10,6 +10,7 @@
     "10": "Capital and reserves",
     "101": "Capital",
     "101000": "Capital",
+    "101300": "Share capital subscribed, called up and paid",
     "104": "Share premiums and similar",
     "104100": "Share premium",
     "105": "Revaluation surpluses",
@@ -174,6 +175,8 @@
     "438": "Social bodies — accrued charges and income",
     "44": "State and other public authorities",
     "441": "State — grants receivable",
+    "442": "Taxes and contributions collected on behalf of the State",
+    "442100": "Income tax withheld at source",
     "444": "State — income tax",
     "444000": "State — income tax",
     "445": "State — turnover taxes",
@@ -350,6 +353,8 @@
     "695000": "Income taxes",
     "696": "Additional corporate income tax on distributions",
     "698": "Tax consolidation",
+    "699": "Income — loss carry-back",
+    "699100": "Income — research tax credit",
     "70": "Sales of manufactured goods, services and goods for resale",
     "701": "Sales of finished goods",
     "704": "Works",
@@ -640,6 +645,7 @@
     "rule:vehicle-taxes": "Annual taxes on passenger vehicles used for business purposes",
     "rule:excess-depreciation": "Excess depreciation of passenger vehicles",
     "rule:sumptuary-expenses": "Sumptuary expenses",
+    "rule:research-tax-credit": "Research tax credit booked as income",
     "rate:standard": "Standard rate",
     "rate:reduced-sme": "Reduced rate for small and medium-sized enterprises"
   }

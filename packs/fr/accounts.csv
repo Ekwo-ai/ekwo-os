@@ -2,6 +2,7 @@ code,parent,type,reconcilable,name,sequence
 10,,equity,false,Capital et réserves,10
 101,10,equity,false,Capital,20
 101000,101,equity,false,Capital,30
+101300,101,equity,false,"Capital souscrit — appelé, versé",35
 104,10,equity,false,Primes liées au capital social,40
 104100,104,equity,false,Primes d'émission,50
 105,10,equity,false,Écarts de réévaluation,60
@@ -166,6 +167,8 @@ code,parent,type,reconcilable,name,sequence
 438,43,liability_current,false,Organismes sociaux — Charges à payer et produits à recevoir,1630
 44,,liability_current,false,État et autres collectivités publiques,1640
 441,44,asset_current,false,État — Subventions à recevoir,1650
+442,44,liability_current,false,"Contributions, impôts et taxes recouvrés pour le compte de l'État",1652
+442100,442,liability_current,false,Prélèvements à la source (impôt sur le revenu),1654
 444,44,liability_current,false,État — Impôt sur les bénéfices,1660
 444000,444,liability_current,false,État — impôt sur les bénéfices,1670
 445,44,liability_current,false,État — Taxes sur le chiffre d'affaires,1680
@@ -342,6 +345,8 @@ code,parent,type,reconcilable,name,sequence
 695000,695,expense,false,Impôts sur les bénéfices,3370
 696,69,expense,false,Suppléments d'impôt sur les sociétés liés aux distributions,3380
 698,69,expense,false,Intégration fiscale,3390
+699,69,expense,false,Produits — Reports en arrière des déficits,3392
+699100,699,expense,false,Produits — Crédit d'impôt recherche,3394
 70,,income,false,"Ventes de produits fabriqués, prestations de services, marchandises",3400
 701,70,income,false,Ventes de produits finis,3410
 704,70,income,false,Travaux,3420
