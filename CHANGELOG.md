@@ -11,6 +11,19 @@ somewhere has already run it.
 
 ### Added
 
+- **The corporate income tax module speaks to an agent.** Eight MCP tools
+  under the `tax` prefix, offered once the module is installed:
+  `tax_estimate` (the year line by line, each line with its article),
+  `tax_parameters` and `tax_declare_parameter` (the facts the country asks a
+  company to declare, written only as the user states them), `tax_adjustments`
+  and `tax_declare_adjustment` (the rules in force and what the company names
+  under each: an account or an amount), `tax_losses`,
+  `tax_record_computation` and `tax_computations`. The prompt
+  `tax_review_year` walks through where the tax of a year stands and what is
+  still to declare. Calling a computation final stays the owner's act, outside
+  the server. A module may now ship prompts beside its tools, under the same
+  prefix. No migration.
+
 - **Every country pack says what a service bought from abroad costs in
   tax.** A software subscription, hosting or an API billed by a supplier
   abroad is the most common purchase of a young company, and 44 packs that

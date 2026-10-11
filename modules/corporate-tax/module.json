@@ -8,5 +8,6 @@
   "status": "available",
   "requires_socle_min": "20260922162500",
   "posts": false,
+  "mcp": { "prefix": "tax" },
   "pack": { "section": "corporate_tax" }
 }

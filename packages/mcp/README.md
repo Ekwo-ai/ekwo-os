@@ -286,8 +286,11 @@ startup to know which: `fixed_assets_list`, `fixed_assets_create`,
 `fixed_assets_schedule`, `fixed_assets_run_depreciation`,
 `fixed_assets_dispose`, `budgets_list`, `budgets_upsert_lines`,
 `budgets_variance`, `einvoicing_validate`, `einvoicing_issue`,
-`einvoicing_status`, `einvoicing_list`. A module that is not installed is not
-offered. When the project does not expose a module's schema yet, the tool says
+`einvoicing_status`, `einvoicing_list`, `tax_estimate`, `tax_parameters`,
+`tax_declare_parameter`, `tax_adjustments`, `tax_declare_adjustment`,
+`tax_losses`, `tax_record_computation`, `tax_computations`. A module may
+offer prompts too, under the same prefix: `tax_review_year`. A module that is
+not installed is not offered. When the project does not expose a module's schema yet, the tool says
 which setting to change.
 
 The electronic invoicing tools send through a transport the server is given,

@@ -997,7 +997,8 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   // The socle's tools are written out above because they are the socle. A
   // module's are declared as data and registered here, so adding a module to
   // this server is adding a toolset to `tools/modules.ts` and nothing else —
-  // the same shape the registry table takes in the database.
+  // the same shape the registry table takes in the database. Its prompts come
+  // with its tools, under the same prefix.
 
   for (const toolset of toolsetsFor(options.modules ?? [])) {
     for (const tool of toolset.tools) {
@@ -1015,6 +1016,21 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
               ...(options.einvoiceTransport === undefined ? {} : { einvoiceTransport: options.einvoiceTransport }),
             }),
           ),
+      );
+    }
+    for (const prompt of toolset.prompts ?? []) {
+      server.registerPrompt(
+        `${toolset.prefix}_${prompt.name}`,
+        {
+          title: prompt.title,
+          description: prompt.description,
+          argsSchema: Object.fromEntries(
+            Object.entries(prompt.args).map(([name, description]) => [name, z.string().describe(description)]),
+          ),
+        },
+        (args: Record<string, string>) => ({
+          messages: [{ role: 'user', content: { type: 'text', text: prompt.text(args) } }],
+        }),
       );
     }
   }
