@@ -14,8 +14,8 @@ import { allPacks, expectationsOf, packWhere, packsRoot, roleOf } from './helper
 // somebody would have written in the application, once per country.
 //
 // The test that matters is not that the lines exist. It is that they tie out:
-// total assets equal total liabilities plus the result of the period, to the
-// cent, against the trial balance — on the Belgian scheme, on the French
+// total assets equal total liabilities and equity, the result of a year not
+// yet closed included, to the cent, against the trial balance — on the Belgian scheme, on the French
 // liasse, and on the generic framework that fits any chart.
 
 let db: PGlite;
@@ -193,11 +193,13 @@ describe('the Belgian abbreviated scheme on the demo company', () => {
     const profit = await profitFromLedger(demo, from, to);
 
     expect(bs['20/58']).toBeCloseTo(17774.4, 2);
-    expect(bs['10/49']).toBeCloseTo(8214.4, 2);
     expect(is['9905']).toBeCloseTo(profit, 2);
-    // Assets = liabilities and equity, plus the result the year has not
-    // allocated yet. That is the identity the whole feature exists for.
-    expect(bs['20/58']).toBeCloseTo(bs['10/49']! + is['9905']!, 2);
+    // Assets = liabilities and equity, the result the year has not allocated
+    // yet included: it stands on rubric 14, where the close will put it.
+    // That is the identity the whole feature exists for.
+    expect(bs['20/58']).toBeCloseTo(bs['10/49']!, 2);
+    expect(bs['10/49']).toBeCloseTo(8214.4 + is['9905']!, 2);
+    expect(bs['14']).toBeCloseTo(is['9905']!, 2);
   });
 
   it('adds its subtotals up from the lines below them', async () => {
@@ -317,7 +319,10 @@ describe('the French liasse on a French company', () => {
     expect(is['HN']).toBeCloseTo(profit, 2);
     expect(is['HN']).toBeCloseTo(6500, 2);
 
-    expect(bs['CO']).toBeCloseTo(bs['EE']! + is['HN']!, 2);
+    // The result of the open year stands on DI, the line of the result of
+    // the year, so the bilan balances before the close.
+    expect(bs['DI']).toBeCloseTo(is['HN']!, 2);
+    expect(bs['CO']).toBeCloseTo(bs['EE']!, 2);
   });
 
   it('splits a VAT account between the two sides by what it holds', async () => {
@@ -356,12 +361,12 @@ describe('the generic framework, on any chart', () => {
     expect(generic['A-TOT']).toBeCloseTo(be['20/58']!, 2);
     expect(genericIs['PROFIT']).toBeCloseTo(beIs['9905']!, 2);
 
-    // The two balance sheets differ on one line, deliberately. The NBB frame
-    // is filed after the year is closed, so it shows the result only once the
-    // meeting has put it somewhere; the generic one derives it from the
-    // movements and balances on its own, whether or not the year is closed.
+    // Both carry the result of the open year on equity: the generic one on a
+    // line of its own, derived from the income and expense accounts by type;
+    // the NBB frame on rubric 14, where the close will put it.
     expect(generic['E-RESULT']).toBeCloseTo(beIs['9905']!, 2);
-    expect(generic['EL-TOT']).toBeCloseTo(be['10/49']! + beIs['9905']!, 2);
+    expect(be['14']).toBeCloseTo(beIs['9905']!, 2);
+    expect(generic['EL-TOT']).toBeCloseTo(be['10/49']!, 2);
     expect(generic['A-TOT']).toBeCloseTo(generic['EL-TOT']!, 2);
   });
 

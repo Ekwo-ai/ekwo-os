@@ -23,8 +23,8 @@
         "AL-BS-E-PREMIUM": "0.00",
         "AL-BS-E-RESERVES": "0.00",
         "AL-BS-E-RETAINED": "0.00",
-        "AL-BS-E-RESULT": "0.00",
-        "AL-BS-E-TOTAL": "0.00",
+        "AL-BS-E-RESULT": "225000.00",
+        "AL-BS-E-TOTAL": "225000.00",
         "AL-BS-L-GRANTS": "0.00",
         "AL-BS-L-PROV-LT": "0.00",
         "AL-BS-L-DEBT-LT": "0.00",
@@ -38,7 +38,7 @@
         "AL-BS-L-OTHPAY": "0.00",
         "AL-BS-L-CURRENT": "155900.00",
         "AL-BS-L-TOTAL": "155900.00",
-        "AL-BS-LE-TOTAL": "155900.00"
+        "AL-BS-LE-TOTAL": "380900.00"
       }
     },
     {
