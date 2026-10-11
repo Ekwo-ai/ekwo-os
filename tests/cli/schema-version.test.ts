@@ -37,10 +37,11 @@ const BUMP = 'schema_version_0_12_1';
 
 /**
  * The floor the packages of this release declare. It rises only when a
- * package reads something an older schema does not have, so a release that
- * adds nothing a package reads leaves it below `RELEASE` — 0.12.1 is one.
+ * package reads something an older schema does not have; 0.12.1 does —
+ * `@ekwo-ai/core` reads `companies.invoice_accent_color` and
+ * `invoice_logo_position`, which 0.12.0 lacks.
  */
-const FLOOR = '0.12.0';
+const FLOOR = '0.12.1';
 
 let db: SqlClient;
 let migrations: Migration[];

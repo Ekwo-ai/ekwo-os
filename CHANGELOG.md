@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.12.1] — 2026-10-11
+
 ### Added
 
 - **Every country pack says what a service bought from abroad costs in
@@ -39,12 +41,24 @@ somewhere has already run it.
   GST or sales tax and which does neither, and `docs/packs.md` says how to
   write either.
 
+- **An invoice wears the colour of its company.** Two nullable columns on
+  `companies`, `invoice_accent_color` (`#rrggbb`) and `invoice_logo_position`
+  (`left` or `right`), checked by the database, written by
+  `update_company_profile` with `company.write` and read back by
+  `get_company`. `ekwo doc pdf` and `render_invoice_pdf` read them and hand
+  them to `@ekwo-ai/invoice-pdf` as its theme, with no new argument; null is
+  the brick's default. The packages now read columns a 0.12.0 database does
+  not have, so this release raises the schema floor.
+
 ### Changed
 
-- **The schema of this release is 0.12.1** (`20261011082857`). It adds
-  `year_result_account()` and `statement_rule_catches()` and changes what a
-  balance sheet reads; no package calls anything a 0.12.0 database lacks, so
-  the floor of `ekwo-os`, `@ekwo-ai/core` and `@ekwo-ai/mcp` stays at 0.12.0.
+- **The schema of this release is 0.12.1, and the packages refuse an older
+  one** (`20261011082857`). It adds `year_result_account()` and
+  `statement_rule_catches()`, changes what a balance sheet reads, and carries
+  the two invoice columns of `companies`. `get_company`, `ekwo doc pdf` and
+  `render_invoice_pdf` read those columns, which a 0.12.0 database does not
+  have, so the floor of `ekwo-os`, `@ekwo-ai/core` and `@ekwo-ai/mcp` rises to
+  0.12.1 and an installation left behind is told to run `ekwo migrate`.
 
 ### Fixed
 
@@ -70,6 +84,36 @@ somewhere has already run it.
   framework, and 17 packs whose balance sheet does the same — is unchanged.
   The golden balance sheets of the 110 other packs are rewritten: equity and
   the total of liabilities rise by the result of the golden year.
+
+- **Eight packs book or declare their self-assessed and import VAT as the
+  law of their country does.** Bulgaria, Croatia and Poland credit the tax a
+  buyer owes on an intra-EU acquisition or a service from abroad to output
+  VAT (6831, 6401, 7710), so the supplier is owed the price alone and the
+  deduction stays on input VAT; their boxes are unchanged. Portugal deducts
+  import VAT collected by customs on campo 24 and owes it on 2781, keeping
+  campos 18/19 for the art. 27, n.º 8 option (`PT-P-IMP-23-DP`). Morocco makes
+  VAT due on collection the default, as art. 95 CGI does, with the debits
+  option on codes of its own. Norway reports imported goods and services from
+  abroad on mva-melding codes 81 and 86, with their deductions on 81F and 86F.
+  Paraguay declares credit notes on the side of Formulario 120 (version 4)
+  they belong to. Korea reports every tax invoice received in box (10) and
+  takes the non-creditable tax back out at (16). Each golden year follows.
+
+### Security
+
+- **The file of a declaration is read as a declaration**
+  (`20261010203452`; decision
+  [0039](docs/decisions/0039-a-deposit-is-an-event.md)). The deposits of a
+  declaration asked `filings.read`, and the two files they name — what was
+  sent and the receipt — asked `documents.read`, like every attachment: a
+  member whose `filings.read` was withdrawn and who kept `documents.read`
+  read them, within their own company. An attachment of a declaration, or
+  one a deposit names, is now read with `filings.read` and written with
+  `filings.write`, by a person and by a machine key alike; every other
+  attachment keeps `documents.read` and `documents.write`. The policy finds
+  the deposit through `attachment_is_filing_deposit_file()`, a definer
+  function, because the deposits are hidden from precisely the member this
+  is about.
 
 ## [0.12.0] — 2026-10-10
 
@@ -109,14 +153,6 @@ somewhere has already run it.
   an XMP packet that says what the PDF's information dictionary says. The
   layout gains a small theme — accent colour, typeface, side of the logo — and
   the figures it prints are tested equal to the CII embedded beside them.
-- **An invoice wears the colour of its company.** Two nullable columns on
-  `companies`, `invoice_accent_color` (`#rrggbb`) and `invoice_logo_position`
-  (`left` or `right`), checked by the database, written by
-  `update_company_profile` with `company.write` and read back by
-  `get_company`. `ekwo doc pdf` and `render_invoice_pdf` read them and hand
-  them to `@ekwo-ai/invoice-pdf` as its theme, with no new argument; null is
-  the brick's default. The packages now read columns a 0.11.1 database does
-  not have: the release that carries this migration raises the schema floor.
 - **The e-invoicing bricks read what they receive.** `readUbl()` of
   `@ekwo-ai/peppol-ubl` reads a received Peppol BIS Billing 3.0 invoice or
   credit note (UBL 2.1); `readCii()` and `readFacturX()` of
@@ -253,22 +289,6 @@ somewhere has already run it.
   positive factor on the liability. Packs `cl` 0.1.1, `ro` 0.2.1, `cz` 0.2.1;
   a company already holding one of these taxes sees the postings under
   *review* in `ekwo pack upgrade`, and an entry already posted stays as it was.
-
-### Security
-
-- **The file of a declaration is read as a declaration**
-  (`20261010203452`; decision
-  [0039](docs/decisions/0039-a-deposit-is-an-event.md)). The deposits of a
-  declaration asked `filings.read`, and the two files they name — what was
-  sent and the receipt — asked `documents.read`, like every attachment: a
-  member whose `filings.read` was withdrawn and who kept `documents.read`
-  read them, within their own company. An attachment of a declaration, or
-  one a deposit names, is now read with `filings.read` and written with
-  `filings.write`, by a person and by a machine key alike; every other
-  attachment keeps `documents.read` and `documents.write`. The policy finds
-  the deposit through `attachment_is_filing_deposit_file()`, a definer
-  function, because the deposits are hidden from precisely the member this
-  is about.
 
 ## [0.11.1] — 2026-10-07
 
@@ -4597,7 +4617,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.1...HEAD
+[0.12.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.1...v0.12.0
 [0.11.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.10.0...v0.11.0
