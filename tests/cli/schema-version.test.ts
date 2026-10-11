@@ -27,18 +27,18 @@ import {
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
 
 /** The schema this release defines. */
-const RELEASE = '0.12.0';
+const RELEASE = '0.12.1';
 
 /** What `ekwo_schema_version()` returned before the migration of this release. */
-const PREVIOUS = '0.11.1';
+const PREVIOUS = '0.12.0';
 
 /** The migration that carries the number, and nothing else. */
-const BUMP = 'schema_version_0_12_0';
+const BUMP = 'schema_version_0_12_1';
 
 /**
  * The floor the packages of this release declare. It rises only when a
- * package reads something an older schema does not have; 0.12.0 does —
- * `@ekwo-ai/core` calls `record_filing_proof()`, which 0.11.1 lacks.
+ * package reads something an older schema does not have, so a release that
+ * adds nothing a package reads leaves it below `RELEASE` — 0.12.1 is one.
  */
 const FLOOR = '0.12.0';
 
