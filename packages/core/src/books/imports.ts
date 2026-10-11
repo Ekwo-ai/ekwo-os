@@ -148,7 +148,7 @@ interface ChartAccount {
   deprecated: boolean;
 }
 
-interface CompanyJournal {
+export interface CompanyJournal {
   code: string;
   journal_type: string;
 }
@@ -196,6 +196,8 @@ export interface Proposal {
   /** Accounts the lines use whose proposal waits for the user's confirmation. */
   unconfirmed_accounts: string[];
   unmapped_journals: string[];
+  /** Why each journal the caller did not answer was proposed where it was. */
+  journal_reasons: Record<string, string>;
   /** The type of each account of the chart, by code: what says a party is a customer or a supplier. */
   account_types: Record<string, string>;
 }
@@ -365,12 +367,25 @@ function accountOfKind(source: SourceAccount, live: readonly ChartAccount[]): Ch
 }
 
 /**
+ * Of accounts tied on their code, the ones that take entries. Once the padding
+ * zeros are set aside a heading and its detail account read the same — `110`
+ * and `110000`, `400` and `400000` — and the heading is the one with another
+ * account of the chart under its code. A tie of one is left as it is.
+ */
+function postable(tied: ChartAccount[], live: readonly ChartAccount[]): ChartAccount[] {
+  if (tied.length < 2) return tied;
+  return tied.filter((account) => !live.some((other) => other.code.length > account.code.length && other.code.startsWith(account.code)));
+}
+
+/**
  * The account of the chart an old account most probably is, and why.
  *
  * The codes give a candidate, never a country: the same code; the same digits
  * once the zeros a chart pads with on the right are set aside (`411` and
  * `411000`); else the account whose digits are the longest beginning of the old
- * code, three at least (`401ACME` to `401000`). A tie is no answer. Then what
+ * code, three at least (`401ACME` to `401000`). Where a heading and its detail
+ * account tie, the detail account, which takes entries, is the candidate; any
+ * other tie is no answer. Then what
  * the files say of the old account — its type, its name, the side of its
  * balance — is held against what the chart says the candidate is, because two
  * charts use the same digits for different things: `610` is a receivable in
@@ -386,7 +401,7 @@ export function proposeAccount(source: SourceAccount, chart: readonly ChartAccou
   const byCode = (): { account: ChartAccount; match: Exclude<MappingMatch, 'kind'> } | null => {
     const same = live.find((account) => account.code === source.code);
     if (same !== undefined) return { account: same, match: 'same-code' };
-    const digits = live.filter((account) => unpadded(account.code) === unpadded(source.code));
+    const digits = postable(live.filter((account) => unpadded(account.code) === unpadded(source.code)), live);
     if (digits.length === 1) return { account: digits[0] as ChartAccount, match: 'same-digits' };
     let best: ChartAccount[] = [];
     let length = 2;
@@ -399,6 +414,7 @@ export function proposeAccount(source: SourceAccount, chart: readonly ChartAccou
         best.push(account);
       }
     }
+    best = postable(best, live);
     return best.length === 1 ? { account: best[0] as ChartAccount, match: 'prefix' } : null;
   };
 
@@ -469,7 +485,7 @@ export async function proposeMapping(
   given: Partial<ImportMapping> = {},
   options: { accept_suggestions?: boolean | undefined } = {},
 ): Promise<Proposal> {
-  const [chart, journals, openingCode] = await Promise.all([
+  const [chart, journals, openingCodes, years] = await Promise.all([
     wholeChart(backend, companyId),
     backend.select<CompanyJournal>({
       table: 'journals',
@@ -480,7 +496,12 @@ export async function proposeMapping(
       ],
       order: [{ column: 'code' }],
     }),
-    openingJournalCode(backend, companyId),
+    backend.select<{ code: string }>({ table: 'journal_templates', columns: ['code'], where: [{ column: 'journal_type', op: 'eq', value: 'opening' }] }),
+    backend.select<{ start_date: string }>({
+      table: 'fiscal_years',
+      columns: ['start_date::text'],
+      where: [{ column: 'company_id', op: 'eq', value: companyId }],
+    }),
   ]);
 
   const byCode = new Map(chart.map((account) => [account.code, account]));
@@ -501,15 +522,17 @@ export async function proposeMapping(
     return { source: source.code, name: source.name, ...proposeAccount(source, chart) };
   });
 
-  const known = new Set(journals.map((journal) => journal.code));
-  const general = journals.find((journal) => journal.journal_type === 'general')?.code ?? null;
+  const targetOf = new Map(accounts.map((account) => [account.source, account.target]));
+  const journalProposals = proposeJournals(books, {
+    journals,
+    openingCodes: new Set([...openingCodes.map((row) => row.code), ...journals.filter((j) => j.journal_type === 'opening').map((j) => j.code)].map((code) => code.toUpperCase())),
+    yearStarts: new Set(years.map((year) => year.start_date.slice(5, 10))),
+    typeOf: (code) => byCode.get(targetOf.get(code) ?? '')?.account_type ?? null,
+  });
   const journalMap: Record<string, string | null> = {};
-  for (const source of [...new Set(books.entries.map((entry) => entry.journal ?? NO_JOURNAL))].sort()) {
+  for (const [source, proposed] of Object.entries(journalProposals)) {
     const answer = given.journals?.[source];
-    if (answer !== undefined && answer !== null) journalMap[source] = answer;
-    else if (openingCode !== null && source.toUpperCase() === openingCode) journalMap[source] = OPENING;
-    else if (known.has(source.toUpperCase())) journalMap[source] = source.toUpperCase();
-    else journalMap[source] = general;
+    journalMap[source] = answer !== undefined && answer !== null ? answer : proposed.target;
   }
 
   const accept = options.accept_suggestions === true;
@@ -534,6 +557,9 @@ export async function proposeMapping(
     unmapped_accounts: accounts.filter((a) => a.basis === 'none' && used.has(a.source)).map((a) => a.source),
     unconfirmed_accounts: waiting.filter((a) => used.has(a.source)).map((a) => a.source),
     unmapped_journals: Object.entries(journalMap).filter(([, target]) => target === null).map(([source]) => source),
+    journal_reasons: Object.fromEntries(
+      Object.entries(journalProposals).filter(([source]) => given.journals?.[source] == null).map(([source, proposed]) => [source, proposed.reason]),
+    ),
     account_types: Object.fromEntries(chart.map((account) => [account.code, account.account_type])),
   };
 }
@@ -572,19 +598,92 @@ function usedAccounts(books: ImportedBooks): string[] {
   return [...used];
 }
 
-/** The code of the journal the pack of this company opens its years on, or null. */
-async function openingJournalCode(backend: Backend, companyId: string): Promise<string | null> {
-  const rows = await backend.select<{ code: string }>({
-    table: 'journals',
-    columns: ['code'],
-    where: [
-      { column: 'company_id', op: 'eq', value: companyId },
-      { column: 'journal_type', op: 'eq', value: 'opening' },
-      { column: 'active', op: 'eq', value: true },
-    ],
-    order: [{ column: 'code' }],
-  });
-  return rows.length === 1 ? (rows[0] as { code: string }).code : null;
+/** What an old journal is held against: the company's journals, the codes opening journals go by, the days its years start on, and the type of the account each old account was proposed to. */
+export interface JournalContext {
+  journals: readonly CompanyJournal[];
+  /** The codes of the opening journals of every pack this installation knows, and of the company's own, upper case. */
+  openingCodes: ReadonlySet<string>;
+  /** The month and day each fiscal year of the company starts on, `MM-DD`. */
+  yearStarts: ReadonlySet<string>;
+  typeOf: (sourceAccount: string) => string | null;
+}
+
+export interface JournalProposal {
+  target: string | null;
+  reason: string;
+}
+
+/** The kinds of journal an old one is recognised as by what its entries touch, each with the account types every entry has to touch. */
+const JOURNAL_SHAPES: { type: string; words: string; touches: ((type: string) => boolean)[] }[] = [
+  { type: 'sales', words: 'a receivable and an income account', touches: [(t) => t === 'asset_receivable', (t) => t.startsWith('income')] },
+  { type: 'purchase', words: 'a payable and an expense account', touches: [(t) => t === 'liability_payable', (t) => t.startsWith('expense')] },
+  { type: 'bank', words: 'a bank or cash account', touches: [(t) => t === 'asset_cash'] },
+];
+
+/**
+ * The journal of the company each old journal most probably goes to, and why.
+ *
+ * Its name is never read: what it holds is. The opening is the journal whose
+ * entries all fall on one day — the first day of a year of the company — and
+ * touch no income or expense account, or the one going by the code an opening
+ * journal has in a pack, its entries on one day. Then the journal of the
+ * company with the same code. Then sales, purchases or bank, where every entry
+ * of the old journal touches what one of them, and only one, is for — and the
+ * company has one journal of that type. Everything else goes to the general
+ * journal.
+ */
+export function proposeJournals(books: ImportedBooks, context: JournalContext): Record<string, JournalProposal> {
+  const bySource = new Map<string, ImportedBooks['entries']>();
+  for (const entry of books.entries) {
+    const source = entry.journal ?? NO_JOURNAL;
+    bySource.set(source, [...(bySource.get(source) ?? []), entry]);
+  }
+  const ofType = (type: string): string | null => {
+    const found = context.journals.filter((journal) => journal.journal_type === type);
+    return found.length === 1 ? (found[0] as CompanyJournal).code : null;
+  };
+  const known = new Set(context.journals.map((journal) => journal.code));
+  const general = context.journals.find((journal) => journal.journal_type === 'general')?.code ?? null;
+  const typesOf = (entry: ImportedBooks['entries'][number]): string[] =>
+    entry.lines.map((line) => context.typeOf(line.account)).filter((type): type is string => type !== null);
+  const oneDay = (entries: ImportedBooks['entries']): string | null => (new Set(entries.map((entry) => entry.date)).size === 1 ? (entries[0]?.date ?? null) : null);
+
+  let opening: { source: string; reason: string } | null = null;
+  if (context.journals.some((journal) => journal.journal_type === 'opening')) {
+    const byCode = [...bySource].filter(([source, entries]) => context.openingCodes.has(source.toUpperCase()) && oneDay(entries) !== null);
+    const byShape = [...bySource].filter(([, entries]) => {
+      const day = oneDay(entries);
+      return day !== null && context.yearStarts.has(day.slice(5, 10)) && entries.every((entry) => typesOf(entry).every((type) => !/^(income|expense)/.test(type)));
+    });
+    const [coded] = byCode;
+    const [shaped] = byShape;
+    if (byCode.length === 1 && coded !== undefined) {
+      opening = { source: coded[0], reason: 'its code is the one an opening journal has, and its entries fall on one day' };
+    } else if (byCode.length === 0 && byShape.length === 1 && shaped !== undefined) {
+      const day = oneDay(shaped[1]) as string;
+      opening = { source: shaped[0], reason: `its entries fall on ${day}, the first day of a year of the company, and touch no income or expense account` };
+    }
+  }
+
+  const proposals: Record<string, JournalProposal> = {};
+  for (const [source, entries] of [...bySource].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) {
+    if (opening?.source === source) {
+      proposals[source] = { target: OPENING, reason: `the opening balance: ${opening.reason}` };
+      continue;
+    }
+    if (known.has(source.toUpperCase())) {
+      proposals[source] = { target: source.toUpperCase(), reason: 'the journal of the company with the same code' };
+      continue;
+    }
+    const shapes = JOURNAL_SHAPES.filter((shape) => entries.every((entry) => shape.touches.every((touch) => typesOf(entry).some(touch))));
+    const [shape] = shapes;
+    const target = shapes.length === 1 && shape !== undefined ? ofType(shape.type) : null;
+    proposals[source] =
+      target !== null && shape !== undefined
+        ? { target, reason: `every entry touches ${shape.words}` }
+        : { target: general, reason: 'nothing its entries touch says it is a sales, purchase, bank or opening journal' };
+  }
+  return proposals;
 }
 
 export interface ImportBooksArgs {
@@ -637,6 +736,7 @@ export async function importBooks(backend: Backend, args: ImportBooksArgs): Prom
     unmapped_accounts: proposal.unmapped_accounts,
     unconfirmed_accounts: proposal.unconfirmed_accounts,
     unmapped_journals: proposal.unmapped_journals,
+    journal_reasons: proposal.journal_reasons,
     violations: books.violations,
   };
 

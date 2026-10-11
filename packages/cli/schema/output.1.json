@@ -690,6 +690,7 @@
               "unmapped_accounts": { "type": "array", "items": { "type": "string" } },
               "unconfirmed_accounts": { "type": "array", "items": { "type": "string" } },
               "unmapped_journals": { "type": "array", "items": { "type": "string" } },
+              "journal_reasons": { "type": "object", "additionalProperties": { "type": "string" } },
               "violations": { "type": "array", "items": { "$ref": "#/$defs/row" } },
               "refusals": { "type": "array", "items": { "type": "string" } },
               "result": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },

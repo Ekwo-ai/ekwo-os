@@ -13,7 +13,10 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { importBooks, proposeAccount, readBooks, type BookFile, type ImportMapping, type ProposedAccount, type SourceAccount } from '@ekwo-ai/core';
+import {
+  importBooks, proposeAccount, proposeJournals, readBooks,
+  type BookFile, type ImportedBooks, type ImportMapping, type JournalContext, type ProposedAccount, type SourceAccount,
+} from '@ekwo-ai/core';
 import type { Pack } from '../packages/cli/src/index.js';
 import { MAX_TEXT_KIB, cliEquivalent, importBooksTool } from '../packages/mcp/src/tools/import-books.js';
 import { freshDatabase, one, repoRoot, rows } from './helpers/db.js';
@@ -352,9 +355,15 @@ describe('the exports of other ledgers, through the same function', () => {
     const answer = await importBooks(backendFor(db, owner), {
       company_id: companyId, source: 'journal-report', files, mapping, open_years: true, date_order: 'dmy',
     });
-    // A report names no journal code: every entry goes to the general journal the proposal found.
-    expect(Object.values((answer['mapping'] as ImportMapping).journals).every((code) => code === journalRoles['miscellaneous'])).toBe(true);
-    expect((answer['result'] as Record<string, unknown>)['entries']).toBe(3);
+    // A report names its journals by what they are for, and no name is read:
+    // the one entry of the first day of the year, on balance accounts only, is
+    // the opening; the invoice touches a receivable and an income account, the
+    // payment the bank.
+    expect((answer['mapping'] as ImportMapping).journals).toEqual({
+      'Manual Journal': '@opening', 'Receivable Invoice': journalRoles['sales'], 'Receive Money': expect.any(String),
+    });
+    expect((answer['result'] as Record<string, unknown>)['entries']).toBe(2);
+    expect((answer['result'] as Record<string, unknown>)['opening_number']).not.toBeNull();
   });
 
   it('takes over a transaction journal, each transaction gathered by the order of its rows, the ledger even to the cent', async () => {
@@ -674,5 +683,137 @@ describe('the correspondence the guide shows', () => {
     }
     expect(tabulated).toBeGreaterThan(0);
     expect(checked).toBe(tabulated);
+  });
+});
+
+describe('a heading and its detail account, the same digits once the padding is set aside', () => {
+  // A ledger that pads its codes to ten digits writes 110000000 for the
+  // account a chart keeps as 110 (a heading) and 110000 (the account under
+  // it, which takes entries). Read from the charts: every pack whose chart
+  // has that shape is tested and none is named.
+  const pairs = (pack: Pack) =>
+    pack.accounts.filter(
+      (detail) =>
+        !pack.accounts.some((other) => other.code.length > detail.code.length && other.code.startsWith(detail.code)) &&
+        pack.accounts.some((heading) => heading.code.length < detail.code.length && detail.code.startsWith(heading.code) && digitsOf(heading.code) === digitsOf(detail.code)),
+    );
+  const shaped = packsWhere('whose chart has a heading and a detail account under it with the same digits', (pack) => pairs(pack).length > 0);
+
+  it('holds in the charts of more than one country', () => {
+    expect(new Set(shaped.map((pack) => pack.manifest.country)).size).toBeGreaterThanOrEqual(2);
+  });
+
+  it('proposes the detail account, which takes entries, for a code padded to ten digits', () => {
+    for (const pack of shaped) {
+      const chart = chartOf(pack);
+      const missed = pairs(pack).filter((detail) => {
+        const padded = digitsOf(detail.code).padEnd(10, '0');
+        if (pack.accounts.some((account) => account.code === padded)) return false;
+        const proposal = proposeAccount(old(padded), chart);
+        return proposal.target !== detail.code || proposal.match !== 'same-digits' || proposal.basis !== 'suggested';
+      });
+      expect(missed.map((account) => `${pack.slug} ${account.code}`)).toEqual([]);
+    }
+  });
+
+  it('does the same on the longest beginning of a code, and still answers nothing between two detail accounts', () => {
+    const chart = [
+      { code: '401', name: 'Suppliers', account_type: 'liability_payable', deprecated: false },
+      { code: '401000', name: 'Suppliers', account_type: 'liability_payable', deprecated: false },
+      { code: '627', name: 'Bank charges', account_type: 'expense', deprecated: false },
+      { code: '6270', name: 'Bank charges', account_type: 'expense', deprecated: false },
+      { code: '62700', name: 'Bank charges again', account_type: 'expense', deprecated: false },
+    ];
+    expect(proposeAccount(old('401ACME', null, null, 'credit'), chart)).toMatchObject({ target: '401000', match: 'prefix' });
+    expect(proposeAccount(old('4010000000', null, null, 'credit'), chart)).toMatchObject({ target: '401000', match: 'same-digits' });
+    // 627 and 6270 sit above 62700: it alone takes entries.
+    expect(proposeAccount(old('6270000000', null, null, 'debit'), chart)).toMatchObject({ target: '62700', match: 'same-digits' });
+    const twoDetails = [
+      { code: '6061', name: 'Water', account_type: 'expense', deprecated: false },
+      { code: '6062', name: 'Power', account_type: 'expense', deprecated: false },
+    ];
+    expect(proposeAccount(old('606', null, null, 'debit'), twoDetails)).toMatchObject({ target: null, basis: 'none' });
+  });
+});
+
+describe('the journals: what their entries touch, never their names', () => {
+  const entry = (journal: string, date: string, ...accounts: string[]): ImportedBooks['entries'][number] => ({
+    journal, journalName: null, number: null, date, reference: null, description: null, row: null,
+    lines: accounts.map((account) => ({ account, contact: null, label: null, debit: '1.00', credit: '0.00', currency: null, amountCurrency: null, dueDate: null, matching: null })),
+  });
+  const books = (...entries: ImportedBooks['entries']): ImportedBooks => ({ format: 'fec', currency: null, accounts: [], contacts: [], entries, opening: [], violations: [] });
+  const TYPES: Record<string, string> = { bank: 'asset_cash', customer: 'asset_receivable', supplier: 'liability_payable', sale: 'income', cost: 'expense', capital: 'equity', vat: 'liability_current' };
+  const context: JournalContext = {
+    journals: [
+      { code: 'J-SAL', journal_type: 'sales' }, { code: 'J-PUR', journal_type: 'purchase' }, { code: 'J-BNK', journal_type: 'bank' },
+      { code: 'J-GEN', journal_type: 'general' }, { code: 'J-OPN', journal_type: 'opening' },
+    ],
+    openingCodes: new Set(['J-OPN', 'OPENS']),
+    yearStarts: new Set(['01-01']),
+    typeOf: (code) => TYPES[code] ?? null,
+  };
+  const targets = (proposals: ReturnType<typeof proposeJournals>) => Object.fromEntries(Object.entries(proposals).map(([source, p]) => [source, p.target]));
+
+  it('takes for the opening the journal whose entries fall on the first day of a year and touch no income or expense', () => {
+    const proposals = proposeJournals(
+      books(
+        entry('A1', '2025-01-01', 'bank', 'capital', 'customer'),
+        entry('V1', '2025-01-01', 'customer', 'sale', 'vat'),
+        entry('V1', '2025-02-03', 'customer', 'sale', 'vat'),
+        entry('P1', '2025-01-01', 'cost', 'supplier'),
+        entry('B1', '2025-01-05', 'bank', 'customer'),
+        entry('B1', '2025-01-09', 'bank', 'supplier'),
+        entry('O1', '2025-03-31', 'capital', 'vat'),
+      ),
+      context,
+    );
+    expect(targets(proposals)).toEqual({ A1: '@opening', V1: 'J-SAL', P1: 'J-PUR', B1: 'J-BNK', O1: 'J-GEN' });
+    expect(proposals['A1']?.reason).toContain('2025-01-01');
+    expect(proposals['V1']?.reason).toContain('receivable');
+    expect(proposals['O1']?.reason).toContain('nothing');
+  });
+
+  it('takes the code of an opening journal a pack knows, its entries on one day, before the shape', () => {
+    const proposals = proposeJournals(books(entry('opens', '2025-06-30', 'bank', 'capital'), entry('A1', '2025-01-01', 'bank', 'capital')), context);
+    expect(targets(proposals)).toEqual({ opens: '@opening', A1: 'J-BNK' });
+    // On several days, it cannot be an opening balance.
+    expect(targets(proposeJournals(books(entry('OPENS', '2025-01-01', 'capital', 'vat'), entry('OPENS', '2025-01-02', 'capital', 'vat')), context))).toEqual({ OPENS: 'J-GEN' });
+  });
+
+  it('proposes no opening when two journals have its shape, or the company has no opening journal or no year', () => {
+    expect(targets(proposeJournals(books(entry('A1', '2025-01-01', 'capital', 'vat'), entry('A2', '2025-01-01', 'capital', 'vat')), context))).toEqual({ A1: 'J-GEN', A2: 'J-GEN' });
+    const single = books(entry('A1', '2025-01-01', 'capital', 'vat'));
+    expect(targets(proposeJournals(single, { ...context, journals: context.journals.filter((j) => j.journal_type !== 'opening') }))).toEqual({ A1: 'J-GEN' });
+    expect(targets(proposeJournals(single, { ...context, yearStarts: new Set() }))).toEqual({ A1: 'J-GEN' });
+  });
+
+  it('keeps the journal of the same code, and sends to the general journal what two shapes fit or the company has two journals for', () => {
+    expect(targets(proposeJournals(books(entry('j-bnk', '2025-02-01', 'cost', 'supplier')), context))).toEqual({ 'j-bnk': 'J-BNK' });
+    expect(targets(proposeJournals(books(entry('X', '2025-02-01', 'bank', 'customer', 'sale')), context))).toEqual({ X: 'J-GEN' });
+    const twoBanks = { ...context, journals: [...context.journals, { code: 'J-BNK2', journal_type: 'bank' }] };
+    expect(targets(proposeJournals(books(entry('X', '2025-02-01', 'bank', 'customer')), twoBanks))).toEqual({ X: 'J-GEN' });
+  });
+
+  it('posts the opening of a FEC whose journals no pack knows by name, as an opening', async () => {
+    const companyId = await company('Import Journals');
+    await db.query(`insert into fiscal_years (company_id, name, start_date, end_date) values ($1, 'FY2025', '2025-01-01', '2025-12-31')`, [companyId]);
+    const renamed: BookFile = {
+      name: 'renamed.txt',
+      content: (FEC.content as string).replace(/^AN\|/gm, 'ZQ1|').replace(/^VE\|/gm, 'ZQ2|').replace(/^AC\|/gm, 'ZQ3|').replace(/^BQ\|/gm, 'ZQ4|'),
+    };
+    const rehearsal = await importBooks(backendFor(db, owner), {
+      company_id: companyId, source: 'fec', files: [renamed], mapping: { accounts: FEC_MAPPING.accounts }, dry_run: true, open_years: true,
+    });
+    const journals = (await rows<{ code: string; journal_type: string }>(db, `select code, journal_type from journals where company_id = $1 and active`, [companyId]));
+    const only = (type: string): string | undefined => {
+      const found = journals.filter((journal) => journal.journal_type === type);
+      return found.length === 1 ? found[0]!.code : undefined;
+    };
+    const general = journals.find((journal) => journal.journal_type === 'general')!.code;
+    expect((rehearsal['mapping'] as ImportMapping).journals).toEqual({
+      ZQ1: '@opening', ZQ2: only('sales') ?? general, ZQ3: only('purchase') ?? general, ZQ4: only('bank') ?? general,
+    });
+    expect(rehearsal['refusals']).toEqual([]);
+    expect((rehearsal['result'] as Record<string, unknown>)['opening_number']).not.toBeNull();
   });
 });
