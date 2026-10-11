@@ -106,11 +106,11 @@
     "postings": {
       "invoice": [
         { "type": "base" },
-        { "type": "tax", "account": "1250", "box": "10" }
+        { "type": "tax", "account": "1250", "box": "10A" }
       ],
       "credit_note": [
         { "type": "base" },
-        { "type": "tax", "account": "1250", "box": "10", "box_factor": -100 }
+        { "type": "tax", "account": "1250", "box": "10A", "box_factor": -100 }
       ]
     },
     "sequence": 50
@@ -125,7 +125,7 @@
     "treatment": "domestic",
     "valid_from": "2000-01-01",
     "recoverable": false,
-    "legal_reference": "부가가치세법 제39조제1항 — 기업업무추진비 및 이와 유사한 비용의 지출에 관련된 매입세액(제5호), 개별소비세법 제1조제2항제3호에 따른 비영업용 소형승용자동차의 구입·임차·유지에 관한 매입세액(제5호의2) 등은 매출세액에서 공제하지 아니한다. 세금계산서는 발급받았으나 공제되지 않으므로 세액은 그 매입 자산·비용의 원가에 산입되고, 신고서 별지 제21호서식 (16)란 '공제받지 못할 매입세액'에 적는다.",
+    "legal_reference": "부가가치세법 제39조제1항 — 「개별소비세법」 제1조제2항제3호에 따른 자동차(운수업, 자동차판매업 등 대통령령으로 정하는 업종에 직접 영업으로 사용되는 것은 제외)의 구입·임차·유지에 관한 매입세액(제5호), 기업업무추진비 및 이와 유사한 비용의 지출에 관련된 매입세액(제6호) 등은 매출세액에서 공제하지 아니한다. 세금계산서는 발급받았으나 공제되지 않으므로 세액은 그 매입 자산·비용의 원가에 산입되고, 신고서 별지 제21호서식에서는 세금계산서 수취분 (10)란에 다른 매입세액과 함께 적고, (16)란 '공제받지 못할 매입세액'에서 다시 차감한다.",
     "source": "vat-act",
     "vat_category": "S",
     "postings": {
@@ -154,12 +154,12 @@
     "postings": {
       "invoice": [
         { "type": "base" },
-        { "type": "tax", "account": "1250", "box": "10" },
+        { "type": "tax", "account": "1250", "box": "10A" },
         { "type": "tax", "factor": -100, "account": "2135" }
       ],
       "credit_note": [
         { "type": "base" },
-        { "type": "tax", "account": "1250", "box": "10", "box_factor": -100 },
+        { "type": "tax", "account": "1250", "box": "10A", "box_factor": -100 },
         { "type": "tax", "factor": -100, "account": "2135" }
       ]
     },

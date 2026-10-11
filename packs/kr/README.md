@@ -80,9 +80,14 @@ non-creditable purchase and an import.
   (소득세법 제163조, 법인세법 제121조); neither side of this tax reaches a box
   of the periodic return proper — the sale is reported separately, at
   `(80)`, under '면세사업 수입금액'.
-- `KR-P-10-NC` — 제39조제1항제5호 (기업업무추진비 and the like): the tax is
-  charged and invoiced but not creditable, so it is a cost of the line it
-  taxes (`tax_on_base`) and is reported at box `(16)`.
+- `KR-P-10-NC` — 제39조제1항제6호 (기업업무추진비 and the like; 제5호 is the
+  passenger car): the tax is charged and invoiced but not creditable, so it
+  is a cost of the line it taxes (`tax_on_base`). The form's instructions put
+  every tax invoice received in box `(10)`, creditable or not, and take the
+  non-creditable tax back out at `(16)` (detailed at `(50)`), so `(17)` is
+  the input tax actually credited. Box `(10)` is therefore declared as the
+  sum of a hidden `10A` — the creditable tax `KR-P-10` and `KR-P-IMP-10`
+  post — and `(16)`.
 - `KR-P-IMP-10` — 제50조: the tax customs collects on an imported good, which
   is fully creditable once the 수입세금계산서 is issued (제35조), and whose
   counter-posting is a liability to customs (`2135`) rather than to the
@@ -113,11 +118,12 @@ sits on `2110` 외상매입금 with the others.
 
 ## The return
 
-`KR-VAT-21` is 별지 제21호서식, the general-method 부가가치세 return, twelve
+`KR-VAT-21` is 별지 제21호서식, the general-method 부가가치세 return, thirteen
 boxes: the ones the eight tax codes above actually reach, plus the totals a
 reviewer needs to see the payable or refundable figure come out —
 `(1)`, `(6)`, `(9)`, `(10)`, `(15)`, `(16)`, `(17)`, the un-numbered `㉰`
-declared `hidden`, `(27)`, `(80)` and `(83)`. The real form carries far more:
+declared `hidden`, `(27)`, `(80)` and `(83)`, with `(10)` the sum of a
+hidden `10A` and `(16)` as described above. The real form carries far more:
 credit-card and cash-receipt sales `(3)`–`(4)`, bad-debt relief `(8)`, fixed
 asset purchases `(11)`, the eighteen credits and reductions of `(18)`–`(25)`,
 every one of the penalty lines of `(26)` — none of it is declared, because

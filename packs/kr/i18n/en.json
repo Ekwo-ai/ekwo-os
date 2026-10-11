@@ -135,6 +135,7 @@
     "1:tax": "Tax invoice issued — tax amount",
     "6": "Zero rate — other",
     "9": "Total output tax",
+    "10A": "Tax invoice received — general purchases, creditable tax",
     "10": "Tax invoice received — general purchases, tax amount",
     "15": "Total input tax",
     "16": "Input tax not creditable",
