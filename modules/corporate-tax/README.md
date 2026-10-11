@@ -270,6 +270,29 @@ a country's section leaves out, and why, is in the README of its pack.
 7. **Figures are kept at the cent.** A country that files its base and its
    tax rounded to the unit says so on its form; forms are a later version.
 
+## Over MCP
+
+Once the module is installed, the MCP server offers its tools under the
+prefix `tax` ([`packages/mcp`](../../packages/mcp/README.md)):
+
+| Tool | What it does |
+|---|---|
+| `tax_estimate` | `tax.estimate()`, line by line, with `estimated_tax` beside it |
+| `tax_parameters` | The parameters the country asks for, each with the company's answer or `declared: false` |
+| `tax_declare_parameter` | Writes one answer for one year, replacing an earlier one |
+| `tax_adjustments` | The rules in force for the year, and what the company named under each |
+| `tax_declare_adjustment` | Names an account, or states an amount, under one rule |
+| `tax_losses` | `tax.loss_stock()` |
+| `tax_record_computation` | `tax.record_computation()` |
+| `tax_computations` | The computations kept, latest first, with their status |
+
+The prompt `tax_review_year` walks an agent through a year: what is still to
+declare, the estimate explained line by line, the losses, the computations
+kept. The descriptions tell the agent that a judgement is the user's to state
+and never one to work out from the books, and that an estimate is not the tax
+due. Calling a computation final, and withdrawing one, are left to the owner
+and are not offered.
+
 ## Rights
 
 | Capability | Holds it by default | Lets somebody |
@@ -308,7 +331,6 @@ company is touched until it enables the module.
 - The provision entry, and the plan of prepayments: the accounts and the
   instalments are in the pack, and nothing reads them.
 - The declaration forms.
-- MCP tools.
 - A country other than the ones whose pack carries a `corporate_tax.json`. A
   company of any other country is refused by name, `no_corporate_tax_rules`,
   rather than given a neighbour's rates. [`docs/packs.md`](../../docs/packs.md)

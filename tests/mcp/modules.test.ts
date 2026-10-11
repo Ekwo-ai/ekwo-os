@@ -25,9 +25,11 @@ import {
 } from '../../packages/mcp/src/index.js';
 import { directoryTransport, einvoiceChecksum } from '@ekwo-ai/core';
 import { packIssuing, packWithoutBrick, sale, seller } from '../../modules/einvoicing/tests/helpers.js';
+import { book, declare, decimal, figures, goldenOf, taxCompany, type GoldenCompany } from '../../modules/corporate-tax/tests/helpers.js';
 import { listModules } from '../../packages/cli/src/module/read.js';
 import { asUser, freshDatabase, moduleCodes, one, repoRoot, rows } from '../helpers/db.js';
 import { newCompany } from '../helpers/factory.js';
+import { packWhere } from '../helpers/packs.js';
 import { backendFor, record } from './helpers.js';
 import { join } from 'node:path';
 
@@ -77,7 +79,7 @@ describe('the loader', () => {
     const client = await connect([]);
     const names = (await client.listTools()).tools.map((tool) => tool.name);
     expect(
-      names.filter((name) => /^(fixed_assets|assets|budgets|einvoicing)_/.test(name)),
+      names.filter((name) => /^(fixed_assets|assets|budgets|einvoicing|tax)_/.test(name)),
     ).toEqual([]);
     await client.close();
   });
@@ -89,7 +91,7 @@ describe('the loader', () => {
         module.manifest,
       ]),
     );
-    const client = await connect(['assets', 'budgets', 'einvoicing']);
+    const client = await connect(['assets', 'budgets', 'einvoicing', 'tax']);
     const names = (await client.listTools()).tools.map((tool) => tool.name);
 
     for (const toolset of MODULE_TOOLSETS) {
@@ -120,6 +122,22 @@ describe('the loader', () => {
       'einvoicing_status',
       'einvoicing_validate',
     ]);
+    expect(names.filter((name) => name.startsWith('tax_')).sort()).toEqual([
+      'tax_adjustments',
+      'tax_computations',
+      'tax_declare_adjustment',
+      'tax_declare_parameter',
+      'tax_estimate',
+      'tax_losses',
+      'tax_parameters',
+      'tax_record_computation',
+    ]);
+    // A module's prompts come with its tools, under the same prefix.
+    const prompts = (await client.listPrompts()).prompts.map((prompt) => prompt.name);
+    for (const toolset of MODULE_TOOLSETS) {
+      for (const prompt of toolset.prompts ?? []) expect(prompts).toContain(`${toolset.prefix}_${prompt.name}`);
+    }
+    expect(prompts).toContain('tax_review_year');
     // The former `assets_*` names were removed in 0.11.0.
     expect(names.filter((name) => name.startsWith('assets_'))).toEqual([]);
     await client.close();
@@ -364,5 +382,133 @@ describe('the electronic invoicing tools', () => {
     expect(einvoiceTransportFrom({})).toBeUndefined();
     expect(einvoiceTransportFrom({ [ENV.einvoiceDirectory]: '  ' })).toBeUndefined();
     expect(einvoiceTransportFrom({ [ENV.einvoiceDirectory]: folder })).toMatchObject({ channel: 'self', service: null });
+  });
+});
+
+describe('the corporate income tax tools', () => {
+  // A worked example that declares parameters, an account and an amount, so
+  // every way in is used; the figure it must reach is the pack's own.
+  const declaresEverything = (company: GoldenCompany): boolean =>
+    Object.keys(company.parameters ?? {}).length > 0 &&
+    (company.adjustments ?? []).some((a) => a.account !== undefined) &&
+    (company.adjustments ?? []).some((a) => a.amount !== undefined);
+  const pack = packWhere('a worked example of corporate tax declaring parameters, an account and an amount', (p) =>
+    p.corporateTax !== null && goldenOf(p).companies.some(declaresEverything),
+  );
+  const golden = goldenOf(pack);
+  const company = golden.companies.find(declaresEverything) as GoldenCompany;
+
+  it('declare what the worked example declares, and reach its figure to the cent', async () => {
+    const fixture = await taxCompany(db, pack.manifest.country, company.name, golden.fiscal_year);
+    for (const entry of company.entries) await book(db, fixture.companyId, entry);
+    await declare(db, fixture, { losses: company.losses ?? [] });
+    const client = await connect(['tax'], backendFor(db, fixture.ownerId));
+    const year = { company_id: fixture.companyId, fiscal_year_id: fixture.fiscalYearId };
+
+    const asked = record(await call(client, 'tax_parameters', year))['parameters'] as { code: string; declared: boolean }[];
+    expect(asked.length).toBe(pack.corporateTax?.parameters.length);
+    expect(asked.every((p) => !p.declared)).toBe(true);
+
+    for (const [code, value] of Object.entries(company.parameters ?? {})) {
+      await call(client, 'tax_declare_parameter', { ...year, code, value });
+    }
+    // A second answer replaces the first rather than standing beside it.
+    const [firstCode, firstValue] = Object.entries(company.parameters ?? {})[0] as [string, boolean | string];
+    await call(client, 'tax_declare_parameter', { ...year, code: firstCode, value: firstValue, note: 'Said again.' });
+    const answered = record(await call(client, 'tax_parameters', year))['parameters'] as {
+      code: string;
+      declared: boolean;
+      value: boolean | string | null;
+      note: string | null;
+    }[];
+    for (const [code, value] of Object.entries(company.parameters ?? {})) {
+      const answer = answered.find((p) => p.code === code);
+      expect(answer?.declared, code).toBe(true);
+      expect(typeof value === 'boolean' ? answer?.value : decimal(answer?.value as string), code).toBe(
+        typeof value === 'boolean' ? value : decimal(value),
+      );
+    }
+    expect(answered.find((p) => p.code === firstCode)?.note).toBe('Said again.');
+
+    for (const adjustment of company.adjustments ?? []) {
+      await call(client, 'tax_declare_adjustment', {
+        ...year,
+        rule_code: adjustment.rule,
+        ...(adjustment.account === undefined ? {} : { account_code: adjustment.account }),
+        ...(adjustment.amount === undefined ? {} : { amount: adjustment.amount }),
+        ...(adjustment.parameters === undefined ? {} : { parameters: adjustment.parameters }),
+      });
+    }
+    const adjustments = record(await call(client, 'tax_adjustments', year)) as {
+      rules: { code: string; legal_reference: string; declared: { account_code: string | null; amount: string | null }[] }[];
+      not_in_force: unknown[];
+    };
+    for (const adjustment of company.adjustments ?? []) {
+      const rule = adjustments.rules.find((r) => r.code === adjustment.rule);
+      expect(rule?.legal_reference, adjustment.rule).toBeTruthy();
+      expect(
+        rule?.declared.some((d) =>
+          adjustment.account === undefined
+            ? decimal(d.amount) === decimal(adjustment.amount)
+            : d.account_code === adjustment.account,
+        ),
+        adjustment.rule,
+      ).toBe(true);
+    }
+    expect(adjustments.not_in_force).toEqual([]);
+
+    const estimate = record(await call(client, 'tax_estimate', year)) as {
+      estimated_tax: string;
+      lines: { kind: string; code: string | null; base: string | null; rate: string | null; amount: string | null }[];
+    };
+    const worked = `\n${company.why}\n${company.expected.computation.join('\n')}\n`;
+    expect(estimate.lines.map(figures), worked).toEqual(company.expected.lines.map(figures));
+    expect(decimal(estimate.estimated_tax), worked).toBe(decimal(company.expected.tax));
+
+    const kept = record(await call(client, 'tax_record_computation', year));
+    const computations = record(await call(client, 'tax_computations', year))['computations'] as {
+      id: string;
+      version: number;
+      status: string;
+      tax: string;
+    }[];
+    expect(computations.map((c) => ({ id: c.id, version: c.version, status: c.status, tax: decimal(c.tax) }))).toEqual([
+      { id: kept['computation_id'], version: 1, status: 'estimate', tax: decimal(company.expected.tax) },
+    ]);
+
+    const before = record(await call(client, 'tax_losses', { company_id: fixture.companyId }))['losses'] as unknown[];
+    expect(before.length).toBe((company.losses ?? []).length);
+  }, 120_000);
+
+  it('refuse, by name, an adjustment with both an account and an amount, and a parameter the country does not ask', async () => {
+    const fixture = await taxCompany(db, pack.manifest.country, `${company.name} bis`, golden.fiscal_year);
+    const client = await connect(['tax'], backendFor(db, fixture.ownerId));
+    const year = { company_id: fixture.companyId, fiscal_year_id: fixture.fiscalYearId };
+    const withAccount = (company.adjustments ?? []).find((a) => a.account !== undefined);
+    await expect(
+      call(client, 'tax_declare_adjustment', {
+        ...year,
+        rule_code: withAccount?.rule,
+        account_code: withAccount?.account,
+        amount: '10.00',
+      }),
+    ).rejects.toThrow(/account_or_amount/);
+    await expect(
+      call(client, 'tax_declare_parameter', { ...year, code: 'no_such_parameter', value: true }),
+    ).rejects.toThrow(/unknown_tax_parameter/);
+  }, 120_000);
+
+  it('offer a checklist that names its tools and the company', async () => {
+    const client = await connect(['tax']);
+    const prompt = await client.getPrompt({
+      name: 'tax_review_year',
+      arguments: { company_id: companyId, fiscal_year_id: companyId },
+    });
+    const text = (prompt.messages[0]?.content as { text: string }).text;
+    expect(text).toContain(companyId);
+    for (const tool of ['tax_parameters', 'tax_adjustments', 'tax_estimate', 'tax_losses', 'tax_computations']) {
+      expect(text).toContain(tool);
+    }
+    await client.close();
   });
 });

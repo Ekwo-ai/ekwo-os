@@ -46,6 +46,7 @@ export {
   MODULE_TOOLSETS,
   installedModules,
   toolsetsFor,
+  type ModulePrompt,
   type ModuleTool,
   type ModuleToolContext,
   type ModuleToolset,
