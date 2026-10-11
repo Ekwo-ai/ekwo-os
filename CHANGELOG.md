@@ -39,6 +39,13 @@ somewhere has already run it.
   GST or sales tax and which does neither, and `docs/packs.md` says how to
   write either.
 
+### Changed
+
+- **The schema of this release is 0.12.1** (`20261011082857`). It adds
+  `year_result_account()` and `statement_rule_catches()` and changes what a
+  balance sheet reads; no package calls anything a 0.12.0 database lacks, so
+  the floor of `ekwo-os`, `@ekwo-ai/core` and `@ekwo-ai/mcp` stays at 0.12.0.
+
 ### Fixed
 
 - **A balance sheet drawn before the close balances: the result of the year
