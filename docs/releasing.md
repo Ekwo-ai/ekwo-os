@@ -81,7 +81,21 @@ is half done is worse than one that is not cut.
    releases install into at once. Run it with several packs, including ones with
    a non-calendar year and a non-monthly return.
 
-   **The last run: 11 October 2026, for `0.12.1`**, on a throwaway project in
+   **The last run: 11 October 2026, for `0.12.2`**, on a throwaway project
+   in `eu-central-1` (Postgres 17.11, session pooler `aws-1`), deleted
+   afterwards, `--reset` between runs. BE (`default` chart, `fr`), FR (`fr`),
+   GB (year opening 1 April), EE (`et`), LU (`fr`, quarterly), SG, ZA
+   (monthly), AR, CL and PL, each upgraded from `ekwo-os@0.12.1` on npm — 7
+   migrations pending, applied by `ekwo migrate` in about 21 s: 22 steps
+   each, all green, 141 to 148 s a run. FR moved its pack from 1.17.1 to
+   1.17.2 on the way. MA (monthly) stopped at the purchase invoice: its pack
+   0.2.0 puts its standard-rate taxes on the cash basis, and the script has
+   no payment step yet — a fresh install of `0.12.1` stops at the same step,
+   and the previous run passed only because it upgraded MA from 0.1.0. Then
+   `--multi-country` with FR and ZW, `sb_publishable_…` as the anon key: 12
+   steps, all green, 105 s. No load run.
+
+   The run before, on 11 October 2026, for `0.12.1`, on a throwaway project in
    `eu-central-1` (Postgres 17.11, session pooler `aws-1`), deleted
    afterwards, `--reset` between runs. BE (`default` chart, `fr`), FR (`fr`),
    GB (year opening 1 April), EE (`et`), LU (`fr`, quarterly), SG, ZA
@@ -92,33 +106,6 @@ is half done is worse than one that is not cut.
    and MA from 0.1.0 to 0.2.0 on the way. Then `--multi-country` with FR and
    ZW, `sb_publishable_…` as the anon key: 12 steps, all green, 106 s. No
    load run.
-
-   The run before, on 10 October 2026, for `0.12.0`, on a throwaway project in
-   `eu-central-1` (session pooler `aws-1`), `--reset` between runs. AR, CL, BE
-   (`default` chart, `fr`), FR (`fr`), GB (year opening 1 April), EE (`et`),
-   LU (`fr`, quarterly), SG and ZA (monthly), each upgraded from
-   `ekwo-os@0.11.1` on npm: 22 steps each, all green, about 125 s a run; AR
-   moved its pack from 0.1.0 to 0.2.0 and CL from 0.1.0 to 0.1.1 on the way.
-   ZW, which 0.11.1 does not carry, installed fresh (year opening 1 January,
-   monthly): 19 steps, all green. Then `--multi-country` with FR and ZW: 12
-   steps, all green. No load run.
-
-8. **The trusted publishing of every package.**
-
-   ```sh
-   npm run release:check
-   ```
-
-   The Release workflow publishes through npm trusted publishing, which works
-   only for a package whose trusted publisher names this repository and
-   `release.yml`. The check reads every package `release:publish` would
-   publish and refuses the release when one has never been published, or when
-   its latest version on npm carries no provenance attestation — which a
-   publish through trusted publishing always has. It names the package and
-   says what to add on npmjs.com (see *One-time setup* below). It also runs
-   first in the workflow, before anything is built; there, a package without
-   an attestation still passes when npm grants the run a publish credential
-   for it, which is the proof its trusted publisher has just been added.
 
 ## Cutting it
 
