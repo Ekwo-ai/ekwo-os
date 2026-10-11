@@ -81,7 +81,19 @@ is half done is worse than one that is not cut.
    releases install into at once. Run it with several packs, including ones with
    a non-calendar year and a non-monthly return.
 
-   **The last run: 10 October 2026, for `0.12.0`**, on a throwaway project in
+   **The last run: 11 October 2026, for `0.12.1`**, on a throwaway project in
+   `eu-central-1` (Postgres 17.11, session pooler `aws-1`), deleted
+   afterwards, `--reset` between runs. BE (`default` chart, `fr`), FR (`fr`),
+   GB (year opening 1 April), EE (`et`), LU (`fr`, quarterly), SG, ZA
+   (monthly), AR, CL, PL and MA (monthly), each upgraded from
+   `ekwo-os@0.12.0` on npm — 4 migrations pending, applied by `ekwo migrate`
+   in about 22 s: 22 steps each, all green, 146 to 163 s a run, the install
+   of `0.12.0` alone about 70 s of it. PL moved its pack from 0.2.0 to 0.2.1
+   and MA from 0.1.0 to 0.2.0 on the way. Then `--multi-country` with FR and
+   ZW, `sb_publishable_…` as the anon key: 12 steps, all green, 106 s. No
+   load run.
+
+   The run before, on 10 October 2026, for `0.12.0`, on a throwaway project in
    `eu-central-1` (session pooler `aws-1`), `--reset` between runs. AR, CL, BE
    (`default` chart, `fr`), FR (`fr`), GB (year opening 1 April), EE (`et`),
    LU (`fr`, quarterly), SG and ZA (monthly), each upgraded from
