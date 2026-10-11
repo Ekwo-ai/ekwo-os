@@ -137,7 +137,7 @@ from.
 
 ---
 
-*Ekwo is maintained by Ekwo (Karuna Co OÜ). The name is the promise: an
+*Ekwo is maintained by Ekwo (EKWO OÜ). The name is the promise: an
 accounting core that is open, that the business owns, that a machine can
 operate and a human still checks — and that leaves a lighter
 footprint, on the books and, in time, on the world.*

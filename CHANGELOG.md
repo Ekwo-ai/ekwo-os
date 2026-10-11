@@ -827,7 +827,7 @@ somewhere has already run it.
   people install.
 
   What replaces it is [`docs/cloud-services.md`](docs/cloud-services.md): the
-  optional services, operated by Ekwo (Karuna Co OÜ), outside the AGPL, with
+  optional services, operated by Ekwo (EKWO OÜ), outside the AGPL, with
   the one test that draws the line — *does it keep working on its own, with us
   or without us?* — what comes back from a filing and stays the business's, and
   what will never be sold. `0061` is rewritten to say it, the
@@ -1123,8 +1123,8 @@ somewhere has already run it.
   [`DISCLAIMER.md`](DISCLAIMER.md) prints no address.
 
 - **The contributor licence agreement is governed by the law of Estonia.**
-  It named Belgian law and the courts of Brussels; Ekwo is operated by Karuna
-  Co OÜ, a company registered in Estonia, and a dispute falls to the Harju
+  It named Belgian law and the courts of Brussels; Ekwo is operated by EKWO OÜ,
+  a company registered in Estonia, and a dispute falls to the Harju
   County Court in Tallinn. [`CLA.md`](CLA.md).
 
 ### Fixed

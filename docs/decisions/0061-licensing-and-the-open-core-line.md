@@ -31,7 +31,7 @@ paid thing is a contract, a certificate, a credential or a machine somebody
 keeps running, and none of that is a feature one could put behind a flag in
 source that other people install. The folder is gone, and what this repository
 publishes is the whole of what it ships. The services are operated by Ekwo
-(Karuna Co OÜ) and described in [`cloud-services.md`](../cloud-services.md).
+(EKWO OÜ) and described in [`cloud-services.md`](../cloud-services.md).
 
 **No adapter imitating another product's API.** Nobody consumes an imitation
 server; integrations read the real product. The route to national filing tools

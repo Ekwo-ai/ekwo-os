@@ -172,7 +172,7 @@ cent.
 - **About a security issue**: `security@ekwo.ai` — see `SECURITY.md`
 - **About anything else**: the support page in Ekwo Cloud, or `support@ekwo.ai`
 
-The controller of this data is **Ekwo**, a trade name of Karuna Co OÜ,
+The controller of this data is **Ekwo**, a trade name of EKWO OÜ,
 registered in Estonia under registry code 14510673. Estonia is in the European
 Union, so the GDPR applies to this service in full, and you may complain to
 your own data protection authority wherever you are.

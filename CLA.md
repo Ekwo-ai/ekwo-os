@@ -3,7 +3,7 @@
 Version 1.0, September 2026.
 
 Thank you for your interest in contributing to Ekwo OS, maintained by Ekwo,
-the trade name of Karuna Co OÜ, a private limited company registered in Estonia
+the trade name of EKWO OÜ, a private limited company registered in Estonia
 under registry code 14510673 ("Ekwo"). This agreement clarifies the
 intellectual property licence granted with contributions from any person or
 entity. It gives Ekwo the rights it needs to distribute and maintain the
@@ -75,6 +75,6 @@ implied, to the fullest extent permitted by law.
 
 ## 7. Governing law
 
-This agreement is governed by the law of Estonia, where Karuna Co OÜ, the
+This agreement is governed by the law of Estonia, where EKWO OÜ, the
 company that operates Ekwo, is registered. Any dispute falls to the Harju
 County Court in Tallinn, Estonia.
