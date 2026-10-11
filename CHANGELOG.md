@@ -9,7 +9,27 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.12.2] — 2026-10-11
+
 ### Added
+
+- **The result of the year in progress has a sub-line of its own where the
+  balance sheet's line mixes it with something else.** Since a balance sheet
+  drawn before the close carries the result nobody has closed, a Belgian
+  rubric 14 "Bénéfice (Perte) reporté(e)" showed the profit brought forward
+  and the year in progress as one figure. Every balance sheet of every pack
+  now says, in the new `result_in_progress` of `statements.json`, whether the
+  line that receives the result is the result `alone` (France `DI`, 51
+  schemes) or `combined` with other balances (Belgium `14`, every scheme that
+  closes into retained earnings, the SYSCOHADA `CJ`; 77 schemes), and a
+  combined one names the label of its sub-line in its own languages.
+  `financial_statement_of_kind()` returns the result in progress as a row
+  `<line>:result_in_progress` under that line; `financial_statement()`, the
+  totals and every filing are unchanged. `statement_account_matches()` gains
+  the column `in_progress`, and `statement_figures()` is the one place a
+  statement is summed. `ekwo pack check` refuses a balance sheet that leaves
+  the rule out or contradicts its own scheme and chart. Migration
+  `20261011120000`, which every pack now names as its `schema_min`.
 
 - **The corporate income tax module speaks to an agent.** Eight MCP tools
   under the `tax` prefix, offered once the module is installed:
@@ -39,6 +59,45 @@ somewhere has already run it.
   and counted towards the first instalment due on or after it. The golden
   tests book the provision of every worked example of every pack and hold the
   tax to the cent.
+
+### Changed
+
+- **The schema of this release is 0.12.2, and the packages refuse an older
+  one** (`20261011163457`). It carries the three `result_in_progress` columns
+  of `statement_templates` and the balance sheet that prints them, and the
+  four integrity fixes below. Every pack `ekwo-os` carries writes those
+  columns when it is installed or upgraded, which a 0.12.1 database does not
+  have, so the floor of `ekwo-os`, `@ekwo-ai/core` and `@ekwo-ai/mcp` rises to
+  0.12.2 and an installation left behind is told to run `ekwo migrate`.
+
+- **The licences, the CLA, the disclaimer and the privacy notice name EKWO
+  OÜ**, the name the Estonian commercial register entered on 8 October 2026
+  (registry code 14510673).
+
+### Fixed
+
+- **An import proposes the detail account behind a padded code.** A FEC with
+  ten-digit codes (`110000000`, `4010000000`) got no proposal for most of its
+  unmatched accounts: once the padding zeros are set aside, a heading and its
+  detail account read the same, and the tie was no answer. On a tie, only the
+  accounts that take entries are kept now.
+
+- **An import proposes a journal from what its entries touch, never its
+  name.** An opening journal went to the general journal, and the sales and
+  bank journals with it. The opening is now the journal whose entries all fall
+  on the first day of a year and touch no income or expense account, or the one
+  going by an opening code the packs give, its entries on one day; sales,
+  purchases and bank are the journals whose every entry touches a receivable
+  and an income account, a payable and an expense account, or a bank account.
+  Each proposal carries its reason under `journal_reasons`, which `ekwo import`
+  shows.
+
+- **The French chart carries the capital called and paid, the tax withheld at
+  source and the research tax credit** (pack `fr` 1.17.2): `101300` (PCG
+  1013), `442` and `442100` (PCG 4421), `699` and `699100` for the research
+  tax credit, which BOI-BIC-RICI-10-10-50 § 510 books on 699. The credit is not
+  taxable income: a new deduction rule takes the balance of `699100` out of the
+  result the corporate tax estimate starts from. The golden year is unchanged.
 
 ### Security
 
@@ -103,24 +162,6 @@ somewhere has already run it.
 ## [0.12.1] — 2026-10-11
 
 ### Added
-
-- **The result of the year in progress has a sub-line of its own where the
-  balance sheet's line mixes it with something else.** Since a balance sheet
-  drawn before the close carries the result nobody has closed, a Belgian
-  rubric 14 "Bénéfice (Perte) reporté(e)" showed the profit brought forward
-  and the year in progress as one figure. Every balance sheet of every pack
-  now says, in the new `result_in_progress` of `statements.json`, whether the
-  line that receives the result is the result `alone` (France `DI`, 51
-  schemes) or `combined` with other balances (Belgium `14`, every scheme that
-  closes into retained earnings, the SYSCOHADA `CJ`; 77 schemes), and a
-  combined one names the label of its sub-line in its own languages.
-  `financial_statement_of_kind()` returns the result in progress as a row
-  `<line>:result_in_progress` under that line; `financial_statement()`, the
-  totals and every filing are unchanged. `statement_account_matches()` gains
-  the column `in_progress`, and `statement_figures()` is the one place a
-  statement is summed. `ekwo pack check` refuses a balance sheet that leaves
-  the rule out or contradicts its own scheme and chart. Migration
-  `20261011120000`, which every pack now names as its `schema_min`.
 
 - **Every country pack says what a service bought from abroad costs in
   tax.** A software subscription, hosting or an API billed by a supplier

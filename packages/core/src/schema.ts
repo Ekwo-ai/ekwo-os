@@ -16,7 +16,7 @@
  */
 
 /** The oldest schema `@ekwo-ai/core` reads. */
-export const SCHEMA_MIN = '0.12.1';
+export const SCHEMA_MIN = '0.12.2';
 
 /** `-1`, `0` or `1`, comparing two `major.minor.patch` versions numerically. */
 export function compareSchemaVersions(left: string, right: string): number {

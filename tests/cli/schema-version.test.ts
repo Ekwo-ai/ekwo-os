@@ -27,21 +27,21 @@ import {
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
 
 /** The schema this release defines. */
-const RELEASE = '0.12.1';
+const RELEASE = '0.12.2';
 
 /** What `ekwo_schema_version()` returned before the migration of this release. */
-const PREVIOUS = '0.12.0';
+const PREVIOUS = '0.12.1';
 
 /** The migration that carries the number, and nothing else. */
-const BUMP = 'schema_version_0_12_1';
+const BUMP = 'schema_version_0_12_2';
 
 /**
  * The floor the packages of this release declare. It rises only when a
- * package reads something an older schema does not have; 0.12.1 does —
- * `@ekwo-ai/core` reads `companies.invoice_accent_color` and
- * `invoice_logo_position`, which 0.12.0 lacks.
+ * package reads something an older schema does not have; 0.12.2 does —
+ * every pack `ekwo-os` carries writes `statement_templates.result_in_progress`
+ * and its two label columns, which 0.12.1 lacks.
  */
-const FLOOR = '0.12.1';
+const FLOOR = '0.12.2';
 
 let db: SqlClient;
 let migrations: Migration[];
