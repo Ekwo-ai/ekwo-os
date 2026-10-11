@@ -29,6 +29,8 @@ export interface AccountBalance {
   account_type: string;
   /** `asset | liability | equity | income | expense | off_balance`. */
   internal_group: string;
+  /** False on income and expense: the accounts a close empties. */
+  carries_forward: boolean;
   balance: number;
 }
 
@@ -54,10 +56,11 @@ export async function rawBalances(
       code: string;
       account_type: string;
       internal_group: string;
+      carries_forward: boolean;
       balance: string;
     }>(
       `select a.id, a.code, a.account_type::text as account_type, a.internal_group,
-              (sum(l.debit) - sum(l.credit))::text as balance
+              a.carries_forward, (sum(l.debit) - sum(l.credit))::text as balance
          from accounts a
          join entry_lines l on l.account_id = a.id
          join entries e on e.id = l.entry_id
@@ -69,7 +72,7 @@ export async function rawBalances(
           and case when $2 in ('income_statement', 'allocation')
                    then e.kind::text <> 'closing'
                    else true end
-        group by a.id, a.code, a.account_type, a.internal_group`,
+        group by a.id, a.code, a.account_type, a.internal_group, a.carries_forward`,
       [companyId, kind, from, to],
     )
   ).rows;
@@ -78,6 +81,7 @@ export async function rawBalances(
     code: r.code,
     account_type: r.account_type,
     internal_group: r.internal_group,
+    carries_forward: r.carries_forward,
     balance: roundCurrency(Number(r.balance), decimals),
   }));
 }
@@ -205,6 +209,49 @@ export function evaluateTotals(
   return out;
 }
 
+/**
+ * A balance sheet drawn before the close: the income and expense accounts no
+ * line catches hold the result nobody has closed yet, and it stands as one
+ * balance on the account the close would leave it on. Which account that is
+ * belongs to the pack and the company, so it is asked of
+ * `year_result_account()` — the one place the close, the opening balance and
+ * the statements read it from — rather than spelled out a second time here.
+ * Where it names none, nothing moves.
+ */
+async function withResultInProgress(
+  pg: PGlite,
+  companyId: string,
+  rules: Rule[],
+  balances: AccountBalance[],
+  decimals: number,
+): Promise<AccountBalance[]> {
+  const unclosed = balances.filter(
+    (a) => !a.carries_forward && !rules.some((r) => matches(r, a)),
+  );
+  const result = roundCurrency(
+    unclosed.reduce((sum, a) => sum + a.balance, 0),
+    decimals,
+  );
+  if (result === 0) return balances;
+  const target = (
+    await pg.query<Omit<AccountBalance, 'balance'>>(
+      `select a.id, a.code, a.account_type::text as account_type, a.internal_group,
+              a.carries_forward
+         from accounts a where a.id = year_result_account($1, $2::numeric)`,
+      [companyId, result.toFixed(decimals)],
+    )
+  ).rows[0];
+  if (target === undefined) return balances;
+
+  const kept = balances.filter((a) => !unclosed.includes(a));
+  const already = kept.find((a) => a.id === target.id);
+  if (already !== undefined) {
+    already.balance = roundCurrency(already.balance + result, decimals);
+    return kept;
+  }
+  return [...kept, { ...target, balance: result }];
+}
+
 export interface StatementLine {
   line_code: string;
   is_total: boolean;
@@ -261,7 +308,9 @@ export async function expectedStatement(
 
   const perLine = new Map<string, number>();
   const unmapped: AccountBalance[] = [];
-  for (const account of balances) {
+  for (const account of kindRow.kind === 'balance_sheet'
+    ? await withResultInProgress(pg, companyId, rules, balances, decimals)
+    : balances) {
     const line = lineFor(rules, account);
     if (line === undefined) {
       if (account.balance !== 0 && reported.includes(account.internal_group)) unmapped.push(account);
