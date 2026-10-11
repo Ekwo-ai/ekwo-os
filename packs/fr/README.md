@@ -129,6 +129,23 @@ form's and the declarant can fill them: **15** and **5B** (inside 16), **21**,
 Line **14** of earlier versions of the form is not on the form in
 force: the rates it used to gather from an annex are lines T1 to T7 now.
 
+## Accounts added in 1.17.2 for books taken over from elsewhere
+
+A FEC of a French company read in October 2026 used three accounts the chart
+did not carry. Each joins the chart at the six digits the pack pads its
+accounts to, under the three-digit heading of the plan.
+
+| Account | Plan account | Source |
+|---|---|---|
+| `101300` Capital souscrit — appelé, versé | 1013 | Plan de comptes of règlement ANC n° 2014-03, art. 1121-1, version 2025 ([anc.gouv.fr](https://www.anc.gouv.fr/files/anc/files/1_Normes_fran%C3%A7aises/Plans%20comptables/Plan-de-comptes-PCG-2025.pdf)) — 1011, 1012 and 1013 split account 101 by what has been called and paid; `101000` stays for a company that does not split it. |
+| `442100` Prélèvements à la source (impôt sur le revenu), under `442` Contributions, impôts et taxes recouvrés pour le compte de l'État | 4421 | Règlement ANC n° 2018-02 du 6 juillet 2018, PCG art. 944-44 — 4421 is credited with the tax withheld from pay by the debit of 421 « Personnel — Rémunérations dues », and debited when it is paid to the State. |
+| `699100` Produits — Crédit d'impôt recherche, under `699` Produits — Reports en arrière des déficits | 699 | The plan has no account for the research tax credit: 699 is the account the plan gives to carry-back. BOI-BIC-RICI-10-10-50, § 510 (source `boi-bic-rici-10-10-50`) records the credit « au débit du compte 444 « État - impôt sur les bénéfices » et par le crédit du compte 699 « Produits - Crédit d'impôt recherche » », in line with the position the ANC took in January 2011 to book it as a reduction of the tax. A subdivision of 695 is used by some ledgers; the pack follows the administration's text. |
+
+The research tax credit is not taxable income (same paragraph): the rule
+`research-tax-credit` of `corporate_tax.json` deducts the balance of
+`699100` from the result the estimate starts from. Both 699 and 695 sit on
+line HK of form 2052, so the income statement is unchanged by the choice.
+
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
 The section carries only rules cited to an official source. A rule that is missing makes an estimate too high or too low
@@ -142,7 +159,7 @@ by something a reader can name; these are the ones to name.
 | The social contribution of 3,3 % (CGI art. 235 ter ZC) and the exceptional contribution on the profits of large companies | Both are a tax on the tax, above a turnover of 7 630 000 € and of 1 billion € respectively. The section has no shape for one yet. |
 | Carry-back of a loss (CGI art. 220 quinquies) | An option, not a rule: nothing computes it. |
 | Rounding of the base and of the tax to the euro | No rule cited. The estimate is kept at the cent. |
-| Tax credits | `credits` is empty: the shape is published and no credit was cited. |
+| Tax credits | `credits` is empty: the shape is published and no credit was cited. The research tax credit booked on `699100` is taken out of the taxable result (`research-tax-credit`); what it then pays of the tax is not computed. |
 | Excess interest, personal benefits, non-deductible provisions (form 2058-A, lines SU, XZ, WD, WI) | No flat rule could be cited for any of them. |
 
 The instalments are the four of CGI art. 1668 at a quarter of the reference

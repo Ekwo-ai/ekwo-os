@@ -234,13 +234,21 @@ describe('the compiled packs against the seeds they replace', () => {
     // head the PCG calls "à régulariser ou en attente". Then the two French
     // accounts the liasse reads and the chart lacked: the other reserves of
     // line DG, and the amortisation of the development costs of line CX.
+    // Then the three a French FEC taken over used and the chart lacked: the
+    // capital called and paid (1013), the income tax withheld from pay under
+    // its 442 head (4421), and the research tax credit under 699.
     expect(added('account_templates').map((r) => `${r['country']}/${r['code']}`)).toEqual([
       'BE/411900',
       'BE/451900',
+      'FR/101300',
       'FR/106800',
       'FR/280300',
+      'FR/442',
+      'FR/442100',
       'FR/445860',
       'FR/445870',
+      'FR/699',
+      'FR/699100',
     ]);
     // Belgian cars and receptions, French fuel: the partially and the wholly
     // non-deductible VAT the engine could not express before. Then the six
