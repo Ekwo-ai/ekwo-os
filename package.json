@@ -29,6 +29,7 @@
     "docs:schema": "node scripts/generate-schema-doc.mjs",
     "inventory": "node scripts/generate-expected-objects.mjs",
     "e2e:supabase": "node scripts/e2e-supabase.mjs",
+    "release:check": "node scripts/check-trusted-publishing.mjs",
     "release:publish": "node scripts/publish.mjs"
   },
   "devDependencies": {

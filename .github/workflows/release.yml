@@ -48,6 +48,11 @@ jobs:
       # reproducible.
       - run: npm install -g npm@11.21.0
       - run: npm ci
+      # Every package must be one this run can publish: a package without a
+      # trusted publisher would stop the run half way, after the packages
+      # before it are already on the registry. See docs/releasing.md.
+      - name: Trusted publishing of every package
+        run: npm run release:check
       - run: npm run typecheck
       - run: npm run build
       - name: Dry run

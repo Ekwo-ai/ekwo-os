@@ -103,6 +103,23 @@ is half done is worse than one that is not cut.
    monthly): 19 steps, all green. Then `--multi-country` with FR and ZW: 12
    steps, all green. No load run.
 
+8. **The trusted publishing of every package.**
+
+   ```sh
+   npm run release:check
+   ```
+
+   The Release workflow publishes through npm trusted publishing, which works
+   only for a package whose trusted publisher names this repository and
+   `release.yml`. The check reads every package `release:publish` would
+   publish and refuses the release when one has never been published, or when
+   its latest version on npm carries no provenance attestation — which a
+   publish through trusted publishing always has. It names the package and
+   says what to add on npmjs.com (see *One-time setup* below). It also runs
+   first in the workflow, before anything is built; there, a package without
+   an attestation still passes when npm grants the run a publish credential
+   for it, which is the proof its trusted publisher has just been added.
+
 ## Cutting it
 
 1. Open a pull request with all of the above. The CI job *Migrations are
@@ -131,16 +148,17 @@ tarball to the commit and the run that built it.
 
 ### One-time setup, on npmjs.com
 
-For each public package (the list is `npm run release:publish`): open
+For each public package (the list is `npm run release:publish`; `npm run
+release:check` names the ones still missing): open
 `https://www.npmjs.com/package/<name>/access`, add a *Trusted Publisher* of
 type **GitHub Actions** naming this repository and the workflow file
-`release.yml`. A package never published before is published once by hand
+`release.yml`, with no environment. A package never published before is published once by hand
 (`npm login --auth-type=web`, then `npm run release:publish -- --for-real` on
 the tag) before its trusted publisher can be set.
 
 ### Releasing
 
-Pushing the tag runs `npm ci`, the typecheck, the build and
+Pushing the tag runs `npm ci`, `npm run release:check`, the typecheck, the build and
 `npm run release:publish -- --for-real`. A version the registry already holds
 is skipped, so a run that stopped half way is simply re-run. A package's npm
 page then shows *Built and signed on GitHub Actions*, and
