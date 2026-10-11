@@ -1,6 +1,6 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
-import { PGlite } from '@electric-sql/pglite';
+import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
   asUser,
@@ -9,6 +9,7 @@ import {
   moduleMigrationFiles,
   moduleSeedFiles,
   one,
+  openDatabase,
   repoRoot,
   rows,
   seedFiles,
@@ -41,8 +42,7 @@ const beforeTheRename = (sql: string): string => sql.replace(/\bfixed_assets\./g
  * with or after the rename, and an upgrade applies them after it.
  */
 async function installedBefore(): Promise<PGlite> {
-  const db = new PGlite();
-  await db.waitReady;
+  const db = await openDatabase();
   await db.exec(await readFile(shimPath, 'utf8'));
   for (const file of await migrationFiles()) {
     if (file.startsWith(ARCHIVE_NAMES)) continue;

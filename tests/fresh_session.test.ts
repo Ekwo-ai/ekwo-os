@@ -1,6 +1,6 @@
-import { PGlite } from '@electric-sql/pglite';
+import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { expectError, freshDatabase, one, rows } from './helpers/db.js';
+import { expectError, freshDatabase, one, openDatabase, rows } from './helpers/db.js';
 
 /**
  * A session nobody prepared.
@@ -24,8 +24,7 @@ let db: PGlite;
 
 beforeAll(async () => {
   prepared = await freshDatabase();
-  db = new PGlite({ loadDataDir: await prepared.dumpDataDir('none') });
-  await db.waitReady;
+  db = await openDatabase({ loadDataDir: await prepared.dumpDataDir('none') });
 });
 
 afterAll(async () => {

@@ -76,5 +76,19 @@ export default defineConfig({
     ],
     testTimeout: 60_000,
     hookTimeout: 60_000,
+    // Most files start one or more PGlite, each a Postgres in WebAssembly
+    // whose heap is hundreds of megabytes and is not given back to the system
+    // while the process lives. Each file therefore runs in a child process of
+    // its own (`forks`, isolated), which exits with the file: whatever one
+    // file grew, the next does not inherit. Threads would share one process,
+    // and so one heap, across every file a worker runs.
+    pool: 'forks',
+    poolOptions: {
+      forks: { isolate: true },
+    },
+    // The schema is built once per run (`freshDatabase` loads it), and a file
+    // that leaves a database open fails instead of holding it.
+    globalSetup: ['tests/global-setup.ts'],
+    setupFiles: ['tests/setup.ts'],
   },
 });

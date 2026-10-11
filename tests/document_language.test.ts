@@ -18,7 +18,7 @@
  * set up and nowhere else.
  */
 
-import { PGlite } from '@electric-sql/pglite';
+import type { PGlite } from '@electric-sql/pglite';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
@@ -28,6 +28,7 @@ import {
   freshDatabase,
   migrationFiles,
   one,
+  openDatabase,
   repoRoot,
   rows,
   seedFiles,
@@ -252,8 +253,7 @@ describe('the documents that were here before the column was', () => {
     // table, the day a pack needs one — and a database frozen at an older
     // migration cannot take them. What the test is about is the column, not
     // the date.
-    const before = new PGlite();
-    await before.waitReady;
+    const before = await openDatabase();
     await before.exec(await readFile(shimPath, 'utf8'));
     for (const file of await migrationFiles()) {
       if (file === MIGRATION || READS_THE_COLUMN.includes(file)) continue;

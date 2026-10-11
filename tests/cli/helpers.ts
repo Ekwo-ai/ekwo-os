@@ -10,9 +10,9 @@
 
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { PGlite } from '@electric-sql/pglite';
+import type { PGlite } from '@electric-sql/pglite';
 import type { SqlClient } from '../../packages/cli/src/sql.js';
-import { repoRoot } from '../helpers/db.js';
+import { openDatabase, repoRoot } from '../helpers/db.js';
 
 export const migrationsPath = join(repoRoot, 'supabase', 'migrations');
 export const seedPath = join(repoRoot, 'supabase', 'seed');
@@ -53,8 +53,7 @@ export function adapt(handle: Queryable, root: PGlite): SqlClient {
  * is the point: the thing under test is the installer, not the schema.
  */
 export async function emptyDatabase(): Promise<{ db: SqlClient; pg: PGlite }> {
-  const pg = new PGlite();
-  await pg.waitReady;
+  const pg = await openDatabase();
   const shim = await readFile(join(repoRoot, 'tests', 'helpers', 'supabase-shim.sql'), 'utf8');
   await pg.exec(shim);
   // What `connect()` does on a real connection: this one is the installer.

@@ -8,10 +8,10 @@
  * as missing, tested as it stands. Nothing here names a country.
  */
 
-import { PGlite } from '@electric-sql/pglite';
+import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import type { Pack } from '../packages/cli/src/index.js';
-import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
+import { asUser, expectError, freshDatabase, one, openDatabase, rows } from './helpers/db.js';
 import {
   breathe,
   exportAs,
@@ -279,8 +279,7 @@ describe('the backend role, on a connection where nothing was ever set', () => {
     await first.query(`delete from companies where id = $1`, [other.companyId]).catch(() => undefined);
     const data = await first.dumpDataDir('none');
     await first.close();
-    db = new PGlite({ loadDataDir: data });
-    await db.waitReady;
+    db = await openDatabase({ loadDataDir: data });
   }, 300_000);
 
   afterAll(async () => {

@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { PGlite } from '@electric-sql/pglite';
+import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { readCamt053, type StatementFile } from '@ekwo-ai/camt053';
-import { asUser, expectError, freshDatabase, one, repoRoot, rows } from './helpers/db.js';
+import { asUser, expectError, freshDatabase, one, openDatabase, repoRoot, rows } from './helpers/db.js';
 import { newCompany, newUser, type Fixture } from './helpers/factory.js';
 
 /**
@@ -576,8 +576,7 @@ describe('on a session nobody prepared', () => {
   it('refuses a caller with no session and no key, and writes nothing', async () => {
     const company = await newCompany(db, { name: 'Session Neuve' });
     await bankAccount(company.companyId, ACCOUNT);
-    const fresh = new PGlite({ loadDataDir: await db.dumpDataDir('none') });
-    await fresh.waitReady;
+    const fresh = await openDatabase({ loadDataDir: await db.dumpDataDir('none') });
     try {
       const { setting } = await one<{ setting: string | null }>(fresh, `select current_setting('ekwo.installing', true) as setting`);
       expect(setting).toBeNull();

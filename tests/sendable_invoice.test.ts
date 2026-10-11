@@ -24,7 +24,7 @@
  * what that sentence is. No category, rate or country is written down here.
  */
 
-import { PGlite } from '@electric-sql/pglite';
+import type { PGlite } from '@electric-sql/pglite';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
@@ -35,6 +35,7 @@ import {
   freshDatabase,
   migrationFiles,
   one,
+  openDatabase,
   repoRoot,
   rows,
   seedFiles,
@@ -253,8 +254,7 @@ describe('the lines that were there before the core wrote the snapshot', () => {
     const files = await migrationFiles();
     expect(files).toEqual(expect.arrayContaining(SNAPSHOT));
 
-    const old = new PGlite();
-    await old.waitReady;
+    const old = await openDatabase();
     try {
       await old.exec(await readFile(shimPath, 'utf8'));
       for (const file of files.filter((name) => !SNAPSHOT.includes(name))) {

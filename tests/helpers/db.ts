@@ -1,7 +1,10 @@
-import { readFile, readdir, stat } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
+import { createHash, randomUUID } from 'node:crypto';
+import { openAsBlob } from 'node:fs';
+import { mkdir, readFile, readdir, rename, stat, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { PGlite, type Extensions } from '@electric-sql/pglite';
+import { PGlite, type Extensions, type PGliteOptions } from '@electric-sql/pglite';
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const repoRoot = join(here, '..', '..');
@@ -126,10 +129,51 @@ export async function moduleSeedFiles(): Promise<ModuleFile[]> {
 }
 
 /**
+ * Every PGlite a test opens, opened here.
+ *
+ * `close()` stops Postgres but keeps the WebAssembly module — and with it the
+ * whole heap of the database, 300 MB and more once a schema is loaded — for as
+ * long as the object is reachable. A test holds its database in a `let` that a
+ * `describe` closes over, so a file that opens one per pack kept every one of
+ * them until the file ended: ec_sales_list.test.ts reached 10 GB in one
+ * worker. The `close()` of a database opened here lets go of the module once
+ * Postgres has stopped, so a closed database weighs nothing, whoever still
+ * points at it.
+ */
+export async function openDatabase(options: PGliteOptions = {}): Promise<PGlite> {
+  const db = new PGlite(options);
+  await db.waitReady;
+  const close = db.close.bind(db);
+  db.close = async () => {
+    await close();
+    open.delete(db);
+    Object.assign(db, { mod: undefined, fs: undefined });
+  };
+  open.add(db);
+  return db;
+}
+
+const open = new Set<PGlite>();
+
+/** The databases opened in this file that nobody closed; `tests/setup.ts` reads it. */
+export function stillOpen(): PGlite[] {
+  return [...open];
+}
+
+/**
  * A brand new in-memory Postgres with the whole schema applied.
  *
  * PGlite is Postgres compiled to WebAssembly, so the migrations run against
  * the real planner and the real constraints — no Docker, no stub.
+ *
+ * The migrations, the modules and the seeds are replayed once per set of
+ * options and per content of those files, not once per call: the first call
+ * builds the database and writes its data directory to disk
+ * (`schemaImage`), and every call after it — in this file or in any other
+ * worker of the run — starts a new Postgres on a copy of that directory. A
+ * replay takes seconds and leaves the heap of the worker swollen; a load
+ * takes a few hundred milliseconds, and what each test gets is the same
+ * database, from the same files.
  *
  * Nothing here grants `anon` or `authenticated` anything. It used to: the
  * shim carried the default privileges of a Supabase project and this function
@@ -140,66 +184,77 @@ export async function moduleSeedFiles(): Promise<ModuleFile[]> {
  * tests is a `grant` somebody wrote.
  */
 export async function freshDatabase(options: Options = {}): Promise<PGlite> {
-  const db = new PGlite(options.extensions === undefined ? {} : { extensions: options.extensions });
-  await db.waitReady;
-
-  await db.exec(await readFile(shimPath, 'utf8'));
-
-  const leftOut = new Set(options.withoutMigrations ?? []);
-  for (const file of (await migrationFiles()).filter((f) => !leftOut.has(f))) {
-    const sql = await readFile(join(migrationsDir, file), 'utf8');
-    try {
-      await db.exec(sql);
-    } catch (error) {
-      throw new Error(`migration ${file} failed: ${(error as Error).message}`);
-    }
-  }
-
-  // The modules come after the socle and before the seeds: a module migration
-  // may reference `public.companies` or `public.accounts`, and a module's
-  // country seed writes its own reference tables, which have to exist first.
-  if (options.modules !== false) {
-    for (const migration of await moduleMigrationFiles()) {
-      const sql = await readFile(migration.path, 'utf8');
-      try {
-        await db.exec(sql);
-      } catch (error) {
-        throw new Error(
-          `module migration ${migration.code}/${migration.file} failed: ${(error as Error).message}`,
-        );
-      }
-    }
-  }
-
-  if (options.seed !== false) {
-    for (const file of await seedFiles()) {
-      const sql = await readFile(join(seedDir, file), 'utf8');
-      try {
-        await db.exec(sql);
-      } catch (error) {
-        throw new Error(`seed ${file} failed: ${(error as Error).message}`);
-      }
-    }
-
-    if (options.modules !== false) {
-      for (const seed of await moduleSeedFiles()) {
-        const sql = await readFile(seed.path, 'utf8');
-        try {
-          await db.exec(sql);
-        } catch (error) {
-          throw new Error(`module seed ${seed.code}/${seed.file} failed: ${(error as Error).message}`);
-        }
-      }
-    }
-  }
+  const image = await schemaImage(options);
+  const db = await openDatabase({
+    loadDataDir: await openAsBlob(image),
+    ...(options.extensions === undefined ? {} : { extensions: options.extensions }),
+  });
 
   // This connection is the installer, and says so. `is_installer()` is what
   // the guards read instead of "auth.uid() is null", so a test that arranges
   // a fixture as the owner keeps working and a test that puts a session or a
   // machine key on the connection stops being the installer for its duration.
+  // A setting lives in the session, not in the data directory: it is set on
+  // every database, loaded or built.
   await db.exec(`select set_config('ekwo.installing', 'on', false);`);
 
   return db;
+}
+
+/**
+ * The data directory of a database built with these options, as a tar file,
+ * built if this run has not built it yet.
+ *
+ * Its name is a hash of the options that change the data and of every file
+ * the build reads, so an edited migration or seed is a new image and never a
+ * stale one. The directory is the run's (`tests/global-setup.ts` makes it and
+ * removes it); outside a run, the system's temporary directory. Two workers
+ * that build the same image at once both write it, each to its own file, and
+ * the rename that publishes it is atomic: the loser's copy is identical.
+ */
+export async function schemaImage(options: Options = {}): Promise<string> {
+  const leftOut = new Set(options.withoutMigrations ?? []);
+  const migrations = (await migrationFiles()).filter((f) => !leftOut.has(f)).map((f) => join(migrationsDir, f));
+  const moduleMigrations =
+    options.modules === false ? [] : (await moduleMigrationFiles()).map((m) => m.path);
+  const seeds = options.seed === false ? [] : (await seedFiles()).map((f) => join(seedDir, f));
+  const moduleSeeds =
+    options.seed === false || options.modules === false ? [] : (await moduleSeedFiles()).map((m) => m.path);
+  // The order is the build's: the modules after the socle and before the
+  // seeds, because a module migration may reference `public.companies` or
+  // `public.accounts`, and a module's country seed writes its own reference
+  // tables, which have to exist first.
+  const files = [shimPath, ...migrations, ...moduleMigrations, ...seeds, ...moduleSeeds];
+
+  const hash = createHash('sha256');
+  for (const file of files) {
+    hash.update(relative(repoRoot, file)).update('\0').update(await readFile(file)).update('\0');
+  }
+  const dir = process.env.EKWO_TEST_SCHEMA_DIR ?? join(tmpdir(), 'ekwo-test-schema');
+  const image = join(dir, `${hash.digest('hex').slice(0, 24)}.tar`);
+  if (await stat(image).catch(() => undefined)) return image;
+
+  const db = await openDatabase();
+  try {
+    for (const file of files) {
+      try {
+        await db.exec(await readFile(file, 'utf8'));
+      } catch (error) {
+        throw new Error(`${relative(repoRoot, file)} failed: ${(error as Error).message}`);
+      }
+    }
+    // A data directory written after a checkpoint opens without replaying
+    // the write-ahead log.
+    await db.exec('checkpoint');
+    const dump = await db.dumpDataDir('none');
+    await mkdir(dir, { recursive: true });
+    const partial = `${image}.${process.pid}.${randomUUID()}`;
+    await writeFile(partial, new Uint8Array(await dump.arrayBuffer()));
+    await rename(partial, image);
+  } finally {
+    await db.close();
+  }
+  return image;
 }
 
 /** Single scalar from a query. */

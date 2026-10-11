@@ -33,7 +33,7 @@
 
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { PGlite } from '@electric-sql/pglite';
+import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
   GRANT_ROLES,
@@ -55,6 +55,7 @@ import {
   migrationFiles,
   moduleMigrationFiles,
   moduleSeedFiles,
+  openDatabase,
   repoRoot,
   rows,
   seedFiles,
@@ -100,8 +101,7 @@ async function aPackWithAScenario(): Promise<{ pack: Pack; golden: PackGolden }>
  * below are about what the migrations put back.
  */
 async function strippedDatabase(): Promise<PGlite> {
-  const db = new PGlite();
-  await db.waitReady;
+  const db = await openDatabase();
   await db.exec(await readFile(shimPath, 'utf8'));
 
   await db.exec(`
