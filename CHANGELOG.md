@@ -40,6 +40,24 @@ somewhere has already run it.
   tests book the provision of every worked example of every pack and hold the
   tax to the cent.
 
+### Security
+
+- **A bank line is settled by the function that settles it**
+  (`20261011154807`; issue #91, reported by Pieterjan Muller).
+  `bank_transactions.entry_id` and `state` were plain columns under
+  `bank.write`: setting `entry_id` back to null let the same money be settled
+  a second time, writing `reconciled` took a line nothing had settled out of
+  every list, and the amount of a line already booked as a payment could
+  still move. `bank_transactions_guard()` now lets a person move a line
+  between `pending` and `ignored`, and leaves `reconciled` and `entry_id` to
+  `settle_from_statement()`, which raises `ekwo.settling_statement` around its
+  one update, honoured for a caller holding `reconcile.write`
+  (`bank_transaction_settled_by_rpc` otherwise, on an insert as on an update).
+  A settled line keeps its amount, day, currency and bank account
+  (`bank_transaction_settled`). `settle_from_statement()` also locks the line
+  it reads, so two calls for one line wait for each other. The demo company
+  raises the setting for the one settled line it writes.
+
 ## [0.12.1] — 2026-10-11
 
 ### Added

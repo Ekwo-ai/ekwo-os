@@ -352,6 +352,11 @@ begin
           12500.00, 14813.00, 'confirmed', 'demo')
   returning id into v_stmt;
 
+  -- The first line is the payment booked above, so it arrives settled. That
+  -- is what `settle_from_statement()` writes, under the setting it raises and
+  -- `bank_transactions_guard()` honours for an owner; the demo raises it for
+  -- this one insert instead of booking the payment a second time.
+  perform set_config('ekwo.settling_statement', 'on', true);
   insert into bank_transactions (company_id, statement_id, bank_account_id, sequence,
                                  transaction_date, value_date, amount, description,
                                  counterpart_name, counterpart_iban, structured_reference,
@@ -364,5 +369,6 @@ begin
      null, s_immo, null, 'pending'),
     (v_company, v_stmt, v_bank, 30, date '2026-08-20', date '2026-08-20', -712.00,
      'Paiement carte, fournitures', null, null, null, null, null, 'pending');
+  perform set_config('ekwo.settling_statement', 'off', true);
 end
 $$;

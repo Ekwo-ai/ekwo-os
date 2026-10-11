@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.12.1",
-  "migration": "20261011120000",
+  "migration": "20261011154807",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3990,6 +3990,10 @@
         "arguments": ""
       },
       {
+        "name": "bank_transactions_guard",
+        "arguments": ""
+      },
+      {
         "name": "caller_companies",
         "arguments": ""
       },
@@ -5460,6 +5464,10 @@
       {
         "table": "bank_transactions",
         "name": "bank_transactions_currency_of_bank_account"
+      },
+      {
+        "table": "bank_transactions",
+        "name": "bank_transactions_guard"
       },
       {
         "table": "bank_transactions",
@@ -7486,6 +7494,14 @@
         },
         {
           "name": "bank_statements_refresh_balance",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "bank_transactions_guard",
           "arguments": "",
           "trigger": true,
           "anon": [],
