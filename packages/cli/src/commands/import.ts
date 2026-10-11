@@ -159,7 +159,11 @@ async function importBookFiles(args: ParsedArgs, deps: BooksDeps, source: BookSo
   const journals = ((result['mapping'] ?? {}) as Row)['journals'] as Record<string, string | null> | undefined;
   if (journals !== undefined && Object.keys(journals).length > 0) {
     line();
-    table([{ title: 'old journal' }, { title: 'becomes' }], Object.entries(journals).map(([from, to]) => [from, to ?? '—']));
+    const why = (result['journal_reasons'] ?? {}) as Record<string, string>;
+    table(
+      [{ title: 'old journal' }, { title: 'becomes' }, { title: 'why' }],
+      Object.entries(journals).map(([from, to]) => [from, to ?? '—', why[from] ?? 'given']),
+    );
   }
 
   const violations = (result['violations'] ?? []) as Row[];
