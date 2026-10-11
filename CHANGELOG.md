@@ -84,6 +84,22 @@ somewhere has already run it.
   box of the line it mirrors, even when the posting has since moved. Lines
   already in a ledger are not rewritten.
 
+- **A ledger line keeps the boxes it was posted in** (`20261011160431`;
+  issue #90, reported by Pieterjan Muller). `vat_return()` read the boxes a
+  line prints in and the form it is on from today's `tax_postings`, which a
+  member with `settings.write` edits and `pack_upgrade()` rewrites, so a
+  return already filed for a locked period could come out with other
+  figures. Two columns, `entry_lines.declaration_boxes` and
+  `entry_lines.report_code`, are now frozen when the line is written, from
+  the posting that writes it, by `entry_lines_box_from_posting()`; a reversal
+  takes those of the line it mirrors, and a change by hand is refused
+  (`declaration_boxes_from_posting`). The rule is written once,
+  `declaration_boxes_of()`, and is the one `vat_return()` applied at reading:
+  the backfill writes on every line what the return read for it, and every
+  pack's golden year returns the same declarations to the cent after the
+  upgrade. `vat_return()` reads the line, and falls back on the postings only
+  for a line restored from an archive written before this release.
+
 ## [0.12.1] — 2026-10-11
 
 ### Added

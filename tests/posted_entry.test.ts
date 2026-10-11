@@ -171,6 +171,8 @@ function another(column: { name: string; type: string }, row: Record<string, unk
       return `not ${column.name}`;
     case 'text':
       return `'changed'`;
+    case 'ARRAY':
+      return `array['changed']`;
     default:
       return null;
   }

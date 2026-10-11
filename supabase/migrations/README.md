@@ -120,6 +120,7 @@ Always number after the newest file on `main`, and check `git log` first.
 | `20261011154807_a_bank_line_is_settled_by_its_function` | `bank_transactions_guard()`: `state` moves between `pending` and `ignored` by hand, `reconciled` and `entry_id` are written by `settle_from_statement()` alone under `ekwo.settling_statement` (honoured for `reconcile.write`), a settled line keeps its amount, day, currency and account; `settle_from_statement()` locks the line it reads |
 | `20261011155443_a_matching_settles_one_counterparty` | `reconcile()` refuses two lines naming different counterparties (`commercial_entity()`), `reconcile_contact_mismatch`; `reconciliations_guard_reconcile()` keeps the table to `reconcile()` and `unreconcile()` under `ekwo.reconciling` (honoured for `reconcile.write`) |
 | `20261011155947_a_box_is_written_by_its_posting` | `entry_lines_box_from_posting()`: a line naming a declaration box names a tax, and a posting of that tax writes that box on that side, or the line mirrors in a reversal a line carrying that box — `declaration_box_without_posting` otherwise |
+| `20261011160431_a_line_keeps_the_boxes_it_was_posted_in` | `entry_lines.declaration_boxes` and `entry_lines.report_code`, frozen when the line is written by `entry_lines_box_from_posting()` from `declaration_boxes_of()` — a reversal takes those of the line it mirrors, a change by hand is `declaration_boxes_from_posting` — and backfilled with the guards lifted by name; `vat_return()` reads them, so a posting changed afterwards moves no return |
 
 ## Rules for a new migration
 

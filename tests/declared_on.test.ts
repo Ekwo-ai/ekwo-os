@@ -39,6 +39,12 @@ const MIGRATIONS = [
   '20261005160900_a_period_is_read_through_its_index.sql',
 ];
 
+/**
+ * Published after the three, and reading `declared_lines()`: left out with
+ * them, and applied after them as part of the same upgrade.
+ */
+const LATER = ['20261011160431_a_line_keeps_the_boxes_it_was_posted_in.sql'];
+
 const withGolden = allPacks.filter((pack) => pack.golden !== null);
 
 interface Box {
@@ -86,7 +92,7 @@ describe('an installation upgraded with books already in it', () => {
   let touchedBefore = '';
 
   beforeAll(async () => {
-    db = await freshDatabase({ withoutMigrations: MIGRATIONS });
+    db = await freshDatabase({ withoutMigrations: [...MIGRATIONS, ...LATER] });
     for (const pack of withGolden) {
       const golden = pack.golden as PackGolden;
       // country-literal: every pack of the checkout books its own year, on its
@@ -124,7 +130,7 @@ describe('an installation upgraded with books already in it', () => {
       await one<{ h: string }>(db, `select md5(string_agg(id::text || updated_at::text, ',' order by id)) as h from entry_lines`)
     ).h;
 
-    for (const file of MIGRATIONS) {
+    for (const file of [...MIGRATIONS, ...LATER]) {
       await db.exec(await readFile(join(repoRoot, 'supabase', 'migrations', file), 'utf8'));
     }
   }, 1_200_000);

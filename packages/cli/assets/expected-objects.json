@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.12.1",
-  "migration": "20261011155947",
+  "migration": "20261011160431",
   "socle": {
     "schema": "public",
     "tables": [
@@ -2241,6 +2241,10 @@
             "type": "text"
           },
           {
+            "name": "declaration_boxes",
+            "type": "text[]"
+          },
+          {
             "name": "declared_on",
             "type": "date"
           },
@@ -2267,6 +2271,10 @@
           {
             "name": "posting_type",
             "type": "tax_posting_type"
+          },
+          {
+            "name": "report_code",
+            "type": "text"
           },
           {
             "name": "sequence",
@@ -4144,6 +4152,10 @@
       {
         "name": "current_api_key",
         "arguments": ""
+      },
+      {
+        "name": "declaration_boxes_of",
+        "arguments": "p_tax_id uuid, p_box text, p_tax_line boolean, OUT boxes text[], OUT report_code text"
       },
       {
         "name": "declaration_period_months",
@@ -7899,6 +7911,17 @@
         {
           "name": "current_api_key",
           "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "declaration_boxes_of",
+          "arguments": "p_tax_id uuid, p_box text, p_tax_line boolean, OUT boxes text[], OUT report_code text",
           "anon": [],
           "authenticated": [
             "execute"
