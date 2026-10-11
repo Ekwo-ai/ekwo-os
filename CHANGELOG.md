@@ -72,6 +72,18 @@ somewhere has already run it.
   (`reconciliation_by_reconcile` otherwise). Grants and policies are
   unchanged, and the cascades of a company and of a line still pass.
 
+- **A ledger line names a declaration box its tax posting writes**
+  (`20261011155947`; issue #88, reported by Pieterjan Muller). A draft line
+  keyed by hand could carry any `declaration_box` and `box_amount`, with no
+  tax, and `vat_return()` summed it into that box. `entry_lines_box_from_posting()`
+  now asks of every line that names a box that it names a tax, and that a
+  posting of that tax writes that box on that side — a `tax` posting for a
+  tax line, `base` or `tax_on_base` otherwise
+  (`declaration_box_without_posting`). `post_document()` and
+  `settle_cash_basis_tax()` already write exactly that; a reversal keeps the
+  box of the line it mirrors, even when the posting has since moved. Lines
+  already in a ledger are not rewritten.
+
 ## [0.12.1] — 2026-10-11
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.12.1",
-  "migration": "20261011155443",
+  "migration": "20261011155947",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4274,6 +4274,10 @@
         "arguments": ""
       },
       {
+        "name": "entry_lines_box_from_posting",
+        "arguments": ""
+      },
+      {
         "name": "entry_lines_guard_period",
         "arguments": ""
       },
@@ -5676,6 +5680,10 @@
       {
         "table": "entries",
         "name": "entries_set_updated_at"
+      },
+      {
+        "table": "entry_lines",
+        "name": "entry_lines_box_from_posting"
       },
       {
         "table": "entry_lines",
@@ -8202,6 +8210,14 @@
         },
         {
           "name": "entries_refresh_totals",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "entry_lines_box_from_posting",
           "arguments": "",
           "trigger": true,
           "anon": [],
