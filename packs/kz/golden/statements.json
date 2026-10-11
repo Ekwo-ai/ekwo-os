@@ -27,8 +27,8 @@
         "EQ-UNPAID": "0.00",
         "EQ-PREMIUM": "0.00",
         "EQ-RESERVES": "0.00",
-        "EQ-RETAINED": "0.00",
-        "EQ-TOTAL": "0.00",
+        "EQ-RETAINED": "56500.00",
+        "EQ-TOTAL": "56500.00",
         "LI-STFIN": "0.00",
         "LI-TAX": "20150.00",
         "LI-OTHERMAND": "0.00",
@@ -42,7 +42,7 @@
         "LI-DTL": "0.00",
         "LI-OTHERLT": "0.00",
         "LI-NCL-TOTAL": "0.00",
-        "EQLI-TOTAL": "98905.00"
+        "EQLI-TOTAL": "155405.00"
       }
     },
     {

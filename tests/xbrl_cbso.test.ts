@@ -55,9 +55,10 @@ beforeAll(async () => {
   db = await freshDatabase();
   demo = await demoCompanyId(db);
 
-  // Annual accounts are filed on a closed year: until the result is
-  // appropriated it sits on neither side of the balance sheet, and 20/58 =
-  // 10/49 — an identity the Filing application checks — is false.
+  // Annual accounts are filed on a closed year: the appropriation the close
+  // books is what the allocation section reports, and the balance sheet then
+  // shows the result where it was appropriated, so 20/58 = 10/49 — an
+  // identity the Filing application checks — holds on the filed figures.
   const year = await one<{ id: string }>(
     db,
     `select id from fiscal_years where company_id = $1 and start_date = date '2026-01-01'`,

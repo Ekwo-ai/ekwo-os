@@ -39,6 +39,31 @@ somewhere has already run it.
   GST or sales tax and which does neither, and `docs/packs.md` says how to
   write either.
 
+### Fixed
+
+- **A balance sheet drawn before the close balances: the result of the year
+  in progress stands on equity** (`20261011081256`). Until a year was closed,
+  its result stayed on the income and expense accounts, which a national
+  balance sheet does not read: a Belgian company in the middle of its year
+  printed TOTAL DE L'ACTIF 3 025,00 and TOTAL DU PASSIF 525,00, the 2 500,00
+  of the year missing, while the trial balance said the books balanced.
+  `statement_account_matches()` now moves the balance of every income and
+  expense account that no line of a balance sheet catches onto the account
+  the close would leave the result on — the current-year result account of a
+  pack that closes into one (`DI` in France), retained earnings otherwise
+  (rubric `14` in Belgium) — and the pack's own rules put it on its line.
+  Assets equal liabilities and equity to the cent, for a profit and for a
+  loss, in all 127 packs that carry a balance sheet. After a close nothing is
+  moved, because the closing entry has already emptied those accounts, so
+  nothing is counted twice; a period that stops inside a closed year shows
+  the result to that day. The choice of account is `year_result_account()`,
+  which `fec_lines()` now reads too, so the *à-nouveaux* of a year nobody
+  closed and the balance sheet put the result in one place. A scheme that
+  already catches income and expense on a line of its own — the generic
+  framework, and 17 packs whose balance sheet does the same — is unchanged.
+  The golden balance sheets of the 110 other packs are rewritten: equity and
+  the total of liabilities rise by the result of the golden year.
+
 ## [0.12.0] — 2026-10-10
 
 ### Added

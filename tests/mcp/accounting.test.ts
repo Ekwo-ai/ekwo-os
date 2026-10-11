@@ -357,10 +357,10 @@ describe('the books, through the tools', () => {
     );
     const profit = list(income['lines']).find((row) => row['line_code'] === '9905')?.['amount'];
 
-    expect(Number(amount('20/58'))).toBeCloseTo(
-      Number(amount('10/49')) + Number(profit),
-      2,
-    );
+    // The year is open, so its result stands on rubric 14, where the close
+    // will put it, and the two totals are equal.
+    expect(Number(amount('14'))).toBeCloseTo(Number(profit), 2);
+    expect(Number(amount('20/58'))).toBeCloseTo(Number(amount('10/49')), 2);
     expect(answer['unmapped_accounts']).toEqual([]);
     expect(String(answer['note'])).toMatch(/ties out/);
   });

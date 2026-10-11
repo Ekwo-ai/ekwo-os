@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.12.0",
-  "migration": "20261010203452",
+  "migration": "20261011081256",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4726,6 +4726,10 @@
         "arguments": "p_company_id uuid, p_statement_code text, p_from date, p_to date"
       },
       {
+        "name": "statement_rule_catches",
+        "arguments": "p_rule statement_line_rules, p_code text, p_account_type account_type, p_balance numeric"
+      },
+      {
         "name": "suggest_combination",
         "arguments": "p_transaction_id uuid"
       },
@@ -4844,6 +4848,10 @@
       {
         "name": "version_at_least",
         "arguments": "p_version text, p_floor text"
+      },
+      {
+        "name": "year_result_account",
+        "arguments": "p_company_id uuid, p_balance numeric"
       }
     ],
     "policies": [
@@ -9436,6 +9444,17 @@
           ]
         },
         {
+          "name": "statement_rule_catches",
+          "arguments": "p_rule statement_line_rules, p_code text, p_account_type account_type, p_balance numeric",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "suggest_combination",
           "arguments": "p_transaction_id uuid",
           "anon": [],
@@ -9737,6 +9756,17 @@
         {
           "name": "version_at_least",
           "arguments": "p_version text, p_floor text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "year_result_account",
+          "arguments": "p_company_id uuid, p_balance numeric",
           "anon": [],
           "authenticated": [
             "execute"
