@@ -86,7 +86,7 @@ non-creditable purchase and an import.
   every tax invoice received in box `(10)`, creditable or not, and take the
   non-creditable tax back out at `(16)` (detailed at `(50)`), so `(17)` is
   the input tax actually credited. Box `(10)` is therefore declared as the
-  sum of a hidden `10A` — the creditable tax `KR-P-10` and `KR-P-IMP-10`
+  sum of `10A` — the creditable tax `KR-P-10` and `KR-P-IMP-10`
   post — and `(16)`.
 - `KR-P-IMP-10` — 제50조: the tax customs collects on an imported good, which
   is fully creditable once the 수입세금계산서 is issued (제35조), and whose
@@ -122,8 +122,8 @@ sits on `2110` 외상매입금 with the others.
 boxes: the ones the eight tax codes above actually reach, plus the totals a
 reviewer needs to see the payable or refundable figure come out —
 `(1)`, `(6)`, `(9)`, `(10)`, `(15)`, `(16)`, `(17)`, the un-numbered `㉰`
-declared `hidden`, `(27)`, `(80)` and `(83)`, with `(10)` the sum of a
-hidden `10A` and `(16)` as described above. The real form carries far more:
+declared `hidden`, `(27)`, `(80)` and `(83)`, with `(10)` the sum of
+`10A` and `(16)` as described above. The real form carries far more:
 credit-card and cash-receipt sales `(3)`–`(4)`, bad-debt relief `(8)`, fixed
 asset purchases `(11)`, the eighteen credits and reductions of `(18)`–`(25)`,
 every one of the penalty lines of `(26)` — none of it is declared, because
