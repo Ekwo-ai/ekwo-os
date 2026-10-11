@@ -36,7 +36,7 @@
 
 import { STATEMENT_FORMATS } from '@ekwo-ai/core';
 import { filingReadiness } from './filing.js';
-import { sourcesOf, type EinvoiceObligation, type Pack, type PackDeadline, type PackSource } from './read.js';
+import { sourcesOf, type EinvoiceObligation, type Pack, type PackDeadline, type PackEvidence, type PackSource } from './read.js';
 
 /** One chart of accounts of a country, as a reader needs it. */
 export interface DescribedChart {
@@ -158,8 +158,10 @@ export interface DescribedStatement {
 /**
  * Who stands behind a pack, and against what.
  *
- * `status` is the pack's own word — `community`, `maintained` or `reviewed` —
- * and `reviewedBy` is a named professional or nobody. There is no status that
+ * `status` is the pack's own word — `community`, `maintained`, `proven` or
+ * `reviewed` — and `reviewedBy` is a named professional or nobody. `evidence`
+ * is what a proven pack was proven on: per scope, whether the filing of a real
+ * company was reproduced, partly reproduced or not tested. There is no status that
  * means certified by Ekwo, and writing a pack is not reviewing it: that is
  * invariant 6 of [`CONTRIBUTING.md`](../../../../CONTRIBUTING.md), and this reader
  * repeats what the manifest says rather than grading it.
@@ -176,6 +178,7 @@ export interface DescribedCertification {
   reviewedBy: string | null;
   reviewedOn: string | null;
   sources: PackSource[];
+  evidence: PackEvidence[];
   lastConsultedOn: string | null;
 }
 
@@ -395,6 +398,7 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
       reviewedBy: pack.manifest.certification?.by ?? null,
       reviewedOn: pack.manifest.certification?.on ?? null,
       sources,
+      evidence: pack.manifest.certification?.evidence ?? [],
       lastConsultedOn: consulted[consulted.length - 1] ?? null,
     },
     boundary: boundaryOf(declarations, einvoicing, bankStatementFormats, filing.taxPayable),

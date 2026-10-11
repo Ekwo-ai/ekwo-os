@@ -38,7 +38,14 @@ export {
   printOperatorChecklist,
   type OperatorInstruction,
 } from './checklist.js';
-export { describeCertification, needsWarning, type Certification, type CertificationFacts } from './pack/certification.js';
+export {
+  CERTIFICATION_SCALE,
+  describeCertification,
+  needsWarning,
+  rankOf,
+  type Certification,
+  type CertificationFacts,
+} from './pack/certification.js';
 export { describeFiling, filingReadiness, type FilingReadiness } from './pack/filing.js';
 export {
   describePack,

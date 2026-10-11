@@ -5,13 +5,17 @@ import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
   CATEGORY_CODES,
+  CERTIFICATION_SCALE,
   TREATMENT_CODES,
   compilePack,
   declaredSeedSequences,
+  describeCertification,
   listPacks,
+  needsWarning,
   packsDir,
   parseCsv,
   readPack,
+  rankOf,
   readSchema,
   seedFileName,
   sourcesOf,
@@ -543,6 +547,98 @@ describe('the committed seeds', () => {
         ]),
       ),
     ).toThrow(/seed_sequence_conflict/);
+  });
+});
+
+/** One comparison that landed, shaped as the schema wants it and naming nobody. */
+const reproducedEvidence = {
+  scope: 'financial_statements',
+  result: 'reproduced',
+  fiscal_year: 2025,
+  filing: 'Annual accounts of an example company',
+  summary: 'Every line of the filed statements matches to the unit they were filed in.',
+  checked_on: '2026-10-10',
+};
+
+describe('the certification scale', () => {
+  it('runs community, maintained, proven, reviewed — the schema and the CLI in one order', () => {
+    // The schema is what a pack may claim and the CLI is what prints it: two
+    // lists of the same scale, compared rather than trusted to agree.
+    expect(certificationStatuses).toEqual(['community', 'maintained', 'proven', 'reviewed']);
+    expect([...CERTIFICATION_SCALE]).toEqual(certificationStatuses);
+    expect(certificationStatuses.map(rankOf)).toEqual([0, 1, 2, 3]);
+    // The deprecated word reads as what it was moved to, and an unknown one is off the scale.
+    expect(rankOf('ekwo')).toBe(rankOf('maintained'));
+    expect(rankOf('certified')).toBe(-1);
+  });
+
+  it('says what a proven pack is, and still warns the operator about it', () => {
+    const said = describeCertification({ status: 'proven' });
+    expect(said).toBe('proven on the real books of a company — not yet reviewed by an accountant');
+    expect(said).not.toMatch(/certified|validated/);
+    // One company's filing covers the cases that company uses, not the operator's.
+    expect(needsWarning('proven')).toBe(true);
+    expect(needsWarning('reviewed')).toBe(false);
+  });
+
+  it('reads every proven pack with what was reproduced and what was not tested', () => {
+    const proven = allPacks.filter((pack) => pack.manifest.certification?.status === 'proven');
+    // country-literal: the two packs whose 2025 filings were reproduced on real books, which this status was added for
+    expect(proven.map((pack) => pack.manifest.country).sort()).toEqual(['BE', 'FR']);
+    for (const pack of proven) {
+      const country = pack.manifest.country;
+      const certification = pack.manifest.certification!;
+      expect(certification.by, country).toBeUndefined();
+      const evidence = certification.evidence ?? [];
+      expect(evidence.some((entry) => entry.result === 'reproduced'), country).toBe(true);
+      // Honesty is the point: the VAT return could not be compared, and says so.
+      expect(evidence.find((entry) => entry.scope === 'vat_return')?.result, country).toBe('not_tested');
+      for (const entry of evidence) {
+        expect(entry.fiscal_year, country).toBe(2025);
+        expect(entry.summary, country).not.toMatch(/certif|validat/i);
+      }
+    }
+  });
+
+  it('refuses a proven pack whose evidence holds no reproduced filing', async () => {
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-proven-'));
+    await cp(join(packs, 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(join(packs, somePack.slug), join(dir, somePack.slug), { recursive: true });
+    const manifestFile = join(dir, somePack.slug, 'pack.json');
+    const manifest = JSON.parse(await readFile(manifestFile, 'utf8')) as Record<string, unknown>;
+    const certification = manifest['certification'] as Record<string, unknown>;
+
+    async function claim(evidence: unknown[] | undefined): Promise<void> {
+      const { evidence: _own, ...rest } = certification;
+      await writeFile(
+        manifestFile,
+        JSON.stringify({
+          ...manifest,
+          certification: { ...rest, status: 'proven', ...(evidence === undefined ? {} : { evidence }) },
+        }),
+        'utf8',
+      );
+    }
+
+    await claim(undefined);
+    await expect(readPack(somePack.slug, dir)).rejects.toThrow(/a proven pack says what it was proven on/);
+
+    await claim([
+      { ...reproducedEvidence, scope: 'balance_sheet', result: 'partly_reproduced' },
+      { ...reproducedEvidence, scope: 'vat_return', result: 'not_tested' },
+    ]);
+    await expect(readPack(somePack.slug, dir)).rejects.toThrow(
+      /evidence holds only partly_reproduced and not_tested; until one scope is reproduced, the pack is maintained/,
+    );
+
+    // A result outside the three is the schema's to refuse.
+    await claim([{ ...reproducedEvidence, result: 'validated' }]);
+    await expect(readPack(somePack.slug, dir)).rejects.toThrow(/validated/);
+
+    await claim([reproducedEvidence, { ...reproducedEvidence, scope: 'vat_return', result: 'not_tested' }]);
+    const read = await readPack(somePack.slug, dir);
+    expect(read.manifest.certification?.status).toBe('proven');
+    expect(read.manifest.certification?.evidence).toHaveLength(2);
   });
 });
 
@@ -1123,6 +1219,9 @@ describe('the pack format', () => {
         ...(manifest['certification'] as Record<string, unknown>),
         status,
         ...(status === 'reviewed' ? { by: 'A. Example, chartered accountant', on: '2026-09-15' } : {}),
+        // A proven pack says what it was proven on; the rule under test here is
+        // another one, so the claim is given the evidence it needs.
+        ...(status === 'proven' ? { evidence: [reproducedEvidence] } : {}),
       };
       await writeFile(file, JSON.stringify(manifest), 'utf8');
     }

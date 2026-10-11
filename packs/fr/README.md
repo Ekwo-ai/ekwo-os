@@ -4,9 +4,15 @@ The format is [`docs/packs.md`](../../docs/packs.md). This file records what the
 pack deliberately leaves out of form 3310-CA3, and why, so that a French
 accountant can disagree with one line rather than with the whole return.
 
-**Status: `maintained`.** The figures are replayed against a year of books by
-`tests/golden.test.ts`, which proves the pack is coherent and not that it is
-right.
+**Status: `proven`.** The figures are replayed against a year of books by
+`tests/golden.test.ts`, which proves the pack is coherent. On the 2025 books of a French SAS under the simplified regime, imported from
+another system, the pack reproduces to the euro every amount of the bilan and
+the compte de résultat of the liasse fiscale 2033 it filed: 33 lines, read
+through the 2050 to 2052 forms. Its CA3 returns were not tested: neither the
+filed returns nor any VAT posting are in those books.
+`certification.evidence` in [`pack.json`](pack.json) says it scope by scope.
+It proves the cases that company uses, not every regime of the country, and
+no accountant has reviewed the pack.
 
 ## Debt: the numbering of form 3310-CA3
 

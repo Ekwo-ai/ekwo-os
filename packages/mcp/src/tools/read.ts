@@ -862,8 +862,8 @@ export const DescribePackInput = z.object({
  * The pack is the transcription of a régime — a chart of accounts, the taxes
  * and the boxes of the return — and a transcription is only worth what its
  * sources are worth. `certification_status` says whether a named professional
- * has read it, and `sources` is the register the pack declares: the texts it
- * was built from, each with the publisher that serves it, an absolute link and
+ * has read it, or whether it reproduced a real company's accepted filing, and
+ * `sources` is the register the pack declares: the texts it was built from, each with the publisher that serves it, an absolute link and
  * the day somebody opened it.
  *
  * It answers a question that used to have no answer here: shown a rate or a
@@ -899,7 +899,7 @@ export async function describePack(
     packs,
     count: packs.length,
     note:
-      'certification_status is what somebody claims, not a certificate: community means nobody has read it, maintained means the maintainers keep it current and nobody has reviewed it, reviewed means the named professional in certified_by read it on certified_at. `sources` is the register the pack declares — each entry is a text, its official publisher, an absolute link and the day it was opened — and it holds no copy of the law itself. A tax and a box of the declaration each carry their own article in legal_reference and name the register entry it is in; a link that no longer answers is the register being stale, never the rule being wrong.',
+      'certification_status is what somebody claims, not a certificate: community means nobody has read it, maintained means the maintainers keep it current and nobody has reviewed it, proven means a maintained pack reproduced, after the books of a real company were imported, the statements that company filed and the administration accepted — it proves the cases that company uses, never every regime of the country, and `ekwo pack describe <cc>` lists per scope what was reproduced and what was not tested — reviewed means the named professional in certified_by read it on certified_at. `sources` is the register the pack declares — each entry is a text, its official publisher, an absolute link and the day it was opened — and it holds no copy of the law itself. A tax and a box of the declaration each carry their own article in legal_reference and name the register entry it is in; a link that no longer answers is the register being stale, never the rule being wrong.',
   };
 }
 

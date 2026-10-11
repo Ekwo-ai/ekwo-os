@@ -228,7 +228,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`az`](../packs/az/) | Azərbaycan | `129_pack_az.sql` | az, en | `community` |
 | [`ba`](../packs/ba/) | Bosna i Hercegovina | `113_pack_ba.sql` | bs, en | `community` |
 | [`bd`](../packs/bd/) | Bangladesh | `126_pack_bd.sql` | en, bn | `community` |
-| [`be`](../packs/be/) | Belgium | `10_pack_be.sql` | fr, nl, de, en | `maintained` |
+| [`be`](../packs/be/) | Belgium | `10_pack_be.sql` | fr, nl, de, en | `proven` |
 | [`bf`](../packs/bf/) | Burkina Faso | `23_pack_bf.sql` | fr | `community` |
 | [`bg`](../packs/bg/) | България | `73_pack_bg.sql` | bg | `community` |
 | [`bh`](../packs/bh/) | البحرين | `117_pack_bh.sql` | ar, en | `community` |
@@ -259,7 +259,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`es`](../packs/es/) | España | `19_pack_es.sql` | es, en | `community` |
 | [`et`](../packs/et/) | Ethiopia | `133_pack_et.sql` | en | `community` |
 | [`fi`](../packs/fi/) | Finland | `67_pack_fi.sql` | fi, en | `community` |
-| [`fr`](../packs/fr/) | France | `11_pack_fr.sql` | fr, en | `maintained` |
+| [`fr`](../packs/fr/) | France | `11_pack_fr.sql` | fr, en | `proven` |
 | [`ga`](../packs/ga/) | Gabon | `28_pack_ga.sql` | fr | `community` |
 | [`gb`](../packs/gb/) | United Kingdom | `14_pack_gb.sql` | en | `community` |
 | [`ge`](../packs/ge/) | საქართველო | `110_pack_ge.sql` | ka, en | `community` |
@@ -1868,10 +1868,12 @@ missing, a field nobody defined, a `kind` outside the six, a `url` that is not
 absolute and `https`. A `source` naming a key the pack's register does not
 carry, which reads as a text and is a typo; the message lists the keys there
 are. A pack whose status is not `community` and whose register holds no entry
-anybody can open, because `maintained` and `reviewed` are both claims that
-somebody keeps this current and neither is sayable about a list of titles. And
-on a `reviewed` pack, a tax or a box that names no source at all — that one is
-a warning on a `maintained` pack and nothing on a `community` one. A bare
+anybody can open, because `maintained`, `proven` and `reviewed` are all claims
+that somebody keeps this current and none is sayable about a list of titles.
+And on a `reviewed` pack, a tax or a box that names no source at all — that one
+is a warning on a `maintained` or a `proven` pack and nothing on a `community`
+one. A `proven` pack whose `certification.evidence` holds no entry with the
+result `reproduced`, because the status is the claim that one did. A bare
 string in the register is a warning everywhere: it is the shape the field had
 before, and a pack written against it still compiles.
 
@@ -2083,6 +2085,7 @@ claims:
 |---|---|---|
 | `community` | anything, including the deprecated bare titles | nothing asked |
 | `maintained` | at least one text somebody can open, or the pack is refused | a warning, naming the first few and counting the rest |
+| `proven` | the same | the same |
 | `reviewed` | the same | **refused** where one of them names no source |
 
 The third row is the substance of a review. A professional who reads a pack
@@ -2098,16 +2101,75 @@ prints it in as many words before anyone books anything:
 |---|---|---|
 | `community` | contributed, not read by an accountant | whoever proposes the pack. It is the honest answer for a new pack, and the right one until the row below happens |
 | `maintained` | maintained by Ekwo, not yet reviewed by an accountant | the maintainers, on a pack they keep up to date themselves. Nobody else, because nobody else is committing to keep it current |
+| `proven` | proven on the real books of a company, not yet reviewed by an accountant: the pack reproduced, to the unit they were filed in, the statements that company filed and the administration accepted, after its books were imported | the maintainers, with the evidence in the same pull request — see [What a proven pack shows](#what-a-proven-pack-shows) |
 | `reviewed` | read by a named professional, on the date shown | the reviewer, in the pull request that carries their name. Not the pack's author, unless the author is the professional and says so under their own name |
 
 A pack with no `certification` block at all compiles as `community`, which is
 the safe reading of silence.
 
+The scale is ordered: `community`, `maintained`, `proven`, `reviewed`.
+
 **There is deliberately no status that means "certified by Ekwo".** Writing a
-pack and testing that it holds together is not reviewing it: only a
-professional reading a pack against the law is. The
+pack and testing that it holds together is not reviewing it, and neither is
+reproducing one company's filing: only a professional reading a pack against
+the law is. The
 [table of packs](#the-packs-of-this-checkout) is generated from the manifests
 and gives the status of each.
+
+### What a proven pack shows
+
+`proven` sits between `maintained` and `reviewed`. A real company's books are
+imported into a throwaway installation, the pack computes that company's
+statements, and they are compared line by line with what the company filed and
+the administration accepted. Where they match to the unit they were filed in,
+the pack has reproduced a real filing. That proves the cases that company uses:
+its legal form, its regime, the accounts it moves. It says nothing about a
+regime it does not use, which is why the status is never called *certified* or
+*validated*, and why an operator is still warned on `ekwo init`.
+
+What was compared is written in the manifest, one entry per scope, the scopes
+that could not be tested included:
+
+```json
+"certification": {
+  "status": "proven",
+  "evidence": [
+    {
+      "scope": "financial_statements",
+      "result": "reproduced",
+      "fiscal_year": 2025,
+      "filing": "French liasse fiscale 2033 (régime simplifié)",
+      "summary": "On the books of a French SAS under the simplified regime, imported from another system, every amount of the bilan and the compte de résultat it filed matches to the euro.",
+      "checked_on": "2026-10-10"
+    },
+    {
+      "scope": "vat_return",
+      "result": "not_tested",
+      "fiscal_year": 2025,
+      "filing": "French CA3 VAT return",
+      "summary": "Not tested: neither the filed returns nor any VAT posting are in the imported books.",
+      "checked_on": "2026-10-10"
+    }
+  ],
+  "sources": [ … ]
+}
+```
+
+| Field | What it holds |
+|---|---|
+| `scope` | what was compared, in snake_case: `income_statement`, `balance_sheet`, `financial_statements`, `vat_return`… |
+| `result` | `reproduced` (every line compared matches), `partly_reproduced` (the summary says which lines do not, and why) or `not_tested` (the summary says why) |
+| `fiscal_year` | the financial year, by the calendar year it ends in |
+| `filing` | the kind of filing, as the country names it |
+| `summary` | one plain sentence |
+| `checked_on` | the day of the comparison |
+
+An entry names the kind of filing and **never the company**: no name, no
+registration number, no amount that would identify it. `ekwo pack check`
+refuses a `proven` pack, or chart, whose evidence holds no `reproduced` entry;
+a pack whose proof only partly landed stays `maintained`, and may carry its
+evidence there. `ekwo pack describe <cc>` prints the entries, and the seed
+header lists them.
 
 ### What a reviewer signs
 

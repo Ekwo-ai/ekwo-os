@@ -202,9 +202,10 @@
           "enum": [
             "community",
             "maintained",
+            "proven",
             "reviewed"
           ],
-          "description": "community: contributed, not read by an accountant. maintained: maintained by Ekwo and not yet read by one either. reviewed: a named professional has read it, and is named in `by`. Writing the pack is not reviewing it, which is why there is no status that means \"certified by Ekwo\"."
+          "description": "community: contributed, not read by an accountant. maintained: maintained by Ekwo and not yet read by one either. proven: maintained, and it reproduced, to the unit they were filed in, the statements a real company filed and the administration accepted, after that company's books were imported — which proves the cases that company uses and no other regime of the country; `evidence` says what was reproduced and what was not tested. reviewed: a named professional has read it, and is named in `by`. Writing the pack is not reviewing it, and reproducing one company's filing is not reviewing it either, which is why there is no status that means \"certified by Ekwo\"."
         },
         "by": {
           "type": [
@@ -223,6 +224,61 @@
             "$ref": "#/$defs/source"
           },
           "description": "The register of texts this pack was built from. An entry is a key, a title, the official publisher, an absolute https URL and the day somebody opened it; a `source` beside a legal_reference elsewhere in the pack names one of those keys, so an article is written where it is claimed and a link is written once. A bare string is what this field held before the register and is still read, so a pack written against the old form goes on compiling — `ekwo pack check` warns, and docs/packs.md calls it deprecated. The register never holds a copy of the text: it says where to read it."
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence_entry"
+          },
+          "description": "What the pack was proven on: one entry per scope a real company's filing was compared against, the scopes that could not be tested included. Required, with at least one `reproduced` entry, on a proven pack. An entry names the kind of filing and never the company: no name, no registration number and no amount that would identify it."
+        }
+      }
+    },
+    "evidence_entry": {
+      "type": "object",
+      "description": "One comparison between the statements Ekwo OS computed from a real company's imported books and the ones that company filed and the administration accepted.",
+      "required": [
+        "scope",
+        "result",
+        "fiscal_year",
+        "filing",
+        "summary",
+        "checked_on"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "scope": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,39}$",
+          "description": "What was compared, in snake_case: `financial_statements`, `vat_return`, `corporate_tax`…"
+        },
+        "result": {
+          "enum": [
+            "reproduced",
+            "partly_reproduced",
+            "not_tested"
+          ],
+          "description": "reproduced: every line compared matches the filing to the unit it was filed in. partly_reproduced: some lines match and the summary says which do not, and why. not_tested: the scope could not be compared, and the summary says why."
+        },
+        "fiscal_year": {
+          "type": "integer",
+          "minimum": 1900,
+          "maximum": 2999,
+          "description": "The financial year of the books and of the filing, by the calendar year it ends in."
+        },
+        "filing": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The kind of filing compared against, as the country names it: \"NBB abridged annual accounts\", \"French liasse fiscale 2033\". Never the company that filed it."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "One plain sentence: what matched, what did not and why. No name, number or amount that identifies the company."
+        },
+        "checked_on": {
+          "$ref": "#/$defs/date",
+          "description": "The day the comparison was made."
         }
       }
     },

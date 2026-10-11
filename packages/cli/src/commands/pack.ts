@@ -543,6 +543,13 @@ function describeToTerminal(description: PackDescription): void {
       ? 'no source carries a day'
       : `${c.lastConsultedOn} · ${c.sources.length} source(s)`,
   ]);
+  // What a proven pack was proven on, scope by scope, the untested ones too.
+  for (const entry of c.evidence) {
+    rows.push([
+      'evidence',
+      `${entry.scope} ${entry.fiscal_year} — ${entry.result.replace('_', ' ')} · ${entry.filing} · ${entry.checked_on}`,
+    ]);
+  }
   pairs(rows, '        ');
 }
 

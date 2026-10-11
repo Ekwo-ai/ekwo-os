@@ -9,6 +9,40 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A pack can be proven on the real books of a company.** The certification
+  scale becomes `community`, `maintained`, `proven`, `reviewed`. A `proven`
+  pack reproduced, to the unit they were filed in, the statements a real
+  company filed and the administration accepted, after that company's books
+  were imported. It proves the cases that company uses, never every regime of
+  the country; it is not a review, and nothing calls it certified or
+  validated. Migration `20261011192741_pack_certification_proven` adds the
+  value to `pack_certification`, between `maintained` and `reviewed`.
+- **`certification.evidence` in `pack.json`** says what a pack was proven on,
+  one entry per scope (`scope`, `result`, `fiscal_year`, `filing`, `summary`,
+  `checked_on`), with `result` one of `reproduced`, `partly_reproduced` and
+  `not_tested`. An entry names the kind of filing and never the company.
+  `ekwo pack check` refuses a `proven` pack, or chart, whose evidence holds no
+  `reproduced` entry. `ekwo pack describe` prints the entries, and the seed
+  header lists them. `CERTIFICATION_SCALE` and `rankOf()` are exported by
+  `ekwo-os`.
+
+### Changed
+
+- **Belgium 1.19.0 and France 1.18.0 are `proven`.** On the 2025 books of a
+  Belgian SA, the pack reproduces every line of the abridged income statement
+  filed with the National Bank of Belgium and 25 of the 34 non-empty lines of
+  the balance sheet; the nine others carry one reclassification made by hand.
+  On the 2025 books of a French SAS under the simplified regime, it reproduces
+  the 33 lines of the bilan and the compte de résultat of the liasse 2033,
+  through the 2050 to 2052 forms. The VAT returns of both were not tested,
+  and the evidence says so. Both packs need schema `20261011192741`.
+- `ekwo init` and `ekwo status` say "proven on the real books of a company —
+  not yet reviewed by an accountant" for such a pack, and still warn the
+  operator to check the boxes against their own situation. The `describe_pack`
+  note of the MCP server explains the status.
+
 ## [0.12.2] — 2026-10-11
 
 ### Added

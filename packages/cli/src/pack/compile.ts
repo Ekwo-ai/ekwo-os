@@ -285,6 +285,13 @@ function header(pack: Pack): string[] {
     lines.push('-- Written from:');
     for (const source of certification.sources ?? []) lines.push(...citation(source));
     lines.push('--');
+    if ((certification.evidence ?? []).length > 0) {
+      lines.push('-- Evidence, per scope, against what that company filed:');
+      for (const entry of certification.evidence ?? []) {
+        lines.push(`--   ${entry.scope} ${entry.fiscal_year}, ${entry.filing}: ${entry.result.replace('_', ' ')} (${entry.checked_on})`);
+      }
+      lines.push('--');
+    }
   }
   if (pack.deferred.length > 0) {
     lines.push('-- In the pack, not compiled by this release:');

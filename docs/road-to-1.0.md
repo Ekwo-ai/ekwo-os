@@ -95,7 +95,9 @@ them beyond the formats above.
   statement framework is a major. What its content is worth is said by its
   status ([0026](decisions/0026-certification-names-a-reviewer.md)):
   `community` — contributed, not yet read by an accountant; `maintained` —
-  kept current by the maintainers, not yet read by an accountant; `reviewed`
+  kept current by the maintainers, not yet read by an accountant; `proven` —
+  maintained, and it reproduced the accepted filing of a real company whose
+  books were imported, for the scopes its evidence names; `reviewed`
   — read by a named professional, with the name and the date in the manifest.
   Tax rules change by law, in every country, and a pack follows them in its
   own versions.

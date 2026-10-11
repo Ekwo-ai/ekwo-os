@@ -65,12 +65,13 @@ recapitulative statements, and how a country that stands alone is written, as
 the [United Kingdom](zones/united-kingdom.md) and the
 [United States](zones/united-states.md) show it.
 
-A pack carries one of three statuses, which `ekwo init` and `ekwo status` print:
+A pack carries one of four statuses, which `ekwo init` and `ekwo status` print:
 
 | Status | Meaning |
 |---|---|
 | `community` | Written from the official texts and checked by the tools and the golden year; no professional has signed it |
 | `maintained` | As above, and kept current by the maintainers |
+| `proven` | As above, and it reproduced the statements a real company filed and the administration accepted, after its books were imported; the pack lists the scopes reproduced and the ones not tested |
 | `reviewed` | Read against the law by a named professional of the country, who signs it |
 
 There is no status meaning "certified by Ekwo": writing a pack is not reviewing

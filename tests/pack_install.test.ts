@@ -120,7 +120,7 @@ describe('a pack that used to call itself certified', () => {
         where t.typname = 'pack_certification'
         order by e.enumsortorder`,
     );
-    expect(values.map((v) => v.enumlabel)).toEqual(['community', 'maintained', 'reviewed', 'ekwo']);
+    expect(values.map((v) => v.enumlabel)).toEqual(['community', 'maintained', 'proven', 'reviewed', 'ekwo']);
   });
 });
 

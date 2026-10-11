@@ -91,8 +91,11 @@ refusals. See [several countries](packages/cli/README.md#several-countries-in-on
 
 Choosing the pack: one per country, listed at `https://ekwo.ai/countries/` and
 under `packs/`. Each has a **status** — `community` (nobody has reviewed it),
-`maintained` (kept up by Ekwo, not reviewed by a professional) or `reviewed`
-(read by a named professional on a date). Say which one the user is getting.
+`maintained` (kept up by Ekwo, not reviewed by a professional), `proven`
+(maintained, and it reproduced the accepted filing of a real company whose
+books were imported — for the scopes its evidence names, never every regime of
+the country) or `reviewed` (read by a named professional on a date). Say which
+one the user is getting, and for a proven pack, what it was not tested on.
 No pack for their country: say so, and point at
 [`docs/packs.md`](docs/packs.md) — do not install a neighbour's pack as if it
 were theirs.

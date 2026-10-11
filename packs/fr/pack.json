@@ -2,12 +2,30 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.17.2",
-  "schema_min": "20261011120000",
+  "version": "1.18.0",
+  "schema_min": "20261011192741",
   "seed_sequence": 11,
   "released_at": "2026-09-30",
   "certification": {
-    "status": "maintained",
+    "status": "proven",
+    "evidence": [
+      {
+        "scope": "financial_statements",
+        "result": "reproduced",
+        "fiscal_year": 2025,
+        "filing": "French liasse fiscale 2033 (régime simplifié)",
+        "summary": "On the books of a French SAS under the simplified regime, imported from another system, every amount of the bilan and the compte de résultat it filed matches to the euro: 33 lines of the 2033-A and 2033-B, read through the 2050 to 2052 forms the pack carries, net amounts only.",
+        "checked_on": "2026-10-10"
+      },
+      {
+        "scope": "vat_return",
+        "result": "not_tested",
+        "fiscal_year": 2025,
+        "filing": "French CA3 VAT return",
+        "summary": "Not tested: neither the filed returns nor any VAT posting are in the imported books.",
+        "checked_on": "2026-10-10"
+      }
+    ],
     "sources": [
       {
         "key": "pcg",

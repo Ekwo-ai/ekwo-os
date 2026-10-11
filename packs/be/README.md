@@ -4,9 +4,15 @@ The format is [`docs/packs.md`](../../docs/packs.md). This file records what the
 pack deliberately leaves out, and why, so that a Belgian accountant can
 disagree with one line rather than with the whole pack.
 
-**Status: `maintained`.** The figures are replayed against a year of books by
-`tests/golden.test.ts`, which proves the pack is coherent and not that it is
-right.
+**Status: `proven`.** The figures are replayed against a year of books by
+`tests/golden.test.ts`, which proves the pack is coherent. On the 2025 books of a Belgian SA, imported from another system, the pack
+reproduces to the euro every line of the income statement it filed with the
+National Bank of Belgium (abridged model), and 25 of the 34 non-empty lines of
+its balance sheet; the nine others carry one reclassification the accountant
+made by hand. Its VAT returns were not tested: those books carry no VAT code.
+`certification.evidence` in [`pack.json`](pack.json) says it scope by scope.
+It proves the cases that company uses, not every regime of the country, and
+no accountant has reviewed the pack.
 
 ## The VAT return: a purchase is printed by its nature and by who owes the tax
 

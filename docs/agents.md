@@ -58,7 +58,8 @@ A document line names its account and its tax **by code**, because several
 taxes share a rate. A Japanese consumption tax code, a Canadian GST/HST code
 and a Kenyan VAT code each come from their pack. `describe_pack` says which
 pack a code comes from, its version, and how far it has been reviewed:
-`community`, `maintained` or `reviewed`.
+`community`, `maintained`, `proven` (it reproduced the accepted filing of a
+real company, for the scopes its evidence names) or `reviewed`.
 
 ### 4. Make a draft, show it, post it once the person agrees
 

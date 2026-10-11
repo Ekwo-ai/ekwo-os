@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.12.2",
-  "migration": "20261011163457",
+  "migration": "20261011192741",
   "socle": {
     "schema": "public",
     "tables": [
@@ -6129,6 +6129,7 @@
         "labels": [
           "community",
           "maintained",
+          "proven",
           "reviewed",
           "ekwo"
         ]

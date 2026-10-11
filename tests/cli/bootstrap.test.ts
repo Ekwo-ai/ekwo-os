@@ -498,17 +498,17 @@ describe('bootstrap', () => {
     // creating the company. It is the only thing standing between an operator
     // and the belief that an accountant checked these boxes, so what it says
     // is asserted here rather than trusted to a code path nobody reads.
-    const maintained = packWhere(
-      'is maintained and not reviewed',
-      (candidate) => candidate.manifest.certification?.status === 'maintained',
+    const proven = packWhere(
+      'is proven and not reviewed',
+      (candidate) => candidate.manifest.certification?.status === 'proven',
     );
-    const pack = await countryPack(db, maintained.manifest.country);
-    expect(pack?.certificationStatus).toBe('maintained');
+    const pack = await countryPack(db, proven.manifest.country);
+    expect(pack?.certificationStatus).toBe('proven');
     expect(pack?.certifiedBy).toBeNull();
     expect(describeCertification({ status: pack!.certificationStatus, by: pack!.certifiedBy, on: pack!.certifiedAt })).toBe(
-      'maintained by Ekwo — not yet reviewed by an accountant',
+      'proven on the real books of a company — not yet reviewed by an accountant',
     );
-    // Maintained is not reviewed, so the operator is warned and not merely told.
+    // Proven is not reviewed, so the operator is warned and not merely told.
     expect(needsWarning(pack!.certificationStatus)).toBe(true);
   });
 

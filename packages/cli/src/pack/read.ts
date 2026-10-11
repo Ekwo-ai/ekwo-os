@@ -92,6 +92,30 @@ export interface PackCertification {
   by?: string | null;
   on?: string;
   sources?: (string | PackSource)[];
+  /** What a `proven` pack was proven on. See `PackEvidence`. */
+  evidence?: PackEvidence[];
+}
+
+/**
+ * One comparison between what Ekwo OS computed from a real company's imported
+ * books and what that company filed and the administration accepted.
+ *
+ * It names the kind of filing and never the company: no name, no registration
+ * number, no amount that would identify it. A scope that could not be compared
+ * is written down as `not_tested` rather than left out, because what a proof
+ * did not cover is half of what it says.
+ */
+export interface PackEvidence {
+  /** What was compared, in snake_case: `financial_statements`, `vat_return`… */
+  scope: string;
+  result: 'reproduced' | 'partly_reproduced' | 'not_tested';
+  /** The financial year, by the calendar year it ends in. */
+  fiscal_year: number;
+  /** The kind of filing, as the country names it. */
+  filing: string;
+  /** One plain sentence: what matched, what did not and why. */
+  summary: string;
+  checked_on: string;
 }
 
 /** The register of a pack: the entries, with the deprecated bare titles dropped. */
@@ -1318,6 +1342,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   const register = sourceRegister(manifest, charts, taxes, report, statements, documents, fixedAssets, corporateTax);
   issues.push(...register.issues);
   warnings.push(...register.warnings);
+  issues.push(...certificationEvidence(manifest, charts));
 
   if (issues.length > 0) {
     // The cause before the consequence. A label problem is almost always
@@ -1381,13 +1406,13 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
  * A **duplicate key** is refused, because a reference would resolve to
  * whichever entry happened to come first. A **key nothing declares** is
  * refused: it reads as a source and is a typo. A pack that is not `community`
- * and carries **no entry at all** is refused, because `maintained` and
- * `reviewed` are claims that somebody keeps this current, and neither is
+ * and carries **no entry at all** is refused, because `maintained`, `proven`
+ * and `reviewed` are claims that somebody keeps this current, and none is
  * sayable about a list of titles. And on a **reviewed** pack every tax and
  * every box has to name a key — the reviewer read something, and this is where
  * they say what.
  *
- * On a `maintained` pack that last one is a warning. The register arrived
+ * On a `maintained` or a `proven` pack that last one is a warning. The register arrived
  * after four packs did; failing them the day it landed would have made the
  * feature the reason the repository was red, and the gap it names is a link
  * that is missing, never a figure that is wrong.
@@ -1582,18 +1607,58 @@ function sourceRegister(
         message: 'a reviewed pack says which text its legal reference is in: add "source": "<key>"',
       });
     }
-  } else if (status === 'maintained' && unsourced.length > 0) {
+  } else if (status !== 'community' && unsourced.length > 0) {
     warnings.push(
       `${unsourced.length} tax(es), box(es) and document rule(s) carry a legal reference and name no source: ` +
         `${unsourced
           .slice(0, 3)
           .map((reference) => reference.path)
           .join(', ')}${unsourced.length > 3 ? ', …' : ''}. ` +
-        'A reviewed pack is refused for this; a maintained one is told.',
+        `A reviewed pack is refused for this; a ${status} one is told.`,
     );
   }
 
   return { sources, issues, warnings };
+}
+
+/**
+ * What a `proven` status rests on.
+ *
+ * `proven` says the pack reproduced the statements a real company filed and
+ * the administration accepted. The claim is only worth the comparison behind
+ * it, so a pack, or a chart, that makes it carries at least one evidence entry
+ * whose result is `reproduced`. A pack that says only `partly_reproduced` or
+ * `not_tested` is honest about a proof that did not land, and stays
+ * `maintained`.
+ *
+ * The shape of an entry — the six fields, the closed vocabulary of `result`,
+ * the date — is the published schema's job. Evidence on a status that is not
+ * `proven` is accepted: a reviewed pack may keep the proof it had before.
+ */
+function certificationEvidence(manifest: Manifest, charts: PackChart[]): Issue[] {
+  const claims = [
+    { path: 'pack.json certification', certification: manifest.certification },
+    ...charts.map((chart) => ({
+      path: `pack.json charts.${chart.code}.certification`,
+      certification: chart.certification,
+    })),
+  ];
+  const issues: Issue[] = [];
+  for (const { path, certification } of claims) {
+    if (certification?.status !== 'proven') continue;
+    const evidence = certification.evidence ?? [];
+    if (evidence.some((entry) => entry.result === 'reproduced')) continue;
+    issues.push({
+      path,
+      message:
+        evidence.length === 0
+          ? 'a proven pack says what it was proven on: add "evidence", with at least one entry whose result is "reproduced"'
+          : `a proven pack reproduced at least one filing, and its evidence holds only ${[
+              ...new Set(evidence.map((entry) => entry.result)),
+            ].join(' and ')}; until one scope is reproduced, the pack is maintained`,
+    });
+  }
+  return issues;
 }
 
 /**

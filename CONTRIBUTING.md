@@ -139,7 +139,10 @@ request that will be sent back.
    is `community` until an accountant has read the pack against the law they
    apply, at which point it becomes `reviewed`, with their name and the date in
    the manifest. `maintained` means the maintainers keep it current and nobody
-   has reviewed it. There is no status that means "certified by Ekwo", and
+   has reviewed it. `proven` means a maintained pack reproduced the accepted
+   filing of a real company whose books were imported, and its
+   `certification.evidence` says, scope by scope, what was reproduced and what
+   was not tested; it is still not a review. There is no status that means "certified by Ekwo", and
    writing a pack is not reviewing it.
 7. **Nothing is ever deleted from a pack, and the seed is never edited by
    hand.** An account is deprecated, a tax gets a `valid_to`, a form version

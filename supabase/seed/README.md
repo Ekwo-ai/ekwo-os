@@ -99,8 +99,10 @@ Every tax and every box names the text it comes from (`legal_reference`, a
 required field), and each manifest carries a certification status — the
 [table of packs](../../docs/packs.md#the-packs-of-this-checkout) gives each
 one's. `maintained` means kept up to date by the maintainers and not yet read
-by an accountant; `community` means not read by an accountant either. In the
-two `maintained` packs, four mappings are known to want a professional's eye:
+by an accountant; `proven` means maintained, and it reproduced the accepted
+filing of a real company whose books were imported, for the scopes its
+evidence names; `community` means not read by an accountant either. In the
+Belgian and French packs, four mappings are known to want a professional's eye:
 
 - Belgium: credit notes on intra-community purchases (box 84 with 62 and 63).
 - France: line 13 of the CA3 (the 2.1 % rate as a special rate).

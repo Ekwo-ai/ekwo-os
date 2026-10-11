@@ -77,6 +77,11 @@ not that it is consistent with the law.
   been read by an accounting or tax professional.
 - **maintained**: written by Ekwo, which updates it when it can; no update is
   promised; not reviewed by an accounting or tax professional.
+- **proven**: maintained, and it reproduced, after a real company's books
+  were imported, the statements that company filed and the administration
+  accepted. It proves the cases that company uses, never every regime of the
+  country, and the pack lists what was reproduced and what was not tested.
+  Not reviewed by an accounting or tax professional either.
 - **reviewed**: read by a named professional, on the date shown, against the
   rules they apply in practice.
 
