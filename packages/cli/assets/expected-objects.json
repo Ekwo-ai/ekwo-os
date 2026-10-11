@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.12.1",
-  "migration": "20261011154807",
+  "migration": "20261011155443",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4626,6 +4626,10 @@
         "arguments": ""
       },
       {
+        "name": "reconciliations_guard_reconcile",
+        "arguments": ""
+      },
+      {
         "name": "reconciliations_refresh_lines",
         "arguments": ""
       },
@@ -5784,6 +5788,10 @@
       {
         "table": "reconciliations",
         "name": "reconciliations_guard_cancelled"
+      },
+      {
+        "table": "reconciliations",
+        "name": "reconciliations_guard_reconcile"
       },
       {
         "table": "reconciliations",
@@ -9158,6 +9166,14 @@
         },
         {
           "name": "reconciliations_guard_cancelled",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "reconciliations_guard_reconcile",
           "arguments": "",
           "trigger": true,
           "anon": [],

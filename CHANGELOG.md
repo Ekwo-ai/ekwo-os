@@ -58,6 +58,20 @@ somewhere has already run it.
   it reads, so two calls for one line wait for each other. The demo company
   raises the setting for the one settled line it writes.
 
+- **A matching settles the items of one counterparty**
+  (`20261011155443`; issue #89, reported by Pieterjan Muller). `reconcile()`
+  never read `contact_id`, so on a receivable account shared by every
+  customer the payment of one could settle the invoice of another; and
+  `reconciliations` was writable by hand under `reconcile.write`, past every
+  check `reconcile()` makes. `reconcile()` now refuses two lines that name
+  different counterparties (`reconcile_contact_mismatch`); a branch and its
+  parent are one party, and a line naming nobody — a receipt keyed by hand,
+  imported history — is attributed by the matching. `reconciliations_guard_reconcile()`
+  keeps the table to `reconcile()` and `unreconcile()`, which raise
+  `ekwo.reconciling`, honoured for a caller holding `reconcile.write`
+  (`reconciliation_by_reconcile` otherwise). Grants and policies are
+  unchanged, and the cascades of a company and of a line still pass.
+
 ## [0.12.1] — 2026-10-11
 
 ### Added
