@@ -170,18 +170,18 @@
     "scope": "purchase",
     "treatment": "import",
     "valid_from": "2026-01-01",
-    "legal_reference": "Merverdiavgiftsloven § 11-1 tredje ledd — mottakeren av varen er ansvarlig for å beregne og betale merverdiavgift ved innførsel, i mva-meldingen for den terminen varen innføres, i stedet for å betale avgiften til Tolletaten ved grensepassering (ordningen fra 1. januar 2017). Fradragsretten for det samme beløpet følger av § 8-1. Denne pakken bokfører derfor to motstående linjer for samme beløp — fradraget på kode 14 og den selvberegnede avgiften på kode 3 — på samme måte som packs/gb bokfører sin «postponed VAT accounting», siden SAF-T-kodelisten ikke har noen egen utgående kode for innførsel (se README.md).",
+    "legal_reference": "Merverdiavgiftsloven § 11-1 første ledd — avgiftssubjektet skal beregne og betale merverdiavgift ved innførsel av varer, i mva-meldingen for den terminen varen innføres, i stedet for å betale avgiften til Tolletaten ved grensepassering (ordningen fra 1. januar 2017). Fradragsretten for det samme beløpet følger av § 8-1. Mva-meldingen fører begge på kode 81: grunnlaget og den beregnede avgiften på én linje, fradraget på en egen linje (boks 81F i denne pakken). Den beregnede avgiften krediteres 2645 og fradraget debiteres 1542, så leverandøren har krav bare på prisen.",
     "source": "mval",
     "postings": {
       "invoice": [
-        { "type": "base", "box": "21" },
-        { "type": "tax", "account": "1542", "box": "14" },
-        { "type": "tax", "factor": -100, "account": "2645", "box": "3" }
+        { "type": "base", "box": "81" },
+        { "type": "tax", "account": "1542", "box": "81F" },
+        { "type": "tax", "factor": -100, "account": "2645", "box": "81" }
       ],
       "credit_note": [
-        { "type": "base", "box": "21", "box_factor": -100 },
-        { "type": "tax", "account": "1542", "box": "14", "box_factor": -100 },
-        { "type": "tax", "factor": -100, "account": "2645", "box": "3", "box_factor": -100 }
+        { "type": "base", "box": "81", "box_factor": -100 },
+        { "type": "tax", "account": "1542", "box": "81F", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2645", "box": "81", "box_factor": -100 }
       ]
     },
     "kind": "vat",
@@ -194,18 +194,18 @@
     "scope": "purchase",
     "treatment": "foreign_services_received",
     "valid_from": "2026-01-01",
-    "legal_reference": "Merverdiavgiftsloven § 3-30 første ledd — kjøp av en fjernleverbar tjeneste fra en tilbyder som ikke har forretningssted eller hjemsted i merverdiavgiftsområdet, er avgiftspliktig når mottakeren er hjemmehørende i merverdiavgiftsområdet og tjenesten er avgiftspliktig ved omsetning her (snudd avregning). Fradragsretten for det samme beløpet følger av § 8-1. Samme bokføringsløsning som NO-P-IMPORT-25, av samme grunn: SAF-T-kodelisten har ingen egen utgående kode for denne selvberegnede avgiften, og den selvpålagte avgiften bokføres derfor på den alminnelige utgående koden 3.",
+    "legal_reference": "Merverdiavgiftsloven § 3-30 første ledd — kjøp av en fjernleverbar tjeneste fra en tilbyder som ikke har forretningssted eller hjemsted i merverdiavgiftsområdet, er avgiftspliktig når mottakeren er hjemmehørende i merverdiavgiftsområdet og tjenesten er avgiftspliktig ved omsetning her; § 11-3 første ledd pålegger mottakeren som er næringsdrivende å beregne og betale avgiften (snudd avregning). Fradragsretten for det samme beløpet følger av § 8-1. Mva-meldingen fører begge på kode 86: grunnlaget og den beregnede avgiften på én linje, fradraget på en egen linje (boks 86F i denne pakken). Bokføringen er den samme som for NO-P-IMPORT-25.",
     "source": "mval",
     "postings": {
       "invoice": [
         { "type": "base", "box": "86" },
-        { "type": "tax", "account": "1543", "box": "86" },
-        { "type": "tax", "factor": -100, "account": "2645", "box": "3" }
+        { "type": "tax", "account": "1543", "box": "86F" },
+        { "type": "tax", "factor": -100, "account": "2645", "box": "86" }
       ],
       "credit_note": [
         { "type": "base", "box": "86", "box_factor": -100 },
-        { "type": "tax", "account": "1543", "box": "86", "box_factor": -100 },
-        { "type": "tax", "factor": -100, "account": "2645", "box": "3", "box_factor": -100 }
+        { "type": "tax", "account": "1543", "box": "86F", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "2645", "box": "86", "box_factor": -100 }
       ]
     },
     "kind": "vat",

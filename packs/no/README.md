@@ -70,7 +70,7 @@ food), the low rate (persontransport, overnatting and the other services of
 taux-zéro case), an export (§§ 6-21/6-22), and an exempt supply with no
 deduction (financial services, § 3-6 — the exemption case). Four on the
 purchase side: the standard and low rates deductible on a domestic purchase,
-the import of goods (§ 11-1, third paragraph) and a remotely-deliverable
+the import of goods (§ 11-1, first paragraph) and a remotely-deliverable
 service bought from a supplier established outside the VAT area (§ 3-30 —
 Norway's reverse charge, narrower than the European Union's general
 business-to-business rule: it reaches only services that can be delivered
@@ -89,16 +89,20 @@ there is no supplier's category to record.
 
 ### The self-assessed liability of import and of a foreign remote service
 
-The Standard Tax Codes list has a code for the *deductible* side of an import
-(`14`) and of a foreign remote service (`86`), each paired with its own base
-code (`21`, `86`), but no code of its own for the *liability* side — the
-amount the buyer owes on that same base. The self-assessed
-liability of `NO-P-IMPORT-25` and `NO-P-FOREIGN-25` is booked to the ordinary
-standard-rate output box, `3`, with `factor: -100` flipping it onto a
-liability account distinct from the tax_payable settlement account and from
-the ordinary output-VAT accounts. **This reading has not been checked against
-a worked example from Skatteetaten or against a Norwegian accounting
-system's own SAF-T export** — see "Before this pack is reviewed" below.
+A registered business computes and pays the VAT on the goods it imports in
+its own mva-melding (§ 11-1, first paragraph), and the VAT on a remotely
+deliverable service bought from abroad (§§ 3-30 and 11-3); it deducts the
+same amount under § 8-1. The mva-melding reports both on one code each —
+`81` for the import of goods at the standard rate, `86` for the service —
+as two lines: the base with the tax computed, and the deduction as a line of
+its own on the same code with a negative amount (Skatteetaten's examples
+`mvakode81.xml` and `mvakode86.xml`). This pack keeps the two lines apart
+as boxes `81`/`81F` and `86`/`86F`: the computed tax counts towards
+`UTSUM`, the deduction towards `INNSUM`. In the ledger the tax owed is
+credited to `2645` (`factor: -100`) and the deduction debited to `1542` or
+`1543`, so the supplier is owed the price alone. Code `14` is the deduction
+of VAT paid to customs at the border, which a registered importer does not
+pay, and code `21` is not a code of the mva-melding, so neither is carried.
 
 ### What the mva-melding does not ask for at all
 
@@ -119,12 +123,13 @@ of Skatteetaten's standardised `mvaKode` values (the same codes the SAF-T
 Financial file uses) with a base amount and a tax amount. This pack's
 "boxes" are therefore those codes, transcribed as a **subset** of the
 published list — the ones the ten taxes above actually reach (`1`, `3`, `5`,
-`13`, `14`, `21`, `31`, `33`, `52`, `86`) — and not the whole list, which also
+`13`, `31`, `33`, `52`, `81`, `86`) — and not the whole list, which also
 carries codes for raw fish, gold and emission-allowance trading, and the
 non-deductible half of an import or a foreign service, none of which this
 pack's taxes model yet.
 
-Four more boxes — `UTSUM`, `INNSUM`, `BETALES`, `TILGODE` — are this pack's
+`81F` and `86F` are the deduction lines of codes `81` and `86`, described
+above. Four more boxes — `UTSUM`, `INNSUM`, `BETALES`, `TILGODE` — are this pack's
 own, not Skatteetaten's: the modern return computes its net figure
 (`fastsattMerverdiavgift`) from the codes without naming an intermediate
 total anywhere a human reads, so this pack declares one.
@@ -177,19 +182,17 @@ reviewed".
 
 ## Before this pack is `reviewed`
 
-1. **The self-assessed liability box for import and foreign services**
-   (box `3`, described above) — the reading is not confirmed against a Norwegian worked example.
-2. **The default payment term**, if Norwegian law gives one absent an
+1. **The default payment term**, if Norwegian law gives one absent an
    agreement (kjøpsloven § 49 or a general principle of contract law) — only
    the interest rate is sourced here.
-3. **The tax point** (`invoice_date`): no article of the merverdiavgiftsloven
+2. **The tax point** (`invoice_date`): no article of the merverdiavgiftsloven
    is cited that states the general tax point as opposed to
    who is liable (§ 11-1) or when an invoice must be issued
    (bokføringsforskriften § 5-2-2, one month after delivery). The value
    declared is a cautious reading of the accrual practice these two give
    together, not a verified single article.
-4. **The chart**, read by someone who books in NS 4102 daily: which accounts
+3. **The chart**, read by someone who books in NS 4102 daily: which accounts
    a small Norwegian AS will miss.
-5. **The bokføringsforskriften chapter 7 threshold** for SAF-T Financial
+4. **The bokføringsforskriften chapter 7 threshold** for SAF-T Financial
    electronic availability, and the exact wording of § 13 b's three-year and
    six-month rule.

@@ -20,7 +20,7 @@ code,parent,type,reconcilable,name,sequence
 1510,,asset_current,false,"Opptjent, ikke fakturert driftsinntekt",160
 1540,,asset_current,false,"Inngående merverdiavgift, alminnelig sats (kode 1)",170
 1541,,asset_current,false,"Inngående merverdiavgift, redusert sats (kode 13)",180
-1542,,asset_current,false,"Fradragsberettiget innførselsmerverdiavgift (kode 14)",185
+1542,,asset_current,false,"Fradragsberettiget innførselsmerverdiavgift (kode 81)",185
 1543,,asset_current,false,"Fradragsberettiget merverdiavgift, tjeneste kjøpt fra utlandet (kode 86)",187
 1545,,asset_current,true,Til gode merverdiavgift (oppgjørskonto),190
 1550,,asset_current,false,Andre fordringer,200
