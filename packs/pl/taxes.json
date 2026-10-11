@@ -298,12 +298,12 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": ["23", "42"] },
-        { "type": "tax", "account": "7710", "box": "24" },
+        { "type": "tax", "factor": -100, "account": "7710", "box": "24" },
         { "type": "tax", "account": "2241", "box": "43" }
       ],
       "credit_note": [
         { "type": "base", "box": ["23", "42"], "box_factor": -100 },
-        { "type": "tax", "account": "7710", "box": "24", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "7710", "box": "24", "box_factor": -100 },
         { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
       ]
     },
@@ -325,12 +325,12 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": ["29", "42"] },
-        { "type": "tax", "account": "7710", "box": "30" },
+        { "type": "tax", "factor": -100, "account": "7710", "box": "30" },
         { "type": "tax", "account": "2241", "box": "43" }
       ],
       "credit_note": [
         { "type": "base", "box": ["29", "42"], "box_factor": -100 },
-        { "type": "tax", "account": "7710", "box": "30", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "7710", "box": "30", "box_factor": -100 },
         { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
       ]
     },
@@ -350,12 +350,12 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": ["27", "42"] },
-        { "type": "tax", "account": "7710", "box": "28" },
+        { "type": "tax", "factor": -100, "account": "7710", "box": "28" },
         { "type": "tax", "account": "2241", "box": "43" }
       ],
       "credit_note": [
         { "type": "base", "box": ["27", "42"], "box_factor": -100 },
-        { "type": "tax", "account": "7710", "box": "28", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "7710", "box": "28", "box_factor": -100 },
         { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
       ]
     },
@@ -375,12 +375,12 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": ["25", "42"] },
-        { "type": "tax", "account": "7710", "box": "26" },
+        { "type": "tax", "factor": -100, "account": "7710", "box": "26" },
         { "type": "tax", "account": "2241", "box": "43" }
       ],
       "credit_note": [
         { "type": "base", "box": ["25", "42"], "box_factor": -100 },
-        { "type": "tax", "account": "7710", "box": "26", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "7710", "box": "26", "box_factor": -100 },
         { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
       ]
     },
@@ -402,12 +402,12 @@
     "postings": {
       "invoice": [
         { "type": "base", "box": ["31", "42"] },
-        { "type": "tax", "account": "7710", "box": "32" },
+        { "type": "tax", "factor": -100, "account": "7710", "box": "32" },
         { "type": "tax", "account": "2241", "box": "43" }
       ],
       "credit_note": [
         { "type": "base", "box": ["31", "42"], "box_factor": -100 },
-        { "type": "tax", "account": "7710", "box": "32", "box_factor": -100 },
+        { "type": "tax", "factor": -100, "account": "7710", "box": "32", "box_factor": -100 },
         { "type": "tax", "account": "2241", "box": "43", "box_factor": -100 }
       ]
     },

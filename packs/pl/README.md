@@ -91,7 +91,10 @@ from a supplier established in the Union (art. 28b) and from one that is
 not, imports of goods under the simplified procedure of art. 33a, and a
 domestic supply by a supplier with no establishment in Poland (art. 17 ust. 1
 pkt 5). Each posts its base once, repeated in the box of tax due and in the
-deduction basket (`P_42`). `PL-P-23-POJAZD` illustrates the 50 % partial
+deduction basket (`P_42`). The buyer is the taxpayer (art. 17 ust. 1 pkt 3-5)
+and the same amount is its input tax (art. 86 ust. 2 pkt 4), so the tax owed is
+credited to VAT należny (7710, factor -100) and the tax deducted debited to
+2241: the supplier account carries only the price invoiced. `PL-P-23-POJAZD` illustrates the 50 % partial
 deduction of art. 86a on mixed-use vehicle costs. The former general
 domestic reverse charge (goods of annex 11) was repealed and replaced by
 mandatory split payment, so it is not carried.
