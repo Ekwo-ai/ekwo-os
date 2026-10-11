@@ -83,9 +83,7 @@ export default defineConfig({
     // file grew, the next does not inherit. Threads would share one process,
     // and so one heap, across every file a worker runs.
     pool: 'forks',
-    poolOptions: {
-      forks: { isolate: true },
-    },
+    isolate: true,
     // The schema is built once per run (`freshDatabase` loads it), and a file
     // that leaves a database open fails instead of holding it.
     globalSetup: ['tests/global-setup.ts'],
