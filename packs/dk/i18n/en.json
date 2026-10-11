@@ -212,6 +212,9 @@
     "DK-ARL-IS:17": "Other taxes",
     "DK-ARL-IS:18": "Result for the year"
   },
+  "result_in_progress": {
+    "DK-ARL-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "Reverse charge — the customer accounts for the VAT.",
     "intracom_goods": "VAT-exempt supply — Danish VAT act, section 34(1)(1).",

@@ -519,6 +519,9 @@
     "BE-BNB-ABBR-AF:694/7": "Uit te keren winst",
     "BE-BNB-ABBR-AF:794": "Tussenkomst van de vennoten in het verlies"
   },
+  "result_in_progress": {
+    "BE-BNB-ABBR-BS": "Resultaat van het lopende boekjaar"
+  },
   "legal_mentions": {
     "reverse_charge": "Btw verlegd — belasting te voldoen door de medecontractant.",
     "intracom_goods": "Vrijgestelde intracommunautaire levering — btw verlegd naar de afnemer.",

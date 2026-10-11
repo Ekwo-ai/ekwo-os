@@ -9,6 +9,8 @@
       "valid_from": "2013-01-01",
       "legal_reference": "Companies Act, 2012, s. 152(1) — every balance sheet of a company shall give a true and fair view of the state of affairs of the company as at the end of its financial year; s. 152(2) — the balance sheet complies with the requirements of the Fourth Schedule to the Act, so far as applicable. The Institute of Certified Public Accountants of Uganda has adopted the IFRS for SMEs Accounting Standard for an entity with no public accountability; the lines below follow section 4 of that standard.",
       "source": "companies-act-2012",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

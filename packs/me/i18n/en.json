@@ -312,5 +312,8 @@
     "ME-FS-IS:ME-IS-260": "Other expenses",
     "ME-FS-IS:ME-IS-270": "Other result",
     "ME-FS-IS:ME-IS-244": "Result before taxation"
+  },
+  "result_in_progress": {
+    "ME-FS-BS": "Result of the current financial year"
   }
 }

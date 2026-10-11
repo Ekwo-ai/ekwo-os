@@ -8,6 +8,8 @@
       "name": "Efnahagsreikningur samkvæmt 3. gr. reglugerðar nr. 696/2019",
       "legal_reference": "Reglugerð nr. 696/2019 um framsetningu og innihald ársreikninga og samstæðureikninga, 3. gr., sett samkvæmt heimild í 6. gr. laga nr. 3/2006 um ársreikninga, sem innleiðir tilskipun 2013/34/ESB (sbr. lög nr. 73/2016). 3. gr. skiptir efnahagsreikningnum í fastafjármuni (a. óefnislegar eignir, b. efnislegar eignir, c. fjáreignir) og veltufjármuni (a. birgðir, b. skammtímakröfur, c. verðbréf, d. handbært fé) á eignahlið, og eigið fé, langtímaskuldir og skammtímaskuldir á hinni.",
       "source": "reglugerd696-2019",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Afkoma yfirstandandi reikningsárs",
       "lines": [
         { "code": "EIGNIR", "name": "Eignir samtals", "sequence": 10, "is_total": true, "plus": ["AV", "UV"] },
         {

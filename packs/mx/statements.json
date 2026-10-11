@@ -8,6 +8,7 @@
       "name": "Estado de situación financiera",
       "legal_reference": "Ley General de Sociedades Mercantiles, art. 172, inciso C) — «un estado que muestre la situación financiera de la sociedad a la fecha de cierre del ejercicio». Estructura mínima: los rubros de activo, pasivo y capital contable y sus cuentas de mayor, tal como los agrupa el código agrupador del SAT (Anexo 24 de la RMF 2026, apartado A, inciso a)). La NIF B-6 «Estado de situación financiera» del CINIF fija la presentación normativa; su texto está protegido por derechos del CINIF y no se transcribe",
       "source": "lgsm",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "ACT",

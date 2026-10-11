@@ -8,6 +8,7 @@
       "name": "Estado de situación financiera",
       "legal_reference": "Marco contable de El Salvador — Resolución 462 del Consejo de Vigilancia de la Profesión de Contaduría Pública y Auditoría (18 de marzo de 2021): los estados financieros se preparan conforme a la NIIF para las PYMES (versión en español 2015) o a las NIIF completas (versión en español 2020), cuyos estados de situación financiera y de resultado integral se presentan por clasificación de corriente y no corriente y por naturaleza del gasto. No existe un formato legal único; este paquete presenta un estado resumido. Estado de situación financiera resumido.",
       "source": "cvpcpa462",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "EFEC",

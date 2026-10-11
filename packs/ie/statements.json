@@ -8,6 +8,7 @@
       "name": "Balance sheet — Companies Act 2014, Schedule 3A, Format 1 (small companies regime)",
       "legal_reference": "Companies Act 2014, Schedule 3A, Part II, Section B — Balance Sheet Formats, Format 1, as inserted by the Companies (Accounting) Act 2017. Section 291(3)(a)(ii) of the Act has a company that qualifies for the small companies regime (s. 280A) comply with Schedule 3A, or with Schedule 3 if it so elects; paragraph 2(1) of Schedule 3A requires the items of the format adopted, in its order and under its headings. Every letter and numeral below is an item of Format 1 and the name is the format's own wording.",
       "source": "ca-2014",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "A",

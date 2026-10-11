@@ -9,6 +9,7 @@
       "valid_from": "2016-01-01",
       "legal_reference": "Handelsgesetzbuch § 266 Abs. 1 bis 3 in der Fassung des Bilanzrichtlinie-Umsetzungsgesetzes (BilRUG) — Gliederung der Bilanz in Kontoform, Aktivseite Abs. 2 und Passivseite Abs. 3. Die Zeilen sind die gesetzlichen Posten mit Buchstaben, römischen und arabischen Zahlen, wie mittelgroße und große Kapitalgesellschaften sie ausweisen; kleine Kapitalgesellschaften (§ 267 Abs. 1) dürfen nach § 266 Abs. 1 Satz 3 nur die mit Buchstaben und römischen Zahlen bezeichneten Posten ausweisen, die hier als Summenzeilen vorhanden sind, Kleinstkapitalgesellschaften (§ 267a) nach Satz 4 nur die Buchstaben. Ein Jahresüberschuss des laufenden, noch nicht abgeschlossenen Geschäftsjahres erscheint erst nach dem Abschluss in Posten A.V.",
       "source": "hgb",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "AKT",

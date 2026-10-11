@@ -9,6 +9,7 @@
       "name": "Bilânço — Tekdüzen Hesap Planı",
       "legal_reference": "1 Sıra No'lu Muhasebe Sistemi Uygulama Genel Tebliği, ekindeki bilânço şeması: Aktif I. Dönen Varlıklar, II. Duran Varlıklar; Pasif III. Kısa Vadeli Yabancı Kaynaklar, IV. Uzun Vadeli Yabancı Kaynaklar, V. Özkaynaklar. Bu pack, Tebliğ'in ayrıntılı alt gruplarından yalnızca bu chart'ın taşıdığı hesapların düştüğü satırları içerir; yıllara yaygın inşaat hakedişleri ve özel tükenmeye tabi varlıklar gibi bu golden'ın hiç ihtiyaç duymadığı, sektöre özgü gruplar bu ilk sürümde yer almaz.",
       "source": "muhasebe-tebligi-1",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "AKT", "name": "AKTİF (VARLIKLAR) TOPLAMI", "sequence": 10, "is_total": true, "plus": ["DV", "DUV"] },
         { "code": "DV", "name": "I. Dönen Varlıklar", "sequence": 20, "parent": "AKT", "is_total": true, "plus": ["DV.1", "DV.1b", "DV.2", "DV.3", "DV.4", "DV.5", "DV.6"] },

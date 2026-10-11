@@ -9,6 +9,8 @@
       "valid_from": "2016-01-01",
       "legal_reference": "Årsregnskabsloven, § 23, stk. 1, jf. bilag 2, skema 1 — balancen i kontoform, for virksomheder i regnskabsklasse B, C og D. Kontoplanets ni klasser er selv bygget om denne opstillings hovedposter, hvilket er hvorfor koderne herunder ser vilkårlige ud",
       "source": "arsregnskabsloven",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Resultat for det igangværende regnskabsår",
       "lines": [
         { "code": "AKTIVER", "name": "AKTIVER I ALT", "sequence": 5, "is_total": true, "plus": ["A", "B"] },
         { "code": "A", "name": "Anlægsaktiver", "sequence": 10, "is_total": true, "plus": ["A.I", "A.II", "A.III"] },

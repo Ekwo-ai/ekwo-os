@@ -8,6 +8,7 @@
       "name": "Bilanss",
       "valid_from": "2025-07-01",
       "legal_reference": "Raamatupidamise seadus, lisa 1 — bilansiskeem, Riigikogu 18.09.2024 seaduse sõnastuses, kehtiv alates 01.07.2025; Raamatupidamise Toimkonna juhend RTJ 2 punktid 10–20", "source": "rps",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "1",

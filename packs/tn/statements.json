@@ -9,6 +9,7 @@
       "valid_from": "1997-01-01",
       "legal_reference": "Loi n° 96-112 du 30 décembre 1996 relative au système comptable des entreprises, art. 15 à 19 — les états financiers comprennent notamment un bilan ; norme comptable générale NC 01, homologuée par le décret n° 96-2459 du 30 décembre 1996, chapitre consacré à la présentation des états financiers. Cette recherche n'a pas pu extraire en texte exploitable le modèle chiffré officiel du bilan de la norme NC 01 (document PDF non extractible) : les postes ci-dessous regroupent donc les comptes de ce pack par classe et sous-classe, dans l'esprit de la norme plutôt que sur la base de son modèle imprimé ligne à ligne, et un comptable tunisien devrait comparer cette présentation à celle de la norme avant tout usage réel.",
       "source": "nc01",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "BS-10",

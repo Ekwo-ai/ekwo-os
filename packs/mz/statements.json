@@ -9,6 +9,8 @@
       "valid_from": "2010-01-01",
       "legal_reference": "Decreto n.º 70/2009, de 22 de Dezembro, capítulo 1.6 — modelo de Balanço do SCE: activos não correntes e correntes; capital próprio e passivos não correntes e correntes. As denominações são as do modelo oficial (colunas Notas, Período n e Período n-1 não representadas); o mapeamento conta a conta é uma selecção feita para este pacote, a partir dos códigos do capítulo 1.5. Não se representam os activos biológicos não correntes, os outros passivos financeiros nem os interesses minoritários, para os quais o plano não tem conta nesta selecção. A linha do resultado líquido junta aos saldos da classe 8 o resultado ainda não apurado das contas das classes 6 e 7, de modo que o balanço fecha antes e depois do apuramento.",
       "source": "decreto-70-2009",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Resultado do exercício em curso",
       "lines": [
         {
           "code": "ANC.1",

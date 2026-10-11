@@ -519,6 +519,9 @@
     "BE-BNB-ABBR-AF:694/7": "Auszuschüttender Gewinn",
     "BE-BNB-ABBR-AF:794": "Beteiligung der Gesellschafter am Verlust"
   },
+  "result_in_progress": {
+    "BE-BNB-ABBR-BS": "Ergebnis des laufenden Geschäftsjahres"
+  },
   "legal_mentions": {
     "reverse_charge": "Steuerschuldnerschaft des Leistungsempfängers.",
     "intracom_goods": "Steuerfreie innergemeinschaftliche Lieferung — Steuerschuldnerschaft des Erwerbers.",

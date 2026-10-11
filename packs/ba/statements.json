@@ -9,6 +9,8 @@
       "valid_from": "2022-01-01",
       "legal_reference": "Pravilnik o sadržaju i formi obrazaca finansijskih izvještaja za privredna društva (\"Službene novine Federacije BiH\", broj 82/10), Prilog 1 — Bilans stanja, čije su pozicije (A-E, rimski i arapski podnaslovi) preuzete od reda do reda; naslijedio ga je od 01.01.2022. istoimeni obrazac uz Pravilnik o kontnom okviru i sadržaju konta za privredna društva (\"Službene novine Federacije BiH\", broj 81/21), čiji puni tekst ovaj paket nije mogao strojno pročitati. Ovaj paket transkribuje strukturu i nazive pozicija onako kako ih nosi Prilog 1 Pravilnika 82/10 (grupe konta po pozicijama), a ne doslovne AOP oznake obrasca 81/21, koje bi trebalo provjeriti prije podnošenja stvarnog izvještaja — vidjeti README.md.",
       "source": "fs-2010",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Rezultat tekuće godine",
       "lines": [
         { "code": "R00", "name": "UKUPNO AKTIVA", "sequence": 10, "is_total": true, "plus": ["R10", "R20"] },
         { "code": "R10", "name": "A) STALNA SREDSTVA I DUGOROČNI PLASMANI", "sequence": 20, "is_total": true,

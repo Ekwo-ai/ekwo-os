@@ -8,6 +8,7 @@
       "name": "Statement of Financial Position",
       "legal_reference": "The Philippines prescribes no line items of its own that this session could read: the Financial and Sustainability Reporting Standards Council adopts the Philippine Financial Reporting Standards and the Philippine Financial Reporting Standard for Small Entities, and this session could not open either standard's own text (see the pack's README, \"Sources\"). This statement is original: it groups this chart's own accounts by the code ranges accounts.csv gives them — current and non-current, receivables and payables split from other balances — the same classification IFRS for SMEs, section 4, uses without transcribing that section's own line items or their numbering.",
       "source": null,
+      "result_in_progress": "alone",
       "lines": [
         { "code": "A-C-CASH", "parent": "A-C", "name": "Cash and cash equivalents", "sequence": 10,
           "rules": [ { "kind": "code_range", "code_from": "1000", "code_to": "1099" } ] },

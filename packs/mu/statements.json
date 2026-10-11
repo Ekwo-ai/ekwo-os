@@ -9,6 +9,8 @@
       "valid_from": "2015-09-15",
       "legal_reference": "Financial Reporting Act 2004, s. 72 and s. 75(1) — standards consistent with IFRS apply to the financial statements of a public interest entity, and the Financial Reporting Council's framework page applies standards consistent with IFRS to the other companies; IAS 1 requires a statement of financial position that separates current from non-current assets and liabilities. The lines below follow the presentation of the IFRS for SMEs and IAS 1, which a company that is not a public interest entity may apply.",
       "source": "fra-2004",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

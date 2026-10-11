@@ -284,5 +284,8 @@
     "CN-ASBE-IS:R31": "Less: income tax expense",
     "CN-ASBE-IS:R40": "4. Net profit (net loss shown with \"-\")"
   },
+  "result_in_progress": {
+    "CN-ASBE-BS": "Result of the current financial year"
+  },
   "legal_mentions": {}
 }

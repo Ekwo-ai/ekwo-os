@@ -8,6 +8,8 @@
       "framework": "LV-GPL",
       "legal_reference": "Gada pārskatu un konsolidēto gada pārskatu likuma 10. panta pirmā daļa un 1. pielikums (bilances shēma). Šī paka apkopo 1. pielikuma posteņus to virsraksta (I—IV) līmenī, kā to atļauj likuma 56.—58. panta tiesības mazām un mikrosabiedrībām apvienot maznozīmīgus posteņus vienā rindā.",
       "source": "gada-parskatu-likums",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Kārtējā pārskata gada rezultāts",
       "lines": [
         { "code": "AKTIVS", "name": "AKTĪVS", "sequence": 10, "is_total": true, "plus": ["ILGTERM", "APGROZ"] },
         { "code": "ILGTERM", "name": "Ilgtermiņa ieguldījumi", "sequence": 20, "is_total": true, "plus": ["NEMAT", "PAMATL", "FIN_ILGT"] },

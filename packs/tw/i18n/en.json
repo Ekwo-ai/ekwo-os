@@ -200,6 +200,9 @@
     "TW-BAA-IS:TAX": "Income tax expense (or benefit)",
     "TW-BAA-IS:NI": "Net profit (loss) for the period"
   },
+  "result_in_progress": {
+    "TW-BAA-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "export": "Zero-rated export (Business Tax Act, article 7, item 1)",
     "exempt": "Exempt (Business Tax Act, article 8)"

@@ -7,6 +7,7 @@
       "framework": "IFRS",
       "name": "Statement of financial position",
       "legal_reference": "Qatar's Income Tax Law (Law No. 24 of 2018), article 12, requires books and records kept in accordance with the laws of the State and international accounting standards, and article 6 requires accrual accounting in accordance with international accounting standards; the Commercial Companies Law (Law No. 11 of 2015), article 182, gives a company a twelve-month financial year and article 183 has the board submit the balance sheet, profit and loss account and activity report to the auditor each year. This pack's research did not open a Qatari text prescribing a statement layout, and did not verify which IFRS regime (full IFRS Accounting Standards or IFRS for SMEs) Qatari non-listed companies apply. The lines follow the minimum line items of IAS 1 Presentation of Financial Statements, paragraph 54, with current and non-current assets and liabilities presented separately (paragraph 60); the numbering and the account ranges are original to this pack. This is the first thing a local reviewer should check.",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "A-NC-FIX",

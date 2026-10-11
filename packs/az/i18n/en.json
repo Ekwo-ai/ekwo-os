@@ -238,5 +238,8 @@
     "AZ-IS:TAX": "Profit tax",
     "AZ-IS:PROFIT": "Net profit (loss) of the period"
   },
+  "result_in_progress": {
+    "AZ-BS": "Result of the current financial year"
+  },
   "legal_mentions": {}
 }

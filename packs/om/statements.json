@@ -9,6 +9,8 @@
       "name": "Statement of financial position — full IFRS Accounting Standards",
       "legal_reference": "Unlike packs/ae and packs/sa, this pack does not build its statements on the IFRS for SMEs Accounting Standard: the IFRS Foundation's own Jurisdictional Profile for Oman records that the Sultanate has not adopted that Standard and that every company not required to use it prepares under 'Full IFRS Standards' instead — which in Oman's case, on this pack's reading of the Profile, is every company, not only one whose securities trade in a public market. The lines below are therefore built on the minimum line items of IAS 1 Presentation of Financial Statements, paragraph 54 (the statement of financial position), and paragraph 60 (current and non-current presented separately, which this pack's research found no Omani text displacing in favour of a liquidity presentation). This is the first thing a reviewer familiar with a real Omani company's accounts should check.",
       "source": "ifrs-oman-profile",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "نتيجة السنة المالية الجارية",
       "lines": [
         {
           "code": "CA",

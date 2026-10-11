@@ -8,6 +8,8 @@
       "name": "Balance Sheet — GAPSME horizontal layout",
       "legal_reference": "Accountancy Profession (General Accounting Principles for Small and Medium-Sized Entities) Regulations (S.L. 281.05), Section 4, paragraph 4.13 — the horizontal layout of the balance sheet, one of the two layouts an entity may adopt. Every heading and sub-item below is the format's own wording; items preceded by Arabic numerals may be combined when immaterial or for clarity, which paragraph 4.13 itself permits and which this chart does in a few places noted beside the line.",
       "source": "gapsme",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         { "code": "NCA", "name": "Non-current assets", "sequence": 10, "is_total": true, "plus": ["NCA.I", "NCA.II", "NCA.III", "NCA.IV", "NCA.V", "NCA.VI"] },
         { "code": "NCA.I", "name": "Intangible assets", "sequence": 20, "parent": "NCA", "is_total": true, "plus": ["NCA.I.1", "NCA.I.2", "NCA.I.3", "NCA.I.4"] },

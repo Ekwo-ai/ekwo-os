@@ -222,5 +222,8 @@
     "KR-GAAP-IS:8": "Profit before income tax",
     "KR-GAAP-IS:9": "Income tax expense",
     "KR-GAAP-IS:10": "Net profit"
+  },
+  "result_in_progress": {
+    "KR-GAAP-BS": "Result of the current financial year"
   }
 }

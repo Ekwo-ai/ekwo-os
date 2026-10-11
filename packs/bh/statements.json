@@ -9,6 +9,8 @@
       "name": "قائمة المركز المالي — طبقًا لمعيار المنشآت الصغيرة والمتوسطة الدولي للتقرير المالي",
       "legal_reference": "Article 219 of the Commercial Companies Law (Legislative Decree No. 21 of 2001) conditions a clean audit opinion on financial statements prepared under international accounting standards, and the IFRS Foundation's Jurisdictional Profile records that Bahrain has adopted IFRS Accounting Standards and the IFRS for SMEs Standard with no local GAAP of its own. This pack's research found no Bahraini text prescribing a line-by-line format for either, so the lines below are built, as packs/ae and packs/sa build theirs on the same absence, on the minimum line items the general IFRS for SMEs Accounting Standard, section 4, asks for, current and non-current apart. A reviewer familiar with the IFRS for SMEs Standard as actually applied in the Kingdom should check this first.",
       "source": "ifrs-profile",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "نتيجة السنة المالية الجارية",
       "lines": [
         { "code": "CA", "name": "الأصول المتداولة", "sequence": 10, "is_total": true,
           "plus": ["CA.1","CA.2","CA.3","CA.4","CA.5"] },

@@ -236,6 +236,9 @@
     "AT-UGB-231-GKV:20": "20. Other taxes",
     "AT-UGB-231-GKV:21": "21. Net income or net loss for the year"
   },
+  "result_in_progress": {
+    "AT-UGB-224-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "Reverse charge — the recipient of the supply is liable for the tax",
     "intracom_goods": "Exempt intra-Community supply of goods",

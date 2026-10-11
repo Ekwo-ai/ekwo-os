@@ -357,6 +357,9 @@
     "RS-IS:S": "S. Income tax",
     "RS-IS:CU": "Ć./U. Net profit (net loss)"
   },
+  "result_in_progress": {
+    "RS-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "VAT is accounted for and paid by the recipient, in accordance with article 10 of the Law on Value Added Tax."
   }

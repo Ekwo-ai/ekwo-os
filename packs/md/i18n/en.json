@@ -298,6 +298,9 @@
     "MD-SNC-IS:140": "Income tax expense (saving)",
     "MD-SNC-IS:150": "Net profit (loss)"
   },
+  "result_in_progress": {
+    "MD-SNC-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "VAT is calculated and paid to the budget by the recipient, in accordance with art. 94 letter c) and art. 115 of the Tax Code.",
     "export": "Supply taxed at the zero VAT rate, in accordance with art. 104 letter a) of the Tax Code.",

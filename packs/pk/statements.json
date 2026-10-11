@@ -9,6 +9,8 @@
       "valid_from": "2017-05-30",
       "legal_reference": "Companies Act, 2017, s. 223 — the financial statements of a company comprise a statement of financial position, a statement of profit or loss and other comprehensive income, a statement of changes in equity and a statement of cash flows with the notes, prepared in the form and with the disclosures of the Fourth and Fifth Schedules and under the framework the Third Schedule assigns to its class; the lines below are the minimum line items of IAS 1 and of section 4 of the IFRS for SMEs, which a full-IFRS company expands and a small-sized entity under the Revised AFRS condenses. The Schedules' detailed disclosure formats, and the statements of cash flows and of changes in equity, are not carried.",
       "source": "companies-act-2017",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

@@ -8,6 +8,7 @@
       "name": "Estado de situación patrimonial (Balance general)",
       "legal_reference": "Ley N.° 1.034/1983, Del Comerciante, art. 82 — el libro de Inventario registra la situación patrimonial al iniciar las operaciones, con indicación y valoración del activo y del pasivo, y, al cierre de cada ejercicio, la situación patrimonial correspondiente; art. 83 — todo comerciante confecciona dentro de los tres primeros meses de cada año el balance general de sus operaciones, con una relación precisa de sus bienes, créditos y acciones, así como de sus obligaciones pendientes a la fecha de balance. Para una sociedad anónima, el Código Civil, art. 1079, añade que la asamblea ordinaria debe considerar y resolver el balance del ejercicio dentro de los cuatro meses del cierre. Ninguno de los dos textos prescribe cuentas ni rubros: este esquema es una estructura original sobre los rubros mínimos que exigen — véase el README.md",
       "source": "comerciante-1034",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "DISP", "parent": null, "name": "Disponibilidades", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "code_prefix", "code_from": "101" }],

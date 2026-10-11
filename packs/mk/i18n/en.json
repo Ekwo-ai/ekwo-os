@@ -233,6 +233,9 @@
     "MK-IS:630": "Financial expenses",
     "MK-IS:640": "Net profit/loss for the period"
   },
+  "result_in_progress": {
+    "MK-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "export": "Export — exempt from value added tax under article 24(1)(1) and article 26 of the Law on Value Added Tax.",
     "exempt": "Exempt from value added tax without right to deduct input tax, under article 23 of the Law on Value Added Tax.",

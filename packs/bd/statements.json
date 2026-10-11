@@ -9,6 +9,8 @@
       "valid_from": "2020-11-01",
       "legal_reference": "Companies Act, 1994, s. 181(2) — books of account that do not give a true and fair view of the company's affairs are not proper books; Financial Reporting Act, 2015 and the IFRS Accounting Standards adopted by the Financial Reporting Council in November 2020 (IFRS Foundation jurisdiction profile) — a public interest entity prepares a statement of financial position under IAS 1, and an entity that is not publicly traded may use the IFRS for SMEs, section 4. There is no prescribed layout in the texts of this register: the lines below are the minimum line items of section 4 of the IFRS for SMEs, which a full-IFRS entity expands under IAS 1. Assets and liabilities are classified into current and non-current.",
       "source": "ifrs-bangladesh",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

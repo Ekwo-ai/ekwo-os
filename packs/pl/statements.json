@@ -9,6 +9,7 @@
       "valid_from": "2026-01-01",
       "legal_reference": "Ustawa o rachunkowości art. 45 ust. 2 pkt 1 et załącznik nr 1 — modèle du bilan pour les entités autres que les banques, les entreprises d'assurance et de réassurance.",
       "source": "ustawa-rachunkowosc",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "AKT", "name": "AKTYWA RAZEM", "sequence": 10, "is_total": true, "plus": ["AKT.A", "AKT.B", "AKT.C", "AKT.D"] },
         { "code": "AKT.A", "parent": "AKT", "name": "A. Aktywa trwałe", "sequence": 20, "is_total": true, "plus": ["AKT.A.I", "AKT.A.II", "AKT.A.III", "AKT.A.IV", "AKT.A.V"] },

@@ -8,6 +8,7 @@
       "name": "Estado de situación financiera",
       "legal_reference": "Resolución N.° 03-2010 de 28 de octubre de 2010 de la Junta Técnica de Contabilidad — adopción de la NIIF para las PYMES como marco de los estados financieros con propósito general de la entidad panameña sin obligación pública de rendir cuentas; sección 4 de esa norma (Estado de situación financiera), que clasifica activos y pasivos entre corrientes y no corrientes. Panamá no impone una numeración de cuentas ni un formato de estado impreso: las líneas de este estado agrupan el catálogo propio de este paquete por esas secciones",
       "source": "niif-pymes",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "11", "parent": "AC", "name": "Efectivo y equivalentes de efectivo", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "code_prefix", "code_from": "11" }] },

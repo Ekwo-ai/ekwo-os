@@ -8,6 +8,8 @@
       "name": "Balance General (Anexo A-1)",
       "legal_reference": "Instructivo de la Declaración Jurada del Impuesto sobre la Renta Persona Jurídica (IR-2) — el Anexo A-1, Balance General, es el estado de activos, pasivos y patrimonio que toda persona jurídica de los sectores manufactura, comercio, agropecuaria u hoteles declara junto con el IR-2; no es un estado bajo NIIF para PYMES en su forma completa, sino el resumen administrativo que la Dirección General de Impuestos Internos exige de todo contribuyente, en ausencia de un catálogo o de un formato de estados financieros único impuesto por la ley dominicana",
       "source": "ir2-instructivo",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Resultado del ejercicio en curso",
       "lines": [
         { "code": "11", "parent": "AC", "name": "Disponible", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "code_prefix", "code_from": "11" }] },

@@ -9,6 +9,8 @@
       "name": "Statement of financial position — IFRS for Small and Medium-sized Entities",
       "legal_reference": "This pack's research could not open an official, directly-fetchable text of Federal Decree-Law No. 32 of 2021 on Commercial Companies to confirm its own article on accounting records and financial statements, or a UAE-specific accounting standards text: uaelegislation.gov.ae refused every unauthenticated request tried in this research pass, and the Ministry of Economy and Tourism's site returned no working legislation link. The lines below are therefore built, exactly as packs/sg/ and packs/hk/ build theirs where no country text could be opened, on the minimum line items of Section 4 (statement of financial position) and Section 5 (income statement) of the IFRS for Small and Medium-sized Entities Accounting Standard, current and non-current apart, expenses by nature. This is the first thing a reviewer should check.",
       "source": null,
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

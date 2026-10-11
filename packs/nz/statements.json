@@ -9,6 +9,8 @@
       "name": "Statement of financial position — NZ IFRS, Tier 2 Reduced Disclosure Regime",
       "legal_reference": "NZ IAS 1 Presentation of Financial Statements (with RDR disclosure concessions), paragraph 54, lists the line items a statement of financial position presents as a minimum, and paragraph 57 prescribes neither their order nor their format, so the lines below are those items in the order New Zealand practice prints them, classified current and non-current under paragraphs 60 to 76. Companies Act 1993, s. 201, and Financial Reporting Act 2013, s. 8 and s. 19 — a reporting entity that has to prepare financial statements prepares them in accordance with generally accepted accounting practice, which XRB A1 assigns to Tier 2 (NZ IFRS with reduced disclosure) for a for-profit entity that has no public accountability and elects the reduced disclosure regime. Biological assets, non-controlling interests and assets held for sale are not lines here, because the chart carries no account for them.",
       "source": "xrb-framework",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

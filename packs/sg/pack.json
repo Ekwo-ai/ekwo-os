@@ -3,7 +3,7 @@
   "country": "SG",
   "name": "Singapore",
   "version": "0.3.0",
-  "schema_min": "20260917170000",
+  "schema_min": "20261011120000",
   "seed_sequence": 50,
   "released_at": "2026-10-01",
   "certification": {

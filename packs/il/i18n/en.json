@@ -203,6 +203,9 @@
     "IL-IAS1-IS:TAX": "Income tax expense",
     "IL-IAS1-IS:PROFIT": "Profit (loss) for the period"
   },
+  "result_in_progress": {
+    "IL-IAS1-SFP": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "Self-invoice — the tax on this transaction is reported and paid by the recipient of the service, under regulation 6ג/6ד of the Value Added Tax Regulations, 5736-1976."
   }

@@ -9,6 +9,8 @@
       "name": "Statement of financial position — IFRS for SMEs Accounting Standard, Section 4",
       "legal_reference": "Companies Act 71 of 2008, s. 29(1) — the annual financial statements of a company must satisfy the financial reporting standard applicable to that company and present fairly its state of affairs; s. 30. Companies Regulation 27(4) — a company that is not required to have its financial statements audited (Regulation 28) may prepare them in accordance with the IFRS for SMEs Accounting Standard, as approved for use in the Republic by the Financial Reporting Standards Council. IFRS for SMEs, paragraph 4.2, lists the line items a statement of financial position presents as a minimum, and paragraph 4.2A leaves their order and format to the entity, so the lines below are those items in the order South African practice prints them, classified current and non-current under paragraphs 4.4 to 4.8. Biological assets (4.2(h)-(i)) and non-controlling interests (4.2(q)) are not lines here, because the chart carries no account for them.",
       "source": "ifrs-for-smes",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

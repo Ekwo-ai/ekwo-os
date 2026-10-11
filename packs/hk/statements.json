@@ -7,6 +7,7 @@
       "framework": "SME-FRS",
       "name": "Statement of financial position",
       "legal_reference": "Companies Ordinance (Cap. 622), Part 9 requires the directors of every company to prepare, for each financial year, financial statements that give a true and fair view of the state of affairs of the company, and prescribes no format to reach it. SME-FRS, the standard a company reporting under the SME-FRF & SME-FRS (Hong Kong Institute of Certified Public Accountants) applies in place of full Hong Kong Financial Reporting Standards, presents financial position by current and non-current assets and liabilities and offers no revaluation model for property, plant and equipment — every item is carried at cost less accumulated depreciation and impairment, which is why this chart carries no revaluation reserve line. The numbering below and the ranges each line reads are original to this pack: there is no legal chart of accounts to number against, so the blocks are this pack's own, the same way the British and Australian packs number theirs.",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "A-NC-FIX",

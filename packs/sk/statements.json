@@ -9,6 +9,7 @@
       "valid_from": "2015-01-01",
       "legal_reference": "Opatrenie MF SR č. MF/18009/2014-74 (ktorým sa mení opatrenie č. 4455/2003-92), Príloha č. 1 — vzor Súvahy Úč POD 1-01, spoločný pre malé aj veľké účtovné jednotky (voľba sa vyznačí na prvej strane tlačiva UZPODv14). Riadkovanie nižšie preberá len súčtové riadky formulára; podrobnejšie rozpisové riadky (napríklad jednotlivé zložky dlhodobého hmotného majetku) nie sú prevzaté, pretože sa nepodarilo overiť ich presné číslovanie čítaním úradného textu — pozri README.",
       "source": "tlacivo-suvaha",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "r001", "name": "SPOLU MAJETOK", "sequence": 10, "is_total": true, "plus": ["r002", "r030", "r061"] },
         { "code": "r002", "parent": "r001", "name": "A. Neobežný majetok", "sequence": 20, "is_total": true, "plus": ["r003", "r011", "r021"] },

@@ -8,6 +8,7 @@
       "name": "Estado de Situación Financiera",
       "legal_reference": "La Junta Técnica de Normas de Contabilidad y de Auditoría (JUNTEC) adoptó la NIIF para las PYMES para su aplicación obligatoria en Honduras y publica un modelo oficial de estados financieros; el Código de Comercio (Decreto Número 73-50) obliga al comerciante a llevar contabilidad por partida doble. Este paquete presenta el activo y el pasivo en corriente y no corriente, que es como la sección 4 de la NIIF para las PYMES ordena el estado de situación financiera cuando la entidad no presenta por liquidez. La JUNTEC no impone un esquema de líneas único: las líneas siguen el modelo de la NIIF para las PYMES y las reglas son las de este plan de cuentas.",
       "source": "juntec-niif-pymes",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "ACT",

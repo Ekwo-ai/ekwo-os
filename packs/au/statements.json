@@ -9,6 +9,8 @@
       "name": "Statement of financial position — AASB 1060, Tier 2 simplified disclosures",
       "legal_reference": "AASB 1060 General Purpose Financial Statements – Simplified Disclosures for For-Profit and Not-for-Profit Tier 2 Entities, paragraphs 35 to 44. Paragraph 35 lists the line items a statement of financial position presents as a minimum and paragraph 42 prescribes neither their order nor their format, so the lines below are those items in the order Australian practice prints them, classified current and non-current under paragraphs 37 to 41. Corporations Act 2001, s. 295 and s. 296 — the financial report of a company that has to prepare one comprises financial statements that comply with the accounting standards, which the AASB makes under s. 334. Biological assets (35(h)), non-controlling interests (35(p)) and the items held for sale of AASB 5 (35(r) and (s)) are not lines here, because the chart carries no account for them.",
       "source": "aasb-1060",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

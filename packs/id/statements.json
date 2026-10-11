@@ -9,6 +9,8 @@
       "name": "Laporan Posisi Keuangan",
       "legal_reference": "Kerangka Standar Pelaporan Keuangan Indonesia dan PSAK 201 (dahulu PSAK 1) - Penyajian Laporan Keuangan, disahkan oleh Dewan Standar Akuntansi Keuangan - Ikatan Akuntan Indonesia, menetapkan pemisahan aset dan liabilitas menjadi lancar/tidak lancar dan komponen minimal laporan posisi keuangan, tanpa menetapkan nomor kode akun. Baris di bawah ini mengelompokkan akun bagan akun original pack ini (accounts.csv) menurut struktur umum tersebut; isi baris demi baris PSAK 201 yang lengkap, dan SAK EMKM sebagai kerangka yang lebih sederhana bagi entitas mikro, kecil dan menengah, tidak ditelusuri secara terperinci pada sesi riset ini - lihat README.",
       "source": "sak-iai",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Laba (rugi) tahun berjalan",
       "lines": [
         {
           "code": "TOTAL-ASET",

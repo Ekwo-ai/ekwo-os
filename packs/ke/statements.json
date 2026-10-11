@@ -9,6 +9,8 @@
       "valid_from": "2015-09-15",
       "legal_reference": "Companies Act (Cap. 486), s. 638(2)(a)(i) \u2014 an individual financial statement comprises a balance sheet as at the last day of the financial year; s. 638(2)(b)(i) \u2014 it gives a true and fair view of the financial position of the company; s. 638(2)(c) \u2014 it complies with the prescribed financial accounting standards as to form and content. ICPAK has adopted the IFRS for SMEs Accounting Standard for an entity with no public accountability; the lines below follow ICPAK's own illustrative statement, section 4 of that standard.",
       "source": "companies-act-2015",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

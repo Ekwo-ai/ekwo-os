@@ -14,10 +14,10 @@
 
 insert into statement_templates
   (code, country, chart_code, name, kind, framework, valid_from, valid_to, legal_reference,
-   source_key)
+   source_key, result_in_progress, result_in_progress_name, result_in_progress_name_i18n)
 values
-  ('IFRS-SME-BS', null, null, 'Statement of financial position', 'balance_sheet', 'IFRS-SME', date '1970-01-01', null, 'IFRS for SMEs, section 4', null),
-  ('IFRS-SME-IS', null, null, 'Income statement', 'income_statement', 'IFRS-SME', date '1970-01-01', null, 'IFRS for SMEs, section 5', null)
+  ('IFRS-SME-BS', null, null, 'Statement of financial position', 'balance_sheet', 'IFRS-SME', date '1970-01-01', null, 'IFRS for SMEs, section 4', null, 'alone', null, '{}'::jsonb),
+  ('IFRS-SME-IS', null, null, 'Income statement', 'income_statement', 'IFRS-SME', date '1970-01-01', null, 'IFRS for SMEs, section 5', null, null, null, '{}'::jsonb)
 on conflict (code) do update set
   country         = excluded.country,
   chart_code      = excluded.chart_code,
@@ -27,7 +27,10 @@ on conflict (code) do update set
   valid_from      = excluded.valid_from,
   valid_to        = excluded.valid_to,
   legal_reference = excluded.legal_reference,
-  source_key      = excluded.source_key;
+  source_key      = excluded.source_key,
+  result_in_progress           = excluded.result_in_progress,
+  result_in_progress_name      = excluded.result_in_progress_name,
+  result_in_progress_name_i18n = excluded.result_in_progress_name_i18n;
 
 insert into statement_line_templates
   (statement_code, code, parent_code, name, name_i18n, sequence, sign, is_total,

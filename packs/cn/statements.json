@@ -8,6 +8,8 @@
       "name": "资产负债表（会企01表）— Balance sheet",
       "legal_reference": "财政部关于修订印发2019年度一般企业财务报表格式的通知（财会〔2019〕6号）附件2 — the balance sheet 会企01表 of a non-financial enterprise that applies the new financial instruments, revenue and leases standards. The notice itself lets an enterprise leave out the items it has no business for (\"企业对不存在相应业务的报表项目可结合本企业的实际情况进行必要删减\"); this statement leaves out the items this chart carries no account for — 衍生金融资产, 应收款项融资, 合同资产, 持有待售资产, 一年内到期的非流动资产, 债权投资, 其他债权投资, 其他权益工具投资, 其他非流动金融资产, 油气资产, 使用权资产, 其他非流动资产 and their liability and equity counterparts (衍生金融负债, 合同负债, 持有待售负债, 一年内到期的非流动负债, 租赁负债, 其他非流动负债, 其他权益工具, 其他综合收益, 专项储备). Line codes are this pack's own: the form numbers no line.",
       "source": "fs-format",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "本年度损益",
       "lines": [
         {
           "code": "A01",

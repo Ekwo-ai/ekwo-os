@@ -220,6 +220,9 @@
     "OM-IFRS-IS:9": "Income tax expense",
     "OM-IFRS-IS:10": "Profit for the year"
   },
+  "result_in_progress": {
+    "OM-IFRS-SFP": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "Reverse charge: the Customer is liable to account for the Value Added Tax due on this supply, and must record its value in Omani Rial, under Article 20 and Article 151 of the Executive Regulations of the Value Added Tax Law."
   }

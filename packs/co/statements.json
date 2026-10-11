@@ -8,6 +8,7 @@
       "name": "Estado de situación financiera",
       "legal_reference": "Decreto 2650 de 1993, art. 4 — el catálogo de cuentas agrupa las clases 1 (activo), 2 (pasivo) y 3 (patrimonio), que conforman el balance general; Decreto 2706 de 2012, sección 4 (grupo 3, microempresas) — estado de situación financiera abreviado, el formato oficial más simple para quien no está obligado a la presentación completa de los grupos 1 y 2",
       "source": "decreto2706",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "11", "parent": "AC", "name": "Disponible", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "code_prefix", "code_from": "11" }] },

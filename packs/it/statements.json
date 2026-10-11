@@ -8,6 +8,7 @@
       "name": "Stato patrimoniale",
       "legal_reference": "Codice civile, art. 2424 — contenuto dello stato patrimoniale. Le lettere e i numeri romani riportati sono le macroclassi e le classi dell'articolo; le voci che nessun conto di questo pacchetto raggiunge (A — crediti verso soci, B — fondi per rischi e oneri, C — trattamento di fine rapporto lavoro subordinato come voce separata dai debiti, III — attività finanziarie che non costituiscono immobilizzazioni) non figurano qui, per la regola per cui una riga senza conto non serve a nulla",
       "source": "codice-civile",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "B.I",

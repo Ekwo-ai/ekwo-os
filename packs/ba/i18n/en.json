@@ -285,5 +285,8 @@
     "BA-FBIH-IS:R80": "VI. Other expenses",
     "BA-FBIH-IS:R90": "Other profit (loss)",
     "BA-FBIH-IS:R99": "NET PROFIT (LOSS) FOR THE PERIOD"
+  },
+  "result_in_progress": {
+    "BA-FBIH-BS": "Result of the current financial year"
   }
 }

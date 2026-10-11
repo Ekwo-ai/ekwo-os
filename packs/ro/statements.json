@@ -8,6 +8,8 @@
       "name": "Bilanț prescurtat",
       "legal_reference": "Ordinul ministrului finanțelor publice nr. 1.802/2014, pct. 451 și anexa — formatul bilanțului prescurtat, pentru microentitățile și entitățile mici definite la pct. 9-10 din același ordin",
       "source": "omfp-1802-2014",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Rezultatul exercițiului financiar în curs",
       "lines": [
         {
           "code": "A",

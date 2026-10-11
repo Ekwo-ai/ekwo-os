@@ -9,6 +9,7 @@
       "valid_from": "2010-01-01",
       "legal_reference": "Zakon o gospodarskih družbah (ZGD-1), 65. člen — členitev bilance stanja. Vrstice tega paketa so postavke zakona same (A, B, C na strani sredstev; A, B, C, Č, D na strani obveznosti do virov sredstev), brez oštevilčenih kontov Enotnega kontnega okvira SIR, ki je avtorskopravno zaščiten — glej README in legal_reference kontnega načrta v pack.json.",
       "source": "zgd-1",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "SRE", "name": "Sredstva", "sequence": 10, "is_total": true, "plus": ["A", "B", "C"], "legal_reference": "ZGD-1, 65. člen", "source": "zgd-1" },
         { "code": "A", "parent": "SRE", "name": "A. Dolgoročna sredstva", "sequence": 20, "is_total": true, "plus": ["A.I", "A.II", "A.III", "A.IV", "A.V", "A.VI"], "legal_reference": "ZGD-1, 65. člen, odstavek o sredstvih, točka A", "source": "zgd-1" },

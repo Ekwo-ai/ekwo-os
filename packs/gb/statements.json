@@ -8,6 +8,8 @@
       "name": "Balance sheet — Companies Act 2006, small companies regime, Format 1",
       "legal_reference": "The Small Companies and Groups (Accounts and Directors' Report) Regulations 2008 (S.I. 2008/409), Schedule 1, Part 1, Section B — Balance sheet Format 1. Companies Act 2006, s. 396(1)(a) and (3): the balance sheet complies with the regulations as to its form and content. Every letter and numeral below is an item of that format and the name is the format's own wording.",
       "source": "small-companies-regs",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "A",

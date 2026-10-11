@@ -8,6 +8,7 @@
       "name": "Balance abreviado",
       "legal_reference": "Real Decreto 1514/2007, Plan General de Contabilidad, tercera parte — modelo de balance abreviado; la columna «N.º cuentas» del modelo publica la cuenta que alimenta cada partida, y esta línea la transcribe",
       "source": "pgc",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "A",

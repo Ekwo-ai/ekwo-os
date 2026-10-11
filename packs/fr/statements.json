@@ -7,6 +7,7 @@
       "framework": "FR-PCG",
       "name": "Bilan — liasse fiscale 2050 et 2051",
       "legal_reference": "Formulaires 2050-SD et 2051-SD, millésime 2026 ; règlement ANC 2022-06", "source": "liasse-2050",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "AA",

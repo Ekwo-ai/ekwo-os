@@ -8,6 +8,7 @@
       "name": "Estado de situación financiera",
       "legal_reference": "Ley de Régimen Tributario Interno, art. 20 y 21 — los estados financieros se elaboran tomando en cuenta los principios contables de general aceptación (en la práctica actual, las NIIF completas o las NIIF para las PYMES adoptadas por la Superintendencia de Compañías, Valores y Seguros) y sirven de base tanto para la declaración de impuestos como para su presentación societaria. No existe un formato único obligatorio para toda sociedad: este paquete presenta un estado de situación financiera resumido, por clasificación NIIF de corriente y no corriente",
       "source": "lrti-contabilidad",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "EFEC", "parent": "AC", "name": "Efectivo y equivalentes de efectivo", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "code_prefix", "code_from": "1.1.01" }] },

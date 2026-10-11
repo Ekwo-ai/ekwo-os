@@ -7,6 +7,7 @@
       "framework": "IFRS for SMEs",
       "name": "Balance sheet (statement of financial position)",
       "legal_reference": "BVI Business Companies Act 2004, section 98A, with the BVI Business Companies (Financial Return) Order 2023 (in force 1 January 2023), requires a company that is not exempt to produce a financial return — an unaudited balance sheet and income statement — and to give it to its registered agent within nine months of the end of its financial year; the return is not filed with the Registrar or made public. Neither the Act nor the Order imposes an accounting framework. This statement is laid out in the IFRS for SMEs form (current and non-current assets and liabilities, equity), which a company can fill in the financial return from; the line numbering and the ranges each line reads are this pack's own, and the Order's own schedule of lines was not opened in this session — see 'From British Virgin Islands' in docs/international.md.",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "A-NC-FIX",

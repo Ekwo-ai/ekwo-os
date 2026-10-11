@@ -194,6 +194,9 @@
     "BH-IFRSSME-IS:9": "Income tax expense",
     "BH-IFRSSME-IS:10": "Profit for the year"
   },
+  "result_in_progress": {
+    "BH-IFRSSME-SFP": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "Reverse charge: the Customer must account for the Tax due on this supply under Article 4 of Legislative Decree No. 48 of 2018."
   }

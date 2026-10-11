@@ -516,6 +516,9 @@
     "NL-BMJ-E:E21": "Share in the result of participating interests",
     "NL-BMJ-E:E22": "Result after taxation"
   },
+  "result_in_progress": {
+    "NL-BMJ-C": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "VAT reverse-charged.",
     "intracom_goods": "Intra-Community supply — 0%, table II, part a, item 6, Dutch Turnover Tax Act 1968.",

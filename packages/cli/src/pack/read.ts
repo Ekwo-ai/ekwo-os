@@ -11,6 +11,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { internalGroup, type AccountType } from '@ekwo-ai/core';
 import { validate, type Issue } from './schema.js';
 import {
   applyCorporateTaxLabels,
@@ -430,6 +431,16 @@ export interface PackStatement {
   source: string | null;
   /** Chart this statement belongs to, or null for every chart of the country. */
   chart_code: string | null;
+  /**
+   * A balance sheet's answer to where the result of the year in progress
+   * stands before the close: on a line that also takes other balances
+   * (`combined`), which then shows it as a sub-line of its own, or on a line
+   * that is the result alone. Null on any other statement, and on a balance
+   * sheet that has not decided — which `ekwo pack check` refuses.
+   */
+  result_in_progress: 'combined' | 'alone' | null;
+  /** The label of that sub-line, in the language of the pack. Null unless combined. */
+  result_in_progress_name: string | null;
   lines: PackStatementLine[];
 }
 
@@ -897,6 +908,8 @@ export interface PackLabels {
   tax_report_boxes: Record<string, Record<string, string>>;
   /** By `statement:line`, because two statements may both carry a line `20`. */
   statement_lines: Record<string, Record<string, string>>;
+  /** By statement code: the label of the sub-line of the result of the year in progress. */
+  result_in_progress: Record<string, Record<string, string>>;
   /** By legal mention code. */
   legal_mentions: Record<string, Record<string, string>>;
   /** By fixed-asset category code. */
@@ -1138,6 +1151,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     taxes: {},
     tax_report_boxes: {},
     statement_lines: {},
+    result_in_progress: {},
     legal_mentions: {},
     asset_categories: {},
     corporate_tax: {},
@@ -1221,6 +1235,19 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
         }
         (labels.statement_lines[`${statementCode as string}:${lineCode as string}`] ??= {})[language] = label;
       }
+
+      // The sub-line of the result in progress exists only on a balance sheet
+      // that combines it, so that is the only statement it is translated for.
+      for (const [code, label] of Object.entries(section('result_in_progress'))) {
+        if (statements.find((st) => st.code === code)?.result_in_progress !== 'combined') {
+          issues.push({
+            path: `i18n/${file} result_in_progress`,
+            message: `${code} is not a balance sheet of this pack whose result_in_progress is combined`,
+          });
+          continue;
+        }
+        (labels.result_in_progress[code] ??= {})[language] = label;
+      }
     }
   }
 
@@ -1282,6 +1309,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   issues.push(...reportReferences(report, taxes));
   issues.push(...proposedPeriod(manifest, report));
   issues.push(...statementReferences(statements, charts));
+  issues.push(...resultInProgress(statements, charts, manifest));
   issues.push(...documentReferences(documents));
 
   // The register, and every rule that points into it. Last of the cross-checks,
@@ -1761,6 +1789,7 @@ export async function readFrameworkPack(slug = GENERIC_PACK, dir = packsDir()): 
     }
   }
   issues.push(...statementReferences(statements, []));
+  issues.push(...resultInProgress(statements, [], null));
 
   // A framework has no chart, no tax and no journal, so no company can be
   // installed on it and no scenario replayed through it. That is a reason and
@@ -1862,6 +1891,7 @@ function languageCoverage(
       'statement_lines',
       statements.flatMap((st) => st.lines.map((line) => `${st.code}:${line.code}`)),
     ],
+    ['result_in_progress', statements.filter((st) => st.result_in_progress === 'combined').map((st) => st.code)],
     ['legal_mentions', documents.mentions.map((m) => m.code)],
     ['asset_categories', (fixedAssets?.categories ?? []).map((c) => c.code)],
     ['corporate_tax', corporateTaxLabelKeys(corporateTax)],
@@ -2551,6 +2581,8 @@ function normaliseStatements(raw: Record<string, unknown>, charts: PackChart[]):
       legal_reference: (statement['legal_reference'] as string | undefined) ?? null,
       source: (statement['source'] as string | undefined) ?? null,
       chart_code: named.length === 1 ? (named[0] as string) : null,
+      result_in_progress: (statement['result_in_progress'] as PackStatement['result_in_progress'] | undefined) ?? null,
+      result_in_progress_name: (statement['result_in_progress_name'] as string | undefined) ?? null,
       lines,
     } satisfies PackStatement;
   });
@@ -2808,6 +2840,191 @@ function statementReferences(statements: PackStatement[], charts: PackChart[]): 
     }
   }
 
+  return issues;
+}
+
+/**
+ * The line of a statement one account lands on, on one side: the rule the
+ * SQL ranks first in `statement_account_matches()` — one code, then a range
+ * or a head of codes, the longest first, then an account type. Null where no
+ * line takes it.
+ */
+function lineTaking(
+  statement: PackStatement,
+  account: { code: string; type: string },
+  side: 'debit' | 'credit',
+): string | null {
+  let best: { line: string; rank: number; length: number; sequence: number } | null = null;
+  for (const line of statement.lines) {
+    for (const rule of line.rules) {
+      if (rule.side !== 'any' && rule.side !== side) continue;
+      const takes = rule.kind === 'account_type' ? rule.account_type === account.type : ruleCatches(rule, account.code);
+      if (!takes) continue;
+      const candidate = {
+        line: line.code,
+        rank: rule.kind === 'account_code' ? 1 : rule.kind === 'account_type' ? 3 : 2,
+        length: (rule.code_from ?? '').length,
+        sequence: rule.sequence,
+      };
+      if (
+        best === null ||
+        candidate.rank < best.rank ||
+        (candidate.rank === best.rank &&
+          (candidate.length > best.length ||
+            (candidate.length === best.length &&
+              (candidate.sequence < best.sequence ||
+                (candidate.sequence === best.sequence && candidate.line < best.line)))))
+      ) {
+        best = candidate;
+      }
+    }
+  }
+  return best?.line ?? null;
+}
+
+/**
+ * Where a balance sheet carries the result of the year in progress, and what
+ * else those lines take.
+ *
+ * The SQL decides it in `statement_account_matches()`, and this is the same
+ * decision read from the pack: an income or expense account a line catches
+ * stays on that line; the rest is moved onto the account the close would
+ * leave the result on — the current-year result accounts of a pack that
+ * closes into them, retained earnings otherwise — and lands where the rules
+ * put that account. A receiving line *combines* the result with something
+ * else when it also takes an account that is neither income nor expense nor
+ * one of those current-year result accounts: retained earnings, which hold
+ * every earlier year, the result brought forward, a reserve, the result
+ * awaiting appropriation.
+ *
+ * `accounts` is a whole chart: what is posted to is its leaves, and the
+ * account the result is moved onto may be a heading, as a close may book on
+ * one. A framework has no chart, so its accounts are the account types its
+ * own rules name.
+ */
+export function resultInProgressLines(
+  statement: PackStatement,
+  accounts: { code: string; type: string; parent: string | null }[],
+  defaults: Manifest['defaults'] | null,
+): { lines: string[]; others: string[] } {
+  const parents = new Set(accounts.map((a) => a.parent));
+  const leaves = accounts.filter((a) => !parents.has(a.code));
+  const isResult = (type: string): boolean => {
+    const group = internalGroup(type as AccountType);
+    return group === 'income' || group === 'expense';
+  };
+  const sides = ['credit', 'debit'] as const;
+  const lines = new Set<string>();
+  let moved = false;
+  for (const account of leaves.filter((a) => isResult(a.type))) {
+    for (const side of sides) {
+      const line = lineTaking(statement, account, side);
+      if (line === null) moved = true;
+      else lines.add(line);
+    }
+  }
+
+  const style = defaults?.['closing_style'] as string | undefined;
+  const roles = defaults?.roles ?? {};
+  const resultAccounts =
+    style === 'result_accounts'
+      ? [roles['current_year_result_profit'], roles['current_year_result_loss']]
+      : [];
+  if (moved && style !== undefined) {
+    const onto =
+      style === 'result_accounts'
+        ? { credit: roles['current_year_result_profit'], debit: roles['current_year_result_loss'] }
+        : { credit: roles['retained_earnings'], debit: roles['retained_earnings_loss'] ?? roles['retained_earnings'] };
+    for (const side of sides) {
+      const code = onto[side];
+      const account = accounts.find((a) => a.code === code);
+      if (code === undefined || code === null || account === undefined) continue;
+      const line = lineTaking(statement, account, side);
+      if (line !== null) lines.add(line);
+    }
+  }
+
+  const others = leaves
+    .filter((a) => !isResult(a.type) && !resultAccounts.includes(a.code) && a.type !== 'off_balance')
+    .filter((a) => sides.some((side) => {
+      const line = lineTaking(statement, a, side);
+      return line !== null && lines.has(line);
+    }))
+    .map((a) => a.code);
+  return { lines: [...lines].sort(), others: [...new Set(others)].sort() };
+}
+
+/**
+ * Every balance sheet says how it shows the result of the year in progress,
+ * and says what its own model says.
+ *
+ * `combined` makes `financial_statement_of_kind()` print the result as a
+ * sub-line under the line that carries it; `alone` prints the line as it is.
+ * Left undecided, a pack would leave a reader unable to tell the year in
+ * progress from the result brought forward — so it is refused, and so is a
+ * value the scheme and the chart contradict, with the accounts that decide it.
+ */
+function resultInProgress(statements: PackStatement[], charts: PackChart[], manifest: Manifest | null): Issue[] {
+  const issues: Issue[] = [];
+  for (const statement of statements) {
+    const where = `statements.json ${statement.code}`;
+    if (statement.kind !== 'balance_sheet') {
+      if (statement.result_in_progress !== null || statement.result_in_progress_name !== null) {
+        issues.push({ path: where, message: 'result_in_progress belongs to a balance sheet; drop it here' });
+      }
+      continue;
+    }
+
+    const applicable = charts.filter((c) => statement.chart_code === null || statement.chart_code === c.code);
+    const sets =
+      applicable.length > 0
+        ? applicable.map((chart) => chart.accounts)
+        : [
+            [...new Set(statement.lines.flatMap((l) => l.rules.map((r) => r.account_type)))]
+              .filter((type): type is string => type !== null)
+              .map((type) => ({ code: '', type, parent: null })),
+          ];
+    const found = sets.map((accounts) => resultInProgressLines(statement, accounts, manifest?.defaults ?? null));
+    const lines = [...new Set(found.flatMap((f) => f.lines))].sort();
+    const others = [...new Set(found.flatMap((f) => f.others))].sort();
+    const model: 'combined' | 'alone' = others.length > 0 ? 'combined' : 'alone';
+    const receiving = lines.length === 1 ? `line ${lines[0]} receives` : `lines ${lines.join(', ')} receive`;
+    const reason =
+      model === 'combined'
+        ? `${receiving} the result and also take${lines.length === 1 ? 's' : ''} ${others.slice(0, 8).join(', ')}` +
+          `${others.length > 8 ? ` and ${others.length - 8} more` : ''}`
+        : lines.length > 0
+          ? `${receiving} the result and take${lines.length === 1 ? 's' : ''} nothing else`
+          : 'no line receives the result';
+
+    if (statement.result_in_progress === null) {
+      issues.push({
+        path: where,
+        message:
+          `says nothing of the result of the year in progress. Add "result_in_progress": "${model}" ` +
+          `— ${reason}${model === 'combined' ? ', with "result_in_progress_name", the label of its sub-line' : ''}.`,
+      });
+      continue;
+    }
+    if (statement.result_in_progress !== model) {
+      issues.push({
+        path: `${where} result_in_progress`,
+        message: `is ${statement.result_in_progress}, and the scheme says ${model}: ${reason}.`,
+      });
+    }
+    if (statement.result_in_progress === 'combined' && statement.result_in_progress_name === null) {
+      issues.push({
+        path: `${where} result_in_progress_name`,
+        message: 'is missing: a combined line shows the result in progress as a sub-line, and the sub-line needs its label',
+      });
+    }
+    if (statement.result_in_progress === 'alone' && statement.result_in_progress_name !== null) {
+      issues.push({
+        path: `${where} result_in_progress_name`,
+        message: 'labels a sub-line that a line holding the result alone never shows; drop it',
+      });
+    }
+  }
   return issues;
 }
 

@@ -13,6 +13,24 @@ somewhere has already run it.
 
 ### Added
 
+- **The result of the year in progress has a sub-line of its own where the
+  balance sheet's line mixes it with something else.** Since a balance sheet
+  drawn before the close carries the result nobody has closed, a Belgian
+  rubric 14 "Bénéfice (Perte) reporté(e)" showed the profit brought forward
+  and the year in progress as one figure. Every balance sheet of every pack
+  now says, in the new `result_in_progress` of `statements.json`, whether the
+  line that receives the result is the result `alone` (France `DI`, 51
+  schemes) or `combined` with other balances (Belgium `14`, every scheme that
+  closes into retained earnings, the SYSCOHADA `CJ`; 77 schemes), and a
+  combined one names the label of its sub-line in its own languages.
+  `financial_statement_of_kind()` returns the result in progress as a row
+  `<line>:result_in_progress` under that line; `financial_statement()`, the
+  totals and every filing are unchanged. `statement_account_matches()` gains
+  the column `in_progress`, and `statement_figures()` is the one place a
+  statement is summed. `ekwo pack check` refuses a balance sheet that leaves
+  the rule out or contradicts its own scheme and chart. Migration
+  `20261011120000`, which every pack now names as its `schema_min`.
+
 - **Every country pack says what a service bought from abroad costs in
   tax.** A software subscription, hosting or an API billed by a supplier
   abroad is the most common purchase of a young company, and 44 packs that

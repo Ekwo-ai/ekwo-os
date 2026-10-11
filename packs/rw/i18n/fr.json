@@ -229,5 +229,8 @@
     "RW-ICPAR-IS:8": "Résultat avant impôt",
     "RW-ICPAR-IS:9": "Charge d'impôt sur les bénéfices",
     "RW-ICPAR-IS:10": "Résultat de l'exercice"
+  },
+  "result_in_progress": {
+    "RW-ICPAR-SFP": "Résultat de l'exercice en cours"
   }
 }

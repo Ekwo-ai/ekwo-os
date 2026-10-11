@@ -9,6 +9,8 @@
       "valid_from": "2016-01-01",
       "legal_reference": "Unternehmensgesetzbuch § 224 Abs. 1 bis 3 in der Fassung des Rechnungslegungs-Änderungsgesetzes 2014 — Gliederung der Bilanz in Kontoform, Aktivseite Abs. 2 und Passivseite Abs. 3. Die Zeilen sind die gesetzlichen Posten mit Buchstaben und römischen Zahlen; kleine und mittelgroße Gesellschaften dürfen nach § 242 Abs. 1 iVm den Größenklassen des § 221 die mit Buchstaben und römischen Zahlen bezeichneten Posten zusammengefasst ausweisen, die hier als Summenzeilen vorhanden sind.",
       "source": "ugb",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Ergebnis des laufenden Geschäftsjahres",
       "lines": [
         {
           "code": "AKT",

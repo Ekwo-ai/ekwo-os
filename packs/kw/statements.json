@@ -7,6 +7,7 @@
       "framework": "IFRS",
       "name": "Statement of financial position — full IFRS Accounting Standards",
       "legal_reference": "Full IFRS Accounting Standards are required of every company under the Commercial Companies Law, by Ministerial Decree No. 18 of 1990 as amended by No. 101 of 2008; the IFRS for SMEs Standard is not adopted (IFRS Foundation, Jurisdictional Profile: Kuwait). Lines follow IAS 1 (statement of financial position; profit or loss). The statement of other comprehensive income is not modelled: this chart carries no OCI account. The line numbering and the account ranges are this pack's own.",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "A-NC-FIX",

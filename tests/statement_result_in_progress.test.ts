@@ -350,6 +350,36 @@ describe('every pack that carries a balance sheet', () => {
           expect(onResult === undefined || Number(onResult.balance) === unclosed).toBe(true);
         });
       }
+
+      it('shows the result in progress as a sub-line exactly where its balance sheet combines it', async () => {
+        // The statement an application draws: the company's own balance
+        // sheet, with the sub-lines the pack asks for.
+        const lines = await rows<{ statement_code: string; line_code: string; parent_code: string; amount: string }>(
+          db,
+          `select statement_code, line_code, parent_code, amount::text
+             from financial_statement_of_kind($1, 'balance_sheet', date '2026-01-01', date '2026-06-30')`,
+          [company],
+        );
+        const statement = pack.statements.find((s) => s.code === lines[0]?.statement_code);
+        const subLines = lines.filter((l) => l.line_code.endsWith(':result_in_progress'));
+        if (statement?.result_in_progress !== 'combined') {
+          expect(subLines).toEqual([]);
+          return;
+        }
+        // Read back with the sign of the line it stands under, the sub-lines
+        // add up to the whole result nobody has closed.
+        const signs = await rows<{ code: string; sign: number }>(
+          db,
+          `select code, sign from statement_line_templates where statement_code = $1`,
+          [statement.code],
+        );
+        const signOf = new Map(signs.map((s) => [s.code, Number(s.sign)]));
+        expect(subLines.length).toBeGreaterThan(0);
+        expect(subLines.reduce((sum, l) => sum + Number(l.amount) * (signOf.get(l.parent_code) ?? 0), 0)).toBeCloseTo(
+          unclosed,
+          6,
+        );
+      });
     });
   }
 });

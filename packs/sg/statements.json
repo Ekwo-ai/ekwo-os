@@ -9,6 +9,8 @@
       "name": "Statement of financial position — SFRS for Small Entities",
       "legal_reference": "Companies Act 1967, s. 201(1) and (2) — the directors lay before the annual general meeting financial statements that comply with the Accounting Standards and give a true and fair view; the Accounting Standards Committee under ACRA issues SFRS for Small Entities, which is based on the IFRS for SMEs Accounting Standard (ACRA, Accounting standards). Section 4 of that standard lists the line items of the statement of financial position as a minimum and prescribes neither their order nor their format; the lines below are those items in the order a Singapore statement prints them, current and non-current apart. The text of the standard is served to Singapore addresses only and was not read for this pack: every paragraph number here is the IFRS for SMEs numbering and is the first thing a reviewer should check. Biological assets, non-controlling interests and assets held for sale are not lines, because the chart holds no account for them.",
       "source": "companies-act",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

@@ -9,6 +9,8 @@
       "name": "قائمة المركز المالي — طبقًا لمعيار المنشآت الصغيرة والمتوسطة من معايير المحاسبة المصرية",
       "legal_reference": "The Minister of Investment issues Egyptian Accounting Standards (EAS) by ministerial decree published in the Official Gazette; EAS, current version issued in July 2015 and amended in 2019 and 2023, is close to IFRS Accounting Standards but not identical, and includes a dedicated set of requirements for small and medium-sized entities effective 1 January 2016 (IFRS Foundation, Jurisdictional Profile: Egypt). This pack's research could not open the Arabic decree text listing the small-and-medium-entities standard's own line items, so the lines below are built, as packs/ae and packs/sa build theirs where no country text could be opened, on the minimum line items the general IFRS for SMEs Accounting Standard, section 4, asks for — current and non-current apart. This is the first thing a reviewer familiar with the actual EAS text should check.",
       "source": "eas-ifrs-profile",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "نتيجة السنة المالية الجارية",
       "lines": [
         { "code": "CA", "name": "الأصول المتداولة", "sequence": 10, "is_total": true,
           "plus": ["CA.1","CA.2","CA.3","CA.4","CA.5","CA.6"] },

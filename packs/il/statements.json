@@ -9,6 +9,8 @@
       "name": "דוח על המצב הכספי (Statement of financial position — IAS 1)",
       "legal_reference": "תקן חשבונאות מספר 29 of the Israel Accounting Standards Board requires a 'reporting corporation' — a public company and a private company that has issued bonds to the public — to prepare its financial statements under IFRS for periods beginning 1 January 2008, and תקנות ניירות ערך (דוחות כספיים שנתיים), התש״ע-2010 sets out what such a corporation's annual report must contain without itself fixing a numbered chart of lines. No statute this pack's research found binds every other Israeli company — the overwhelming majority of them, private and outside that definition — to this or to any other fixed statement format; those companies keep books under Israeli GAAP or under IFRS by choice, with no numbered scheme of their own either. The lines below are therefore built, exactly as packs/ae/ and packs/sg/ and packs/hk/ each build theirs where no country-specific statutory format exists, on the minimum line items IAS 1 itself requires (paragraph 54), current and non-current apart. This is the first thing a reviewer should check.",
       "source": "accounting-standard-29",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "תוצאות שנת הכספים השוטפת",
       "lines": [
         {
           "code": "CA",

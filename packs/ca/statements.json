@@ -9,6 +9,8 @@
       "legal_reference": "CPA Canada Handbook — Accounting, Part II, Section 1521, Balance sheet, which names the items a balance sheet presents and the order it presents them in, read with Section 1510, Current assets and current liabilities, for the current/non-current split. Section 71 of the Canada Business Corporations Regulations, 2001 requires annual financial statements to be prepared in accordance with Canadian GAAP, and section 70 of the same regulations defines Canadian GAAP as “generally accepted accounting principles as set out in the CPA Canada Handbook – Accounting”. Canada prescribes no chart of accounts and no statutory line-by-line scheme: this is the short-form presentation ASPE asks for, and the line names are the Handbook's own words.",
       "source": "aspe",
       "taxonomy": null,
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "10",

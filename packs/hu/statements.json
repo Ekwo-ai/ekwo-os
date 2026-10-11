@@ -9,6 +9,7 @@
       "valid_from": "2016-01-01",
       "legal_reference": "A számvitelről szóló 2000. évi C. törvény 22. § — a mérleg tagolását az 1. számú melléklet tartalmazza, „A”, illetve „B” változatban; e pack az „A” változatot követi. A törvény betűkkel (A–G) és — az eszközoldalon — római számokkal jelöli a fő- és altételeket; e pack ugyanezeket a jelöléseket használja sorkódként.",
       "source": "szamviteli-torveny",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "AKT",

@@ -9,6 +9,7 @@
       "valid_from": "2016-01-01",
       "legal_reference": "Zakon o računovodstvu čl. 19. st. 4. — mali poduzetnici sastavljaju skraćenu bilancu tako da popunjavaju samo pozicije označene slovima i rimskim brojevima, bez daljnje razrade po arapskim brojevima; mikro poduzetnici prema st. 3. smiju ići i kraće, na same slovne pozicije. Pravilnik o strukturi i sadržaju godišnjih financijskih izvještaja (NN 95/16, 144/20, 158/23) čl. 2. i Prilog I. propisuju AOP oznaku, naziv i redoslijed svake pozicije; svaka je linija ovog obrasca imenovana svojom AOP oznakom. Ovaj pack nema zakonom propisan računski plan (vidi pack.json, charts[].legal_reference) pa se AOP pozicija razrade — gdje ih plan iz accounts.csv ne razlikuje, npr. IV. Potraživanja dugoročna, V. Rezerve fer vrijednosti, VIII. Manjinski interes — čitaju kao nula umjesto brisanja pozicije, tako da obrazac ostaje prepoznatljiv onome tko ga uspoređuje s Obrascom POD-BIL. Izvanbilančni zapisi (AOP 066 i 124) nisu vlastita linija: to je memorandumska evidencija izvan dvojnog knjigovodstva, koju plan bilježi na kontima 9xxx (account_type off_balance), isključenima iz odgovornosti svake izjave po definiciji financial_statement().",
       "source": "pravilnik-fin-izvjestaji",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "AKT",

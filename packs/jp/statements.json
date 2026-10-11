@@ -9,6 +9,8 @@
       "name": "貸借対照表（会社計算規則）",
       "legal_reference": "会社計算規則 (Ordinance on Company Accounting, Ministry of Justice Ordinance No. 13 of 2006), arts. 72 to 86 — the balance sheet of a 株式会社 is divided into assets, liabilities and net assets (art. 73), assets into current, fixed and deferred (art. 74), liabilities into current and fixed (art. 75), net assets into shareholders' equity, valuation and translation adjustments, share acquisition rights and 株式引受権 (art. 76). The Ordinance prescribes the sections and some items and leaves the rest to 'appropriate items', so the lines below are its items and the subdivisions Japanese practice prints. 会社法 art. 435(2) is what requires the statements; the Ordinance is what gives their form.",
       "source": "company-accounting",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "当期損益",
       "lines": [
         {
           "code": "A",

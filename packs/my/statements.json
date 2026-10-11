@@ -9,6 +9,8 @@
       "name": "Statement of financial position",
       "legal_reference": "Malaysia prescribes no line items of its own that this session could read as a primary, openly served text: Companies Act 2016, section 245 requires a company's financial statements to comply with the approved accounting standards MASB issues — MFRS, converging with IFRS, or MPERS, converging with the IFRS for SMEs Accounting Standard — and this session could not open either standard's own paragraphs (they are served to registered users; see the pack's README, \"Sources\"). This statement is original: it groups this chart's own accounts by the code ranges accounts.csv gives them — current and non-current, receivables and payables split from other balances — the same classification MFRS 101 and Section 4 of MPERS use, without transcribing either standard's own line items or their paragraph numbering.",
       "source": null,
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Keputusan tahun kewangan semasa",
       "lines": [
         { "code": "CA-CASH", "parent": "CA", "name": "Cash and cash equivalents", "sequence": 10,
           "rules": [ { "kind": "code_range", "code_from": "1000", "code_to": "1040" } ] },

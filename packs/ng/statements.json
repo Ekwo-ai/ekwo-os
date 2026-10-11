@@ -9,6 +9,8 @@
       "valid_from": "2026-01-01",
       "legal_reference": "Companies and Allied Matters Act 2020, s. 377(2)(b) requires \"the balance sheet or balance sheet as at the last day of the year\" among the financial statements the directors prepare; s. 378(1) requires it to comply with the First Schedule to the Act \"so far as applicable\" and with the accounting standards the Financial Reporting Council of Nigeria lays down. The lines below follow the First Schedule, Section C, Balance Sheet Formats, Format 1 — a vertical format, headed A to M — summarised to the level of this chart's own account blocks; each heading below names the paragraph of Format 1 it carries.",
       "source": "cama-2020",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         { "code": "A", "name": "Called up share capital not paid", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "account_code", "code_from": "0000" }],

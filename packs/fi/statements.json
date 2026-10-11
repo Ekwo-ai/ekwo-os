@@ -9,6 +9,7 @@
       "valid_from": "1998-01-01",
       "legal_reference": "Kirjanpitoasetus 1339/1997, 1 luku 6 § — taseen kaava. Tässä pakissa kaava on esitetty tiivistettynä: kirjanpitoasetuksen omat alaerät (esim. oman pääoman rahastot, vieraan pääoman erät) on yhdistetty yhdeksi riviksi silloin, kun tilikartassa ei ole erillistä tiliä kullekin alaerälle. Rivi 2.2 (Saamiset ja siirtosaamiset) yhdistää kirjanpitoasetuksen pitkä- ja lyhytaikaiset saamiset, koska tilikartta ei erittele niitä.",
       "source": "kpa",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "1", "name": "A Pysyvät vastaavat", "sequence": 10, "is_total": true, "plus": ["1.1", "1.2", "1.3"] },
         { "code": "1.1", "parent": "1", "name": "A I Aineettomat hyödykkeet", "sequence": 20, "sign": 1,

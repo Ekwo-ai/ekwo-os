@@ -7,6 +7,7 @@
       "framework": "IFRS-SME",
       "name": "Statement of financial position",
       "legal_reference": "Companies Act 1981, section 84(1)(a)(iii) requires the directors to lay before the general meeting a balance sheet at the end of the period, and section 84(1A) requires the notes to describe the generally accepted accounting principles used, which may be those of Bermuda or of another jurisdiction, and to identify them where they are not Bermuda's. The Act prescribes no layout. This statement follows the presentation of IFRS for SMEs (International Accounting Standards Board), section 4: current and non-current assets and liabilities, with equity shown beside them; that is a choice of this pack, not a text that Bermuda imposes, and a company that reports under full IFRS or US GAAP presents the same balance sheet with different notes. The numbering and the ranges each line reads are original to this pack: Bermuda has no legal chart of accounts to number against. Retained earnings and cash flows are separate statements under section 84(1)(a)(ii) and (iiiA), which this pack does not model.",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "A-NC-FIX",

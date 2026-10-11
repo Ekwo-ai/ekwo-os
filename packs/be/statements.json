@@ -8,6 +8,8 @@
       "taxonomy": "nbb-cbso:26.0",
       "name": "Bilan — schéma abrégé",
       "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3", "source": "comptes-annuels",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Résultat de l'exercice en cours",
       "lines": [
         {
           "code": "20",

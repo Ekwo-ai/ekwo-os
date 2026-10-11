@@ -7,6 +7,8 @@
       "name": "Maliyyə vəziyyəti haqqında hesabat (balans)",
       "legal_reference": "Azərbaycan Respublikasının «Mühasibat uçotu haqqında» Qanunu, maddə 6 — maliyyə hesabatları MHBS, KOS üçün MHBS və ya (mikro və kiçik sahibkarlıq subyektləri üçün) sadələşdirilmiş milli qaydalara əsasən tərtib edilir; qanun balansın vahid məcburi sətirlərini müəyyən etmir. Bu pack MHBS-nin maliyyə vəziyyəti haqqında hesabatının minimal qruplaşdırmasından və hesablar planının iki rəqəmli qruplarından (10-19, 20-24, 30-34, 40-44, 50-54) istifadə edir.",
       "source": "accounting-law",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Cari maliyyə ilinin nəticəsi",
       "lines": [
         {
           "code": "A-NC-INT",

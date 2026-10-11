@@ -254,6 +254,9 @@
     "MU-IFRS-IS:9": "Charge d'impôt sur le résultat",
     "MU-IFRS-IS:10": "Résultat de l'exercice"
   },
+  "result_in_progress": {
+    "MU-IFRS-SFP": "Résultat de l'exercice en cours"
+  },
   "legal_mentions": {
     "vat_invoice": "VAT INVOICE"
   }

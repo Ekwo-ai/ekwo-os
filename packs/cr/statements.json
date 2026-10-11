@@ -8,6 +8,7 @@
       "name": "Balance General de Situación",
       "legal_reference": "Código de Comercio, art. 258 — cada cierre de ejercicio fiscal se asienta en el libro de Balances, entre otros, el Balance General de Situación posterior al cierre, distinguiendo el activo del pasivo y del patrimonio. Este esquema es una estructura mínima sobre esos rubros; la presentación completa de acuerdo con las NIIF o las NIIF para las PYMES es la que adopta el Colegio de Contadores Públicos de Costa Rica, cuyo texto pertenece al IASB y al Colegio y no se transcribe aquí — ver README.md",
       "source": "ccom",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "CB", "parent": null, "name": "Efectivo y equivalentes de efectivo", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "code_prefix", "code_from": "111" }],

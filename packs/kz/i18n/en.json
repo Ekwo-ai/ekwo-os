@@ -224,6 +224,9 @@
     "KZ-IFRS-IS:IS-CIT": "Corporate income tax expense",
     "KZ-IFRS-IS:IS-NET": "Net result (profit/loss)"
   },
+  "result_in_progress": {
+    "KZ-IFRS-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "VAT on works and services acquired from a non-resident is self-assessed and paid by the recipient."
   }

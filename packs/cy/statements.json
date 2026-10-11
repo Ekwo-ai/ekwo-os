@@ -8,6 +8,8 @@
       "name": "Statement of financial position",
       "legal_reference": "Companies Law, Cap. 113, s. 141A (as substituted) requires every company's accounts to be prepared in accordance with International Financial Reporting Standards as adopted by the European Union, which prescribe no fixed table of captions — the Eighth Schedule that once did was repealed in 2003 by s. 20 of Ν. 167(Ι)/2003. The lines below are the minimum line items of section 4.2 of the IFRS for SMEs Accounting Standard (2015), used here as an illustrative layout precise enough to read this chart against, and grouped onto the codes of `accounts.csv`, which are themselves original and not a published format.",
       "source": "ifrs-for-smes-standard",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "NC-INT",

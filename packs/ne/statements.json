@@ -9,6 +9,8 @@
       "valid_from": "2018-01-01",
       "legal_reference": "Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF) du 26 janvier 2017, art. 25, 26 et 29 ; Système comptable OHADA, Titre IX, chapitre 3 (modèle de bilan) et chapitre 7 (tableau de correspondance postes/comptes). En vigueur pour les comptes personnels des entités au 1er janvier 2018 (AUDCIF, art. 113).",
       "source": "syscohada",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Résultat de l'exercice en cours",
       "lines": [
         {
           "code": "AD",

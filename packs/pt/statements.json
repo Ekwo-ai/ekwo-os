@@ -8,6 +8,7 @@
       "name": "Balanço",
       "legal_reference": "Decreto-Lei n.º 158/2009, que aprova o SNC; Portaria n.º 220/2015, de 24 de julho — modelos de demonstrações financeiras. As legendas retomam a terminologia corrente do modelo de Balanço do SNC; o mapeamento conta a conta é uma seleção feita para este pacote e não uma transcrição campo a campo da portaria, cujo texto não pôde ser extraído automaticamente — ver README",
       "source": "portaria-220-2015",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "ANC", "parent": "ATIVO", "name": "ATIVO NÃO CORRENTE", "sequence": 10, "is_total": true,
           "plus": ["ANC.1", "ANC.2", "ANC.3"] },

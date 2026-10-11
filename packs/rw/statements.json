@@ -9,6 +9,8 @@
       "valid_from": "2021-02-08",
       "legal_reference": "Law N° 007/2021 of 05/02/2021 governing companies, article 122 — the individual accounts of a company show its activities during the accounting period, including a balance sheet, a profit and loss account, cash flow statements, equity and a statement of changes; article 123 — the balance sheet of a company complies with international standards. The Institute of Certified Public Accountants of Rwanda has adopted the IFRS for SMEs Accounting Standard for an entity with no public accountability; the lines below follow that standard's illustrative statement of financial position, section 4.",
       "source": "companies-law",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

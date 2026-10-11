@@ -9,6 +9,7 @@
       "valid_from": "2026-01-01",
       "legal_reference": "Национален счетоводен стандарт 1 — Представяне на финансови отчети, § 10.1 и § 14, Приложение № 1 — примерна схема на счетоводния баланс за предприятия, прилагащи националните счетоводни стандарти.",
       "source": "ss1",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "AKTIV", "name": "АКТИВ — общо", "sequence": 10, "is_total": true, "plus": ["AKTIV.A", "AKTIV.B", "AKTIV.V", "AKTIV.G"] },
         { "code": "AKTIV.A", "parent": "AKTIV", "name": "Раздел А. Записан, невнесен капитал", "sequence": 20, "sign": 1, "rules": [{ "kind": "code_range", "code_from": "3100", "code_to": "3199" }] },

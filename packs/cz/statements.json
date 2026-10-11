@@ -9,6 +9,7 @@
       "valid_from": "2016-01-01",
       "legal_reference": "Vyhláška č. 500/2002 Sb., § 4 a příloha č. 1 — structure de la rozvaha en quatre blocs (B. Stálá aktiva, C. Oběžná aktiva, D.1 Časové rozlišení aktiv côté actif ; A. Vlastní kapitál, B.+C. Cizí zdroje, D.1 Časové rozlišení pasiv côté passif), dans sa forme simplifiée en vigueur depuis la novelle de 2016 (vyhláška č. 250/2015 Sb.).",
       "source": "vyhlaska-500-2002",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "AKT", "name": "AKTIVA CELKEM", "sequence": 10, "is_total": true, "plus": ["AKT.B", "AKT.C", "AKT.D"] },
         { "code": "AKT.B", "parent": "AKT", "name": "B. Stálá aktiva", "sequence": 20, "is_total": true, "plus": ["AKT.B.I", "AKT.B.II", "AKT.B.III"] },

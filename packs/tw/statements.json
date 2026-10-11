@@ -8,6 +8,8 @@
       "name": "資產負債表 — Statement of financial position",
       "legal_reference": "商業會計處理準則第14條 — a balance sheet presents assets (current, non-current), liabilities (current, non-current) and equity (capital or paid-in capital, capital surplus, retained earnings or accumulated deficit, other equity, treasury shares).",
       "source": "accounting-rules",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "本年度損益",
       "lines": [
         { "code": "CA", "name": "流動資產 Current assets", "sequence": 10, "sign": 1,
           "rules": [ { "kind": "code_range", "code_from": "11", "code_to": "12" } ] },

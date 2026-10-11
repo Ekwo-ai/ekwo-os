@@ -9,6 +9,8 @@
       "valid_from": "2005-01-01",
       "legal_reference": "The Zambia Institute of Chartered Accountants (ZICA), the professional body recognised under the Accountants Act, 2008, adopted IFRS Accounting Standards in full from 2005 and sets a three-tier framework: full IFRS for listed companies, public interest entities and government-owned enterprises; IFRS for SMEs (or full IFRS at the company's option) for economically significant companies with a turnover of K20 million and above; and the Zambian Financial Reporting Standard for Micro and Small Entities below that. Zambia has no statutory format for the statements, so these lines are an original presentation by nature of expense that follows IAS 1 / section 4 of IFRS for SMEs (statement of financial position).",
       "source": "zica-financial-reporting",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

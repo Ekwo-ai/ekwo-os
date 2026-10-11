@@ -8,6 +8,7 @@
       "name": "Estado de Situación Financiera",
       "legal_reference": "Decreto Número 2-70, Código de Comercio de Guatemala, art. 368 — todo comerciante debe llevar su contabilidad de forma organizada, de acuerdo con el sistema de partida doble y los principios de contabilidad generalmente aceptados o aceptados por la ley de la materia, así como establecer, al iniciar sus operaciones y por lo menos una vez al año, la situación financiera de su empresa mediante el balance general firmado por el comerciante y el contador. La Resolución del 29 de junio de 2010 de la Asamblea General Extraordinaria del Colegio de Contadores Públicos y Auditores de Guatemala, publicada en el Diario de Centro América el 13 de julio de 2010, adopta la Norma Internacional de Información Financiera para Pequeñas y Medianas Entidades (NIIF para PYMES) como parte de los principios de contabilidad generalmente aceptados a que remite el Código de Comercio, de aplicación obligatoria desde el 1 de enero de 2011. Este paquete presenta el activo y el pasivo en corriente/no corriente, que es como la NIIF para PYMES (sección 4) ordena el estado de situación financiera cuando la entidad no presenta por liquidez",
       "source": "codigo-comercio",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "ACT", "parent": null, "name": "Activo", "sequence": 10, "is_total": true, "plus": ["AC", "ANC"] },
         { "code": "AC", "parent": "ACT", "name": "Activo corriente", "sequence": 20, "is_total": true, "plus": ["111", "112", "113", "114", "115", "116", "119"] },

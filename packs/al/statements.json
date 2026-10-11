@@ -9,6 +9,7 @@
       "valid_from": "2015-01-01",
       "legal_reference": "Standardi Kombëtar i Kontabilitetit Nr. 2 «Paraqitja e Pasqyrave Financiare», Shtojca 1 «Zërat e bilancit». Ky pack transkripton zërat kryesorë të Shtojcës 1 (kolona «Zëri i bilancit»), duke i paraqitur aktivet afatgjata materiale dhe amortizimin e akumuluar në të njëjtin rresht (vlerë neto) dhe duke kombinuar disa nën-zëra që SKK 2 lejon t'i japë në shënimet shpjeguese në një rresht të vetëm të bilancit; nuk riprodhon zërat e pasqyrave të konsoliduara (aksionet e pakicës, kapitali i shoqërisë mëmë) as ata të veprimeve me instrumente derivativë apo grante, të cilat asnjë llogari e këtij paketimi nuk i kërkon. Shih README.md.",
       "source": "skk-2",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "AL-BS-A-INTANG", "name": "Aktive afatgjata jomateriale (neto)", "sequence": 10, "sign": 1,
           "rules": [ { "kind": "account_code", "code_from": "201" }, { "kind": "account_code", "code_from": "203" }, { "kind": "account_code", "code_from": "205" }, { "kind": "account_code", "code_from": "207" }, { "kind": "account_code", "code_from": "208" }, { "kind": "account_code", "code_from": "280" } ] },

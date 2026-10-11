@@ -8,6 +8,7 @@
       "name": "Estado de Situación Financiera",
       "legal_reference": "Ley N° 18.046, sobre Sociedades Anónimas, art. 74 — el directorio presenta anualmente a la junta ordinaria de accionistas «una memoria razonada acerca de la situación de la sociedad en el último ejercicio, acompañada del balance general, del estado de ganancias y pérdidas», que «deberán reflejar con claridad la situación patrimonial de la sociedad al cierre del ejercicio y los beneficios obtenidos o las pérdidas sufridas durante el mismo». Chile no fija un plan de cuentas ni una estructura de líneas obligatoria para ese balance fuera de las sociedades que la Comisión para el Mercado Financiero fiscaliza (que reportan bajo Normas Internacionales de Información Financiera, cuyo texto no se transcribe aquí): esta es la estructura mínima que Ekwo instala por defecto, agrupada por naturaleza (activo circulante, activo fijo, pasivo circulante, pasivo no corriente, patrimonio), sobre el plan de cuentas propio del paquete",
       "source": "ley18046",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "ACT", "parent": null, "name": "Total Activos", "sequence": 10, "is_total": true, "plus": ["AC", "AF", "AO"] },
         { "code": "AC", "parent": "ACT", "name": "Activo Circulante", "sequence": 20, "is_total": true,

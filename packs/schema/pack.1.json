@@ -1896,6 +1896,18 @@
         "source": {
           "$ref": "#/$defs/source_ref"
         },
+        "result_in_progress": {
+          "enum": [
+            "combined",
+            "alone"
+          ],
+          "description": "A balance sheet only, and required there. Until a year is closed its result is still on the income and expense accounts, and the balance sheet carries it onto the line the close would leave it on. combined: that line also takes other balances — the result brought forward, reserves, the result awaiting appropriation — so a reader cannot tell the year in progress from the rest, and the statement shows it as a sub-line of its own under that line (BE rubric 14 takes 140/141). alone: that line is the result of the year and nothing else, and shows it as it is (FR DI takes 120/129). Decided from the scheme and the chart: `ekwo pack check` works out which lines receive the result and what else they take, and refuses a value the pack's own model contradicts."
+        },
+        "result_in_progress_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The label of that sub-line, in the language of the pack — the result of the year in progress. Required with result_in_progress combined, refused otherwise; translated in i18n/<lang>.json under result_in_progress, by statement code."
+        },
         "lines": {
           "type": "array",
           "minItems": 1,
@@ -2086,6 +2098,13 @@
             "type": "string"
           },
           "description": "By `<statement>:<line>`, because two statements may both carry a line `20`."
+        },
+        "result_in_progress": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "By statement code: the label of the sub-line a balance sheet whose result_in_progress is combined shows the result of the year in progress on."
         },
         "legal_mentions": {
           "type": "object",

@@ -519,6 +519,9 @@
     "BE-BNB-ABBR-AF:694/7": "Profit to be distributed",
     "BE-BNB-ABBR-AF:794": "Shareholders' contribution to the loss"
   },
+  "result_in_progress": {
+    "BE-BNB-ABBR-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "Reverse charge — VAT to be accounted for by the customer.",
     "intracom_goods": "Exempt intra-Community supply — reverse charge by the customer.",

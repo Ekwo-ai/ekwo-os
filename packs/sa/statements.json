@@ -9,6 +9,8 @@
       "name": "Statement of financial position — IFRS for Small and Medium-sized Entities",
       "legal_reference": "The Saudi Organization for Chartered and Professional Accountants endorses the IFRS for SMEs Accounting Standard for a small or medium-sized entity, and full IFRS for a listed entity; the Kingdom prescribes no chart of accounts and no statement format of its own. See the chart's own legal_reference in pack.json for what this pack's research could and could not open.",
       "source": "socpa-standards",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

@@ -8,6 +8,8 @@
       "name": "Balanço",
       "legal_reference": "Decreto n.º 82/01 (Plano Geral de Contabilidade), Anexo — modelo de Balanço. The caption wording follows the plan's balance sheet; the account-to-line mapping is this pack's selection at the level of detail of the chart, not a transcription field by field of the model, and a balance sheet printed for a filing is prepared from the company's own notes.",
       "source": "pgc-82-01",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Resultado do exercício em curso",
       "lines": [
         {
           "code": "AI.1",

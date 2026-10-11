@@ -9,6 +9,7 @@
       "valid_from": "2010-01-01",
       "legal_reference": "Loi n° 07-11 du 25 novembre 2007 portant système comptable financier, art. 25 et 26 ; arrêté du 26 juillet 2008, titre II, chapitre 2 — modèle de bilan. En vigueur pour les exercices ouverts à compter du 1er janvier 2010.",
       "source": "scf",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "ANC-GW", "parent": "ANC-TOT", "name": "Écart d'acquisition (goodwill)", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "code_range", "code_from": "207", "code_to": "207" }],

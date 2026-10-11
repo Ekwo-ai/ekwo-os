@@ -8,6 +8,7 @@
       "name": "Balance General",
       "legal_reference": "Código de Comercio (Decreto Ley N.° 14379), art. 331° — el directorio de toda sociedad anónima debe elaborar y publicar anualmente una memoria que contenga el balance general y el estado de resultados del ejercicio; el mismo artículo exige, además, un balance de comprobación de sumas y saldos y un inventario valorado del patrimonio social. Ni el Código de Comercio ni las Normas de Contabilidad Generalmente Aceptadas del Consejo Técnico Nacional de Auditoría y Contabilidad (CTNAC) prescriben las líneas de un balance general modelo; este esquema agrupa el activo en corriente y no corriente y el pasivo en corriente y no corriente, que es la práctica seguida bajo las NIIF adoptadas como marco supletorio por la Resolución CTNAC N.° 01/2012 — véase el README",
       "source": "codigo-comercio",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "CB", "parent": null, "name": "Caja y bancos", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "code_prefix", "code_from": "111" }],

@@ -266,6 +266,9 @@
     "UA-NPSBO1-IS:2300": "Income tax expense (income)",
     "UA-NPSBO1-IS:2350": "Net profit (loss)"
   },
+  "result_in_progress": {
+    "UA-NPSBO1-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "VAT is charged and paid by the recipient of the service, on their own account, under article 208.2 of the Tax Code of Ukraine."
   }

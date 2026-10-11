@@ -9,6 +9,8 @@
       "valid_from": "2018-01-01",
       "legal_reference": "Zakon o računovodstvu (\"Sl. list CG\", br. 052/16), član 4, i Pravilnik o sadržini i formi obrazaca finansijskih iskaza za privredna društva i druga pravna lica, usklađen sa Direktivom 2013/34/EU — obrazac \"Iskaz o finansijskoj poziciji /Bilans stanja/\" nosi redne brojeve (AOP) od 001 do 144. Ovaj paket transkribuje jedanaest zbirnih redova na nivou klase/grupe konta Kontnog okvira umjesto svakog od preko sto pojedinačnih redova obrasca — svaki konto ovog paketa dostiže tačno jedan od njih. Kompletnu podjelu po pojedinačnim rednim brojevima obrasca vidjeti u README.md.",
       "source": "fin-iskazi-obrazac",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Rezultat tekuće godine",
       "lines": [
         { "code": "ME-BS-000", "name": "Neuplaćeni upisani kapital", "sequence": 10, "sign": 1,
           "rules": [ { "kind": "code_range", "code_from": "00", "code_to": "00" } ] },

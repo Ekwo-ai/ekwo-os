@@ -9,6 +9,7 @@
       "valid_from": "2016-01-01",
       "legal_reference": "Årsredovisningslag (1995:1554) 3 kap. 3 § första stycket — balansräkningen ska upprättas enligt den uppställningsform som anges i bilaga 1 till denna lag; bilaga 1, Uppställningsform för balansräkningen (kontoform), i den lydelse bilagan fick genom lag (2015:813), som förde in Europaparlamentets och rådets direktiv 2013/34/EU och som tillämpas första gången för det räkenskapsår som inleds närmast efter den 31 december 2015. Uppställningen följer aktiebolagens rad under rubriken A. Eget kapital, eftersom kontoplanen kontot 2010 Aktiekapital bär; posterna för ekonomiska föreningar, handelsbolag och övriga företagsformer, som bilagan ger som alternativ under samma rubrik, används inte av denna plan. Denna lag ställer inte upp någon kontoplan — se legal_reference på chart 'default' i pack.json — så varje rad nedan är en av Ekwos egna kontointervall i det plan denna pack bär, inte ett återgivande av BAS-kontoplanens numrering. En post i bilagan som ingen av kontona i denna pack svarar mot skrivs ut utan regel och läses noll; README räknar upp dem.",
       "source": "arsredovisningslagen",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "TG",

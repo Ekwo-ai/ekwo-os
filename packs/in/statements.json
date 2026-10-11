@@ -9,6 +9,8 @@
       "legal_reference": "Section 129(1) of the Companies Act, 2013: the financial statements shall be in the form or forms provided for different classes of companies in Schedule III. Division I of Schedule III is the form for a company whose financial statements comply with the Companies (Accounting Standards) Rules, 2006 — the Accounting Standards, which a company not required to apply Ind AS reports under; Division II is the Ind AS form and is not carried. This is Part I, the Balance Sheet, line for line down to the sub-heads of the face of the statement, as amended with effect from 1 April 2021. The Notes the Schedule requires, the comparatives of the previous period and the rounding of general instruction 4 are the preparer's and not the ledger's.",
       "source": "schedule-iii",
       "taxonomy": null,
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "A11",

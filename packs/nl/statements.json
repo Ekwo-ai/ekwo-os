@@ -9,6 +9,8 @@
       "valid_from": "2016-01-01",
       "legal_reference": "Besluit modellen jaarrekening, art. 1, lid 2 — een vennootschap waarop art. 2:396 BW van toepassing is (klein) mag voor de balans model C kiezen; Burgerlijk Wetboek Boek 2, art. 364 tot en met 376 en art. 396, lid 3 — de indeling van de balans en de beperking voor een kleine rechtspersoon. De regels volgen de koppeling die de dataset «RGS NL en EN labels» van elke RGS-code naar de begrippen jenv-bw2 van de Nederlandse Taxonomie legt. Regel I staat niet in het model: het is de controletelling die tegenover E hoort te staan",
       "source": "bmj",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Resultaat van het lopende boekjaar",
       "lines": [
         {
           "code": "A",

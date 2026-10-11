@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.12.1",
-  "migration": "20261011082857",
+  "migration": "20261011120000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3071,6 +3071,18 @@
             "type": "jsonb"
           },
           {
+            "name": "result_in_progress",
+            "type": "text"
+          },
+          {
+            "name": "result_in_progress_name",
+            "type": "text"
+          },
+          {
+            "name": "result_in_progress_name_i18n",
+            "type": "jsonb"
+          },
+          {
             "name": "source_key",
             "type": "text"
           },
@@ -4723,6 +4735,10 @@
       },
       {
         "name": "statement_account_matches",
+        "arguments": "p_company_id uuid, p_statement_code text, p_from date, p_to date"
+      },
+      {
+        "name": "statement_figures",
         "arguments": "p_company_id uuid, p_statement_code text, p_from date, p_to date"
       },
       {
@@ -9434,6 +9450,17 @@
         },
         {
           "name": "statement_account_matches",
+          "arguments": "p_company_id uuid, p_statement_code text, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "statement_figures",
           "arguments": "p_company_id uuid, p_statement_code text, p_from date, p_to date",
           "anon": [],
           "authenticated": [

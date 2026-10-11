@@ -8,6 +8,7 @@
       "name": "Pasqyra e pozicionit financiar",
       "legal_reference": "Ligji Nr. 06/L-032 për Kontabilitet, Raportim Financiar dhe Auditim, neni 8 — organizatat e vogla dhe të mesme (neni 5, paragrafët 3 dhe 4) përgatisin pasqyrat financiare sipas IFRS for SMEs; neni 7 — organizatat e mëdha (neni 5, paragrafi 5) përgatisin sipas IFRS-ve të plota. Ligji Nr. 06/L-032 nuk përcakton një formë të vetme e të detyrueshme të bilancit me rreshta të caktuar (ndryshe, për shembull, nga plani kombëtar serb apo boshnjak). Ky paket përdor grupimin minimal të parashikuar nga seksioni 4 i IFRS for SMEs, sipas diapazoneve të kodeve të llogarive të vetë këtij paketi (shih README.md) — kodet e llogarive nuk janë të përcaktuara me ligj.",
       "source": "ligji-kontabiliteti",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "A-NC-FIX",

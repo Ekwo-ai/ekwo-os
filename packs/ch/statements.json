@@ -8,6 +8,8 @@
       "name": "Bilanz nach Art. 959 OR",
       "legal_reference": "Obligationenrecht (OR), Art. 959 Abs. 1 — die Bilanz stellt die Vermögens- und Finanzierungslage des Unternehmens am Bilanzstichtag dar. Abs. 5 gibt die Mindestgliederung des Umlauf- und des Anlagevermögens, Abs. 6 die des kurz- und des langfristigen Fremdkapitals sowie des Eigenkapitals. Jede Position unten ist eine Ziffer dieser beiden Absätze; wo mehrere Ziffern zu einer Zeile zusammengefasst sind, weil dieser Kontenrahmen keine eigene Kontenreihe für sie führt, sagt die Zeile es selbst.",
       "source": "or",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Ergebnis des laufenden Geschäftsjahres",
       "lines": [
         {
           "code": "AKT",

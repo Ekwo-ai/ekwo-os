@@ -8,6 +8,8 @@
       "name": "Balanse etter regnskapsloven § 6-2",
       "legal_reference": "Regnskapsloven (LOV-1998-07-17-56) § 6-2 første ledd gir oppstillingsplanen for balansen: eiendeler inndelt i A. Anleggsmidler (I. Immaterielle eiendeler, II. Varige driftsmidler, III. Finansielle anleggsmidler) og B. Omløpsmidler (I. Varer, II. Fordringer, III. Investeringer, IV. Bankinnskudd, kontanter og lignende), og egenkapital og gjeld inndelt i C. Egenkapital (I. Innskutt egenkapital, II. Opptjent egenkapital) og D. Gjeld (I. Avsetning for forpliktelser, II. Annen langsiktig gjeld, III. Kortsiktig gjeld). Denne planen er felles for alle regnskapspliktige, jf. NRS 8 God regnskapsskikk for små foretak, kapittel 3.2.1, som bekrefter at små foretak benytter samme oppstillingsplan som øvrige foretak. Linjene under er gruppert på romertallsnivå (I-IV): § 6-2 tallfester underposter innenfor hver romertallsgruppe, men NRS 8 kapittel 3, første avsnitt, tillater sammenslåing av poster når det gjør regnskapet mer oversiktlig, som er den forenklingen et lite foretaks kontoplan vanligvis bruker.",
       "source": "regnskapsl",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Resultat for inneværende regnskapsår",
       "lines": [
         { "code": "EIENDELER", "name": "Sum eiendeler", "sequence": 10, "is_total": true, "plus": ["ANLEGGSMIDLER", "OMLOPSMIDLER"] },
         {

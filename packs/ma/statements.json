@@ -9,6 +9,8 @@
       "valid_from": "1994-01-01",
       "legal_reference": "Code général de normalisation comptable, deuxième partie, Titre I — modèle du bilan du modèle normal. Les postes du bilan retenus ici regroupent, pour un pack de statut community, les comptes divisionnaires d'un même poste du cadre comptable en une seule ligne — le modèle normal officiel détaille davantage le passif circulant (fournisseurs, personnel, organismes sociaux, État, associés, autres créanciers et régularisation en postes distincts) ; voir la section « From Morocco » de docs/international.md.",
       "source": "cgnc",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Résultat de l'exercice en cours",
       "lines": [
         { "code": "AA", "parent": "AZ", "name": "Immobilisations en non-valeurs", "sequence": 10, "sign": 1,
           "rules": [ { "kind": "code_range", "code_from": "21", "code_to": "21" },

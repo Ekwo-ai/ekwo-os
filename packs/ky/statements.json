@@ -7,6 +7,7 @@
       "framework": "IFRS-SME",
       "name": "Statement of financial position",
       "legal_reference": "Companies Act (2026 Revision), section 59(1) and (2) requires every company to keep proper books of account — contracts and invoices included — and deems them not proper unless they give a true and fair view of the company's affairs and explain its transactions; it prescribes no financial-statement format and no accounting framework. This statement follows the presentation of IFRS for SMEs (IASB): current and non-current assets and liabilities, equity, with the result for the year shown as its own unallocated line until closing. The line numbering and the ranges each line reads are original to this pack, because no legal chart exists to number against. See the README.",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "A-NC-FIX",

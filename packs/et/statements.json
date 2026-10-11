@@ -9,6 +9,8 @@
       "valid_from": "2019-07-08",
       "legal_reference": "Financial Reporting Proclamation No. 847/2014, art. 5 — commercial organisations prepare their financial statements under IFRS Accounting Standards, public interest entities in full, and under the IFRS for SMEs Accounting Standard when they have no public accountability; the Accounting and Auditing Board of Ethiopia (AABE) endorses and enforces the standards (IFRS Foundation jurisdictional profile). Ethiopia has no statutory chart of accounts or statement layout, so the lines below follow section 4 (statement of financial position) and section 5 (statement of comprehensive income, expenses by nature) of the IFRS for SMEs Accounting Standard. Presented as a statement of financial position with total assets less total liabilities equal to equity.",
       "source": "ifrs-profile",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

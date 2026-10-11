@@ -7,6 +7,7 @@
       "framework": "BDAS",
       "name": "Balance sheet",
       "legal_reference": "Brunei Darussalam Accounting Standards for Non-Public Interest Entities (BDAS NON-PIE), BDAS 1 (Presentation of Financial Statements), paragraphs 1.1 and 1.16 to 1.21: a complete set of financial statements comprises a balance sheet, an income statement, accounting policies and explanatory notes, and a cash flow statement; the balance sheet presents current and non-current assets and current and non-current liabilities as separate classifications, and its face includes, where applicable, property, plant and equipment, intangible assets, financial assets, inventories, trade and other receivables, tax assets, cash and cash equivalents, trade and other payables, tax liabilities, provisions, non-current liabilities, issued capital and reserves (paragraph 1.19). BDAS NON-PIE has applied since 1 January 2018 to entities without public accountability (Brunei Darussalam Accounting Standards Council, Frequently Asked Questions on BDAS); an entity with public accountability reports under full IFRS since 1 January 2014 (Notice No. 1/2014) and a non-public interest entity may choose IFRS. The numbering below and the ranges each line reads are original to this pack: neither the Income Tax Act nor BDAS prescribes a chart of accounts, so the blocks are this pack's own. This pack does not carry the cash flow statement BDAS 18 also requires; see the README.",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "A-NC-FIX",

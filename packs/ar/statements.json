@@ -8,6 +8,7 @@
       "name": "Estado de situación patrimonial",
       "legal_reference": "Ley General de Sociedades 19.550, art. 63 — contenido mínimo del estado de situación patrimonial: el activo se presenta distinguiendo el corriente del no corriente, discriminado por rubros (caja y bancos; créditos; bienes de cambio; bienes de uso; activos intangibles; otros); el pasivo, distinguiendo también el corriente del no corriente (deudas comerciales, bancarias, sociales y fiscales; previsiones); y el patrimonio neto, de acuerdo con las normas que rigen a la sociedad. Este esquema es una estructura mínima sobre esos rubros; la presentación normativa completa es la de las Resoluciones Técnicas 8 y 9 de la FACPCE, cuyo texto pertenece a esa Federación y no se transcribe aquí — ver README.md",
       "source": "lgs",
+      "result_in_progress": "alone",
       "lines": [
         { "code": "CB", "parent": null, "name": "Caja y bancos", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "code_prefix", "code_from": "111" }],

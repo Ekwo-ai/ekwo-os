@@ -9,6 +9,8 @@
       "name": "재무상태표",
       "legal_reference": "상법 제447조는 주식회사의 이사가 매 결산기에 대차대조표(재무상태표)와 손익계산서를 작성하도록 정하나, 계정과목이나 표시 항목을 지정하지 않는다. 한국채택국제회계기준(K-IFRS)을 적용하지 않는 회사는 한국회계기준원(KASB)이 제정한 일반기업회계기준에 따라 재무제표를 작성하며, 이 기준은 자산·부채를 1년 또는 정상영업주기를 기준으로 유동·비유동으로 구분하여 표시할 것을 요구한다. 이 재무상태표는 그 유동·비유동 구분 원칙과 대한민국 실무의 일반적 표시 순서를 따라 이 팩이 작성한 것으로, 일반기업회계기준의 세부 항목별 배열을 문언 그대로 검증하지는 못했다 — docs/international.md 및 packs/kr/README.md 참조.",
       "source": "commercial-act",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "당기손익",
       "lines": [
         { "code": "A", "name": "자산총계", "sequence": 10, "is_total": true, "plus": ["A1", "A2"],
           "legal_reference": "상법 제447조.", "source": "commercial-act" },

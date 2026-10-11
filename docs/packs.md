@@ -131,6 +131,25 @@ above it, and the figure comes back the way it started, silently. It cost the
 Luxembourg pack a wrong set of golden figures. `ekwo pack check` refuses the
 two together; `minus` is how a total subtracts.
 
+**A balance sheet says how it shows the result of the year in progress.**
+Until a year is closed its result stands on the income and expense accounts,
+and the balance sheet carries it onto the line the close would leave it on.
+`result_in_progress` on the statement says what that line is: `alone` when it
+is the result of the year and nothing else — the French `DI` takes 120 and 129
+— and `combined` when it also takes other balances — the Belgian rubric `14`
+takes 140 and 141, the result brought forward; a pack that closes into
+retained earnings carries every earlier year on the same line. A combined
+balance sheet names the label of the sub-line in `result_in_progress_name`,
+in the language of the pack, and translates it in `i18n/<lang>.json` under
+`result_in_progress`, by statement code. `financial_statement_of_kind()` then
+shows the result in progress as a row of its own under its line — key
+`<line>:result_in_progress`, parent the line, no total adds it — and
+`financial_statement()`, which is what a filing reads, is unchanged. The value
+is not a preference: `ekwo pack check` works out which lines receive the
+result and what else they take, from the scheme and the chart, and refuses a
+balance sheet that leaves it out or says the opposite, naming the accounts
+that decide it.
+
 `ekwo pack check` refuses a statement whose totals form a cycle, a line that is
 both summed and computed, a computed line carrying a sign, two lines that catch
 one account on the same side, two lines that carry the same fact key, and — the

@@ -9,6 +9,8 @@
       "valid_from": "2018-01-01",
       "legal_reference": "Companies Act, 2002 (Cap. 212), s. 153 — the directors of every company prepare individual accounts for each accounting period indicating a profit and loss account, a balance sheet as at the last day of the accounting period, and a cash flow statement; s. 154(1) — the balance sheet gives a true and fair view of the state of affairs of the company as at the end of its accounting period; s. 154(2) — a company's balance sheet, profit and loss account and cash flow statement comply with the requirements specified in regulations prescribed by the Minister, or the National Board of Accountants and Auditors, having regard to generally accepted principles of accounting. The National Board of Accountants and Auditors, the standard-setting body the Auditors and Accountants (Registration) Act (Cap. 286) entrusts, adopted the IFRS for SMEs Accounting Standard with effect from 2010 and, by its 2018 technical pronouncement, requires a commercial enterprise that is not a public-interest entity with an annual turnover of TZS 800,000,000 or more and total assets of TZS 400,000,000 or more to report under it; the lines below follow the statement of financial position that Standard sets out at section 4. This pack does not carry a cash flow statement or a statement of changes in equity: `statements.json` knows a `balance_sheet` and an `income_statement`, and no third kind of statement.",
       "source": "companies-act-2002",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

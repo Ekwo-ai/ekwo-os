@@ -8,6 +8,8 @@
       "name": "Estado de Situación Financiera",
       "legal_reference": "Ley General de Sociedades, Ley N.° 26887, art. 223 — los estados financieros se preparan y presentan de conformidad con las disposiciones legales sobre la materia y con principios de contabilidad generalmente aceptados en el país, que remiten a las Normas Internacionales de Información Financiera (NIIF) oficializadas por el Consejo Normativo de Contabilidad.",
       "source": "lgs",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Resultado del ejercicio en curso",
       "lines": [
         {
           "code": "ACT",

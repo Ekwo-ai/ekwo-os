@@ -8,6 +8,7 @@
       "name": "Bilan abrégé (eCDF)",
       "valid_from": "2016-01-01",
       "legal_reference": "Règlement grand-ducal du 18 décembre 2015 déterminant la forme et le contenu des schémas de présentation, annexe II — bilan abrégé ; formulaire eCDF CA_BILANABR", "source": "schemas-comptes-annuels",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "201",

@@ -9,6 +9,8 @@
       "valid_from": "2019-01-01",
       "legal_reference": "Companies and Other Business Entities Act [Chapter 24:31] requires a company to keep accounting records and to lay annual financial statements before its members; the Public Accountants and Auditors Board (PAAB), through the Zimbabwe Accounting Practices Board, prescribes the standards they follow: IFRS Accounting Standards for publicly accountable entities and the IFRS for SMEs Accounting Standard for eligible entities, prescribed by statutory instrument (Statutory Instrument 41 of 2019, repealed and replaced by Statutory Instrument 137 of 2026, as IFAC's profile of Zimbabwe records). Zimbabwe has no statutory format and no legal chart of accounts, so these lines are an original presentation that follows IAS 1 and section 4 of IFRS for SMEs (statement of financial position): current and non-current assets, current and non-current liabilities, net assets and equity.",
       "source": "ifac-zimbabwe",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

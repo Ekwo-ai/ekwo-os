@@ -8,6 +8,8 @@
       "name": "Bilanțul contabil",
       "legal_reference": "S.N.C. 5 „Prezentarea situațiilor financiare”, aprobat prin ordinul Ministerului Finanțelor nr. 118 din 29.07.2013, anexa nr. 1 — Forma nr. 1, Bilanțul contabil. Acest pachet transcrie liniile de capitol și de secțiune ale formularului, la nivelul grupelor de conturi (cod rd.), fără fiecare cont sintetic de gradul I sau II în parte — forma abreviată, în lipsa unei versiuni oficiale «micro» sau «prescurtate» distincte confirmate de cercetarea acestui pachet. Activele biologice imobilizate (clasa 13), introduse ulterior primei redacții a formularului consultate, sunt reluate împreună cu activele materiale pe termen lung (rd. 090) — a se vedea README.md.",
       "source": "snc-prezentarea",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Rezultatul exercițiului financiar în curs",
       "lines": [
         { "code": "030", "name": "Valoarea de bilanț a activelor nemateriale", "sequence": 10, "sign": 1,
           "rules": [{ "kind": "code_prefix", "code_from": "11", "sequence": 10 }] },

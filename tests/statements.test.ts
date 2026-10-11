@@ -696,7 +696,9 @@ describe('one evaluator, called by both reports', () => {
           and p.prosrc like '%evaluate_totals(%'
         order by 1`,
     );
-    expect(callers.map((c) => c.proname)).toEqual(['financial_statement', 'vat_return']);
+    // A statement is summed in `statement_figures()`, which both
+    // `financial_statement()` and `financial_statement_of_kind()` read.
+    expect(callers.map((c) => c.proname)).toEqual(['statement_figures', 'vat_return']);
   });
 
   it('leaves neither of them working a formula out on its own', async () => {
@@ -707,7 +709,7 @@ describe('one evaluator, called by both reports', () => {
       `select p.proname
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
         where n.nspname = 'public'
-          and p.proname in ('vat_return', 'financial_statement')
+          and p.proname in ('vat_return', 'financial_statement', 'statement_figures')
           and (p.prosrc like '%foreach%plus_boxes%' or p.prosrc like '%foreach%plus_lines%')`,
     );
     expect(own).toEqual([]);

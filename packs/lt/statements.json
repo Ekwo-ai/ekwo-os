@@ -9,6 +9,8 @@
       "valid_from": "2016-01-01",
       "legal_reference": "Verslo apskaitos standartas VAS 2 „Balansas“, nustatantis balanso sudarymo tvarką ir jo formas, taikomas finansinėms ataskaitoms, sudaromoms už laikotarpius, prasidedančius 2016-01-01 ir vėliau, pagal Direktyvos 2013/34/ES perkėlimą. Šio pako rengimo metu VAS 2 pilno teksto (avnt.lt) tiesiogiai patikrinti nepavyko (serveris grąžino 403 klaidą automatizuotam užklausimui) — eilučių pavadinimai ir grupavimas šiame faile atkurti pagal bendrą Baltijos šalių apskaitos praktiką (analogiškai Estijos RPS lisa 1 schema) ir Direktyvos 2013/34/ES balanso schemų sandarą, o ne pažodžiui perrašyti iš VAS 2 priedo. Rekomenduojama, kad vietos buhalteris eilutes sutikrintų su oficialiu VAS 2 priedo tekstu.",
       "source": "avnt-planas",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Einamųjų finansinių metų rezultatas",
       "lines": [
         { "code": "1", "name": "Ilgalaikis turtas", "sequence": 10, "is_total": true, "plus": ["1.1", "1.2", "1.3"] },
         { "code": "1.1", "parent": "1", "name": "Nematerialusis turtas", "sequence": 20, "sign": 1,

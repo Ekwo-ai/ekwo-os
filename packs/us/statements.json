@@ -9,6 +9,8 @@
       "legal_reference": "17 CFR 210.5-02 — Balance sheets, of Regulation S-X. The United States prescribes no chart of accounts and no statutory statement scheme for a company that is not a registrant; Regulation S-X is the one published, openable text that names the captions of a commercial balance sheet and fixes their order, and it is what an American balance sheet is laid out on whether or not the company files with the Commission. Every line code below is the rule's own caption number and every name is the rule's own wording.",
       "source": "reg-s-x",
       "taxonomy": null,
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "1",

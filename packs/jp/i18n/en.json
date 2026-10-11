@@ -308,6 +308,9 @@
     "JP-KSK-PL:13": "Income taxes — deferred",
     "JP-KSK-PL:14": "Net profit"
   },
+  "result_in_progress": {
+    "JP-KSK-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "export": "Exempt as an export (Consumption Tax Act, art. 7(1))",
     "non_taxable": "Non-taxable supply (Consumption Tax Act, art. 6(1) and Appended Table 2)"

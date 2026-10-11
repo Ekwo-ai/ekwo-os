@@ -242,5 +242,8 @@
     "CH-OR-959B-IS:AOE": "Produits extraordinaires, uniques ou hors période",
     "CH-OR-959B-IS:STE": "Impôts directs",
     "CH-OR-959B-IS:JG": "Bénéfice ou perte de l'exercice"
+  },
+  "result_in_progress": {
+    "CH-OR-959-BS": "Résultat de l'exercice en cours"
   }
 }

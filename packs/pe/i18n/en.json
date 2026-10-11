@@ -267,6 +267,9 @@
     "PE-EF-ER:88": "Income tax expense",
     "PE-EF-ER:UN": "Net profit (loss) for the year"
   },
+  "result_in_progress": {
+    "PE-EF-ESF": "Result of the current financial year"
+  },
   "legal_mentions": {
     "cpe_not_issued": "This document is not an electronic payment voucher: it has not been validated by SUNAT or by an Electronic Services Operator (OSE) and carries none of the codes the Electronic Emission System requires. Only a valid electronic payment voucher supports the operation for tax purposes.",
     "export": "Export operation, out of the scope of the General Sales Tax (article 33 of the consolidated text of the VAT and Excise Tax Act).",

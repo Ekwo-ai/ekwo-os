@@ -273,5 +273,8 @@
     "CA-ASPE-IS:100": "Bénéfice avant impôts",
     "CA-ASPE-IS:110": "Impôts sur le revenu",
     "CA-ASPE-IS:120": "Bénéfice net"
+  },
+  "result_in_progress": {
+    "CA-ASPE-BS": "Résultat de l'exercice en cours"
   }
 }

@@ -8,6 +8,7 @@
       "name": "Estado de Situación Patrimonial",
       "legal_reference": "Ley N° 16.060, de Sociedades Comerciales, art. 87 — dentro de los cuatro meses de la fecha de cierre del ejercicio los administradores deben formular, cuando menos, el inventario y el balance general (estado de situación patrimonial y de resultados). Uruguay no fija una estructura de líneas obligatoria para ese balance fuera de las Normas Internacionales de Información Financiera que adopta el Decreto N° 291/014 para las empresas obligadas a aplicarlas (cuyo texto no se transcribe aquí): esta es la estructura mínima que Ekwo instala por defecto, agrupada por naturaleza (activo corriente, activo fijo, pasivo corriente, pasivo no corriente, patrimonio), sobre el plan de cuentas propio del paquete",
       "source": "ley16060",
+      "result_in_progress": "alone",
       "lines": [
         {
           "code": "ACT",

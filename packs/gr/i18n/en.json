@@ -212,6 +212,9 @@
     "GR-ELP-IS:FIN": "Interest and related items (net)",
     "GR-ELP-IS:RESULT": "Result before tax"
   },
+  "result_in_progress": {
+    "GR-ELP-BS": "Result of the current financial year"
+  },
   "legal_mentions": {
     "reverse_charge": "Reverse charge — the customer is liable for the tax.",
     "intracom_goods": "VAT exempt — intra-Community supply of goods, article 33 of the VAT Code.",

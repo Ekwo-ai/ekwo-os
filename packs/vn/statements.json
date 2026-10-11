@@ -9,6 +9,8 @@
       "name": "Báo cáo tình hình tài chính (Mẫu số B01-DN)",
       "legal_reference": "Thông tư số 99/2025/TT-BTC hướng dẫn Chế độ kế toán doanh nghiệp, Mẫu số B01-DN — trước 01/01/2026 mẫu này mang tên « Bảng cân đối kế toán » dưới Thông tư 200/2014/TT-BTC ; Thông tư 99/2025/TT-BTC giữ nguyên mã số B01-DN nhưng đổi tên thành « Báo cáo tình hình tài chính ». Các dòng dưới đây tái hiện các mục lớn (mã số cấp tổng hợp) của mẫu; danh mục chi tiết đầy đủ theo từng mã số cấp 2/cấp 3 của Thông tư 99/2025/TT-BTC chưa được đối chiếu từng dòng khi soạn gói này — xem README. Các tài khoản của lớp 6 (chi phí sản xuất, kinh doanh dở dang trung gian: 611, 621, 622, 623, 627, 631) được gộp vào giá vốn hàng bán (632) trên báo cáo kết quả kinh doanh, để đơn giản hóa: gói này không trình bày riêng một sổ giá thành sản xuất.",
       "source": "vas-tt99",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Kết quả kinh doanh năm hiện hành",
       "lines": [
         {
           "code": "270",

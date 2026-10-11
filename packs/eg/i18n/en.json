@@ -187,5 +187,8 @@
     "EG-EAS-IS:8": "Profit before corporate tax",
     "EG-EAS-IS:9": "Corporate tax expense",
     "EG-EAS-IS:10": "Profit for the year"
+  },
+  "result_in_progress": {
+    "EG-EAS-SFP": "Result of the current financial year"
   }
 }

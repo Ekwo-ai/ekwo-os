@@ -9,6 +9,8 @@
       "valid_from": "2019-08-02",
       "legal_reference": "Companies Act, 2019 (Act 992), s. 127(5)(a)(i) — the financial statements of a company comprise a statement of financial position; s. 127(5)(b) — they are prepared in compliance with the International Financial Reporting Standards adopted by the Institute of Chartered Accountants, Ghana, or any other standards the Institute approves or adopts; Sixth Schedule, Part Two, paragraph 13 — assets and liabilities are classified under headings appropriate to the business, distinguishing current from non-current assets and current from other liabilities, in accordance with the IFRS. The Institute adopted the IFRS as Ghana National Accounting Standards in 2007 and the IFRS for SMEs in 2010, for periods ending on or after 31 December 2015 after a two-year moratorium. There is no prescribed layout: the lines below are the minimum line items of section 4 of the IFRS for SMEs, which a full-IFRS company expands under IAS 1.",
       "source": "companies-act-2019",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Result of the current financial year",
       "lines": [
         {
           "code": "CA",

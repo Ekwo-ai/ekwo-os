@@ -22,7 +22,7 @@
  */
 
 import { describeCertification } from './certification.js';
-import { sourcesOf, type FrameworkPack, type Pack, type PackSource, type PackStatement } from './read.js';
+import { sourcesOf, type FrameworkPack, type Pack, type PackLabels, type PackSource, type PackStatement } from './read.js';
 import { compileCorporateTaxSection } from './corporate-tax.js';
 
 /**
@@ -88,7 +88,7 @@ export function compilePack(pack: Pack): string {
   out.push(...taxes(pack, country));
   out.push(...postings(pack, country));
   out.push(...taxReport(pack, country));
-  out.push(...statements(pack.statements, pack.labels.statement_lines, country));
+  out.push(...statements(pack.statements, pack.labels, country));
   out.push(...defaults(pack, country));
   out.push(...documentRules(pack, country));
 
@@ -265,7 +265,7 @@ export function compileFrameworkPack(pack: FrameworkPack): string {
     '-- directly, and nothing here is copied into a company.',
     '',
   );
-  out.push(...statements(pack.statements, {}, null));
+  out.push(...statements(pack.statements, { statement_lines: {}, result_in_progress: {} }, null));
   return `${out.join('\n')}\n`;
 }
 
@@ -364,7 +364,7 @@ function accounts(pack: Pack, country: string): string[] {
  */
 function statements(
   list: PackStatement[],
-  labels: Record<string, Record<string, string>>,
+  labels: Pick<PackLabels, 'statement_lines' | 'result_in_progress'>,
   country: string | null,
 ): string[] {
   if (list.length === 0) return [];
@@ -373,7 +373,7 @@ function statements(
   out.push(
     'insert into statement_templates',
     '  (code, country, chart_code, name, kind, framework, valid_from, valid_to, legal_reference,',
-    '   source_key)',
+    '   source_key, result_in_progress, result_in_progress_name, result_in_progress_name_i18n)',
     'values',
     [...list]
       .sort(byCode)
@@ -381,7 +381,8 @@ function statements(
         (s) =>
           `  (${text(s.code)}, ${text(country)}, ${text(s.chart_code)}, ${text(s.name)}, ` +
           `${text(s.kind)}, ${text(s.framework)}, ${date(s.valid_from)}, ${date(s.valid_to)}, ` +
-          `${text(s.legal_reference)}, ${text(s.source)})`,
+          `${text(s.legal_reference)}, ${text(s.source)}, ${text(s.result_in_progress)}, ` +
+          `${text(s.result_in_progress_name)}, ${json(labels.result_in_progress[s.code])})`,
       )
       .join(',\n'),
     'on conflict (code) do update set',
@@ -393,7 +394,10 @@ function statements(
     '  valid_from      = excluded.valid_from,',
     '  valid_to        = excluded.valid_to,',
     '  legal_reference = excluded.legal_reference,',
-    '  source_key      = excluded.source_key;',
+    '  source_key      = excluded.source_key,',
+    '  result_in_progress           = excluded.result_in_progress,',
+    '  result_in_progress_name      = excluded.result_in_progress_name,',
+    '  result_in_progress_name_i18n = excluded.result_in_progress_name_i18n;',
     '',
   );
 
@@ -403,7 +407,7 @@ function statements(
     for (const line of [...statement.lines].sort((a, b) => a.sequence - b.sequence || (a.code < b.code ? -1 : 1))) {
       lines.push(
         `  (${text(statement.code)}, ${text(line.code)}, ${text(line.parent)}, ${text(line.name)}, ` +
-          `${json(labels[`${statement.code}:${line.code}`])}, ${line.sequence}, ${line.sign}, ` +
+          `${json(labels.statement_lines[`${statement.code}:${line.code}`])}, ${line.sequence}, ${line.sign}, ` +
           `${line.is_total ? 'true' : 'false'}, ${array(line.plus)}, ${array(line.minus)}, ` +
           `${text(line.xbrl)}, ${text(line.legal_reference)}, ${text(line.source)})`,
       );

@@ -8,6 +8,7 @@
       "name": "งบแสดงฐานะการเงิน",
       "legal_reference": "Thailand prescribes no line items of its own that this session could read: the Federation of Accounting Professions issues a Thai Financial Reporting Standard for entities that are not publicly accountable, and this session could not open its text (see the pack's README, \"Sources\"). This statement is original: it groups this chart's own accounts by the code ranges accounts.csv gives them — current and non-current, receivables and payables split from other balances — the same classification IFRS for SMEs, section 4, uses without transcribing that section's own line items or their numbering.",
       "source": null,
+      "result_in_progress": "alone",
       "lines": [
         { "code": "A-C-CASH", "parent": "A-C", "name": "เงินสดและรายการเทียบเท่าเงินสด", "sequence": 10,
           "rules": [ { "kind": "code_range", "code_from": "1000", "code_to": "1099" } ] },
