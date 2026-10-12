@@ -2169,7 +2169,11 @@ registration number, no amount that would identify it. `ekwo pack check`
 refuses a `proven` pack, or chart, whose evidence holds no `reproduced` entry;
 a pack whose proof only partly landed stays `maintained`, and may carry its
 evidence there. `ekwo pack describe <cc>` prints the entries, and the seed
-header lists them.
+header lists them. The seed also writes them to `country_packs.evidence`, so an
+installation answers for itself — the MCP tool `describe_pack` returns them —
+without a clone of this repository. A pack that carries evidence needs
+`schema_min` of `20261012050145` or later; a pack that carries none writes
+nothing there and keeps the schema it needed.
 
 ### What a reviewer signs
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.12.2",
-  "migration": "20261011192741",
+  "migration": "20261012050145",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1598,6 +1598,10 @@
           {
             "name": "country",
             "type": "character(2)"
+          },
+          {
+            "name": "evidence",
+            "type": "jsonb"
           },
           {
             "name": "installed_at",

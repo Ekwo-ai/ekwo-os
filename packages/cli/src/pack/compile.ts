@@ -22,7 +22,7 @@
  */
 
 import { describeCertification } from './certification.js';
-import { sourcesOf, type FrameworkPack, type Pack, type PackLabels, type PackSource, type PackStatement } from './read.js';
+import { sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackSource, type PackStatement } from './read.js';
 import { compileCorporateTaxSection } from './corporate-tax.js';
 
 /**
@@ -922,6 +922,11 @@ function documentRules(pack: Pack, country: string): string[] {
  * `country_packs`: which pack this installation holds, and how much anyone
  * has read it. `ekwo init` prints the certification status, `ekwo status`
  * compares this version to what each company copied.
+ *
+ * `evidence` is the column written only when the pack carries evidence. It
+ * arrived with `20261012050145`, and a pack that carries none keeps a seed
+ * that runs on a schema from before it — the column would only ever have
+ * received its default, the empty list.
  */
 function manifestRow(pack: Pack, country: string): string[] {
   const { manifest } = pack;
@@ -942,10 +947,13 @@ function manifestRow(pack: Pack, country: string): string[] {
     // things a reader can open, or it is nothing.
     register(sourcesOf(certification)),
   ];
+  const evidence = certification?.evidence ?? [];
+  const proven = evidence.length > 0;
+  if (proven) row.push(evidenceList(evidence));
   return [
     'insert into country_packs',
     '  (country, name, version, released_at, schema_min, certification_status,',
-    '   certified_by, certified_at, checksum, sources)',
+    `   certified_by, certified_at, checksum, sources${proven ? ', evidence' : ''})`,
     'values',
     `  (${row.join(', ')})`,
     'on conflict (country) do update set',
@@ -957,7 +965,9 @@ function manifestRow(pack: Pack, country: string): string[] {
     '  certified_by         = excluded.certified_by,',
     '  certified_at         = excluded.certified_at,',
     '  checksum             = excluded.checksum,',
-    '  sources              = excluded.sources;',
+    ...(proven
+      ? ['  sources              = excluded.sources,', '  evidence             = excluded.evidence;']
+      : ['  sources              = excluded.sources;']),
     '',
   ];
 }
@@ -1072,6 +1082,25 @@ function register(sources: PackSource[]): string {
     url: source.url,
     consulted_on: source.consulted_on,
     kind: source.kind,
+  }));
+  return `${text(JSON.stringify(rows))}::jsonb`;
+}
+
+/**
+ * The evidence of a proven pack, as one jsonb array.
+ *
+ * In the order the pack declares, like the register, and written out field
+ * by field for the same reason: a field added to the format later is a field
+ * somebody decided to compile.
+ */
+function evidenceList(evidence: PackEvidence[]): string {
+  const rows = evidence.map((entry) => ({
+    scope: entry.scope,
+    result: entry.result,
+    fiscal_year: entry.fiscal_year,
+    filing: entry.filing,
+    summary: entry.summary,
+    checked_on: entry.checked_on,
   }));
   return `${text(JSON.stringify(rows))}::jsonb`;
 }

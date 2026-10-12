@@ -914,6 +914,7 @@ Country packs loaded in this installation, with their version and certification.
 | `checksum` | `text` | sha256 of the pack files, so a changed pack is visible without a diff. |
 | `installed_at` | `timestamp with time zone` | not null |
 | `sources` | `jsonb` | not null — Register of the texts this pack was built from, in the pack's own order: [{key, title, publisher, url, consulted_on, kind, reason_codes}]. `kind` is one of law, regulation, form, standard, portal, guidance. `reason_codes` is true on the one entry — at most one, and a `standard` — that publishes the list an exemption reason code of this country comes from; absent everywhere else. Written by the generated seed; never a copy of the text itself. |
+| `evidence` | `jsonb` | not null — What a proven pack was proven on, in the pack's own order: [{scope, result, fiscal_year, filing, summary, checked_on}]. `result` is one of reproduced, partly_reproduced, not_tested. An entry names the kind of filing and never the company. Written by the generated seed of a pack that carries evidence; empty otherwise. |
 
 Constraints:
 

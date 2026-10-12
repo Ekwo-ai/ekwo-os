@@ -122,6 +122,7 @@ Always number after the newest file on `main`, and check `git log` first.
 | `20261011155947_a_box_is_written_by_its_posting` | `entry_lines_box_from_posting()`: a line naming a declaration box names a tax, and a posting of that tax writes that box on that side, or the line mirrors in a reversal a line carrying that box — `declaration_box_without_posting` otherwise |
 | `20261011160431_a_line_keeps_the_boxes_it_was_posted_in` | `entry_lines.declaration_boxes` and `entry_lines.report_code`, frozen when the line is written by `entry_lines_box_from_posting()` from `declaration_boxes_of()` — a reversal takes those of the line it mirrors, a change by hand is `declaration_boxes_from_posting` — and backfilled with the guards lifted by name; `vat_return()` reads them, so a posting changed afterwards moves no return |
 | `20261011192741_pack_certification_proven` | `pack_certification` gains `proven`, between `maintained` and `reviewed`: the pack reproduced the accepted filing of a real company whose books were imported. No row moves; a pack's seed says it |
+| `20261012050145_pack_evidence` | `country_packs.evidence`: what a proven pack was proven on, per scope, as its manifest declares it; written only by the seed of a pack that carries evidence |
 
 ## Rules for a new migration
 

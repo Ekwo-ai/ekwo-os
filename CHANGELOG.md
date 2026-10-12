@@ -40,6 +40,13 @@ somewhere has already run it.
   `reproduced` entry. `ekwo pack describe` prints the entries, and the seed
   header lists them. `CERTIFICATION_SCALE` and `rankOf()` are exported by
   `ekwo-os`.
+- **`country_packs.evidence`** holds that evidence in the installation, in
+  the order the manifest declares it, and `describe_pack` returns it: an agent
+  or an application reading the books sees which statements a proven pack
+  reproduced and which it did not test, without a clone of this repository.
+  Migration `20261012050145_pack_evidence` adds the column, defaulting to an
+  empty list; only the seed of a pack that carries evidence writes it, so the
+  seeds of every other country run on the schema they needed before.
 
 ### Changed
 
@@ -50,7 +57,7 @@ somewhere has already run it.
   On the 2025 books of a French SAS under the simplified regime, it reproduces
   the 33 lines of the bilan and the compte de résultat of the liasse 2033,
   through the 2050 to 2052 forms. The VAT returns of both were not tested,
-  and the evidence says so. Both packs need schema `20261011192741`.
+  and the evidence says so. Both packs need schema `20261012050145`.
 - `ekwo init` and `ekwo status` say "proven on the real books of a company —
   not yet reviewed by an accountant" for such a pack, and still warn the
   operator to check the boxes against their own situation. The `describe_pack`
