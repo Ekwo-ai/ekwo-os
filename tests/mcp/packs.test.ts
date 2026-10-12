@@ -74,6 +74,30 @@ describe('describe_pack', () => {
           /^\d{4}-\d{2}-\d{2}$/,
         );
       }
+
+      // What a proven pack was proven on reaches the installation as the
+      // manifest declares it, and a pack with no evidence says nothing.
+      const evidence = (
+        typeof row['evidence'] === 'string' ? JSON.parse(row['evidence']) : row['evidence']
+      ) as unknown[];
+      expect(evidence, pack.slug).toEqual(pack.manifest.certification?.evidence ?? []);
+    }
+  });
+
+  it('says, for a proven pack, what it was proven on and what was not tested', async () => {
+    const proven = allPacks.filter((pack) => pack.manifest.certification?.status === 'proven');
+    for (const pack of proven) {
+      const answer = record(await readTools.describePack(member, { country: pack.manifest.country }));
+      const row = list(answer['packs'])[0]!;
+      const evidence = (
+        typeof row['evidence'] === 'string' ? JSON.parse(row['evidence']) : row['evidence']
+      ) as Record<string, unknown>[];
+      expect(evidence.some((entry) => entry['result'] === 'reproduced'), pack.slug).toBe(true);
+      for (const entry of evidence) {
+        expect(Object.keys(entry).sort(), pack.slug).toEqual(
+          ['checked_on', 'filing', 'fiscal_year', 'result', 'scope', 'summary'],
+        );
+      }
     }
   });
 

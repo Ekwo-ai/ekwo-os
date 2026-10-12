@@ -480,7 +480,8 @@ export const AUDIT_LOG = [
 /**
  * `country_packs` — which pack this installation holds, and where its rules
  * come from. `sources` is the register the pack declares: a reader that wants
- * to check a rate rather than trust it starts there.
+ * to check a rate rather than trust it starts there. `evidence` is what a
+ * proven pack was proven on, per scope, and what was not tested.
  */
 export const COUNTRY_PACK = [
   'country',
@@ -493,5 +494,6 @@ export const COUNTRY_PACK = [
   'certified_at::text',
   'checksum',
   'sources',
+  'evidence',
   'installed_at::text',
 ];
