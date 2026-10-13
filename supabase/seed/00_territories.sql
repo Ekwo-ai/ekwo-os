@@ -296,11 +296,12 @@ on conflict (code) do update set
 --      `parent_code` is the State they belong to, which is what lets a
 --      condition naming that State reach them.
 --
--- The list therefore grows with the packs, and it grows by a handful of rows
--- and not by fifty: `packs/us/` declares three states because three states is
--- what its codes cover. `docs/international.md` already records that a pack of
--- a third country adds a row here before anything else; this is the same
--- sentence with a second clause.
+-- The list therefore grows with the packs, and with the places their
+-- documents deliver to: `packs/us/` taxes three states, and a Californian sale
+-- can be shipped to any of the fifty, so all fifty are here, with the District
+-- of Columbia. `docs/international.md` already records that a pack of a third
+-- country adds a row here before anything else; this is the same sentence
+-- with a second clause.
 --
 -- The dividing line is worth stating, because it is the one somebody will be
 -- tempted to cross. This table says **where a body of tax law applies**. It
@@ -347,6 +348,121 @@ insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_
    'ISO 3166-2:US for the code. Arizona Revised Statutes, title 42, chapter 5, article 1, which levies the transaction privilege tax on the gross proceeds of a retail business, and section 42-5155, which levies the use tax on tangible personal property purchased from a retailer for storage, use or consumption in this State. No tax of this repository is levied here: the row exists because a Californian sale shipped to Phoenix has to be able to say where the goods went. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
   ('US-OR', 'iso_3166_2', 'Oregon',     'US', 'none', null, null, null,
    'ISO 3166-2:US for the code. Oregon imposes no general sales or use tax: no chapter of the Oregon Revised Statutes levies one, and article IX, section 1a of the Oregon Constitution, with the six rejections of a sales tax put to the electorate since 1933, is why. A territory with no tax is a territory all the same — it is what says that a delivery there carries none. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
+
+-- The other forty-six States and the District of Columbia. None of them is
+-- named by a tax of this repository; each is a place a Californian sale can be
+-- shipped to and a place a customer or a supplier can be established in, and
+-- `documents.supply_territory_code` and `contacts.territory_code` are foreign
+-- keys, so a destination this table does not carry is one a document cannot
+-- name. Four States were enough for the codes; they were never enough for the
+-- deliveries. The legal reference of each row is the ISO register and nothing
+-- more, because the row says where a body of law applies and nothing about
+-- what that law charges — a State with no sales tax and a State with one get
+-- the same sentence, and the difference is a pack's to write.
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('US-AL', 'iso_3166_2', 'Alabama',        'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-AK', 'iso_3166_2', 'Alaska',         'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-AR', 'iso_3166_2', 'Arkansas',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-CO', 'iso_3166_2', 'Colorado',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-CT', 'iso_3166_2', 'Connecticut',    'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-DE', 'iso_3166_2', 'Delaware',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-FL', 'iso_3166_2', 'Florida',        'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-GA', 'iso_3166_2', 'Georgia',        'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-HI', 'iso_3166_2', 'Hawaii',         'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-ID', 'iso_3166_2', 'Idaho',          'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-IL', 'iso_3166_2', 'Illinois',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-IN', 'iso_3166_2', 'Indiana',        'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-IA', 'iso_3166_2', 'Iowa',           'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-KS', 'iso_3166_2', 'Kansas',         'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-KY', 'iso_3166_2', 'Kentucky',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-LA', 'iso_3166_2', 'Louisiana',      'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-ME', 'iso_3166_2', 'Maine',          'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-MD', 'iso_3166_2', 'Maryland',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-MA', 'iso_3166_2', 'Massachusetts',  'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-MI', 'iso_3166_2', 'Michigan',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-MN', 'iso_3166_2', 'Minnesota',      'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-MS', 'iso_3166_2', 'Mississippi',    'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-MO', 'iso_3166_2', 'Missouri',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-MT', 'iso_3166_2', 'Montana',        'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-NE', 'iso_3166_2', 'Nebraska',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-NV', 'iso_3166_2', 'Nevada',         'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-NH', 'iso_3166_2', 'New Hampshire',  'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-NJ', 'iso_3166_2', 'New Jersey',     'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-NM', 'iso_3166_2', 'New Mexico',     'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-NC', 'iso_3166_2', 'North Carolina', 'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-ND', 'iso_3166_2', 'North Dakota',   'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-OH', 'iso_3166_2', 'Ohio',           'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-OK', 'iso_3166_2', 'Oklahoma',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-PA', 'iso_3166_2', 'Pennsylvania',   'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-RI', 'iso_3166_2', 'Rhode Island',   'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-SC', 'iso_3166_2', 'South Carolina', 'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-SD', 'iso_3166_2', 'South Dakota',   'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-TN', 'iso_3166_2', 'Tennessee',      'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-TX', 'iso_3166_2', 'Texas',          'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-UT', 'iso_3166_2', 'Utah',           'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-VT', 'iso_3166_2', 'Vermont',        'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-VA', 'iso_3166_2', 'Virginia',       'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-WA', 'iso_3166_2', 'Washington',     'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-WV', 'iso_3166_2', 'West Virginia',  'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-WI', 'iso_3166_2', 'Wisconsin',      'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-WY', 'iso_3166_2', 'Wyoming',        'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of states. A State of the United States levies its taxes under its own laws, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('US-DC', 'iso_3166_2', 'District of Columbia', 'US', 'none', null, null, null,
+   'ISO 3166-2:US for the code, in its category of districts. The District of Columbia is the seat of the federal government and no State; its Council levies taxes under the District of Columbia Official Code, and no tax of this repository is levied here: the row exists so that a supply delivered here, and a party established here, can say where they are. Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).')
 on conflict (code) do update set
   code_source     = excluded.code_source,
   name            = excluded.name,

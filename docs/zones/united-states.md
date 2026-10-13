@@ -46,7 +46,9 @@ payment formats `ach` and `csv`.
 
 ## What it does not do
 
-It covers three states out of fifty and does not decide where a seller has
+It taxes three states out of fifty — every state, and the District of
+Columbia, is a territory a sale can be delivered to and a party can be in,
+but only those three carry a code — and it does not decide where a seller has
 nexus: economic nexus, since *South Dakota v. Wayfair*, is a threshold a seller
 crossed, and the pack cannot know it. It files nothing with any tax
 administration. See [`packs/us/README.md`](../../packs/us/README.md) for the

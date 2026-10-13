@@ -62,6 +62,16 @@ somewhere has already run it.
   not yet reviewed by an accountant" for such a pack, and still warn the
   operator to check the boxes against their own situation. The `describe_pack`
   note of the MCP server explains the status.
+- **Every American state is a territory.** `supabase/seed/00_territories.sql`
+  carries the fifty states and the District of Columbia under `US`, where it
+  carried the four the codes and the golden year name. A Californian sale
+  shipped to Texas, and a customer established in Florida, can now say where
+  they are: `documents.supply_territory_code` and `contacts.territory_code`
+  are foreign keys into the table, so a state it did not carry was a
+  destination no document could name. The forty-seven new rows carry no tax
+  and say nothing about what their state charges. The seed upserts, so
+  `ekwo migrate` brings them to an installation that already exists; no
+  migration and no pack changes.
 
 ## [0.12.2] — 2026-10-11
 

@@ -741,6 +741,36 @@ describe('a supply measured against the territory of its seller', () => {
     expect(await outcome(elsewhere)).toBe(inside ? 'tax_territory_mismatch' : 'posted');
   });
 
+  // A destination is a foreign key into the reference table, so a territory of
+  // the seller's country that the table does not carry is one no sale can be
+  // shipped to. Every sibling of the seller's territory is tried, and not one
+  // of them: the claim is that the table holds the whole level of the country,
+  // and not only the territories the pack's codes name.
+  it("answers for every other territory of the seller's country, and not only the ones the codes name", async () => {
+    const territories = await readTerritories(repoRootOfPacks());
+    const siblings = territories
+      .filter(
+        (territory) =>
+          territory.code !== sellerTerritory &&
+          !territory.outside_parent_tax &&
+          territory.parent_code === pack.manifest.country,
+      )
+      .map((territory) => territory.code);
+    const named = new Set(
+      pack.taxes.flatMap((tax) => [
+        tax.applies_seller_territory,
+        tax.applies_buyer_territory,
+        tax.applies_supply_territory,
+      ]),
+    );
+    expect(siblings.filter((code) => !named.has(code)).length).toBeGreaterThan(named.size);
+
+    const inside = relational.applies_supply_vs_seller === 'same';
+    for (const code of siblings) {
+      expect(await outcome(code), code).toBe(inside ? 'tax_territory_mismatch' : 'posted');
+    }
+  });
+
   it('reads the opposite relation the opposite way', async () => {
     const opposite = relational.applies_supply_vs_seller === 'same' ? 'other' : 'same';
     await db.query(
