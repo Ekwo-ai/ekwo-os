@@ -2574,9 +2574,13 @@ still a file outside `packs/`, so a pull request that adds one says so.
 A pack that **conditions a tax on a territory below the country** adds rows to
 the same file, one per territory it names — and one per territory its golden
 scenario delivers to, because `documents.supply_territory_code` is a foreign
-key as well. `packs/us/` adds four: the three states its codes belong to and
-the one its last invoice ships to. The rows grow with the packs and not with the
-world: a state nothing says anything about has no row.
+key as well. Once a pack conditions a tax on one territory of a country, every
+territory of the same level in that country is a place its documents can
+deliver to and its contacts can be in, so the file carries all of them:
+`packs/us/` taxes three states, and the file carries the fifty and the District
+of Columbia, as it carries the thirteen provinces and territories of Canada and
+the States and Union territories of India. The rows grow with the packs and
+not with the world: a country no pack divides has no row below it.
 
 **Nothing under `tests/` or `modules/*/tests/`.** A test about the core walks
 `listPacks()` and reads its expectation from the pack — a role from the
