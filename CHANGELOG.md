@@ -136,6 +136,14 @@ somewhere has already run it.
   and say nothing about what their state charges. The seed upserts, so
   `ekwo migrate` brings them to an installation that already exists; no
   migration and no pack changes.
+- **The test run's own process stays small.** The schema image every test
+  file loads is built in a child process that exits when it is written,
+  instead of in the vitest process, which kept the 1.2 to 1.4 GB of that build
+  for the rest of the run: PGlite holds its compiled WebAssembly module, and
+  the machine code compiled for it, for as long as the process lives. On a
+  dozen pack files and a tenth of the golden replay, the vitest process now
+  stays near 200 MB, and the whole run peaks 0.7 to 1.0 GB lower, on Node 22
+  as on Node 24 (issue #28, opened by the maintainers).
 
 ## [0.12.2] — 2026-10-11
 
