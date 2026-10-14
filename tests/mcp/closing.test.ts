@@ -57,6 +57,47 @@ describe('opening_balance', () => {
     ]);
   });
 
+  it('opens on the day of the takeover, with the open items as documents', async () => {
+    const customer = await newContact(db, fx.companyId, { type: 'customer', name: 'Atelier Sirocco' });
+    const answer = record(
+      await writeTools.openingBalance(backend, {
+        company_id: fx.companyId,
+        fiscal_year_id: year2026,
+        opening_date: '2026-07-01',
+        allow_result_accounts: true,
+        lines: [
+          { account_code: '550000', debit: '20000.00' },
+          { account_code: '400000', debit: '1210.00' },
+          { account_code: '700000', credit: '9000.00' },
+          { account_code: '100000', credit: '12210.00' },
+        ],
+        items: [
+          {
+            doc_type: 'sale_invoice',
+            number: 'F2026-0101',
+            contact_id: customer,
+            amount: '1210.00',
+            document_date: '2026-06-15',
+            due_date: '2026-07-15',
+            payment_reference: '+++090/9337/55493+++',
+          },
+        ],
+      }),
+    );
+    expect(record(answer['entry'])['entry_date']).toBe('2026-07-01');
+    expect(answer['documents']).toEqual([
+      expect.objectContaining({
+        doc_type: 'sale_invoice',
+        number: 'F2026-0101',
+        payment_reference: '+++090/9337/55493+++',
+        document_date: '2026-06-15',
+        due_date: '2026-07-15',
+        amount_total: '1210.00',
+        state: 'posted',
+      }),
+    ]);
+  });
+
   it('hands the refusal of the database back, word for word', async () => {
     await expect(
       writeTools.openingBalance(backend, {

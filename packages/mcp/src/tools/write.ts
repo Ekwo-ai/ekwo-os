@@ -1062,7 +1062,10 @@ export async function lockPeriod(
 
 export const OpeningBalanceInput = z.object({
   company_id: companyId,
-  fiscal_year_id: uuid.describe('The year the balance opens. The entry is dated on its first day.'),
+  fiscal_year_id: uuid.describe('The year the balance opens. The entry is dated on its first day unless opening_date says otherwise.'),
+  opening_date: isoDate
+    .optional()
+    .describe('The day the books were taken over, inside that year. Left out, its first day. The balance is what the previous system held at the end of the day before.'),
   lines: z
     .array(
       z.object({
@@ -1079,6 +1082,24 @@ export const OpeningBalanceInput = z.object({
     .boolean()
     .optional()
     .describe('Default false: an opening balance is made of the balance sheet. Pass true only when taking books over in the middle of a year that has already run.'),
+  items: z
+    .array(
+      z.object({
+        doc_type: z.enum(['sale_invoice', 'sale_credit_note', 'purchase_invoice', 'purchase_credit_note']),
+        number: z.string().min(1).describe('The number the document had. Unique among the documents of its type in this company.'),
+        contact_id: uuid.describe('The customer or supplier who owes it or is owed it.'),
+        amount: z.union([z.string(), z.number()]).describe('What is still open of it: a positive decimal string. The type says the side.'),
+        document_date: isoDate.describe('The day it was issued, on or before the opening.'),
+        due_date: isoDate.optional(),
+        payment_reference: z.string().min(1).optional().describe('The reference a payment of it quotes — the structured one where the country has them. What statement matching finds it by.'),
+        supplier_reference: z.string().min(1).optional().describe('On a purchase, the supplier\'s own number.'),
+        label: z.string().min(1).optional(),
+      }),
+    )
+    .optional()
+    .describe(
+      'The invoices and credit notes still open on the opening day. Each becomes a posted document on the opening journal, with its number, reference and dates, against the suspense account — nothing is booked to revenue or expense again — so statement matching finds it like an invoice issued here. The items of a receivable or payable account replace its line of the balance and must add up to it exactly.',
+    ),
 });
 
 export async function openingBalance(
@@ -1093,22 +1114,56 @@ export async function openingBalance(
     ...(line.label === undefined ? {} : { label: line.label }),
   }));
 
+  const items = args.items?.map((item) => ({
+    doc_type: item.doc_type,
+    number: item.number,
+    contact_id: item.contact_id,
+    amount: amountIn(item.amount),
+    document_date: item.document_date,
+    ...(item.due_date === undefined ? {} : { due_date: item.due_date }),
+    ...(item.payment_reference === undefined ? {} : { payment_reference: item.payment_reference }),
+    ...(item.supplier_reference === undefined ? {} : { supplier_reference: item.supplier_reference }),
+    ...(item.label === undefined ? {} : { label: item.label }),
+  }));
+
   const answer = await backend.rpc<string>('opening_balance', {
     p_company_id: args.company_id,
     p_fiscal_year_id: args.fiscal_year_id,
     p_lines: lines,
     p_allow_result_accounts: args.allow_result_accounts ?? false,
+    ...(args.opening_date === undefined ? {} : { p_opening_date: args.opening_date }),
+    ...(items === undefined ? {} : { p_items: items }),
   });
   const entryId = only(answer, 'the opening balance produced no entry');
 
   const entries = await backend.select<Row>({
     table: 'entries',
-    columns: ['id', 'number', 'entry_date::text', 'description', 'state', 'kind', 'total_debit::text', 'total_credit::text'],
+    columns: ['id', 'number', 'journal_id', 'entry_date::text', 'description', 'state', 'kind', 'total_debit::text', 'total_credit::text'],
     where: [{ column: 'id', op: 'eq', value: entryId }],
   });
+  const entry = only(entries, `entry ${entryId}`);
+  const { journal_id: journalId, ...shown } = entry;
+  const documents =
+    items === undefined || items.length === 0
+      ? []
+      : await backend.select<Row>({
+          table: 'documents',
+          columns: ['id', 'doc_type', 'number', 'contact_id', 'document_date::text', 'due_date::text', 'payment_reference', 'amount_total::text', 'state'],
+          where: [
+            { column: 'company_id', op: 'eq', value: args.company_id },
+            { column: 'journal_id', op: 'eq', value: journalId as string },
+            { column: 'accounting_date', op: 'eq', value: shown['entry_date'] as string },
+            { column: 'number', op: 'in', value: items.map((item) => item.number) },
+          ],
+          order: [{ column: 'number' }],
+        });
   return {
-    entry: only(entries, `entry ${entryId}`),
-    note: 'The opening entry is posted. A year holds one; a second call is refused rather than adding to it.',
+    entry: shown,
+    ...(documents.length === 0 ? {} : { documents }),
+    note:
+      documents.length === 0
+        ? 'The opening entry is posted. A year holds one; a second call is refused rather than adding to it.'
+        : 'The opening entry is posted, and each open item is a posted document on the opening journal, matched by statements like any invoice. A year holds one opening; a second call is refused rather than adding to it.',
   };
 }
 

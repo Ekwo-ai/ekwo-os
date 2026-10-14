@@ -34,7 +34,7 @@ same `importBooks()`. Neither holds a rule.
 
 | Source | Brick | Reads |
 |---|---|---|
-| `trial-balance` | `@ekwo-ai/trial-balance` | A CSV of `account`, `debit`, `credit` or one signed `balance`. Becomes the opening entry of a year. |
+| `trial-balance` | `@ekwo-ai/trial-balance` | A CSV of `account`, `debit`, `credit` or one signed `balance`. Becomes the opening entry of a year, or of the day inside it the books were taken over; with it, the list of the invoices still open (`readOpenItems()`). |
 | `fec` | `@ekwo-ai/fec` (`readFec()`) | The *fichier des écritures comptables*, found by the names of its columns, in any of the variants of the text. |
 | `journal-items` | `@ekwo-ai/journal-items` | The lines of every entry exported as CSV from the list view of an ERP whose ledger is a table of lines, under its labels or its field names; the chart and the partners beside it. |
 | `journal-report` | `@ekwo-ai/journal-report` | A journal report or a general ledger detail, saved as CSV from a cloud service's spreadsheet export; the chart and the contacts beside it. |
@@ -119,13 +119,66 @@ It runs as the caller and needs `entries.write` and `entries.post`. In one
 transaction it opens the fiscal years the books need (with `p_open_years`),
 finds or creates the parties, checks every account code before writing
 anything, posts each entry through `post_entry()`, writes the opening balance
-through `opening_balance()`, and records the import in `book_imports`. The same
+through `opening_balance()` — on the day the books give, with the open items of
+`opening.items` — and records the import in `book_imports`. The same
 files imported twice are refused (`import_already_done`), with what the first
 import wrote.
 
 **The rehearsal** is the same function with `p_dry_run`: everything runs and is
 rolled back, so a rehearsal is refused exactly as the import would be and shows
 the numbers the entries would take.
+
+## An opening on the day of the takeover
+
+Books are rarely taken over on the first day of a year. The trial balance of
+the day before the takeover is the opening; the invoices and credit notes
+still open that day come beside it, as a second CSV:
+
+```
+type,number,contact,contact name,amount,document date,due date,payment reference
+sale_invoice,F2026-0412,C0001,Atelier Sirocco,1200.00,2026-05-12,2026-07-11,+++090/9337/55493+++
+purchase_invoice,A-2026-118,F0001,Verger du Moulin,900.00,2026-06-20,2026-07-19,VM-5521
+```
+
+```sh
+ekwo import trial-balance balance.csv --open-items open-items.csv \
+  --opening-date 2026-07-01 --allow-result-accounts --dry-run
+```
+
+`type` is `sale_invoice`, `sale_credit_note`, `purchase_invoice` or
+`purchase_credit_note`; `contact` is the code the balance names the party by;
+`amount` is what is still open, positive, the type saying the side; the days
+are written `YYYY-MM-DD`. `supplier reference` and `label` are optional
+columns.
+
+- **The opening entry is dated on the day of the takeover**, on the opening
+  journal. With `--allow-result-accounts` it carries the income and expense of
+  the months before at their figure of the day.
+- **Each open item becomes a posted document** on the opening journal, booked
+  on that day and dated on the day it was issued, with its number, its payment
+  reference and its due date. Its one line names the suspense account of the
+  company and carries no tax, so its entry puts the amount on the receivable
+  or payable of its party against the suspense account: nothing is booked to
+  revenue, expense or tax a second time. A statement line that quotes the
+  reference finds it (`suggest_matches()`), and `settle_from_statement()` and
+  `reconcile()` settle it, as they would an invoice issued here.
+- **The items of an account are its whole balance.** The lines of the balance
+  on a receivable or payable account the items fall on are written on the
+  suspense account instead, which the items bring back to nothing; an account
+  whose items do not add up to its line is refused
+  (`opening_items_unbalanced`), with both figures.
+
+Read on either side of the day: a trial balance or a statement that ends the
+day before the takeover reads nothing of these books; one that covers the
+whole year reads what the previous system held plus what was booked since; one
+that starts on the day reads the year-to-date figures as a movement of its
+period. A tax return reads none of it — the opening carries no tax and no box,
+and the returns of the months before were filed from the previous system.
+
+The same is `opening_balance(…, p_opening_date, p_items)` in the schema, where
+each item names its contact by id, and the MCP tool `opening_balance`
+(`opening_date`, `items`). See
+[decision 0067](decisions/0067-an-opening-on-the-day-of-the-takeover.md).
 
 ## What an import does not do
 

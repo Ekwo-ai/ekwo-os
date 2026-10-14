@@ -58,7 +58,7 @@ never after the software that writes it:
 
 | Package | Format |
 |---|---|
-| [`trial-balance`](trial-balance/) | A trial balance as CSV |
+| [`trial-balance`](trial-balance/) | A trial balance as CSV, and the open items beside it |
 | [`journal-items`](journal-items/) | The lines of every entry, exported as CSV from a ledger kept as a table of lines |
 | [`journal-report`](journal-report/) | A journal report or general ledger detail saved as CSV |
 | [`transaction-journal`](transaction-journal/) | A transaction journal saved as CSV |

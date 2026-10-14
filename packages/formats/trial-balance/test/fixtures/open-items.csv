@@ -1,0 +1,5 @@
+type,number,contact,contact name,amount,document date,due date,payment reference
+sale_invoice,F2025-0412,C0001,Atelier Sirocco,1200.00,2025-12-12,2026-01-11,+++090/9337/55493+++
+sale_invoice,F2025-0431,C0001,Atelier Sirocco,300.00,2025-12-28,2026-01-27,+++090/9337/55594+++
+sale_invoice,F2025-0433,C0002,Brume et Fils,250.50,2025-12-30,,
+purchase_invoice,A-2025-118,F0001,Verger du Moulin,900.00,2025-12-20,2026-01-19,VM-5521

@@ -61,7 +61,7 @@ export const MAX_TEXT_KIB = 256;
 export const IMPORT_BOOKS_DESCRIPTION =
   "Takes over the books a user kept elsewhere — a FEC, an XML audit file, an export of journal items, a journal report, a transaction journal, a trial balance, or the export of " +
   NAMED_SOURCE_KEYS.join(' or ') +
-  " by name — whole or not at all. Each file is read by the reader of its source; every account of the old chart is matched to one of this company's chart and every old journal to a journal of the company. The codes give a candidate (the same code, the same digits without the padding zeros, or the longest beginning of three digits or more), and what the files say of the old account — its type, its name, the side of its balance — is held against what the chart says the candidate is, never a country: only the same code, not contradicted, is `exact`; anything else is `suggested` with its reason, or `none`. Each old journal is proposed from what its entries touch, never its name — the opening (entries on the first day of a year, balance accounts only), sales, purchases, bank, else the general journal — with its reason under journal_reasons. Call it with dry_run first: it returns the correspondence proposed, the suggestions under mapping.suggested, what is unanswered, and — when everything is answered — what the database would write, rehearsed and rolled back. Show the user every suggested line and its reason first; nothing is posted while one is unconfirmed. Settle each by writing its code under mapping.accounts, or, once the user has read and approved them all, pass accept_suggestions. Every entry is posted through post_entry(); a trial balance becomes the opening entry. Imported lines carry no tax and feed no VAT box. The same files twice are refused. The files travel as text, up to " + MAX_TEXT_KIB + " KiB in all: a larger export is imported from the terminal with `ekwo import`, which reads it from the disk. Ask the user before the real call.";
+  " by name — whole or not at all. Each file is read by the reader of its source; every account of the old chart is matched to one of this company's chart and every old journal to a journal of the company. The codes give a candidate (the same code, the same digits without the padding zeros, or the longest beginning of three digits or more), and what the files say of the old account — its type, its name, the side of its balance — is held against what the chart says the candidate is, never a country: only the same code, not contradicted, is `exact`; anything else is `suggested` with its reason, or `none`. Each old journal is proposed from what its entries touch, never its name — the opening (entries on the first day of a year, balance accounts only), sales, purchases, bank, else the general journal — with its reason under journal_reasons. Call it with dry_run first: it returns the correspondence proposed, the suggestions under mapping.suggested, what is unanswered, and — when everything is answered — what the database would write, rehearsed and rolled back. Show the user every suggested line and its reason first; nothing is posted while one is unconfirmed. Settle each by writing its code under mapping.accounts, or, once the user has read and approved them all, pass accept_suggestions. Every entry is posted through post_entry(); a trial balance becomes the opening entry, on the first day of a year or the day inside it the books were taken over, and the open items beside it (open_items) posted documents that statement matching finds. Imported lines carry no tax and feed no VAT box. The same files twice are refused. The files travel as text, up to " + MAX_TEXT_KIB + " KiB in all: a larger export is imported from the terminal with `ekwo import`, which reads it from the disk. Ask the user before the real call.";
 
 export const ImportBooksInput = z.object({
   company_id: companyId,
@@ -95,7 +95,18 @@ export const ImportBooksInput = z.object({
     .describe('The correspondence, as a previous call with dry_run returned it and the user completed it. What it answers wins over the proposal.'),
   dry_run: z.boolean().optional().describe('Show what would be written — the correspondence proposed, the entries, the numbers — and write nothing. Always first, and the user reads it before the real call.'),
   open_years: z.boolean().optional().describe('Open the fiscal years the entries fall in where the company has none, on the length and first day of its own. Off, such an entry is refused by name.'),
-  opening_date: isoDate.optional().describe('For a trial balance: the first day of the fiscal year it opens. The file does not say it; an audit file does, and needs none.'),
+  opening_date: isoDate
+    .optional()
+    .describe('For a trial balance: the day it opens on — the first day of a fiscal year, or the day inside it the books were taken over. The file does not say it; an audit file does, and needs none.'),
+  open_items: z
+    .object({
+      name: z.string().min(1).describe('The name the file had, kept on the record of the import.'),
+      content: z.string().min(1).describe('The file itself, as text (UTF-8).'),
+    })
+    .optional()
+    .describe(
+      'With an opening: the invoices and credit notes still open on its day, as CSV — type (sale_invoice, sale_credit_note, purchase_invoice, purchase_credit_note), number, contact (the code the balance names the party by), contact name, amount still open, document date and due date as YYYY-MM-DD, payment reference, supplier reference. Each becomes a posted document on the opening journal, found by statement matching like an invoice issued here; the items of a receivable or payable account must add up to its line of the balance.',
+    ),
   allow_result_accounts: z.boolean().optional().describe('Let an opening balance carry income and expense accounts: books taken over in the middle of a year.'),
   keep_numbers: z.boolean().optional().describe('Post each entry under the number it had. Where the country forbids a hole in the sequence it takes the entries.import capability; left out, the journal draws the numbers and the old one is kept as the reference.'),
   date_order: z.enum(['dmy', 'mdy', 'ymd']).optional().describe('For `journal-report` and `transaction-journal`: the order of a date written only in digits, which the file does not say.'),
@@ -113,7 +124,10 @@ export async function importBooksTool(
   backend: Backend,
   args: z.infer<typeof ImportBooksInput>,
 ): Promise<unknown> {
-  const bytes = args.files.reduce((sum, file) => sum + Buffer.byteLength(file.content, 'utf8'), 0);
+  const bytes = [...args.files, ...(args.open_items === undefined ? [] : [args.open_items])].reduce(
+    (sum, file) => sum + Buffer.byteLength(file.content, 'utf8'),
+    0,
+  );
   if (bytes > MAX_TEXT_KIB * 1024) {
     throw new BooksError(
       `files_too_large: ${Math.ceil(bytes / 1024)} KiB of text, and this tool takes ${MAX_TEXT_KIB} KiB at most. Import it from the terminal, which reads the files from the disk and runs the same import: ${cliEquivalent(args)}`,
@@ -133,6 +147,7 @@ export async function importBooksTool(
     dry_run: args.dry_run,
     open_years: args.open_years,
     opening_date: args.opening_date,
+    open_items: args.open_items,
     allow_result_accounts: args.allow_result_accounts,
     keep_numbers: args.keep_numbers,
     date_order: args.date_order,
@@ -152,6 +167,7 @@ export function cliEquivalent(args: z.infer<typeof ImportBooksInput>): string {
     '--dry-run',
     ...(args.open_years === true ? ['--open-years'] : []),
     ...(args.opening_date === undefined ? [] : ['--opening-date', args.opening_date]),
+    ...(args.open_items === undefined ? [] : ['--open-items', quote(args.open_items.name)]),
     ...(args.allow_result_accounts === true ? ['--allow-result-accounts'] : []),
     ...(args.keep_numbers === true ? ['--keep-numbers'] : []),
     ...(args.date_order === undefined ? [] : ['--date-order', args.date_order]),

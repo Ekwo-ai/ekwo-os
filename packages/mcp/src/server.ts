@@ -801,7 +801,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Import an opening balance',
       description:
-        'Turns the trial balance of whatever kept the books before into the opening entry of a fiscal year, on the opening journal, dated on its first day. Lines are {account_code, debit, credit}; total debit must equal total credit. Balance-sheet accounts only, unless allow_result_accounts is set, which is for taking books over in the middle of a year. A year holds one opening: a second call is refused rather than added to.',
+        'Turns the trial balance of whatever kept the books before into the opening entry of a fiscal year, on the opening journal, dated on its first day — or on opening_date, the day inside the year the books were taken over. Lines are {account_code, debit, credit}; total debit must equal total credit. Balance-sheet accounts only, unless allow_result_accounts is set, which is for taking books over in the middle of a year. items are the invoices and credit notes still open that day, each posted as a document with its number, payment reference and due date, so a bank statement finds it; the items of an account replace its line and must add up to it. A year holds one opening: a second call is refused rather than added to.',
       inputSchema: write.OpeningBalanceInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },

@@ -36,6 +36,7 @@ const IMPORT_FLAGS = [
   'save-mapping',
   'open-years',
   'opening-date',
+  'open-items',
   'allow-result-accounts',
   'keep-numbers',
   'accept-suggestions',
@@ -101,6 +102,9 @@ async function importBookFiles(args: ParsedArgs, deps: BooksDeps, source: BookSo
   const savePath = stringFlag(args, 'save-mapping');
   const mapping = mappingPath === undefined ? undefined : await readMapping(mappingPath);
   const files = await Promise.all(paths.map(async (path) => ({ name: basename(path), content: new Uint8Array(await readFile(path)) })));
+  const openItemsPath = stringFlag(args, 'open-items');
+  const openItems =
+    openItemsPath === undefined ? undefined : { name: basename(openItemsPath), content: new Uint8Array(await readFile(openItemsPath)) };
   const dryRun = boolFlag(args, 'dry-run');
 
   const { backend, company } = await openBooks(args, deps);
@@ -112,6 +116,7 @@ async function importBookFiles(args: ParsedArgs, deps: BooksDeps, source: BookSo
     dry_run: dryRun,
     open_years: boolFlag(args, 'open-years'),
     opening_date: stringFlag(args, 'opening-date'),
+    open_items: openItems,
     allow_result_accounts: boolFlag(args, 'allow-result-accounts'),
     keep_numbers: boolFlag(args, 'keep-numbers'),
     accept_suggestions: boolFlag(args, 'accept-suggestions'),
@@ -127,7 +132,7 @@ async function importBookFiles(args: ParsedArgs, deps: BooksDeps, source: BookSo
   const read = (result['read'] ?? {}) as Row;
   heading(`${dryRun ? 'Rehearsed' : 'Imported'} ${source}, in ${company.name}`);
   pairs([
-    ['read', `${text(read['entries'])} entries, ${text(read['lines'])} lines, ${text(read['opening_lines'])} opening lines`],
+    ['read', `${text(read['entries'])} entries, ${text(read['lines'])} lines, ${text(read['opening_lines'])} opening lines${openItems === undefined ? '' : `, ${text(read['open_items'])} open items`}`],
     ['accounts', `${text(read['accounts'])} in the files`],
     ['parties', text(read['contacts'])],
   ]);
@@ -180,6 +185,7 @@ async function importBookFiles(args: ParsedArgs, deps: BooksDeps, source: BookSo
       ['entries', text(written['entries'])],
       ['numbers', written['first_number'] === null ? '—' : `${text(written['first_number'])} … ${text(written['last_number'])}`],
       ['opening', text(written['opening_number']) || '—'],
+      ...(openItems === undefined ? [] : [['open items', `${text(written['open_items'])} posted as documents`] as [string, string]]),
       ['debit', text(written['total_debit'])],
       ['credit', text(written['total_credit'])],
       ['parties', `${text(written['contacts_created'])} created, ${text(written['contacts_found'])} found`],
@@ -197,7 +203,7 @@ async function importBookFiles(args: ParsedArgs, deps: BooksDeps, source: BookSo
 }
 
 async function importStatements(args: ParsedArgs, deps: BooksDeps, format: StatementFormat, paths: string[]): Promise<number> {
-  for (const flag of ['mapping', 'save-mapping', 'open-years', 'opening-date', 'allow-result-accounts', 'keep-numbers', 'accept-suggestions', 'date-order', 'encoding']) {
+  for (const flag of ['mapping', 'save-mapping', 'open-years', 'opening-date', 'open-items', 'allow-result-accounts', 'keep-numbers', 'accept-suggestions', 'date-order', 'encoding']) {
     if (args.flags.has(flag)) throw new UsageError(`bad_flag: --${flag} is for books, and ${format} is a bank statement.`);
   }
   const bankAccount = stringFlag(args, 'bank-account');
