@@ -607,10 +607,12 @@
         }
       },
       "match": {
+        "$comment": "The statement line as settle_from_statement() left it. `document_id` is the first document named, null for a line settled by its --extra lines alone; `document_ids` all of them, in the order the --amount values follow.",
         "type": "object",
         "required": ["document_id", "transaction", "settled_lines"],
         "properties": {
-          "document_id": { "type": "string" },
+          "document_id": { "type": ["string", "null"] },
+          "document_ids": { "type": "array", "items": { "type": "string" } },
           "transaction": { "$ref": "#/$defs/row" },
           "settled_lines": { "type": "array", "items": { "type": "string" } }
         }

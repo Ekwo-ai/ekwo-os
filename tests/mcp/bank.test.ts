@@ -228,6 +228,75 @@ describe('a payment on that account', () => {
   });
 });
 
+describe('settle_from_statement', () => {
+  it('settles a payout net of the fee the provider kept, in one entry, and refuses one a cent off', async () => {
+    const accounts = list(
+      record(await readTools.listBankAccounts(accountant, { company_id: one.companyId }))['bank_accounts'],
+    );
+    const bankAccountId = String(accounts[0]?.['id']);
+    const fee = await rows<{ code: string }>(
+      db,
+      `select code from accounts where company_id = $1 and account_type = 'expense' and not reconcilable order by code limit 1`,
+      [one.companyId],
+    );
+    const feeCode = String(fee[0]?.code);
+
+    const draft = record(
+      await writeTools.createDocument(accountant, {
+        company_id: one.companyId,
+        doc_type: 'sale_invoice',
+        contact_id: customerId,
+        document_date: '2026-06-22',
+        lines: [{ name: 'Abonnement', unit_price: '100.00', account_code: '704000' }],
+      }),
+    );
+    const documentId = String(record(draft['document'])['id']);
+    await writeTools.postDocument(accountant, { document_id: documentId });
+
+    const payout = String(
+      record(
+        record(
+          await writeTools.createBankTransaction(accountant, {
+            company_id: one.companyId,
+            bank_account_id: bankAccountId,
+            transaction_date: '2026-06-25',
+            amount: '97.00',
+            contact_id: customerId,
+          }),
+        )['transaction'],
+      )['id'],
+    );
+
+    await expect(
+      writeTools.settleFromStatement(accountant, {
+        transaction_id: payout,
+        document_id: documentId,
+        extra_lines: [{ account: feeCode, amount: '2.99' }],
+      }),
+    ).rejects.toThrow(/settlement_unbalanced/);
+
+    const settled = record(
+      await writeTools.settleFromStatement(accountant, {
+        transaction_id: payout,
+        document_id: documentId,
+        amounts: ['100.00'],
+        extra_lines: [{ account: feeCode, amount: '3.00', description: 'Provider fee' }],
+      }),
+    );
+    const transaction = record(settled['transaction']);
+    expect(transaction['state']).toBe('reconciled');
+    expect(await ledgerOfEntry(db, String(transaction['entry_id']))).toEqual([
+      { code: '550000', debit: '97.00', credit: '0.00' },
+      { code: '400000', debit: '0.00', credit: '100.00' },
+      { code: feeCode, debit: '3.00', credit: '0.00' },
+    ]);
+    const document = record(
+      record(await readTools.getDocument(accountant, { document_id: documentId }))['document'],
+    );
+    expect(document['payment_state']).toBe('paid');
+  });
+});
+
 describe('import_bank_statement', () => {
   // The brick's own invented statement: eleven booked lines and one pending,
   // on an account that exists nowhere.

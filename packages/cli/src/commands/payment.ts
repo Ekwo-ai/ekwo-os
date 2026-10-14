@@ -5,12 +5,21 @@
  * inserts the payment, has `post_payment()` book it and `reconcile()` match
  * it. `settleFromStatement()` is `settle_from_statement()` of the schema: the
  * statement line is booked as the payment it is and matched to what is open
- * on the document. Which way the money goes, who it is from and how much is
- * still owed are read from the ledger, never worked out here.
+ * on the document — for the amount given with `--amount`, one per document,
+ * and with the fees and charges it is net of as `--extra` lines in the same
+ * entry. Which way the money goes, who it is from, how much is still owed and
+ * whether the line balances are read from the ledger, never worked out here.
  */
 
-import { recordPayment, resolveContact, resolveDocument, settleFromStatement, type RecordPaymentArgs } from '@ekwo-ai/core';
-import { UsageError, boolFlag, rejectUnknownFlags, stringFlag, type ParsedArgs } from '../args.js';
+import {
+  recordPayment,
+  resolveContact,
+  resolveDocument,
+  settleFromStatement,
+  type RecordPaymentArgs,
+  type SettlementExtraLine,
+} from '@ekwo-ai/core';
+import { UsageError, boolFlag, rejectUnknownFlags, stringFlag, stringFlags, type ParsedArgs } from '../args.js';
 import { BOOKS_FLAGS, CREATE_FLAGS, given, openBooks, required, stdinDocument, today, uuidArg, type BooksDeps } from '../books.js';
 import { setResult } from '../output.js';
 import { dim, heading, line, note, pairs, step } from '../ui.js';
@@ -85,14 +94,52 @@ export async function paymentCommand(args: ParsedArgs, deps: BooksDeps = {}): Pr
   return 0;
 }
 
-export async function matchCommand(args: ParsedArgs, deps: BooksDeps = {}): Promise<number> {
-  rejectUnknownFlags(args, BOOKS_FLAGS);
-  const { backend, company } = await openBooks(args, deps);
-  const transactionId = uuidArg(args.positional[0], 'the bank transaction');
-  const documentId = await resolveDocument(backend, company.id, required(args.positional[1], 'the document it pays', '<document>'));
+const MATCH_FLAGS = [...BOOKS_FLAGS, 'amount', 'extra'] as const;
+const EXTRA_KEYS = ['account', 'amount', 'tax', 'description'] as const;
 
-  const result = (await settleFromStatement(backend, { transaction_id: transactionId, document_id: documentId })) as Row;
-  setResult({ document_id: documentId, ...result });
+/**
+ * `--extra "account=<code>,amount=3.00,tax=<code>,description=Provider fee"` —
+ * a line the settlement books beside the documents, named fields as `--line`
+ * reads them. The amount goes in as it was typed.
+ */
+function parseExtra(text: string): SettlementExtraLine {
+  const extra: Record<string, string> = {};
+  for (const part of text.split(/(?<!\\),/)) {
+    const equals = part.indexOf('=');
+    const key = (equals === -1 ? part : part.slice(0, equals)).trim();
+    if (equals === -1 || !(EXTRA_KEYS as readonly string[]).includes(key)) {
+      throw new UsageError(
+        `bad_extra: "${part.trim()}" is not key=value with a key among ${EXTRA_KEYS.join(', ')}. Example: --extra "account=<account code>,amount=3.00,tax=<tax code>".`,
+      );
+    }
+    extra[key] = part.slice(equals + 1).trim().replace(/\\,/g, ',');
+  }
+  if (extra['account'] === undefined || extra['amount'] === undefined) {
+    throw new UsageError(`bad_extra: "${text}" needs an account and an amount.`);
+  }
+  return extra as unknown as SettlementExtraLine;
+}
+
+export async function matchCommand(args: ParsedArgs, deps: BooksDeps = {}): Promise<number> {
+  rejectUnknownFlags(args, MATCH_FLAGS);
+  const transactionId = uuidArg(args.positional[0], 'the bank transaction');
+  const extras = stringFlags(args, 'extra').map(parseExtra);
+  const amounts = stringFlags(args, 'amount');
+  const named = args.positional.slice(1);
+  if (named.length === 0 && extras.length === 0) {
+    throw new UsageError('missing_argument: the document it pays was not given. Pass <document>, or --extra lines that are the whole of the statement line.');
+  }
+  const { backend, company } = await openBooks(args, deps);
+  const documentIds: string[] = [];
+  for (const document of named) documentIds.push(await resolveDocument(backend, company.id, document));
+
+  const result = (await settleFromStatement(backend, {
+    transaction_id: transactionId,
+    document_ids: documentIds,
+    ...(amounts.length === 0 ? {} : { amounts }),
+    ...(extras.length === 0 ? {} : { extra_lines: extras }),
+  })) as Row;
+  setResult({ document_id: documentIds[0] ?? null, document_ids: documentIds, ...result });
 
   const transaction = (result['transaction'] ?? {}) as Row;
   heading(`Statement line, in ${company.name}`);
@@ -101,5 +148,6 @@ export async function matchCommand(args: ParsedArgs, deps: BooksDeps = {}): Prom
     ['state', text(transaction['state'])],
     ['entry', dim(text(transaction['entry_id']))],
   ]);
+  for (const extra of extras) step(`booked ${text(extra.amount)} on ${extra.account}${extra.tax === undefined ? '' : ` with ${extra.tax}`}`);
   return 0;
 }

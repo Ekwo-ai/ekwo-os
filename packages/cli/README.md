@@ -173,7 +173,7 @@ project reports what was already there and creates nothing a second time.
 | `ekwo cancel <document>` | Undoes a posted invoice, and says how. Back to draft, through `unpost_document()`, where its country allows it and nothing about it has left; otherwise through `cancel_document()`: the credit note that names it, posted and matched against it, and the invoice cancelled. `--date` books the credit note on another day than the invoice's, which is how a locked period is stepped over; `--credit` asks for the note where a draft was possible. |
 | `ekwo reverse <entry>` | Undoes a posted entry keyed by hand, through `reverse_entry()`: its mirror, posted and matched against it. By id or by number; `--date` as for `cancel`. |
 | `ekwo payment record` | Money in or out, booked and matched. With `--doc`, against that document. |
-| `ekwo match <transaction> <document>` | A bank statement line pays a document, through `settle_from_statement()`. |
+| `ekwo match <transaction> <document>… [--amount <amount>]… [--extra "account=<code>,amount=<amount>,tax=<code>"]…` | A bank statement line pays documents, through `settle_from_statement()`: `--amount`, once per document, says how much settles each; `--extra` books the fee or the charges the line is net of in the same entry, and alone settles a bank charge. The line balances to the cent or is refused. |
 | `ekwo import <source> <file>…` | Books kept elsewhere — `trial-balance`, `fec`, `journal-items`, `journal-report`, `transaction-journal`, `xaf` — whole or not at all, through `import_books()`, with a correspondence of accounts and journals you save and give back; or a bank statement — `camt.053`, `coda`, `cfonb120` — as pending lines. `--dry-run` rehearses. See [taking over books](#taking-over-books-ekwo-import). |
 | `ekwo doc list` / `show` | What exists, and with `--unpaid` what is posted and still owed. See [keeping books](#keeping-books). |
 | `ekwo doc pdf <document>` | The PDF of a sale invoice or credit note, rendered from the books by [`@ekwo-ai/invoice-pdf`](../formats/invoice-pdf/README.md), with the logo the company names by URL (fetched by this command, from a public http(s) address only). Written to `--out`, or under its own name in the current directory. `--factur-x` embeds the CII of a posted sale and makes it a Factur-X PDF/A-3 (the rules it breaks end on exit 1); `--page-size Letter`; `--labels <file.json>` gives the words of the layout in the document's language. `ekwo document` is the whole word of `ekwo doc`. Records nothing. |
@@ -263,6 +263,7 @@ ekwo post job-7
 ekwo cancel job-7                # back to draft where the country allows it, else the credit note
 ekwo payment record --doc job-7 --amount 1750.00 --date 2026-06-30 --bank-account <id> --ref bank-1
 ekwo match <bank transaction id> job-9
+ekwo match <payout id> job-9 --extra "account=<fee account>,amount=3.00,tax=<tax code>"
 ekwo doc list --unpaid --since 2026-06-01 --json
 ```
 

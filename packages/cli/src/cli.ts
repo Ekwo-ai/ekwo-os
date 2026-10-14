@@ -154,7 +154,11 @@ ${bold('Connecting')} ${dim('(every command)')}
   ${cyan('reverse')}     <entry> — undo a posted entry, through reverse_entry(): its
               mirror, posted and matched against it. Its id or its number.
   ${cyan('payment')}     record — money in or out, booked and matched.
-  ${cyan('match')}       <bank transaction> <document> — a statement line pays a document.
+  ${cyan('match')}       <bank transaction> <document>… — a statement line pays documents.
+              --amount <amount>, once per document, says how much settles
+              each; --extra "account=<code>,amount=<amount>,tax=<code>" books
+              a fee or a charge the line is net of in the same entry, and
+              --extra alone settles a bank charge. It balances to the cent.
   ${cyan('import')}      <source> <file>… — books kept elsewhere, whole or not at all:
               trial-balance, fec, journal-items, journal-report,
               transaction-journal, xaf, or the export of another ledger by

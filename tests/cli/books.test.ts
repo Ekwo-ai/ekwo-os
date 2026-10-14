@@ -386,6 +386,46 @@ describe('the verbs', () => {
     expect(twice.error?.name).toBe('nothing_open');
   });
 
+  it('match books the fee a payout is net of with --extra, and a bank charge on its own', async () => {
+    await ekwo(['doc', 'new', '--contact', contactId, '--date', '2026-07-02', '--ref', 'job-9b', '--line', `name=Licence,price=100.00,account=${SALES}`]);
+    await ekwo(['post', 'job-9b']);
+    const invoice = await one<{ id: string; total: string }>(pg, `select id, amount_total::text as total from documents where client_ref = 'job-9b'`);
+    const fee = await one<{ code: string }>(
+      pg,
+      `select code from accounts where company_id = $1 and account_type = 'expense' and not reconcilable and not deprecated order by code limit 1`,
+      [companyId],
+    );
+    const line = async (amount: string): Promise<string> =>
+      (
+        await one<{ id: string }>(
+          pg,
+          `insert into bank_transactions (company_id, bank_account_id, transaction_date, amount, currency_code)
+           select $1, $2, date '2026-07-06', $3::numeric, currency_code from companies where id = $1 returning id`,
+          [companyId, bankAccountId, amount],
+        )
+      ).id;
+    // What the provider paid out: the invoice less a fee of 3.00. The command
+    // line adds nothing up; the database says whether it balances.
+    const payout = await line(String((Number(invoice.total) - 3).toFixed(2)));
+
+    const short = await ekwo(['match', payout, 'job-9b', '--extra', `account=${fee.code},amount=2.99`]);
+    expect(short.exitCode).toBe(EXIT_REFUSED);
+    expect(short.error?.name).toBe('settlement_unbalanced');
+
+    const matched = await ekwo(['match', payout, 'job-9b', '--amount', invoice.total, '--extra', `account=${fee.code},amount=3.00,description=Provider fee`]);
+    expect(matched.exitCode).toBe(0);
+    expect(matched.data).toMatchObject({ document_id: invoice.id, document_ids: [invoice.id], transaction: { state: 'reconciled' } });
+    expect((await one<Row>(pg, `select payment_state from documents where id = $1`, [invoice.id]))['payment_state']).toBe('paid');
+
+    const charge = await line('-4.50');
+    const charged = await ekwo(['match', charge, '--extra', `account=${fee.code},amount=4.50`]);
+    expect(charged.exitCode).toBe(0);
+    expect(charged.data).toMatchObject({ document_id: null, settled_lines: [], transaction: { state: 'reconciled' } });
+
+    const nothing = await ekwo(['match', await line('10.00')]);
+    expect(nothing.exitCode).toBe(EXIT_USAGE);
+  });
+
   it('cancel undoes a posted invoice with the credit note that names it; a paid one is code 3', async () => {
     await ekwo(['doc', 'new', '--contact', contactId, '--date', '2026-07-10', '--ref', 'job-10', '--line', `name=Mistake,price=120.00,account=${SALES}`]);
     await ekwo(['post', 'job-10']);
