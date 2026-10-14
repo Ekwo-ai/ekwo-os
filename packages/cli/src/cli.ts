@@ -324,8 +324,14 @@ ${bold('ekwo import')} ${dim('(one command, one reader per source; nothing is po
                             read. Left out, a suggestion stops the import.
   --open-years              Open the fiscal years the entries fall in, on the
                             length and first day of the company's own.
-  --opening-date <d>        trial-balance: the first day of the year it opens.
-                            An audit file (xaf) says it, and needs none.
+  --opening-date <d>        trial-balance: the day it opens on — the first day
+                            of a year, or the day inside it the books were
+                            taken over. An audit file (xaf) says it, and needs none.
+  --open-items <file>       With an opening: the invoices and credit notes still
+                            open on its day, as CSV (type, number, contact,
+                            amount, document date, due date, payment reference).
+                            Each becomes a posted document; the items of an
+                            account add up to its line of the balance.
   --allow-result-accounts   trial-balance: income and expense accounts too, for
                             books taken over in the middle of a year.
   --keep-numbers            Post each entry under the number it had. Left out,

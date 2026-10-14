@@ -256,11 +256,72 @@ describe('a trial balance as the opening of a year', () => {
     ).rejects.toThrow(/missing_opening_date/);
   });
 
-  it('refuses a day that is not the first of a year', async () => {
+  it('opens on the day inside a year the books were taken over, the open items as documents', async () => {
     const companyId = await company('Balance Mid Year');
+    const answer = await importBooks(backendFor(db, owner), {
+      company_id: companyId,
+      source: 'trial-balance',
+      files: [BALANCE],
+      open_items: fixture('trial-balance', 'open-items.csv'),
+      mapping,
+      opening_date: '2026-03-01',
+    });
+    expect((answer['read'] as Record<string, unknown>)['open_items']).toBe(4);
+    expect((answer['result'] as Record<string, unknown>)['open_items']).toBe(4);
+
+    const opening = await one<{ entry_date: string; kind: string }>(
+      db, `select entry_date::text, kind::text from entries where company_id = $1 and kind = 'opening'`, [companyId],
+    );
+    expect(opening).toEqual({ entry_date: '2026-03-01', kind: 'opening' });
+    const documents = await rows<{ number: string; contact: string; payment_reference: string | null; due_date: string | null; state: string }>(
+      db,
+      `select d.number, c.name as contact, d.payment_reference, d.due_date::text, d.state::text
+         from documents d join contacts c on c.id = d.contact_id
+        where d.company_id = $1 order by d.number`,
+      [companyId],
+    );
+    expect(documents).toEqual([
+      { number: 'A-2025-118', contact: 'Verger du Moulin', payment_reference: 'VM-5521', due_date: '2026-01-19', state: 'posted' },
+      { number: 'F2025-0412', contact: 'Atelier Sirocco', payment_reference: '+++090/9337/55493+++', due_date: '2026-01-11', state: 'posted' },
+      { number: 'F2025-0431', contact: 'Atelier Sirocco', payment_reference: '+++090/9337/55594+++', due_date: '2026-01-27', state: 'posted' },
+      // No due date in the file: the terms of the party give it, as for any invoice.
+      { number: 'F2025-0433', contact: 'Brume et Fils', payment_reference: null, due_date: null, state: 'posted' },
+    ]);
+    // The parties the balance and the items name are one party each.
+    expect(await count('contacts', companyId)).toBe(3);
+
+    const receivable = await one<{ balance: string }>(
+      db,
+      `select closing_balance::text as balance from trial_balance($1, date '2026-01-01', date '2026-12-31')
+        where account_code = $2`,
+      [companyId, roleOf(somePack, 'receivable')],
+    );
+    expect(receivable.balance).toBe('1750.50');
+  });
+
+  it('refuses open items that do not add up to the balance', async () => {
+    const companyId = await company('Balance Items Short');
+    const short: BookFile = {
+      name: 'open-items.csv',
+      content: 'type,number,contact,amount,date\nsale_invoice,F1,C0001,1000.00,2026-01-15\n',
+    };
     await expect(
-      importBooks(backendFor(db, owner), { company_id: companyId, source: 'trial-balance', files: [BALANCE], mapping, opening_date: '2026-03-01' }),
-    ).rejects.toThrow(/opening_not_first_day/);
+      importBooks(backendFor(db, owner), {
+        company_id: companyId, source: 'trial-balance', files: [BALANCE], open_items: short, mapping, opening_date: '2026-03-01',
+      }),
+    ).rejects.toThrow(/opening_items_unbalanced/);
+    expect(await count('documents', companyId)).toBe(0);
+    expect(await count('entries', companyId)).toBe(0);
+  });
+
+  it('refuses open items with no balance to open', async () => {
+    const companyId = await company('Items Alone');
+    await expect(
+      importBooks(backendFor(db, owner), {
+        company_id: companyId, source: 'fec', files: [FEC], open_items: fixture('trial-balance', 'open-items.csv'),
+        mapping: { ...FEC_MAPPING, journals: { ...FEC_MAPPING.journals, AN: journalRoles['miscellaneous']! } }, open_years: true,
+      }),
+    ).rejects.toThrow(/unexpected_open_items/);
   });
 
   it('posts one opening entry, with the parties of the receivables and payables', async () => {

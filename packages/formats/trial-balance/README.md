@@ -62,9 +62,48 @@ written. What is not a trial balance at all — no account column, a debit
 column beside a balance column, an amount that is not one — is thrown as a
 `BooksFileError` with a `code`.
 
+## The open items beside it
+
+The trial balance says what the receivable account holds; the aged balance
+printed beside it says who owes it, under which number. `readOpenItems()`
+reads that list, one row per invoice or credit note still open:
+
+```ts
+import { readOpenItems } from '@ekwo-ai/trial-balance';
+
+const { items, contacts, violations } = readOpenItems(bytesOrString);
+
+items; // [{ type: 'sale_invoice', number: 'F2025-0412', contact: 'C0001', amount: '1200.00',
+       //    documentDate: '2025-12-12', dueDate: '2026-01-11', paymentReference: '+++090/9337/55493+++', … }]
+```
+
+| Column | Names accepted | |
+|---|---|---|
+| type | `type`, `document type` | required: `sale_invoice`, `sale_credit_note`, `purchase_invoice` or `purchase_credit_note` |
+| number | `number`, `document number`, `invoice number` | required |
+| contact | `contact`, `party` | required: the code the balance names the party by |
+| contact name | `contact name`, `party name` | optional |
+| amount | `amount`, `open amount`, `amount open` | required: what is still open, positive — the type says the side |
+| document date | `document date`, `issue date`, `date` | required, `YYYY-MM-DD` |
+| due date | `due date` | optional, `YYYY-MM-DD` |
+| payment reference | `payment reference`, `structured reference` | optional |
+| supplier reference | `supplier reference` | optional |
+| label | `label`, `description` | optional |
+
+A day is written `YYYY-MM-DD` and nothing else: one written in digits only is
+read differently on each side of an ocean, and is refused rather than guessed.
+A row that lacks a required value comes back in `violations` and is left out;
+an unknown type, a signed amount or a day that is not one is thrown as a
+`BooksFileError`. Separator, decimal mark and encoding are read as for the
+balance.
+
+## Where it goes
+
 It knows no chart of accounts. The codes are the ones the file wrote; which
 account of another chart each becomes is the importer's business. In
 [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os) that is `ekwo import
-trial-balance <file> --opening-date <first day of the year>`.
+trial-balance <file> --opening-date <day> [--open-items <file>]`, where the day
+is the first of a year or the day inside it the books were taken over, and
+each open item becomes a posted document.
 
 MIT.

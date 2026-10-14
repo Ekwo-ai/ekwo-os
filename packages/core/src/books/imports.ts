@@ -17,7 +17,7 @@
 
 import { createHash } from 'node:crypto';
 import { readFec, type ImportedBooks, type ImportedLine } from '@ekwo-ai/fec';
-import { readTrialBalance } from '@ekwo-ai/trial-balance';
+import { readOpenItems, readTrialBalance, type ImportedOpenItems } from '@ekwo-ai/trial-balance';
 import { readJournalItems } from '@ekwo-ai/journal-items';
 import { readJournalReport, type DateOrder } from '@ekwo-ai/journal-report';
 import { readTransactionJournal } from '@ekwo-ai/transaction-journal';
@@ -696,8 +696,14 @@ export interface ImportBooksArgs {
   dry_run?: boolean | undefined;
   /** Open the fiscal years the entries fall in, where the company has none. */
   open_years?: boolean | undefined;
-  /** The first day of the year a trial balance opens, where the file says none. */
+  /** The day a trial balance opens on, where the file says none: the first day of a fiscal year, or the day inside it the books were taken over. */
   opening_date?: string | undefined;
+  /**
+   * The invoices and credit notes still open on the day of the opening, as
+   * CSV (`readOpenItems()` of `@ekwo-ai/trial-balance`). Each becomes a
+   * posted document carrying its share of the receivable or payable balance.
+   */
+  open_items?: BookFile | undefined;
   /** Let a trial balance carry income and expense accounts: books taken over in the middle of a year. */
   allow_result_accounts?: boolean | undefined;
   /** Keep the numbers the entries had, where the country allows a number chosen by hand or the caller holds entries.import. */
@@ -719,6 +725,11 @@ export interface ImportBooksArgs {
  */
 export async function importBooks(backend: Backend, args: ImportBooksArgs): Promise<Record<string, unknown>> {
   const books = readBooks(args.source, args.files, { encoding: args.encoding, date_order: args.date_order });
+  const openItems =
+    args.open_items === undefined
+      ? null
+      : readOpenItems(args.open_items.content, args.encoding === undefined ? {} : { encoding: args.encoding === 'iso-8859-15' ? 'iso-8859-1' : args.encoding });
+  const violations = [...books.violations, ...(openItems?.violations ?? [])];
   const proposal = await proposeMapping(backend, args.company_id, books, args.mapping ?? {}, { accept_suggestions: args.accept_suggestions });
   const read = {
     accounts: books.accounts.length,
@@ -726,6 +737,7 @@ export async function importBooks(backend: Backend, args: ImportBooksArgs): Prom
     entries: books.entries.length,
     lines: books.entries.reduce((sum, entry) => sum + entry.lines.length, 0),
     opening_lines: books.opening.length,
+    open_items: openItems?.items.length ?? 0,
   };
   const answer = {
     dry_run: args.dry_run === true,
@@ -737,7 +749,7 @@ export async function importBooks(backend: Backend, args: ImportBooksArgs): Prom
     unconfirmed_accounts: proposal.unconfirmed_accounts,
     unmapped_journals: proposal.unmapped_journals,
     journal_reasons: proposal.journal_reasons,
-    violations: books.violations,
+    violations,
   };
 
   const company = await backend.select<{ currency_code: string | null }>({
@@ -752,10 +764,10 @@ export async function importBooks(backend: Backend, args: ImportBooksArgs): Prom
   if (books.currency !== null && currency !== null && books.currency.toUpperCase() !== currency) {
     blocking.push(`import_currency_mismatch: the files are in ${books.currency} and the company keeps its books in ${currency}`);
   }
-  if (books.violations.length > 0) {
+  if (violations.length > 0) {
     blocking.push(
-      `import_violations: the files do not add up in ${books.violations.length} place${books.violations.length === 1 ? '' : 's'}; ` +
-        books.violations.slice(0, 5).map((v) => `${v.row === null ? '' : `row ${v.row}: `}${v.message}`).join('; '),
+      `import_violations: the files do not add up in ${violations.length} place${violations.length === 1 ? '' : 's'}; ` +
+        violations.slice(0, 5).map((v) => `${v.row === null ? '' : `row ${v.row}: `}${v.message}`).join('; '),
     );
   }
   if (proposal.unmapped_accounts.length > 0) {
@@ -781,12 +793,13 @@ export async function importBooks(backend: Backend, args: ImportBooksArgs): Prom
     });
   }
 
-  const payload = buildPayload(books, proposal.mapping, proposal.account_types, currency, {
+  const payload = buildPayload(books, openItems, proposal.mapping, proposal.account_types, currency, {
     ...args,
     opening_date: args.opening_date ?? openingDateOf(books),
   });
-  payload['checksum'] = booksChecksum(args.files);
-  payload['file_names'] = args.files.map((file) => file.name);
+  const files = args.open_items === undefined ? args.files : [...args.files, args.open_items];
+  payload['checksum'] = booksChecksum(files);
+  payload['file_names'] = files.map((file) => file.name);
 
   const [result] = await backend.rpc<Row>('import_books', {
     p_company_id: args.company_id,
@@ -810,6 +823,7 @@ export async function importBooks(backend: Backend, args: ImportBooksArgs): Prom
 /** The books, translated into this company's codes, in the shape `import_books()` takes. */
 function buildPayload(
   books: ImportedBooks,
+  openItems: ImportedOpenItems | null,
   mapping: ImportMapping,
   accountTypes: Record<string, string>,
   currency: string | null,
@@ -869,19 +883,32 @@ function buildPayload(
       throw new BooksError('import_two_openings: these books carry a trial balance and entries mapped to the opening; one opening per import');
     }
     if (args.opening_date === undefined) {
-      throw new BooksError('missing_opening_date: a trial balance says nothing of the day it opens. Give the first day of the fiscal year it opens (opening_date).');
+      throw new BooksError('missing_opening_date: a trial balance says nothing of the day it opens. Give the first day of the fiscal year it opens, or the day inside it the books were taken over (opening_date).');
     }
     openingDate = args.opening_date;
     openingLines.push(...books.opening.map(line));
   } else if (args.opening_date !== undefined && openingDate === null) {
     throw new BooksError('unexpected_opening_date: an opening date was given and these books carry no balance to open');
   }
+  if (openItems !== null && openingDate === null) {
+    throw new BooksError('unexpected_open_items: open items were given and these books carry no balance to open; the open items are the detail of an opening');
+  }
+  // An open item is owed by a customer or to a supplier, and its type says which.
+  for (const item of openItems?.items ?? []) {
+    const seen = roles.get(item.contact) ?? new Set<string>();
+    seen.add(item.type.startsWith('sale_') ? 'customer' : 'supplier');
+    roles.set(item.contact, seen);
+  }
 
   const typeOf = (key: string): string => {
     const seen = roles.get(key) ?? new Set<string>();
     return seen.size === 2 ? 'both' : seen.size === 1 ? ([...seen][0] as string) : 'other';
   };
-  const contacts = books.contacts
+  const listed = [
+    ...books.contacts,
+    ...(openItems?.contacts ?? []).filter((contact) => !books.contacts.some((known) => known.code === contact.code)),
+  ];
+  const contacts = listed
     .filter((contact) => roles.has(contact.code))
     .map((contact) => ({
       key: contact.code,
@@ -904,6 +931,23 @@ function buildPayload(
     source: books.format,
     contacts,
     entries,
-    opening: openingDate === null ? null : { date: openingDate, lines: openingLines },
+    opening:
+      openingDate === null
+        ? null
+        : {
+            date: openingDate,
+            lines: openingLines,
+            items: (openItems?.items ?? []).map((item) => ({
+              doc_type: item.type,
+              number: item.number,
+              contact_key: item.contact,
+              amount: item.amount,
+              document_date: item.documentDate,
+              due_date: item.dueDate,
+              payment_reference: item.paymentReference,
+              supplier_reference: item.supplierReference,
+              label: item.label,
+            })),
+          },
   };
 }

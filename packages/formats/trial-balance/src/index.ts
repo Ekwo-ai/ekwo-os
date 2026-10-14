@@ -16,6 +16,14 @@ import type { ImportedAccount, ImportedBooks, ImportedContact, ImportedLine, Rea
 
 export * from './types.js';
 export { BooksFileError, type BooksFileErrorCode } from './errors.js';
+export {
+  OPEN_ITEM_COLUMNS,
+  OPEN_ITEM_TYPES,
+  readOpenItems,
+  type ImportedOpenItem,
+  type ImportedOpenItems,
+  type OpenItemType,
+} from './open-items.js';
 
 const DEFAULTS = { encoding: 'utf-8', maxBytes: 64 * 1024 * 1024 } as const;
 

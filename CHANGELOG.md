@@ -11,6 +11,35 @@ somewhere has already run it.
 
 ### Added
 
+- **An opening on the day the books were taken over, whose open items are
+  documents** (`20261014081038`; issue #92, reported by Pieterjan Muller).
+  `opening_balance()` was dated on the first day of a year and kept one line
+  per account and party, so a takeover in July was refused and an open
+  invoice lost its number, its payment reference and its due date: statement
+  matching could not find it. It takes two more arguments, last and optional.
+  `p_opening_date` is any day of the year, its first day when left out; the
+  opening entry is dated there and holds the year-to-date figures of the
+  previous system. `p_items` lists the sale and purchase invoices and credit
+  notes still open, each posted by `post_document()` as a document on the
+  opening journal — number, payment reference, date of issue, due date,
+  contact, amount — against the suspense account the pack names, never
+  revenue, expense or tax. The items of a receivable or payable account take
+  the place of its line of the balance and must add up to it
+  (`opening_items_unbalanced`). `open_items()`, `suggest_matches()`,
+  `settle_from_statement()` and `reconcile()` find them like an invoice issued
+  here. Refused by name, before anything is written: `opening_item_type`,
+  `opening_item_without_number`, `opening_item_duplicate`,
+  `opening_item_unknown_contact`, `opening_item_amount`,
+  `opening_item_without_date`, `opening_item_after_opening`,
+  `opening_item_due_before_issue`, `opening_date_outside_year`,
+  `no_suspense_account`. Where a chart keeps its suspense account
+  reconcilable, the lines on it are matched against each other in the same
+  transaction. `import_books()` no longer refuses an opening that is not on
+  the first day of a year (`opening_not_first_day` is gone) and passes
+  `opening.items` on. `readOpenItems()` of `@ekwo-ai/trial-balance` reads the
+  list as CSV; `ekwo import trial-balance <file> --opening-date <d>
+  --open-items <file>`, and the MCP tools `import_books` (`open_items`) and
+  `opening_balance` (`opening_date`, `items`), carry it. Decision record 0067.
 - **`ekwo peppol validate <file>` and `ekwo peppol lookup <participant>`**
   ask the Peppol network two questions with no installation and no sign-in.
   `validate` reads a UBL invoice or credit note as it arrived and names every
