@@ -134,6 +134,30 @@ the return say the same thing, because they are the same rows.
    wrong;
 8. numbers and posts the entry, and points the document at it.
 
+## Settling a statement line
+
+`settle_from_statement(transaction, line_ids, amounts, extra_lines)` books a
+bank statement line as the payment it is and matches it against the open
+items named, in one entry. `amounts` says how much settles each item, in the
+order named; left out, the items are settled oldest first — in full when
+there are extra lines. `extra_lines` are
+what the money is net of or carries besides — the fee a payment provider kept
+from a payout, the charges of a bank, a small difference — as
+`{account, amount, tax?, description?}`, by code, a positive amount a charge
+(debited), a tax inside the amount and booked from the postings of a purchase
+invoice. The line balances to the cent: money in is the items less the extra
+lines, money out the items plus them, and `settlement_unbalanced` names the
+difference otherwise. A payout of 97.00 for an invoice of 100.00 is
+
+| account | debit | credit |
+|---|---|---|
+| bank | 97.00 | |
+| customer | | 100.00 |
+| fee | 3.00 | |
+
+with the customer line matched against the invoice. Extra lines alone settle a
+bank charge that pays no item.
+
 
 ## Tables
 
@@ -2202,7 +2226,7 @@ Constraints:
 | `set_updated_at()` | Generic BEFORE UPDATE trigger keeping updated_at honest. |
 | `settle_cash_basis_tax(p_document_id uuid, p_date date)` | Moves the share of a cash-basis tax that settlement has made due, from the transition account to the account and the box it is declared on. Derived from the ledger, so it is the same call whether a matching was made or undone. |
 | `settle_filing(p_filing_id uuid, p_credit tax_credit_treatment, p_reference text, p_contact_id uuid, p_date date)` | Clears the tax accounts a declared period moved and carries the net to the account the pack names for what is owed to the administration — or, where the period ends in a credit, to the one it names for a credit, once the company has said whether it is carried forward or claimed back. One entry per declaration, through post_entry(), with the reference the payment will be matched by. Naming the administration as the contact is what makes the debt settle by itself: matching books a payment, and a payment is made to somebody. |
-| `settle_from_statement(p_transaction_id uuid, p_line_ids uuid[])` | Books the payment a statement line is, and matches it against the open items named. One counterparty, one payment, `post_payment()` and `reconcile()` doing the accounting — nothing here writes a ledger of its own. The one writer of bank_transactions.entry_id and of the reconciled state, which bank_transactions_guard() holds it to. |
+| `settle_from_statement(p_transaction_id uuid, p_line_ids uuid[], p_amounts numeric[], p_extra_lines jsonb)` | Books the payment a statement line is, and matches it against the open items named, in one entry through post_entry() and one transaction. p_amounts, beside p_line_ids, says how much settles each item (partial settlement, several items at once); without it the items are settled oldest first, and in full when there are extra lines. p_extra_lines books beside the settlement what the money is net of or carries besides — a fee a payment provider kept, bank charges, a small difference — as [{account, amount, tax?, description?}]: account and tax are codes of the company, a positive amount is a charge (debit) and a negative one a credit, and a tax is taken out of the amount from the postings of a purchase invoice. The line balances to the cent — money in is the items less the charges, money out the items plus the charges — or settlement_unbalanced names the difference; extra lines alone settle a bank charge with no item. Without extra lines, post_payment() books the payment as before. The matchings are reconcile()'s, one counterparty; the one writer of bank_transactions.entry_id and of the reconciled state, which bank_transactions_guard() holds it to. |
 | `share_document(p_document_id uuid, p_expires_at timestamp with time zone)` | Publishes a sales document behind a link and returns the token once — only its hash is stored. `url` is the instance's public base plus /shared/<token>, or null where the instance has not recorded one. A share is never edited: revoke it and make another. |
 | `share_instance(p_companies_per_person integer)` | Turns the shared setting on (decision 0065): a signed-in person may create up to this many companies of their own, and nobody learns of a company they may not know of. The installer or an instance administrator, on an installation that has an administrator. |
 | `shared_document(p_token text)` | One document, read by whoever holds its link: the header, the lines with the price as it was keyed and whether that price holds the tax, the tax breakdown, the totals, the legal mentions in the language the document was written in, and what is still owed today. Returns null — the same null, in the same shape — for a token that is unknown, withdrawn, expired, or onto a document that may no longer be shared. |
