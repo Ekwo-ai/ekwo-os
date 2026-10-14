@@ -255,6 +255,13 @@
               "code_to": "499",
               "side": "debit",
               "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "45",
+              "code_to": "48",
+              "side": "debit",
+              "sequence": 30
             }
           ]
         },
@@ -891,7 +898,8 @@
             {
               "kind": "code_range",
               "code_from": "46",
-              "code_to": "46"
+              "code_to": "46",
+              "side": "credit"
             }
           ]
         },
@@ -918,7 +926,8 @@
             {
               "kind": "code_range",
               "code_from": "450",
-              "code_to": "453"
+              "code_to": "453",
+              "side": "credit"
             }
           ]
         },
@@ -933,7 +942,8 @@
             {
               "kind": "code_range",
               "code_from": "454",
-              "code_to": "459"
+              "code_to": "459",
+              "side": "credit"
             }
           ]
         },
@@ -949,6 +959,7 @@
               "kind": "code_range",
               "code_from": "47",
               "code_to": "48",
+              "side": "credit",
               "sequence": 10
             },
             {
