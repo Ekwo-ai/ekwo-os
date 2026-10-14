@@ -126,7 +126,7 @@
     },
     {
       "code": "total_assets",
-      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubrique 20/58 « Total de l'actif » : classes 20 à 41, 490/1, 499 en solde débiteur et 50 à 58",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubrique 20/58 « Total de l'actif » : classes 20 à 41, 45 à 48 et 499 en solde débiteur (rubrique 41 « Autres créances »), 490/1 et 50 à 58",
       "source": "comptes-annuels",
       "rules": [
         {
@@ -147,6 +147,12 @@
         },
         {
           "kind": "code_range",
+          "code_from": "45",
+          "code_to": "48",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
           "code_from": "50",
           "code_to": "58"
         }
@@ -154,7 +160,7 @@
     },
     {
       "code": "current_assets",
-      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubriques 3, 40/41, 50/53, 54/58 et 490/1 des actifs circulants, sans la rubrique 29 des créances à plus d'un an",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubriques 3, 40/41 (45 à 48 et 499 en solde débiteur compris), 50/53, 54/58 et 490/1 des actifs circulants, sans la rubrique 29 des créances à plus d'un an",
       "source": "comptes-annuels",
       "rules": [
         {
@@ -171,6 +177,12 @@
           "kind": "code_range",
           "code_from": "499",
           "code_to": "499",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "45",
+          "code_to": "48",
           "side": "debit"
         },
         {
@@ -211,13 +223,19 @@
     },
     {
       "code": "current_liabilities",
-      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubriques 42/48 « Dettes à un an au plus » — 499 en solde créditeur compris — et 492/3 « Comptes de régularisation »",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubriques 42/48 « Dettes à un an au plus » — 45 à 48 et 499 en solde créditeur — et 492/3 « Comptes de régularisation »",
       "source": "comptes-annuels",
       "rules": [
         {
           "kind": "code_range",
           "code_from": "42",
-          "code_to": "48"
+          "code_to": "44"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "45",
+          "code_to": "48",
+          "side": "credit"
         },
         {
           "kind": "code_range",
