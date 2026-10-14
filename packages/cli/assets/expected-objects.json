@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.12.2",
-  "migration": "20261012050145",
+  "migration": "20261014081038",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4567,7 +4567,7 @@
       },
       {
         "name": "opening_balance",
-        "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_lines jsonb, p_allow_result_accounts boolean"
+        "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_lines jsonb, p_allow_result_accounts boolean, p_opening_date date, p_items jsonb"
       },
       {
         "name": "opening_journal_id",
@@ -9001,7 +9001,7 @@
         },
         {
           "name": "opening_balance",
-          "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_lines jsonb, p_allow_result_accounts boolean",
+          "arguments": "p_company_id uuid, p_fiscal_year_id uuid, p_lines jsonb, p_allow_result_accounts boolean, p_opening_date date, p_items jsonb",
           "anon": [],
           "authenticated": [
             "execute"

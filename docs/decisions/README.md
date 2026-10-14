@@ -66,6 +66,7 @@ consequence.
 - [0030](0030-charts-and-financial-statements-are-data.md) — A country has charts, and a financial statement is data
 - [0031](0031-opening-and-closing-are-parameters.md) — Opening and closing are parameters, not code
 - [0032](0032-the-fec-carries-its-opening-balances.md) — The audit file carries opening balances, never posted
+- [0067](0067-an-opening-on-the-day-of-the-takeover.md) — An opening on the day of the takeover, whose open items are documents
 - [0033](0033-what-a-country-requires-on-a-document-is-data.md) — What a country requires on a document is data
 - [0034](0034-a-label-is-data.md) — A label is data, and a declared language is a promise
 - [0035](0035-the-chart-stays-whole.md) — The chart stays whole; the working list is derived
