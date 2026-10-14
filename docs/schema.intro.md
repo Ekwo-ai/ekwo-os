@@ -134,3 +134,27 @@ the return say the same thing, because they are the same rows.
    wrong;
 8. numbers and posts the entry, and points the document at it.
 
+## Settling a statement line
+
+`settle_from_statement(transaction, line_ids, amounts, extra_lines)` books a
+bank statement line as the payment it is and matches it against the open
+items named, in one entry. `amounts` says how much settles each item, in the
+order named; left out, the items are settled oldest first — in full when
+there are extra lines. `extra_lines` are
+what the money is net of or carries besides — the fee a payment provider kept
+from a payout, the charges of a bank, a small difference — as
+`{account, amount, tax?, description?}`, by code, a positive amount a charge
+(debited), a tax inside the amount and booked from the postings of a purchase
+invoice. The line balances to the cent: money in is the items less the extra
+lines, money out the items plus them, and `settlement_unbalanced` names the
+difference otherwise. A payout of 97.00 for an invoice of 100.00 is
+
+| account | debit | credit |
+|---|---|---|
+| bank | 97.00 | |
+| customer | | 100.00 |
+| fee | 3.00 | |
+
+with the customer line matched against the invoice. Extra lines alone settle a
+bank charge that pays no item.
+
