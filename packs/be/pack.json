@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BE",
   "name": "Belgium",
-  "version": "1.19.0",
-  "schema_min": "20261012050145",
+  "version": "1.20.0",
+  "schema_min": "20261014152111",
   "seed_sequence": 10,
   "released_at": "2026-09-30",
   "certification": {

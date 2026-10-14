@@ -55,3 +55,19 @@ Nothing names the account `615200`, which holds restaurants (31 % refused) and
 receptions (50 %) together, nor `664100`, which holds fines beside interest on
 late payment: a company says which amount, or which account of its own, falls
 under which rule.
+
+## The analysis: what `analysis.json` reads
+
+Since 1.20.0 the pack says which of its accounts make the aggregates of an
+analysis ([`docs/analysis.md`](../../docs/analysis.md)). The balance-sheet
+aggregates take exactly the accounts of the same rubrics of the abbreviated
+model: `total_assets` is rubric 20/58, `equity` 10/15, `cash` 54/58,
+`trade_receivables` 40, `trade_payables` 44, `long_term_debt` 17, and
+`current_liabilities` 42/48 with 492/3.
+
+| Choice | Why |
+|---|---|
+| `current_assets` leaves out rubric 29, the receivables due after more than a year | The schema prints 29 among the current assets; a current ratio asks what turns into cash within the year, and 29 does not. Everything else of 29/58 is taken: 3, 40/41, 50/53, 54/58, 490/1. |
+| `net_result` is rubric 9904, classes 60 to 67 and 70 to 77 | The transfers to and from untaxed reserves (68, 78) and the appropriations (69, 79) move a result that is already made; they are not part of what the year earned. |
+| `financial_result` is 75/76 less 65/66 | The two rubrics the income statement of the pack prints as financial. |
+| Only the `default` chart | The chart of associations has accounts of its own, and nobody has written its analysis yet. |

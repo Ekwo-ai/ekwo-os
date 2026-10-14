@@ -30,7 +30,8 @@ import { replayScenario } from './helpers/golden-scenario.js';
  * on each pack from what its own scenario declares, replays the documents and
  * the payments through the real functions — `post_document`, `post_payment`,
  * `reconcile` — and compares `vat_return`, `financial_statement` and
- * `trial_balance` against the files. A pack with no scenario and no declared
+ * `trial_balance` — and, where the pack defines one, `financial_analysis` —
+ * against the files. A pack with no scenario and no declared
  * exemption never reaches this file: `readPack` refuses it, so `ekwo pack
  * check` and the CI refuse it too.
  *
@@ -59,6 +60,12 @@ interface BalanceExpectation {
   from: string;
   to: string;
   accounts: Record<string, { debit: string; credit: string; closing: string }>;
+}
+/** `golden/analysis.json`, written only for a pack that carries `analysis.json`. */
+interface AnalysisExpectation {
+  from: string;
+  to: string;
+  aggregates: Record<string, { amount: string; accounts: Record<string, string> }>;
 }
 
 /**
@@ -383,6 +390,59 @@ function runGolden(pack: Pack, golden: PackGolden): void {
       const golden_ = await expectation<BalanceExpectation>(dir, 'trial_balance.json', actual);
       expect(actual).toEqual(golden_);
     });
+
+    // -----------------------------------------------------------------
+    // The analysis, where the pack says what its accounts mean.
+    // -----------------------------------------------------------------
+
+    if (pack.analysis !== null) {
+      it('reads the aggregates the golden records, and they tie out to the balance sheet', async () => {
+        const found = await rows<{ aggregate: string; amount: string; accounts: { code: string | null; amount: number }[] }>(
+          db,
+          `select aggregate, amount::text, accounts from financial_analysis($1, $2::date, $3::date)`,
+          [companyId, golden.fiscalYear.start, golden.fiscalYear.end],
+        );
+
+        const actual: AnalysisExpectation = {
+          from: golden.fiscalYear.start,
+          to: golden.fiscalYear.end,
+          aggregates: Object.fromEntries(
+            found.map((row) => [
+              row.aggregate,
+              {
+                amount: fixed(row.amount, decimals, `aggregate ${row.aggregate}`),
+                accounts: Object.fromEntries(
+                  row.accounts.map((part) => [
+                    part.code ?? '',
+                    fixed(String(part.amount), decimals, `aggregate ${row.aggregate}, account ${part.code}`),
+                  ]),
+                ),
+              },
+            ]),
+          ),
+        };
+        await save(dir, 'analysis.json', actual);
+        const golden_ = await expectation<AnalysisExpectation>(dir, 'analysis.json', actual);
+        expect(actual).toEqual(golden_);
+
+        // Not read from a file: with the books balanced, the assets are the
+        // equity and everything else the balance sheet holds, read as a
+        // credit — whatever the figures of the year are.
+        const of = (code: string) => found.find((row) => row.aggregate === code);
+        const named = new Set([...(of('total_assets')?.accounts ?? []), ...(of('equity')?.accounts ?? [])].map((p) => p.code));
+        const rest = await rows<{ code: string; closing: string }>(
+          db,
+          `select t.account_code as code, t.closing_balance::text as closing
+             from trial_balance($1, $2::date, $3::date) t
+             join accounts a on a.id = t.account_id
+            where a.carries_forward and t.closing_balance <> 0`,
+          [companyId, golden.fiscalYear.start, golden.fiscalYear.end],
+        );
+        const liabilities = -rest.filter((r) => !named.has(r.code)).reduce((sum, r) => sum + Number(r.closing), 0);
+        expect(Number(of('total_assets')?.amount)).toBeGreaterThan(0);
+        expect(Number(of('total_assets')?.amount)).toBeCloseTo(Number(of('equity')?.amount) + liabilities, 6);
+      });
+    }
 
     it('balances: the ledger of the golden is a ledger, whatever the figures are', async () => {
       // The one assertion that is not read from a file. A golden regenerated

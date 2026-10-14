@@ -1,6 +1,6 @@
 -- Ekwo OS — France: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/fr at version 1.18.0, do not edit.
+-- Generated from packs/fr at version 1.19.0, do not edit.
 -- Change the pack and run `ekwo pack build fr`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -58,7 +58,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources, evidence)
 values
-  ('FR', 'France', '1.18.0', date '2026-09-30', '20261012050145', 'proven', null, null, '1b45ef6fadd25cf859b3d2152f23c9d5616adb10f5bda104f3adced0814d8861', '[{"key":"pcg","title":"Règlement ANC n° 2014-03 du 5 juin 2014 relatif au plan comptable général, dans sa version consolidée","publisher":"Autorité des normes comptables","url":"https://www.anc.gouv.fr/pcg-reglement-ndeg-2014-03-du-5-juin-2014-relatif-au-plan-comptable-general","consulted_on":"2026-09-15","kind":"regulation"},{"key":"anc-2022-06","title":"Règlement ANC n° 2022-06 du 4 novembre 2022 modifiant le règlement ANC n° 2014-03 relatif au plan comptable général","publisher":"Autorité des normes comptables","url":"https://www.anc.gouv.fr/reglement-ndeg-2022-06-du-4-novembre-2022","consulted_on":"2026-09-15","kind":"regulation"},{"key":"cgi","title":"Code général des impôts","publisher":"Légifrance — Direction de l''information légale et administrative","url":"https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006069577","consulted_on":"2026-09-15","kind":"law"},{"key":"cgi-annexe-2","title":"Code général des impôts, annexe II","publisher":"Légifrance — Direction de l''information légale et administrative","url":"https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006069569","consulted_on":"2026-09-15","kind":"law"},{"key":"cibs","title":"Code des impositions sur les biens et services, art. A. 161-28 et A. 161-29 — échéances déclaratives de la déclaration commune des impositions sur les biens et services","publisher":"Légifrance — Direction de l''information légale et administrative","url":"https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000051359495","consulted_on":"2026-09-21","kind":"regulation"},{"key":"code-de-commerce","title":"Code de commerce","publisher":"Légifrance — Direction de l''information légale et administrative","url":"https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000005634379","consulted_on":"2026-09-15","kind":"law"},{"key":"facturation-electronique","title":"Ordonnance n° 2021-1190 du 15 septembre 2021 relative à la généralisation de la facturation électronique dans les transactions entre assujettis à la taxe sur la valeur ajoutée et à la transmission des données de transaction","publisher":"Légifrance — Direction de l''information légale et administrative","url":"https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000044044176","consulted_on":"2026-09-15","kind":"regulation"},{"key":"ca3","title":"Formulaire 3310-CA3-SD et sa notice 3310-NOT-CA3-SD — TVA et taxes assimilées, régime du réel normal","publisher":"DGFiP","url":"https://www.impots.gouv.fr/formulaire/3310-ca3-sd/tva-et-taxes-assimilees-regime-du-reel-normal-mini-reel","consulted_on":"2026-09-21","kind":"form"},{"key":"liasse-2050","title":"Liasse fiscale du régime réel normal en matière de BIC et d''IS, dont les tableaux 2050-SD à 2053-SD","publisher":"DGFiP","url":"https://www.impots.gouv.fr/formulaire/2050-liasse/liasse-fiscale-du-regime-reel-normal-en-matiere-de-bic-et-dis","consulted_on":"2026-09-15","kind":"form"},{"key":"boi-bic-amt","title":"BOI-BIC-AMT-10-40-10 — durée normale d''utilisation des biens amortissables","publisher":"DGFiP — Bulletin officiel des finances publiques","url":"https://bofip.impots.gouv.fr/bofip/2060-PGP.html/identifiant=BOI-BIC-AMT-10-40-10-20131216","consulted_on":"2026-09-15","kind":"guidance"},{"key":"espace-professionnel","title":"Espace professionnel impots.gouv.fr — où la déclaration de TVA et la liasse sont déposées","publisher":"DGFiP","url":"https://cfspro-idp.impots.gouv.fr/","consulted_on":"2026-09-15","kind":"portal"},{"key":"en-16931","title":"EN 16931-1 — modèle sémantique de la facture électronique européenne, et la conformité que la directive 2014/55/UE en attend","publisher":"Commission européenne","url":"https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance","consulted_on":"2026-09-15","kind":"standard"},{"key":"uncl5305","title":"UNCL5305 — liste des codes de catégorie de TVA (BT-118 et BT-151), sous-ensemble publié pour EN 16931","publisher":"OpenPEPPOL — liste publiée par la Commission européenne","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/","consulted_on":"2026-09-15","kind":"standard"},{"key":"vatex","title":"VATEX — liste des codes de motif d''exonération de TVA (BT-121)","publisher":"OpenPEPPOL — liste publiée par la Commission européenne","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/","consulted_on":"2026-09-15","kind":"standard"},{"key":"boi-is-liq-20-20","title":"BOI-IS-LIQ-20-20 — IS, liquidation, taux réduits : taux réduit en faveur des petites et moyennes entreprises, limite et modalités d''application","publisher":"Direction générale des finances publiques — BOFiP-Impôts","url":"https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621","consulted_on":"2026-09-30","kind":"guidance"},{"key":"boi-is-def-10-30","title":"BOI-IS-DEF-10-30 — IS, déficits et moins-values nettes à long terme : report en avant des déficits","publisher":"Direction générale des finances publiques — BOFiP-Impôts","url":"https://bofip.impots.gouv.fr/bofip/2103-PGP.html/identifiant=BOI-IS-DEF-10-30-20130410","consulted_on":"2026-09-30","kind":"guidance"},{"key":"boi-is-decla-20-10","title":"BOI-IS-DECLA-20-10 — IS, obligations déclaratives et de paiement : acomptes d''impôt sur les sociétés","publisher":"Direction générale des finances publiques — BOFiP-Impôts","url":"https://bofip.impots.gouv.fr/bofip/3558-PGP.html/identifiant=BOI-IS-DECLA-20-10-20200610","consulted_on":"2026-09-30","kind":"guidance"},{"key":"boi-bic-rici-10-10-50","title":"BOI-BIC-RICI-10-10-50 — BIC, réductions et crédits d''impôt : crédit d''impôt recherche, utilisation du crédit d''impôt","publisher":"Direction générale des finances publiques — BOFiP-Impôts","url":"https://bofip.impots.gouv.fr/bofip/4669-PGP.html/identifiant=BOI-BIC-RICI-10-10-50-20250813","consulted_on":"2026-10-11","kind":"guidance"},{"key":"notice-2571","title":"Notice n° 2571-NOT-SD, millésime 2026 — relevé d''acompte d''impôt sur les sociétés","publisher":"Direction générale des finances publiques","url":"https://www.impots.gouv.fr/sites/default/files/formulaires/2571-sd/2026/2571-sd_5289.pdf","consulted_on":"2026-09-30","kind":"form"},{"key":"notice-2857","title":"Notice n° 2857-FC-NOT-SD — taxes annuelles sur l''affectation des véhicules de tourisme à des fins économiques","publisher":"Direction générale des finances publiques","url":"https://www.impots.gouv.fr/sites/default/files/formulaires/2857-fc-sd/2025/2857-fc-sd_5281.pdf","consulted_on":"2026-09-30","kind":"form"}]'::jsonb, '[{"scope":"financial_statements","result":"reproduced","fiscal_year":2025,"filing":"French liasse fiscale 2033 (régime simplifié)","summary":"On the books of a French SAS under the simplified regime, imported from another system, every amount of the bilan and the compte de résultat it filed matches to the euro: 33 lines of the 2033-A and 2033-B, read through the 2050 to 2052 forms the pack carries, net amounts only.","checked_on":"2026-10-10"},{"scope":"vat_return","result":"not_tested","fiscal_year":2025,"filing":"French CA3 VAT return","summary":"Not tested: neither the filed returns nor any VAT posting are in the imported books.","checked_on":"2026-10-10"}]'::jsonb)
+  ('FR', 'France', '1.19.0', date '2026-09-30', '20261014152111', 'proven', null, null, '835d0527114635e1312978a815c14ebd076fa169335452d0119575411ea29ede', '[{"key":"pcg","title":"Règlement ANC n° 2014-03 du 5 juin 2014 relatif au plan comptable général, dans sa version consolidée","publisher":"Autorité des normes comptables","url":"https://www.anc.gouv.fr/pcg-reglement-ndeg-2014-03-du-5-juin-2014-relatif-au-plan-comptable-general","consulted_on":"2026-09-15","kind":"regulation"},{"key":"anc-2022-06","title":"Règlement ANC n° 2022-06 du 4 novembre 2022 modifiant le règlement ANC n° 2014-03 relatif au plan comptable général","publisher":"Autorité des normes comptables","url":"https://www.anc.gouv.fr/reglement-ndeg-2022-06-du-4-novembre-2022","consulted_on":"2026-09-15","kind":"regulation"},{"key":"cgi","title":"Code général des impôts","publisher":"Légifrance — Direction de l''information légale et administrative","url":"https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006069577","consulted_on":"2026-09-15","kind":"law"},{"key":"cgi-annexe-2","title":"Code général des impôts, annexe II","publisher":"Légifrance — Direction de l''information légale et administrative","url":"https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006069569","consulted_on":"2026-09-15","kind":"law"},{"key":"cibs","title":"Code des impositions sur les biens et services, art. A. 161-28 et A. 161-29 — échéances déclaratives de la déclaration commune des impositions sur les biens et services","publisher":"Légifrance — Direction de l''information légale et administrative","url":"https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000051359495","consulted_on":"2026-09-21","kind":"regulation"},{"key":"code-de-commerce","title":"Code de commerce","publisher":"Légifrance — Direction de l''information légale et administrative","url":"https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000005634379","consulted_on":"2026-09-15","kind":"law"},{"key":"facturation-electronique","title":"Ordonnance n° 2021-1190 du 15 septembre 2021 relative à la généralisation de la facturation électronique dans les transactions entre assujettis à la taxe sur la valeur ajoutée et à la transmission des données de transaction","publisher":"Légifrance — Direction de l''information légale et administrative","url":"https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000044044176","consulted_on":"2026-09-15","kind":"regulation"},{"key":"ca3","title":"Formulaire 3310-CA3-SD et sa notice 3310-NOT-CA3-SD — TVA et taxes assimilées, régime du réel normal","publisher":"DGFiP","url":"https://www.impots.gouv.fr/formulaire/3310-ca3-sd/tva-et-taxes-assimilees-regime-du-reel-normal-mini-reel","consulted_on":"2026-09-21","kind":"form"},{"key":"liasse-2050","title":"Liasse fiscale du régime réel normal en matière de BIC et d''IS, dont les tableaux 2050-SD à 2053-SD","publisher":"DGFiP","url":"https://www.impots.gouv.fr/formulaire/2050-liasse/liasse-fiscale-du-regime-reel-normal-en-matiere-de-bic-et-dis","consulted_on":"2026-09-15","kind":"form"},{"key":"boi-bic-amt","title":"BOI-BIC-AMT-10-40-10 — durée normale d''utilisation des biens amortissables","publisher":"DGFiP — Bulletin officiel des finances publiques","url":"https://bofip.impots.gouv.fr/bofip/2060-PGP.html/identifiant=BOI-BIC-AMT-10-40-10-20131216","consulted_on":"2026-09-15","kind":"guidance"},{"key":"espace-professionnel","title":"Espace professionnel impots.gouv.fr — où la déclaration de TVA et la liasse sont déposées","publisher":"DGFiP","url":"https://cfspro-idp.impots.gouv.fr/","consulted_on":"2026-09-15","kind":"portal"},{"key":"en-16931","title":"EN 16931-1 — modèle sémantique de la facture électronique européenne, et la conformité que la directive 2014/55/UE en attend","publisher":"Commission européenne","url":"https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance","consulted_on":"2026-09-15","kind":"standard"},{"key":"uncl5305","title":"UNCL5305 — liste des codes de catégorie de TVA (BT-118 et BT-151), sous-ensemble publié pour EN 16931","publisher":"OpenPEPPOL — liste publiée par la Commission européenne","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/","consulted_on":"2026-09-15","kind":"standard"},{"key":"vatex","title":"VATEX — liste des codes de motif d''exonération de TVA (BT-121)","publisher":"OpenPEPPOL — liste publiée par la Commission européenne","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/","consulted_on":"2026-09-15","kind":"standard"},{"key":"boi-is-liq-20-20","title":"BOI-IS-LIQ-20-20 — IS, liquidation, taux réduits : taux réduit en faveur des petites et moyennes entreprises, limite et modalités d''application","publisher":"Direction générale des finances publiques — BOFiP-Impôts","url":"https://bofip.impots.gouv.fr/bofip/2065-PGP.html/identifiant=BOI-IS-LIQ-20-20-20230621","consulted_on":"2026-09-30","kind":"guidance"},{"key":"boi-is-def-10-30","title":"BOI-IS-DEF-10-30 — IS, déficits et moins-values nettes à long terme : report en avant des déficits","publisher":"Direction générale des finances publiques — BOFiP-Impôts","url":"https://bofip.impots.gouv.fr/bofip/2103-PGP.html/identifiant=BOI-IS-DEF-10-30-20130410","consulted_on":"2026-09-30","kind":"guidance"},{"key":"boi-is-decla-20-10","title":"BOI-IS-DECLA-20-10 — IS, obligations déclaratives et de paiement : acomptes d''impôt sur les sociétés","publisher":"Direction générale des finances publiques — BOFiP-Impôts","url":"https://bofip.impots.gouv.fr/bofip/3558-PGP.html/identifiant=BOI-IS-DECLA-20-10-20200610","consulted_on":"2026-09-30","kind":"guidance"},{"key":"boi-bic-rici-10-10-50","title":"BOI-BIC-RICI-10-10-50 — BIC, réductions et crédits d''impôt : crédit d''impôt recherche, utilisation du crédit d''impôt","publisher":"Direction générale des finances publiques — BOFiP-Impôts","url":"https://bofip.impots.gouv.fr/bofip/4669-PGP.html/identifiant=BOI-BIC-RICI-10-10-50-20250813","consulted_on":"2026-10-11","kind":"guidance"},{"key":"notice-2571","title":"Notice n° 2571-NOT-SD, millésime 2026 — relevé d''acompte d''impôt sur les sociétés","publisher":"Direction générale des finances publiques","url":"https://www.impots.gouv.fr/sites/default/files/formulaires/2571-sd/2026/2571-sd_5289.pdf","consulted_on":"2026-09-30","kind":"form"},{"key":"notice-2857","title":"Notice n° 2857-FC-NOT-SD — taxes annuelles sur l''affectation des véhicules de tourisme à des fins économiques","publisher":"Direction générale des finances publiques","url":"https://www.impots.gouv.fr/sites/default/files/formulaires/2857-fc-sd/2025/2857-fc-sd_5281.pdf","consulted_on":"2026-09-30","kind":"form"}]'::jsonb, '[{"scope":"financial_statements","result":"reproduced","fiscal_year":2025,"filing":"French liasse fiscale 2033 (régime simplifié)","summary":"On the books of a French SAS under the simplified regime, imported from another system, every amount of the bilan and the compte de résultat it filed matches to the euro: 33 lines of the 2033-A and 2033-B, read through the 2050 to 2052 forms the pack carries, net amounts only.","checked_on":"2026-10-10"},{"scope":"vat_return","result":"not_tested","fiscal_year":2025,"filing":"French CA3 VAT return","summary":"Not tested: neither the filed returns nor any VAT posting are in the imported books.","checked_on":"2026-10-10"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -1299,6 +1299,174 @@ select v.statement_code, v.line_code, v.sequence, v.rule_kind, v.code_from,
   ) as v (statement_code, line_code, sequence, rule_kind, code_from, code_to,
           account_type, balance_side)
 on conflict (statement_code, line_code, sequence) do update set
+  rule_kind    = excluded.rule_kind,
+  code_from    = excluded.code_from,
+  code_to      = excluded.code_to,
+  account_type = excluded.account_type,
+  balance_side = excluded.balance_side;
+
+delete from analysis_rules r
+ where r.country = 'FR'
+   and (r.chart_code, r.aggregate, r.sequence) not in (
+     values ('default', 'cash', 10),
+            ('default', 'cash', 20),
+            ('default', 'current_assets', 10),
+            ('default', 'current_assets', 20),
+            ('default', 'current_assets', 30),
+            ('default', 'current_assets', 40),
+            ('default', 'current_assets', 50),
+            ('default', 'current_assets', 60),
+            ('default', 'current_assets', 70),
+            ('default', 'current_assets', 80),
+            ('default', 'current_assets', 90),
+            ('default', 'current_liabilities', 10),
+            ('default', 'current_liabilities', 20),
+            ('default', 'current_liabilities', 30),
+            ('default', 'current_liabilities', 40),
+            ('default', 'current_liabilities', 50),
+            ('default', 'depreciation', 10),
+            ('default', 'equity', 10),
+            ('default', 'equity', 20),
+            ('default', 'financial_result', 10),
+            ('default', 'financial_result', 20),
+            ('default', 'financial_result', 30),
+            ('default', 'financial_result', 40),
+            ('default', 'financial_result', 50),
+            ('default', 'income_tax', 10),
+            ('default', 'long_term_debt', 10),
+            ('default', 'net_result', 10),
+            ('default', 'other_operating_income', 10),
+            ('default', 'other_operating_income', 20),
+            ('default', 'other_operating_income', 30),
+            ('default', 'other_operating_income', 40),
+            ('default', 'other_operating_income', 50),
+            ('default', 'other_operating_income', 60),
+            ('default', 'purchases', 10),
+            ('default', 'revenue', 10),
+            ('default', 'revenue', 20),
+            ('default', 'staff_costs', 10),
+            ('default', 'total_assets', 10),
+            ('default', 'total_assets', 20),
+            ('default', 'total_assets', 30),
+            ('default', 'total_assets', 40),
+            ('default', 'total_assets', 50),
+            ('default', 'total_assets', 60),
+            ('default', 'total_assets', 70),
+            ('default', 'total_assets', 80),
+            ('default', 'total_assets', 90),
+            ('default', 'total_assets', 100),
+            ('default', 'trade_payables', 10),
+            ('default', 'trade_payables', 20),
+            ('default', 'trade_payables', 30),
+            ('default', 'trade_receivables', 10),
+            ('default', 'trade_receivables', 20)
+   );
+
+delete from analysis_templates t
+ where t.country = 'FR'
+   and (t.chart_code, t.aggregate) not in (
+     values ('default', 'cash'),
+            ('default', 'current_assets'),
+            ('default', 'current_liabilities'),
+            ('default', 'depreciation'),
+            ('default', 'equity'),
+            ('default', 'financial_result'),
+            ('default', 'income_tax'),
+            ('default', 'long_term_debt'),
+            ('default', 'net_result'),
+            ('default', 'other_operating_income'),
+            ('default', 'purchases'),
+            ('default', 'revenue'),
+            ('default', 'staff_costs'),
+            ('default', 'total_assets'),
+            ('default', 'trade_payables'),
+            ('default', 'trade_receivables')
+   );
+
+insert into analysis_templates
+  (country, chart_code, aggregate, legal_reference, source_key)
+values
+  ('FR', 'default', 'cash', 'Formulaires 2050-SD à 2053-SD, millésime 2026, ligne CF « Disponibilités » : compte 51 en solde débiteur et comptes 52 à 58', 'liasse-2050'),
+  ('FR', 'default', 'current_assets', 'Formulaires 2050-SD à 2053-SD, millésime 2026, ligne CJ « Total de l''actif circulant » : classe 3, comptes 4091, 411 à 418, 42 à 47 en solde débiteur, 486, 49, 50, 51 en solde débiteur, 52 à 58 et 59', 'liasse-2050'),
+  ('FR', 'default', 'current_liabilities', 'Formulaires 2050-SD à 2053-SD, millésime 2026, lignes DW à EB et concours bancaires courants de la ligne DU : comptes 401 à 408, 4191, 42 à 47 en solde créditeur, 487 et 51 en solde créditeur', 'liasse-2050'),
+  ('FR', 'default', 'depreciation', 'Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1, compte 68 « Dotations aux amortissements, aux dépréciations et aux provisions »', 'anc-2022-06'),
+  ('FR', 'default', 'equity', 'Formulaires 2050-SD à 2053-SD, millésime 2026, ligne DL « Capitaux propres » : comptes 100 à 108, 11, 12, 13 et 14, sans le compte 109 « Actionnaires : capital souscrit non appelé », porté à l''actif', 'liasse-2050'),
+  ('FR', 'default', 'financial_result', 'Formulaires 2050-SD à 2053-SD, millésime 2026, ligne GV « Résultat financier » : comptes 76, 786 et 796 des produits financiers, 66 et 686 des charges financières', 'liasse-2050'),
+  ('FR', 'default', 'income_tax', 'Formulaires 2050-SD à 2053-SD, millésime 2026, ligne HK « Impôts sur les bénéfices » : comptes 695 à 699 (Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1)', 'liasse-2050'),
+  ('FR', 'default', 'long_term_debt', 'Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1, comptes 16 « Emprunts et dettes assimilées » et 17 « Dettes rattachées à des participations »', 'anc-2022-06'),
+  ('FR', 'default', 'net_result', 'Formulaires 2050-SD à 2053-SD, millésime 2026, ligne HN « Bénéfice ou perte » : toutes les charges de la classe 6 et tous les produits de la classe 7 (Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1)', 'liasse-2050'),
+  ('FR', 'default', 'other_operating_income', 'Formulaires 2050-SD à 2053-SD, millésime 2026, lignes FM à FQ : comptes 71 « Production stockée », 72 « Production immobilisée », 74 « Subventions d''exploitation », 750 à 754 et 756 à 759 « Autres produits de gestion courante », 781 et 791 « Reprises et transferts de charges d''exploitation »', 'liasse-2050'),
+  ('FR', 'default', 'purchases', 'Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1, comptes 60 « Achats », 61 et 62 « Autres achats et charges externes » ; Formulaires 2050-SD à 2053-SD, millésime 2026, lignes FS à FW', 'anc-2022-06'),
+  ('FR', 'default', 'revenue', 'Formulaires 2050-SD à 2053-SD, millésime 2026, ligne FJ « Chiffres d''affaires nets » : comptes 70 « Ventes de produits fabriqués, prestations de services, marchandises » et 73 « Produits nets partiels sur opérations à long terme » (Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1)', 'liasse-2050'),
+  ('FR', 'default', 'staff_costs', 'Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1, compte 64 « Charges de personnel » ; Formulaires 2050-SD à 2053-SD, millésime 2026, lignes FY et FZ', 'anc-2022-06'),
+  ('FR', 'default', 'total_assets', 'Formulaires 2050-SD à 2053-SD, millésime 2026, ligne CO « Total général de l''actif » : classe 2, classe 3, comptes 4091, 411 à 418, 42 à 47 en solde débiteur, 486, 49, 50, 51 en solde débiteur, 52 à 58 et 59', 'liasse-2050'),
+  ('FR', 'default', 'trade_payables', 'Formulaires 2050-SD à 2053-SD, millésime 2026, ligne DX « Dettes fournisseurs et comptes rattachés » : comptes 401, 403 et 408', 'liasse-2050'),
+  ('FR', 'default', 'trade_receivables', 'Formulaires 2050-SD à 2053-SD, millésime 2026, ligne BX « Clients et comptes rattachés » : comptes 411 à 418 et 491 « Dépréciations des comptes de clients »', 'liasse-2050')
+on conflict (country, chart_code, aggregate) do update set
+  legal_reference = excluded.legal_reference,
+  source_key      = excluded.source_key;
+
+insert into analysis_rules
+  (country, chart_code, aggregate, sequence, rule_kind, code_from, code_to,
+   account_type, balance_side)
+select v.country, v.chart_code, v.aggregate, v.sequence, v.rule_kind, v.code_from,
+       v.code_to, v.account_type::account_type, v.balance_side
+  from (values
+    ('FR', 'default', 'cash', 10, 'code_range', '51', '51', null, 'debit'),
+    ('FR', 'default', 'cash', 20, 'code_range', '52', '58', null, 'any'),
+    ('FR', 'default', 'current_assets', 10, 'code_range', '3', '3', null, 'any'),
+    ('FR', 'default', 'current_assets', 20, 'code_range', '4091', '4091', null, 'any'),
+    ('FR', 'default', 'current_assets', 30, 'code_range', '411', '418', null, 'any'),
+    ('FR', 'default', 'current_assets', 40, 'code_range', '42', '47', null, 'debit'),
+    ('FR', 'default', 'current_assets', 50, 'code_range', '486', '486', null, 'any'),
+    ('FR', 'default', 'current_assets', 60, 'code_range', '49', '49', null, 'any'),
+    ('FR', 'default', 'current_assets', 70, 'code_range', '50', '50', null, 'any'),
+    ('FR', 'default', 'current_assets', 80, 'code_range', '51', '51', null, 'debit'),
+    ('FR', 'default', 'current_assets', 90, 'code_range', '52', '59', null, 'any'),
+    ('FR', 'default', 'current_liabilities', 10, 'code_range', '401', '408', null, 'any'),
+    ('FR', 'default', 'current_liabilities', 20, 'code_range', '4191', '4191', null, 'any'),
+    ('FR', 'default', 'current_liabilities', 30, 'code_range', '42', '47', null, 'credit'),
+    ('FR', 'default', 'current_liabilities', 40, 'code_range', '487', '487', null, 'any'),
+    ('FR', 'default', 'current_liabilities', 50, 'code_range', '51', '51', null, 'credit'),
+    ('FR', 'default', 'depreciation', 10, 'code_range', '68', '68', null, 'any'),
+    ('FR', 'default', 'equity', 10, 'code_range', '100', '108', null, 'any'),
+    ('FR', 'default', 'equity', 20, 'code_range', '11', '14', null, 'any'),
+    ('FR', 'default', 'financial_result', 10, 'code_range', '76', '76', null, 'any'),
+    ('FR', 'default', 'financial_result', 20, 'code_range', '786', '786', null, 'any'),
+    ('FR', 'default', 'financial_result', 30, 'code_range', '796', '796', null, 'any'),
+    ('FR', 'default', 'financial_result', 40, 'code_range', '66', '66', null, 'any'),
+    ('FR', 'default', 'financial_result', 50, 'code_range', '686', '686', null, 'any'),
+    ('FR', 'default', 'income_tax', 10, 'code_range', '695', '699', null, 'any'),
+    ('FR', 'default', 'long_term_debt', 10, 'code_range', '16', '17', null, 'any'),
+    ('FR', 'default', 'net_result', 10, 'code_range', '60', '79', null, 'any'),
+    ('FR', 'default', 'other_operating_income', 10, 'code_range', '71', '72', null, 'any'),
+    ('FR', 'default', 'other_operating_income', 20, 'code_range', '74', '74', null, 'any'),
+    ('FR', 'default', 'other_operating_income', 30, 'code_range', '750', '754', null, 'any'),
+    ('FR', 'default', 'other_operating_income', 40, 'code_range', '756', '759', null, 'any'),
+    ('FR', 'default', 'other_operating_income', 50, 'code_range', '781', '781', null, 'any'),
+    ('FR', 'default', 'other_operating_income', 60, 'code_range', '791', '791', null, 'any'),
+    ('FR', 'default', 'purchases', 10, 'code_range', '60', '62', null, 'any'),
+    ('FR', 'default', 'revenue', 10, 'code_range', '70', '70', null, 'any'),
+    ('FR', 'default', 'revenue', 20, 'code_range', '73', '73', null, 'any'),
+    ('FR', 'default', 'staff_costs', 10, 'code_range', '64', '64', null, 'any'),
+    ('FR', 'default', 'total_assets', 10, 'code_range', '20', '29', null, 'any'),
+    ('FR', 'default', 'total_assets', 20, 'code_range', '3', '3', null, 'any'),
+    ('FR', 'default', 'total_assets', 30, 'code_range', '4091', '4091', null, 'any'),
+    ('FR', 'default', 'total_assets', 40, 'code_range', '411', '418', null, 'any'),
+    ('FR', 'default', 'total_assets', 50, 'code_range', '42', '47', null, 'debit'),
+    ('FR', 'default', 'total_assets', 60, 'code_range', '486', '486', null, 'any'),
+    ('FR', 'default', 'total_assets', 70, 'code_range', '49', '49', null, 'any'),
+    ('FR', 'default', 'total_assets', 80, 'code_range', '50', '50', null, 'any'),
+    ('FR', 'default', 'total_assets', 90, 'code_range', '51', '51', null, 'debit'),
+    ('FR', 'default', 'total_assets', 100, 'code_range', '52', '59', null, 'any'),
+    ('FR', 'default', 'trade_payables', 10, 'code_range', '401', '401', null, 'any'),
+    ('FR', 'default', 'trade_payables', 20, 'code_range', '403', '403', null, 'any'),
+    ('FR', 'default', 'trade_payables', 30, 'code_range', '408', '408', null, 'any'),
+    ('FR', 'default', 'trade_receivables', 10, 'code_range', '411', '418', null, 'any'),
+    ('FR', 'default', 'trade_receivables', 20, 'code_range', '491', '491', null, 'any')
+  ) as v (country, chart_code, aggregate, sequence, rule_kind, code_from, code_to,
+          account_type, balance_side)
+on conflict (country, chart_code, aggregate, sequence) do update set
   rule_kind    = excluded.rule_kind,
   code_from    = excluded.code_from,
   code_to      = excluded.code_to,

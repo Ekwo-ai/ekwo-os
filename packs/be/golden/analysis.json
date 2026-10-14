@@ -1,0 +1,103 @@
+{
+  "from": "2026-01-01",
+  "to": "2026-12-31",
+  "aggregates": {
+    "revenue": {
+      "amount": "24500.00",
+      "accounts": {
+        "700000": "18500.00",
+        "704000": "6000.00"
+      }
+    },
+    "other_operating_income": {
+      "amount": "0.00",
+      "accounts": {}
+    },
+    "purchases": {
+      "amount": "11194.50",
+      "accounts": {
+        "604000": "9000.00",
+        "613000": "1200.00",
+        "615000": "994.50"
+      }
+    },
+    "staff_costs": {
+      "amount": "0.00",
+      "accounts": {}
+    },
+    "depreciation": {
+      "amount": "0.00",
+      "accounts": {}
+    },
+    "financial_result": {
+      "amount": "0.00",
+      "accounts": {}
+    },
+    "income_tax": {
+      "amount": "0.00",
+      "accounts": {}
+    },
+    "net_result": {
+      "amount": "13305.50",
+      "accounts": {
+        "604000": "-9000.00",
+        "613000": "-1200.00",
+        "615000": "-994.50",
+        "700000": "18500.00",
+        "704000": "6000.00"
+      }
+    },
+    "equity": {
+      "amount": "13305.50",
+      "accounts": {
+        "140000": "13305.50"
+      }
+    },
+    "total_assets": {
+      "amount": "36141.50",
+      "accounts": {
+        "241000": "12000.00",
+        "400000": "11725.00",
+        "411000": "4576.50",
+        "550000": "7840.00"
+      }
+    },
+    "current_assets": {
+      "amount": "24141.50",
+      "accounts": {
+        "400000": "11725.00",
+        "411000": "4576.50",
+        "550000": "7840.00"
+      }
+    },
+    "cash": {
+      "amount": "7840.00",
+      "accounts": {
+        "550000": "7840.00"
+      }
+    },
+    "trade_receivables": {
+      "amount": "11725.00",
+      "accounts": {
+        "400000": "11725.00"
+      }
+    },
+    "current_liabilities": {
+      "amount": "22836.00",
+      "accounts": {
+        "440000": "19881.00",
+        "451000": "2955.00"
+      }
+    },
+    "trade_payables": {
+      "amount": "19881.00",
+      "accounts": {
+        "440000": "19881.00"
+      }
+    },
+    "long_term_debt": {
+      "amount": "0.00",
+      "accounts": {}
+    }
+  }
+}

@@ -84,6 +84,24 @@ export const sourceKinds: string[] = (() => {
 })();
 
 /**
+ * A closed vocabulary of the published schema, by definition and property.
+ *
+ * For a list the schema and the database both carry — the aggregates of an
+ * analysis are an enum of `analysis_aggregate` and the rows of
+ * `analysis_aggregates` — so that a test holds the two to each other instead
+ * of restating either.
+ */
+export function readSchemaEnum(definition: string, property: string): string[] {
+  const defs = (schema['$defs'] ?? {}) as Record<string, Record<string, unknown>>;
+  const properties = (defs[definition]?.['properties'] ?? {}) as Record<string, Record<string, unknown>>;
+  const values = properties[property]?.['enum'];
+  if (!Array.isArray(values) || values.length === 0) {
+    throw new Error(`packs/schema/pack.1.json defines no enum at $defs.${definition}.${property}`);
+  }
+  return values as string[];
+}
+
+/**
  * The ways a pack may close its year, from the published schema.
  *
  * Read there for the same reason as the statuses above: the vocabulary is

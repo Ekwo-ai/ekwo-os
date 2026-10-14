@@ -1,0 +1,260 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "aggregates": [
+    {
+      "code": "revenue",
+      "legal_reference": "Arrêté royal du 21 octobre 2018, annexe 1 — plan comptable minimum normalisé, classe 70 « Chiffre d'affaires » ; Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 4, rubrique 70",
+      "source": "pcmn",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "70",
+          "code_to": "70"
+        }
+      ]
+    },
+    {
+      "code": "other_operating_income",
+      "legal_reference": "Arrêté royal du 21 octobre 2018, annexe 1 — plan comptable minimum normalisé, comptes 71 « Variation des stocks et des commandes en cours d'exécution », 72 « Production immobilisée », 73 « Cotisations, dons, legs et subsides » et 74 « Autres produits d'exploitation »",
+      "source": "pcmn",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "71",
+          "code_to": "74"
+        }
+      ]
+    },
+    {
+      "code": "purchases",
+      "legal_reference": "Arrêté royal du 21 octobre 2018, annexe 1 — plan comptable minimum normalisé, classes 60 « Approvisionnements et marchandises » et 61 « Services et biens divers » ; Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 4, rubriques 60 et 61 de la marge brute",
+      "source": "pcmn",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "60",
+          "code_to": "61"
+        }
+      ]
+    },
+    {
+      "code": "staff_costs",
+      "legal_reference": "Arrêté royal du 21 octobre 2018, annexe 1 — plan comptable minimum normalisé, classe 62 « Rémunérations, charges sociales et pensions » ; Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 4, rubrique 62",
+      "source": "pcmn",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "62",
+          "code_to": "62"
+        }
+      ]
+    },
+    {
+      "code": "depreciation",
+      "legal_reference": "Arrêté royal du 21 octobre 2018, annexe 1 — plan comptable minimum normalisé, classe 63 « Amortissements, réductions de valeur et provisions pour risques et charges » ; Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 4, rubriques 630 à 635/8",
+      "source": "pcmn",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "63",
+          "code_to": "63"
+        }
+      ]
+    },
+    {
+      "code": "financial_result",
+      "legal_reference": "Arrêté royal du 21 octobre 2018, annexe 1 — plan comptable minimum normalisé, classes 75 et 76 « Produits financiers », 65 et 66 « Charges financières » ; Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 4, rubriques 75/76B et 65/66B",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "75",
+          "code_to": "76"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "65",
+          "code_to": "66"
+        }
+      ]
+    },
+    {
+      "code": "income_tax",
+      "legal_reference": "Arrêté royal du 21 octobre 2018, annexe 1 — plan comptable minimum normalisé, classes 67 « Impôts sur le résultat » et 77 « Régularisations d'impôts et reprises de provisions fiscales » ; Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 4, rubrique 67/77",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "67",
+          "code_to": "67"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "77",
+          "code_to": "77"
+        }
+      ]
+    },
+    {
+      "code": "net_result",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 4, rubrique 9904 « Bénéfice (Perte) de l'exercice » : classes 60 à 67 et 70 à 77 du plan comptable minimum normalisé, avant les transferts aux réserves immunisées (68 et 78) et les affectations (69 et 79)",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "60",
+          "code_to": "67"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "70",
+          "code_to": "77"
+        }
+      ]
+    },
+    {
+      "code": "equity",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubrique 10/15 « Capitaux propres » : classes 10 à 15 du plan comptable minimum normalisé",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "10",
+          "code_to": "15"
+        }
+      ]
+    },
+    {
+      "code": "total_assets",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubrique 20/58 « Total de l'actif » : classes 20 à 41, 490/1, 499 en solde débiteur et 50 à 58",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "20",
+          "code_to": "41"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "490",
+          "code_to": "491"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "499",
+          "code_to": "499",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "50",
+          "code_to": "58"
+        }
+      ]
+    },
+    {
+      "code": "current_assets",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubriques 3, 40/41, 50/53, 54/58 et 490/1 des actifs circulants, sans la rubrique 29 des créances à plus d'un an",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "3",
+          "code_to": "3"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "40",
+          "code_to": "41"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "499",
+          "code_to": "499",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "490",
+          "code_to": "491"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "50",
+          "code_to": "58"
+        }
+      ]
+    },
+    {
+      "code": "cash",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubrique 54/58 « Valeurs disponibles »",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "54",
+          "code_to": "58"
+        }
+      ]
+    },
+    {
+      "code": "trade_receivables",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubrique 40 « Créances commerciales » à un an au plus",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "40",
+          "code_to": "40"
+        }
+      ]
+    },
+    {
+      "code": "current_liabilities",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubriques 42/48 « Dettes à un an au plus » — 499 en solde créditeur compris — et 492/3 « Comptes de régularisation »",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "42",
+          "code_to": "48"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "499",
+          "code_to": "499",
+          "side": "credit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "492",
+          "code_to": "493"
+        }
+      ]
+    },
+    {
+      "code": "trade_payables",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubrique 44 « Dettes commerciales » à un an au plus",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "44",
+          "code_to": "44"
+        }
+      ]
+    },
+    {
+      "code": "long_term_debt",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe — modèle abrégé des comptes annuels, section A-cap 3, rubrique 17 « Dettes à plus d'un an »",
+      "source": "comptes-annuels",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "17",
+          "code_to": "17"
+        }
+      ]
+    }
+  ]
+}

@@ -172,3 +172,24 @@ The instalments are the four of CGI art. 1668 at a quarter of the reference
 tax each. The order in which a company whose year is not the calendar year
 pays them, and the large-company rule for the last one, are in the legal
 reference and not in the data; nothing reads the schedule yet.
+
+## The analysis: what `analysis.json` reads
+
+Since 1.19.0 the pack says which of its accounts make the aggregates of an
+analysis ([`docs/analysis.md`](../../docs/analysis.md)). Each aggregate
+mirrors a line of the liasse where one exists, and takes exactly the accounts
+the pack's own form 2050 or 2052 puts on it, side included: `total_assets` is
+CO, `equity` DL, `current_assets` CJ, `cash` CF, `trade_receivables` BX,
+`trade_payables` DX, `revenue` FJ, `net_result` HN, `financial_result` GV,
+`income_tax` HK.
+
+| Choice | Why |
+|---|---|
+| `revenue` takes 73 beside 70 | Line FJ, the net turnover, adds the partial income of long-term contracts. |
+| `income_tax` is 695 to 699, not class 69 | 691 is the employees' share of the profit, which line HJ prints apart. |
+| `equity` is 100 to 108 and 11 to 14, without 109 | 109, the capital subscribed and not called, is printed among the assets (AA). |
+| `trade_receivables` is 411 to 418 with 491, not class 41 | 419, the advances received from customers, is a debt (DW); 491 is the impairment of customers BX deducts. |
+| `trade_payables` is 401, 403 and 408 | 404 and 405 are the suppliers of fixed assets (DZ), and 4091 the advances paid to suppliers, an asset (BV). |
+| `cash` is 51 in debit and 52 to 58 | Line CF. A bank account in credit is a bank overdraft, among the debts of line DU, and `current_liabilities` takes it. |
+| `current_liabilities` is 401 to 408, 4191, 42 to 47 in credit, 487 and 51 in credit | Lines DW to EB, and the bank overdrafts of DU. 519 is not in the chart; a bank account in credit stands for it. |
+| `long_term_debt` is 16 and 17 | The borrowings and the debts related to participations. |

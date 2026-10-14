@@ -1,0 +1,384 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "aggregates": [
+    {
+      "code": "revenue",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, ligne FJ « Chiffres d'affaires nets » : comptes 70 « Ventes de produits fabriqués, prestations de services, marchandises » et 73 « Produits nets partiels sur opérations à long terme » (Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1)",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "70",
+          "code_to": "70"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "73",
+          "code_to": "73"
+        }
+      ]
+    },
+    {
+      "code": "other_operating_income",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, lignes FM à FQ : comptes 71 « Production stockée », 72 « Production immobilisée », 74 « Subventions d'exploitation », 750 à 754 et 756 à 759 « Autres produits de gestion courante », 781 et 791 « Reprises et transferts de charges d'exploitation »",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "71",
+          "code_to": "72"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "74",
+          "code_to": "74"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "750",
+          "code_to": "754"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "756",
+          "code_to": "759"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "781",
+          "code_to": "781"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "791",
+          "code_to": "791"
+        }
+      ]
+    },
+    {
+      "code": "purchases",
+      "legal_reference": "Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1, comptes 60 « Achats », 61 et 62 « Autres achats et charges externes » ; Formulaires 2050-SD à 2053-SD, millésime 2026, lignes FS à FW",
+      "source": "anc-2022-06",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "60",
+          "code_to": "62"
+        }
+      ]
+    },
+    {
+      "code": "staff_costs",
+      "legal_reference": "Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1, compte 64 « Charges de personnel » ; Formulaires 2050-SD à 2053-SD, millésime 2026, lignes FY et FZ",
+      "source": "anc-2022-06",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "64",
+          "code_to": "64"
+        }
+      ]
+    },
+    {
+      "code": "depreciation",
+      "legal_reference": "Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1, compte 68 « Dotations aux amortissements, aux dépréciations et aux provisions »",
+      "source": "anc-2022-06",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "68",
+          "code_to": "68"
+        }
+      ]
+    },
+    {
+      "code": "financial_result",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, ligne GV « Résultat financier » : comptes 76, 786 et 796 des produits financiers, 66 et 686 des charges financières",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "76",
+          "code_to": "76"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "786",
+          "code_to": "786"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "796",
+          "code_to": "796"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "66",
+          "code_to": "66"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "686",
+          "code_to": "686"
+        }
+      ]
+    },
+    {
+      "code": "income_tax",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, ligne HK « Impôts sur les bénéfices » : comptes 695 à 699 (Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1)",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "695",
+          "code_to": "699"
+        }
+      ]
+    },
+    {
+      "code": "net_result",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, ligne HN « Bénéfice ou perte » : toutes les charges de la classe 6 et tous les produits de la classe 7 (Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1)",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "60",
+          "code_to": "79"
+        }
+      ]
+    },
+    {
+      "code": "equity",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, ligne DL « Capitaux propres » : comptes 100 à 108, 11, 12, 13 et 14, sans le compte 109 « Actionnaires : capital souscrit non appelé », porté à l'actif",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "100",
+          "code_to": "108"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "11",
+          "code_to": "14"
+        }
+      ]
+    },
+    {
+      "code": "total_assets",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, ligne CO « Total général de l'actif » : classe 2, classe 3, comptes 4091, 411 à 418, 42 à 47 en solde débiteur, 486, 49, 50, 51 en solde débiteur, 52 à 58 et 59",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "20",
+          "code_to": "29"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "3",
+          "code_to": "3"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "4091",
+          "code_to": "4091"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "411",
+          "code_to": "418"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "42",
+          "code_to": "47",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "486",
+          "code_to": "486"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "49",
+          "code_to": "49"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "50",
+          "code_to": "50"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "51",
+          "code_to": "51",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "52",
+          "code_to": "59"
+        }
+      ]
+    },
+    {
+      "code": "current_assets",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, ligne CJ « Total de l'actif circulant » : classe 3, comptes 4091, 411 à 418, 42 à 47 en solde débiteur, 486, 49, 50, 51 en solde débiteur, 52 à 58 et 59",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "3",
+          "code_to": "3"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "4091",
+          "code_to": "4091"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "411",
+          "code_to": "418"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "42",
+          "code_to": "47",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "486",
+          "code_to": "486"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "49",
+          "code_to": "49"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "50",
+          "code_to": "50"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "51",
+          "code_to": "51",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "52",
+          "code_to": "59"
+        }
+      ]
+    },
+    {
+      "code": "cash",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, ligne CF « Disponibilités » : compte 51 en solde débiteur et comptes 52 à 58",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "51",
+          "code_to": "51",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "52",
+          "code_to": "58"
+        }
+      ]
+    },
+    {
+      "code": "trade_receivables",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, ligne BX « Clients et comptes rattachés » : comptes 411 à 418 et 491 « Dépréciations des comptes de clients »",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "411",
+          "code_to": "418"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "491",
+          "code_to": "491"
+        }
+      ]
+    },
+    {
+      "code": "current_liabilities",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, lignes DW à EB et concours bancaires courants de la ligne DU : comptes 401 à 408, 4191, 42 à 47 en solde créditeur, 487 et 51 en solde créditeur",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "401",
+          "code_to": "408"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "4191",
+          "code_to": "4191"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "42",
+          "code_to": "47",
+          "side": "credit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "487",
+          "code_to": "487"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "51",
+          "code_to": "51",
+          "side": "credit"
+        }
+      ]
+    },
+    {
+      "code": "trade_payables",
+      "legal_reference": "Formulaires 2050-SD à 2053-SD, millésime 2026, ligne DX « Dettes fournisseurs et comptes rattachés » : comptes 401, 403 et 408",
+      "source": "liasse-2050",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "401",
+          "code_to": "401"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "403",
+          "code_to": "403"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "408",
+          "code_to": "408"
+        }
+      ]
+    },
+    {
+      "code": "long_term_debt",
+      "legal_reference": "Règlement ANC n° 2014-03 relatif au plan comptable général, modifié par le règlement ANC n° 2022-06, art. 932-1, comptes 16 « Emprunts et dettes assimilées » et 17 « Dettes rattachées à des participations »",
+      "source": "anc-2022-06",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "16",
+          "code_to": "17"
+        }
+      ]
+    }
+  ]
+}
