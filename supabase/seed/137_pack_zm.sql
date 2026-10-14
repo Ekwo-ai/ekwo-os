@@ -478,6 +478,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('ZM-ZICA-IS', 'ZM-ZICA-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('ZM-ZICA-IS', '1', 10),
+            ('ZM-ZICA-IS', '2', 10),
+            ('ZM-ZICA-IS', '3', 10),
+            ('ZM-ZICA-IS', '4', 10),
+            ('ZM-ZICA-IS', '5', 10),
+            ('ZM-ZICA-IS', '6', 10),
+            ('ZM-ZICA-IS', '7', 10),
+            ('ZM-ZICA-IS', '9', 10),
+            ('ZM-ZICA-SFP', 'CA.1', 10),
+            ('ZM-ZICA-SFP', 'CA.2', 10),
+            ('ZM-ZICA-SFP', 'CA.3', 10),
+            ('ZM-ZICA-SFP', 'CA.4', 10),
+            ('ZM-ZICA-SFP', 'CA.5', 10),
+            ('ZM-ZICA-SFP', 'CA.6', 10),
+            ('ZM-ZICA-SFP', 'NCA.1', 10),
+            ('ZM-ZICA-SFP', 'NCA.2', 10),
+            ('ZM-ZICA-SFP', 'NCA.3', 10),
+            ('ZM-ZICA-SFP', 'NCA.4', 10),
+            ('ZM-ZICA-SFP', 'NCA.5', 10),
+            ('ZM-ZICA-SFP', 'NCA.6', 10),
+            ('ZM-ZICA-SFP', 'NCA.7', 10),
+            ('ZM-ZICA-SFP', 'CL.1', 10),
+            ('ZM-ZICA-SFP', 'CL.1', 20),
+            ('ZM-ZICA-SFP', 'CL.2', 10),
+            ('ZM-ZICA-SFP', 'CL.3', 10),
+            ('ZM-ZICA-SFP', 'CL.4', 10),
+            ('ZM-ZICA-SFP', 'CL.5', 10),
+            ('ZM-ZICA-SFP', 'NCL.1', 10),
+            ('ZM-ZICA-SFP', 'NCL.2', 10),
+            ('ZM-ZICA-SFP', 'NCL.3', 10),
+            ('ZM-ZICA-SFP', 'EQ.1', 10),
+            ('ZM-ZICA-SFP', 'EQ.2', 10),
+            ('ZM-ZICA-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

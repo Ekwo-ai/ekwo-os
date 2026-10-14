@@ -516,6 +516,37 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('NG-CAMA-BS', 'NG-CAMA-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('NG-CAMA-BS', 'A', 10),
+            ('NG-CAMA-BS', 'B.INT', 10),
+            ('NG-CAMA-BS', 'B.TAN', 10),
+            ('NG-CAMA-BS', 'C', 10),
+            ('NG-CAMA-BS', 'E.STK', 10),
+            ('NG-CAMA-BS', 'E.DBT', 10),
+            ('NG-CAMA-BS', 'E.INV', 10),
+            ('NG-CAMA-BS', 'E.CSH', 10),
+            ('NG-CAMA-BS', 'F', 10),
+            ('NG-CAMA-BS', 'G', 10),
+            ('NG-CAMA-BS', 'J', 10),
+            ('NG-CAMA-BS', 'K', 10),
+            ('NG-CAMA-BS', 'L', 10),
+            ('NG-CAMA-BS', 'M.SC', 10),
+            ('NG-CAMA-BS', 'M.SP', 10),
+            ('NG-CAMA-BS', 'M.RV', 10),
+            ('NG-CAMA-BS', 'M.OR', 10),
+            ('NG-CAMA-BS', 'M.RE', 10),
+            ('NG-CAMA-IS', '1', 10),
+            ('NG-CAMA-IS', '2', 10),
+            ('NG-CAMA-IS', '4', 10),
+            ('NG-CAMA-IS', '5', 10),
+            ('NG-CAMA-IS', '6', 10),
+            ('NG-CAMA-IS', '6B', 10),
+            ('NG-CAMA-IS', '12', 10),
+            ('NG-CAMA-IS', '13', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

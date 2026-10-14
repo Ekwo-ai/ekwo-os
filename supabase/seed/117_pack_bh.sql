@@ -429,6 +429,41 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('BH-IFRSSME-IS', 'BH-IFRSSME-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('BH-IFRSSME-IS', '1', 10),
+            ('BH-IFRSSME-IS', '2', 10),
+            ('BH-IFRSSME-IS', '3', 10),
+            ('BH-IFRSSME-IS', '4', 10),
+            ('BH-IFRSSME-IS', '5', 10),
+            ('BH-IFRSSME-IS', '6', 10),
+            ('BH-IFRSSME-IS', '6', 20),
+            ('BH-IFRSSME-IS', '7', 10),
+            ('BH-IFRSSME-IS', '9', 10),
+            ('BH-IFRSSME-SFP', 'CA.1', 10),
+            ('BH-IFRSSME-SFP', 'CA.2', 10),
+            ('BH-IFRSSME-SFP', 'CA.2', 20),
+            ('BH-IFRSSME-SFP', 'CA.3', 10),
+            ('BH-IFRSSME-SFP', 'CA.4', 10),
+            ('BH-IFRSSME-SFP', 'CA.5', 10),
+            ('BH-IFRSSME-SFP', 'NCA.1', 10),
+            ('BH-IFRSSME-SFP', 'NCA.2', 10),
+            ('BH-IFRSSME-SFP', 'NCA.3', 10),
+            ('BH-IFRSSME-SFP', 'NCA.4', 10),
+            ('BH-IFRSSME-SFP', 'NCA.5', 10),
+            ('BH-IFRSSME-SFP', 'CL.1', 10),
+            ('BH-IFRSSME-SFP', 'CL.1', 20),
+            ('BH-IFRSSME-SFP', 'CL.2', 10),
+            ('BH-IFRSSME-SFP', 'CL.3', 10),
+            ('BH-IFRSSME-SFP', 'NCL.1', 10),
+            ('BH-IFRSSME-SFP', 'NCL.2', 10),
+            ('BH-IFRSSME-SFP', 'NCL.3', 10),
+            ('BH-IFRSSME-SFP', 'EQ.1', 10),
+            ('BH-IFRSSME-SFP', 'EQ.2', 10),
+            ('BH-IFRSSME-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

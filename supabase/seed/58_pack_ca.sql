@@ -654,6 +654,36 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('CA-ASPE-BS', 'CA-ASPE-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('CA-ASPE-BS', '10', 10),
+            ('CA-ASPE-BS', '20', 10),
+            ('CA-ASPE-BS', '30', 10),
+            ('CA-ASPE-BS', '40', 10),
+            ('CA-ASPE-BS', '50', 10),
+            ('CA-ASPE-BS', '60', 10),
+            ('CA-ASPE-BS', '110', 10),
+            ('CA-ASPE-BS', '120', 10),
+            ('CA-ASPE-BS', '130', 10),
+            ('CA-ASPE-BS', '300', 10),
+            ('CA-ASPE-BS', '310', 10),
+            ('CA-ASPE-BS', '320', 10),
+            ('CA-ASPE-BS', '330', 10),
+            ('CA-ASPE-BS', '410', 10),
+            ('CA-ASPE-BS', '600', 10),
+            ('CA-ASPE-BS', '610', 10),
+            ('CA-ASPE-BS', '620', 10),
+            ('CA-ASPE-BS', '630', 10),
+            ('CA-ASPE-IS', '10', 10),
+            ('CA-ASPE-IS', '20', 10),
+            ('CA-ASPE-IS', '40', 10),
+            ('CA-ASPE-IS', '50', 10),
+            ('CA-ASPE-IS', '80', 10),
+            ('CA-ASPE-IS', '90', 10),
+            ('CA-ASPE-IS', '110', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

@@ -459,6 +459,38 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('CO-DECRETO2649-ER', 'CO-DECRETO2649-ESF')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('CO-DECRETO2649-ER', '41', 10),
+            ('CO-DECRETO2649-ER', '42', 10),
+            ('CO-DECRETO2649-ER', '61', 10),
+            ('CO-DECRETO2649-ER', '62', 10),
+            ('CO-DECRETO2649-ER', '51', 10),
+            ('CO-DECRETO2649-ER', '52', 10),
+            ('CO-DECRETO2649-ER', '53', 10),
+            ('CO-DECRETO2649-ER', '54', 10),
+            ('CO-DECRETO2649-ESF', '11', 10),
+            ('CO-DECRETO2649-ESF', '12', 10),
+            ('CO-DECRETO2649-ESF', '13', 10),
+            ('CO-DECRETO2649-ESF', '14', 10),
+            ('CO-DECRETO2649-ESF', '15', 10),
+            ('CO-DECRETO2649-ESF', '16', 10),
+            ('CO-DECRETO2649-ESF', '17', 10),
+            ('CO-DECRETO2649-ESF', '21', 10),
+            ('CO-DECRETO2649-ESF', '22', 10),
+            ('CO-DECRETO2649-ESF', '23', 10),
+            ('CO-DECRETO2649-ESF', '24', 10),
+            ('CO-DECRETO2649-ESF', '25', 10),
+            ('CO-DECRETO2649-ESF', '26', 10),
+            ('CO-DECRETO2649-ESF', '27', 10),
+            ('CO-DECRETO2649-ESF', '28', 10),
+            ('CO-DECRETO2649-ESF', '31', 10),
+            ('CO-DECRETO2649-ESF', '33', 10),
+            ('CO-DECRETO2649-ESF', '36', 10),
+            ('CO-DECRETO2649-ESF', '37', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

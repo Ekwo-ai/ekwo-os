@@ -654,6 +654,57 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('AO-PGC-BAL', 'AO-PGC-DR')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('AO-PGC-BAL', 'AI.1', 10),
+            ('AO-PGC-BAL', 'AI.2', 10),
+            ('AO-PGC-BAL', 'AI.3', 10),
+            ('AO-PGC-BAL', 'AI.3', 20),
+            ('AO-PGC-BAL', 'AI.4', 10),
+            ('AO-PGC-BAL', 'AI.5', 10),
+            ('AO-PGC-BAL', 'AC.1', 10),
+            ('AO-PGC-BAL', 'AC.2', 10),
+            ('AO-PGC-BAL', 'AC.2', 20),
+            ('AO-PGC-BAL', 'AC.3', 10),
+            ('AO-PGC-BAL', 'AC.3', 20),
+            ('AO-PGC-BAL', 'AC.3', 30),
+            ('AO-PGC-BAL', 'AC.3', 40),
+            ('AO-PGC-BAL', 'AC.3', 50),
+            ('AO-PGC-BAL', 'AC.4', 10),
+            ('AO-PGC-BAL', 'AC.4', 20),
+            ('AO-PGC-BAL', 'AC.5', 10),
+            ('AO-PGC-BAL', 'CP.1', 10),
+            ('AO-PGC-BAL', 'CP.2', 10),
+            ('AO-PGC-BAL', 'CP.3', 10),
+            ('AO-PGC-BAL', 'CP.4', 10),
+            ('AO-PGC-BAL', 'CP.5', 10),
+            ('AO-PGC-BAL', 'PNC.1', 10),
+            ('AO-PGC-BAL', 'PNC.2', 10),
+            ('AO-PGC-BAL', 'PC.1', 10),
+            ('AO-PGC-BAL', 'PC.2', 10),
+            ('AO-PGC-BAL', 'PC.3', 10),
+            ('AO-PGC-BAL', 'PC.4', 10),
+            ('AO-PGC-BAL', 'PC.4', 20),
+            ('AO-PGC-BAL', 'PC.4', 30),
+            ('AO-PGC-BAL', 'PC.4', 40),
+            ('AO-PGC-DR', '1', 10),
+            ('AO-PGC-DR', '2', 10),
+            ('AO-PGC-DR', '3', 10),
+            ('AO-PGC-DR', '4', 10),
+            ('AO-PGC-DR', '4', 20),
+            ('AO-PGC-DR', '5', 10),
+            ('AO-PGC-DR', '6', 10),
+            ('AO-PGC-DR', '7', 10),
+            ('AO-PGC-DR', '8', 10),
+            ('AO-PGC-DR', '9', 10),
+            ('AO-PGC-DR', '10', 10),
+            ('AO-PGC-DR', '11', 10),
+            ('AO-PGC-DR', '12', 10),
+            ('AO-PGC-DR', '13', 10),
+            ('AO-PGC-DR', '14', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

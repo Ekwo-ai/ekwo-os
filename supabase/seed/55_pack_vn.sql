@@ -441,6 +441,33 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('VN-BCTC-BCTHTC', 'VN-BCTC-KQKD')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('VN-BCTC-BCTHTC', '110', 10),
+            ('VN-BCTC-BCTHTC', '120', 10),
+            ('VN-BCTC-BCTHTC', '130', 10),
+            ('VN-BCTC-BCTHTC', '130', 20),
+            ('VN-BCTC-BCTHTC', '140', 10),
+            ('VN-BCTC-BCTHTC', '150', 10),
+            ('VN-BCTC-BCTHTC', '150', 20),
+            ('VN-BCTC-BCTHTC', '220', 10),
+            ('VN-BCTC-BCTHTC', '260', 10),
+            ('VN-BCTC-BCTHTC', '310', 10),
+            ('VN-BCTC-BCTHTC', '330', 10),
+            ('VN-BCTC-BCTHTC', '410', 10),
+            ('VN-BCTC-KQKD', '01', 10),
+            ('VN-BCTC-KQKD', '02', 10),
+            ('VN-BCTC-KQKD', '11', 10),
+            ('VN-BCTC-KQKD', '21', 10),
+            ('VN-BCTC-KQKD', '22', 10),
+            ('VN-BCTC-KQKD', '25', 10),
+            ('VN-BCTC-KQKD', '26', 10),
+            ('VN-BCTC-KQKD', '31', 10),
+            ('VN-BCTC-KQKD', '32', 10),
+            ('VN-BCTC-KQKD', '51', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

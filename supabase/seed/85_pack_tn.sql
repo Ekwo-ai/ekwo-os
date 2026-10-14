@@ -460,6 +460,57 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('TN-SCE-BS', 'TN-SCE-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('TN-SCE-BS', 'BS-10', 10),
+            ('TN-SCE-BS', 'BS-10', 20),
+            ('TN-SCE-BS', 'BS-20', 10),
+            ('TN-SCE-BS', 'BS-20', 20),
+            ('TN-SCE-BS', 'BS-20', 30),
+            ('TN-SCE-BS', 'BS-30', 10),
+            ('TN-SCE-BS', 'BS-30', 20),
+            ('TN-SCE-BS', 'BS-30', 30),
+            ('TN-SCE-BS', 'BS-40', 10),
+            ('TN-SCE-BS', 'BS-50', 10),
+            ('TN-SCE-BS', 'BS-51', 10),
+            ('TN-SCE-BS', 'BS-60', 10),
+            ('TN-SCE-BS', 'BS-60', 20),
+            ('TN-SCE-BS', 'BS-60', 30),
+            ('TN-SCE-BS', 'BS-60', 40),
+            ('TN-SCE-BS', 'BS-70', 10),
+            ('TN-SCE-BS', 'BS-70', 20),
+            ('TN-SCE-BS', 'BS-100', 10),
+            ('TN-SCE-BS', 'BS-110', 10),
+            ('TN-SCE-BS', 'BS-120', 10),
+            ('TN-SCE-BS', 'BS-130', 10),
+            ('TN-SCE-BS', 'BS-140', 10),
+            ('TN-SCE-BS', 'BS-150', 10),
+            ('TN-SCE-BS', 'BS-160', 10),
+            ('TN-SCE-BS', 'BS-170', 10),
+            ('TN-SCE-BS', 'BS-175', 10),
+            ('TN-SCE-BS', 'BS-180', 10),
+            ('TN-SCE-BS', 'BS-180', 20),
+            ('TN-SCE-BS', 'BS-190', 10),
+            ('TN-SCE-BS', 'BS-190', 20),
+            ('TN-SCE-BS', 'BS-190', 30),
+            ('TN-SCE-BS', 'BS-190', 40),
+            ('TN-SCE-BS', 'BS-195', 10),
+            ('TN-SCE-BS', 'BS-195', 20),
+            ('TN-SCE-IS', 'IS-10', 10),
+            ('TN-SCE-IS', 'IS-20', 10),
+            ('TN-SCE-IS', 'IS-30', 10),
+            ('TN-SCE-IS', 'IS-40', 10),
+            ('TN-SCE-IS', 'IS-50', 10),
+            ('TN-SCE-IS', 'IS-60', 10),
+            ('TN-SCE-IS', 'IS-70', 10),
+            ('TN-SCE-IS', 'IS-80', 10),
+            ('TN-SCE-IS', 'IS-90', 10),
+            ('TN-SCE-IS', 'IS-100', 10),
+            ('TN-SCE-IS', 'IS-110', 10),
+            ('TN-SCE-IS', 'IS-120', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

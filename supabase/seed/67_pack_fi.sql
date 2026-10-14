@@ -473,6 +473,46 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('FI-KPA-BS', 'FI-KPA-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('FI-KPA-BS', '1.1', 10),
+            ('FI-KPA-BS', '1.2', 10),
+            ('FI-KPA-BS', '1.3', 10),
+            ('FI-KPA-BS', '2.1', 10),
+            ('FI-KPA-BS', '2.2', 10),
+            ('FI-KPA-BS', '2.2', 20),
+            ('FI-KPA-BS', '2.2', 30),
+            ('FI-KPA-BS', '2.3', 10),
+            ('FI-KPA-BS', '2.4', 10),
+            ('FI-KPA-BS', '4.1', 10),
+            ('FI-KPA-BS', '4.2', 10),
+            ('FI-KPA-BS', '4.3', 10),
+            ('FI-KPA-BS', '4.4', 10),
+            ('FI-KPA-BS', '4.5', 10),
+            ('FI-KPA-BS', '4.6', 10),
+            ('FI-KPA-BS', '5', 10),
+            ('FI-KPA-BS', '6', 10),
+            ('FI-KPA-BS', '7', 10),
+            ('FI-KPA-BS', '8', 10),
+            ('FI-KPA-BS', '8', 20),
+            ('FI-KPA-BS', '8', 30),
+            ('FI-KPA-BS', '8', 40),
+            ('FI-KPA-IS', '1', 10),
+            ('FI-KPA-IS', '2', 10),
+            ('FI-KPA-IS', '3', 10),
+            ('FI-KPA-IS', '4', 10),
+            ('FI-KPA-IS', '5', 10),
+            ('FI-KPA-IS', '6', 10),
+            ('FI-KPA-IS', '7', 10),
+            ('FI-KPA-IS', '8', 10),
+            ('FI-KPA-IS', '10.1', 10),
+            ('FI-KPA-IS', '10.2', 10),
+            ('FI-KPA-IS', '12', 10),
+            ('FI-KPA-IS', '13', 10),
+            ('FI-KPA-IS', '14', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

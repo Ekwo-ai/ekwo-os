@@ -750,6 +750,50 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('IN-SCH3-BS', 'IN-SCH3-PL')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('IN-SCH3-BS', 'A11', 10),
+            ('IN-SCH3-BS', 'A12', 10),
+            ('IN-SCH3-BS', 'A13', 10),
+            ('IN-SCH3-BS', 'A2', 10),
+            ('IN-SCH3-BS', 'A31', 10),
+            ('IN-SCH3-BS', 'A32', 10),
+            ('IN-SCH3-BS', 'A33', 10),
+            ('IN-SCH3-BS', 'A34', 10),
+            ('IN-SCH3-BS', 'A41', 10),
+            ('IN-SCH3-BS', 'A42', 10),
+            ('IN-SCH3-BS', 'A43', 10),
+            ('IN-SCH3-BS', 'A44', 10),
+            ('IN-SCH3-BS', 'B1ai', 10),
+            ('IN-SCH3-BS', 'B1aii', 10),
+            ('IN-SCH3-BS', 'B1aiii', 10),
+            ('IN-SCH3-BS', 'B1aiv', 10),
+            ('IN-SCH3-BS', 'B1b', 10),
+            ('IN-SCH3-BS', 'B1c', 10),
+            ('IN-SCH3-BS', 'B1d', 10),
+            ('IN-SCH3-BS', 'B1e', 10),
+            ('IN-SCH3-BS', 'B2a', 10),
+            ('IN-SCH3-BS', 'B2b', 10),
+            ('IN-SCH3-BS', 'B2c', 10),
+            ('IN-SCH3-BS', 'B2d', 10),
+            ('IN-SCH3-BS', 'B2e', 10),
+            ('IN-SCH3-BS', 'B2f', 10),
+            ('IN-SCH3-PL', 'I', 10),
+            ('IN-SCH3-PL', 'II', 10),
+            ('IN-SCH3-PL', 'IVa', 10),
+            ('IN-SCH3-PL', 'IVb', 10),
+            ('IN-SCH3-PL', 'IVc', 10),
+            ('IN-SCH3-PL', 'IVd', 10),
+            ('IN-SCH3-PL', 'IVe', 10),
+            ('IN-SCH3-PL', 'IVf', 10),
+            ('IN-SCH3-PL', 'IVg', 10),
+            ('IN-SCH3-PL', 'VI', 10),
+            ('IN-SCH3-PL', 'VIII', 10),
+            ('IN-SCH3-PL', 'X1', 10),
+            ('IN-SCH3-PL', 'X2', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

@@ -503,6 +503,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('LK-SLFRS-IS', 'LK-SLFRS-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('LK-SLFRS-IS', '1', 10),
+            ('LK-SLFRS-IS', '2', 10),
+            ('LK-SLFRS-IS', '3', 10),
+            ('LK-SLFRS-IS', '4', 10),
+            ('LK-SLFRS-IS', '5', 10),
+            ('LK-SLFRS-IS', '6', 10),
+            ('LK-SLFRS-IS', '7', 10),
+            ('LK-SLFRS-IS', '9', 10),
+            ('LK-SLFRS-SFP', 'CA.1', 10),
+            ('LK-SLFRS-SFP', 'CA.2', 10),
+            ('LK-SLFRS-SFP', 'CA.3', 10),
+            ('LK-SLFRS-SFP', 'CA.4', 10),
+            ('LK-SLFRS-SFP', 'CA.5', 10),
+            ('LK-SLFRS-SFP', 'CA.6', 10),
+            ('LK-SLFRS-SFP', 'NCA.1', 10),
+            ('LK-SLFRS-SFP', 'NCA.2', 10),
+            ('LK-SLFRS-SFP', 'NCA.3', 10),
+            ('LK-SLFRS-SFP', 'NCA.4', 10),
+            ('LK-SLFRS-SFP', 'NCA.5', 10),
+            ('LK-SLFRS-SFP', 'NCA.6', 10),
+            ('LK-SLFRS-SFP', 'NCA.7', 10),
+            ('LK-SLFRS-SFP', 'CL.1', 10),
+            ('LK-SLFRS-SFP', 'CL.1', 20),
+            ('LK-SLFRS-SFP', 'CL.2', 10),
+            ('LK-SLFRS-SFP', 'CL.3', 10),
+            ('LK-SLFRS-SFP', 'CL.4', 10),
+            ('LK-SLFRS-SFP', 'CL.5', 10),
+            ('LK-SLFRS-SFP', 'NCL.1', 10),
+            ('LK-SLFRS-SFP', 'NCL.2', 10),
+            ('LK-SLFRS-SFP', 'NCL.3', 10),
+            ('LK-SLFRS-SFP', 'EQ.1', 10),
+            ('LK-SLFRS-SFP', 'EQ.2', 10),
+            ('LK-SLFRS-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

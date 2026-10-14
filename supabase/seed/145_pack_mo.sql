@@ -345,6 +345,51 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('MO-NSRF-BS', 'MO-NSRF-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('MO-NSRF-BS', 'A-NC-FIX', 10),
+            ('MO-NSRF-BS', 'A-NC-INT', 10),
+            ('MO-NSRF-BS', 'A-NC-INV', 10),
+            ('MO-NSRF-BS', 'A-C-INV', 10),
+            ('MO-NSRF-BS', 'A-C-REC', 10),
+            ('MO-NSRF-BS', 'A-C-REC', 20),
+            ('MO-NSRF-BS', 'A-C-PRE', 10),
+            ('MO-NSRF-BS', 'A-C-CASH', 10),
+            ('MO-NSRF-BS', 'E-CAP', 10),
+            ('MO-NSRF-BS', 'E-LEG', 10),
+            ('MO-NSRF-BS', 'E-OTH', 10),
+            ('MO-NSRF-BS', 'E-OTH', 20),
+            ('MO-NSRF-BS', 'E-RET', 10),
+            ('MO-NSRF-BS', 'E-RESULT', 10),
+            ('MO-NSRF-BS', 'E-RESULT', 20),
+            ('MO-NSRF-BS', 'E-RESULT', 30),
+            ('MO-NSRF-BS', 'L-NC-BANK', 10),
+            ('MO-NSRF-BS', 'L-NC-LEASE', 10),
+            ('MO-NSRF-BS', 'L-NC-OTH', 10),
+            ('MO-NSRF-BS', 'L-C-PAY', 10),
+            ('MO-NSRF-BS', 'L-C-PAY', 20),
+            ('MO-NSRF-BS', 'L-C-REL', 10),
+            ('MO-NSRF-BS', 'L-C-TAX', 10),
+            ('MO-NSRF-BS', 'L-C-BORR', 10),
+            ('MO-NSRF-BS', 'L-C-LEASE', 10),
+            ('MO-NSRF-BS', 'L-C-OTH', 10),
+            ('MO-NSRF-BS', 'L-C-OTH', 20),
+            ('MO-NSRF-BS', 'L-C-OTH', 30),
+            ('MO-NSRF-IS', 'REV', 10),
+            ('MO-NSRF-IS', 'COST', 10),
+            ('MO-NSRF-IS', 'OTH-OPI', 10),
+            ('MO-NSRF-IS', 'PERS', 10),
+            ('MO-NSRF-IS', 'DEPR', 10),
+            ('MO-NSRF-IS', 'OTH-OPX', 10),
+            ('MO-NSRF-IS', 'OTH-OPX', 20),
+            ('MO-NSRF-IS', 'OTH-OPX', 30),
+            ('MO-NSRF-IS', 'FIN-EXP', 10),
+            ('MO-NSRF-IS', 'INV-INC', 10),
+            ('MO-NSRF-IS', 'OTH-INC', 10),
+            ('MO-NSRF-IS', 'TAX', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

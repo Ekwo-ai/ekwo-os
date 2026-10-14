@@ -467,6 +467,42 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('AR-ER', 'AR-ESP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('AR-ER', 'VEN', 10),
+            ('AR-ER', 'CV', 10),
+            ('AR-ER', 'GC', 10),
+            ('AR-ER', 'GA', 10),
+            ('AR-ER', 'RFPOS', 10),
+            ('AR-ER', 'RFNEG', 10),
+            ('AR-ER', 'OTRI', 10),
+            ('AR-ER', 'OTRE', 10),
+            ('AR-ER', 'IG', 10),
+            ('AR-ESP', 'CB', 10),
+            ('AR-ESP', 'INV', 10),
+            ('AR-ESP', 'CXV', 10),
+            ('AR-ESP', 'OCR', 10),
+            ('AR-ESP', 'CFI', 10),
+            ('AR-ESP', 'BCA', 10),
+            ('AR-ESP', 'PPI', 10),
+            ('AR-ESP', 'CNC', 10),
+            ('AR-ESP', 'BUS', 10),
+            ('AR-ESP', 'AIN', 10),
+            ('AR-ESP', 'CPC', 10),
+            ('AR-ESP', 'REM', 10),
+            ('AR-ESP', 'CFP', 10),
+            ('AR-ESP', 'ANT', 10),
+            ('AR-ESP', 'PRO', 10),
+            ('AR-ESP', 'DBL', 10),
+            ('AR-ESP', 'ODL', 10),
+            ('AR-ESP', 'CAP', 10),
+            ('AR-ESP', 'RES', 10),
+            ('AR-ESP', 'RES', 20),
+            ('AR-ESP', 'RNA', 10),
+            ('AR-ESP', 'REJ', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

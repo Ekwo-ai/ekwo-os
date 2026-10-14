@@ -444,6 +444,32 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('PH-BS', 'PH-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('PH-BS', 'A-C-CASH', 10),
+            ('PH-BS', 'A-C-REC', 10),
+            ('PH-BS', 'A-C-OTH', 10),
+            ('PH-BS', 'A-C-PREP', 10),
+            ('PH-BS', 'A-NC-FIX', 10),
+            ('PH-BS', 'A-NC-OTH', 10),
+            ('PH-BS', 'L-C-PAY', 10),
+            ('PH-BS', 'L-C-OTH', 10),
+            ('PH-BS', 'L-C-OTH', 20),
+            ('PH-BS', 'L-NC', 10),
+            ('PH-BS', 'E-CAP', 10),
+            ('PH-BS', 'E-RET', 10),
+            ('PH-BS', 'E-RESULT', 10),
+            ('PH-BS', 'E-RESULT', 20),
+            ('PH-IS', 'REV', 10),
+            ('PH-IS', 'COST', 10),
+            ('PH-IS', 'OTH-INC', 10),
+            ('PH-IS', 'OPEX', 10),
+            ('PH-IS', 'OPEX', 20),
+            ('PH-IS', 'DEPR', 10),
+            ('PH-IS', 'TAX', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

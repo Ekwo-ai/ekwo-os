@@ -465,6 +465,50 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('NI-EF-ER', 'NI-EF-ESF')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('NI-EF-ER', '411', 10),
+            ('NI-EF-ER', '412', 10),
+            ('NI-EF-ER', '413', 10),
+            ('NI-EF-ER', '414', 10),
+            ('NI-EF-ER', '415', 10),
+            ('NI-EF-ER', '51', 10),
+            ('NI-EF-ER', '52', 10),
+            ('NI-EF-ER', '53', 10),
+            ('NI-EF-ER', '46', 10),
+            ('NI-EF-ER', '54', 10),
+            ('NI-EF-ER', '56', 10),
+            ('NI-EF-ER', '55', 10),
+            ('NI-EF-ESF', '111', 10),
+            ('NI-EF-ESF', '112', 10),
+            ('NI-EF-ESF', '113', 10),
+            ('NI-EF-ESF', '114', 10),
+            ('NI-EF-ESF', '115', 10),
+            ('NI-EF-ESF', '116', 10),
+            ('NI-EF-ESF', '119', 10),
+            ('NI-EF-ESF', '121', 10),
+            ('NI-EF-ESF', '122', 10),
+            ('NI-EF-ESF', '123', 10),
+            ('NI-EF-ESF', '211', 10),
+            ('NI-EF-ESF', '212', 10),
+            ('NI-EF-ESF', '213', 10),
+            ('NI-EF-ESF', '214', 10),
+            ('NI-EF-ESF', '215', 10),
+            ('NI-EF-ESF', '221', 10),
+            ('NI-EF-ESF', '222', 10),
+            ('NI-EF-ESF', '223', 10),
+            ('NI-EF-ESF', '224', 10),
+            ('NI-EF-ESF', '310', 10),
+            ('NI-EF-ESF', '311', 10),
+            ('NI-EF-ESF', '320', 10),
+            ('NI-EF-ESF', '330', 10),
+            ('NI-EF-ESF', '341', 10),
+            ('NI-EF-ESF', '342', 10),
+            ('NI-EF-ESF', '351', 10),
+            ('NI-EF-ESF', '352', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

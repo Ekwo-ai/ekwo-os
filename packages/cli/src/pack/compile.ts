@@ -448,6 +448,26 @@ function statements(
     '',
   );
 
+  // The seeds are re-applied by every `ekwo migrate`, so the rules of a statement
+  // are the pack's and nothing else: a rule a release dropped — a line that
+  // became a total, a range narrowed — would otherwise stay in an installation
+  // that upgraded, and an account it catches would leave the statement.
+  const keys = [...list]
+    .sort(byCode)
+    .flatMap((statement) =>
+      statement.lines.flatMap((line) =>
+        line.rules.map((rule) => `(${text(statement.code)}, ${text(line.code)}, ${rule.sequence})`),
+      ),
+    );
+  out.push(
+    'delete from statement_line_rules r',
+    ` where r.statement_code in (${[...list].sort(byCode).map((s) => text(s.code)).join(', ')})`,
+    ...(keys.length > 0
+      ? ['   and (r.statement_code, r.line_code, r.sequence) not in (', `     values ${keys.join(',\n            ')}`, '   );']
+      : ['   ;']),
+    '',
+  );
+
   if (rules.length > 0) {
     out.push(
       'insert into statement_line_rules',

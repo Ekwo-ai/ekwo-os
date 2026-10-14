@@ -498,6 +498,49 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('MY-BS', 'MY-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('MY-BS', 'CA-CASH', 10),
+            ('MY-BS', 'CA-REC', 10),
+            ('MY-BS', 'CA-REC', 20),
+            ('MY-BS', 'CA-TAX', 10),
+            ('MY-BS', 'CA-STAFF', 10),
+            ('MY-BS', 'CA-INV', 10),
+            ('MY-BS', 'CA-STI', 10),
+            ('MY-BS', 'CA-ITAX', 10),
+            ('MY-BS', 'CA-PREP', 10),
+            ('MY-BS', 'NCA-PPE', 10),
+            ('MY-BS', 'NCA-INVPROP', 10),
+            ('MY-BS', 'NCA-INTANG', 10),
+            ('MY-BS', 'NCA-ASSOC', 10),
+            ('MY-BS', 'NCA-FIN', 10),
+            ('MY-BS', 'NCA-DTA', 10),
+            ('MY-BS', 'CL-PAY', 10),
+            ('MY-BS', 'CL-PAY', 20),
+            ('MY-BS', 'CL-OTH', 10),
+            ('MY-BS', 'CL-TAXP', 10),
+            ('MY-BS', 'CL-TAXSETTLE', 10),
+            ('MY-BS', 'CL-STAT', 10),
+            ('MY-BS', 'CL-FIN', 10),
+            ('MY-BS', 'CL-ITAX', 10),
+            ('MY-BS', 'CL-PROV', 10),
+            ('MY-BS', 'NCL-FIN', 10),
+            ('MY-BS', 'NCL-DTAX', 10),
+            ('MY-BS', 'NCL-PROV', 10),
+            ('MY-BS', 'EQ-CAP', 10),
+            ('MY-BS', 'EQ-RES', 10),
+            ('MY-BS', 'EQ-RET', 10),
+            ('MY-IS', 'REV', 10),
+            ('MY-IS', 'COGS', 10),
+            ('MY-IS', 'OTH-INC', 10),
+            ('MY-IS', 'OPEX', 10),
+            ('MY-IS', 'OPEX', 20),
+            ('MY-IS', 'DEPR', 10),
+            ('MY-IS', 'FIN', 10),
+            ('MY-IS', 'TAX', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

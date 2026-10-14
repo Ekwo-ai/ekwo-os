@@ -461,6 +461,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('TZ-NBAA-IS', 'TZ-NBAA-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('TZ-NBAA-IS', '1', 10),
+            ('TZ-NBAA-IS', '2', 10),
+            ('TZ-NBAA-IS', '3', 10),
+            ('TZ-NBAA-IS', '4', 10),
+            ('TZ-NBAA-IS', '5', 10),
+            ('TZ-NBAA-IS', '6', 10),
+            ('TZ-NBAA-IS', '7', 10),
+            ('TZ-NBAA-IS', '9', 10),
+            ('TZ-NBAA-SFP', 'CA.1', 10),
+            ('TZ-NBAA-SFP', 'CA.2', 10),
+            ('TZ-NBAA-SFP', 'CA.3', 10),
+            ('TZ-NBAA-SFP', 'CA.4', 10),
+            ('TZ-NBAA-SFP', 'CA.5', 10),
+            ('TZ-NBAA-SFP', 'CA.6', 10),
+            ('TZ-NBAA-SFP', 'NCA.1', 10),
+            ('TZ-NBAA-SFP', 'NCA.2', 10),
+            ('TZ-NBAA-SFP', 'NCA.3', 10),
+            ('TZ-NBAA-SFP', 'NCA.4', 10),
+            ('TZ-NBAA-SFP', 'NCA.5', 10),
+            ('TZ-NBAA-SFP', 'NCA.6', 10),
+            ('TZ-NBAA-SFP', 'NCA.7', 10),
+            ('TZ-NBAA-SFP', 'CL.1', 10),
+            ('TZ-NBAA-SFP', 'CL.1', 20),
+            ('TZ-NBAA-SFP', 'CL.2', 10),
+            ('TZ-NBAA-SFP', 'CL.3', 10),
+            ('TZ-NBAA-SFP', 'CL.4', 10),
+            ('TZ-NBAA-SFP', 'CL.5', 10),
+            ('TZ-NBAA-SFP', 'NCL.1', 10),
+            ('TZ-NBAA-SFP', 'NCL.2', 10),
+            ('TZ-NBAA-SFP', 'NCL.3', 10),
+            ('TZ-NBAA-SFP', 'EQ.1', 10),
+            ('TZ-NBAA-SFP', 'EQ.2', 10),
+            ('TZ-NBAA-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

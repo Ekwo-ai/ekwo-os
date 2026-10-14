@@ -546,6 +546,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('ZA-IFRSSME-PL', 'ZA-IFRSSME-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('ZA-IFRSSME-PL', '1', 10),
+            ('ZA-IFRSSME-PL', '2', 10),
+            ('ZA-IFRSSME-PL', '3', 10),
+            ('ZA-IFRSSME-PL', '4', 10),
+            ('ZA-IFRSSME-PL', '5', 10),
+            ('ZA-IFRSSME-PL', '6', 10),
+            ('ZA-IFRSSME-PL', '7', 10),
+            ('ZA-IFRSSME-PL', '9', 10),
+            ('ZA-IFRSSME-SFP', 'CA.1', 10),
+            ('ZA-IFRSSME-SFP', 'CA.2', 10),
+            ('ZA-IFRSSME-SFP', 'CA.2', 20),
+            ('ZA-IFRSSME-SFP', 'CA.3', 10),
+            ('ZA-IFRSSME-SFP', 'CA.4', 10),
+            ('ZA-IFRSSME-SFP', 'CA.5', 10),
+            ('ZA-IFRSSME-SFP', 'CA.6', 10),
+            ('ZA-IFRSSME-SFP', 'NCA.1', 10),
+            ('ZA-IFRSSME-SFP', 'NCA.2', 10),
+            ('ZA-IFRSSME-SFP', 'NCA.3', 10),
+            ('ZA-IFRSSME-SFP', 'NCA.4', 10),
+            ('ZA-IFRSSME-SFP', 'NCA.5', 10),
+            ('ZA-IFRSSME-SFP', 'NCA.6', 10),
+            ('ZA-IFRSSME-SFP', 'NCA.7', 10),
+            ('ZA-IFRSSME-SFP', 'CL.1', 10),
+            ('ZA-IFRSSME-SFP', 'CL.1', 20),
+            ('ZA-IFRSSME-SFP', 'CL.2', 10),
+            ('ZA-IFRSSME-SFP', 'CL.3', 10),
+            ('ZA-IFRSSME-SFP', 'CL.4', 10),
+            ('ZA-IFRSSME-SFP', 'NCL.1', 10),
+            ('ZA-IFRSSME-SFP', 'NCL.2', 10),
+            ('ZA-IFRSSME-SFP', 'NCL.3', 10),
+            ('ZA-IFRSSME-SFP', 'EQ.1', 10),
+            ('ZA-IFRSSME-SFP', 'EQ.2', 10),
+            ('ZA-IFRSSME-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

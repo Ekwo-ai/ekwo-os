@@ -552,6 +552,51 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('PL-UOR-BILANS', 'PL-UOR-RZIS-POROWNAWCZY')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('PL-UOR-BILANS', 'AKT.A.I', 10),
+            ('PL-UOR-BILANS', 'AKT.A.II', 10),
+            ('PL-UOR-BILANS', 'AKT.A.III', 10),
+            ('PL-UOR-BILANS', 'AKT.A.IV', 10),
+            ('PL-UOR-BILANS', 'AKT.A.V', 10),
+            ('PL-UOR-BILANS', 'AKT.B.I', 10),
+            ('PL-UOR-BILANS', 'AKT.B.II', 10),
+            ('PL-UOR-BILANS', 'AKT.B.III', 10),
+            ('PL-UOR-BILANS', 'AKT.B.IV', 10),
+            ('PL-UOR-BILANS', 'AKT.C', 10),
+            ('PL-UOR-BILANS', 'AKT.D', 10),
+            ('PL-UOR-BILANS', 'PAS.A.I', 10),
+            ('PL-UOR-BILANS', 'PAS.A.II', 10),
+            ('PL-UOR-BILANS', 'PAS.A.III', 10),
+            ('PL-UOR-BILANS', 'PAS.A.IV', 10),
+            ('PL-UOR-BILANS', 'PAS.A.V', 10),
+            ('PL-UOR-BILANS', 'PAS.A.VI', 10),
+            ('PL-UOR-BILANS', 'PAS.A.VII', 10),
+            ('PL-UOR-BILANS', 'PAS.B.I', 10),
+            ('PL-UOR-BILANS', 'PAS.B.II', 10),
+            ('PL-UOR-BILANS', 'PAS.B.III', 10),
+            ('PL-UOR-BILANS', 'PAS.B.IV', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.A.I', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.A.II', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.A.III', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.A.IV', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.B.I', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.B.II', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.B.III', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.B.IV', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.B.V', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.B.VI', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.B.VII', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.B.VIII', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.D', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.E', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.G', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.H', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.J', 10),
+            ('PL-UOR-RZIS-POROWNAWCZY', 'RZIS.K', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

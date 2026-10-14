@@ -441,6 +441,36 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('IL-IAS1-IS', 'IL-IAS1-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('IL-IAS1-IS', 'REV', 10),
+            ('IL-IAS1-IS', 'OINC', 10),
+            ('IL-IAS1-IS', 'COS', 10),
+            ('IL-IAS1-IS', 'EMP', 10),
+            ('IL-IAS1-IS', 'DEP', 10),
+            ('IL-IAS1-IS', 'OPEX', 10),
+            ('IL-IAS1-IS', 'FIN', 10),
+            ('IL-IAS1-IS', 'TAX', 10),
+            ('IL-IAS1-SFP', 'CA.1', 10),
+            ('IL-IAS1-SFP', 'CA.2', 10),
+            ('IL-IAS1-SFP', 'CA.3', 10),
+            ('IL-IAS1-SFP', 'CA.4', 10),
+            ('IL-IAS1-SFP', 'NCA.1', 10),
+            ('IL-IAS1-SFP', 'NCA.2', 10),
+            ('IL-IAS1-SFP', 'NCA.3', 10),
+            ('IL-IAS1-SFP', 'CL.1', 10),
+            ('IL-IAS1-SFP', 'CL.2', 10),
+            ('IL-IAS1-SFP', 'CL.2', 20),
+            ('IL-IAS1-SFP', 'CL.3', 10),
+            ('IL-IAS1-SFP', 'CL.4', 10),
+            ('IL-IAS1-SFP', 'CL.5', 10),
+            ('IL-IAS1-SFP', 'NCL.1', 10),
+            ('IL-IAS1-SFP', 'NCL.2', 10),
+            ('IL-IAS1-SFP', 'EQ.1', 10),
+            ('IL-IAS1-SFP', 'EQ.2', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

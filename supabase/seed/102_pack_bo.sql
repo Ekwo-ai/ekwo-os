@@ -431,6 +431,42 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('BO-EF-BG', 'BO-EF-ER')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('BO-EF-BG', 'CB', 10),
+            ('BO-EF-BG', 'INV', 10),
+            ('BO-EF-BG', 'CXV', 10),
+            ('BO-EF-BG', 'OCR', 10),
+            ('BO-EF-BG', 'CFI', 10),
+            ('BO-EF-BG', 'EXI', 10),
+            ('BO-EF-BG', 'PPI', 10),
+            ('BO-EF-BG', 'CNC', 10),
+            ('BO-EF-BG', 'AF', 10),
+            ('BO-EF-BG', 'AIN', 10),
+            ('BO-EF-BG', 'CPC', 10),
+            ('BO-EF-BG', 'REM', 10),
+            ('BO-EF-BG', 'CFP', 10),
+            ('BO-EF-BG', 'ANT', 10),
+            ('BO-EF-BG', 'PRO', 10),
+            ('BO-EF-BG', 'DBL', 10),
+            ('BO-EF-BG', 'ODL', 10),
+            ('BO-EF-BG', 'CAP', 10),
+            ('BO-EF-BG', 'RES', 10),
+            ('BO-EF-BG', 'RES', 20),
+            ('BO-EF-BG', 'RNA', 10),
+            ('BO-EF-BG', 'REJ', 10),
+            ('BO-EF-ER', 'VEN', 10),
+            ('BO-EF-ER', 'CV', 10),
+            ('BO-EF-ER', 'GC', 10),
+            ('BO-EF-ER', 'GA', 10),
+            ('BO-EF-ER', 'RFPOS', 10),
+            ('BO-EF-ER', 'RFNEG', 10),
+            ('BO-EF-ER', 'OTRI', 10),
+            ('BO-EF-ER', 'OTRE', 10),
+            ('BO-EF-ER', 'IUE', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

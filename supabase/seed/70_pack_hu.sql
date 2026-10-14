@@ -480,6 +480,51 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('HU-SZT-EREDMENY-A', 'HU-SZT-MERLEG-A')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('HU-SZT-EREDMENY-A', '01', 10),
+            ('HU-SZT-EREDMENY-A', '02', 10),
+            ('HU-SZT-EREDMENY-A', '03', 10),
+            ('HU-SZT-EREDMENY-A', '04', 10),
+            ('HU-SZT-EREDMENY-A', 'III', 10),
+            ('HU-SZT-EREDMENY-A', '05', 10),
+            ('HU-SZT-EREDMENY-A', '06', 10),
+            ('HU-SZT-EREDMENY-A', '07', 10),
+            ('HU-SZT-EREDMENY-A', '08', 10),
+            ('HU-SZT-EREDMENY-A', '09', 10),
+            ('HU-SZT-EREDMENY-A', '10', 10),
+            ('HU-SZT-EREDMENY-A', '11', 10),
+            ('HU-SZT-EREDMENY-A', '12', 10),
+            ('HU-SZT-EREDMENY-A', 'VI', 10),
+            ('HU-SZT-EREDMENY-A', 'VII', 10),
+            ('HU-SZT-EREDMENY-A', 'VIII', 10),
+            ('HU-SZT-EREDMENY-A', 'IX', 10),
+            ('HU-SZT-EREDMENY-A', 'X', 10),
+            ('HU-SZT-EREDMENY-A', 'XII', 10),
+            ('HU-SZT-EREDMENY-A', 'XIII', 10),
+            ('HU-SZT-MERLEG-A', 'A.I', 10),
+            ('HU-SZT-MERLEG-A', 'A.II', 10),
+            ('HU-SZT-MERLEG-A', 'A.III', 10),
+            ('HU-SZT-MERLEG-A', 'B.I', 10),
+            ('HU-SZT-MERLEG-A', 'B.II', 10),
+            ('HU-SZT-MERLEG-A', 'B.III', 10),
+            ('HU-SZT-MERLEG-A', 'B.IV', 10),
+            ('HU-SZT-MERLEG-A', 'C', 10),
+            ('HU-SZT-MERLEG-A', 'D.I', 10),
+            ('HU-SZT-MERLEG-A', 'D.II', 10),
+            ('HU-SZT-MERLEG-A', 'D.III', 10),
+            ('HU-SZT-MERLEG-A', 'D.IV', 10),
+            ('HU-SZT-MERLEG-A', 'D.V', 10),
+            ('HU-SZT-MERLEG-A', 'D.VI', 10),
+            ('HU-SZT-MERLEG-A', 'D.VII', 10),
+            ('HU-SZT-MERLEG-A', 'E', 10),
+            ('HU-SZT-MERLEG-A', 'F.I', 10),
+            ('HU-SZT-MERLEG-A', 'F.II', 10),
+            ('HU-SZT-MERLEG-A', 'F.III', 10),
+            ('HU-SZT-MERLEG-A', 'G', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

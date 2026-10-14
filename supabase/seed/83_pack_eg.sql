@@ -427,6 +427,42 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('EG-EAS-IS', 'EG-EAS-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('EG-EAS-IS', '1', 10),
+            ('EG-EAS-IS', '2', 10),
+            ('EG-EAS-IS', '3', 10),
+            ('EG-EAS-IS', '4', 10),
+            ('EG-EAS-IS', '5', 10),
+            ('EG-EAS-IS', '6', 10),
+            ('EG-EAS-IS', '6', 20),
+            ('EG-EAS-IS', '7', 10),
+            ('EG-EAS-IS', '9', 10),
+            ('EG-EAS-SFP', 'CA.1', 10),
+            ('EG-EAS-SFP', 'CA.2', 10),
+            ('EG-EAS-SFP', 'CA.2', 20),
+            ('EG-EAS-SFP', 'CA.3', 10),
+            ('EG-EAS-SFP', 'CA.4', 10),
+            ('EG-EAS-SFP', 'CA.5', 10),
+            ('EG-EAS-SFP', 'CA.6', 10),
+            ('EG-EAS-SFP', 'NCA.1', 10),
+            ('EG-EAS-SFP', 'NCA.2', 10),
+            ('EG-EAS-SFP', 'NCA.3', 10),
+            ('EG-EAS-SFP', 'NCA.4', 10),
+            ('EG-EAS-SFP', 'CL.1', 10),
+            ('EG-EAS-SFP', 'CL.1', 20),
+            ('EG-EAS-SFP', 'CL.1', 30),
+            ('EG-EAS-SFP', 'CL.2', 10),
+            ('EG-EAS-SFP', 'CL.3', 10),
+            ('EG-EAS-SFP', 'CL.4', 10),
+            ('EG-EAS-SFP', 'NCL.1', 10),
+            ('EG-EAS-SFP', 'NCL.2', 10),
+            ('EG-EAS-SFP', 'EQ.1', 10),
+            ('EG-EAS-SFP', 'EQ.2', 10),
+            ('EG-EAS-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

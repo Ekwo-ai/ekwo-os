@@ -524,6 +524,56 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('MD-SNC-BS', 'MD-SNC-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('MD-SNC-BS', '030', 10),
+            ('MD-SNC-BS', '090', 10),
+            ('MD-SNC-BS', '090', 20),
+            ('MD-SNC-BS', '160', 10),
+            ('MD-SNC-BS', '160', 20),
+            ('MD-SNC-BS', '170', 10),
+            ('MD-SNC-BS', '170', 20),
+            ('MD-SNC-BS', '250', 10),
+            ('MD-SNC-BS', '350', 10),
+            ('MD-SNC-BS', '350', 20),
+            ('MD-SNC-BS', '390', 10),
+            ('MD-SNC-BS', '440', 10),
+            ('MD-SNC-BS', '450', 10),
+            ('MD-SNC-BS', '520', 10),
+            ('MD-SNC-BS', '560', 10),
+            ('MD-SNC-BS', '610', 10),
+            ('MD-SNC-BS', '640', 10),
+            ('MD-SNC-BS', '640', 20),
+            ('MD-SNC-BS', '690', 10),
+            ('MD-SNC-BS', '760', 10),
+            ('MD-SNC-BS', '820', 10),
+            ('MD-SNC-BS', '860', 10),
+            ('MD-SNC-BS', '960', 10),
+            ('MD-SNC-BS', '960', 20),
+            ('MD-SNC-IS', '010', 10),
+            ('MD-SNC-IS', '020', 10),
+            ('MD-SNC-IS', '040', 10),
+            ('MD-SNC-IS', '040', 20),
+            ('MD-SNC-IS', '040', 30),
+            ('MD-SNC-IS', '040', 40),
+            ('MD-SNC-IS', '040', 50),
+            ('MD-SNC-IS', '050', 10),
+            ('MD-SNC-IS', '060', 10),
+            ('MD-SNC-IS', '070', 10),
+            ('MD-SNC-IS', '070', 20),
+            ('MD-SNC-IS', '070', 30),
+            ('MD-SNC-IS', '070', 40),
+            ('MD-SNC-IS', '070', 50),
+            ('MD-SNC-IS', '090', 10),
+            ('MD-SNC-IS', '090', 20),
+            ('MD-SNC-IS', '100', 10),
+            ('MD-SNC-IS', '100', 20),
+            ('MD-SNC-IS', '120', 10),
+            ('MD-SNC-IS', '120', 20),
+            ('MD-SNC-IS', '140', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

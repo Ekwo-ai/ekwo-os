@@ -474,6 +474,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('KE-ICPAK-IS', 'KE-ICPAK-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('KE-ICPAK-IS', '1', 10),
+            ('KE-ICPAK-IS', '2', 10),
+            ('KE-ICPAK-IS', '3', 10),
+            ('KE-ICPAK-IS', '4', 10),
+            ('KE-ICPAK-IS', '5', 10),
+            ('KE-ICPAK-IS', '6', 10),
+            ('KE-ICPAK-IS', '7', 10),
+            ('KE-ICPAK-IS', '9', 10),
+            ('KE-ICPAK-SFP', 'CA.1', 10),
+            ('KE-ICPAK-SFP', 'CA.2', 10),
+            ('KE-ICPAK-SFP', 'CA.3', 10),
+            ('KE-ICPAK-SFP', 'CA.4', 10),
+            ('KE-ICPAK-SFP', 'CA.5', 10),
+            ('KE-ICPAK-SFP', 'CA.6', 10),
+            ('KE-ICPAK-SFP', 'NCA.1', 10),
+            ('KE-ICPAK-SFP', 'NCA.2', 10),
+            ('KE-ICPAK-SFP', 'NCA.3', 10),
+            ('KE-ICPAK-SFP', 'NCA.4', 10),
+            ('KE-ICPAK-SFP', 'NCA.5', 10),
+            ('KE-ICPAK-SFP', 'NCA.6', 10),
+            ('KE-ICPAK-SFP', 'NCA.7', 10),
+            ('KE-ICPAK-SFP', 'CL.1', 10),
+            ('KE-ICPAK-SFP', 'CL.1', 20),
+            ('KE-ICPAK-SFP', 'CL.2', 10),
+            ('KE-ICPAK-SFP', 'CL.3', 10),
+            ('KE-ICPAK-SFP', 'CL.4', 10),
+            ('KE-ICPAK-SFP', 'CL.5', 10),
+            ('KE-ICPAK-SFP', 'NCL.1', 10),
+            ('KE-ICPAK-SFP', 'NCL.2', 10),
+            ('KE-ICPAK-SFP', 'NCL.3', 10),
+            ('KE-ICPAK-SFP', 'EQ.1', 10),
+            ('KE-ICPAK-SFP', 'EQ.2', 10),
+            ('KE-ICPAK-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

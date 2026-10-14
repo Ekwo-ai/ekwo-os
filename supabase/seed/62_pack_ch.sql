@@ -481,6 +481,36 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('CH-OR-959-BS', 'CH-OR-959B-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('CH-OR-959-BS', 'UV.1', 10),
+            ('CH-OR-959-BS', 'UV.2', 10),
+            ('CH-OR-959-BS', 'UV.3', 10),
+            ('CH-OR-959-BS', 'UV.4', 10),
+            ('CH-OR-959-BS', 'UV.5', 10),
+            ('CH-OR-959-BS', 'AV.1', 10),
+            ('CH-OR-959-BS', 'AV.2', 10),
+            ('CH-OR-959-BS', 'FK1.1', 10),
+            ('CH-OR-959-BS', 'FK1.2', 10),
+            ('CH-OR-959-BS', 'FK2', 10),
+            ('CH-OR-959-BS', 'EK.1', 10),
+            ('CH-OR-959-BS', 'EK.2', 10),
+            ('CH-OR-959B-IS', 'NE', 10),
+            ('CH-OR-959B-IS', 'MAT', 10),
+            ('CH-OR-959B-IS', 'PERS', 10),
+            ('CH-OR-959B-IS', 'SBA', 10),
+            ('CH-OR-959B-IS', 'SBA', 20),
+            ('CH-OR-959B-IS', 'ABS', 10),
+            ('CH-OR-959B-IS', 'FA', 10),
+            ('CH-OR-959B-IS', 'FE', 10),
+            ('CH-OR-959B-IS', 'BFA', 10),
+            ('CH-OR-959B-IS', 'BFE', 10),
+            ('CH-OR-959B-IS', 'AOA', 10),
+            ('CH-OR-959B-IS', 'AOE', 10),
+            ('CH-OR-959B-IS', 'STE', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

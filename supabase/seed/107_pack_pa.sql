@@ -510,6 +510,40 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('PA-NIIFPYME-ERI', 'PA-NIIFPYME-ESF')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('PA-NIIFPYME-ERI', '41', 10),
+            ('PA-NIIFPYME-ERI', '42', 10),
+            ('PA-NIIFPYME-ERI', '51', 10),
+            ('PA-NIIFPYME-ERI', '61', 10),
+            ('PA-NIIFPYME-ERI', '62', 10),
+            ('PA-NIIFPYME-ERI', '63', 10),
+            ('PA-NIIFPYME-ERI', '64', 10),
+            ('PA-NIIFPYME-ESF', '11', 10),
+            ('PA-NIIFPYME-ESF', '12', 10),
+            ('PA-NIIFPYME-ESF', '13', 10),
+            ('PA-NIIFPYME-ESF', '14', 10),
+            ('PA-NIIFPYME-ESF', '15', 10),
+            ('PA-NIIFPYME-ESF', '16', 10),
+            ('PA-NIIFPYME-ESF', '17', 10),
+            ('PA-NIIFPYME-ESF', '18', 10),
+            ('PA-NIIFPYME-ESF', '19', 10),
+            ('PA-NIIFPYME-ESF', '21', 10),
+            ('PA-NIIFPYME-ESF', '22', 10),
+            ('PA-NIIFPYME-ESF', '23', 10),
+            ('PA-NIIFPYME-ESF', '24', 10),
+            ('PA-NIIFPYME-ESF', '25', 10),
+            ('PA-NIIFPYME-ESF', '26', 10),
+            ('PA-NIIFPYME-ESF', '27', 10),
+            ('PA-NIIFPYME-ESF', '28', 10),
+            ('PA-NIIFPYME-ESF', '29', 10),
+            ('PA-NIIFPYME-ESF', '31', 10),
+            ('PA-NIIFPYME-ESF', '32', 10),
+            ('PA-NIIFPYME-ESF', '33', 10),
+            ('PA-NIIFPYME-ESF', '34', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

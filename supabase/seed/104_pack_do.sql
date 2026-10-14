@@ -412,6 +412,35 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('DO-IR2-A1', 'DO-IR2-B1')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('DO-IR2-A1', '11', 10),
+            ('DO-IR2-A1', '12', 10),
+            ('DO-IR2-A1', '13', 10),
+            ('DO-IR2-A1', '14', 10),
+            ('DO-IR2-A1', '15', 10),
+            ('DO-IR2-A1', '16', 10),
+            ('DO-IR2-A1', '17', 10),
+            ('DO-IR2-A1', '21', 10),
+            ('DO-IR2-A1', '22', 10),
+            ('DO-IR2-A1', '31', 10),
+            ('DO-IR2-A1', '32', 10),
+            ('DO-IR2-A1', '33', 10),
+            ('DO-IR2-B1', '41', 10),
+            ('DO-IR2-B1', '42', 10),
+            ('DO-IR2-B1', '43', 10),
+            ('DO-IR2-B1', '50', 10),
+            ('DO-IR2-B1', '51', 10),
+            ('DO-IR2-B1', '52', 10),
+            ('DO-IR2-B1', '53', 10),
+            ('DO-IR2-B1', '54', 10),
+            ('DO-IR2-B1', '55', 10),
+            ('DO-IR2-B1', '56', 10),
+            ('DO-IR2-B1', '57', 10),
+            ('DO-IR2-B1', '58', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

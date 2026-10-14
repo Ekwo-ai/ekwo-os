@@ -329,6 +329,41 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('BN-BDAS-BS', 'BN-BDAS-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('BN-BDAS-BS', 'A-NC-FIX', 10),
+            ('BN-BDAS-BS', 'A-NC-INT', 10),
+            ('BN-BDAS-BS', 'A-NC-OTH', 10),
+            ('BN-BDAS-BS', 'A-C-REC', 10),
+            ('BN-BDAS-BS', 'A-C-REC', 20),
+            ('BN-BDAS-BS', 'A-C-TAX', 10),
+            ('BN-BDAS-BS', 'A-C-INV', 10),
+            ('BN-BDAS-BS', 'A-C-OTH', 10),
+            ('BN-BDAS-BS', 'A-C-PRE', 10),
+            ('BN-BDAS-BS', 'A-C-CASH', 10),
+            ('BN-BDAS-BS', 'E-CAP', 10),
+            ('BN-BDAS-BS', 'E-RET', 10),
+            ('BN-BDAS-BS', 'E-RESULT', 10),
+            ('BN-BDAS-BS', 'E-RESULT', 20),
+            ('BN-BDAS-BS', 'E-RESULT', 30),
+            ('BN-BDAS-BS', 'E-RESULT', 40),
+            ('BN-BDAS-BS', 'L-NC', 10),
+            ('BN-BDAS-BS', 'L-C-PAY', 10),
+            ('BN-BDAS-BS', 'L-C-TAX', 10),
+            ('BN-BDAS-BS', 'L-C-OTH', 10),
+            ('BN-BDAS-BS', 'L-C-OTH', 20),
+            ('BN-BDAS-IS', 'REV', 10),
+            ('BN-BDAS-IS', 'COST', 10),
+            ('BN-BDAS-IS', 'OTH-INC', 10),
+            ('BN-BDAS-IS', 'OPEX', 10),
+            ('BN-BDAS-IS', 'OPEX', 20),
+            ('BN-BDAS-IS', 'OPEX', 30),
+            ('BN-BDAS-IS', 'DEPR', 10),
+            ('BN-BDAS-IS', 'FIN', 10),
+            ('BN-BDAS-IS', 'TAX', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

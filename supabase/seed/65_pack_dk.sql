@@ -460,6 +460,39 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('DK-ARL-BS', 'DK-ARL-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('DK-ARL-BS', 'A.I', 10),
+            ('DK-ARL-BS', 'A.II', 10),
+            ('DK-ARL-BS', 'A.III', 10),
+            ('DK-ARL-BS', 'B.I', 10),
+            ('DK-ARL-BS', 'B.II', 10),
+            ('DK-ARL-BS', 'B.III', 10),
+            ('DK-ARL-BS', 'B.IV', 10),
+            ('DK-ARL-BS', 'C.I', 10),
+            ('DK-ARL-BS', 'C.II', 10),
+            ('DK-ARL-BS', 'C.III', 10),
+            ('DK-ARL-BS', 'C.IV', 10),
+            ('DK-ARL-BS', 'C.V', 10),
+            ('DK-ARL-BS', 'D', 10),
+            ('DK-ARL-BS', 'E', 10),
+            ('DK-ARL-BS', 'F', 10),
+            ('DK-ARL-IS', '1', 10),
+            ('DK-ARL-IS', '4', 10),
+            ('DK-ARL-IS', '5a', 10),
+            ('DK-ARL-IS', '5b', 10),
+            ('DK-ARL-IS', '6a', 10),
+            ('DK-ARL-IS', '6b', 10),
+            ('DK-ARL-IS', '6c', 10),
+            ('DK-ARL-IS', '7', 10),
+            ('DK-ARL-IS', '9', 10),
+            ('DK-ARL-IS', '13', 10),
+            ('DK-ARL-IS', '15b', 10),
+            ('DK-ARL-IS', '16', 10),
+            ('DK-ARL-IS', '17', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

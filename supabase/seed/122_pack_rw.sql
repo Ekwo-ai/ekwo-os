@@ -466,6 +466,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('RW-ICPAR-IS', 'RW-ICPAR-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('RW-ICPAR-IS', '1', 10),
+            ('RW-ICPAR-IS', '2', 10),
+            ('RW-ICPAR-IS', '3', 10),
+            ('RW-ICPAR-IS', '4', 10),
+            ('RW-ICPAR-IS', '5', 10),
+            ('RW-ICPAR-IS', '6', 10),
+            ('RW-ICPAR-IS', '7', 10),
+            ('RW-ICPAR-IS', '9', 10),
+            ('RW-ICPAR-SFP', 'CA.1', 10),
+            ('RW-ICPAR-SFP', 'CA.2', 10),
+            ('RW-ICPAR-SFP', 'CA.3', 10),
+            ('RW-ICPAR-SFP', 'CA.4', 10),
+            ('RW-ICPAR-SFP', 'CA.5', 10),
+            ('RW-ICPAR-SFP', 'CA.6', 10),
+            ('RW-ICPAR-SFP', 'NCA.1', 10),
+            ('RW-ICPAR-SFP', 'NCA.2', 10),
+            ('RW-ICPAR-SFP', 'NCA.3', 10),
+            ('RW-ICPAR-SFP', 'NCA.4', 10),
+            ('RW-ICPAR-SFP', 'NCA.5', 10),
+            ('RW-ICPAR-SFP', 'NCA.6', 10),
+            ('RW-ICPAR-SFP', 'NCA.7', 10),
+            ('RW-ICPAR-SFP', 'CL.1', 10),
+            ('RW-ICPAR-SFP', 'CL.1', 20),
+            ('RW-ICPAR-SFP', 'CL.2', 10),
+            ('RW-ICPAR-SFP', 'CL.3', 10),
+            ('RW-ICPAR-SFP', 'CL.4', 10),
+            ('RW-ICPAR-SFP', 'CL.5', 10),
+            ('RW-ICPAR-SFP', 'NCL.1', 10),
+            ('RW-ICPAR-SFP', 'NCL.2', 10),
+            ('RW-ICPAR-SFP', 'NCL.3', 10),
+            ('RW-ICPAR-SFP', 'EQ.1', 10),
+            ('RW-ICPAR-SFP', 'EQ.2', 10),
+            ('RW-ICPAR-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

@@ -417,6 +417,37 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('EC-NIIF-ER', 'EC-NIIF-ESF')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('EC-NIIF-ER', 'ING', 10),
+            ('EC-NIIF-ER', 'OIN', 10),
+            ('EC-NIIF-ER', 'COV', 10),
+            ('EC-NIIF-ER', 'GAD', 10),
+            ('EC-NIIF-ER', 'GVE', 10),
+            ('EC-NIIF-ER', 'GFI', 10),
+            ('EC-NIIF-ER', 'GIR', 10),
+            ('EC-NIIF-ESF', 'EFEC', 10),
+            ('EC-NIIF-ESF', 'FIN', 10),
+            ('EC-NIIF-ESF', 'CXC', 10),
+            ('EC-NIIF-ESF', 'OCXC', 10),
+            ('EC-NIIF-ESF', 'INV', 10),
+            ('EC-NIIF-ESF', 'ANT', 10),
+            ('EC-NIIF-ESF', 'IMPC', 10),
+            ('EC-NIIF-ESF', 'PPE', 10),
+            ('EC-NIIF-ESF', 'INT', 10),
+            ('EC-NIIF-ESF', 'CXP', 10),
+            ('EC-NIIF-ESF', 'OFCP', 10),
+            ('EC-NIIF-ESF', 'ADMT', 10),
+            ('EC-NIIF-ESF', 'IVAP', 10),
+            ('EC-NIIF-ESF', 'OCXP', 10),
+            ('EC-NIIF-ESF', 'OFLP', 10),
+            ('EC-NIIF-ESF', 'CAP', 10),
+            ('EC-NIIF-ESF', 'RES', 10),
+            ('EC-NIIF-ESF', 'RACU', 10),
+            ('EC-NIIF-ESF', 'REJE', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

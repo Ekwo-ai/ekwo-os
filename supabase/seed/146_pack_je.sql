@@ -534,6 +534,42 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('JE-FRS102-1A-BS', 'JE-FRS102-1A-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('JE-FRS102-1A-BS', 'A', 10),
+            ('JE-FRS102-1A-BS', 'B.I', 10),
+            ('JE-FRS102-1A-BS', 'B.II', 10),
+            ('JE-FRS102-1A-BS', 'B.III', 10),
+            ('JE-FRS102-1A-BS', 'C.I', 10),
+            ('JE-FRS102-1A-BS', 'C.II', 10),
+            ('JE-FRS102-1A-BS', 'C.III', 10),
+            ('JE-FRS102-1A-BS', 'C.IV', 10),
+            ('JE-FRS102-1A-BS', 'D', 10),
+            ('JE-FRS102-1A-BS', 'E.1', 10),
+            ('JE-FRS102-1A-BS', 'E.2', 10),
+            ('JE-FRS102-1A-BS', 'E.3', 10),
+            ('JE-FRS102-1A-BS', 'E.4', 10),
+            ('JE-FRS102-1A-BS', 'J', 10),
+            ('JE-FRS102-1A-BS', 'H', 10),
+            ('JE-FRS102-1A-BS', 'I', 10),
+            ('JE-FRS102-1A-BS', 'K.I', 10),
+            ('JE-FRS102-1A-BS', 'K.II', 10),
+            ('JE-FRS102-1A-BS', 'K.III', 10),
+            ('JE-FRS102-1A-BS', 'K.IV', 10),
+            ('JE-FRS102-1A-IS', '1', 10),
+            ('JE-FRS102-1A-IS', '2', 10),
+            ('JE-FRS102-1A-IS', '4', 10),
+            ('JE-FRS102-1A-IS', '5', 10),
+            ('JE-FRS102-1A-IS', '6', 10),
+            ('JE-FRS102-1A-IS', '7', 10),
+            ('JE-FRS102-1A-IS', '8', 10),
+            ('JE-FRS102-1A-IS', '9', 10),
+            ('JE-FRS102-1A-IS', '10', 10),
+            ('JE-FRS102-1A-IS', '11', 10),
+            ('JE-FRS102-1A-IS', '12', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

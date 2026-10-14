@@ -517,6 +517,56 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('TR-TDHP-BILANCO', 'TR-TDHP-GELIR')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('TR-TDHP-BILANCO', 'DV.1', 10),
+            ('TR-TDHP-BILANCO', 'DV.1b', 10),
+            ('TR-TDHP-BILANCO', 'DV.2', 10),
+            ('TR-TDHP-BILANCO', 'DV.3', 10),
+            ('TR-TDHP-BILANCO', 'DV.4', 10),
+            ('TR-TDHP-BILANCO', 'DV.5', 10),
+            ('TR-TDHP-BILANCO', 'DV.6', 10),
+            ('TR-TDHP-BILANCO', 'DUV.A', 10),
+            ('TR-TDHP-BILANCO', 'DUV.C', 10),
+            ('TR-TDHP-BILANCO', 'DUV.1', 10),
+            ('TR-TDHP-BILANCO', 'DUV.E', 10),
+            ('TR-TDHP-BILANCO', 'DUV.G', 10),
+            ('TR-TDHP-BILANCO', 'DUV.H', 10),
+            ('TR-TDHP-BILANCO', 'KVYK.1', 10),
+            ('TR-TDHP-BILANCO', 'KVYK.2', 10),
+            ('TR-TDHP-BILANCO', 'KVYK.3', 10),
+            ('TR-TDHP-BILANCO', 'KVYK.D', 10),
+            ('TR-TDHP-BILANCO', 'KVYK.4', 10),
+            ('TR-TDHP-BILANCO', 'KVYK.5', 10),
+            ('TR-TDHP-BILANCO', 'KVYK.H', 10),
+            ('TR-TDHP-BILANCO', 'KVYK.6', 10),
+            ('TR-TDHP-BILANCO', 'UVYK.1', 10),
+            ('TR-TDHP-BILANCO', 'UVYK.B', 10),
+            ('TR-TDHP-BILANCO', 'UVYK.C', 10),
+            ('TR-TDHP-BILANCO', 'UVYK.D', 10),
+            ('TR-TDHP-BILANCO', 'UVYK.2', 10),
+            ('TR-TDHP-BILANCO', 'UVYK.G', 10),
+            ('TR-TDHP-BILANCO', 'UVYK.H', 10),
+            ('TR-TDHP-BILANCO', 'OZK.1', 10),
+            ('TR-TDHP-BILANCO', 'OZK.B', 10),
+            ('TR-TDHP-BILANCO', 'OZK.2', 10),
+            ('TR-TDHP-BILANCO', 'OZK.3', 10),
+            ('TR-TDHP-BILANCO', 'OZK.4', 10),
+            ('TR-TDHP-BILANCO', 'OZK.5', 10),
+            ('TR-TDHP-BILANCO', 'OZK.6', 10),
+            ('TR-TDHP-GELIR', 'GT.A', 10),
+            ('TR-TDHP-GELIR', 'GT.B', 10),
+            ('TR-TDHP-GELIR', 'GT.D', 10),
+            ('TR-TDHP-GELIR', 'GT.E', 10),
+            ('TR-TDHP-GELIR', 'GT.F', 10),
+            ('TR-TDHP-GELIR', 'GT.G', 10),
+            ('TR-TDHP-GELIR', 'GT.H', 10),
+            ('TR-TDHP-GELIR', 'GT.I', 10),
+            ('TR-TDHP-GELIR', 'GT.J', 10),
+            ('TR-TDHP-GELIR', 'GT.VK', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

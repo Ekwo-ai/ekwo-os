@@ -521,6 +521,45 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('IT-CC-BS', 'IT-CC-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('IT-CC-BS', 'B.I', 10),
+            ('IT-CC-BS', 'B.II', 10),
+            ('IT-CC-BS', 'B.III', 10),
+            ('IT-CC-BS', 'C.I', 10),
+            ('IT-CC-BS', 'C.II', 10),
+            ('IT-CC-BS', 'C.IV', 10),
+            ('IT-CC-BS', 'D-ATT', 10),
+            ('IT-CC-BS', 'A.I', 10),
+            ('IT-CC-BS', 'A.IV-VI', 10),
+            ('IT-CC-BS', 'A.VIII', 10),
+            ('IT-CC-BS', 'A.IX', 10),
+            ('IT-CC-BS', 'D.banche', 10),
+            ('IT-CC-BS', 'D.fornitori', 10),
+            ('IT-CC-BS', 'D.tributari', 10),
+            ('IT-CC-BS', 'D.previdenza', 10),
+            ('IT-CC-BS', 'D.personale', 10),
+            ('IT-CC-BS', 'D.altri', 10),
+            ('IT-CC-BS', 'D.altri', 20),
+            ('IT-CC-BS', 'E-PASS', 10),
+            ('IT-CC-IS', 'A.1', 10),
+            ('IT-CC-IS', 'A.5', 10),
+            ('IT-CC-IS', 'B.6', 10),
+            ('IT-CC-IS', 'B.7', 10),
+            ('IT-CC-IS', 'B.8', 10),
+            ('IT-CC-IS', 'B.9.a', 10),
+            ('IT-CC-IS', 'B.9.b', 10),
+            ('IT-CC-IS', 'B.9.c', 10),
+            ('IT-CC-IS', 'B.10.a', 10),
+            ('IT-CC-IS', 'B.10.b', 10),
+            ('IT-CC-IS', 'B.10.c', 10),
+            ('IT-CC-IS', 'B.14', 10),
+            ('IT-CC-IS', 'C.16', 10),
+            ('IT-CC-IS', 'C.17', 10),
+            ('IT-CC-IS', '20', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

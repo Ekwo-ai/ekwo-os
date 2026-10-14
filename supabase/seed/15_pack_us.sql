@@ -651,6 +651,54 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('US-SX-BS', 'US-SX-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('US-SX-BS', '1', 10),
+            ('US-SX-BS', '2', 10),
+            ('US-SX-BS', '3', 10),
+            ('US-SX-BS', '4', 10),
+            ('US-SX-BS', '5', 10),
+            ('US-SX-BS', '6', 10),
+            ('US-SX-BS', '7', 10),
+            ('US-SX-BS', '8', 10),
+            ('US-SX-BS', '8', 20),
+            ('US-SX-BS', '10', 10),
+            ('US-SX-BS', '11', 10),
+            ('US-SX-BS', '12', 10),
+            ('US-SX-BS', '13', 10),
+            ('US-SX-BS', '14', 10),
+            ('US-SX-BS', '15', 10),
+            ('US-SX-BS', '16', 10),
+            ('US-SX-BS', '17', 10),
+            ('US-SX-BS', '19', 10),
+            ('US-SX-BS', '20', 10),
+            ('US-SX-BS', '20', 20),
+            ('US-SX-BS', '22', 10),
+            ('US-SX-BS', '23', 10),
+            ('US-SX-BS', '24', 10),
+            ('US-SX-BS', '25', 10),
+            ('US-SX-BS', '26', 10),
+            ('US-SX-BS', '27', 10),
+            ('US-SX-BS', '28', 10),
+            ('US-SX-BS', '29', 10),
+            ('US-SX-BS', '30', 10),
+            ('US-SX-BS', '31', 10),
+            ('US-SX-IS', '1', 10),
+            ('US-SX-IS', '2', 10),
+            ('US-SX-IS', '3', 10),
+            ('US-SX-IS', '4', 10),
+            ('US-SX-IS', '5', 10),
+            ('US-SX-IS', '6', 10),
+            ('US-SX-IS', '7', 10),
+            ('US-SX-IS', '8', 10),
+            ('US-SX-IS', '9', 10),
+            ('US-SX-IS', '11', 10),
+            ('US-SX-IS', '12', 10),
+            ('US-SX-IS', '14', 10),
+            ('US-SX-IS', '21', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

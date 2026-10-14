@@ -499,6 +499,52 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('PE-EF-ER', 'PE-EF-ESF')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('PE-EF-ER', '70', 10),
+            ('PE-EF-ER', '73', 10),
+            ('PE-EF-ER', '75', 10),
+            ('PE-EF-ER', '60', 10),
+            ('PE-EF-ER', '69', 10),
+            ('PE-EF-ER', '62', 10),
+            ('PE-EF-ER', '63', 10),
+            ('PE-EF-ER', '64', 10),
+            ('PE-EF-ER', '65', 10),
+            ('PE-EF-ER', '68', 10),
+            ('PE-EF-ER', '77', 10),
+            ('PE-EF-ER', '67', 10),
+            ('PE-EF-ER', '88', 10),
+            ('PE-EF-ESF', '10', 10),
+            ('PE-EF-ESF', '12', 10),
+            ('PE-EF-ESF', '14', 10),
+            ('PE-EF-ESF', '16', 10),
+            ('PE-EF-ESF', '18', 10),
+            ('PE-EF-ESF', '19', 10),
+            ('PE-EF-ESF', '20', 10),
+            ('PE-EF-ESF', '29', 10),
+            ('PE-EF-ESF', 'IGVCF', 10),
+            ('PE-EF-ESF', 'IGVCF', 20),
+            ('PE-EF-ESF', 'IGVCF', 30),
+            ('PE-EF-ESF', '33', 10),
+            ('PE-EF-ESF', '34', 10),
+            ('PE-EF-ESF', '37', 10),
+            ('PE-EF-ESF', '39', 10),
+            ('PE-EF-ESF', 'IGVDEB', 10),
+            ('PE-EF-ESF', 'IGVDEB', 20),
+            ('PE-EF-ESF', 'IGVDEB', 30),
+            ('PE-EF-ESF', 'IGVDEB', 40),
+            ('PE-EF-ESF', 'IGVDEB', 50),
+            ('PE-EF-ESF', '41', 10),
+            ('PE-EF-ESF', '42', 10),
+            ('PE-EF-ESF', '46', 10),
+            ('PE-EF-ESF', '45', 10),
+            ('PE-EF-ESF', '48', 10),
+            ('PE-EF-ESF', '50', 10),
+            ('PE-EF-ESF', '58', 10),
+            ('PE-EF-ESF', '59', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

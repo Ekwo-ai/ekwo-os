@@ -459,6 +459,51 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('MK-BS', 'MK-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('MK-BS', '100', 10),
+            ('MK-BS', '110', 10),
+            ('MK-BS', '120', 10),
+            ('MK-BS', '130', 10),
+            ('MK-BS', '140', 10),
+            ('MK-BS', '150', 10),
+            ('MK-BS', '170', 10),
+            ('MK-BS', '180', 10),
+            ('MK-BS', '190', 10),
+            ('MK-BS', '200', 10),
+            ('MK-BS', '210', 10),
+            ('MK-BS', '220', 10),
+            ('MK-BS', '230', 10),
+            ('MK-BS', '240', 10),
+            ('MK-BS', '250', 10),
+            ('MK-BS', '250', 20),
+            ('MK-BS', '280', 10),
+            ('MK-BS', '290', 10),
+            ('MK-BS', '300', 10),
+            ('MK-BS', '320', 10),
+            ('MK-BS', '330', 10),
+            ('MK-BS', '350', 10),
+            ('MK-BS', '360', 10),
+            ('MK-BS', '370', 10),
+            ('MK-BS', '380', 10),
+            ('MK-BS', '390', 10),
+            ('MK-BS', '400', 10),
+            ('MK-BS', '410', 10),
+            ('MK-IS', '500', 10),
+            ('MK-IS', '510', 10),
+            ('MK-IS', '530', 10),
+            ('MK-IS', '540', 10),
+            ('MK-IS', '550', 10),
+            ('MK-IS', '560', 10),
+            ('MK-IS', '570', 10),
+            ('MK-IS', '580', 10),
+            ('MK-IS', '590', 10),
+            ('MK-IS', '600', 10),
+            ('MK-IS', '620', 10),
+            ('MK-IS', '630', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

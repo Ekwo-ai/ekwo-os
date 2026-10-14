@@ -455,6 +455,41 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('PY-ER', 'PY-ESP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('PY-ER', 'VEN', 10),
+            ('PY-ER', 'CV', 10),
+            ('PY-ER', 'GC', 10),
+            ('PY-ER', 'GA', 10),
+            ('PY-ER', 'RFPOS', 10),
+            ('PY-ER', 'RFNEG', 10),
+            ('PY-ER', 'OTRI', 10),
+            ('PY-ER', 'OTRE', 10),
+            ('PY-ER', 'IRE', 10),
+            ('PY-ESP', 'DISP', 10),
+            ('PY-ESP', 'CXV', 10),
+            ('PY-ESP', 'OCR', 10),
+            ('PY-ESP', 'CFI', 10),
+            ('PY-ESP', 'BCA', 10),
+            ('PY-ESP', 'PPI', 10),
+            ('PY-ESP', 'CNC', 10),
+            ('PY-ESP', 'BUS', 10),
+            ('PY-ESP', 'AIN', 10),
+            ('PY-ESP', 'CPC', 10),
+            ('PY-ESP', 'REM', 10),
+            ('PY-ESP', 'CFP', 10),
+            ('PY-ESP', 'ANT', 10),
+            ('PY-ESP', 'PRO', 10),
+            ('PY-ESP', 'DBL', 10),
+            ('PY-ESP', 'ODL', 10),
+            ('PY-ESP', 'CAP', 10),
+            ('PY-ESP', 'RES', 10),
+            ('PY-ESP', 'RES', 20),
+            ('PY-ESP', 'RNA', 10),
+            ('PY-ESP', 'REJ', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

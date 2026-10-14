@@ -498,6 +498,49 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('AT-UGB-224-BS', 'AT-UGB-231-GKV')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('AT-UGB-224-BS', 'A.I', 10),
+            ('AT-UGB-224-BS', 'A.II', 10),
+            ('AT-UGB-224-BS', 'A.III', 10),
+            ('AT-UGB-224-BS', 'B.I', 10),
+            ('AT-UGB-224-BS', 'B.II', 10),
+            ('AT-UGB-224-BS', 'B.III', 10),
+            ('AT-UGB-224-BS', 'B.IV', 10),
+            ('AT-UGB-224-BS', 'C', 10),
+            ('AT-UGB-224-BS', 'D', 10),
+            ('AT-UGB-224-BS', 'P.A.I', 10),
+            ('AT-UGB-224-BS', 'P.A.II', 10),
+            ('AT-UGB-224-BS', 'P.A.III', 10),
+            ('AT-UGB-224-BS', 'P.A.IV', 10),
+            ('AT-UGB-224-BS', 'P.B.1', 10),
+            ('AT-UGB-224-BS', 'P.B.2', 10),
+            ('AT-UGB-224-BS', 'P.B.3', 10),
+            ('AT-UGB-224-BS', 'P.B.4', 10),
+            ('AT-UGB-224-BS', 'P.C.1', 10),
+            ('AT-UGB-224-BS', 'P.C.2', 10),
+            ('AT-UGB-224-BS', 'P.C.3', 10),
+            ('AT-UGB-224-BS', 'P.C.4', 10),
+            ('AT-UGB-224-BS', 'P.C.5', 10),
+            ('AT-UGB-224-BS', 'P.C.6', 10),
+            ('AT-UGB-224-BS', 'P.C.8', 10),
+            ('AT-UGB-224-BS', 'P.D', 10),
+            ('AT-UGB-231-GKV', '1', 10),
+            ('AT-UGB-231-GKV', '2', 10),
+            ('AT-UGB-231-GKV', '3', 10),
+            ('AT-UGB-231-GKV', '4', 10),
+            ('AT-UGB-231-GKV', '5', 10),
+            ('AT-UGB-231-GKV', '6', 10),
+            ('AT-UGB-231-GKV', '7', 10),
+            ('AT-UGB-231-GKV', '8', 10),
+            ('AT-UGB-231-GKV', '10', 10),
+            ('AT-UGB-231-GKV', '12', 10),
+            ('AT-UGB-231-GKV', '15', 10),
+            ('AT-UGB-231-GKV', '18', 10),
+            ('AT-UGB-231-GKV', '20', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

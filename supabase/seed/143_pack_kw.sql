@@ -321,6 +321,35 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('KW-IFRS-IS', 'KW-IFRS-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('KW-IFRS-IS', 'REV', 10),
+            ('KW-IFRS-IS', 'COST', 10),
+            ('KW-IFRS-IS', 'OTH-INC', 10),
+            ('KW-IFRS-IS', 'OPEX', 10),
+            ('KW-IFRS-IS', 'DEPR', 10),
+            ('KW-IFRS-SFP', 'A-NC-FIX', 10),
+            ('KW-IFRS-SFP', 'A-NC-INT', 10),
+            ('KW-IFRS-SFP', 'A-NC-OTH', 10),
+            ('KW-IFRS-SFP', 'A-C-REC', 10),
+            ('KW-IFRS-SFP', 'A-C-INV', 10),
+            ('KW-IFRS-SFP', 'A-C-OTH', 10),
+            ('KW-IFRS-SFP', 'A-C-PRE', 10),
+            ('KW-IFRS-SFP', 'A-C-CASH', 10),
+            ('KW-IFRS-SFP', 'E-CAP', 10),
+            ('KW-IFRS-SFP', 'E-RET', 10),
+            ('KW-IFRS-SFP', 'E-RESULT', 10),
+            ('KW-IFRS-SFP', 'E-RESULT', 20),
+            ('KW-IFRS-SFP', 'E-RESULT', 30),
+            ('KW-IFRS-SFP', 'E-RESULT', 40),
+            ('KW-IFRS-SFP', 'L-NC', 10),
+            ('KW-IFRS-SFP', 'L-C-PAY', 10),
+            ('KW-IFRS-SFP', 'L-C-TAX', 10),
+            ('KW-IFRS-SFP', 'L-C-OTH', 10),
+            ('KW-IFRS-SFP', 'L-C-OTH', 20)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

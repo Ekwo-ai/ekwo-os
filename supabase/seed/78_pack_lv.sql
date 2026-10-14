@@ -454,6 +454,32 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('LV-GPL-BS', 'LV-GPL-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('LV-GPL-BS', 'NEMAT', 10),
+            ('LV-GPL-BS', 'PAMATL', 10),
+            ('LV-GPL-BS', 'FIN_ILGT', 10),
+            ('LV-GPL-BS', 'KRAJ', 10),
+            ('LV-GPL-BS', 'DEBIT', 10),
+            ('LV-GPL-BS', 'FIN_ISTERM', 10),
+            ('LV-GPL-BS', 'NAUDA', 10),
+            ('LV-GPL-BS', 'KAPITALS', 10),
+            ('LV-GPL-BS', 'UZKRAJ', 10),
+            ('LV-GPL-BS', 'KRED_ILGT', 10),
+            ('LV-GPL-BS', 'KRED_ISTERM', 10),
+            ('LV-GPL-IS', '1', 10),
+            ('LV-GPL-IS', '2', 10),
+            ('LV-GPL-IS', '4', 10),
+            ('LV-GPL-IS', '5', 10),
+            ('LV-GPL-IS', '6', 10),
+            ('LV-GPL-IS', '7', 10),
+            ('LV-GPL-IS', '8', 10),
+            ('LV-GPL-IS', '9', 10),
+            ('LV-GPL-IS', '12', 10),
+            ('LV-GPL-IS', '15', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

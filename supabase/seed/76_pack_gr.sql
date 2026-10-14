@@ -487,6 +487,34 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('GR-ELP-BS', 'GR-ELP-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('GR-ELP-BS', 'ANC', 10),
+            ('GR-ELP-BS', 'ANC', 20),
+            ('GR-ELP-BS', 'AC-INV', 10),
+            ('GR-ELP-BS', 'AC-REC', 10),
+            ('GR-ELP-BS', 'AC-REC', 20),
+            ('GR-ELP-BS', 'AC-PREP', 10),
+            ('GR-ELP-BS', 'AC-OTH', 10),
+            ('GR-ELP-BS', 'AC-OTH', 20),
+            ('GR-ELP-BS', 'AC-CASH', 10),
+            ('GR-ELP-BS', 'CAP', 10),
+            ('GR-ELP-BS', 'CAP', 20),
+            ('GR-ELP-BS', 'L-NC', 10),
+            ('GR-ELP-BS', 'L-C', 10),
+            ('GR-ELP-BS', 'L-C', 20),
+            ('GR-ELP-IS', 'REV', 10),
+            ('GR-ELP-IS', 'OTH-INC', 10),
+            ('GR-ELP-IS', 'STAFF', 10),
+            ('GR-ELP-IS', 'DEPR', 10),
+            ('GR-ELP-IS', 'OTH-EXP', 10),
+            ('GR-ELP-IS', 'OTH-EXP', 20),
+            ('GR-ELP-IS', 'OTH-GAIN', 10),
+            ('GR-ELP-IS', 'FIN', 10),
+            ('GR-ELP-IS', 'FIN', 20)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

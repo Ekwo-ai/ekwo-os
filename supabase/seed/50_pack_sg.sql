@@ -644,6 +644,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('SG-SFRSSE-IS', 'SG-SFRSSE-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('SG-SFRSSE-IS', '1', 10),
+            ('SG-SFRSSE-IS', '2', 10),
+            ('SG-SFRSSE-IS', '3', 10),
+            ('SG-SFRSSE-IS', '4', 10),
+            ('SG-SFRSSE-IS', '5', 10),
+            ('SG-SFRSSE-IS', '6', 10),
+            ('SG-SFRSSE-IS', '7', 10),
+            ('SG-SFRSSE-IS', '9', 10),
+            ('SG-SFRSSE-SFP', 'CA.1', 10),
+            ('SG-SFRSSE-SFP', 'CA.2', 10),
+            ('SG-SFRSSE-SFP', 'CA.2', 20),
+            ('SG-SFRSSE-SFP', 'CA.3', 10),
+            ('SG-SFRSSE-SFP', 'CA.4', 10),
+            ('SG-SFRSSE-SFP', 'CA.5', 10),
+            ('SG-SFRSSE-SFP', 'CA.6', 10),
+            ('SG-SFRSSE-SFP', 'NCA.1', 10),
+            ('SG-SFRSSE-SFP', 'NCA.2', 10),
+            ('SG-SFRSSE-SFP', 'NCA.3', 10),
+            ('SG-SFRSSE-SFP', 'NCA.4', 10),
+            ('SG-SFRSSE-SFP', 'NCA.5', 10),
+            ('SG-SFRSSE-SFP', 'NCA.6', 10),
+            ('SG-SFRSSE-SFP', 'NCA.7', 10),
+            ('SG-SFRSSE-SFP', 'CL.1', 10),
+            ('SG-SFRSSE-SFP', 'CL.1', 20),
+            ('SG-SFRSSE-SFP', 'CL.2', 10),
+            ('SG-SFRSSE-SFP', 'CL.3', 10),
+            ('SG-SFRSSE-SFP', 'CL.4', 10),
+            ('SG-SFRSSE-SFP', 'NCL.1', 10),
+            ('SG-SFRSSE-SFP', 'NCL.2', 10),
+            ('SG-SFRSSE-SFP', 'NCL.3', 10),
+            ('SG-SFRSSE-SFP', 'EQ.1', 10),
+            ('SG-SFRSSE-SFP', 'EQ.2', 10),
+            ('SG-SFRSSE-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

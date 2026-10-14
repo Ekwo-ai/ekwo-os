@@ -511,6 +511,56 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('SK-UCT-SUVAHA', 'SK-UCT-VZAS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('SK-UCT-SUVAHA', 'r003', 10),
+            ('SK-UCT-SUVAHA', 'r003', 20),
+            ('SK-UCT-SUVAHA', 'r003', 30),
+            ('SK-UCT-SUVAHA', 'r011', 10),
+            ('SK-UCT-SUVAHA', 'r011', 20),
+            ('SK-UCT-SUVAHA', 'r011', 30),
+            ('SK-UCT-SUVAHA', 'r011', 40),
+            ('SK-UCT-SUVAHA', 'r021', 10),
+            ('SK-UCT-SUVAHA', 'r031', 10),
+            ('SK-UCT-SUVAHA', 'r046', 10),
+            ('SK-UCT-SUVAHA', 'r055', 10),
+            ('SK-UCT-SUVAHA', 'r061', 10),
+            ('SK-UCT-SUVAHA', 'r068', 10),
+            ('SK-UCT-SUVAHA', 'r073', 10),
+            ('SK-UCT-SUVAHA', 'r080', 10),
+            ('SK-UCT-SUVAHA', 'r084', 10),
+            ('SK-UCT-SUVAHA', 'r085', 10),
+            ('SK-UCT-SUVAHA', 'r088', 10),
+            ('SK-UCT-SUVAHA', 'r090', 10),
+            ('SK-UCT-SUVAHA', 'r095', 10),
+            ('SK-UCT-SUVAHA', 'r107', 10),
+            ('SK-UCT-SUVAHA', 'r107', 20),
+            ('SK-UCT-SUVAHA', 'r119', 10),
+            ('SK-UCT-SUVAHA', 'r122', 10),
+            ('SK-UCT-VZAS', 'r03', 10),
+            ('SK-UCT-VZAS', 'r04', 10),
+            ('SK-UCT-VZAS', 'r05', 10),
+            ('SK-UCT-VZAS', 'r09', 10),
+            ('SK-UCT-VZAS', 'r11', 10),
+            ('SK-UCT-VZAS', 'r12', 10),
+            ('SK-UCT-VZAS', 'r14', 10),
+            ('SK-UCT-VZAS', 'r16', 10),
+            ('SK-UCT-VZAS', 'r18', 10),
+            ('SK-UCT-VZAS', 'r19', 10),
+            ('SK-UCT-VZAS', 'r20', 10),
+            ('SK-UCT-VZAS', 'r22', 10),
+            ('SK-UCT-VZAS', 'r24', 10),
+            ('SK-UCT-VZAS', 'r26', 10),
+            ('SK-UCT-VZAS', 'r39', 10),
+            ('SK-UCT-VZAS', 'r42', 10),
+            ('SK-UCT-VZAS', 'r44', 10),
+            ('SK-UCT-VZAS', 'r49', 10),
+            ('SK-UCT-VZAS', 'r52', 10),
+            ('SK-UCT-VZAS', 'r54', 10),
+            ('SK-UCT-VZAS', 'r58', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

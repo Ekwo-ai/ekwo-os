@@ -455,6 +455,42 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('CR-CCOM-ER', 'CR-CCOM-ESF')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('CR-CCOM-ER', 'VEN', 10),
+            ('CR-CCOM-ER', 'CV', 10),
+            ('CR-CCOM-ER', 'GV', 10),
+            ('CR-CCOM-ER', 'GA', 10),
+            ('CR-CCOM-ER', 'IFO', 10),
+            ('CR-CCOM-ER', 'OTRI', 10),
+            ('CR-CCOM-ER', 'GFO', 10),
+            ('CR-CCOM-ER', 'OTRE', 10),
+            ('CR-CCOM-ER', 'ISR', 10),
+            ('CR-CCOM-ESF', 'CB', 10),
+            ('CR-CCOM-ESF', 'INV', 10),
+            ('CR-CCOM-ESF', 'CXC', 10),
+            ('CR-CCOM-ESF', 'OCR', 10),
+            ('CR-CCOM-ESF', 'CFI', 10),
+            ('CR-CCOM-ESF', 'INVT', 10),
+            ('CR-CCOM-ESF', 'PPI', 10),
+            ('CR-CCOM-ESF', 'CNC', 10),
+            ('CR-CCOM-ESF', 'PPE', 10),
+            ('CR-CCOM-ESF', 'AIN', 10),
+            ('CR-CCOM-ESF', 'CPC', 10),
+            ('CR-CCOM-ESF', 'REM', 10),
+            ('CR-CCOM-ESF', 'CFP', 10),
+            ('CR-CCOM-ESF', 'ANT', 10),
+            ('CR-CCOM-ESF', 'PRO', 10),
+            ('CR-CCOM-ESF', 'PBL', 10),
+            ('CR-CCOM-ESF', 'ODL', 10),
+            ('CR-CCOM-ESF', 'CAP', 10),
+            ('CR-CCOM-ESF', 'RES', 10),
+            ('CR-CCOM-ESF', 'RES', 20),
+            ('CR-CCOM-ESF', 'RAA', 10),
+            ('CR-CCOM-ESF', 'RDP', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

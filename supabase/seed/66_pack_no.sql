@@ -452,6 +452,41 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('NO-RSKL-BS', 'NO-RSKL-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('NO-RSKL-BS', 'A.I', 10),
+            ('NO-RSKL-BS', 'A.II', 10),
+            ('NO-RSKL-BS', 'A.III', 10),
+            ('NO-RSKL-BS', 'B.I', 10),
+            ('NO-RSKL-BS', 'B.II', 10),
+            ('NO-RSKL-BS', 'B.III', 10),
+            ('NO-RSKL-BS', 'B.IV', 10),
+            ('NO-RSKL-BS', 'C.I', 10),
+            ('NO-RSKL-BS', 'C.II', 10),
+            ('NO-RSKL-BS', 'D.I', 10),
+            ('NO-RSKL-BS', 'D.II', 10),
+            ('NO-RSKL-BS', 'D.III', 10),
+            ('NO-RSKL-IS', '1', 10),
+            ('NO-RSKL-IS', '2', 10),
+            ('NO-RSKL-IS', '3', 10),
+            ('NO-RSKL-IS', '4', 10),
+            ('NO-RSKL-IS', '5', 10),
+            ('NO-RSKL-IS', '6', 10),
+            ('NO-RSKL-IS', '7', 10),
+            ('NO-RSKL-IS', '8', 10),
+            ('NO-RSKL-IS', '9', 10),
+            ('NO-RSKL-IS', '11', 10),
+            ('NO-RSKL-IS', '12', 10),
+            ('NO-RSKL-IS', '13', 10),
+            ('NO-RSKL-IS', '14', 10),
+            ('NO-RSKL-IS', '15', 10),
+            ('NO-RSKL-IS', '16', 10),
+            ('NO-RSKL-IS', '17', 10),
+            ('NO-RSKL-IS', '18', 10),
+            ('NO-RSKL-IS', '20', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

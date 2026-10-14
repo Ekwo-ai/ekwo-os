@@ -562,6 +562,58 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('PT-SNC-BAL', 'PT-SNC-DR')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('PT-SNC-BAL', 'ANC.1', 10),
+            ('PT-SNC-BAL', 'ANC.2', 10),
+            ('PT-SNC-BAL', 'ANC.3', 10),
+            ('PT-SNC-BAL', 'ANC.3', 20),
+            ('PT-SNC-BAL', 'AC.1', 10),
+            ('PT-SNC-BAL', 'AC.2', 10),
+            ('PT-SNC-BAL', 'AC.3', 10),
+            ('PT-SNC-BAL', 'AC.3', 20),
+            ('PT-SNC-BAL', 'AC.3', 30),
+            ('PT-SNC-BAL', 'AC.3', 40),
+            ('PT-SNC-BAL', 'AC.3', 50),
+            ('PT-SNC-BAL', 'AC.3', 60),
+            ('PT-SNC-BAL', 'AC.3', 70),
+            ('PT-SNC-BAL', 'AC.3', 75),
+            ('PT-SNC-BAL', 'AC.3', 80),
+            ('PT-SNC-BAL', 'AC.4', 10),
+            ('PT-SNC-BAL', 'CP.1', 10),
+            ('PT-SNC-BAL', 'CP.2', 10),
+            ('PT-SNC-BAL', 'CP.3', 10),
+            ('PT-SNC-BAL', 'CP.4', 10),
+            ('PT-SNC-BAL', 'CP.5', 10),
+            ('PT-SNC-BAL', 'CP.6', 10),
+            ('PT-SNC-BAL', 'PNC.1', 10),
+            ('PT-SNC-BAL', 'PC.1', 10),
+            ('PT-SNC-BAL', 'PC.2', 10),
+            ('PT-SNC-BAL', 'PC.3', 10),
+            ('PT-SNC-BAL', 'PC.3', 20),
+            ('PT-SNC-BAL', 'PC.3', 30),
+            ('PT-SNC-BAL', 'PC.3', 40),
+            ('PT-SNC-BAL', 'PC.4', 10),
+            ('PT-SNC-BAL', 'PC.4', 20),
+            ('PT-SNC-BAL', 'PC.4', 30),
+            ('PT-SNC-BAL', 'PC.4', 40),
+            ('PT-SNC-DR', '1', 10),
+            ('PT-SNC-DR', '2', 10),
+            ('PT-SNC-DR', '3', 10),
+            ('PT-SNC-DR', '4', 10),
+            ('PT-SNC-DR', '5', 10),
+            ('PT-SNC-DR', '6', 10),
+            ('PT-SNC-DR', '7', 10),
+            ('PT-SNC-DR', '8', 10),
+            ('PT-SNC-DR', '8', 20),
+            ('PT-SNC-DR', '9', 10),
+            ('PT-SNC-DR', '10', 10),
+            ('PT-SNC-DR', '11', 10),
+            ('PT-SNC-DR', '12', 10),
+            ('PT-SNC-DR', '13', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

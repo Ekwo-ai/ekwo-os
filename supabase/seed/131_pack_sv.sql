@@ -477,6 +477,42 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('SV-NIIF-ER', 'SV-NIIF-ESF')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('SV-NIIF-ER', 'ING', 10),
+            ('SV-NIIF-ER', 'OIN', 10),
+            ('SV-NIIF-ER', 'COV', 10),
+            ('SV-NIIF-ER', 'GAD', 10),
+            ('SV-NIIF-ER', 'GVE', 10),
+            ('SV-NIIF-ER', 'GFI', 10),
+            ('SV-NIIF-ER', 'GIR', 10),
+            ('SV-NIIF-ESF', 'EFEC', 10),
+            ('SV-NIIF-ESF', 'FIN', 10),
+            ('SV-NIIF-ESF', 'CXC', 10),
+            ('SV-NIIF-ESF', 'OCXC', 10),
+            ('SV-NIIF-ESF', 'INV', 10),
+            ('SV-NIIF-ESF', 'ANT', 10),
+            ('SV-NIIF-ESF', 'IMPC', 10),
+            ('SV-NIIF-ESF', 'PPE', 10),
+            ('SV-NIIF-ESF', 'INT', 10),
+            ('SV-NIIF-ESF', 'ILP', 10),
+            ('SV-NIIF-ESF', 'IDA', 10),
+            ('SV-NIIF-ESF', 'CXP', 10),
+            ('SV-NIIF-ESF', 'OFCP', 10),
+            ('SV-NIIF-ESF', 'LAB', 10),
+            ('SV-NIIF-ESF', 'ADMT', 10),
+            ('SV-NIIF-ESF', 'IVAP', 10),
+            ('SV-NIIF-ESF', 'OCXP', 10),
+            ('SV-NIIF-ESF', 'OFLP', 10),
+            ('SV-NIIF-ESF', 'PROV', 10),
+            ('SV-NIIF-ESF', 'IDP', 10),
+            ('SV-NIIF-ESF', 'CAP', 10),
+            ('SV-NIIF-ESF', 'RES', 10),
+            ('SV-NIIF-ESF', 'RACU', 10),
+            ('SV-NIIF-ESF', 'REJE', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

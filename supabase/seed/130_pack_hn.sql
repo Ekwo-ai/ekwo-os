@@ -478,6 +478,50 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('HN-EF-ER', 'HN-EF-ESF')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('HN-EF-ER', '411', 10),
+            ('HN-EF-ER', '412', 10),
+            ('HN-EF-ER', '413', 10),
+            ('HN-EF-ER', '414', 10),
+            ('HN-EF-ER', '415', 10),
+            ('HN-EF-ER', '51', 10),
+            ('HN-EF-ER', '52', 10),
+            ('HN-EF-ER', '53', 10),
+            ('HN-EF-ER', '46', 10),
+            ('HN-EF-ER', '54', 10),
+            ('HN-EF-ER', '56', 10),
+            ('HN-EF-ER', '55', 10),
+            ('HN-EF-ESF', '111', 10),
+            ('HN-EF-ESF', '112', 10),
+            ('HN-EF-ESF', '113', 10),
+            ('HN-EF-ESF', '114', 10),
+            ('HN-EF-ESF', '115', 10),
+            ('HN-EF-ESF', '116', 10),
+            ('HN-EF-ESF', '119', 10),
+            ('HN-EF-ESF', '121', 10),
+            ('HN-EF-ESF', '122', 10),
+            ('HN-EF-ESF', '123', 10),
+            ('HN-EF-ESF', '211', 10),
+            ('HN-EF-ESF', '212', 10),
+            ('HN-EF-ESF', '213', 10),
+            ('HN-EF-ESF', '214', 10),
+            ('HN-EF-ESF', '215', 10),
+            ('HN-EF-ESF', '221', 10),
+            ('HN-EF-ESF', '222', 10),
+            ('HN-EF-ESF', '223', 10),
+            ('HN-EF-ESF', '224', 10),
+            ('HN-EF-ESF', '310', 10),
+            ('HN-EF-ESF', '311', 10),
+            ('HN-EF-ESF', '320', 10),
+            ('HN-EF-ESF', '330', 10),
+            ('HN-EF-ESF', '341', 10),
+            ('HN-EF-ESF', '342', 10),
+            ('HN-EF-ESF', '351', 10),
+            ('HN-EF-ESF', '352', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

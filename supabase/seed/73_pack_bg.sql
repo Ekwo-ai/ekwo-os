@@ -433,6 +433,32 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('BG-SS1-BALANS', 'BG-SS1-OPR')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('BG-SS1-BALANS', 'AKTIV.A', 10),
+            ('BG-SS1-BALANS', 'AKTIV.B.I', 10),
+            ('BG-SS1-BALANS', 'AKTIV.B.II', 10),
+            ('BG-SS1-BALANS', 'AKTIV.B.III', 10),
+            ('BG-SS1-BALANS', 'AKTIV.B.IV', 10),
+            ('BG-SS1-BALANS', 'AKTIV.V.I', 10),
+            ('BG-SS1-BALANS', 'AKTIV.V.II', 10),
+            ('BG-SS1-BALANS', 'AKTIV.V.III', 10),
+            ('BG-SS1-BALANS', 'AKTIV.V.IV', 10),
+            ('BG-SS1-BALANS', 'AKTIV.G', 10),
+            ('BG-SS1-BALANS', 'PASIV.A.I', 10),
+            ('BG-SS1-BALANS', 'PASIV.A.II', 10),
+            ('BG-SS1-BALANS', 'PASIV.A.III', 10),
+            ('BG-SS1-BALANS', 'PASIV.A.IV', 10),
+            ('BG-SS1-BALANS', 'PASIV.A.V', 10),
+            ('BG-SS1-BALANS', 'PASIV.A.VI', 10),
+            ('BG-SS1-BALANS', 'PASIV.B', 10),
+            ('BG-SS1-BALANS', 'PASIV.V', 10),
+            ('BG-SS1-BALANS', 'PASIV.G', 10),
+            ('BG-SS1-OPR', 'OPR.A', 10),
+            ('BG-SS1-OPR', 'OPR.B', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

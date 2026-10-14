@@ -421,6 +421,35 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('GE-IFRS-BS', 'GE-IFRS-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('GE-IFRS-BS', 'A-NC-FIX', 10),
+            ('GE-IFRS-BS', 'A-NC-OTH', 10),
+            ('GE-IFRS-BS', 'A-C-REC', 10),
+            ('GE-IFRS-BS', 'A-C-OTH', 10),
+            ('GE-IFRS-BS', 'A-C-OTH', 20),
+            ('GE-IFRS-BS', 'A-C-OTH', 30),
+            ('GE-IFRS-BS', 'A-C-CASH', 10),
+            ('GE-IFRS-BS', 'E-CAP', 10),
+            ('GE-IFRS-BS', 'E-RET', 10),
+            ('GE-IFRS-BS', 'E-RESULT', 10),
+            ('GE-IFRS-BS', 'E-RESULT', 20),
+            ('GE-IFRS-BS', 'E-RESULT', 30),
+            ('GE-IFRS-BS', 'E-RESULT', 40),
+            ('GE-IFRS-BS', 'E-RESULT', 50),
+            ('GE-IFRS-BS', 'E-RESULT', 60),
+            ('GE-IFRS-BS', 'L-NC', 10),
+            ('GE-IFRS-BS', 'L-C-PAY', 10),
+            ('GE-IFRS-BS', 'L-C-OTH', 10),
+            ('GE-IFRS-IS', 'REV', 10),
+            ('GE-IFRS-IS', 'COST', 10),
+            ('GE-IFRS-IS', 'OTH-INC', 10),
+            ('GE-IFRS-IS', 'OPEX', 10),
+            ('GE-IFRS-IS', 'OPEX', 20),
+            ('GE-IFRS-IS', 'DEPR', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

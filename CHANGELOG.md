@@ -150,6 +150,17 @@ somewhere has already run it.
   under Node 22. The golden replay under Node 24 stays informative for now
   (issue #28).
 
+### Fixed
+
+- **An upgraded installation keeps only the statement rules its packs
+  declare.** The seeds `ekwo migrate` re-applies upserted the rules of a
+  statement and never removed one a release had dropped. A line that became a
+  total kept its old ranges, the accounts they caught were assigned to it, and
+  a total only adds up its children: those accounts left the statement, and
+  the balance sheet no longer balanced. Each pack seed now deletes, for its
+  own statements, every rule it does not declare before writing its rules, so
+  the next `ekwo migrate` cleans an installation that upgraded.
+
 ## [0.12.2] — 2026-10-11
 
 ### Added

@@ -317,6 +317,34 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('KY-IFRS-SME-IS', 'KY-IFRS-SME-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('KY-IFRS-SME-IS', 'REV', 10),
+            ('KY-IFRS-SME-IS', 'COST', 10),
+            ('KY-IFRS-SME-IS', 'OTH-INC', 10),
+            ('KY-IFRS-SME-IS', 'OPEX', 10),
+            ('KY-IFRS-SME-IS', 'DEPR', 10),
+            ('KY-IFRS-SME-SFP', 'A-NC-FIX', 10),
+            ('KY-IFRS-SME-SFP', 'A-NC-INT', 10),
+            ('KY-IFRS-SME-SFP', 'A-NC-OTH', 10),
+            ('KY-IFRS-SME-SFP', 'A-C-REC', 10),
+            ('KY-IFRS-SME-SFP', 'A-C-INV', 10),
+            ('KY-IFRS-SME-SFP', 'A-C-OTH', 10),
+            ('KY-IFRS-SME-SFP', 'A-C-PRE', 10),
+            ('KY-IFRS-SME-SFP', 'A-C-CASH', 10),
+            ('KY-IFRS-SME-SFP', 'E-CAP', 10),
+            ('KY-IFRS-SME-SFP', 'E-RET', 10),
+            ('KY-IFRS-SME-SFP', 'E-RESULT', 10),
+            ('KY-IFRS-SME-SFP', 'E-RESULT', 20),
+            ('KY-IFRS-SME-SFP', 'E-RESULT', 30),
+            ('KY-IFRS-SME-SFP', 'E-RESULT', 40),
+            ('KY-IFRS-SME-SFP', 'L-NC', 10),
+            ('KY-IFRS-SME-SFP', 'L-C-PAY', 10),
+            ('KY-IFRS-SME-SFP', 'L-C-OTH', 10),
+            ('KY-IFRS-SME-SFP', 'L-C-OTH', 20)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

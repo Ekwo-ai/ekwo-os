@@ -508,6 +508,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('GH-ICAG-IS', 'GH-ICAG-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('GH-ICAG-IS', '1', 10),
+            ('GH-ICAG-IS', '2', 10),
+            ('GH-ICAG-IS', '3', 10),
+            ('GH-ICAG-IS', '4', 10),
+            ('GH-ICAG-IS', '5', 10),
+            ('GH-ICAG-IS', '6', 10),
+            ('GH-ICAG-IS', '7', 10),
+            ('GH-ICAG-IS', '9', 10),
+            ('GH-ICAG-SFP', 'CA.1', 10),
+            ('GH-ICAG-SFP', 'CA.2', 10),
+            ('GH-ICAG-SFP', 'CA.3', 10),
+            ('GH-ICAG-SFP', 'CA.4', 10),
+            ('GH-ICAG-SFP', 'CA.5', 10),
+            ('GH-ICAG-SFP', 'CA.6', 10),
+            ('GH-ICAG-SFP', 'NCA.1', 10),
+            ('GH-ICAG-SFP', 'NCA.2', 10),
+            ('GH-ICAG-SFP', 'NCA.3', 10),
+            ('GH-ICAG-SFP', 'NCA.4', 10),
+            ('GH-ICAG-SFP', 'NCA.5', 10),
+            ('GH-ICAG-SFP', 'NCA.6', 10),
+            ('GH-ICAG-SFP', 'NCA.7', 10),
+            ('GH-ICAG-SFP', 'CL.1', 10),
+            ('GH-ICAG-SFP', 'CL.1', 20),
+            ('GH-ICAG-SFP', 'CL.2', 10),
+            ('GH-ICAG-SFP', 'CL.3', 10),
+            ('GH-ICAG-SFP', 'CL.4', 10),
+            ('GH-ICAG-SFP', 'CL.5', 10),
+            ('GH-ICAG-SFP', 'NCL.1', 10),
+            ('GH-ICAG-SFP', 'NCL.2', 10),
+            ('GH-ICAG-SFP', 'NCL.3', 10),
+            ('GH-ICAG-SFP', 'EQ.1', 10),
+            ('GH-ICAG-SFP', 'EQ.2', 10),
+            ('GH-ICAG-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

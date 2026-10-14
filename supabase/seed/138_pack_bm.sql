@@ -319,6 +319,35 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('BM-IFRS-SME-IS', 'BM-IFRS-SME-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('BM-IFRS-SME-IS', 'REV', 10),
+            ('BM-IFRS-SME-IS', 'COST', 10),
+            ('BM-IFRS-SME-IS', 'OTH-INC', 10),
+            ('BM-IFRS-SME-IS', 'OPEX', 10),
+            ('BM-IFRS-SME-IS', 'DEPR', 10),
+            ('BM-IFRS-SME-SFP', 'A-NC-FIX', 10),
+            ('BM-IFRS-SME-SFP', 'A-NC-INT', 10),
+            ('BM-IFRS-SME-SFP', 'A-NC-OTH', 10),
+            ('BM-IFRS-SME-SFP', 'A-C-REC', 10),
+            ('BM-IFRS-SME-SFP', 'A-C-INV', 10),
+            ('BM-IFRS-SME-SFP', 'A-C-OTH', 10),
+            ('BM-IFRS-SME-SFP', 'A-C-PRE', 10),
+            ('BM-IFRS-SME-SFP', 'A-C-CASH', 10),
+            ('BM-IFRS-SME-SFP', 'E-CAP', 10),
+            ('BM-IFRS-SME-SFP', 'E-RET', 10),
+            ('BM-IFRS-SME-SFP', 'E-RESULT', 10),
+            ('BM-IFRS-SME-SFP', 'E-RESULT', 20),
+            ('BM-IFRS-SME-SFP', 'E-RESULT', 30),
+            ('BM-IFRS-SME-SFP', 'E-RESULT', 40),
+            ('BM-IFRS-SME-SFP', 'L-NC', 10),
+            ('BM-IFRS-SME-SFP', 'L-C-PAY', 10),
+            ('BM-IFRS-SME-SFP', 'L-C-TAX', 10),
+            ('BM-IFRS-SME-SFP', 'L-C-OTH', 10),
+            ('BM-IFRS-SME-SFP', 'L-C-OTH', 20)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

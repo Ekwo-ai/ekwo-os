@@ -327,6 +327,39 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('QA-IFRS-IS', 'QA-IFRS-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('QA-IFRS-IS', 'REV', 10),
+            ('QA-IFRS-IS', 'COST', 10),
+            ('QA-IFRS-IS', 'OTH-INC', 10),
+            ('QA-IFRS-IS', 'OPEX', 10),
+            ('QA-IFRS-IS', 'OPEX', 20),
+            ('QA-IFRS-IS', 'OPEX', 30),
+            ('QA-IFRS-IS', 'DEPR', 10),
+            ('QA-IFRS-IS', 'TAX', 10),
+            ('QA-IFRS-IS', 'TAX', 20),
+            ('QA-IFRS-SFP', 'A-NC-FIX', 10),
+            ('QA-IFRS-SFP', 'A-NC-INT', 10),
+            ('QA-IFRS-SFP', 'A-NC-OTH', 10),
+            ('QA-IFRS-SFP', 'A-C-REC', 10),
+            ('QA-IFRS-SFP', 'A-C-INV', 10),
+            ('QA-IFRS-SFP', 'A-C-OTH', 10),
+            ('QA-IFRS-SFP', 'A-C-PRE', 10),
+            ('QA-IFRS-SFP', 'A-C-CASH', 10),
+            ('QA-IFRS-SFP', 'E-CAP', 10),
+            ('QA-IFRS-SFP', 'E-RET', 10),
+            ('QA-IFRS-SFP', 'E-RESULT', 10),
+            ('QA-IFRS-SFP', 'E-RESULT', 20),
+            ('QA-IFRS-SFP', 'E-RESULT', 30),
+            ('QA-IFRS-SFP', 'E-RESULT', 40),
+            ('QA-IFRS-SFP', 'L-NC', 10),
+            ('QA-IFRS-SFP', 'L-C-PAY', 10),
+            ('QA-IFRS-SFP', 'L-C-TAX', 10),
+            ('QA-IFRS-SFP', 'L-C-OTH', 10),
+            ('QA-IFRS-SFP', 'L-C-OTH', 20)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

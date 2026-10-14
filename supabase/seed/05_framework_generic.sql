@@ -74,6 +74,33 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('IFRS-SME-BS', 'IFRS-SME-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('IFRS-SME-BS', 'A-NC-FIX', 10),
+            ('IFRS-SME-BS', 'A-NC-OTH', 10),
+            ('IFRS-SME-BS', 'A-C-REC', 10),
+            ('IFRS-SME-BS', 'A-C-OTH', 10),
+            ('IFRS-SME-BS', 'A-C-OTH', 20),
+            ('IFRS-SME-BS', 'A-C-CASH', 10),
+            ('IFRS-SME-BS', 'E-CAP', 10),
+            ('IFRS-SME-BS', 'E-RET', 10),
+            ('IFRS-SME-BS', 'E-RESULT', 10),
+            ('IFRS-SME-BS', 'E-RESULT', 20),
+            ('IFRS-SME-BS', 'E-RESULT', 30),
+            ('IFRS-SME-BS', 'E-RESULT', 40),
+            ('IFRS-SME-BS', 'E-RESULT', 50),
+            ('IFRS-SME-BS', 'L-NC', 10),
+            ('IFRS-SME-BS', 'L-C-PAY', 10),
+            ('IFRS-SME-BS', 'L-C-OTH', 10),
+            ('IFRS-SME-BS', 'L-C-OTH', 20),
+            ('IFRS-SME-IS', 'REV', 10),
+            ('IFRS-SME-IS', 'COST', 10),
+            ('IFRS-SME-IS', 'OTH-INC', 10),
+            ('IFRS-SME-IS', 'OPEX', 10),
+            ('IFRS-SME-IS', 'DEPR', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

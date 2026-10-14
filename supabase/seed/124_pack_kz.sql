@@ -468,6 +468,51 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('KZ-IFRS-BS', 'KZ-IFRS-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('KZ-IFRS-BS', 'AS-CASH', 10),
+            ('KZ-IFRS-BS', 'AS-STFA', 10),
+            ('KZ-IFRS-BS', 'AS-STREC', 10),
+            ('KZ-IFRS-BS', 'AS-INV', 10),
+            ('KZ-IFRS-BS', 'AS-CTAX', 10),
+            ('KZ-IFRS-BS', 'AS-OCA', 10),
+            ('KZ-IFRS-BS', 'AS-LTFA', 10),
+            ('KZ-IFRS-BS', 'AS-LTREC', 10),
+            ('KZ-IFRS-BS', 'AS-INVEST', 10),
+            ('KZ-IFRS-BS', 'AS-INVPROP', 10),
+            ('KZ-IFRS-BS', 'AS-PPE', 10),
+            ('KZ-IFRS-BS', 'AS-EXPLOR', 10),
+            ('KZ-IFRS-BS', 'AS-INTANG', 10),
+            ('KZ-IFRS-BS', 'AS-DTA', 10),
+            ('KZ-IFRS-BS', 'AS-ONCA', 10),
+            ('KZ-IFRS-BS', 'EQ-SHARE', 10),
+            ('KZ-IFRS-BS', 'EQ-UNPAID', 10),
+            ('KZ-IFRS-BS', 'EQ-PREMIUM', 10),
+            ('KZ-IFRS-BS', 'EQ-RESERVES', 10),
+            ('KZ-IFRS-BS', 'EQ-RETAINED', 10),
+            ('KZ-IFRS-BS', 'LI-STFIN', 10),
+            ('KZ-IFRS-BS', 'LI-TAX', 10),
+            ('KZ-IFRS-BS', 'LI-OTHERMAND', 10),
+            ('KZ-IFRS-BS', 'LI-STPAY', 10),
+            ('KZ-IFRS-BS', 'LI-STPROV', 10),
+            ('KZ-IFRS-BS', 'LI-OTHERST', 10),
+            ('KZ-IFRS-BS', 'LI-LTFIN', 10),
+            ('KZ-IFRS-BS', 'LI-LTPAY', 10),
+            ('KZ-IFRS-BS', 'LI-LTPROV', 10),
+            ('KZ-IFRS-BS', 'LI-DTL', 10),
+            ('KZ-IFRS-BS', 'LI-OTHERLT', 10),
+            ('KZ-IFRS-IS', 'IS-REV', 10),
+            ('KZ-IFRS-IS', 'IS-COGS', 10),
+            ('KZ-IFRS-IS', 'IS-SELL', 10),
+            ('KZ-IFRS-IS', 'IS-ADMIN', 10),
+            ('KZ-IFRS-IS', 'IS-OPINC', 10),
+            ('KZ-IFRS-IS', 'IS-OPEXP', 10),
+            ('KZ-IFRS-IS', 'IS-FININC', 10),
+            ('KZ-IFRS-IS', 'IS-FINEXP', 10),
+            ('KZ-IFRS-IS', 'IS-CIT', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

@@ -545,6 +545,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('CY-IFRS-SME-BS', 'CY-IFRS-SME-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('CY-IFRS-SME-BS', 'NC-INT', 10),
+            ('CY-IFRS-SME-BS', 'NC-INV', 10),
+            ('CY-IFRS-SME-BS', 'NC-PPE', 10),
+            ('CY-IFRS-SME-BS', 'NC-FIN', 10),
+            ('CY-IFRS-SME-BS', 'NC-DTA', 10),
+            ('CY-IFRS-SME-BS', 'C-INV', 10),
+            ('CY-IFRS-SME-BS', 'C-REC', 10),
+            ('CY-IFRS-SME-BS', 'C-REC', 20),
+            ('CY-IFRS-SME-BS', 'C-TAX', 10),
+            ('CY-IFRS-SME-BS', 'C-PRE', 10),
+            ('CY-IFRS-SME-BS', 'C-CASH', 10),
+            ('CY-IFRS-SME-BS', 'E-SHARE', 10),
+            ('CY-IFRS-SME-BS', 'E-PREM', 10),
+            ('CY-IFRS-SME-BS', 'E-REVAL', 10),
+            ('CY-IFRS-SME-BS', 'E-LEGAL', 10),
+            ('CY-IFRS-SME-BS', 'E-OTH', 10),
+            ('CY-IFRS-SME-BS', 'E-RET', 10),
+            ('CY-IFRS-SME-BS', 'LNC-BOR', 10),
+            ('CY-IFRS-SME-BS', 'LNC-DTL', 10),
+            ('CY-IFRS-SME-BS', 'LNC-PROV', 10),
+            ('CY-IFRS-SME-BS', 'LC-BOR', 10),
+            ('CY-IFRS-SME-BS', 'LC-PAY', 10),
+            ('CY-IFRS-SME-BS', 'LC-PAY', 20),
+            ('CY-IFRS-SME-BS', 'LC-TAX', 10),
+            ('CY-IFRS-SME-IS', 'REV', 10),
+            ('CY-IFRS-SME-IS', 'RET', 10),
+            ('CY-IFRS-SME-IS', 'COST', 10),
+            ('CY-IFRS-SME-IS', 'OTHINC', 10),
+            ('CY-IFRS-SME-IS', 'DIST', 10),
+            ('CY-IFRS-SME-IS', 'ADMIN', 10),
+            ('CY-IFRS-SME-IS', 'DEPR', 10),
+            ('CY-IFRS-SME-IS', 'FINCOST', 10),
+            ('CY-IFRS-SME-IS', 'TAX', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

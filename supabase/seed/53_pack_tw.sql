@@ -450,6 +450,24 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('TW-BAA-BS', 'TW-BAA-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('TW-BAA-BS', 'CA', 10),
+            ('TW-BAA-BS', 'NCA', 10),
+            ('TW-BAA-BS', 'CL', 10),
+            ('TW-BAA-BS', 'NCL', 10),
+            ('TW-BAA-BS', 'EQCAP', 10),
+            ('TW-BAA-BS', 'EQCS', 10),
+            ('TW-BAA-BS', 'EQRE', 10),
+            ('TW-BAA-BS', 'EQTS', 10),
+            ('TW-BAA-IS', 'REV', 10),
+            ('TW-BAA-IS', 'COGS', 10),
+            ('TW-BAA-IS', 'OPEX', 10),
+            ('TW-BAA-IS', 'NONOP', 10),
+            ('TW-BAA-IS', 'TAX', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

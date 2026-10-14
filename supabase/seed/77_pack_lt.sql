@@ -479,6 +479,37 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('LT-VAS-BS', 'LT-VAS-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('LT-VAS-BS', '1.1', 10),
+            ('LT-VAS-BS', '1.2', 10),
+            ('LT-VAS-BS', '1.3', 10),
+            ('LT-VAS-BS', '2.1', 10),
+            ('LT-VAS-BS', '2.2', 10),
+            ('LT-VAS-BS', '2.3', 10),
+            ('LT-VAS-BS', '2.4', 10),
+            ('LT-VAS-BS', '4.1', 10),
+            ('LT-VAS-BS', '4.2', 10),
+            ('LT-VAS-BS', '4.3', 10),
+            ('LT-VAS-BS', '4.4', 10),
+            ('LT-VAS-BS', '5', 10),
+            ('LT-VAS-BS', '6.1', 10),
+            ('LT-VAS-BS', '6.2', 10),
+            ('LT-VAS-BS', '6.3', 10),
+            ('LT-VAS-BS', '6.4', 10),
+            ('LT-VAS-IS', '1', 10),
+            ('LT-VAS-IS', '2', 10),
+            ('LT-VAS-IS', '3', 10),
+            ('LT-VAS-IS', '4', 10),
+            ('LT-VAS-IS', '5', 10),
+            ('LT-VAS-IS', '6', 10),
+            ('LT-VAS-IS', '7', 10),
+            ('LT-VAS-IS', '9', 10),
+            ('LT-VAS-IS', '10', 10),
+            ('LT-VAS-IS', '12', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

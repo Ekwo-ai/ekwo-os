@@ -545,6 +545,50 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('ME-FS-BS', 'ME-FS-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('ME-FS-BS', 'ME-BS-000', 10),
+            ('ME-FS-BS', 'ME-BS-010', 10),
+            ('ME-FS-BS', 'ME-BS-020', 10),
+            ('ME-FS-BS', 'ME-BS-030', 10),
+            ('ME-FS-BS', 'ME-BS-040', 10),
+            ('ME-FS-BS', 'ME-BS-100', 10),
+            ('ME-FS-BS', 'ME-BS-110', 10),
+            ('ME-FS-BS', 'ME-BS-120', 10),
+            ('ME-FS-BS', 'ME-BS-130', 10),
+            ('ME-FS-BS', 'ME-BS-140', 10),
+            ('ME-FS-BS', 'ME-BS-2000', 10),
+            ('ME-FS-BS', 'ME-BS-2010', 10),
+            ('ME-FS-BS', 'ME-BS-2020', 10),
+            ('ME-FS-BS', 'ME-BS-2030', 10),
+            ('ME-FS-BS', 'ME-BS-2040', 10),
+            ('ME-FS-BS', 'ME-BS-2050', 10),
+            ('ME-FS-BS', 'ME-BS-2100', 10),
+            ('ME-FS-BS', 'ME-BS-2200', 10),
+            ('ME-FS-BS', 'ME-BS-2210', 10),
+            ('ME-FS-BS', 'ME-BS-2220', 10),
+            ('ME-FS-BS', 'ME-BS-2230', 10),
+            ('ME-FS-BS', 'ME-BS-2240', 10),
+            ('ME-FS-BS', 'ME-BS-2250', 10),
+            ('ME-FS-IS', 'ME-IS-201', 10),
+            ('ME-FS-IS', 'ME-IS-202', 10),
+            ('ME-FS-IS', 'ME-IS-203', 10),
+            ('ME-FS-IS', 'ME-IS-204', 10),
+            ('ME-FS-IS', 'ME-IS-205', 10),
+            ('ME-FS-IS', 'ME-IS-206', 10),
+            ('ME-FS-IS', 'ME-IS-210', 10),
+            ('ME-FS-IS', 'ME-IS-211', 10),
+            ('ME-FS-IS', 'ME-IS-212', 10),
+            ('ME-FS-IS', 'ME-IS-213', 10),
+            ('ME-FS-IS', 'ME-IS-214', 10),
+            ('ME-FS-IS', 'ME-IS-215', 10),
+            ('ME-FS-IS', 'ME-IS-226', 10),
+            ('ME-FS-IS', 'ME-IS-237', 10),
+            ('ME-FS-IS', 'ME-IS-250', 10),
+            ('ME-FS-IS', 'ME-IS-260', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

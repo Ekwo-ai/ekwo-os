@@ -524,6 +524,45 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('NZ-XRB-PL', 'NZ-XRB-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('NZ-XRB-PL', '1', 10),
+            ('NZ-XRB-PL', '2', 10),
+            ('NZ-XRB-PL', '3', 10),
+            ('NZ-XRB-PL', '4', 10),
+            ('NZ-XRB-PL', '5', 10),
+            ('NZ-XRB-PL', '6', 10),
+            ('NZ-XRB-PL', '7', 10),
+            ('NZ-XRB-PL', '9', 10),
+            ('NZ-XRB-SFP', 'CA.1', 10),
+            ('NZ-XRB-SFP', 'CA.2', 10),
+            ('NZ-XRB-SFP', 'CA.2', 20),
+            ('NZ-XRB-SFP', 'CA.3', 10),
+            ('NZ-XRB-SFP', 'CA.4', 10),
+            ('NZ-XRB-SFP', 'CA.5', 10),
+            ('NZ-XRB-SFP', 'CA.5', 20),
+            ('NZ-XRB-SFP', 'CA.6', 10),
+            ('NZ-XRB-SFP', 'NCA.1', 10),
+            ('NZ-XRB-SFP', 'NCA.2', 10),
+            ('NZ-XRB-SFP', 'NCA.3', 10),
+            ('NZ-XRB-SFP', 'NCA.4', 10),
+            ('NZ-XRB-SFP', 'NCA.5', 10),
+            ('NZ-XRB-SFP', 'NCA.6', 10),
+            ('NZ-XRB-SFP', 'NCA.7', 10),
+            ('NZ-XRB-SFP', 'CL.1', 10),
+            ('NZ-XRB-SFP', 'CL.1', 20),
+            ('NZ-XRB-SFP', 'CL.2', 10),
+            ('NZ-XRB-SFP', 'CL.3', 10),
+            ('NZ-XRB-SFP', 'CL.4', 10),
+            ('NZ-XRB-SFP', 'NCL.1', 10),
+            ('NZ-XRB-SFP', 'NCL.2', 10),
+            ('NZ-XRB-SFP', 'NCL.3', 10),
+            ('NZ-XRB-SFP', 'EQ.1', 10),
+            ('NZ-XRB-SFP', 'EQ.2', 10),
+            ('NZ-XRB-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

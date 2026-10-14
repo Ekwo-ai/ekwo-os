@@ -507,6 +507,52 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('SI-ZGD-BS', 'SI-ZGD-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('SI-ZGD-BS', 'A.I', 10),
+            ('SI-ZGD-BS', 'A.II', 10),
+            ('SI-ZGD-BS', 'A.III', 10),
+            ('SI-ZGD-BS', 'A.IV', 10),
+            ('SI-ZGD-BS', 'A.V', 10),
+            ('SI-ZGD-BS', 'A.VI', 10),
+            ('SI-ZGD-BS', 'B.II', 10),
+            ('SI-ZGD-BS', 'B.III', 10),
+            ('SI-ZGD-BS', 'B.IV', 10),
+            ('SI-ZGD-BS', 'B.V', 10),
+            ('SI-ZGD-BS', 'C', 10),
+            ('SI-ZGD-BS', 'P.A.I', 10),
+            ('SI-ZGD-BS', 'P.A.II', 10),
+            ('SI-ZGD-BS', 'P.A.III', 10),
+            ('SI-ZGD-BS', 'P.A.VI', 10),
+            ('SI-ZGD-BS', 'P.A.VII', 10),
+            ('SI-ZGD-BS', 'P.B', 10),
+            ('SI-ZGD-BS', 'P.C.I', 10),
+            ('SI-ZGD-BS', 'P.C.II', 10),
+            ('SI-ZGD-BS', 'P.C.III', 10),
+            ('SI-ZGD-BS', 'P.Č.II', 10),
+            ('SI-ZGD-BS', 'P.Č.III', 10),
+            ('SI-ZGD-BS', 'P.D', 10),
+            ('SI-ZGD-IS', '1', 10),
+            ('SI-ZGD-IS', '2', 10),
+            ('SI-ZGD-IS', '3', 10),
+            ('SI-ZGD-IS', '4', 10),
+            ('SI-ZGD-IS', '5', 10),
+            ('SI-ZGD-IS', '6', 10),
+            ('SI-ZGD-IS', '7', 10),
+            ('SI-ZGD-IS', '8', 10),
+            ('SI-ZGD-IS', '9', 10),
+            ('SI-ZGD-IS', '10', 10),
+            ('SI-ZGD-IS', '11', 10),
+            ('SI-ZGD-IS', '12', 10),
+            ('SI-ZGD-IS', '13', 10),
+            ('SI-ZGD-IS', '14', 10),
+            ('SI-ZGD-IS', '15', 10),
+            ('SI-ZGD-IS', '16', 10),
+            ('SI-ZGD-IS', '17', 10),
+            ('SI-ZGD-IS', '18', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

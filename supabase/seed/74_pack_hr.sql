@@ -573,6 +573,46 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('HR-PSFI-BS', 'HR-PSFI-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('HR-PSFI-BS', 'AKT.B.I', 10),
+            ('HR-PSFI-BS', 'AKT.B.II', 10),
+            ('HR-PSFI-BS', 'AKT.B.III', 10),
+            ('HR-PSFI-BS', 'AKT.B.V', 10),
+            ('HR-PSFI-BS', 'AKT.C.I', 10),
+            ('HR-PSFI-BS', 'AKT.C.II', 10),
+            ('HR-PSFI-BS', 'AKT.C.II', 20),
+            ('HR-PSFI-BS', 'AKT.C.II', 30),
+            ('HR-PSFI-BS', 'AKT.C.II', 40),
+            ('HR-PSFI-BS', 'AKT.C.III', 10),
+            ('HR-PSFI-BS', 'AKT.C.III', 20),
+            ('HR-PSFI-BS', 'AKT.C.IV', 10),
+            ('HR-PSFI-BS', 'AKT.D', 10),
+            ('HR-PSFI-BS', 'PAS.A.I', 10),
+            ('HR-PSFI-BS', 'PAS.A.II', 10),
+            ('HR-PSFI-BS', 'PAS.A.III', 10),
+            ('HR-PSFI-BS', 'PAS.A.III', 20),
+            ('HR-PSFI-BS', 'PAS.A.IV', 10),
+            ('HR-PSFI-BS', 'PAS.A.VI', 10),
+            ('HR-PSFI-BS', 'PAS.A.VII', 10),
+            ('HR-PSFI-BS', 'PAS.B', 10),
+            ('HR-PSFI-BS', 'PAS.C', 10),
+            ('HR-PSFI-BS', 'PAS.D', 10),
+            ('HR-PSFI-BS', 'PAS.D', 20),
+            ('HR-PSFI-BS', 'PAS.E', 10),
+            ('HR-PSFI-IS', 'RDG.I', 10),
+            ('HR-PSFI-IS', 'RDG.I', 20),
+            ('HR-PSFI-IS', 'RDG.II', 10),
+            ('HR-PSFI-IS', 'RDG.II', 20),
+            ('HR-PSFI-IS', 'RDG.II', 30),
+            ('HR-PSFI-IS', 'RDG.II', 40),
+            ('HR-PSFI-IS', 'RDG.III', 10),
+            ('HR-PSFI-IS', 'RDG.III', 20),
+            ('HR-PSFI-IS', 'RDG.IV', 10),
+            ('HR-PSFI-IS', 'RDG.XII', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

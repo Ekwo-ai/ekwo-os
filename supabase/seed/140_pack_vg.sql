@@ -324,6 +324,38 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('VG-FR-BS', 'VG-FR-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('VG-FR-BS', 'A-NC-FIX', 10),
+            ('VG-FR-BS', 'A-NC-INT', 10),
+            ('VG-FR-BS', 'A-NC-OTH', 10),
+            ('VG-FR-BS', 'A-C-REC', 10),
+            ('VG-FR-BS', 'A-C-INV', 10),
+            ('VG-FR-BS', 'A-C-OTH', 10),
+            ('VG-FR-BS', 'A-C-PRE', 10),
+            ('VG-FR-BS', 'A-C-CASH', 10),
+            ('VG-FR-BS', 'E-CAP', 10),
+            ('VG-FR-BS', 'E-RET', 10),
+            ('VG-FR-BS', 'E-RESULT', 10),
+            ('VG-FR-BS', 'E-RESULT', 20),
+            ('VG-FR-BS', 'E-RESULT', 30),
+            ('VG-FR-BS', 'E-RESULT', 40),
+            ('VG-FR-BS', 'L-NC', 10),
+            ('VG-FR-BS', 'L-C-PAY', 10),
+            ('VG-FR-BS', 'L-C-TAX', 10),
+            ('VG-FR-BS', 'L-C-OTH', 10),
+            ('VG-FR-BS', 'L-C-OTH', 20),
+            ('VG-FR-IS', 'REV', 10),
+            ('VG-FR-IS', 'COST', 10),
+            ('VG-FR-IS', 'OTH-INC', 10),
+            ('VG-FR-IS', 'OPEX', 10),
+            ('VG-FR-IS', 'DEPR', 10),
+            ('VG-FR-IS', 'OTH-EXP', 10),
+            ('VG-FR-IS', 'OTH-EXP', 20),
+            ('VG-FR-IS', 'TAX', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

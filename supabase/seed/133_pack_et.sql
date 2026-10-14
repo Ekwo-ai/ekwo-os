@@ -470,6 +470,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('ET-IFRS-IS', 'ET-IFRS-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('ET-IFRS-IS', '1', 10),
+            ('ET-IFRS-IS', '2', 10),
+            ('ET-IFRS-IS', '3', 10),
+            ('ET-IFRS-IS', '4', 10),
+            ('ET-IFRS-IS', '5', 10),
+            ('ET-IFRS-IS', '6', 10),
+            ('ET-IFRS-IS', '7', 10),
+            ('ET-IFRS-IS', '9', 10),
+            ('ET-IFRS-SFP', 'CA.1', 10),
+            ('ET-IFRS-SFP', 'CA.2', 10),
+            ('ET-IFRS-SFP', 'CA.3', 10),
+            ('ET-IFRS-SFP', 'CA.4', 10),
+            ('ET-IFRS-SFP', 'CA.5', 10),
+            ('ET-IFRS-SFP', 'CA.6', 10),
+            ('ET-IFRS-SFP', 'NCA.1', 10),
+            ('ET-IFRS-SFP', 'NCA.2', 10),
+            ('ET-IFRS-SFP', 'NCA.3', 10),
+            ('ET-IFRS-SFP', 'NCA.4', 10),
+            ('ET-IFRS-SFP', 'NCA.5', 10),
+            ('ET-IFRS-SFP', 'NCA.6', 10),
+            ('ET-IFRS-SFP', 'NCA.7', 10),
+            ('ET-IFRS-SFP', 'CL.1', 10),
+            ('ET-IFRS-SFP', 'CL.1', 20),
+            ('ET-IFRS-SFP', 'CL.2', 10),
+            ('ET-IFRS-SFP', 'CL.3', 10),
+            ('ET-IFRS-SFP', 'CL.4', 10),
+            ('ET-IFRS-SFP', 'CL.5', 10),
+            ('ET-IFRS-SFP', 'NCL.1', 10),
+            ('ET-IFRS-SFP', 'NCL.2', 10),
+            ('ET-IFRS-SFP', 'NCL.3', 10),
+            ('ET-IFRS-SFP', 'EQ.1', 10),
+            ('ET-IFRS-SFP', 'EQ.2', 10),
+            ('ET-IFRS-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

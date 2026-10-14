@@ -489,6 +489,45 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('AM-BS', 'AM-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('AM-BS', 'A-NC-FIX', 10),
+            ('AM-BS', 'A-NC-FIX', 20),
+            ('AM-BS', 'A-NC-FIX', 30),
+            ('AM-BS', 'A-NC-FIN', 10),
+            ('AM-BS', 'A-NC-FIN', 20),
+            ('AM-BS', 'A-C-INV', 10),
+            ('AM-BS', 'A-C-REC', 10),
+            ('AM-BS', 'A-C-FIN', 10),
+            ('AM-BS', 'A-C-FIN', 20),
+            ('AM-BS', 'A-C-CASH', 10),
+            ('AM-BS', 'E-CAP', 10),
+            ('AM-BS', 'E-CAP', 20),
+            ('AM-BS', 'E-CAP', 30),
+            ('AM-BS', 'E-RET', 10),
+            ('AM-BS', 'E-RET', 20),
+            ('AM-BS', 'E-RESULT', 10),
+            ('AM-BS', 'E-RESULT', 20),
+            ('AM-BS', 'L-NC', 10),
+            ('AM-BS', 'L-C-FIN', 10),
+            ('AM-BS', 'L-C-PAY', 10),
+            ('AM-BS', 'L-C-OTH', 10),
+            ('AM-BS', 'L-C-OTH', 20),
+            ('AM-IS', 'REV', 10),
+            ('AM-IS', 'REV', 20),
+            ('AM-IS', 'COST', 10),
+            ('AM-IS', 'OTH-OP-INC', 10),
+            ('AM-IS', 'OTH-OP-INC', 20),
+            ('AM-IS', 'SELL', 10),
+            ('AM-IS', 'ADMIN', 10),
+            ('AM-IS', 'OTH-OP-EXP', 10),
+            ('AM-IS', 'OTH-OP-EXP', 20),
+            ('AM-IS', 'NONOP-INC', 10),
+            ('AM-IS', 'NONOP-EXP', 10),
+            ('AM-IS', 'TAX', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

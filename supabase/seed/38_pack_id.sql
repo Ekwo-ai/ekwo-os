@@ -412,6 +412,27 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('ID-LK-BS', 'ID-LK-LR')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('ID-LK-BS', 'KAS-BANK', 10),
+            ('ID-LK-BS', 'PIUTANG', 10),
+            ('ID-LK-BS', 'PPN-MASUKAN', 10),
+            ('ID-LK-BS', 'PERSEDIAAN', 10),
+            ('ID-LK-BS', 'ASET-LANCAR-LAIN', 10),
+            ('ID-LK-BS', 'ASET-TETAP', 10),
+            ('ID-LK-BS', 'ASET-LAIN', 10),
+            ('ID-LK-BS', 'LIABILITAS-LANCAR', 10),
+            ('ID-LK-BS', 'LIABILITAS-TIDAK-LANCAR', 10),
+            ('ID-LK-BS', 'TOTAL-EKUITAS', 10),
+            ('ID-LK-LR', 'PENDAPATAN-NETO', 10),
+            ('ID-LK-LR', 'HPP', 10),
+            ('ID-LK-LR', 'BEBAN-USAHA', 10),
+            ('ID-LK-LR', 'PENDAPATAN-LAIN', 10),
+            ('ID-LK-LR', 'BEBAN-LAIN', 10),
+            ('ID-LK-LR', 'BEBAN-PPH', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

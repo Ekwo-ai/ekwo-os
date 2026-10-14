@@ -605,6 +605,44 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('AU-AASB1060-PL', 'AU-AASB1060-SFP')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('AU-AASB1060-PL', '1', 10),
+            ('AU-AASB1060-PL', '2', 10),
+            ('AU-AASB1060-PL', '3', 10),
+            ('AU-AASB1060-PL', '4', 10),
+            ('AU-AASB1060-PL', '5', 10),
+            ('AU-AASB1060-PL', '6', 10),
+            ('AU-AASB1060-PL', '7', 10),
+            ('AU-AASB1060-PL', '9', 10),
+            ('AU-AASB1060-SFP', 'CA.1', 10),
+            ('AU-AASB1060-SFP', 'CA.2', 10),
+            ('AU-AASB1060-SFP', 'CA.2', 20),
+            ('AU-AASB1060-SFP', 'CA.3', 10),
+            ('AU-AASB1060-SFP', 'CA.4', 10),
+            ('AU-AASB1060-SFP', 'CA.5', 10),
+            ('AU-AASB1060-SFP', 'CA.6', 10),
+            ('AU-AASB1060-SFP', 'NCA.1', 10),
+            ('AU-AASB1060-SFP', 'NCA.2', 10),
+            ('AU-AASB1060-SFP', 'NCA.3', 10),
+            ('AU-AASB1060-SFP', 'NCA.4', 10),
+            ('AU-AASB1060-SFP', 'NCA.5', 10),
+            ('AU-AASB1060-SFP', 'NCA.6', 10),
+            ('AU-AASB1060-SFP', 'NCA.7', 10),
+            ('AU-AASB1060-SFP', 'CL.1', 10),
+            ('AU-AASB1060-SFP', 'CL.1', 20),
+            ('AU-AASB1060-SFP', 'CL.2', 10),
+            ('AU-AASB1060-SFP', 'CL.3', 10),
+            ('AU-AASB1060-SFP', 'CL.4', 10),
+            ('AU-AASB1060-SFP', 'NCL.1', 10),
+            ('AU-AASB1060-SFP', 'NCL.2', 10),
+            ('AU-AASB1060-SFP', 'NCL.3', 10),
+            ('AU-AASB1060-SFP', 'EQ.1', 10),
+            ('AU-AASB1060-SFP', 'EQ.2', 10),
+            ('AU-AASB1060-SFP', 'EQ.3', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

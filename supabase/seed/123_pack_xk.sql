@@ -439,6 +439,37 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('XK-IFRS-BS', 'XK-IFRS-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('XK-IFRS-BS', 'A-NC-FIX', 10),
+            ('XK-IFRS-BS', 'A-NC-OTH', 10),
+            ('XK-IFRS-BS', 'A-C-REC', 10),
+            ('XK-IFRS-BS', 'A-C-OTH', 10),
+            ('XK-IFRS-BS', 'A-C-OTH', 20),
+            ('XK-IFRS-BS', 'A-C-OTH', 30),
+            ('XK-IFRS-BS', 'A-C-CASH', 10),
+            ('XK-IFRS-BS', 'E-CAP', 10),
+            ('XK-IFRS-BS', 'E-RET', 10),
+            ('XK-IFRS-BS', 'E-RESULT', 10),
+            ('XK-IFRS-BS', 'E-RESULT', 20),
+            ('XK-IFRS-BS', 'E-RESULT', 30),
+            ('XK-IFRS-BS', 'E-RESULT', 40),
+            ('XK-IFRS-BS', 'E-RESULT', 50),
+            ('XK-IFRS-BS', 'E-RESULT', 60),
+            ('XK-IFRS-BS', 'L-NC', 10),
+            ('XK-IFRS-BS', 'L-C-PAY', 10),
+            ('XK-IFRS-BS', 'L-C-OTH', 10),
+            ('XK-IFRS-BS', 'L-C-OTH', 20),
+            ('XK-IFRS-BS', 'L-C-OTH', 30),
+            ('XK-IFRS-IS', 'REV', 10),
+            ('XK-IFRS-IS', 'COST', 10),
+            ('XK-IFRS-IS', 'OTH-INC', 10),
+            ('XK-IFRS-IS', 'OPEX', 10),
+            ('XK-IFRS-IS', 'OPEX', 20),
+            ('XK-IFRS-IS', 'DEPR', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)

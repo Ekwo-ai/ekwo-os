@@ -417,6 +417,37 @@ on conflict (statement_code, code) do update set
   legal_reference = excluded.legal_reference,
   source_key      = excluded.source_key;
 
+delete from statement_line_rules r
+ where r.statement_code in ('IS-696-BS', 'IS-696-IS')
+   and (r.statement_code, r.line_code, r.sequence) not in (
+     values ('IS-696-BS', 'AV.1', 10),
+            ('IS-696-BS', 'AV.2', 10),
+            ('IS-696-BS', 'AV.3', 10),
+            ('IS-696-BS', 'UV.1', 10),
+            ('IS-696-BS', 'UV.2', 10),
+            ('IS-696-BS', 'UV.3', 10),
+            ('IS-696-BS', 'UV.4', 10),
+            ('IS-696-BS', 'EK.1', 10),
+            ('IS-696-BS', 'EK.2', 10),
+            ('IS-696-BS', 'EK.3', 10),
+            ('IS-696-BS', 'LS', 10),
+            ('IS-696-BS', 'SS.1', 10),
+            ('IS-696-BS', 'SS.2', 10),
+            ('IS-696-BS', 'SS.3', 10),
+            ('IS-696-BS', 'SS.4', 10),
+            ('IS-696-IS', 'NE', 10),
+            ('IS-696-IS', 'KSV', 10),
+            ('IS-696-IS', 'LAUN', 10),
+            ('IS-696-IS', 'ONNUR', 10),
+            ('IS-696-IS', 'ONNUR', 20),
+            ('IS-696-IS', 'AFSKR', 10),
+            ('IS-696-IS', 'FE', 10),
+            ('IS-696-IS', 'FE', 20),
+            ('IS-696-IS', 'FA', 10),
+            ('IS-696-IS', 'FA', 20),
+            ('IS-696-IS', 'SKATT', 10)
+   );
+
 insert into statement_line_rules
   (statement_code, line_code, sequence, rule_kind, code_from, code_to,
    account_type, balance_side)
