@@ -796,6 +796,36 @@ export async function financialStatement(
   };
 }
 
+export const FinancialAnalysisInput = z.object({
+  company_id: companyId,
+  from: isoDate.describe('First day of the period the movements are read on: revenue, purchases, the result.'),
+  to: isoDate.describe('Last day of the period, and the day the balances are read at: equity, assets, debts, cash.'),
+});
+
+export async function financialAnalysis(
+  backend: Backend,
+  args: z.infer<typeof FinancialAnalysisInput>,
+): Promise<unknown> {
+  const rows = await backend.rpc<Record<string, unknown>>('financial_analysis', {
+    p_company_id: args.company_id,
+    p_from: args.from,
+    p_to: args.to,
+  });
+  const aggregates = moneyFields(rows, ['amount']).map((row) => ({
+    ...row,
+    accounts: moneyFields((row['accounts'] ?? []) as Record<string, unknown>[], ['amount']),
+  }));
+
+  return {
+    period: { from: args.from, to: args.to },
+    aggregates,
+    note:
+      aggregates.length === 0
+        ? "This company's country pack does not say which of its accounts make an analysis, so there is nothing to read: say so rather than working the figures out from account codes."
+        : 'Each amount is signed as its aggregate is named: revenue, other income and equity positive, net_result positive for a profit, financial_result for a gain, income_tax for a charge, every balance positive. Movements are those of the period; balances are at its last day, and equity includes the result of the years not closed yet. accounts says where each figure comes from.',
+  };
+}
+
 export const GenerateFecInput = z.object({
   company_id: companyId,
   from: isoDate,

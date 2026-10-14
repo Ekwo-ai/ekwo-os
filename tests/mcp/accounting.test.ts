@@ -365,6 +365,31 @@ describe('the books, through the tools', () => {
     expect(String(answer['note'])).toMatch(/ties out/);
   });
 
+  it('reads the figures of an analysis, each with the accounts that make it', async () => {
+    const answer = record(
+      await readTools.financialAnalysis(backend, {
+        company_id: fx.companyId,
+        from: '2026-01-01',
+        to: '2026-12-31',
+      }),
+    );
+    const aggregates = list(answer['aggregates']);
+    const of = (code: string): Record<string, unknown> => record(aggregates.find((row) => row['aggregate'] === code));
+
+    expect(aggregates.map((row) => row['aggregate'])).toEqual(
+      expect.arrayContaining(['revenue', 'net_result', 'equity', 'total_assets']),
+    );
+    for (const row of aggregates) {
+      expect(String(row['amount'])).toMatch(/^-?\d+\.\d{2}$/);
+      const parts = list(row['accounts']);
+      expect(parts.reduce((sum, part) => sum + Number(part['amount']), 0)).toBeCloseTo(Number(row['amount']), 2);
+    }
+    // A first year, open, with no capital booked: what the company owns of
+    // itself is what it has earned so far.
+    expect(Number(of('revenue')['amount'])).toBeGreaterThan(0);
+    expect(of('equity')['amount']).toBe(of('net_result')['amount']);
+  });
+
   it('takes the form by name where a country files more than one', async () => {
     const named = record(
       await readTools.vatReturn(backend, {

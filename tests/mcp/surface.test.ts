@@ -43,6 +43,7 @@ const READ_TOOLS = [
   'portfolio_filings_touched_since',
   'list_statements',
   'financial_statement',
+  'financial_analysis',
   'generate_fec',
   'read_audit_log',
   'describe_pack',

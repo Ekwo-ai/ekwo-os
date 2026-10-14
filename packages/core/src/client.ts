@@ -15,6 +15,7 @@ import { fromQueryRow, generateFec, type FecOptions, type FecQueryRow } from '@e
 import type {
   AgedBalanceRow,
   Entry,
+  FinancialAnalysisRow,
   Instance,
   InstanceEdition,
   InstanceAdmin,
@@ -95,6 +96,21 @@ export class EkwoClient {
       p_to: range.to,
     });
     return unwrap(result, 'trial_balance');
+  }
+
+  /**
+   * The aggregates an analysis of the books is computed from — revenue, net
+   * result, equity, total and current assets, cash, receivables, payables… —
+   * as the company's pack defines them, each with the accounts that make it.
+   * Empty for a company whose pack says nothing about an analysis.
+   */
+  async financialAnalysis(range: PeriodRange): Promise<FinancialAnalysisRow[]> {
+    const result = await this.db.rpc<FinancialAnalysisRow[]>('financial_analysis', {
+      p_company_id: range.companyId,
+      p_from: range.from,
+      p_to: range.to,
+    });
+    return unwrap(result, 'financial_analysis');
   }
 
   async vatReturn(range: PeriodRange): Promise<VatReturnRow[]> {

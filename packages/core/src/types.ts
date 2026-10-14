@@ -557,6 +557,49 @@ export interface TrialBalanceRow {
   closing_balance: Decimal;
 }
 
+/** The aggregates `financial_analysis()` may return, in the order it returns them. */
+export type AnalysisAggregate =
+  | 'revenue'
+  | 'other_operating_income'
+  | 'purchases'
+  | 'staff_costs'
+  | 'depreciation'
+  | 'financial_result'
+  | 'income_tax'
+  | 'net_result'
+  | 'equity'
+  | 'total_assets'
+  | 'current_assets'
+  | 'cash'
+  | 'trade_receivables'
+  | 'current_liabilities'
+  | 'trade_payables'
+  | 'long_term_debt';
+
+/** One account of an aggregate: where part of the figure comes from. */
+export interface FinancialAnalysisAccount {
+  /** Null only for the result no close has moved, where the pack names no account to carry it. */
+  code: string | null;
+  name: string | null;
+  /** The account's part, with the sign of the aggregate. A JSON number, written to the decimals of the currency. */
+  amount: number;
+}
+
+/**
+ * One row of `financial_analysis(company_id, from, to)`: one aggregate the
+ * company's pack defines, in the company currency, signed as it is named —
+ * revenue positive when earned, net_result positive when a profit,
+ * financial_result when a gain, income_tax when a charge, every balance
+ * positive. The movements are those of the period; the balances are at its
+ * end, and equity includes the result of every year not closed yet.
+ */
+export interface FinancialAnalysisRow {
+  aggregate: AnalysisAggregate;
+  amount: Decimal;
+  /** The accounts that make the amount, by code; those that come to nothing are left out. */
+  accounts: FinancialAnalysisAccount[];
+}
+
 /** One row of `aged_balance(company_id, at, group)`. */
 export interface AgedBalanceRow {
   contact_id: Uuid | null;
