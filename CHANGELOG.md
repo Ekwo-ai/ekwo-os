@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.13.0] — 2026-10-14
+
 ### Added
 
 - **An opening on the day the books were taken over, whose open items are
@@ -142,9 +144,20 @@ somewhere has already run it.
   golden gains `analysis.json`. `@ekwo-ai/core` gains
   `EkwoClient.financialAnalysis()` and `FinancialAnalysisRow`; the MCP server
   the tool `financial_analysis`. [`docs/analysis.md`](docs/analysis.md) is the
-  page, and `docs/packs.md` says how a pack adds the section.
+  page, and `docs/packs.md` says how a pack adds the section (#112).
 
 ### Changed
+
+- **The schema of this release is 0.13.0, and the packages refuse an older
+  one** (`20261014164531`). It carries the `proven` certification and the
+  evidence of a pack, the settlement of a bank line net of its fees, the
+  opening on the day of a takeover, and the analysis tables with
+  `financial_analysis()`. `@ekwo-ai/core` and `@ekwo-ai/mcp` call
+  `financial_analysis()`, and the Belgian and French packs `ekwo-os` carries
+  write `analysis_templates` and `analysis_rules` when they are installed or
+  upgraded, none of which a 0.12.2 database has, so the floor of `ekwo-os`,
+  `@ekwo-ai/core` and `@ekwo-ai/mcp` rises to 0.13.0 and an installation left
+  behind is told to run `ekwo migrate`.
 
 - **Belgium 1.19.0 and France 1.18.0 are `proven`.** On the 2025 books of a
   Belgian SA, the pack reproduces every line of the abridged income statement
@@ -192,6 +205,21 @@ somewhere has already run it.
   the balance sheet no longer balanced. Each pack seed now deletes, for its
   own statements, every rule it does not declare before writing its rules, so
   the next `ekwo migrate` cleans an installation that upgraded.
+- **Belgium shows an account of 45 to 48 in debit among the other
+  receivables** (pack 1.20.0, #113). The abridged balance sheet of the
+  National Bank of Belgium took the accounts of 45 to 48 on their line of
+  debts whatever their balance, so a debit balance there — a VAT credit with
+  the administration, an advance on a remuneration, a suspense account —
+  reduced the debts instead of standing among the receivables. A debit
+  balance of 45 to 48 now goes to line 41, Other receivables, and a credit
+  balance stays on its line, as the French pack already splits 42 to 47 and
+  as Belgium already split 499. The analysis of the pack follows its balance
+  sheet: `total_assets` and `current_assets` take 45 to 48 in debit, and
+  `current_liabilities` takes them in credit only.
+
+The end-to-end run against a real Supabase project (`npm run e2e:supabase`,
+step 7 of `docs/releasing.md`) was not run for 0.13.0; the last run is the one
+of 0.12.2.
 
 ## [0.12.2] — 2026-10-11
 
@@ -4951,7 +4979,9 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.1...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.13.0...HEAD
+[0.13.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.2...v0.13.0
+[0.12.2]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.1...v0.12.2
 [0.12.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.1...v0.12.0
 [0.11.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.11.0...v0.11.1

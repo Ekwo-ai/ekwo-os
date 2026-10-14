@@ -27,21 +27,22 @@ import {
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
 
 /** The schema this release defines. */
-const RELEASE = '0.12.2';
+const RELEASE = '0.13.0';
 
 /** What `ekwo_schema_version()` returned before the migration of this release. */
-const PREVIOUS = '0.12.1';
+const PREVIOUS = '0.12.2';
 
 /** The migration that carries the number, and nothing else. */
-const BUMP = 'schema_version_0_12_2';
+const BUMP = 'schema_version_0_13_0';
 
 /**
  * The floor the packages of this release declare. It rises only when a
- * package reads something an older schema does not have; 0.12.2 does —
- * every pack `ekwo-os` carries writes `statement_templates.result_in_progress`
- * and its two label columns, which 0.12.1 lacks.
+ * package reads something an older schema does not have; 0.13.0 does —
+ * `@ekwo-ai/core` and `@ekwo-ai/mcp` call `financial_analysis()`, and the
+ * Belgian and French packs `ekwo-os` carries write `analysis_templates` and
+ * `analysis_rules`, none of which 0.12.2 has.
  */
-const FLOOR = '0.12.2';
+const FLOOR = '0.13.0';
 
 let db: SqlClient;
 let migrations: Migration[];
