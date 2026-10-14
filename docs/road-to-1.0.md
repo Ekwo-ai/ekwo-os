@@ -124,8 +124,9 @@ Each item is done when its evidence is published where it says.
   versions of Postgres (the majors a Supabase project runs) and of Node (from
   the `>=20` the CLI and the MCP server declare) are written down on this page,
   and every one of them is a required job of `.github/workflows/ci.yml`.
-  Today the suite runs on PGlite — Postgres 17 — under Node 22, with Node 24
-  informative. *Evidence: the CI matrix, and a green run on the release
+  Today the suite runs on PGlite — Postgres 17 — under Node 22 and Node 24,
+  and a failure under either fails the run; the golden replay under Node 24 is
+  still informative. *Evidence: the CI matrix, and a green run on the release
   candidate's commit.*
 - [ ] **B. A real upgrade from every published version.** On a real hosted
   project, `scripts/e2e-supabase.mjs` with `EKWO_E2E_PREVIOUS` installs each
