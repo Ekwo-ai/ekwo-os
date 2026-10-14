@@ -144,6 +144,11 @@ somewhere has already run it.
   dozen pack files and a tenth of the golden replay, the vitest process now
   stays near 200 MB, and the whole run peaks 0.7 to 1.0 GB lower, on Node 22
   as on Node 24 (issue #28, opened by the maintainers).
+- **Node 24 gates the test job of the CI again.** It had been informative
+  since 25 September, when the hosted runner was shut down under it part-way
+  through the suite; a failing test under Node 24 now fails the run as it does
+  under Node 22. The golden replay under Node 24 stays informative for now
+  (issue #28).
 
 ## [0.12.2] — 2026-10-11
 
