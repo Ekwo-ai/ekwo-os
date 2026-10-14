@@ -19,6 +19,7 @@ packs/be/
 ├── taxes.json         taxes and their postings, per kind of document
 ├── tax_report.json    the boxes of the periodic return and their totals
 ├── statements.json    the balance sheet, the income statement and their rules
+├── analysis.json      which accounts make the revenue, the equity, the assets… of an analysis
 ├── fixed_assets.json  the section of the fixed assets module, where the country has one
 ├── corporate_tax.json the section of the corporate income tax module, where the country has one
 ├── golden/
@@ -26,6 +27,7 @@ packs/be/
 │   ├── vat_return.json    what the declaration comes to, period by period
 │   ├── statements.json    what every line of every statement comes to
 │   ├── trial_balance.json every account that moved, to the cent
+│   ├── analysis.json      what every aggregate of the analysis comes to, where the pack has one
 │   └── corporate_tax.json companies whose tax was worked out by hand, beside the section
 └── i18n/
     ├── README.md      where each language's wording comes from
@@ -168,6 +170,79 @@ an accountant opens it in a spreadsheet.
 `accounts.csv` is a **strict subset** of CSV: a header line, no newline inside
 a field, a field quoted only when it holds a comma or a quote, a quote doubled
 inside a quoted field. The parser is forty lines and refuses anything else.
+
+## The analysis section
+
+`analysis.json` says what the accounts of the chart mean to an analysis of the
+books: which of them make the revenue, the net result, the equity, the total
+and the current assets, the cash, what customers owe and what is owed to
+suppliers. A statement cannot say it — its lines are the national rubrics, and
+`21/28` means nothing to a screen that draws a current ratio in every country
+— and the core may not, because an account code is the pack's. The function
+that reads the section is `financial_analysis()`, and
+[`analysis.md`](analysis.md) is what it returns and how each aggregate is read.
+
+```json
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "aggregates": [
+    { "code": "revenue",
+      "legal_reference": "… classe 70 « Chiffre d'affaires » …", "source": "pcmn",
+      "rules": [ { "kind": "code_range", "code_from": "70", "code_to": "70" } ] },
+    { "code": "current_liabilities",
+      "legal_reference": "… rubriques 42/48 et 492/3 …", "source": "comptes-annuels",
+      "rules": [ { "kind": "code_range", "code_from": "42", "code_to": "48" },
+                 { "kind": "code_range", "code_from": "499", "code_to": "499", "side": "credit" },
+                 { "kind": "code_range", "code_from": "492", "code_to": "493" } ] }
+  ]
+}
+```
+
+**The aggregates are a closed list**, the sixteen of
+[`analysis.md`](analysis.md#the-aggregates): `code` is an enum of the schema,
+and the core's `analysis_aggregates` holds the same list with how each is read
+and its sign. A pack never says whether `revenue` is a credit or which way
+`equity` is printed; it says which accounts. Leave out an aggregate the chart
+cannot express rather than approximating it.
+
+**The rules are a statement line's**, the same object and the same test —
+`code_range`, `code_prefix`, `account_code`, `account_type`, and `side` to take
+an account only while its balance is a debit or a credit. Model a mixed class
+the way the pack's balance sheet splits it: a bank account in debit is cash, in
+credit a debt; class 42 to 47 in debit is a receivable, in credit a liability.
+An account reaches an aggregate once, whatever the number of its rules that
+take it, and aggregates overlap by design — cash is inside the current assets,
+which are inside the total.
+
+**Mirror the statements.** The balance-sheet aggregates of a pack are lines its
+balance sheet already prints: `total_assets` is the total of the assets,
+`equity` the equity rubric, `trade_receivables` the customers line. Take
+exactly the accounts those lines take, side included, and the golden shows the
+same figure on both. Then `total_assets` is `equity` plus everything else the
+balance sheet holds, which the golden runner asserts for every pack carrying
+the section.
+
+**Each aggregate cites its text** — `legal_reference`, required: the class of
+the chart or the rubric of the statement it mirrors, as the country cites it —
+and names the register entry it is read in, in `source`.
+
+**`charts`** lists the charts of the pack the rules are written for, and is
+left out for the default chart alone. A second chart — one for associations —
+has accounts of its own, and gets an analysis when somebody writes one for it.
+
+### Adding it to a pack
+
+1. Write `packs/<cc>/analysis.json` with `revenue`, `net_result`, `equity` and
+   `total_assets` at least, from the pack's own statements as above.
+2. Raise `schema_min` to `20261014152111`, the migration that created
+   `analysis_templates` and `analysis_rules`, and raise the pack's version.
+3. `ekwo pack build <cc>`, then `UPDATE_GOLDEN=1 npm test -- tests/golden.test.ts`,
+   which writes `golden/analysis.json`. Read it beside `golden/statements.json`:
+   an aggregate that mirrors a line comes to that line's figure.
+
+Nothing outside the folder changes. A pack without the section compiles
+exactly as before and its companies get no analysis — which is what a pack
+that has not said what its accounts mean should give.
 
 ## Compiling
 
@@ -377,8 +452,8 @@ refuses two packs claiming the same one.
 The compiler writes `chart_templates`, `account_templates`,
 `journal_templates`, `tax_templates`, `tax_posting_templates`,
 `tax_report_templates`, `tax_report_box_templates`, `statement_templates`,
-`statement_line_templates`, `statement_line_rules`, `legal_mention_templates`,
-`country_defaults`, `country_packs` and — for a module section —
+`statement_line_templates`, `statement_line_rules`, `analysis_templates`,
+`analysis_rules`, `legal_mention_templates`, `country_defaults`, `country_packs` and — for a module section —
 `fixed_assets.country_rules` and `fixed_assets.category_templates`, or the
 seven reference tables of the `tax` schema, and **nothing that
 belongs to a company**. Every insert upserts on the natural key —
@@ -399,9 +474,9 @@ worth knowing while you work: **changing any file of a pack makes the committed
 seed stale**, including a file the compiler never reads, such as
 `i18n/README.md`. `ekwo pack build` again and commit the result.
 
-The three generated files under `golden/` are the deliberate exception —
-`vat_return.json`, `statements.json` and `trial_balance.json` are outside the
-checksum, and `golden/scenario.json` is inside it. A scenario is a decision
+The generated files under `golden/` are the deliberate exception —
+`vat_return.json`, `statements.json`, `trial_balance.json` and, where the pack
+has an analysis section, `analysis.json` are outside the checksum, and `golden/scenario.json` is inside it. A scenario is a decision
 about what a country's books look like, and moving it moves the pack; the
 expectations are what the engine made of that scenario, so a checksum that
 moved because the statements function gained a line would tell every operator
@@ -1439,19 +1514,20 @@ sales into three other states. A pack whose country taxes uniformly leaves all
 three out and nothing changes.
 
 **Three expectation files** sit beside the scenario and are generated, never
-written by hand:
+written by hand, and a fourth where the pack has an analysis section:
 
 | File | Holds |
 |---|---|
 | `vat_return.json` | every box of the return that came to something, per period, keyed `<box>:<kind>` |
 | `statements.json` | every line of every statement named, over the financial year |
 | `trial_balance.json` | every account that moved or ended with a balance: debit, credit, closing |
+| `analysis.json` | every aggregate the pack defines, over the financial year, with the accounts that make it |
 
 ```sh
 UPDATE_GOLDEN=1 npm test -- tests/golden.test.ts
 ```
 
-rewrites those three and **never the scenario** — a runner that could rewrite
+rewrites those files and **never the scenario** — a runner that could rewrite
 its own inputs proves nothing. The diff is then the thing to review.
 
 ### What only this pack can claim
@@ -1930,6 +2006,17 @@ the document it settles.
 `check` validates the scenario and does not replay it. The replay is
 `tests/golden.test.ts`, and the two are different questions: whether the
 scenario is sayable, and whether the engine still makes the same figures of it.
+
+**The analysis section.** An aggregate outside the closed list, or one defined
+twice. A section that leaves out `revenue`, `net_result`, `equity` or
+`total_assets`. An aggregate with no `legal_reference`, or a `source` the
+register does not hold. A rule of a kind a statement line does not know, or
+missing what its kind takes — both bounds of a `code_range`, the code of the
+others, the type of an `account_type` rule. A `charts` entry that is not a
+chart of the pack. And a rule that reaches **no account** of a chart it is
+written for: a range typed one digit off reads as a definition and catches
+nothing, and an aggregate that is silently nil is the figure this check is
+there to stop.
 
 **The framework pack**, `packs/generic/`, has two of its own: every rule has to
 be an `account_type` rule, because the other three kinds name a chart and a
@@ -2435,6 +2522,11 @@ chart with no legal codes a balance sheet that ties out.
 
 Add `xbrl` fact keys only for a taxonomy you can verify, and leave them null
 otherwise. A wrong key is worse than no key.
+
+Once the statements are in, [the analysis section](#the-analysis-section) is a
+short file more: which of those lines are the revenue, the equity, the total
+and the current assets. It is optional, and it is what gives the companies of
+the country an analysis.
 
 ### 7. Check what you have so far
 

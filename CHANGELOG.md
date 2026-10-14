@@ -112,6 +112,38 @@ somewhere has already run it.
   to settle a statement line, with the same arguments; `@ekwo-ai/core`'s
   `settleFromStatement()` takes `document_ids`, `amounts` and `extra_lines`.
 
+- **What the accounts of a pack mean to an analysis, and
+  `financial_analysis()`** (`20261014152111`). A statement knows its national
+  lines and nothing else, so a screen drawing a margin or a current ratio had
+  nothing to read but account codes. A pack may now carry `analysis.json`:
+  which of its accounts make each of sixteen aggregates — `revenue`,
+  `other_operating_income`, `purchases`, `staff_costs`, `depreciation`,
+  `financial_result`, `income_tax`, `net_result`, `equity`, `total_assets`,
+  `current_assets`, `cash`, `trade_receivables`, `current_liabilities`,
+  `trade_payables`, `long_term_debt` — by the rules a statement line already
+  uses, each aggregate citing its text. The list, how each aggregate is read
+  (movements of the period or balance at its end) and its sign are the
+  core's, in `analysis_aggregates`; the accounts are the pack's, in
+  `analysis_templates` and `analysis_rules`, which the pack seed fills.
+  `financial_analysis(company, from, to)` returns one row per aggregate the
+  company's pack defines — `aggregate`, `amount` in the company currency,
+  `accounts` as `[{code, name, amount}]` — and none for a company whose pack
+  defines none. `equity` takes the result no close has moved yet, on the
+  account the close would leave it on, so total assets are equity plus
+  everything else the balance sheet holds. `security invoker`, `stable`,
+  `entries.read`; refused by name: `unknown_company`, `not_allowed`,
+  `invalid_period`. `account_rule_catches()` is the one test of a rule, and
+  `statement_rule_catches()` now calls it. `ekwo pack check` refuses an
+  aggregate outside the list or defined twice, a section without `revenue`,
+  `net_result`, `equity` and `total_assets`, a rule missing its arguments and
+  a rule that reaches no account of its chart. The Belgian (1.20.0) and French
+  (1.19.0) packs carry the section, their balance-sheet aggregates taking
+  exactly the accounts of the same lines of their own balance sheet, and their
+  golden gains `analysis.json`. `@ekwo-ai/core` gains
+  `EkwoClient.financialAnalysis()` and `FinancialAnalysisRow`; the MCP server
+  the tool `financial_analysis`. [`docs/analysis.md`](docs/analysis.md) is the
+  page, and `docs/packs.md` says how a pack adds the section.
+
 ### Changed
 
 - **Belgium 1.19.0 and France 1.18.0 are `proven`.** On the 2025 books of a
