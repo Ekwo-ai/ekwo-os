@@ -52,7 +52,9 @@ reserves and transfers of the result are later entries taken by people.
 **An opening balance refuses the income statement** unless the caller passes
 `p_allow_result_accounts` — for taking books over in the middle of a year.
 It takes rows `{account_code, debit, credit, contact_id, label}`, what every
-previous system exports.
+previous system exports, on the first day of the year or on the day inside it
+the books were taken over, with the invoices still open as documents
+([0067](0067-an-opening-on-the-day-of-the-takeover.md)).
 
 **A close is undone by reversing.** `reopen_fiscal_year` reverses what the
 close wrote and clears the flag, and refuses once a later year is closed or
@@ -72,4 +74,5 @@ holds entries.
 
 - `tests/closing.test.ts`
 - [0032 The FEC carries its opening balances](0032-the-fec-carries-its-opening-balances.md)
+- [0067 An opening on the day of the takeover](0067-an-opening-on-the-day-of-the-takeover.md)
 - [0013 Locks live in the database](0013-locks-live-in-the-database-and-everything-raises.md)
