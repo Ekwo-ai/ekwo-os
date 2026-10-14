@@ -13,6 +13,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { internalGroup, type AccountType } from '@ekwo-ai/core';
 import { validate, type Issue } from './schema.js';
+import { ruleCatches, ruleTakes } from './rules.js';
+import { analysisReferences, analysisSources, normaliseAnalysis, type PackAnalysis } from './analysis.js';
 import {
   applyCorporateTaxLabels,
   corporateTaxLabelKeys,
@@ -802,6 +804,7 @@ export interface PackFixedAssets {
 }
 
 export type { PackCorporateTax } from './corporate-tax.js';
+export type { PackAnalysis, PackAnalysisAggregate } from './analysis.js';
 
 export interface Pack {
   /** Lower-case directory name, e.g. `be`. */
@@ -817,6 +820,8 @@ export interface Pack {
   taxes: PackTax[];
   /** `statements.json`, with every line and rule normalised. */
   statements: PackStatement[];
+  /** `analysis.json`, or null where this pack does not say what its accounts mean to an analysis. */
+  analysis: PackAnalysis | null;
   /**
    * Languages this pack publishes, the language of its own files first. A
    * language the manifest declares covers every label; one that is only a
@@ -1094,6 +1099,17 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     statements = normaliseStatements(raw as Record<string, unknown>, charts);
   }
 
+  // What the accounts mean to an analysis of the books. Optional, like a
+  // module section, but compiled into the pack seed: the tables it fills are
+  // the core's, and `financial_analysis()` reads them.
+  let analysis: PackAnalysis | null = null;
+  if (existsSync(join(root, 'analysis.json'))) {
+    const raw = await readJson(join(root, 'analysis.json'));
+    issues.push(...validate(raw, defs['analysis'] ?? {}, schema, 'analysis.json'));
+    analysis = normaliseAnalysis(raw as Record<string, unknown>, charts);
+    issues.push(...analysisReferences(analysis, charts));
+  }
+
   const documents = normaliseDocumentRules(manifest);
 
   // The section of a module. A pack that carries none simply has no country
@@ -1339,7 +1355,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   // The register, and every rule that points into it. Last of the cross-checks,
   // because a source is named by a tax, a box, a statement line and a mention,
   // and all four have to have been read before the references can be resolved.
-  const register = sourceRegister(manifest, charts, taxes, report, statements, documents, fixedAssets, corporateTax);
+  const register = sourceRegister(manifest, charts, taxes, report, statements, analysis, documents, fixedAssets, corporateTax);
   issues.push(...register.issues);
   warnings.push(...register.warnings);
   issues.push(...certificationEvidence(manifest, charts));
@@ -1368,6 +1384,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     accounts,
     taxes,
     statements,
+    analysis,
     // The pack's own language first, then the ones the manifest declares, in
     // the order it declares them — not the order `readdir` happens to return.
     // This list is what an installer shows a human being.
@@ -1427,6 +1444,7 @@ function sourceRegister(
   taxes: PackTax[],
   report: PackReport | null,
   statements: PackStatement[],
+  analysis: PackAnalysis | null,
   documents: PackDocumentRules,
   fixedAssets: PackFixedAssets | null,
   corporateTax: PackCorporateTax | null,
@@ -1541,6 +1559,7 @@ function sourceRegister(
         kind: 'other' as const,
       })),
     ]),
+    ...analysisSources(analysis).map((reference) => ({ ...reference, kind: 'other' as const })),
     ...documents.mentions.map((mention) => ({
       path: `pack.json documents.mentions.${mention.code}`,
       source: mention.source,
@@ -2653,22 +2672,6 @@ function normaliseStatements(raw: Record<string, unknown>, charts: PackChart[]):
   });
 }
 
-/** Does this rule catch this account code? The same comparison the SQL makes. */
-function ruleCatches(rule: PackStatementRule, code: string): boolean {
-  const from = rule.code_from ?? '';
-  const to = rule.code_to ?? '';
-  switch (rule.kind) {
-    case 'account_code':
-      return code === from;
-    case 'code_prefix':
-      return code.slice(0, from.length) === from;
-    case 'code_range':
-      return code.slice(0, from.length) >= from && code.slice(0, to.length) <= to;
-    default:
-      return false;
-  }
-}
-
 /**
  * What the schema cannot say about a statement.
  *
@@ -2923,7 +2926,7 @@ function lineTaking(
   for (const line of statement.lines) {
     for (const rule of line.rules) {
       if (rule.side !== 'any' && rule.side !== side) continue;
-      const takes = rule.kind === 'account_type' ? rule.account_type === account.type : ruleCatches(rule, account.code);
+      const takes = ruleTakes(rule, account);
       if (!takes) continue;
       const candidate = {
         line: line.code,

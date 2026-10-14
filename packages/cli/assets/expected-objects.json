@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.12.2",
-  "migration": "20261014081038",
+  "migration": "20261014152111",
   "socle": {
     "schema": "public",
     "tables": [
@@ -123,6 +123,101 @@
           {
             "name": "updated_at",
             "type": "timestamp with time zone"
+          }
+        ]
+      },
+      {
+        "name": "analysis_aggregates",
+        "columns": [
+          {
+            "name": "adds_unclosed_result",
+            "type": "boolean"
+          },
+          {
+            "name": "code",
+            "type": "text"
+          },
+          {
+            "name": "description",
+            "type": "text"
+          },
+          {
+            "name": "reading",
+            "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "integer"
+          },
+          {
+            "name": "sign",
+            "type": "smallint"
+          }
+        ]
+      },
+      {
+        "name": "analysis_rules",
+        "columns": [
+          {
+            "name": "account_type",
+            "type": "account_type"
+          },
+          {
+            "name": "aggregate",
+            "type": "text"
+          },
+          {
+            "name": "balance_side",
+            "type": "text"
+          },
+          {
+            "name": "chart_code",
+            "type": "text"
+          },
+          {
+            "name": "code_from",
+            "type": "text"
+          },
+          {
+            "name": "code_to",
+            "type": "text"
+          },
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "rule_kind",
+            "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "integer"
+          }
+        ]
+      },
+      {
+        "name": "analysis_templates",
+        "columns": [
+          {
+            "name": "aggregate",
+            "type": "text"
+          },
+          {
+            "name": "chart_code",
+            "type": "text"
+          },
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "source_key",
+            "type": "text"
           }
         ]
       },
@@ -3882,6 +3977,10 @@
         "arguments": "p_company_id uuid, p_code text"
       },
       {
+        "name": "account_rule_catches",
+        "arguments": "p_rule_kind text, p_code_from text, p_code_to text, p_rule_type account_type, p_side text, p_code text, p_account_type account_type, p_balance numeric"
+      },
+      {
         "name": "accounts_guard_frozen",
         "arguments": ""
       },
@@ -4367,6 +4466,10 @@
       },
       {
         "name": "filings_touched_since",
+        "arguments": "p_company_id uuid, p_from date, p_to date"
+      },
+      {
+        "name": "financial_analysis",
         "arguments": "p_company_id uuid, p_from date, p_to date"
       },
       {
@@ -4913,6 +5016,21 @@
         "table": "accounts",
         "name": "accounts_write",
         "command": "all"
+      },
+      {
+        "table": "analysis_aggregates",
+        "name": "analysis_aggregates_select",
+        "command": "select"
+      },
+      {
+        "table": "analysis_rules",
+        "name": "analysis_rules_select",
+        "command": "select"
+      },
+      {
+        "table": "analysis_templates",
+        "name": "analysis_templates_select",
+        "command": "select"
       },
       {
         "table": "analytic_axes",
@@ -6356,6 +6474,36 @@
           ]
         },
         {
+          "name": "analysis_aggregates",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "analysis_rules",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "analysis_templates",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
           "name": "analytic_axes",
           "anon": [],
           "authenticated": [
@@ -7245,6 +7393,17 @@
         {
           "name": "account_id_by_code",
           "arguments": "p_company_id uuid, p_code text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "account_rule_catches",
+          "arguments": "p_rule_kind text, p_code_from text, p_code_to text, p_rule_type account_type, p_side text, p_code text, p_account_type account_type, p_balance numeric",
           "anon": [],
           "authenticated": [
             "execute"
@@ -8445,6 +8604,17 @@
         },
         {
           "name": "filings_touched_since",
+          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "financial_analysis",
           "arguments": "p_company_id uuid, p_from date, p_to date",
           "anon": [],
           "authenticated": [

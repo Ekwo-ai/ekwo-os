@@ -2091,6 +2091,84 @@
         }
       }
     },
+    "analysis": {
+      "type": "object",
+      "title": "analysis.json",
+      "description": "packs/<cc>/analysis.json — what the accounts of the pack mean to an analysis of the books: which of them make the revenue, the equity, the current assets of a company, and the other aggregates of a closed list. A statement knows only its national lines; this section names the generic figures a ratio is computed from, with the same rules a statement line uses. Optional: a company of a pack that carries none gets no aggregate from `financial_analysis()`, never another country's. How each aggregate is read — movements of the period or balance at its end — and the sign it is returned with belong to the aggregate and not to the pack, so a pack says which accounts and nothing else.",
+      "required": [
+        "aggregates"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "charts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/code"
+          },
+          "description": "The charts of the pack these rules are written for. Omitted, the default chart alone: a second chart — a chart for associations — has accounts of its own, and is given an analysis only when somebody has written one for it."
+        },
+        "aggregates": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/analysis_aggregate"
+          }
+        }
+      }
+    },
+    "analysis_aggregate": {
+      "type": "object",
+      "description": "One aggregate: its code, the accounts that make it, and where that reading of the chart comes from. An account reaches the aggregate when any of its rules catches it, once, whatever the number of rules that do.",
+      "required": [
+        "code",
+        "legal_reference",
+        "rules"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "revenue",
+            "other_operating_income",
+            "purchases",
+            "staff_costs",
+            "depreciation",
+            "financial_result",
+            "income_tax",
+            "net_result",
+            "equity",
+            "total_assets",
+            "current_assets",
+            "cash",
+            "trade_receivables",
+            "current_liabilities",
+            "trade_payables",
+            "long_term_debt"
+          ],
+          "description": "The aggregate, from a closed list the core reads: revenue, other_operating_income, purchases (purchases and external charges), staff_costs, depreciation (depreciation and provisions), financial_result, income_tax and net_result are read on the movements of the period; equity, total_assets, current_assets, cash, trade_receivables, current_liabilities, trade_payables and long_term_debt on the balance at its end. equity also takes the result of every year not closed yet."
+        },
+        "legal_reference": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Where the accounts come from: the classes of the chart, or the rubric of the statement the aggregate mirrors, cited as the country cites them."
+        },
+        "source": {
+          "$ref": "#/$defs/source_ref"
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/statement_rule"
+          },
+          "description": "The rules of a statement line, unchanged: code_range, code_prefix, account_code or account_type, and side to take an account only while its balance is a debit or a credit."
+        }
+      }
+    },
     "i18n": {
       "type": "object",
       "title": "i18n/<lang>.json",

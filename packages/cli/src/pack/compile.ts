@@ -24,6 +24,7 @@
 import { describeCertification } from './certification.js';
 import { sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackSource, type PackStatement } from './read.js';
 import { compileCorporateTaxSection } from './corporate-tax.js';
+import { compileAnalysis } from './analysis.js';
 
 /**
  * Which number each pack's compiled seed carries, by slug.
@@ -89,6 +90,7 @@ export function compilePack(pack: Pack): string {
   out.push(...postings(pack, country));
   out.push(...taxReport(pack, country));
   out.push(...statements(pack.statements, pack.labels, country));
+  out.push(...compileAnalysis(pack.analysis, country));
   out.push(...defaults(pack, country));
   out.push(...documentRules(pack, country));
 

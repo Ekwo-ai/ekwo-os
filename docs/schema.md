@@ -165,6 +165,9 @@ bank charge that pays no item.
 |---|---|
 | [`account_templates`](#account_templates) | Reference charts of accounts, one set per country. |
 | [`accounts`](#accounts) | Chart of accounts, one per company. |
+| [`analysis_aggregates`](#analysis_aggregates) | The aggregates an analysis of the books is computed from, and how each is read. Vocabulary of the core, the same in every country; the accounts that make each one are a pack's, in analysis_rules. |
+| [`analysis_rules`](#analysis_rules) | How an account of a company reaches an aggregate: the rules of a statement line, with the same columns and the same test, account_rule_catches(). An account reaches an aggregate once, whatever the number of its rules that take it; two aggregates may take the same account — cash is part of the current assets, which are part of the total. |
+| [`analysis_templates`](#analysis_templates) | The aggregates a pack defines for one of its charts, and where that reading of the chart comes from. Written by the seed of a pack that carries analysis.json; a chart with no row has no analysis, and financial_analysis() returns nothing for its companies. |
 | [`analytic_axes`](#analytic_axes) | Analytic dimensions: cost centre, project, activity. |
 | [`analytic_values`](#analytic_values) | Values of an axis, optionally hierarchical. |
 | [`api_keys`](#api_keys) | Machine access to one company. Hashed at rest, scoped to an explicit list of capabilities, and never wider than the person who issued it — at issuance and at every use. |
@@ -280,6 +283,71 @@ Constraints:
 - `CHECK (((account_type <> ALL (ARRAY['asset_receivable'::account_type, 'liability_payable'::account_type])) OR reconcilable))`
 - `PRIMARY KEY (id)`
 - `UNIQUE (company_id, code)`
+
+### `analysis_aggregates`
+
+The aggregates an analysis of the books is computed from, and how each is read. Vocabulary of the core, the same in every country; the accounts that make each one are a pack's, in analysis_rules.
+
+| Column | Type | Notes |
+|---|---|---|
+| `code` | `text` | not null |
+| `reading` | `text` | not null — movements: what the period added, posted entries dated inside it, less the entries close_fiscal_year() marks closing — as an income statement reads. closing: the balance at the end of the period, every posted entry up to it — as a balance sheet reads. |
+| `sign` | `smallint` | not null — Multiplies the debit-minus-credit balance so the aggregate reads as its name says: 1 where a debit is the figure (an asset, a charge), -1 where a credit is (revenue, equity, a debt, a profit). |
+| `adds_unclosed_result` | `boolean` | not null — Whether the aggregate also takes the result nobody has closed: the balance of every income and expense account its rules do not catch, on the account year_result_account() names. True of equity alone. |
+| `sequence` | `integer` | not null |
+| `description` | `text` | not null |
+
+Constraints:
+
+- `CHECK ((reading = ANY (ARRAY['movements'::text, 'closing'::text])))`
+- `CHECK ((sign = ANY (ARRAY[1, '-1'::integer])))`
+- `CHECK (((NOT adds_unclosed_result) OR (reading = 'closing'::text)))`
+- `PRIMARY KEY (code)`
+
+### `analysis_rules`
+
+How an account of a company reaches an aggregate: the rules of a statement line, with the same columns and the same test, account_rule_catches(). An account reaches an aggregate once, whatever the number of its rules that take it; two aggregates may take the same account — cash is part of the current assets, which are part of the total.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `chart_code` | `text` | not null |
+| `aggregate` | `text` | not null |
+| `sequence` | `integer` | not null |
+| `rule_kind` | `text` | not null |
+| `code_from` | `text` |  |
+| `code_to` | `text` |  |
+| `account_type` | `account_type` |  |
+| `balance_side` | `text` | not null — Which side of the account the aggregate takes, read on the balance the aggregate reads: `debit` and `credit` split an account the balance sheet itself splits — a bank account in debit is cash, in credit a debt. |
+
+Constraints:
+
+- `CHECK (
+CASE rule_kind
+    WHEN 'account_type'::text THEN ((account_type IS NOT NULL) AND (code_from IS NULL) AND (code_to IS NULL))
+    WHEN 'code_range'::text THEN ((code_from IS NOT NULL) AND (code_to IS NOT NULL) AND (account_type IS NULL))
+    ELSE ((code_from IS NOT NULL) AND (code_to IS NULL) AND (account_type IS NULL))
+END)`
+- `CHECK ((rule_kind = ANY (ARRAY['account_code'::text, 'code_range'::text, 'code_prefix'::text, 'account_type'::text])))`
+- `CHECK ((balance_side = ANY (ARRAY['debit'::text, 'credit'::text, 'any'::text])))`
+- `PRIMARY KEY (country, chart_code, aggregate, sequence)`
+
+### `analysis_templates`
+
+The aggregates a pack defines for one of its charts, and where that reading of the chart comes from. Written by the seed of a pack that carries analysis.json; a chart with no row has no analysis, and financial_analysis() returns nothing for its companies.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `chart_code` | `text` | not null |
+| `aggregate` | `text` | not null |
+| `legal_reference` | `text` | not null — The classes of the chart or the rubric of the statement the aggregate mirrors, cited as the country cites them. |
+| `source_key` | `text` | Key of the entry of the pack's source register where that reference can be read. |
+
+Constraints:
+
+- `CHECK ((country ~ '^[A-Z]{2}$'::text))`
+- `PRIMARY KEY (country, chart_code, aggregate)`
 
 ### `analytic_axes`
 
@@ -2025,6 +2093,7 @@ Constraints:
 |---|---|
 | `accept_invitation(p_token text)` | Turns an invitation into a membership for the signed-in user, whose address has to be the one invited. Single use, and refused once expired. |
 | `account_id_by_code(p_company_id uuid, p_code text)` | Account of a company by its code, or NULL. |
+| `account_rule_catches(p_rule_kind text, p_code_from text, p_code_to text, p_rule_type account_type, p_side text, p_code text, p_account_type account_type, p_balance numeric)` | Whether a rule takes an account with this code, type and balance: by one code, by the head of the code, by a range of heads or by account type, on the side the rule names. The one spelling of that test, read through statement_rule_catches() by the statements and directly by financial_analysis(). |
 | `accounts_guard_frozen()` | Refuses a change of code or of account_type on an account that carries ledger lines, is named by a tax posting or plays a company role. The label, the translations, the parent, reconcilable, deprecated and pinned stay editable. |
 | `accounts_in_use(p_company_id uuid, p_from date, p_to date)` | The accounts of a company that are in use: moved by a posted entry in the period — ever, when no period is given — or referenced by the configuration of the company — a role default, a contact override, a journal, a tax posting, a cash-basis transition, a bank account, a product — or held by a module the company has enabled, or pinned. Deprecated accounts are left out. A configuration reference is not dated; only the movement is. This is a reading: nothing here restricts what may be booked. |
 | `acting_user()` | The person a write is recorded against: the signed-in user, or the person who issued the machine key presented in this transaction (api_keys.created_by). Null on a direct connection and for a key the installation issued itself. It attributes and never authorises: what a key may do is still has_capability(), and auth.uid() stays null for a key. |
@@ -2135,6 +2204,7 @@ Constraints:
 | `filing_rounding(p_company_id uuid, p_report_code text)` | How a figure of this form is written when it is frozen for this company: the currency's decimals and the country's method, coarsened to the unit of the form where the form names one. The only reader of tax_report_templates.rounding_unit. |
 | `filing_tax_movements(p_filing_id uuid)` | The tax accounts a declared period moved and by how much, on the same window and the same tax-point rule the return read, net of what an earlier settlement of the same period already carried. What settle_filing() clears — the whole period the first time, the difference on a corrective — and what anybody can read before it does. |
 | `filings_touched_since(p_company_id uuid, p_from date, p_to date)` | Declarations that have gone and whose period the ledger moved afterwards: how many entries carrying a declaration box landed in it, when the last one did, and how many of the filed figures now disagree. An entry that changes no figure is still listed — it was posted into a period that had been declared, and that is the fact being reported. |
+| `financial_analysis(p_company_id uuid, p_from date, p_to date)` | The aggregates of a company over a period, one row per aggregate its pack defines for its chart, in the order of analysis_aggregates: the amount in the company currency, signed as the aggregate is named, and the accounts that make it as [{code, name, amount}], each amount with that same sign. Movements are read from p_from to p_to, less the closing entries; balances at p_to. equity adds the result no close has moved yet, on the account year_result_account() names (code and name null where the pack names none). No row for a company whose pack defines no analysis. Security invoker: entries.read, and the caller's own rights on the ledger. |
 | `financial_statement(p_company_id uuid, p_statement_code text, p_from date, p_to date)` | One financial statement of a company for a period: each line summed from the accounts its rules catch, then the totals evaluated in the order the scheme declares them. No country rule lives in this function. |
 | `financial_statement_of_kind(p_company_id uuid, p_kind text, p_from date, p_to date)` | One financial statement of a company by kind — balance_sheet, income_statement, allocation, cash_flow — for a caller that does not know which scheme its country pack carries. Resolves through default_statement_code() at the end date of the period, then answers as financial_statement() does, with the code it chose in the first column. On a balance sheet whose line for the result also takes other balances (statement_templates.result_in_progress = combined), the result nobody has closed yet follows that line as a row of its own: key <line>:result_in_progress, parent the line, the pack's label, not a total — a detail of its parent that no total adds. |
 | `fiscal_year_at(p_company_id uuid, p_date date)` | Fiscal year covering a date, or NULL. |
@@ -2233,7 +2303,7 @@ Constraints:
 | `significant_words(p_text text, p_minimum_length integer)` | The words of a name that are long enough to be evidence, lowercased and deduplicated. No stop list: a word shared by several contacts is disqualified by the count of what it reaches, which is a fact about this company rather than an opinion about a language. |
 | `statement_account_matches(p_company_id uuid, p_statement_code text, p_from date, p_to date)` | Which line of a statement each account of a company falls on, with its balance: cumulative to the end date on a balance sheet, over the period otherwise. On a balance sheet the income and expense accounts no line catches are the result nobody has closed yet, and stand as one balance on year_result_account(); in_progress is the part of each balance that is that result — an income or expense account a line catches, or the moved result — and nil elsewhere. The one place statement_figures() and unmapped_accounts() read. |
 | `statement_figures(p_company_id uuid, p_statement_code text, p_from date, p_to date)` | A financial statement as financial_statement() returns it, with in_progress beside each line: the part of the line that is the result of the year nobody has closed, read with the line's sign — nil on a total, on a statement that is not a balance sheet, and once the year is closed. Read by financial_statement() and financial_statement_of_kind(), so the ledger is summed once. |
-| `statement_rule_catches(p_rule statement_line_rules, p_code text, p_account_type account_type, p_balance numeric)` | Whether a rule of a statement line takes an account with this code, type and balance: by one code, by the head of the code, by a range of heads or by account type, on the side the rule names. The one spelling of that test, read by statement_account_matches(). |
+| `statement_rule_catches(p_rule statement_line_rules, p_code text, p_account_type account_type, p_balance numeric)` | Whether a rule of a statement line takes an account with this code, type and balance. A call to account_rule_catches(), so a statement and an analysis read a rule the same way; read by statement_account_matches(). |
 | `suggest_combination(p_transaction_id uuid)` | A subset of one counterparty's open items that adds up to the statement line, oldest first. A proposal only: it is never applied automatically, because a sum that reaches the right total from the wrong documents leaves nothing behind to notice. |
 | `suggest_contacts(p_transaction_id uuid)` | Who this statement line could be, with the score, the evidence in a sentence, and how many contacts that same evidence reached. It writes nothing and decides nothing: a caller that applies a match on its own is expected to require alternatives = 1. Only the contacts whose name shares a word with the line are scored, through contacts.name_words. |
 | `suggest_matches(p_transaction_id uuid)` | What a statement line could settle: the open items it matches, the evidence, and how many candidates that same evidence produced. Writes nothing. A combination of several documents is offered by suggest_combination(), separately, because it is a resemblance and not an identification. |

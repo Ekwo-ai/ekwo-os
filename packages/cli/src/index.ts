@@ -110,6 +110,8 @@ export {
   type PackFixedAssets,
   type PackAssetCategory,
   type PackCorporateTax,
+  type PackAnalysis,
+  type PackAnalysisAggregate,
   type PackGolden,
   type PackGoldenContact,
   type PackGoldenDocument,
@@ -137,6 +139,7 @@ export {
   type Territory,
 } from './pack/territories.js';
 export { validate, type Issue } from './pack/schema.js';
+export { REQUIRED_AGGREGATES, compileAnalysis } from './pack/analysis.js';
 export {
   packDiff,
   packStatus,
