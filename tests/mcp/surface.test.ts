@@ -62,6 +62,7 @@ const WRITE_TOOLS = [
   'record_payment',
   'reconcile',
   'unreconcile',
+  'settle_from_statement',
   'create_bank_account',
   'create_bank_transaction',
   'import_bank_statement',

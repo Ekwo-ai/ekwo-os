@@ -111,16 +111,37 @@ function callOf(
   fn: string,
   args: Record<string, unknown>,
   schema?: string,
+  arrays: ReadonlyMap<string, string> = new Map(),
 ): { call: string; params: unknown[] } {
   const entries = Object.entries(args);
   const params: unknown[] = [];
   const parts = entries.map(([name, value], index) => {
+    const array = arrays.get(name);
+    if (array !== undefined && Array.isArray(value)) {
+      params.push(arrayLiteral(value));
+      return `${identifier(name)} => $${index + 1}::text::${array}`;
+    }
     const json = typeof value === 'object' && value !== null;
     params.push(json ? JSON.stringify(value) : value);
     return `${identifier(name)} => $${index + 1}${json ? '::text::jsonb' : ''}`;
   });
   return { call: `${qualified(schema, fn)}(${parts.join(', ')})`, params };
 }
+
+/**
+ * A list for a parameter declared as a Postgres array — `uuid[]`,
+ * `numeric[]` — is that array, not JSON: PostgREST reads the JSON list into
+ * the declared type, and this route says the same thing in the literal
+ * Postgres reads, each element quoted, through `text` like a JSON argument.
+ */
+function arrayLiteral(values: unknown[]): string {
+  const element = (value: unknown): string =>
+    value === null || value === undefined ? 'NULL' : `"${String(value).replace(/["\\]/g, (c) => `\\${c}`)}"`;
+  return `{${values.map(element).join(',')}}`;
+}
+
+/** Only such a name reaches a cast, so a type read from the catalogue is checked all the same. */
+const ARRAY_TYPE = /^[a-z_][a-z0-9_ ]*\[\]$/;
 
 export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
   const claims = JSON.stringify({
@@ -147,12 +168,48 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
     }
   }
 
+  /**
+   * The parameters of a function that are Postgres arrays, by name, read once
+   * per function from the catalogue. Every other list is JSON.
+   */
+  const arrayParameters = new Map<string, Promise<ReadonlyMap<string, string>>>();
+  function arraysOf(fn: string, schema?: string): Promise<ReadonlyMap<string, string>> {
+    const key = `${schema ?? 'public'}.${fn}`;
+    let found = arrayParameters.get(key);
+    if (found === undefined) {
+      found = asUser((tx) =>
+        tx.query<{ name: string; type: string }>(
+          `select a.name, a.type::regtype::text as type
+             from pg_proc p
+             join pg_namespace n on n.oid = p.pronamespace
+             cross join lateral unnest(p.proargnames, coalesce(p.proallargtypes, p.proargtypes::oid[])) as a (name, type)
+            where n.nspname = $1 and p.proname = $2`,
+          [schema ?? 'public', fn],
+        ),
+      ).then(
+        (rows) => new Map(rows.filter((row) => ARRAY_TYPE.test(row.type)).map((row) => [row.name, row.type])),
+        (error: unknown) => {
+          arrayParameters.delete(key);
+          throw error;
+        },
+      );
+      arrayParameters.set(key, found);
+    }
+    return found;
+  }
+
+  /** The call, with a list for an array parameter sent as that array. */
+  async function callFor(fn: string, args: Record<string, unknown>, schema?: string): Promise<{ call: string; params: unknown[] }> {
+    const arrays = Object.values(args).some(Array.isArray) ? await arraysOf(fn, schema) : undefined;
+    return callOf(fn, args, schema, arrays);
+  }
+
   return {
     mode: 'sql',
     actingAs: options.userId,
 
     async rpc<T>(fn: string, args: Record<string, unknown> = {}, schema?: string): Promise<T[]> {
-      const { call, params } = callOf(fn, args, schema);
+      const { call, params } = await callFor(fn, args, schema);
       // Aggregated as JSON so the shape matches what PostgREST returns for the
       // same function, instead of depending on how a driver types a column.
       const rows = await asUser((tx) =>
@@ -165,7 +222,7 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
     },
 
     async rpcVoid(fn: string, args: Record<string, unknown> = {}, schema?: string): Promise<void> {
-      const { call, params } = callOf(fn, args, schema);
+      const { call, params } = await callFor(fn, args, schema);
       await asUser((tx) => tx.query(`select ${call}`, params));
     },
 

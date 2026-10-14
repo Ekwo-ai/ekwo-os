@@ -248,6 +248,7 @@ Every write names its company explicitly.
 | `reconcile` / `unreconcile` | Matches two ledger lines, or undoes one matching |
 | `create_bank_account` | Registers an account from its identifier, in the scheme the company's country uses (an IBAN, a routing number and an account number, a sort code and an account number…), and wires it to the bank journal. Running it twice with the same identifier creates nothing |
 | `create_bank_transaction` | One statement line by hand, for an installation with no feed |
+| `settle_from_statement` | Books a statement line as the payment it is and matches it against the documents or open items named, in one entry — with `amounts`, how much settles each; with `extra_lines`, the fee a payment provider kept or the charges of a bank, on the account and with the tax the user names. The line balances to the cent or is refused (`settlement_unbalanced`); extra lines alone settle a bank charge |
 | `import_bank_statement` | A statement file (`camt.053`, `coda`, `cfonb120`) into statements and pending lines. Books nothing; the same file twice creates nothing; an unknown account or a statement that does not add up is refused by name, a missing statement is signalled |
 | `lock_period` | Moves the accounting and VAT lock dates. Needs `company.write`. |
 | `opening_balance` | The trial balance of whatever kept the books before, as the opening entry — of the first day of the year, or of `opening_date`, the day inside it the books were taken over. `items` are the invoices and credit notes still open that day: each a posted document with its number, payment reference and due date, which statement matching finds like an invoice issued here; the items of an account must add up to its line |
@@ -269,7 +270,7 @@ at, and those somebody pinned with `pin_accounts`. `include_all` returns the
 whole chart, and every write tool still accepts any account of it.
 
 `post_document`, `cancel_document`, `reverse_entry`, `record_payment`,
-`update_document_lines`, `unreconcile`, `lock_period`, `opening_balance`, `import_books`,
+`update_document_lines`, `unreconcile`, `settle_from_statement`, `lock_period`, `opening_balance`, `import_books`,
 `close_fiscal_year`, `reopen_fiscal_year`, `revoke_invitation`, `remove_member`,
 `set_member_role`, `revoke_api_key` and `revoke_share` are annotated destructive in the protocol, so a client can ask
 before calling them.

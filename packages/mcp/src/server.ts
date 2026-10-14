@@ -582,6 +582,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'settle_from_statement',
+    {
+      title: 'Settle a bank statement line',
+      description:
+        'Books a pending statement line as the payment it is and matches it against the documents or open items named, in one entry: the bank, the customer or supplier account, and the extra lines the money is net of — the fee a payment provider kept from a payout, the charges of a bank, each on the account and with the tax the user names. A payout of 97.00 for an invoice of 100.00 settles the invoice in full with an extra line of 3.00 on a fee account. amounts says how much settles each item; left out, oldest first. The line has to balance to the cent (settlement_unbalanced otherwise, with the difference). Extra lines alone settle a bank charge. One counterparty per line. The entry cannot be unposted. Ask the user before calling it, and for the fee account and its tax.',
+      inputSchema: write.SettleFromStatementInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.settleFromStatement(backend, args)),
+  );
+
+  server.registerTool(
     'create_bank_account',
     {
       title: 'Add a bank account',

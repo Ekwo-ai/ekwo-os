@@ -77,6 +77,41 @@ somewhere has already run it.
   empty list; only the seed of a pack that carries evidence writes it, so the
   seeds of every other country run on the schema they needed before.
 
+- **A bank line settles what it pays, net of what it costs**
+  (`20261014081008`; issue #93, reported by Pieterjan Muller). A payout of a
+  payment provider — 97.00 for an invoice of 100.00, the provider keeping
+  3.00 — or a payment to a supplier with the bank's charges on the same line
+  could not be settled: `settle_from_statement()` refused more money than
+  open and booked no line for the fee, and the way round it, a manual entry
+  and a PATCH of the bank line, is what `bank_transactions_guard()` refuses
+  since 0.12.2. The function takes two optional arguments, and every call
+  made before keeps its meaning. `p_amounts`, beside `p_line_ids`, says how
+  much settles each item — one in part, several at once, in any order — where
+  the function spread the money oldest first. `p_extra_lines`,
+  `[{account, amount, tax?, description?}]`, books in the same entry what the
+  money is net of or carries besides: a fee on an expense account, with the
+  tax it bears taken out of it from the postings of a purchase invoice, bank
+  charges, a small difference. Account and tax are the caller's, by code;
+  positive is a charge, negative a credit. The line balances to the cent —
+  money in is the items less the charges, money out the items plus them — or
+  `settlement_unbalanced` names the difference. With extra lines and no
+  amounts the items are settled in full, so that a fee keyed a cent wrong is
+  refused rather than left open on the invoice; extra lines alone settle a
+  bank charge with no item. One entry, through `post_entry()`; the matchings
+  are `reconcile()`'s, one counterparty. Refused by name: an account the
+  company does not have or that takes no entry by hand (deprecated, off the
+  balance sheet, reconcilable: `account_takes_no_entries`), a tax it does not
+  have, not in force, on sales or on a cash basis, a negative charge bearing a
+  tax (`extra_line_sign`), an amount of nothing, finer than the currency or
+  over what an item has open, a field an extra line does not know, and extra
+  lines on a line in another currency than the company's. `ekwo match` takes
+  several documents, `--amount` once per document and `--extra
+  "account=…,amount=…,tax=…"`, and settles a bank charge with `--extra`
+  alone; its answer gains `document_ids`, and `document_id` is null for such
+  a charge. The MCP server gains the tool `settle_from_statement`, the first
+  to settle a statement line, with the same arguments; `@ekwo-ai/core`'s
+  `settleFromStatement()` takes `document_ids`, `amounts` and `extra_lines`.
+
 ### Changed
 
 - **Belgium 1.19.0 and France 1.18.0 are `proven`.** On the 2025 books of a

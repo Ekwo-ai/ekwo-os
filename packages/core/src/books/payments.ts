@@ -36,12 +36,37 @@ export interface RecordPaymentArgs {
   client_ref?: string | undefined;
 }
 
+/**
+ * A line the settlement books beside the open items: what the money is net of,
+ * or carries besides — a fee a payment provider kept, bank charges, a small
+ * difference. Positive is a charge, debited; negative a credit.
+ */
+export interface SettlementExtraLine {
+  /** The account, by code. */
+  account: string;
+  /** A decimal string. A tax, when named, is inside it. */
+  amount: string | number;
+  /** The tax the charge bears, by code; taken out of the amount. */
+  tax?: string | undefined;
+  description?: string | undefined;
+}
+
 export interface SettleFromStatementArgs {
   transaction_id: string;
   /** The document the statement line pays: its open items are the lines settled. */
   document_id?: string | undefined;
+  /** Several documents the one line pays, in the order `amounts` follows. */
+  document_ids?: string[] | undefined;
   /** Or the open items themselves, by ledger line. */
   line_ids?: string[] | undefined;
+  /**
+   * How much of the money settles each item, in the order of `line_ids` — or
+   * one amount per document, in the order they are named. Left out, the items
+   * are settled oldest first.
+   */
+  amounts?: (string | number)[] | undefined;
+  /** Lines booked in the same entry beside the settlement. Alone, they settle a line that pays no item. */
+  extra_lines?: SettlementExtraLine[] | undefined;
 }
 
 interface OpenItem {
@@ -343,32 +368,52 @@ export async function unreconcile(
 
 /**
  * A statement line pays a document: `settle_from_statement()` books the
- * payment the line is and matches it against the open items named. Naming a
- * document names what is open on it; nothing here chooses between candidates.
+ * payment the line is and matches it against the open items named, with the
+ * extra lines it is net of in the same entry. Naming a document names what is
+ * open on it; nothing here chooses between candidates, and nothing here adds
+ * up an amount: whether the line balances is the schema's answer.
  */
 export async function settleFromStatement(
   backend: Backend,
   args: SettleFromStatementArgs,
 ): Promise<unknown> {
+  const extras = args.extra_lines ?? [];
+  const documents = args.document_ids ?? (args.document_id === undefined ? [] : [args.document_id]);
   let lineIds = args.line_ids;
   if (lineIds === undefined || lineIds.length === 0) {
-    if (args.document_id === undefined) {
-      throw new BooksError('no_lines_named: settling needs the document this money pays, or the open items themselves.');
+    if (documents.length === 0 && extras.length === 0) {
+      throw new BooksError('no_lines_named: settling needs the document this money pays, the open items themselves, or the extra lines that are the whole of it.');
     }
-    const transaction = only(
-      await backend.select<{ company_id: string }>({
-        table: 'bank_transactions',
-        columns: ['company_id'],
-        where: [{ column: 'id', op: 'eq', value: args.transaction_id }],
-      }),
-      `bank transaction ${args.transaction_id}`,
-    );
-    lineIds = (await openItemsOf(backend, transaction.company_id, args.document_id)).map((item) => item.line_id);
+    lineIds = [];
+    if (documents.length > 0) {
+      const transaction = only(
+        await backend.select<{ company_id: string }>({
+          table: 'bank_transactions',
+          columns: ['company_id'],
+          where: [{ column: 'id', op: 'eq', value: args.transaction_id }],
+        }),
+        `bank transaction ${args.transaction_id}`,
+      );
+      for (const documentId of documents) {
+        const open = await openItemsOf(backend, transaction.company_id, documentId);
+        // An amount per document stands for its one open item; a document
+        // falling due in instalments has several, and one amount does not say
+        // which of them it settles.
+        if (args.amounts !== undefined && open.length > 1) {
+          throw new BooksError(
+            `amount_needs_lines: document ${documentId} has ${open.length} open items, and one amount does not say which it settles. Name the items with line_ids and one amount for each.`,
+          );
+        }
+        lineIds.push(...open.map((item) => item.line_id));
+      }
+    }
   }
 
   await backend.rpc<Row>('settle_from_statement', {
     p_transaction_id: args.transaction_id,
     p_line_ids: lineIds,
+    ...(args.amounts === undefined ? {} : { p_amounts: args.amounts.map(String) }),
+    ...(extras.length === 0 ? {} : { p_extra_lines: extras }),
   });
   const settled = await backend.select<Row>({
     table: 'bank_transactions',

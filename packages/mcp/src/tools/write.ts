@@ -47,6 +47,7 @@ export {
   reconcile,
   recordPayment,
   reverseEntry,
+  settleFromStatement,
   undoDocument,
   unreconcile,
   updateDocumentLines,
@@ -400,6 +401,31 @@ export const UnreconcileInput = z.object({
   reconciliation_id: uuid.describe('The matching to undo, as returned by reconcile or read from the ledger line.'),
 });
 
+const decimal = z.union([z.string(), z.number()]);
+
+export const SettleFromStatementInput = z.object({
+  transaction_id: uuid.describe('The statement line, as list_bank_transactions returns it. It is settled once.'),
+  document_id: uuid.optional().describe('The posted document the line pays; its open items are what is settled.'),
+  document_ids: z.array(uuid).min(1).optional().describe('Several documents the one line pays, in the order amounts follows.'),
+  line_ids: z.array(uuid).min(1).optional().describe('Or the open items themselves, by ledger line.'),
+  amounts: z
+    .array(decimal)
+    .min(1)
+    .optional()
+    .describe('How much of the line settles each item — one per line_ids, or one per document — as decimal strings. Left out, the items are settled oldest first, and in full when there are extra_lines. Less than an item has open settles it in part, which is the user\'s decision, never yours.'),
+  extra_lines: z
+    .array(
+      z.object({
+        account: z.string().min(1).describe('The account, by code: an expense for a fee or a charge, an income for a surplus. Never a customer or supplier account.'),
+        amount: decimal.describe('A decimal string. Positive is a charge (debited), negative a credit. With a tax, the tax is inside it.'),
+        tax: z.string().min(1).optional().describe('The tax the charge bears, by code, when the provider or the bank invoices it with one. Ask the user; do not choose.'),
+        description: z.string().min(1).optional(),
+      }).strict(),
+    )
+    .optional()
+    .describe('Lines booked in the same entry beside the settlement: the fee a payment provider kept from a payout, the charges of a bank, a small difference. Money in is the items less these; money out the items plus these; to the cent, or settlement_unbalanced names the difference. Alone, with no document and no line, they settle a bank charge.'),
+});
+
 // ---------------------------------------------------------------------------
 // Bank
 // ---------------------------------------------------------------------------
@@ -600,7 +626,7 @@ export async function createBankTransaction(
   );
   return {
     transaction: created,
-    note: 'A statement line is not an entry. It waits as `pending` until a payment is recorded against it.',
+    note: 'A statement line is not an entry. It waits as `pending` until settle_from_statement books it as the payment it is.',
   };
 }
 
