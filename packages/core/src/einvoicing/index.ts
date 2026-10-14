@@ -9,3 +9,4 @@ export * from './transport.js';
 export * from './directory.js';
 export * from './formats.js';
 export * from './issue.js';
+export * from './peppol.js';

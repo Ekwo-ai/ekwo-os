@@ -14,6 +14,7 @@ import { reverseCommand } from './commands/entry.js';
 import { IMPORT_USAGE, importCommand } from './commands/import.js';
 import { doctorCommand } from './commands/doctor.js';
 import { einvoiceCommand } from './commands/einvoice.js';
+import { peppolCommand, type PeppolDeps } from './commands/peppol.js';
 import { initCommand, type InitDeps } from './commands/init.js';
 import { loginCommand, logoutCommand, type LoginDeps } from './commands/login.js';
 import { migrateCommand } from './commands/migrate.js';
@@ -64,13 +65,14 @@ export const COMMANDS = [
   'import',
   'proof',
   'einvoice',
+  'peppol',
   // Aliases, last: `invoice` is what `doc` used to be called, and `document` is its whole word.
   'invoice',
   'document',
 ] as const;
 
 /** What a test may hand a command instead of the network, the disk and the environment. */
-export type RunDeps = InitDeps & LoginDeps & BooksDeps & ProofDeps;
+export type RunDeps = InitDeps & LoginDeps & BooksDeps & ProofDeps & PeppolDeps;
 
 export function help(): string {
   return `${bold('ekwo')} — install and operate Ekwo OS on a Supabase project you own.
@@ -169,6 +171,12 @@ ${bold('Connecting')} ${dim('(every command)')}
               declares, through the einvoicing module. validate writes it and
               names the rules it breaks; issue keeps it, and with --send
               --to <directory> writes it to that folder; status follows it.
+  ${cyan('peppol')}      validate <file> | lookup <participant> — the Peppol network, with
+              no installation and no sign-in. validate reads a UBL invoice or
+              credit note as it arrived and names the rules it breaks; lookup
+              checks an identifier (0208:0999999922) and asks the SML whether
+              it is registered, and with which SMP. --test: the acceptance
+              network.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
   --profile <name>          Which profile: a demo instance, production, one client
@@ -202,6 +210,8 @@ ${bold('Keeping books')} ${dim('(each verb is one function the MCP server calls 
   --send, --to <directory>  einvoice issue. Send the file, to that folder — the
                             one transport this release ships. --refresh --to on
                             einvoice status reads the receipts left beside it.
+  --test                    peppol lookup. Ask the SML of the acceptance network
+                            rather than the production one.
   --out <file>              einvoice validate, issue. Also write the file there.
                             doc pdf. Write the PDF there rather than under its
                             own name in the current directory.
@@ -467,6 +477,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await proofCommand(args, deps);
       case 'einvoice':
         return await einvoiceCommand(args, deps);
+      case 'peppol':
+        return await peppolCommand(args, deps);
       default:
         throw new UsageError(`unknown command: ${args.command}\nRun \`ekwo --help\` for the list.`);
     }

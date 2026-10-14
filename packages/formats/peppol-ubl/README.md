@@ -317,6 +317,11 @@ the `cname` lookup, the unpadded base32 of its SHA-256 for the `naptr` lookup
 of BDXL. It is pure — the hashes are written out in the package, there is no
 default zone, and nothing is resolved: the lookup belongs to a transport.
 
+The lookup itself is in `@ekwo-ai/core`, `lookupPeppolParticipant()`, which
+asks the DNS for that name and reads the SMP off its NAPTR record; from a
+terminal, `ekwo peppol lookup <participant>`, and `ekwo peppol validate <file>`
+for a file received.
+
 ## Sources
 
 - OASIS, *Universal Business Language 2.1*, schemas of 4 November 2013:

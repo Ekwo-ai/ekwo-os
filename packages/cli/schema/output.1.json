@@ -51,6 +51,16 @@
       "$comment": "A row as the database holds it, in the columns the MCP server reads too: snake case, amounts and dates as strings. The columns are the schema's (docs/schema.md), not this file's.",
       "type": "object"
     },
+    "peppolParty": {
+      "$comment": "A party of a received Peppol document as the file names it: its legal name, its VAT identifier and its electronic address, `scheme:value`. Null where the file says nothing.",
+      "type": "object",
+      "required": ["name", "vat_id", "electronic_address"],
+      "properties": {
+        "name": { "type": ["string", "null"] },
+        "vat_id": { "type": ["string", "null"] },
+        "electronic_address": { "type": ["string", "null"] }
+      }
+    },
     "documentPdf": {
       "$comment": "The PDF of a sale invoice or credit note, rendered from the views by renderDocumentPdf() and written to `written_to`; the file itself is never in the document. `logo` is `embedded`, `none`, or why the logo the company names was not used. `factur_x` is null without --factur-x; with it, the rules of EN 16931 the embedded CII breaks, which end on exit code 1. Nothing was recorded.",
       "type": "object",
@@ -656,6 +666,41 @@
         "type": "object",
         "required": ["transmissions", "count"],
         "properties": { "transmissions": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
+      },
+      "peppol validate": {
+        "$comment": "A received UBL invoice or credit note, read without any installation: what it says, and every rule it breaks — the arithmetic of EN 16931 the reader re-adds, and the electronic addresses (BT-34, BT-49) checked as Peppol participant identifiers. Nothing is booked. `valid` is false when a rule is broken, and the exit code is then 1. A file that is not a UBL invoice at all is a wrong call, code 2. `payable` is a decimal string, as the file wrote it.",
+        "type": "object",
+        "required": ["file", "kind", "customization_id", "number", "issue_date", "currency", "seller", "buyer", "payable", "line_count", "violations", "valid"],
+        "properties": {
+          "file": { "type": "string" },
+          "kind": { "enum": ["invoice", "credit_note"] },
+          "customization_id": { "type": ["string", "null"] },
+          "number": { "type": "string" },
+          "issue_date": { "type": "string" },
+          "currency": { "type": "string" },
+          "seller": { "$ref": "#/$defs/peppolParty" },
+          "buyer": { "$ref": "#/$defs/peppolParty" },
+          "payable": { "type": "string" },
+          "line_count": { "type": "integer" },
+          "violations": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "valid": { "type": "boolean" }
+        }
+      },
+      "peppol lookup": {
+        "$comment": "A Peppol participant identifier, checked, then looked up on the DNS of the Service Metadata Locator (SML) of one network. `registered` is null when the identifier is not one and nothing was asked; `smp` is the address of the Service Metadata Publisher the record names. The exit code is 0 only for a registered participant.",
+        "type": "object",
+        "required": ["participant", "identifier", "valid", "problems", "network", "zone", "hostname", "registered", "smp"],
+        "properties": {
+          "participant": { "type": "string" },
+          "identifier": { "type": ["string", "null"] },
+          "valid": { "type": "boolean" },
+          "problems": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "network": { "enum": ["production", "test"] },
+          "zone": { "type": "string" },
+          "hostname": { "type": ["string", "null"] },
+          "registered": { "type": ["boolean", "null"] },
+          "smp": { "type": ["string", "null"] }
+        }
       },
       "import": {
         "oneOf": [

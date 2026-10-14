@@ -11,6 +11,19 @@ somewhere has already run it.
 
 ### Added
 
+- **`ekwo peppol validate <file>` and `ekwo peppol lookup <participant>`**
+  ask the Peppol network two questions with no installation and no sign-in.
+  `validate` reads a UBL invoice or credit note as it arrived and names every
+  rule it breaks: the arithmetic of EN 16931, and the electronic addresses of
+  both parties (BT-34, BT-49) checked as participant identifiers, check digits
+  included (`invalid_electronic_address`). Nothing is booked; a rule broken
+  ends on exit 1, a file that is not a UBL invoice on exit 2. `lookup` checks
+  an identifier, then asks the DNS of the Service Metadata Locator whether it
+  is registered and which Service Metadata Publisher holds it — production,
+  or the acceptance network with `--test`; it ends on 0 only for a registered
+  participant, and asks nothing for an identifier that is not one. Both are
+  functions of `@ekwo-ai/core`, `readPeppolFile()` and
+  `lookupPeppolParticipant()`, which take the DNS as a parameter.
 - **A pack can be proven on the real books of a company.** The certification
   scale becomes `community`, `maintained`, `proven`, `reviewed`. A `proven`
   pack reproduced, to the unit they were filed in, the statements a real

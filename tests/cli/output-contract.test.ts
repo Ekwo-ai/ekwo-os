@@ -390,6 +390,9 @@ describe('every command answers --json with one document of the published shape'
     // The electronic invoices sent: none, on a company that never turned the
     // module on — row level security answers with nothing, not with an error.
     expect((await asPerson(['einvoice', 'list'])).data).toMatchObject({ count: 0 });
+    // A received Peppol file, read with no installation at all.
+    const received = join(repoRoot, 'packages', 'formats', 'peppol-ubl', 'test', 'fixtures', 'invoice-standard.xml');
+    expect((await asProver(['peppol', 'validate', received])).data).toMatchObject({ valid: true });
 
     expect((await asPerson(['logout'])).data).toMatchObject({ signedOut: true });
     // The commands that install act as nobody, and carry no such field.

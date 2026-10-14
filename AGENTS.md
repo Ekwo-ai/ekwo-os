@@ -194,6 +194,7 @@ reach and whether you may write; without that box ticked, you read.
 | A link the customer opens without an account | — | `share_document` |
 | The PDF of an invoice or a credit note, with the company's logo | `ekwo doc pdf <doc> [--factur-x] [--out file]` | `render_invoice_pdf` |
 | The electronic invoice of a posted sale (module `einvoicing`) | `ekwo einvoice validate <doc>`, then `ekwo einvoice issue <doc>` | `einvoicing_validate`, then `einvoicing_issue` |
+| A received Peppol file, or whether a recipient is on Peppol (no installation needed) | `ekwo peppol validate <file>`, `ekwo peppol lookup <participant>` | — |
 | The VAT return of a period | — | `vat_return` |
 | Trial balance, ledger | — | `trial_balance`, `general_ledger` |
 
