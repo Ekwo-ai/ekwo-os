@@ -166,8 +166,16 @@ is proved by a DNS TXT record on `ekwo.ai`. On every release, from
 
 ```sh
 mcp-publisher validate
-mcp-publisher login dns --domain ekwo.ai --private-key "<key>"
+mcp-publisher login dns --domain ekwo.ai --private-key "$KEY"
 mcp-publisher publish
+```
+
+`mcp-publisher` wants the 32-byte Ed25519 seed as 64 hex characters, while the
+key is kept as a PKCS#8 PEM file. The seed is the last 32 bytes of the DER
+body:
+
+```sh
+KEY=$(grep -v -- "-----" ~/.config/ekwo/ekwo-mcp-registry.pem | tr -d "\n" | base64 -d | tail -c 32 | xxd -p -c 64)
 ```
 
 ## After a release
