@@ -11,6 +11,7 @@ somewhere has already run it.
 
 ### Fixed
 
+- **Every MCP tool carries its title where a connector directory reads it.** A tool was declared with a top-level `title`, which the SDK takes, and nothing under `annotations.title`, which directories and some clients are the only ones to read; they listed all of them by their machine name. The server now copies the one title into the annotations at registration, for every tool, present and future, and `tests/mcp/surface.test.ts` reads the list a client sees to hold it there. The writes of the modules — `fixed_assets_create`, `fixed_assets_run_depreciation`, `fixed_assets_dispose`, `budgets_upsert_lines` and the others — say `destructiveHint: true`, as the socle's writes already did.
 - **An archive is given the time it takes.** An export of a whole company (`export_company()`, its manifest and tables) or an `import_company()`, asked over the API by a key or a signed-in member, now runs under a clock of five minutes instead of the eight seconds of `authenticated`; the clock is only ever raised. A company of about 17 000 rows exported in 11.5 s, so its nightly copy failed with `canceling statement due to statement timeout`.
 
 ## [0.13.0] — 2026-10-14

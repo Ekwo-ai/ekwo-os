@@ -9,7 +9,7 @@
  */
 
 import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import type { CallToolResult, ToolAnnotations } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from './backend.js';
 import { columns, relayableInvitation, type EinvoiceTransport, type LogoFetch } from '@ekwo-ai/core';
@@ -111,10 +111,37 @@ export function instructionsFor(options: ServerOptions = {}): string {
   return options.inviteToRegister === true ? `${INSTRUCTIONS}\n\n${relayableInvitation()}` : INSTRUCTIONS;
 }
 
+/**
+ * The same tool, with its title where every reader looks for it.
+ *
+ * The protocol lets a tool carry its human-readable name in two places: a
+ * top-level `title`, which the SDK's `registerTool` takes, and
+ * `annotations.title`, which some directories and clients are the only ones
+ * to read. A tool declared with one and not the other is listed by its
+ * machine name there. So the one title given below is copied into the
+ * annotations, and a title already set there is left as it is.
+ */
+function titled<T extends { title?: string; annotations?: ToolAnnotations }>(config: T): T {
+  if (config.title === undefined || config.annotations?.title !== undefined) return config;
+  return { ...config, annotations: { ...config.annotations, title: config.title } };
+}
+
+/**
+ * A server on which no tool can be registered without `annotations.title`.
+ *
+ * Done once, on the server, rather than at each of the registrations below:
+ * a tool added later goes through the same door, and `tests/mcp/surface.test.ts`
+ * reads the list a client sees to make sure none slipped past.
+ */
+function withTitledTools(server: McpServer): McpServer {
+  const register = server.registerTool.bind(server);
+  server.registerTool = ((name, config, callback) => register(name, titled(config), callback)) as McpServer['registerTool'];
+  return server;
+}
+
 export function buildServer(backend: Backend, options: ServerOptions = {}): McpServer {
-  const server = new McpServer(
-    { name: SERVER_NAME, version: SERVER_VERSION },
-    { instructions: instructionsFor(options) },
+  const server = withTitledTools(
+    new McpServer({ name: SERVER_NAME, version: SERVER_VERSION }, { instructions: instructionsFor(options) }),
   );
 
   // -------------------------------------------------------------------- read
@@ -1032,7 +1059,12 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
           title: tool.title,
           description: tool.description,
           inputSchema: tool.input.shape,
-          annotations: { readOnlyHint: tool.readOnly, openWorldHint: false },
+          // A module tool that is not read-only writes the books — an asset
+          // recorded, a depreciation booked, budget lines replaced — and says
+          // so, the way the socle's writes above do.
+          annotations: tool.readOnly
+            ? { readOnlyHint: true, openWorldHint: false }
+            : { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
         },
         async (args: unknown) =>
           guard(() =>
