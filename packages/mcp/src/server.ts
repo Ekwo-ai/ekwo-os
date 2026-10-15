@@ -9,7 +9,7 @@
  */
 
 import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import type { CallToolResult, ToolAnnotations } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from './backend.js';
 import { columns } from '@ekwo-ai/core';
@@ -68,13 +68,43 @@ export interface ServerOptions {
   modules?: readonly string[];
 }
 
+/**
+ * The same tool, with its title where every reader looks for it.
+ *
+ * The protocol lets a tool carry its human-readable name in two places: a
+ * top-level `title`, which the SDK's `registerTool` takes, and
+ * `annotations.title`, which some directories and clients are the only ones
+ * to read. A tool declared with one and not the other is listed by its
+ * machine name there. So the one title given below is copied into the
+ * annotations, and a title already set there is left as it is.
+ */
+function titled<T extends { title?: string; annotations?: ToolAnnotations }>(config: T): T {
+  if (config.title === undefined || config.annotations?.title !== undefined) return config;
+  return { ...config, annotations: { ...config.annotations, title: config.title } };
+}
+
+/**
+ * A server on which no tool can be registered without `annotations.title`.
+ *
+ * Done once, on the server, rather than at each of the registrations below:
+ * a tool added later goes through the same door, and `tests/mcp/surface.test.ts`
+ * reads the list a client sees to make sure none slipped past.
+ */
+function withTitledTools(server: McpServer): McpServer {
+  const register = server.registerTool.bind(server);
+  server.registerTool = ((name, config, callback) => register(name, titled(config), callback)) as McpServer['registerTool'];
+  return server;
+}
+
 export function buildServer(backend: Backend, options: ServerOptions = {}): McpServer {
-  const server = new McpServer(
-    { name: SERVER_NAME, version: SERVER_VERSION },
-    {
-      instructions:
-        'Ekwo OS keeps double-entry books in the user\'s own Postgres. You act as that user: everything you can see and change is what row level security lets them see and change. Amounts are decimal strings ("1210.00"), dates are ISO (2026-06-15), identifiers are uuids. Invoices are created as drafts and become ledger entries only when post_document is called; a posted entry is never deleted or edited: an invoice is undone by cancel_document — back to draft where its country allows it and nothing has left, by the credit note that names it otherwise, and it says which — and an entry keyed by hand by reverse_entry. When the database refuses — period_locked, entry_unbalanced, document_total_mismatch — report the refusal rather than working around it.',
-    },
+  const server = withTitledTools(
+    new McpServer(
+      { name: SERVER_NAME, version: SERVER_VERSION },
+      {
+        instructions:
+          'Ekwo OS keeps double-entry books in the user\'s own Postgres. You act as that user: everything you can see and change is what row level security lets them see and change. Amounts are decimal strings ("1210.00"), dates are ISO (2026-06-15), identifiers are uuids. Invoices are created as drafts and become ledger entries only when post_document is called; a posted entry is never deleted or edited: an invoice is undone by cancel_document — back to draft where its country allows it and nothing has left, by the credit note that names it otherwise, and it says which — and an entry keyed by hand by reverse_entry. When the database refuses — period_locked, entry_unbalanced, document_total_mismatch — report the refusal rather than working around it.',
+      },
+    ),
   );
 
   // -------------------------------------------------------------------- read
@@ -915,7 +945,12 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
           title: tool.title,
           description: tool.description,
           inputSchema: tool.input.shape,
-          annotations: { readOnlyHint: tool.readOnly, openWorldHint: false },
+          // A module tool that is not read-only writes the books — an asset
+          // recorded, a depreciation booked, budget lines replaced — and says
+          // so, the way the socle's writes above do.
+          annotations: tool.readOnly
+            ? { readOnlyHint: true, openWorldHint: false }
+            : { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
         },
         async (args) => guard(() => tool.run(backend, args as Record<string, never>)),
       );

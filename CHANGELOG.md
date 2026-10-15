@@ -9,6 +9,10 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Fixed
+
+- **Every MCP tool carries its title where a connector directory reads it.** A tool was declared with a top-level `title`, which the SDK takes, and nothing under `annotations.title`, which directories and some clients are the only ones to read; they listed all of them by their machine name. The server now copies the one title into the annotations at registration, for every tool, present and future, and `tests/mcp/surface.test.ts` reads the list a client sees to hold it there. The writes of the modules — `assets_create`, `assets_run_depreciation`, `assets_dispose` and `budgets_upsert_lines` — say `destructiveHint: true`, as the socle's writes already did.
+
 ### Added
 
 - **The MCP server answers over HTTP too** (`handleHttpRequest`,

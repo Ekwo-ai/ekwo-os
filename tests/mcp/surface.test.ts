@@ -14,7 +14,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { ENV, SERVER_NAME, SERVER_VERSION, buildServer, type Backend } from '../../packages/mcp/src/index.js';
+import { ENV, MODULE_TOOLSETS, SERVER_NAME, SERVER_VERSION, buildServer, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase, repoRoot } from '../helpers/db.js';
 import { newCompany, type Fixture } from '../helpers/factory.js';
 import { backendFor } from './helpers.js';
@@ -187,6 +187,36 @@ describe('the tools a client is offered', () => {
       'reopen_fiscal_year',
     ]) {
       expect(byName.get(name)?.annotations?.destructiveHint, name).toBe(true);
+    }
+  });
+
+  it('each carry their title in the annotations, and every write says whether it destroys', async () => {
+    // Connector directories read `annotations.title`, not the top-level
+    // `title` the SDK takes, and list a tool without it by its machine name.
+    // Every tool is checked, the modules' included — a module not installed
+    // is not offered, so a server with all of them is the one to ask.
+    const whole = buildServer(backend, { modules: MODULE_TOOLSETS.map((toolset) => toolset.code) });
+    const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+    const everything = new Client({ name: 'test-client', version: '0.0.0' });
+    await Promise.all([everything.connect(clientTransport), whole.connect(serverTransport)]);
+    try {
+      const { tools } = await everything.listTools();
+      expect(tools.length).toBeGreaterThan(READ_TOOLS.length + WRITE_TOOLS.length);
+      for (const tool of tools) {
+        expect(tool.annotations?.title, tool.name).toBe(tool.title);
+        expect(tool.annotations?.title?.length ?? 0, tool.name).toBeGreaterThan(0);
+        if (tool.annotations?.readOnlyHint !== true) {
+          expect(typeof tool.annotations?.destructiveHint, tool.name).toBe('boolean');
+        }
+      }
+      // The writes of the modules the directory looked at, by name.
+      for (const name of ['assets_create', 'assets_dispose', 'assets_run_depreciation', 'budgets_upsert_lines']) {
+        const tool = tools.find((candidate) => candidate.name === name);
+        expect(tool?.annotations?.readOnlyHint, name).toBe(false);
+        expect(tool?.annotations?.destructiveHint, name).toBe(true);
+      }
+    } finally {
+      await everything.close();
     }
   });
 
