@@ -566,6 +566,23 @@
           "note": { "type": "string" }
         }
       },
+      "contact statement": {
+        "$comment": "contact_statement(): the balance carried forward to `from`, the posted lines of the contact's receivable and payable accounts over the period with their running balance and matching_state, and the closing balance. Amounts are decimal strings, debit minus credit in the company currency.",
+        "type": "object",
+        "required": ["contact_id", "period", "opening_balance", "closing_balance", "lines", "count"],
+        "properties": {
+          "contact_id": { "type": "string" },
+          "period": {
+            "type": "object",
+            "required": ["from", "to"],
+            "properties": { "from": { "type": "string" }, "to": { "type": "string" } }
+          },
+          "opening_balance": { "type": "string" },
+          "closing_balance": { "type": "string" },
+          "lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "count": { "type": "integer" }
+        }
+      },
       "doc new": { "$ref": "#/$defs/documentAnswer" },
       "doc line add": { "$ref": "#/$defs/documentAnswer" },
       "invoice new": { "$ref": "#/$defs/documentAnswer" },
