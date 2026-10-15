@@ -279,6 +279,29 @@ describe('the books, through the tools', () => {
     expect(list(after['rows'])).toEqual([]);
   });
 
+  it("reads the customer's statement: the invoice, both payments, nothing left open", async () => {
+    const statement = record(
+      await readTools.contactStatement(backend, {
+        company_id: fx.companyId,
+        contact_id: customerId,
+        from: '2026-01-01',
+        to: '2026-12-31',
+      }),
+    );
+    const lines = list(statement['lines']);
+
+    expect(statement['opening_balance']).toBe('0.00');
+    expect(lines.map((line) => [line['debit'], line['credit'], line['running_balance']])).toEqual([
+      ['1210.00', '0.00', '1210.00'],
+      ['0.00', '500.00', '710.00'],
+      ['0.00', '710.00', '0.00'],
+    ]);
+    expect(lines[0]?.['document_id']).toBe(documentId);
+    expect(lines.every((line) => line['matching_state'] === 'matched' && line['open_amount'] === '0.00')).toBe(true);
+    expect(statement['closing_balance']).toBe('0.00');
+    expect(statement['count']).toBe(3);
+  });
+
   it('reads the trial balance back, and it balances', async () => {
     const balance = record(
       await readTools.trialBalance(backend, {

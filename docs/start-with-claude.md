@@ -235,6 +235,7 @@ Now it is your books. Sentences that work, and what answers them:
 | "Show me the trial balance for 2026." | `trial_balance` |
 | "Every movement on the customers account." | `general_ledger` |
 | "Who owes me money, and since when?" | `aged_balance` |
+| "Everything that went through with this customer this year." | `search_contacts`, `contact_statement` |
 | "Invoice Lõuna Pagarid 1 000 for consulting at the standard rate, and post it." | `search_contacts`, `create_document`, `post_document` |
 | "Send them a link to the invoice." | `share_document` |
 | "Prepare my VAT return for January." | `vat_return` |

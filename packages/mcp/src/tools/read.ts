@@ -33,7 +33,7 @@ import {
 
 // Moved to the core with the writing half they are read back by; exported
 // from here under the names they always had.
-export { getDocument, listDocuments, searchContacts } from '@ekwo-ai/core';
+export { contactStatement, getDocument, listDocuments, searchContacts } from '@ekwo-ai/core';
 
 export const uuid = z.string().uuid();
 export const isoDate = z
@@ -185,6 +185,13 @@ export const SearchContactsInput = z.object({
   contact_type: z.enum(['customer', 'supplier', 'both', 'employee', 'other']).optional(),
   vat_number: z.string().min(1).optional().describe('Exact match, e.g. BE0123456749.'),
   limit: z.number().int().min(1).max(200).optional(),
+});
+
+export const ContactStatementInput = z.object({
+  company_id: companyId,
+  contact_id: uuid.describe('The contact, from search_contacts.'),
+  from: isoDate.describe('First day of the period. The balance carried forward is the one before it.'),
+  to: isoDate.describe('Last day of the period.'),
 });
 
 // ---------------------------------------------------------------------------

@@ -14,6 +14,7 @@
 import { fromQueryRow, generateFec, type FecOptions, type FecQueryRow } from '@ekwo-ai/fec';
 import type {
   AgedBalanceRow,
+  ContactStatementRow,
   Entry,
   FinancialAnalysisRow,
   Instance,
@@ -133,6 +134,21 @@ export class EkwoClient {
       p_group: group,
     });
     return unwrap(result, 'aged_balance');
+  }
+
+  /**
+   * The statement of account of a contact: the balance carried forward to
+   * `from`, then every posted line of its receivable and payable accounts over
+   * the period, with the running balance and how far each line is matched.
+   */
+  async contactStatement(range: PeriodRange & { contactId: Uuid }): Promise<ContactStatementRow[]> {
+    const result = await this.db.rpc<ContactStatementRow[]>('contact_statement', {
+      p_company_id: range.companyId,
+      p_contact_id: range.contactId,
+      p_from: range.from,
+      p_to: range.to,
+    });
+    return unwrap(result, 'contact_statement');
   }
 
   /** The French FEC for a period, ready to be written to disk. */
