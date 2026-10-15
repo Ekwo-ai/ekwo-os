@@ -168,6 +168,7 @@ project reports what was already there and creates nothing a second time.
 | `ekwo use <company>` | Picks the company the next commands run on. |
 | `ekwo whoami` | Who you are on which instance, the companies you can see, and what you may do on the one in use. |
 | `ekwo contact add` / `list` | A customer or a supplier, and finding one again. |
+| `ekwo contact statement` | What went through the accounts of one contact over a period, the balance it runs to, and what is still open. |
 | `ekwo doc new` / `doc line add` | A draft document — any kind, with `--type` — and one more line on it. A draft books nothing. `ekwo invoice` is the old name of `ekwo doc`, kept as an alias. |
 | `ekwo post <document>` | Books it, through `post_document()`. `--dry-run` shows the entry the database would write and writes nothing. |
 | `ekwo cancel <document>` | Undoes a posted invoice, and says how. Back to draft, through `unpost_document()`, where its country allows it and nothing about it has left; otherwise through `cancel_document()`: the credit note that names it, posted and matched against it, and the invoice cancelled. `--date` books the credit note on another day than the invoice's, which is how a locked period is stepped over; `--credit` asks for the note where a draft was possible. |

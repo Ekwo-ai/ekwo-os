@@ -141,6 +141,8 @@ ${bold('Connecting')} ${dim('(every command)')}
                             Needed to create a user.
 
   ${cyan('contact')}     add <name> | list — the people and companies the books name.
+              statement <name|id> --from <date> [--to <date>] — what went
+              through their accounts, the balance it runs to, what is open.
   ${cyan('doc')}         new | line add <document> — a draft and its lines; list | show
               <document> — what exists, and what is still owed. One object: a
               sale invoice, a bill, a quote or a credit note, with --type. A

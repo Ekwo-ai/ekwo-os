@@ -364,6 +364,30 @@ describe('the verbs', () => {
     expect(await count('entries')).toBe(3);
   });
 
+  it('contact statement runs through the invoice and both payments, by the name of the contact', async () => {
+    const owed = await one<{ total: string }>(pg, `select amount_total::text as total from documents where id = $1`, [documentId]);
+    const answer = await ekwo(['contact', 'statement', 'Client Example', '--from', '2026-01-01', '--to', '2026-12-31']);
+    expect(answer.exitCode).toBe(0);
+    const statement = answer.data as { opening_balance: string; closing_balance: string; lines: Row[]; count: number };
+
+    expect(statement.opening_balance).toBe('0.00');
+    expect(statement.lines.map((l) => [l['debit'], l['credit'], l['matching_state']])).toEqual([
+      [owed.total, '0.00', 'matched'],
+      ['0.00', owed.total, 'matched'],
+      ['0.00', '10.00', 'open'],
+    ]);
+    expect(statement.lines[0]?.['document_id']).toBe(documentId);
+    // The ten paid on account are owed back to the customer.
+    expect(statement.closing_balance).toBe('-10.00');
+
+    const before = await ekwo(['contact', 'statement', contactId, '--from', '2026-01-01', '--to', '2026-05-31']);
+    expect(before.data).toMatchObject({ opening_balance: '0.00', closing_balance: '0.00', count: 0 });
+
+    const unnamed = await ekwo(['contact', 'statement', 'Client Example']);
+    expect(unnamed.exitCode).toBe(EXIT_USAGE);
+    expect(unnamed.error?.name).toBe('missing_argument');
+  });
+
   it('match settles a statement line against a document, through settle_from_statement()', async () => {
     await ekwo(['doc', 'new', '--contact', contactId, '--date', '2026-07-01', '--ref', 'job-9', '--line', `name=Retainer,price=300.00,account=${SALES}`]);
     const posted = await ekwo(['post', 'job-9']);
