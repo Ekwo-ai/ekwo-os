@@ -25,6 +25,7 @@ const READ_TOOLS = [
   'list_accounts',
   'search_contacts',
   'suggest_duplicate_contacts',
+  'contact_statement',
   'search_products',
   'list_documents',
   'get_document',

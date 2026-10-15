@@ -34,7 +34,7 @@ import {
 
 // Moved to the core with the writing half they are read back by; exported
 // from here under the names they always had.
-export { analyticReport, getDocument, listAnalyticAxes, listDocuments, searchContacts, suggestDuplicateContacts } from '@ekwo-ai/core';
+export { analyticReport, contactStatement, getDocument, listAnalyticAxes, listDocuments, searchContacts, suggestDuplicateContacts } from '@ekwo-ai/core';
 
 export const uuid = z.string().uuid();
 export const isoDate = z
@@ -190,6 +190,13 @@ export const SearchContactsInput = z.object({
 
 export const SuggestDuplicateContactsInput = z.object({
   company_id: companyId,
+});
+
+export const ContactStatementInput = z.object({
+  company_id: companyId,
+  contact_id: uuid.describe('The contact, from search_contacts.'),
+  from: isoDate.describe('First day of the period. The balance carried forward is the one before it.'),
+  to: isoDate.describe('Last day of the period.'),
 });
 
 // ---------------------------------------------------------------------------

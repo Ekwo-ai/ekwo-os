@@ -117,7 +117,7 @@ export interface ServerOptions {
 export const INSTRUCTIONS = [
   'Ekwo OS keeps double-entry books in the user\'s own Postgres. You act as that user: everything you can see and change is what row level security lets them see and change. Amounts are decimal strings ("1210.00"), dates are ISO (2026-06-15), identifiers are uuids.',
   'A first session, in order. (1) list_companies: every other tool takes a company_id from it; an empty list means this user has not been invited to a company yet, and status says who you are acting as. (2) get_company: the financial years and whether each is closed, the lock dates, the journals and the role accounts — a date you book on falls in an open year, after the lock date. (3) list_accounts and the resource ekwo://companies/{companyId}/taxes: a document line names its account and its tax by code, never by rate, because several taxes share a rate; describe_pack says which country pack those codes come from and how far it has been reviewed. (4) search_contacts, then create_contact only if nobody matches, then create_document: a draft with the totals the database computed. Show it to the user. (5) post_document once the user has said yes to that document; record_payment when the money moves. How you may post is the database\'s to hold you to, and status says it: the company\'s agent_posting (in get_company) and the choice the person made for this session. In review, the default, a document is posted only after a person approved that draft as it stands, and post_document is refused with approval_required until then; in autopilot — the company\'s setting, or a session the person started so — you post directly, and every posting is recorded on the audit trail with this session. A company that forbids autopilot refuses it (autopilot_forbidden).',
-  'Reading a tax return: vat_return gives the boxes of a period with their names and amounts, summed from what was posted, and the boxes computed from other boxes; a draft is in no box. Name a report_code only where the country files several declarations. It prepares figures and files nothing — the prompt prepare_vat_return walks through checking them against the ledger. The reports beside it are trial_balance, general_ledger, journal_book (the book of one journal or of all of them, with the totals of each), aged_balance, financial_statement (list_statements first), financial_analysis, the figures a ratio is computed from, and analytic_report, the result of each project, cost centre or site of an analytic axis.',
+  'Reading a tax return: vat_return gives the boxes of a period with their names and amounts, summed from what was posted, and the boxes computed from other boxes; a draft is in no box. Name a report_code only where the country files several declarations. It prepares figures and files nothing — the prompt prepare_vat_return walks through checking them against the ledger. The reports beside it are trial_balance, general_ledger, journal_book (the book of one journal or of all of them, with the totals of each), aged_balance, contact_statement (one contact), financial_statement (list_statements first), financial_analysis, the figures a ratio is computed from, and analytic_report, the result of each project, cost centre or site of an analytic axis.',
   'Correcting: a posted entry is never deleted or edited. A posted invoice is undone by cancel_document — back to draft where its country allows it and nothing has left, by the credit note that names it otherwise, and it says which — and an entry keyed by hand by reverse_entry. A paid document is unmatched first with unreconcile, and only when the user says so. Ask the user before every post, cancel, reversal, payment or lock.',
   'When the database refuses, the message starts with a name — period_locked, entry_unbalanced, document_total_mismatch, reversal_date_needed — followed by a sentence saying what to do next. Report it to the user and follow that sentence rather than working around it.',
 ].join('\n\n');
@@ -240,6 +240,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
     async (args) => guard(() => read.suggestDuplicateContacts(backend, args)),
+  );
+
+  server.registerTool(
+    'contact_statement',
+    {
+      title: 'Statement of a contact',
+      description:
+        'The statement of account of one customer or supplier over a period: the balance carried forward from before it, then every posted line of their receivable and payable accounts — date, journal, entry, the document it books, debit, credit and running balance — and the balance the period ends on. Debit minus credit, in the company currency: positive is what the contact owes the company, negative what the company owes them. Each line says how far a matching has settled it today (matching_state open, partial or matched, and open_amount). Drafts are not in it. It is the ledger read for one contact, the same figures aged_balance gives.',
+      inputSchema: read.ContactStatementInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.contactStatement(backend, args)),
   );
 
   server.registerTool(
