@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.13.0",
-  "migration": "20261015042916",
+  "migration": "20261015073000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4233,6 +4233,10 @@
         "arguments": "p_transaction_id uuid, p_contact_id uuid"
       },
       {
+        "name": "contact_statement",
+        "arguments": "p_company_id uuid, p_contact_id uuid, p_from date, p_to date"
+      },
+      {
         "name": "contacts_language_reaches_drafts",
         "arguments": ""
       },
@@ -8026,6 +8030,17 @@
         {
           "name": "confirm_contact",
           "arguments": "p_transaction_id uuid, p_contact_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "contact_statement",
+          "arguments": "p_company_id uuid, p_contact_id uuid, p_from date, p_to date",
           "anon": [],
           "authenticated": [
             "execute"
