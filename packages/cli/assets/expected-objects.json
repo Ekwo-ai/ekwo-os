@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.24.0",
-  "migration": "20261028160000",
+  "migration": "20261029021600",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -5100,6 +5100,10 @@
         "arguments": "p_company_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[]"
       },
       {
+        "name": "contact_statement",
+        "arguments": "p_company_id uuid, p_contact_id uuid, p_from date, p_to date"
+      },
+      {
         "name": "contacts_guard_merged",
         "arguments": ""
       },
@@ -9952,6 +9956,17 @@
         {
           "name": "contact_candidates",
           "arguments": "p_company_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[]",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "contact_statement",
+          "arguments": "p_company_id uuid, p_contact_id uuid, p_from date, p_to date",
           "anon": [],
           "authenticated": [
             "execute"
