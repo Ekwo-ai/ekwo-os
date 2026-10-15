@@ -9,6 +9,17 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Changed
+
+- **The README says where to get help, and what the books answer at a
+  glance.** A *Support* section names the three ways — issues and discussions
+  in the open, e-mail with Hosted and Pro, and Ekwo Consulting on quote for
+  tailor-made work and dedicated support — and *What ships today* lists the
+  compass: `financial_analysis()` and the seven figures the Analysis screen
+  and the MCP tool read from it. `DISCLAIMER.md` 2.2 names Ekwo Consulting as
+  a trade name of EKWO OÜ beside Ekwo. Nothing in the schema or the packages
+  changes.
+
 ### Fixed
 
 - **Every MCP tool carries its title where a connector directory reads it.** A tool was declared with a top-level `title`, which the SDK takes, and nothing under `annotations.title`, which directories and some clients are the only ones to read; they listed all of them by their machine name. The server now copies the one title into the annotations at registration, for every tool, present and future, and `tests/mcp/surface.test.ts` reads the list a client sees to hold it there. The writes of the modules — `fixed_assets_create`, `fixed_assets_run_depreciation`, `fixed_assets_dispose`, `budgets_upsert_lines` and the others — say `destructiveHint: true`, as the socle's writes already did.

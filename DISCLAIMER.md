@@ -7,9 +7,10 @@ adviser and not a financial, legal or investment adviser, and installing it,
 using it or reading this site does not make Ekwo, or anyone who contributed to
 it, your accountant or your adviser.
 
-*Version 2.1 — 28 September 2026. This page applies to Ekwo OS, the software
+*Version 2.2 — 15 October 2026. This page applies to Ekwo OS, the software
 of this repository, and to the site at ekwo.ai. The managed edition is
-governed by its own terms.*
+governed by its own terms, and so is every engagement of Ekwo Consulting, by
+its quote.*
 
 ## 1. What the project is
 
@@ -236,5 +237,5 @@ every earlier one.
 
 ## Legal and contact
 
-Ekwo is a trade name of EKWO OÜ, Estonia, registry code 14510673 ·
+Ekwo and Ekwo Consulting are trade names of EKWO OÜ, Estonia, registry code 14510673 ·
 contact through an Ekwo Cloud account, at https://cloud.ekwo.ai/account
