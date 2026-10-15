@@ -557,6 +557,45 @@ export interface TrialBalanceRow {
   closing_balance: Decimal;
 }
 
+/** How far a matching settles a line of a statement, today. */
+export type MatchingState = 'open' | 'partial' | 'matched';
+
+/**
+ * One row of `contact_statement(company_id, contact_id, from, to)`. The first
+ * row is the balance carried forward to `from` (`row_kind` `opening`: only the
+ * date, the debit or the credit and the balance are set); every other row is a
+ * posted line of a receivable or payable account that names the contact, in
+ * ledger order. Amounts are in the company currency; the running balance is
+ * debit minus credit, positive when the contact owes.
+ */
+export interface ContactStatementRow {
+  row_kind: 'opening' | 'line';
+  entry_date: IsoDate;
+  journal_code: string | null;
+  entry_id: Uuid | null;
+  entry_number: string | null;
+  entry_line_id: Uuid | null;
+  /** The document the entry books; null on a payment or an entry keyed by hand. */
+  document_id: Uuid | null;
+  document_number: string | null;
+  doc_type: DocType | null;
+  account_id: Uuid | null;
+  account_code: string | null;
+  account_name: string | null;
+  line_name: string | null;
+  reference: string | null;
+  date_maturity: IsoDate | null;
+  debit: Decimal;
+  credit: Decimal;
+  running_balance: Decimal;
+  matching_number: string | null;
+  /** How much of the line a matching has settled, today. Null on the opening row. */
+  matched_amount: Decimal | null;
+  /** What no matching has settled yet, on the line's own side. Null on the opening row. */
+  open_amount: Decimal | null;
+  matching_state: MatchingState | null;
+}
+
 /** The aggregates `financial_analysis()` may return, in the order it returns them. */
 export type AnalysisAggregate =
   | 'revenue'
