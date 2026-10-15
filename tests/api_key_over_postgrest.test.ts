@@ -191,7 +191,10 @@ describe('the clock of a request that carries a key', () => {
    * clock of the role it starts the request as — `anon` — before the
    * pre-request; `set local` stands for that, and the hook comes after it.
    */
-  async function clockOf(secret: string | undefined): Promise<{ role: string; timeout: string }> {
+  async function clockOf(
+    secret: string | undefined,
+    { path = '/rpc/installed_schema_version', claims = '', armed = '3s', as = 'anon' }: { path?: string; claims?: string; armed?: string; as?: 'anon' | 'authenticated' } = {},
+  ): Promise<{ role: string; timeout: string }> {
     await db.exec(`
       select set_config('request.jwt.claims', '', false);
       select set_config('ekwo.installing', '', false);
@@ -199,9 +202,11 @@ describe('the clock of a request that carries a key', () => {
     await db.query('begin');
     try {
       await db.exec(`
-        set local role anon;
-        set local statement_timeout = '3s';
+        set local role ${as};
+        set local statement_timeout = '${armed}';
         select set_config('request.headers', '${headers(secret)}', true);
+        select set_config('request.path', '${path}', true);
+        select set_config('request.jwt.claims', '${claims}', true);
       `);
       await db.query(`select ekwo_pre_request()`);
       return await one<{ role: string; timeout: string }>(
@@ -259,6 +264,45 @@ describe('the clock of a request that carries a key', () => {
     const secret = await issue('Copie de nuit, sans reglage', ['entries.read']);
     const clock = await clockOf(secret);
     expect(clock).toEqual({ role: 'authenticated', timeout: '3s' });
+  });
+
+  it('is the archive one for an export or an import carried by a key', async () => {
+    const secret = await issue('Copie de nuit, archive', ['entries.read']);
+    for (const path of ['/rpc/export_company', '/rpc/export_company_manifest', '/rpc/export_company_tables', '/rpc/import_company']) {
+      const clock = await withRoleSettings(
+        [`alter role authenticated set statement_timeout = '8s'`],
+        [`alter role authenticated reset statement_timeout`],
+        () => clockOf(secret, { path }),
+      );
+      expect(clock, path).toEqual({ role: 'authenticated', timeout: '5min' });
+    }
+  });
+
+  it('is the archive one for an export asked by a signed-in member', async () => {
+    const clock = await clockOf(undefined, {
+      path: '/rpc/export_company',
+      claims: JSON.stringify({ sub: ownerId, role: 'authenticated' }),
+      armed: '8s',
+      as: 'authenticated',
+    });
+    expect(clock.timeout).toBe('5min');
+  });
+
+  it('stays the role one for a call that is not an archive', async () => {
+    const secret = await issue('Copie de nuit, lecture', ['entries.read']);
+    const clock = await withRoleSettings(
+      [`alter role authenticated set statement_timeout = '8s'`],
+      [`alter role authenticated reset statement_timeout`],
+      () => clockOf(secret, { path: '/rpc/financial_statement' }),
+    );
+    expect(clock.timeout).toBe('8s');
+  });
+
+  it('is never raised for an anonymous export, and never lowered', async () => {
+    expect((await clockOf(undefined, { path: '/rpc/export_company' })).timeout).toBe('3s');
+    const secret = await issue('Copie de nuit, sans horloge', ['entries.read']);
+    expect((await clockOf(secret, { path: '/rpc/export_company', armed: '0' })).timeout).toBe('0');
+    expect((await clockOf(secret, { path: '/rpc/export_company', armed: '10min' })).timeout).toBe('10min');
   });
 
   it('stays the anonymous one for a request without a key', async () => {

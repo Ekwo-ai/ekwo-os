@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.13.0",
-  "migration": "20261014164531",
+  "migration": "20261015042916",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4005,6 +4005,10 @@
         "arguments": "p_company_id uuid"
       },
       {
+        "name": "archive_statement_timeout",
+        "arguments": ""
+      },
+      {
         "name": "archive_under_current_names",
         "arguments": "p_archive jsonb"
       },
@@ -4563,6 +4567,10 @@
       {
         "name": "is_any_company_member",
         "arguments": ""
+      },
+      {
+        "name": "is_archive_request",
+        "arguments": "p_path text"
       },
       {
         "name": "is_company_member",
@@ -7478,6 +7486,17 @@
           ]
         },
         {
+          "name": "archive_statement_timeout",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "archive_under_current_names",
           "arguments": "p_archive jsonb",
           "anon": [],
@@ -8869,6 +8888,17 @@
           "anon": [
             "execute"
           ],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "is_archive_request",
+          "arguments": "p_path text",
+          "anon": [],
           "authenticated": [
             "execute"
           ],

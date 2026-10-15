@@ -9,6 +9,10 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Fixed
+
+- **An archive is given the time it takes.** An export of a whole company (`export_company()`, its manifest and tables) or an `import_company()`, asked over the API by a key or a signed-in member, now runs under a clock of five minutes instead of the eight seconds of `authenticated`; the clock is only ever raised. A company of about 17 000 rows exported in 11.5 s, so its nightly copy failed with `canceling statement due to statement timeout`.
+
 ## [0.13.0] — 2026-10-14
 
 ### Added
