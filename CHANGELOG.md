@@ -9,6 +9,29 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **The statement of account of a contact** (`20261029021600_a_contact_has_a_statement`).
+  `contact_statement(company, contact, from, to)` reads one customer or
+  supplier out of the ledger: a first row with the balance carried forward to
+  `from` (`row_kind` `opening`), then every posted line of the period on an
+  account of type `asset_receivable` or `liability_payable` that names the
+  contact, in ledger order — date, journal, entry, the document it books,
+  debit, credit and running balance, debit minus credit in the currency of
+  the company. Each line says how far a matching settles it today:
+  `matched_amount`, `open_amount` and `matching_state` (`open`, `partial`,
+  `matched`). The accounts are told by their type, as `aged_balance()` reads
+  them, so the statement closes on what the aged balance says the contact
+  owes; the other side of each entry, the drafts and the other contacts are
+  not in it. The running balance is computed over the whole period, so a page
+  of the result keeps it. Security invoker, `entries.read`; refused by name:
+  `unknown_company`, `not_allowed`, `unknown_contact`, `invalid_period`.
+  `@ekwo-ai/core` reads it with `contactStatement()` and
+  `EkwoClient.contactStatement()`, the MCP server with the read-only tool
+  `contact_statement`, and the command line with
+  `ekwo contact statement <name|id> --from <date> [--to <date>]`, `--to`
+  being today when left out.
+
 ## [0.24.0] — 2026-10-28
 
 ### Added

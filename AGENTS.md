@@ -187,6 +187,7 @@ reach and whether you may write; without that box ticked, you read.
 | A customer | `ekwo contact add "<name>" --country <cc> --ref <yours>` | `create_contact` |
 | The contacts that are probably one party | `ekwo contact duplicates` | `suggest_duplicate_contacts` |
 | One party created twice, joined | `ekwo contact merge <keep> <absorb>` | `merge_contacts` |
+| What a customer owes, line by line | `ekwo contact statement "<name>" --from <date> --to <date>` | `contact_statement` |
 | Accounts and tax codes | the country's set-up page | `list_accounts`, `describe_pack` |
 | A draft invoice | `ekwo doc new --contact <name> --line "name=…,price=…,account=<code>,tax=<code>" --ref <yours>` | `create_document` |
 | See the entry before booking | `ekwo post <doc> --dry-run` | — |
