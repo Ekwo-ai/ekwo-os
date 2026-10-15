@@ -214,6 +214,7 @@ Every write names its company explicitly.
 | `get_company` | Financial years, lock dates, journals, default accounts |
 | `list_accounts` | The accounts a company works with, by code prefix, type or name. `include_all` for the whole chart |
 | `search_contacts` | Customers and suppliers, by name, type or VAT number |
+| `contact_statement` | The statement of account of one contact over a period: the balance carried forward, each posted line of their receivable and payable accounts with its running balance and how far it is matched, and the closing balance |
 | `search_products` | The catalogue: code, unit, price, account and tax of what is sold and bought |
 | `list_documents` | Invoices, credit notes and quotes, filtered |
 | `get_document` | One document with its lines and the entry it produced |

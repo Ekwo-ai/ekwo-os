@@ -4,6 +4,7 @@
 
 import { BooksError, type Backend, type Filter, type Row } from './backend.js';
 import * as columns from './columns.js';
+import { money, moneyFields } from './format.js';
 import { createdBefore, only } from './shared.js';
 import type { ContactType } from '../types.js';
 
@@ -109,4 +110,46 @@ export async function resolveContact(
     );
   }
   return matches[0] as { id: string; name: string };
+}
+
+export interface ContactStatementArgs {
+  company_id: string;
+  contact_id: string;
+  /** First day of the period; the balance carried forward is the one before it. */
+  from: string;
+  to: string;
+}
+
+/**
+ * The statement of account of a contact, from `contact_statement()`: the
+ * balance carried forward to `from`, every posted line of the contact's
+ * receivable and payable accounts over the period with its running balance and
+ * how far a matching settles it, and the balance the period ends on. Amounts
+ * are decimal strings in the company currency, debit minus credit: positive
+ * when the contact owes the company, negative when the company owes them.
+ */
+export async function contactStatement(
+  backend: Backend,
+  args: ContactStatementArgs,
+): Promise<unknown> {
+  const rows = await backend.rpc<Row>('contact_statement', {
+    p_company_id: args.company_id,
+    p_contact_id: args.contact_id,
+    p_from: args.from,
+    p_to: args.to,
+  });
+  const opening = rows.find((row) => row['row_kind'] === 'opening');
+  const lines = moneyFields(
+    rows.filter((row) => row['row_kind'] === 'line').map(({ row_kind: _kind, ...line }) => line),
+    ['debit', 'credit', 'running_balance', 'matched_amount', 'open_amount'],
+  );
+  const openingBalance = money(opening?.['running_balance'] ?? 0);
+  return {
+    contact_id: args.contact_id,
+    period: { from: args.from, to: args.to },
+    opening_balance: openingBalance,
+    closing_balance: lines.length > 0 ? lines[lines.length - 1]!['running_balance'] : openingBalance,
+    lines,
+    count: lines.length,
+  };
 }

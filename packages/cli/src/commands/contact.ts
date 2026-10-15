@@ -1,17 +1,27 @@
 /**
- * `ekwo contact add` and `ekwo contact list` — `createContact()` and
- * `searchContacts()` of the core, which are the MCP server's `create_contact`
- * and `search_contacts`.
+ * `ekwo contact add`, `ekwo contact list` and `ekwo contact statement` —
+ * `createContact()`, `searchContacts()` and `contactStatement()` of the core,
+ * which are the MCP server's `create_contact`, `search_contacts` and
+ * `contact_statement`.
  */
 
-import { CONTACT_TYPES, createContact, searchContacts, type ContactType, type CreateContactArgs } from '@ekwo-ai/core';
+import {
+  CONTACT_TYPES,
+  contactStatement,
+  createContact,
+  resolveContact,
+  searchContacts,
+  type ContactType,
+  type CreateContactArgs,
+} from '@ekwo-ai/core';
 import { UsageError, numberFlag, rejectUnknownFlags, stringFlag, type ParsedArgs } from '../args.js';
-import { BOOKS_FLAGS, CREATE_FLAGS, given, openBooks, stdinDocument, type BooksDeps } from '../books.js';
+import { BOOKS_FLAGS, CREATE_FLAGS, given, openBooks, stdinDocument, today, type BooksDeps } from '../books.js';
 import { setResult } from '../output.js';
-import { dim, heading, note, step, table } from '../ui.js';
+import { dim, heading, note, pairs, step, table } from '../ui.js';
 
 const ADD_FLAGS = [...CREATE_FLAGS, 'type', 'vat', 'email', 'country', 'terms', 'aux', 'address', 'postal-code', 'city'] as const;
 const LIST_FLAGS = [...BOOKS_FLAGS, 'query', 'type', 'vat', 'limit'] as const;
+const STATEMENT_FLAGS = [...BOOKS_FLAGS, 'from', 'to'] as const;
 
 const ADD_FIELDS = [
   'name', 'contact_type', 'vat_number', 'email', 'country', 'payment_terms_days', 'auxiliary_code',
@@ -30,7 +40,11 @@ export async function contactCommand(args: ParsedArgs, deps: BooksDeps = {}): Pr
   const action = args.positional[0];
   if (action === 'add') return add(args, deps);
   if (action === 'list') return list(args, deps);
-  throw new UsageError('usage: ekwo contact add <name> [--type --vat --email --country --terms --ref] | ekwo contact list [--query --type --vat]');
+  if (action === 'statement') return statement(args, deps);
+  throw new UsageError(
+    'usage: ekwo contact add <name> [--type --vat --email --country --terms --ref] | ekwo contact list [--query --type --vat]' +
+      ' | ekwo contact statement <name|id> --from <date> [--to <date>]',
+  );
 }
 
 async function add(args: ParsedArgs, deps: BooksDeps): Promise<number> {
@@ -89,5 +103,52 @@ async function list(args: ParsedArgs, deps: BooksDeps): Promise<number> {
       result.contacts.map((c) => [String(c['name']), String(c['contact_type']), String(c['vat_number'] ?? ''), dim(String(c['id']))]),
     );
   }
+  return 0;
+}
+
+async function statement(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, STATEMENT_FLAGS);
+  const wanted = args.positional[1];
+  if (wanted === undefined || wanted.length === 0) {
+    throw new UsageError('missing_argument: the contact. `ekwo contact statement "<name|id>" --from <date>`.');
+  }
+  const from = stringFlag(args, 'from');
+  if (from === undefined) {
+    throw new UsageError('missing_argument: --from, the first day of the period. The balance carried forward is the one before it.');
+  }
+  const givenTo = stringFlag(args, 'to');
+  const to = givenTo ?? today();
+  const { backend, company } = await openBooks(args, deps);
+  const contact = await resolveContact(backend, company.id, wanted);
+
+  const result = (await contactStatement(backend, { company_id: company.id, contact_id: contact.id, from, to })) as {
+    opening_balance: string;
+    closing_balance: string;
+    lines: Record<string, unknown>[];
+    count: number;
+  };
+  setResult(result);
+
+  heading(`Statement of ${contact.name}, ${from} to ${to}`);
+  if (givenTo === undefined) note(dim(`to today, ${to}: no --to was given`));
+  pairs([['carried forward', result.opening_balance]]);
+  if (result.lines.length === 0) note(dim('No posted line in the period.'));
+  else {
+    const cell = (value: unknown): string => (value === null || value === undefined ? '' : String(value));
+    table(
+      [
+        { title: 'date' }, { title: 'entry' }, { title: 'document' }, { title: 'account' },
+        { title: 'debit', align: 'right' }, { title: 'credit', align: 'right' }, { title: 'balance', align: 'right' },
+        { title: 'matched' },
+      ],
+      result.lines.map((l) => [
+        cell(l['entry_date']), cell(l['entry_number']), cell(l['document_number']), cell(l['account_code']),
+        cell(l['debit']), cell(l['credit']), cell(l['running_balance']),
+        l['matching_state'] === 'matched' ? dim('matched') : cell(l['matching_state']),
+      ]),
+    );
+  }
+  pairs([['balance', result.closing_balance]]);
+  note(dim('Debit minus credit, in the currency of the company: positive is what the contact owes.'));
   return 0;
 }

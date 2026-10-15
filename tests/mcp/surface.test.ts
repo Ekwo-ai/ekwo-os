@@ -24,6 +24,7 @@ const READ_TOOLS = [
   'get_company',
   'list_accounts',
   'search_contacts',
+  'contact_statement',
   'search_products',
   'list_documents',
   'get_document',

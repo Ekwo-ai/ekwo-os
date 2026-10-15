@@ -327,8 +327,8 @@ user_preferences                         one row per person, null everywhere
 ```
 
 `post_document()` turns a document into an entry. `trial_balance`,
-`general_ledger`, `aged_balance`, `vat_return`, `ec_sales_list`,
-`financial_statement` and `fec_lines` read the ledger back.
+`general_ledger`, `aged_balance`, `contact_statement`, `vat_return`,
+`ec_sales_list`, `financial_statement` and `fec_lines` read the ledger back.
 `opening_balance()` takes over the balances of whatever kept the books before,
 and `close_fiscal_year()` closes a year the way the country pack says.
 [`docs/schema.md`](docs/schema.md) describes every table and column, and
