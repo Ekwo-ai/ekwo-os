@@ -2,7 +2,14 @@ import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { compilePack, REQUIRED_AGGREGATES, readPack } from '../packages/cli/src/index.js';
+import {
+  compileFrameworkPack,
+  compilePack,
+  GENERIC_PACK,
+  REQUIRED_AGGREGATES,
+  readFrameworkPack,
+  readPack,
+} from '../packages/cli/src/index.js';
 import { allPacks, packsRoot, packWhere, readSchemaEnum } from './helpers/packs.js';
 
 // The `analysis` section of a pack: what `ekwo pack check` reads of it, what
@@ -27,6 +34,7 @@ beforeAll(async () => {
   dir = await mkdtemp(join(tmpdir(), 'ekwo-analysis-'));
   await cp(join(packsRoot, 'schema'), join(dir, 'schema'), { recursive: true });
   await cp(source.dir, join(dir, source.slug), { recursive: true });
+  await cp(join(packsRoot, GENERIC_PACK), join(dir, GENERIC_PACK), { recursive: true });
 });
 
 afterAll(async () => {
@@ -166,5 +174,68 @@ describe('what `ekwo pack check` refuses of an analysis section', () => {
       s.aggregates[0]!['source'] = 'no-such-source';
     });
     expect(message).toContain('no-such-source');
+  });
+});
+
+describe('the framework\'s analysis section', () => {
+  const frameworkPath = (): string => join(dir, GENERIC_PACK, 'analysis.json');
+
+  /** Reads the framework copy with its section changed, and gives back what the reader said. */
+  async function brokenFramework(change: (section: Section) => void): Promise<string> {
+    const original = await readFile(frameworkPath(), 'utf8');
+    const section = JSON.parse(original) as Section;
+    change(section);
+    await writeFile(frameworkPath(), JSON.stringify(section), 'utf8');
+    try {
+      await readFrameworkPack(GENERIC_PACK, dir);
+      return 'accepted';
+    } catch (error) {
+      return (error as Error).message;
+    } finally {
+      await writeFile(frameworkPath(), original, 'utf8');
+    }
+  }
+
+  it('is read, by account type, and leaves out what no account type tells apart', async () => {
+    expect(await brokenFramework(() => undefined)).toBe('accepted');
+    const framework = await readFrameworkPack();
+    const codes = framework.analysis!.aggregates.map((a) => a.code);
+    for (const required of REQUIRED_AGGREGATES) expect(codes).toContain(required);
+    for (const unread of ['staff_costs', 'financial_result', 'income_tax']) expect(codes).not.toContain(unread);
+    for (const aggregate of framework.analysis!.aggregates) {
+      expect(aggregate.rules.every((r) => r.kind === 'account_type'), aggregate.code).toBe(true);
+    }
+  });
+
+  it('refuses a rule by code: a framework has no chart', async () => {
+    const message = await brokenFramework((s) => {
+      s.aggregates[0]!.rules.push({ kind: 'code_prefix', code_from: '7' });
+    });
+    expect(message).toContain('account_type rules only');
+  });
+
+  it('refuses an account type that is not one of the eighteen', async () => {
+    const message = await brokenFramework((s) => {
+      s.aggregates[0]!.rules.push({ kind: 'account_type', account_type: 'income_exceptional' });
+    });
+    expect(message).toContain('income_exceptional is not one of the eighteen account types');
+  });
+
+  it('refuses a chart: it has none to name', async () => {
+    const message = await brokenFramework((s) => {
+      s.charts = ['default'];
+    });
+    expect(message).toMatch(/analysis\.json/);
+  });
+
+  it('compiles into the framework seed, owned by the framework and by no country', async () => {
+    const framework = await readFrameworkPack();
+    const seed = compileFrameworkPack(framework);
+    const code = framework.manifest.code;
+    expect(seed).toContain(`where r.country is null and r.framework = '${code}'`);
+    expect(seed).toContain('on conflict (framework, aggregate) do update set');
+    const block = seed.slice(seed.indexOf('insert into analysis_rules'));
+    const rows = block.slice(0, block.indexOf(') as v')).split('\n').filter((l) => l.startsWith(`    ('${code}'`));
+    expect(rows).toHaveLength(framework.analysis!.aggregates.reduce((n, a) => n + a.rules.length, 0));
   });
 });

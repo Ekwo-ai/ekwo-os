@@ -11,14 +11,17 @@
  * after it; and, with the books balanced, total assets equal to equity plus
  * everything else the company owes, to the cent. The figures each pack
  * produces on its own scenario are in its golden, `golden/analysis.json`.
+ *
+ * A company whose pack says nothing is read through the framework pack's
+ * section instead, by account type, and the rows say so in `source`.
  */
 
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
 import { newCompany, newUser, type Fixture } from './helpers/factory.js';
-import { allPacks, packWhere, packsWhere, readSchemaEnum, roleOf } from './helpers/packs.js';
-import type { Pack } from '../packages/cli/src/index.js';
+import { allPacks, packsWhere, readSchemaEnum, roleOf } from './helpers/packs.js';
+import { readFrameworkPack, type Pack } from '../packages/cli/src/index.js';
 
 let db: PGlite;
 
@@ -40,15 +43,21 @@ interface Aggregate {
   aggregate: string;
   amount: number;
   accounts: Part[];
+  source: string;
 }
 
 async function analysis(company: string, from: string, to: string): Promise<Aggregate[]> {
-  const found = await rows<{ aggregate: string; amount: string; accounts: Part[] }>(
+  const found = await rows<{ aggregate: string; amount: string; accounts: Part[]; source: string }>(
     db,
-    `select aggregate, amount::text, accounts from financial_analysis($1, $2::date, $3::date)`,
+    `select aggregate, amount::text, accounts, source from financial_analysis($1, $2::date, $3::date)`,
     [company, from, to],
   );
-  return found.map((row) => ({ aggregate: row.aggregate, amount: Number(row.amount), accounts: row.accounts }));
+  return found.map((row) => ({
+    aggregate: row.aggregate,
+    amount: Number(row.amount),
+    accounts: row.accounts,
+    source: row.source,
+  }));
 }
 
 function figure(found: Aggregate[], code: string): Aggregate {
@@ -152,6 +161,7 @@ for (const pack of packsWhere('that says what its accounts mean to an analysis',
     it('returns one row per aggregate the pack defines, in the order of the list', async () => {
       const found = await analysis(fx.companyId, '2026-01-01', '2026-06-30');
       expect(found.map((r) => r.aggregate)).toEqual(defined);
+      expect(new Set(found.map((r) => r.source))).toEqual(new Set(['pack']));
     });
 
     it('says which accounts make each figure, and they add up to it', async () => {
@@ -234,14 +244,106 @@ for (const pack of packsWhere('that says what its accounts mean to an analysis',
 }
 
 describe('a company whose pack says nothing about an analysis', () => {
-  it('gets no row, rather than another chart read for it', async () => {
-    const pack = packWhere('without an analysis section', (p) => p.analysis === null);
-    const fx = await newCompany(db, { country: pack.manifest.country, name: `Silent ${pack.slug}` });
+  // The aggregates no account type tells apart: the framework leaves them out.
+  const unread = ['staff_costs', 'financial_result', 'income_tax'];
+  const silent = packsWhere('without an analysis section', (p) => p.analysis === null);
+  let fx: Fixture;
+  let found: Aggregate[];
+
+  beforeAll(async () => {
+    const pack = silent[0]!;
+    fx = await newCompany(db, { country: pack.manifest.country, name: `Silent ${pack.slug}` });
     await book(fx, pack, '2026-03-15', [
       ['bank', 1000, 0],
       ['sales', 0, 1000],
     ]);
-    expect(await analysis(fx.companyId, '2026-01-01', '2026-12-31')).toEqual([]);
+    await book(fx, pack, '2026-04-20', [
+      ['purchase', 400, 0],
+      ['bank', 0, 400],
+    ]);
+    found = await analysis(fx.companyId, '2026-01-01', '2026-12-31');
+  }, 120_000);
+
+  it('gets the framework\'s reading by account type, and is told so', async () => {
+    const framework = await readFrameworkPack();
+    const order = await aggregateOrder();
+    const read = order.filter((code) => framework.analysis!.aggregates.some((a) => a.code === code));
+    expect(read).toHaveLength(13);
+    expect(found.map((r) => r.aggregate)).toEqual(read);
+    expect(new Set(found.map((r) => r.source))).toEqual(new Set(['framework']));
+  });
+
+  it('gets no row for what no account type tells apart, rather than a zero', () => {
+    for (const code of unread) expect(found.map((r) => r.aggregate)).not.toContain(code);
+  });
+
+  it('reads the period through the account types', () => {
+    expect(figure(found, 'revenue').amount).toBe(1000);
+    expect(figure(found, 'net_result').amount).toBe(600);
+    expect(figure(found, 'equity').amount).toBe(600);
+    expect(figure(found, 'cash').amount).toBe(600);
+  });
+
+  it('balances: total assets are equity, current liabilities and long-term debt', () => {
+    expect(figure(found, 'total_assets').amount).toBe(600);
+    expect(figure(found, 'total_assets').amount).toBeCloseTo(
+      figure(found, 'equity').amount +
+        figure(found, 'current_liabilities').amount +
+        figure(found, 'long_term_debt').amount,
+      6,
+    );
+  });
+
+  it('is read through the framework its chart declares, before any other', async () => {
+    // A second framework, with one statement and one aggregate, and a chart
+    // that names that statement. Written inside a transaction that is rolled
+    // back: the reference data of the other tests stays what the seeds wrote.
+    const pack = silent[1] ?? silent[0]!;
+    const own = 'TEST-FRAMEWORK';
+    await db.query('begin');
+    try {
+      await db.query(
+        `insert into statement_templates (code, country, chart_code, name, kind, framework)
+         values ($1 || '-BS', null, null, 'Balance sheet of a test framework', 'balance_sheet', $1)`,
+        [own],
+      );
+      await db.query(
+        `insert into analysis_templates (framework, aggregate, legal_reference) values ($1, 'revenue', 'A test framework')`,
+        [own],
+      );
+      await db.query(
+        `insert into analysis_rules (framework, aggregate, sequence, rule_kind, account_type)
+         values ($1, 'revenue', 10, 'account_type', 'income')`,
+        [own],
+      );
+      const other = await newCompany(db, { country: pack.manifest.country, name: `Own framework ${pack.slug}` });
+      await book(other, pack, '2026-03-15', [
+        ['bank', 250, 0],
+        ['sales', 0, 250],
+      ]);
+
+      // Not declared yet: the framework the installation carries first by code.
+      const before = await analysis(other.companyId, '2026-01-01', '2026-12-31');
+      const framework = await readFrameworkPack();
+      const first = [framework.manifest.code, own].sort()[0];
+      expect(before.length).toBe(first === own ? 1 : framework.analysis!.aggregates.length);
+
+      await db.query(
+        `update chart_templates ch
+            set statements = ch.statements || array[$1 || '-BS']
+          where ch.country = $2
+            and ch.code = (select coalesce(
+                  (select p.chart_code from company_packs p where p.company_id = $3 and p.country = $2),
+                  (select d.code from chart_templates d where d.country = $2 and d.is_default)))`,
+        [own, pack.manifest.country, other.companyId],
+      );
+      const after = await analysis(other.companyId, '2026-01-01', '2026-12-31');
+      expect(after).toEqual([
+        expect.objectContaining({ aggregate: 'revenue', amount: 250, source: 'framework' }),
+      ]);
+    } finally {
+      await db.query('rollback');
+    }
   });
 });
 

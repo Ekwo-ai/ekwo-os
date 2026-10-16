@@ -9,6 +9,29 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **Every company gets an analysis, whatever its country.** A company whose
+  country pack carries no `analysis.json` used to get no row from
+  `financial_analysis()`, so the Analysis screen of most countries was empty.
+  The framework pack now carries one, `packs/generic/analysis.json` (generic
+  1.2.0): thirteen of the sixteen aggregates written as sums of the eighteen
+  account types, as `packs/generic/statements.json` builds a balance sheet for
+  any chart — revenue, other operating income, purchases, depreciation, the net
+  result, equity, total and current assets, cash, trade receivables, current
+  liabilities, trade payables and long-term debt. Staff costs, the financial
+  result and income tax are left out, because no account type tells them apart:
+  such a company gets no row for them rather than a zero. Migration
+  `20261016065440` lets `analysis_templates` and `analysis_rules` hold a
+  framework's rows, with no country and no chart, and `financial_analysis()`
+  reads the country pack's rows when the company's chart has any and the
+  framework's otherwise — the framework whose statements the chart declares,
+  else the one the installation carries. The function returns a fourth column,
+  `source`, `pack` or `framework`, typed `FinancialAnalysisRow.source` in
+  `@ekwo-ai/core` and explained by the `financial_analysis` tool of
+  `@ekwo-ai/mcp`. Country seeds and their keys are unchanged. See
+  [decision 0068](docs/decisions/0068-an-analysis-for-every-country.md).
+
 ### Changed
 
 - **The Estonian pack carries the analysis section.** Pack `ee` 1.13.0 adds

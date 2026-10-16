@@ -228,7 +228,7 @@ Every write names its company explicitly.
 | `portfolio_upcoming_filings` | *Portfolio* = the companies you may read: for an accounting firm, its clients ([`docs/firms.md`](../../docs/firms.md)). What falls due between two dates in every company you hold `filings.read` on. One row per company at least: a pack that names no deadline is listed without a date, and says so |
 | `portfolio_filings_touched_since` | Declarations that have gone and whose period received entries afterwards, across the same companies, with the company named |
 | `list_statements` / `financial_statement` | The schemes a company can be presented on, and one statement |
-| `financial_analysis` | Revenue, net result, equity, total and current assets, cash, receivables, payables and the other aggregates of an analysis, each with the accounts that make it, as the country pack defines them; empty where the pack defines none ([`docs/analysis.md`](../../docs/analysis.md)) |
+| `financial_analysis` | Revenue, net result, equity, total and current assets, cash, receivables, payables and the other aggregates of an analysis, each with the accounts that make it, as the country pack defines them, or read by account type through the generic framework where it defines none — `source` says which ([`docs/analysis.md`](../../docs/analysis.md)) |
 | `generate_fec` | The French FEC as text, with its checks and its filename, for a company that keeps French books |
 | `read_audit_log` | Who changed what and when: the configuration of a company, and the acts that change a state. Append-only for every client; only the database writes it |
 | `get_preferences` | What you prefer, and the language chain to read labels with |

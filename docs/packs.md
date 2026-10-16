@@ -35,9 +35,10 @@ packs/be/
     ├── de.json
     └── en.json
 
-packs/generic/         a pack with no country: statements by account type
+packs/generic/         a pack with no country: statements and an analysis by account type
 ├── pack.json
-└── statements.json
+├── statements.json
+└── analysis.json      the aggregates a company is read on when its country pack defines none
 ```
 
 ## A country has charts, not a chart
@@ -241,8 +242,31 @@ has accounts of its own, and gets an analysis when somebody writes one for it.
    an aggregate that mirrors a line comes to that line's figure.
 
 Nothing outside the folder changes. A pack without the section compiles
-exactly as before and its companies get no analysis — which is what a pack
-that has not said what its accounts mean should give.
+exactly as before, and its companies are read through the framework's
+section below — by account type, with `source = 'framework'` on every row.
+
+### The framework's analysis
+
+`packs/generic/analysis.json` is the section of the framework pack, and the
+reading `financial_analysis()` falls back to for a company whose country pack
+defines none for its chart. It is the analysis twin of
+`packs/generic/statements.json`: rules by `account_type` only — the framework
+has no chart, so a code means nothing to it — and no `charts` and no `source`;
+each aggregate cites the sections of IFRS for SMEs it follows and the account
+types it reads in `legal_reference`. The schema holds it to
+`$defs.framework_analysis`, and `ekwo pack check` refuses a rule of another
+kind and an account type that is not one of the eighteen.
+
+It defines thirteen aggregates and leaves out three — `staff_costs`,
+`financial_result` and `income_tax` — because they sit inside `expense` and
+`income_other` with everything else, and no account type tells them apart. A
+company read through the framework gets no row for them, which a screen shows
+as not read rather than zero. [`analysis.md`](analysis.md#when-the-pack-says-nothing)
+lists which account types make each aggregate.
+
+`ekwo pack build generic` compiles it into `supabase/seed/05_framework_generic.sql`,
+beside the generic statements: rows with no country and no chart, owned by the
+framework's `code` from `pack.json`.
 
 ## Compiling
 
@@ -275,8 +299,8 @@ excerpt:
 
 ```
 Packs (…)
-  generic  Generic framework 1.1.1 · 2 statements · no country · certification maintained
-          no golden — A framework is not a country: this pack carries statements and nothing else …
+  generic  Generic framework 1.2.0 · 2 statements · no country · certification maintained
+          no golden — A framework is not a country: this pack carries statements and an analysis by account type and nothing else …
   be  Belgium 1.15.0 · 2 chart(s), 706 accounts · 22 taxes · 3 statements · fr, nl, de, en · certification maintained · golden: 12 documents, 4 payments, 4 period(s)
           filing — BE-VAT-PERIODIC (31 boxes) · cadence: month · deadline: in the pack · file: vat-consignment · settles to: 451900
           default (default) — PCMN — plan comptable minimum normalisé, 355 accounts, BE-BNB-ABBR-BS, BE-BNB-ABBR-IS, BE-BNB-ABBR-AF
@@ -1581,7 +1605,7 @@ not.
 and by the CI — unless the manifest says why:
 
 ```json
-"golden": { "exempt": "A framework is not a country: this pack carries statements and nothing else …" }
+"golden": { "exempt": "A framework is not a country: this pack carries statements and an analysis by account type and nothing else …" }
 ```
 
 which `ekwo pack check` and `ekwo pack list` print. `packs/generic/` is the
@@ -1589,7 +1613,8 @@ one exemption in this repository, and the reason is structural: a framework
 has no chart, no journal, no tax and no currency, so no company can be
 installed on it and there is no year of books to replay. Its lines are proved
 where they are reachable — through a chart that names no statement of its own
-and falls back to it.
+and falls back to it — and its analysis through a company whose country pack
+defines none.
 
 **What a golden does not prove.** That the figures are the law. A box expected
 wrongly and a posting written wrongly pass together, which is the whole reason
@@ -2020,8 +2045,9 @@ there to stop.
 
 **The framework pack**, `packs/generic/`, has two of its own: every rule has to
 be an `account_type` rule, because the other three kinds name a chart and a
-framework has none; and the exemption from a golden is required, in at least a
-sentence.
+framework has none — in `statements.json` and in `analysis.json` alike, where
+the account type must also be one of the eighteen; and the exemption from a
+golden is required, in at least a sentence.
 
 **The module sections.** For `fixed_assets`: a disposal style that does not name the
 accounts it needs — `net_result` the gain, `gross` both the proceeds and the

@@ -816,13 +816,20 @@ export async function financialAnalysis(
     accounts: moneyFields((row['accounts'] ?? []) as Record<string, unknown>[], ['amount']),
   }));
 
+  const signs =
+    'Each amount is signed as its aggregate is named: revenue, other income and equity positive, net_result positive for a profit, financial_result for a gain, income_tax for a charge, every balance positive. Movements are those of the period; balances are at its last day, and equity includes the result of the years not closed yet. accounts says where each figure comes from.';
+  const source = rows[0]?.['source'] ?? null;
+
   return {
     period: { from: args.from, to: args.to },
+    source,
     aggregates,
     note:
       aggregates.length === 0
-        ? "This company's country pack does not say which of its accounts make an analysis, so there is nothing to read: say so rather than working the figures out from account codes."
-        : 'Each amount is signed as its aggregate is named: revenue, other income and equity positive, net_result positive for a profit, financial_result for a gain, income_tax for a charge, every balance positive. Movements are those of the period; balances are at its last day, and equity includes the result of the years not closed yet. accounts says where each figure comes from.',
+        ? 'Neither the country pack of this company nor a framework says which of its accounts make an analysis, so there is nothing to read: say so rather than working the figures out from account codes.'
+        : source === 'framework'
+          ? `This company's country pack defines no analysis, so these figures are read by account type through the generic framework (source: framework). Staff costs, the financial result and income tax are not among them, because no account type tells them apart: say they are not read, never that they are zero. ${signs}`
+          : signs,
   };
 }
 

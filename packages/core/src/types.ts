@@ -586,8 +586,18 @@ export interface FinancialAnalysisAccount {
 }
 
 /**
+ * Whose reading of the accounts a row of `financial_analysis()` comes from:
+ * `pack` when the company's country pack defines an analysis for its chart,
+ * `framework` when it defines none and the framework pack's section is read
+ * instead, by account type. A framework reading carries no `staff_costs`,
+ * `financial_result` or `income_tax`: no account type tells them apart.
+ */
+export type FinancialAnalysisSource = 'pack' | 'framework';
+
+/**
  * One row of `financial_analysis(company_id, from, to)`: one aggregate the
- * company's pack defines, in the company currency, signed as it is named —
+ * company's pack defines — or, where it defines none, the framework pack —
+ * in the company currency, signed as it is named —
  * revenue positive when earned, net_result positive when a profit,
  * financial_result when a gain, income_tax when a charge, every balance
  * positive. The movements are those of the period; the balances are at its
@@ -598,6 +608,8 @@ export interface FinancialAnalysisRow {
   amount: Decimal;
   /** The accounts that make the amount, by code; those that come to nothing are left out. */
   accounts: FinancialAnalysisAccount[];
+  /** Whose reading this is; the same on every row of one call. */
+  source: FinancialAnalysisSource;
 }
 
 /** One row of `aged_balance(company_id, at, group)`. */

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.13.0",
-  "migration": "20261015042916",
+  "migration": "20261016065440",
   "socle": {
     "schema": "public",
     "tables": [
@@ -187,6 +187,10 @@
             "type": "character(2)"
           },
           {
+            "name": "framework",
+            "type": "text"
+          },
+          {
             "name": "rule_kind",
             "type": "text"
           },
@@ -210,6 +214,10 @@
           {
             "name": "country",
             "type": "character(2)"
+          },
+          {
+            "name": "framework",
+            "type": "text"
           },
           {
             "name": "legal_reference",

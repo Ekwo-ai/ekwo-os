@@ -167,7 +167,7 @@ bank charge that pays no item.
 | [`accounts`](#accounts) | Chart of accounts, one per company. |
 | [`analysis_aggregates`](#analysis_aggregates) | The aggregates an analysis of the books is computed from, and how each is read. Vocabulary of the core, the same in every country; the accounts that make each one are a pack's, in analysis_rules. |
 | [`analysis_rules`](#analysis_rules) | How an account of a company reaches an aggregate: the rules of a statement line, with the same columns and the same test, account_rule_catches(). An account reaches an aggregate once, whatever the number of its rules that take it; two aggregates may take the same account — cash is part of the current assets, which are part of the total. |
-| [`analysis_templates`](#analysis_templates) | The aggregates a pack defines for one of its charts, and where that reading of the chart comes from. Written by the seed of a pack that carries analysis.json; a chart with no row has no analysis, and financial_analysis() returns nothing for its companies. |
+| [`analysis_templates`](#analysis_templates) | The aggregates a pack defines for one of its charts, or a framework for any chart, and where that reading comes from. Written by the seed of a pack that carries analysis.json; financial_analysis() reads the country's rows when the company's chart has any, and a framework's otherwise. |
 | [`analytic_axes`](#analytic_axes) | Analytic dimensions: cost centre, project, activity. |
 | [`analytic_values`](#analytic_values) | Values of an axis, optionally hierarchical. |
 | [`api_keys`](#api_keys) | Machine access to one company. Hashed at rest, scoped to an explicit list of capabilities, and never wider than the person who issued it — at issuance and at every use. |
@@ -310,8 +310,8 @@ How an account of a company reaches an aggregate: the rules of a statement line,
 
 | Column | Type | Notes |
 |---|---|---|
-| `country` | `character(2)` | not null |
-| `chart_code` | `text` | not null |
+| `country` | `character(2)` |  |
+| `chart_code` | `text` |  |
 | `aggregate` | `text` | not null |
 | `sequence` | `integer` | not null |
 | `rule_kind` | `text` | not null |
@@ -319,6 +319,7 @@ How an account of a company reaches an aggregate: the rules of a statement line,
 | `code_to` | `text` |  |
 | `account_type` | `account_type` |  |
 | `balance_side` | `text` | not null — Which side of the account the aggregate takes, read on the balance the aggregate reads: `debit` and `credit` split an account the balance sheet itself splits — a bank account in debit is cash, in credit a debt. |
+| `framework` | `text` | The framework the rule belongs to; null on a country's rule. A framework's rules are account_type rules only. |
 
 Constraints:
 
@@ -328,26 +329,41 @@ CASE rule_kind
     WHEN 'code_range'::text THEN ((code_from IS NOT NULL) AND (code_to IS NOT NULL) AND (account_type IS NULL))
     ELSE ((code_from IS NOT NULL) AND (code_to IS NULL) AND (account_type IS NULL))
 END)`
+- `CHECK (((country IS NULL) OR (country ~ '^[A-Z]{2}$'::text)))`
+- `CHECK (((country IS NOT NULL) OR (rule_kind = 'account_type'::text)))`
 - `CHECK ((rule_kind = ANY (ARRAY['account_code'::text, 'code_range'::text, 'code_prefix'::text, 'account_type'::text])))`
+- `CHECK (
+CASE
+    WHEN (country IS NULL) THEN ((chart_code IS NULL) AND (framework IS NOT NULL))
+    ELSE ((chart_code IS NOT NULL) AND (framework IS NULL))
+END)`
 - `CHECK ((balance_side = ANY (ARRAY['debit'::text, 'credit'::text, 'any'::text])))`
-- `PRIMARY KEY (country, chart_code, aggregate, sequence)`
+- `UNIQUE (framework, aggregate, sequence)`
+- `UNIQUE (country, chart_code, aggregate, sequence)`
 
 ### `analysis_templates`
 
-The aggregates a pack defines for one of its charts, and where that reading of the chart comes from. Written by the seed of a pack that carries analysis.json; a chart with no row has no analysis, and financial_analysis() returns nothing for its companies.
+The aggregates a pack defines for one of its charts, or a framework for any chart, and where that reading comes from. Written by the seed of a pack that carries analysis.json; financial_analysis() reads the country's rows when the company's chart has any, and a framework's otherwise.
 
 | Column | Type | Notes |
 |---|---|---|
-| `country` | `character(2)` | not null |
-| `chart_code` | `text` | not null |
+| `country` | `character(2)` | The country of the pack this reading of a chart comes from. Null on a framework's row, which reads account types and fits any chart of any country. |
+| `chart_code` | `text` | The chart the rules are written for. Null on a framework's row. |
 | `aggregate` | `text` | not null |
 | `legal_reference` | `text` | not null — The classes of the chart or the rubric of the statement the aggregate mirrors, cited as the country cites them. |
 | `source_key` | `text` | Key of the entry of the pack's source register where that reference can be read. |
+| `framework` | `text` | The framework this row belongs to, as its pack names it — the code statement_templates.framework carries for the same framework. Null on a country's row. |
 
 Constraints:
 
-- `CHECK ((country ~ '^[A-Z]{2}$'::text))`
-- `PRIMARY KEY (country, chart_code, aggregate)`
+- `CHECK (((country IS NULL) OR (country ~ '^[A-Z]{2}$'::text)))`
+- `CHECK (
+CASE
+    WHEN (country IS NULL) THEN ((chart_code IS NULL) AND (framework IS NOT NULL))
+    ELSE ((chart_code IS NOT NULL) AND (framework IS NULL))
+END)`
+- `UNIQUE (framework, aggregate)`
+- `UNIQUE (country, chart_code, aggregate)`
 
 ### `analytic_axes`
 
@@ -2205,7 +2221,7 @@ Constraints:
 | `filing_rounding(p_company_id uuid, p_report_code text)` | How a figure of this form is written when it is frozen for this company: the currency's decimals and the country's method, coarsened to the unit of the form where the form names one. The only reader of tax_report_templates.rounding_unit. |
 | `filing_tax_movements(p_filing_id uuid)` | The tax accounts a declared period moved and by how much, on the same window and the same tax-point rule the return read, net of what an earlier settlement of the same period already carried. What settle_filing() clears — the whole period the first time, the difference on a corrective — and what anybody can read before it does. |
 | `filings_touched_since(p_company_id uuid, p_from date, p_to date)` | Declarations that have gone and whose period the ledger moved afterwards: how many entries carrying a declaration box landed in it, when the last one did, and how many of the filed figures now disagree. An entry that changes no figure is still listed — it was posted into a period that had been declared, and that is the fact being reported. |
-| `financial_analysis(p_company_id uuid, p_from date, p_to date)` | The aggregates of a company over a period, one row per aggregate its pack defines for its chart, in the order of analysis_aggregates: the amount in the company currency, signed as the aggregate is named, and the accounts that make it as [{code, name, amount}], each amount with that same sign. Movements are read from p_from to p_to, less the closing entries; balances at p_to. equity adds the result no close has moved yet, on the account year_result_account() names (code and name null where the pack names none). No row for a company whose pack defines no analysis. Security invoker: entries.read, and the caller's own rights on the ledger. |
+| `financial_analysis(p_company_id uuid, p_from date, p_to date)` | The aggregates of a company over a period, in the order of analysis_aggregates: the amount in the company currency, signed as the aggregate is named, the accounts that make it as [{code, name, amount}], each amount with that same sign, and source. source is pack when the company's country pack defines an analysis for its chart, and the rows are the ones it defines; framework otherwise, and the rows are those a framework reads by account type — the framework whose statements the chart declares, else the one the installation carries — which leaves out the aggregates no account type tells apart. Movements are read from p_from to p_to, less the closing entries; balances at p_to. equity adds the result no close has moved yet, on the account year_result_account() names (code and name null where the pack names none). No row when neither the pack nor a framework defines an analysis. Security invoker: entries.read, and the caller's own rights on the ledger. |
 | `financial_statement(p_company_id uuid, p_statement_code text, p_from date, p_to date)` | One financial statement of a company for a period: each line summed from the accounts its rules catch, then the totals evaluated in the order the scheme declares them. No country rule lives in this function. |
 | `financial_statement_of_kind(p_company_id uuid, p_kind text, p_from date, p_to date)` | One financial statement of a company by kind — balance_sheet, income_statement, allocation, cash_flow — for a caller that does not know which scheme its country pack carries. Resolves through default_statement_code() at the end date of the period, then answers as financial_statement() does, with the code it chose in the first column. On a balance sheet whose line for the result also takes other balances (statement_templates.result_in_progress = combined), the result nobody has closed yet follows that line as a row of its own: key <line>:result_in_progress, parent the line, the pack's label, not a total — a detail of its parent that no total adds. |
 | `fiscal_year_at(p_company_id uuid, p_date date)` | Fiscal year covering a date, or NULL. |

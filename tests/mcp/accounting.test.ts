@@ -375,6 +375,9 @@ describe('the books, through the tools', () => {
     );
     const aggregates = list(answer['aggregates']);
     const of = (code: string): Record<string, unknown> => record(aggregates.find((row) => row['aggregate'] === code));
+    // This company's pack defines the analysis, and the answer says so.
+    expect(answer['source']).toBe('pack');
+    expect(aggregates.every((row) => row['source'] === 'pack')).toBe(true);
 
     expect(aggregates.map((row) => row['aggregate'])).toEqual(
       expect.arrayContaining(['revenue', 'net_result', 'equity', 'total_assets']),

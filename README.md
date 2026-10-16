@@ -44,7 +44,8 @@ What ships today:
   invoicing.
 - **The compass of the company** — `financial_analysis()` reads, from the
   posted entries, the aggregates a country pack defines (revenue, equity,
-  cash, receivables, payables…), so that days of cash, net margin, current
+  cash, receivables, payables…), or, in a country whose pack defines none,
+  thirteen of them read by account type through the generic framework, so that days of cash, net margin, current
   ratio, equity ratio, days of sales and of purchases outstanding and growth
   come from the books with nothing to set up. The Analysis screen of Ekwo
   Cloud and the `financial_analysis` tool of the MCP server read it;

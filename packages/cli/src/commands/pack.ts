@@ -172,7 +172,10 @@ export async function packCommand(args: ParsedArgs, deps: CommandDeps = {}): Pro
       if (current === sql) note(dim(`${file} — already the output of packs/${GENERIC_PACK}`));
       else {
         await writeFile(path, sql, 'utf8');
-        step(`${file} — ${framework.statements.length} statements`);
+        step(
+          `${file} — ${framework.statements.length} statements` +
+            (framework.analysis === null ? '' : `, ${framework.analysis.aggregates.length} aggregates`),
+        );
       }
     } else if (current !== sql) {
       stale += 1;

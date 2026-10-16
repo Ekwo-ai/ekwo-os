@@ -11,7 +11,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { internalGroup, type AccountType } from '@ekwo-ai/core';
+import { ACCOUNT_TYPES, internalGroup, type AccountType } from '@ekwo-ai/core';
 import { validate, type Issue } from './schema.js';
 import { ruleCatches, ruleTakes } from './rules.js';
 import { analysisReferences, analysisSources, normaliseAnalysis, type PackAnalysis } from './analysis.js';
@@ -953,6 +953,11 @@ export interface FrameworkPack {
   dir: string;
   manifest: FrameworkManifest;
   statements: PackStatement[];
+  /**
+   * `analysis.json`: the aggregates the framework reads by account type for a
+   * company whose country pack defines none, or null where it carries none.
+   */
+  analysis: PackAnalysis | null;
   /** Why this pack carries no golden scenario. Never null: it can carry none. */
   goldenExemption: string | null;
   checksum: string;
@@ -1838,7 +1843,9 @@ function assetReferences(fixedAssets: PackFixedAssets, manifest: Manifest): Issu
 }
 
 /**
- * The framework pack: statements by account type, no country, no chart.
+ * The framework pack: statements by account type, no country, no chart — and,
+ * in `analysis.json`, the aggregates of an analysis by account type, which
+ * `financial_analysis()` reads for a company whose country pack defines none.
  *
  * It is read and compiled beside the country packs because it is the same
  * kind of thing — declarative lines an accountant can read — and because the
@@ -1875,6 +1882,33 @@ export async function readFrameworkPack(slug = GENERIC_PACK, dir = packsDir()): 
   issues.push(...statementReferences(statements, []));
   issues.push(...resultInProgress(statements, [], null));
 
+  // The analysis a company is read on when its country pack defines none.
+  // Held to the statements' rule: account types, because there is no chart.
+  let analysis: PackAnalysis | null = null;
+  if (existsSync(join(root, 'analysis.json'))) {
+    const raw = await readJson(join(root, 'analysis.json'));
+    issues.push(...validate(raw, defs['framework_analysis'] ?? {}, schema, 'analysis.json'));
+    analysis = normaliseAnalysis(raw as Record<string, unknown>, []);
+    issues.push(...analysisReferences(analysis, []));
+    for (const aggregate of analysis.aggregates) {
+      for (const rule of aggregate.rules) {
+        if (rule.kind !== 'account_type') {
+          issues.push({
+            path: `analysis.json ${aggregate.code}`,
+            message:
+              `a ${rule.kind} rule names a chart, and this framework has none. ` +
+              'The generic analysis is what the eighteen account types buy: account_type rules only.',
+          });
+        } else if (!(ACCOUNT_TYPES as readonly string[]).includes(rule.account_type ?? '')) {
+          issues.push({
+            path: `analysis.json ${aggregate.code}`,
+            message: `${rule.account_type ?? '(none)'} is not one of the eighteen account types`,
+          });
+        }
+      }
+    }
+  }
+
   // A framework has no chart, no tax and no journal, so no company can be
   // installed on it and no scenario replayed through it. That is a reason and
   // it is written down: the rule is that a pack without a golden says why.
@@ -1897,6 +1931,7 @@ export async function readFrameworkPack(slug = GENERIC_PACK, dir = packsDir()): 
     dir: root,
     manifest,
     statements,
+    analysis,
     goldenExemption: manifest.golden?.exempt ?? null,
     checksum: await checksum(root),
   };

@@ -12,8 +12,11 @@
  * core's: `analysis_aggregates`, read by `financial_analysis()`. A pack says
  * which accounts, and where that reading of its chart comes from.
  *
- * Optional, and never borrowed: a company whose pack carries no section gets
- * no aggregate, rather than the reading of another country's chart.
+ * Optional, and never borrowed from another country: a company whose pack
+ * carries no section is read through the framework pack's own section
+ * (`packs/generic/analysis.json`), which takes account types only and leaves
+ * out what no account type tells apart — never through another country's
+ * chart.
  */
 
 import type { Issue } from './schema.js';
@@ -191,7 +194,48 @@ export function compileAnalysis(section: PackAnalysis | null, country: string): 
   // A pack that has never declared the section writes nothing at all, so its
   // seed keeps running on a schema older than the analysis tables.
   if (section === null) return [];
+  return compileRows(section, {
+    columns: ['country', 'chart_code'],
+    scope: (alias) => `${alias}.country = ${text(country)}`,
+    key: ['chart_code'],
+    parts: [...section.charts].sort().map((chart) => ({ owner: [text(country), text(chart)], key: [text(chart)] })),
+  });
+}
 
+/**
+ * The SQL of a framework's section, for the framework seed: the same rows,
+ * owned by the framework rather than by a country and a chart — `country` and
+ * `chart_code` stay null and `framework` carries the framework's code, which
+ * the caller reads from the manifest. `financial_analysis()` reads them for a
+ * company whose country pack defines no analysis for its chart.
+ *
+ * Idempotent the way a country's section is: the delete is scoped to this
+ * framework's rows, so a release that drops an aggregate drops its row, and
+ * no country's row is touched.
+ */
+export function compileFrameworkAnalysis(section: PackAnalysis | null, framework: string): string[] {
+  if (section === null) return [];
+  return compileRows(section, {
+    columns: ['framework'],
+    scope: (alias) => `${alias}.country is null and ${alias}.framework = ${text(framework)}`,
+    key: [],
+    parts: [{ owner: [text(framework)], key: [] }],
+  });
+}
+
+/** Whose rows a section compiles into, and how its seed finds them again. */
+interface Owner {
+  /** The columns that say whose a row is, written before `aggregate`. */
+  columns: string[];
+  /** The condition that scopes the deletes to this owner's rows. */
+  scope: (alias: string) => string;
+  /** The columns of `columns` that vary inside this owner, part of the keys kept. */
+  key: string[];
+  /** One entry per chart, or one for a framework: the values of `columns` and of `key`. */
+  parts: { owner: string[]; key: string[] }[];
+}
+
+function compileRows(section: PackAnalysis, owner: Owner): string[] {
   const out: string[] = [];
   const templates: string[] = [];
   const rules: string[] = [];
@@ -199,59 +243,70 @@ export function compileAnalysis(section: PackAnalysis | null, country: string): 
   const ruleKeys: string[] = [];
 
   const aggregates = [...section.aggregates].sort((a, b) => (a.code < b.code ? -1 : a.code > b.code ? 1 : 0));
-  for (const chart of [...section.charts].sort()) {
+  for (const part of owner.parts) {
     for (const aggregate of aggregates) {
       templates.push(
-        `  (${text(country)}, ${text(chart)}, ${text(aggregate.code)}, ` +
-          `${text(aggregate.legal_reference)}, ${text(aggregate.source)})`,
+        `  (${[...part.owner, text(aggregate.code), text(aggregate.legal_reference), text(aggregate.source)].join(', ')})`,
       );
-      templateKeys.push(`(${text(chart)}, ${text(aggregate.code)})`);
+      templateKeys.push(`(${[...part.key, text(aggregate.code)].join(', ')})`);
       for (const rule of [...aggregate.rules].sort((a, b) => a.sequence - b.sequence)) {
         rules.push(
-          `  (${text(country)}, ${text(chart)}, ${text(aggregate.code)}, ${rule.sequence}, ${text(rule.kind)}, ` +
-            `${text(rule.code_from)}, ${text(rule.code_to)}, ${text(rule.account_type)}, ${text(rule.side)})`,
+          `  (${[
+            ...part.owner,
+            text(aggregate.code),
+            String(rule.sequence),
+            text(rule.kind),
+            text(rule.code_from),
+            text(rule.code_to),
+            text(rule.account_type),
+            text(rule.side),
+          ].join(', ')})`,
         );
-        ruleKeys.push(`(${text(chart)}, ${text(aggregate.code)}, ${rule.sequence})`);
+        ruleKeys.push(`(${[...part.key, text(aggregate.code), String(rule.sequence)].join(', ')})`);
       }
     }
   }
 
+  const keyOf = (alias: string, columns: string[]): string =>
+    `(${[...owner.key, ...columns].map((column) => `${alias}.${column}`).join(', ')})`;
   out.push(
     'delete from analysis_rules r',
-    ` where r.country = ${text(country)}`,
+    ` where ${owner.scope('r')}`,
     ...(ruleKeys.length > 0
-      ? ['   and (r.chart_code, r.aggregate, r.sequence) not in (', `     values ${ruleKeys.join(',\n            ')}`, '   );']
+      ? [`   and ${keyOf('r', ['aggregate', 'sequence'])} not in (`, `     values ${ruleKeys.join(',\n            ')}`, '   );']
       : ['   ;']),
     '',
     'delete from analysis_templates t',
-    ` where t.country = ${text(country)}`,
+    ` where ${owner.scope('t')}`,
     ...(templateKeys.length > 0
-      ? ['   and (t.chart_code, t.aggregate) not in (', `     values ${templateKeys.join(',\n            ')}`, '   );']
+      ? [`   and ${keyOf('t', ['aggregate'])} not in (`, `     values ${templateKeys.join(',\n            ')}`, '   );']
       : ['   ;']),
     '',
   );
 
   if (templates.length === 0) return out;
 
+  const columns = owner.columns.join(', ');
+  const values = owner.columns.map((column) => `v.${column}`).join(', ');
   out.push(
     'insert into analysis_templates',
-    '  (country, chart_code, aggregate, legal_reference, source_key)',
+    `  (${columns}, aggregate, legal_reference, source_key)`,
     'values',
     templates.join(',\n'),
-    'on conflict (country, chart_code, aggregate) do update set',
+    `on conflict (${columns}, aggregate) do update set`,
     '  legal_reference = excluded.legal_reference,',
     '  source_key      = excluded.source_key;',
     '',
     'insert into analysis_rules',
-    '  (country, chart_code, aggregate, sequence, rule_kind, code_from, code_to,',
+    `  (${columns}, aggregate, sequence, rule_kind, code_from, code_to,`,
     '   account_type, balance_side)',
-    'select v.country, v.chart_code, v.aggregate, v.sequence, v.rule_kind, v.code_from,',
+    `select ${values}, v.aggregate, v.sequence, v.rule_kind, v.code_from,`,
     '       v.code_to, v.account_type::account_type, v.balance_side',
     '  from (values',
     rules.map((row) => `  ${row}`).join(',\n'),
-    '  ) as v (country, chart_code, aggregate, sequence, rule_kind, code_from, code_to,',
+    `  ) as v (${columns}, aggregate, sequence, rule_kind, code_from, code_to,`,
     '          account_type, balance_side)',
-    'on conflict (country, chart_code, aggregate, sequence) do update set',
+    `on conflict (${columns}, aggregate, sequence) do update set`,
     '  rule_kind    = excluded.rule_kind,',
     '  code_from    = excluded.code_from,',
     '  code_to      = excluded.code_to,',

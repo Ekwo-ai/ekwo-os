@@ -1,6 +1,6 @@
--- Ekwo OS — Generic framework: financial statements by account type, for any chart of any country.
+-- Ekwo OS — Generic framework: financial statements and an analysis by account type, for any chart of any country.
 --
--- Generated from packs/generic at version 1.1.1, do not edit.
+-- Generated from packs/generic at version 1.2.0, do not edit.
 -- Change the pack and run `ekwo pack build generic`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -132,6 +132,125 @@ select v.statement_code, v.line_code, v.sequence, v.rule_kind, v.code_from,
   ) as v (statement_code, line_code, sequence, rule_kind, code_from, code_to,
           account_type, balance_side)
 on conflict (statement_code, line_code, sequence) do update set
+  rule_kind    = excluded.rule_kind,
+  code_from    = excluded.code_from,
+  code_to      = excluded.code_to,
+  account_type = excluded.account_type,
+  balance_side = excluded.balance_side;
+
+-- The analysis by account type, read by `financial_analysis()` for a company
+-- whose country pack defines none for its chart.
+
+delete from analysis_rules r
+ where r.country is null and r.framework = 'IFRS-SME'
+   and (r.aggregate, r.sequence) not in (
+     values ('cash', 10),
+            ('current_assets', 10),
+            ('current_assets', 20),
+            ('current_assets', 30),
+            ('current_assets', 40),
+            ('current_liabilities', 10),
+            ('current_liabilities', 20),
+            ('current_liabilities', 30),
+            ('depreciation', 10),
+            ('equity', 10),
+            ('equity', 20),
+            ('long_term_debt', 10),
+            ('net_result', 10),
+            ('net_result', 20),
+            ('net_result', 30),
+            ('net_result', 40),
+            ('net_result', 50),
+            ('other_operating_income', 10),
+            ('purchases', 10),
+            ('purchases', 20),
+            ('revenue', 10),
+            ('total_assets', 10),
+            ('total_assets', 20),
+            ('total_assets', 30),
+            ('total_assets', 40),
+            ('total_assets', 50),
+            ('total_assets', 60),
+            ('trade_payables', 10),
+            ('trade_receivables', 10)
+   );
+
+delete from analysis_templates t
+ where t.country is null and t.framework = 'IFRS-SME'
+   and (t.aggregate) not in (
+     values ('cash'),
+            ('current_assets'),
+            ('current_liabilities'),
+            ('depreciation'),
+            ('equity'),
+            ('long_term_debt'),
+            ('net_result'),
+            ('other_operating_income'),
+            ('purchases'),
+            ('revenue'),
+            ('total_assets'),
+            ('trade_payables'),
+            ('trade_receivables')
+   );
+
+insert into analysis_templates
+  (framework, aggregate, legal_reference, source_key)
+values
+  ('IFRS-SME', 'cash', 'IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: asset_cash', null),
+  ('IFRS-SME', 'current_assets', 'IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: asset_cash, asset_receivable, asset_current, asset_prepayments', null),
+  ('IFRS-SME', 'current_liabilities', 'IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: liability_payable, liability_current, liability_credit_card', null),
+  ('IFRS-SME', 'depreciation', 'IFRS for SMEs (2015), section 5 — Statement of Comprehensive Income — read by account type: expense_depreciation', null),
+  ('IFRS-SME', 'equity', 'IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: equity, equity_retained', null),
+  ('IFRS-SME', 'long_term_debt', 'IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: liability_non_current', null),
+  ('IFRS-SME', 'net_result', 'IFRS for SMEs (2015), section 5 — Statement of Comprehensive Income — read by account type: income, income_other, expense, expense_direct_cost, expense_depreciation', null),
+  ('IFRS-SME', 'other_operating_income', 'IFRS for SMEs (2015), section 5 — Statement of Comprehensive Income — read by account type: income_other', null),
+  ('IFRS-SME', 'purchases', 'IFRS for SMEs (2015), section 5 — Statement of Comprehensive Income — read by account type: expense_direct_cost, expense', null),
+  ('IFRS-SME', 'revenue', 'IFRS for SMEs (2015), section 5 — Statement of Comprehensive Income — read by account type: income', null),
+  ('IFRS-SME', 'total_assets', 'IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: asset_cash, asset_receivable, asset_current, asset_prepayments, asset_fixed, asset_non_current', null),
+  ('IFRS-SME', 'trade_payables', 'IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: liability_payable', null),
+  ('IFRS-SME', 'trade_receivables', 'IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: asset_receivable', null)
+on conflict (framework, aggregate) do update set
+  legal_reference = excluded.legal_reference,
+  source_key      = excluded.source_key;
+
+insert into analysis_rules
+  (framework, aggregate, sequence, rule_kind, code_from, code_to,
+   account_type, balance_side)
+select v.framework, v.aggregate, v.sequence, v.rule_kind, v.code_from,
+       v.code_to, v.account_type::account_type, v.balance_side
+  from (values
+    ('IFRS-SME', 'cash', 10, 'account_type', null, null, 'asset_cash', 'any'),
+    ('IFRS-SME', 'current_assets', 10, 'account_type', null, null, 'asset_cash', 'any'),
+    ('IFRS-SME', 'current_assets', 20, 'account_type', null, null, 'asset_receivable', 'any'),
+    ('IFRS-SME', 'current_assets', 30, 'account_type', null, null, 'asset_current', 'any'),
+    ('IFRS-SME', 'current_assets', 40, 'account_type', null, null, 'asset_prepayments', 'any'),
+    ('IFRS-SME', 'current_liabilities', 10, 'account_type', null, null, 'liability_payable', 'any'),
+    ('IFRS-SME', 'current_liabilities', 20, 'account_type', null, null, 'liability_current', 'any'),
+    ('IFRS-SME', 'current_liabilities', 30, 'account_type', null, null, 'liability_credit_card', 'any'),
+    ('IFRS-SME', 'depreciation', 10, 'account_type', null, null, 'expense_depreciation', 'any'),
+    ('IFRS-SME', 'equity', 10, 'account_type', null, null, 'equity', 'any'),
+    ('IFRS-SME', 'equity', 20, 'account_type', null, null, 'equity_retained', 'any'),
+    ('IFRS-SME', 'long_term_debt', 10, 'account_type', null, null, 'liability_non_current', 'any'),
+    ('IFRS-SME', 'net_result', 10, 'account_type', null, null, 'income', 'any'),
+    ('IFRS-SME', 'net_result', 20, 'account_type', null, null, 'income_other', 'any'),
+    ('IFRS-SME', 'net_result', 30, 'account_type', null, null, 'expense', 'any'),
+    ('IFRS-SME', 'net_result', 40, 'account_type', null, null, 'expense_direct_cost', 'any'),
+    ('IFRS-SME', 'net_result', 50, 'account_type', null, null, 'expense_depreciation', 'any'),
+    ('IFRS-SME', 'other_operating_income', 10, 'account_type', null, null, 'income_other', 'any'),
+    ('IFRS-SME', 'purchases', 10, 'account_type', null, null, 'expense_direct_cost', 'any'),
+    ('IFRS-SME', 'purchases', 20, 'account_type', null, null, 'expense', 'any'),
+    ('IFRS-SME', 'revenue', 10, 'account_type', null, null, 'income', 'any'),
+    ('IFRS-SME', 'total_assets', 10, 'account_type', null, null, 'asset_cash', 'any'),
+    ('IFRS-SME', 'total_assets', 20, 'account_type', null, null, 'asset_receivable', 'any'),
+    ('IFRS-SME', 'total_assets', 30, 'account_type', null, null, 'asset_current', 'any'),
+    ('IFRS-SME', 'total_assets', 40, 'account_type', null, null, 'asset_prepayments', 'any'),
+    ('IFRS-SME', 'total_assets', 50, 'account_type', null, null, 'asset_fixed', 'any'),
+    ('IFRS-SME', 'total_assets', 60, 'account_type', null, null, 'asset_non_current', 'any'),
+    ('IFRS-SME', 'trade_payables', 10, 'account_type', null, null, 'liability_payable', 'any'),
+    ('IFRS-SME', 'trade_receivables', 10, 'account_type', null, null, 'asset_receivable', 'any')
+  ) as v (framework, aggregate, sequence, rule_kind, code_from, code_to,
+          account_type, balance_side)
+on conflict (framework, aggregate, sequence) do update set
   rule_kind    = excluded.rule_kind,
   code_from    = excluded.code_from,
   code_to      = excluded.code_to,

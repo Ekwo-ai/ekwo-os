@@ -1,0 +1,199 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/framework_analysis",
+  "aggregates": [
+    {
+      "code": "revenue",
+      "legal_reference": "IFRS for SMEs (2015), section 5 — Statement of Comprehensive Income — read by account type: income",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "income"
+        }
+      ]
+    },
+    {
+      "code": "other_operating_income",
+      "legal_reference": "IFRS for SMEs (2015), section 5 — Statement of Comprehensive Income — read by account type: income_other",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "income_other"
+        }
+      ]
+    },
+    {
+      "code": "purchases",
+      "legal_reference": "IFRS for SMEs (2015), section 5 — Statement of Comprehensive Income — read by account type: expense_direct_cost, expense",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "expense_direct_cost"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "expense"
+        }
+      ]
+    },
+    {
+      "code": "depreciation",
+      "legal_reference": "IFRS for SMEs (2015), section 5 — Statement of Comprehensive Income — read by account type: expense_depreciation",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "expense_depreciation"
+        }
+      ]
+    },
+    {
+      "code": "net_result",
+      "legal_reference": "IFRS for SMEs (2015), section 5 — Statement of Comprehensive Income — read by account type: income, income_other, expense, expense_direct_cost, expense_depreciation",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "income"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "income_other"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "expense"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "expense_direct_cost"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "expense_depreciation"
+        }
+      ]
+    },
+    {
+      "code": "equity",
+      "legal_reference": "IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: equity, equity_retained",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "equity"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "equity_retained"
+        }
+      ]
+    },
+    {
+      "code": "total_assets",
+      "legal_reference": "IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: asset_cash, asset_receivable, asset_current, asset_prepayments, asset_fixed, asset_non_current",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "asset_cash"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "asset_receivable"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "asset_current"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "asset_prepayments"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "asset_fixed"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "asset_non_current"
+        }
+      ]
+    },
+    {
+      "code": "current_assets",
+      "legal_reference": "IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: asset_cash, asset_receivable, asset_current, asset_prepayments",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "asset_cash"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "asset_receivable"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "asset_current"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "asset_prepayments"
+        }
+      ]
+    },
+    {
+      "code": "cash",
+      "legal_reference": "IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: asset_cash",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "asset_cash"
+        }
+      ]
+    },
+    {
+      "code": "trade_receivables",
+      "legal_reference": "IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: asset_receivable",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "asset_receivable"
+        }
+      ]
+    },
+    {
+      "code": "current_liabilities",
+      "legal_reference": "IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: liability_payable, liability_current, liability_credit_card",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "liability_payable"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "liability_current"
+        },
+        {
+          "kind": "account_type",
+          "account_type": "liability_credit_card"
+        }
+      ]
+    },
+    {
+      "code": "trade_payables",
+      "legal_reference": "IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: liability_payable",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "liability_payable"
+        }
+      ]
+    },
+    {
+      "code": "long_term_debt",
+      "legal_reference": "IFRS for SMEs (2015), section 4 — Statement of Financial Position — read by account type: liability_non_current",
+      "rules": [
+        {
+          "kind": "account_type",
+          "account_type": "liability_non_current"
+        }
+      ]
+    }
+  ]
+}

@@ -24,7 +24,7 @@
 import { describeCertification } from './certification.js';
 import { sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackSource, type PackStatement } from './read.js';
 import { compileCorporateTaxSection } from './corporate-tax.js';
-import { compileAnalysis } from './analysis.js';
+import { compileAnalysis, compileFrameworkAnalysis } from './analysis.js';
 
 /**
  * Which number each pack's compiled seed carries, by slug.
@@ -249,7 +249,7 @@ export function frameworkSeedFileName(slug: string): string {
 export function compileFrameworkPack(pack: FrameworkPack): string {
   const { manifest } = pack;
   const out: string[] = [
-    `-- Ekwo OS — ${manifest.name}: financial statements by account type, for any chart of any country.`,
+    `-- Ekwo OS — ${manifest.name}: financial statements${pack.analysis === null ? '' : ' and an analysis'} by account type, for any chart of any country.`,
     '--',
     `-- Generated from packs/${pack.slug} at version ${manifest.version}, do not edit.`,
     `-- Change the pack and run \`ekwo pack build ${pack.slug}\`; \`ekwo pack check --all\``,
@@ -268,6 +268,14 @@ export function compileFrameworkPack(pack: FrameworkPack): string {
     '',
   );
   out.push(...statements(pack.statements, { statement_lines: {}, result_in_progress: {} }, null));
+  if (pack.analysis !== null) {
+    out.push(
+      '-- The analysis by account type, read by `financial_analysis()` for a company',
+      '-- whose country pack defines none for its chart.',
+      '',
+      ...compileFrameworkAnalysis(pack.analysis, manifest.code),
+    );
+  }
   return `${out.join('\n')}\n`;
 }
 
