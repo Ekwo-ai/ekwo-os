@@ -95,5 +95,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('BND', 'Brunei dollar', 'B$', 2),
   ('MOP', 'Macanese pataca', E'MOP$', 2),
   ('ZWG', 'Zimbabwe Gold', 'ZiG', 2),
-  ('XCD', 'East Caribbean dollar', 'EC$', 2)
+  ('XCD', 'East Caribbean dollar', 'EC$', 2),
+  ('BSD', 'Bahamian dollar', 'B$', 2)
 on conflict (code) do nothing;
