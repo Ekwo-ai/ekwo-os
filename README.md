@@ -452,8 +452,8 @@ Three ways to get help, from the open to the dedicated:
   for everyone.
 - **By e-mail, with Hosted and Pro.** A company or a firm on
   [Ekwo Cloud](https://cloud.ekwo.ai) writes from its Support page and gets a
-  written answer from the people who write Ekwo, within two working days.
-  What each plan includes: [ekwo.ai/pricing](https://ekwo.ai/pricing/).
+  written answer from the people who write Ekwo. What each plan includes:
+  [ekwo.ai/pricing](https://ekwo.ai/pricing/).
 - **On quote: Ekwo Consulting.** The services line of Ekwo, for what no plan
   covers — a country pack written or reviewed with a professional of that
   country, a module, a connector to the software you already run, a migration
