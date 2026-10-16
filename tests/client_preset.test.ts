@@ -1025,6 +1025,11 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select import_bank_statement($1, '{"statements": []}'::jsonb)`,
         params: [mine.companyId],
       },
+      // Refused on the person, by name, before the identifier is read.
+      'ekwo.create_bank_account': {
+        sql: `select create_bank_account($1, 'any account number')`,
+        params: [mine.companyId],
+      },
       // Refused on the person, by name, before the books are read.
       'ekwo.import_books': {
         sql: `select import_books($1, jsonb_build_object('source', 'fec', 'checksum', 'sha256:' || repeat('0', 64), 'entries', '[]'::jsonb))`,
