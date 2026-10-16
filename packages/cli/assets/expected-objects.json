@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.13.0",
-  "migration": "20261016065440",
+  "migration": "20261016145816",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4753,6 +4753,10 @@
         "arguments": "p_secret text"
       },
       {
+        "name": "product_report",
+        "arguments": "p_company_id uuid, p_from date, p_to date"
+      },
+      {
         "name": "purge_audit_log",
         "arguments": "p_before date"
       },
@@ -9389,6 +9393,17 @@
           "anon": [
             "execute"
           ],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "product_report",
+          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
           "authenticated": [
             "execute"
           ],

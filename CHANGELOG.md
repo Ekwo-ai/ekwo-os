@@ -11,6 +11,18 @@ somewhere has already run it.
 
 ### Added
 
+- **What each product brought in, and cost.** `product_report(company, from,
+  to)` (migration `20261016145816`) reads the posted invoices and credit notes
+  dated in a period and gives, for each product named on a line and on each
+  side — sold, bought — the documents that named it, the quantity and the
+  untaxed amount in the company's currency, a credit note counting against
+  its invoice. Drafts, quotes, orders and lines naming no product say
+  nothing; a retired product keeps reporting what it did and says `active`
+  false. Security invoker, so the caller reads what `documents.read` lets
+  them read. It is the reading behind a reporting by line of service, such
+  as the Products screen of Ekwo Cloud: the ledger never knew which product a
+  line was, and `document_lines.product_id` is the one place that does.
+
 - **Every company gets an analysis, whatever its country.** A company whose
   country pack carries no `analysis.json` used to get no row from
   `financial_analysis()`, so the Analysis screen of most countries was empty.
