@@ -1,4 +1,4 @@
-# An analysis for every country, read by account type where the pack says nothing
+# An analysis for every country, by account type
 
 > Status: accepted
 

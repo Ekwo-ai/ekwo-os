@@ -67,7 +67,7 @@ consequence.
 - [0031](0031-opening-and-closing-are-parameters.md) — Opening and closing are parameters, not code
 - [0032](0032-the-fec-carries-its-opening-balances.md) — The audit file carries opening balances, never posted
 - [0067](0067-an-opening-on-the-day-of-the-takeover.md) — An opening on the day of the takeover, with its open items
-- [0068](0068-an-analysis-for-every-country.md) — An analysis for every country, read by account type where the pack says nothing
+- [0068](0068-an-analysis-for-every-country.md) — An analysis for every country, by account type
 - [0033](0033-what-a-country-requires-on-a-document-is-data.md) — What a country requires on a document is data
 - [0034](0034-a-label-is-data.md) — A label is data, and a declared language is a promise
 - [0035](0035-the-chart-stays-whole.md) — The chart stays whole; the working list is derived
