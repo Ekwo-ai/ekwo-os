@@ -40,47 +40,6 @@
     "sequence": 10
   },
   {
-    "code": "AG-S-15",
-    "name": "Sale, standard rate 15 % (to 31 December 2023)",
-    "description": "The general rate from the introduction of the tax on 29 January 2007 to 31 December 2023.",
-    "kind": "vat",
-    "rate": 15,
-    "scope": "sale",
-    "treatment": "domestic",
-    "valid_from": "2007-01-29",
-    "valid_to": "2023-12-31",
-    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(d) — 15 per cent in any case not otherwise provided for; the Department's FAQ (question 3) dates the introduction of the tax at 29 January 2007 and (question 4) gives the standard rate as 15 %. The Department announced the rise to 17 % from 1 January 2024.",
-    "source": "abst-act-2006",
-    "vat_category": "S",
-    "postings": {
-      "invoice": [
-        {
-          "type": "base",
-          "box": "200"
-        },
-        {
-          "type": "tax",
-          "account": "2100",
-          "box": "250"
-        }
-      ],
-      "credit_note": [
-        {
-          "type": "base",
-          "box": "200",
-          "box_factor": -100
-        },
-        {
-          "type": "tax",
-          "account": "2100",
-          "box": "250",
-          "box_factor": -100
-        }
-      ]
-    },
-    "sequence": 15
-  },
-  {
     "code": "AG-S-ZR-EXPG",
     "name": "Sale, zero-rated (export of goods)",
     "description": "A supply of goods the supplier has entered, or will enter, for export under the Customs (Control and Management) Act, or that the Commissioner is satisfied have been or will be exported.",
@@ -235,47 +194,6 @@
       ]
     },
     "sequence": 60
-  },
-  {
-    "code": "AG-P-15",
-    "name": "Purchase, standard rate 15 % (to 31 December 2023), deductible",
-    "description": "The same purchase before the rate rose.",
-    "kind": "vat",
-    "rate": 15,
-    "scope": "purchase",
-    "treatment": "domestic",
-    "valid_from": "2007-01-29",
-    "valid_to": "2023-12-31",
-    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(d) and s. 29(1); the Department's FAQ, question 4, gives the standard rate as 15 %.",
-    "source": "abst-act-2006",
-    "vat_category": "S",
-    "postings": {
-      "invoice": [
-        {
-          "type": "base",
-          "box": "310"
-        },
-        {
-          "type": "tax",
-          "account": "1150",
-          "box": "330"
-        }
-      ],
-      "credit_note": [
-        {
-          "type": "base",
-          "box": "310",
-          "box_factor": -100
-        },
-        {
-          "type": "tax",
-          "account": "1150",
-          "box": "330",
-          "box_factor": -100
-        }
-      ]
-    },
-    "sequence": 65
   },
   {
     "code": "AG-P-17-BL",

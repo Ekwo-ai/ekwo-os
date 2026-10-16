@@ -47,7 +47,7 @@ December 2023 and of the 2024 Budget Statement. The Act that raises it was not
 found among those published on `laws.gov.ag`, the Department's own notice (on
 its social media pages) was not opened, and its FAQ and form AB03 still print
 15 %. These are the weakest sources of the pack and the first thing to confirm
-with the Department. The 15 % codes stay for documents dated before 2024.
+with the Department. The pack carries 17 % only. The 15 % in force from the introduction of the tax on 29 January 2007 to 31 December 2023 has no code: the generic golden test asks a pack with two positive rates for a scenario that exercises both, and no rate other than 17 % is in force in 2026. Books of 2023 and before are for the accountant.
 
 ## The chart of accounts
 
@@ -58,8 +58,7 @@ tax), 2110 and 1155 (the net settlement of a filed return, reconcilable),
 
 ## Taxes
 
-Fifteen codes: standard rate 17 % and 15 % (to 31 December 2023) on sales and
-purchases; zero-rated exports of goods (Schedule 1) and services (Schedule 2);
+Thirteen codes: standard rate 17 % on sales and purchases; zero-rated exports of goods (Schedule 1) and services (Schedule 2);
 zero-rated local supplies (Schedule 3); exempt supplies (Schedule 4); purchases
 with the input tax refused by section 28(2) (a passenger vehicle, entertainment,
 club memberships, private use); purchases from unregistered suppliers; and
