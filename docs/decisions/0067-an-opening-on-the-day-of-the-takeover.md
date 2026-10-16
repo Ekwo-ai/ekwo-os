@@ -1,4 +1,4 @@
-# An opening on the day of the takeover, whose open items are documents
+# An opening on the day of the takeover, with its open items
 
 > Status: accepted
 
