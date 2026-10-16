@@ -1,0 +1,193 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "BS-VAT",
+  "name": "VAT return",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "valid_from": "2015-01-01",
+  "legal_reference": "Value Added Tax Act, 2014, s. 46(2) and s. 47 — the tax period of a registrant is one calendar month or another period the Comptroller determines in a particular case (the Department's guidance on filing a quarterly return shows quarterly filing for smaller registrants), and the registrant files a VAT return in the prescribed form for each period whether or not tax is payable. The form is filed online at vat.revenue.gov.bs. The boxes carry the line numbers of the Department's guidance on completing the return (standard method, version of 1 January 2017), and the lines for the reduced rate are the pack's own; the pack carries the lines a document writes into and the totals between them (1, 2, 4 to 5, 7 to 10, 12, 14, 18, 19 and 25 to 27). Withholding (Forms 73 and 74), the bonded supplies, the reverse charge on imported services (lines 6 and 16), the deferred import VAT, the credit brought forward and the fines are not carried: see the README.",
+  "source": "vat-guide-return",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 21,
+    "legal_reference": "Value Added Tax Act, 2014, s. 47(1)(a) and (b) — the return is filed, and the tax paid, within twenty-one days after the end of the tax period; the Department's payment page repeats it. A large taxpayer has fourteen days (s. 47(1A)), which this deadline does not carry: it depends on a fact about the company. The Act does not move a date that falls on a weekend or a holiday.",
+    "source": "vat-payment-page"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Line 1 — Zero-rated supplies",
+      "sequence": 10,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 1: the total of zero-rated sales made during the period.",
+      "source": "vat-guide-return"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Line 2 — Exempt supplies",
+      "sequence": 20,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 2: the total of exempt sales made during the period.",
+      "source": "vat-guide-return"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Line 4 — Taxable supplies at the standard rate (10 %), value without VAT",
+      "sequence": 30,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 4: the standard-rated sales. The guide prints the value inclusive of VAT; this box holds the value without tax and box 4I adds the tax back.",
+      "source": "vat-guide-return"
+    },
+    {
+      "box": "5",
+      "kind": "tax",
+      "name": "Line 5 — VAT collected on standard-rate supplies",
+      "sequence": 40,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 5 = line 4 × (rate / (100 + rate)): 10/110 at 10 % (the guide, from 2017, prints 7.5/107.5).",
+      "source": "vat-guide-return"
+    },
+    {
+      "box": "4I",
+      "kind": "total",
+      "name": "Line 4 as printed — standard-rated supplies, VAT included",
+      "sequence": 50,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 4, inclusive of the VAT charged, as the form prints it.",
+      "source": "vat-guide-return",
+      "plus": [
+        "4",
+        "5"
+      ]
+    },
+    {
+      "box": "R4",
+      "kind": "base",
+      "name": "Reduced rate (5 %) — Taxable supplies, value without VAT",
+      "sequence": 60,
+      "legal_reference": "Value Added Tax (Amendment) Act, 2025, s. 3 — the reduced rate of five per cent from 1 April 2025. The guide (2017) and the worksheet online predate it and have no line for it: this box is the pack's own and the preparer places it on the current form.",
+      "source": "vat-amend-2025"
+    },
+    {
+      "box": "R5",
+      "kind": "tax",
+      "name": "Reduced rate (5 %) — VAT collected on reduced-rated supplies",
+      "sequence": 70,
+      "legal_reference": "As box R4: the VAT at the reduced rate of five per cent.",
+      "source": "vat-amend-2025"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Line 7 — Output adjustments for the period",
+      "sequence": 80,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 7: debit notes issued, credit notes received and bad debts relating to supplies reported in a previous period — declared and empty: a credit note issued in the period is written into lines 4 and 5 by the document itself, so the line stays for the adjustments the preparer enters by hand.",
+      "source": "vat-guide-return"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Line 8 — Supplies excluding VAT, taxable and bonded",
+      "sequence": 90,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 8 = L1 + L3 + L4 − L5: the zero-rated and standard-rated sales without VAT (bonded supplies, line 3, are not carried). The reduced-rate supplies, which the guide does not know, are added here.",
+      "source": "vat-guide-return",
+      "plus": [
+        "1",
+        "4",
+        "R4"
+      ]
+    },
+    {
+      "box": "9",
+      "kind": "total",
+      "name": "Line 9 — Total supplies excluding VAT",
+      "sequence": 100,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 9 = L2 + L8: the exempt supplies and the line 8 total.",
+      "source": "vat-guide-return",
+      "plus": [
+        "2",
+        "8"
+      ]
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Line 10 — Total output tax",
+      "sequence": 110,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 10 = L5 + L6 + L7. Line 6, the reverse charge on imported services, is not carried; the VAT at the reduced rate (R5) is added.",
+      "source": "vat-guide-return",
+      "plus": [
+        "5",
+        "R5",
+        "7"
+      ]
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Lines 12 and 13 — Value of imports (capital goods and operating inputs), without VAT",
+      "sequence": 120,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, lines 12 and 13: the value of imports of capital goods and services, and of operating inputs, exclusive of VAT. The guide splits them in two; this box holds both.",
+      "source": "vat-guide-return"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Line 14 — VAT paid on imported goods",
+      "sequence": 130,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 14: the VAT paid at the border on imported goods. Line 15, the import VAT deferred, is not carried.",
+      "source": "vat-guide-return"
+    },
+    {
+      "box": "18",
+      "kind": "base",
+      "name": "Lines 17 and 18 — Value of domestic purchases (capital and operating), without VAT",
+      "sequence": 140,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, lines 17 and 18: the value of domestic purchases of capital goods and services, and of operating inputs, exclusive of VAT, whether standard-rated, reduced-rated, zero-rated or exempt. The guide splits them in two; this box holds both.",
+      "source": "vat-guide-return"
+    },
+    {
+      "box": "19",
+      "kind": "tax",
+      "name": "Line 19 — VAT paid on domestic goods and services",
+      "sequence": 150,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 19: the VAT paid on domestic goods and services, and the deemed VAT.",
+      "source": "vat-guide-return"
+    },
+    {
+      "box": "25",
+      "kind": "tax",
+      "name": "Line 25 — Input adjustments for the period",
+      "sequence": 160,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 25: credit notes issued and debit notes received for purchases reported in a previous period — declared and empty, for the reason given at line 7.",
+      "source": "vat-guide-return"
+    },
+    {
+      "box": "26",
+      "kind": "total",
+      "name": "Line 26 — Total input tax",
+      "sequence": 170,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 26 = L23 + L24 + L25, the claimable input tax. The guide splits L20 into the part attributable to taxable supplies, the part from mixed supplies (apportionment worksheet) and the part not claimable (lines 21 to 24); the pack claims the whole of the tax entered on lines 14 and 19 (line 16, the reverse charge on imported services, is not carried).",
+      "source": "vat-guide-return",
+      "plus": [
+        "14",
+        "19",
+        "25"
+      ]
+    },
+    {
+      "box": "27",
+      "kind": "total",
+      "name": "Line 27 — VAT payable (positive) or VAT credit (negative)",
+      "sequence": 180,
+      "legal_reference": "VAT Guidance on Completing a VAT Return, line 27 = L10 − L26, which can be negative. Lines 28 to 31 (deferred VAT, the credit brought forward and the net amount) settle one period against the next and are not documents.",
+      "source": "vat-guide-return",
+      "plus": [
+        "10"
+      ],
+      "minus": [
+        "26"
+      ]
+    }
+  ]
+}

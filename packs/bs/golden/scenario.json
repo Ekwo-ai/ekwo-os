@@ -1,0 +1,321 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Nassau trading company, registered for VAT and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "BS-IFRS-SFP",
+    "BS-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-bs",
+      "name": "Cable Beach Retail Ltd",
+      "type": "customer",
+      "country": "BS"
+    },
+    {
+      "ref": "cust-us",
+      "name": "Fort Lauderdale Marine Supply Inc.",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "cust-gb",
+      "name": "Harlow Consulting Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-bs",
+      "name": "Bay Street Wholesalers Ltd",
+      "type": "supplier",
+      "country": "BS"
+    },
+    {
+      "ref": "supp-cn",
+      "name": "Shenzhen Components Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-bs",
+      "date": "2026-01-08",
+      "why": "A domestic sale at the standard rate of 10 %: ten units of 1,200.00 give 12,000.00 and 1,200.00 of VAT — lines 4 and 5.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale",
+          "quantity": 10,
+          "unit_price": 1200,
+          "tax": "BS-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-bs",
+      "date": "2026-01-12",
+      "why": "The rental of a dwelling, an exempt supply under item 5 of Part I of the Second Schedule: line 2, no VAT.",
+      "lines": [
+        {
+          "name": "Apartment rental, January",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "BS-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2026-01-15",
+      "why": "An export of goods entered for export, zero-rated under paragraph 1 of Part I of the First Schedule: 50 units of 80.00 in line 1.",
+      "lines": [
+        {
+          "name": "Marine fittings, export consignment",
+          "quantity": 50,
+          "unit_price": 80,
+          "tax": "BS-S-ZR-EXPG",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2026-01-19",
+      "why": "Freight directly attributable to goods exported, zero-rated under paragraph 2 of Part II of the First Schedule: line 1.",
+      "lines": [
+        {
+          "name": "Freight for an export shipment",
+          "quantity": 1,
+          "unit_price": 2500,
+          "tax": "BS-S-ZR-EXPS",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-bs",
+      "date": "2026-01-21",
+      "why": "A sale of unprepared food by a food store at the reduced rate of 5 % (Fourth Schedule, tariff heading 0207): 100 cases of 20.00 give 2,000.00 and 100.00 of VAT — lines R4 and R5. The second positive rate, exercised for the generic tests.",
+      "lines": [
+        {
+          "name": "Frozen chicken thighs, case",
+          "quantity": 100,
+          "unit_price": 20,
+          "tax": "BS-S-5",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-bs",
+      "date": "2026-01-26",
+      "why": "A credit note for one unit returned from INV-001: lines 4 and 5 fall by 1,200.00 and 120.00.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "BS-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-bs",
+      "date": "2026-01-09",
+      "why": "A local purchase at the standard rate, credit allowed in full (s. 50): lines 18 and 19.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "BS-P-10",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-bs",
+      "date": "2026-01-13",
+      "why": "A passenger car not used wholly for taxable supplies, whose input tax s. 50(1)(f) refuses: the 3,000.00 of VAT joins the cost of the asset and no tax is claimed; the net value goes to line 18.",
+      "lines": [
+        {
+          "name": "Passenger car for the sales manager",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "BS-P-10-BL",
+          "account": "1660"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-bs",
+      "date": "2026-01-14",
+      "why": "A local purchase of freight on an export shipment, zero-rated (First Schedule, Part II, paragraph 2): line 18, no tax.",
+      "lines": [
+        {
+          "name": "Freight on an export shipment",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "BS-P-ZR",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-bs",
+      "date": "2026-01-16",
+      "why": "A life insurance premium for staff, exempt under item 1(a) of Part I of the Second Schedule: line 18, no tax.",
+      "lines": [
+        {
+          "name": "Group life insurance premium",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "BS-P-EX",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-20",
+      "why": "An import of goods: VAT of 10 % on a customs value of 20,000.00 is collected by Customs and claimed — lines 12 and 14.",
+      "lines": [
+        {
+          "name": "Imported electronic components for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "BS-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-bs",
+      "date": "2026-01-28",
+      "why": "A purchase from a supplier below the registration threshold, who charges no VAT: none claimed; line 18.",
+      "lines": [
+        {
+          "name": "Cleaning services from an unregistered individual",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "BS-P-NR",
+          "account": "6330"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-007",
+      "type": "purchase_invoice",
+      "contact": "supp-bs",
+      "date": "2026-01-29",
+      "why": "Unprepared food bought by the food store at the reduced rate of 5 %: 1,000.00 and 50.00 of input tax — lines 18 and 19.",
+      "lines": [
+        {
+          "name": "Frozen chicken thighs bought for resale",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "BS-P-5",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-bs",
+      "date": "2026-01-30",
+      "why": "A purchase credit note for a short delivery on PINV-001: lines 18 and 19 fall by 500.00 and 50.00.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "BS-P-10",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 3000,
+      "contact": "cust-bs",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The rent of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 4000,
+      "contact": "cust-us",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-07",
+      "amount": 8800,
+      "contact": "supp-bs",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 2000,
+      "contact": "cust-gb",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Harlow Consulting Ltd before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

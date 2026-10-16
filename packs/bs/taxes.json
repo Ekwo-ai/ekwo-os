@@ -1,0 +1,477 @@
+[
+  {
+    "code": "BS-S-10",
+    "name": "Sale, standard rate 10 %",
+    "description": "The general rate on a taxable supply of goods or services by a VAT registrant.",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 6(1) — value added tax is chargeable at a standard rate of ten per cent on a taxable supply and a taxable importation that is not zero-rated (or, from 1 April 2025, reduced-rated). The reprint of 1 July 2024 reads ten per cent and cites Act No. 32 of 2021, the Value Added Tax (Amendment) (No. 2) Act published on 13 December 2021, as the amendment; the effect from 1 January 2022 rests on Orbitax's report of that gazette, because the commencement clause of the Act, an image scan, was not read.  The output tax is reported in the standard-rate output lines of the VAT return (lines 4 and 5).",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "BS-S-5",
+    "name": "Sale, reduced rate 5 % (unprepared food, food store)",
+    "description": "Unprepared food for human consumption listed in the Fourth Schedule, sold by a food store: meat, fish, dairy, grains, vegetables and the other tariff headings the Schedule lists.",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-04-01",
+    "legal_reference": "Value Added Tax (Amendment) Act, 2025, s. 3 — section 6(1)(b) of the principal Act: a reduced rate of five per cent on the supplies and importations in the Fourth Schedule if sold unprepared in a food store (a business with at least 10 % of its 2024 turnover from unprepared food, or a pharmacy), from 1 April 2025. The Value Added Tax (Amendment) Bill, 2026, published by the Department, would instead exempt the same goods from 1 April 2026 (Second Schedule, Part III); a Bill was read and whether it was passed was not confirmed, so the code carries no end date and the accountant checks the position of the books after 31 March 2026. The reduced-rate lines of the current return form could not be read; lines R4 and R5 are this pack's own.",
+    "source": "vat-amend-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "R4"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "R5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "R4",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "R5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "BS-S-ZR-EXPG",
+    "name": "Sale, zero-rated (export of goods)",
+    "description": "Goods the supplier has entered for export under the Customs Management Act and that are in fact exported, or goods not in The Bahamas at the time of supply.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 6(1)(a) and First Schedule, Part I, paragraphs 1 and 2 — exports are zero-rated where the registrant supplier has entered the goods for export and exports them, and the Comptroller is satisfied they were not used after entry except as necessary for the export; so is a supply of goods not situated in The Bahamas at the time of supply and not to be entered for home consumption. The conditions in regulations and VAT Rules are not carried. Reported in line 1.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "BS-S-ZR-EXPS",
+    "name": "Sale, zero-rated (services tied to export or foreign property)",
+    "description": "A supply of services the First Schedule, Part II, zero-rates: services connected with land or goods outside The Bahamas, with goods temporarily imported, with foreign-going vessels and aircraft, and freight and insurance attributable to exported goods.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 6(1)(a) and First Schedule, Part II, paragraphs 1 to 4 — services directly connected with land outside The Bahamas, with personal property situated outside it, with goods temporarily imported or with the repair of a foreign-going aircraft or vessel; freight and insurance directly attributable to goods exported in accordance with regulations; certain services to non-residents (containers) and to foreign-going vessels. A service supplied directly to a non-resident who is not a taxable person is in several cases exempt rather than zero-rated (Second Schedule, Part I, item 11): the preparer decides which applies. Reported in line 1.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "BS-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply the Second Schedule, Part I, lists as exempt: life insurance, most financial services, public medical services, tuition, the rental of a dwelling, daycare, religious services, gambling and other items.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 7 and Second Schedule, Part I — exempt supplies include life insurance and annuities (item 1), financial services other than those in paragraph (9) of Part II of the First Schedule (item 2), public medical services (item 3), education funded by tuition (item 4), the rental of a dwelling (item 5), daycare (item 9), care of persons in need (item 10), services to non-residents of the kinds item 11 lists, religious services (item 12), services of recognised charities (item 13) and games of chance (item 14). The input tax on what an exempt supply uses is not deductible (s. 50(1)(b)). Reported in line 2.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "BS-P-10",
+    "name": "Purchase, standard rate 10 %, deductible",
+    "description": "A local purchase from a VAT registrant, for a taxable activity: the input tax is claimed.",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 6(1) — value added tax is chargeable at a standard rate of ten per cent on a taxable supply and a taxable importation that is not zero-rated (or, from 1 April 2025, reduced-rated). The reprint of 1 July 2024 reads ten per cent and cites Act No. 32 of 2021, the Value Added Tax (Amendment) (No. 2) Act published on 13 December 2021, as the amendment; the effect from 1 January 2022 rests on Orbitax's report of that gazette, because the commencement clause of the Act, an image scan, was not read.  The input tax is claimed under s. 50 when the registrant holds the VAT invoice (s. 50(1)(d)). Value in line 18, tax in line 19.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "18"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "19"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "19",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "BS-P-10-BL",
+    "name": "Purchase, standard rate 10 %, input tax not allowed",
+    "description": "A purchase on which section 50 refuses the credit — a passenger vehicle not used wholly for taxable supplies, entertainment, club fees and subscriptions, or a private use: the tax is part of the cost.",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 50(1)(a), (f), (g), (h) and (i) — the claim is not allowable where the acquisition is not for the claimant's taxable activity, where it is a passenger vehicle not used wholly in support of taxable supplies (and its repair or maintenance, unless the claimant refurbishes or hires such vehicles), entertainment (unless the claimant provides entertainment or gives it to staff as a reward), or fees and subscriptions to clubs (the text of paragraph (i) was read only in part). The tax joins the cost of the item. Value in line 18.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "18"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "BS-P-5",
+    "name": "Purchase, reduced rate 5 %, deductible",
+    "description": "A purchase at the reduced rate of five per cent (unprepared food bought by a food store): the input tax is claimed.",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-04-01",
+    "legal_reference": "Value Added Tax (Amendment) Act, 2025, s. 3 — section 6(1)(b) of the principal Act (see BS-S-5, including the position of the 2026 Bill). The input tax is claimed under s. 50 on the same conditions as at the standard rate. Value in line 18, tax in line 19.",
+    "source": "vat-amend-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "18"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "19"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "19",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "BS-P-NR",
+    "name": "Purchase from a supplier not registered for VAT",
+    "description": "A purchase from a person who does not charge VAT: nothing to claim.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 54(6) — a person who is not a registrant must not issue a VAT invoice or VAT sales receipt, and s. 50(1)(d) allows no claim without one. The registration threshold is one hundred thousand dollars of taxable supplies (s. 21(a)); below it a business is not obliged to register and cannot charge VAT. Value in line 18.",
+    "source": "vat-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "BS-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A local purchase of a zero-rated good or service.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 6(1)(a) and First Schedule: the supplier charges zero per cent. Value in line 18.",
+    "source": "vat-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "BS-P-EX",
+    "name": "Purchase, exempt",
+    "description": "A local purchase of an exempt supply: no tax was charged, and none can be claimed.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 7 and Second Schedule: an exempt supply carries no VAT. Value in line 18.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "BS-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "The VAT Customs collects on a taxable importation, claimed as input tax.",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 6(1) — the rate applies to a taxable importation; s. 44 — the VAT on a taxable importation of goods is collected by Customs as if it were customs duty; s. 50(1)(c) — a claim is allowed once the import VAT has been paid, with the import declaration held (s. 50(1)(e)). Value in line 12, tax in line 14. Import VAT deferred under VAT Rule 2015-005 is not carried.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "14"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "14",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "BS-P-IMP-ZR",
+    "name": "Import of zero-rated goods",
+    "description": "An import of goods the First Schedule zero-rates.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 6(1)(a) — a taxable importation specified in the First Schedule is chargeable at zero per cent. Value in line 12.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "BS-P-IMP-EX",
+    "name": "Import of exempt goods",
+    "description": "An import the Second Schedule, Part II, exempts.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Tax Act, 2014, s. 7 and Second Schedule, Part II — exempt importations of goods. Value in line 12.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  }
+]

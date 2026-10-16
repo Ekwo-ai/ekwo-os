@@ -1,0 +1,211 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BS",
+  "name": "The Bahamas",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 401,
+  "released_at": "2026-10-17",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act, 2014 (Ch. 370A), reprint as at 1 July 2024: ss. 6, 7, 19 to 21, 45 to 47, 50, 54 and the First, Second and Third Schedules",
+        "publisher": "Department of Inland Revenue, Commonwealth of The Bahamas",
+        "url": "https://inlandrevenue.finance.gov.bs/wp-content/uploads/2024/11/Value-Added-Tax-Act.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "law"
+      },
+      {
+        "key": "vat-amend-2021-2",
+        "title": "Value Added Tax (Amendment) (No. 2) Act, 2021 (No. 32 of 2021, assent and gazette 13 December 2021): the Act that amends section 6 (the published copy is an image scan; the reprint cites it as the amendment of the rate)",
+        "publisher": "Department of Inland Revenue, Commonwealth of The Bahamas",
+        "url": "https://inlandrevenue.finance.gov.bs/wp-content/uploads/2021/12/Value-Added-Tax-Amendment-No-2-Act-2021.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "law"
+      },
+      {
+        "key": "rate-2022-orbitax",
+        "title": "The Bahamas VAT Rate Reduced from 12% to 10% — reports the gazette of 13 December 2021 and the effect from 1 January 2022",
+        "publisher": "Orbitax",
+        "url": "https://orbitax.com/news/archive.php/The-Bahamas-VAT-Rate-Reduced-f-48702",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-amend-2025",
+        "title": "Value Added Tax (Amendment) Act, 2025 (assent 31 March 2025, in force 1 April 2025): section 6(1)(b), the reduced rate of 5 % and the Fourth Schedule",
+        "publisher": "Department of Inland Revenue, Commonwealth of The Bahamas",
+        "url": "https://inlandrevenue.finance.gov.bs/wp-content/uploads/2025/07/VALUE-ADDED-TAX-AMENDMENT-ACT-2025.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "law"
+      },
+      {
+        "key": "vat-amend-bill-2026",
+        "title": "Value Added Tax (Amendment) Bill, 2026 — a Bill, read as published: it would exempt the Fourth Schedule goods sold unprepared by a food store from 1 April 2026; whether it was passed was not confirmed",
+        "publisher": "Department of Inland Revenue, Commonwealth of The Bahamas",
+        "url": "https://inlandrevenue.finance.gov.bs/wp-content/uploads/2026/02/VALUE-ADDED-TAX-AMENDMENT-BILL-2026-revised-copy-to-be-laid-in-HOA.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "law"
+      },
+      {
+        "key": "vat-return-worksheet",
+        "title": "VAT return form (worksheet 32a, standard rate): sections A to E, output tax, input tax and the VAT payable or credit (the copy online still prints 7.5 %; its line numbers are those of the guidance on completing the return)",
+        "publisher": "Department of Inland Revenue, Commonwealth of The Bahamas",
+        "url": "https://inlandrevenue.finance.gov.bs/wp-content/uploads/2015/11/VAT-Form-No.-32a-Return-Filing-Worksheet-Standard-Rate-v2.4_20141216-edited.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "form"
+      },
+      {
+        "key": "vat-guide-return",
+        "title": "VAT Guidance on Completing a VAT Return, standard method (version of 1 January 2017): lines 1 to 31 of the return, still printing the 7.5 % rate of that year",
+        "publisher": "Department of Inland Revenue, Commonwealth of The Bahamas",
+        "url": "https://inlandrevenue.finance.gov.bs/wp-content/uploads/2015/02/2017-01-01-VAT-Guidance-on-Completing-a-VAT-Return.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-payment-page",
+        "title": "Payment – VAT: the return and the payment are due within 21 days after the end of the VAT period, filed online",
+        "publisher": "Department of Inland Revenue, Commonwealth of The Bahamas",
+        "url": "https://inlandrevenue.finance.gov.bs/value-added-tax/payment-vat/",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "dir-vat-portal",
+        "title": "Value Added Tax — the Department's VAT pages (legal texts, forms, payment, FAQs); the online filing service is vat.revenue.gov.bs",
+        "publisher": "Department of Inland Revenue, Commonwealth of The Bahamas",
+        "url": "https://inlandrevenue.finance.gov.bs/value-added-tax/",
+        "consulted_on": "2026-10-17",
+        "kind": "portal"
+      },
+      {
+        "key": "iso-4217",
+        "title": "ISO 4217 currency code list, list one — BAHAMAS (THE), Bahamian Dollar, BSD, 044, two minor units",
+        "publisher": "SIX Group (maintenance agency of ISO 4217)",
+        "url": "https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list-one.xml",
+        "consulted_on": "2026-10-17",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BSD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "The Bahamas reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "BS-IFRS-SFP",
+        "BS-IFRS-IS"
+      ],
+      "legal_reference": "There is no statutory chart of accounts in The Bahamas in the texts consulted. The Value Added Tax Act, 2014, requires a registrant to account for output tax, input tax and the net amount payable for each tax period (ss. 46 and 47) and to hold the invoice, credit note or import declaration behind every input tax claim (s. 50(1)(d) and (e)). This chart is original: four digits, blocked so that each range reaches one line of the IFRS-style statements, with the accounts a Bahamian company keeps — a Bahamian dollar current account and a foreign currency account, VAT output and input tax, the net VAT settlement account, VAT collected by Customs on imports, VAT withheld under section 23A, and National Insurance. The Bahamas has no income tax on companies or individuals: the accounts for income taxes are for taxes paid abroad and for the domestic minimum top-up tax of large multinational groups.",
+      "source": "vat-act"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, 2014, s. 54(1) and (3)(a) — a registrant supplier issues to a registrant recipient an original VAT invoice within sixty calendar days, in the form and with the particulars the Comptroller prescribes, and only one VAT invoice for a taxable supply; a copy is marked \"copy\" (s. 54(4)). The Act asks for one invoice per supply and not for a series without gaps, which is why the style is `sequential`. The particulars the Comptroller prescribes are in the VAT Rules on the content of invoices and receipts, which were not read.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "The time of supply is section 32 of the Act (rules relating to time of supply), which was not read for this pack. `invoice_date` is declared as a convention of this pack and not as a rule of the law; a payment or a deposit received before the invoice may bring the supply forward, and is recorded as a gap in the README.",
+        "source": "vat-act"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "None of the texts consulted (the VAT Act and its amendments to 2025, the Department's guidance on invoices, sales receipts, credit notes and debit notes, its payment page) imposes a structured electronic invoice or a clearance system: a VAT invoice is a document with prescribed particulars (s. 54) and the return is filed online. No Peppol authority or published profile was found, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`.",
+    "source": "vat-act"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Value Added Tax Act, 2014, s. 45 — a taxable importation of services is taxed: the importer or recipient submits a VAT return and pays the VAT within seven calendar days of the import (recipient not a taxable person), on the date in the notice of assessment (unregistered taxable person) or within twenty-one calendar days after the tax period (registrant). The pack carries no code for the self-charge: the services that are taxable on import, the value they are taxed on and the matching input tax claim are for the user and the accountant, and are recorded as a gap in the README.",
+      "source": "vat-act"
+    }
+  ]
+}
