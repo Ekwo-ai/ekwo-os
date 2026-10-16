@@ -109,6 +109,8 @@ const HINTS: Record<string, string> = {
   statement_currency_mismatch: 'The statement is in another currency than the bank account it belongs to. Nothing is converted on import.',
   bank_account_mismatch: 'The bank account named is not the account the statement is of.',
   no_bank_account: 'The payment names no bank account and its journal has no default account. create_bank_account adds one and wires it to the journal.',
+  bank_account_exists: 'Another bank account of this company already carries this name, so the two would read the same in every list. list_bank_accounts shows it; ask the user what to call this one and pass it as label.',
+  not_a_bank_journal: 'A bank account books through a bank or a cash journal. Leave the journal out to take the bank journal of the company, or name one of those.',
   missing_account: 'The line names no account, and the company and its country model have no default for this kind of document. Give account_code on the line, or set the company default.',
   payment_already_booked: 'This payment already has an entry.',
   payment_cancelled: 'A cancelled payment cannot be booked.',

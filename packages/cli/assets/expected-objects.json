@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.24.0",
-  "migration": "20261028160000",
+  "migration": "20261029021700",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -5112,6 +5112,10 @@
         "arguments": "p_company_id uuid, p_name text, p_capabilities jsonb, p_expires_at timestamp with time zone, p_posting_mode text"
       },
       {
+        "name": "create_bank_account",
+        "arguments": "p_company_id uuid, p_account_identifier text, p_name text, p_bank_name text, p_bic text, p_currency_code text, p_journal_id uuid, p_account_id uuid"
+      },
+      {
         "name": "create_company",
         "arguments": "p_name text, p_country character, p_currency_code character, p_language character, p_chart_code text, p_fiscal_year integer, p_fiscal_year_start date, p_owner_user_id uuid"
       },
@@ -5794,6 +5798,10 @@
       {
         "name": "purge_audit_log",
         "arguments": "p_before date"
+      },
+      {
+        "name": "read_bank_account_identifier",
+        "arguments": "p_scheme text, p_raw text"
       },
       {
         "name": "receive_purchase_document",
@@ -9988,6 +9996,17 @@
           ]
         },
         {
+          "name": "create_bank_account",
+          "arguments": "p_company_id uuid, p_account_identifier text, p_name text, p_bank_name text, p_bic text, p_currency_code text, p_journal_id uuid, p_account_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "create_company",
           "arguments": "p_name text, p_country character, p_currency_code character, p_language character, p_chart_code text, p_fiscal_year integer, p_fiscal_year_start date, p_owner_user_id uuid",
           "anon": [],
@@ -11747,6 +11766,17 @@
           "arguments": "p_before date",
           "anon": [],
           "authenticated": [],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "read_bank_account_identifier",
+          "arguments": "p_scheme text, p_raw text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
           "service_role": [
             "execute"
           ]
