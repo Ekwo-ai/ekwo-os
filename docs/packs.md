@@ -1238,7 +1238,9 @@ IBAN. The keys are the ones of `BANK_ACCOUNT_SCHEMES` in `@ekwo-ai/core`, which
 holds the one validator of each; the schema of the pack accepts exactly those
 keys, and `tests/bank_account_schemes.test.ts` keeps the two equal. Adding a
 scheme is adding it to the registry, to the schema and to a test — it is a
-reader and not a pack. The value is stored in `country_defaults.bank_account_scheme`,
+reader and not a pack — in the core, and in `read_bank_account_identifier()`
+of the schema, which `create_bank_account()` asks; `tests/bank_account_identifier_sql.test.ts`
+holds the two readers to the same answers. The value is stored in `country_defaults.bank_account_scheme`,
 and a pack that declares it needs `schema_min` of `20260929141500` or later.
 
 **The zones a country belongs to.** `zones` is a list of lower-case names at

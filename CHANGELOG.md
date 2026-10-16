@@ -72,6 +72,21 @@ somewhere has already run it.
   `ekwo contact statement <name|id> --from <date> [--to <date>]`, `--to`
   being today when left out. Below schema 0.25.0 they are refused by name,
   `schema_too_old_for` (feature `contact_statement`).
+- **A bank account is created by a function of the schema**
+  (`20261029010400_a_bank_account_is_created_by_its_function`).
+  `create_bank_account(company, identifier, name, bank name, bic, currency,
+  journal, ledger account)` reads the identifier in the
+  scheme the country's pack declares, takes the bank journal and the ledger
+  account the country template chose unless others are named, points the
+  journal back at the account, answers the existing account for the same
+  identifier however it is spelled (`created = false`), and refuses by name:
+  `not_allowed` without `bank.write`, `missing_account_identifier`,
+  `invalid_bank_account`, `not_a_bank_journal`, `no_bank_journal`,
+  `no_bank_ledger_account`, and `bank_account_exists` for the name of another
+  account. `read_bank_account_identifier(scheme, raw)` is the reader of
+  `@ekwo-ai/core` written in SQL, and a test runs both over the same inputs,
+  scheme by scheme, refusals included. A web application or a script on the
+  REST API now adds an account the way the MCP server does.
 
 ### Changed
 
@@ -84,6 +99,10 @@ somewhere has already run it.
   sale invoice to a business (`contacts.is_company`) only: no longer on a
   sale credit note, nor on an invoice to a consumer or one that names no
   contact yet.
+- **The `create_bank_account` tool of the MCP server calls the function.**
+  Its inputs and its answer are unchanged; a viewer is now told
+  `not_allowed: … bank.write` instead of the policy's sentence, and a name
+  already taken is refused.
 
 ## [0.24.0] — 2026-10-28
 
