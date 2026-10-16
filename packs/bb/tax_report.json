@@ -1,0 +1,187 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "BB-VAT-RETURN",
+  "name": "VAT return (box layout of this pack)",
+  "period": [
+    "month",
+    "bimonth"
+  ],
+  "period_default": "bimonth",
+  "valid_from": "2022-04-01",
+  "legal_reference": "Value Added Tax Act, Cap. 87, s. 44 — the taxable period is a two-month period beginning on the first day of January, March, May, July, September and November, or of February, April, June, August, October and December, as the Comptroller determines and notifies; calendar months on request (s. 44(5)) and always for a large taxpayer (supplies of $25 000 000 or more over 12 months); longer periods on application (s. 44(6)). The Authority's table of filing periods (period numbers 202201 to 202212) lists both series. Only the series starting in January (the second, 'B') fits the 'bimonth' of the format, which is anchored on 1 January: a registrant on the December series files periods the format cannot express, see README.md. s. 45 — a return for each taxable period within 21 days after its end",
+  "source": "bb-vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 21,
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 45(1) — every registrant files a return within 21 days after the end of each taxable period, and s. 46(1) pays the output tax within the same 21 days. For a period ending on the last day of a month, the 21st day is the 21st of the next month. The Comptroller may extend the time (s. 45(4)); a penalty of $100 applies to a late return (s. 45(3)). Weekend roll-forward is not expressible",
+    "source": "bb-vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard-rated supplies (17.5 %), net of VAT",
+      "sequence": 10,
+      "legal_reference": "Box number and label are this pack's own: the Authority's VAT return form was not found online (it is filed in the Authority's online services portal), so the layout follows what the Act makes a return carry — the output tax of the period (s. 46), the allowable input tax (s. 46(2), s. 48) and the net payable or refundable (s. 46, s. 47). Taxable supplies at the standard rate (s. 7(2)).",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Accommodation and direct tourism supplies (7.5 %), net of VAT",
+      "sequence": 20,
+      "legal_reference": "Taxable supplies at 7½ per cent (s. 7(11)).",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Telecommunications supplies (22 %), net of VAT",
+      "sequence": 30,
+      "legal_reference": "Taxable supplies at the telecommunications rate the Authority lists (rates page).",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Zero-rated supplies, including exports",
+      "sequence": 40,
+      "legal_reference": "Taxable supplies at zero per cent (s. 8); they are taxable supplies and stay on the return (s. 45(1) requires a return for each period whether or not a taxable supply was made).",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 50,
+      "legal_reference": "Supplies of the Second Schedule (s. 10), reported for information; the right to recover input tax does not follow them.",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Total supplies",
+      "sequence": 60,
+      "legal_reference": "Sum of boxes 1 to 5 — the sum is this pack's reading, the Act asks for 'such information as the Comptroller approves' (s. 45(1)).",
+      "source": "bb-vat-act",
+      "plus": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 70,
+      "legal_reference": "Tax at 17.5 % on box 1 (s. 7(2)).",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Output tax on accommodation",
+      "sequence": 80,
+      "legal_reference": "Tax at 7.5 % on box 2 (s. 7(11)).",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Output tax on telecommunications",
+      "sequence": 90,
+      "legal_reference": "Tax at 22 % on box 3.",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Total output tax for the period",
+      "sequence": 100,
+      "legal_reference": "The output tax payable for the taxable period (s. 46(1)); a credit note posts a negative amount to its own boxes (s. 52).",
+      "source": "bb-vat-act",
+      "plus": [
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Value of imports",
+      "sequence": 110,
+      "legal_reference": "Goods imported on which tax was paid on entry (s. 7(3)).",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Value of local purchases",
+      "sequence": 120,
+      "legal_reference": "Purchases made in Barbados for the taxable activity, taxable, zero-rated and exempt.",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "VAT paid on imports",
+      "sequence": 130,
+      "legal_reference": "Input tax on importation, deemed paid on account of the output tax (s. 46(2)(a)).",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "VAT paid on local purchases",
+      "sequence": 140,
+      "legal_reference": "Allowable input tax on local purchases (s. 46(2)(a), s. 48).",
+      "source": "bb-vat-act"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Total input tax for the period",
+      "sequence": 150,
+      "legal_reference": "Sum of boxes 13 and 14.",
+      "source": "bb-vat-act",
+      "plus": [
+        "13",
+        "14"
+      ]
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "VAT payable",
+      "sequence": 160,
+      "legal_reference": "The output tax of the period not covered by input tax, paid within 21 days after the end of the period (s. 46(1), (2)); a balance under $1 is not payable (s. 46(3)). Penalty and interest on default (s. 46(4)) are not modelled.",
+      "source": "bb-vat-act",
+      "plus": [
+        "10"
+      ],
+      "minus": [
+        "15"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "VAT refundable",
+      "sequence": 170,
+      "legal_reference": "The excess of input over output tax, refunded or applied against what is owed, if claimed in a return filed within 5 years of the end of the period (s. 47(1), (2)).",
+      "source": "bb-vat-act",
+      "plus": [
+        "15"
+      ],
+      "minus": [
+        "10"
+      ],
+      "floor_zero": true
+    }
+  ]
+}

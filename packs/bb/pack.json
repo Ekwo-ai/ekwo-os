@@ -1,0 +1,200 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BB",
+  "name": "Barbados",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 201,
+  "released_at": "2026-10-17",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "bb-vat-act",
+        "title": "Value Added Tax Act, Cap. 87 (consolidated text, L.R.O. 1997 to 2008, as published by the Authority; the amending Acts and Orders listed on the same page are not applied to it)",
+        "publisher": "Barbados Revenue Authority — Laws of Barbados",
+        "url": "https://bra.gov.bb/attachment?file=Attachments%2fValue+Added+Tax+Act%2c+Cap.+87.pdf&name=Value+Added+Tax+Act%2c+Cap.87",
+        "consulted_on": "2026-10-17",
+        "kind": "law"
+      },
+      {
+        "key": "bb-vat-regs",
+        "title": "Value Added Tax Regulations, 1996 (Cap. 87A)",
+        "publisher": "Barbados Revenue Authority — Laws of Barbados",
+        "url": "https://bra.gov.bb/attachment?file=Attachments%2fValue+Added+Tax+Regulations+Cap.+87%27A.pdf&name=Value+Added+Tax+Regulations+Cap.+87%27A",
+        "consulted_on": "2026-10-17",
+        "kind": "regulation"
+      },
+      {
+        "key": "bra-vat-rates",
+        "title": "Value Added Tax — VAT rates and threshold",
+        "publisher": "Barbados Revenue Authority",
+        "url": "https://bra.gov.bb/Popular-Topics/Value-Added-Tax/VAT-Rates/",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "bra-filing-periods",
+        "title": "What are the VAT filing periods?",
+        "publisher": "Barbados Revenue Authority",
+        "url": "https://bra.gov.bb/Popular-Topics/Value-Added-Tax/What-are-the-VAT-Filing-Periods/",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "bra-zero-rated-2022",
+        "title": "Policy Note: items zero-rated for value added tax from 1 April 2022 (P&F No. 003/2022)",
+        "publisher": "Barbados Revenue Authority",
+        "url": "https://bra.gov.bb/News/Policy-Notes/Items-Zero-Rated-for-Value-Added-T",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "bra-who-registers",
+        "title": "Who must register for VAT",
+        "publisher": "Barbados Revenue Authority",
+        "url": "https://bra.gov.bb/Popular-Topics/Value-Added-Tax/Who-Must-Register-for-VAT/",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "iasb-ifrs-sme",
+        "title": "IFRS for SMEs Accounting Standard",
+        "publisher": "IFRS Foundation / International Accounting Standards Board",
+        "url": "https://www.ifrs.org/issued-standards/ifrs-for-smes/",
+        "consulted_on": "2026-10-17",
+        "kind": "standard"
+      },
+      {
+        "key": "bra-vat-portal",
+        "title": "Value Added Tax — the Authority's VAT page, filing periods, registration and the online services portal the return is filed through",
+        "publisher": "Barbados Revenue Authority",
+        "url": "https://bra.gov.bb/Popular-Topics/Value-Added-Tax/",
+        "consulted_on": "2026-10-17",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BBD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460",
+      "tax_payable": "2100",
+      "tax_receivable": "1172"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Barbados reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "BB-IFRS-SME-SFP",
+        "BB-IFRS-SME-IS"
+      ],
+      "legal_reference": "This pack found no legal chart of accounts in Barbados, and opened neither the Companies Act, Cap. 308, nor the Income Tax Act, Cap. 73: no section of either is cited. What the Value Added Tax Act, Cap. 87, s. 75 and the Value Added Tax Regulations, 1996, reg. 7 ask of a person who carries on a taxable activity is that accounts and records be kept, and the Act keeps them for 7 years after the end of the year they relate to. This chart is original: four digits, blocked so that each range reaches one line of a statement of financial position and an income statement presented in the manner of IFRS for SMEs, which is a choice of this pack and not a text the country imposes. The settlement account of the VAT return (2100, refundable 1172) is distinct from the accounts the tax posts to (2101 to 2103 collected, 1170 and 1171 recoverable). See README.md",
+      "source": "bb-vat-act"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Regulations, 1996, reg. 2(b) — a tax invoice carries 'a number assigned to the tax invoice identifying the invoice as one of a series issued by the registrant'. The text asks for a series, and does not say the series may have no gap, which is why `numbering` is `sequential` and not `gapless`; `number_format` is a convention this pack proposes",
+        "source": "bb-vat-regs"
+      },
+      "payment_terms": {
+        "legal_reference": "No Barbados text read for this pack sets a payment term between two businesses or a rate of interest on a commercial debt paid late: the penalty of 10 per cent and the interest of the Value Added Tax Act, Cap. 87, s. 46(4) are charges on the registrant towards the Comptroller, not a term between two businesses. `legal_payment_days` and `late_payment_reference` are empty",
+        "source": "bb-vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, Cap. 87, s. 16(1) — a supply takes place when an invoice for it is issued, when payment is received or when the goods are made available or the services performed, 'whichever is the earliest'; s. 16(3) applies the same three triggers to a periodic payment under an agreement that provides for them. The closed vocabulary of this field has no value for three triggers at once: `earliest_of_delivery_or_payment` is the nearest and is what the rule reduces to when no invoice comes first. The other cases of s. 16 (hire purchase, sale on approval) are not modelled",
+        "source": "bb-vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Barbados text read for this pack obliges a business to issue or accept an electronic invoice: the Value Added Tax Regulations, 1996, reg. 2 list the particulars of a tax invoice without naming a platform, a format or a Peppol profile, and the Value Added Tax Act, Cap. 87, s. 7(7) only asks a registrant to issue a tax invoice to another registrant who requests one. No Peppol authority for Barbados was looked for. `profile`, `party_scheme` and `vat_scheme` are null: there is no domestic profile to name",
+    "source": "bb-vat-regs"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Not modelled, and not a finding that the service is untaxed. The Value Added Tax Act, Cap. 87, s. 7(1) taxes the supply in Barbados of goods or services by a registrant and goods imported; how a service received from a supplier abroad is declared was not found in the pages read (the Act's provisions on imported services were not located). The pack carries no code for it rather than guess a mechanism: such a purchase is entered with BB-P-EX and the user, with their accountant, accounts for any VAT owed outside the pack. See README.md",
+      "source": "bb-vat-act"
+    }
+  ]
+}
