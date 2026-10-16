@@ -583,8 +583,8 @@ describe('the certification scale', () => {
 
   it('reads every proven pack with what was reproduced and what was not tested', () => {
     const proven = allPacks.filter((pack) => pack.manifest.certification?.status === 'proven');
-    // country-literal: the two packs whose 2025 filings were reproduced on real books, which this status was added for
-    expect(proven.map((pack) => pack.manifest.country).sort()).toEqual(['BE', 'FR']);
+    // country-literal: the three packs whose 2025 filings were reproduced on real books, which this status was added for
+    expect(proven.map((pack) => pack.manifest.country).sort()).toEqual(['BE', 'EE', 'FR']);
     for (const pack of proven) {
       const country = pack.manifest.country;
       const certification = pack.manifest.certification!;

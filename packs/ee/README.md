@@ -8,9 +8,20 @@ file says where the content came from and which decisions it rests on, so that
 an Estonian accountant reading the pack can disagree with a specific sentence
 rather than with the whole of it.
 
-**Status: `community`.** Nobody has reviewed it against the law they apply. The
-figures are replayed against a year of books by `tests/golden.test.ts`, which
-proves the pack is coherent and proves nothing about whether it is right.
+**Status: `proven`.** The pack reproduced, to the cent, the balance sheet and the
+income statement of the annual report an Estonian OÜ filed with the e-Business
+Register for 2025, on books rebuilt from the exports of its accounting provider:
+the balance sheet at 31 December 2024 as the opening entry, then every sale,
+purchase and bank movement of 2025 as documents and statement lines. The
+monthly VAT returns (KMD) of July 2025 onwards were computed from those books
+and recorded as filed, but the figures as filed were not retrieved, so the
+return is `not_tested` in `certification.evidence`. Nobody has yet reviewed the
+pack against the law they apply: one company's filing covers the cases that
+company uses — intra-Community services sold, domestic services bought, a
+salary paid outside Estonia, securities held at fair value — and not every
+regime of the country. The figures are also replayed against a year of books
+by `tests/golden.test.ts`, which proves the pack is coherent and proves
+nothing about whether it is right.
 
 ## Sources
 

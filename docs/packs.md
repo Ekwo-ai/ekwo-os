@@ -329,7 +329,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`do`](../packs/do/) | Dominican Republic | `104_pack_do.sql` | es | `community` |
 | [`dz`](../packs/dz/) | Algérie | `86_pack_dz.sql` | fr | `community` |
 | [`ec`](../packs/ec/) | Ecuador | `101_pack_ec.sql` | es | `community` |
-| [`ee`](../packs/ee/) | Estonia | `13_pack_ee.sql` | et, en | `community` |
+| [`ee`](../packs/ee/) | Estonia | `13_pack_ee.sql` | et, en | `proven` |
 | [`eg`](../packs/eg/) | مصر | `83_pack_eg.sql` | ar, en | `community` |
 | [`es`](../packs/es/) | España | `19_pack_es.sql` | es, en | `community` |
 | [`et`](../packs/et/) | Ethiopia | `133_pack_et.sql` | en | `community` |

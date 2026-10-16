@@ -11,6 +11,17 @@ somewhere has already run it.
 
 ### Changed
 
+- **The Estonian pack is `proven` on the real books of a company.** Pack `ee`
+  1.12.0 reproduced, to the cent, every non-empty line of the balance sheet and
+  of the income statement of the 2025 annual report an Estonian OÜ filed with
+  the e-Business Register, on books rebuilt from its accounting provider's
+  exports — an opening balance at 31 December 2024, then 70 documents and 38
+  monthly camt.053 statements settled to the last line. `certification.evidence`
+  says what was reproduced and that the monthly VAT return (KMD) was computed
+  and recorded but not compared with the figures as filed. Months before
+  July 2025 are refused by name, because the pack carries the form in its
+  wording in force from 1 July 2025 only. Nothing in the schema changes.
+
 - **The README says where to get help, and what the books answer at a
   glance.** A *Support* section names the three ways — issues and discussions
   in the open, e-mail with Hosted and Pro, and Ekwo Consulting on quote for

@@ -2,12 +2,38 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EE",
   "name": "Estonia",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "schema_min": "20261011120000",
   "seed_sequence": 13,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-16",
   "certification": {
-    "status": "community",
+    "status": "proven",
+    "evidence": [
+      {
+        "scope": "balance_sheet",
+        "result": "reproduced",
+        "fiscal_year": 2025,
+        "filing": "Estonian annual report (majandusaasta aruanne) filed with the e-Business Register",
+        "summary": "On the books of an Estonian OÜ rebuilt from the exports of its accounting provider — the balance sheet at 31 December 2024 as the opening entry, then every sale, purchase and bank movement of 2025 as documents and statement lines — each of the eight non-empty lines of the balance sheet it filed for 2025 matches to the cent: cash, short-term financial investments, receivables and prepayments, payables and prepayments, share capital, unpaid capital, retained earnings and the profit of the year.",
+        "checked_on": "2026-10-16"
+      },
+      {
+        "scope": "income_statement",
+        "result": "reproduced",
+        "fiscal_year": 2025,
+        "filing": "Estonian annual report (majandusaasta aruanne) filed with the e-Business Register",
+        "summary": "Every non-empty line of the income statement (scheme 1) of the same annual report matches to the cent: revenue, other operating expenses, employee expenses, profit from financial investments, interest income and the profit of the year.",
+        "checked_on": "2026-10-16"
+      },
+      {
+        "scope": "vat_return",
+        "result": "not_tested",
+        "fiscal_year": 2025,
+        "filing": "Estonian VAT return (vorm KMD) on e-MTA",
+        "summary": "Not tested against the returns the accountant filed: the monthly KMD of July 2025 to September 2026 were computed from the books, frozen and recorded as filed through the accountant's portal, but the figures as filed were not retrieved for comparison. Months before July 2025 are refused by name, because the pack carries the form in its wording in force from 1 July 2025 only.",
+        "checked_on": "2026-10-16"
+      }
+    ],
     "sources": [
       {
         "key": "kms",
