@@ -96,6 +96,7 @@ The same call is `EkwoClient.financialAnalysis({ companyId, from, to })` in
 |---|---|---|
 | Belgium | `default`, PCMN | the rubrics of the abbreviated model of the annual accounts and the classes of the PCMN |
 | France | `default`, PCG | the lines of the liasse 2050 to 2053 and the accounts of the PCG |
+| Estonia | `default` | the lines of the balance sheet and of income statement scheme 1 of the Raamatupidamise seadus, annexes 1 and 2, and the four-class chart of the pack |
 
 `packs/<cc>/analysis.json` says, aggregate by aggregate, which text each
 reading comes from. The balance-sheet aggregates of both packs take exactly

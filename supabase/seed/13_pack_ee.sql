@@ -1,6 +1,6 @@
 -- Ekwo OS — Estonia: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/ee at version 1.12.0, do not edit.
+-- Generated from packs/ee at version 1.13.0, do not edit.
 -- Change the pack and run `ekwo pack build ee`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -43,7 +43,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources, evidence)
 values
-  ('EE', 'Estonia', '1.12.0', date '2026-10-16', '20261011120000', 'proven', null, null, '85910656345d079aeb496c181e6089b119e3a6b2de600aeea17e081b6b9d2867', '[{"key":"kms","title":"Käibemaksuseadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/kms","consulted_on":"2026-09-16","kind":"law"},{"key":"kms-kommentaarid","title":"Käibemaksuseadus Rahandusministeeriumi kommentaaridega, seisuga jaanuar 2026 — § 27, § 29 ja § 34","publisher":"Rahandusministeerium","url":"https://fin.ee/sites/default/files/documents/2026-01/K%C3%A4ibemaksuseaduse%20kommentaarid%20jaanuar%202026.pdf","consulted_on":"2026-09-21","kind":"guidance"},{"key":"rps","title":"Raamatupidamise seadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/rps","consulted_on":"2026-09-15","kind":"law"},{"key":"e-arved","title":"Nõuded raamatupidamise korraldamiseks ja majandustehingute dokumenteerimiseks — algdokumendid, arved ja e-arved","publisher":"Rahandusministeerium","url":"https://fin.ee/finantspoliitika-valissuhted/arvestusvaldkond/raamatupidamise-algdokumendid-arved-e-arved","consulted_on":"2026-09-21","kind":"guidance"},{"key":"vos","title":"Võlaõigusseadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/120062026018","consulted_on":"2026-09-15","kind":"law"},{"key":"kmd-vorm","title":"Rahandusministri 10.06.2014 määrus nr 17 „Käibedeklaratsiooni vorm“, lisa 1 (vorm KMD) ja lisa 2 (vorm KMD INF)","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/130052025008","consulted_on":"2026-09-15","kind":"regulation"},{"key":"rtj-2","title":"Raamatupidamise Toimkonna juhend RTJ 2 „Nõuded informatsiooni esitusviisile raamatupidamise aastaaruandes“, rahandusministri 22.12.2017 määruse nr 105 lisa 2","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/119022025012","consulted_on":"2026-09-15","kind":"guidance"},{"key":"kmd-esitamine","title":"Käibedeklaratsiooni ja aruannete esitamine — vormi KMD ja selle lisa täitmine","publisher":"Maksu- ja Tolliamet","url":"https://www.emta.ee/ariklient/maksud-ja-tasumine/kaibemaks/kaibedeklaratsiooni-ja-aruannete-esitamine","consulted_on":"2026-09-15","kind":"form"},{"key":"e-mta","title":"e-MTA — keskkond, kus käibedeklaratsioon esitatakse","publisher":"Maksu- ja Tolliamet","url":"https://maasikas.emta.ee/","consulted_on":"2026-09-15","kind":"portal"},{"key":"en-16931","title":"EN 16931-1 — Euroopa e-arve semantiline andmemudel ja direktiivist 2014/55/EL tulenev vastavus","publisher":"Euroopa Komisjon","url":"https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance","consulted_on":"2026-09-15","kind":"standard"},{"key":"uncl5305","title":"UNCL5305 — käibemaksu kategooria koodide loend (BT-118 ja BT-151), EN 16931 jaoks avaldatud alamhulk","publisher":"OpenPEPPOL — nimekirja avaldab Euroopa Komisjon","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/","consulted_on":"2026-09-15","kind":"standard"},{"key":"vatex","title":"VATEX — käibemaksuvabastuse põhjuse koodide loend (BT-121)","publisher":"OpenPEPPOL — nimekirja avaldab Euroopa Komisjon","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/","consulted_on":"2026-09-15","kind":"standard"}]'::jsonb, '[{"scope":"balance_sheet","result":"reproduced","fiscal_year":2025,"filing":"Estonian annual report (majandusaasta aruanne) filed with the e-Business Register","summary":"On the books of an Estonian OÜ rebuilt from the exports of its accounting provider — the balance sheet at 31 December 2024 as the opening entry, then every sale, purchase and bank movement of 2025 as documents and statement lines — each of the eight non-empty lines of the balance sheet it filed for 2025 matches to the cent: cash, short-term financial investments, receivables and prepayments, payables and prepayments, share capital, unpaid capital, retained earnings and the profit of the year.","checked_on":"2026-10-16"},{"scope":"income_statement","result":"reproduced","fiscal_year":2025,"filing":"Estonian annual report (majandusaasta aruanne) filed with the e-Business Register","summary":"Every non-empty line of the income statement (scheme 1) of the same annual report matches to the cent: revenue, other operating expenses, employee expenses, profit from financial investments, interest income and the profit of the year.","checked_on":"2026-10-16"},{"scope":"vat_return","result":"not_tested","fiscal_year":2025,"filing":"Estonian VAT return (vorm KMD) on e-MTA","summary":"Not tested against the returns the accountant filed: the monthly KMD of July 2025 to September 2026 were computed from the books, frozen and recorded as filed through the accountant''s portal, but the figures as filed were not retrieved for comparison. Months before July 2025 are refused by name, because the pack carries the form in its wording in force from 1 July 2025 only.","checked_on":"2026-10-16"}]'::jsonb)
+  ('EE', 'Estonia', '1.13.0', date '2026-10-16', '20261014152111', 'proven', null, null, 'd41571b66c0ea048a5e79aacdd05fcfb4e1338247525f9d7975ae7c2b92e91e9', '[{"key":"kms","title":"Käibemaksuseadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/kms","consulted_on":"2026-09-16","kind":"law"},{"key":"kms-kommentaarid","title":"Käibemaksuseadus Rahandusministeeriumi kommentaaridega, seisuga jaanuar 2026 — § 27, § 29 ja § 34","publisher":"Rahandusministeerium","url":"https://fin.ee/sites/default/files/documents/2026-01/K%C3%A4ibemaksuseaduse%20kommentaarid%20jaanuar%202026.pdf","consulted_on":"2026-09-21","kind":"guidance"},{"key":"rps","title":"Raamatupidamise seadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/rps","consulted_on":"2026-09-15","kind":"law"},{"key":"e-arved","title":"Nõuded raamatupidamise korraldamiseks ja majandustehingute dokumenteerimiseks — algdokumendid, arved ja e-arved","publisher":"Rahandusministeerium","url":"https://fin.ee/finantspoliitika-valissuhted/arvestusvaldkond/raamatupidamise-algdokumendid-arved-e-arved","consulted_on":"2026-09-21","kind":"guidance"},{"key":"vos","title":"Võlaõigusseadus","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/120062026018","consulted_on":"2026-09-15","kind":"law"},{"key":"kmd-vorm","title":"Rahandusministri 10.06.2014 määrus nr 17 „Käibedeklaratsiooni vorm“, lisa 1 (vorm KMD) ja lisa 2 (vorm KMD INF)","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/130052025008","consulted_on":"2026-09-15","kind":"regulation"},{"key":"rtj-2","title":"Raamatupidamise Toimkonna juhend RTJ 2 „Nõuded informatsiooni esitusviisile raamatupidamise aastaaruandes“, rahandusministri 22.12.2017 määruse nr 105 lisa 2","publisher":"Riigi Teataja","url":"https://www.riigiteataja.ee/akt/119022025012","consulted_on":"2026-09-15","kind":"guidance"},{"key":"kmd-esitamine","title":"Käibedeklaratsiooni ja aruannete esitamine — vormi KMD ja selle lisa täitmine","publisher":"Maksu- ja Tolliamet","url":"https://www.emta.ee/ariklient/maksud-ja-tasumine/kaibemaks/kaibedeklaratsiooni-ja-aruannete-esitamine","consulted_on":"2026-09-15","kind":"form"},{"key":"e-mta","title":"e-MTA — keskkond, kus käibedeklaratsioon esitatakse","publisher":"Maksu- ja Tolliamet","url":"https://maasikas.emta.ee/","consulted_on":"2026-09-15","kind":"portal"},{"key":"en-16931","title":"EN 16931-1 — Euroopa e-arve semantiline andmemudel ja direktiivist 2014/55/EL tulenev vastavus","publisher":"Euroopa Komisjon","url":"https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467108950/EN+16931+compliance","consulted_on":"2026-09-15","kind":"standard"},{"key":"uncl5305","title":"UNCL5305 — käibemaksu kategooria koodide loend (BT-118 ja BT-151), EN 16931 jaoks avaldatud alamhulk","publisher":"OpenPEPPOL — nimekirja avaldab Euroopa Komisjon","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/","consulted_on":"2026-09-15","kind":"standard"},{"key":"vatex","title":"VATEX — käibemaksuvabastuse põhjuse koodide loend (BT-121)","publisher":"OpenPEPPOL — nimekirja avaldab Euroopa Komisjon","url":"https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/","consulted_on":"2026-09-15","kind":"standard"}]'::jsonb, '[{"scope":"balance_sheet","result":"reproduced","fiscal_year":2025,"filing":"Estonian annual report (majandusaasta aruanne) filed with the e-Business Register","summary":"On the books of an Estonian OÜ rebuilt from the exports of its accounting provider — the balance sheet at 31 December 2024 as the opening entry, then every sale, purchase and bank movement of 2025 as documents and statement lines — each of the eight non-empty lines of the balance sheet it filed for 2025 matches to the cent: cash, short-term financial investments, receivables and prepayments, payables and prepayments, share capital, unpaid capital, retained earnings and the profit of the year.","checked_on":"2026-10-16"},{"scope":"income_statement","result":"reproduced","fiscal_year":2025,"filing":"Estonian annual report (majandusaasta aruanne) filed with the e-Business Register","summary":"Every non-empty line of the income statement (scheme 1) of the same annual report matches to the cent: revenue, other operating expenses, employee expenses, profit from financial investments, interest income and the profit of the year.","checked_on":"2026-10-16"},{"scope":"vat_return","result":"not_tested","fiscal_year":2025,"filing":"Estonian VAT return (vorm KMD) on e-MTA","summary":"Not tested against the returns the accountant filed: the monthly KMD of July 2025 to September 2026 were computed from the books, frozen and recorded as filed through the accountant''s portal, but the figures as filed were not retrieved for comparison. Months before July 2025 are refused by name, because the pack carries the form in its wording in force from 1 July 2025 only.","checked_on":"2026-10-16"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -728,6 +728,120 @@ select v.statement_code, v.line_code, v.sequence, v.rule_kind, v.code_from,
   ) as v (statement_code, line_code, sequence, rule_kind, code_from, code_to,
           account_type, balance_side)
 on conflict (statement_code, line_code, sequence) do update set
+  rule_kind    = excluded.rule_kind,
+  code_from    = excluded.code_from,
+  code_to      = excluded.code_to,
+  account_type = excluded.account_type,
+  balance_side = excluded.balance_side;
+
+delete from analysis_rules r
+ where r.country = 'EE'
+   and (r.chart_code, r.aggregate, r.sequence) not in (
+     values ('default', 'cash', 10),
+            ('default', 'current_assets', 10),
+            ('default', 'current_assets', 20),
+            ('default', 'current_assets', 30),
+            ('default', 'current_liabilities', 10),
+            ('default', 'current_liabilities', 20),
+            ('default', 'current_liabilities', 30),
+            ('default', 'current_liabilities', 40),
+            ('default', 'current_liabilities', 50),
+            ('default', 'depreciation', 10),
+            ('default', 'equity', 10),
+            ('default', 'financial_result', 10),
+            ('default', 'financial_result', 20),
+            ('default', 'income_tax', 10),
+            ('default', 'long_term_debt', 10),
+            ('default', 'net_result', 10),
+            ('default', 'other_operating_income', 10),
+            ('default', 'purchases', 10),
+            ('default', 'revenue', 10),
+            ('default', 'staff_costs', 10),
+            ('default', 'total_assets', 10),
+            ('default', 'total_assets', 20),
+            ('default', 'total_assets', 30),
+            ('default', 'trade_payables', 10),
+            ('default', 'trade_receivables', 10)
+   );
+
+delete from analysis_templates t
+ where t.country = 'EE'
+   and (t.chart_code, t.aggregate) not in (
+     values ('default', 'cash'),
+            ('default', 'current_assets'),
+            ('default', 'current_liabilities'),
+            ('default', 'depreciation'),
+            ('default', 'equity'),
+            ('default', 'financial_result'),
+            ('default', 'income_tax'),
+            ('default', 'long_term_debt'),
+            ('default', 'net_result'),
+            ('default', 'other_operating_income'),
+            ('default', 'purchases'),
+            ('default', 'revenue'),
+            ('default', 'staff_costs'),
+            ('default', 'total_assets'),
+            ('default', 'trade_payables'),
+            ('default', 'trade_receivables')
+   );
+
+insert into analysis_templates
+  (country, chart_code, aggregate, legal_reference, source_key)
+values
+  ('EE', 'default', 'cash', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, rida 1.1 „Raha“; kontod 1000–1099', 'rps'),
+  ('EE', 'default', 'current_assets', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, jaotis 1 „Käibevarad“: raha, finantsinvesteeringud, nõuded ja ettemaksed, varud, bioloogilised varad; kontod 1000–1499, lisaks deebetsaldoga 2310, 2311 ja 2490', 'rps'),
+  ('EE', 'default', 'current_liabilities', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, jaotis 4 „Lühiajalised kohustised“: laenukohustised, võlad ja ettemaksed, eraldised, sihtfinantseerimine; kontod 2000–2299 ja 2320–2749, lisaks kreeditsaldoga 2310, 2311 ja 2490', 'rps'),
+  ('EE', 'default', 'depreciation', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 10 „Põhivarade kulum ja väärtuse langus“ ja rida 11 „Olulised käibevara allahindlused“; kontod 4800–4879', 'rps'),
+  ('EE', 'default', 'equity', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, jaotis „Omakapital“, read 7.1 kuni 7.10; kontod 2900–2989', 'rps'),
+  ('EE', 'default', 'financial_result', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, read 14 kuni 19: kasum (kahjum) tütar- ja sidusettevõtjatelt ja finantsinvesteeringutelt, intressitulud, intressikulud, muud finantstulud ja -kulud; kontod 3800–3899 ja 4950–4979', 'rps'),
+  ('EE', 'default', 'income_tax', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 21 „Tulumaks“; kontod 4990–4999', 'rps'),
+  ('EE', 'default', 'long_term_debt', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, jaotis 5 „Pikaajalised kohustised“; kontod 2750–2789', 'rps'),
+  ('EE', 'default', 'net_result', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 22 „Aruandeaasta kasum (kahjum)“: kõik tulud (klass 3) miinus kõik kulud (klass 4)', 'rps'),
+  ('EE', 'default', 'other_operating_income', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, read 2 kuni 6: muud äritulud, varude jääkide muutused, kapitaliseeritud väljaminekud; kontod 3100–3299', 'rps'),
+  ('EE', 'default', 'purchases', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 7 „Kaubad, toore, materjal ja teenused“ ja rida 8 „Mitmesugused tegevuskulud“; kontod 4000–4699', 'rps'),
+  ('EE', 'default', 'revenue', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 1 „Müügitulu“; kontod 3000–3099', 'rps'),
+  ('EE', 'default', 'staff_costs', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 9 „Tööjõukulud“; kontod 4700–4799', 'rps'),
+  ('EE', 'default', 'total_assets', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, „Kokku varad“: käibevarad ja põhivarad; kontod 1000–1999, lisaks deebetsaldoga maksukontod 2310 ja 2311 ning selgitamata maksed 2490, mida bilanss näitab nõuetena', 'rps'),
+  ('EE', 'default', 'trade_payables', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, rida 4.2.1 „Võlad tarnijatele“; kontod 2100–2199', 'rps'),
+  ('EE', 'default', 'trade_receivables', 'Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, rida 1.3.1 „Nõuded ostjate vastu“; kontod 1200–1209', 'rps')
+on conflict (country, chart_code, aggregate) do update set
+  legal_reference = excluded.legal_reference,
+  source_key      = excluded.source_key;
+
+insert into analysis_rules
+  (country, chart_code, aggregate, sequence, rule_kind, code_from, code_to,
+   account_type, balance_side)
+select v.country, v.chart_code, v.aggregate, v.sequence, v.rule_kind, v.code_from,
+       v.code_to, v.account_type::account_type, v.balance_side
+  from (values
+    ('EE', 'default', 'cash', 10, 'code_range', '1000', '1099', null, 'any'),
+    ('EE', 'default', 'current_assets', 10, 'code_range', '1000', '1499', null, 'any'),
+    ('EE', 'default', 'current_assets', 20, 'code_range', '2310', '2311', null, 'debit'),
+    ('EE', 'default', 'current_assets', 30, 'code_range', '2490', '2490', null, 'debit'),
+    ('EE', 'default', 'current_liabilities', 10, 'code_range', '2000', '2299', null, 'any'),
+    ('EE', 'default', 'current_liabilities', 20, 'code_range', '2310', '2311', null, 'credit'),
+    ('EE', 'default', 'current_liabilities', 30, 'code_range', '2320', '2489', null, 'any'),
+    ('EE', 'default', 'current_liabilities', 40, 'code_range', '2490', '2490', null, 'credit'),
+    ('EE', 'default', 'current_liabilities', 50, 'code_range', '2500', '2749', null, 'any'),
+    ('EE', 'default', 'depreciation', 10, 'code_range', '4800', '4879', null, 'any'),
+    ('EE', 'default', 'equity', 10, 'code_range', '2900', '2989', null, 'any'),
+    ('EE', 'default', 'financial_result', 10, 'code_range', '3800', '3899', null, 'any'),
+    ('EE', 'default', 'financial_result', 20, 'code_range', '4950', '4979', null, 'any'),
+    ('EE', 'default', 'income_tax', 10, 'code_range', '4990', '4999', null, 'any'),
+    ('EE', 'default', 'long_term_debt', 10, 'code_range', '2750', '2789', null, 'any'),
+    ('EE', 'default', 'net_result', 10, 'code_range', '3000', '4999', null, 'any'),
+    ('EE', 'default', 'other_operating_income', 10, 'code_range', '3100', '3299', null, 'any'),
+    ('EE', 'default', 'purchases', 10, 'code_range', '4000', '4699', null, 'any'),
+    ('EE', 'default', 'revenue', 10, 'code_range', '3000', '3099', null, 'any'),
+    ('EE', 'default', 'staff_costs', 10, 'code_range', '4700', '4799', null, 'any'),
+    ('EE', 'default', 'total_assets', 10, 'code_range', '1000', '1999', null, 'any'),
+    ('EE', 'default', 'total_assets', 20, 'code_range', '2310', '2311', null, 'debit'),
+    ('EE', 'default', 'total_assets', 30, 'code_range', '2490', '2490', null, 'debit'),
+    ('EE', 'default', 'trade_payables', 10, 'code_range', '2100', '2199', null, 'any'),
+    ('EE', 'default', 'trade_receivables', 10, 'code_range', '1200', '1209', null, 'any')
+  ) as v (country, chart_code, aggregate, sequence, rule_kind, code_from, code_to,
+          account_type, balance_side)
+on conflict (country, chart_code, aggregate, sequence) do update set
   rule_kind    = excluded.rule_kind,
   code_from    = excluded.code_from,
   code_to      = excluded.code_to,

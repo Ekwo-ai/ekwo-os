@@ -11,6 +11,17 @@ somewhere has already run it.
 
 ### Changed
 
+- **The Estonian pack carries the analysis section.** Pack `ee` 1.13.0 adds
+  `analysis.json`: the sixteen aggregates `financial_analysis()` reads — revenue,
+  purchases, staff costs, the financial result, the equity, the current assets,
+  the cash, what customers owe and what is owed to suppliers — mirrored on the
+  lines of the balance sheet and of income statement scheme 1 of the
+  Raamatupidamise seadus, side included for the tax and suspense accounts the
+  balance sheet shows on either side. Until now an Estonian company had no
+  analysis at all, and the Analysis screen of a client drew empty charts: a pack
+  that has not said what its accounts mean gives none, by design. The golden of
+  the pack holds the figures beside its statements. Nothing in the schema changes.
+
 - **The Estonian pack is `proven` on the real books of a company.** Pack `ee`
   1.12.0 reproduced, to the cent, every non-empty line of the balance sheet and
   of the income statement of the 2025 annual report an Estonian OÜ filed with

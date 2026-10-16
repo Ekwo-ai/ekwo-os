@@ -1,0 +1,248 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "aggregates": [
+    {
+      "code": "revenue",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 1 „Müügitulu“; kontod 3000–3099",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "3000",
+          "code_to": "3099"
+        }
+      ]
+    },
+    {
+      "code": "other_operating_income",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, read 2 kuni 6: muud äritulud, varude jääkide muutused, kapitaliseeritud väljaminekud; kontod 3100–3299",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "3100",
+          "code_to": "3299"
+        }
+      ]
+    },
+    {
+      "code": "purchases",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 7 „Kaubad, toore, materjal ja teenused“ ja rida 8 „Mitmesugused tegevuskulud“; kontod 4000–4699",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "4000",
+          "code_to": "4699"
+        }
+      ]
+    },
+    {
+      "code": "staff_costs",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 9 „Tööjõukulud“; kontod 4700–4799",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "4700",
+          "code_to": "4799"
+        }
+      ]
+    },
+    {
+      "code": "depreciation",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 10 „Põhivarade kulum ja väärtuse langus“ ja rida 11 „Olulised käibevara allahindlused“; kontod 4800–4879",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "4800",
+          "code_to": "4879"
+        }
+      ]
+    },
+    {
+      "code": "financial_result",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, read 14 kuni 19: kasum (kahjum) tütar- ja sidusettevõtjatelt ja finantsinvesteeringutelt, intressitulud, intressikulud, muud finantstulud ja -kulud; kontod 3800–3899 ja 4950–4979",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "3800",
+          "code_to": "3899"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "4950",
+          "code_to": "4979"
+        }
+      ]
+    },
+    {
+      "code": "income_tax",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 21 „Tulumaks“; kontod 4990–4999",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "4990",
+          "code_to": "4999"
+        }
+      ]
+    },
+    {
+      "code": "net_result",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — kasumiaruande skeem 1, rida 22 „Aruandeaasta kasum (kahjum)“: kõik tulud (klass 3) miinus kõik kulud (klass 4)",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "3000",
+          "code_to": "4999"
+        }
+      ]
+    },
+    {
+      "code": "equity",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, jaotis „Omakapital“, read 7.1 kuni 7.10; kontod 2900–2989",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "2900",
+          "code_to": "2989"
+        }
+      ]
+    },
+    {
+      "code": "total_assets",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, „Kokku varad“: käibevarad ja põhivarad; kontod 1000–1999, lisaks deebetsaldoga maksukontod 2310 ja 2311 ning selgitamata maksed 2490, mida bilanss näitab nõuetena",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "1000",
+          "code_to": "1999"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "2310",
+          "code_to": "2311",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "2490",
+          "code_to": "2490",
+          "side": "debit"
+        }
+      ]
+    },
+    {
+      "code": "current_assets",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, jaotis 1 „Käibevarad“: raha, finantsinvesteeringud, nõuded ja ettemaksed, varud, bioloogilised varad; kontod 1000–1499, lisaks deebetsaldoga 2310, 2311 ja 2490",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "1000",
+          "code_to": "1499"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "2310",
+          "code_to": "2311",
+          "side": "debit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "2490",
+          "code_to": "2490",
+          "side": "debit"
+        }
+      ]
+    },
+    {
+      "code": "cash",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, rida 1.1 „Raha“; kontod 1000–1099",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "1000",
+          "code_to": "1099"
+        }
+      ]
+    },
+    {
+      "code": "trade_receivables",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, rida 1.3.1 „Nõuded ostjate vastu“; kontod 1200–1209",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "1200",
+          "code_to": "1209"
+        }
+      ]
+    },
+    {
+      "code": "current_liabilities",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, jaotis 4 „Lühiajalised kohustised“: laenukohustised, võlad ja ettemaksed, eraldised, sihtfinantseerimine; kontod 2000–2299 ja 2320–2749, lisaks kreeditsaldoga 2310, 2311 ja 2490",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "2000",
+          "code_to": "2299"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "2310",
+          "code_to": "2311",
+          "side": "credit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "2320",
+          "code_to": "2489"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "2490",
+          "code_to": "2490",
+          "side": "credit"
+        },
+        {
+          "kind": "code_range",
+          "code_from": "2500",
+          "code_to": "2749"
+        }
+      ]
+    },
+    {
+      "code": "trade_payables",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, rida 4.2.1 „Võlad tarnijatele“; kontod 2100–2199",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "2100",
+          "code_to": "2199"
+        }
+      ]
+    },
+    {
+      "code": "long_term_debt",
+      "legal_reference": "Raamatupidamise seadus, lisa 1 (bilansiskeem) ja lisa 2 (kasumiaruande skeem 1), 18.09.2024 sõnastuses, kehtiv alates 01.07.2025 — bilansiskeem, jaotis 5 „Pikaajalised kohustised“; kontod 2750–2789",
+      "source": "rps",
+      "rules": [
+        {
+          "kind": "code_range",
+          "code_from": "2750",
+          "code_to": "2789"
+        }
+      ]
+    }
+  ]
+}
