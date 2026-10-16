@@ -1,0 +1,162 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "AG-AB03",
+  "name": "ABST return (form AB03)",
+  "period": "month",
+  "period_default": "month",
+  "valid_from": "2007-01-29",
+  "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 39 — a taxable person lodges an ABST return for each tax period on the form the Commissioner prescribes; the FAQ (questions 17 and 18) — every registered business files monthly, and a nil return is filed when there were no sales. The form is AB03; this pack carries the lines a document writes into and the totals between them (200 to 400). Lines 210, 260 (accommodation and other supplies to guests at the special rate) are not carried: see the README. Penalties for a late return and a late payment are in the README.",
+  "source": "ab03-form",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "The Antigua and Barbuda Sales Tax (Amendment) Act 2024, s. 3 — section 39(1) of the Act now reads \"a taxable person must lodge an ABST return for each tax period no later than fifteen (15) calendar days after the end of the period\", applicable from the tax period ending 31 March 2024. Before it, the Act (s. 39(1)) and the FAQ (question 17) gave one calendar month. The Act does not move a date that falls on a weekend or a holiday; the FAQ does (next working day), and the pack does not carry that.",
+    "source": "abst-amend-2024"
+  },
+  "boxes": [
+    {
+      "box": "200",
+      "kind": "base",
+      "name": "Line 200 — Standard-rated supplies (sales), value without ABST",
+      "sequence": 10,
+      "legal_reference": "Form AB03, line 200 — standard-rated supplies. The form prints the line ABST-inclusive (the Act's s. 57 requires inclusive prices); this box holds the value without tax and the total below adds the tax back.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "250",
+      "kind": "tax",
+      "name": "Line 250 — ABST payable on standard-rated supplies",
+      "sequence": 20,
+      "legal_reference": "Form AB03, line 250 = line 200 × (rate / (100 + rate)), 17/117 from 1 January 2024.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "200I",
+      "kind": "total",
+      "name": "Line 200 as printed — standard-rated supplies, ABST included",
+      "sequence": 30,
+      "plus": [
+        "200",
+        "250"
+      ],
+      "legal_reference": "Form AB03, line 200, ABST-inclusive as the form prints it.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "220",
+      "kind": "base",
+      "name": "Line 220 — Zero-rated supplies (sales)",
+      "sequence": 40,
+      "legal_reference": "Form AB03, line 220 — zero-rated supplies, exports and local.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "230",
+      "kind": "base",
+      "name": "Line 230 — Exempt supplies (sales)",
+      "sequence": 50,
+      "legal_reference": "Form AB03, line 230 — exempt supplies.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "240",
+      "kind": "total",
+      "name": "Line 240 — Total supplies",
+      "sequence": 60,
+      "plus": [
+        "200I",
+        "220",
+        "230"
+      ],
+      "legal_reference": "Form AB03, line 240 — the total of lines 200, 220 and 230.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "270",
+      "kind": "tax",
+      "name": "Line 270 — ABST adjustments (debit notes issued, credit notes received)",
+      "sequence": 70,
+      "legal_reference": "Form AB03, line 270 — declared and empty: a credit note issued is written into lines 200 and 250 by the document itself, so the line stays for the adjustments the preparer enters by hand.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "295",
+      "kind": "total",
+      "name": "Line 295 — Total output tax for this period",
+      "sequence": 80,
+      "plus": [
+        "250",
+        "270"
+      ],
+      "legal_reference": "Form AB03, line 295 — the total of lines 250 and 270.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "300",
+      "kind": "base",
+      "name": "Line 300 — Total value of imports (standard-rated, zero-rated and exempt)",
+      "sequence": 90,
+      "legal_reference": "Form AB03, line 300.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "310",
+      "kind": "base",
+      "name": "Line 310 — Total value of domestic purchases (standard-rated, zero-rated and exempt)",
+      "sequence": 100,
+      "legal_reference": "Form AB03, line 310.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "320",
+      "kind": "tax",
+      "name": "Line 320 — ABST paid to the Comptroller of Customs on imports",
+      "sequence": 110,
+      "legal_reference": "Form AB03, line 320.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "330",
+      "kind": "tax",
+      "name": "Line 330 — ABST paid or payable on local taxable purchases",
+      "sequence": 120,
+      "legal_reference": "Form AB03, line 330.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "340",
+      "kind": "tax",
+      "name": "Line 340 — ABST adjustments (debit notes received, credit notes issued)",
+      "sequence": 130,
+      "legal_reference": "Form AB03, line 340 — declared and empty, for the reason given at line 270.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "395",
+      "kind": "total",
+      "name": "Line 395 — Total input tax for this period",
+      "sequence": 140,
+      "plus": [
+        "320",
+        "330",
+        "340"
+      ],
+      "legal_reference": "Form AB03, line 395 — the total of lines 320, 330 and 340.",
+      "source": "ab03-form"
+    },
+    {
+      "box": "400",
+      "kind": "total",
+      "name": "Line 400 — Tax payable (positive) or excess credit (negative)",
+      "sequence": 150,
+      "plus": [
+        "295"
+      ],
+      "minus": [
+        "395"
+      ],
+      "legal_reference": "Form AB03, line 400 is line 295 less line 395 when 295 is the greater; line 500 (excess credit) is line 395 less line 295 when 395 is the greater. The two are one signed figure here. Lines 100 (credit brought forward), 410 to 430 (payment) and 510 and 600 settle one period against the next and are not documents.",
+      "source": "ab03-form"
+    }
+  ]
+}

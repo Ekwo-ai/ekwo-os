@@ -1,0 +1,508 @@
+[
+  {
+    "code": "AG-S-17",
+    "name": "Sale, standard rate 17 %",
+    "description": "The general rate on a taxable supply of goods or services by a person registered for ABST, from 1 January 2024.",
+    "kind": "vat",
+    "rate": 17,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(d) — the rate is 15 per cent in any case not otherwise provided for. The Inland Revenue Department announced on 22 December 2023 that the rate rises from 15 % to 17 % on 1 January 2024 (Sovos, reporting the announcement) and the 2024 Budget Statement of 15 December 2023 confirmed it (Orbitax). The statute that raises the rate was not found among the Acts published on laws.gov.ag and the Department's own notice was not opened, so the figure rests on guidance; the form AB03 on the Department's site (version of July 2022) and its FAQ still print 15 %. Line 200 of the return takes the standard-rated sales and line 250 the ABST on them.",
+    "source": "rate-2024-sovos",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "200"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "250"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "200",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "250",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "AG-S-15",
+    "name": "Sale, standard rate 15 % (to 31 December 2023)",
+    "description": "The general rate from the introduction of the tax on 29 January 2007 to 31 December 2023.",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2007-01-29",
+    "valid_to": "2023-12-31",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(d) — 15 per cent in any case not otherwise provided for; the Department's FAQ (question 3) dates the introduction of the tax at 29 January 2007 and (question 4) gives the standard rate as 15 %. The Department announced the rise to 17 % from 1 January 2024.",
+    "source": "abst-act-2006",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "200"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "250"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "200",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "250",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 15
+  },
+  {
+    "code": "AG-S-ZR-EXPG",
+    "name": "Sale, zero-rated (export of goods)",
+    "description": "A supply of goods the supplier has entered, or will enter, for export under the Customs (Control and Management) Act, or that the Commissioner is satisfied have been or will be exported.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2007-01-29",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(a) — a zero-rated supply is taxed at zero per cent; Schedule 1, paragraph (1), items 1 and 2 — a supply of goods entered or to be entered for export and actually exported, or exported by the supplier to the Commissioner's satisfaction, is zero-rated; paragraphs (2) and (3) refuse the zero rate to goods altered or used in Antigua and Barbuda after the supply and to unprocessed agricultural products. Line 220 of form AB03.",
+    "source": "abst-act-2006",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "220"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "220",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "AG-S-ZR-EXPS",
+    "name": "Sale, zero-rated (export of services)",
+    "description": "A supply of services listed in Schedule 2 — services in connection with land or goods outside Antigua and Barbuda, and the other items the Schedule lists.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2007-01-29",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(a); Schedule 2, paragraph (1) — a taxable supply listed in one of the items (services in connection with land or improvements to land outside Antigua and Barbuda, with goods outside the country when the services are performed, with goods temporarily imported, services physically performed outside the country, and the others the Schedule lists) is zero-rated, subject to paragraphs (2) and (3), which refuse it to some services consumed in the country. Line 220 of form AB03.",
+    "source": "abst-act-2006",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "220"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "220",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "AG-S-ZR-DOM",
+    "name": "Sale, zero-rated (local supply)",
+    "description": "A local supply Schedule 3 zero-rates: food of a kind the Regulations specify, electricity for domestic use, water, fuel under the tariff headings 2710 and 2711 and the goods the Regulations list.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2007-01-29",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(a); Schedule 3, paragraph (2), items 1 to 5 — food for human consumption of a kind specified in the Regulations, goods specified in the Regulations, electricity for residential domestic use, water and fuel (Customs Tariff headings 2710.10 to 2710.40 and 2711.00) are zero-rated. The Regulations were not read: which food and which goods are zero-rated is for the user and the accountant. Line 220 of form AB03.",
+    "source": "abst-act-2006",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "220"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "220",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "AG-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply Schedule 4 lists as exempt — financial services and insurance, education services, medical services, residential property and passenger transport within the country among them.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2007-01-29",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, Schedule 4, paragraph (1) — a supply listed in one of the items is an exempt supply: item 1 financial services and insurance, item 4 and 5 residential property and leases, item 9 passenger transport within the country, item 10 education services, item 11 medical, dental and nursing services, item 13 prescription medicines, and the others the Schedule lists. Exempt is not taxable (FAQ, question 7) and carries no input tax credit (s. 29). Line 230 of form AB03.",
+    "source": "abst-act-2006",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "230"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "230",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "AG-P-17",
+    "name": "Purchase, standard rate 17 %, deductible",
+    "description": "A local purchase from a person registered for ABST, for a taxable activity: the input tax is claimed.",
+    "kind": "vat",
+    "rate": 17,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(d) — the rate is 15 per cent in any case not otherwise provided for. The Inland Revenue Department announced on 22 December 2023 that the rate rises from 15 % to 17 % on 1 January 2024 (Sovos, reporting the announcement) and the 2024 Budget Statement of 15 December 2023 confirmed it (Orbitax). The statute that raises the rate was not found among the Acts published on laws.gov.ag and the Department's own notice was not opened, so the figure rests on guidance; the form AB03 on the Department's site (version of July 2022) and its FAQ still print 15 %. The Antigua and Barbuda Sales Tax Act 2006, s. 29(1) — if all the person's supplies in the period are taxable, the input tax on taxable acquisitions and imports is allowed in full. Line 310 takes the value of domestic purchases and line 330 the ABST paid on them.",
+    "source": "rate-2024-sovos",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "310"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "330"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "310",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "330",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "AG-P-15",
+    "name": "Purchase, standard rate 15 % (to 31 December 2023), deductible",
+    "description": "The same purchase before the rate rose.",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2007-01-29",
+    "valid_to": "2023-12-31",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(d) and s. 29(1); the Department's FAQ, question 4, gives the standard rate as 15 %.",
+    "source": "abst-act-2006",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "310"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "330"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "310",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "330",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 65
+  },
+  {
+    "code": "AG-P-17-BL",
+    "name": "Purchase, standard rate 17 %, input tax not allowed",
+    "description": "A purchase on which section 28 refuses the credit — a passenger vehicle, entertainment, a club membership or a private use: the tax is part of the cost.",
+    "kind": "vat",
+    "rate": 17,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 28(2) — no input tax credit arises to the extent that the acquisition is not made for the taxable activity (a), is a passenger vehicle or its spare parts and repairs, unless the person deals in or hires out vehicles (b), is used to provide entertainment (c), is a membership of a sporting, social or recreational club (d) or is otherwise private or domestic (e). The tax stays in the cost of the asset or the expense. The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(d) — the rate is 15 per cent in any case not otherwise provided for. The Inland Revenue Department announced on 22 December 2023 that the rate rises from 15 % to 17 % on 1 January 2024 (Sovos, reporting the announcement) and the 2024 Budget Statement of 15 December 2023 confirmed it (Orbitax). The statute that raises the rate was not found among the Acts published on laws.gov.ag and the Department's own notice was not opened, so the figure rests on guidance; the form AB03 on the Department's site (version of July 2022) and its FAQ still print 15 %. ",
+    "source": "abst-act-2006",
+    "vat_category": "S",
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "310"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "310",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "AG-P-NR",
+    "name": "Purchase from a supplier not registered for ABST",
+    "description": "A purchase from a person who does not charge ABST: nothing to claim.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2007-01-29",
+    "legal_reference": "The Department's FAQ, question 9 — only a business registered for ABST can charge the tax; a supplier below the EC$300,000 threshold (question 11) charges none, so there is no input tax to claim. The value is entered on line 310 of form AB03 with the other domestic purchases.",
+    "source": "abst-faq",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "310"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "310",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "AG-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A local purchase of a zero-rated good or service.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2007-01-29",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(a) and Schedule 3: the supplier charges zero per cent. Value on line 310 of form AB03.",
+    "source": "abst-act-2006",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "310"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "310",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "AG-P-EX",
+    "name": "Purchase, exempt",
+    "description": "A local purchase of an exempt supply: no tax was charged, and none can be claimed.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2007-01-29",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, Schedule 4: an exempt supply carries no ABST. Value on line 310 of form AB03.",
+    "source": "abst-act-2006",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "310"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "310",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "AG-P-IMP",
+    "name": "Import of goods, ABST paid at the border",
+    "description": "The ABST the Comptroller of Customs collects on a taxable import, claimed as input tax.",
+    "kind": "vat",
+    "rate": 17,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2024-01-01",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(1)(b) — ABST is levied on a taxable import; s. 29(1) — the input tax on a taxable import is allowed. Form AB03, line 300 (value of imports) and line 320 (ABST paid to the Comptroller of Customs on imports). The customs value on which the ABST is computed is entered by the user. The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(d) — the rate is 15 per cent in any case not otherwise provided for. The Inland Revenue Department announced on 22 December 2023 that the rate rises from 15 % to 17 % on 1 January 2024 (Sovos, reporting the announcement) and the 2024 Budget Statement of 15 December 2023 confirmed it (Orbitax). The statute that raises the rate was not found among the Acts published on laws.gov.ag and the Department's own notice was not opened, so the figure rests on guidance; the form AB03 on the Department's site (version of July 2022) and its FAQ still print 15 %. ",
+    "source": "abst-act-2006",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "300"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "320"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "300",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "320",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "AG-P-IMP-ZR",
+    "name": "Import of zero-rated goods",
+    "description": "An import of goods Schedule 3 zero-rates.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2007-01-29",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, s. 8(3)(a) and Schedule 3, paragraph (2): a supply or import of the goods listed is zero-rated. Value on line 300 of form AB03.",
+    "source": "abst-act-2006",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "300"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "300",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "AG-P-IMP-EX",
+    "name": "Import of exempt goods",
+    "description": "An import Schedule 5 exempts.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2007-01-29",
+    "legal_reference": "The Antigua and Barbuda Sales Tax Act 2006, Schedule 5 — imports exempt from ABST. Value on line 300 of form AB03.",
+    "source": "abst-act-2006",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "300"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "300",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  }
+]

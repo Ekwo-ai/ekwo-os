@@ -1,0 +1,305 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a St. John's trading company, registered for ABST and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "AG-IFRS-SFP",
+    "AG-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-ag",
+      "name": "Falmouth Retail Ltd",
+      "type": "customer",
+      "country": "AG"
+    },
+    {
+      "ref": "cust-us",
+      "name": "Miami Marine Supply Inc.",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "cust-gb",
+      "name": "Harlow Consulting Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-ag",
+      "name": "English Harbour Wholesalers Ltd",
+      "type": "supplier",
+      "country": "AG"
+    },
+    {
+      "ref": "supp-cn",
+      "name": "Shenzhen Components Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-ag",
+      "date": "2026-01-08",
+      "why": "A domestic sale at the standard rate of 17 %: ten units of 1,200.00 give 12,000.00 and 2,040.00 of ABST — lines 200 and 250 of form AB03.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale",
+          "quantity": 10,
+          "unit_price": 1200,
+          "tax": "AG-S-17",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-ag",
+      "date": "2026-01-12",
+      "why": "Tuition for an accredited course, an exempt education service under item 10 of Schedule 4: line 230, no ABST.",
+      "lines": [
+        {
+          "name": "Course tuition, January",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "AG-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-us",
+      "date": "2026-01-15",
+      "why": "An export of goods entered for export, zero-rated under item 1 of Schedule 1: 50 units of 80.00 on line 220.",
+      "lines": [
+        {
+          "name": "Marine fittings, export consignment",
+          "quantity": 50,
+          "unit_price": 80,
+          "tax": "AG-S-ZR-EXPG",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2026-01-19",
+      "why": "A service physically performed outside Antigua and Barbuda for a foreign customer, zero-rated under Schedule 2: line 220.",
+      "lines": [
+        {
+          "name": "Market research report",
+          "quantity": 1,
+          "unit_price": 9000,
+          "tax": "AG-S-ZR-EXPS",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-ag",
+      "date": "2026-01-21",
+      "why": "A local sale of water, zero-rated under item 4 of Schedule 3: line 220, and the credit for the input tax stays.",
+      "lines": [
+        {
+          "name": "Bottled water, 5-gallon, retail sale",
+          "quantity": 100,
+          "unit_price": 20,
+          "tax": "AG-S-ZR-DOM",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-ag",
+      "date": "2026-01-26",
+      "why": "A credit note for one unit returned from INV-001: lines 200 and 250 fall by 1,200.00 and 204.00.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "AG-S-17",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-ag",
+      "date": "2026-01-09",
+      "why": "A local purchase at the standard rate, credit allowed in full (s. 29(1)): lines 310 and 330.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "AG-P-17",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-ag",
+      "date": "2026-01-13",
+      "why": "A passenger vehicle, whose input tax s. 28(2)(b) refuses: the 5,100.00 of ABST joins the cost of the asset and no tax is claimed; the net value goes to line 310.",
+      "lines": [
+        {
+          "name": "Passenger car for the sales manager",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "AG-P-17-BL",
+          "account": "1660"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-ag",
+      "date": "2026-01-14",
+      "why": "A local purchase of fuel, zero-rated under item 5 of Schedule 3: line 310, no tax.",
+      "lines": [
+        {
+          "name": "Fuel for the delivery van",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "AG-P-ZR",
+          "account": "6380"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-ag",
+      "date": "2026-01-16",
+      "why": "An insurance premium, exempt under item 1 of Schedule 4: line 310, no tax.",
+      "lines": [
+        {
+          "name": "Business insurance premium",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "AG-P-EX",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-20",
+      "why": "An import of goods: ABST of 17 % on a customs value of 20,000.00 is collected by the Comptroller of Customs and claimed — lines 300 and 320.",
+      "lines": [
+        {
+          "name": "Imported electronic components for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "AG-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-ag",
+      "date": "2026-01-28",
+      "why": "A purchase from a supplier below the registration threshold: no ABST charged, none claimed; line 310.",
+      "lines": [
+        {
+          "name": "Cleaning services from an unregistered individual",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "AG-P-NR",
+          "account": "6330"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-ag",
+      "date": "2026-01-30",
+      "why": "A purchase credit note for a short delivery on PINV-001: lines 310 and 330 fall by 500.00 and 85.00.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "AG-P-17",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 3000,
+      "contact": "cust-ag",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The tuition of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 4000,
+      "contact": "cust-us",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-07",
+      "amount": 9360,
+      "contact": "supp-ag",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, ABST included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 2000,
+      "contact": "cust-gb",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Harlow Consulting Ltd before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}
