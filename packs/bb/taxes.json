@@ -1,0 +1,439 @@
+[
+  {
+    "code": "BB-S-175",
+    "name": "Sale, VAT 17.5 %",
+    "description": "A taxable supply made in Barbados by a registrant, standard-rated",
+    "kind": "vat",
+    "rate": 17.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-04-01",
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 7(1) and (2) — tax is imposed on the taxable supply in Barbados of goods or services by a registrant, on the value of the supply, payable by the registrant when the supply is made. The Authority's rates page gives 17.5 % as the 'rate for standard supplies'; the consolidated text of the Act the Authority publishes still prints 15 % in s. 7(2) and (3) and is amended by the Acts and Orders listed beside it, which this pack did not apply: the rate comes from the rates page. The base posts to box 1 net of the tax, the tax to box 7 (box numbers are this pack's, see tax_report.json). valid_from is 1 April 2022, the date the Authority's current list of zero-rated items took effect (Policy Note P&F No. 003/2022): the dates from which 17.5 %, 7.5 % and 22 % apply were not found in an official text, so the pack claims no document before that date.",
+    "source": "bra-vat-rates",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-S-175-INC",
+    "name": "Retail sale, VAT 17.5 %, the price includes the tax",
+    "description": "For a price set with the VAT already in it: the Act requires a price advertised, quoted or marked to include it",
+    "kind": "vat",
+    "rate": 17.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-04-01",
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 7(4) — the price a registrant advertises, quotes or marks on goods includes the tax payable; s. 7(5) allows a price without tax where the tax and the total are stated separately; s. 7(6) lets the Comptroller exempt a class of registrants. `price_include` records that the unit price of the line is the inclusive price; the engine takes the tax out of it. Rate: see BB-S-175. valid_from is 1 April 2022, the date the Authority's current list of zero-rated items took effect (Policy Note P&F No. 003/2022): the dates from which 17.5 %, 7.5 % and 22 % apply were not found in an official text, so the pack claims no document before that date.",
+    "source": "bb-vat-act",
+    "vat_category": "S",
+    "sequence": 20,
+    "price_include": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-S-75",
+    "name": "Sale of accommodation, VAT 7.5 %",
+    "description": "Accommodation by guest houses, hotels, inns and similar places, including a home let as a vacation or holiday home; direct tourism services",
+    "kind": "vat",
+    "rate": 7.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-04-01",
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 7(11) — notwithstanding s. 7, the tax on the supply of accommodation by guest houses, hotels, inns or any other similar place, including a dwellinghouse normally let as a vacation or holiday home, is 7½ per cent of the value of the supply. The Authority's rates page gives 7.5 % for 'accommodating direct tourism services'. Secondary sources reviewed report 10 % from 1 January 2020 for the sector; no official text found says so and the Act and the rates page prevail here, but a reviewer must confirm the rate in force. valid_from is 1 April 2022, the date the Authority's current list of zero-rated items took effect (Policy Note P&F No. 003/2022): the dates from which 17.5 %, 7.5 % and 22 % apply were not found in an official text, so the pack claims no document before that date.",
+    "source": "bra-vat-rates",
+    "vat_category": "S",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "8",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-S-22",
+    "name": "Sale of telecommunications services, VAT 22 %",
+    "description": "Telecommunications services at the rate the Authority lists for them",
+    "kind": "vat",
+    "rate": 22,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-04-01",
+    "legal_reference": "The Authority's rates page lists '22 % — VAT on telecommunications services'. The provision of the Value Added Tax Act, Cap. 87 that sets it is an amendment to the consolidated text published (whose s. 7 prints only 15 % and 7½ %), which this pack did not locate: the rate rests on the rates page alone, and the definition of the services it reaches is the user's, with their accountant. valid_from is 1 April 2022, the date the Authority's current list of zero-rated items took effect (Policy Note P&F No. 003/2022): the dates from which 17.5 %, 7.5 % and 22 % apply were not found in an official text, so the pack claims no document before that date.",
+    "source": "bra-vat-rates",
+    "vat_category": "S",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "2103",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2103",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-S-0",
+    "name": "Zero-rated supply (export)",
+    "description": "A supply taxable at the rate of zero per cent, an export of goods or services",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2022-04-01",
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 8 — a taxable supply specified in the First Schedule and not in the Second is taxable at the rate of zero per cent; s. 2 — a zero-rated supply is a taxable supply, which keeps the right to recover input tax (s. 46(2), s. 47). The First Schedule's paragraph on exports was not isolated in the text read; the pack carries the case under the Schedule's general heading and the user checks the paragraph that applies. valid_from is 1 April 2022, the date the Authority's current list of zero-rated items took effect (Policy Note P&F No. 003/2022): the dates from which 17.5 %, 7.5 % and 22 % apply were not found in an official text, so the pack claims no document before that date.",
+    "source": "bb-vat-act",
+    "vat_category": "G",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-S-Z",
+    "name": "Zero-rated supply in Barbados",
+    "description": "A domestic supply listed in the First Schedule: the Authority's list of zero-rated items (from 1 April 2022) names sanitary towels and tampons, baby and adult diapers, antiperspirants, vitamins and multi-minerals, among others",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-04-01",
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 8 and the First Schedule; Policy Note P&F No. 003/2022 of the Barbados Revenue Authority, whose revised list took effect on 1 April 2022. Only the examples the Authority's page prints were read; the full table of the Policy Note was not, and the pack does not list the items.",
+    "source": "bra-zero-rated-2022",
+    "vat_category": "Z",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-S-EX",
+    "name": "Exempt supply",
+    "description": "A supply specified in the Second Schedule: financial services, among others",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2022-04-01",
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 10 — a supply of goods or services specified in the Second Schedule is exempt from the tax; the Schedule opens with the supply of a financial service (paragraph 1). The Authority's page adds that a registrant making exempt supplies is not entitled to recover the allowable input tax on related purchases. The other paragraphs of the Schedule were not read in full. valid_from is 1 April 2022, the date the Authority's current list of zero-rated items took effect (Policy Note P&F No. 003/2022): the dates from which 17.5 %, 7.5 % and 22 % apply were not found in an official text, so the pack claims no document before that date.",
+    "source": "bb-vat-act",
+    "vat_category": "E",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-P-175",
+    "name": "Purchase, VAT 17.5 %",
+    "description": "A local purchase of a taxable supply, for the taxable activity",
+    "kind": "vat",
+    "rate": 17.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-04-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 46(2) and s. 48 — the allowable input tax of the registrant for the period is deemed paid on account of the output tax; s. 47 — the excess of input over output tax is refunded, if claimed within 5 years of the end of the period and all earlier returns are filed. Which input tax is allowable (s. 48, and s. 49 for motor cars, which restricts it) is the user's to apply: the pack treats the tax on a business purchase as recoverable. Rate: see BB-S-175. valid_from is 1 April 2022, the date the Authority's current list of zero-rated items took effect (Policy Note P&F No. 003/2022): the dates from which 17.5 %, 7.5 % and 22 % apply were not found in an official text, so the pack claims no document before that date.",
+    "source": "bb-vat-act",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-P-75",
+    "name": "Purchase of accommodation, VAT 7.5 %",
+    "description": "Accommodation bought for the business at the tourism rate",
+    "kind": "vat",
+    "rate": 7.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-04-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 46(2) and s. 48 — the allowable input tax of the registrant for the period is deemed paid on account of the output tax; s. 47 — the excess of input over output tax is refunded, if claimed within 5 years of the end of the period and all earlier returns are filed. Which input tax is allowable (s. 48, and s. 49 for motor cars, which restricts it) is the user's to apply: the pack treats the tax on a business purchase as recoverable. Rate: see BB-S-75. valid_from is 1 April 2022, the date the Authority's current list of zero-rated items took effect (Policy Note P&F No. 003/2022): the dates from which 17.5 %, 7.5 % and 22 % apply were not found in an official text, so the pack claims no document before that date.",
+    "source": "bb-vat-act",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-P-22",
+    "name": "Purchase of telecommunications, VAT 22 %",
+    "description": "Telecommunications services bought for the business",
+    "kind": "vat",
+    "rate": 22,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-04-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 46(2) and s. 48 — the allowable input tax of the registrant for the period is deemed paid on account of the output tax; s. 47 — the excess of input over output tax is refunded, if claimed within 5 years of the end of the period and all earlier returns are filed. Which input tax is allowable (s. 48, and s. 49 for motor cars, which restricts it) is the user's to apply: the pack treats the tax on a business purchase as recoverable. Rate: see BB-S-22. valid_from is 1 April 2022, the date the Authority's current list of zero-rated items took effect (Policy Note P&F No. 003/2022): the dates from which 17.5 %, 7.5 % and 22 % apply were not found in an official text, so the pack claims no document before that date.",
+    "source": "bra-vat-rates",
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-P-175-IMP",
+    "name": "Import, VAT 17.5 %",
+    "description": "Goods imported, VAT paid to the Comptroller of Customs",
+    "kind": "vat",
+    "rate": 17.5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2022-04-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 7(1)(b) and (3) — tax is imposed on goods imported into Barbados, payable when the goods are entered for use within Barbados by the importer, proprietor or other person liable for the duties under the Customs Act; s. 46(2) lets the registrant count the tax paid on importation as input tax. The pack applies 17.5 % to the invoice value; the customs value on which the tax is charged (with duty) is the customs entry's. Zero-rated importations are the Third Schedule's (s. 11), not modelled. valid_from is 1 April 2022, the date the Authority's current list of zero-rated items took effect (Policy Note P&F No. 003/2022): the dates from which 17.5 %, 7.5 % and 22 % apply were not found in an official text, so the pack claims no document before that date.",
+    "source": "bb-vat-act",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "13"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "13",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "BB-P-EX",
+    "name": "Purchase without VAT",
+    "description": "A purchase of a zero-rated or exempt supply, or from a person who charges no VAT: no input tax to claim",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2022-04-01",
+    "recoverable": false,
+    "legal_reference": "Value Added Tax Act, Cap. 87, s. 8 and s. 10 — a zero-rated supply carries tax at zero per cent and an exempt supply carries none, so the purchaser has no input tax to claim; the value is still reported among the purchases of the period.",
+    "source": "bb-vat-act",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]

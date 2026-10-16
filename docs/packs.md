@@ -327,6 +327,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`au`](../packs/au/) | Australia | `40_pack_au.sql` | en | `community` |
 | [`az`](../packs/az/) | Azərbaycan | `129_pack_az.sql` | az, en | `community` |
 | [`ba`](../packs/ba/) | Bosna i Hercegovina | `113_pack_ba.sql` | bs, en | `community` |
+| [`bb`](../packs/bb/) | Barbados | `201_pack_bb.sql` | en | `community` |
 | [`bd`](../packs/bd/) | Bangladesh | `126_pack_bd.sql` | en, bn | `community` |
 | [`be`](../packs/be/) | Belgium | `10_pack_be.sql` | fr, nl, de, en | `proven` |
 | [`bf`](../packs/bf/) | Burkina Faso | `23_pack_bf.sql` | fr | `community` |

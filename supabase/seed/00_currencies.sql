@@ -101,5 +101,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('JMD', 'Jamaican dollar', 'J$', 2),
   ('KGS', 'Kyrgyzstani som', E'сом', 2),
   ('SRD', 'Surinamese dollar', 'Sr$', 2),
-  ('TTD', 'Trinidad and Tobago dollar', 'TT$', 2)
+  ('TTD', 'Trinidad and Tobago dollar', 'TT$', 2),
+  ('BBD', 'Barbadian dollar', 'Bds$', 2)
 on conflict (code) do nothing;
