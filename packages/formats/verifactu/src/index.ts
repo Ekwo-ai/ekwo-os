@@ -16,7 +16,7 @@
  * README. It depends on nothing.
  */
 
-import { AEAT_ERRORS, SPECIFICATION } from './codes.js';
+import { SPECIFICATION } from './codes.js';
 import { fingerprint, fingerprintInput } from './hash.js';
 import { qrUrl } from './qr.js';
 import { type AltaModel, buildRecord, filenameOf } from './record.js';
@@ -67,12 +67,8 @@ export const VERIFACTU: FiscalisationFormat = {
 
   write(input) {
     const { model, violations } = buildRecord(input);
-    const hash = fingerprint(fingerprintInput(model));
-    if (model.chain.previous !== null && model.chain.previous.hash === hash) {
-      const [severity, message] = AEAT_ERRORS['2008'];
-      violations.push({ code: '2008', message, severity });
-    }
-    return { content: writeRecord(model, hash), filename: filenameOf(model), mediaType: 'application/xml', violations };
+    const content = writeRecord(model, fingerprint(fingerprintInput(model)));
+    return { content, filename: filenameOf(model), mediaType: 'application/xml', violations };
   },
 
   verificationUrl(input, mode, environment = 'production') {

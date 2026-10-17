@@ -66,7 +66,6 @@ export const AEAT_ERRORS = {
   '1100': ['rejected', 'Valor o tipo incorrecto del campo.'],
   '1102': ['rejected', 'El valor del campo IDType es incorrecto.'],
   '1104': ['rejected', 'El valor del campo NumSerieFactura es incorrecto.'],
-  '1105': ['rejected', 'El valor del campo FechaExpedicionFactura es incorrecto.'],
   '1112': ['rejected', 'El campo FechaExpedicionFactura es superior a la fecha actual.'],
   '1124': ['rejected', 'El valor del campo TipoImpositivo no está incluido en la lista de valores permitidos.'],
   '1130': ['rejected', 'El campo NumSerieFactura contiene caracteres no permitidos.'],
@@ -112,7 +111,6 @@ export const AEAT_ERRORS = {
   '2003': ['accepted', 'El contenido de la huella del registro anterior no cumple con las especificaciones.'],
   '2005': ['accepted', 'El campo ImporteTotal tiene un valor incorrecto para el valor de los campos BaseImponibleOimporteNoSujeto, CuotaRepercutida y CuotaRecargoEquivalencia suministrados.'],
   '2006': ['accepted', 'El campo CuotaTotal tiene un valor incorrecto para el valor de los campos CuotaRepercutida y CuotaRecargoEquivalencia suministrados.'],
-  '2008': ['accepted', 'El valor de la huella del registro anterior debe ser diferente a la huella del registro actual.'],
   '4102': ['rejected', 'El XML no cumple el esquema. Falta informar campo obligatorio.'],
   '4113': ['rejected', 'El XML no cumple con el esquema: se ha superado el límite permitido de registros para el bloque.'],
 } as const satisfies Record<string, readonly ['rejected' | 'accepted', string]>;
