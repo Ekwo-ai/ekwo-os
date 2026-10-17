@@ -26,8 +26,9 @@ qualified professional check the set-up of a company and its first invoices.
 | capabilities | `einvoicing.read`, `einvoicing.send` — their area is the module code |
 | pack section | none of its own: it reads the `einvoicing` section every pack already carries |
 | posts to the ledger | no, and a test holds it to that |
-| MCP tools | `einvoicing_validate`, `einvoicing_issue`, `einvoicing_status`, `einvoicing_list` |
-| command line | `ekwo einvoice validate`, `issue`, `status`, `list` |
+| MCP tools | `einvoicing_validate`, `einvoicing_issue`, `einvoicing_status`, `einvoicing_list`, `einvoicing_fiscalise`, `einvoicing_fiscalisation_status` |
+| command line | `ekwo einvoice validate`, `issue`, `status`, `list`, `fiscalise`, `fiscalisation` |
+| version | 1.1.0 — fiscalisation, the chained record (`20261018015212_einvoicing_fiscalisation.sql`, which reads the socle column of `20261018014537`) |
 
 ## What it holds
 
@@ -40,6 +41,78 @@ that would rewrite what was issued or what came back.
 | `einvoicing.issues` | One file written for one posted sale: the exact text, its SHA-256, the profile, the brick that wrote it, what the file declares it follows, and every rule of the format it breaks. `sendable` is true when that list is empty, and only then. A document whose books were completed is issued again: a second row, the first kept. |
 | `einvoicing.transmissions` | One sending of one issue: the channel in two words (`self`, `service`), the service by name as free text, the reference it gave, and a state that only moves forward. |
 | `einvoicing.transmission_events` | Every state a sending reached, with what the service said at that moment, verbatim, and its structured answer as it came. Appended to, never rewritten. |
+
+## Fiscalisation: the chained record of every invoice
+
+Many countries ask the invoicing software itself to leave, for every invoice
+it issues, a record that cannot be changed, chained to the one before by a
+hash, often shown on the invoice as a QR code and a sentence, and sent to the
+tax authority at once or later. That is a **capability of this module**, not
+a module of its own: a fiscal record is a second artefact of the same posted
+sale, written by a brick, kept beside the electronic invoice, and sent to
+another counter.
+
+Whether a company has such a regime, and its rules, is the
+`einvoicing.fiscalisation` block of its country pack (`packs/schema/pack.1.json`,
+`$defs/fiscalisation`), compiled by the socle into
+`country_defaults.einvoice_fiscalisation`: the format of the record and so
+its brick, the digest and the fields it covers, the QR code, the sentence,
+the modes of sending and their limits, the events. The module names no
+country; the format is looked up in `FISCALISATION_FORMATS`
+(`packages/core/src/einvoicing/fiscalisation.ts`), and one the registry does
+not hold is refused by name, `format_without_brick`.
+
+| Table | What it is |
+|---|---|
+| `einvoicing.fiscal_chain` | One record of one posted sale, numbered from 1 within a company and an invoicing system (`system_id`): the fields the hash covers, the exact text hashed, the hash, the hash of the record before (none for the first, which says it is the first), when it was generated with its offset, its mode of sending, the URL its QR code encodes, and its file — an issue of artefact `fiscal_record`. |
+| `einvoicing.fiscal_events` | What the system records beside the invoices — a summary every so many hours where the pack asks for one, a start, a stop, a break found in the chain — numbered per company and system. |
+
+Both are written by functions alone and refuse every update and delete
+(`fiscal_record_kept`). `einvoicing.issues` and `einvoicing.transmissions`
+gain an `artefact` (`einvoice`, `fiscal_record`): the rule "one sending alive
+per document" holds per artefact, and only an electronic invoice that has
+left writes `documents.peppol_status`.
+
+```sql
+-- One more link, and its file, in one transaction.
+select einvoicing.append_fiscal_record(document, system, 'alta', format, mode,
+         issuer_tax_id, series, number, issued_on, record, hash_input, hash,
+         previous_hash, generated_at, verification_url,
+         brick, specification, filename, media_type, content, checksum, violations);
+-- The first break of a chain, walked forward then backward; no row when intact.
+select * from einvoicing.verify_fiscal_chain(company, system);
+select einvoicing.log_fiscal_event(company, system, 'summary', '{"records": 12}');
+```
+
+What the database checks without trusting the caller: the pack declares a
+regime in that format and mode (`no_fiscalisation_regime`,
+`fiscal_format_mismatch`, `fiscal_mode_not_allowed`); the record breaks no
+rule (`fiscal_record_not_chainable`); its hash is the digest the pack names
+of the text it came with (`fiscal_hash_mismatch`), and it holds every field
+the pack says the hash covers (`fiscal_record_fields_missing`); the tail of
+the chain is intact (`fiscal_chain_broken`) and is the record named as
+previous — none for the first (`fiscal_chain_not_first`, `fiscal_chain_link`);
+an invoice is recorded once and cancelled once (`fiscal_record_exists`,
+`fiscal_nothing_to_cancel`).
+
+**Nothing is fiscalised by a trigger.** A posted sale of a company whose pack
+declares a regime and that has no record is named by the status, and the
+record is made by an explicit gesture:
+
+```sh
+ekwo einvoice fiscalise <document> --system system.json   # the record, chained, and its file
+ekwo einvoice fiscalise <document> --system system.json --dry-run
+ekwo einvoice fiscalisation                                # chain verified, pending, missing, events
+```
+
+`system.json` describes the invoicing system as the regime asks — its name,
+identifier, version, installation, producer and producer's tax number — and
+is the operator's to write: none of it is invented. `EKWO_FISCAL_SYSTEM`
+holds the same JSON for the MCP server, whose tools are
+`einvoicing_fiscalise` and `einvoicing_fiscalisation_status`. Sending the
+records is a transport, as for the electronic invoice: the record's issue is
+sent with the same functions (`record_transmission`), and none ships for a
+tax authority — the host brings it.
 
 ## The states of a sending
 
@@ -196,6 +269,13 @@ profile that travels elsewhere writes them too: renaming them is the socle's
 to do.
 
 ## What it does not do yet
+
+- **Sending fiscal records to an authority.** The chain is kept and the file
+  of each record is an issue ready to send; the transport of the authority
+  (its envelope, certificate and flow control) is the host's.
+- **Unposting a fiscalised document.** `unpost_document()` reads the socle's
+  two columns, which a fiscal record does not write; a record is cancelled by
+  an `anulacion`, and the document by a credit note.
 
 - **Receiving.** An incoming file turned into a purchase draft needs the UBL
   and CII readers of the format bricks, which are being written. The seam is
