@@ -1,0 +1,304 @@
+[
+  {
+    "code": "GY-S-14",
+    "name": "Sale, VAT 14 %",
+    "description": "A taxable supply made in Guyana by a registered person, standard-rated",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2007-01-01",
+    "legal_reference": "Value-Added Tax Act 2005 (Act No. 10 of 2005), s. 9(1)(a) — a tax levied on every taxable supply by a taxable person in Guyana, at the single rate the Minister fixes by regulations, accounted for by the person making the supply (s. 9(2)(a)); Value-Added Tax Regulations, reg. 2 — fourteen per cent (14 %). The Authority's return page names the same line: standard-rated sales excluding VAT (line 17) and the VAT charged (line 18); box numbers of this pack are the line numbers of that return. valid_from 1 January 2007: the Act leaves its commencement to a ministerial order (s. 1(2)) that was not read, so this date, on which the tax is understood to have begun, is an assumption to verify.",
+    "source": "gy-vat-act",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "17"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "17",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GY-S-14-INC",
+    "name": "Retail sale, VAT 14 %, the price includes the tax",
+    "description": "A standard-rated sale whose price already holds the VAT",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2007-01-01",
+    "legal_reference": "Value-Added Tax Act 2005, s. 9(1)(a) and Regulations reg. 2 (14 %), as GY-S-14. Where a part of the price represents tax not accounted for separately, the value of the supply is the price reduced by the tax fraction multiplied by that price (s. 16(2)): 114.00 holds 100.00 and 14.00, which is what price_include does. Same lines as GY-S-14. valid_from as GY-S-14.",
+    "source": "gy-vat-act",
+    "vat_category": "S",
+    "sequence": 20,
+    "price_include": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "17"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "17",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GY-S-0",
+    "name": "Zero-rated supply (export)",
+    "description": "An export of goods or services, zero-rated",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2007-01-01",
+    "legal_reference": "Value-Added Tax Act 2005, s. 17(1) and Schedule I, paragraphs 2 and 3 — goods exported from Guyana by the supplier, and the services of the export list, are charged at zero per cent; s. 17(2) requires the supplier to keep documentary proof acceptable to the Commissioner. A zero-rated supply is a taxable supply: the input tax of what produces it stays creditable, and the Authority's return carries it on its own line, zero-rated sales (line 15). valid_from as GY-S-14.",
+    "source": "gy-vat-act",
+    "vat_category": "G",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "15"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "15",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GY-S-Z",
+    "name": "Zero-rated supply (domestic)",
+    "description": "A supply made in Guyana that Schedule I zero-rates",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2007-01-01",
+    "legal_reference": "Value-Added Tax Act 2005, s. 17(1) and Schedule I — besides exports, the Schedule zero-rates domestic supplies listed by heading (raw and packaging materials, medical supplies, utilities, construction, agriculture, food, household necessities, education, computer and internet data; the list was revised on 27 March 2026 and amended by Order 3 of 2026, w.e.f. 16 February 2026). The pack does not reproduce the list: whether a supply is on it is the user's, with their accountant, against the Authority's list (source gra-zero-exempt). Line 15 of the return. valid_from as GY-S-14.",
+    "source": "gra-zero-exempt",
+    "vat_category": "Z",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "15"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "15",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GY-S-EX",
+    "name": "Exempt supply",
+    "description": "A supply that Schedule II exempts",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2007-01-01",
+    "legal_reference": "Value-Added Tax Act 2005, s. 18(1) and Schedule II, paragraph 2 — exempt are, among others, financial services to the extent the Minister's regulations provide, international transport services, kerosene, liquid propane and butane gas, gasoline and diesel, accommodation in a residential dwelling, funeral services and locally mined raw gold or diamonds certified by the competent bodies; s. 18(2) — a supply that would be zero-rated is never exempt. No input tax is creditable on what is bought to make exempt supplies. Exempt sales, line 16 of the return. valid_from as GY-S-14.",
+    "source": "gra-zero-exempt",
+    "vat_category": "E",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "16"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "16",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GY-P-14",
+    "name": "Purchase, VAT 14 %",
+    "description": "A local purchase with 14 % VAT, creditable when it serves taxable supplies",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2007-01-01",
+    "legal_reference": "Value-Added Tax Act 2005, s. 24(1)(a) — the input tax payable on taxable supplies made to the person in the period, for use in a taxable activity, is a credit against the output tax (s. 23(1)); s. 24(2) — only against a tax invoice, a sales invoice or a debit or credit note. Return lines 8 (standard-rated purchases excluding VAT) and 9 (VAT claimed on local supply of goods and services acquired solely for making taxable supplies). The lines for goods and services acquired for mixed supplies (11 and 12) and the apportionment of s. 25 are not modelled. valid_from as GY-S-14.",
+    "source": "gy-vat-act",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "8",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GY-P-14-IMP",
+    "name": "Import, VAT 14 % paid at entry",
+    "description": "Goods imported, with VAT paid on entry to the Commissioner-General",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2007-01-01",
+    "legal_reference": "Value-Added Tax Act 2005, s. 9(1)(b) and s. 19 to 22 — tax is levied on an import of goods and paid by the importer on entry of the goods; the value of the import is the customs value with the insurance and freight not already in it (s. 20). The tax paid is input tax creditable for use in a taxable activity (s. 24(1)(a)). Return lines 8 and 10 (VAT claimed on import of goods and services acquired solely for making taxable supplies). The pack applies 14 % to the invoice value: the customs value is the entry's. valid_from as GY-S-14.",
+    "source": "gy-vat-act",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "8",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GY-P-0",
+    "name": "Purchase, zero-rated",
+    "description": "A purchase of a supply that Schedule I zero-rates",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2007-01-01",
+    "legal_reference": "Value-Added Tax Act 2005, s. 17 and Schedule I — no tax is charged on the supply. Return line 6, zero-rated purchases. valid_from as GY-S-14.",
+    "source": "gy-vat-act",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GY-P-EX",
+    "name": "Purchase, exempt",
+    "description": "A purchase of an exempt supply",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2007-01-01",
+    "legal_reference": "Value-Added Tax Act 2005, s. 18 and Schedule II — no tax is charged on the supply. Return line 7, exempt purchases. valid_from as GY-S-14.",
+    "source": "gy-vat-act",
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]

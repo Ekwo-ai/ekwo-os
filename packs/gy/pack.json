@@ -1,0 +1,192 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "GY",
+  "name": "Guyana",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 402,
+  "released_at": "2026-10-18",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "gy-vat-act",
+        "title": "Value-Added Tax Act 2005 (Act No. 10 of 2005), Laws of Guyana revised edition, as amended up to (O) 6 of 2021 (Authority's updated copy of 14 September 2021); later orders amending the Schedules are not applied to it",
+        "publisher": "Guyana Revenue Authority",
+        "url": "https://www.gra.gov.gy/wp-content/uploads/2020/10/VAT-Act-_updated-Sept-14-2021.pdf",
+        "consulted_on": "2026-10-18",
+        "kind": "law"
+      },
+      {
+        "key": "gy-vat-regs",
+        "title": "Value-Added Tax Regulations 2005 as amended (Regulation 8 of 2016) — rate of tax (reg. 2), registration threshold (reg. 3), returns (reg. 6), refunds (reg. 7)",
+        "publisher": "Guyana Revenue Authority",
+        "url": "https://gra.gov.gy/storage/2020/06/VATRegulations_Jan2017_.pdf",
+        "consulted_on": "2026-10-18",
+        "kind": "regulation"
+      },
+      {
+        "key": "gra-zero-exempt",
+        "title": "Zero-rated and exempt supplies — Schedules I and II of the Value-Added Tax Act as revised on 27 March 2026 (amendments to Order 3 of 2026, w.e.f. 16 February 2026)",
+        "publisher": "Guyana Revenue Authority",
+        "url": "https://www.gra.gov.gy/wp-content/uploads/2026/03/VAT-Zero-and-Exempt-List-Revised-March-27-2026.pdf",
+        "consulted_on": "2026-10-18",
+        "kind": "guidance"
+      },
+      {
+        "key": "gra-vat-return",
+        "title": "Value Added Tax Return — who files, when and where (the 21st of every month), and what each line of the return, lines 4 to 26, asks for",
+        "publisher": "Guyana Revenue Authority",
+        "url": "https://gra.gov.gy/optimal/vat/",
+        "consulted_on": "2026-10-18",
+        "kind": "guidance"
+      },
+      {
+        "key": "gra-vat-return-form",
+        "title": "VAT Return Form (the printed form of the return)",
+        "publisher": "Guyana Revenue Authority",
+        "url": "https://gra.gov.gy/storage/2019/08/VAT_Return_Form.pdf",
+        "consulted_on": "2026-10-18",
+        "kind": "guidance"
+      },
+      {
+        "key": "iasb-ifrs-sme",
+        "title": "IFRS for SMEs Accounting Standard",
+        "publisher": "IFRS Foundation / International Accounting Standards Board",
+        "url": "https://www.ifrs.org/issued-standards/ifrs-for-smes/",
+        "consulted_on": "2026-10-18",
+        "kind": "standard"
+      },
+      {
+        "key": "gra-optimal",
+        "title": "Optimal eServices — the Authority's online service the return is filed through",
+        "publisher": "Guyana Revenue Authority",
+        "url": "https://gra.gov.gy/optimal/",
+        "consulted_on": "2026-10-18",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "GYD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460",
+      "tax_payable": "2100",
+      "tax_receivable": "1172"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Guyana reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "GY-IFRS-SME-SFP",
+        "GY-IFRS-SME-IS"
+      ],
+      "legal_reference": "This pack found no legal chart of accounts in Guyana, and opened neither the Companies Act nor the Income Tax Act: no section of either is cited. What the Value-Added Tax Act 2005 asks of a taxable person is that records be kept (s. 60), with the particulars the Regulations set (reg. 9). This chart is original: four digits, blocked so that each range reaches one line of a statement of financial position and an income statement presented in the manner of IFRS for SMEs, which is a choice of this pack and not a text the country imposes. The settlement account of the VAT return (2100, refundable 1172) is distinct from the accounts the tax posts to (2101 collected, 1170 and 1171 recoverable). See README.md",
+      "source": "gy-vat-act"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value-Added Tax Act 2005, s. 28 — a registered supplier gives the recipient an original tax invoice with the particulars of Schedule III, paragraph 1 (a sales invoice may replace it for a cash sale below the amount of Schedule IV, paragraph 3, ten thousand dollars), and s. 29 treats tax credit and debit notes. The Act, as read for this pack, does not say that the series of invoice numbers may have no gap, which is why `numbering` is `sequential` and not `gapless`; `number_format` is a convention this pack proposes",
+        "source": "gy-vat-act"
+      },
+      "payment_terms": {
+        "legal_reference": "No Guyanese text read for this pack sets a payment term between two businesses or a rate of interest on a commercial debt paid late: the interest of two per cent a month on unpaid tax (s. 27, Schedule IV) is a charge on the taxable person towards the Commissioner, not a term between two businesses. `legal_payment_days` and `late_payment_reference` are empty",
+        "source": "gy-vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value-Added Tax Act 2005, s. 14(1) — a supply occurs on the earliest of the date the goods are delivered or made available or the services completed, the date the supplier issues an invoice, and the date any consideration is received. The closed vocabulary of this field has no value for three triggers at once: `earliest_of_delivery_or_payment` is the nearest and is what the rule reduces to when no invoice comes first. The special cases of s. 14(2) to (6) (credit agreement, lay-away, change of use, repossession, forfeited deposits) are not modelled",
+        "source": "gy-vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Guyanese text read for this pack obliges a business to issue or accept an electronic invoice: the Value-Added Tax Act 2005, s. 28 asks for a tax invoice without naming a platform, a format or a Peppol profile. The Authority's Optimal service takes the return online, which is a filing channel and not an invoice format. No Peppol authority for Guyana was looked for. `profile`, `party_scheme` and `vat_scheme` are null: there is no domestic profile to name",
+    "source": "gy-vat-act"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Not modelled, and not a finding that the service is untaxed. The Value-Added Tax Act 2005, s. 9(1)(b) taxes the import of services other than an exempt import, s. 9(2)(c) has the recipient pay the tax and s. 22(2) has the recipient furnish an import declaration and pay within twenty days after the time of the import. The Authority's guide to imported services was not opened and the pack carries no code for this self-assessment (the tax would have to be both collected and deducted by the recipient): such a purchase is entered with GY-P-EX and the user, with their accountant, accounts for the tax outside the pack. See README.md",
+      "source": "gy-vat-act"
+    }
+  ]
+}

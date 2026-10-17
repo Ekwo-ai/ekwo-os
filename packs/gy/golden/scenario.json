@@ -1,0 +1,328 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Two months of a trading company of Guyana, a VAT filer",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "GY-IFRS-SME-SFP",
+    "GY-IFRS-SME-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-a",
+      "name": "Georgetown Trading Company Limited",
+      "type": "customer",
+      "country": "GY"
+    },
+    {
+      "ref": "cust-b",
+      "name": "Linden Consulting Limited",
+      "type": "customer",
+      "country": "GY"
+    },
+    {
+      "ref": "cust-c",
+      "name": "Berbice Guest House Limited",
+      "type": "customer",
+      "country": "GY"
+    },
+    {
+      "ref": "cust-d",
+      "name": "Caribbean Exports Inc",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "supp-a",
+      "name": "Demerara Wholesale Limited",
+      "type": "supplier",
+      "country": "GY"
+    },
+    {
+      "ref": "supp-b",
+      "name": "Essequibo Building Supplies Limited",
+      "type": "supplier",
+      "country": "GY"
+    },
+    {
+      "ref": "supp-c",
+      "name": "Miami Components LLC",
+      "type": "supplier",
+      "country": "US"
+    },
+    {
+      "ref": "supp-d",
+      "name": "Mahaica Printing Works",
+      "type": "supplier",
+      "country": "GY"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-10",
+      "why": "A domestic sale of goods at the standard rate: 10,000.00 to line 17 and 1,400.00 of tax (14 %) to line 18.",
+      "lines": [
+        {
+          "name": "Trading stock",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "GY-S-14",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-15",
+      "why": "A retail sale whose price already holds the VAT: 5,700.00 inclusive is 5,000.00 plus 700.00 (5,700 x 14/114), 5,000.00 to line 17 and 700.00 to line 18.",
+      "lines": [
+        {
+          "name": "Retail goods, VAT-inclusive price",
+          "quantity": 1,
+          "unit_price": 5700,
+          "tax": "GY-S-14-INC",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cust-c",
+      "date": "2026-01-18",
+      "why": "A second standard-rated sale, of a service: 4,000.00 to line 17 and 560.00 of tax to line 18.",
+      "lines": [
+        {
+          "name": "Guest accommodation, taxable",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "GY-S-14",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cust-d",
+      "date": "2026-01-22",
+      "why": "An export, zero-rated: 20,000.00 to line 15 and no tax posted.",
+      "lines": [
+        {
+          "name": "Export of goods",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "GY-S-0",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-01-28",
+      "why": "A supply the Act exempts (a financial service, Schedule II): 3,000.00 to line 16, no tax.",
+      "lines": [
+        {
+          "name": "Financial service, exempt",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "GY-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-01-29",
+      "why": "A standard-rated sale of a service: 2,000.00 to line 17 and 280.00 of tax to line 18.",
+      "lines": [
+        {
+          "name": "Consulting services",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "GY-S-14",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-30",
+      "why": "A domestic supply the Schedule zero-rates: 1,200.00 to line 15, no tax.",
+      "lines": [
+        {
+          "name": "Zero-rated goods",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "GY-S-Z",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-01-08",
+      "why": "A local purchase with 14 % VAT: 6,000.00 to line 8 and 840.00 of input tax to line 9.",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "GY-P-14",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "supp-c",
+      "date": "2026-01-12",
+      "why": "Goods imported, tax paid on entry: 8,000.00 to line 8 and 1,120.00 of input tax to line 10.",
+      "lines": [
+        {
+          "name": "Components imported",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "GY-P-14-IMP",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "supp-d",
+      "date": "2026-01-20",
+      "why": "An exempt purchase: 1,500.00 to line 7, no tax.",
+      "lines": [
+        {
+          "name": "Printing, exempt supply",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "GY-P-EX",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cust-a",
+      "date": "2026-02-05",
+      "why": "A credit note on a standard-rated sale: 2,000.00 and 280.00 of tax taken off lines 17 and 18 of the month of the credit note.",
+      "lines": [
+        {
+          "name": "Return of trading stock",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "GY-S-14",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-02-10",
+      "why": "A standard-rated sale of the second month: 20,000.00 to line 17 and 2,800.00 of tax to line 18.",
+      "lines": [
+        {
+          "name": "Trading stock",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "GY-S-14",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-02-15",
+      "why": "A large local purchase in the second month: 40,000.00 to line 8 and 5,600.00 of input tax to line 9, which exceeds the output tax and gives a refundable position.",
+      "lines": [
+        {
+          "name": "Office equipment",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "GY-P-14",
+          "account": "1640"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-02",
+      "amount": 11400,
+      "contact": "cust-a",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Exactly settles V1: a matched receipt."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 2000,
+      "contact": "cust-b",
+      "journal": "BNK",
+      "match": null,
+      "why": "A part-payment on account, matched to nothing: the open item a return must survive."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-02-06",
+      "amount": 6840,
+      "contact": "supp-a",
+      "journal": "BNK",
+      "match": "C1",
+      "why": "Exactly settles C1: a matched payment."
+    },
+    {
+      "ref": "E4",
+      "direction": "outbound",
+      "date": "2026-02-25",
+      "amount": 1000,
+      "contact": "supp-c",
+      "journal": "BNK",
+      "match": null,
+      "why": "A part-payment on account to a supplier, matched to nothing."
+    }
+  ]
+}

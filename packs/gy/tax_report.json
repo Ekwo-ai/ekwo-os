@@ -1,0 +1,145 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "GY-VAT-RETURN",
+  "name": "VAT return (line numbers of the Authority's Value Added Tax Return)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2007-01-01",
+  "legal_reference": "Value-Added Tax Act 2005, s. 30 and Schedule IV — the tax period is the calendar month (the Act's definition of 'tax period'; the Minister may authorise another period for a class of persons); s. 31(1) — a return for each tax period, whether or not tax is payable; s. 31(2) — in the form the Commissioner prescribes. The Authority's return page gives the due date: the 21st of every month, or the next business day when the 21st is a holiday. The revised Act read for this pack says fifteen days after the end of the period: the page of the Authority, which is the current instruction, is what the pack follows (see README). The box numbers are the line numbers of the Authority's return (lines 4 to 26); the lines this pack does not post to are left out.",
+  "source": "gy-vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 21,
+    "legal_reference": "Authority's return page, 'When and where does this return need to be submitted': the due date is the 21st of every month, or the next business day if the 21st is a holiday. Value-Added Tax Act 2005, s. 31(1) as consolidated reads fifteen days after the end of the period, and s. 42(1)(a) makes the tax payable by the due date of the return. Weekend and holiday roll-forward is not expressible.",
+    "source": "gra-vat-return"
+  },
+  "boxes": [
+    {
+      "box": "6",
+      "kind": "base",
+      "name": "Zero-rated purchases",
+      "sequence": 10,
+      "legal_reference": "Line 6 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): purchases of supplies that Schedule I zero-rates.",
+      "source": "gra-vat-return"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Exempt purchases",
+      "sequence": 20,
+      "legal_reference": "Line 7 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): purchases of supplies that Schedule II exempts.",
+      "source": "gra-vat-return"
+    },
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Standard-rated purchases excluding VAT",
+      "sequence": 30,
+      "legal_reference": "Line 8 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): the tax-exclusive value of purchases and imports on which 14 % was charged.",
+      "source": "gra-vat-return"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "VAT claimed on local supplies acquired solely for taxable supplies",
+      "sequence": 40,
+      "legal_reference": "Line 9 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): input tax on local purchases, creditable under s. 24(1)(a) of the Act.",
+      "source": "gy-vat-act"
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "VAT claimed on imports acquired solely for taxable supplies",
+      "sequence": 50,
+      "legal_reference": "Line 10 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): tax paid on imports of goods and services, creditable under s. 24(1)(a) of the Act.",
+      "source": "gy-vat-act"
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "name": "Total input VAT",
+      "sequence": 60,
+      "legal_reference": "Line 14 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): the Authority adds lines 9 to 13; this pack posts to lines 9 and 10 only (11 and 12, mixed supplies, and 13, adjustments of earlier periods, are not modelled), so the total is lines 9 and 10.",
+      "source": "gra-vat-return",
+      "plus": [
+        "9",
+        "10"
+      ]
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Zero-rated sales",
+      "sequence": 70,
+      "legal_reference": "Line 15 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): the total consideration of the zero-rated supplies of the period, exports included (s. 17, Schedule I).",
+      "source": "gra-vat-return"
+    },
+    {
+      "box": "16",
+      "kind": "base",
+      "name": "Exempt sales",
+      "sequence": 80,
+      "legal_reference": "Line 16 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): the value of the exempt supplies of the period (s. 18, Schedule II).",
+      "source": "gra-vat-return"
+    },
+    {
+      "box": "17",
+      "kind": "base",
+      "name": "Standard-rated sales excluding VAT",
+      "sequence": 90,
+      "legal_reference": "Line 17 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): the tax-exclusive value of the standard-rated supplies (14 %, s. 9(1)(a) and Regulations reg. 2).",
+      "source": "gra-vat-return"
+    },
+    {
+      "box": "18",
+      "kind": "tax",
+      "name": "VAT charged on goods and services during this period",
+      "sequence": 100,
+      "legal_reference": "Line 18 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): the output tax due on the supplies of the period; a credit note posts a negative amount to the same lines (s. 29).",
+      "source": "gy-vat-act"
+    },
+    {
+      "box": "20",
+      "kind": "total",
+      "name": "Total output VAT",
+      "sequence": 110,
+      "legal_reference": "Line 20 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): the Authority adds line 18 and line 19 (output tax under-declared in earlier periods, not modelled); the total is line 18.",
+      "source": "gra-vat-return",
+      "plus": [
+        "18"
+      ]
+    },
+    {
+      "box": "25",
+      "kind": "total",
+      "name": "VAT payable",
+      "sequence": 120,
+      "legal_reference": "Line 25 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): output tax less the total input tax credit for the period, payable by the due date of the return (s. 23(1), s. 42(1)(a)). Interest on unpaid tax (two per cent a month or part of a month, s. 27 and Schedule IV) and the penalty for a late return are not modelled. The credit brought forward from earlier months (line 5) is not an input of this pack: the pack reads the books of the period.",
+      "source": "gy-vat-act",
+      "plus": [
+        "20"
+      ],
+      "minus": [
+        "14"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "23",
+      "kind": "total",
+      "name": "VAT refundable",
+      "sequence": 130,
+      "legal_reference": "Line 23 of the Authority's Value Added Tax Return (page 'Value Added Tax Return', source gra-vat-return): the excess of the input tax credit over the output tax: carried forward to the next period as input tax (s. 35(2)) and refundable on claim only after six consecutive periods (s. 35(3)); the Regulations (reg. 7) deal with claims, and the Authority lets a registered person whose sales are mostly zero-rated claim monthly, which the pack does not model.",
+      "source": "gy-vat-act",
+      "plus": [
+        "14"
+      ],
+      "minus": [
+        "20"
+      ],
+      "floor_zero": true
+    }
+  ]
+}
