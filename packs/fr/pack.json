@@ -186,6 +186,110 @@
         "url": "https://www.impots.gouv.fr/sites/default/files/formulaires/2857-fc-sd/2025/2857-fc-sd_5281.pdf",
         "consulted_on": "2026-09-30",
         "kind": "form"
+      },
+      {
+        "key": "lfr-2022-art-26",
+        "title": "Loi n° 2022-1157 du 16 août 2022 de finances rectificative pour 2022, art. 26 — facturation électronique et transmission des données de transaction et de paiement",
+        "publisher": "Légifrance — Journal officiel",
+        "url": "https://www.legifrance.gouv.fr/jorf/article_jo/JORFARTI000046186698",
+        "consulted_on": "2026-10-18",
+        "kind": "law"
+      },
+      {
+        "key": "lf-2024-art-91",
+        "title": "Loi n° 2023-1322 du 29 décembre 2023 de finances pour 2024, art. 91 — dates d'entrée en vigueur de la facturation électronique et de la transmission des données",
+        "publisher": "Légifrance — Journal officiel",
+        "url": "https://www.legifrance.gouv.fr/jorf/article_jo/JORFARTI000048727444",
+        "consulted_on": "2026-10-18",
+        "kind": "law"
+      },
+      {
+        "key": "lf-2026-art-123",
+        "title": "Loi de finances pour 2026, art. 123 — facturation électronique et transmission des données",
+        "publisher": "Légifrance — Journal officiel",
+        "url": "https://www.legifrance.gouv.fr/jorf/article_jo/JORFARTI000053508878",
+        "consulted_on": "2026-10-18",
+        "kind": "law"
+      },
+      {
+        "key": "decret-2022-1299",
+        "title": "Décret n° 2022-1299 du 7 octobre 2022 relatif à la généralisation de la facturation électronique dans les transactions entre assujettis à la taxe sur la valeur ajoutée et à la transmission des données de transaction",
+        "publisher": "Légifrance — Journal officiel",
+        "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000046383394",
+        "consulted_on": "2026-10-18",
+        "kind": "regulation"
+      },
+      {
+        "key": "arrete-2022-10-07",
+        "title": "Arrêté du 7 octobre 2022 relatif à la généralisation de la facturation électronique dans les transactions entre assujettis à la taxe sur la valeur ajoutée et à la transmission des données de transaction",
+        "publisher": "Légifrance — Journal officiel",
+        "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000046383471",
+        "consulted_on": "2026-10-18",
+        "kind": "regulation"
+      },
+      {
+        "key": "decret-2024-266",
+        "title": "Décret n° 2024-266 du 25 mars 2024 relatif à la généralisation de la facturation électronique dans les transactions entre assujettis à la taxe sur la valeur ajoutée et à la transmission des données de transaction",
+        "publisher": "Légifrance — Journal officiel",
+        "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049328045",
+        "consulted_on": "2026-10-18",
+        "kind": "regulation"
+      },
+      {
+        "key": "decret-2026-677",
+        "title": "Décret n° 2026-677 du 27 juillet 2026 relatif à la généralisation de la facturation électronique",
+        "publisher": "Légifrance — Journal officiel du 28 juillet 2026",
+        "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054499487",
+        "consulted_on": "2026-10-18",
+        "kind": "regulation"
+      },
+      {
+        "key": "arrete-2026-07-27",
+        "title": "Arrêté du 27 juillet 2026 relatif à la généralisation de la facturation électronique",
+        "publisher": "Légifrance — Journal officiel du 28 juillet 2026",
+        "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054499535",
+        "consulted_on": "2026-10-18",
+        "kind": "regulation"
+      },
+      {
+        "key": "boi-tva-decla-20-30-50",
+        "title": "BOI-TVA-DECLA-20-30-50 — obligation de transmission des données de transaction (champ, données, modalités de transmission), version du 30 septembre 2026",
+        "publisher": "DGFiP — BOFiP-Impôts",
+        "url": "https://bofip.impots.gouv.fr/doctrine/pgp/13897-PGP",
+        "consulted_on": "2026-10-18",
+        "kind": "guidance"
+      },
+      {
+        "key": "boi-tva-decla-20-30-60",
+        "title": "BOI-TVA-DECLA-20-30-60 — obligation de transmission des données de paiement, version du 30 septembre 2026",
+        "publisher": "DGFiP — BOFiP-Impôts",
+        "url": "https://bofip.impots.gouv.fr/doctrine/pgp/13901-PGP",
+        "consulted_on": "2026-10-18",
+        "kind": "guidance"
+      },
+      {
+        "key": "frequences-e-reporting",
+        "title": "Facturation électronique — fréquences et délais de transmission des données de transaction et de paiement (mise à jour d'août 2026)",
+        "publisher": "DGFiP — impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/sites/default/files/media/1_metier/2_professionnel/EV/2_gestion/290_facturation_electronique/japprof_frequences-et-delais-de-transmission.pdf",
+        "consulted_on": "2026-10-18",
+        "kind": "guidance"
+      },
+      {
+        "key": "specifications-externes",
+        "title": "Spécifications externes de la facturation électronique (B2B, G2B et B2G), version 3.2 du 30 avril 2026, et les normes AFNOR XP Z12-012, Z12-013 et Z12-014",
+        "publisher": "DGFiP — impots.gouv.fr",
+        "url": "https://www.impots.gouv.fr/specifications-externes-b2b",
+        "consulted_on": "2026-10-18",
+        "kind": "standard"
+      },
+      {
+        "key": "boi-tva-decla-30-10-30",
+        "title": "BOI-TVA-DECLA-30-10-30 — logiciels et systèmes de caisse : conditions d'inaltérabilité, de sécurisation, de conservation et d'archivage des données (CGI, art. 286, I, 3° bis), version du 25 mars 2026",
+        "publisher": "DGFiP — BOFiP-Impôts",
+        "url": "https://bofip.impots.gouv.fr/bofip/10691-PGP.html/identifiant=BOI-TVA-DECLA-30-10-30-20260325",
+        "consulted_on": "2026-10-18",
+        "kind": "guidance"
       }
     ]
   },

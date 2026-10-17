@@ -193,3 +193,45 @@ CO, `equity` DL, `current_assets` CJ, `cash` CF, `trade_receivables` BX,
 | `cash` is 51 in debit and 52 to 58 | Line CF. A bank account in credit is a bank overdraft, among the debts of line DU, and `current_liabilities` takes it. |
 | `current_liabilities` is 401 to 408, 4191, 42 to 47 in credit, 487 and 51 in credit | Lines DW to EB, and the bank overdrafts of DU. 519 is not in the chart; a bank account in credit stands for it. |
 | `long_term_debt` is 16 and 17 | The borrowings and the debts related to participations. |
+
+## Fiscalisation / e-reporting
+
+The reform has two halves: the e-invoice between businesses, and the
+**e-reporting** of what that invoice does not carry — sales to private
+customers, international operations, and the payment of services. Both go
+through a *plateforme agréée* (PA, an approved platform) chosen by the company;
+the State keeps the directory and the concentrator. A separate regime, older,
+governs cash software.
+
+| Obligation | Text | Who, and from when | Channel |
+|---|---|---|---|
+| **B2B e-invoice** | CGI art. 289 bis; ordonnance n° 2021-1190 (`facturation-electronique`); loi de finances rectificative pour 2022, art. 26; loi de finances pour 2024, art. 91; loi de finances pour 2026, art. 123; décret n° 2022-1299 and arrêté du 7 octobre 2022, amended by décret n° 2024-266 and by the décret n° 2026-677 and arrêté of 27 July 2026 | Between taxable persons established in France. Reception by every company from **1 September 2026**; issuing from **1 September 2026** for large companies, intermediate-sized companies and single VAT groups (CGI art. 256 C), from **1 September 2027** for small and medium companies and micro-enterprises | A PA, in Factur-X, UBL or CII (`specifications-externes`); the pack's `einvoicing` profile is `factur-x-en16931` |
+| **E-reporting of transaction data** | CGI art. 290, I (established) and II (not established); CGI annex II art. 242 nonies M (data) and O (frequency); annex IV art. 41 septies D, L and M; BOI-TVA-DECLA-20-30-50 (`boi-tva-decla-20-30-50`) | Sales to non-taxable persons (B2C), totalled per day by category and rate; B2B operations with persons not established in France, invoice by invoice; purchases from non-established suppliers. Exempt operations of art. 261 to 261 E are out. Same dates as issuing, by size (BOI § 10); a non-established company liable as customer from 1 September 2027 whatever its size | A structured XML file through the PA (annex IV art. 41 septies L; BOI-TVA-DECLA-20-30-50-30 § 20–30), at the frequency below |
+| **E-reporting of payment data** | CGI art. 290 A; annex II art. 242 nonies P; annex IV art. 41 septies P; BOI-TVA-DECLA-20-30-60 (`boi-tva-decla-20-30-60`) | Services whose VAT is due on collection, and down payments, outside reverse charge — on e-invoices (the status « Encaissée ») and on reported transactions. Same dates | Through the PA: the invoice's lifecycle status, or a payment report |
+| **Secured cash software** — *a distinct fiscalisation* | CGI art. 286, I, 3° bis; BOI-TVA-DECLA-30-10-30 (`boi-tva-decla-30-10-30`) | Since 1 January 2018, a taxable person recording sales to private customers in cash software or a cash system | Nothing is transmitted: the software meets conditions of inalterability, security, retention and archiving, proven by a certificate or the publisher's attestation. The pack names the regime and does not carry it |
+
+The frequency follows the company's VAT regime (annex II art. 242 nonies O and
+P, III; annex IV art. 41 septies M and P; `frequences-e-reporting`). A period
+without any operation sends nothing, and the count is per PA.
+
+| VAT regime | Transaction data | Payment data |
+|---|---|---|
+| Réel normal, monthly (CGI art. 287, 2) | Three times a month — 1st–10th, 11th–20th, 21st–end — within ten days of each | Monthly, within ten days of the month's end |
+| Réel normal, quarterly | Monthly, within ten days | Monthly, within ten days |
+| Réel simplifié (art. 298 bis, 302 septies A) | Monthly, between the 25th and the end of the following month | Same |
+| Franchise en base (art. 293 B) and flat-rate refund (art. 298 quater, 298 quinquies) | Every calendar two-month period, between the 25th and the end of the following month | Same |
+
+**What the pack will declare.** Once the schema of `einvoicing.fiscalisation`
+is on main, the French block will name the brick that writes the report
+(`fr-ereporting`, the transaction and payment flows of the external
+specifications), `submission.mode` `batch` with the cadence above,
+`mandatory_from` 1 September 2026 for large and intermediate-sized companies
+and 1 September 2027 for the others, the events reported — a sale to a private
+customer, an operation with a non-established person, a payment received on a
+service — and its `legal_reference` and `source`. **It will declare no hash,
+no QR code and no mention.** Articles 290 and 290 A of the CGI, their decrees
+and the BOFiP comment (BOI-TVA-DECLA-20-30-50 and -60) require none: the data
+leave as a file through the PA. The four mentions the reform adds to the
+invoice itself — the customer's SIREN, the category of the operation, the
+option for VAT on debits, the delivery address — sit in annex II art. 242
+nonies A, among the invoice's mentions, and are outside this block.
