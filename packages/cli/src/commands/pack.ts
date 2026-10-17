@@ -513,6 +513,17 @@ function describeToTerminal(description: PackDescription): void {
               ? ' · issued when the buyer asks, no general obligation'
               : ' · date of obligation not declared'),
   ]);
+  const fiscalisation = description.einvoicing?.fiscalisation ?? null;
+  if (fiscalisation !== null) {
+    rows.push([
+      'fiscalisation',
+      `${fiscalisation.format} · ${fiscalisation.hash.algorithm} chain · ` +
+        `sent ${fiscalisation.submission.modes.join(' or ')}` +
+        (fiscalisation.mandatory_from.length === 0
+          ? ''
+          : ` · from ${fiscalisation.mandatory_from.map((entry) => (entry.who === null ? entry.from : `${entry.from} (${entry.who})`)).join(', ')}`),
+    ]);
+  }
   rows.push([
     'tax balance',
     `payable ${description.vatBalance.payable ?? 'no account named'} · ` +

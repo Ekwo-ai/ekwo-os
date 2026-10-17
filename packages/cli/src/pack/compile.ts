@@ -872,10 +872,11 @@ function defaults(pack: Pack, country: string): string[] {
  * than the `default` keyword the rounding columns use: there is nothing for
  * the schema to decide.
  *
- * `einvoice_obligation` and `bank_account_scheme` are the columns written only
- * when the pack says them. They arrived with `20260921084143` and
- * `20260929141500`, and a pack that declares neither keeps a seed that runs on
- * a schema from before them — the column would only ever have received a null.
+ * `einvoice_obligation`, `bank_account_scheme` and `einvoice_fiscalisation`
+ * are the columns written only when the pack says them. They arrived with
+ * `20260921084143`, `20260929141500` and `20261018014537`, and a pack that
+ * declares none keeps a seed that runs on a schema from before them — the
+ * column would only ever have received a null.
  */
 function documentRules(pack: Pack, country: string): string[] {
   const rules = pack.documents;
@@ -883,6 +884,10 @@ function documentRules(pack: Pack, country: string): string[] {
     rules.einvoice_obligation === null
       ? []
       : [`  einvoice_obligation           = ${text(rules.einvoice_obligation)},`];
+  const fiscalisation =
+    rules.einvoice_fiscalisation === null
+      ? []
+      : [`  einvoice_fiscalisation        = ${text(JSON.stringify(rules.einvoice_fiscalisation))}::jsonb,`];
   const bankScheme =
     rules.bank_account_scheme === null
       ? []
@@ -909,6 +914,7 @@ function documentRules(pack: Pack, country: string): string[] {
     ...obligation,
     `  einvoice_legal_reference      = ${text(rules.einvoice_reference.legal_reference)},`,
     `  einvoice_source_key           = ${text(rules.einvoice_reference.source)},`,
+    ...fiscalisation,
     `  party_scheme                  = ${text(rules.party_scheme)},`,
     `  vat_scheme                    = ${text(rules.vat_scheme)},`,
     ...bankScheme,

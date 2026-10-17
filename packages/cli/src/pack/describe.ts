@@ -36,7 +36,7 @@
 
 import { STATEMENT_FORMATS } from '@ekwo-ai/core';
 import { filingReadiness } from './filing.js';
-import { sourcesOf, type EinvoiceObligation, type Pack, type PackDeadline, type PackEvidence, type PackSource } from './read.js';
+import { sourcesOf, type EinvoiceObligation, type Pack, type PackFiscalisation, type PackDeadline, type PackEvidence, type PackSource } from './read.js';
 
 /** One chart of accounts of a country, as a reader needs it. */
 export interface DescribedChart {
@@ -124,6 +124,13 @@ export interface DescribedEinvoicing {
    */
   obligation: EinvoiceObligation | null;
   legalReference: string | null;
+  /**
+   * The chained record the invoicing software leaves for every invoice, as
+   * the pack declares it in `einvoicing.fiscalisation`: the brick that writes
+   * it, the hash, the QR code and the sentence, how records are sent. Null
+   * where the country has no such regime.
+   */
+  fiscalisation: PackFiscalisation | null;
 }
 
 /**
@@ -324,7 +331,9 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
   }
 
   const einvoicing: DescribedEinvoicing | null =
-    pack.documents.einvoice_profile === null && pack.documents.einvoice_obligation === null
+    pack.documents.einvoice_profile === null &&
+    pack.documents.einvoice_obligation === null &&
+    pack.documents.einvoice_fiscalisation === null
       ? null
       : {
           profile: pack.documents.einvoice_profile,
@@ -333,6 +342,7 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
             pack.documents.einvoice_obligation ??
             (pack.documents.einvoice_mandatory_from === null ? null : 'mandatory'),
           legalReference: pack.documents.einvoice_reference.legal_reference,
+          fiscalisation: pack.documents.einvoice_fiscalisation,
         };
 
   const bankStatementFormats: DescribedBankFormat[] = pack.documents.bank_statement_formats.map(

@@ -886,6 +886,9 @@
         },
         "source": {
           "$ref": "#/$defs/source_ref"
+        },
+        "fiscalisation": {
+          "$ref": "#/$defs/fiscalisation"
         }
       }
     },
@@ -3444,6 +3447,388 @@
             }
           }
         }
+      }
+    },
+    "fiscal_submission_mode": {
+      "enum": [
+        "realtime",
+        "batch",
+        "none"
+      ],
+      "description": "How the records of an invoicing system reach the tax authority. realtime: each record is sent as it is generated. batch: records are sent in messages, at the intervals the authority sets. none: the records are kept by the system and handed over only when the authority asks."
+    },
+    "fiscalisation": {
+      "type": "object",
+      "description": "The record a country requires the invoicing software to leave for every invoice it issues: immutable, chained to the previous one by a hash, sometimes shown on the invoice as a QR code and a sentence, and sent to the tax authority at once or later. Left out, the country has no such regime. Every value is a rule of the country's law and cites it; the XML of the record is written by the brick `format` names, never by the core.",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "hash",
+        "submission",
+        "legal_reference",
+        "source"
+      ],
+      "properties": {
+        "mandatory_from": {
+          "description": "The day the obligation starts: one date, or one date per category of taxpayer where the law sets several, each with a short name of the category the legal reference explains.",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/date"
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "who",
+                  "from"
+                ],
+                "properties": {
+                  "who": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]{0,59}$",
+                    "description": "The category of taxpayer, as a short name: corporate_income_taxpayers, others."
+                  },
+                  "from": {
+                    "$ref": "#/$defs/date"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "format": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,39}$",
+          "description": "The name of the format of the record, which is the key of the brick that writes it in the core's registry of fiscalisation formats. A format no brick writes is refused by name, format_without_brick."
+        },
+        "hash": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "algorithm",
+            "fields"
+          ],
+          "description": "How a record is chained to the one before it.",
+          "properties": {
+            "algorithm": {
+              "enum": [
+                "SHA-256",
+                "SHA-384",
+                "SHA-512"
+              ],
+              "description": "The digest the law names."
+            },
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 10,
+              "description": "The code the record carries for that algorithm, in the authority's own list, where it has one."
+            },
+            "encoding": {
+              "enum": [
+                "hex-upper",
+                "hex-lower",
+                "base64"
+              ],
+              "description": "How the digest is written in the record."
+            },
+            "separator": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4,
+              "description": "What joins the name=value pairs of the text that is hashed. Given, the core reads the hashed fields back out of that text, in the order of `fields`, and refuses a record whose text does not hold them."
+            },
+            "fields": {
+              "description": "The ordered names of the record fields the hash covers: one list, or one list per kind of record (alta for an invoice issued, anulacion for its record cancelled).",
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/fiscal_fields"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "alta": {
+                      "$ref": "#/$defs/fiscal_fields"
+                    },
+                    "anulacion": {
+                      "$ref": "#/$defs/fiscal_fields"
+                    }
+                  }
+                }
+              ]
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
+          }
+        },
+        "qr": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "size_mm",
+            "error_correction"
+          ],
+          "description": "The QR code the invoice carries, which encodes the URL of the authority's verification service for that invoice.",
+          "properties": {
+            "url": {
+              "type": "string",
+              "pattern": "^https://",
+              "description": "The verification service, where there is one for every mode."
+            },
+            "services": {
+              "type": "array",
+              "minItems": 1,
+              "description": "The verification services, where the URL depends on the mode of submission or on the environment.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "modes",
+                  "environment",
+                  "url"
+                ],
+                "properties": {
+                  "modes": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/$defs/fiscal_submission_mode"
+                    }
+                  },
+                  "environment": {
+                    "enum": [
+                      "production",
+                      "test"
+                    ]
+                  },
+                  "url": {
+                    "type": "string",
+                    "pattern": "^https://"
+                  }
+                }
+              }
+            },
+            "parameters": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,39}$"
+              },
+              "description": "The query parameters of the URL, in order."
+            },
+            "standard": {
+              "type": "string",
+              "minLength": 1
+            },
+            "error_correction": {
+              "enum": [
+                "L",
+                "M",
+                "Q",
+                "H"
+              ],
+              "description": "The error correction level of ISO/IEC 18004."
+            },
+            "size_mm": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "min",
+                "max"
+              ],
+              "properties": {
+                "min": {
+                  "type": "number",
+                  "minimum": 1
+                },
+                "max": {
+                  "type": "number",
+                  "minimum": 1
+                }
+              }
+            },
+            "quiet_zone_mm": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "min"
+              ],
+              "properties": {
+                "min": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "recommended": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            },
+            "label": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The words printed beside the code, where the authority gives them."
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
+          }
+        },
+        "mention": {
+          "type": "array",
+          "minItems": 1,
+          "description": "The sentence the invoice must carry, per mode of submission where the law differs.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "text"
+            ],
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "alternatives": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Other sentences the law accepts in its place."
+              },
+              "modes": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/fiscal_submission_mode"
+                }
+              },
+              "legal_reference": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              }
+            }
+          }
+        },
+        "submission": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode"
+          ],
+          "description": "How the records reach the authority. Sending is the host's transport; the pack says what the law asks of it.",
+          "properties": {
+            "mode": {
+              "$ref": "#/$defs/fiscal_submission_mode",
+              "description": "The mode a record is written for unless the company says otherwise."
+            },
+            "modes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/fiscal_submission_mode"
+              },
+              "description": "Every mode the law allows; `mode` is one of them."
+            },
+            "batch_max": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "The most records one sending carries."
+            },
+            "interval_seconds": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "The wait between two sendings, where the law sets one."
+            },
+            "retry_seconds": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "The longest a pending record waits before it is sent again."
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
+          }
+        },
+        "events": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "summary_every_hours"
+          ],
+          "description": "The event records the system keeps beside the invoice records.",
+          "properties": {
+            "summary_every_hours": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "modes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/fiscal_submission_mode"
+              }
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
+          }
+        },
+        "tax_attributes": {
+          "type": "object",
+          "description": "What the brick needs on a tax line that the pack's categories do not decide alone: by code of this pack's taxes, attributes passed to the brick on that tax's row. `ekwo pack check` refuses a code the pack does not carry.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "legal_reference": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The texts that create the regime and set its dates."
+        },
+        "source": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,39}$",
+          "description": "Key of the entry in certification.sources where the legal reference is read."
+        }
+      }
+    },
+    "fiscal_fields": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_]{0,59}$"
       }
     }
   }

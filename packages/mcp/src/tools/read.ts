@@ -932,11 +932,25 @@ export async function describePack(
     };
   }
 
+  // The fiscalisation regime the socle compiled beside each pack, where it
+  // holds the column: a socle older than the column answers without it.
+  let fiscalisation = new Map<unknown, unknown>();
+  try {
+    const regimes = await backend.select<Row>({
+      table: 'country_defaults',
+      columns: ['country', 'einvoice_fiscalisation'],
+      where: [{ column: 'country', op: 'in', value: packs.map((pack) => String(pack['country'])) }],
+    });
+    fiscalisation = new Map(regimes.map((row) => [row['country'], row['einvoice_fiscalisation'] ?? null]));
+  } catch {
+    // No column, nothing to say: the pack is described as before.
+  }
+
   return {
-    packs,
+    packs: packs.map((pack) => ({ ...pack, einvoicing_fiscalisation: fiscalisation.get(pack['country']) ?? null })),
     count: packs.length,
     note:
-      'certification_status is what somebody claims, not a certificate: community means nobody has read it, maintained means the maintainers keep it current and nobody has reviewed it, proven means a maintained pack reproduced, after the books of a real company were imported, the statements that company filed and the administration accepted — it proves the cases that company uses, never every regime of the country, and `evidence` lists per scope the kind of filing, the financial year, what was reproduced and what was not tested — reviewed means the named professional in certified_by read it on certified_at. `sources` is the register the pack declares — each entry is a text, its official publisher, an absolute link and the day it was opened — and it holds no copy of the law itself. A tax and a box of the declaration each carry their own article in legal_reference and name the register entry it is in; a link that no longer answers is the register being stale, never the rule being wrong.',
+      'einvoicing_fiscalisation is the chained record the country requires the invoicing software to keep for every invoice — the format of the record, the hash, the QR code and the sentence the invoice carries, how records reach the authority — or null where it has none; einvoicing_fiscalise writes one. certification_status is what somebody claims, not a certificate: community means nobody has read it, maintained means the maintainers keep it current and nobody has reviewed it, proven means a maintained pack reproduced, after the books of a real company were imported, the statements that company filed and the administration accepted — it proves the cases that company uses, never every regime of the country, and `evidence` lists per scope the kind of filing, the financial year, what was reproduced and what was not tested — reviewed means the named professional in certified_by read it on certified_at. `sources` is the register the pack declares — each entry is a text, its official publisher, an absolute link and the day it was opened — and it holds no copy of the law itself. A tax and a box of the declaration each carry their own article in legal_reference and name the register entry it is in; a link that no longer answers is the register being stale, never the rule being wrong.',
   };
 }
 

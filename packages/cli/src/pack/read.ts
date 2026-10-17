@@ -588,6 +588,12 @@ export interface PackDocumentRules {
   einvoice_obligation: EinvoiceObligation | null;
   /** The text that makes the profile obligatory, and where it is read. */
   einvoice_reference: PackRuleReference;
+  /**
+   * The fiscalisation regime of the country — the chained record the
+   * invoicing software leaves for every invoice it issues — as the pack
+   * declares it, or null where the country has none.
+   */
+  einvoice_fiscalisation: PackFiscalisation | null;
   /** ISO 6523 ICD, four digits. */
   party_scheme: string | null;
   vat_scheme: string | null;
@@ -597,6 +603,76 @@ export interface PackDocumentRules {
   payment_formats: string[];
   fiscal_year_default: string | null;
   mentions: PackMention[];
+}
+
+/** How the records of an invoicing system reach the tax authority. */
+export type FiscalSubmissionMode = 'realtime' | 'batch' | 'none';
+
+/** The kinds of record a fiscalisation chain holds. */
+export type FiscalRecordKind = 'alta' | 'anulacion';
+
+/**
+ * `einvoicing.fiscalisation`, normalised: the record a country requires for
+ * every invoice issued, chained by a hash, shown on the invoice and sent to
+ * the authority. The shape of the pack file, with two conveniences a reader
+ * needs every time: `mandatory_from` is always a list, and `hash.fields`
+ * always says which kind of record it covers. Compiled as it is into
+ * `country_defaults.einvoice_fiscalisation`.
+ */
+export interface PackFiscalisation {
+  /** One entry per category of taxpayer; `who` is null where the law sets one date for all. */
+  mandatory_from: { who: string | null; from: string }[];
+  /** The brick that writes the record, by the key of the core's registry. */
+  format: string;
+  hash: {
+    algorithm: string;
+    code: string | null;
+    encoding: string | null;
+    separator: string | null;
+    /** The ordered fields the hash covers, by kind of record; `*` where one list covers every kind. */
+    fields: Partial<Record<FiscalRecordKind | '*', string[]>>;
+    legal_reference: string | null;
+    source: string | null;
+  };
+  qr: {
+    url: string | null;
+    services: { modes: FiscalSubmissionMode[]; environment: 'production' | 'test'; url: string }[];
+    parameters: string[];
+    standard: string | null;
+    error_correction: string;
+    size_mm: { min: number; max: number };
+    quiet_zone_mm: { min: number; recommended: number | null } | null;
+    label: string | null;
+    legal_reference: string | null;
+    source: string | null;
+  } | null;
+  mention: {
+    text: string;
+    alternatives: string[];
+    /** Empty: every mode. */
+    modes: FiscalSubmissionMode[];
+    legal_reference: string | null;
+    source: string | null;
+  }[];
+  submission: {
+    mode: FiscalSubmissionMode;
+    modes: FiscalSubmissionMode[];
+    batch_max: number | null;
+    interval_seconds: number | null;
+    retry_seconds: number | null;
+    legal_reference: string | null;
+    source: string | null;
+  };
+  events: {
+    summary_every_hours: number;
+    modes: FiscalSubmissionMode[];
+    legal_reference: string | null;
+    source: string | null;
+  } | null;
+  /** By code of a tax of this pack, the attributes handed to the brick on that tax's row. */
+  tax_attributes: Record<string, Record<string, string>>;
+  legal_reference: string;
+  source: string;
 }
 
 /** Whether a statute makes a country's e-invoicing profile obligatory between companies. */
@@ -1356,6 +1432,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   issues.push(...statementReferences(statements, charts));
   issues.push(...resultInProgress(statements, charts, manifest));
   issues.push(...documentReferences(documents));
+  issues.push(...fiscalisationReferences(documents.einvoice_fiscalisation, new Set(taxes.map((tax) => tax.code))));
 
   // The register, and every rule that points into it. Last of the cross-checks,
   // because a source is named by a tax, a box, a statement line and a mention,
@@ -1542,6 +1619,7 @@ function sourceRegister(
         // did not. What an invoice must carry is as reviewable as a rate.
         kind: 'rule' as const,
       })),
+    ...fiscalisationSources(documents.einvoice_fiscalisation).map((reference) => ({ ...reference, kind: 'rule' as const })),
     ...charts.map((chart) => ({ path: `pack.json charts.${chart.code}`, source: chart.source, kind: 'other' as const })),
     ...(manifest.not_taxed ?? []).map((entry) => ({
       path: `pack.json not_taxed.${entry.treatment}`,
@@ -1697,6 +1775,20 @@ function certificationEvidence(manifest: Manifest, charts: PackChart[]): Issue[]
  * reader raises on by name. So the demand for a citation attaches to the rule
  * being *declared*, never to the section existing.
  */
+/** Every register key a fiscalisation block cites, where it cites it. */
+function fiscalisationSources(block: PackFiscalisation | null): { path: string; source: string | null }[] {
+  if (block === null) return [];
+  const where = 'pack.json einvoicing.fiscalisation';
+  return [
+    { path: where, source: block.source },
+    { path: `${where}.hash`, source: block.hash.source },
+    ...(block.qr === null ? [] : [{ path: `${where}.qr`, source: block.qr.source }]),
+    ...block.mention.map((entry, index) => ({ path: `${where}.mention[${index}]`, source: entry.source })),
+    { path: `${where}.submission`, source: block.submission.source },
+    ...(block.events === null ? [] : [{ path: `${where}.events`, source: block.events.source }]),
+  ];
+}
+
 function documentRules(
   documents: PackDocumentRules,
 ): { path: string; what: string; under: string; declared: boolean; reference: PackRuleReference }[] {
@@ -2522,6 +2614,7 @@ function normaliseDocumentRules(manifest: Manifest): PackDocumentRules {
     // `einvoicing` carries its citation flat, beside the profile, because the
     // section is one rule: there is nothing else in it to tell apart.
     einvoice_reference: ruleReference(einvoicing),
+    einvoice_fiscalisation: normaliseFiscalisation(einvoicing['fiscalisation']),
     party_scheme: (einvoicing['party_scheme'] as string | null | undefined) ?? null,
     vat_scheme: (einvoicing['vat_scheme'] as string | null | undefined) ?? null,
     bank_account_scheme: (bank['account_scheme'] as string | undefined) ?? null,
@@ -2530,6 +2623,198 @@ function normaliseDocumentRules(manifest: Manifest): PackDocumentRules {
     fiscal_year_default: (manifest.defaults['fiscal_year_default'] as string | undefined) ?? null,
     mentions,
   };
+}
+
+const textOrNull = (value: unknown): string | null => (typeof value === 'string' ? value : null);
+const numberOrNull = (value: unknown): number | null => (typeof value === 'number' ? value : null);
+const modesOf = (value: unknown): FiscalSubmissionMode[] =>
+  Array.isArray(value) ? (value as FiscalSubmissionMode[]) : [];
+
+/**
+ * `einvoicing.fiscalisation`, read into the shape the core and the seed use.
+ * Absent is null — the country has no such regime — and never an empty block.
+ */
+function normaliseFiscalisation(raw: unknown): PackFiscalisation | null {
+  if (raw === null || typeof raw !== 'object') return null;
+  const block = raw as Record<string, unknown>;
+  const hash = (block['hash'] ?? {}) as Record<string, unknown>;
+  const qr = (block['qr'] ?? null) as Record<string, unknown> | null;
+  const submission = (block['submission'] ?? {}) as Record<string, unknown>;
+  const events = (block['events'] ?? null) as Record<string, unknown> | null;
+  const dates = block['mandatory_from'];
+  const fields = hash['fields'];
+  const size = (qr?.['size_mm'] ?? {}) as Record<string, unknown>;
+  const quiet = (qr?.['quiet_zone_mm'] ?? null) as Record<string, unknown> | null;
+  const mode = String(submission['mode'] ?? '') as FiscalSubmissionMode;
+  const modes = modesOf(submission['modes']);
+  return {
+    mandatory_from:
+      typeof dates === 'string'
+        ? [{ who: null, from: dates }]
+        : Array.isArray(dates)
+          ? (dates as Record<string, unknown>[]).map((entry) => ({ who: String(entry['who']), from: String(entry['from']) }))
+          : [],
+    format: String(block['format'] ?? ''),
+    hash: {
+      algorithm: String(hash['algorithm'] ?? ''),
+      code: textOrNull(hash['code']),
+      encoding: textOrNull(hash['encoding']),
+      separator: textOrNull(hash['separator']),
+      fields: Array.isArray(fields)
+        ? { '*': fields.map(String) }
+        : Object.fromEntries(
+            Object.entries((fields ?? {}) as Record<string, unknown>).map(([kind, list]) => [kind, (list as unknown[]).map(String)]),
+          ),
+      legal_reference: textOrNull(hash['legal_reference']),
+      source: textOrNull(hash['source']),
+    },
+    qr:
+      qr === null
+        ? null
+        : {
+            url: textOrNull(qr['url']),
+            services: ((qr['services'] ?? []) as Record<string, unknown>[]).map((service) => ({
+              modes: modesOf(service['modes']),
+              environment: service['environment'] as 'production' | 'test',
+              url: String(service['url']),
+            })),
+            parameters: ((qr['parameters'] ?? []) as unknown[]).map(String),
+            standard: textOrNull(qr['standard']),
+            error_correction: String(qr['error_correction'] ?? ''),
+            size_mm: { min: Number(size['min']), max: Number(size['max']) },
+            quiet_zone_mm:
+              quiet === null ? null : { min: Number(quiet['min']), recommended: numberOrNull(quiet['recommended']) },
+            label: textOrNull(qr['label']),
+            legal_reference: textOrNull(qr['legal_reference']),
+            source: textOrNull(qr['source']),
+          },
+    mention: ((block['mention'] ?? []) as Record<string, unknown>[]).map((entry) => ({
+      text: String(entry['text']),
+      alternatives: ((entry['alternatives'] ?? []) as unknown[]).map(String),
+      modes: modesOf(entry['modes']),
+      legal_reference: textOrNull(entry['legal_reference']),
+      source: textOrNull(entry['source']),
+    })),
+    submission: {
+      mode,
+      modes: modes.length === 0 ? [mode] : modes,
+      batch_max: numberOrNull(submission['batch_max']),
+      interval_seconds: numberOrNull(submission['interval_seconds']),
+      retry_seconds: numberOrNull(submission['retry_seconds']),
+      legal_reference: textOrNull(submission['legal_reference']),
+      source: textOrNull(submission['source']),
+    },
+    events:
+      events === null
+        ? null
+        : {
+            summary_every_hours: Number(events['summary_every_hours']),
+            modes: modesOf(events['modes']),
+            legal_reference: textOrNull(events['legal_reference']),
+            source: textOrNull(events['source']),
+          },
+    tax_attributes: Object.fromEntries(
+      Object.entries((block['tax_attributes'] ?? {}) as Record<string, Record<string, unknown>>).map(([code, attributes]) => [
+        code,
+        Object.fromEntries(Object.entries(attributes).map(([name, value]) => [name, String(value)])),
+      ]),
+    ),
+    legal_reference: String(block['legal_reference'] ?? ''),
+    source: String(block['source'] ?? ''),
+  };
+}
+
+/** A calendar day that exists: `2027-02-30` matches the pattern and is no day. */
+function isCalendarDay(day: string): boolean {
+  const parsed = new Date(`${day}T00:00:00Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === day;
+}
+
+/**
+ * What the schema cannot say about a fiscalisation block: days that exist,
+ * a size whose minimum is not above its maximum, a mode named that the law
+ * does not allow, a list that names a field twice, a tax the pack does not
+ * carry. The register keys it cites are checked with every other reference.
+ */
+function fiscalisationReferences(block: PackFiscalisation | null, taxCodes: Set<string>): Issue[] {
+  if (block === null) return [];
+  const issues: Issue[] = [];
+  const where = 'pack.json einvoicing.fiscalisation';
+
+  const categories = new Set<string>();
+  for (const entry of block.mandatory_from) {
+    if (!isCalendarDay(entry.from)) {
+      issues.push({ path: `${where}.mandatory_from`, message: `${entry.from} is not a day of the calendar` });
+    }
+    const key = entry.who ?? '';
+    if (categories.has(key)) {
+      issues.push({ path: `${where}.mandatory_from`, message: `names the category ${entry.who ?? '(all)'} twice` });
+    }
+    categories.add(key);
+  }
+
+  for (const [kind, fields] of Object.entries(block.hash.fields)) {
+    const seen = new Set<string>();
+    for (const field of fields ?? []) {
+      if (seen.has(field)) issues.push({ path: `${where}.hash.fields`, message: `${kind === '*' ? 'the list' : kind} names ${field} twice` });
+      seen.add(field);
+    }
+  }
+
+  const allowed = new Set(block.submission.modes);
+  if (!allowed.has(block.submission.mode)) {
+    issues.push({
+      path: `${where}.submission.mode`,
+      message: `is ${block.submission.mode}, which submission.modes does not list (${block.submission.modes.join(', ')})`,
+    });
+  }
+  if (new Set(block.submission.modes).size !== block.submission.modes.length) {
+    issues.push({ path: `${where}.submission.modes`, message: 'names a mode twice' });
+  }
+  if (block.submission.batch_max !== null && !allowed.has('batch')) {
+    issues.push({ path: `${where}.submission.batch_max`, message: 'sizes a batch, and batch is not a mode this regime allows' });
+  }
+  const modesNamed: { path: string; modes: FiscalSubmissionMode[] }[] = [
+    ...block.mention.map((entry, index) => ({ path: `${where}.mention[${index}].modes`, modes: entry.modes })),
+    ...(block.events === null ? [] : [{ path: `${where}.events.modes`, modes: block.events.modes }]),
+    ...(block.qr?.services ?? []).map((service, index) => ({ path: `${where}.qr.services[${index}].modes`, modes: service.modes })),
+  ];
+  for (const named of modesNamed) {
+    for (const mode of named.modes) {
+      if (!allowed.has(mode)) issues.push({ path: named.path, message: `names ${mode}, which submission.modes does not list` });
+    }
+  }
+
+  const qr = block.qr;
+  if (qr !== null) {
+    if (qr.size_mm.min > qr.size_mm.max) {
+      issues.push({ path: `${where}.qr.size_mm`, message: `min ${qr.size_mm.min} is above max ${qr.size_mm.max}` });
+    }
+    if (qr.url === null && qr.services.length === 0) {
+      issues.push({ path: `${where}.qr`, message: 'names no verification service: give url, or services' });
+    }
+    // Every mode the law allows has a production service to point at.
+    if (qr.url === null) {
+      for (const mode of allowed) {
+        if (!qr.services.some((service) => service.environment === 'production' && service.modes.includes(mode))) {
+          issues.push({ path: `${where}.qr.services`, message: `no production service for the mode ${mode}` });
+        }
+      }
+    }
+    for (const url of [qr.url, ...qr.services.map((service) => service.url)]) {
+      if (url !== null && !URL.canParse(url)) issues.push({ path: `${where}.qr`, message: `${url} is not a URL` });
+    }
+  }
+
+  for (const code of Object.keys(block.tax_attributes)) {
+    if (!taxCodes.has(code)) {
+      issues.push({ path: `${where}.tax_attributes.${code}`, message: `${code} is not a tax of this pack` });
+    }
+    if (Object.keys(block.tax_attributes[code] ?? {}).length === 0) {
+      issues.push({ path: `${where}.tax_attributes.${code}`, message: 'carries no attribute' });
+    }
+  }
+  return issues;
 }
 
 /**
