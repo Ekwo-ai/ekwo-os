@@ -42,6 +42,14 @@ it.
 | [`peppol-ubl`](peppol-ubl/) | Peppol BIS Billing 3.0 (UBL 2.1), with participant identifiers checked offline |
 | [`factur-x`](factur-x/) | Factur-X and ZUGFeRD: EN 16931 CII XML, embedded in and extracted from a PDF/A-3 |
 
+**Invoicing records, written.** An administration that wants every invoice
+recorded as it is issued, chained to the one before, gets the record from the
+same rows; keeping the chain and sending the record belong to the host:
+
+| Package | Format |
+|---|---|
+| [`verifactu`](verifactu/) | The Spanish VERI\*FACTU *registro de facturación*, with its chained SHA-256 fingerprint and the URL of its QR code |
+
 **Bank statements, read.** They return statements and lines under the same
 field names, which is what `import_bank_statement()` takes:
 
