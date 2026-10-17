@@ -142,13 +142,11 @@ core can write today.
 
 | Obligation | Text | Who, and from when |
 |---|---|---|
-| **B2B e-invoice** | Ley 18/2022, art. 12; Real Decreto 238/2026 | EN 16931 in UBL, CII, EDIFACT or Facturae. Twelve months after the ministerial order on the public solution for companies above 8 M€, twenty-four for the rest. Without that order there is no date, and `mandatory_from` is null |
+| **B2B e-invoice** | Ley 18/2022, art. 12; Real Decreto 238/2026; Orden HAC/1028/2026 | EN 16931 in UBL, CII, EDIFACT or Facturae; the public solution speaks UBL. The order on the public solution entered into force on 6 October 2026, so the obligation starts on **6 October 2027** for companies above 8 M€ of turnover and on **6 October 2028** for the rest; `mandatory_from` carries the first date |
 | **SII** — invoice records sent to the Agencia Tributaria within four days | Real Decreto 596/2016; Reglamento del IVA, art. 62.6 | Everyone on a monthly return, since 1 July 2017; optional for others |
 | **VERI*FACTU** — certified invoicing software | Real Decreto 1007/2023, as amended by Real Decreto-ley 15/2025 | Corporate income taxpayers before 1 January 2027, everyone else before 1 July 2027 |
 
-`einvoicing.profile` is null because no brick writes a Spanish invoice yet;
-the identifier scheme is `9920`, the Agencia Tributaria's NIF, for both the
-party and the VAT number.
+`einvoicing.profile` is `aeat-ubl`, the UBL invoice of the public solution (annex I of Orden HAC/1028/2026). No brick writes it yet: the core refuses to issue by that name (`format_without_brick`) rather than write something else in its place, as it does for `ksef-fa3` in the Polish pack. The identifier scheme is `9920`, the Agencia Tributaria's NIF, for both the party and the VAT number.
 
 ## What a reviewer should look at first
 

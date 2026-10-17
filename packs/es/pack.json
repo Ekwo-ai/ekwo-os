@@ -250,6 +250,14 @@
         "kind": "regulation"
       },
       {
+        "key": "orden-hac-1028-2026",
+        "title": "Orden HAC/1028/2026, de 2 de octubre, por la que se regula la solución pública de facturación electrónica — BOE núm. 247, de 5 de octubre de 2026, en vigor el 6 de octubre de 2026",
+        "publisher": "Agencia Estatal Boletín Oficial del Estado",
+        "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-20587",
+        "consulted_on": "2026-10-17",
+        "kind": "regulation"
+      },
+      {
         "key": "aeat-factura-electronica",
         "title": "Facturación electrónica obligatoria — nota de la Agencia Tributaria del 31 de marzo de 2026",
         "publisher": "Agencia Estatal de Administración Tributaria",
@@ -493,11 +501,11 @@
     ]
   },
   "einvoicing": {
-    "profile": null,
-    "mandatory_from": null,
+    "profile": "aeat-ubl",
+    "mandatory_from": "2027-10-06",
     "party_scheme": "9920",
     "vat_scheme": "9920",
-    "legal_reference": "Ley 18/2022, art. 12, que modifica el art. 2 bis de la Ley 56/2007, y Real Decreto 238/2026, en vigor desde el 20 de abril de 2026 — factura electrónica obligatoria entre empresarios y profesionales, ajustada al modelo semántico EN 16931 en sintaxis UBL (la de referencia de la solución pública), CII, EDIFACT o Facturae (art. 12 del real decreto). La obligación empieza doce meses después de la entrada en vigor de la orden ministerial que desarrolla la solución pública de facturación electrónica para quien superó 8 millones de euros de volumen de operaciones el año anterior, y veinticuatro meses después para los demás (disposición final cuarta). A 21 de septiembre de 2026 esta orden no se ha encontrado publicada en el BOE, así que no hay fecha que escribir: mandatory_from queda vacío y profile también, porque ninguna pieza de packages/formats escribe todavía una factura española y declarar un perfil sería afirmar lo contrario. El esquema 9920 (Agencia Española de Administración Tributaria) identifica el NIF, que en España es a la vez el identificador de la empresa y el de IVA. SII (Real Decreto 596/2016) y VERI*FACTU (Real Decreto 1007/2023) son obligaciones de registro y remisión de facturas, no un formato de factura: véase el README",
+    "legal_reference": "Ley 18/2022, art. 12, que modifica el art. 2 bis de la Ley 56/2007, y Real Decreto 238/2026, en vigor desde el 20 de abril de 2026 — factura electrónica obligatoria entre empresarios y profesionales, ajustada al modelo semántico EN 16931 en sintaxis UBL (la de referencia de la solución pública), CII, EDIFACT o Facturae (art. 12 del real decreto). La obligación empieza doce meses después de la entrada en vigor de la orden ministerial que desarrolla la solución pública de facturación electrónica para quien superó 8 millones de euros de volumen de operaciones el año anterior, y veinticuatro meses después para los demás (disposición final cuarta). Esa orden es la Orden HAC/1028/2026, de 2 de octubre, que regula la solución pública de facturación electrónica en sintaxis UBL sobre el modelo EN 16931 (BOE núm. 247, de 5 de octubre de 2026), en vigor el 6 de octubre de 2026: la obligación empieza el 6 de octubre de 2027 para quien superó los 8 millones y el 6 de octubre de 2028 para los demás. mandatory_from lleva la primera fecha, como hace el pack francés con sus dos oleadas. El perfil aeat-ubl nombra la factura UBL de la solución pública (anexo I de la orden); ninguna pieza de packages/formats la escribe todavía, y el núcleo lo dice por su nombre (format_without_brick) en lugar de escribir otra cosa en su lugar, como ocurre con ksef-fa3 en el pack polaco. El esquema 9920 (Agencia Española de Administración Tributaria) identifica el NIF, que en España es a la vez el identificador de la empresa y el de IVA. SII (Real Decreto 596/2016) y VERI*FACTU (Real Decreto 1007/2023) son obligaciones de registro y remisión de facturas, no un formato de factura: véase el README",
     "source": "rd-238-2026"
   },
   "bank": {
