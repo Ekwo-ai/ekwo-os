@@ -137,8 +137,8 @@ the annual summary, is not transcribed.
 
 ### E-invoicing, SII and VERI*FACTU
 
-Three different obligations, and none of them is an e-invoicing profile the
-core can write today.
+Three different obligations. The first is an e-invoicing profile the core
+cannot write yet; the third is a fiscalisation regime the core chains.
 
 | Obligation | Text | Who, and from when |
 |---|---|---|
@@ -147,6 +147,30 @@ core can write today.
 | **VERI*FACTU** — certified invoicing software | Real Decreto 1007/2023, as amended by Real Decreto-ley 15/2025 | Corporate income taxpayers before 1 January 2027, everyone else before 1 July 2027 |
 
 `einvoicing.profile` is `aeat-ubl`, the UBL invoice of the public solution (annex I of Orden HAC/1028/2026). No brick writes it yet: the core refuses to issue by that name (`format_without_brick`) rather than write something else in its place, as it does for `ksef-fa3` in the Polish pack. The identifier scheme is `9920`, the Agencia Tributaria's NIF, for both the party and the VAT number.
+
+**VERI*FACTU is `einvoicing.fiscalisation`.** Every invoice the software
+issues leaves a *registro de facturación*, chained to the previous one, and
+the pack says how, article by article (Orden HAC/1177/2024, BOE-A-2024-22138,
+source `orden-hac-1177-2024`):
+
+| Rule | Value | Where |
+|---|---|---|
+| Obligation | 1 January 2027 for corporate income taxpayers, 1 July 2027 for the others | Real Decreto-ley 15/2025, final provision one (`rdl-15-2025`) |
+| Format | `verifactu`, written by `@ekwo-ai/verifactu` | `SuministroInformacion.xsd` of the AEAT |
+| Chain | each record carries the first 64 characters of the previous record's fingerprint; the time of generation carries its time zone | art. 7.a).4.º, art. 7.g) |
+| Hash | SHA-256 (list L12, code `01`), hexadecimal capitals, over `name=value` pairs joined by `&`: eight fields for an *alta*, five for an *anulación* | art. 13.2; AEAT technical document on the fingerprint, v0.1.2 |
+| QR code | 30 to 40 mm, ISO/IEC 18004, error correction M; the URL of the AEAT's *cotejo* service with the NIF, the series and number, the date and the total — `ValidarQR` for a system that sends, `ValidarQRNoVerifactu` for one that keeps | arts. 20.1.a) and 21; AEAT technical document on the QR code, v0.5.0 |
+| Sentence | «VERI*FACTU» or «Factura verificable en la sede electrónica de la AEAT», on an invoice of a system that sends | art. 20.1.b) |
+| Sending | 1 to 1,000 records a message, 60 s between messages at first, a pending sending retried at least hourly | art. 16.2, 16.4; annex 2.2 |
+| Events | a summary event at least every 6 hours of operation — only for a system that does not send (art. 3 excludes art. 9 for VERI*FACTU) | art. 9.2 |
+| Tax attributes | `aeat_qualification` E5 on `ES-S-ICG`, N2 on `ES-S-ICS` and `ES-S-NS`: what the EN 16931 category does not decide alone | lists L9 and L10 of the AEAT's record design; Ley 37/1992, arts. 25 and 69 |
+
+The core keeps the chain in the `einvoicing` module (`ekwo einvoice
+fiscalise`, MCP `einvoicing_fiscalise`) and never fiscalises a document on
+its own: the status (`ekwo einvoice fiscalisation`) names every posted sale
+without a record. Sending the records to the AEAT is a transport the host
+brings; none ships with the core. SII stays out of the pack: it is a
+remission of the books, not a record of the software.
 
 ## What a reviewer should look at first
 

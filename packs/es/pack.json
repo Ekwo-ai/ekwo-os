@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "ES",
   "name": "España",
-  "version": "0.5.0",
-  "schema_min": "20261011120000",
+  "version": "0.6.0",
+  "schema_min": "20261018014537",
   "seed_sequence": 19,
-  "released_at": "2026-10-01",
+  "released_at": "2026-10-18",
   "certification": {
     "status": "community",
     "sources": [
@@ -258,6 +258,14 @@
         "kind": "regulation"
       },
       {
+        "key": "orden-hac-1177-2024",
+        "title": "Orden HAC/1177/2024, de 17 de octubre, por la que se desarrollan las especificaciones técnicas, funcionales y de contenido de los sistemas informáticos de facturación y de los sistemas VERI*FACTU",
+        "publisher": "Agencia Estatal Boletín Oficial del Estado",
+        "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2024-22138",
+        "consulted_on": "2026-10-17",
+        "kind": "regulation"
+      },
+      {
         "key": "aeat-factura-electronica",
         "title": "Facturación electrónica obligatoria — nota de la Agencia Tributaria del 31 de marzo de 2026",
         "publisher": "Agencia Estatal de Administración Tributaria",
@@ -506,7 +514,148 @@
     "party_scheme": "9920",
     "vat_scheme": "9920",
     "legal_reference": "Ley 18/2022, art. 12, que modifica el art. 2 bis de la Ley 56/2007, y Real Decreto 238/2026, en vigor desde el 20 de abril de 2026 — factura electrónica obligatoria entre empresarios y profesionales, ajustada al modelo semántico EN 16931 en sintaxis UBL (la de referencia de la solución pública), CII, EDIFACT o Facturae (art. 12 del real decreto). La obligación empieza doce meses después de la entrada en vigor de la orden ministerial que desarrolla la solución pública de facturación electrónica para quien superó 8 millones de euros de volumen de operaciones el año anterior, y veinticuatro meses después para los demás (disposición final cuarta). Esa orden es la Orden HAC/1028/2026, de 2 de octubre, que regula la solución pública de facturación electrónica en sintaxis UBL sobre el modelo EN 16931 (BOE núm. 247, de 5 de octubre de 2026), en vigor el 6 de octubre de 2026: la obligación empieza el 6 de octubre de 2027 para quien superó los 8 millones y el 6 de octubre de 2028 para los demás. mandatory_from lleva la primera fecha, como hace el pack francés con sus dos oleadas. El perfil aeat-ubl nombra la factura UBL de la solución pública (anexo I de la orden); ninguna pieza de packages/formats la escribe todavía, y el núcleo lo dice por su nombre (format_without_brick) en lugar de escribir otra cosa en su lugar, como ocurre con ksef-fa3 en el pack polaco. El esquema 9920 (Agencia Española de Administración Tributaria) identifica el NIF, que en España es a la vez el identificador de la empresa y el de IVA. SII (Real Decreto 596/2016) y VERI*FACTU (Real Decreto 1007/2023) son obligaciones de registro y remisión de facturas, no un formato de factura: véase el README",
-    "source": "rd-238-2026"
+    "source": "rd-238-2026",
+    "fiscalisation": {
+      "mandatory_from": [
+        {
+          "who": "corporate_income_taxpayers",
+          "from": "2027-01-01"
+        },
+        {
+          "who": "others",
+          "from": "2027-07-01"
+        }
+      ],
+      "format": "verifactu",
+      "hash": {
+        "algorithm": "SHA-256",
+        "code": "01",
+        "encoding": "hex-upper",
+        "separator": "&",
+        "fields": {
+          "alta": [
+            "IDEmisorFactura",
+            "NumSerieFactura",
+            "FechaExpedicionFactura",
+            "TipoFactura",
+            "CuotaTotal",
+            "ImporteTotal",
+            "Huella",
+            "FechaHoraHusoGenRegistro"
+          ],
+          "anulacion": [
+            "IDEmisorFacturaAnulada",
+            "NumSerieFacturaAnulada",
+            "FechaExpedicionFacturaAnulada",
+            "Huella",
+            "FechaHoraHusoGenRegistro"
+          ]
+        },
+        "legal_reference": "Orden HAC/1177/2024, art. 7.a).4.º (cada registro lleva los primeros 64 caracteres de la huella del registro inmediatamente anterior), art. 7.g) (la fecha y hora de generación incluye el huso horario) y art. 13.2 (algoritmo y codificación del documento técnico de la sede electrónica); anexo, lista L12: 01 = SHA-256. Campos, orden, separador y salida en hexadecimal en mayúsculas: AEAT, «Detalle de las especificaciones técnicas para generación de la huella o hash de los registros de facturación», versión 0.1.2, 27 de agosto de 2024",
+        "source": "orden-hac-1177-2024"
+      },
+      "qr": {
+        "services": [
+          {
+            "modes": [
+              "realtime",
+              "batch"
+            ],
+            "environment": "production",
+            "url": "https://www2.agenciatributaria.gob.es/wlpl/TIKE-CONT/ValidarQR"
+          },
+          {
+            "modes": [
+              "none"
+            ],
+            "environment": "production",
+            "url": "https://www2.agenciatributaria.gob.es/wlpl/TIKE-CONT/ValidarQRNoVerifactu"
+          },
+          {
+            "modes": [
+              "realtime",
+              "batch"
+            ],
+            "environment": "test",
+            "url": "https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQR"
+          },
+          {
+            "modes": [
+              "none"
+            ],
+            "environment": "test",
+            "url": "https://prewww2.aeat.es/wlpl/TIKE-CONT/ValidarQRNoVerifactu"
+          }
+        ],
+        "parameters": [
+          "nif",
+          "numserie",
+          "fecha",
+          "importe"
+        ],
+        "standard": "ISO/IEC 18004",
+        "error_correction": "M",
+        "size_mm": {
+          "min": 30,
+          "max": 40
+        },
+        "quiet_zone_mm": {
+          "min": 2,
+          "recommended": 6
+        },
+        "label": "QR tributario:",
+        "legal_reference": "Orden HAC/1177/2024, art. 20.1.a) (la factura incluye un código QR) y art. 21: tamaño entre 30x30 y 40x40 milímetros, norma ISO/IEC 18004, nivel M de corrección de errores (21.1); URL del servicio de cotejo o remisión de información por parte del receptor de la factura con el NIF del obligado a expedirla, el número de serie y número, la fecha de expedición y el importe total (21.2). Servicios, parámetros, zona en blanco y texto «QR tributario:»: AEAT, «Detalle de las especificaciones técnicas del código QR de la factura y de la URL del servicio de cotejo o remisión de información por parte del receptor de la factura», versión 0.5.0, 10 de diciembre de 2025",
+        "source": "orden-hac-1177-2024"
+      },
+      "mention": [
+        {
+          "text": "VERI*FACTU",
+          "alternatives": [
+            "Factura verificable en la sede electrónica de la AEAT"
+          ],
+          "modes": [
+            "realtime",
+            "batch"
+          ],
+          "legal_reference": "Orden HAC/1177/2024, art. 20.1.b): en las facturas expedidas por un sistema VERI*FACTU, la frase «Factura verificable en la sede electrónica de la AEAT» o «VERI*FACTU»",
+          "source": "orden-hac-1177-2024"
+        }
+      ],
+      "submission": {
+        "mode": "realtime",
+        "modes": [
+          "realtime",
+          "batch",
+          "none"
+        ],
+        "batch_max": 1000,
+        "interval_seconds": 60,
+        "retry_seconds": 3600,
+        "legal_reference": "Orden HAC/1177/2024, art. 16.2 (tiempo de espera entre envíos, inicialmente 60 segundos y actualizable en las respuestas de la AEAT; número máximo de registros por envío fijado por el diseño de registro, de 1 a 1.000 según el apartado 2.2 del anexo) y art. 16.4 (reintento de la remisión pendiente al menos una vez cada hora). Un sistema que no remite («NO VERI*FACTU», modo none) conserva los registros y los entrega a requerimiento de la AEAT (Real Decreto 1007/2023)",
+        "source": "orden-hac-1177-2024"
+      },
+      "events": {
+        "summary_every_hours": 6,
+        "modes": [
+          "none"
+        ],
+        "legal_reference": "Orden HAC/1177/2024, art. 9.2: por cada 6 horas que el sistema haya estado operativo y disponible para su uso, al menos un registro resumen de los eventos, también antes de cerrarse o apagarse. El art. 3 excluye el art. 9 mientras el sistema actúe como VERI*FACTU",
+        "source": "orden-hac-1177-2024"
+      },
+      "tax_attributes": {
+        "ES-S-ICG": {
+          "aeat_qualification": "E5"
+        },
+        "ES-S-ICS": {
+          "aeat_qualification": "N2"
+        },
+        "ES-S-NS": {
+          "aeat_qualification": "N2"
+        }
+      },
+      "legal_reference": "Real Decreto 1007/2023, de 5 de diciembre, Reglamento de los requisitos de los sistemas informáticos de facturación; Orden HAC/1177/2024, de 17 de octubre, especificaciones técnicas (BOE-A-2024-22138); Real Decreto-ley 15/2025, disposición final primera: sistemas adaptados antes del 1 de enero de 2027 para los contribuyentes del Impuesto sobre Sociedades y antes del 1 de julio de 2027 para los demás. tax_attributes lleva la calificación de la operación (diseño de registros de la AEAT, listas L9 y L10) que la categoría EN 16931 no decide sola: E5 para la entrega intracomunitaria de bienes exenta (Ley 37/1992, art. 25), N2 para el servicio no sujeto por las reglas de localización (art. 69) y para ES-S-NS",
+      "source": "orden-hac-1177-2024"
+    }
   },
   "bank": {
     "account_scheme": "iban",
