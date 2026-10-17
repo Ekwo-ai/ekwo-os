@@ -1,0 +1,168 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "DM-VAT-RETURN",
+  "name": "VAT return (box layout of this pack)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2006-03-01",
+  "legal_reference": "Value Added Tax Act, 2005, s. 31 — the tax period of a taxable person is the calendar month; s. 32(1) — a return for each tax period within 20 calendar days after its end, whether or not tax is payable; s. 32(2) — in the form the Comptroller prescribes, stating the information needed to calculate the tax payable under s. 24. The Division's VAT page and registration guide say the same (due on the 20th of the month after the period). The tax came into force on 1 March 2006",
+  "source": "dm-vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Value Added Tax Act, 2005, s. 32(1) and s. 41 — the return is filed within 20 calendar days after the end of the tax period and the tax is paid by the same date: for a month, the 20th of the next month (the Division's guide gives the example of March 2018 due on 20 April 2018). The Comptroller may extend the time to file (s. 33) but not the due date of payment. A late return costs $100 a month or part (Division's VAT page); the ten per cent penalty is s. 41(4). Weekend roll-forward is not expressible",
+    "source": "dm-vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard-rated supplies (15 %), net of VAT",
+      "sequence": 10,
+      "legal_reference": "Box number and label are this pack's own: the Division's monthly VAT return form was not found online (the return is filed in its Tax eFiling service, and the forms page lists only the registration and refund forms), so the layout follows what the Act makes a return carry — the output tax of the period, the input tax deduction and the net payable or refundable (s. 24, s. 25, s. 52). Taxable supplies at 15 per cent (s. 9(1)(a)).",
+      "source": "dm-vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Accommodation and dive-activity supplies (10 %), net of VAT",
+      "sequence": 20,
+      "legal_reference": "Taxable supplies at 10 per cent: accommodation services by a hotel, guest house, inn or similar establishment (s. 9(1)(c), Regulations reg. 5) and the dive activity portion of a dive package (s. 9(1)(d), added by Act 4 of 2006).",
+      "source": "dm-vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Zero-rated supplies, including exports",
+      "sequence": 30,
+      "legal_reference": "Taxable supplies at zero per cent (s. 17, Schedule I); they stay on the return (s. 32(1) requires a return for each period whether or not tax is payable).",
+      "source": "dm-vat-act"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 40,
+      "legal_reference": "Supplies of Schedule II (s. 18), reported for information; the input tax of what is acquired to make them is not deductible (s. 26).",
+      "source": "dm-vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Total supplies",
+      "sequence": 50,
+      "legal_reference": "Sum of boxes 1 to 4 — the sum is this pack's reading, the Act asks for the information needed to calculate the tax (s. 32(2)(b)).",
+      "source": "dm-vat-act",
+      "plus": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 60,
+      "legal_reference": "Tax at 15 % on box 1 (s. 9(1)(a)).",
+      "source": "dm-vat-act"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Output tax on accommodation and dive activity",
+      "sequence": 70,
+      "legal_reference": "Tax at 10 % on box 2 (s. 9(1)(c), (d)).",
+      "source": "dm-vat-act"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Total output tax for the period",
+      "sequence": 80,
+      "legal_reference": "The output tax payable in respect of taxable supplies made during the period (s. 24(1)); a credit note posts a negative amount to its own boxes (s. 30).",
+      "source": "dm-vat-act",
+      "plus": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Value of imports",
+      "sequence": 90,
+      "legal_reference": "Goods imported on which tax was paid at the port of entry (s. 9(1)(b), s. 22).",
+      "source": "dm-vat-act"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Value of local purchases",
+      "sequence": 100,
+      "legal_reference": "Purchases made in Dominica for the taxable activity, taxable, zero-rated and exempt.",
+      "source": "dm-vat-act"
+    },
+    {
+      "box": "11",
+      "kind": "tax",
+      "name": "VAT paid on imports",
+      "sequence": 110,
+      "legal_reference": "Input tax paid on the import of goods, deductible for use in a taxable activity (s. 25(1)(a)).",
+      "source": "dm-vat-act"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "VAT paid on local purchases",
+      "sequence": 120,
+      "legal_reference": "Input tax payable on taxable supplies made to the person, deductible on a tax invoice (s. 25(1)(a), (2)).",
+      "source": "dm-vat-act"
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Total input tax for the period",
+      "sequence": 130,
+      "legal_reference": "Sum of boxes 11 and 12: the total input tax deduction allowed for the period (s. 24(1), s. 25).",
+      "source": "dm-vat-act",
+      "plus": [
+        "11",
+        "12"
+      ]
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "name": "VAT payable",
+      "sequence": 140,
+      "legal_reference": "Output tax less the input tax deduction, paid within 20 calendar days after the end of the period (s. 24(1), s. 41). Penalty and interest on default (s. 28, s. 41(4)) are not modelled.",
+      "source": "dm-vat-act",
+      "plus": [
+        "8"
+      ],
+      "minus": [
+        "13"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "VAT refundable",
+      "sequence": 150,
+      "legal_reference": "The excess of the input tax deduction over the output tax: carried forward and set against later liabilities, refunded on claim under the conditions of s. 52 (the Division's refund guide: after six consecutive tax periods when more than $100, or monthly for a taxpayer whose sales are mostly zero-rated).",
+      "source": "dm-vat-act",
+      "plus": [
+        "13"
+      ],
+      "minus": [
+        "8"
+      ],
+      "floor_zero": true
+    }
+  ]
+}

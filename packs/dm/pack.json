@@ -1,0 +1,200 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "DM",
+  "name": "Dominica",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 202,
+  "released_at": "2026-10-17",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "dm-vat-act",
+        "title": "Value Added Tax Act, 2005 (Act 7 of 2005), as enacted; the amending Acts listed on the Division's VAT page (Act 4 of 2006, Act 17 of 2008, Act 8 of 2014, Act 12 of 2015) are not all applied to it",
+        "publisher": "Inland Revenue Division, Ministry of Finance, Commonwealth of Dominica — Laws of Dominica",
+        "url": "https://www.dominica.gov.dm/laws/2005/act7-2005.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "law"
+      },
+      {
+        "key": "dm-vat-amend-2006",
+        "title": "Value Added Tax (Amendment) Act, 2006 (Act 4 of 2006) — s. 9(1)(d) and (e) added",
+        "publisher": "Inland Revenue Division, Ministry of Finance, Commonwealth of Dominica — Laws of Dominica",
+        "url": "https://www.dominica.gov.dm/laws/2006/act4-2006.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "law"
+      },
+      {
+        "key": "dm-vat-regs",
+        "title": "Value Added Tax Regulations, 2006 (S.R.O. 9 of 2006)",
+        "publisher": "Inland Revenue Division, Ministry of Finance, Commonwealth of Dominica — Laws of Dominica",
+        "url": "https://www.dominica.gov.dm/laws/2006/sro9-2006.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "regulation"
+      },
+      {
+        "key": "ird-vat",
+        "title": "Value Added Tax (VAT) — governance, rates, due date, filing, penalties and interest",
+        "publisher": "Inland Revenue Division, Ministry of Finance, Commonwealth of Dominica",
+        "url": "https://www.ird.gov.dm/tax-laws/value-added-tax",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "ird-vat-registration-guide",
+        "title": "Guide to Registration for VAT (2018) — who registers, taxable and exempt supplies, returns and tax periods",
+        "publisher": "Inland Revenue Division, Ministry of Finance, Commonwealth of Dominica",
+        "url": "https://ird.gov.dm/phocadownload/guides/VAT%20-%20Registration%20Guide%202018.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "ird-vat-refund-guide",
+        "title": "Guide to Filing V.A.T. Claims and Applications for Refund (the page 'Completing Your VAT Return' links it as its guide to filing)",
+        "publisher": "Inland Revenue Division, Ministry of Finance, Commonwealth of Dominica",
+        "url": "https://ird.gov.dm/phocadownload/vat_return/VAT%20-%20Refund%20Guide%201.0.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "iasb-ifrs-sme",
+        "title": "IFRS for SMEs Accounting Standard",
+        "publisher": "IFRS Foundation / International Accounting Standards Board",
+        "url": "https://www.ifrs.org/issued-standards/ifrs-for-smes/",
+        "consulted_on": "2026-10-17",
+        "kind": "standard"
+      },
+      {
+        "key": "ird-efiling",
+        "title": "Tax eFiling — the Division's online service the return is filed through",
+        "publisher": "Inland Revenue Division, Ministry of Finance, Commonwealth of Dominica",
+        "url": "https://efiling.ird.gov.dm/",
+        "consulted_on": "2026-10-17",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XCD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460",
+      "tax_payable": "2100",
+      "tax_receivable": "1172"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Dominica reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "DM-IFRS-SME-SFP",
+        "DM-IFRS-SME-IS"
+      ],
+      "legal_reference": "This pack found no legal chart of accounts in Dominica, and opened neither the Companies Act nor the Income Tax Act: no section of either is cited. What the Value Added Tax Act, 2005, s. 64 asks of a taxable person is that records be kept (s. 63 defines them), and the Division's registration guide repeats it. This chart is original: four digits, blocked so that each range reaches one line of a statement of financial position and an income statement presented in the manner of IFRS for SMEs, which is a choice of this pack and not a text the country imposes. The settlement account of the VAT return (2100, refundable 1172) is distinct from the accounts the tax posts to (2101 and 2102 collected, 1170 and 1171 recoverable). See README.md",
+      "source": "dm-vat-act"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, 2005, s. 29 — a tax invoice is a document provided as the Act requires, and s. 30 treats tax credit and debit notes; the Act, as read for this pack, does not say that the series of invoice numbers may have no gap, which is why `numbering` is `sequential` and not `gapless`; `number_format` is a convention this pack proposes. The particulars of an invoice are in the Regulations (S.R.O. 9 of 2006), which this pack did not read in full",
+        "source": "dm-vat-act"
+      },
+      "payment_terms": {
+        "legal_reference": "No Dominican text read for this pack sets a payment term between two businesses or a rate of interest on a commercial debt paid late: the penalty of ten per cent (s. 41(4)) and the interest of one per cent a month (s. 28, Division's VAT page) are charges on the taxable person towards the Comptroller, not a term between two businesses. `legal_payment_days` and `late_payment_reference` are empty",
+        "source": "dm-vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, 2005, s. 14(1) — a supply occurs on the earliest of the date the goods are delivered or made available or the services completed, the date the supplier issues an invoice, and the date any consideration is received. The closed vocabulary of this field has no value for three triggers at once: `earliest_of_delivery_or_payment` is the nearest and is what the rule reduces to when no invoice comes first. The special cases of s. 14(2) to (5) (credit agreement, lay-away, change of use, repossession) are not modelled",
+        "source": "dm-vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Dominican text read for this pack obliges a business to issue or accept an electronic invoice: the Value Added Tax Act, 2005, s. 29 asks for a tax invoice without naming a platform, a format or a Peppol profile. No Peppol authority for Dominica was looked for. `profile`, `party_scheme` and `vat_scheme` are null: there is no domestic profile to name",
+    "source": "dm-vat-act"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Not modelled, and not a finding that the service is untaxed. The Value Added Tax Act, 2005, s. 9(1)(b) taxes at 15 per cent the import of services other than an exempt import, s. 9(2)(c) has the recipient pay the tax and s. 23 has the recipient file an import declaration and pay within 20 calendar days after the tax period in which the services were imported. The pack carries no code for this self-assessment (the declaration form was not found online, and the tax would have to be both collected and deducted by the recipient): such a purchase is entered with DM-P-EX and the user, with their accountant, accounts for the tax outside the pack. See README.md",
+      "source": "dm-vat-act"
+    }
+  ]
+}
