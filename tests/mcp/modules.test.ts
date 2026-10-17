@@ -117,6 +117,8 @@ describe('the loader', () => {
       'budgets_variance',
     ]);
     expect(names.filter((name) => name.startsWith('einvoicing_')).sort()).toEqual([
+      'einvoicing_fiscalisation_status',
+      'einvoicing_fiscalise',
       'einvoicing_issue',
       'einvoicing_list',
       'einvoicing_status',

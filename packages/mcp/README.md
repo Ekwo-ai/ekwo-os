@@ -128,6 +128,7 @@ alongside the server; the recommended route needs no driver at all.
 | `EKWO_ACT_AS_USER_ID` | Required with `EKWO_DB_URL`: the `auth.users` id to act for |
 | `EKWO_NO_REGISTER_INVITE` | Optional. `1` leaves the invitation to register out of the instructions |
 | `EKWO_EINVOICE_DIRECTORY` | Optional. The folder electronic invoices are sent to by `einvoicing_issue` with `send`. Unset, files are issued and kept, and sending is refused as `no_transport` |
+| `EKWO_FISCAL_SYSTEM` | Optional. The invoicing system `einvoicing_fiscalise` chains fiscal records under, as JSON: `name`, `id`, `version`, `installation`, `producerName`, `producerTaxId`, and the booleans a regime may ask (`verifactuOnly`, `multipleTaxpayers`, `multipleTaxpayersNow`). Unset, fiscalising is refused as `no_fiscal_system`; malformed, the server does not start |
 
 ### Started with nothing set
 
@@ -288,7 +289,8 @@ startup to know which: `fixed_assets_list`, `fixed_assets_create`,
 `fixed_assets_schedule`, `fixed_assets_run_depreciation`,
 `fixed_assets_dispose`, `budgets_list`, `budgets_upsert_lines`,
 `budgets_variance`, `einvoicing_validate`, `einvoicing_issue`,
-`einvoicing_status`, `einvoicing_list`, `tax_estimate`, `tax_parameters`,
+`einvoicing_status`, `einvoicing_list`, `einvoicing_fiscalise`,
+`einvoicing_fiscalisation_status`, `tax_estimate`, `tax_parameters`,
 `tax_declare_parameter`, `tax_adjustments`, `tax_declare_adjustment`,
 `tax_losses`, `tax_record_computation`, `tax_computations`. A module may
 offer prompts too, under the same prefix: `tax_review_year`. A module that is
@@ -300,6 +302,10 @@ never one a model chooses: the folder of `EKWO_EINVOICE_DIRECTORY`, or a
 transport a host hands to `buildServer()` as `einvoiceTransport`. No
 credential of a network ever reaches a tool. See
 [`modules/einvoicing`](../../modules/einvoicing/README.md).
+
+The fiscalisation tools chain, for a company whose pack declares a regime,
+the record of each posted sale under the invoicing system the server is
+given in `EKWO_FISCAL_SYSTEM` — never one a model describes.
 
 **Resources.** `ekwo://companies/{id}/chart` is the whole chart of accounts;
 `ekwo://companies/{id}/taxes` is every tax with the ledger account and the

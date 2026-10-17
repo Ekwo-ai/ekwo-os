@@ -26,13 +26,19 @@ import {
   TRANSMISSION_STATES,
   amountIn,
   decimal,
+  FISCAL_RECORD_KINDS,
+  FISCAL_SUBMISSION_MODES,
   einvoiceStatus,
+  fiscalisationStatus,
+  fiscaliseDocument,
   issueEinvoice,
+  parseFiscalSystem,
   listEinvoiceTransmissions,
   money,
   moneyFields,
   validateEinvoice,
   type EinvoiceTransport,
+  type FiscalSystem,
 } from '@ekwo-ai/core';
 import { companyId, isoDate, uuid } from './read.js';
 
@@ -77,6 +83,8 @@ export interface ModuleTool {
  */
 export interface ModuleToolContext {
   einvoiceTransport?: EinvoiceTransport;
+  /** The invoicing system fiscal records are chained by, described by whoever runs the server. */
+  fiscalSystem?: FiscalSystem;
 }
 
 /**
@@ -505,6 +513,57 @@ const EINVOICING: ModuleToolset = {
             },
             context.einvoiceTransport,
           ),
+        );
+      },
+    },
+    {
+      verb: 'fiscalise',
+      title: 'Chain the fiscal record of an invoice',
+      readOnly: false,
+      description:
+        'Writes the fiscal record of a posted sale — the record its company\'s country pack requires the invoicing software to keep for every invoice, in the format of its einvoicing.fiscalisation block — chains it after the last record of the invoicing system, with the hash of that record, and keeps its file. Records nothing when the record breaks a rule (the rules are listed, as the format names them) or with dry_run. A record once chained is never changed: a mistake is an anulacion, then a new alta. The answer carries verification_url, what the QR code of the invoice encodes. Refused by name where the pack declares no regime (no_fiscalisation_regime) or no brick writes its format (format_without_brick). Ask the user before chaining: a record is kept as the law requires, for good.',
+      input: z.object({
+        document_id: documentId,
+        kind: z.enum(FISCAL_RECORD_KINDS).optional().describe('alta (the default) when the invoice is issued; anulacion to cancel its record.'),
+        mode: z.enum(FISCAL_SUBMISSION_MODES).optional().describe('How the record reaches the authority, among the modes the pack allows. The pack\'s default when left out.'),
+        rectification: z.string().min(1).max(10).optional().describe('For a credit note: why it rectifies, in the regime\'s own code, where the regime asks and the books do not say. Ask the user; never guess it.'),
+        dry_run: z.boolean().optional().describe('Write the record and list what is wrong with it; chain nothing.'),
+        include_file: z.boolean().optional().describe('Hand the file of the record back too.'),
+      }),
+      async run(backend, args, context) {
+        const system = context.fiscalSystem;
+        if (system === undefined) {
+          throw new EkwoMcpError(
+            'no_fiscal_system: the invoicing system that chains the records is described by whoever runs this server, as JSON in EKWO_FISCAL_SYSTEM — name, id, version, installation, producerName, producerTaxId — and it is not set. Nothing was chained.',
+          );
+        }
+        return inSchema('einvoicing', () =>
+          fiscaliseDocument(backend, args['document_id'] as unknown as string, {
+            system: parseFiscalSystem(system, 'the fiscal system of this server'),
+            ...(args['kind'] === undefined ? {} : { kind: args['kind'] as unknown as (typeof FISCAL_RECORD_KINDS)[number] }),
+            ...(args['mode'] === undefined ? {} : { mode: args['mode'] as unknown as (typeof FISCAL_SUBMISSION_MODES)[number] }),
+            ...(args['rectification'] === undefined ? {} : { rectification: args['rectification'] as unknown as string }),
+            ...(args['dry_run'] === undefined ? {} : { dryRun: args['dry_run'] as unknown as boolean }),
+            ...(args['include_file'] === undefined ? {} : { includeFile: args['include_file'] as unknown as boolean }),
+          }),
+        );
+      },
+    },
+    {
+      verb: 'fiscalisation_status',
+      title: 'Where the fiscal records of a company stand',
+      readOnly: true,
+      description:
+        'The fiscalisation regime of a company, as its country pack declares it, and where its records stand: each chain of an invoicing system, walked both ways (verified, or the first break), the records still to be sent to the authority, the posted sales from the start of the obligation that have no record — named here, never fiscalised on their own — and the latest events. A broken chain is for the company\'s accountant before anything else.',
+      input: z.object({
+        company_id: companyId,
+        limit: z.number().int().min(1).max(500).optional().describe('At most this many pending records and missing documents listed. 50 by default.'),
+      }),
+      async run(backend, args) {
+        return inSchema('einvoicing', () =>
+          fiscalisationStatus(backend, args['company_id'] as unknown as string, {
+            ...(args['limit'] === undefined ? {} : { limit: args['limit'] as unknown as number }),
+          }),
         );
       },
     },

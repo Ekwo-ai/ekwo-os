@@ -175,6 +175,9 @@ ${bold('Connecting')} ${dim('(every command)')}
               declares, through the einvoicing module. validate writes it and
               names the rules it breaks; issue keeps it, and with --send
               --to <directory> writes it to that folder; status follows it.
+              fiscalise <document> --system <file> chains the fiscal record the
+              country's fiscalisation regime requires; fiscalisation says
+              where the chain stands and which sales have no record.
   ${cyan('peppol')}      validate <file> | lookup <participant> — the Peppol network, with
               no installation and no sign-in. validate reads a UBL invoice or
               credit note as it arrived and names the rules it breaks; lookup
@@ -205,6 +208,13 @@ ${bold('Keeping books')} ${dim('(each verb is one function the MCP server calls 
                             account, tax, product, unit, discount, description.
                             Codes, never rates; a comma in a value is \\,.
   --dry-run                 post. Ask the database what it would write.
+                            einvoice fiscalise. Write the record, chain nothing.
+  --system <file>           einvoice fiscalise. The invoicing system, as JSON:
+                            name, id, version, installation, producerName,
+                            producerTaxId. Or EKWO_FISCAL_SYSTEM.
+  --kind alta|anulacion     einvoice fiscalise. anulacion cancels the record.
+  --mode <mode>             einvoice fiscalise. realtime, batch or none, among
+                            the modes the pack allows; the pack's default.
   --date <YYYY-MM-DD>       cancel, reverse. The day the undoing is booked on,
                             which asks cancel for a credit note. Left out: the
                             day of what is undone, while its period is open —
@@ -359,6 +369,7 @@ ${bold('Environment')}
   EKWO_ACCESS_TOKEN         The same, with a session token already in hand.
   EKWO_PROFILE              Same as --profile.
   EKWO_EINVOICE_DIRECTORY   Same as --to, for ekwo einvoice.
+  EKWO_FISCAL_SYSTEM        The JSON of --system, for ekwo einvoice fiscalise.
   EKWO_CONFIG_DIR           Where profiles and sessions are kept. Defaults to
                             $XDG_CONFIG_HOME/ekwo, else ~/.config/ekwo.
   EKWO_REGISTRY_URL         Where registrations are announced.

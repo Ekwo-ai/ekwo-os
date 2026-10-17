@@ -163,12 +163,11 @@ function addressOf(header: Row, side: 'seller' | 'buyer'): ElectronicAddress | n
 }
 
 /**
- * Writes the file of a posted sale, in the profile of its company's country
- * pack, and says which rules it breaks. Records nothing.
+ * Refuses, by name, a document that is not a posted sale: what an electronic
+ * invoice and a fiscal record are both written from. The database refuses it
+ * again; this says so before a brick is run.
  */
-export async function produceEinvoice(backend: Backend, documentId: string): Promise<ProducedEinvoice> {
-  const source = await readEinvoiceSource(backend, documentId);
-  const { header } = source;
+export function assertPostedSale(header: Row, documentId: string): void {
   const what = `${String(header['doc_type'])} ${String(header['number'] ?? documentId)}`;
   if (header['doc_type'] !== 'sale_invoice' && header['doc_type'] !== 'sale_credit_note') {
     throw new BooksError(
@@ -181,6 +180,16 @@ export async function produceEinvoice(backend: Backend, documentId: string): Pro
       { hint: 'post_document (ekwo post <document>) books it; --dry-run shows the entry first.' },
     );
   }
+}
+
+/**
+ * Writes the file of a posted sale, in the profile of its company's country
+ * pack, and says which rules it breaks. Records nothing.
+ */
+export async function produceEinvoice(backend: Backend, documentId: string): Promise<ProducedEinvoice> {
+  const source = await readEinvoiceSource(backend, documentId);
+  const { header } = source;
+  assertPostedSale(header, documentId);
 
   const format = einvoiceFormat(header['einvoice_profile'] as string | null);
   const written = format.write(source);

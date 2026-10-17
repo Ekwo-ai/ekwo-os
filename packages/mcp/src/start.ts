@@ -7,7 +7,7 @@
  */
 
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { directoryTransport, registrationInvitation, type EinvoiceTransport } from '@ekwo-ai/core';
+import { FISCAL_SYSTEM_ENV, directoryTransport, parseFiscalSystem, registrationInvitation, type EinvoiceTransport, type FiscalSystem } from '@ekwo-ai/core';
 import type { Backend } from './backend.js';
 import { ENV, openBackend, readConfig } from './config.js';
 import { assertSchemaSupported } from './schema.js';
@@ -50,11 +50,13 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
   const modules = await installedModules(backend);
   const inviteToRegister = await shouldInviteToRegister(backend, env);
   const einvoiceTransport = einvoiceTransportFrom(env);
+  const fiscalSystem = fiscalSystemFrom(env);
   return {
     server: buildServer(backend, {
       modules,
       inviteToRegister,
       ...(einvoiceTransport === undefined ? {} : { einvoiceTransport }),
+      ...(fiscalSystem === undefined ? {} : { fiscalSystem }),
     }),
     backend,
     summary:
@@ -75,6 +77,17 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
 export function einvoiceTransportFrom(env: NodeJS.ProcessEnv): EinvoiceTransport | undefined {
   const directory = env[ENV.einvoiceDirectory]?.trim();
   return directory === undefined || directory === '' ? undefined : directoryTransport(directory);
+}
+
+/**
+ * The invoicing system fiscal records are chained by, from the JSON of
+ * `EKWO_FISCAL_SYSTEM`. Unset, `einvoicing_fiscalise` asks for it by name; set
+ * and malformed, the server refuses to start rather than chain records under
+ * a system nobody described.
+ */
+export function fiscalSystemFrom(env: NodeJS.ProcessEnv): FiscalSystem | undefined {
+  const value = env[FISCAL_SYSTEM_ENV]?.trim();
+  return value === undefined || value === '' ? undefined : parseFiscalSystem(value);
 }
 
 /**

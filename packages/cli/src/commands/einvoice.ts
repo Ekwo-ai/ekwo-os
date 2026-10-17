@@ -1,6 +1,7 @@
 /**
- * `ekwo einvoice validate | issue | status | list` — the electronic invoice of
- * a posted sale, through the `einvoicing` module.
+ * `ekwo einvoice validate | issue | status | list | fiscalise | fiscalisation`
+ * — the electronic invoice of a posted sale, and the fiscal record its
+ * country's fiscalisation regime requires, through the `einvoicing` module.
  *
  * Each verb is one function of the core — `validateEinvoice()`,
  * `issueEinvoice()`, `einvoiceStatus()`, `listEinvoiceTransmissions()` — which
@@ -16,16 +17,24 @@
  * checked or also kept; a refusal of the database is 3, word for word.
  */
 
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import {
+  FISCAL_RECORD_KINDS,
+  FISCAL_SUBMISSION_MODES,
+  FISCAL_SYSTEM_ENV,
   TRANSMISSION_STATES,
   directoryTransport,
   einvoiceStatus,
+  fiscalisationStatus,
+  fiscaliseDocument,
+  parseFiscalSystem,
   issueEinvoice,
   listEinvoiceTransmissions,
   resolveDocument,
   validateEinvoice,
   type EinvoiceTransport,
+  type FiscalRecordKind,
+  type FiscalSubmissionMode,
   type TransmissionState,
 } from '@ekwo-ai/core';
 import { UsageError, boolFlag, numberFlag, rejectUnknownFlags, stringFlag, type ParsedArgs } from '../args.js';
@@ -42,12 +51,16 @@ const VALIDATE_FLAGS = [...BOOKS_FLAGS, 'out'] as const;
 const ISSUE_FLAGS = [...BOOKS_FLAGS, 'out', 'send', 'to'] as const;
 const STATUS_FLAGS = [...BOOKS_FLAGS, 'refresh', 'to'] as const;
 const LIST_FLAGS = [...BOOKS_FLAGS, 'doc', 'state', 'limit'] as const;
+const FISCALISE_FLAGS = [...BOOKS_FLAGS, 'system', 'kind', 'mode', 'rectification', 'dry-run', 'out'] as const;
+const FISCALISATION_FLAGS = [...BOOKS_FLAGS, 'limit'] as const;
 
 const USAGE =
   'usage: ekwo einvoice validate <document> [--out <file>]' +
   ' | ekwo einvoice issue <document> [--send --to <directory>] [--out <file>]' +
   ' | ekwo einvoice status <document> [--refresh --to <directory>]' +
-  ' | ekwo einvoice list [--doc <document> --state <state> --limit <n>]';
+  ' | ekwo einvoice list [--doc <document> --state <state> --limit <n>]' +
+  ' | ekwo einvoice fiscalise <document> [--system <file>] [--kind alta|anulacion] [--mode <mode>] [--rectification <code>] [--dry-run] [--out <file>]' +
+  ' | ekwo einvoice fiscalisation [--limit <n>]';
 
 const text = (value: unknown): string => (value === null || value === undefined ? '' : String(value));
 
@@ -79,6 +92,10 @@ export async function einvoiceCommand(args: ParsedArgs, deps: BooksDeps = {}): P
       return status(args, deps);
     case 'list':
       return list(args, deps);
+    case 'fiscalise':
+      return fiscalise(args, deps);
+    case 'fiscalisation':
+      return fiscalisation(args, deps);
     default:
       throw new UsageError(USAGE);
   }
@@ -219,4 +236,120 @@ async function list(args: ParsedArgs, deps: BooksDeps): Promise<number> {
     );
   }
   return EXIT_OK;
+}
+
+/** The invoicing system, from --system <file> or the environment; refused by name when neither says. */
+async function systemOf(args: ParsedArgs, deps: BooksDeps) {
+  const file = stringFlag(args, 'system');
+  if (file !== undefined) return parseFiscalSystem(await readFile(file, 'utf8'), file);
+  const value = (deps.env ?? process.env)[FISCAL_SYSTEM_ENV]?.trim();
+  if (value === undefined || value === '') {
+    throw new UsageError(
+      `no_fiscal_system: a fiscal record is chained by an invoicing system its operator describes — --system <file> or ${FISCAL_SYSTEM_ENV}, as JSON: name, id, version, installation, producerName, producerTaxId.`,
+    );
+  }
+  return parseFiscalSystem(value);
+}
+
+async function fiscalise(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, FISCALISE_FLAGS);
+  const kind = stringFlag(args, 'kind');
+  if (kind !== undefined && !(FISCAL_RECORD_KINDS as readonly string[]).includes(kind)) {
+    throw new UsageError(`bad_value: --kind is one of ${FISCAL_RECORD_KINDS.join(', ')}, got "${kind}".`);
+  }
+  const mode = stringFlag(args, 'mode');
+  if (mode !== undefined && !(FISCAL_SUBMISSION_MODES as readonly string[]).includes(mode)) {
+    throw new UsageError(`bad_value: --mode is one of ${FISCAL_SUBMISSION_MODES.join(', ')}, got "${mode}".`);
+  }
+  const system = await systemOf(args, deps);
+  const { backend, company } = await openBooks(args, deps);
+  const documentId = await resolveDocument(backend, company.id, required(args.positional[1], 'the document', '<document>'));
+  const out = stringFlag(args, 'out');
+  const rectification = stringFlag(args, 'rectification');
+
+  const result = await fiscaliseDocument(backend, documentId, {
+    system,
+    dryRun: boolFlag(args, 'dry-run'),
+    includeFile: out !== undefined,
+    ...(kind === undefined ? {} : { kind: kind as FiscalRecordKind }),
+    ...(mode === undefined ? {} : { mode: mode as FiscalSubmissionMode }),
+    ...(rectification === undefined ? {} : { rectification }),
+  });
+  const { file, ...rest } = result;
+  if (out !== undefined && typeof file === 'string') await writeFile(out, file, 'utf8');
+  setResult({ ...rest, ...(out === undefined || typeof file !== 'string' ? {} : { written_to: out }) });
+
+  const record = result['record'] as Row | null;
+  heading(`The fiscal record of ${text(result['number'])}, in ${company.name}`);
+  pairs([
+    ['format', `${text(result['format'])}  ${dim(text(result['brick']))}`],
+    ['kind', `${text(result['kind'])}${result['mode'] === undefined ? '' : `, sent ${text(result['mode'])}`}`],
+    ['system', text(result['system_id'])],
+    ...(record === null
+      ? []
+      : ([
+          ['chain', `record ${text(record['seq'])}${record['is_first'] === true ? ', the first' : ''}  ${dim(text(record['id']))}`],
+          ['hash', dim(text(record['hash']))],
+        ] as [string, string][])),
+    ...(result['verification_url'] === null || result['verification_url'] === undefined
+      ? []
+      : ([['QR code', text(result['verification_url'])]] as [string, string][])),
+    ...(out === undefined || typeof file !== 'string' ? [] : [['written to', out] as [string, string]]),
+  ]);
+  line();
+  const violations = (result['violations'] ?? []) as Row[];
+  if (violations.length === 0) note(dim('It breaks no rule this release re-reads.'));
+  else {
+    warn(`It breaks ${violations.length} rule(s), and a record that breaks one is not chained:`);
+    for (const violation of violations) line(`  ${text(violation['code'])}: ${text(violation['message'])}`);
+  }
+  line();
+  note(dim(text(result['note'])));
+  return violations.length === 0 ? EXIT_OK : EXIT_ERROR;
+}
+
+async function fiscalisation(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, FISCALISATION_FLAGS);
+  const { backend, company } = await openBooks(args, deps);
+  const limit = numberFlag(args, 'limit');
+  const result = await fiscalisationStatus(backend, company.id, limit === undefined ? {} : { limit });
+  setResult(result);
+
+  heading(`Fiscal records of ${company.name}`);
+  const regime = result['regime'] as Row | null;
+  if (regime === null) {
+    note(dim(text(result['note'])));
+    return EXIT_OK;
+  }
+  pairs([
+    ['format', `${text(regime['format'])}  ${dim(text(regime['brick']))}`],
+    ['sent', `${text(regime['mode'])} ${dim(`(${(regime['modes'] as string[]).join(', ')})`)}`],
+    [
+      'obligation',
+      (regime['mandatory_from'] as Row[]).map((entry) => (entry['who'] === null ? text(entry['from']) : `${text(entry['from'])} (${text(entry['who'])})`)).join(', ') || 'no date declared',
+    ],
+  ]);
+  const systems = result['systems'] as Row[];
+  if (systems.length > 0) {
+    line();
+    table(
+      [{ title: 'system' }, { title: 'records', align: 'right' }, { title: 'chain' }],
+      systems.map((s) => [
+        text(s['system_id']),
+        text(s['records']),
+        s['verified'] === true ? 'intact' : `breaks at ${text((s['break'] as Row | null)?.['seq'])}: ${text((s['break'] as Row | null)?.['problem'])}`,
+      ]),
+    );
+  }
+  line();
+  pairs([
+    ['to send', text(result['pending_count'])],
+    ['without a record', text(result['missing_count'])],
+  ]);
+  for (const document of result['missing'] as Row[]) {
+    line(`    ${text(document['document_date'])}  ${text(document['number'])}  ${dim(text(document['id']))}`);
+  }
+  line();
+  note(dim(text(result['note'])));
+  return result['verified'] === true ? EXIT_OK : EXIT_ERROR;
 }

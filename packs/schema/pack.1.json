@@ -3509,6 +3509,7 @@
           "additionalProperties": false,
           "required": [
             "algorithm",
+            "separator",
             "fields"
           ],
           "description": "How a record is chained to the one before it.",
@@ -3539,7 +3540,7 @@
               "type": "string",
               "minLength": 1,
               "maxLength": 4,
-              "description": "What joins the name=value pairs of the text that is hashed. Given, the core reads the hashed fields back out of that text, in the order of `fields`, and refuses a record whose text does not hold them."
+              "description": "What joins the name=value pairs of the text that is hashed. The core reads the hashed fields back out of that text, in the order of `fields`, keeps them on the record, and refuses a record whose text does not hold them."
             },
             "fields": {
               "description": "The ordered names of the record fields the hash covers: one list, or one list per kind of record (alta for an invoice issued, anulacion for its record cancelled).",

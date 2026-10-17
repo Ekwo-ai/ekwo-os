@@ -669,6 +669,52 @@
         "required": ["transmissions", "count"],
         "properties": { "transmissions": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
       },
+      "einvoice fiscalise": {
+        "$comment": "The fiscal record of a posted sale, written by the brick of its country pack's fiscalisation regime: `chained` true with `record` — the row of einvoicing.fiscal_chain — once it is in the chain, false with `record` null under --dry-run or when it breaks a rule, listed in `violations` (the exit code is then 1). `already` is true when the document had that record in the chain already. `verification_url` is what the QR code of the invoice encodes. `written_to` is the --out path of the record's file.",
+        "type": "object",
+        "required": ["document_id", "format", "brick", "kind", "system_id", "chained", "record", "violations", "note"],
+        "properties": {
+          "document_id": { "type": "string" },
+          "number": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+          "doc_type": { "type": "string" },
+          "format": { "type": "string" },
+          "brick": { "type": "string" },
+          "specification": { "type": "string" },
+          "kind": { "enum": ["alta", "anulacion"] },
+          "mode": { "enum": ["realtime", "batch", "none"] },
+          "system_id": { "type": "string" },
+          "generated_at": { "type": "string" },
+          "hash": { "type": "string" },
+          "previous_hash": { "type": ["string", "null"] },
+          "fields": { "$ref": "#/$defs/row" },
+          "verification_url": { "type": ["string", "null"] },
+          "filename": { "type": "string" },
+          "violations": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "chained": { "type": "boolean" },
+          "already": { "type": "boolean" },
+          "record": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "written_to": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      },
+      "einvoice fiscalisation": {
+        "$comment": "Where the fiscal records of the company stand: `regime` as its country pack declares it (null where it has none), each chain of an invoicing system in `systems` with `verified` and the first `break`, the records still to be sent in `pending`, the posted sales from the start of the obligation without a record in `missing`, and the latest `events`. A broken chain ends on exit code 1.",
+        "type": "object",
+        "required": ["company_id", "regime", "systems", "verified", "pending", "missing", "events", "note"],
+        "properties": {
+          "company_id": { "type": "string" },
+          "regime": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "systems": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "verified": { "type": "boolean" },
+          "pending": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "pending_count": { "type": "integer" },
+          "missing": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "missing_count": { "type": "integer" },
+          "before_obligation_count": { "type": "integer" },
+          "events": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "note": { "type": "string" }
+        }
+      },
       "peppol validate": {
         "$comment": "A received UBL invoice or credit note, read without any installation: what it says, and every rule it breaks — the arithmetic of EN 16931 the reader re-adds, and the electronic addresses (BT-34, BT-49) checked as Peppol participant identifiers. Nothing is booked. `valid` is false when a rule is broken, and the exit code is then 1. A file that is not a UBL invoice at all is a wrong call, code 2. `payable` is a decimal string, as the file wrote it.",
         "type": "object",

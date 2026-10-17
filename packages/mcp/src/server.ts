@@ -12,7 +12,7 @@ import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mc
 import type { CallToolResult, ToolAnnotations } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from './backend.js';
-import { columns, relayableInvitation, type EinvoiceTransport, type LogoFetch } from '@ekwo-ai/core';
+import { columns, relayableInvitation, type EinvoiceTransport, type FiscalSystem, type LogoFetch } from '@ekwo-ai/core';
 import * as read from './tools/read.js';
 import * as write from './tools/write.js';
 import { toolsetsFor } from './tools/modules.js';
@@ -81,6 +81,13 @@ export interface ServerOptions {
    * and sending is refused as no_transport.
    */
   einvoiceTransport?: EinvoiceTransport;
+  /**
+   * The invoicing system fiscal records are chained by, for
+   * `einvoicing_fiscalise`: its name, identifier, version, installation and
+   * producer. Described by whoever runs the server — `start.ts` reads
+   * `EKWO_FISCAL_SYSTEM` — and never invented.
+   */
+  fiscalSystem?: FiscalSystem;
   /**
    * How `render_invoice_pdf` fetches the logo a company names by URL. Left
    * out, the global `fetch`; a test passes its own. Only http and https, and
@@ -1070,6 +1077,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
           guard(() =>
             tool.run(backend, args as Record<string, never>, {
               ...(options.einvoiceTransport === undefined ? {} : { einvoiceTransport: options.einvoiceTransport }),
+              ...(options.fiscalSystem === undefined ? {} : { fiscalSystem: options.fiscalSystem }),
             }),
           ),
       );
