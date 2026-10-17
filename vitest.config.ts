@@ -32,6 +32,9 @@ export default defineConfig({
       '@ekwo-ai/peppol-ubl': fileURLToPath(
         new URL('./packages/formats/peppol-ubl/src/index.ts', import.meta.url),
       ),
+      '@ekwo-ai/verifactu': fileURLToPath(
+        new URL('./packages/formats/verifactu/src/index.ts', import.meta.url),
+      ),
       // Before the package itself: an alias matches a prefix, and the first that matches wins.
       '@ekwo-ai/factur-x/pdf': fileURLToPath(
         new URL('./packages/formats/factur-x/src/pdf.ts', import.meta.url),
