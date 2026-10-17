@@ -96,3 +96,7 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('MOP', 'Macanese pataca', E'MOP$', 2),
   ('ZWG', 'Zimbabwe Gold', 'ZiG', 2)
 on conflict (code) do nothing;
+
+insert into currencies (code, name, symbol, decimal_places) values
+  ('XCD', 'East Caribbean dollar', 'EC$', 2)
+on conflict (code) do nothing;

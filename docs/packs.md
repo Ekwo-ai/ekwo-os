@@ -350,6 +350,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`cz`](../packs/cz/) | Czechia | `68_pack_cz.sql` | cs | `community` |
 | [`de`](../packs/de/) | Germany | `18_pack_de.sql` | de, en | `community` |
 | [`dk`](../packs/dk/) | Danmark | `65_pack_dk.sql` | da, en | `community` |
+| [`dm`](../packs/dm/) | Dominica | `202_pack_dm.sql` | en | `community` |
 | [`do`](../packs/do/) | Dominican Republic | `104_pack_do.sql` | es | `community` |
 | [`dz`](../packs/dz/) | Algérie | `86_pack_dz.sql` | fr | `community` |
 | [`ec`](../packs/ec/) | Ecuador | `101_pack_ec.sql` | es | `community` |
