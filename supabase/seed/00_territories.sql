@@ -2564,3 +2564,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('GD', 'iso_3166_1', 'Grenada', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Grenada levies a value added tax of its own under the Value Added Tax Act, Cap. 333A, administered by the Inland Revenue Division: section 8 imposes it on the taxable supply and the taxable import, at 15 per cent, with a rate of 10 per cent for hotel or holiday accommodation and for the dive activity of a dive package and 7.5 per cent for electricity under the Regulations, a zero rate for the supplies of the First to Third Schedules and exemption for those of the Fourth.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

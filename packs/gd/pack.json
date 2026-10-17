@@ -1,0 +1,184 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "GD",
+  "name": "Grenada",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 203,
+  "released_at": "2026-10-17",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "gd-vat-act",
+        "title": "Value Added Tax Act, Cap. 333A (consolidated text as published by Parliament, with Schedules One to Five); amendments after 2015, if any, are not applied",
+        "publisher": "Parliament of Grenada",
+        "url": "https://grenadaparliament.gd/wp-content/uploads/2021/08/Cap333A-VALUE-ADDED-TAX-ACT.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "law"
+      },
+      {
+        "key": "gd-vat-amend-2015",
+        "title": "Value Added Tax (Amendment) Act, 2015 (Act 21 of 2015) — registration threshold raised to $300,000 (s. 9(2)), late fee of s. 44(3), suspension regime s. 66A, Fourth Schedule item 1",
+        "publisher": "Parliament of Grenada",
+        "url": "https://grenadaparliament.gd/wp-content/uploads/2021/08/Act-No.-21-of-2015-Value-Added-Tax-Amendment.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "law"
+      },
+      {
+        "key": "gd-vat-regs-2023",
+        "title": "Value Added Tax (Amendment) Regulations, 2023 (S.R.O. 6 of 2023) — regulation 4A, electricity consumption at 7.5 %, in force 1 February 2023",
+        "publisher": "Government of Grenada, Statutory Rules and Orders (gazetted 27 January 2023)",
+        "url": "https://nowgrenada.com/wp-content/uploads/2023/01/S.R.O.-6-of-2023-Value-Added-Tax-Amendment-Regulations.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "regulation"
+      },
+      {
+        "key": "gd-gtax-release",
+        "title": "Inland Revenue Division launches a new digital tax administration system, GTAX — VAT, PAYE and corporate income tax instalments filed and paid online",
+        "publisher": "Ministry of Finance, Government of Grenada (news release of 26 January 2024)",
+        "url": "https://www.finance.gd/docs/2024/Press%20Release%20-%20Inland%20Revenue%20Division%20(IRD)%20Launches%20a%20New%20Digital%20Tax%20Administration%20System-%20GTAX.pdf",
+        "consulted_on": "2026-10-17",
+        "kind": "guidance"
+      },
+      {
+        "key": "iasb-ifrs-sme",
+        "title": "IFRS for SMEs Accounting Standard",
+        "publisher": "IFRS Foundation / International Accounting Standards Board",
+        "url": "https://www.ifrs.org/issued-standards/ifrs-for-smes/",
+        "consulted_on": "2026-10-17",
+        "kind": "standard"
+      },
+      {
+        "key": "gd-tax-portal",
+        "title": "Tax portal of the Inland Revenue Division (G-TAX), the address named in the Ministry's news release for online registration",
+        "publisher": "Inland Revenue Division, Ministry of Finance, Government of Grenada",
+        "url": "https://tax.gov.gd",
+        "consulted_on": "2026-10-17",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XCD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460",
+      "tax_payable": "2100",
+      "tax_receivable": "1172"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Grenada reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "GD-IFRS-SME-SFP",
+        "GD-IFRS-SME-IS"
+      ],
+      "legal_reference": "This pack found no legal chart of accounts in Grenada, and opened neither the Companies Act nor the Income Tax Act: no section of either is cited. What the Value Added Tax Act, Cap. 333A, asks of a taxable person is that VAT invoices be issued (s. 37) and records retained (s. 43). This chart is original: four digits, blocked so that each range reaches one line of a statement of financial position and an income statement presented in the manner of IFRS for SMEs, which is a choice of this pack and not a text the country imposes. The settlement account of the VAT return (2100, refundable 1172) is distinct from the accounts the tax posts to (2101, 2102 and 2103 collected, 1170 and 1171 recoverable). See README.md",
+      "source": "gd-vat-act"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, Cap. 333A, s. 37 — VAT invoices, and s. 39 — VAT credit and debit notes. The Act, as read for this pack, does not say that the series of invoice numbers may have no gap, which is why `numbering` is `sequential` and not `gapless`; `number_format` is a convention this pack proposes. The particulars of a VAT invoice are not printed as mentions",
+        "source": "gd-vat-act"
+      },
+      "payment_terms": {
+        "legal_reference": "No Grenadian text read for this pack sets a payment term between two businesses or a rate of interest on a commercial debt paid late: the late payment fee of twenty per cent (s. 46(3)) and the interest of s. 68 are charges on the taxable person towards the Comptroller, not a term between two businesses. `legal_payment_days` and `late_payment_reference` are empty",
+        "source": "gd-vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "The time-of-supply rules of the Value Added Tax Act, Cap. 333A (Part IV) were not read in full for this pack: `earliest_of_delivery_or_payment` is the nearest value of the closed vocabulary to the usual rule (the earliest of delivery, invoice and payment) and is a convention to be checked against the Act by a reviewer",
+        "source": "gd-vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Grenadian text read for this pack obliges a business to issue or accept an electronic invoice: the Value Added Tax Act, Cap. 333A, s. 37 asks for a VAT invoice without naming a platform, a format or a Peppol profile. No Peppol authority for Grenada was looked for. `profile`, `party_scheme` and `vat_scheme` are null: there is no domestic profile to name",
+    "source": "gd-vat-act"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Not modelled, and not a finding that the service is untaxed. The Value Added Tax Act, Cap. 333A, s. 22 makes a supply of services in Grenada by a non-resident a taxable supply, and has the recipient reverse charge the VAT, when the recipient would not have had a full input tax credit had the supply been taxable locally. The pack carries no code for this self-assessment (the tax would be both collected and deducted, and the declaration line was not found): such a purchase is entered with GD-P-EX and the user, with their accountant, accounts for the tax outside the pack. See README.md",
+      "source": "gd-vat-act"
+    }
+  ]
+}
