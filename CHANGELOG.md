@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.14.0] — 2026-10-17
+
 ### Added
 
 - **What each product brought in, and cost.** `product_report(company, from,
@@ -46,6 +48,17 @@ somewhere has already run it.
 
 ### Changed
 
+- **The schema of this release is 0.14.0, and the packages refuse an older
+  one** (`20261017030500`). It carries the clock an export or an import is
+  given, the analysis rows of a framework beside those of a country's chart,
+  the `source` column of `financial_analysis()`, and `product_report()`. The
+  framework pack `ekwo-os` carries writes `analysis_templates.framework` and
+  `analysis_rules.framework` when it is installed or upgraded, and
+  `@ekwo-ai/core` and `@ekwo-ai/mcp` read the `source` column, none of which a
+  0.13.0 database has, so the floor of `ekwo-os`, `@ekwo-ai/core` and
+  `@ekwo-ai/mcp` rises to 0.14.0 and an installation left behind is told to
+  run `ekwo migrate`.
+
 - **The Estonian pack carries the analysis section.** Pack `ee` 1.13.0 adds
   `analysis.json`: the sixteen aggregates `financial_analysis()` reads — revenue,
   purchases, staff costs, the financial result, the equity, the current assets,
@@ -81,6 +94,10 @@ somewhere has already run it.
 
 - **Every MCP tool carries its title where a connector directory reads it.** A tool was declared with a top-level `title`, which the SDK takes, and nothing under `annotations.title`, which directories and some clients are the only ones to read; they listed all of them by their machine name. The server now copies the one title into the annotations at registration, for every tool, present and future, and `tests/mcp/surface.test.ts` reads the list a client sees to hold it there. The writes of the modules — `fixed_assets_create`, `fixed_assets_run_depreciation`, `fixed_assets_dispose`, `budgets_upsert_lines` and the others — say `destructiveHint: true`, as the socle's writes already did.
 - **An archive is given the time it takes.** An export of a whole company (`export_company()`, its manifest and tables) or an `import_company()`, asked over the API by a key or a signed-in member, now runs under a clock of five minutes instead of the eight seconds of `authenticated`; the clock is only ever raised. A company of about 17 000 rows exported in 11.5 s, so its nightly copy failed with `canceling statement due to statement timeout`.
+
+The end-to-end run against a real Supabase project (`npm run e2e:supabase`,
+step 7 of `docs/releasing.md`) was not run for 0.14.0; the last run is the one
+of 0.12.2.
 
 ## [0.13.0] — 2026-10-14
 
@@ -5052,7 +5069,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.13.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.14.0...HEAD
+[0.14.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.2...v0.13.0
 [0.12.2]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.1...v0.12.2
 [0.12.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.0...v0.12.1
