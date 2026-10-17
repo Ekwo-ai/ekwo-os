@@ -71,3 +71,28 @@ model: `total_assets` is rubric 20/58, `equity` 10/15, `cash` 54/58,
 | `net_result` is rubric 9904, classes 60 to 67 and 70 to 77 | The transfers to and from untaxed reserves (68, 78) and the appropriations (69, 79) move a result that is already made; they are not part of what the year earned. |
 | `financial_result` is 75/76 less 65/66 | The two rubrics the income statement of the pack prints as financial. |
 | Only the `default` chart | The chart of associations has accounts of its own, and nobody has written its analysis yet. |
+
+## Fiscalisation / e-reporting
+
+Belgium has one obligation in force on invoices between businesses, one
+announced, and one distinct regime for cash registers. None of them asks for
+a hash, a chain or a QR code on an invoice.
+
+| Obligation | Text | Who, and from when | Channel |
+|---|---|---|---|
+| **B2B structured e-invoice** | Loi du 6 février 2024, Code de la TVA art. 53, § 2bis (`facturation-electronique`) | Taxable persons established in Belgium, between each other, since **1 January 2026** | Peppol BIS 3 over the Peppol network, the pack's `einvoicing` profile `peppol-bis-3`; another EN 16931 format by agreement of the parties |
+| **E-reporting of invoice data** — *announced, no text in force* | None in force on 18 October 2026. The Council of Ministers approved a preliminary draft law amending the VAT Code on 18 July 2026, on the proposal of the Minister of Finance; the minister's answer quoted in avis n° 123/2025 of the Data Protection Authority, point 29 (`apd-avis-123-2025`), sets out the plan; the e-invoicing FAQ (`e-reporting-faq`) says it « doit encore être transposée en droit belge » | Announced from **1 January 2028**, for operations in Belgium between taxable persons subject to the e-invoicing obligation, reported by the supplier and by the customer (announcement of 18 July 2026). It transmits the mandatory data of the structured invoice — art. 5 of arrêté royal n° 1 (`ar-1`) — and replaces the annual customer listing of art. 53quinquies of the Code (`code-tva`). It needs a derogation of the Council of the EU under art. 395 of the VAT Directive (same avis) | « Near real-time » (FAQ). No published text names the channel; the structured Peppol invoice is the announced technical basis (same avis). The five-corner model, with the administration as the fifth corner, appears in professional commentary and in no official text read |
+| **Intra-Community reporting (ViDA)** | The ViDA directive, as summarised by the FAQ and the same avis | Intra-Community operations, by **1 July 2030** at the latest | Not specified yet |
+| **Certified cash register (SCE / GKS)** — *a distinct fiscalisation* | Arrêté royal du 30 décembre 2009, as amended by the arrêté royal du 25 mai 2026 (`ar-caisse-horeca-2026`), on VAT Code art. 53octies | Horeca establishments the regime covers. SCE 2.0 from **1 July 2026** for newly obliged establishments; systems registered 2014–2017 by 1 July 2027, 2018–2021 by 1 July 2028, 2022 to 30 June 2026 by 1 January 2029 (art. 5) | A fiscal data module and a VAT signing card sign every till receipt, and the data go to SPF Finances. A cash register is a device on the counter, outside what a ledger issues: the pack names the regime and does not carry it |
+
+**What the pack will declare.** Once the schema of `einvoicing.fiscalisation`
+is on main, the Belgian block will name the brick that writes the report
+(`be-ereporting`, in Peppol UBL), `submission.mode` `batch`, the events that
+are reported — an invoice and a credit note issued, an invoice and a credit
+note received — and its `legal_reference` and `source`. `mandatory_from` stays
+empty until a law is published in the Moniteur belge: 1 January 2028 is an
+announcement. **It will declare no hash, no QR code and no mention.** The law of
+6 February 2024 and article 5 of arrêté royal n° 1, which lists what an invoice
+carries, require none, and the announced reporting transmits data the invoice
+already carries. The digital signature of a till receipt belongs to the cash
+register regime above, and stays there.

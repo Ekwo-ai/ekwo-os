@@ -210,6 +210,30 @@
         "url": "https://www.ejustice.just.fgov.be/cgi/article.pl?language=fr&sum_date=2026-07-29&lg_txt=f&caller=sum&s_editie=1&2026005724=2&numac_search=2026005724&view_numac=",
         "consulted_on": "2026-09-30",
         "kind": "law"
+      },
+      {
+        "key": "e-reporting-faq",
+        "title": "Questions générales sur l'e-reporting — FAQ de la facturation électronique",
+        "publisher": "SPF Stratégie et Appui (BOSA) et SPF Finances — efacture.belgium.be",
+        "url": "https://efacture.belgium.be/fr/FAQ/questions-generales-sur-le-e-reporting",
+        "consulted_on": "2026-10-18",
+        "kind": "guidance"
+      },
+      {
+        "key": "apd-avis-123-2025",
+        "title": "Avis n° 123/2025 du 21 novembre 2025 concernant un avant-projet de loi portant des dispositions diverses en matière de taxe sur la valeur ajoutée (CO-A-2025-182), point 29 — le rapportage électronique envisagé dès le 1er janvier 2028",
+        "publisher": "Autorité de protection des données",
+        "url": "https://www.dataprotectionauthority.be/publications/avis-n0-123-2025.pdf",
+        "consulted_on": "2026-10-18",
+        "kind": "guidance"
+      },
+      {
+        "key": "ar-caisse-horeca-2026",
+        "title": "Arrêté royal du 25 mai 2026 modifiant l'arrêté royal du 30 décembre 2009 fixant la définition et les conditions auxquelles doit répondre un système de caisse enregistreuse dans le secteur horeca",
+        "publisher": "SPF Justice — Moniteur belge du 3 juin 2026 (Justel)",
+        "url": "https://www.ejustice.just.fgov.be/eli/arrete/2026/05/25/2026003998/justel",
+        "consulted_on": "2026-10-18",
+        "kind": "regulation"
       }
     ]
   },
