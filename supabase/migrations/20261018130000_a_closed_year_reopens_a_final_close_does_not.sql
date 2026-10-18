@@ -261,7 +261,7 @@ begin
   -- The capability first, in the words the close uses: a refusal that told a
   -- viewer whether the year is closed would answer a question they may ask
   -- elsewhere, and a silent update of no row would answer nothing.
-  if auth.uid() is not null and not has_capability(v_year.company_id, 'year_end.close') then
+  if not (is_installer() or has_capability(v_year.company_id, 'year_end.close')) then
     raise exception 'not_allowed: closing or re-opening a financial year needs year_end.close'
       using errcode = '42501';
   end if;
