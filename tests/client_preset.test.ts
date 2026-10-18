@@ -858,6 +858,8 @@ describe('a client writes nothing else — by the function', () => {
     'public.shared_document': 'what anybody holding a link may read',
     'public.export_company': 'leaves with the books of their own company: reads, and says so on the trail',
     'public.note_company_export': 'the line on the trail, which company.export is what allows',
+    'public.analytic_refresh_document_line': 'writes again, under row level security, the amounts the database derives from a split; no figure a person keyed',
+    'public.analytic_refresh_entry_line': 'writes again, under row level security, the amounts the database derives from a split; no figure a person keyed',
   };
 
   let refused: Record<string, { sql: string; params: unknown[] }>;

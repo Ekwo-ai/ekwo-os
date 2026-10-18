@@ -33,17 +33,19 @@
 create table document_line_analytics (
   id                uuid primary key default gen_random_uuid(),
   company_id        uuid not null references companies(id) on delete cascade,
-  document_line_id  uuid not null references document_lines(id) on delete cascade,
-  analytic_value_id uuid not null references analytic_values(id) on delete restrict,
+  -- Every reference holds the company (decision 0065): a line or a value of
+  -- another company is refused by the same key as one of nobody.
+  document_line_id  uuid not null,
+  analytic_value_id uuid not null,
   percentage        numeric(7, 3) not null default 100,
   -- Derived: the share of the line's untaxed amount, in the document's
   -- currency. Written by `document_line_analytics_refresh()`, never by hand.
   amount            numeric(16, 2),
   created_at        timestamptz not null default now(),
-  unique (document_line_id, analytic_value_id),
+  unique (document_line_id, analytic_value_id, company_id),
   constraint document_line_analytics_percentage check (percentage > 0 and percentage <= 100),
   foreign key (document_line_id, company_id) references document_lines(id, company_id) on delete cascade,
-  foreign key (analytic_value_id, company_id) references analytic_values(id, company_id)
+  foreign key (analytic_value_id, company_id) references analytic_values(id, company_id) on delete restrict
 );
 
 comment on table document_line_analytics is
@@ -53,7 +55,6 @@ comment on column document_line_analytics.amount is
 comment on column entry_line_analytics.amount is
   'The share of the line''s balance (debit minus credit) in the company''s currency, derived by the database. The shares of one axis are rounded in the order of their codes, so a whole split adds up to its line.';
 
-create index document_line_analytics_value_idx on document_line_analytics (analytic_value_id);
 create index document_line_analytics_analytic_value_company_idx on document_line_analytics (analytic_value_id, company_id);
 create index document_line_analytics_company_idx on document_line_analytics (company_id);
 create index document_line_analytics_document_line_company_idx on document_line_analytics (document_line_id, company_id);
@@ -175,11 +176,19 @@ begin
     return old;
   end if;
 
+  -- A row written into a company the writer may not know of: nothing below
+  -- is read for it. And only the row's own company is read, so a line of
+  -- another company is the foreign key's to refuse, as a line of nobody is.
+  if tg_op <> 'DELETE' then
+    perform assert_writes_into_known_company(new.company_id);
+  end if;
+
   select d.state, d.number, d.doc_type, l.account_id, l.sequence
     into v_state, v_number, v_type, v_account, v_seq
     from document_lines l
     join documents d on d.id = l.document_id
-   where l.id = coalesce(new.document_line_id, old.document_line_id);
+   where l.id = coalesce(new.document_line_id, old.document_line_id)
+     and l.company_id = coalesce(new.company_id, old.company_id);
 
   -- No line: it is being deleted, and its split with it; or it does not
   -- exist, which is the foreign key's to say.
@@ -199,7 +208,8 @@ begin
 
   perform assert_analytic_account(v_account, format('line %s of %s %s', v_seq, v_type, coalesce(v_number, '(draft)')));
 
-  select v.axis_id into v_axis from analytic_values v where v.id = new.analytic_value_id;
+  select v.axis_id into v_axis from analytic_values v
+   where v.id = new.analytic_value_id and v.company_id = new.company_id;
   select coalesce(sum(x.percentage), 0) into v_total
     from document_line_analytics x
     join analytic_values v on v.id = x.analytic_value_id
@@ -247,18 +257,23 @@ begin
     return new;
   end if;
 
+  -- As on a document line: the writer's company first, and its rows only.
+  perform assert_writes_into_known_company(new.company_id);
+
   select l.account_id, l.sequence, e.number
     into v_account, v_seq, v_number
     from entry_lines l
     join entries e on e.id = l.entry_id
-   where l.id = new.entry_line_id;
+   where l.id = new.entry_line_id
+     and l.company_id = new.company_id;
   if not found then
     return new;
   end if;
 
   perform assert_analytic_account(v_account, format('line %s of entry %s', v_seq, coalesce(v_number, '(draft)')));
 
-  select v.axis_id into v_axis from analytic_values v where v.id = new.analytic_value_id;
+  select v.axis_id into v_axis from analytic_values v
+   where v.id = new.analytic_value_id and v.company_id = new.company_id;
   select coalesce(sum(x.percentage), 0) into v_total
     from entry_line_analytics x
     join analytic_values v on v.id = x.analytic_value_id
