@@ -1,0 +1,186 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "GD-VAT-RETURN",
+  "name": "VAT return (box layout of this pack)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2010-02-01",
+  "legal_reference": "Value Added Tax Act, Cap. 333A, s. 2 — the tax period is a calendar month; s. 44(1) — a taxable person lodges a VAT return for each tax period no later than twenty days after the end of the period; s. 44(2) — lodged with the Comptroller, in the form the Comptroller prescribes; s. 46(1) — the VAT is payable by the due date for lodgement. The return is filed through the Inland Revenue Division's online service (G-TAX).",
+  "source": "gd-vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Value Added Tax Act, Cap. 333A, s. 44(1) and s. 46(1) — the return is lodged within twenty days after the end of the tax period and the VAT is paid by the same date: for a month, the 20th of the next month. A late return costs a late fee of 5 % of the tax owing plus 1 % a month, or $500, whichever is greater, up to $10,000 (s. 44(3), as substituted by Act 21 of 2015, s. 3); a late payment costs 20 % of the VAT unpaid (s. 46(3)). An extension to file does not move the date of payment (s. 44(6)). Weekend roll-forward is not expressible",
+    "source": "gd-vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard-rated supplies (15 %), net of VAT",
+      "sequence": 10,
+      "legal_reference": "Box number and label are this pack's own: the layout of the monthly return in the Inland Revenue Division's online service (G-TAX) was not found as a text, so the boxes follow what the Act makes the net amount carry — the output tax of the period less the input tax credits allowed (s. 32(1)). Taxable supplies at fifteen per cent (s. 8(3)(e)).",
+      "source": "gd-vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Accommodation and dive-activity supplies (10 %), net of VAT",
+      "sequence": 20,
+      "legal_reference": "Taxable supplies at ten per cent: hotel or holiday accommodation (s. 8(3)(b)) and the dive activity portion of a dive package (s. 8(3)(c)).",
+      "source": "gd-vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Electricity supplies (7.5 %), net of VAT",
+      "sequence": 30,
+      "legal_reference": "Taxable supplies of electricity consumption at 7.5 % (Regulations, reg. 4A, inserted by S.R.O. 6 of 2023).",
+      "source": "gd-vat-regs-2023"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Zero-rated supplies, including exports",
+      "sequence": 40,
+      "legal_reference": "Taxable supplies at zero per cent (s. 8(3)(a); First, Second and Third Schedules); they stay on the return (s. 44(1) asks for a return for each tax period).",
+      "source": "gd-vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 50,
+      "legal_reference": "Supplies of the Fourth Schedule, reported for information; the input tax of what is acquired to make them is not creditable (s. 34(3)(b)).",
+      "source": "gd-vat-act"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Total supplies",
+      "sequence": 60,
+      "legal_reference": "Sum of boxes 1 to 5 — the sum is this pack's reading, the form is the Comptroller's (s. 44(2)).",
+      "source": "gd-vat-act",
+      "plus": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 70,
+      "legal_reference": "Tax at 15 % on box 1 (s. 8(3)(e)).",
+      "source": "gd-vat-act"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Output tax on accommodation and dive activity",
+      "sequence": 80,
+      "legal_reference": "Tax at 10 % on box 2 (s. 8(3)(b), (c)).",
+      "source": "gd-vat-act"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Output tax on electricity",
+      "sequence": 90,
+      "legal_reference": "Tax at 7.5 % on box 3 (Regulations, reg. 4A).",
+      "source": "gd-vat-regs-2023"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Total output tax for the period",
+      "sequence": 100,
+      "legal_reference": "Amount A of the net amount: the output tax chargeable on the taxable supplies of the period (s. 32(1)(a)); a credit note posts a negative amount to its own boxes (s. 39).",
+      "source": "gd-vat-act",
+      "plus": [
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Value of imports",
+      "sequence": 110,
+      "legal_reference": "Goods imported on which tax was paid to the Comptroller of Customs (s. 8(1)(b), s. 47).",
+      "source": "gd-vat-act"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Value of local purchases",
+      "sequence": 120,
+      "legal_reference": "Purchases made in Grenada for the taxable activity, taxable, zero-rated and exempt.",
+      "source": "gd-vat-act"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "VAT paid on imports",
+      "sequence": 130,
+      "legal_reference": "Input tax paid on the import of goods, creditable for use in a taxable activity (s. 34).",
+      "source": "gd-vat-act"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "VAT paid on local purchases",
+      "sequence": 140,
+      "legal_reference": "Input tax chargeable on taxable acquisitions, creditable on a VAT invoice (s. 34, s. 37).",
+      "source": "gd-vat-act"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Total input tax credits for the period",
+      "sequence": 150,
+      "legal_reference": "Sum of boxes 13 and 14: amount B of the net amount, the input tax credits allowed for the period (s. 32(1)(b), s. 34).",
+      "source": "gd-vat-act",
+      "plus": [
+        "13",
+        "14"
+      ]
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "VAT payable",
+      "sequence": 160,
+      "legal_reference": "Output tax less input tax credits when positive (s. 32(2)), due by the date the return is due (s. 46(1)). Late fee, late payment fee and interest (s. 44(3), s. 46(3), s. 68) are not modelled.",
+      "source": "gd-vat-act",
+      "plus": [
+        "10"
+      ],
+      "minus": [
+        "15"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "VAT refundable",
+      "sequence": 170,
+      "legal_reference": "The excess of the input tax credits over the output tax (s. 32(3)): carried forward as an input tax credit for up to three following tax periods, then refunded on application when it exceeds $250, within two calendar months; refunded at once when half or more of the turnover or of the input expenditure relates to zero-rated or export supplies (s. 49). The pack only reports box 17.",
+      "source": "gd-vat-act",
+      "plus": [
+        "15"
+      ],
+      "minus": [
+        "10"
+      ],
+      "floor_zero": true
+    }
+  ]
+}

@@ -1,0 +1,439 @@
+[
+  {
+    "code": "GD-S-15",
+    "name": "Sale, VAT 15 %",
+    "description": "A taxable supply made in Grenada by a taxable person, standard-rated",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-02-01",
+    "legal_reference": "Value Added Tax Act, Cap. 333A, s. 8(3)(e) — fifteen per cent in any other case than the zero, ten per cent and special rates, of the value of a taxable supply (s. 8(2)); the VAT is the liability of the supplier (s. 8(4)(a)) and is accounted for in the net amount of s. 32. The base posts to box 1 net of the tax, the tax to box 7 (box numbers are this pack's, see tax_report.json). valid_from is 1 February 2010, the date the Act's Schedule IV amendment is deemed to have come into force (Act 21 of 2015, s. 1(5)); the Act's own commencement date was not read.",
+    "source": "gd-vat-act",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-S-15-INC",
+    "name": "Retail sale, VAT 15 %, the price includes the tax",
+    "description": "A standard-rated sale whose price already holds the VAT",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-02-01",
+    "legal_reference": "Value Added Tax Act, Cap. 333A, s. 8(3)(e) at fifteen per cent, and the tax fraction of s. 19(1), which extracts the tax from a value that includes it — what price_include does: 115.00 holds 100.00 and 15.00. Same boxes as GD-S-15.",
+    "source": "gd-vat-act",
+    "vat_category": "S",
+    "sequence": 20,
+    "price_include": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-S-10",
+    "name": "Sale of hotel or holiday accommodation or dive activity, VAT 10 %",
+    "description": "Hotel or holiday accommodation, or the dive activity portion of a dive package",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-02-01",
+    "legal_reference": "Value Added Tax Act, Cap. 333A, s. 8(3)(b) — ten per cent on a supply of hotel or holiday accommodation, including accommodation that the supplier chooses to tax after forty-five days instead of treating it as exempt under items 6 and 7 of the Fourth Schedule (paragraph (2)); s. 8(3)(c) — ten per cent of the dive activity portion of a dive package, to the extent provided in the Regulations (the Regulations that fix it were not read: the pack does not decide which supplies qualify). Base to box 2, tax to box 8.",
+    "source": "gd-vat-act",
+    "vat_category": "S",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "8",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-S-7.5",
+    "name": "Sale of electricity, VAT 7.5 %",
+    "description": "Electricity consumption, at the special rate of the Regulations",
+    "kind": "vat",
+    "rate": 7.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-02-01",
+    "legal_reference": "Value Added Tax Regulations (S.R.O. 41 of 2009), regulation 4A, inserted by the Value Added Tax (Amendment) Regulations, 2023 (S.R.O. 6 of 2023), in force 1 February 2023 — for the purposes of s. 8(3)(d) of the Act, VAT is levied on the consumption of electricity at 7.5 %. The first 99 kilowatt hours a household uses in a tax period are zero-rated (Third Schedule, item 3). Base to box 3, tax to box 9.",
+    "source": "gd-vat-regs-2023",
+    "vat_category": "S",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "2103",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2103",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-S-0",
+    "name": "Zero-rated supply (export)",
+    "description": "An export of goods or services, zero-rated",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2010-02-01",
+    "legal_reference": "Value Added Tax Act, Cap. 333A, s. 8(3)(a) and the First Schedule, items 1 to 3 (goods entered for export and exported, with the documentary evidence of item 3) and the Second Schedule (services consumed outside Grenada) — zero per cent. A zero-rated supply is a taxable supply: the input tax of what produces it stays creditable (s. 34). Base to box 4.",
+    "source": "gd-vat-act",
+    "vat_category": "G",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-S-Z",
+    "name": "Zero-rated supply in Grenada",
+    "description": "A domestic supply of the Third Schedule at zero per cent (flour, rice, milk, infant preparations; water; the first 99 kWh of household electricity; motor spirit and cooking gas)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-02-01",
+    "legal_reference": "Value Added Tax Act, Cap. 333A, s. 8(3)(a) and the Third Schedule — item 1 food for human consumption to the extent provided in the Regulations (flour, sugar, rice, milk, infant preparations; the 2023 Regulations repeal cane sugar from their Third Schedule), item 2 water supplied by NAWASA for domestic use, item 3 the first 99 kWh of electricity supplied by GRENLEC to a household in a tax period, item 4 stamps, item 5 motor spirit, diesel, LPG and kerosene taxed under the Petrol Tax Act, item 5A text books. The pack does not reproduce the Regulations' lists: the user checks the item against them. Base to box 4.",
+    "source": "gd-vat-act",
+    "vat_category": "Z",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-S-EX",
+    "name": "Exempt supply",
+    "description": "A supply of the Fourth Schedule (financial services, residential rent, education, health, passenger transport), outside the tax",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2010-02-01",
+    "legal_reference": "Value Added Tax Act, Cap. 333A, Fourth Schedule — exempt supplies include financial services not remunerated by an explicit fee (item 1, as amended by Act 21 of 2015, s. 5), vacant land, residential premises and their rental (items 3 to 5), accommodation occupied for more than forty-five days under a landlord and tenant agreement (items 6 and 7), education services (item 9), medical services (item 10), taxi, bus and ferry passenger transport (item 16), international transport (item 22), and the further items 23A to 23K (bread, certain medicines, certain meats, and others as prescribed). A supply that would be both exempt and zero-rated is zero-rated (paragraph (3)). The input tax of what is acquired to make an exempt supply is not creditable (s. 34(3)(b)). Base to box 5.",
+    "source": "gd-vat-act",
+    "vat_category": "E",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-P-15",
+    "name": "Purchase, VAT 15 %",
+    "description": "A purchase from a taxable person, standard-rated, with a VAT invoice",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-02-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, Cap. 333A, s. 34(1) and (3)(a) — an input tax credit for the whole of the input tax chargeable on an acquisition that relates wholly to taxable supplies, on a VAT invoice (s. 37) or a credit or debit note (s. 39). Section 33(2) denies the credit for acquisitions that are not for the taxable activity, passenger vehicles, entertainment, club memberships and private use, and s. 34(3)(c) apportions a mixed acquisition: both are the user's. Base to box 12, tax to box 14.",
+    "source": "gd-vat-act",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-P-10",
+    "name": "Purchase of accommodation or dive activity, VAT 10 %",
+    "description": "Hotel or holiday accommodation or dive activity bought for the business at the reduced rate",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-02-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, Cap. 333A, s. 8(3)(b), (c) and s. 34 — input tax at ten per cent is creditable on the same conditions as at fifteen. Base to box 12, tax to box 14.",
+    "source": "gd-vat-act",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-P-7.5",
+    "name": "Purchase of electricity, VAT 7.5 %",
+    "description": "Electricity consumed by the business, at the special rate of the Regulations",
+    "kind": "vat",
+    "rate": 7.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-02-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Regulations (S.R.O. 41 of 2009), regulation 4A, inserted by S.R.O. 6 of 2023 — VAT is levied on the consumption of electricity at 7.5 %; the tax is creditable as input tax (Act, s. 34). Base to box 12, tax to box 14.",
+    "source": "gd-vat-regs-2023",
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-P-15-IMP",
+    "name": "Import of goods, VAT 15 %",
+    "description": "Goods imported: the VAT paid to the Comptroller of Customs",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2010-02-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, Cap. 333A, s. 8(1)(b) and (3)(e), s. 31 and s. 47 to 48 — fifteen per cent of the value of a taxable import, paid to the Comptroller of Customs at the time of import on the import declaration; the value for tax (s. 31) includes duty and freight, which the pack does not compute: it applies 15 % to the invoice value and the customs entry is the user's. The tax paid is creditable (s. 34). Imports under the suspension regime of s. 66A (Act 21 of 2015) pay no tax at the border and are listed on the return: not modelled. Base to box 11, tax to box 13.",
+    "source": "gd-vat-act",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "13"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "13",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "GD-P-EX",
+    "name": "Purchase without VAT",
+    "description": "A purchase of a zero-rated or exempt supply, or from a person who charges no VAT: no input tax to claim",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2010-02-01",
+    "recoverable": false,
+    "legal_reference": "Value Added Tax Act, Cap. 333A, s. 8(3)(a) and the Third and Fourth Schedules — a zero-rated supply carries tax at zero per cent and an exempt supply none, so the purchaser has no input tax to claim; the value is still reported among the purchases of the period (box 12).",
+    "source": "gd-vat-act",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]

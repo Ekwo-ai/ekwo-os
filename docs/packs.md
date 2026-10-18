@@ -364,6 +364,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`fr`](../packs/fr/) | France | `11_pack_fr.sql` | fr, en | `proven` |
 | [`ga`](../packs/ga/) | Gabon | `28_pack_ga.sql` | fr | `community` |
 | [`gb`](../packs/gb/) | United Kingdom | `14_pack_gb.sql` | en | `community` |
+| [`gd`](../packs/gd/) | Grenada | `203_pack_gd.sql` | en | `community` |
 | [`ge`](../packs/ge/) | საქართველო | `110_pack_ge.sql` | ka, en | `community` |
 | [`gg`](../packs/gg/) | Guernsey | `141_pack_gg.sql` | en | `community` |
 | [`gh`](../packs/gh/) | Ghana | `119_pack_gh.sql` | en | `community` |
