@@ -581,6 +581,53 @@
           "note": { "type": "string" }
         }
       },
+      "line unnamed leave": {
+        "$comment": "The record leave_line_unnamed() wrote: line_id, company_id, reason, created_by, created_at. The line is no longer proposed a contact and stays an open item.",
+        "type": "object",
+        "required": ["left_unnamed", "note"],
+        "properties": {
+          "left_unnamed": { "$ref": "#/$defs/row" },
+          "note": { "type": "string" }
+        }
+      },
+      "line unnamed undo": {
+        "$comment": "The record undo_leave_line_unnamed() removed. The line is proposed a contact again.",
+        "type": "object",
+        "required": ["removed", "note"],
+        "properties": {
+          "removed": { "$ref": "#/$defs/row" },
+          "note": { "type": "string" }
+        }
+      },
+      "line combinations suggest": {
+        "$comment": "The proposals of suggest_item_combinations(), one per line and proposal: proposal_id (stable for the same lines), ordinal, contact_id, account_id, line_id, side, amount, kind (pair, combination), line_ids, total, difference (the line less the total, 0.00 when exact), because, alternatives (proposals of the same line). Amounts are decimal strings.",
+        "type": "object",
+        "required": ["proposals", "count", "note"],
+        "properties": {
+          "proposals": { "type": "array", "items": { "type": "object", "required": ["proposal_id", "line_id", "line_ids", "difference"] } },
+          "count": { "type": "integer" },
+          "note": { "type": "string" }
+        }
+      },
+      "line match": {
+        "$comment": "What reconcile_many(), or reconcile_with_difference() with --difference, wrote: matching_number, amount, difference (0.00 without a difference), adjustment_entry_id (the entry of the difference, or null), reconciliation_ids. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["matching", "note"],
+        "properties": {
+          "matching": { "$ref": "#/$defs/row" },
+          "note": { "type": "string" }
+        }
+      },
+      "line differences list": {
+        "$comment": "The largest difference reconcile_with_difference() books (units of the currency, amount, currency_code; null for a company that cannot be read) and the reasons, each with side (charge, income, either), account_id, account_code, account_name, available and because.",
+        "type": "object",
+        "required": ["tolerance", "reasons", "note"],
+        "properties": {
+          "tolerance": { "type": ["object", "null"] },
+          "reasons": { "type": "array", "items": { "type": "object", "required": ["reason", "side", "available"] } },
+          "note": { "type": "string" }
+        }
+      },
       "proof stamp": {
         "$comment": "The proof recorded for the sha256 of the file, without its bytes. already_proved: the same bytes were proved before and nothing was submitted. calendars_failed: the calendars that did not answer, when enough others did.",
         "type": "object",

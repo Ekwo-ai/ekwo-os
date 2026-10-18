@@ -224,6 +224,8 @@ Every write names its company explicitly.
 | `trial_balance` | Opening, movements and closing per account |
 | `general_ledger` | Every posted line of an account, with a running balance |
 | `suggest_line_contacts` | The contacts an open receivable or payable line that names nobody could be, best first, each with its evidence and how many contacts that evidence reached. Writes nothing |
+| `suggest_item_combinations` | For each open receivable or payable line of one counterparty, the lines of the other side that settle it: an exact pair, several lines to the cent, or within the company's difference tolerance, with the difference. Writes nothing |
+| `matching_difference_options` | The reasons a difference may be booked for, with the account the pack gives for each, and the company's tolerance |
 | `aged_balance` | What is still owed, bucketed by age, read from the ledger |
 | `vat_return` | The boxes for a period, summed from the ledger |
 | `ec_sales_list` | The recapitulative statement of European Union supplies: one line per customer VAT number and per nature |
@@ -249,6 +251,9 @@ Every write names its company explicitly.
 | `reverse_entry` | Undoes a posted entry keyed by hand: its mirror, posted under the next number and matched against it. Same rule for the date |
 | `record_payment` | Books money in or out and matches it against open invoices — or, with `document_id`, against that document alone, which then names the contact and the direction. With `client_ref`, recording twice records once |
 | `set_line_contact` | Names the contact of such a line, once, from nothing to a contact of the company, and learns the label as a motif. Refused by name for a line that names somebody, is matched, is not on a receivable or payable account, or a contact of another company |
+| `leave_line_unnamed` / `undo_leave_line_unnamed` | Leaves such a line without a contact on purpose, with the reason, so it is no longer suggested; or takes that back |
+| `reconcile_many` | Matches several lines of one counterparty and one account together, their open debits and credits equal to the cent, under one letter |
+| `reconcile_with_difference` | The same with a small difference, booked on the account the pack gives for the reason (`rounding`, `exchange_difference`) within the company's tolerance, then matched |
 | `reconcile` / `unreconcile` | Matches two ledger lines, or undoes one matching |
 | `create_bank_account` | Registers an account from its identifier, in the scheme the company's country uses (an IBAN, a routing number and an account number, a sort code and an account number…), and wires it to the bank journal. Running it twice with the same identifier creates nothing |
 | `create_bank_transaction` | One statement line by hand, for an installation with no feed |

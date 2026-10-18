@@ -350,6 +350,30 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'suggest_item_combinations',
+    {
+      title: 'Suggest which open items settle each other',
+      description:
+        'For each open line on a receivable or payable account of one counterparty (a branch and its parent are one party), the lines of the other side on the same account that could settle it, up to three proposals a line: an exact pair, several lines that add up to it to the cent ("this payment settles these three invoices", or one invoice paid in instalments), and — only when nothing is exact — a pair or several lines within the company\'s difference tolerance, with the difference (the line less the total). Each proposal has a stable proposal_id, a kind (pair, combination), the lines and a sentence. It writes nothing: show the user, then reconcile_many for a difference of 0.00, or reconcile_with_difference once they have seen the difference and chosen a reason.',
+      inputSchema: read.SuggestItemCombinationsInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.suggestItemCombinations(backend, args)),
+  );
+
+  server.registerTool(
+    'matching_difference_options',
+    {
+      title: 'The reasons and the tolerance for booking a difference',
+      description:
+        'What reconcile_with_difference accepts for this company: the largest difference it books (in units of the currency and as an amount) and the reasons — rounding, exchange_difference — each with the account the pack gives, the side it answers (charge, income, either) and whether it is available. No pack carries a role for bank charges or payment discounts, so they are not reasons.',
+      inputSchema: read.MatchingDifferenceOptionsInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.matchingDifferenceOptions(backend, args)),
+  );
+
+  server.registerTool(
     'aged_balance',
     {
       title: 'Aged balance',
@@ -649,6 +673,54 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     },
     async (args) => guard(() => write.setLineContact(backend, args)),
+  );
+
+  server.registerTool(
+    'leave_line_unnamed',
+    {
+      title: 'Leave a ledger line without a contact',
+      description:
+        'Records that an open line on a receivable or payable account names nobody on purpose — a cash difference, a one-off refund — with the user\'s reason: suggest_line_contacts no longer proposes it. The line does not move and stays an open item. Refused by name: unknown_line, not_allowed, reason_required, reason_too_long, line_not_posted, line_has_contact, line_not_third_party, line_left_unnamed. Ask the user before calling it.',
+      inputSchema: write.LeaveLineUnnamedInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.leaveLineUnnamed(backend, args)),
+  );
+
+  server.registerTool(
+    'undo_leave_line_unnamed',
+    {
+      title: 'Take back leaving a line without a contact',
+      description:
+        'Takes back leave_line_unnamed: the line is proposed a contact again. Refused by name: unknown_line, not_allowed, line_not_left_unnamed.',
+      inputSchema: write.UndoLeaveLineUnnamedInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.undoLeaveLineUnnamed(backend, args)),
+  );
+
+  server.registerTool(
+    'reconcile_many',
+    {
+      title: 'Match several ledger lines together',
+      description:
+        'Matches several lines together in one call — one payment against several invoices, one invoice against several instalments — when their open debits and credits are equal to the cent: posted lines of one company, one reconcilable account, one counterparty (a line naming nobody is attributed by the matching), in the company\'s currency. Paired oldest first through reconcile, under one letter. Refused by name, and never settled in part: reconcile_unbalanced gives the difference. Show the user the lines and ask before calling it.',
+      inputSchema: write.ReconcileManyInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.reconcileMany(backend, args)),
+  );
+
+  server.registerTool(
+    'reconcile_with_difference',
+    {
+      title: 'Match ledger lines and book a small difference',
+      description:
+        'Matches the same set of lines as reconcile_many when their totals differ by no more than the company\'s tolerance: posts an entry that books the difference on the same account and counterparty against the account the pack gives for the reason (matching_difference_options: rounding, exchange_difference), then matches everything under one letter. Refused by name: difference_above_tolerance, no_difference, unknown_difference_reason, no_account_for_reason, and every refusal of reconcile_many. The entry is posted; unreconcile of the matching of the difference line takes it back. Show the user the difference and the account, and let them choose the reason, before calling it.',
+      inputSchema: write.ReconcileWithDifferenceInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.reconcileWithDifference(backend, args)),
   );
 
   server.registerTool(

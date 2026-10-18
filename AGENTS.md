@@ -189,6 +189,9 @@ reach and whether you may write; without that box ticked, you read.
 | Book it | `ekwo post <doc>` | `post_document` |
 | Undo it | `ekwo cancel <doc>` | `cancel_document` |
 | Who an open line that names nobody is, and naming it | `ekwo line contacts suggest`, then `ekwo line contact set <line> <contact>` | `suggest_line_contacts`, then `set_line_contact` |
+| A line that names nobody on purpose | `ekwo line unnamed leave <line> --reason …` (undo: `ekwo line unnamed undo <line>`) | `leave_line_unnamed`, `undo_leave_line_unnamed` |
+| Which open items settle each other, and matching several at once | `ekwo line combinations suggest`, then `ekwo line match <line> <line>…` | `suggest_item_combinations`, then `reconcile_many` |
+| A small difference, booked with its reason and matched | `ekwo line differences list`, then `ekwo line match <line>… --difference <reason>` | `matching_difference_options`, then `reconcile_with_difference` |
 | A payment | `ekwo payment record --doc <doc> --amount … --date … --bank-account <id>` | `record_payment` |
 | Books kept elsewhere (FEC, journal items, a report, a trial balance) | `ekwo import <source> <files…> --dry-run --save-mapping map.json`, then `--mapping map.json` | `import_books` (`dry_run` first) |
 | A bank statement file | `ekwo import camt.053 <file>` (or `coda`, `cfonb120`) | `import_bank_statement` |

@@ -158,7 +158,14 @@ ${bold('Connecting')} ${dim('(every command)')}
   ${cyan('line')}        contacts suggest [--line <line>…] — who each open receivable or
               payable line that names nobody could be, with the evidence and
               how many contacts it reached; contact set <line> <contact> — name
-              it, once, and the books learn the label for next time.
+              it, once, and the books learn the label for next time;
+              unnamed leave <line> --reason <text> | unnamed undo <line> —
+              leave it without a contact on purpose, or take that back;
+              combinations suggest [--contact <contact>] — what lines of one
+              counterparty settle each other; match <line> <line>…
+              [--difference <reason>] — match them in one gesture, booking a
+              small difference with its reason; differences list — the
+              reasons and the tolerance.
   ${cyan('payment')}     record — money in or out, booked and matched.
   ${cyan('match')}       <bank transaction> <document>… — a statement line pays documents.
               --amount <amount>, once per document, says how much settles

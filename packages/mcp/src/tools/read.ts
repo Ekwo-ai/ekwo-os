@@ -610,6 +610,23 @@ export async function agedBalance(
 }
 
 // ---------------------------------------------------------------------------
+// Open items that settle each other
+// ---------------------------------------------------------------------------
+
+export { matchingDifferenceOptions, suggestItemCombinations } from '@ekwo-ai/core';
+
+export const SuggestItemCombinationsInput = z.object({
+  company_id: companyId,
+  contact_id: uuid
+    .optional()
+    .describe('One contact; its branches and its parent count as one party. Left out: every counterparty of the company.'),
+});
+
+export const MatchingDifferenceOptionsInput = z.object({
+  company_id: companyId,
+});
+
+// ---------------------------------------------------------------------------
 // Lines that name nobody
 // ---------------------------------------------------------------------------
 

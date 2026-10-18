@@ -43,13 +43,17 @@ export {
   cancelDocument,
   createContact,
   createDocument,
+  leaveLineUnnamed,
   postDocument,
   reconcile,
+  reconcileMany,
+  reconcileWithDifference,
   recordPayment,
   reverseEntry,
   setLineContact,
   settleFromStatement,
   undoDocument,
+  undoLeaveLineUnnamed,
   unreconcile,
   updateDocumentLines,
 } from '@ekwo-ai/core';
@@ -405,6 +409,31 @@ export const UnreconcileInput = z.object({
 export const SetLineContactInput = z.object({
   line_id: uuid.describe('The open ledger line on a receivable or payable account that names nobody, as suggest_line_contacts returns it.'),
   contact_id: uuid.describe('The contact the user chose for it — one of the candidates, or one they created with create_contact. A contact of the same company.'),
+});
+
+const matchedLines = z
+  .array(uuid)
+  .min(2)
+  .describe('The ledger lines to match together, as suggest_item_combinations returns them: the line and the lines it settles. One counterparty, one account, at least one debit and one credit.');
+
+export const ReconcileManyInput = z.object({
+  line_ids: matchedLines,
+});
+
+export const ReconcileWithDifferenceInput = z.object({
+  line_ids: matchedLines,
+  reason: z
+    .string()
+    .describe('Why the lines differ, as matching_difference_options lists it: rounding or exchange_difference. The user chooses it.'),
+});
+
+export const LeaveLineUnnamedInput = z.object({
+  line_id: uuid.describe('The open line on a receivable or payable account that names nobody, as suggest_line_contacts returns it.'),
+  reason: z.string().min(1).max(500).describe('Why the line names nobody, in the user\'s words.'),
+});
+
+export const UndoLeaveLineUnnamedInput = z.object({
+  line_id: uuid.describe('A line left unnamed by leave_line_unnamed.'),
 });
 
 const decimal = z.union([z.string(), z.number()]);
