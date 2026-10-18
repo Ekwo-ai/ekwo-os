@@ -935,6 +935,16 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select undo_leave_line_unnamed($1)`,
         params: [mine.receivableLineId],
       },
+      // Sure pairs matched in one gesture, and the gesture undone:
+      // reconcile.write (decision 0075).
+      'public.reconcile_batch': {
+        sql: `select reconcile_batch(jsonb_build_array(jsonb_build_array($1::text, $2::text)))`,
+        params: [mine.receivableLineId, mine.openPaymentLineId],
+      },
+      'public.unreconcile_batch': {
+        sql: `select unreconcile_batch(gen_random_uuid())`,
+        params: [],
+      },
       // What a decision teaches is contacts.write, which the policy of
       // contact_patterns asks of the motif it would write.
       'public.learn_contact_patterns': {

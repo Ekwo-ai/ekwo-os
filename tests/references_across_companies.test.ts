@@ -28,6 +28,9 @@ const LATER = [
   // which MIGRATION defines.
   '20261018210000_several_lines_settle_together_and_a_difference_is_booked.sql',
   '20261018210500_a_line_is_left_unnamed_and_a_crowded_name_is_doubted.sql',
+  // Reads open_items() as 20261018180416 left it, and makes its references
+  // composite with scope_references_to_company().
+  '20261018230000_sure_pairs_are_matched_in_one_gesture.sql',
 ];
 
 let db: PGlite;

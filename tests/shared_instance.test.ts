@@ -752,6 +752,25 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
       },
     ],
   },
+  // A batch of pairs: one of Alice's lines beside one of Bob's own, on
+  // either side, as an object and as a list.
+  'public.reconcile_batch': {
+    reads: ['debit_line_id', 'credit_line_id'],
+    calls: (id) => [
+      {
+        sql: `select reconcile_batch(jsonb_build_array(jsonb_build_object('debit_line_id', $2::text, 'credit_line_id', (select l.id from entry_lines l where l.company_id = $1 order by l.id limit 1))))`,
+        params: [bobBooks, id],
+      },
+      {
+        sql: `select reconcile_batch(jsonb_build_array(jsonb_build_object('debit_line_id', (select l.id from entry_lines l where l.company_id = $1 order by l.id limit 1), 'credit_line_id', $2::text)))`,
+        params: [bobBooks, id],
+      },
+      {
+        sql: `select reconcile_batch(jsonb_build_array(jsonb_build_array($2::text, (select l.id from entry_lines l where l.company_id = $1 order by l.id limit 1))))`,
+        params: [bobBooks, id],
+      },
+    ],
+  },
   'public.import_company': {
     reads: ['company_id', 'entry_id'],
     calls: (id) => [{ sql: `select import_company($1::jsonb)`, params: [{ manifest: { company: { id } }, tables: { 'public.companies': [{ id, company_id: id }] } }] }],

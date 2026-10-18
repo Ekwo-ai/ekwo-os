@@ -371,6 +371,19 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     [companyId, `Left unnamed ${tag}`, ownerId],
   );
 
+  // A gesture several matchings were made in, as reconcile_batch() records
+  // it, named on a matching of the journey. Written by hand: what a batch
+  // matches is `sure_pairs.test.ts`, that it travels is this.
+  await db.query(
+    `with batch as (
+       insert into reconciliation_batches (company_id, pair_count, amount, created_by)
+       values ($1, 1, 1, $2) returning id
+     )
+     update reconciliations r set batch_id = (select id from batch)
+      where r.id = (select x.id from reconciliations x where x.company_id = $1 order by x.created_at, x.id limit 1)`,
+    [companyId, ownerId],
+  );
+
   // A declaration that went, with its proof, and the draft of the next one.
   const period = filedPeriod(pack);
   const filing = await one<{ id: string }>(db, `select id from prepare_filing($1, $2::date, $3::date)`, [

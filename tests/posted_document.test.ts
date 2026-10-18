@@ -454,11 +454,8 @@ describe('the way an issued invoice is undone', () => {
     await asUser(db, accountant, async () => {
       // A credit note says what it credits while it is still a draft.
       await db.query(`update documents set reversed_document_id = $2 where id = $1`, [creditId, invoiceId]);
+      // Posting it matches it with the invoice (decision 0075).
       await db.query(`select post_document($1)`, [creditId]);
-      await db.query(`select reconcile($1, $2)`, [
-        await thirdPartyLine(db, 'document_id', invoiceId),
-        await thirdPartyLine(db, 'document_id', creditId),
-      ]);
     });
 
     // The two entries cancel out, account by account.

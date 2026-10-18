@@ -615,6 +615,16 @@ describe('a posted document becomes cancelled on facts, not on a word', () => {
     await asUser(db, accountant, async () => {
       await db.query(`update documents set reversed_document_id = $2 where id = $1`, [creditId, invoiceId]);
       await db.query(`select post_document($1)`, [creditId]);
+      // Posting it matched it with the invoice (decision 0075); a person may
+      // undo that, and the invoice is then owed again.
+      for (const { id } of await rows<{ id: string }>(
+        db,
+        `select r.id from reconciliations r join entry_lines l on l.id in (r.debit_line_id, r.credit_line_id)
+          where l.entry_id = $1`,
+        [await entryOf(creditId)],
+      )) {
+        await db.query(`select unreconcile($1)`, [id]);
+      }
     });
     // Unmatched: the invoice is still owed on the ledger.
     expect(await refusalOf(`update documents set state = 'cancelled' where id = $1`, [invoiceId])).toMatch(/^document_cancelled_by_hand\b/);
