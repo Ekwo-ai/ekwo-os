@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.20.0",
-  "schema_min": "20261018023930",
+  "version": "1.21.0",
+  "schema_min": "20261018130000",
   "seed_sequence": 11,
   "released_at": "2026-10-18",
   "certification": {
@@ -302,6 +302,11 @@
     "rounding_method": "half_up",
     "opening_entry_label": "À-nouveaux",
     "closing_style": "result_accounts",
+    "final_close": {
+      "due": "before_next_fiscal_year_ends",
+      "legal_reference": "Règlement ANC n° 2014-03 relatif au plan comptable général, art. 921-4 (art. 1031-4 de la version consolidée au 1er janvier 2026) — « Une procédure de clôture destinée à figer la chronologie et à garantir l'intangibilité des enregistrements est mise en œuvre au plus tard avant l'expiration de la période suivante. » Pour les comptabilités informatisées, une opération dont la date tombe dans une période déjà figée est enregistrée au premier jour de la période non encore clôturée, avec mention expresse de sa date de survenance.",
+      "source": "pcg"
+    },
     "roles": {
       "receivable": "411000",
       "payable": "401000",

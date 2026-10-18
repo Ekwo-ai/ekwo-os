@@ -321,9 +321,9 @@ describe.each(countries)('%s — installed at 1.0.0, then a whole year', (countr
   });
 
   it('opens the year after with the balance the closed one leaves', async () => {
-    // The other half of a close, and the reason `reopen_fiscal_year` refuses a
-    // year whose successor has been booked into: the opening entry of the next
-    // year is the closing balance of this one, and it is written once.
+    // The other half of a close, for books taken over at the start of the next
+    // year: its opening entry is the closing balance of this one, and it is
+    // written once. The close itself writes no opening (decision 0031).
     const next = await one<{ id: string; start_date: string }>(
       pg,
       `insert into fiscal_years (company_id, name, start_date, end_date)

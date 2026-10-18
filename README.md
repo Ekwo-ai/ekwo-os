@@ -346,7 +346,9 @@ user_preferences                         one row per person, null everywhere
 `general_ledger`, `aged_balance`, `vat_return`, `ec_sales_list`,
 `financial_statement` and `fec_lines` read the ledger back.
 `opening_balance()` takes over the balances of whatever kept the books before,
-and `close_fiscal_year()` closes a year the way the country pack says.
+and `close_fiscal_year()` closes a year the way the country pack says;
+`reopen_fiscal_year()` reopens it to correct it, and `close_fiscal_year_finally()`
+freezes it for good where the country's law asks for that.
 [`docs/schema.md`](docs/schema.md) describes every table and column, and
 [`docs/mapping.md`](docs/mapping.md) lines them up against EN 16931.
 

@@ -1204,9 +1204,15 @@ export async function closeFiscalYear(
   const answer = await backend.rpc<Row>('close_fiscal_year', {
     p_fiscal_year_id: args.fiscal_year_id,
   });
+  // What the country asks next: a final close, by when and under which
+  // article, or nothing. The pack says it; the tool only passes it on.
+  const finalClose = await backend.rpc<Row>('fiscal_year_final_close', {
+    p_fiscal_year_id: args.fiscal_year_id,
+  });
   return {
     close: only(answer, `fiscal year ${args.fiscal_year_id}`),
-    note: 'The income statement is back at zero and the year refuses new entries. What a general meeting decides to do with the result — a dividend, a reserve — is a later entry, and the close never writes it.',
+    final_close: only(finalClose, `fiscal year ${args.fiscal_year_id}`),
+    note: 'The income statement is back at zero and the year refuses new entries. It can still be reopened with reopen_fiscal_year. What a general meeting decides to do with the result — a dividend, a reserve — is a later entry, and the close never writes it. Where final_close.required is true, the country requires a final close by final_close.due_date: tell the user, and call close_fiscal_year_finally only when they ask for it.',
   };
 }
 
@@ -1223,6 +1229,23 @@ export async function reopenFiscalYear(
   });
   return {
     reopen: only(answer, `fiscal year ${args.fiscal_year_id}`),
-    note: 'The entries the close wrote are reversed, not deleted, and the year accepts entries again. Refused once a later year is closed or holds entries of its own.',
+    note: 'The entries the close wrote are reversed, not deleted, and the year accepts entries again. Entries of later years are untouched: they read this year from the ledger, so a new close carries the corrected result to them by itself.',
+  };
+}
+
+export const CloseFiscalYearFinallyInput = z.object({
+  fiscal_year_id: uuid.describe('The closed year to close for good. Every closed year before it must already be finally closed.'),
+});
+
+export async function closeFiscalYearFinally(
+  backend: Backend,
+  args: z.infer<typeof CloseFiscalYearFinallyInput>,
+): Promise<unknown> {
+  const answer = await backend.rpc<Row>('close_fiscal_year_finally', {
+    p_fiscal_year_id: args.fiscal_year_id,
+  });
+  return {
+    final_close: only(answer, `fiscal year ${args.fiscal_year_id}`),
+    note: 'The year is closed for good: reopen_fiscal_year refuses it for everybody, and nothing about it changes any more. A correction is booked in an open year.',
   };
 }

@@ -156,4 +156,19 @@ describe('close_fiscal_year and reopen_fiscal_year', () => {
       ]),
     ).toEqual({ is_closed: false });
   });
+
+  it('closes a closed year for good, after which reopening is refused', async () => {
+    await trade();
+    const closed = record(await writeTools.closeFiscalYear(backend, { fiscal_year_id: year2026 }));
+    // What the country asks next comes with the close, from the pack.
+    expect(record(closed['final_close'])).toHaveProperty('required');
+
+    const final = record(
+      await writeTools.closeFiscalYearFinally(backend, { fiscal_year_id: year2026 }),
+    );
+    expect(record(final['final_close'])['finally_closed_at']).toBeTruthy();
+    await expect(
+      writeTools.reopenFiscalYear(backend, { fiscal_year_id: year2026 }),
+    ).rejects.toThrow(/fiscal_year_finally_closed/);
+  });
 });

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.13.0",
-  "migration": "20261018102431",
+  "migration": "20261018130000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1518,6 +1518,18 @@
             "type": "text"
           },
           {
+            "name": "final_close_due",
+            "type": "text"
+          },
+          {
+            "name": "final_close_legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "final_close_source_key",
+            "type": "text"
+          },
+          {
             "name": "fiscal_year_default",
             "type": "text"
           },
@@ -2516,6 +2528,10 @@
           {
             "name": "end_date",
             "type": "date"
+          },
+          {
+            "name": "finally_closed_at",
+            "type": "timestamp with time zone"
           },
           {
             "name": "id",
@@ -4153,6 +4169,10 @@
         "arguments": "p_fiscal_year_id uuid"
       },
       {
+        "name": "close_fiscal_year_finally",
+        "arguments": "p_fiscal_year_id uuid"
+      },
+      {
         "name": "commercial_entity",
         "arguments": "p_contact_id uuid"
       },
@@ -4509,7 +4529,15 @@
         "arguments": "p_country character, p_year integer, p_start date, OUT start_date date, OUT end_date date"
       },
       {
+        "name": "fiscal_year_final_close",
+        "arguments": "p_fiscal_year_id uuid"
+      },
+      {
         "name": "fiscal_years_guard_closed",
+        "arguments": ""
+      },
+      {
+        "name": "fiscal_years_guard_final",
         "arguments": ""
       },
       {
@@ -5885,7 +5913,15 @@
       },
       {
         "table": "fiscal_years",
+        "name": "fiscal_years_audit_final_close"
+      },
+      {
+        "table": "fiscal_years",
         "name": "fiscal_years_guard_closed"
+      },
+      {
+        "table": "fiscal_years",
+        "name": "fiscal_years_guard_final"
       },
       {
         "table": "fiscal_years",
@@ -7831,6 +7867,17 @@
           ]
         },
         {
+          "name": "close_fiscal_year_finally",
+          "arguments": "p_fiscal_year_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "commercial_entity",
           "arguments": "p_contact_id uuid",
           "anon": [],
@@ -8720,7 +8767,26 @@
           ]
         },
         {
+          "name": "fiscal_year_final_close",
+          "arguments": "p_fiscal_year_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "fiscal_years_guard_closed",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "fiscal_years_guard_final",
           "arguments": "",
           "trigger": true,
           "anon": [],

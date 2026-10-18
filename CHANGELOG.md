@@ -11,6 +11,25 @@ somewhere has already run it.
 
 ### Added
 
+- **A closed year can be reopened; a final close cannot** (socle migration
+  `20261018130000`, decision 0031 rewritten). `reopen_fiscal_year()` no longer
+  refuses a year whose successor holds posted entries: the close writes
+  nothing in the year after, which reads the result from the ledger, so a year
+  reopened, corrected and closed again carries its new result forward with no
+  entry in the later years, and moves nothing there when nothing changed. A
+  later year that is closed is reopened first (`later_fiscal_year_closed`).
+  `close_fiscal_year_finally()` sets `fiscal_years.finally_closed_at` on a
+  closed year, after every closed year before it; from then on
+  `reopen_fiscal_year()` refuses it (`fiscal_year_finally_closed`) and the
+  guard `fiscal_years_guard_final` refuses any change to the year, for
+  everybody, `service_role` and the installer included. The act is audited as
+  `fiscal_year_finally_closed`. Whether a country requires it is pack data:
+  `defaults.final_close` (`due`, `legal_reference`, `source`) compiles into
+  `country_defaults.final_close_due`, read by `fiscal_year_final_close()`. The
+  French pack (1.21.0) declares it under the PCG, art. 921-4. The MCP server
+  gains `close_fiscal_year_finally`, and `close_fiscal_year` answers with
+  `final_close`.
+
 - **A piece goes on its document** (socle migration `20261018102431`,
   decision 0069). An invoice, a credit note or a receipt is attached to its
   document. The trigger `attachments_guard_document` refuses a file on an

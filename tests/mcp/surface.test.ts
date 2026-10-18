@@ -83,6 +83,7 @@ const WRITE_TOOLS = [
   'import_books',
   'close_fiscal_year',
   'reopen_fiscal_year',
+  'close_fiscal_year_finally',
 ];
 
 let db: PGlite;
@@ -230,6 +231,7 @@ describe('the tools a client is offered', () => {
       'import_books',
       'close_fiscal_year',
       'reopen_fiscal_year',
+      'close_fiscal_year_finally',
     ]) {
       expect(byName.get(name)?.annotations?.destructiveHint, name).toBe(true);
     }

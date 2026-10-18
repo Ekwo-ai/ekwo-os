@@ -947,6 +947,10 @@ describe('a client writes nothing else — by the function', () => {
       },
       'public.close_fiscal_year': { sql: `select close_fiscal_year($1)`, params: [mine.fiscalYearId] },
       'public.reopen_fiscal_year': { sql: `select reopen_fiscal_year($1)`, params: [mine.fiscalYearId] },
+      'public.close_fiscal_year_finally': {
+        sql: `select close_fiscal_year_finally($1)`,
+        params: [mine.fiscalYearId],
+      },
       'public.opening_balance': {
         sql: `select opening_balance($1, $2, $3::jsonb, true)`,
         params: [mine.companyId, mine.fiscalYearId, lines],

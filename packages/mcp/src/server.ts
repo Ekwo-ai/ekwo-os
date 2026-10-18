@@ -871,7 +871,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Close a fiscal year',
       description:
-        'Closes a year: the result of the year leaves the income statement the way the country model says — straight to retained earnings, into a current-year result account, or through the appropriation accounts — every income and expense account goes back to zero, and the year stops accepting entries. Refused while the year holds a draft entry, while an earlier year with entries is open, or when a later year is already closed. It never writes what a general meeting decides to do with the result. Always ask the user before calling it.',
+        'Closes a year: the result of the year leaves the income statement the way the country model says — straight to retained earnings, into a current-year result account, or through the appropriation accounts — every income and expense account goes back to zero, and the year stops accepting entries. The close can be undone with reopen_fiscal_year; final_close in the answer says whether the country also requires a final close, which cannot, and by when. Refused while the year holds a draft entry, while an earlier year with entries is open, or when a later year is already closed. It never writes what a general meeting decides to do with the result. Always ask the user before calling it.',
       inputSchema: write.CloseFiscalYearInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },
@@ -883,11 +883,23 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Re-open a closed fiscal year',
       description:
-        'Undoes a close that was run too early: the entries it wrote are reversed, never deleted, and the year accepts entries again. Refused once a later year is closed or holds entries of its own, because re-opening changes a result those years stand on. Always ask the user before calling it.',
+        'Undoes an ordinary close, to correct the year: the entries it wrote are reversed, never deleted, and the year accepts entries again. Entries already posted in later years do not prevent it and are not touched — they read this year from the ledger, so closing it again carries the corrected result to them. Refused for a year under a final close (fiscal_year_finally_closed), for everybody, and while a later year is closed (later_fiscal_year_closed): reopen that one first. Always ask the user before calling it.',
       inputSchema: write.ReopenFiscalYearInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },
     async (args) => guard(() => write.reopenFiscalYear(backend, args)),
+  );
+
+  server.registerTool(
+    'close_fiscal_year_finally',
+    {
+      title: 'Close a fiscal year for good',
+      description:
+        'The final close: a year already closed is frozen, and from then on nobody can reopen it or change it — not the owner, not an accountant, not the operator. Refused on an open year (fiscal_year_not_closed) and while a closed year before it is not finally closed. Whether the country requires it, and by when, is final_close in the answer of close_fiscal_year. Irreversible: call it only when the user has asked for this specific year to be closed for good.',
+      inputSchema: write.CloseFiscalYearFinallyInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.closeFiscalYearFinally(backend, args)),
   );
 
   // --------------------------------------------------------------- resources

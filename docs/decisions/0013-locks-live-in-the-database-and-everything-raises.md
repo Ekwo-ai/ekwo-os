@@ -20,7 +20,9 @@ closes.
 a change of `is_closed` or `closed_at` unless `ekwo.closing_fiscal_year` is set,
 transaction-locally, by `close_fiscal_year()` or `reopen_fiscal_year()`.
 Creating a year that is already closed stays allowed: it describes a year kept
-elsewhere and computes nothing.
+elsewhere and computes nothing. `finally_closed_at` is set only by
+`close_fiscal_year_finally()`, and once set no setting lets anything change the
+year ([0031](0031-opening-and-closing-are-parameters.md)).
 
 **`state`, `payment_state` and `sent_at` are three questions.** One column
 mixing draft, sent and paid can answer none of them.

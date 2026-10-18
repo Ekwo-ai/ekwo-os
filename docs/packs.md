@@ -2566,6 +2566,26 @@ declares a style without the accounts it needs, and an opening journal that is
 not of journal type `opening`, so the gap is found when the pack is written and
 not on somebody's year end.
 
+**A final close, where the law requires one.** A close is reversible:
+`reopen_fiscal_year()` undoes it to correct the year. Some laws require the
+books of a year to be frozen for good by a set day; say so under
+`defaults.final_close`, with the article:
+
+```json
+"final_close": {
+  "due": "before_next_fiscal_year_ends",
+  "legal_reference": "the article that requires it, as the country cites it",
+  "source": "a key of certification.sources"
+}
+```
+
+`before_next_fiscal_year_ends` is the one rule so far: the final close is
+carried out at the latest before the following year ends. It compiles into
+`country_defaults.final_close_due`, and `fiscal_year_final_close()` gives the
+day for one year. Leave it out where the law asks for nothing: the final close
+is still offered by `close_fiscal_year_finally()`, and never asked for. The
+pack needs `schema_min` of `20261018130000` or later.
+
 ### 4. The taxes, and where each one posts
 
 `taxes.json`. One entry per code, and a code is a rate at a date: a new rate is

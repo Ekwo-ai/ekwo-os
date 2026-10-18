@@ -255,7 +255,8 @@ Every write names its company explicitly.
 | `lock_period` | Moves the accounting and VAT lock dates. Needs `company.write`. |
 | `opening_balance` | The trial balance of whatever kept the books before, as the opening entry — of the first day of the year, or of `opening_date`, the day inside it the books were taken over. `items` are the invoices and credit notes still open that day: each a posted document with its number, payment reference and due date, which statement matching finds like an invoice issued here; the items of an account must add up to its line |
 | `import_books` | Books kept elsewhere — a FEC, an export of journal items, a journal report, a trial balance — whole or not at all, with `open_items` beside a trial balance. `dry_run: true` first: the correspondence proposed for every account and journal — `exact` only for the same code the files do not contradict, otherwise `suggested` with its reason, or `none` — what has no answer, and the import rehearsed by the database and taken back. Then again with the completed `mapping`, or `accept_suggestions` once the user has read every suggestion; nothing is posted while one is unconfirmed. Every entry through `post_entry()`; no tax; the same files twice refused, saying when and what. The files travel as text, 256 KiB at most: beyond, the tool answers with the `ekwo import` command that reads them from the disk. `ekwo import` is the same function |
-| `close_fiscal_year` / `reopen_fiscal_year` | Closes a year the way the country pack says, or reverses a close run too early |
+| `close_fiscal_year` / `reopen_fiscal_year` | Closes a year the way the country pack says — with `final_close`, whether the country also requires a final close and by when — or reopens it to correct it, whatever later years hold; a later closed year is reopened first |
+| `close_fiscal_year_finally` | The final close of a closed year: nobody reopens it afterwards, the operator included. Only on the user's explicit request |
 | `create_company` | A company on a country pack, with its chart and its first financial year. An instance-level act |
 | `update_company_profile` | What a company says about itself on its documents |
 | `set_preferences` | Your own language, timezone, formats and default company |
@@ -273,7 +274,7 @@ whole chart, and every write tool still accepts any account of it.
 
 `post_document`, `cancel_document`, `reverse_entry`, `record_payment`,
 `update_document_lines`, `unreconcile`, `settle_from_statement`, `lock_period`, `opening_balance`, `import_books`,
-`close_fiscal_year`, `reopen_fiscal_year`, `revoke_invitation`, `remove_member`,
+`close_fiscal_year`, `reopen_fiscal_year`, `close_fiscal_year_finally`, `revoke_invitation`, `remove_member`,
 `set_member_role`, `revoke_api_key` and `revoke_share` are annotated destructive in the protocol, so a client can ask
 before calling them.
 

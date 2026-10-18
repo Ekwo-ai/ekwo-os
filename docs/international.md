@@ -84,7 +84,7 @@ it. How a professional reviews a pack is in
 |---|---|
 | A country as a versioned pack, upgraded in place | **Done** — `ekwo pack status` and `ekwo pack upgrade` |
 | The rules of an invoice: numbering, payment terms, tax point, legal mentions, e-invoicing profile | **Done**, as pack data |
-| Opening balances and a year-end close | **Done** — `opening_balance()`, `close_fiscal_year()`, `reopen_fiscal_year()` |
+| Opening balances and a year-end close | **Done** — `opening_balance()`, `close_fiscal_year()`, `reopen_fiscal_year()`, and the final close `close_fiscal_year_finally()`, required where the pack says so |
 | A tax engine beyond the European value added tax | **Done** — GST, sales and use taxes, withholding, non-recoverable and tax-inclusive taxes, several taxes on one line |
 | Taxes due on collection | **Done**; cash accounting as a ledger is not |
 | Exchange differences | **Realised differences done**; revaluation of open items not yet |

@@ -74,6 +74,8 @@ const HINTS: Record<string, string> = {
   entry_is_a_reversal: 'This entry undoes another one. A reversal is not reversed; post the original again as a new entry if it was right after all.',
   entry_already_reversed: 'A posted reversal already names this entry. Read it back rather than reversing twice.',
   entry_of_a_document: 'A document wrote this entry, and it is undone with the document: cancel_document.',
+  fiscal_year_finally_closed: 'The financial year is under a final close: nobody reopens it or changes it. Book the correction in an open year.',
+  later_fiscal_year_closed: 'A later financial year is closed. Reopen the later one first, then this one — latest first.',
   entry_of_a_year_end: 'The entries of a close are undone by reopen_fiscal_year; an opening is corrected by an ordinary entry of the year.',
   entry_belongs_elsewhere: 'Something else wrote this entry — a payment, a bank transaction, a module, a declaration or a matching — and it is undone there.',
   entry_matched: 'The entry is matched. Undo the matching with unreconcile first, and only when the user says so: it records money that moved.',

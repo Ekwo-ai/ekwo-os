@@ -22,7 +22,7 @@
  */
 
 import { describeCertification } from './certification.js';
-import { sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackSource, type PackStatement } from './read.js';
+import { finalCloseOf, sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackSource, type PackStatement } from './read.js';
 import { compileCorporateTaxSection } from './corporate-tax.js';
 import { compileAnalysis, compileFrameworkAnalysis } from './analysis.js';
 
@@ -93,6 +93,7 @@ export function compilePack(pack: Pack): string {
   out.push(...compileAnalysis(pack.analysis, country));
   out.push(...defaults(pack, country));
   out.push(...documentRules(pack, country));
+  out.push(...finalClose(pack, country));
 
   return `${out.join('\n')}\n`;
 }
@@ -879,6 +880,28 @@ function defaults(pack: Pack, country: string): string[] {
  * declares none keeps a seed that runs on a schema from before them — the
  * column would only ever have received a null.
  */
+/**
+ * Whether the country requires a final close of every year, and by when, with
+ * the article behind it — `defaults.final_close`, into the three
+ * `country_defaults` columns that `20261018130000` added.
+ *
+ * Written only when the pack says it, like `einvoice_obligation`: a pack that
+ * declares nothing keeps a seed that runs on a schema from before the columns,
+ * which would only ever have received a null.
+ */
+function finalClose(pack: Pack, country: string): string[] {
+  const rule = finalCloseOf(pack.manifest);
+  if (rule === null) return [];
+  return [
+    '',
+    'update country_defaults set',
+    `  final_close_due             = ${text(rule.due)},`,
+    `  final_close_legal_reference = ${text(rule.legal_reference)},`,
+    `  final_close_source_key      = ${text(rule.source ?? null)}`,
+    ` where country = ${text(country)};`,
+  ];
+}
+
 function documentRules(pack: Pack, country: string): string[] {
   const rules = pack.documents;
   const obligation =

@@ -44,7 +44,9 @@ the four template tables plus `country_defaults` that
    in.
 4. **A locked period refuses writes.** Triggers on `entries` and
    `entry_lines` consult `companies.lock_date`, `companies.tax_lock_date` and
-   `fiscal_years.is_closed`. Matching stays allowed.
+   `fiscal_years.is_closed`. Matching stays allowed. A closed year is
+   reopened by `reopen_fiscal_year()`; a year under a final close
+   (`fiscal_years.finally_closed_at`) is never reopened or changed, by anybody.
 5. **A third-party account is reconcilable.** A check constraint refuses an
    `asset_receivable` or `liability_payable` account that is not.
 6. **Every table has row level security.** At instance level, a row in
@@ -990,6 +992,9 @@ Which template account plays which role, per country.
 | `einvoice_obligation` | `text` | Whether a statute obliges companies of this country to exchange electronic invoices between themselves: mandatory (from einvoice_mandatory_from), on_request (a seller has to issue one when a buyer the law entitles to ask does; no date binds everybody) or none (no such statute at the day the pack was released). An obligation towards the public sector alone is said in einvoice_legal_reference. Null where the pack says nothing. |
 | `bank_account_scheme` | `text` | How a bank of this country identifies an account: iban, aba-routing-account, sort-code-account, bsb-account, ifsc-account, clabe, zengin, transit-institution-account. From the pack. Null where the pack declares none, which clients read as a free-text account number and never as an IBAN. |
 | `einvoice_fiscalisation` | `jsonb` | The fiscalisation regime of the country, as its pack declares it in einvoicing.fiscalisation and `ekwo pack build` normalises it: kind (chained: a record per invoice, chained by its hash; reporting: the documents' data reported, nothing chained, hash null), format (the brick that writes the record or the report), mandatory_from (always a list of {who, from}, empty while the obligation is only announced), announced_from, announced_by, announced_on, hash, qr, mention, submission (with channel and cadence), events, reported, tax_attributes, legal_reference, source. Null where the country has no such regime. Read by the einvoicing module, which keeps the chain of a chained regime. |
+| `final_close_due` | `text` | Whether this country requires a final close of every fiscal year, and by when: before_next_fiscal_year_ends, or null where the pack says nothing and the final close is offered without being asked for. fiscal_year_final_close() is the function that reads it. |
+| `final_close_legal_reference` | `text` | The article that requires the final close, as the pack cites it. |
+| `final_close_source_key` | `text` | Key of the entry in the pack's source register where that article is read. |
 
 Constraints:
 
@@ -1003,6 +1008,7 @@ CASE einvoice_obligation
     ELSE true
 END)`
 - `CHECK (((einvoice_obligation IS NULL) OR (einvoice_obligation = ANY (ARRAY['mandatory'::text, 'on_request'::text, 'none'::text]))))`
+- `CHECK (((final_close_due IS NULL) OR (final_close_due = 'before_next_fiscal_year_ends'::text)))`
 - `CHECK (((fiscal_year_default IS NULL) OR (fiscal_year_default = ANY (ARRAY['calendar'::text, 'april'::text, 'july'::text, 'october'::text]))))`
 - `CHECK (((legal_payment_days IS NULL) OR (legal_payment_days >= 0)))`
 - `CHECK (((party_scheme IS NULL) OR (party_scheme ~ '^[0-9]{4}$'::text)))`
@@ -1370,10 +1376,12 @@ Accounting periods. An exercise is an object, not two integers on the company.
 | `closed_at` | `timestamp with time zone` |  |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
+| `finally_closed_at` | `timestamp with time zone` | When the year was finally closed by close_fiscal_year_finally(). Null for a year that is open or under an ordinary close. Once set, the year is never reopened, its dates never move and the stamp is never cleared — by anybody. |
 
 Constraints:
 
 - `CHECK ((end_date > start_date))`
+- `CHECK (((finally_closed_at IS NULL) OR is_closed))`
 - `PRIMARY KEY (id)`
 - `UNIQUE (company_id, start_date)`
 
@@ -2150,6 +2158,7 @@ Constraints:
 | `catch_up_journal_sequence(p_journal_id uuid, p_date date, p_number text)` | Advances the counter of a journal to the counter inside a number that was written by hand, so the next automatic number continues the series. Definer, because nobody writes `journal_sequences` directly — and guarded like `next_entry_number()`: the installer, or entries.post on the company of the journal. |
 | `claim_instance_admin(p_user_id uuid)` | Makes a user an instance administrator. The first claim is open; afterwards only an administrator may appoint one. |
 | `close_fiscal_year(p_fiscal_year_id uuid)` | Closes a fiscal year: the result leaves the income statement the way the country model says, and every income and expense account goes back to zero. The entry that moves the result is `appropriation`, the one that empties the income statement is `closing`. The balance sheet needs no entry — the reports read the ledger from the beginning. The allocation decided by a meeting is never part of it. |
+| `close_fiscal_year_finally(p_fiscal_year_id uuid)` | Closes a closed fiscal year for good: sets finally_closed_at, after which reopen_fiscal_year() refuses it for everybody and nothing about the year changes. Refused on an open year (fiscal_year_not_closed), on a year already final, and while a closed year before it is not final. Needs year_end.close. Whether the country requires it is fiscal_year_final_close(). |
 | `commercial_entity(p_contact_id uuid)` | Root of the contact parent chain; the entity a document is booked against. |
 | `companies_creator_is_fixed()` | Writes companies.created_by from acting_user() when a company is created, and refuses to change it afterwards. The installer writes what it brings in as it is. |
 | `companies_default_capital_currency()` | A capital stated with no currency is stated in the company's own. The alternative was a literal in the schema, which is one country's answer given to every country. |
@@ -2233,7 +2242,9 @@ Constraints:
 | `financial_statement_of_kind(p_company_id uuid, p_kind text, p_from date, p_to date)` | One financial statement of a company by kind — balance_sheet, income_statement, allocation, cash_flow — for a caller that does not know which scheme its country pack carries. Resolves through default_statement_code() at the end date of the period, then answers as financial_statement() does, with the code it chose in the first column. On a balance sheet whose line for the result also takes other balances (statement_templates.result_in_progress = combined), the result nobody has closed yet follows that line as a row of its own: key <line>:result_in_progress, parent the line, the pack's label, not a total — a detail of its parent that no total adds. |
 | `fiscal_year_at(p_company_id uuid, p_date date)` | Fiscal year covering a date, or NULL. |
 | `fiscal_year_bounds(p_country character, p_year integer, p_start date, OUT start_date date, OUT end_date date)` | The first and last day of a financial year opening in a given calendar year, on the month the country pack declares — or on a day the caller names. Raises rather than assuming January. |
+| `fiscal_year_final_close(p_fiscal_year_id uuid)` | Whether the country of the company requires a final close of this fiscal year, by when (due, and due_date once the following year exists), under which article, and whether it was done. Read from country_defaults.final_close_due, which the pack writes; null where the pack says nothing. |
 | `fiscal_years_guard_closed()` | Refuses a hand-written change to is_closed or closed_at. The setting close_fiscal_year() and reopen_fiscal_year() raise is honoured only for the installer or a caller holding year_end.close, because any session may set it. A column any client may flip is not a lock. |
+| `fiscal_years_guard_final()` | Keeps a final close final. Refuses, for everybody, any change to a finally closed year — is_closed, closed_at, finally_closed_at, its dates — and deleting it; and refuses setting finally_closed_at anywhere but in close_fiscal_year_finally(), for a caller holding year_end.close. |
 | `format_number(p_format text, p_code text, p_date date, p_number integer)` | One document number, rendered from the pattern the country pack declares. Raises rather than guessing at a token it does not know. |
 | `general_ledger(p_company_id uuid, p_from date, p_to date, p_account_ids uuid[])` | Posted lines of a period per account, with the balance carried forward from before the period. |
 | `has_capability(p_company_id uuid, p_capability text)` | Whether the current caller may do one named thing in one company — a signed-in member by their preset and their adjustments (member_holds), or a machine key by its own list and by what its issuer still holds there (key_holds). Revoked beats granted, a key is never wider than its issuer today, and a non-member holding no key holds nothing. |
@@ -2306,7 +2317,7 @@ Constraints:
 | `rehearse_post_document(p_document_id uuid)` | What post_document() would write, without writing it: the function is called for real inside a block that is then rolled back, so every rule, lock and refusal is the real one. The entry number shown is the one it would take now; somebody else posting first takes it instead. Amounts are text. |
 | `remove_member(p_company_id uuid, p_user_id uuid)` | Takes a member out of a company and returns the row that left. Needs members.manage, except to leave oneself. The last owner of a company is refused, themself included: promote a successor first. Pending invitations are not touched; revoke_invitation() withdraws them. |
 | `reopen_filing(p_filing_id uuid)` | Takes a rejected declaration back to draft so its figures can be worked out again. Only a rejected one: a declaration the administration accepted is replaced by a corrective, never rewritten. What was sent stays in tax_filing_deposits. |
-| `reopen_fiscal_year(p_fiscal_year_id uuid)` | Undoes a close: reverses the appropriation and closing entries it wrote and clears is_closed. Refused once a later year is closed or holds entries of its own. |
+| `reopen_fiscal_year(p_fiscal_year_id uuid)` | Undoes an ordinary close: reverses the appropriation and closing entries it wrote and clears is_closed, whatever a later year holds — the close wrote nothing there, and the later year reads the result from the ledger. Refused for a year under a final close (fiscal_year_finally_closed), for everybody, and while a later year is closed (later_fiscal_year_closed), which is reopened first. |
 | `resolve_counterpart_account(p_company_id uuid, p_contact_id uuid, p_is_sale boolean)` | Third-party account by role: contact override first, company default second. Never by code prefix. |
 | `resolve_line_account(p_company_id uuid, p_doc_type doc_type, p_account_id uuid)` | Account of a document line: the line, then the company default, then the country model. Never a code prefix. |
 | `resolve_line_account(p_company_id uuid, p_doc_type doc_type, p_product_id uuid, p_account_id uuid)` | Account of a document line: the line, the product, the company default, the country model. Never a code prefix. |

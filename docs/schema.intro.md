@@ -44,7 +44,9 @@ the four template tables plus `country_defaults` that
    in.
 4. **A locked period refuses writes.** Triggers on `entries` and
    `entry_lines` consult `companies.lock_date`, `companies.tax_lock_date` and
-   `fiscal_years.is_closed`. Matching stays allowed.
+   `fiscal_years.is_closed`. Matching stays allowed. A closed year is
+   reopened by `reopen_fiscal_year()`; a year under a final close
+   (`fiscal_years.finally_closed_at`) is never reopened or changed, by anybody.
 5. **A third-party account is reconcilable.** A check constraint refuses an
    `asset_receivable` or `liability_payable` account that is not.
 6. **Every table has row level security.** At instance level, a row in

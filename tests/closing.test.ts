@@ -24,6 +24,7 @@ import {
   newCompany,
   newContact,
   newDocument,
+  newUser,
   numberShape,
   type Fixture,
 } from './helpers/factory.js';
@@ -630,12 +631,8 @@ describe('undoing a close', () => {
     });
   });
 
-  it('refuses once a later year has been booked into', async () => {
-    const fx = await companyWithTwoYears('BE');
-    await tradingYear(fx, 'BE', 10000, 4000);
-    const year = await fiscalYear(fx.companyId, 'Exercice 2026');
-    await close(fx, year);
-
+  /** A sale of 2027, posted, so the year after the one reopened holds an entry. */
+  async function bookInto2027(fx: Fixture): Promise<void> {
     const customer = await newContact(db, fx.companyId);
     const invoice = await newDocument(db, fx.companyId, {
       docType: 'sale_invoice',
@@ -644,11 +641,104 @@ describe('undoing a close', () => {
       lines: [{ unitPrice: 500, taxCode: 'BE-S-21', accountCode: '700000' }],
     });
     await asUser(db, fx.ownerId, () => db.query(`select post_document($1)`, [invoice]));
+  }
+
+  /** Every entry of 2027, with what it carries, so two moments can be compared. */
+  async function entriesOf2027(companyId: string): Promise<unknown[]> {
+    return rows(
+      db,
+      `select e.id, e.number, e.kind::text as kind, e.total_debit::text as total
+         from entries e
+        where e.company_id = $1 and e.entry_date between date '2027-01-01' and date '2027-12-31'
+        order by e.number`,
+      [companyId],
+    );
+  }
+
+  it('reopens a year whose successor holds posted entries, and closes it again unchanged', async () => {
+    const fx = await companyWithTwoYears('BE');
+    await tradingYear(fx, 'BE', 10000, 4000);
+    const year = await fiscalYear(fx.companyId, 'Exercice 2026');
+    await close(fx, year);
+    await bookInto2027(fx);
+
+    const before2027 = await entriesOf2027(fx.companyId);
+    const balanceSheet2027 = await balancesAt(fx.companyId, '2027-01-01', '2027-12-31');
+
+    const undone = await asUser(db, fx.ownerId, () =>
+      one<{ reopen_fiscal_year: { reversal_entry_ids: string[] } }>(
+        db,
+        `select reopen_fiscal_year($1)`,
+        [year],
+      ),
+    );
+    expect(undone.reopen_fiscal_year.reversal_entry_ids).toHaveLength(2);
+    const again = await close(fx, year);
+    expect(again.result).toBe('6000.00');
+
+    // Nothing changed in 2026, so nothing moved in 2027: the same entries, and
+    // the same balances at its end.
+    expect(await entriesOf2027(fx.companyId)).toEqual(before2027);
+    expect(await balancesAt(fx.companyId, '2027-01-01', '2027-12-31')).toEqual(balanceSheet2027);
+  });
+
+  it('carries a corrected result to the year after without writing in it', async () => {
+    const fx = await companyWithTwoYears('BE');
+    await tradingYear(fx, 'BE', 10000, 4000);
+    const year = await fiscalYear(fx.companyId, 'Exercice 2026');
+    await close(fx, year);
+    await bookInto2027(fx);
+    const before2027 = await entriesOf2027(fx.companyId);
+    const retained = async (): Promise<string | undefined> =>
+      (await balancesAt(fx.companyId, '2027-01-01', '2027-12-31')).find((b) => b.code === '140000')
+        ?.closing_balance;
+    expect(await retained()).toBe('-6000.00');
+
+    // Reopened, corrected by an invoice of 2026 forgotten at the close, and
+    // closed again.
+    await asUser(db, fx.ownerId, () => db.query(`select reopen_fiscal_year($1)`, [year]));
+    const customer = await newContact(db, fx.companyId);
+    const forgotten = await newDocument(db, fx.companyId, {
+      docType: 'sale_invoice',
+      contactId: customer,
+      date: '2026-12-20',
+      lines: [{ unitPrice: 1000, taxCode: 'BE-S-21', accountCode: '700000' }],
+    });
+    await asUser(db, fx.ownerId, () => db.query(`select post_document($1)`, [forgotten]));
+    const again = await close(fx, year);
+    expect(again.result).toBe('7000.00');
+
+    // The year after reads the new result on its balance sheet, and holds
+    // exactly the entries it held: the close wrote no opening there to redo.
+    expect(await retained()).toBe('-7000.00');
+    expect(await entriesOf2027(fx.companyId)).toEqual(before2027);
+  });
+
+  it('refuses while a later year is closed, which is reopened first', async () => {
+    const fx = await companyWithTwoYears('BE');
+    await tradingYear(fx, 'BE', 10000, 4000);
+    const year = await fiscalYear(fx.companyId, 'Exercice 2026');
+    const y2027 = await fiscalYear(fx.companyId, 'Exercice 2027');
+    await close(fx, year);
+    await bookInto2027(fx);
+    await close(fx, y2027);
 
     const message = await asUser(db, fx.ownerId, () =>
       expectError(db, `select reopen_fiscal_year($1)`, [year]),
     );
-    expect(message).toMatch(/next_fiscal_year_in_use/);
+    expect(message).toMatch(/later_fiscal_year_closed/);
+
+    // Latest first, and both open.
+    await asUser(db, fx.ownerId, async () => {
+      await db.query(`select reopen_fiscal_year($1)`, [y2027]);
+      await db.query(`select reopen_fiscal_year($1)`, [year]);
+    });
+    const open = await rows<{ is_closed: boolean }>(
+      db,
+      `select is_closed from fiscal_years where company_id = $1`,
+      [fx.companyId],
+    );
+    expect(open.every((row) => !row.is_closed)).toBe(true);
   });
 
   it('refuses a year that is open', async () => {
@@ -658,6 +748,201 @@ describe('undoing a close', () => {
       expectError(db, `select reopen_fiscal_year($1)`, [year]),
     );
     expect(message).toMatch(/fiscal_year_not_closed/);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// close_fiscal_year_finally
+// ---------------------------------------------------------------------------
+
+describe('a final close', () => {
+  async function member(fx: Fixture, role: 'accountant'): Promise<string> {
+    const id = await newUser(db);
+    await db.query(`insert into company_members (company_id, user_id, role) values ($1, $2, $3)`, [
+      fx.companyId,
+      id,
+      role,
+    ]);
+    return id;
+  }
+
+  async function finallyClosed(): Promise<{ fx: Fixture; year: string }> {
+    const fx = await companyWithTwoYears('BE');
+    await tradingYear(fx, 'BE', 10000, 4000);
+    const year = await fiscalYear(fx.companyId, 'Exercice 2026');
+    await close(fx, year);
+    await asUser(db, fx.ownerId, () => db.query(`select close_fiscal_year_finally($1)`, [year]));
+    return { fx, year };
+  }
+
+  it('is refused on an open year', async () => {
+    const fx = await companyWithTwoYears('BE');
+    const year = await fiscalYear(fx.companyId, 'Exercice 2026');
+    const message = await asUser(db, fx.ownerId, () =>
+      expectError(db, `select close_fiscal_year_finally($1)`, [year]),
+    );
+    expect(message).toMatch(/fiscal_year_not_closed/);
+  });
+
+  it('is refused to a member who may not close a year', async () => {
+    const fx = await companyWithTwoYears('BE');
+    await tradingYear(fx, 'BE', 10000, 4000);
+    const year = await fiscalYear(fx.companyId, 'Exercice 2026');
+    await close(fx, year);
+    // An accountant who sees the year and has had the capability taken away.
+    const accountant = await member(fx, 'accountant');
+    await db.query(
+      `update company_members set capabilities_revoked = array['year_end.close']
+        where company_id = $1 and user_id = $2`,
+      [fx.companyId, accountant],
+    );
+    const message = await asUser(db, accountant, () =>
+      expectError(db, `select close_fiscal_year_finally($1)`, [year]),
+    );
+    expect(message).toMatch(/not_allowed/);
+  });
+
+  it('cannot be reopened, by any seat', async () => {
+    const { fx, year } = await finallyClosed();
+    const accountant = await member(fx, 'accountant');
+
+    const seats: [string, () => Promise<string>][] = [
+      ['owner', () => asUser(db, fx.ownerId, () => expectError(db, `select reopen_fiscal_year($1)`, [year]))],
+      ['accountant', () => asUser(db, accountant, () => expectError(db, `select reopen_fiscal_year($1)`, [year]))],
+      [
+        'service_role',
+        () => asUser(db, fx.ownerId, () => expectError(db, `select reopen_fiscal_year($1)`, [year]), 'service_role'),
+      ],
+      ['installer', () => expectError(db, `select reopen_fiscal_year($1)`, [year])],
+    ];
+    for (const [seat, attempt] of seats) {
+      expect(await attempt(), seat).toMatch(/fiscal_year_finally_closed/);
+    }
+
+    const state = await one<{ is_closed: boolean; final: boolean }>(
+      db,
+      `select is_closed, finally_closed_at is not null as final from fiscal_years where id = $1`,
+      [year],
+    );
+    expect(state).toEqual({ is_closed: true, final: true });
+  });
+
+  it('cannot be undone by writing the columns, even under the settings the functions raise', async () => {
+    const { year } = await finallyClosed();
+    const writes = [
+      `select set_config('ekwo.closing_fiscal_year', 'on', true);
+       update fiscal_years set is_closed = false, closed_at = null where id = $1`,
+      `select set_config('ekwo.final_close', 'on', true);
+       update fiscal_years set finally_closed_at = null where id = $1`,
+      `update fiscal_years set end_date = date '2026-11-30' where id = $1`,
+      `delete from fiscal_years where id = $1`,
+    ];
+    for (const sql of writes) {
+      // As the installer, which every other guard lets through.
+      const message = await db
+        .transaction(async (tx) => {
+          for (const statement of sql.split(';').map((s) => s.trim()).filter(Boolean)) {
+            await tx.query(statement, statement.includes('$1') ? [year] : []);
+          }
+          return '';
+        })
+        .catch((error: Error) => error.message);
+      expect(message, sql).toMatch(/fiscal_year_finally_closed/);
+    }
+  });
+
+  it('is not set by hand', async () => {
+    const fx = await companyWithTwoYears('BE');
+    await tradingYear(fx, 'BE', 10000, 4000);
+    const year = await fiscalYear(fx.companyId, 'Exercice 2026');
+    await close(fx, year);
+    const message = await asUser(db, fx.ownerId, () =>
+      expectError(db, `update fiscal_years set finally_closed_at = now() where id = $1`, [year]),
+    );
+    expect(message).toMatch(/fiscal_year_close_not_a_column/);
+  });
+
+  it('follows the closed years before it, and leaves the year after open to book in', async () => {
+    const fx = await companyWithTwoYears('BE');
+    await tradingYear(fx, 'BE', 10000, 4000);
+    const year = await fiscalYear(fx.companyId, 'Exercice 2026');
+    const y2027 = await fiscalYear(fx.companyId, 'Exercice 2027');
+    await close(fx, year);
+    await close(fx, y2027);
+
+    const message = await asUser(db, fx.ownerId, () =>
+      expectError(db, `select close_fiscal_year_finally($1)`, [y2027]),
+    );
+    expect(message).toMatch(/earlier_fiscal_year_not_final/);
+
+    await asUser(db, fx.ownerId, async () => {
+      await db.query(`select close_fiscal_year_finally($1)`, [year]);
+      // The ordinary close of the year after is still an ordinary one.
+      await db.query(`select reopen_fiscal_year($1)`, [y2027]);
+    });
+  });
+
+  it('is in the audit trail', async () => {
+    const { fx } = await finallyClosed();
+    const act = await one<{ record_key: string }>(
+      db,
+      `select record_key from audit_log
+        where company_id = $1 and action = 'fiscal_year_finally_closed'`,
+      [fx.companyId],
+    );
+    expect(act.record_key).toBe('Exercice 2026');
+  });
+
+  it('is required where the pack says so, and by the day it says', async () => {
+    // The column is what each manifest declares, and nothing else.
+    const declared = await rows<{ country: string; due: string | null; reference: string | null }>(
+      db,
+      `select country, final_close_due as due, final_close_legal_reference as reference
+         from country_defaults order by country`,
+    );
+    const expected = allPacks
+      .map((pack) => {
+        const rule = pack.manifest.defaults['final_close'] as
+          | { due: string; legal_reference: string }
+          | undefined;
+        return {
+          country: pack.manifest.country,
+          due: rule?.due ?? null,
+          reference: rule?.legal_reference ?? null,
+        };
+      })
+      .sort((a, b) => (a.country < b.country ? -1 : 1));
+    expect(declared).toEqual(expected);
+
+    // And fiscal_year_final_close() reads it for one year, with the day the
+    // rule names once the year after exists.
+    const requiring = expected.find((row) => row.due === 'before_next_fiscal_year_ends');
+    if (requiring === undefined) return;
+    const fx = await newCompany(db, { country: requiring.country, name: 'Final close' });
+    await db.query(
+      `insert into fiscal_years (company_id, name, start_date, end_date)
+       values ($1, 'FY 2027', date '2027-01-01', date '2027-12-31')`,
+      [fx.companyId],
+    );
+    const first = await one<{ id: string }>(
+      db,
+      `select id from fiscal_years where company_id = $1 and start_date = date '2026-01-01'`,
+      [fx.companyId],
+    );
+    const answer = await asUser(db, fx.ownerId, () =>
+      one<{ fiscal_year_final_close: Record<string, unknown> }>(
+        db,
+        `select fiscal_year_final_close($1)`,
+        [first.id],
+      ),
+    );
+    expect(answer.fiscal_year_final_close).toMatchObject({
+      required: true,
+      due: 'before_next_fiscal_year_ends',
+      due_date: '2027-12-31',
+      legal_reference: requiring.reference,
+      finally_closed_at: null,
+    });
   });
 });
 
@@ -690,9 +975,11 @@ describe('the three functions', () => {
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
         where n.nspname = 'public'
           and p.proname in ('opening_balance', 'close_fiscal_year', 'reopen_fiscal_year',
-                            'opening_journal_id', 'has_opening_entry', 'fiscal_years_guard_closed')`,
+                            'opening_journal_id', 'has_opening_entry', 'fiscal_years_guard_closed',
+                            'close_fiscal_year_finally', 'fiscal_year_final_close',
+                            'fiscal_years_guard_final')`,
     );
-    expect(bodies.length).toBe(6);
+    expect(bodies.length).toBe(9);
     for (const fn of bodies) {
       // SQLSTATE codes are five characters of Postgres, not of a chart.
       const body = fn.prosrc.replace(/errcode = '[0-9A-Z]{5}'/g, '');

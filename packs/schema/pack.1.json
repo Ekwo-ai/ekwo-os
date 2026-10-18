@@ -421,6 +421,30 @@
           ],
           "description": "How the year-end close moves the result. retained_earnings: straight into retained earnings (UK, US). result_accounts: into a current-year result account that sits on the balance sheet and waits for the meeting that allocates it (FR 120/129). appropriation_accounts: through an appropriation account that is itself part of the income statement, and from there to retained earnings (BE 693/793 to 140/141). Named after the mechanism, never after a country."
         },
+        "final_close": {
+          "type": "object",
+          "description": "Whether this country requires a final close of every fiscal year — the close that freezes it for good, after which reopen_fiscal_year() refuses it for everybody — and by when, with the article that requires it. Left out, the final close is offered and never asked for. before_next_fiscal_year_ends: carried out at the latest before the following fiscal year ends. Compiled into country_defaults.final_close_due, read by fiscal_year_final_close(). Named after the rule, never after a country.",
+          "required": [
+            "due",
+            "legal_reference"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "due": {
+              "enum": [
+                "before_next_fiscal_year_ends"
+              ]
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The article that requires the final close, cited as the country cites it."
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
+          }
+        },
         "fiscal_year_default": {
           "enum": [
             "calendar",

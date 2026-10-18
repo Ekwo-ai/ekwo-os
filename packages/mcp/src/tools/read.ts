@@ -1024,7 +1024,7 @@ export const ReadAuditLogInput = z.object({
     .string()
     .optional()
     .describe(
-      'One act: document_posted, document_cancelled, entry_posted, entry_reversed, payment_posted, payment_reconciled, payment_unreconciled, fiscal_year_closed, fiscal_year_reopened, pack_upgraded.',
+      'One act: document_posted, document_cancelled, entry_posted, entry_reversed, payment_posted, payment_reconciled, payment_unreconciled, fiscal_year_closed, fiscal_year_reopened, fiscal_year_finally_closed, pack_upgraded.',
     ),
   operation: z.enum(['insert', 'update', 'delete']).optional(),
   from: isoDate.optional().describe('Earliest date, inclusive.'),

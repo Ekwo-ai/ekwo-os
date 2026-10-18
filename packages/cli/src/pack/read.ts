@@ -1648,6 +1648,7 @@ function sourceRegister(
         kind: 'rule' as const,
       })),
     ...fiscalisationSources(documents.einvoice_fiscalisation).map((reference) => ({ ...reference, kind: 'rule' as const })),
+    ...finalCloseSources(manifest),
     ...charts.map((chart) => ({ path: `pack.json charts.${chart.code}`, source: chart.source, kind: 'other' as const })),
     ...(manifest.not_taxed ?? []).map((entry) => ({
       path: `pack.json not_taxed.${entry.treatment}`,
@@ -1817,6 +1818,26 @@ function fiscalisationSources(block: PackFiscalisation | null): { path: string; 
     ...(block.events === null ? [] : [{ path: `${where}.events`, source: block.events.source }]),
     ...block.reported.map((entry, index) => ({ path: `${where}.reported[${index}]`, source: entry.source })),
   ];
+}
+
+/**
+ * The register key of `defaults.final_close`, where a pack declares one. The
+ * schema already requires its `legal_reference`, so only where it is read is
+ * left to check.
+ */
+function finalCloseSources(manifest: Manifest): { path: string; source: string | null; kind: 'rule' }[] {
+  const finalClose = finalCloseOf(manifest);
+  if (finalClose === null) return [];
+  return [{ path: 'pack.json defaults.final_close', source: finalClose.source ?? null, kind: 'rule' }];
+}
+
+/** `defaults.final_close` of a manifest, or null where the country says nothing. */
+export function finalCloseOf(
+  manifest: Manifest,
+): { due: string; legal_reference: string; source?: string | null } | null {
+  const raw = manifest.defaults['final_close'];
+  if (raw === null || raw === undefined || typeof raw !== 'object') return null;
+  return raw as { due: string; legal_reference: string; source?: string | null };
 }
 
 function documentRules(
