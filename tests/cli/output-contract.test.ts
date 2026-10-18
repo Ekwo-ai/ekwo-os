@@ -374,6 +374,55 @@ describe('every command answers --json with one document of the published shape'
     const suggested = await asPerson(['line', 'contacts', 'suggest', '--line', anonymousLine]);
     expect(suggested.data).toMatchObject({ count: 1, lines: [{ line_id: anonymousLine, side: 'debit', amount: '7.00' }] });
     expect((await asPerson(['line', 'contact', 'set', anonymousLine, 'Client Example'])).exitCode).toBe(0);
+    // Left unnamed on purpose, then taken back (decision 0073).
+    const unnamed = await root.query<{ id: string }>(
+      `with e as (
+         insert into entries (company_id, journal_id, entry_date, description)
+         select c.id, c.miscellaneous_journal_id, date '2026-06-16', 'Imported' from companies c where c.name = 'Example One'
+         returning id, company_id
+       ), l as (
+         insert into entry_lines (entry_id, company_id, account_id, sequence, name, debit, credit)
+         select e.id, e.company_id,
+                (select id from accounts where company_id = e.company_id and account_type = 'asset_receivable' order by code limit 1),
+                10, 'Cash difference', 3, 0
+           from e
+         returning id, entry_id, company_id
+       )
+       insert into entry_lines (entry_id, company_id, account_id, sequence, debit, credit)
+       select l.entry_id, l.company_id, account_id_by_code(l.company_id, $1), 20, 0, 3 from l
+       returning (select id from l) as id`,
+      [sales],
+    );
+    const unnamedLine = unnamed.rows[0]?.id as string;
+    await root.query(`select post_entry(entry_id) from entry_lines where id = $1`, [unnamedLine]);
+    expect((await asPerson(['line', 'unnamed', 'leave', unnamedLine, '--reason', 'A cash difference'])).exitCode).toBe(0);
+    expect((await asPerson(['line', 'unnamed', 'undo', unnamedLine])).exitCode).toBe(0);
+    // The named line against a credit of the same customer a little short: proposed, then matched with its difference (decision 0072).
+    const short = await root.query<{ id: string }>(
+      `with e as (
+         insert into entries (company_id, journal_id, entry_date, description)
+         select c.id, c.miscellaneous_journal_id, date '2026-06-17', 'Received' from companies c where c.name = 'Example One'
+         returning id, company_id
+       ), l as (
+         insert into entry_lines (entry_id, company_id, account_id, sequence, name, debit, credit, contact_id)
+         select e.id, e.company_id, (select account_id from entry_lines where id = $2), 10, 'Received', 0, 6.5,
+                (select contact_id from entry_lines where id = $2)
+           from e
+         returning id, entry_id, company_id
+       )
+       insert into entry_lines (entry_id, company_id, account_id, sequence, debit, credit)
+       select l.entry_id, l.company_id, account_id_by_code(l.company_id, $1), 20, 6.5, 0 from l
+       returning (select id from l) as id`,
+      [sales, anonymousLine],
+    );
+    const shortLine = short.rows[0]?.id as string;
+    await root.query(`select post_entry(entry_id) from entry_lines where id = $1`, [shortLine]);
+    const proposed = await asPerson(['line', 'combinations', 'suggest', '--contact', 'Client Example']);
+    expect(proposed.data).toMatchObject({ proposals: [{ line_id: anonymousLine, line_ids: [shortLine], difference: '0.50' }] });
+    expect((await asPerson(['line', 'differences', 'list'])).exitCode).toBe(0);
+    const matched = await asPerson(['line', 'match', anonymousLine, shortLine, '--difference', 'rounding']);
+    expect(matched.command).toBe('line match');
+    expect(matched.data).toMatchObject({ matching: { difference: '0.50' } });
 
     // Books from elsewhere: a balance on two accounts of the chart, rehearsed.
     const cash = await root.query<{ code: string }>(`select a.code from bank_accounts b join accounts a on a.id = b.account_id where b.id = $1`, [bankAccount]);

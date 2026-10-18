@@ -24,6 +24,10 @@ const LATER = [
   // Replaces the guard of a posted line with the body of MIGRATION, which
   // calls a function MIGRATION defines.
   '20261018180416_a_line_that_names_nobody_is_named_once.sql',
+  // Both make their new references composite with scope_references_to_company(),
+  // which MIGRATION defines.
+  '20261018210000_several_lines_settle_together_and_a_difference_is_booked.sql',
+  '20261018210500_a_line_is_left_unnamed_and_a_crowded_name_is_doubted.sql',
 ];
 
 let db: PGlite;

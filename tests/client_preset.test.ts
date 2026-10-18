@@ -912,6 +912,29 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select set_line_contact($1, $2)`,
         params: [mine.receivableLineId, mine.contactId],
       },
+      // Several lines in one gesture, with or without a difference: reconcile.write,
+      // asked before the set is checked further (decision 0072).
+      'public.reconcile_many': {
+        sql: `select * from reconcile_many(array[$1, $2]::uuid[])`,
+        params: [mine.receivableLineId, mine.openPaymentLineId],
+      },
+      'public.reconcile_with_difference': {
+        sql: `select * from reconcile_with_difference(array[$1, $2]::uuid[], 'rounding')`,
+        params: [mine.receivableLineId, mine.openPaymentLineId],
+      },
+      'public.match_lines': {
+        sql: `select * from match_lines(array[$1, $2]::uuid[], null)`,
+        params: [mine.receivableLineId, mine.openPaymentLineId],
+      },
+      // Leaving a line unnamed, and the undo: reconcile.write (decision 0073).
+      'public.leave_line_unnamed': {
+        sql: `select leave_line_unnamed($1, 'by the client')`,
+        params: [mine.receivableLineId],
+      },
+      'public.undo_leave_line_unnamed': {
+        sql: `select undo_leave_line_unnamed($1)`,
+        params: [mine.receivableLineId],
+      },
       // What a decision teaches is contacts.write, which the policy of
       // contact_patterns asks of the motif it would write.
       'public.learn_contact_patterns': {

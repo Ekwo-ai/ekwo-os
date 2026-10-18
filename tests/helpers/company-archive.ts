@@ -362,6 +362,15 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     [companyId, `books-${tag}.txt`, ownerId],
   );
 
+  // A line somebody decided to leave without a contact, as
+  // leave_line_unnamed() records it. Written by hand: which lines may be left
+  // is `line_unnamed.test.ts`, that the decision travels is this.
+  await db.query(
+    `insert into lines_left_unnamed (line_id, company_id, reason, created_by)
+     select l.id, $1, $2, $3 from entry_lines l where l.company_id = $1 order by l.created_at, l.id limit 1`,
+    [companyId, `Left unnamed ${tag}`, ownerId],
+  );
+
   // A declaration that went, with its proof, and the draft of the next one.
   const period = filedPeriod(pack);
   const filing = await one<{ id: string }>(db, `select id from prepare_filing($1, $2::date, $3::date)`, [

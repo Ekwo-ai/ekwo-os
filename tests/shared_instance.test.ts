@@ -724,6 +724,34 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
     reads: [],
     calls: (id) => [{ sql: `select * from suggest_line_contacts($1, $2::uuid[])`, params: [bobBooks, [id]] }],
   },
+  // A set of lines to match: one of Alice's beside one of Bob's own.
+  'public.reconcile_many': {
+    reads: [],
+    calls: (id) => [
+      {
+        sql: `select * from reconcile_many(array[$2::uuid, (select l.id from entry_lines l where l.company_id = $1 order by l.id limit 1)])`,
+        params: [bobBooks, id],
+      },
+    ],
+  },
+  'public.reconcile_with_difference': {
+    reads: [],
+    calls: (id) => [
+      {
+        sql: `select * from reconcile_with_difference(array[$2::uuid, (select l.id from entry_lines l where l.company_id = $1 order by l.id limit 1)], 'rounding')`,
+        params: [bobBooks, id],
+      },
+    ],
+  },
+  'public.match_lines': {
+    reads: [],
+    calls: (id) => [
+      {
+        sql: `select * from match_lines(array[$2::uuid, (select l.id from entry_lines l where l.company_id = $1 order by l.id limit 1)], null)`,
+        params: [bobBooks, id],
+      },
+    ],
+  },
   'public.import_company': {
     reads: ['company_id', 'entry_id'],
     calls: (id) => [{ sql: `select import_company($1::jsonb)`, params: [{ manifest: { company: { id } }, tables: { 'public.companies': [{ id, company_id: id }] } }] }],
