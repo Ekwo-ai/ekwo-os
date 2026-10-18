@@ -168,11 +168,16 @@ Each item is done when its evidence is published where it says.
   *Evidence: a "Validated against" section in the README of each library
   under [`packages/formats/`](../packages/formats/README.md), naming the tool,
   its version and the result.*
-- [ ] **F. At least three packs at status `reviewed`.** Each read by a named
-  external professional, authorised in that country, whose name and date are
-  in the pack's manifest — and the three from at least two continents.
-  *Evidence: `status: reviewed` in `packs/<cc>/pack.json`, and the table of
-  packs in [`packs.md`](packs.md#the-packs-of-this-checkout).*
+- [x] **F. At least three packs at status `proven`.** Each reproduced the
+  accepted filing of a real company whose books were imported into Ekwo, for
+  the scopes its evidence names
+  ([0026](decisions/0026-certification-names-a-reviewer.md)). A pack at
+  `reviewed` counts as well, and remains the status a named professional's
+  reading gives; it is no longer a condition of the tag. Today `be`, `ee` and
+  `fr` are `proven`, on the financial statements of a real company each.
+  *Evidence: `certification.status` and `certification.evidence` in
+  `packs/<cc>/pack.json`, and the table of packs in
+  [`packs.md`](packs.md#the-packs-of-this-checkout).*
 - [ ] **G. Real books, kept and filed.** At least three real companies, in at
   least two countries, keep their books in Ekwo for a full quarter and file
   their tax returns from Ekwo's figures; and a past financial year of a real
