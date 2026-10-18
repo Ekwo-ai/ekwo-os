@@ -30,6 +30,24 @@ somewhere has already run it.
   status names the sales without a record. The Spanish pack (0.6.0) declares
   VERI*FACTU from Orden HAC/1177/2024.
 
+- **Fiscalisation without a chain: a reporting regime, and a day only
+  announced.** In `einvoicing.fiscalisation`, `hash` becomes optional: left
+  out, the regime reports the documents' data to the authority and nothing is
+  chained (`kind` `reporting` once normalised). `announced_from`, with
+  `announced_by` and `announced_on`, carries a day announced while no text is
+  in force, exclusive of `mandatory_from`; `submission.channel` and
+  `submission.cadence` (per category of taxpayer and kind of data: the period
+  and the due rule) carry a batch sent by period; `reported` names what is
+  reported and by whom. Socle migration `20261018023930` widens the shape
+  check of `country_defaults.einvoice_fiscalisation`. `fiscaliseDocument()`
+  refuses a reporting regime by name (`format_without_brick`, then
+  `fiscal_regime_without_chain`), and `fiscalisationStatus()` counts no sale as
+  missing a record under a reporting regime or one only announced. The
+  Belgian pack (1.21.0) declares the e-reporting announced for 1 January 2028;
+  the French pack (1.20.0) the e-reporting of transaction and payment data of
+  CGI art. 290 and 290 A, with its dates by size and its cadence by VAT
+  regime. Neither has a brick yet.
+
 - **What each product brought in, and cost.** `product_report(company, from,
   to)` (migration `20261016145816`) reads the posted invoices and credit notes
   dated in a period and gives, for each product named on a line and on each
