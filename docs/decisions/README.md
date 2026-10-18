@@ -94,6 +94,7 @@ consequence.
 - [0070](0070-a-line-that-names-nobody-is-named-once.md) — A third-party line that names nobody is named once
 - [0071](0071-several-lines-settle-together-and-a-difference-is-booked.md) — Several lines settle together, and a small difference is booked
 - [0072](0072-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt
+- [0073](0073-sure-pairs-are-matched-in-one-gesture.md) — The sure pairs are matched in one gesture, and what undoes an entry is matched as it is posted
 
 ## Formats and modules
 
