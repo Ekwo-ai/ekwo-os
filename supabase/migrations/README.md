@@ -129,6 +129,7 @@ Always number after the newest file on `main`, and check `git log` first.
 | `20261015042916_an_archive_is_given_its_time` | `archive_statement_timeout()` and `is_archive_request(path)`; `ekwo_pre_request()` gives an export (whole, manifest, tables) or an import, asked by a key or a signed-in member, a clock of five minutes, only ever upwards — a company of 17 000 rows took 11.5 s, past the 8 s of `authenticated` |
 | `20261016065440_an_analysis_for_every_country` | `analysis_templates` and `analysis_rules` hold a framework's rows — no country, no chart, a `framework` column, account_type rules only — beside a country's, whose keys stay what the seeds upsert on; `financial_analysis()` reads the country pack's rows, else the framework's (the one the chart's statements declare, else the one installed) and returns a fourth column, `source`, `pack` or `framework` |
 | `20261018014537_a_country_chains_its_invoices` | `country_defaults.einvoice_fiscalisation`, a jsonb with no default: the fiscalisation regime a pack declares in `einvoicing.fiscalisation` — the format of the chained record, the fields its hash covers, the QR code, the sentence, how records are sent — null where the country has none. Read by the `einvoicing` module |
+| `20261018023930_a_country_reports_its_invoices` | the shape check of `country_defaults.einvoice_fiscalisation` accepts a block without `hash` — a reporting regime, the documents' data reported and nothing chained — and types `announced_from` and `kind` where given |
 
 ## Rules for a new migration
 

@@ -3459,15 +3459,32 @@
     },
     "fiscalisation": {
       "type": "object",
-      "description": "The record a country requires the invoicing software to leave for every invoice it issues: immutable, chained to the previous one by a hash, sometimes shown on the invoice as a QR code and a sentence, and sent to the tax authority at once or later. Left out, the country has no such regime. Every value is a rule of the country's law and cites it; the XML of the record is written by the brick `format` names, never by the core.",
+      "description": "The record a country requires the invoicing software to leave for the invoices it issues, and how it reaches the tax authority. With `hash`, a chained-record regime: every record is immutable, chained to the previous one by a hash, sometimes shown on the invoice as a QR code and a sentence, and sent at once or later. Without `hash`, a reporting regime: the records are the documents' data reported to the authority, nothing is chained, the brick `format` names writes the report and the core keeps no chain for it. Left out, the country has no such regime. Every value is a rule of the country's law and cites it; the file of a record or of a report is written by the brick `format` names, never by the core.",
       "additionalProperties": false,
       "required": [
         "format",
-        "hash",
         "submission",
         "legal_reference",
         "source"
       ],
+      "not": {
+        "required": [
+          "mandatory_from",
+          "announced_from"
+        ]
+      },
+      "dependentRequired": {
+        "announced_from": [
+          "announced_by",
+          "announced_on"
+        ],
+        "announced_by": [
+          "announced_from"
+        ],
+        "announced_on": [
+          "announced_from"
+        ]
+      },
       "properties": {
         "mandatory_from": {
           "description": "The day the obligation starts: one date, or one date per category of taxpayer where the law sets several, each with a short name of the category the legal reference explains.",
@@ -3499,6 +3516,19 @@
             }
           ]
         },
+        "announced_from": {
+          "$ref": "#/$defs/date",
+          "description": "The day an obligation is announced to start while no text in force sets it: a government's announcement, a bill. Exclusive of mandatory_from — an announced day is not an obligation, and nothing is counted against it — and given with announced_by and announced_on; legal_reference says what was announced and where it is read."
+        },
+        "announced_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Who announced it, as the announcement names them: a council of ministers, a minister."
+        },
+        "announced_on": {
+          "$ref": "#/$defs/date",
+          "description": "The day it was announced."
+        },
         "format": {
           "type": "string",
           "pattern": "^[a-z0-9][a-z0-9-]{0,39}$",
@@ -3512,7 +3542,7 @@
             "separator",
             "fields"
           ],
-          "description": "How a record is chained to the one before it.",
+          "description": "How a record is chained to the one before it. Left out, the regime is a reporting regime and nothing is chained.",
           "properties": {
             "algorithm": {
               "enum": [
@@ -3764,6 +3794,84 @@
               "minimum": 1,
               "description": "The longest a pending record waits before it is sent again."
             },
+            "channel": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]{0,59}$",
+              "description": "Who carries the records to the authority, as a short name the legal reference explains: the authority's own service, or a platform it accredits. Left out where the law names none."
+            },
+            "cadence": {
+              "type": "array",
+              "minItems": 1,
+              "description": "When the records of a batch regime are sent, where the law sets periods rather than intervals: one entry per category of taxpayer and kind of data, each with the period a sending covers and the day it is due.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "who",
+                  "data",
+                  "period",
+                  "due"
+                ],
+                "properties": {
+                  "who": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]{0,59}$",
+                    "description": "The category of taxpayer, as a short name the legal reference explains: a tax regime, a size."
+                  },
+                  "data": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_]{0,59}$",
+                    "description": "What the sending carries, as a short name the legal reference explains: transactions, payments."
+                  },
+                  "period": {
+                    "enum": [
+                      "day",
+                      "week",
+                      "ten_days",
+                      "month",
+                      "two_months",
+                      "quarter",
+                      "half_year",
+                      "year"
+                    ],
+                    "description": "The calendar period one sending covers. ten_days: the 1st to the 10th, the 11th to the 20th, the 21st to the end of each month. two_months: January and February, March and April, and so on. The list grows with the country that needs another."
+                  },
+                  "due": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "rule"
+                    ],
+                    "description": "When the sending of a period is due. days_after_period: within `days` days of its end. month_after_period_from_day: from the day `day` to the last day of the month after it.",
+                    "properties": {
+                      "rule": {
+                        "enum": [
+                          "days_after_period",
+                          "month_after_period_from_day"
+                        ]
+                      },
+                      "days": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 366
+                      },
+                      "day": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 28
+                      }
+                    }
+                  },
+                  "legal_reference": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source": {
+                    "$ref": "#/$defs/source_ref"
+                  }
+                }
+              }
+            },
             "legal_reference": {
               "type": "string",
               "minLength": 1
@@ -3798,6 +3906,43 @@
             },
             "source": {
               "$ref": "#/$defs/source_ref"
+            }
+          }
+        },
+        "reported": {
+          "type": "array",
+          "minItems": 1,
+          "description": "What a reporting regime reports, where the law names it: one entry per scope of operations, with who reports it. A sibling of events rather than part of it: events are the records a system keeps of its own life, these are the operations the authority is told of.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "what"
+            ],
+            "properties": {
+              "what": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]{0,59}$",
+                "description": "The scope, as a short name the legal reference explains: sales to persons who are not taxable, payments received on services."
+              },
+              "by": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "enum": [
+                    "supplier",
+                    "customer"
+                  ]
+                },
+                "description": "Who reports it: the supplier, the customer, or both. Left out, the supplier."
+              },
+              "legal_reference": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              }
             }
           }
         },

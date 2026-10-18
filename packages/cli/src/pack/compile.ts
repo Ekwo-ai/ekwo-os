@@ -874,7 +874,8 @@ function defaults(pack: Pack, country: string): string[] {
  *
  * `einvoice_obligation`, `bank_account_scheme` and `einvoice_fiscalisation`
  * are the columns written only when the pack says them. They arrived with
- * `20260921084143`, `20260929141500` and `20261018014537`, and a pack that
+ * `20260921084143`, `20260929141500` and `20261018014537` (its shape check
+ * widened by `20261018023930` for a regime that reports), and a pack that
  * declares none keeps a seed that runs on a schema from before them — the
  * column would only ever have received a null.
  */

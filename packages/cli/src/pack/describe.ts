@@ -125,10 +125,12 @@ export interface DescribedEinvoicing {
   obligation: EinvoiceObligation | null;
   legalReference: string | null;
   /**
-   * The chained record the invoicing software leaves for every invoice, as
-   * the pack declares it in `einvoicing.fiscalisation`: the brick that writes
-   * it, the hash, the QR code and the sentence, how records are sent. Null
-   * where the country has no such regime.
+   * The fiscalisation regime, as the pack declares it in
+   * `einvoicing.fiscalisation`: `kind` says whether it chains a record for
+   * every invoice (`chained`, with its hash, QR code and sentence) or reports
+   * the documents' data (`reporting`, no chain); then the brick that writes
+   * it, how records are sent, and whether the obligation is in force or only
+   * announced. Null where the country has no such regime.
    */
   fiscalisation: PackFiscalisation | null;
 }

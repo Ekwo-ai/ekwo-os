@@ -1320,9 +1320,13 @@ country that needs it.
 Some countries require the invoicing software itself to leave, for every
 invoice it issues, a record that cannot be changed, chained to the previous
 one by a hash, often shown on the invoice as a QR code and a sentence, and
-sent to the tax authority at once or later. A pack says so in an optional
-object of its `einvoicing` section. Left out, the country has no such regime;
-nothing is defaulted.
+sent to the tax authority at once or later — a **chained-record** regime.
+Others require no chain, no QR code and no sentence, only that the data of
+the documents reach the authority — a **reporting** regime. A pack says
+which in an optional object of its `einvoicing` section: with `hash`, the
+records are chained; without it, they are the documents' data reported, the
+brick `format` names writes the report, and the core keeps no chain for it.
+Left out, the country has no such regime; nothing is defaulted.
 
 ```json
 "fiscalisation": {
@@ -1341,27 +1345,51 @@ nothing is defaulted.
 }
 ```
 
+A reporting regime, with a day only announced:
+
+```json
+"fiscalisation": {
+  "announced_from": "2031-01-01", "announced_by": "…", "announced_on": "2030-06-01",
+  "format": "a-report-format",
+  "submission": { "mode": "batch", "channel": "accredited_platform",
+                  "cadence": [{ "who": "monthly_filer", "data": "transactions", "period": "ten_days",
+                                "due": { "rule": "days_after_period", "days": 10 } }] },
+  "reported": [{ "what": "sales_to_non_taxable_persons", "by": ["supplier"] }],
+  "legal_reference": "…", "source": "<register key>"
+}
+```
+
 | Field | What it says |
 |---|---|
 | `mandatory_from` | One date, or one per category of taxpayer (`who`, a short name the legal reference explains) |
+| `announced_from` | The day an obligation is announced to start while no text in force sets it, with `announced_by` and `announced_on`: who announced it, and when. Exclusive of `mandatory_from`; an announced day binds nobody, and `fiscalisationStatus()` counts no sale against it |
 | `format` | The brick that writes the record, by the key of `FISCALISATION_FORMATS` in `@ekwo-ai/core`; one no brick writes is refused by name when a record is asked for, `format_without_brick` |
-| `hash` | The digest (`SHA-256`, `SHA-384`, `SHA-512`), its code in the authority's list and its encoding, the separator of the `name=value` pairs hashed, and the ordered fields covered — one list, or one per kind of record (`alta`, `anulacion`). The core reads the fields back out of the brick's text and the database recomputes the digest |
+| `hash` | Left out for a reporting regime. The digest (`SHA-256`, `SHA-384`, `SHA-512`), its code in the authority's list and its encoding, the separator of the `name=value` pairs hashed, and the ordered fields covered — one list, or one per kind of record (`alta`, `anulacion`). The core reads the fields back out of the brick's text and the database recomputes the digest |
 | `qr` | The verification service — `url`, or `services` per mode and environment — the parameters, the standard, the error correction level, the size and quiet zone in millimetres, the words printed beside it |
 | `mention` | The sentence the invoice carries, with the alternatives the law accepts, per mode where it differs |
-| `submission` | The default `mode` and every mode the law allows: `realtime` (each record as it is made), `batch` (in messages), `none` (kept, handed over on request); the size of a batch, the wait between sendings, the longest a pending record waits |
+| `submission` | The default `mode` and every mode the law allows: `realtime` (each record as it is made), `batch` (in messages), `none` (kept, handed over on request); the size of a batch, the wait between sendings, the longest a pending record waits; `channel`, who carries the records (a short name); `cadence`, where the law sets periods: per category of taxpayer (`who`) and kind of data (`data`), the `period` one sending covers (`day`, `week`, `ten_days`, `month`, `two_months`, `quarter`, `half_year`, `year`) and when it is `due` — `days_after_period` with `days`, or `month_after_period_from_day` with `day`, from that day to the end of the month after the period |
 | `events` | How often a summary event is kept, and in which modes |
+| `reported` | What a reporting regime reports — a scope, `what`, a short name the legal reference explains — and who reports it, `by`: `supplier`, `customer` or both (the supplier when left out). A sibling of `events`: those are the records a system keeps of its own life, these the operations the authority is told of |
 | `tax_attributes` | What the brick needs on a tax line that its category does not decide alone, by code of a tax of this pack |
 
 Every sub-object may carry its own `legal_reference` and `source`; the block
 carries both, and `ekwo pack check` refuses it without them. It also refuses
-a day that does not exist, a mode named that `submission.modes` does not
+an obligation both in force and announced, an announcement without who made
+it and when or made after the day it announces, a cadence for a regime that
+sends no batch or naming one kind of data of one category twice, a due rule
+without its number, a scope reported twice, a day that does not exist, a mode named that `submission.modes` does not
 list, a `batch_max` where batch is not allowed, a QR size whose minimum is
 above its maximum, no production service for a mode the law allows, a field
 named twice in a hash list, and a `tax_attributes` code the pack does not
-carry. The block compiles, normalised (`mandatory_from` always a list,
+carry. The block compiles, normalised (`kind` `chained` or `reporting`,
+`mandatory_from` always a list, `hash` null for a reporting regime,
 `hash.fields` always by kind, `*` for every kind), into
 `country_defaults.einvoice_fiscalisation`, which the `einvoicing` module
-reads when it chains a record. The schema names no country: every value of a
+reads when it chains a record. `fiscaliseDocument()` refuses a reporting
+regime by name — `format_without_brick` while no brick writes its format,
+`fiscal_regime_without_chain` once one does — and `fiscalisationStatus()`
+counts posted sales as missing a record only under a chained regime in force,
+from its earliest `mandatory_from`. The schema names no country: every value of a
 regime is in its pack, with its article.
 
 ### The mentions, and when each applies

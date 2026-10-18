@@ -517,11 +517,15 @@ function describeToTerminal(description: PackDescription): void {
   if (fiscalisation !== null) {
     rows.push([
       'fiscalisation',
-      `${fiscalisation.format} · ${fiscalisation.hash.algorithm} chain · ` +
-        `sent ${fiscalisation.submission.modes.join(' or ')}` +
-        (fiscalisation.mandatory_from.length === 0
-          ? ''
-          : ` · from ${fiscalisation.mandatory_from.map((entry) => (entry.who === null ? entry.from : `${entry.from} (${entry.who})`)).join(', ')}`),
+      `${fiscalisation.format} · ` +
+        (fiscalisation.hash === null ? 'reporting, no chain' : `chained record, ${fiscalisation.hash.algorithm}`) +
+        ` · sent ${fiscalisation.submission.modes.join(' or ')}` +
+        (fiscalisation.submission.cadence.length === 0 ? '' : ` by period (${fiscalisation.submission.cadence.length} cadences)`) +
+        (fiscalisation.announced_from !== null
+          ? ` · announced from ${fiscalisation.announced_from} (${fiscalisation.announced_by ?? 'by nobody named'}, ${fiscalisation.announced_on ?? 'undated'}), no text in force`
+          : fiscalisation.mandatory_from.length === 0
+            ? ''
+            : ` · from ${fiscalisation.mandatory_from.map((entry) => (entry.who === null ? entry.from : `${entry.from} (${entry.who})`)).join(', ')}`),
     ]);
   }
   rows.push([

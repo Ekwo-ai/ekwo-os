@@ -590,8 +590,8 @@ export interface PackDocumentRules {
   einvoice_reference: PackRuleReference;
   /**
    * The fiscalisation regime of the country — the chained record the
-   * invoicing software leaves for every invoice it issues — as the pack
-   * declares it, or null where the country has none.
+   * invoicing software leaves for every invoice it issues, or the data it
+   * reports — as the pack declares it, or null where the country has none.
    */
   einvoice_fiscalisation: PackFiscalisation | null;
   /** ISO 6523 ICD, four digits. */
@@ -611,19 +611,31 @@ export type FiscalSubmissionMode = 'realtime' | 'batch' | 'none';
 /** The kinds of record a fiscalisation chain holds. */
 export type FiscalRecordKind = 'alta' | 'anulacion';
 
+/** A chained-record regime chains every record by a hash; a reporting regime reports the documents' data and chains nothing. */
+export type FiscalRegimeKind = 'chained' | 'reporting';
+
 /**
  * `einvoicing.fiscalisation`, normalised: the record a country requires for
- * every invoice issued, chained by a hash, shown on the invoice and sent to
- * the authority. The shape of the pack file, with two conveniences a reader
- * needs every time: `mandatory_from` is always a list, and `hash.fields`
- * always says which kind of record it covers. Compiled as it is into
+ * the invoices issued — chained by a hash, shown on the invoice and sent to
+ * the authority, or only reported to it. The shape of the pack file, with
+ * three conveniences a reader needs every time: `kind` says which of the two
+ * regimes it is, `mandatory_from` is always a list (empty where the
+ * obligation is only announced), and `hash.fields` always says which kind of
+ * record it covers. Compiled as it is into
  * `country_defaults.einvoice_fiscalisation`.
  */
 export interface PackFiscalisation {
-  /** One entry per category of taxpayer; `who` is null where the law sets one date for all. */
+  /** `chained` where the pack gives a hash, `reporting` where it gives none. */
+  kind: FiscalRegimeKind;
+  /** One entry per category of taxpayer; `who` is null where the law sets one date for all. Empty while the obligation is only announced. */
   mandatory_from: { who: string | null; from: string }[];
+  /** The day an obligation is announced to start while no text in force sets it, by whom and when; null where a text is in force or nothing is announced. */
+  announced_from: string | null;
+  announced_by: string | null;
+  announced_on: string | null;
   /** The brick that writes the record, by the key of the core's registry. */
   format: string;
+  /** Null for a reporting regime: nothing is chained. */
   hash: {
     algorithm: string;
     code: string | null;
@@ -633,7 +645,7 @@ export interface PackFiscalisation {
     fields: Partial<Record<FiscalRecordKind | '*', string[]>>;
     legal_reference: string | null;
     source: string | null;
-  };
+  } | null;
   qr: {
     url: string | null;
     services: { modes: FiscalSubmissionMode[]; environment: 'production' | 'test'; url: string }[];
@@ -660,6 +672,10 @@ export interface PackFiscalisation {
     batch_max: number | null;
     interval_seconds: number | null;
     retry_seconds: number | null;
+    /** Who carries the records to the authority, where the law names it. */
+    channel: string | null;
+    /** The periods a batch is sent for, by category of taxpayer and kind of data; empty where the law sets none. */
+    cadence: FiscalCadence[];
     legal_reference: string | null;
     source: string | null;
   };
@@ -669,10 +685,22 @@ export interface PackFiscalisation {
     legal_reference: string | null;
     source: string | null;
   } | null;
+  /** What a reporting regime reports and who reports it; empty where the pack does not say. */
+  reported: { what: string; by: ('supplier' | 'customer')[]; legal_reference: string | null; source: string | null }[];
   /** By code of a tax of this pack, the attributes handed to the brick on that tax's row. */
   tax_attributes: Record<string, Record<string, string>>;
   legal_reference: string;
   source: string;
+}
+
+/** One period of a batch regime: who sends what, for which period, due when. */
+export interface FiscalCadence {
+  who: string;
+  data: string;
+  period: 'day' | 'week' | 'ten_days' | 'month' | 'two_months' | 'quarter' | 'half_year' | 'year';
+  due: { rule: 'days_after_period' | 'month_after_period_from_day'; days: number | null; day: number | null };
+  legal_reference: string | null;
+  source: string | null;
 }
 
 /** Whether a statute makes a country's e-invoicing profile obligatory between companies. */
@@ -1781,11 +1809,13 @@ function fiscalisationSources(block: PackFiscalisation | null): { path: string; 
   const where = 'pack.json einvoicing.fiscalisation';
   return [
     { path: where, source: block.source },
-    { path: `${where}.hash`, source: block.hash.source },
+    ...(block.hash === null ? [] : [{ path: `${where}.hash`, source: block.hash.source }]),
     ...(block.qr === null ? [] : [{ path: `${where}.qr`, source: block.qr.source }]),
     ...block.mention.map((entry, index) => ({ path: `${where}.mention[${index}]`, source: entry.source })),
     { path: `${where}.submission`, source: block.submission.source },
+    ...block.submission.cadence.map((entry, index) => ({ path: `${where}.submission.cadence[${index}]`, source: entry.source })),
     ...(block.events === null ? [] : [{ path: `${where}.events`, source: block.events.source }]),
+    ...block.reported.map((entry, index) => ({ path: `${where}.reported[${index}]`, source: entry.source })),
   ];
 }
 
@@ -2637,37 +2667,44 @@ const modesOf = (value: unknown): FiscalSubmissionMode[] =>
 function normaliseFiscalisation(raw: unknown): PackFiscalisation | null {
   if (raw === null || typeof raw !== 'object') return null;
   const block = raw as Record<string, unknown>;
-  const hash = (block['hash'] ?? {}) as Record<string, unknown>;
+  const hash = (block['hash'] ?? null) as Record<string, unknown> | null;
   const qr = (block['qr'] ?? null) as Record<string, unknown> | null;
   const submission = (block['submission'] ?? {}) as Record<string, unknown>;
   const events = (block['events'] ?? null) as Record<string, unknown> | null;
   const dates = block['mandatory_from'];
-  const fields = hash['fields'];
+  const fields = hash?.['fields'];
   const size = (qr?.['size_mm'] ?? {}) as Record<string, unknown>;
   const quiet = (qr?.['quiet_zone_mm'] ?? null) as Record<string, unknown> | null;
   const mode = String(submission['mode'] ?? '') as FiscalSubmissionMode;
   const modes = modesOf(submission['modes']);
   return {
+    kind: hash === null ? 'reporting' : 'chained',
     mandatory_from:
       typeof dates === 'string'
         ? [{ who: null, from: dates }]
         : Array.isArray(dates)
           ? (dates as Record<string, unknown>[]).map((entry) => ({ who: String(entry['who']), from: String(entry['from']) }))
           : [],
+    announced_from: textOrNull(block['announced_from']),
+    announced_by: textOrNull(block['announced_by']),
+    announced_on: textOrNull(block['announced_on']),
     format: String(block['format'] ?? ''),
-    hash: {
-      algorithm: String(hash['algorithm'] ?? ''),
-      code: textOrNull(hash['code']),
-      encoding: textOrNull(hash['encoding']),
-      separator: textOrNull(hash['separator']),
-      fields: Array.isArray(fields)
-        ? { '*': fields.map(String) }
-        : Object.fromEntries(
-            Object.entries((fields ?? {}) as Record<string, unknown>).map(([kind, list]) => [kind, (list as unknown[]).map(String)]),
-          ),
-      legal_reference: textOrNull(hash['legal_reference']),
-      source: textOrNull(hash['source']),
-    },
+    hash:
+      hash === null
+        ? null
+        : {
+            algorithm: String(hash['algorithm'] ?? ''),
+            code: textOrNull(hash['code']),
+            encoding: textOrNull(hash['encoding']),
+            separator: textOrNull(hash['separator']),
+            fields: Array.isArray(fields)
+              ? { '*': fields.map(String) }
+              : Object.fromEntries(
+                  Object.entries((fields ?? {}) as Record<string, unknown>).map(([kind, list]) => [kind, (list as unknown[]).map(String)]),
+                ),
+            legal_reference: textOrNull(hash['legal_reference']),
+            source: textOrNull(hash['source']),
+          },
     qr:
       qr === null
         ? null
@@ -2701,6 +2738,18 @@ function normaliseFiscalisation(raw: unknown): PackFiscalisation | null {
       batch_max: numberOrNull(submission['batch_max']),
       interval_seconds: numberOrNull(submission['interval_seconds']),
       retry_seconds: numberOrNull(submission['retry_seconds']),
+      channel: textOrNull(submission['channel']),
+      cadence: ((submission['cadence'] ?? []) as Record<string, unknown>[]).map((entry) => {
+        const due = (entry['due'] ?? {}) as Record<string, unknown>;
+        return {
+          who: String(entry['who']),
+          data: String(entry['data']),
+          period: entry['period'] as FiscalCadence['period'],
+          due: { rule: due['rule'] as FiscalCadence['due']['rule'], days: numberOrNull(due['days']), day: numberOrNull(due['day']) },
+          legal_reference: textOrNull(entry['legal_reference']),
+          source: textOrNull(entry['source']),
+        };
+      }),
       legal_reference: textOrNull(submission['legal_reference']),
       source: textOrNull(submission['source']),
     },
@@ -2713,6 +2762,12 @@ function normaliseFiscalisation(raw: unknown): PackFiscalisation | null {
             legal_reference: textOrNull(events['legal_reference']),
             source: textOrNull(events['source']),
           },
+    reported: ((block['reported'] ?? []) as Record<string, unknown>[]).map((entry) => ({
+      what: String(entry['what']),
+      by: Array.isArray(entry['by']) ? (entry['by'] as ('supplier' | 'customer')[]) : ['supplier'],
+      legal_reference: textOrNull(entry['legal_reference']),
+      source: textOrNull(entry['source']),
+    })),
     tax_attributes: Object.fromEntries(
       Object.entries((block['tax_attributes'] ?? {}) as Record<string, Record<string, unknown>>).map(([code, attributes]) => [
         code,
@@ -2732,9 +2787,12 @@ function isCalendarDay(day: string): boolean {
 
 /**
  * What the schema cannot say about a fiscalisation block: days that exist,
- * a size whose minimum is not above its maximum, a mode named that the law
- * does not allow, a list that names a field twice, a tax the pack does not
- * carry. The register keys it cites are checked with every other reference.
+ * an obligation either in force or announced and never both, an announcement
+ * that says who made it and when, a size whose minimum is not above its
+ * maximum, a mode named that the law does not allow, a list that names a
+ * field twice, a cadence for a regime that sends no batch, a tax the pack
+ * does not carry. The register keys it cites are checked with every other
+ * reference.
  */
 function fiscalisationReferences(block: PackFiscalisation | null, taxCodes: Set<string>): Issue[] {
   if (block === null) return [];
@@ -2753,7 +2811,28 @@ function fiscalisationReferences(block: PackFiscalisation | null, taxCodes: Set<
     categories.add(key);
   }
 
-  for (const [kind, fields] of Object.entries(block.hash.fields)) {
+  // An announced day is not an obligation: one or the other, and the announcement says who and when.
+  if (block.announced_from !== null && block.mandatory_from.length > 0) {
+    issues.push({
+      path: `${where}.announced_from`,
+      message: 'is given beside mandatory_from: an obligation is either in force, from mandatory_from, or only announced, from announced_from',
+    });
+  }
+  const announcement = [block.announced_from, block.announced_by, block.announced_on];
+  if (announcement.some((value) => value !== null) && announcement.some((value) => value === null)) {
+    issues.push({
+      path: `${where}.announced_from`,
+      message: 'an announced obligation gives announced_from, announced_by and announced_on together: the day it would start, who announced it, and when',
+    });
+  }
+  for (const [name, day] of [['announced_from', block.announced_from], ['announced_on', block.announced_on]] as const) {
+    if (day !== null && !isCalendarDay(day)) issues.push({ path: `${where}.${name}`, message: `${day} is not a day of the calendar` });
+  }
+  if (block.announced_from !== null && block.announced_on !== null && block.announced_on > block.announced_from) {
+    issues.push({ path: `${where}.announced_on`, message: `${block.announced_on} is after the day announced, ${block.announced_from}` });
+  }
+
+  for (const [kind, fields] of Object.entries(block.hash?.fields ?? {})) {
     const seen = new Set<string>();
     for (const field of fields ?? []) {
       if (seen.has(field)) issues.push({ path: `${where}.hash.fields`, message: `${kind === '*' ? 'the list' : kind} names ${field} twice` });
@@ -2773,6 +2852,28 @@ function fiscalisationReferences(block: PackFiscalisation | null, taxCodes: Set<
   }
   if (block.submission.batch_max !== null && !allowed.has('batch')) {
     issues.push({ path: `${where}.submission.batch_max`, message: 'sizes a batch, and batch is not a mode this regime allows' });
+  }
+  if (block.submission.cadence.length > 0 && !allowed.has('batch')) {
+    issues.push({ path: `${where}.submission.cadence`, message: 'sets the periods of a batch, and batch is not a mode this regime allows' });
+  }
+  const periods = new Set<string>();
+  for (const [index, entry] of block.submission.cadence.entries()) {
+    const path = `${where}.submission.cadence[${index}]`;
+    const key = `${entry.who}/${entry.data}`;
+    if (periods.has(key)) issues.push({ path, message: `names ${entry.data} of ${entry.who} twice` });
+    periods.add(key);
+    if (entry.due.rule === 'days_after_period' && (entry.due.days === null || entry.due.day !== null)) {
+      issues.push({ path: `${path}.due`, message: 'days_after_period gives days, the number of days after the end of the period, and no day' });
+    }
+    if (entry.due.rule === 'month_after_period_from_day' && (entry.due.day === null || entry.due.days !== null)) {
+      issues.push({ path: `${path}.due`, message: 'month_after_period_from_day gives day, the first day of the month after the period it may be sent, and no days' });
+    }
+  }
+  const scopes = new Set<string>();
+  for (const [index, entry] of block.reported.entries()) {
+    if (scopes.has(entry.what)) issues.push({ path: `${where}.reported[${index}]`, message: `names ${entry.what} twice` });
+    scopes.add(entry.what);
+    if (new Set(entry.by).size !== entry.by.length) issues.push({ path: `${where}.reported[${index}].by`, message: 'names a party twice' });
   }
   const modesNamed: { path: string; modes: FiscalSubmissionMode[] }[] = [
     ...block.mention.map((entry, index) => ({ path: `${where}.mention[${index}].modes`, modes: entry.modes })),
