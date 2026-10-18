@@ -107,7 +107,7 @@ Everything the database holds about the company:
 | The chart and what books on it | `fiscal_years`, `accounts`, `journals`, `taxes`, `tax_postings`, `analytic_axes`, `analytic_values`, `products` |
 | Third parties | `contacts`, `contact_patterns`, and which contacts were merged into which, with what moved, in `contact_merges` |
 | The ledger | `entries`, `entry_lines`, `entry_line_analytics`, the counters that number it: `journal_sequences`, `matching_sequences`, which files its history was taken over from, in `book_imports`, and the lines left without a contact on purpose, in `lines_left_unnamed` |
-| Documents and money | `documents`, `document_lines`, `payments`, `reconciliations`, the gestures several of them were made in, in `reconciliation_batches`, and which posted documents went back to draft, with the entry each gave up, in `document_unpostings` |
+| Documents and money | `documents`, `document_lines`, the analytic split keyed on each line in `document_line_analytics`, `payments`, `reconciliations`, the gestures several of them were made in, in `reconciliation_batches`, and which posted documents went back to draft, with the entry each gave up, in `document_unpostings` |
 | The bank | `bank_accounts`, `bank_statements`, `bank_transactions`, and which lines each statement lists in `bank_statement_lines` |
 | Declarations | `tax_filings`, the figures each was frozen with in `tax_filing_boxes`, and the proof each one went in `tax_filing_deposits`; the hashes committed to a public ledger in `filing_proofs`, with their proofs |
 | Pieces | `attachments` — the rows |

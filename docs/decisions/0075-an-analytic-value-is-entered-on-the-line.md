@@ -100,6 +100,7 @@ entries, the closing entry left out as the income statement leaves it out.
 ## See also
 
 - `supabase/migrations/20261019130000_an_analytic_value_is_entered_on_the_line.sql`
+- `supabase/migrations/20261019130500_analytic_report.sql`
 - `supabase/migrations/20260911120800_analytics_attachments.sql`
 - `tests/analytics.test.ts`
 - [0008](0008-documents-and-entries-are-two-layers.md) — Documents and entries are two joined layers

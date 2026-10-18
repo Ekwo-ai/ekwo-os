@@ -61,6 +61,20 @@ somewhere has already run it.
   line gains `ekwo contact duplicates` and the MCP server
   `suggest_duplicate_contacts`.
 
+- **An analytic value is entered on the line, and read from the ledger**
+  (socle migration `20261019130000`, decision 0075). `document_line_analytics`
+  is the split of a document line, in percent per axis; `post_document()`
+  groups the lines by account, tax and split and copies the split of each
+  group onto the ledger line it writes, so the ledger stays the one source of
+  every report. `cancel_document()` gives the credit note the split of the
+  invoice. A split is refused outside the income and expense groups of
+  `accounts.internal_group` (`analytic_not_on_result_account`) and beyond
+  100 % on one axis (`analytic_split_over_100`); its `amount` is derived by the
+  database and a whole split adds up to its line to the cent.
+  `products.analytic_value_id` and `contacts.analytic_value_id` pre-fill a
+  line at 100 % on an axis it leaves free, and never constrain it. A document
+  with no split posts exactly as before.
+
 ## [0.14.0] — 2026-10-18
 
 ### Added
