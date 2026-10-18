@@ -19,7 +19,12 @@ import { freshDatabase, one, repoRoot } from './helpers/db.js';
 import { newCompany, newContact } from './helpers/factory.js';
 
 const MIGRATION = '20261007113412_a_tenant_measures_nothing_of_another.sql';
-const LATER = ['20261007160000_a_person_joins_a_company_of_their_own_accord.sql'];
+const LATER = [
+  '20261007160000_a_person_joins_a_company_of_their_own_accord.sql',
+  // Replaces the guard of a posted line with the body of MIGRATION, which
+  // calls a function MIGRATION defines.
+  '20261018180416_a_line_that_names_nobody_is_named_once.sql',
+];
 
 let db: PGlite;
 let sql: string;

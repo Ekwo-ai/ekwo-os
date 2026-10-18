@@ -907,6 +907,17 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select confirm_contact($1, $2)`,
         params: [mine.bankTransactionId, mine.contactId],
       },
+      // Naming a line is reconcile.write, asked before the line is read further.
+      'public.set_line_contact': {
+        sql: `select set_line_contact($1, $2)`,
+        params: [mine.receivableLineId, mine.contactId],
+      },
+      // What a decision teaches is contacts.write, which the policy of
+      // contact_patterns asks of the motif it would write.
+      'public.learn_contact_patterns': {
+        sql: `select learn_contact_patterns($1, $2, 'the line', 'Learned by the client', null, null, null, null, null)`,
+        params: [mine.companyId, mine.contactId],
+      },
       'public.settle_cash_basis_tax': {
         sql: `select settle_cash_basis_tax($1, $2::date)`,
         params: [mine.postedDocumentId, TO],

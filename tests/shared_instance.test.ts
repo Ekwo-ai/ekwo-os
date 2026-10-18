@@ -720,6 +720,10 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
       },
     ],
   },
+  'public.suggest_line_contacts': {
+    reads: [],
+    calls: (id) => [{ sql: `select * from suggest_line_contacts($1, $2::uuid[])`, params: [bobBooks, [id]] }],
+  },
   'public.import_company': {
     reads: ['company_id', 'entry_id'],
     calls: (id) => [{ sql: `select import_company($1::jsonb)`, params: [{ manifest: { company: { id } }, tables: { 'public.companies': [{ id, company_id: id }] } }] }],
