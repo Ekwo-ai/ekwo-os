@@ -48,6 +48,8 @@ const READ_TOOLS = [
   'list_statements',
   'financial_statement',
   'financial_analysis',
+  'list_analytic_axes',
+  'analytic_report',
   'generate_fec',
   'read_audit_log',
   'describe_pack',

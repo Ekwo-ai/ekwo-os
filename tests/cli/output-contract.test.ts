@@ -431,6 +431,13 @@ describe('every command answers --json with one document of the published shape'
     expect(matched.command).toBe('line match');
     expect(matched.data).toMatchObject({ matching: { difference: '0.50' } });
 
+    // The analytic plan, and the result of each value of an axis.
+    await root.query(`insert into analytic_axes (company_id, code, name) values ($1, 'PROJECT', 'Project')`, [keyed.rows[0]?.company_id]);
+    expect((await asPerson(['analytic', 'axes'])).data).toMatchObject({ count: 1 });
+    const byActivity = await asPerson(['analytic', 'report', '--axis', 'PROJECT', '--from', '2026-01-01', '--to', '2026-12-31']);
+    expect(byActivity.exitCode).toBe(0);
+    expect((byActivity.data as { values: unknown[] }).values).toEqual([]);
+
     // Books from elsewhere: a balance on two accounts of the chart, rehearsed.
     const cash = await root.query<{ code: string }>(`select a.code from bank_accounts b join accounts a on a.id = b.account_id where b.id = $1`, [bankAccount]);
     const balance = join(cwd, 'balance.csv');

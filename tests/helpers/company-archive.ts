@@ -169,11 +169,28 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     `insert into analytic_values (company_id, axis_id, code, name) values ($1, $2, 'V1', $3) returning id`,
     [companyId, axis.id, `Value ${tag}`],
   );
+  // A split goes on a line of the income statement, and nowhere else.
   await db.query(
-    `insert into entry_line_analytics (company_id, entry_line_id, analytic_value_id, percentage, amount)
-     select $1, l.id, $2, 100, l.debit + l.credit
-       from entry_lines l where l.company_id = $1 order by l.created_at, l.id limit 1`,
+    `insert into entry_line_analytics (company_id, entry_line_id, analytic_value_id, percentage)
+     select $1, l.id, $2, 100
+       from entry_lines l join accounts a on a.id = l.account_id
+      where l.company_id = $1 and a.internal_group in ('income', 'expense')
+      order by l.created_at, l.id limit 1`,
     [companyId, value.id],
+  );
+  // And on the line of a document it was keyed on. The documents of the
+  // golden year are posted, and a posted document's split is frozen: the
+  // guard is switched off for this one row, because that the row travels is
+  // the subject, not how it was keyed.
+  await withoutTrigger(db, 'document_line_analytics', 'document_line_analytics_guard', () =>
+    db.query(
+      `insert into document_line_analytics (company_id, document_line_id, analytic_value_id, percentage)
+       select $1, l.id, $2, 100
+         from document_lines l join accounts a on a.id = l.account_id
+        where l.company_id = $1 and a.internal_group in ('income', 'expense')
+        order by l.created_at, l.id limit 1`,
+      [companyId, value.id],
+    ),
   );
   await db.query(
     `insert into contact_patterns (company_id, contact_id, kind, value, source)
