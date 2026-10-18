@@ -37,7 +37,7 @@ create table lines_left_unnamed (
   line_id    uuid primary key references entry_lines(id) on delete cascade,
   company_id uuid not null references companies(id) on delete cascade,
   reason     text not null,
-  created_by uuid default auth.uid(),
+  created_by uuid default acting_user(),
   created_at timestamptz not null default now(),
   constraint lines_left_unnamed_reason_said
     check (length(btrim(reason)) between 1 and 500)
@@ -48,7 +48,7 @@ comment on table lines_left_unnamed is
 comment on column lines_left_unnamed.reason is
   'Why the line names nobody, in the words of the person who decided it.';
 comment on column lines_left_unnamed.created_by is
-  'Who decided it.';
+  'Who decided it: the signed-in user, or the person who issued the machine key presented (acting_user()).';
 
 create index lines_left_unnamed_company_idx on lines_left_unnamed (company_id);
 

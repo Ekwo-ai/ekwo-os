@@ -1523,7 +1523,7 @@ Open lines on a receivable or payable account that a person decided to leave wit
 | `line_id` | `uuid` | not null |
 | `company_id` | `uuid` | not null |
 | `reason` | `text` | not null — Why the line names nobody, in the words of the person who decided it. |
-| `created_by` | `uuid` | Who decided it. |
+| `created_by` | `uuid` | Who decided it: the signed-in user, or the person who issued the machine key presented (acting_user()). |
 | `created_at` | `timestamp with time zone` | not null |
 
 Constraints:
