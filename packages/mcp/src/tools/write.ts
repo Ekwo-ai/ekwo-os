@@ -47,6 +47,7 @@ export {
   reconcile,
   recordPayment,
   reverseEntry,
+  setLineContact,
   settleFromStatement,
   undoDocument,
   unreconcile,
@@ -399,6 +400,11 @@ export const ReconcileInput = z.object({
 
 export const UnreconcileInput = z.object({
   reconciliation_id: uuid.describe('The matching to undo, as returned by reconcile or read from the ledger line.'),
+});
+
+export const SetLineContactInput = z.object({
+  line_id: uuid.describe('The open ledger line on a receivable or payable account that names nobody, as suggest_line_contacts returns it.'),
+  contact_id: uuid.describe('The contact the user chose for it — one of the candidates, or one they created with create_contact. A contact of the same company.'),
 });
 
 const decimal = z.union([z.string(), z.number()]);

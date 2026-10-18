@@ -338,6 +338,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'suggest_line_contacts',
+    {
+      title: 'Suggest the contact of lines that name nobody',
+      description:
+        'For each open line on a receivable or payable account that names no contact — typically the open items of books imported line by line — the contacts it could be, best first, each with a score, the method (a learned motif, the number of a document of the company quoted in the label, the description or the reference of the entry, the words of a contact\'s name), the evidence in a sentence, and alternatives: how many contacts the same evidence reached. More than 1 is a question for the user, not an answer. It writes nothing; set_line_contact names a line once the user has chosen.',
+      inputSchema: read.SuggestLineContactsInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.suggestLineContacts(backend, args)),
+  );
+
+  server.registerTool(
     'aged_balance',
     {
       title: 'Aged balance',
@@ -625,6 +637,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
     },
     async (args) => guard(() => write.unreconcile(backend, args)),
+  );
+
+  server.registerTool(
+    'set_line_contact',
+    {
+      title: 'Name the contact of a ledger line',
+      description:
+        'Names the contact of an open line on a receivable or payable account that names nobody — the open items of books imported line by line — once, from nothing to a contact of the same company, and learns the label as a motif of that contact for the next suggestion. Refused by name: unknown_line, line_not_posted, line_has_contact (a posted counterparty is corrected by reversing the entry), line_matched (unmatch it first, and only when the user says so), line_not_third_party, unknown_contact. Changes no amount, account or tax box. Show the user the candidates of suggest_line_contacts and ask which one before calling it; never pick one yourself.',
+      inputSchema: write.SetLineContactInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.setLineContact(backend, args)),
   );
 
   server.registerTool(

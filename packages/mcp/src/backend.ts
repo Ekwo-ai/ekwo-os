@@ -121,6 +121,11 @@ const HINTS: Record<string, string> = {
   unknown_entry_line: 'No ledger line with that id is visible to you.',
   unknown_reconciliation: 'No matching with that id is visible to you.',
   unknown_payment: 'No payment with that id is visible to you.',
+  unknown_line: 'No ledger line with that id is visible to you. suggest_line_contacts lists the lines that can be named.',
+  line_has_contact: 'The line already names a contact, and keeps it. A posted counterparty is corrected by reversing the entry, and only when the user says so.',
+  line_matched: 'The line is matched, and keeps the counterparty it was matched as. Undo the matching with unreconcile first, and only when the user says so.',
+  line_not_third_party: 'Only a line on a receivable or payable account is named this way. suggest_line_contacts lists the ones that can be.',
+  line_not_posted: 'The line belongs to a draft, which takes its contact like any other column and is posted with it.',
 };
 
 /**

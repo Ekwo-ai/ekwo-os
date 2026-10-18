@@ -11,6 +11,7 @@ import { contactCommand } from './commands/contact.js';
 import { demoCommand } from './commands/demo.js';
 import { cancelCommand, docCommand, postCommand } from './commands/document.js';
 import { reverseCommand } from './commands/entry.js';
+import { lineCommand } from './commands/line.js';
 import { IMPORT_USAGE, importCommand } from './commands/import.js';
 import { doctorCommand } from './commands/doctor.js';
 import { einvoiceCommand } from './commands/einvoice.js';
@@ -60,6 +61,7 @@ export const COMMANDS = [
   'post',
   'cancel',
   'reverse',
+  'line',
   'payment',
   'match',
   'import',
@@ -153,6 +155,10 @@ ${bold('Connecting')} ${dim('(every command)')}
               note that names it otherwise. --credit asks for the note.
   ${cyan('reverse')}     <entry> — undo a posted entry, through reverse_entry(): its
               mirror, posted and matched against it. Its id or its number.
+  ${cyan('line')}        contacts suggest [--line <line>…] — who each open receivable or
+              payable line that names nobody could be, with the evidence and
+              how many contacts it reached; contact set <line> <contact> — name
+              it, once, and the books learn the label for next time.
   ${cyan('payment')}     record — money in or out, booked and matched.
   ${cyan('match')}       <bank transaction> <document>… — a statement line pays documents.
               --amount <amount>, once per document, says how much settles
@@ -488,6 +494,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await cancelCommand(args, deps);
       case 'reverse':
         return await reverseCommand(args, deps);
+      case 'line':
+        return await lineCommand(args, deps);
       case 'payment':
         return await paymentCommand(args, deps);
       case 'match':

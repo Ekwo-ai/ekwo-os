@@ -188,6 +188,7 @@ reach and whether you may write; without that box ticked, you read.
 | See the entry before booking | `ekwo post <doc> --dry-run` | — |
 | Book it | `ekwo post <doc>` | `post_document` |
 | Undo it | `ekwo cancel <doc>` | `cancel_document` |
+| Who an open line that names nobody is, and naming it | `ekwo line contacts suggest`, then `ekwo line contact set <line> <contact>` | `suggest_line_contacts`, then `set_line_contact` |
 | A payment | `ekwo payment record --doc <doc> --amount … --date … --bank-account <id>` | `record_payment` |
 | Books kept elsewhere (FEC, journal items, a report, a trial balance) | `ekwo import <source> <files…> --dry-run --save-mapping map.json`, then `--mapping map.json` | `import_books` (`dry_run` first) |
 | A bank statement file | `ekwo import camt.053 <file>` (or `coda`, `cfonb120`) | `import_bank_statement` |

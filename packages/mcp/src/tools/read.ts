@@ -609,6 +609,21 @@ export async function agedBalance(
   };
 }
 
+// ---------------------------------------------------------------------------
+// Lines that name nobody
+// ---------------------------------------------------------------------------
+
+export { suggestLineContacts } from '@ekwo-ai/core';
+
+export const SuggestLineContactsInput = z.object({
+  company_id: companyId,
+  line_ids: z
+    .array(uuid)
+    .min(1)
+    .optional()
+    .describe('The ledger lines to ask about. Left out: every open line of the company on a receivable or payable account that names no contact.'),
+});
+
 export const VatReturnInput = z.object({
   company_id: companyId,
   from: isoDate,

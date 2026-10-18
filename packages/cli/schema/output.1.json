@@ -562,6 +562,25 @@
           "note": { "type": "string" }
         }
       },
+      "line contacts suggest": {
+        "$comment": "The open receivable and payable lines that name nobody and that some evidence points at, each with its label, side, amount and candidates best first: contact_id, name, score (a number between 0 and 1), method, because, alternatives (how many contacts the same evidence reached). Amounts are decimal strings.",
+        "type": "object",
+        "required": ["lines", "count", "note"],
+        "properties": {
+          "lines": { "type": "array", "items": { "type": "object", "required": ["line_id", "candidates"] } },
+          "count": { "type": "integer" },
+          "note": { "type": "string" }
+        }
+      },
+      "line contact set": {
+        "$comment": "The ledger line set_line_contact() named, as it now stands. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["entry_line", "note"],
+        "properties": {
+          "entry_line": { "$ref": "#/$defs/row" },
+          "note": { "type": "string" }
+        }
+      },
       "proof stamp": {
         "$comment": "The proof recorded for the sha256 of the file, without its bytes. already_proved: the same bytes were proved before and nothing was submitted. calendars_failed: the calendars that did not answer, when enough others did.",
         "type": "object",

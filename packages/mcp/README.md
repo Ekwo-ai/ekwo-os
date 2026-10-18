@@ -223,6 +223,7 @@ Every write names its company explicitly.
 | `list_bank_transactions` | Statement lines, pending by default |
 | `trial_balance` | Opening, movements and closing per account |
 | `general_ledger` | Every posted line of an account, with a running balance |
+| `suggest_line_contacts` | The contacts an open receivable or payable line that names nobody could be, best first, each with its evidence and how many contacts that evidence reached. Writes nothing |
 | `aged_balance` | What is still owed, bucketed by age, read from the ledger |
 | `vat_return` | The boxes for a period, summed from the ledger |
 | `ec_sales_list` | The recapitulative statement of European Union supplies: one line per customer VAT number and per nature |
@@ -247,6 +248,7 @@ Every write names its company explicitly.
 | `cancel_document` | Undoes a posted invoice, and says how in `undone_by`: back to `draft` where its country's `posted_edit_policy` allows it and nothing about it has left (`unpost_document()`), otherwise a `credit_note` that names it, posted and matched against it, and the invoice cancelled (`cancel_document()`), with `why` the draft was ruled out. A credit note is dated on the invoice's day while that period is open; otherwise the caller gives a date. A date, or `credit_note: true`, asks for the credit note |
 | `reverse_entry` | Undoes a posted entry keyed by hand: its mirror, posted under the next number and matched against it. Same rule for the date |
 | `record_payment` | Books money in or out and matches it against open invoices — or, with `document_id`, against that document alone, which then names the contact and the direction. With `client_ref`, recording twice records once |
+| `set_line_contact` | Names the contact of such a line, once, from nothing to a contact of the company, and learns the label as a motif. Refused by name for a line that names somebody, is matched, is not on a receivable or payable account, or a contact of another company |
 | `reconcile` / `unreconcile` | Matches two ledger lines, or undoes one matching |
 | `create_bank_account` | Registers an account from its identifier, in the scheme the company's country uses (an IBAN, a routing number and an account number, a sort code and an account number…), and wires it to the bank journal. Running it twice with the same identifier creates nothing |
 | `create_bank_transaction` | One statement line by hand, for an installation with no feed |

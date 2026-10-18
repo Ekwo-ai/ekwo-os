@@ -350,6 +350,30 @@ describe('every command answers --json with one document of the published shape'
     );
     const numbered = await root.query<{ number: string }>(`select number from post_entry($1)`, [handId]);
     expect((await asPerson(['reverse', numbered.rows[0]?.number as string])).exitCode).toBe(0);
+    // A receivable line that names nobody, as an import brings it: suggested, then named.
+    const anonymous = await root.query<{ id: string }>(
+      `with e as (
+         insert into entries (company_id, journal_id, entry_date, description)
+         select c.id, c.miscellaneous_journal_id, date '2026-06-16', 'Imported' from companies c where c.name = 'Example One'
+         returning id, company_id
+       )
+       insert into entry_lines (entry_id, company_id, account_id, sequence, name, debit, credit)
+       select e.id, e.company_id,
+              (select id from accounts where company_id = e.company_id and account_type = 'asset_receivable' order by code limit 1),
+              10, 'Client Example, imported', 7, 0
+         from e
+       returning id, entry_id`,
+    );
+    const anonymousLine = anonymous.rows[0]?.id as string;
+    await root.query(
+      `insert into entry_lines (entry_id, company_id, account_id, sequence, debit, credit)
+       select l.entry_id, l.company_id, account_id_by_code(l.company_id, $2), 20, 0, 7 from entry_lines l where l.id = $1`,
+      [anonymousLine, sales],
+    );
+    await root.query(`select post_entry(entry_id) from entry_lines where id = $1`, [anonymousLine]);
+    const suggested = await asPerson(['line', 'contacts', 'suggest', '--line', anonymousLine]);
+    expect(suggested.data).toMatchObject({ count: 1, lines: [{ line_id: anonymousLine, side: 'debit', amount: '7.00' }] });
+    expect((await asPerson(['line', 'contact', 'set', anonymousLine, 'Client Example'])).exitCode).toBe(0);
 
     // Books from elsewhere: a balance on two accounts of the chart, rehearsed.
     const cash = await root.query<{ code: string }>(`select a.code from bank_accounts b join accounts a on a.id = b.account_id where b.id = $1`, [bankAccount]);
