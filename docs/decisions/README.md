@@ -91,6 +91,7 @@ consequence.
 - [0045](0045-recognising-a-counterparty.md) — A counterparty is recognised from learned patterns
 - [0046](0046-settling-applies-identification-and-offers-resemblance.md) — Settling applies identification, offers resemblance
 - [0047](0047-a-statement-is-imported-once.md) — A bank statement is imported once
+- [0070](0070-a-line-that-names-nobody-is-named-once.md) — A third-party line that names nobody is named once
 
 ## Formats and modules
 
