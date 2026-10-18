@@ -189,10 +189,12 @@ behind it — bring them in as documents: the purchase or sale becomes a
 the document (`attachments.entity_type = 'document'`). Never hang the PDF on a
 ledger entry that stands in for an invoice: a document is what a reader opens
 to find the receipt, and an entry posted by a document refuses a file
-(decision 0069). For a year already closed, reopen it with
-`reopen_fiscal_year()`, replace the imported purchase entries by documents
-(reversing the imported entries on their own date), check that the trial
-balance is unchanged account by account, and close it again.
+(decision 0069). The documents of an open year replace the imported entries:
+each document is posted, and the entry imported for the same invoice is
+reversed on its own date, so the trial balance ends unchanged account by
+account. A closed year is reopened first with `reopen_fiscal_year()`, which
+refuses (`next_fiscal_year_in_use`) as soon as the following year holds a
+posted entry: the history of such a year stays in the ledger as imported.
 
 ## What an import does not do
 
