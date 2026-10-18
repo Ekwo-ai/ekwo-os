@@ -4,7 +4,7 @@ import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
 import { newCompany, newContact, newDocument, newUser, type Fixture } from './helpers/factory.js';
 import { newMember, refusalAs } from './helpers/integrity.js';
 
-// Decision 0073: a line a person decided to leave without a contact is no
+// Decision 0072: a line a person decided to leave without a contact is no
 // longer proposed one, and stays an open item; a text whose words reach
 // several contacts by name names none of them with confidence.
 

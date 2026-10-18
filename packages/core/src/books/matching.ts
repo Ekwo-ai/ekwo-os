@@ -4,7 +4,7 @@
  *
  * `suggest_item_combinations()` proposes, `reconcile_many()` and
  * `reconcile_with_difference()` match, `leave_line_unnamed()` and its undo
- * record a decision about a line (decisions 0072 and 0073). The search, the
+ * record a decision about a line (decisions 0071 and 0072). The search, the
  * accounts a difference is booked on, the tolerance and every refusal are the
  * schema's; this file asks for them and shapes the answer.
  */

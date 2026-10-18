@@ -1,6 +1,6 @@
 /**
- * Open items that settle each other, through the tools (decision 0072), and a
- * line left without a contact on purpose (decision 0073).
+ * Open items that settle each other, through the tools (decision 0071), and a
+ * line left without a contact on purpose (decision 0072).
  *
  * Each tool is a thin call on the schema: the proposals come back as the
  * search found them, a matching answers with its letter and what it booked,

@@ -94,4 +94,4 @@ open.
 - [0045](0045-recognising-a-counterparty.md) — A counterparty is recognised from learned patterns
 - [0046](0046-settling-applies-identification-and-offers-resemblance.md) — Settling applies identification, offers resemblance
 - [0070](0070-a-line-that-names-nobody-is-named-once.md) — A third-party line that names nobody is named once
-- [0073](0073-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt
+- [0072](0072-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt

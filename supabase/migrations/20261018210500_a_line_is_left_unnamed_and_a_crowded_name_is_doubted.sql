@@ -1,5 +1,5 @@
 -- Ekwo OS — a line may be left unnamed, and a name among several is a doubt
--- (decision 0073).
+-- (decision 0072).
 --
 -- Two answers to what `suggest_line_contacts()` (decision 0070) showed on
 -- real books.
@@ -44,7 +44,7 @@ create table lines_left_unnamed (
 );
 
 comment on table lines_left_unnamed is
-  'Open lines on a receivable or payable account that a person decided to leave without a contact, with the reason: suggest_line_contacts() no longer proposes them. Written by leave_line_unnamed(), removed by undo_leave_line_unnamed(). The line itself does not move and stays an open item (decision 0073).';
+  'Open lines on a receivable or payable account that a person decided to leave without a contact, with the reason: suggest_line_contacts() no longer proposes them. Written by leave_line_unnamed(), removed by undo_leave_line_unnamed(). The line itself does not move and stays an open item (decision 0072).';
 comment on column lines_left_unnamed.reason is
   'Why the line names nobody, in the words of the person who decided it.';
 comment on column lines_left_unnamed.created_by is
@@ -158,7 +158,7 @@ end;
 $$;
 
 comment on function leave_line_unnamed(uuid, text) is
-  'Records that a person decided an open line on a receivable or payable account names nobody, with the reason: suggest_line_contacts() no longer proposes it. The line does not move and stays an open item. Needs reconcile.write. Refuses unknown_line, not_allowed, reason_required, reason_too_long, line_not_posted, line_has_contact, line_not_third_party, line_left_unnamed by name. undo_leave_line_unnamed() takes it back (decision 0073).';
+  'Records that a person decided an open line on a receivable or payable account names nobody, with the reason: suggest_line_contacts() no longer proposes it. The line does not move and stays an open item. Needs reconcile.write. Refuses unknown_line, not_allowed, reason_required, reason_too_long, line_not_posted, line_has_contact, line_not_third_party, line_left_unnamed by name. undo_leave_line_unnamed() takes it back (decision 0072).';
 
 revoke execute on function leave_line_unnamed(uuid, text) from public, anon;
 grant execute on function leave_line_unnamed(uuid, text) to authenticated, service_role;
@@ -234,7 +234,7 @@ as $$
       and l.matched_amount = 0
       and l.matching_number is null
       and abs(l.balance) > 0
-      -- A person decided this one names nobody (decision 0073).
+      -- A person decided this one names nobody (decision 0072).
       and not exists (select 1 from lines_left_unnamed u where u.line_id = l.id)
   ),
   -- The strongest piece of evidence for each contact of each line: a contact
@@ -418,7 +418,7 @@ begin
       and s.score >= v_policy.name_threshold
   ),
   -- A text whose words reach several contacts names none of them for sure
-  -- (decision 0073): each is capped at 0.600, below what a single name earns,
+  -- (decision 0072): each is capped at 0.600, below what a single name earns,
   -- and says how many the text reached. A label that is a contact's whole
   -- name is that contact, and keeps its 0.950.
   by_name_among as (

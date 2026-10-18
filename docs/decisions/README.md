@@ -92,8 +92,8 @@ consequence.
 - [0046](0046-settling-applies-identification-and-offers-resemblance.md) — Settling applies identification, offers resemblance
 - [0047](0047-a-statement-is-imported-once.md) — A bank statement is imported once
 - [0070](0070-a-line-that-names-nobody-is-named-once.md) — A third-party line that names nobody is named once
-- [0072](0072-several-lines-settle-together-and-a-difference-is-booked.md) — Several lines settle together, and a small difference is booked
-- [0073](0073-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt
+- [0071](0071-several-lines-settle-together-and-a-difference-is-booked.md) — Several lines settle together, and a small difference is booked
+- [0072](0072-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt
 
 ## Formats and modules
 

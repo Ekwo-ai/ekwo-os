@@ -374,7 +374,7 @@ describe('every command answers --json with one document of the published shape'
     const suggested = await asPerson(['line', 'contacts', 'suggest', '--line', anonymousLine]);
     expect(suggested.data).toMatchObject({ count: 1, lines: [{ line_id: anonymousLine, side: 'debit', amount: '7.00' }] });
     expect((await asPerson(['line', 'contact', 'set', anonymousLine, 'Client Example'])).exitCode).toBe(0);
-    // Left unnamed on purpose, then taken back (decision 0073).
+    // Left unnamed on purpose, then taken back (decision 0072).
     const unnamed = await root.query<{ id: string }>(
       `with e as (
          insert into entries (company_id, journal_id, entry_date, description)
@@ -397,7 +397,7 @@ describe('every command answers --json with one document of the published shape'
     await root.query(`select post_entry(entry_id) from entry_lines where id = $1`, [unnamedLine]);
     expect((await asPerson(['line', 'unnamed', 'leave', unnamedLine, '--reason', 'A cash difference'])).exitCode).toBe(0);
     expect((await asPerson(['line', 'unnamed', 'undo', unnamedLine])).exitCode).toBe(0);
-    // The named line against a credit of the same customer a little short: proposed, then matched with its difference (decision 0072).
+    // The named line against a credit of the same customer a little short: proposed, then matched with its difference (decision 0071).
     const short = await root.query<{ id: string }>(
       `with e as (
          insert into entries (company_id, journal_id, entry_date, description)

@@ -1,5 +1,5 @@
 -- Ekwo OS — several lines settle together, and a small difference is booked
--- (decision 0072).
+-- (decision 0071).
 --
 -- A matching screen over the receivable and payable accounts meets three
 -- shapes `reconcile()` does not answer in one gesture:
@@ -570,7 +570,7 @@ grant execute on function matching_difference_reasons(uuid) to authenticated, se
 alter table reconciliations add column adjustment_entry_id uuid references entries(id);
 
 comment on column reconciliations.adjustment_entry_id is
-  'The entry reconcile_with_difference() posted for the difference, on the matchings of its third-party line. unreconcile() of one of them takes the entry back with its mirror (decision 0072).';
+  'The entry reconcile_with_difference() posted for the difference, on the matchings of its third-party line. unreconcile() of one of them takes the entry back with its mirror (decision 0071).';
 
 create index reconciliations_adjustment_entry_idx on reconciliations (adjustment_entry_id)
   where adjustment_entry_id is not null;
@@ -977,7 +977,7 @@ begin
 
   -- A difference booked by reconcile_with_difference() goes the same way:
   -- every matching of its line, then its mirror, and the line matched with
-  -- the mirror's so that neither is left open (decision 0072).
+  -- the mirror's so that neither is left open (decision 0071).
   if v_row.adjustment_entry_id is not null then
     select * into v_adj from entries where id = v_row.adjustment_entry_id;
 

@@ -913,7 +913,7 @@ describe('a client writes nothing else — by the function', () => {
         params: [mine.receivableLineId, mine.contactId],
       },
       // Several lines in one gesture, with or without a difference: reconcile.write,
-      // asked before the set is checked further (decision 0072).
+      // asked before the set is checked further (decision 0071).
       'public.reconcile_many': {
         sql: `select * from reconcile_many(array[$1, $2]::uuid[])`,
         params: [mine.receivableLineId, mine.openPaymentLineId],
@@ -926,7 +926,7 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select * from match_lines(array[$1, $2]::uuid[], null)`,
         params: [mine.receivableLineId, mine.openPaymentLineId],
       },
-      // Leaving a line unnamed, and the undo: reconcile.write (decision 0073).
+      // Leaving a line unnamed, and the undo: reconcile.write (decision 0072).
       'public.leave_line_unnamed': {
         sql: `select leave_line_unnamed($1, 'by the client')`,
         params: [mine.receivableLineId],

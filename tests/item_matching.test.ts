@@ -4,7 +4,7 @@ import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
 import { newCompany, newContact, newUser, type Fixture } from './helpers/factory.js';
 import { newMember, refusalAs } from './helpers/integrity.js';
 
-// Decision 0072: several open lines of one counterparty on one account settle
+// Decision 0071: several open lines of one counterparty on one account settle
 // each other in one gesture, the proposals come from the one search a
 // statement line uses, and a small difference is booked on the account the
 // pack gives for its reason, then matched.

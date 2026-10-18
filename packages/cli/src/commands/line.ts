@@ -3,9 +3,9 @@
  *
  * `contacts suggest` and `contact set`: who a line that names nobody could be,
  * and naming it (decision 0070); `unnamed leave` and `unnamed undo`: leaving
- * it without a contact on purpose (decision 0073); `combinations suggest`,
+ * it without a contact on purpose (decision 0072); `combinations suggest`,
  * `match` and `differences list`: what settles what, several lines matched in
- * one gesture, and a small difference booked with its reason (decision 0072).
+ * one gesture, and a small difference booked with its reason (decision 0071).
  *
  * Each verb is a function of the core, which is the MCP tool of the same
  * name, which is the schema's function. The scores, the search, the accounts

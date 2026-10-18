@@ -214,7 +214,7 @@ bank charge that pays no item.
 | [`journal_templates`](#journal_templates) |  |
 | [`journals`](#journals) | Books of entry. The code is the first segment of every entry number. |
 | [`legal_mention_templates`](#legal_mention_templates) | The sentences a country requires on an invoice, and the closed condition that says when each applies. Reference data filled by a pack, never copied into a company. |
-| [`lines_left_unnamed`](#lines_left_unnamed) | Open lines on a receivable or payable account that a person decided to leave without a contact, with the reason: suggest_line_contacts() no longer proposes them. Written by leave_line_unnamed(), removed by undo_leave_line_unnamed(). The line itself does not move and stays an open item (decision 0073). |
+| [`lines_left_unnamed`](#lines_left_unnamed) | Open lines on a receivable or payable account that a person decided to leave without a contact, with the reason: suggest_line_contacts() no longer proposes them. Written by leave_line_unnamed(), removed by undo_leave_line_unnamed(). The line itself does not move and stays an open item (decision 0072). |
 | [`matching_sequences`](#matching_sequences) |  |
 | [`matching_settings`](#matching_settings) | What this company considers close enough. Every column is nullable and null means the shipped answer, which lives in matching_policy_of() and nowhere else — so a reader always gets a number and a company that never had an opinion has no row. |
 | [`modules`](#modules) | One row per module this installation carries, written by the module's own first migration. The registry is a table, not code. |
@@ -1516,7 +1516,7 @@ Constraints:
 
 ### `lines_left_unnamed`
 
-Open lines on a receivable or payable account that a person decided to leave without a contact, with the reason: suggest_line_contacts() no longer proposes them. Written by leave_line_unnamed(), removed by undo_leave_line_unnamed(). The line itself does not move and stays an open item (decision 0073).
+Open lines on a receivable or payable account that a person decided to leave without a contact, with the reason: suggest_line_contacts() no longer proposes them. Written by leave_line_unnamed(), removed by undo_leave_line_unnamed(). The line itself does not move and stays an open item (decision 0072).
 
 | Column | Type | Notes |
 |---|---|---|
@@ -1672,7 +1672,7 @@ One row per pairing of a debit with a credit. Full matching is the sum of partia
 | `created_at` | `timestamp with time zone` | not null |
 | `fx_entry_id` | `uuid` | The entry that booked the realised exchange difference this matching revealed, or null. Written by reconcile() and read by unreconcile(), which reverses it. |
 | `tax_transfer_entry_id` | `uuid` | Entry that moved the cash-basis tax this matching made due, when there was one. |
-| `adjustment_entry_id` | `uuid` | The entry reconcile_with_difference() posted for the difference, on the matchings of its third-party line. unreconcile() of one of them takes the entry back with its mirror (decision 0072). |
+| `adjustment_entry_id` | `uuid` | The entry reconcile_with_difference() posted for the difference, on the matchings of its third-party line. unreconcile() of one of them takes the entry back with its mirror (decision 0071). |
 
 Constraints:
 
@@ -2295,7 +2295,7 @@ Constraints:
 | `key_holds(p_key api_keys, p_company_id uuid, p_capability text)` | Whether one machine key holds one capability on one company now: the key is live and on that company, the capability is on its list, and the person who issued it holds it there today (member_holds). A key the installation issued, created_by null, is bounded by its list alone. Worked out at the call, never stored. |
 | `label_for(p_name text, p_i18n jsonb, p_languages text[])` | The label in the first language of the list that has one, and the row's own name when none of them does. The only place a translated label is chosen. |
 | `learn_contact_patterns(p_company_id uuid, p_contact_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[])` | What a decision teaches contact_patterns, from the same facts contact_candidates() scored: every motif that had named somebody else is charged a use without a success, and the account and the name as the line wrote them become learned motifs of the contact chosen. Called by confirm_contact() and set_line_contact(), the only two places a motif is learned. |
-| `leave_line_unnamed(p_line_id uuid, p_reason text)` | Records that a person decided an open line on a receivable or payable account names nobody, with the reason: suggest_line_contacts() no longer proposes it. The line does not move and stays an open item. Needs reconcile.write. Refuses unknown_line, not_allowed, reason_required, reason_too_long, line_not_posted, line_has_contact, line_not_third_party, line_left_unnamed by name. undo_leave_line_unnamed() takes it back (decision 0073). |
+| `leave_line_unnamed(p_line_id uuid, p_reason text)` | Records that a person decided an open line on a receivable or payable account names nobody, with the reason: suggest_line_contacts() no longer proposes it. The line does not move and stays an open item. Needs reconcile.write. Refuses unknown_line, not_allowed, reason_required, reason_too_long, line_not_posted, line_has_contact, line_not_third_party, line_left_unnamed by name. undo_leave_line_unnamed() takes it back (decision 0072). |
 | `legal_mention_treatments(p_applies_when text)` | The tax treatments a condition of legal_mention_templates.applies_when covers, or null for a condition that is not about a treatment (always, late_payment, cash_basis, small_business). The one place that says so: document_legal_mentions reads it to print the sentence, document_tax_summary to give a VAT group its reason. |
 | `line_contact_facts(p_line_id uuid)` | What a ledger line says about who it is, as contact_candidates() reads it: the label, the text of the label, the entry's description and reference, the amount in the currency the line is stated in, and the types of document whose number is evidence — sales for a receivable, purchases for a payable, by account_type. |
 | `locale_of_country_pack()` | Fills a company's currency and language from the pack of its fiscal country when the caller named neither. A pack that says nothing leaves them null, and NOT NULL refuses the row. |
