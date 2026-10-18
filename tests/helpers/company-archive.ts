@@ -303,6 +303,35 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     [companyId, transmission.id, `outbox/invoice-${tag}.xml`],
   );
 
+  // And the chained record of that sale, with one event of the system that
+  // keeps the chain: the first record of its chain, its file an issue of its
+  // own artefact. By hand too — which regime a pack declares is not the
+  // subject; that a chain travels with its hashes as they were is.
+  const record = await one<{ id: string }>(
+    db,
+    `insert into einvoicing.issues (company_id, document_id, artefact, sequence, profile, brick, filename, media_type,
+                                    content, byte_size, checksum, violations, sendable)
+     values ($1, $2, 'fiscal_record', 1, 'some-format', 'some-brick', 'record.xml', 'application/xml',
+             $3, octet_length($3), encode(sha256(convert_to($3, 'UTF8')), 'hex'), '[]'::jsonb, true)
+     returning id`,
+    [companyId, issue.document_id, `<Record>${tag}</Record>`],
+  );
+  await db.query(
+    `insert into einvoicing.fiscal_chain (company_id, system_id, seq, document_id, kind, format, issuer_tax_id, number,
+                                          issued_on, record, hash_input, hash_algorithm, hash_encoding, hash,
+                                          previous_hash, is_first, generated_at, generated_instant, mode, issue_id)
+     select $1, 'system:1', 1, d.id, 'alta', 'some-format', 'TAX-1', coalesce(d.number, 'N-1'), d.document_date,
+            jsonb_build_object('number', $3::text), 'number=' || $3::text, 'SHA-256', 'hex-lower',
+            encode(sha256(convert_to('number=' || $3::text, 'UTF8')), 'hex'), null, true,
+            '2026-01-05T10:00:00+01:00', '2026-01-05T10:00:00+01:00'::timestamptz, 'none', $4
+       from documents d where d.id = $2`,
+    [companyId, issue.document_id, tag, record.id],
+  );
+  await db.query(
+    `insert into einvoicing.fiscal_events (company_id, system_id, seq, kind, detail) values ($1, 'system:1', 1, 'summary', '{"records": 1}')`,
+    [companyId],
+  );
+
   // A piece on a document.
   const someDocument = [...replayed.documents.values()][0] as string;
   await db.query(

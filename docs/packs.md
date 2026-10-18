@@ -1315,6 +1315,55 @@ received.
 a format and not against a name somebody typed. The list grows with the
 country that needs it.
 
+### Fiscalisation: `einvoicing.fiscalisation`
+
+Some countries require the invoicing software itself to leave, for every
+invoice it issues, a record that cannot be changed, chained to the previous
+one by a hash, often shown on the invoice as a QR code and a sentence, and
+sent to the tax authority at once or later. A pack says so in an optional
+object of its `einvoicing` section. Left out, the country has no such regime;
+nothing is defaulted.
+
+```json
+"fiscalisation": {
+  "mandatory_from": [{ "who": "large", "from": "2030-01-01" }, { "who": "others", "from": "2031-01-01" }],
+  "format": "a-record-format",
+  "hash": { "algorithm": "SHA-256", "encoding": "hex-upper", "separator": "&",
+            "fields": { "alta": ["…", "…"], "anulacion": ["…"] } },
+  "qr": { "services": [{ "modes": ["realtime", "batch"], "environment": "production", "url": "https://…" }],
+          "size_mm": { "min": 30, "max": 40 }, "error_correction": "M" },
+  "mention": [{ "text": "…", "alternatives": ["…"], "modes": ["realtime", "batch"] }],
+  "submission": { "mode": "realtime", "modes": ["realtime", "batch", "none"],
+                  "batch_max": 1000, "interval_seconds": 60, "retry_seconds": 3600 },
+  "events": { "summary_every_hours": 6, "modes": ["none"] },
+  "tax_attributes": { "<tax code>": { "<attribute>": "<value>" } },
+  "legal_reference": "…", "source": "<register key>"
+}
+```
+
+| Field | What it says |
+|---|---|
+| `mandatory_from` | One date, or one per category of taxpayer (`who`, a short name the legal reference explains) |
+| `format` | The brick that writes the record, by the key of `FISCALISATION_FORMATS` in `@ekwo-ai/core`; one no brick writes is refused by name when a record is asked for, `format_without_brick` |
+| `hash` | The digest (`SHA-256`, `SHA-384`, `SHA-512`), its code in the authority's list and its encoding, the separator of the `name=value` pairs hashed, and the ordered fields covered — one list, or one per kind of record (`alta`, `anulacion`). The core reads the fields back out of the brick's text and the database recomputes the digest |
+| `qr` | The verification service — `url`, or `services` per mode and environment — the parameters, the standard, the error correction level, the size and quiet zone in millimetres, the words printed beside it |
+| `mention` | The sentence the invoice carries, with the alternatives the law accepts, per mode where it differs |
+| `submission` | The default `mode` and every mode the law allows: `realtime` (each record as it is made), `batch` (in messages), `none` (kept, handed over on request); the size of a batch, the wait between sendings, the longest a pending record waits |
+| `events` | How often a summary event is kept, and in which modes |
+| `tax_attributes` | What the brick needs on a tax line that its category does not decide alone, by code of a tax of this pack |
+
+Every sub-object may carry its own `legal_reference` and `source`; the block
+carries both, and `ekwo pack check` refuses it without them. It also refuses
+a day that does not exist, a mode named that `submission.modes` does not
+list, a `batch_max` where batch is not allowed, a QR size whose minimum is
+above its maximum, no production service for a mode the law allows, a field
+named twice in a hash list, and a `tax_attributes` code the pack does not
+carry. The block compiles, normalised (`mandatory_from` always a list,
+`hash.fields` always by kind, `*` for every kind), into
+`country_defaults.einvoice_fiscalisation`, which the `einvoicing` module
+reads when it chains a record. The schema names no country: every value of a
+regime is in its pack, with its article.
+
 ### The mentions, and when each applies
 
 `applies_when` is a closed vocabulary and never an expression: an accountant

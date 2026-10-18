@@ -114,7 +114,7 @@ describe('describePack', () => {
     for (const { pack, description } of described) {
       const profile = pack.documents.einvoice_profile;
       const obligation = pack.documents.einvoice_obligation;
-      if (profile === null && obligation === null) {
+      if (profile === null && obligation === null && pack.documents.einvoice_fiscalisation === null) {
         expect(description.einvoicing).toBeNull();
         continue;
       }
@@ -126,6 +126,13 @@ describe('describePack', () => {
         obligation ?? (pack.documents.einvoice_mandatory_from === null ? null : 'mandatory'),
       );
     }
+  });
+
+  it('describes the fiscalisation regime a pack declares, as the pack declares it', () => {
+    for (const { pack, description } of described) {
+      expect(description.einvoicing?.fiscalisation ?? null).toEqual(pack.documents.einvoice_fiscalisation);
+    }
+    expect(described.some(({ description }) => description.einvoicing?.fiscalisation)).toBe(true);
   });
 
   it('says of each role of the tax balance whether the pack names an account', () => {
