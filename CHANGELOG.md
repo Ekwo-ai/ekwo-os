@@ -11,6 +11,25 @@ somewhere has already run it.
 
 ### Added
 
+- **Fiscalisation, a capability of the `einvoicing` module.** A country pack
+  may declare `einvoicing.fiscalisation` — the chained record its law requires
+  the invoicing software to keep for every invoice: the format and its brick,
+  the dates, the fields the hash covers, the QR code, the sentence, how
+  records are sent, the events, each with its article. `ekwo pack check`
+  holds it to the schema and to what the schema cannot say; it compiles into
+  `country_defaults.einvoice_fiscalisation` (socle migration
+  `20261018014537`) and `pack describe` / `describe_pack` show it. The module,
+  version 1.1.0 (`20261018015212`), keeps `einvoicing.fiscal_chain` and
+  `einvoicing.fiscal_events`, immutable, with `append_fiscal_record()`,
+  `verify_fiscal_chain()` and `log_fiscal_event()`; a record's file is an
+  issue of artefact `fiscal_record`. The core registers formats in
+  `FISCALISATION_FORMATS`, with `@ekwo-ai/verifactu` first, and
+  `fiscaliseDocument()` / `fiscalisationStatus()` back `ekwo einvoice
+  fiscalise` / `fiscalisation` and the MCP tools `einvoicing_fiscalise` /
+  `einvoicing_fiscalisation_status`. Nothing is fiscalised on posting: the
+  status names the sales without a record. The Spanish pack (0.6.0) declares
+  VERI*FACTU from Orden HAC/1177/2024.
+
 - **What each product brought in, and cost.** `product_report(company, from,
   to)` (migration `20261016145816`) reads the posted invoices and credit notes
   dated in a period and gives, for each product named on a line and on each
