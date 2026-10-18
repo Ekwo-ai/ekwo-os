@@ -26,12 +26,14 @@ import {
   type DocumentLegalMentionRow,
   type DocumentLineRow,
   type DocumentTaxRow,
+  type FiscalQr,
   type InvoiceLabels,
   type InvoicePdfInput,
   type InvoiceTheme,
   type PageSize,
 } from '@ekwo-ai/invoice-pdf';
 import { EINVOICE_FORMATS, type EinvoiceViolation } from '../einvoicing/formats.js';
+import type { FiscalRegime } from '../einvoicing/fiscalisation.js';
 import { readEinvoiceSource } from '../einvoicing/issue.js';
 import { BooksError, type Backend, type Row } from './backend.js';
 import { onlyVisible } from './shared.js';
@@ -128,6 +130,64 @@ export async function readInvoiceTheme(backend: Backend, companyId: string): Pro
   };
 }
 
+/**
+ * The fiscal QR code of a document, or why it has none. Its country's regime
+ * is read as the socle compiled it from the pack, in `country_defaults`; the
+ * URL is the one the brick wrote into the document's last record of kind
+ * `alta` in `einvoicing.fiscal_chain`; the size is the smallest the regime
+ * allows, the quiet zone the one it recommends. Nothing is made up: without a
+ * record there is no URL, and the PDF is rendered without a code.
+ */
+export async function readFiscalQr(
+  backend: Backend,
+  documentId: string,
+  country: string | null,
+): Promise<{ qr: FiscalQr } | { skipped: string }> {
+  if (country === null) return { skipped: 'none' };
+  const [defaults] = await backend.select<{ einvoice_fiscalisation: FiscalRegime | null }>({
+    table: 'country_defaults',
+    columns: ['einvoice_fiscalisation'],
+    where: [{ column: 'country', op: 'eq', value: country }],
+  });
+  const regime = defaults?.einvoice_fiscalisation ?? null;
+  if (regime === null || regime.qr === null || regime.qr === undefined) return { skipped: 'none' };
+  const modules = await backend
+    .select<{ code: string; status: string }>({ table: 'modules', columns: ['code', 'status'], where: [{ column: 'code', op: 'eq', value: 'einvoicing' }] })
+    .catch(() => []);
+  if (!modules.some((row) => row.status !== 'draft')) {
+    return { skipped: 'the country prints a fiscal QR code, and the einvoicing module that keeps the records is not installed here' };
+  }
+  const [record] = await backend.select<{ verification_url: string | null; mode: string }>({
+    schema: 'einvoicing',
+    table: 'fiscal_chain',
+    columns: ['verification_url', 'mode'],
+    where: [
+      { column: 'document_id', op: 'eq', value: documentId },
+      { column: 'kind', op: 'eq', value: 'alta' },
+    ],
+    order: [{ column: 'seq', ascending: false }],
+    limit: 1,
+  });
+  if (record === undefined || record.verification_url === null) {
+    return { skipped: 'no fiscal record yet: einvoicing_fiscalise (ekwo einvoice fiscalise) chains one, and its QR code is printed from then on' };
+  }
+  const level = regime.qr.error_correction;
+  if (level !== 'L' && level !== 'M' && level !== 'Q' && level !== 'H') {
+    throw new BooksError(`invoice_pdf_unrenderable: the country pack asks for a QR code at error correction level ${level}, which is not L, M, Q or H.`);
+  }
+  const quiet = regime.qr.quiet_zone_mm;
+  return {
+    qr: {
+      content: record.verification_url,
+      errorCorrection: level,
+      sizeMm: regime.qr.size_mm.min,
+      quietZoneMm: quiet === null ? null : (quiet.recommended ?? quiet.min),
+      label: regime.qr.label,
+      mention: regime.mention.find((mention) => mention.modes.includes(record.mode as never))?.text ?? null,
+    },
+  };
+}
+
 /** What a logo fetch may be handed: the global `fetch`, or a test's. */
 export type LogoFetch = (url: string, init: { signal: AbortSignal; redirect: 'follow' | 'error' }) => Promise<{
   ok: boolean;
@@ -217,6 +277,8 @@ export interface DocumentPdf {
   page_count: number;
   /** `embedded`, `none` (the company names no logo), or why the one it names was not used. */
   logo: string;
+  /** `printed`, `none` (the country's regime prints no QR code, or it has none), or why the one it asks for is not there. */
+  fiscal_qr: string;
   /** Null without --factur-x; otherwise the rules of EN 16931 the embedded XML breaks, as the e-invoicing adapter names them. */
   factur_x: { profile: 'en16931'; violations: EinvoiceViolation[] } | null;
   file: Uint8Array;
@@ -249,6 +311,9 @@ export async function renderDocumentPdf(
       } else logo = fetched.skipped;
     }
   }
+
+  const fiscal = await readFiscalQr(backend, args.document_id, typeof header.country === 'string' ? header.country : null);
+  if ('qr' in fiscal) input.fiscalQr = fiscal.qr;
 
   const options = {
     theme: await readInvoiceTheme(backend, String(header.company_id)),
@@ -294,6 +359,7 @@ export async function renderDocumentPdf(
     byte_size: rendered.file.byteLength,
     page_count: rendered.pageCount,
     logo,
+    fiscal_qr: 'qr' in fiscal ? 'printed' : fiscal.skipped,
     factur_x: factur,
     file: rendered.file,
   };

@@ -362,7 +362,8 @@ What the views do not carry yet, and the page therefore cannot print:
 logo the company names by URL (from a public http(s) address only), and call
 this package — through `renderDocumentPdf()` of `@ekwo-ai/core`, which writes
 the CII with the adapter of the `einvoicing` formats when Factur-X is asked
-for.
+for, and passes the fiscal QR code where the country's pack declares one and
+the document has its fiscal record.
 
 ## Development
 

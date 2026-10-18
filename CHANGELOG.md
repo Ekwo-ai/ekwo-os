@@ -11,6 +11,17 @@ somewhere has already run it.
 
 ### Added
 
+- **The fiscal QR code on the PDF of an invoice.** `@ekwo-ai/invoice-pdf`
+  gains `encodeQr()`, a QR encoder of ISO/IEC 18004 with no dependency (byte
+  mode, levels L to H, versions 1 to 10), tested against the vectors
+  published with the standard, and `fiscalQr`, drawn in vectors on the first
+  page right of the buyer, with its label above and its mention under it.
+  `renderDocumentPdf()` — `ekwo doc pdf`, `render_invoice_pdf` — passes it
+  where the company's pack declares a fiscalisation QR code and the sale has
+  an `alta` record in `einvoicing.fiscal_chain`: its verification URL, the
+  smallest size and the recommended quiet zone of the pack, the label, and
+  the sentence of the record's mode. `fiscal_qr` in the result says
+  `printed`, `none`, or why not.
 - **Fiscalisation, a capability of the `einvoicing` module.** A country pack
   may declare `einvoicing.fiscalisation` — the chained record its law requires
   the invoicing software to keep for every invoice: the format and its brick,
