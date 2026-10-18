@@ -24,10 +24,12 @@ import { InvoicePdfError } from './errors.js';
 import { decimal, formatterFor, groupIban, isZero, type Formatter } from './format.js';
 import { labelsWith } from './labels.js';
 import { embedLogo } from './logo.js';
+import { encodeQr, type QrErrorCorrection } from './qr.js';
 import { clean, refuseRightToLeft, typesetter, type Typesetter } from './text.js';
 import { INK, resolveTheme } from './theme.js';
 import type {
   DocumentHeaderRow,
+  FiscalQr,
   InvoiceLabels,
   InvoicePdfInput,
   InvoicePdfOptions,
@@ -134,6 +136,58 @@ class Canvas {
 
 const lineHeight = (size: number): number => size * LEADING;
 
+const POINTS_PER_MM = 72 / 25.4;
+
+/**
+ * The fiscal QR code, its label above and its mention under it, at the size
+ * and with the blank margin the regime asks for: measured first, so that the
+ * buyer's panels make room for it, then drawn. Each row of dark modules is one
+ * rectangle per run, all filled at once: no seam between two modules, nothing
+ * rasterised.
+ */
+async function fiscalQrBlock(
+  canvas: Canvas,
+  qr: FiscalQr,
+): Promise<{ width: number; height: number; draw: (x: number, top: number) => Promise<void> }> {
+  const content = text(qr.content);
+  if (content === null) throw new InvoicePdfError('missing_field', 'the fiscal QR code has no content');
+  if (typeof qr.sizeMm !== 'number' || !Number.isFinite(qr.sizeMm) || qr.sizeMm <= 0) {
+    throw new InvoicePdfError('invalid_value', `${String(qr.sizeMm)} mm is not the size of a QR code`);
+  }
+  const quietMm = qr.quietZoneMm ?? null;
+  if (quietMm !== null && (typeof quietMm !== 'number' || !Number.isFinite(quietMm) || quietMm < 0)) {
+    throw new InvoicePdfError('invalid_value', `${String(quietMm)} mm is not a quiet zone`);
+  }
+  const code = encodeQr(content, qr.errorCorrection as QrErrorCorrection);
+  const side = qr.sizeMm * POINTS_PER_MM;
+  const module = side / code.size;
+  const quiet = Math.max(quietMm === null ? 0 : quietMm * POINTS_PER_MM, 4 * module);
+  const label = text(qr.label);
+  const mention = text(qr.mention);
+  const labelLines = label === null ? [] : await canvas.ts.wrap(label, BODY, side, true);
+  const mentionLines = mention === null ? [] : await canvas.ts.wrap(mention, SMALL, side, false);
+  let path = '';
+  code.modules.forEach((row, y) => {
+    for (let x = 0; x < code.size; x++) {
+      if (!row[x]) continue;
+      let end = x;
+      while (end + 1 < code.size && row[end + 1]) end++;
+      path += `M${x} ${y}h${end - x + 1}v1h${-(end - x + 1)}z`;
+      x = end;
+    }
+  });
+  return {
+    width: side + 2 * quiet,
+    height: labelLines.length * lineHeight(BODY) + 2 * quiet + side + mentionLines.length * lineHeight(SMALL),
+    draw: async (x, top) => {
+      let y = top - (await paragraph(canvas, labelLines, x + quiet, top, { bold: true }));
+      canvas.page.drawSvgPath(path, { x: x + quiet, y: y - quiet, scale: module, color: INK, borderWidth: 0 });
+      y -= 2 * quiet + side;
+      await paragraph(canvas, mentionLines, x + quiet, y, { size: SMALL });
+    },
+  };
+}
+
 /** A block of lines, drawn from the cursor down; returns the height used. */
 async function paragraph(
   canvas: Canvas,
@@ -208,6 +262,8 @@ function refuseRightToLeftAnywhere(input: InvoicePdfInput, labels: InvoiceLabels
     for (const [key, value] of Object.entries(tax)) check(value, `document_tax_summary[${i}].${key}`);
   });
   (input.mentions ?? []).forEach((mention, i) => check(mention.text, `document_legal_mentions[${i}].text`));
+  check(input.fiscalQr?.label, 'fiscalQr.label');
+  check(input.fiscalQr?.mention, 'fiscalQr.mention');
   for (const [key, value] of Object.entries(labels)) check(value, `labels.${key}`);
 }
 
@@ -390,10 +446,9 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   canvas.rule(canvas.y, canvas.left, canvas.right, theme.accent, 0.8);
   canvas.y -= 12;
 
-  // --- the buyer, and where the goods went: each on a shaded panel, side by side
+  // --- the buyer, and where the goods went: each on a shaded panel, side by side; on the right, the fiscal QR code
   const panelPad = 8;
-  const partyWidth = contentWidth * 0.48;
-  const partyText = partyWidth - 2 * panelPad;
+  const fiscal = input.fiscalQr === undefined || input.fiscalQr === null ? null : await fiscalQrBlock(canvas, input.fiscalQr);
   const buyerLines: string[] = addressLines(
     f,
     header.buyer_address_line1,
@@ -415,6 +470,10 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   const buyerEndpoint = text(header.buyer_peppol_identifier);
   if (buyerScheme !== null && buyerEndpoint !== null) buyerLines.push(`${labels.electronicAddress}: ${buyerScheme}:${buyerEndpoint}`);
   const delivery = addressLines(f, header.delivery_address_line1, null, header.delivery_postal_code, header.delivery_city, null, header.delivery_country);
+  const gap = contentWidth * 0.04;
+  const partyWidth =
+    fiscal === null || delivery.length === 0 ? contentWidth * 0.48 : (contentWidth - fiscal.width - 2 * gap) / 2;
+  const partyText = partyWidth - 2 * panelPad;
 
   /** A party: its heading, its name in bold, its lines — measured, so that the panel is drawn under them first. */
   const party = async (heading: string, name: string | null, lines: readonly string[]): Promise<[string[], string[], string[]]> => {
@@ -427,14 +486,15 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   const panelHeight =
     Math.max(...panels.map(([h, n, l]) => h.length * lineHeight(SMALL) + n.length * lineHeight(10.5) + l.length * lineHeight(BODY))) + 2 * panelPad;
   for (const [i, [heading, name, lines]] of panels.entries()) {
-    const x = canvas.left + i * (contentWidth - partyWidth);
+    const x = fiscal === null ? canvas.left + i * (contentWidth - partyWidth) : canvas.left + i * (partyWidth + gap);
     canvas.shade(x, canvas.y - panelHeight, partyWidth, panelHeight);
     let y = canvas.y - panelPad;
     y -= await paragraph(canvas, heading, x + panelPad, y, { size: SMALL, bold: true, color: MUTED });
     y -= await paragraph(canvas, name, x + panelPad, y, { size: 10.5, bold: true });
     await paragraph(canvas, lines, x + panelPad, y);
   }
-  canvas.y -= panelHeight + 16;
+  if (fiscal !== null) await fiscal.draw(canvas.right - fiscal.width, canvas.y);
+  canvas.y -= Math.max(panelHeight, fiscal?.height ?? 0) + 16;
 
   // --- the lines
   const products = input.lines.filter((l) => (text(l.line_type) ?? 'product') === 'product');

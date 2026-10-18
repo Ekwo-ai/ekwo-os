@@ -274,6 +274,26 @@ export interface InvoiceTheme {
   logoPosition?: 'left' | 'right';
 }
 
+/**
+ * The QR code a fiscalisation regime requires on the invoice, and the words
+ * around it — every value as the country's rules give it; nothing here has a
+ * default of its own but the quiet zone.
+ */
+export interface FiscalQr {
+  /** What the code encodes: the verification URL of the document's fiscal record. Written in byte mode, as UTF-8. */
+  content: string;
+  /** `L`, `M`, `Q` or `H`. */
+  errorCorrection: 'L' | 'M' | 'Q' | 'H';
+  /** The side of the code, quiet zone left out, in millimetres. */
+  sizeMm: number;
+  /** The blank margin kept around the code, in millimetres. Defaults to four modules, the minimum of ISO/IEC 18004. */
+  quietZoneMm?: number | null;
+  /** Printed above the code. */
+  label?: string | null;
+  /** Printed under the code: the sentence of the regime. */
+  mention?: string | null;
+}
+
 /** What {@link renderInvoicePdf} reads: the four views of one document, and the bytes of a logo. */
 export interface InvoicePdfInput {
   header: DocumentHeaderRow;
@@ -282,6 +302,8 @@ export interface InvoicePdfInput {
   mentions?: readonly DocumentLegalMentionRow[];
   /** PNG, or RGB or grey JPEG, bytes; a PNG's transparency is flattened on white. Never a URL: this package fetches nothing. */
   logo?: Uint8Array | ArrayBuffer | null;
+  /** Drawn in vectors at the top of the first page, under the title, with its label above and its mention under it. */
+  fiscalQr?: FiscalQr | null;
 }
 
 export interface InvoicePdfOptions {

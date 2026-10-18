@@ -266,3 +266,59 @@ describe('what it refuses', () => {
     expect((await refusal(() => renderInvoicePdf(englishInvoice(), { locale: 'not a tag' }))).code).toBe('invalid_language');
   });
 });
+
+describe('a fiscal QR code', () => {
+  const fiscalQr = {
+    content: 'https://example.com/verify?id=INV-2026-0042&total=121.00',
+    errorCorrection: 'M' as const,
+    sizeMm: 30,
+    quietZoneMm: 6,
+    label: 'Fiscal QR:',
+    mention: 'Invoice verifiable with the tax authority',
+  };
+
+  it('is drawn in vectors on the first page, beside the buyer, its label above and its mention under it', async () => {
+    const rendered = await renderInvoicePdf(englishInvoice({ fiscalQr }));
+    expect(rendered.pageCount).toBe(1);
+    const first = rendered.text[0] ?? [];
+    const label = first.indexOf('Fiscal QR:');
+    expect(label).toBeGreaterThan(first.indexOf(ENGLISH_LABELS.billTo));
+    // The mention is wrapped to the width of the code, under it.
+    expect(first.slice(label + 1).join(' ')).toMatch(/^Invoice verifiable with the tax authority/);
+    expect(first.indexOf(ENGLISH_LABELS.description)).toBeGreaterThan(label);
+    expect(await imagesOf(rendered.file)).toBe(0);
+  });
+
+  it('narrows the buyer and the delivery panels to make room for it', async () => {
+    const input = englishInvoice({ fiscalQr });
+    input.header = { ...input.header, delivery_address_line1: 'Lagerweg 1', delivery_postal_code: '10115', delivery_city: 'Berlin', delivery_country: 'DE' };
+    const rendered = await renderInvoicePdf(input);
+    expect(rendered.pageCount).toBe(1);
+    expect(all(rendered.text)).toContain(ENGLISH_LABELS.deliverTo);
+    expect(all(rendered.text)).toContain('Fiscal QR:');
+  });
+
+  it('takes the room it asks for: the page grows by the code, its quiet zone, its label and its mention', async () => {
+    const without = await renderInvoicePdf(longInvoice(30));
+    const withQr = await renderInvoicePdf({ ...longInvoice(30), fiscalQr });
+    expect(withQr.pageCount).toBeGreaterThanOrEqual(without.pageCount);
+    expect(withQr.text.slice(1).flat()).not.toContain('Fiscal QR:');
+  });
+
+  it('prints the code alone when the regime gives no label and no mention', async () => {
+    const rendered = await renderInvoicePdf(englishInvoice({ fiscalQr: { ...fiscalQr, label: null, mention: null } }));
+    expect(all(rendered.text)).not.toContain('Fiscal QR:');
+  });
+
+  it('refuses a code without content, a size that is not one, and a URL no version up to 10 holds', async () => {
+    for (const bad of [
+      { ...fiscalQr, content: ' ' },
+      { ...fiscalQr, sizeMm: 0 },
+      { ...fiscalQr, quietZoneMm: -1 },
+      { ...fiscalQr, content: `https://example.com/${'a'.repeat(300)}` },
+    ]) {
+      const error = await refusal(() => renderInvoicePdf(englishInvoice({ fiscalQr: bad })));
+      expect(['missing_field', 'invalid_value']).toContain(error.code);
+    }
+  });
+});
