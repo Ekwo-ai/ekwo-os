@@ -671,6 +671,27 @@
           "note": { "type": "string" }
         }
       },
+      "analytic axes": {
+        "$comment": "The analytic axes of the company, each with its values.",
+        "type": "object",
+        "required": ["axes", "count"],
+        "properties": {
+          "axes": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "count": { "type": "integer" }
+        }
+      },
+      "analytic report": {
+        "$comment": "analytic_report() of the schema: income, expense and result per value of one axis, read from the posted ledger, and the part no share of the axis reaches. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["period", "axis", "values", "unassigned", "note"],
+        "properties": {
+          "period": { "type": "object", "required": ["from", "to"] },
+          "axis": { "$ref": "#/$defs/row" },
+          "values": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "unassigned": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "note": { "type": "string" }
+        }
+      },
       "proof stamp": {
         "$comment": "The proof recorded for the sha256 of the file, without its bytes. already_proved: the same bytes were proved before and nothing was submitted. calendars_failed: the calendars that did not answer, when enough others did.",
         "type": "object",

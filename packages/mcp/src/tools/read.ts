@@ -33,7 +33,7 @@ import {
 
 // Moved to the core with the writing half they are read back by; exported
 // from here under the names they always had.
-export { getDocument, listDocuments, searchContacts, suggestDuplicateContacts } from '@ekwo-ai/core';
+export { analyticReport, getDocument, listAnalyticAxes, listDocuments, searchContacts, suggestDuplicateContacts } from '@ekwo-ai/core';
 
 export const uuid = z.string().uuid();
 export const isoDate = z
@@ -868,6 +868,17 @@ export async function financialAnalysis(
           : signs,
   };
 }
+
+export const ListAnalyticAxesInput = z.object({
+  company_id: companyId,
+});
+
+export const AnalyticReportInput = z.object({
+  company_id: companyId,
+  axis: z.string().min(1).describe('The analytic axis, by its code or its id: list_analytic_axes names them.'),
+  from: isoDate.describe('First day of the period.'),
+  to: isoDate.describe('Last day of the period.'),
+});
 
 export const GenerateFecInput = z.object({
   company_id: companyId,

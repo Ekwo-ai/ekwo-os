@@ -203,6 +203,7 @@ reach and whether you may write; without that box ticked, you read.
 | A received Peppol file, or whether a recipient is on Peppol (no installation needed) | `ekwo peppol validate <file>`, `ekwo peppol lookup <participant>` | — |
 | The VAT return of a period | — | `vat_return` |
 | Trial balance, ledger | — | `trial_balance`, `general_ledger` |
+| The result by project, cost centre or site | `ekwo analytic report --axis <code> --from … --to …` | `list_analytic_axes`, `analytic_report` |
 
 A line names its account and its tax by **code**, never by rate: several taxes
 share a rate. The codes are the country's: on its set-up page, and from

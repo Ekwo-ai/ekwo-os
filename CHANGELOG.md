@@ -75,6 +75,17 @@ somewhere has already run it.
   line at 100 % on an axis it leaves free, and never constrain it. A document
   with no split posts exactly as before.
 
+- **The result by activity** (socle migration `20261019130500`, decision 0075).
+  `analytic_report(company, axis, from, to)` reads the posted ledger: the
+  income, expense and result of each value of an axis, from the whole income
+  statement — salaries, rent and depreciation included — and one row for the
+  part no share of the axis reaches, so the rows add up to the result of the
+  period, closing entry left out. It needs `entries.read` and
+  `settings.read`, and refuses `unknown_analytic_axis` and `invalid_period`.
+  The MCP server gains `list_analytic_axes` and `analytic_report`; the command
+  line gains `ekwo analytic axes` and `ekwo analytic report --axis <code>
+  --from <date> --to <date>`, both through `analyticReport()` of the core.
+
 ## [0.14.0] — 2026-10-18
 
 ### Added

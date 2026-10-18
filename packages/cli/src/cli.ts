@@ -6,6 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { UsageError, boolFlag, parseArgs, type ParsedArgs } from './args.js';
+import { analyticCommand } from './commands/analytic.js';
 import { companyCommand } from './commands/company.js';
 import { contactCommand } from './commands/contact.js';
 import { demoCommand } from './commands/demo.js';
@@ -64,6 +65,7 @@ export const COMMANDS = [
   'line',
   'payment',
   'match',
+  'analytic',
   'import',
   'proof',
   'einvoice',
@@ -176,6 +178,11 @@ ${bold('Connecting')} ${dim('(every command)')}
               each; --extra "account=<code>,amount=<amount>,tax=<code>" books
               a fee or a charge the line is net of in the same entry, and
               --extra alone settles a bank charge. It balances to the cent.
+  ${cyan('analytic')}    axes — the analytic axes of the company and their values; report
+              --axis <code> --from <date> --to <date> — the income, expense
+              and result of each value of the axis, from the posted ledger,
+              and the part no share of the axis reaches. They add up to the
+              result of the period.
   ${cyan('import')}      <source> <file>… — books kept elsewhere, whole or not at all:
               trial-balance, fec, journal-items, journal-report,
               transaction-journal, xaf, or the export of another ledger by
@@ -519,6 +526,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await reverseCommand(args, deps);
       case 'line':
         return await lineCommand(args, deps);
+      case 'analytic':
+        return await analyticCommand(args, deps);
       case 'payment':
         return await paymentCommand(args, deps);
       case 'match':

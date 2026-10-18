@@ -234,6 +234,8 @@ Every write names its company explicitly.
 | `portfolio_filings_touched_since` | Declarations that have gone and whose period received entries afterwards, across the same companies, with the company named |
 | `list_statements` / `financial_statement` | The schemes a company can be presented on, and one statement |
 | `financial_analysis` | Revenue, net result, equity, total and current assets, cash, receivables, payables and the other aggregates of an analysis, each with the accounts that make it, as the country pack defines them, or read by account type through the generic framework where it defines none — `source` says which ([`docs/analysis.md`](../../docs/analysis.md)) |
+| `list_analytic_axes` | The analytic axes of a company — a cost centre, a project, a site — and the values of each, which may nest |
+| `analytic_report` | The income, expense and result of each value of one axis over a period, from the posted ledger, the whole income statement included, and `unassigned`, the part no share of the axis reaches; they add up to the result of the period ([decision 0075](../../docs/decisions/0075-an-analytic-value-is-entered-on-the-line.md)) |
 | `generate_fec` | The French FEC as text, with its checks and its filename, for a company that keeps French books |
 | `read_audit_log` | Who changed what and when: the configuration of a company, and the acts that change a state. Append-only for every client; only the database writes it |
 | `get_preferences` | What you prefer, and the language chain to read labels with |
