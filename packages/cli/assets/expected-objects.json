@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.13.0",
-  "migration": "20261018023930",
+  "migration": "20261018102431",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4057,6 +4057,10 @@
         "arguments": "p_attachment_id uuid"
       },
       {
+        "name": "attachments_guard_document",
+        "arguments": ""
+      },
+      {
         "name": "audit_changes",
         "arguments": ""
       },
@@ -5586,6 +5590,10 @@
       {
         "table": "api_keys",
         "name": "api_keys_audit"
+      },
+      {
+        "table": "attachments",
+        "name": "attachments_guard_document"
       },
       {
         "table": "audit_log",
@@ -7593,6 +7601,14 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "attachments_guard_document",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "audit_changes",

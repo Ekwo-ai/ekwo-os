@@ -25,7 +25,7 @@ companies ─┬─ company_members            who may read or write, in four pr
            ├─ reconciliations            bilateral matching, by amount
            ├─ bank_accounts ── bank_statements ── bank_transactions
            ├─ analytic_axes ── analytic_values ── entry_line_analytics
-           └─ attachments                files, polymorphic
+           └─ attachments                files; an invoice's piece on its document
 ```
 
 Reference data sits outside any company: `currencies`, `currency_rates`, and
@@ -55,6 +55,10 @@ the four template tables plus `country_defaults` that
    into them; they cannot read a ledger they were not invited to.
 7. **The instance row is a singleton.** A primary key of `1` and a check
    constraint make a second row impossible, not merely unusual.
+8. **A piece goes on its document.** An invoice, a credit note or a receipt
+   is attached to the document (`attachments.entity_type = 'document'`). An
+   entry that a document posted refuses a file and names the document to use;
+   an entry no document posted keeps its own piece (decision 0069).
 
 ## Registration is opt-in
 

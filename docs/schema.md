@@ -25,7 +25,7 @@ companies ─┬─ company_members            who may read or write, in four pr
            ├─ reconciliations            bilateral matching, by amount
            ├─ bank_accounts ── bank_statements ── bank_transactions
            ├─ analytic_axes ── analytic_values ── entry_line_analytics
-           └─ attachments                files, polymorphic
+           └─ attachments                files; an invoice's piece on its document
 ```
 
 Reference data sits outside any company: `currencies`, `currency_rates`, and
@@ -55,6 +55,10 @@ the four template tables plus `country_defaults` that
    into them; they cannot read a ledger they were not invited to.
 7. **The instance row is a singleton.** A primary key of `1` and a check
    constraint make a second row impossible, not merely unusual.
+8. **A piece goes on its document.** An invoice, a credit note or a receipt
+   is attached to the document (`attachments.entity_type = 'document'`). An
+   entry that a document posted refuses a file and names the document to use;
+   an entry no document posted keeps its own piece (decision 0069).
 
 ## Registration is opt-in
 
@@ -171,7 +175,7 @@ bank charge that pays no item.
 | [`analytic_axes`](#analytic_axes) | Analytic dimensions: cost centre, project, activity. |
 | [`analytic_values`](#analytic_values) | Values of an axis, optionally hierarchical. |
 | [`api_keys`](#api_keys) | Machine access to one company. Hashed at rest, scoped to an explicit list of capabilities, and never wider than the person who issued it — at issuance and at every use. |
-| [`attachments`](#attachments) | Files attached to any record. `entity_type` is constrained rather than free text. |
+| [`attachments`](#attachments) | Files attached to any record. `entity_type` is constrained rather than free text. An invoice or a receipt goes on its document; an entry takes a file only when no document posted it (trigger attachments_guard_document). |
 | [`audit_log`](#audit_log) | Append-only record of every change to the configuration and reference data of a company, and of the acts that change the state of a document, a payment, a financial year or a pack. Written by trigger, never by a client, and no client rewrites it: no role is granted update, delete or truncate, and triggers refuse them. The owner of the database is bound only while it leaves those triggers enabled. |
 | [`bank_accounts`](#bank_accounts) | Bank and card accounts, each mapped to a ledger account and a journal. |
 | [`bank_statement_lines`](#bank_statement_lines) | Which lines a statement lists. A line is stored once, in bank_transactions, under the first statement that brought it; a later statement that overlaps the first lists the same line here instead of duplicating it, and its closing balance is proved over the list. |
@@ -432,7 +436,7 @@ Constraints:
 
 ### `attachments`
 
-Files attached to any record. `entity_type` is constrained rather than free text.
+Files attached to any record. `entity_type` is constrained rather than free text. An invoice or a receipt goes on its document; an entry takes a file only when no document posted it (trigger attachments_guard_document).
 
 | Column | Type | Notes |
 |---|---|---|
@@ -2125,6 +2129,7 @@ Constraints:
 | `assert_references_within_company(p_schema text)` | Raises reference_across_companies, naming every table and column and how many rows, when a row of the schema names a row of another company by a key scope_references_to_company() is about to make composite. One anti-join per key, run before anything changes. For migrations (decision 0065). |
 | `assert_writes_into_known_company(p_company_id uuid)` | Refuses a person or a machine key who writes a row into a company they may not know of (may_know_of_company()), with one answer whether the company exists or not. Called by the definer guards before they read anything for that row. The backend role, the owner and the installer are neither, and pass: the guard then runs for them in full (decision 0065). |
 | `attachment_is_filing_deposit_file(p_attachment_id uuid)` | Whether a deposit of a declaration names this attachment as the file that was sent or as the receipt. Definer, because the policy of attachments asks it for callers who may not read the deposits — which is the case it exists for; it answers about one id and nothing else, and about a company the caller may not know of as about nobody (decision 0065). |
+| `attachments_guard_document()` | Refuses a file on an entry that a document posted: the invoice or receipt is the piece of the document, and goes on it (entity_type = document). An entry no document posted keeps its own pieces. |
 | `audit_changes()` | The generic audit trigger. One jsonb argument names the company column, the natural key, the columns to redact and the acts an insert or a delete stands for. |
 | `audit_entry_posting()` | Records that an entry was posted, cancelled, or posted as the reversal of another. The lines themselves are not audited: a posted entry is immutable and is corrected by a reversal. |
 | `audit_log_is_append_only()` | Refuses every update and every delete on audit_log to any role a grant reaches — no client holds those verbs, and this refuses them again. A delete passes only while ekwo.audit_purge names a date, for a row older than it, by the owner of the table, which is how purge_audit_log() runs. The owner can disable this trigger: it keeps clients from rewriting the history, not the owner of the database. |

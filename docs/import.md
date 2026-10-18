@@ -180,6 +180,20 @@ each item names its contact by id, and the MCP tool `opening_balance`
 (`opening_date`, `items`). See
 [decision 0067](decisions/0067-an-opening-on-the-day-of-the-takeover.md).
 
+## Invoices and their pieces
+
+The ledger is the minimum an import brings. When the former system also holds
+the invoices — a purchase with its supplier, lines and taxes, and the PDF
+behind it — bring them in as documents: the purchase or sale becomes a
+`documents` row, its entry is the one the document posts, and the PDF goes on
+the document (`attachments.entity_type = 'document'`). Never hang the PDF on a
+ledger entry that stands in for an invoice: a document is what a reader opens
+to find the receipt, and an entry posted by a document refuses a file
+(decision 0069). For a year already closed, reopen it with
+`reopen_fiscal_year()`, replace the imported purchase entries by documents
+(reversing the imported entries on their own date), check that the trial
+balance is unchanged account by account, and close it again.
+
 ## What an import does not do
 
 - **No tax.** A line arrives with an account and an amount, not with the tax

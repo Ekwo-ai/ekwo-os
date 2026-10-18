@@ -11,6 +11,13 @@ somewhere has already run it.
 
 ### Added
 
+- **A piece goes on its document** (socle migration `20261018102431`,
+  decision 0069). An invoice, a credit note or a receipt is attached to its
+  document. The trigger `attachments_guard_document` refuses a file on an
+  entry that a document posted, with `attachment_belongs_on_document` naming
+  the document to attach to instead; an entry no document posted keeps its own
+  pieces. `docs/import.md` says how a taken-over history brings its invoices
+  in as documents, with their PDFs.
 - **Fiscalisation, a capability of the `einvoicing` module.** A country pack
   may declare `einvoicing.fiscalisation` — the chained record its law requires
   the invoicing software to keep for every invoice: the format and its brick,

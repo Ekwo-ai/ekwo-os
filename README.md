@@ -338,7 +338,7 @@ companies ─┬─ company_members            who may read or write, and what t
            ├─ reconciliations            bilateral matching, by amount
            ├─ bank_accounts ── bank_statements ── bank_transactions
            ├─ analytic_axes ── analytic_values ── entry_line_analytics
-           └─ attachments                files, polymorphic
+           └─ attachments                files; an invoice's piece on its document
 user_preferences                         one row per person, null everywhere
 ```
 
