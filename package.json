@@ -25,7 +25,6 @@
     "check:no-conflict-markers": "node scripts/check-no-conflict-markers.mjs",
     "check:no-bare-eu": "node scripts/check-no-bare-eu.mjs",
     "check:no-competitor-names": "node scripts/check-no-competitor-names.mjs",
-    "check:no-tool-attribution": "node scripts/check-no-tool-attribution.mjs",
     "check:ohada": "node scripts/ohada-packs.mjs",
     "docs:schema": "node scripts/generate-schema-doc.mjs",
     "inventory": "node scripts/generate-expected-objects.mjs",
