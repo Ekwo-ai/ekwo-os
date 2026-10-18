@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.14.0",
-  "migration": "20261018210500",
+  "migration": "20261018230000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -3048,6 +3048,43 @@
         ]
       },
       {
+        "name": "reconciliation_batches",
+        "columns": [
+          {
+            "name": "amount",
+            "type": "numeric"
+          },
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "created_by",
+            "type": "uuid"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "pair_count",
+            "type": "integer"
+          },
+          {
+            "name": "undone_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "undone_by",
+            "type": "uuid"
+          }
+        ]
+      },
+      {
         "name": "reconciliations",
         "columns": [
           {
@@ -3057,6 +3094,10 @@
           {
             "name": "amount",
             "type": "numeric(16,2)"
+          },
+          {
+            "name": "batch_id",
+            "type": "uuid"
           },
           {
             "name": "company_id",
@@ -4418,6 +4459,10 @@
         "arguments": ""
       },
       {
+        "name": "documents_match_credit_note_on_posting",
+        "arguments": ""
+      },
+      {
         "name": "documents_refresh_amount_paid",
         "arguments": "p_document_id uuid"
       },
@@ -4463,6 +4508,10 @@
       },
       {
         "name": "entries_guard_posted",
+        "arguments": ""
+      },
+      {
+        "name": "entries_match_reversal_on_posting",
         "arguments": ""
       },
       {
@@ -4722,6 +4771,10 @@
         "arguments": "p_entry_id uuid, p_reversal_id uuid"
       },
       {
+        "name": "matchable_lines",
+        "arguments": "p_company_id uuid, p_contact_id uuid"
+      },
+      {
         "name": "matching_difference_reasons",
         "arguments": "p_company_id uuid"
       },
@@ -4739,6 +4792,10 @@
       },
       {
         "name": "may_know_of_company",
+        "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "may_match_on_posting",
         "arguments": "p_company_id uuid"
       },
       {
@@ -4870,12 +4927,20 @@
         "arguments": "p_line_a uuid, p_line_b uuid, p_amount numeric"
       },
       {
+        "name": "reconcile_batch",
+        "arguments": "p_pairs jsonb"
+      },
+      {
         "name": "reconcile_many",
         "arguments": "p_line_ids uuid[]"
       },
       {
         "name": "reconcile_with_difference",
         "arguments": "p_line_ids uuid[], p_reason text"
+      },
+      {
+        "name": "reconciliation_batches_guard",
+        "arguments": ""
       },
       {
         "name": "reconciliations_guard_cancelled",
@@ -5034,6 +5099,10 @@
         "arguments": "p_transaction_id uuid"
       },
       {
+        "name": "suggest_sure_pairs",
+        "arguments": "p_company_id uuid, p_contact_id uuid"
+      },
+      {
         "name": "supersede_filing",
         "arguments": "p_filing_id uuid"
       },
@@ -5108,6 +5177,10 @@
       {
         "name": "unreconcile",
         "arguments": "p_reconciliation_id uuid"
+      },
+      {
+        "name": "unreconcile_batch",
+        "arguments": "p_batch_id uuid"
       },
       {
         "name": "unregister_instance",
@@ -5592,6 +5665,21 @@
         "command": "all"
       },
       {
+        "table": "reconciliation_batches",
+        "name": "reconciliation_batches_insert",
+        "command": "insert"
+      },
+      {
+        "table": "reconciliation_batches",
+        "name": "reconciliation_batches_select",
+        "command": "select"
+      },
+      {
+        "table": "reconciliation_batches",
+        "name": "reconciliation_batches_update",
+        "command": "update"
+      },
+      {
         "table": "reconciliations",
         "name": "reconciliations_select",
         "command": "select"
@@ -5941,6 +6029,10 @@
       },
       {
         "table": "documents",
+        "name": "documents_match_credit_note_on_posting"
+      },
+      {
+        "table": "documents",
         "name": "documents_refresh_payment_state"
       },
       {
@@ -5978,6 +6070,10 @@
       {
         "table": "entries",
         "name": "entries_guard_posted"
+      },
+      {
+        "table": "entries",
+        "name": "entries_match_reversal_on_posting"
       },
       {
         "table": "entries",
@@ -6102,6 +6198,14 @@
       {
         "table": "products",
         "name": "products_set_updated_at"
+      },
+      {
+        "table": "reconciliation_batches",
+        "name": "reconciliation_batches_audit"
+      },
+      {
+        "table": "reconciliation_batches",
+        "name": "reconciliation_batches_guard"
       },
       {
         "table": "reconciliations",
@@ -7294,6 +7398,20 @@
           ],
           "service_role": [
             "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
+          "name": "reconciliation_batches",
+          "anon": [],
+          "authenticated": [
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
             "insert",
             "select",
             "update"
@@ -8526,6 +8644,14 @@
           "service_role": []
         },
         {
+          "name": "documents_match_credit_note_on_posting",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "documents_refresh_amount_paid",
           "arguments": "p_document_id uuid",
           "anon": [],
@@ -8635,6 +8761,14 @@
         },
         {
           "name": "entries_guard_posted",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "entries_match_reversal_on_posting",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -9334,6 +9468,17 @@
           ]
         },
         {
+          "name": "matchable_lines",
+          "arguments": "p_company_id uuid, p_contact_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "matching_difference_reasons",
           "arguments": "p_company_id uuid",
           "anon": [],
@@ -9379,6 +9524,17 @@
         },
         {
           "name": "may_know_of_company",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "may_match_on_posting",
           "arguments": "p_company_id uuid",
           "anon": [],
           "authenticated": [
@@ -9743,6 +9899,17 @@
           ]
         },
         {
+          "name": "reconcile_batch",
+          "arguments": "p_pairs jsonb",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "reconcile_many",
           "arguments": "p_line_ids uuid[]",
           "anon": [],
@@ -9763,6 +9930,14 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "reconciliation_batches_guard",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "reconciliations_guard_cancelled",
@@ -10180,6 +10355,17 @@
           ]
         },
         {
+          "name": "suggest_sure_pairs",
+          "arguments": "p_company_id uuid, p_contact_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "supersede_filing",
           "arguments": "p_filing_id uuid",
           "anon": [],
@@ -10363,6 +10549,17 @@
         {
           "name": "unreconcile",
           "arguments": "p_reconciliation_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "unreconcile_batch",
+          "arguments": "p_batch_id uuid",
           "anon": [],
           "authenticated": [
             "execute"
