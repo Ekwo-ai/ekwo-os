@@ -7,6 +7,12 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- **A fiscal QR code on the first page.** `fiscalQr` — content, error
+  correction level, size and quiet zone in millimetres, label, mention — is
+  drawn right of the buyer, in vectors, its label above and its mention under
+  it. `encodeQr()` is the encoder, ISO/IEC 18004 with no dependency: byte
+  mode, levels L to H, versions 1 to 10, the mask of the lowest penalty;
+  tested against the published vectors of the standard.
 - **The visual PDF of a sale invoice or credit note.** `renderInvoicePdf()`
   takes the rows of `document_header`, `document_line_items`,
   `document_tax_summary` and `document_legal_mentions`, and the bytes of a

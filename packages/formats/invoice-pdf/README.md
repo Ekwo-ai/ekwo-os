@@ -250,6 +250,41 @@ no violation, and checks that the totals, the tax per rate and the amount due
 printed on the page — read out of the PDF — are the figures of the CII inside
 it, on an invoice under two rates and on a credit note.
 
+## A fiscal QR code
+
+Where a country requires the invoicing software to chain a record of every
+invoice, its invoice often carries a QR code that lets the customer check the
+record with the tax authority, a label above it and a sentence under it.
+`fiscalQr` takes them as the country's rules give them, and nothing has a
+default but the quiet zone:
+
+```ts
+const { file } = await renderInvoicePdf({
+  ...input,
+  fiscalQr: {
+    content: 'https://example.com/verify?id=INV-1&total=121.00', // the record's verification URL
+    errorCorrection: 'M',
+    sizeMm: 30,
+    quietZoneMm: 6,      // at least four modules, whatever is asked
+    label: 'Fiscal QR:',
+    mention: 'Invoice verifiable with the tax authority',
+  },
+});
+```
+
+It is drawn on the first page, right of the buyer, in vectors — one filled
+path, no picture — at the size asked, its blank margin kept clear; the buyer's
+panels narrow to make room. The code is written by `encodeQr()`, an encoder of
+ISO/IEC 18004 with no dependency: byte mode (a string as UTF-8), the four
+error correction levels, versions 1 to 10 — up to 213 bytes at level M. The
+level asked is the level written, never raised; data no version up to 10
+holds is refused (`invalid_value`), never cut. The mask is the one of the
+lowest penalty (8.8.2 of the standard). [`test/qr.test.ts`](test/qr.test.ts)
+checks it against the vectors published with the standard — the error
+correction of the worked example, the 32 format strings, the version
+information — and a symbol, module by module, that an independent encoder
+wrote and an independent reader decoded.
+
 ## What it refuses
 
 An `InvoicePdfError` with a `code`, before anything is drawn wrong:
@@ -258,7 +293,7 @@ An `InvoicePdfError` with a `code`, before anything is drawn wrong:
 |---|---|
 | `not_a_sale_document` | A purchase, a quote, an order: this package renders what a seller issues. |
 | `missing_field` | No currency, no date, no total, a tax group without its base or its tax. |
-| `invalid_value` | A figure that is not a decimal, a currency that is not ISO 4217, a date that is not `YYYY-MM-DD`; a theme colour that is not `#rrggbb`, a logo position that is neither `left` nor `right`. |
+| `invalid_value` | A figure that is not a decimal, a currency that is not ISO 4217, a date that is not `YYYY-MM-DD`; a theme colour that is not `#rrggbb`, a logo position that is neither `left` nor `right`; a fiscal QR code whose data no version up to 10 holds, or whose size or level is not one. |
 | `invalid_language` | A language tag `Intl` does not accept. |
 | `glyph_not_covered` | A character no font has. |
 | `right_to_left_text` | A string written right to left. |
@@ -327,7 +362,8 @@ What the views do not carry yet, and the page therefore cannot print:
 logo the company names by URL (from a public http(s) address only), and call
 this package — through `renderDocumentPdf()` of `@ekwo-ai/core`, which writes
 the CII with the adapter of the `einvoicing` formats when Factur-X is asked
-for.
+for, and passes the fiscal QR code where the country's pack declares one and
+the document has its fiscal record.
 
 ## Development
 

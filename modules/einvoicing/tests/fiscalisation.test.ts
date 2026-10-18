@@ -11,10 +11,12 @@ import {
   hashedFields,
   issueEinvoice,
   parseFiscalSystem,
+  renderDocumentPdf,
   type FiscalRecordInput,
   type FiscalSystem,
   type FiscalisationFormat,
 } from '@ekwo-ai/core';
+import { pdfText } from '../../../packages/formats/invoice-pdf/test/pdf-text.js';
 import { asUser, expectError, freshDatabase, one, rows, withoutTrigger } from '../../../tests/helpers/db.js';
 import { allPacks, packWhere } from '../../../tests/helpers/packs.js';
 import { backendFor } from '../../../tests/mcp/helpers.js';
@@ -597,5 +599,50 @@ describe('the compiled regime', () => {
       expect(row?.r).toEqual(JSON.parse(JSON.stringify(pack.documents.einvoice_fiscalisation)));
     }
     expect(originalRegime).toBeNull();
+  });
+});
+
+describe('the PDF of a sale whose regime prints a QR code', () => {
+  const WITH_QR = {
+    ...REGIME,
+    qr: {
+      url: 'https://verify.invalid',
+      services: [],
+      parameters: [],
+      standard: 'ISO/IEC 18004',
+      error_correction: 'M',
+      size_mm: { min: 30, max: 40 },
+      quiet_zone_mm: { min: 2, recommended: 6 },
+      label: 'Invented QR:',
+      legal_reference: null,
+      source: null,
+    },
+    mention: [{ text: 'An invented sentence for batch records', alternatives: [], modes: ['batch'], legal_reference: null, source: null }],
+  };
+
+  it('carries the code of its last record, with the label and the mention of the regime, once the record is chained', async () => {
+    const country = chained.pack.manifest.country;
+    await db.query(`update country_defaults set einvoice_fiscalisation = $2 where country = $1`, [country, WITH_QR]);
+    try {
+      const documentId = await sale(db, chained);
+      const before = await renderDocumentPdf(chained.backend, { document_id: documentId });
+      expect(before.fiscal_qr).toMatch(/^no fiscal record yet/);
+      expect((await pdfText(before.file)).flat()).not.toContain('Invented QR:');
+
+      const made = await fiscaliseDocument(chained.backend, documentId, { system: SYSTEM, generatedAt: AT }, FORMATS);
+      const after = await renderDocumentPdf(chained.backend, { document_id: documentId });
+      expect(after.fiscal_qr).toBe('printed');
+      expect(made['verification_url']).toMatch(/^https:\/\/verify\.invalid\/batch\?n=/);
+      const first = (await pdfText(after.file))[0] ?? [];
+      expect(first).toContain('Invented QR:');
+      expect(first.slice(first.indexOf('Invented QR:') + 1).join(' ')).toMatch(/^An invented sentence for batch records/);
+    } finally {
+      await db.query(`update country_defaults set einvoice_fiscalisation = $2 where country = $1`, [country, REGIME]);
+    }
+  });
+
+  it('says none where the regime prints no QR code', async () => {
+    const pdf = await renderDocumentPdf(chained.backend, { document_id: await sale(db, chained) });
+    expect(pdf.fiscal_qr).toBe('none');
   });
 });

@@ -114,6 +114,15 @@ records is a transport, as for the electronic invoice: the record's issue is
 sent with the same functions (`record_transmission`), and none ships for a
 tax authority — the host brings it.
 
+**The QR code on the invoice.** Once a sale has its record, its PDF —
+`ekwo doc pdf`, `render_invoice_pdf`, `renderDocumentPdf()` — carries the QR
+code of the regime: the verification URL of its last `alta` record, at the
+smallest size and with the quiet zone the pack gives, its label above and,
+under it, the sentence the pack names for the record's mode, drawn by
+[`@ekwo-ai/invoice-pdf`](../../packages/formats/invoice-pdf/README.md#a-fiscal-qr-code).
+Before the record there is no URL, and the PDF says so in `fiscal_qr`
+rather than printing a code of its own making.
+
 ## The states of a sending
 
 ```

@@ -135,7 +135,12 @@ export interface FiscalRegime {
   announced_by: string | null;
   announced_on: string | null;
   hash: { algorithm: string; separator: string | null; fields: Partial<Record<FiscalRecordKind | '*', string[]>> } | null;
-  qr: { size_mm: { min: number; max: number }; error_correction: string; label: string | null } | null;
+  qr: {
+    size_mm: { min: number; max: number };
+    quiet_zone_mm: { min: number; recommended: number | null } | null;
+    error_correction: string;
+    label: string | null;
+  } | null;
   mention: { text: string; alternatives: string[]; modes: FiscalSubmissionMode[] }[];
   submission: { mode: FiscalSubmissionMode; modes: FiscalSubmissionMode[]; channel: string | null; cadence: Row[] };
   events: { summary_every_hours: number; modes: FiscalSubmissionMode[] } | null;
