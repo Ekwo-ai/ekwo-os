@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.14.0",
-  "migration": "20261018180416",
+  "migration": "20261018210500",
   "socle": {
     "schema": "public",
     "tables": [
@@ -2782,6 +2782,31 @@
         ]
       },
       {
+        "name": "lines_left_unnamed",
+        "columns": [
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "created_by",
+            "type": "uuid"
+          },
+          {
+            "name": "line_id",
+            "type": "uuid"
+          },
+          {
+            "name": "reason",
+            "type": "text"
+          }
+        ]
+      },
+      {
         "name": "matching_sequences",
         "columns": [
           {
@@ -2811,6 +2836,10 @@
           },
           {
             "name": "date_window_days",
+            "type": "integer"
+          },
+          {
+            "name": "difference_tolerance_units",
             "type": "integer"
           },
           {
@@ -3021,6 +3050,10 @@
       {
         "name": "reconciliations",
         "columns": [
+          {
+            "name": "adjustment_entry_id",
+            "type": "uuid"
+          },
           {
             "name": "amount",
             "type": "numeric(16,2)"
@@ -4173,6 +4206,10 @@
         "arguments": "p_fiscal_year_id uuid"
       },
       {
+        "name": "combination_subsets",
+        "arguments": "p_amounts numeric[], p_target numeric, p_tolerance numeric, p_min_lines integer, p_max_results integer"
+      },
+      {
         "name": "commercial_entity",
         "arguments": "p_contact_id uuid"
       },
@@ -4657,6 +4694,10 @@
         "arguments": "p_company_id uuid, p_contact_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[]"
       },
       {
+        "name": "leave_line_unnamed",
+        "arguments": "p_line_id uuid, p_reason text"
+      },
+      {
         "name": "legal_mention_treatments",
         "arguments": "p_applies_when text"
       },
@@ -4673,12 +4714,28 @@
         "arguments": "p_filing_id uuid"
       },
       {
+        "name": "match_lines",
+        "arguments": "p_line_ids uuid[], p_reason text"
+      },
+      {
         "name": "match_reversal",
         "arguments": "p_entry_id uuid, p_reversal_id uuid"
       },
       {
+        "name": "matching_difference_reasons",
+        "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "matching_difference_tolerance",
+        "arguments": "p_company_id uuid"
+      },
+      {
         "name": "matching_policy_of",
         "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "matching_search_bounds",
+        "arguments": ""
       },
       {
         "name": "may_know_of_company",
@@ -4811,6 +4868,14 @@
       {
         "name": "reconcile",
         "arguments": "p_line_a uuid, p_line_b uuid, p_amount numeric"
+      },
+      {
+        "name": "reconcile_many",
+        "arguments": "p_line_ids uuid[]"
+      },
+      {
+        "name": "reconcile_with_difference",
+        "arguments": "p_line_ids uuid[], p_reason text"
       },
       {
         "name": "reconciliations_guard_cancelled",
@@ -4957,6 +5022,10 @@
         "arguments": "p_transaction_id uuid"
       },
       {
+        "name": "suggest_item_combinations",
+        "arguments": "p_company_id uuid, p_contact_id uuid"
+      },
+      {
         "name": "suggest_line_contacts",
         "arguments": "p_company_id uuid, p_line_ids uuid[]"
       },
@@ -5019,6 +5088,10 @@
       {
         "name": "trial_balance",
         "arguments": "p_company_id uuid, p_from date, p_to date"
+      },
+      {
+        "name": "undo_leave_line_unnamed",
+        "arguments": "p_line_id uuid"
       },
       {
         "name": "unmapped_accounts",
@@ -5461,6 +5534,21 @@
       {
         "table": "legal_mention_templates",
         "name": "legal_mention_templates_select",
+        "command": "select"
+      },
+      {
+        "table": "lines_left_unnamed",
+        "name": "lines_left_unnamed_delete",
+        "command": "delete"
+      },
+      {
+        "table": "lines_left_unnamed",
+        "name": "lines_left_unnamed_insert",
+        "command": "insert"
+      },
+      {
+        "table": "lines_left_unnamed",
+        "name": "lines_left_unnamed_select",
         "command": "select"
       },
       {
@@ -5974,6 +6062,10 @@
       {
         "table": "journals",
         "name": "journals_set_updated_at"
+      },
+      {
+        "table": "lines_left_unnamed",
+        "name": "lines_left_unnamed_audit"
       },
       {
         "table": "matching_settings",
@@ -7126,6 +7218,20 @@
           ]
         },
         {
+          "name": "lines_left_unnamed",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select"
+          ]
+        },
+        {
           "name": "matching_sequences",
           "anon": [],
           "authenticated": [
@@ -7889,6 +7995,17 @@
         {
           "name": "close_fiscal_year_finally",
           "arguments": "p_fiscal_year_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "combination_subsets",
+          "arguments": "p_amounts numeric[], p_target numeric, p_tolerance numeric, p_min_lines integer, p_max_results integer",
           "anon": [],
           "authenticated": [
             "execute"
@@ -9143,6 +9260,17 @@
           ]
         },
         {
+          "name": "leave_line_unnamed",
+          "arguments": "p_line_id uuid, p_reason text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "legal_mention_treatments",
           "arguments": "p_applies_when text",
           "anon": [],
@@ -9184,6 +9312,17 @@
           ]
         },
         {
+          "name": "match_lines",
+          "arguments": "p_line_ids uuid[], p_reason text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "match_reversal",
           "arguments": "p_entry_id uuid, p_reversal_id uuid",
           "anon": [],
@@ -9195,8 +9334,41 @@
           ]
         },
         {
+          "name": "matching_difference_reasons",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "matching_difference_tolerance",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "matching_policy_of",
           "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "matching_search_bounds",
+          "arguments": "",
           "anon": [],
           "authenticated": [
             "execute"
@@ -9562,6 +9734,28 @@
         {
           "name": "reconcile",
           "arguments": "p_line_a uuid, p_line_b uuid, p_amount numeric",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "reconcile_many",
+          "arguments": "p_line_ids uuid[]",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "reconcile_with_difference",
+          "arguments": "p_line_ids uuid[], p_reason text",
           "anon": [],
           "authenticated": [
             "execute"
@@ -9953,6 +10147,17 @@
           ]
         },
         {
+          "name": "suggest_item_combinations",
+          "arguments": "p_company_id uuid, p_contact_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "suggest_line_contacts",
           "arguments": "p_company_id uuid, p_line_ids uuid[]",
           "anon": [],
@@ -10103,6 +10308,17 @@
         {
           "name": "trial_balance",
           "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "undo_leave_line_unnamed",
+          "arguments": "p_line_id uuid",
           "anon": [],
           "authenticated": [
             "execute"
