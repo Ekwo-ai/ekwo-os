@@ -85,14 +85,19 @@ a hash, a chain or a QR code on an invoice.
 | **Intra-Community reporting (ViDA)** | The ViDA directive, as summarised by the FAQ and the same avis | Intra-Community operations, by **1 July 2030** at the latest | Not specified yet |
 | **Certified cash register (SCE / GKS)** — *a distinct fiscalisation* | Arrêté royal du 30 décembre 2009, as amended by the arrêté royal du 25 mai 2026 (`ar-caisse-horeca-2026`), on VAT Code art. 53octies | Horeca establishments the regime covers. SCE 2.0 from **1 July 2026** for newly obliged establishments; systems registered 2014–2017 by 1 July 2027, 2018–2021 by 1 July 2028, 2022 to 30 June 2026 by 1 January 2029 (art. 5) | A fiscal data module and a VAT signing card sign every till receipt, and the data go to SPF Finances. A cash register is a device on the counter, outside what a ledger issues: the pack names the regime and does not carry it |
 
-**What the pack will declare.** Once the schema of `einvoicing.fiscalisation`
-is on main, the Belgian block will name the brick that writes the report
-(`be-ereporting`, in Peppol UBL), `submission.mode` `batch`, the events that
-are reported — an invoice and a credit note issued, an invoice and a credit
-note received — and its `legal_reference` and `source`. `mandatory_from` stays
-empty until a law is published in the Moniteur belge: 1 January 2028 is an
-announcement. **It will declare no hash, no QR code and no mention.** The law of
-6 February 2024 and article 5 of arrêté royal n° 1, which lists what an invoice
-carries, require none, and the announced reporting transmits data the invoice
-already carries. The digital signature of a till receipt belongs to the cash
-register regime above, and stays there.
+**What the pack declares.** `einvoicing.fiscalisation` is a reporting
+regime: format `be-ereporting` (Peppol UBL is the announced basis; no brick
+writes it yet, and the core refuses a report by name, `format_without_brick`),
+`submission.mode` `batch`, and one scope reported, `invoices_between_taxable_persons`,
+by the supplier and by the customer. The obligation is **announced, not in
+force**: `announced_from` 2028-01-01, `announced_by` the Council of Ministers
+on the proposal of the Minister of Finance, `announced_on` 2026-07-18, and no
+`mandatory_from` until a law is published in the Moniteur belge — so
+`ekwo einvoice fiscalisation` counts no sale as missing a report. The press
+release of 18 July 2026 answered 403 and was not read; its date is the one
+reported by professional bodies, and the plan itself is read in avis
+n° 123/2025, point 29. **It declares no hash, no QR code and no mention.** The
+law of 6 February 2024 and article 5 of arrêté royal n° 1, which lists what an
+invoice carries, require none, and the announced reporting transmits data the
+invoice already carries. The digital signature of a till receipt belongs to
+the cash register regime above, and stays there.

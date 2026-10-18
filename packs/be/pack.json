@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BE",
   "name": "Belgium",
-  "version": "1.20.0",
-  "schema_min": "20261014152111",
+  "version": "1.21.0",
+  "schema_min": "20261018023930",
   "seed_sequence": 10,
-  "released_at": "2026-09-30",
+  "released_at": "2026-10-18",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -436,7 +436,31 @@
     "party_scheme": "0208",
     "vat_scheme": "9925",
     "legal_reference": "Loi du 6 février 2024 modifiant le Code de la TVA, art. 53, § 2 — facturation électronique structurée entre assujettis établis en Belgique à partir du 1er janvier 2026",
-    "source": "facturation-electronique"
+    "source": "facturation-electronique",
+    "fiscalisation": {
+      "announced_from": "2028-01-01",
+      "announced_by": "Conseil des ministres, sur proposition du ministre des Finances",
+      "announced_on": "2026-07-18",
+      "format": "be-ereporting",
+      "submission": {
+        "mode": "batch",
+        "legal_reference": "Annoncé, aucun texte en vigueur. FAQ e-facture, « Questions générales sur l'e-reporting » : transmission « en temps quasi réel » ; avis APD n° 123/2025, point 29 : la facture électronique structurée (Peppol) comme base technique. Aucun texte publié ne fixe le canal ni la fréquence ; le mode batch dit seulement que les données partent en messages, hors de la facture",
+        "source": "e-reporting-faq"
+      },
+      "reported": [
+        {
+          "what": "invoices_between_taxable_persons",
+          "by": [
+            "supplier",
+            "customer"
+          ],
+          "legal_reference": "Annoncé : les données obligatoires de la facture (arrêté royal n° 1, art. 5) des opérations en Belgique entre assujettis soumis à l'obligation de facturation électronique (Code de la TVA, art. 53, § 2bis), rapportées par le fournisseur et par le client, en remplacement du listing annuel des clients (Code de la TVA, art. 53quinquies) ; avis APD n° 123/2025, point 29",
+          "source": "apd-avis-123-2025"
+        }
+      ],
+      "legal_reference": "Annoncé, aucun texte en vigueur au 18 octobre 2026 : avant-projet de loi modifiant le Code de la TVA approuvé en Conseil des ministres le 18 juillet 2026, sur proposition du ministre des Finances (communiqué non lu : la page répond 403 ; date et contenu connus par des reprises d'organisations professionnelles) ; réponse du ministre citée par l'avis de l'Autorité de protection des données n° 123/2025 du 21 novembre 2025, point 29 — rapportage électronique dès le 1er janvier 2028, sous réserve d'une dérogation du Conseil de l'UE (directive TVA, art. 395). La FAQ e-facture précise qu'il « doit encore être transposé en droit belge ». Aucun hash, aucun QR code, aucune mention : ni la loi du 6 février 2024 ni l'arrêté royal n° 1, art. 5, n'en exigent",
+      "source": "apd-avis-123-2025"
+    }
   },
   "bank": {
     "account_scheme": "iban",
