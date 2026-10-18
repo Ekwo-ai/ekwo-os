@@ -1669,14 +1669,14 @@ Matchings made in one gesture: reconcile_batch() writes the row and names it on 
 | `amount` | `numeric` | not null — The total matched, in the company's currency. |
 | `created_by` | `uuid` | Who matched: the signed-in user, or the person who issued the machine key presented (acting_user()). |
 | `created_at` | `timestamp with time zone` | not null |
-| `undone_by` | `uuid` | Who undid it, as acting_user() said. |
+| `undone_by` | `uuid` | Who undid it, as acting_user() said; null for the installer. |
 | `undone_at` | `timestamp with time zone` | When unreconcile_batch() undid the gesture; null while it stands. |
 
 Constraints:
 
 - `CHECK ((amount > (0)::numeric))`
 - `CHECK ((pair_count > 0))`
-- `CHECK (((undone_at IS NULL) = (undone_by IS NULL)))`
+- `CHECK (((undone_by IS NULL) OR (undone_at IS NOT NULL)))`
 - `PRIMARY KEY (id)`
 
 ### `reconciliations`

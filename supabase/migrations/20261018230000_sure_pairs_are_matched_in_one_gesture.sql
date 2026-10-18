@@ -425,8 +425,10 @@ create table reconciliation_batches (
   undone_at   timestamptz,
   constraint reconciliation_batches_pairs_named check (pair_count > 0),
   constraint reconciliation_batches_amount_positive check (amount > 0),
-  constraint reconciliation_batches_undone_by_somebody
-    check ((undone_at is null) = (undone_by is null))
+  -- Who undid it is named when somebody is signed in; the installer is
+  -- nobody, as for created_by.
+  constraint reconciliation_batches_undone_when_undone
+    check (undone_by is null or undone_at is not null)
 );
 
 comment on table reconciliation_batches is
@@ -440,7 +442,7 @@ comment on column reconciliation_batches.created_by is
 comment on column reconciliation_batches.undone_at is
   'When unreconcile_batch() undid the gesture; null while it stands.';
 comment on column reconciliation_batches.undone_by is
-  'Who undid it, as acting_user() said.';
+  'Who undid it, as acting_user() said; null for the installer.';
 
 create unique index reconciliation_batches_id_company_idx on reconciliation_batches (id, company_id);
 create index reconciliation_batches_company_idx on reconciliation_batches (company_id, created_at);

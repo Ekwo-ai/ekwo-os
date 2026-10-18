@@ -373,6 +373,18 @@ describe('reconcile_batch() and unreconcile_batch()', () => {
     for (const id of [a, b, c, d]) expect(await openOf(id)).toBeGreaterThan(0);
   });
 
+  it('is made and undone by the installer, who is nobody', async () => {
+    const who = await customer();
+    const a = await line({ amount: 13, side: 'debit', contact: who });
+    const b = await line({ amount: 13, side: 'credit', contact: who });
+    const batch = await one<Batch>(db, `select * from reconcile_batch($1::jsonb)`, [JSON.stringify([[a, b]])]);
+    expect(batch.created_by).toBeNull();
+    const undone = await one<Batch>(db, `select * from unreconcile_batch($1)`, [batch.id]);
+    expect(undone.undone_at).not.toBeNull();
+    expect(undone.undone_by).toBeNull();
+    expect(await openOf(a)).toBe(13);
+  });
+
   it('refuses the whole batch on one refusal, and says which pair', async () => {
     const who = await customer();
     const a = await line({ amount: 10, side: 'debit', contact: who });
