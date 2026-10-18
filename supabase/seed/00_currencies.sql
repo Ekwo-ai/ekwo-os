@@ -97,5 +97,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('ZWG', 'Zimbabwe Gold', 'ZiG', 2),
   ('XCD', 'East Caribbean dollar', 'EC$', 2),
   ('BSD', 'Bahamian dollar', 'B$', 2),
-  ('GYD', 'Guyanese dollar', 'G$', 2)
+  ('GYD', 'Guyanese dollar', 'G$', 2),
+  ('JMD', 'Jamaican dollar', 'J$', 2)
 on conflict (code) do nothing;

@@ -1,0 +1,344 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Two months of a trading company of Jamaica, a GCT filer",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "JM-IFRS-SME-SFP",
+    "JM-IFRS-SME-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-a",
+      "name": "Kingston Trading Company Limited",
+      "type": "customer",
+      "country": "JM"
+    },
+    {
+      "ref": "cust-b",
+      "name": "Montego Bay Consulting Limited",
+      "type": "customer",
+      "country": "JM"
+    },
+    {
+      "ref": "cust-c",
+      "name": "Ocho Rios Telecom Services Limited",
+      "type": "customer",
+      "country": "JM"
+    },
+    {
+      "ref": "cust-d",
+      "name": "Caribbean Exports Inc",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "supp-a",
+      "name": "Spanish Town Wholesale Limited",
+      "type": "supplier",
+      "country": "JM"
+    },
+    {
+      "ref": "supp-b",
+      "name": "Mandeville Office Supplies Limited",
+      "type": "supplier",
+      "country": "JM"
+    },
+    {
+      "ref": "supp-c",
+      "name": "Miami Components LLC",
+      "type": "supplier",
+      "country": "US"
+    },
+    {
+      "ref": "supp-d",
+      "name": "Portmore Printing Works",
+      "type": "supplier",
+      "country": "JM"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-10",
+      "why": "A domestic sale of goods at the standard rate: 10,000.00 to line 14 and 1,500.00 of tax (15 %) to line 15.",
+      "lines": [
+        {
+          "name": "Trading stock",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "JM-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-15",
+      "why": "A retail sale whose price already holds the GCT: 5,750.00 inclusive is 5,000.00 plus 750.00 (5,750 x 15/115), 5,000.00 to line 14 and 750.00 to line 15.",
+      "lines": [
+        {
+          "name": "Retail goods, GCT-inclusive price",
+          "quantity": 1,
+          "unit_price": 5750,
+          "tax": "JM-S-15-INC",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cust-c",
+      "date": "2026-01-18",
+      "why": "A sale of telephone service at 25 %: 4,000.00 to line 18 and 1,000.00 of tax to line 19.",
+      "lines": [
+        {
+          "name": "Telephone service, monthly plan",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "JM-S-25",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cust-d",
+      "date": "2026-01-22",
+      "why": "An export, zero-rated: 20,000.00 to line 8 and no tax posted.",
+      "lines": [
+        {
+          "name": "Export of goods",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "JM-S-0",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-01-28",
+      "why": "A supply the Act exempts (a financial service, exempt schedule): 3,000.00 to line 7, no tax.",
+      "lines": [
+        {
+          "name": "Financial service, exempt",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "JM-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-01-29",
+      "why": "A sale of telephone instruments at 25 %: 2,000.00 to line 18 and 500.00 to line 19.",
+      "lines": [
+        {
+          "name": "Telephone instruments",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "JM-S-25",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-30",
+      "why": "A domestic zero-rated supply on the zero-rated list: 1,200.00 to line 9, no tax.",
+      "lines": [
+        {
+          "name": "Zero-rated goods",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "JM-S-Z",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-01-08",
+      "why": "A local purchase at 15 %: 6,000.00 to line 26 and 900.00 of input tax to line 29.",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "JM-P-15",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "supp-c",
+      "date": "2026-01-12",
+      "why": "An imported purchase: 8,000.00 to line 25 and the 1,200.00 paid to the Commissioner of Customs to line 30.",
+      "lines": [
+        {
+          "name": "Components imported",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "JM-P-15-IMP",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "supp-d",
+      "date": "2026-01-20",
+      "why": "A purchase without GCT: 1,500.00 to line 26 and no input tax.",
+      "lines": [
+        {
+          "name": "Printing, exempt supply",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "JM-P-EX",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cust-a",
+      "date": "2026-02-05",
+      "why": "A credit note in February: it lowers February's line 14 (by 2,000.00) and line 15 (by 300.00), January stays as filed.",
+      "lines": [
+        {
+          "name": "Return of trading stock",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "JM-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-02-10",
+      "why": "A second month's sale: 20,000.00 plus 3,000.00.",
+      "lines": [
+        {
+          "name": "Trading stock",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "JM-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-02-15",
+      "why": "A large purchase of equipment, 40,000.00 plus 6,000.00 of input tax, more than February's output tax: the period ends with a GCT refundable (line 43), not a GCT payable.",
+      "lines": [
+        {
+          "name": "Office equipment",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "JM-P-15",
+          "account": "1640"
+        }
+      ]
+    },
+    {
+      "ref": "C5",
+      "type": "purchase_invoice",
+      "contact": "supp-d",
+      "date": "2026-01-25",
+      "why": "A purchase of telephone service at 25 %: 4,000.00 to line 26 and 1,000.00 of input tax to line 29.",
+      "lines": [
+        {
+          "name": "Business telephone service",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "JM-P-25",
+          "account": "6370"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-02",
+      "amount": 11500,
+      "contact": "cust-a",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Exactly settles V1: a matched receipt."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 2000,
+      "contact": "cust-b",
+      "journal": "BNK",
+      "match": null,
+      "why": "A part-payment on account, matched to nothing: the open item a return must survive."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-02-06",
+      "amount": 6900,
+      "contact": "supp-a",
+      "journal": "BNK",
+      "match": "C1",
+      "why": "Exactly settles C1: a matched payment."
+    },
+    {
+      "ref": "E4",
+      "direction": "outbound",
+      "date": "2026-02-25",
+      "amount": 1000,
+      "contact": "supp-c",
+      "journal": "BNK",
+      "match": null,
+      "why": "A part-payment on account to a supplier, matched to nothing."
+    }
+  ]
+}

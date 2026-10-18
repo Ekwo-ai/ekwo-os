@@ -1,0 +1,214 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "JM-GCT-RETURN",
+  "name": "GCT return (Form 4A, standard return)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2020-04-01",
+  "legal_reference": "General Consumption Tax Act; Tax Administration Jamaica, GCT forms page — Form 4A is the standard return of the registered taxpayer who supplies goods and services, for a return period of one month, due on or before the last day of the month that follows. Tourism activities (Form 4D), general insurance (Form 4E), special consumption tax (Form 4C), miscellaneous activities (Form 4G) and approved groups (Form 4H) have their own forms, which this pack does not carry. The boxes are the line numbers of Form 4A.",
+  "source": "jm-form-4a",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Tax Administration Jamaica, GCT forms page: Form 4A is due on or before the last day of the month following the return period. Since 1 October 2014 a due date that falls on a weekend or a holiday is not moved to the next working day: the return and the payment are due by the last working day of the month (Jamaica Information Service). The pack's rule gives the last day of the month; the working-day adjustment is not expressible. The Commissioner has extended dates by announcement (after Hurricane Melissa in 2025), which a rule cannot hold.",
+    "source": "jm-form-4a"
+  },
+  "rounding": {
+    "unit": 1,
+    "legal_reference": "Form 4A, instructions: all dollar value amounts are rounded to the nearest whole number."
+  },
+  "boxes": [
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 10,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 7.",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Export supplies",
+      "sequence": 20,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 8.",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Zero-rated supplies",
+      "sequence": 30,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 9.",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Exempt, export and zero-rated supplies",
+      "sequence": 40,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 10 = lines 7 + 8 + 9.",
+      "source": "jm-form-4a",
+      "plus": [
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "box": "14",
+      "kind": "base",
+      "name": "Supplies at the standard rate (15 %), net of GCT",
+      "sequence": 50,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 14 (supplies to other entities at the standard rate; the pack does not separate the supplies to Tax Withholding Entities, line 12).",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "18",
+      "kind": "base",
+      "name": "Supplies at a rate other than the standard (25 %), net of GCT",
+      "sequence": 60,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 18 (supplies to other entities at other rates, carried from Section C1).",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "Taxable supplies at a positive rate",
+      "sequence": 70,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 11 (total supplies less line 10) = lines 14 + 18.",
+      "source": "jm-form-4a",
+      "plus": [
+        "14",
+        "18"
+      ]
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Total supplies for the period (excluding imported services)",
+      "sequence": 80,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 6 = lines 10 + 11.",
+      "source": "jm-form-4a",
+      "plus": [
+        "10",
+        "11"
+      ]
+    },
+    {
+      "box": "15",
+      "kind": "tax",
+      "name": "Output tax on supplies at the standard rate",
+      "sequence": 90,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 15 (line 14 x 15 %).",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "19",
+      "kind": "tax",
+      "name": "Output tax on supplies at other rates",
+      "sequence": 100,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 19 (from Section C1).",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "24",
+      "kind": "total",
+      "name": "Total output tax for the period",
+      "sequence": 110,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 24. The pack fills lines 15 and 19; imported services (21), GCT deferred (22) and adjustments (23) are not modelled.",
+      "source": "jm-form-4a",
+      "plus": [
+        "15",
+        "19"
+      ]
+    },
+    {
+      "box": "25",
+      "kind": "base",
+      "name": "Value of imported goods that qualify for credit",
+      "sequence": 120,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 25.",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "26",
+      "kind": "base",
+      "name": "Value of local purchases and expenses that qualify for credit",
+      "sequence": 130,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 26 (the pack does not separate local purchases from local expenses, line 27).",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "28",
+      "kind": "total",
+      "name": "Total purchases and expenses that qualify for credit",
+      "sequence": 140,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 28 = lines 25 + 26 (+ 27).",
+      "source": "jm-form-4a",
+      "plus": [
+        "25",
+        "26"
+      ]
+    },
+    {
+      "box": "29",
+      "kind": "tax",
+      "name": "GCT on local purchases and expenses that qualify for credit",
+      "sequence": 150,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 29.",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "30",
+      "kind": "tax",
+      "name": "GCT paid on imports that qualifies for credit",
+      "sequence": 160,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 30.",
+      "source": "jm-form-4a"
+    },
+    {
+      "box": "37",
+      "kind": "total",
+      "name": "Total input tax for the period",
+      "sequence": 170,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 37. The pack fills lines 29 and 30; deferred GCT (31), capital goods (33), tax withheld by Tax Withholding Entities (34), imported services (35) and adjustments (36) are not modelled.",
+      "source": "jm-form-4a",
+      "plus": [
+        "29",
+        "30"
+      ]
+    },
+    {
+      "box": "38",
+      "kind": "total",
+      "name": "GCT payable",
+      "sequence": 180,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 38 (line 24 less line 37), when positive.",
+      "source": "jm-form-4a",
+      "plus": [
+        "24"
+      ],
+      "minus": [
+        "37"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "43",
+      "kind": "total",
+      "name": "GCT creditable (to refund or to credit)",
+      "sequence": 190,
+      "legal_reference": "Form 4A (General Consumption Tax Return, revision of 3 June 2025), line 38 when negative, and line 43 where the taxpayer chooses a refund or a credit.",
+      "source": "jm-form-4a",
+      "plus": [
+        "37"
+      ],
+      "minus": [
+        "24"
+      ],
+      "floor_zero": true
+    }
+  ]
+}

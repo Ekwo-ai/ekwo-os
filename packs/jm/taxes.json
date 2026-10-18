@@ -1,0 +1,359 @@
+[
+  {
+    "code": "JM-S-15",
+    "name": "Sale, GCT 15 %",
+    "description": "A taxable supply made in Jamaica by a registered taxpayer, standard-rated",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-04-01",
+    "legal_reference": "General Consumption Tax Act, the standard rate of 15 % on the taxable supply of goods and services in Jamaica by a registered taxpayer (the rate in force since 1 April 2020, previously 16.5 %: Tax Administration Jamaica, document 'Advanced GCT', which states it; the Act's rate schedule itself was not opened). Base to line 14 of Form 4A, tax to line 15 (box numbers are the line numbers of the form, see tax_report.json). valid_from is 1 April 2020, the date of the 15 % rate.",
+    "source": "jm-gct-advanced",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "14"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "15"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "14",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "15",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "JM-S-15-INC",
+    "name": "Retail sale, GCT 15 %, the price includes the tax",
+    "description": "A standard-rated sale whose price already holds the GCT",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-04-01",
+    "legal_reference": "General Consumption Tax Act, the standard rate of 15 % on the taxable supply of goods and services in Jamaica by a registered taxpayer (the rate in force since 1 April 2020, previously 16.5 %: Tax Administration Jamaica, document 'Advanced GCT', which states it; the Act's rate schedule itself was not opened). The tax is extracted from a price that includes it, which is what price_include does: 115.00 holds 100.00 and 15.00. Same lines as JM-S-15.",
+    "source": "jm-gct-advanced",
+    "vat_category": "S",
+    "sequence": 20,
+    "price_include": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "14"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "15"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "14",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "15",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "JM-S-25",
+    "name": "Sale of telephone service or instrument, GCT 25 %",
+    "description": "A supply of telephone services, telephone instruments or telephone cards, taxed at 25 %",
+    "kind": "vat",
+    "rate": 25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-04-01",
+    "legal_reference": "General Consumption Tax rate of 25 % on telephone services, telephone instruments and telephone cards, as listed by Tax Administration Jamaica on its GCT page and in its booklet on GCT on government purchases (the Act's schedule was not opened). Form 4A reports a supply at a rate other than the standard in Section C1: this pack posts the base to line 18 and the tax to line 19, and does not break them down by rate. The pack does not decide which supplies qualify: that is the user's, with their accountant.",
+    "source": "jm-tax-gct-page",
+    "vat_category": "S",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "18"
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "19"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "19",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "JM-S-0",
+    "name": "Zero-rated supply (export)",
+    "description": "An export of goods or services, zero-rated",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2020-04-01",
+    "legal_reference": "General Consumption Tax Act — exports are zero-rated; Form 4A line 8 'Export Supplies' carries them, outside the taxable supplies at a positive rate (line 11). A zero-rated supply is a taxable supply: the input tax of what produces it stays creditable. The conditions of zero-rating (Tax Administration Jamaica's zero-rating requests) are the user's. Base to line 8.",
+    "source": "jm-form-4a",
+    "vat_category": "G",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "8",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "JM-S-Z",
+    "name": "Zero-rated supply (domestic)",
+    "description": "A zero-rated supply made in Jamaica (a good or service of the zero-rated schedule)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-04-01",
+    "legal_reference": "General Consumption Tax Act, zero-rated goods and services (0 % in Tax Administration Jamaica's list of rates): Form 4A line 9 'Zero Rated Supplies'. The pack does not reproduce the schedule: whether a supply is on it is the user's, with their accountant. Base to line 9.",
+    "source": "jm-tax-gct-page",
+    "vat_category": "Z",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "JM-S-EX",
+    "name": "Exempt supply",
+    "description": "A supply the Act exempts: no tax charged, and no credit for the input tax it uses",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-04-01",
+    "legal_reference": "General Consumption Tax Act, exempt supplies: Form 4A line 7 'Exempt Supplies'. Exempt supplies exceeding 5 % of total supplies make the input tax subject to apportionment (Form 4A Section D1), which the pack does not compute. The pack does not reproduce the schedule of exempt supplies. Base to line 7.",
+    "source": "jm-form-4a",
+    "vat_category": "E",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "JM-P-15",
+    "name": "Purchase, GCT 15 %",
+    "description": "A purchase from a registered taxpayer, standard-rated, with a tax invoice",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-04-01",
+    "recoverable": true,
+    "legal_reference": "General Consumption Tax Act — the tax paid on a purchase or expense for use in a taxable activity is an input tax credit, on a tax invoice (Tax Administration Jamaica, GCT page: only registered taxpayers issue tax invoices that let the customer claim the credit). Base to line 26, tax to line 29. Apportionment when exempt supplies exceed 5 % of total supplies (Form 4A Section D1) and the categories of tax that do not qualify are the user's.",
+    "source": "jm-tax-gct-page",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "26"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "29"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "26",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "29",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "JM-P-25",
+    "name": "Purchase, GCT 25 %",
+    "description": "A purchase of telephone services or instruments from a registered taxpayer, taxed at 25 %",
+    "kind": "vat",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-04-01",
+    "recoverable": true,
+    "legal_reference": "Same credit as JM-P-15 on a purchase of a supply taxed at 25 % (telephone services, instruments and cards: Tax Administration Jamaica, GCT page). Base to line 26, tax to line 29.",
+    "source": "jm-tax-gct-page",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "26"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "29"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "26",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "29",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "JM-P-15-IMP",
+    "name": "Import of goods, GCT 15 %",
+    "description": "GCT paid at the border on imported goods (customs entry)",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2020-04-01",
+    "recoverable": true,
+    "legal_reference": "General Consumption Tax Act — the GCT paid on imports that qualifies for credit is Form 4A line 30 (and the value of imported goods line 25). The pack applies 15 % to the invoice value; the customs value (with duty and freight) and any Advanced GCT collected from a commercial importer are the customs entry's, not this code's. Base to line 25, tax to line 30.",
+    "source": "jm-form-4a",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "25"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "30"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "25",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "30",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "JM-P-EX",
+    "name": "Purchase without GCT",
+    "description": "A purchase of a zero-rated or exempt supply, or from a person who charges no GCT: no input tax to claim",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2020-04-01",
+    "recoverable": false,
+    "legal_reference": "No GCT is charged on a zero-rated or exempt supply to the purchaser, so there is no credit to claim; the value is still reported among the local purchases of the period (Form 4A line 26).",
+    "source": "jm-form-4a",
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "26"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "26",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]
