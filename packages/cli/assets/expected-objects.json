@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.13.0",
-  "migration": "20261016145816",
+  "migration": "20261018015212",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1492,6 +1492,10 @@
           {
             "name": "current_year_result_profit_code",
             "type": "text"
+          },
+          {
+            "name": "einvoice_fiscalisation",
+            "type": "jsonb"
           },
           {
             "name": "einvoice_legal_reference",
@@ -11110,12 +11114,158 @@
     },
     {
       "code": "einvoicing",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "schema": "einvoicing",
       "tables": [
         {
+          "name": "fiscal_chain",
+          "columns": [
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "document_id",
+              "type": "uuid"
+            },
+            {
+              "name": "format",
+              "type": "text"
+            },
+            {
+              "name": "generated_at",
+              "type": "text"
+            },
+            {
+              "name": "generated_instant",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "hash",
+              "type": "text"
+            },
+            {
+              "name": "hash_algorithm",
+              "type": "text"
+            },
+            {
+              "name": "hash_encoding",
+              "type": "text"
+            },
+            {
+              "name": "hash_input",
+              "type": "text"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "is_first",
+              "type": "boolean"
+            },
+            {
+              "name": "issue_id",
+              "type": "uuid"
+            },
+            {
+              "name": "issued_on",
+              "type": "date"
+            },
+            {
+              "name": "issuer_tax_id",
+              "type": "text"
+            },
+            {
+              "name": "kind",
+              "type": "einvoicing.fiscal_record_kind"
+            },
+            {
+              "name": "mode",
+              "type": "text"
+            },
+            {
+              "name": "number",
+              "type": "text"
+            },
+            {
+              "name": "previous_hash",
+              "type": "text"
+            },
+            {
+              "name": "record",
+              "type": "jsonb"
+            },
+            {
+              "name": "recorded_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "recorded_by",
+              "type": "uuid"
+            },
+            {
+              "name": "seq",
+              "type": "integer"
+            },
+            {
+              "name": "series",
+              "type": "text"
+            },
+            {
+              "name": "system_id",
+              "type": "text"
+            },
+            {
+              "name": "verification_url",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "fiscal_events",
+          "columns": [
+            {
+              "name": "at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "detail",
+              "type": "jsonb"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "kind",
+              "type": "text"
+            },
+            {
+              "name": "recorded_by",
+              "type": "uuid"
+            },
+            {
+              "name": "seq",
+              "type": "integer"
+            },
+            {
+              "name": "system_id",
+              "type": "text"
+            }
+          ]
+        },
+        {
           "name": "issues",
           "columns": [
+            {
+              "name": "artefact",
+              "type": "einvoicing.artefact"
+            },
             {
               "name": "brick",
               "type": "text"
@@ -11235,6 +11385,10 @@
           "name": "transmissions",
           "columns": [
             {
+              "name": "artefact",
+              "type": "einvoicing.artefact"
+            },
+            {
               "name": "channel",
               "type": "einvoicing.channel"
             },
@@ -11292,6 +11446,10 @@
       "views": [],
       "functions": [
         {
+          "name": "append_fiscal_record",
+          "arguments": "p_document_id uuid, p_system_id text, p_kind einvoicing.fiscal_record_kind, p_format text, p_mode text, p_issuer_tax_id text, p_series text, p_number text, p_issued_on date, p_record jsonb, p_hash_input text, p_hash text, p_previous_hash text, p_generated_at text, p_verification_url text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb"
+        },
+        {
           "name": "archive_tables",
           "arguments": ""
         },
@@ -11300,7 +11458,19 @@
           "arguments": "p_company_id uuid"
         },
         {
+          "name": "fiscal_digest",
+          "arguments": "p_algorithm text, p_encoding text, p_input text"
+        },
+        {
+          "name": "fiscal_regime",
+          "arguments": "p_company_id uuid"
+        },
+        {
           "name": "guard_event",
+          "arguments": ""
+        },
+        {
+          "name": "guard_fiscal",
           "arguments": ""
         },
         {
@@ -11312,8 +11482,12 @@
           "arguments": ""
         },
         {
+          "name": "log_fiscal_event",
+          "arguments": "p_company_id uuid, p_system_id text, p_kind text, p_detail jsonb"
+        },
+        {
           "name": "record_issue",
-          "arguments": "p_document_id uuid, p_profile text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb"
+          "arguments": "p_document_id uuid, p_profile text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb, p_artefact einvoicing.artefact"
         },
         {
           "name": "record_transmission",
@@ -11334,9 +11508,23 @@
         {
           "name": "state_rank",
           "arguments": "p_state einvoicing.transmission_state"
+        },
+        {
+          "name": "verify_fiscal_chain",
+          "arguments": "p_company_id uuid, p_system_id text"
         }
       ],
       "policies": [
+        {
+          "table": "fiscal_chain",
+          "name": "einvoicing_fiscal_chain_select",
+          "command": "select"
+        },
+        {
+          "table": "fiscal_events",
+          "name": "einvoicing_fiscal_events_select",
+          "command": "select"
+        },
         {
           "table": "issues",
           "name": "einvoicing_issues_select",
@@ -11355,6 +11543,14 @@
       ],
       "triggers": [
         {
+          "table": "fiscal_chain",
+          "name": "einvoicing_fiscal_chain_guard"
+        },
+        {
+          "table": "fiscal_events",
+          "name": "einvoicing_fiscal_events_guard"
+        },
+        {
           "table": "issues",
           "name": "einvoicing_issues_guard"
         },
@@ -11369,11 +11565,27 @@
       ],
       "types": [
         {
+          "name": "artefact",
+          "kind": "enum",
+          "labels": [
+            "einvoice",
+            "fiscal_record"
+          ]
+        },
+        {
           "name": "channel",
           "kind": "enum",
           "labels": [
             "self",
             "service"
+          ]
+        },
+        {
+          "name": "fiscal_record_kind",
+          "kind": "enum",
+          "labels": [
+            "alta",
+            "anulacion"
           ]
         },
         {
@@ -11403,6 +11615,26 @@
           ]
         },
         "tables": [
+          {
+            "name": "fiscal_chain",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
+          {
+            "name": "fiscal_events",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
           {
             "name": "issues",
             "anon": [],
@@ -11438,6 +11670,17 @@
         "sequences": [],
         "functions": [
           {
+            "name": "append_fiscal_record",
+            "arguments": "p_document_id uuid, p_system_id text, p_kind einvoicing.fiscal_record_kind, p_format text, p_mode text, p_issuer_tax_id text, p_series text, p_number text, p_issued_on date, p_record jsonb, p_hash_input text, p_hash text, p_previous_hash text, p_generated_at text, p_verification_url text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "archive_tables",
             "arguments": "",
             "anon": [],
@@ -11460,7 +11703,37 @@
             ]
           },
           {
+            "name": "fiscal_digest",
+            "arguments": "p_algorithm text, p_encoding text, p_input text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "fiscal_regime",
+            "arguments": "p_company_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "guard_event",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
+          },
+          {
+            "name": "guard_fiscal",
             "arguments": "",
             "trigger": true,
             "anon": [],
@@ -11484,8 +11757,19 @@
             "service_role": []
           },
           {
+            "name": "log_fiscal_event",
+            "arguments": "p_company_id uuid, p_system_id text, p_kind text, p_detail jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "record_issue",
-            "arguments": "p_document_id uuid, p_profile text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb",
+            "arguments": "p_document_id uuid, p_profile text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb, p_artefact einvoicing.artefact",
             "anon": [],
             "authenticated": [
               "execute"
@@ -11541,6 +11825,17 @@
           {
             "name": "state_rank",
             "arguments": "p_state einvoicing.transmission_state",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "verify_fiscal_chain",
+            "arguments": "p_company_id uuid, p_system_id text",
             "anon": [],
             "authenticated": [
               "execute"
