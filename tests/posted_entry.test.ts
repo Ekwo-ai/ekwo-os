@@ -293,11 +293,9 @@ describe('what has to keep working', () => {
   it('a posted entry is undone by a reversal that names it, and the two are matched', async () => {
     const original = await entry();
     const reversal = await entry({ debit: sales, credit: receivable, reverses: original });
-    const line = (id: string) =>
-      one<{ id: string }>(db, `select id from entry_lines where entry_id = $1 and account_id = $2`, [id, receivable]).then((row) => row.id);
 
-    // The matching writes two columns of a posted line, and that is the list.
-    await asUser(db, accountant, async () => db.query(`select reconcile($1, $2)`, [await line(original), await line(reversal)]));
+    // Posting the reversal matched the two (decision 0075); the matching
+    // writes two columns of a posted line, and that is the list.
     const matched = await rows<{ matched_amount: string; matching_number: string | null }>(
       db,
       `select matched_amount::text, matching_number from entry_lines where entry_id in ($1, $2) and account_id = $3`,

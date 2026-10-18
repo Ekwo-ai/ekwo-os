@@ -74,8 +74,10 @@ describe('FEC export of the demo company', () => {
     expect(receivable.every((r) => r.comp_aux_num !== null)).toBe(true);
 
     const lettered = queried.filter((r) => r.ecriture_let !== null);
-    expect(lettered).toHaveLength(2);
-    expect(new Set(lettered.map((r) => r.ecriture_let)).size).toBe(1);
+    // The payment of the first invoice, and the credit note on the second,
+    // matched with it as it was posted (decision 0075).
+    expect(lettered).toHaveLength(4);
+    expect(new Set(lettered.map((r) => r.ecriture_let)).size).toBe(2);
     expect(lettered.every((r) => r.date_let !== null)).toBe(true);
   });
 });
