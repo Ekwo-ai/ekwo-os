@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "0.13.0",
-  "migration": "20261018130000",
+  "schemaVersion": "0.14.0",
+  "migration": "20261018135109",
   "socle": {
     "schema": "public",
     "tables": [
