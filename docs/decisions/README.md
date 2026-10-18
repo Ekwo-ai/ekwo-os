@@ -37,6 +37,7 @@ consequence.
 
 - [0008](0008-documents-and-entries-are-two-layers.md) — Documents and entries are two joined layers
 - [0069](0069-a-piece-goes-on-its-document.md) — A piece goes on its document
+- [0075](0075-an-analytic-value-is-entered-on-the-line.md) — An analytic value is entered on the line, and read from the ledger
 - [0009](0009-accounts-have-types-and-are-resolved-by-role.md) — Accounts have types and are resolved by role
 - [0010](0010-amounts-are-positive-and-totals-derived.md) — Amounts are positive; totals are derived
 - [0011](0011-an-amount-is-rounded-at-its-currency.md) — An amount is rounded at the decimals of its currency
