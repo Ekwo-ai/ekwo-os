@@ -615,7 +615,7 @@ describe('a posted document becomes cancelled on facts, not on a word', () => {
     await asUser(db, accountant, async () => {
       await db.query(`update documents set reversed_document_id = $2 where id = $1`, [creditId, invoiceId]);
       await db.query(`select post_document($1)`, [creditId]);
-      // Posting it matched it with the invoice (decision 0075); a person may
+      // Posting it matched it with the invoice (decision 0073); a person may
       // undo that, and the invoice is then owed again.
       for (const { id } of await rows<{ id: string }>(
         db,

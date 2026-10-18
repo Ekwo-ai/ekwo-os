@@ -294,7 +294,7 @@ describe('what has to keep working', () => {
     const original = await entry();
     const reversal = await entry({ debit: sales, credit: receivable, reverses: original });
 
-    // Posting the reversal matched the two (decision 0075); the matching
+    // Posting the reversal matched the two (decision 0073); the matching
     // writes two columns of a posted line, and that is the list.
     const matched = await rows<{ matched_amount: string; matching_number: string | null }>(
       db,

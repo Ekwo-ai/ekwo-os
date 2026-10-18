@@ -4,7 +4,7 @@ import { asUser, freshDatabase, one, rows, withoutTrigger } from './helpers/db.j
 import { newCompany, newContact, newDocument, newUser, type Fixture } from './helpers/factory.js';
 import { newMember, plainSale, refusalAs } from './helpers/integrity.js';
 
-// Decision 0075: the pairs that leave nothing to choose are said by one
+// Decision 0073: the pairs that leave nothing to choose are said by one
 // function and matched in one gesture, undone as one; and what undoes an
 // entry — a reversal, a credit note naming its invoice — is matched with it
 // as it is posted.
@@ -239,7 +239,7 @@ describe('suggest_sure_pairs()', () => {
     // invoice's pair would be read in date order.
     const payment = await line({ amount: 40, side: 'credit', contact: who, date: '2026-03-02' });
     // A reversal posted without its matching — by somebody the posting does
-    // not match for, or before decision 0075.
+    // not match for, or before decision 0073.
     const reversal = await withoutTrigger(db, 'entries', 'entries_match_reversal_on_posting', () =>
       item({ amount: 40, side: 'credit', contact: who, date: '2026-03-05', reverses: original.entry }),
     );

@@ -75,7 +75,7 @@ describe('FEC export of the demo company', () => {
 
     const lettered = queried.filter((r) => r.ecriture_let !== null);
     // The payment of the first invoice, and the credit note on the second,
-    // matched with it as it was posted (decision 0075).
+    // matched with it as it was posted (decision 0073).
     expect(lettered).toHaveLength(4);
     expect(new Set(lettered.map((r) => r.ecriture_let)).size).toBe(2);
     expect(lettered.every((r) => r.date_let !== null)).toBe(true);

@@ -347,7 +347,7 @@ describe('unpost_document', () => {
       await db.query(`update documents set reversed_document_id = $2 where id = $1`, [byHand, credited]);
       await db.query(`select post_document($1)`, [byHand]);
     });
-    // Posting it matched it with the invoice (decision 0075), which settles it
+    // Posting it matched it with the invoice (decision 0073), which settles it
     // in part: that is said first, and once undone, the credit note is.
     expect(await refusalOf(`select unpost_document($1)`, [credited], b.accountant)).toMatch(/^document_paid\b.*unreconcile/);
     const creditedLine = await thirdPartyLine(db, 'document_id', credited);

@@ -1,5 +1,5 @@
 -- Ekwo OS — the sure pairs are matched in one gesture, and what undoes an
--- entry is matched with it as it is posted (decision 0075).
+-- entry is matched with it as it is posted (decision 0073).
 --
 -- A matching screen over books brought in from elsewhere opens on hundreds of
 -- proposals, and most of them are not questions: one invoice of 1 200.00 and
@@ -432,7 +432,7 @@ create table reconciliation_batches (
 );
 
 comment on table reconciliation_batches is
-  'Matchings made in one gesture: reconcile_batch() writes the row and names it on every matching it wrote (reconciliations.batch_id); unreconcile_batch() undoes those still standing and says when and by whom. Written by those two functions alone (decision 0075).';
+  'Matchings made in one gesture: reconcile_batch() writes the row and names it on every matching it wrote (reconciliations.batch_id); unreconcile_batch() undoes those still standing and says when and by whom. Written by those two functions alone (decision 0073).';
 comment on column reconciliation_batches.pair_count is
   'How many pairs of lines the gesture matched.';
 comment on column reconciliation_batches.amount is
@@ -507,7 +507,7 @@ create trigger reconciliation_batches_audit
 alter table reconciliations add column batch_id uuid references reconciliation_batches(id);
 
 comment on column reconciliations.batch_id is
-  'The gesture that made this matching, when reconcile_batch() made it; unreconcile_batch() undoes every matching that names it (decision 0075).';
+  'The gesture that made this matching, when reconcile_batch() made it; unreconcile_batch() undoes every matching that names it (decision 0073).';
 
 create index reconciliations_batch_idx on reconciliations (batch_id) where batch_id is not null;
 
@@ -762,7 +762,7 @@ end;
 $$;
 
 comment on function match_reversal(uuid, uuid) is
-  'Matches every reconcilable line of a posted entry against the line of its posted reversal — or of the credit note of its document — on the same account, the other side and the same counterparty, through reconcile(). Returns how many matchings it made. Called by reverse_entry() and cancel_document(), and as a reversal or a credit note is posted (decision 0075).';
+  'Matches every reconcilable line of a posted entry against the line of its posted reversal — or of the credit note of its document — on the same account, the other side and the same counterparty, through reconcile(). Returns how many matchings it made. Called by reverse_entry() and cancel_document(), and as a reversal or a credit note is posted (decision 0073).';
 
 -- ---------------------------------------------------------------------------
 -- 7. Matched as it is posted
@@ -783,7 +783,7 @@ as $$
 $$;
 
 comment on function may_match_on_posting(uuid) is
-  'Whether a posting matches what it undoes on the spot: the caller holds reconcile.write and settings.read in the company, or is the installer. Read by the triggers of decision 0075.';
+  'Whether a posting matches what it undoes on the spot: the caller holds reconcile.write and settings.read in the company, or is the installer. Read by the triggers of decision 0073.';
 
 revoke execute on function may_match_on_posting(uuid) from public, anon;
 grant execute on function may_match_on_posting(uuid) to authenticated, service_role;
@@ -802,7 +802,7 @@ end;
 $$;
 
 comment on function entries_match_reversal_on_posting() is
-  'As an entry that names what it undoes (reversed_entry_id) is posted, matches its third-party lines with that entry''s through match_reversal(), when the caller may match (may_match_on_posting()). Whatever wrote the reversal: reverse_entry(), a draft keyed by hand, the mirror unreconcile() posts (decision 0075).';
+  'As an entry that names what it undoes (reversed_entry_id) is posted, matches its third-party lines with that entry''s through match_reversal(), when the caller may match (may_match_on_posting()). Whatever wrote the reversal: reverse_entry(), a draft keyed by hand, the mirror unreconcile() posts (decision 0073).';
 
 revoke execute on function entries_match_reversal_on_posting() from public, anon, authenticated, service_role;
 
@@ -843,7 +843,7 @@ end;
 $$;
 
 comment on function documents_match_credit_note_on_posting() is
-  'As a credit note that names its invoice (reversed_document_id) is posted, matches its third-party lines with the invoice''s through match_reversal() — for what both still have open, so a credit note for part of an invoice settles that part — when the invoice is posted, of the matching kind, in the same currency at the same rate, and the caller may match (may_match_on_posting()). Decision 0075.';
+  'As a credit note that names its invoice (reversed_document_id) is posted, matches its third-party lines with the invoice''s through match_reversal() — for what both still have open, so a credit note for part of an invoice settles that part — when the invoice is posted, of the matching kind, in the same currency at the same rate, and the caller may match (may_match_on_posting()). Decision 0073.';
 
 revoke execute on function documents_match_credit_note_on_posting() from public, anon, authenticated, service_role;
 
@@ -891,7 +891,7 @@ begin
   -- so undoing the matching takes it back: its own matching goes, and a mirror
   -- entry cancels it on the same date. The period has to be open, which is the
   -- honest refusal — a difference that has been declared is not unmade quietly.
-  -- The mirror is matched with it as it is posted (decision 0075).
+  -- The mirror is matched with it as it is posted (decision 0073).
   if v_row.fx_entry_id is not null then
     select * into v_fx from entries where id = v_row.fx_entry_id;
 
@@ -920,7 +920,7 @@ begin
 
   -- A difference booked by reconcile_with_difference() goes the same way:
   -- every matching of its line, then its mirror, and the line matched with
-  -- the mirror's so that neither is left open (decision 0072) — as the mirror
+  -- the mirror's so that neither is left open (decision 0071) — as the mirror
   -- is posted, and here for a caller the posting did not match for.
   if v_row.adjustment_entry_id is not null then
     select * into v_adj from entries where id = v_row.adjustment_entry_id;

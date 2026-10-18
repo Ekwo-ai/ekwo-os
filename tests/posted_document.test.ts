@@ -454,7 +454,7 @@ describe('the way an issued invoice is undone', () => {
     await asUser(db, accountant, async () => {
       // A credit note says what it credits while it is still a draft.
       await db.query(`update documents set reversed_document_id = $2 where id = $1`, [creditId, invoiceId]);
-      // Posting it matches it with the invoice (decision 0075).
+      // Posting it matches it with the invoice (decision 0073).
       await db.query(`select post_document($1)`, [creditId]);
     });
 
