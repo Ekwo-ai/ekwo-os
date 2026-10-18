@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.14.0",
-  "migration": "20261018135109",
+  "migration": "20261018180416",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4269,6 +4269,10 @@
         "arguments": "p_transaction_id uuid, p_contact_id uuid"
       },
       {
+        "name": "contact_candidates",
+        "arguments": "p_company_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[]"
+      },
+      {
         "name": "contacts_language_reaches_drafts",
         "arguments": ""
       },
@@ -4649,8 +4653,16 @@
         "arguments": "p_name text, p_i18n jsonb, p_languages text[]"
       },
       {
+        "name": "learn_contact_patterns",
+        "arguments": "p_company_id uuid, p_contact_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[]"
+      },
+      {
         "name": "legal_mention_treatments",
         "arguments": "p_applies_when text"
+      },
+      {
+        "name": "line_contact_facts",
+        "arguments": "p_line_id uuid"
       },
       {
         "name": "locale_of_country_pack",
@@ -4718,7 +4730,7 @@
       },
       {
         "name": "open_items",
-        "arguments": "p_company_id uuid, p_contact_id uuid, p_as_of date"
+        "arguments": "p_company_id uuid, p_contact_id uuid, p_as_of date, p_third_party_only boolean"
       },
       {
         "name": "opening_balance",
@@ -4881,6 +4893,10 @@
         "arguments": "p_schema text"
       },
       {
+        "name": "set_line_contact",
+        "arguments": "p_line_id uuid, p_contact_id uuid"
+      },
+      {
         "name": "set_member_role",
         "arguments": "p_company_id uuid, p_user_id uuid, p_role member_role, p_capabilities jsonb"
       },
@@ -4939,6 +4955,10 @@
       {
         "name": "suggest_contacts",
         "arguments": "p_transaction_id uuid"
+      },
+      {
+        "name": "suggest_line_contacts",
+        "arguments": "p_company_id uuid, p_line_ids uuid[]"
       },
       {
         "name": "suggest_matches",
@@ -8114,6 +8134,17 @@
           ]
         },
         {
+          "name": "contact_candidates",
+          "arguments": "p_company_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[]",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "contacts_language_reaches_drafts",
           "arguments": "",
           "trigger": true,
@@ -9101,8 +9132,30 @@
           ]
         },
         {
+          "name": "learn_contact_patterns",
+          "arguments": "p_company_id uuid, p_contact_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[]",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "legal_mention_treatments",
           "arguments": "p_applies_when text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "line_contact_facts",
+          "arguments": "p_line_id uuid",
           "anon": [],
           "authenticated": [
             "execute"
@@ -9288,7 +9341,7 @@
         },
         {
           "name": "open_items",
-          "arguments": "p_company_id uuid, p_contact_id uuid, p_as_of date",
+          "arguments": "p_company_id uuid, p_contact_id uuid, p_as_of date, p_third_party_only boolean",
           "anon": [],
           "authenticated": [
             "execute"
@@ -9725,6 +9778,17 @@
           "service_role": []
         },
         {
+          "name": "set_line_contact",
+          "arguments": "p_line_id uuid, p_contact_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "set_member_role",
           "arguments": "p_company_id uuid, p_user_id uuid, p_role member_role, p_capabilities jsonb",
           "anon": [],
@@ -9880,6 +9944,17 @@
         {
           "name": "suggest_contacts",
           "arguments": "p_transaction_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "suggest_line_contacts",
+          "arguments": "p_company_id uuid, p_line_ids uuid[]",
           "anon": [],
           "authenticated": [
             "execute"
