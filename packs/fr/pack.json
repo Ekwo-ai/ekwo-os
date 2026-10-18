@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.19.0",
-  "schema_min": "20261014152111",
+  "version": "1.20.0",
+  "schema_min": "20261018023930",
   "seed_sequence": 11,
-  "released_at": "2026-09-30",
+  "released_at": "2026-10-18",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -466,7 +466,161 @@
     "party_scheme": "0009",
     "vat_scheme": "9957",
     "legal_reference": "Ordonnance n° 2021-1190 du 15 septembre 2021, modifiée par la loi de finances pour 2024, art. 91 — réception obligatoire par toutes les entreprises au 1er septembre 2026 ; émission au 1er septembre 2026 pour les grandes entreprises et les entreprises de taille intermédiaire, au 1er septembre 2027 pour les petites et moyennes entreprises et les microentreprises. Le schéma de partie déclaré est le SIRET (0009), identifiant porté par les factures et par Chorus Pro ; le SIREN (0002) désigne la même entreprise sans son établissement",
-    "source": "facturation-electronique"
+    "source": "facturation-electronique",
+    "fiscalisation": {
+      "mandatory_from": [
+        {
+          "who": "large",
+          "from": "2026-09-01"
+        },
+        {
+          "who": "intermediate",
+          "from": "2026-09-01"
+        },
+        {
+          "who": "single_vat_groups",
+          "from": "2026-09-01"
+        },
+        {
+          "who": "small_medium",
+          "from": "2027-09-01"
+        },
+        {
+          "who": "micro",
+          "from": "2027-09-01"
+        },
+        {
+          "who": "non_established_liable",
+          "from": "2027-09-01"
+        }
+      ],
+      "format": "fr-ereporting",
+      "submission": {
+        "mode": "batch",
+        "channel": "accredited_platform",
+        "cadence": [
+          {
+            "who": "real_normal_monthly",
+            "data": "transactions",
+            "period": "ten_days",
+            "due": {
+              "rule": "days_after_period",
+              "days": 10
+            },
+            "legal_reference": "Réel normal mensuel (CGI, art. 287, 2) : trois transmissions par mois, du 1er au 10, du 11 au 20 et du 21 à la fin du mois, chacune dans les dix jours — CGI, annexe II, art. 242 nonies O ; annexe IV, art. 41 septies M ; BOI-TVA-DECLA-20-30-50-30, § 40 à 100",
+            "source": "frequences-e-reporting"
+          },
+          {
+            "who": "real_normal_monthly",
+            "data": "payments",
+            "period": "month",
+            "due": {
+              "rule": "days_after_period",
+              "days": 10
+            },
+            "legal_reference": "Réel normal mensuel : une transmission par mois, dans les dix jours suivant sa fin — CGI, annexe II, art. 242 nonies P, III ; annexe IV, art. 41 septies P ; BOI-TVA-DECLA-20-30-60, § 160 à 210",
+            "source": "frequences-e-reporting"
+          },
+          {
+            "who": "real_normal_quarterly",
+            "data": "transactions",
+            "period": "month",
+            "due": {
+              "rule": "days_after_period",
+              "days": 10
+            },
+            "legal_reference": "Réel normal trimestriel : une transmission par mois, dans les dix jours — CGI, annexe II, art. 242 nonies O ; annexe IV, art. 41 septies M ; BOI-TVA-DECLA-20-30-50-30, § 40 à 100",
+            "source": "frequences-e-reporting"
+          },
+          {
+            "who": "real_normal_quarterly",
+            "data": "payments",
+            "period": "month",
+            "due": {
+              "rule": "days_after_period",
+              "days": 10
+            },
+            "legal_reference": "Réel normal trimestriel : une transmission par mois, dans les dix jours — CGI, annexe II, art. 242 nonies P, III ; annexe IV, art. 41 septies P ; BOI-TVA-DECLA-20-30-60, § 160 à 210",
+            "source": "frequences-e-reporting"
+          },
+          {
+            "who": "real_simplified",
+            "data": "transactions",
+            "period": "month",
+            "due": {
+              "rule": "month_after_period_from_day",
+              "day": 25
+            },
+            "legal_reference": "Réel simplifié (CGI, art. 298 bis et 302 septies A) : une transmission par mois, entre le 25 et la fin du mois suivant — CGI, annexe II, art. 242 nonies O ; annexe IV, art. 41 septies M ; BOI-TVA-DECLA-20-30-50-30, § 40 à 100",
+            "source": "frequences-e-reporting"
+          },
+          {
+            "who": "real_simplified",
+            "data": "payments",
+            "period": "month",
+            "due": {
+              "rule": "month_after_period_from_day",
+              "day": 25
+            },
+            "legal_reference": "Réel simplifié : une transmission par mois, entre le 25 et la fin du mois suivant — CGI, annexe II, art. 242 nonies P, III ; annexe IV, art. 41 septies P ; BOI-TVA-DECLA-20-30-60, § 160 à 210",
+            "source": "frequences-e-reporting"
+          },
+          {
+            "who": "franchise_or_flat_rate_refund",
+            "data": "transactions",
+            "period": "two_months",
+            "due": {
+              "rule": "month_after_period_from_day",
+              "day": 25
+            },
+            "legal_reference": "Franchise en base (CGI, art. 293 B) et remboursement forfaitaire (art. 298 quater et 298 quinquies) : une transmission par bimestre civil, entre le 25 et la fin du mois suivant — CGI, annexe II, art. 242 nonies O ; annexe IV, art. 41 septies M ; BOI-TVA-DECLA-20-30-50-30, § 40 à 100",
+            "source": "frequences-e-reporting"
+          },
+          {
+            "who": "franchise_or_flat_rate_refund",
+            "data": "payments",
+            "period": "two_months",
+            "due": {
+              "rule": "month_after_period_from_day",
+              "day": 25
+            },
+            "legal_reference": "Franchise en base et remboursement forfaitaire : une transmission par bimestre civil, entre le 25 et la fin du mois suivant — CGI, annexe II, art. 242 nonies P, III ; annexe IV, art. 41 septies P ; BOI-TVA-DECLA-20-30-60, § 160 à 210",
+            "source": "frequences-e-reporting"
+          }
+        ],
+        "legal_reference": "Les données sont transmises sous forme de fichier structuré par la plateforme agréée choisie par l'entreprise (CGI, annexe IV, art. 41 septies L ; BOI-TVA-DECLA-20-30-50-30, § 20 et 30), selon le régime de TVA de l'entreprise ; une période sans opération ne donne lieu à aucune transmission",
+        "source": "boi-tva-decla-20-30-50"
+      },
+      "reported": [
+        {
+          "what": "sales_to_non_taxable_persons",
+          "by": [
+            "supplier"
+          ],
+          "legal_reference": "CGI, art. 290, I ; annexe II, art. 242 nonies M : livraisons et prestations à des non-assujettis, totalisées par jour, par catégorie d'opération et par taux ; les opérations exonérées des art. 261 à 261 E sont hors du champ",
+          "source": "boi-tva-decla-20-30-50"
+        },
+        {
+          "what": "operations_with_non_established_persons",
+          "by": [
+            "supplier",
+            "customer"
+          ],
+          "legal_reference": "CGI, art. 290, I et II ; annexe II, art. 242 nonies M : opérations avec des assujettis non établis en France, facture par facture — ventes déclarées par le fournisseur, acquisitions auprès d'un fournisseur non établi par le client",
+          "source": "boi-tva-decla-20-30-50"
+        },
+        {
+          "what": "payments_received_on_services",
+          "by": [
+            "supplier"
+          ],
+          "legal_reference": "CGI, art. 290 A ; annexe II, art. 242 nonies P ; annexe IV, art. 41 septies P : encaissements des prestations de services dont la TVA est exigible à l'encaissement, et des acomptes, hors autoliquidation — statut « Encaissée » de la facture électronique, ou données de paiement des opérations déclarées",
+          "source": "boi-tva-decla-20-30-60"
+        }
+      ],
+      "legal_reference": "CGI, art. 290 (données de transaction) et 290 A (données de paiement) ; annexe II, art. 242 nonies M, O et P ; annexe IV, art. 41 septies D, L, M et P ; loi de finances pour 2024, art. 91 — mêmes dates que l'émission des factures électroniques : 1er septembre 2026 pour les grandes entreprises, les entreprises de taille intermédiaire et les assujettis uniques (CGI, art. 256 C), 1er septembre 2027 pour les petites et moyennes entreprises et les microentreprises, et pour l'assujetti non établi redevable en tant que preneur quelle que soit sa taille (BOI-TVA-DECLA-20-30-50, § 10). Aucun hash, aucun QR code, aucune mention : ni ces articles, ni leurs décrets, ni le BOFiP n'en exigent ; les quatre mentions nouvelles de la facture (annexe II, art. 242 nonies A) relèvent des mentions de la facture",
+      "source": "boi-tva-decla-20-30-50"
+    }
   },
   "bank": {
     "account_scheme": "iban",

@@ -221,17 +221,22 @@ without any operation sends nothing, and the count is per PA.
 | Réel simplifié (art. 298 bis, 302 septies A) | Monthly, between the 25th and the end of the following month | Same |
 | Franchise en base (art. 293 B) and flat-rate refund (art. 298 quater, 298 quinquies) | Every calendar two-month period, between the 25th and the end of the following month | Same |
 
-**What the pack will declare.** Once the schema of `einvoicing.fiscalisation`
-is on main, the French block will name the brick that writes the report
-(`fr-ereporting`, the transaction and payment flows of the external
-specifications), `submission.mode` `batch` with the cadence above,
-`mandatory_from` 1 September 2026 for large and intermediate-sized companies
-and 1 September 2027 for the others, the events reported — a sale to a private
-customer, an operation with a non-established person, a payment received on a
-service — and its `legal_reference` and `source`. **It will declare no hash,
-no QR code and no mention.** Articles 290 and 290 A of the CGI, their decrees
-and the BOFiP comment (BOI-TVA-DECLA-20-30-50 and -60) require none: the data
-leave as a file through the PA. The four mentions the reform adds to the
-invoice itself — the customer's SIREN, the category of the operation, the
-option for VAT on debits, the delivery address — sit in annex II art. 242
-nonies A, among the invoice's mentions, and are outside this block.
+**What the pack declares.** `einvoicing.fiscalisation` is a reporting
+regime: format `fr-ereporting` (the transaction and payment flows of the
+external specifications; no brick writes it yet, and the core refuses a report
+by name, `format_without_brick`), `submission.mode` `batch` through the
+`accredited_platform`, with the eight cadences of the table above — `who` is
+`real_normal_monthly`, `real_normal_quarterly`, `real_simplified` or
+`franchise_or_flat_rate_refund`, `data` is `transactions` or `payments`, each
+with its article. `mandatory_from` is 1 September 2026 for `large`,
+`intermediate` and `single_vat_groups`, 1 September 2027 for `small_medium`,
+`micro` and `non_established_liable`. Three scopes are reported:
+`sales_to_non_taxable_persons` and `payments_received_on_services` by the
+supplier, `operations_with_non_established_persons` by the supplier and the
+customer. **It declares no hash, no QR code and no mention.** Articles 290 and
+290 A of the CGI, their decrees and the BOFiP comment (BOI-TVA-DECLA-20-30-50
+and -60) require none: the data leave as a file through the PA. The four
+mentions the reform adds to the invoice itself — the customer's SIREN, the
+category of the operation, the option for VAT on debits, the delivery address
+— sit in annex II art. 242 nonies A, among the invoice's mentions, and are
+outside this block.
