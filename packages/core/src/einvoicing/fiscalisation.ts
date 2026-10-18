@@ -119,15 +119,27 @@ export function fiscalisationFormat(
   return found;
 }
 
-/** The regime of a company as the socle compiled it from its pack, or null where it has none. */
+/**
+ * The regime of a company as the socle compiled it from its pack, or null
+ * where it has none. `chained`: a record for every invoice, chained by a
+ * hash. `reporting`: the documents' data reported to the authority, no hash,
+ * nothing chained — the core keeps no chain for it.
+ */
 export interface FiscalRegime {
+  kind: 'chained' | 'reporting';
   format: string;
+  /** Empty while the obligation is only announced. */
   mandatory_from: { who: string | null; from: string }[];
-  hash: { algorithm: string; separator: string | null; fields: Partial<Record<FiscalRecordKind | '*', string[]>> };
+  /** A day only announced, no text in force: it binds nobody. */
+  announced_from: string | null;
+  announced_by: string | null;
+  announced_on: string | null;
+  hash: { algorithm: string; separator: string | null; fields: Partial<Record<FiscalRecordKind | '*', string[]>> } | null;
   qr: { size_mm: { min: number; max: number }; error_correction: string; label: string | null } | null;
   mention: { text: string; alternatives: string[]; modes: FiscalSubmissionMode[] }[];
-  submission: { mode: FiscalSubmissionMode; modes: FiscalSubmissionMode[] };
+  submission: { mode: FiscalSubmissionMode; modes: FiscalSubmissionMode[]; channel: string | null; cadence: Row[] };
   events: { summary_every_hours: number; modes: FiscalSubmissionMode[] } | null;
+  reported: { what: string; by: ('supplier' | 'customer')[] }[];
   tax_attributes: Record<string, Record<string, string>>;
   legal_reference: string;
   source: string;
@@ -229,6 +241,12 @@ export async function fiscaliseDocument(
     );
   }
   const format = fiscalisationFormat(regime.format, formats);
+  if (regime.hash === null) {
+    throw new BooksError(
+      `fiscal_regime_without_chain: the country pack of this company declares a reporting regime, ${regime.format}: the data of its documents are reported to the authority and nothing is chained, so ${what} has no record to chain. The report is written by ${format.brick}, not by fiscaliseDocument().`,
+    );
+  }
+  const hashRule = regime.hash;
   const kind = options.kind ?? 'alta';
   const mode = options.mode ?? regime.submission.mode;
   if (!regime.submission.modes.includes(mode)) {
@@ -312,8 +330,8 @@ export async function fiscaliseDocument(
   const hashInput = format.hashInput(input);
   const hash = format.hash(input);
   const verificationUrl = format.verificationUrl(input, mode, options.environment ?? 'production');
-  const fields = regime.hash.fields[kind] ?? regime.hash.fields['*'] ?? [];
-  const record = regime.hash.separator === null ? null : hashedFields(hashInput, fields, regime.hash.separator);
+  const fields = hashRule.fields[kind] ?? hashRule.fields['*'] ?? [];
+  const record = hashRule.separator === null ? null : hashedFields(hashInput, fields, hashRule.separator);
   if (record === null) {
     throw new BooksError(
       `fiscal_hash_fields_unread: the pack says the hash of a ${kind} record covers ${fields.join(', ')}, and the text ${format.brick} hashed does not hold them in that order. The pack and the brick disagree about what is hashed; nothing is chained.`,
@@ -400,6 +418,15 @@ function earliestObligation(regime: FiscalRegime): string | null {
 }
 
 /**
+ * Whether the status counts posted sales as missing a record. Only under a
+ * chained regime in force: an announced day binds nobody, and a reporting
+ * regime keeps no chain — which documents it reports is its brick's to say.
+ */
+function countsMissing(regime: FiscalRegime | null): boolean {
+  return regime !== null && regime.hash !== null && (regime.announced_from ?? null) === null;
+}
+
+/**
  * Where the fiscal records of a company stand: its regime, each chain
  * verified, the records still to be sent, the posted sales without a record,
  * and the latest events. A posted sale without a record is named here and
@@ -464,8 +491,9 @@ export async function fiscalisationStatus(backend: Backend, companyId: string, o
     order: [{ column: 'document_date' }, { column: 'number' }],
   });
   const from = regime === null ? null : earliestObligation(regime);
-  const without = posted.filter((d) => !fiscalised.has(String(d['id'])));
-  const missing = regime === null ? [] : without.filter((d) => from === null || String(d['document_date']) >= from);
+  const counted = countsMissing(regime);
+  const without = counted ? posted.filter((d) => !fiscalised.has(String(d['id']))) : [];
+  const missing = without.filter((d) => from === null || String(d['document_date']) >= from);
 
   const events = await backend.select<Row>({
     schema: SCHEMA,
@@ -483,12 +511,19 @@ export async function fiscalisationStatus(backend: Backend, companyId: string, o
       regime === null
         ? null
         : {
+            kind: regime.kind,
             format: regime.format,
             brick: FISCALISATION_FORMATS[regime.format]?.brick ?? null,
             mandatory_from: regime.mandatory_from,
+            announced_from: regime.announced_from,
+            announced_by: regime.announced_by,
+            announced_on: regime.announced_on,
             mode: regime.submission.mode,
             modes: regime.submission.modes,
+            channel: regime.submission.channel,
+            cadence: regime.submission.cadence,
             events: regime.events,
+            reported: regime.reported,
             legal_reference: regime.legal_reference,
           },
     systems,
@@ -497,17 +532,30 @@ export async function fiscalisationStatus(backend: Backend, companyId: string, o
     pending_count: pending.length,
     missing: missing.slice(0, limit),
     missing_count: missing.length,
-    before_obligation_count: regime === null ? 0 : without.length - missing.length,
+    before_obligation_count: without.length - missing.length,
     events,
     note:
       regime === null
         ? 'The country pack of this company declares no fiscalisation regime.'
-        : broken.length > 0
-          ? `The chain of ${broken.map((s) => String(s['system_id'])).join(', ')} breaks where break says. Nothing more is chained to it; this is for the company's accountant before anything else.`
-          : missing.length > 0
-            ? `${missing.length} posted sale(s) dated from ${from ?? 'the start of the obligation'} have no fiscal record. Nothing is fiscalised on its own: einvoicing_fiscalise (ekwo einvoice fiscalise) chains one.`
-            : 'Every posted sale within the obligation has its record, and every chain is intact.',
+        : !counted
+          ? uncountedNote(regime)
+          : broken.length > 0
+            ? `The chain of ${broken.map((s) => String(s['system_id'])).join(', ')} breaks where break says. Nothing more is chained to it; this is for the company's accountant before anything else.`
+            : missing.length > 0
+              ? `${missing.length} posted sale(s) dated from ${from ?? 'the start of the obligation'} have no fiscal record. Nothing is fiscalised on its own: einvoicing_fiscalise (ekwo einvoice fiscalise) chains one.`
+              : 'Every posted sale within the obligation has its record, and every chain is intact.',
   };
+}
+
+/** Why the status counts no sale as missing a record under a regime that is announced only, or that reports. */
+function uncountedNote(regime: FiscalRegime): string {
+  if (regime.announced_from !== null) {
+    return `The fiscalisation of this company's country is only announced, from ${regime.announced_from} (${regime.announced_by ?? 'by nobody named'}, ${regime.announced_on ?? 'undated'}); no text in force sets it, so no sale is counted as missing a record.`;
+  }
+  const brick = FISCALISATION_FORMATS[regime.format]?.brick;
+  return `The fiscalisation of this company's country is a reporting regime, ${regime.format}: the data of its documents are reported to the authority and nothing is chained, so no sale is counted as missing a record. ${
+    brick === undefined ? `No brick of packages/formats/ writes ${regime.format} yet (format_without_brick), and Ekwo writes no report for it.` : `${brick} writes the report.`
+  }`;
 }
 
 /** The variable the command line and the MCP server read the invoicing system from, as JSON. */

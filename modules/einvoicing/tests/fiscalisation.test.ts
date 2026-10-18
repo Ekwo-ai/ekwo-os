@@ -3,6 +3,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
   BooksError,
+  EINVOICE_FORMATS,
   FISCALISATION_FORMATS,
   einvoiceChecksum,
   fiscalisationStatus,
@@ -99,8 +100,8 @@ let originalRegime: unknown;
 beforeAll(async () => {
   db = await freshDatabase();
   const withRegime = packWhere(
-    'declares a fiscalisation regime and charges a standard rate',
-    (pack) => pack.documents.einvoice_fiscalisation !== null && standardTaxOf(pack) !== undefined,
+    'declares a chained fiscalisation regime and charges a standard rate',
+    (pack) => pack.documents.einvoice_fiscalisation?.hash != null && standardTaxOf(pack) !== undefined,
   );
   declaring = await seller(db, withRegime, 'Chained Seller');
   // A country whose pack declares a profile a brick writes and no regime.
@@ -442,7 +443,8 @@ describe('fiscalisationStatus', () => {
       (pack) =>
         pack.documents.einvoice_fiscalisation === null &&
         pack.manifest.country !== chained.pack.manifest.country &&
-        pack.documents.einvoice_profile === 'factur-x-en16931' &&
+        pack.documents.einvoice_profile !== null &&
+        EINVOICE_FORMATS[pack.documents.einvoice_profile] !== undefined &&
         standardTaxOf(pack) !== undefined,
     );
     const other = await seller(db, plain, 'No Regime Seller');
@@ -467,6 +469,68 @@ describe('fiscalisationStatus', () => {
   });
 });
 
+describe('a regime that reports, or that is only announced', () => {
+  /** The fake company's country given another regime for the length of one test, then its invented one back. */
+  async function under<T>(regime: Record<string, unknown>, run: () => Promise<T>): Promise<T> {
+    await db.query(`update country_defaults set einvoice_fiscalisation = $2 where country = $1`, [chained.pack.manifest.country, regime]);
+    try {
+      return await run();
+    } finally {
+      await db.query(`update country_defaults set einvoice_fiscalisation = $2 where country = $1`, [chained.pack.manifest.country, REGIME]);
+    }
+  }
+  const REPORTING = {
+    ...REGIME,
+    kind: 'reporting',
+    format: 'fake-report',
+    hash: null,
+    announced_from: null,
+    announced_by: null,
+    announced_on: null,
+    events: null,
+    reported: [{ what: 'invented_scope', by: ['supplier'], legal_reference: null, source: null }],
+  };
+  const ANNOUNCED = { ...REGIME, kind: 'chained', mandatory_from: [], announced_from: '2026-01-01', announced_by: 'An invented council', announced_on: '2025-06-01' };
+
+  it('counts no sale as missing under a reporting regime, and says no brick writes its report', async () => {
+    const documentId = await sale(db, chained, { date: '2026-07-02' });
+    const status = await under(REPORTING, () => fiscalisationStatus(chained.backend, chained.companyId, { limit: 500 }));
+    expect(status['missing']).toEqual([]);
+    expect(status['missing_count']).toBe(0);
+    expect(status['regime']).toMatchObject({ kind: 'reporting', format: 'fake-report', brick: null });
+    expect(String(status['note'])).toMatch(/reporting regime, fake-report: .* nothing is chained/);
+    expect(String(status['note'])).toMatch(/format_without_brick/);
+    expect(await rows(db, `select 1 from einvoicing.fiscal_chain where document_id = $1`, [documentId])).toHaveLength(0);
+  });
+
+  it('refuses to chain a record under a reporting regime: without a brick by format_without_brick, with one by fiscal_regime_without_chain', async () => {
+    const documentId = await sale(db, chained);
+    const withoutBrick = await under(REPORTING, () =>
+      fiscaliseDocument(chained.backend, documentId, { system: SYSTEM, generatedAt: AT }, FORMATS).catch((e: Error) => e.message),
+    );
+    expect(withoutBrick).toMatch(/^format_without_brick: .* keeps its fiscal records as fake-report/);
+    const withBrick = await under(REPORTING, () =>
+      fiscaliseDocument(chained.backend, documentId, { system: SYSTEM, generatedAt: AT }, { 'fake-report': { ...fake, format: 'fake-report' } }).catch(
+        (e: Error) => e.message,
+      ),
+    );
+    expect(withBrick).toMatch(/^fiscal_regime_without_chain: .* reporting regime, fake-report/);
+    expect(await rows(db, `select 1 from einvoicing.fiscal_chain where document_id = $1`, [documentId])).toHaveLength(0);
+  });
+
+  it('counts no sale as missing while the obligation is only announced, and says who announced it and when', async () => {
+    const documentId = await sale(db, chained, { date: '2026-07-03' });
+    const status = await under(ANNOUNCED, () => fiscalisationStatus(chained.backend, chained.companyId, { limit: 500 }));
+    expect((status['missing'] as Record<string, unknown>[]).map((d) => d['id'])).not.toContain(documentId);
+    expect(status['missing_count']).toBe(0);
+    expect(status['regime']).toMatchObject({ announced_from: '2026-01-01', mandatory_from: [] });
+    expect(String(status['note'])).toMatch(/only announced, from 2026-01-01 \(An invented council, 2025-06-01\)/);
+    // The same sale, under the regime in force, is missing its record.
+    const inForce = await fiscalisationStatus(chained.backend, chained.companyId, { limit: 500 });
+    expect((inForce['missing'] as Record<string, unknown>[]).map((d) => d['id'])).toContain(documentId);
+  });
+});
+
 // ---------------------------------------------------------------- the real brick
 
 describe('the brick the declaring pack names', () => {
@@ -488,7 +552,7 @@ describe('the brick the declaring pack names', () => {
     expect(chain.map((r) => r.seq)).toEqual([1, 2]);
     // The record holds the fields the pack names, in its order; the second
     // carries the first's hash among them.
-    const fields = regime.hash.fields['alta'] ?? regime.hash.fields['*']!;
+    const fields = regime.hash!.fields['alta'] ?? regime.hash!.fields['*']!;
     expect(Object.keys(chain[1]!.record).sort()).toEqual([...fields].sort());
     expect(Object.values(chain[1]!.record)).toContain(chain[0]!.hash);
     // The verification URL points at the production service the pack names for the default mode.
