@@ -17,7 +17,7 @@ somewhere has already run it.
   supplier's MSIC code, the moment of issuance — it writes the UBL 2.1
   document LHDNM validates, in JSON or XML: invoice, credit note, debit note
   and refund note, the supplier's (`01`–`04`) or self-billed (`11`–`14`),
-  version 1.0 or 1.1, with the code tables of the MyInvois SDK and every rule
+  version 1.1 by default or 1.0 when asked, with the code tables of the MyInvois SDK and every rule
   the document breaks, by LHDNM's error code where it publishes one. It signs
   nothing and submits nothing, and is not yet registered as a format of the
   socle.
@@ -141,7 +141,10 @@ somewhere has already run it.
   MyInvois as a clearance regime in format `myinvois`, with its link returned
   by LHDNM and its two 72-hour windows, the four steps of its calendar by
   turnover and the RM3,000,000 threshold of exemption of the e-Invoice General
-  Guideline 4.8; no brick writes `myinvois` yet, and the status says so.
+  Guideline 4.8, and its e-invoicing profile is now `myinvois`, the document
+  submitted to the MyInvois API, in place of `pint-my`, the Peppol channel;
+  the core does not hand a sale to the `myinvois` brick yet, and the status
+  says so.
 
 - **What each product brought in, and cost.** `product_report(company, from,
   to)` (migration `20261016145816`) reads the posted invoices and credit notes

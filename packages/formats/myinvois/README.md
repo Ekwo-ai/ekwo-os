@@ -18,7 +18,7 @@ import { MYINVOIS } from '@ekwo-ai/myinvois';
 
 const input = {
   header, lines, taxes,                  // the three views of a posted document
-  version: '1.0',                        // 1.0 unsigned, 1.1 to be signed by the host
+  version: '1.1',                        // the default: to be signed by the host; 1.0 unsigned
   issuedAt: '2026-01-15T10:30:00+08:00', // written in UTC: 2026-01-15, 02:30:00Z
   supplier: { tin, sst: 'NA', tourismTax: 'NA', activity: { msic: '46510', description } },
   buyer: { tin, phone: '+60123456789' },
@@ -53,7 +53,7 @@ given, and every code list is in the package.
 ```ts
 interface MyInvoisInput {
   header: Row; lines: Row[]; taxes: Row[];
-  version: '1.0' | '1.1';
+  version?: '1.0' | '1.1';               // 1.1 when left out
   kind?: 'invoice' | 'credit-note' | 'debit-note' | 'refund-note';
   issuedAt: string;                       // ISO 8601 with its offset
   supplier: PartyIdentifiers & { activity?: { msic: string; description: string } };
@@ -94,11 +94,11 @@ MYINVOIS.write(input, syntax = 'json'): {
   `AccountingSupplierParty`, the company as `AccountingCustomerParty` — and
   `supplier` and `buyer` in the input always mean the parties of the
   document, as the SDK names them.
-- **The version** is stated, never assumed. LHDNM accepts version 1.0
-  without a signature "until such time as \[it\] issues an official notice
-  concerning the retirement of version 1.0", and recommends 1.1 (FAQ). A 1.1
-  document written here is complete once signed, and `requiresSignature`
-  says so.
+- **The version is 1.1 unless 1.0 is asked for.** LHDNM recommends 1.1
+  (FAQ) and accepts version 1.0 without a signature "until such time as
+  \[it\] issues an official notice concerning the retirement of version 1.0".
+  A 1.1 document written here is complete once signed, and
+  `requiresSignature` says so.
 - **The moment of issuance** is written in UTC, which is what the SDK asks
   for `IssueDate` and `IssueTime`. It is not the date of the document in the
   books: a document issued at 07:00 in Kuala Lumpur is issued the day before

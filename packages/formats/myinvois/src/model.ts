@@ -320,8 +320,9 @@ export function buildModel(input: MyInvoisInput): { model: DocumentModel; violat
   if (!allowed.kinds.includes(kind)) {
     throw new MyInvoisError(`a ${String(header.doc_type)} cannot be written as a ${kind}: it is one of ${allowed.kinds.join(', ')}`);
   }
-  if (input.version !== '1.0' && input.version !== '1.1') {
-    throw new MyInvoisError(`the version of the document is 1.0 or 1.1, never ${String(input.version)}`);
+  const version = input.version ?? '1.1';
+  if (version !== '1.0' && version !== '1.1') {
+    throw new MyInvoisError(`the version of the document is 1.0 or 1.1, never ${String(version)}`);
   }
   const number = text(header.number);
   if (number === null) throw new MyInvoisError('the document has no number: it was never issued');
@@ -471,7 +472,7 @@ export function buildModel(input: MyInvoisInput): { model: DocumentModel; violat
       typeCode: (TYPE_CODES[kind] as [string, string])[selfBilled ? 1 : 0],
       kind,
       selfBilled,
-      version: input.version,
+      version,
       number,
       issueDate: issued.date,
       issueTime: issued.time,

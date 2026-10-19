@@ -68,6 +68,14 @@ describe('an invoice of the Malaysian golden year', () => {
     expect(written.content).not.toContain('UBLExtensions');
   });
 
+  it('writes version 1.1 when no version is asked for', () => {
+    const { version: _, ...unstated } = invoice();
+    const written = MYINVOIS.write(unstated);
+    expect(written.version).toBe('1.1');
+    expect(written.requiresSignature).toBe(true);
+    expect(JSON.parse(written.content).Invoice[0].InvoiceTypeCode[0]).toEqual({ _: '01', listVersionID: '1.1' });
+  });
+
   it('reads a state by its name in LHDNM list, and keeps a code as it is', () => {
     const document = documentOf(invoice());
     expect(at(document.AccountingSupplierParty[0].Party[0], 'PostalAddress', 'CountrySubentityCode')).toBe('14');

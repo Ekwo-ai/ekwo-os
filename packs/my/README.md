@@ -201,8 +201,10 @@ comply has been raised twice since — to RM1,000,000 in December 2025 and to
 RM3,000,000 by version 4.8 of LHDNM's own guideline, dated 30 August 2026,
 § 1.6.1(e) — and `fiscalisation.exemption` carries it as a dated history. Only
 the RM3,000,000 threshold is an entry, from 30 August 2026, the date of the
-guideline that states it: the texts this pack cites do not give the day the
-RM1,000,000 threshold took effect, and none is invented. The books do not say
+guideline that states it. The RM1,000,000 threshold, which the Cabinet
+decided on 6 December 2025 for the phase of 1 January 2026, is reported by the
+press and by advisers; no text of LHDNM or of the Ministry of Finance stating
+it was found, so it is not an entry and no date is invented. The books do not say
 a company's turnover, so `ekwo einvoice fiscalisation` counts every posted
 sale from 1 August 2024 and says which threshold holds; whether a company is
 bound, and from which step, is the company's and its accountant's to say.
@@ -216,12 +218,15 @@ reject a validated invoice within `PT72H`, 72 hours of its validation, each
 with a reason. The `einvoicing` module records each submission and each answer
 (`ekwo einvoice clearance`, `einvoicing_clearance`) and refuses a cancellation
 or a rejection after the window; a posted sale without a validation is named
-by the status. Two things remain: **no brick writes the MyInvois document
-yet**, which the status says by name (`format_without_brick`), and **Ekwo does
-not call MyInvois** — the submission, its authentication and its signature
-are the host's (see
+by the status. Two things remain: **the core does not hand a posted sale to
+the brick yet** — `@ekwo-ai/myinvois` writes the MyInvois document, and until
+the core registers it the status says so by name (`format_without_brick`) —
+and **Ekwo does not call MyInvois**: the submission, its authentication and
+its signature are the host's (see
 [`docs/international.md`](../../docs/international.md#from-malaysia)). The
-profile stays `pint-my` and the scheme `0230`, the SSM number.
+profile is `myinvois`, the document submitted to the MyInvois API directly —
+PINT MY, through a Peppol access point, is the other channel and not the one
+declared — and the scheme is `0230`, the SSM number.
 
 **No withholding tax.** Income Tax Act 1967, s. 107A and s. 109 impose
 withholding on payments to a non-resident — contract payments, interest,

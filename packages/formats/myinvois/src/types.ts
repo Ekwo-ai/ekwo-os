@@ -202,11 +202,11 @@ export interface MyInvoisInput {
   lines: readonly Row[];
   taxes: readonly Row[];
   /**
-   * `cbc:InvoiceTypeCode/@listVersionID`. `1.1` is signed and `1.0` is not;
-   * this package signs nothing, so a `1.1` document is complete only once the
-   * host has added its signature. Stated, never assumed.
+   * `cbc:InvoiceTypeCode/@listVersionID`. `1.1`, the default, is signed and
+   * `1.0` is not; this package signs nothing, so a `1.1` document is complete
+   * only once the host has added its signature. `1.0` is written when asked.
    */
-  version: '1.0' | '1.1';
+  version?: '1.0' | '1.1';
   /**
    * An invoice is `invoice` and a credit note `credit-note` without being
    * told. A debit note is booked as an invoice and a refund note as a credit
