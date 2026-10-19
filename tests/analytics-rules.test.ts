@@ -1,5 +1,5 @@
 /**
- * The rules of the analytic split decided on 19/10/2026 (decision 0075,
+ * The rules of the analytic split decided on 19/10/2026 (decision 0076,
  * `supabase/migrations/20261019130000_an_analytic_value_is_entered_on_the_line.sql`
  * and `20261019130500_analytic_report.sql`).
  *

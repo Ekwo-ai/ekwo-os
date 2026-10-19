@@ -6,7 +6,7 @@
  * movement of the fixed assets — a parent with the subtotal of the values
  * below it, its own amount in the `direct_` columns — with one more row for
  * the part no share of the axis reaches, and one for the total (decision
- * 0075). This file finds the axis by its code, calls the function, and puts
+ * 0076). This file finds the axis by its code, calls the function, and puts
  * the unassigned and the total rows beside the values rather than among
  * them. It adds nothing up: the subtotals and the total are the database's,
  * and a sum worked out here would be a second answer (decision 0056).

@@ -62,7 +62,7 @@ somewhere has already run it.
   `suggest_duplicate_contacts`.
 
 - **An analytic value is entered on the line, and read from the ledger**
-  (socle migration `20261019130000`, decision 0075). `document_line_analytics`
+  (socle migration `20261019130000`, decision 0076). `document_line_analytics`
   is the split of a document line, in percent per axis; `post_document()`
   groups the lines by account, tax and split and copies the split of each
   group onto the ledger line it writes — the share of a tax nobody gets back
@@ -85,7 +85,7 @@ somewhere has already run it.
   (`analytic_axis_required`). A document with no split, in a company that
   requires no axis, posts exactly as before.
 
-- **The result by activity** (socle migration `20261019130500`, decision 0075).
+- **The result by activity** (socle migration `20261019130500`, decision 0076).
   `analytic_report(company, axis, from, to)` reads the posted ledger: the
   income, expense and result of each value of an axis, from the whole income
   statement — salaries, rent and depreciation included — and `fixed_assets`,

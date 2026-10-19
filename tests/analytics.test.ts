@@ -1,7 +1,7 @@
 /**
  * The analytic split, from the line of a document to the result of an
  * activity (`supabase/migrations/20261019130000_an_analytic_value_is_entered_on_the_line.sql`,
- * decision 0075).
+ * decision 0076).
  *
  * What is guarded: a product and a contact pre-fill the split of a line at
  * 100 % on an axis the line leaves free, only on an account that carries a

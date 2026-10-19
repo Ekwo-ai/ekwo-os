@@ -2,7 +2,7 @@
 --
 -- `20261019130000` puts the analytic split on the ledger line, copied there
 -- from the document line at posting or keyed on a line no document wrote
--- (decision 0075). This is the reading of it. `product_report()` answers
+-- (decision 0076). This is the reading of it. `product_report()` answers
 -- "what did this offer bring in and cost", from the invoice lines that name
 -- a product; `analytic_report(company, axis, from, to)` answers "what did this
 -- activity make", from the whole income statement — salaries, rent and

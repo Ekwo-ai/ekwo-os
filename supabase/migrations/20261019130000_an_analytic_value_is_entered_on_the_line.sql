@@ -3,7 +3,7 @@
 -- `20260911120800` created the analytic plan — `analytic_axes`,
 -- `analytic_values` and `entry_line_analytics`, the split of a ledger line in
 -- percent — and nothing filled it or read it. This file wires it, as decision
--- 0075 records:
+-- 0076 records:
 --
 --   * `document_line_analytics` is the split of a document line, the same
 --     shape and checks as the split of a ledger line. The person keys the
@@ -975,7 +975,7 @@ begin
   end if;
 
   -- An axis the company requires is carried whole by the lines it is
-  -- required on, or nothing is booked (decision 0075).
+  -- required on, or nothing is booked (decision 0076).
   perform assert_document_analytic_axes(p_document_id);
 
   -- A fixed-amount tax has no basis to spread over lines; refuse rather than
@@ -1147,7 +1147,7 @@ begin
      where l.document_id = p_document_id
        and l.line_type = 'product'
      -- The split is part of the key: lines that go to different analytic
-     -- values are different ledger lines (decision 0075).
+     -- values are different ledger lines (decision 0076).
      group by l.account_id, l.tax_id, document_line_split_key(l.id)
     having sum(l.amount_untaxed) <> 0
      order by 4
@@ -1457,7 +1457,7 @@ end;
 $$;
 
 comment on function post_document(uuid) is
-  'Books a document: one entry, the bases on the accounts of the lines, the tax of each group rounded once and shared over the postings of the tax, each ledger line naming the posting type that wrote it. Refuses a tax whose applies_*_territory the document contradicts — read with territory_within_for_tax(), so a territory outside its parent''s tax does not satisfy a condition naming the parent — or whose applies_supply_vs_seller it contradicts, by name, before anything reaches the ledger; chooses no tax for anybody. Writes the three territories it resolved on the document (seller_territory_code, buyer_territory_code, supply_territory_resolved). Groups the lines by account, tax and analytic split, and copies the split of each group onto the ledger line it writes; refuses analytic_axis_required, before anything is written, when a line leaves part of a required axis off (decision 0075).';
+  'Books a document: one entry, the bases on the accounts of the lines, the tax of each group rounded once and shared over the postings of the tax, each ledger line naming the posting type that wrote it. Refuses a tax whose applies_*_territory the document contradicts — read with territory_within_for_tax(), so a territory outside its parent''s tax does not satisfy a condition naming the parent — or whose applies_supply_vs_seller it contradicts, by name, before anything reaches the ledger; chooses no tax for anybody. Writes the three territories it resolved on the document (seller_territory_code, buyer_territory_code, supply_territory_resolved). Groups the lines by account, tax and analytic split, and copies the split of each group onto the ledger line it writes; refuses analytic_axis_required, before anything is written, when a line leaves part of a required axis off (decision 0076).';
 
 -- ---------------------------------------------------------------------------
 -- 10. cancel_document, whose credit note takes the split of the invoice
@@ -1613,7 +1613,7 @@ comment on function cancel_document(uuid, date) is
 -- ---------------------------------------------------------------------------
 -- 11. merge_contacts, which carries the default too
 --
--- `20261019090000` as it was, with one field more among the empty fields of
+-- `20261019104812` as it is, with one field more among the empty fields of
 -- the kept contact it fills from the absorbed one: `analytic_value_id`. The
 -- column points at a value, not at a contact, so the walk over the foreign
 -- keys to `contacts` does not see it.
@@ -1693,18 +1693,12 @@ begin
 
   -- Two numbers are two legal persons, whatever their names say; and a
   -- declaration reads the number.
-  if upper(regexp_replace(coalesce(v_keep.vat_number, ''), '[^0-9A-Za-z]', '', 'g'))
-       <> upper(regexp_replace(coalesce(v_absorb.vat_number, ''), '[^0-9A-Za-z]', '', 'g'))
-     and coalesce(btrim(v_keep.vat_number), '') <> ''
-     and coalesce(btrim(v_absorb.vat_number), '') <> '' then
+  if party_identifier(v_keep.vat_number) <> party_identifier(v_absorb.vat_number) then
     raise exception 'different_identifiers: % carries the VAT number % and % carries %: two numbers are two parties, and are not merged',
       v_keep.name, v_keep.vat_number, v_absorb.name, v_absorb.vat_number
       using errcode = '55006';
   end if;
-  if upper(regexp_replace(coalesce(v_keep.registration_number, ''), '[^0-9A-Za-z]', '', 'g'))
-       <> upper(regexp_replace(coalesce(v_absorb.registration_number, ''), '[^0-9A-Za-z]', '', 'g'))
-     and coalesce(btrim(v_keep.registration_number), '') <> ''
-     and coalesce(btrim(v_absorb.registration_number), '') <> '' then
+  if party_identifier(v_keep.registration_number) <> party_identifier(v_absorb.registration_number) then
     raise exception 'different_identifiers: % carries the registration number % and % carries %: two numbers are two parties, and are not merged',
       v_keep.name, v_keep.registration_number, v_absorb.name, v_absorb.registration_number
       using errcode = '55006';
@@ -1745,7 +1739,7 @@ begin
   if coalesce(btrim(v_new.notes), '') = '' and coalesce(btrim(v_absorb.notes), '') <> '' then
     v_new.notes := v_absorb.notes; v_filled := v_filled || 'notes'::text;
   end if;
-  -- The analytic value its lines start with (decision 0075), taken where the
+  -- The analytic value its lines start with (decision 0076), taken where the
   -- kept contact names none.
   if v_new.analytic_value_id is null and v_absorb.analytic_value_id is not null then
     v_new.analytic_value_id := v_absorb.analytic_value_id; v_filled := v_filled || 'analytic_value_id'::text;
