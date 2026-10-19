@@ -241,6 +241,7 @@ Every write names its company explicitly.
 | `describe_pack` | Which country packs this installation holds: their version, how much anyone has read them, the register of texts each was built from — title, official publisher, link and the day it was opened — and, for a proven pack, its evidence: per scope, the kind of filing, the year, what was reproduced and what was not tested |
 | `status` | Schema version, instance, connection, companies |
 | `create_contact` | A customer, supplier or other third party |
+| `merge_contacts` | Joins two contacts that are one party: everything naming the absorbed one, posted lines and issued documents included, names the kept one, whose empty fields are filled; the absorbed one is retired. Refused by name for two different VAT or registration numbers, a contact merged before, or a matching that would span two parties |
 | `create_product` | A catalogue row: code, name, unit, price, account, tax |
 | `update_product` | Changes one, or retires it with `active: false` |
 | `pin_accounts` | Adds accounts to the working chart a company sees first, or takes one back out with `pinned: false` |

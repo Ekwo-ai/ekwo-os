@@ -44,6 +44,7 @@ export {
   createContact,
   createDocument,
   leaveLineUnnamed,
+  mergeContacts,
   postDocument,
   reconcile,
   reconcileMany,
@@ -75,6 +76,11 @@ export const CreateContactInput = z.object({
   postal_code: z.string().min(1).optional(),
   city: z.string().min(1).optional(),
   client_ref: z.string().min(1).max(200).optional().describe('Your own reference for this creation. Calling again with the same one returns what was created the first time (`replayed: true`) instead of creating a second — use it whenever a call might be repeated after a timeout.'),
+});
+
+export const MergeContactsInput = z.object({
+  keep_contact_id: uuid.describe('The contact that stays and takes the history of the other — the one the user chose to keep, as search_contacts returns it.'),
+  absorb_contact_id: uuid.describe('The duplicate the user chose to retire: everything naming it will name the kept contact. A contact of the same company.'),
 });
 
 // ---------------------------------------------------------------------------

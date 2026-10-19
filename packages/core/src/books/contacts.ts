@@ -110,3 +110,45 @@ export async function resolveContact(
   }
   return matches[0] as { id: string; name: string };
 }
+
+export interface MergeContactsArgs {
+  /** The contact that stays, and takes the history of the other. */
+  keep_contact_id: string;
+  /** The contact that is retired once everything naming it names the kept one. */
+  absorb_contact_id: string;
+}
+
+/**
+ * Merges two contacts of one company through `merge_contacts()` (decision
+ * 0074): every row naming the absorbed contact — posted lines and issued
+ * documents included — names the kept one, the learned motifs are folded, the
+ * kept contact's empty fields are filled, and the absorbed contact is retired.
+ * What moved and what was filled are the database's answer; the refusals are
+ * its own, by name.
+ */
+export async function mergeContacts(backend: Backend, args: MergeContactsArgs): Promise<unknown> {
+  const merge = only(
+    await backend.rpc<Row>('merge_contacts', { p_keep: args.keep_contact_id, p_absorb: args.absorb_contact_id }),
+    `contacts ${args.keep_contact_id} and ${args.absorb_contact_id} were not merged`,
+  );
+  const both = await backend.select<Row>({
+    table: 'contacts',
+    columns: [...columns.CONTACT, 'merged_into'],
+    where: [{ column: 'id', op: 'in', value: [args.keep_contact_id, args.absorb_contact_id] }],
+  });
+  const byId = new Map(both.map((contact) => [String(contact['id']), contact]));
+  return {
+    merge: {
+      id: merge['id'],
+      kept_id: merge['kept_id'],
+      absorbed_id: merge['absorbed_id'],
+      moved: merge['moved'],
+      filled: merge['filled'],
+      merged_by: merge['merged_by'],
+      merged_at: merge['merged_at'],
+    },
+    kept: byId.get(args.keep_contact_id) ?? null,
+    absorbed: byId.get(args.absorb_contact_id) ?? null,
+    note: 'Everything that named the absorbed contact names the kept one now, posted lines and issued documents included; the absorbed contact is retired, kept as the record of what was imported, and is named by no row again. There is no unmerge: the audit trail lists every line and document that moved.',
+  };
+}

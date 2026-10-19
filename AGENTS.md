@@ -183,6 +183,7 @@ reach and whether you may write; without that box ticked, you read.
 | The companies of the installation | `ekwo company list` | `list_companies` |
 | Company details (address, VAT number) | — | `update_company_profile` |
 | A customer | `ekwo contact add "<name>" --country <cc> --ref <yours>` | `create_contact` |
+| One party created twice, joined | `ekwo contact merge <keep> <absorb>` | `merge_contacts` |
 | Accounts and tax codes | the country's set-up page | `list_accounts`, `describe_pack` |
 | A draft invoice | `ekwo doc new --contact <name> --line "name=…,price=…,account=<code>,tax=<code>" --ref <yours>` | `create_document` |
 | See the entry before booking | `ekwo post <doc> --dry-run` | — |

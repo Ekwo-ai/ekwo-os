@@ -292,6 +292,10 @@ describe('every command answers --json with one document of the published shape'
     const contact = await asPerson(['contact', 'add', 'Client Example', '--ref', 'c-1']);
     expect(contact.exitCode).toBe(0);
     expect((await asPerson(['contact', 'list'])).exitCode).toBe(0);
+    // One party created twice, merged: the second is retired into the first.
+    expect((await asPerson(['contact', 'add', 'Example Client', '--ref', 'c-2'])).exitCode).toBe(0);
+    const merged = await asPerson(['contact', 'merge', 'Client Example', 'Example Client']);
+    expect(merged.data).toMatchObject({ kept: { name: 'Client Example' }, absorbed: { name: 'Example Client', active: false } });
     const draft = await asPerson(['doc', 'new', '--contact', 'Client Example', '--date', '2026-06-15', '--ref', 'd-1', '--line', `name=Work,price=100.00,account=${sales}`]);
     expect(draft.exitCode).toBe(0);
     expect((await asPerson(['doc', 'line', 'add', 'd-1', '--name', 'More', '--price', '20.00', '--account', sales])).command).toBe('doc line add');

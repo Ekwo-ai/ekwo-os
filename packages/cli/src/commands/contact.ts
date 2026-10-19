@@ -1,17 +1,30 @@
 /**
- * `ekwo contact add` and `ekwo contact list` — `createContact()` and
- * `searchContacts()` of the core, which are the MCP server's `create_contact`
- * and `search_contacts`.
+ * `ekwo contact add`, `ekwo contact list` and `ekwo contact merge` —
+ * `createContact()`, `searchContacts()` and `mergeContacts()` of the core,
+ * which are the MCP server's `create_contact`, `search_contacts` and
+ * `merge_contacts`.
  */
 
-import { CONTACT_TYPES, createContact, searchContacts, type ContactType, type CreateContactArgs } from '@ekwo-ai/core';
+import {
+  CONTACT_TYPES,
+  createContact,
+  mergeContacts,
+  resolveContact,
+  searchContacts,
+  type ContactType,
+  type CreateContactArgs,
+} from '@ekwo-ai/core';
 import { UsageError, numberFlag, rejectUnknownFlags, stringFlag, type ParsedArgs } from '../args.js';
 import { BOOKS_FLAGS, CREATE_FLAGS, given, openBooks, stdinDocument, type BooksDeps } from '../books.js';
 import { setResult } from '../output.js';
-import { dim, heading, note, step, table } from '../ui.js';
+import { dim, heading, note, pairs, step, table } from '../ui.js';
 
 const ADD_FLAGS = [...CREATE_FLAGS, 'type', 'vat', 'email', 'country', 'terms', 'aux', 'address', 'postal-code', 'city'] as const;
 const LIST_FLAGS = [...BOOKS_FLAGS, 'query', 'type', 'vat', 'limit'] as const;
+const MERGE_FLAGS = [...BOOKS_FLAGS] as const;
+
+const USAGE =
+  'usage: ekwo contact add <name> [--type --vat --email --country --terms --ref] | ekwo contact list [--query --type --vat] | ekwo contact merge <keep> <absorb>';
 
 const ADD_FIELDS = [
   'name', 'contact_type', 'vat_number', 'email', 'country', 'payment_terms_days', 'auxiliary_code',
@@ -30,7 +43,8 @@ export async function contactCommand(args: ParsedArgs, deps: BooksDeps = {}): Pr
   const action = args.positional[0];
   if (action === 'add') return add(args, deps);
   if (action === 'list') return list(args, deps);
-  throw new UsageError('usage: ekwo contact add <name> [--type --vat --email --country --terms --ref] | ekwo contact list [--query --type --vat]');
+  if (action === 'merge') return merge(args, deps);
+  throw new UsageError(USAGE);
 }
 
 async function add(args: ParsedArgs, deps: BooksDeps): Promise<number> {
@@ -89,5 +103,36 @@ async function list(args: ParsedArgs, deps: BooksDeps): Promise<number> {
       result.contacts.map((c) => [String(c['name']), String(c['contact_type']), String(c['vat_number'] ?? ''), dim(String(c['id']))]),
     );
   }
+  return 0;
+}
+
+async function merge(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, MERGE_FLAGS);
+  const [wantedKeep, wantedAbsorb] = [args.positional[1], args.positional[2]];
+  if (wantedKeep === undefined || wantedAbsorb === undefined) {
+    throw new UsageError(`missing_argument: the contact to keep and the contact to absorb, by name or id. ${USAGE}`);
+  }
+  const { backend, company } = await openBooks(args, deps);
+  const keep = await resolveContact(backend, company.id, wantedKeep);
+  const absorb = await resolveContact(backend, company.id, wantedAbsorb);
+
+  const result = (await mergeContacts(backend, { keep_contact_id: keep.id, absorb_contact_id: absorb.id })) as {
+    merge: { moved: Record<string, number>; filled: string[] };
+    kept: Record<string, unknown> | null;
+    absorbed: Record<string, unknown> | null;
+    note: string;
+  };
+  setResult(result);
+
+  heading(`Contacts merged, in ${company.name}`);
+  pairs([
+    ['kept', `${String(result.kept?.['name'] ?? keep.name)}  ${dim(keep.id)}`],
+    ['absorbed', `${String(result.absorbed?.['name'] ?? absorb.name)}  ${dim(absorb.id)}`],
+  ]);
+  const moved = Object.entries(result.merge.moved);
+  if (moved.length === 0) note(dim('Nothing named the absorbed contact.'));
+  else table([{ title: 'moved' }, { title: 'rows' }], moved.map(([what, count]) => [what, String(count)]));
+  if (result.merge.filled.length > 0) note(dim(`filled from the absorbed contact: ${result.merge.filled.join(', ')}`));
+  note(dim(result.note));
   return 0;
 }

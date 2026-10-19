@@ -142,7 +142,10 @@ ${bold('Connecting')} ${dim('(every command)')}
                             (sb_secret_…) or the legacy service_role JWT.
                             Needed to create a user.
 
-  ${cyan('contact')}     add <name> | list — the people and companies the books name.
+  ${cyan('contact')}     add <name> | list — the people and companies the books name;
+              merge <keep> <absorb> — one party created twice: everything that
+              names the second, posted lines and issued documents included,
+              names the first, and the second is retired. By name or id.
   ${cyan('doc')}         new | line add <document> — a draft and its lines; list | show
               <document> — what exists, and what is still owed. One object: a
               sale invoice, a bill, a quote or a credit note, with --type. A

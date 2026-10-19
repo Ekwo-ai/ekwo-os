@@ -568,6 +568,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'merge_contacts',
+    {
+      title: 'Merge two contacts of one company',
+      description:
+        'One party created twice — two spellings of one customer, two imports of one supplier: everything that names the absorbed contact names the kept one afterwards, in one transaction — posted ledger lines and issued documents included, statement lines, payments, branches, files and learned motifs — and the kept contact\'s empty fields (VAT number, IBAN, address, email…) are filled from the absorbed one without overwriting any. The absorbed contact is retired, never deleted, and no row may name it again. No amount, account, date or tax box moves, and there is no unmerge. Refused by name: unknown_contact (also a contact of another company), same_contact, already_merged, different_identifiers (two different VAT or registration numbers are two parties), matching_across_parties, not_allowed. Show the user the two contacts side by side with search_contacts and ask which one to keep before calling it; never decide that two contacts are one yourself.',
+      inputSchema: write.MergeContactsInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.mergeContacts(backend, args)),
+  );
+
+  server.registerTool(
     'create_document',
     {
       title: 'Create a draft invoice',
