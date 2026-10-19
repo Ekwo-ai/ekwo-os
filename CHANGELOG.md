@@ -200,6 +200,20 @@ somewhere has already run it.
   end-to-end run against a real Supabase project was not run for this
   release.
 
+### Fixed
+
+- **A pair of contacts by name weighs its words** (socle migration
+  `20261019112919`, decision 0075 amended). `suggest_duplicate_contacts()`
+  proposed "LG SERVICES" and "ASBL UCM SERVICES", "Parking" and "Parking
+  Cathédrale SA", "DKV Belgium" and "APPLE RETAIL BELGIUM BV": one shared
+  trade, place or legal form. Each word now weighs 1 over the contacts of the
+  company that carry it, every word of the name counts at any length, and a
+  pair needs the rarest significant word of the shorter name in the longer,
+  with what only one of the two says weighing no more than what they share;
+  the words the longer adds below the minimum length — a legal form — are not
+  counted against it. The same name is always a pair. Scores, identifiers
+  (VAT, registration, bank account) and `contact_candidates()` are unchanged.
+
 ## [0.14.0] — 2026-10-18
 
 ### Added

@@ -168,7 +168,7 @@ project reports what was already there and creates nothing a second time.
 | `ekwo use <company>` | Picks the company the next commands run on. |
 | `ekwo whoami` | Who you are on which instance, the companies you can see, and what you may do on the one in use. |
 | `ekwo contact add` / `list` | A customer or a supplier, and finding one again. |
-| `ekwo contact duplicates` | The pairs of contacts that are probably one party, strongest first, through `suggest_duplicate_contacts()`: which one to keep, a score, and the evidence — the same VAT or registration number, the same bank account, the same words of the name. Writes nothing. |
+| `ekwo contact duplicates` | The pairs of contacts that are probably one party, strongest first, through `suggest_duplicate_contacts()`: which one to keep, a score, and the evidence — the same VAT or registration number, the same bank account, the words of the name weighed by how few contacts carry them. Writes nothing. |
 | `ekwo contact merge <keep> <absorb>` | One party created twice — two spellings, two imports — joined through `merge_contacts()`: everything that names the second, posted lines and issued documents included, names the first; the first takes the fields it left empty; the second is retired, never deleted, and named by nothing again. By name or id. |
 | `ekwo doc new` / `doc line add` | A draft document — any kind, with `--type` — and one more line on it. A draft books nothing. `ekwo invoice` is the old name of `ekwo doc`, kept as an alias. |
 | `ekwo post <document>` | Books it, through `post_document()`. `--dry-run` shows the entry the database would write and writes nothing. |

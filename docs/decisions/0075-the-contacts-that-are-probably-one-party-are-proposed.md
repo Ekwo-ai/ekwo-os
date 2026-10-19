@@ -1,6 +1,11 @@
 # The contacts that are probably one party are proposed
 
 > Status: accepted
+>
+> Amended 2026-10-19 by `20261019112919`: a pair by name weighs each word by
+> how few contacts of the company carry it, reads every word of the name at
+> any length, and counts what the longer name adds. The first rule proposed
+> "LG SERVICES" and "ASBL UCM SERVICES" on one shared trade.
 
 ## Context
 
@@ -43,14 +48,28 @@ person still chooses it.
   punctuation and case are set aside: 1.
 - The same **bank account**, on the contact or in a learned motif
   (`counterparty_account`): 1, as `contact_candidates()` scores it.
-- The same **significant words of the name** in any order, or every word of
-  one name in the other: the score `contact_candidates()` gives a name — 0.950
-  for the same name, 0.900 for the words of one inside the other — capped at
-  0.600 when the words of the shorter name reach several contacts, since it
-  cannot say which one is the twin. Two names that merely share a word are not
-  a pair: thirty suppliers whose names end in one legal form are not thirty
-  duplicates. The words are `significant_words()` at the company's minimum
-  length, and the threshold is the company's `name_threshold`.
+- The **words of the name**, each weighed by how rare it is among the
+  company's contacts: 1 over the number of contacts that carry it, so a word
+  carried by one contact weighs 1 and a legal form carried by thirty weighs
+  1/30. Every word counts, at any length — the initials "LG", "KBC", "DKV"
+  that tell two parties apart are shorter than the minimum length. For the
+  shorter name and the longer, a pair needs the rarest significant word of
+  the shorter (at the company's minimum length) in the longer, and what only
+  one of them says — every word of the shorter missing from the longer, the
+  significant words of the longer missing from the shorter — weighing no more
+  than the significant words they share. The words of the longer below the
+  minimum length are not counted against it: a name written in full grows by
+  its legal form ("Isabel" and "ISABEL NV"). So one shared trade, place or
+  legal form never makes a pair on its own: "LG SERVICES" is not "ASBL UCM
+  SERVICES", "Parking" is not "Parking Cathédrale SA", and "Garage Annez" is
+  "Garage Annez et fils". The same name is always a pair. No list of legal
+  forms: the core has none, and the count catches the trade and the town as
+  well. The score is the one `contact_candidates()` gives a name — 0.950 for
+  the same name, 0.900 otherwise — capped at 0.600 when the shorter name
+  agrees with several contacts, since it cannot say which one is the twin;
+  the threshold is the company's `name_threshold`. `contact_candidates()` is
+  not changed by the weighing: a statement line and a ledger line are
+  suggested as before.
 
 **One scoring path.** The score of a name and its cap move out of
 `contact_candidates()` into `name_agreement()` and `name_among_several()`,
@@ -67,8 +86,7 @@ disappears at the next call, and the kept contact is proposed again with any
 third contact it still resembles.
 
 **Bounded by construction.** The pairs of a name are found through the rarest
-word of each name — every word of the shorter is in the longer, its rarest one
-too — never by comparing every contact with every other; identifiers are
+significant word of each name, which a pair needs in the other — never by comparing every contact with every other; identifiers are
 joined on their value. The function plans its joins as hash joins whatever the
 statistics say. At 2 000 contacts on PGlite it answers in about 40 ms.
 
@@ -79,8 +97,10 @@ caller may read; a company of somebody else gives no row.
 
 - A screen lists the pairs, shows the two contacts and the sentences, and
   calls `merge_contacts()` on the pair a person confirms.
-- A statement line, a ledger line and a pair of contacts are weighed by one
-  rule; a change to how a name scores changes all three.
+- A statement line, a ledger line and a pair of contacts are scored by one
+  rule; a change to how a name scores changes all three. Which pairs of
+  contacts are compared at all is the duplicates' own: the weighing of the
+  words reads two names, where a line reads one text.
 - Contacts with the same name and nothing else to tell them apart are
   proposed. Many contacts sharing one exact name are many pairs; that is what
   the books say.
@@ -88,6 +108,7 @@ caller may read; a company of somebody else gives no row.
 ## See also
 
 - `supabase/migrations/20261019104812_the_contacts_that_are_probably_one_party.sql`
+- `supabase/migrations/20261019112919_a_pair_by_name_weighs_its_words.sql`
 - `tests/duplicate_contacts.test.ts`
 - [0045](0045-recognising-a-counterparty.md) — A counterparty is recognised from learned patterns
 - [0072](0072-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt
