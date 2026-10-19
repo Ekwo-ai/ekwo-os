@@ -148,7 +148,7 @@ beforeAll(async () => {
       `insert into fixed_assets.disposals (asset_id, company_id, disposal_date, proceeds, counterpart_account_id, contact_id,
                                            cost, accumulated, net_book_value, result, entry_id)
        select $1, $2, $3::date, 100, (select id from accounts where company_id = $2 order by code limit 1),
-              (select id from contacts where company_id = $2 order by id limit 1), 6000, 1200, 4800, -4700,
+              (select id from contacts where company_id = $2 and merged_into is null order by id limit 1), 6000, 1200, 4800, -4700,
               (select id from entries where company_id = $2 and state = 'posted' order by id limit 1)`,
       [asset.id, company, openDay],
     );
@@ -1028,7 +1028,7 @@ describe('the other person, signed in', () => {
       one<{ id: string }>(
         db,
         `insert into documents (company_id, doc_type, contact_id, document_date)
-         select $1, 'sale_invoice', c.id, $2::date from contacts c where c.company_id = $1 order by c.id limit 1 returning id`,
+         select $1, 'sale_invoice', c.id, $2::date from contacts c where c.company_id = $1 and c.merged_into is null order by c.id limit 1 returning id`,
         [bobBooks, openDay],
       ),
     );
@@ -1097,7 +1097,7 @@ describe('the other person, signed in', () => {
       const plant = (id: string) =>
         probe(
           `insert into documents (company_id, doc_type, contact_id, document_date, reversed_document_id)
-           select $1, 'sale_credit_note', c.id, $3::date, $2 from contacts c where c.company_id = $1 order by c.id limit 1`,
+           select $1, 'sale_credit_note', c.id, $3::date, $2 from contacts c where c.company_id = $1 and c.merged_into is null order by c.id limit 1`,
           [bobBooks, id, openDay],
           [id, NOWHERE],
         );
@@ -1426,7 +1426,7 @@ describe('a posted row, on a shared installation', () => {
         one<{ id: string }>(
           db,
           `insert into documents (company_id, doc_type, contact_id, document_date)
-           select $1, 'sale_invoice', c.id, $2::date from contacts c where c.company_id = $1 order by c.id limit 1 returning id`,
+           select $1, 'sale_invoice', c.id, $2::date from contacts c where c.company_id = $1 and c.merged_into is null order by c.id limit 1 returning id`,
           [bobBooks, openDay],
         ),
     );
