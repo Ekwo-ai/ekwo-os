@@ -42,6 +42,15 @@ it.
 | [`peppol-ubl`](peppol-ubl/) | Peppol BIS Billing 3.0 (UBL 2.1), with participant identifiers checked offline |
 | [`factur-x`](factur-x/) | Factur-X and ZUGFeRD: EN 16931 CII XML, embedded in and extracted from a PDF/A-3 |
 
+**Electronic invoices cleared before they are issued.** An administration that
+validates every invoice before it is the taxpayer's gets the document from the
+same rows; signing it, submitting it and keeping the identifier the
+administration returns belong to the host:
+
+| Package | Format |
+|---|---|
+| [`myinvois`](myinvois/) | The Malaysian MyInvois e-Invoice of LHDNM (UBL 2.1, JSON or XML): invoices, credit, debit and refund notes, the supplier's or self-billed |
+
 **Invoicing records, written.** An administration that wants every invoice
 recorded as it is issued, chained to the one before, gets the record from the
 same rows; keeping the chain and sending the record belong to the host:

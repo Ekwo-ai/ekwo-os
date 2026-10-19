@@ -1,0 +1,304 @@
+{
+  "_D": "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+  "_A": "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+  "_B": "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+  "Invoice": [
+    {
+      "ID": [
+        { "_": "INV-2026-0001" }
+      ],
+      "IssueDate": [
+        { "_": "2026-01-15" }
+      ],
+      "IssueTime": [
+        { "_": "02:30:00Z" }
+      ],
+      "InvoiceTypeCode": [
+        { "_": "01", "listVersionID": "1.0" }
+      ],
+      "DocumentCurrencyCode": [
+        { "_": "MYR" }
+      ],
+      "AccountingSupplierParty": [
+        {
+          "Party": [
+            {
+              "IndustryClassificationCode": [
+                { "_": "46510", "name": "Wholesale of computer hardware, software and peripherals" }
+              ],
+              "PartyIdentification": [
+                {
+                  "ID": [
+                    { "_": "C10000000010", "schemeID": "TIN" }
+                  ]
+                },
+                {
+                  "ID": [
+                    { "_": "202601000001", "schemeID": "BRN" }
+                  ]
+                },
+                {
+                  "ID": [
+                    { "_": "W10-0000-00000001", "schemeID": "SST" }
+                  ]
+                },
+                {
+                  "ID": [
+                    { "_": "NA", "schemeID": "TTX" }
+                  ]
+                }
+              ],
+              "PostalAddress": [
+                {
+                  "CityName": [
+                    { "_": "Kuala Lumpur" }
+                  ],
+                  "PostalZone": [
+                    { "_": "50480" }
+                  ],
+                  "CountrySubentityCode": [
+                    { "_": "14" }
+                  ],
+                  "AddressLine": [
+                    {
+                      "Line": [
+                        { "_": "Lot 1, Jalan Contoh" }
+                      ]
+                    },
+                    {
+                      "Line": [
+                        { "_": "Taman Contoh" }
+                      ]
+                    }
+                  ],
+                  "Country": [
+                    {
+                      "IdentificationCode": [
+                        { "_": "MYS", "listID": "ISO3166-1", "listAgencyID": "6" }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "PartyLegalEntity": [
+                {
+                  "RegistrationName": [
+                    { "_": "Syarikat Contoh Sdn. Bhd." }
+                  ]
+                }
+              ],
+              "Contact": [
+                {
+                  "Telephone": [
+                    { "_": "+60300000001" }
+                  ],
+                  "ElectronicMail": [
+                    { "_": "accounts@contoh.example" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "AccountingCustomerParty": [
+        {
+          "Party": [
+            {
+              "PartyIdentification": [
+                {
+                  "ID": [
+                    { "_": "C20000000020", "schemeID": "TIN" }
+                  ]
+                },
+                {
+                  "ID": [
+                    { "_": "202601000002", "schemeID": "BRN" }
+                  ]
+                },
+                {
+                  "ID": [
+                    { "_": "NA", "schemeID": "SST" }
+                  ]
+                }
+              ],
+              "PostalAddress": [
+                {
+                  "CityName": [
+                    { "_": "Shah Alam" }
+                  ],
+                  "PostalZone": [
+                    { "_": "40000" }
+                  ],
+                  "CountrySubentityCode": [
+                    { "_": "10" }
+                  ],
+                  "AddressLine": [
+                    {
+                      "Line": [
+                        { "_": "No. 2, Jalan Bintang" }
+                      ]
+                    }
+                  ],
+                  "Country": [
+                    {
+                      "IdentificationCode": [
+                        { "_": "MYS", "listID": "ISO3166-1", "listAgencyID": "6" }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "PartyLegalEntity": [
+                {
+                  "RegistrationName": [
+                    { "_": "Menara Bintang Trading Sdn. Bhd." }
+                  ]
+                }
+              ],
+              "Contact": [
+                {
+                  "Telephone": [
+                    { "_": "+60300000002" }
+                  ],
+                  "ElectronicMail": [
+                    { "_": "finance@bintang.example" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "PaymentTerms": [
+        {
+          "Note": [
+            { "_": "Thirty days from the date of the invoice" }
+          ]
+        }
+      ],
+      "TaxTotal": [
+        {
+          "TaxAmount": [
+            { "_": 200.00, "currencyID": "MYR" }
+          ],
+          "TaxSubtotal": [
+            {
+              "TaxableAmount": [
+                { "_": 2000.00, "currencyID": "MYR" }
+              ],
+              "TaxAmount": [
+                { "_": 200.00, "currencyID": "MYR" }
+              ],
+              "TaxCategory": [
+                {
+                  "ID": [
+                    { "_": "01" }
+                  ],
+                  "TaxScheme": [
+                    {
+                      "ID": [
+                        { "_": "OTH", "schemeID": "UN/ECE 5153", "schemeAgencyID": "6" }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "LegalMonetaryTotal": [
+        {
+          "LineExtensionAmount": [
+            { "_": 2000.00, "currencyID": "MYR" }
+          ],
+          "TaxExclusiveAmount": [
+            { "_": 2000.00, "currencyID": "MYR" }
+          ],
+          "TaxInclusiveAmount": [
+            { "_": 2200.00, "currencyID": "MYR" }
+          ],
+          "PayableAmount": [
+            { "_": 2200.00, "currencyID": "MYR" }
+          ]
+        }
+      ],
+      "InvoiceLine": [
+        {
+          "ID": [
+            { "_": "2" }
+          ],
+          "InvoicedQuantity": [
+            { "_": 20, "unitCode": "C62" }
+          ],
+          "LineExtensionAmount": [
+            { "_": 2000.00, "currencyID": "MYR" }
+          ],
+          "TaxTotal": [
+            {
+              "TaxAmount": [
+                { "_": 200.00, "currencyID": "MYR" }
+              ],
+              "TaxSubtotal": [
+                {
+                  "TaxableAmount": [
+                    { "_": 2000.00, "currencyID": "MYR" }
+                  ],
+                  "TaxAmount": [
+                    { "_": 200.00, "currencyID": "MYR" }
+                  ],
+                  "Percent": [
+                    { "_": 10 }
+                  ],
+                  "TaxCategory": [
+                    {
+                      "ID": [
+                        { "_": "01" }
+                      ],
+                      "TaxScheme": [
+                        {
+                          "ID": [
+                            { "_": "OTH", "schemeID": "UN/ECE 5153", "schemeAgencyID": "6" }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Item": [
+            {
+              "Description": [
+                { "_": "Steel fittings" }
+              ],
+              "CommodityClassification": [
+                {
+                  "ItemClassificationCode": [
+                    { "_": "022", "listID": "CLASS" }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Price": [
+            {
+              "PriceAmount": [
+                { "_": 100.00, "currencyID": "MYR" }
+              ]
+            }
+          ],
+          "ItemPriceExtension": [
+            {
+              "Amount": [
+                { "_": 2000.00, "currencyID": "MYR" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -11,6 +11,17 @@ somewhere has already run it.
 
 ### Added
 
+- **`@ekwo-ai/myinvois`, the Malaysian MyInvois e-Invoice**, a new brick
+  under `packages/formats/`. From the three views of a posted document and
+  the LHDNM identifiers the books do not hold — the TIN of each party, the
+  supplier's MSIC code, the moment of issuance — it writes the UBL 2.1
+  document LHDNM validates, in JSON or XML: invoice, credit note, debit note
+  and refund note, the supplier's (`01`–`04`) or self-billed (`11`–`14`),
+  version 1.0 or 1.1, with the code tables of the MyInvois SDK and every rule
+  the document breaks, by LHDNM's error code where it publishes one. It signs
+  nothing and submits nothing, and is not yet registered as a format of the
+  socle.
+
 - **Two contacts of one company are merged** (socle migration
   `20261019090000`, module assets migration `20261019090001`, decision 0074).
   `merge_contacts(keep, absorb)` moves every reference of the absorbed contact

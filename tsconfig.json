@@ -26,6 +26,7 @@
       "@ekwo-ai/vat-consignment": ["./packages/formats/vat-consignment/src/index.ts"],
       "@ekwo-ai/peppol-ubl": ["./packages/formats/peppol-ubl/src/index.ts"],
       "@ekwo-ai/verifactu": ["./packages/formats/verifactu/src/index.ts"],
+      "@ekwo-ai/myinvois": ["./packages/formats/myinvois/src/index.ts"],
       "@ekwo-ai/factur-x": ["./packages/formats/factur-x/src/index.ts"],
       "@ekwo-ai/factur-x/pdf": ["./packages/formats/factur-x/src/pdf.ts"],
       "@ekwo-ai/invoice-pdf": ["./packages/formats/invoice-pdf/src/index.ts"],
