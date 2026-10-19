@@ -51,6 +51,9 @@ const READS_THE_COLUMN = [
   // Not a reader but a guard: it freezes posted documents, and on a real
   // database it arrived after this backfill had filled them.
   '20260918161204_a_posted_document_does_not_move.sql',
+  // Replaces document_header again, with the identifiers of the parties, and
+  // reads the column as the view before it did.
+  '20261019150000_a_party_names_its_identifiers.sql',
 ];
 
 let db: PGlite;

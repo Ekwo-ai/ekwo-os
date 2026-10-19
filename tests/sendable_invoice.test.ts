@@ -54,6 +54,9 @@ const SNAPSHOT = [
   // Published after the backfill it would refuse: on a real database the
   // posted lines were filled before anything froze them, and so they are here.
   '20260918161204_a_posted_document_does_not_move.sql',
+  // Replaces document_header again with more columns, so it cannot come
+  // before the view it extends.
+  '20261019150000_a_party_names_its_identifiers.sql',
 ];
 
 /** The treatments each condition of a legal mention covers — the vocabulary of `applies_when`, as the schema documents it. */
