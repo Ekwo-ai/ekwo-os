@@ -131,14 +131,24 @@ keeps what they share:
 | On receipt | a reference for the submission | a reference for the sending | the system's own identifier for the file |
 | Validated with | the document's unique identifier, the moment of validation, a link to its validation page | the KSeF number, the moment it was received | a receipt of delivery, with its moment |
 | Rejected with | the errors found | a code and its description | a rejection notice with the errors; the corrected file is sent again |
-| Verification link on the invoice | returned by the authority, as a QR code | built by the issuer from the invoice | none |
+| Verification link on the invoice | built by the issuer from the identifier and the long ID the authority returns, as a QR code | built by the issuer from the invoice | none |
 | The issuer cancels | within 72 hours of validation, with a reason | never: a correcting invoice | never: a credit note |
 | The buyer rejects | within the same 72 hours, with a reason | never | a public buyer, within a period the law sets; a private one never |
 
 So a pack declares `verification` (`returned`, `computed`, `none`), and two
 windows as ISO 8601 durations, each left out where the law grants none:
 `cancellation_window` for the issuer, `rejection_window` for the buyer, both
-counted from the validation. The module keeps:
+counted from the validation. Where the issuer builds the link,
+`verification_url` gives it per environment of the authority (`production`,
+`test`), `{identifier}` standing for the identifier and any other `{name}` for
+that value of the authority's answer: a validation recorded without a link
+gets it built from its answer, or is refused by name,
+`clearance_verification_unbuilt`, where the answer lacks a value. `printed`
+names what the invoice prints of its validation beside the QR code — columns
+of the clearance under keys of the invoice labels — and the PDF of a
+validated sale (`ekwo doc pdf`, `render_invoice_pdf`) carries both, as it
+carries the QR code of a chained record, its `qr.label` and its mention. The
+module keeps:
 
 | Table | What it is |
 |---|---|
@@ -198,6 +208,7 @@ what a host submits.
 ```sh
 ekwo einvoice clearance <document> submitted --reference SUB-1
 ekwo einvoice clearance <document> validated --identifier <id> --validated-at <time> --verification-url <url>
+ekwo einvoice clearance <document> validated --identifier <id> --validated-at <time> --detail answer.json [--environment test]
 ekwo einvoice clearance <document> rejected --reason "…" [--by buyer]
 ekwo einvoice clearance <document> cancelled --reason "…"
 ekwo einvoice fiscalisation                    # validated, waiting, missing, rejected, cancelled

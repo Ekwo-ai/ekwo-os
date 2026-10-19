@@ -381,6 +381,7 @@ async function docPdf(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   pairs([
     ['file', `${out}  ${dim(`${result.byte_size} bytes, ${result.page_count} page(s)`)}`],
     ['logo', result.logo],
+    ...(result.verification_url === null ? [] : [['verification', `QR code of ${result.verification_url}`] as [string, string]]),
     ...(result.factur_x === null ? [] : [['factur-x', `${result.factur_x.profile}, embedded`] as [string, string]]),
   ]);
   const violations = result.factur_x?.violations ?? [];

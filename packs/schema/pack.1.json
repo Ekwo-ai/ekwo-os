@@ -3649,6 +3649,72 @@
               ],
               "description": "Where the link the invoice carries to the authority's verification comes from, usually as a QR code. returned: the authority gives it with its validation. computed: the issuer builds it from the invoice and what the authority answered. none: the invoice carries no such link. Unless none, a validation is recorded with its link."
             },
+            "verification_url": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "production"
+              ],
+              "description": "Where `verification` is computed: the link the issuer builds, per environment of the authority. `{identifier}` is the identifier the authority gave the invoice; any other `{name}` is the value of `name` in the authority's answer, as it wrote it. Each value is encoded as part of a URL; a validation whose answer lacks one is refused by name, clearance_verification_unbuilt.",
+              "properties": {
+                "production": {
+                  "type": "string",
+                  "pattern": "^https://[^{}]+(\\{[A-Za-z][A-Za-z0-9_]*\\}[^{}]*)*$"
+                },
+                "test": {
+                  "type": "string",
+                  "pattern": "^https://[^{}]+(\\{[A-Za-z][A-Za-z0-9_]*\\}[^{}]*)*$"
+                },
+                "legal_reference": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source": {
+                  "$ref": "#/$defs/source_ref"
+                }
+              }
+            },
+            "printed": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "fields"
+              ],
+              "description": "What the invoice prints of its validation beside the QR code of its verification link. Each line is a column of the validation under a word of the invoice layout, named by its key in the labels of @ekwo-ai/invoice-pdf, which the caller gives in the language of the document. Left out, the layout's own words for the identifier and the moment of validation.",
+              "properties": {
+                "heading": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z][a-zA-Z0-9]{0,59}$",
+                  "description": "The key of the label printed above the lines."
+                },
+                "fields": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "field",
+                      "label"
+                    ],
+                    "properties": {
+                      "field": {
+                        "enum": [
+                          "identifier",
+                          "validated_at",
+                          "reference",
+                          "submitted_at"
+                        ]
+                      },
+                      "label": {
+                        "type": "string",
+                        "pattern": "^[a-zA-Z][a-zA-Z0-9]{0,59}$"
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "cancellation_window": {
               "$ref": "#/$defs/duration",
               "description": "How long after its validation the issuer may still cancel a validated invoice at the authority, as an ISO 8601 duration: PT72H. Left out, a validated invoice is never cancelled there, only corrected by a credit note."

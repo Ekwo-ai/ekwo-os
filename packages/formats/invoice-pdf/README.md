@@ -78,6 +78,7 @@ that is null is not printed; nothing is filled in for it.
 | `taxes` | `document_tax_summary` | `tax_name`, `tax_rate`, `base_amount`, `tax_charged` — what the customer pays — and `exemption_reason` under its group. Not `legal_reference`, written for whoever reviews a pack and not for a customer. |
 | `mentions` | `document_legal_mentions` | `text`, already in the document's language and valid on its date, in the order of `sequence`. |
 | `logo` | — | The bytes of the logo, PNG or JPEG. A PNG's transparency is flattened on white. `document_header.seller_logo_url` is never fetched here: the caller fetches it, or not. |
+| `verification` | — | The tax authority's verification of the invoice, where it has one: the QR code of `url` (ISO/IEC 18004, bytes in UTF-8, at `errorCorrection`, `M` by default, `sizeMm` wide, 30 by default, with a quiet zone of at least four modules or `quietZoneMm`), and beside it a `heading`, `fields` — each a label and a value, a `datetime` written in UTC — and `notes`. A heading or a label that is a key of the labels is printed in the caller's words; anything else is printed as it is, which is how a country's prescribed words arrive. |
 
 Figures arrive as the decimal text the database holds and are handed to
 `Intl.NumberFormat` as text, which writes them digit for digit — never through
@@ -166,7 +167,9 @@ Ekwo OS keeps the accent and the side per company, in
 The order of the page, top to bottom: the seller and the document's title,
 number, dates and references side by side; a rule; the buyer and the delivery
 address; the lines; the tax summary; the totals with, on their left, how to
-pay; the note; the legal mentions; the foot.
+pay; the note; the authority's verification, its QR code on the left and
+what the authority gave the invoice on its right; the legal mentions; the
+foot.
 
 ### What the layout keeps from earlier renderers
 
@@ -327,7 +330,11 @@ What the views do not carry yet, and the page therefore cannot print:
 logo the company names by URL (from a public http(s) address only), and call
 this package — through `renderDocumentPdf()` of `@ekwo-ai/core`, which writes
 the CII with the adapter of the `einvoicing` formats when Factur-X is asked
-for.
+for. Where the company's country pack declares a fiscalisation regime
+and the `einvoicing` module validated the document (a clearance) or chained
+its record (a chained regime), `readVerification()` hands this package the
+link recorded and what the pack says to print beside it; nothing here knows
+which authority it is.
 
 ## Development
 

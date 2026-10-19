@@ -11,6 +11,7 @@ import {
   hashedFields,
   issueEinvoice,
   parseFiscalSystem,
+  readVerification,
   type FiscalRecordInput,
   type FiscalSystem,
   type FiscalisationFormat,
@@ -560,6 +561,34 @@ describe('the brick the declaring pack names', () => {
     expect(String(second['verification_url']).startsWith(service?.url ?? regime.qr?.url ?? '')).toBe(true);
     const verified = await rows(db, `select * from einvoicing.verify_fiscal_chain($1, $2)`, [declaring.companyId, systemId(SYSTEM)]);
     expect(verified).toEqual([]);
+  });
+
+  it('puts the QR code of the record of its issue on the PDF, with the words and the mention the pack prescribes', async () => {
+    const regime = declaring.pack.documents.einvoice_fiscalisation!;
+    const own = (await one<{ v: string }>(db, `select vat_number as v from companies where id = $1`, [declaring.companyId])).v;
+    const system: FiscalSystem = { ...SYSTEM, producerTaxId: own };
+    const documentId = await sale(db, declaring);
+    expect(await readVerification(declaring.backend, documentId, declaring.companyId)).toBeNull();
+
+    const record = await fiscaliseDocument(declaring.backend, documentId, { system, generatedAt: AT });
+    const verification = await readVerification(declaring.backend, documentId, declaring.companyId);
+    const mode = String(record['mode']);
+    expect(verification).toEqual({
+      url: record['verification_url'],
+      heading: regime.qr?.label ?? null,
+      notes: regime.mention.filter((m) => m.modes.length === 0 || m.modes.includes(mode as never)).map((m) => m.text),
+      ...(regime.qr === null
+        ? {}
+        : {
+            errorCorrection: regime.qr.error_correction,
+            sizeMm: regime.qr.size_mm.min,
+            ...(regime.qr.quiet_zone_mm === null ? {} : { quietZoneMm: regime.qr.quiet_zone_mm.recommended ?? regime.qr.quiet_zone_mm.min }),
+          }),
+    });
+
+    // Once the record is cancelled, the invoice no longer carries its code.
+    await fiscaliseDocument(declaring.backend, documentId, { system, kind: 'anulacion', generatedAt: AT });
+    expect(await readVerification(declaring.backend, documentId, declaring.companyId)).toBeNull();
   });
 
   it('names a posted sale dated before the obligation as before it, not as missing', async () => {

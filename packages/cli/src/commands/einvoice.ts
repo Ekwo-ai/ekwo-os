@@ -59,7 +59,7 @@ const LIST_FLAGS = [...BOOKS_FLAGS, 'doc', 'state', 'limit'] as const;
 const FISCALISE_FLAGS = [...BOOKS_FLAGS, 'system', 'kind', 'mode', 'rectification', 'dry-run', 'out'] as const;
 const FISCALISATION_FLAGS = [...BOOKS_FLAGS, 'limit'] as const;
 const CLEARANCE_FLAGS = [
-  ...BOOKS_FLAGS, 'reference', 'issue', 'identifier', 'validated-at', 'verification-url', 'reason', 'by', 'at', 'detail',
+  ...BOOKS_FLAGS, 'reference', 'issue', 'identifier', 'validated-at', 'verification-url', 'environment', 'reason', 'by', 'at', 'detail',
 ] as const;
 
 const USAGE =
@@ -70,7 +70,7 @@ const USAGE =
   ' | ekwo einvoice fiscalise <document> [--system <file>] [--kind alta|anulacion] [--mode <mode>] [--rectification <code>] [--dry-run] [--out <file>]' +
   ' | ekwo einvoice fiscalisation [--limit <n>]' +
   ' | ekwo einvoice clearance <document> submitted [--reference <ref>] [--issue <id>] [--at <time>] [--detail <file>]' +
-  ' | ekwo einvoice clearance <document> validated --identifier <id> --validated-at <time> [--verification-url <url>]' +
+  ' | ekwo einvoice clearance <document> validated --identifier <id> --validated-at <time> [--verification-url <url> | --environment production|test --detail <file>]' +
   ' | ekwo einvoice clearance <document> rejected|cancelled --reason <text> [--by authority|buyer] [--at <time>]';
 
 const text = (value: unknown): string => (value === null || value === undefined ? '' : String(value));
@@ -411,6 +411,10 @@ async function clearance(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   if (by !== undefined && by !== 'authority' && by !== 'buyer') {
     throw new UsageError(`bad_value: --by is authority or buyer, got "${by}".`);
   }
+  const environment = stringFlag(args, 'environment');
+  if (environment !== undefined && environment !== 'production' && environment !== 'test') {
+    throw new UsageError(`bad_value: --environment is production or test, got "${environment}".`);
+  }
   const detail = await detailOf(args);
   const { backend, company } = await openBooks(args, deps);
   const documentId = await resolveDocument(backend, company.id, required(args.positional[1], 'the document', '<document>'));
@@ -432,6 +436,7 @@ async function clearance(args: ParsedArgs, deps: BooksDeps): Promise<number> {
             at,
           }),
           ...(by === undefined ? {} : { by }),
+          ...(environment === undefined ? {} : { environment }),
           ...(detail === undefined ? {} : { answer: detail }),
         });
   setResult(result);

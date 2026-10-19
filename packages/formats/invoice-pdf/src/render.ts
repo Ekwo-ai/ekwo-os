@@ -24,6 +24,7 @@ import { InvoicePdfError } from './errors.js';
 import { decimal, formatterFor, groupIban, isZero, type Formatter } from './format.js';
 import { labelsWith } from './labels.js';
 import { embedLogo } from './logo.js';
+import { encodeQr } from './qr.js';
 import { clean, refuseRightToLeft, typesetter, type Typesetter } from './text.js';
 import { INK, resolveTheme } from './theme.js';
 import type {
@@ -208,6 +209,15 @@ function refuseRightToLeftAnywhere(input: InvoicePdfInput, labels: InvoiceLabels
     for (const [key, value] of Object.entries(tax)) check(value, `document_tax_summary[${i}].${key}`);
   });
   (input.mentions ?? []).forEach((mention, i) => check(mention.text, `document_legal_mentions[${i}].text`));
+  const verification = input.verification ?? null;
+  if (verification !== null) {
+    check(verification.heading, 'verification.heading');
+    (verification.fields ?? []).forEach((field, i) => {
+      check(field.label, `verification.fields[${i}].label`);
+      check(field.value, `verification.fields[${i}].value`);
+    });
+    (verification.notes ?? []).forEach((note, i) => check(note, `verification.notes[${i}]`));
+  }
   for (const [key, value] of Object.entries(labels)) check(value, `labels.${key}`);
 }
 
@@ -682,6 +692,66 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
     await heading(labels.note);
     await flow(await ts.wrap(note, BODY, contentWidth, false));
     canvas.y -= 12;
+  }
+
+  // --- the authority's verification: its QR code, and beside it what the authority gave the invoice
+  const verification = input.verification ?? null;
+  if (verification !== null) {
+    const url = text(verification.url);
+    if (url === null) throw new InvoicePdfError('missing_field', 'the verification has no url to encode');
+    const level = verification.errorCorrection ?? 'M';
+    let matrix;
+    try {
+      matrix = encodeQr(url, level);
+    } catch (error) {
+      throw new InvoicePdfError('invalid_value', `the verification url cannot be a QR code: ${error instanceof Error ? error.message : String(error)}`);
+    }
+    const mm = 72 / 25.4;
+    const sizeMm = verification.sizeMm ?? 30;
+    if (!(sizeMm > 0)) throw new InvoicePdfError('invalid_value', `a QR code of ${String(sizeMm)} mm cannot be drawn`);
+    const side = sizeMm * mm;
+    const module = side / matrix.size;
+    const quiet = Math.max(4 * module, (verification.quietZoneMm ?? 0) * mm);
+    const worded = (label: string): string => {
+      const own = (labels as unknown as Record<string, unknown>)[label];
+      return typeof own === 'string' ? own : label;
+    };
+    const textX = canvas.left + side + quiet + 4;
+    const textWidth = canvas.right - textX;
+    const heading = text(verification.heading === undefined || verification.heading === null ? null : worded(verification.heading));
+    const lines: [string, Style][] = [];
+    if (heading !== null) for (const l of await ts.wrap(heading, BODY, textWidth, true)) lines.push([l, { bold: true }]);
+    for (const field of verification.fields ?? []) {
+      const value = text(field.value);
+      if (value === null) continue;
+      const shown = field.kind === 'datetime' ? f.dateTime(value) : value;
+      for (const l of await ts.wrap(`${worded(field.label)}: ${shown}`, BODY, textWidth, false)) lines.push([l, {}]);
+    }
+    for (const note of verification.notes ?? []) {
+      const t = text(note);
+      if (t !== null) for (const l of await ts.wrap(t, SMALL, textWidth, false)) lines.push([l, { size: SMALL, color: MUTED }]);
+    }
+    const textHeight = lines.reduce((sum, [, style]) => sum + lineHeight(style.size ?? BODY), 0);
+    const blockHeight = Math.max(side + 2 * quiet, textHeight + quiet);
+    await canvas.ensure(blockHeight);
+    const top = canvas.y - quiet;
+    // One rectangle per run of dark modules in a row: the same code, fewer drawing operators.
+    for (const [y, row] of matrix.modules.entries()) {
+      for (let x = 0; x < matrix.size; x++) {
+        if (!row[x]) continue;
+        let run = 1;
+        while (x + run < matrix.size && row[x + run]) run++;
+        canvas.page.drawRectangle({ x: canvas.left + x * module, y: top - (y + 1) * module, width: run * module, height: module, color: INK });
+        x += run - 1;
+      }
+    }
+    let y = top;
+    for (const [l, style] of lines) {
+      const size = style.size ?? BODY;
+      y -= lineHeight(size);
+      await canvas.text(l, textX, y + size * 0.28, style);
+    }
+    canvas.y -= blockHeight + 6;
   }
 
   const mentions = [...(input.mentions ?? [])]

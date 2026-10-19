@@ -245,6 +245,8 @@ ${bold('Keeping books')} ${dim('(each verb is one function the MCP server calls 
   --identifier <id>         einvoice clearance validated. What the authority
                             named the invoice; with --validated-at <time> and,
                             where the regime has one, --verification-url <url>.
+                            Where the pack builds the link, --detail <file> (the
+                            answer) and --environment production|test instead.
   --reason <text>           einvoice clearance rejected|cancelled. Why, as it
                             was said. --by authority|buyer says who rejected.
   --reference <ref>         einvoice clearance submitted. What the authority

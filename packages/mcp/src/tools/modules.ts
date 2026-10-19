@@ -575,7 +575,7 @@ const EINVOICING: ModuleToolset = {
       title: 'Record a submission to the authority, or its answer',
       readOnly: false,
       description:
-        'Under a clearance regime — the authority validates every invoice before it is issued, and an invoice is valid only once validated — records what happened to a posted sale: submitted (it left for the authority, with the reference the authority gave on receipt), validated (with the identifier the authority gave it, the moment it validated it and, where the regime has one, the verification link the invoice carries as a QR code), rejected (by the authority, or by the buyer after validation and within the window the pack declares, with the reason) or cancelled (by the issuer, after validation and within the pack\'s window, with the reason). Nothing is sent by this tool: it records what the host that talks to the authority reports, and the answer verbatim in answer. Every transition that cannot have happened is refused by name (clearance_pending, clearance_state_backwards, clearance_window_closed, clearance_not_cancellable, clearance_verification_missing…). Refused where the pack declares no clearance regime (fiscal_regime_not_clearance). Never record an answer nobody received: an invoice recorded as validated is one the books treat as valid.',
+        'Under a clearance regime — the authority validates every invoice before it is issued, and an invoice is valid only once validated — records what happened to a posted sale: submitted (it left for the authority, with the reference the authority gave on receipt), validated (with the identifier the authority gave it, the moment it validated it and, where the regime has one, the verification link the invoice carries as a QR code), rejected (by the authority, or by the buyer after validation and within the window the pack declares, with the reason) or cancelled (by the issuer, after validation and within the pack\'s window, with the reason). Nothing is sent by this tool: it records what the host that talks to the authority reports, and the answer verbatim in answer. Every transition that cannot have happened is refused by name (clearance_pending, clearance_state_backwards, clearance_window_closed, clearance_not_cancellable, clearance_verification_missing, clearance_verification_unbuilt…). Refused where the pack declares no clearance regime (fiscal_regime_not_clearance). Never record an answer nobody received: an invoice recorded as validated is one the books treat as valid.',
       input: z.object({
         document_id: documentId,
         what: z.enum(['submitted', ...CLEARANCE_ANSWERS]).describe('What happened: submitted, then one of validated, rejected, cancelled.'),
@@ -583,7 +583,8 @@ const EINVOICING: ModuleToolset = {
         issue_id: uuid.optional().describe('submitted: the electronic invoice submitted, where this module kept it (einvoicing_status lists them).'),
         identifier: z.string().min(1).optional().describe('validated: the identifier the authority gave the invoice.'),
         validated_at: z.string().min(1).optional().describe('validated: when the authority validated it, ISO 8601 with its offset.'),
-        verification_url: z.string().url().optional().describe('validated: the link to the authority\'s verification, where the regime has one.'),
+        verification_url: z.string().url().optional().describe('validated: the link to the authority\'s verification, where the regime has one. Left out where the pack builds it (clearance.verification computed): it is then built from identifier and answer.'),
+        environment: z.enum(['production', 'test']).optional().describe('validated: which environment of the authority answered, where the pack builds the link — production when left out, test for its sandbox.'),
         reason: z.string().min(1).optional().describe('rejected, cancelled: why, as it was said.'),
         by: z.enum(['authority', 'buyer']).optional().describe('rejected: who rejected it. The authority when left out.'),
         at: z.string().min(1).optional().describe('When it happened, ISO 8601 with its offset. Now when left out; the windows of the regime are read against it.'),
@@ -607,6 +608,7 @@ const EINVOICING: ModuleToolset = {
                 ...(text('identifier') === undefined ? {} : { identifier: text('identifier') as string }),
                 ...(text('validated_at') === undefined ? {} : { validatedAt: text('validated_at') as string }),
                 ...(text('verification_url') === undefined ? {} : { verificationUrl: text('verification_url') as string }),
+                ...(text('environment') === undefined ? {} : { environment: text('environment') as 'production' | 'test' }),
                 ...(text('reason') === undefined ? {} : { reason: text('reason') as string }),
                 ...(text('by') === undefined ? {} : { by: text('by') as 'authority' | 'buyer' }),
                 ...(text('at') === undefined ? {} : { at: text('at') as string }),

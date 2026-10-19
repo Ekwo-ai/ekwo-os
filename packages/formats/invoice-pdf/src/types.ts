@@ -240,6 +240,12 @@ export interface InvoiceLabels {
   note: string;
   /** `{page}` and `{pages}` are replaced. */
   page: string;
+  /** Above the QR code of an invoice validated by a tax authority, where the country names no words of its own. */
+  clearanceVerification: string;
+  /** The identifier the authority gave the invoice when it validated it. */
+  clearanceIdentifier: string;
+  /** When the authority validated the invoice. */
+  clearanceValidatedAt: string;
   /** UN/ECE Recommendation 20 code → what is printed after a quantity. An empty string prints nothing. */
   units: Readonly<Record<string, string>>;
 }
@@ -274,6 +280,41 @@ export interface InvoiceTheme {
   logoPosition?: 'left' | 'right';
 }
 
+/** The error correction levels of ISO/IEC 18004. */
+export type QrErrorCorrection = 'L' | 'M' | 'Q' | 'H';
+
+/** One line printed beside the QR code: what it is, and its value. */
+export interface InvoiceVerificationField {
+  /** A key of {@link InvoiceLabels}, printed in the words of the layout; any other text is printed as it is. */
+  label: string;
+  value: string;
+  /** `datetime`: an ISO 8601 moment, written in the language of the document, in UTC. Default `text`. */
+  kind?: 'text' | 'datetime';
+}
+
+/**
+ * What a tax authority's verification of the invoice puts on it: a QR code of
+ * the link where anybody checks the invoice, the words the country wants
+ * beside it, and what the authority gave the invoice. Every value comes from
+ * the caller — from the authority's answer or the country's rules —, and the
+ * package knows no authority: it draws the code and prints the lines.
+ */
+export interface InvoiceVerification {
+  /** What the QR code encodes, as it is. */
+  url: string;
+  /** Printed above the lines: a key of {@link InvoiceLabels}, or the words a country prescribes as they are. None by default. */
+  heading?: string | null;
+  fields?: readonly InvoiceVerificationField[];
+  /** Sentences printed under the fields, as they are: a mention the country requires beside the code. */
+  notes?: readonly string[];
+  /** Default `M`. */
+  errorCorrection?: QrErrorCorrection;
+  /** The side of the code, quiet zone excluded. Default 30. */
+  sizeMm?: number;
+  /** The blank margin kept around the code. Default 4 modules' worth, and never less than what is given. */
+  quietZoneMm?: number;
+}
+
 /** What {@link renderInvoicePdf} reads: the four views of one document, and the bytes of a logo. */
 export interface InvoicePdfInput {
   header: DocumentHeaderRow;
@@ -282,6 +323,8 @@ export interface InvoicePdfInput {
   mentions?: readonly DocumentLegalMentionRow[];
   /** PNG, or RGB or grey JPEG, bytes; a PNG's transparency is flattened on white. Never a URL: this package fetches nothing. */
   logo?: Uint8Array | ArrayBuffer | null;
+  /** The QR code of the authority's verification, and its lines; absent or null, nothing is printed for it. */
+  verification?: InvoiceVerification | null;
 }
 
 export interface InvoicePdfOptions {

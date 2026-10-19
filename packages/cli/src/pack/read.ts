@@ -11,7 +11,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ACCOUNT_TYPES, internalGroup, type AccountType } from '@ekwo-ai/core';
+import { ACCOUNT_TYPES, INVOICE_LABEL_KEYS, internalGroup, type AccountType } from '@ekwo-ai/core';
 import { validate, type Issue } from './schema.js';
 import { ruleCatches, ruleTakes } from './rules.js';
 import { analysisReferences, analysisSources, normaliseAnalysis, type PackAnalysis } from './analysis.js';
@@ -628,6 +628,22 @@ export interface PackTurnover {
 export interface PackClearance {
   /** Where the verification link the invoice carries comes from: given by the authority, built by the issuer, or none. */
   verification: 'returned' | 'computed' | 'none';
+  /**
+   * Where `verification` is `computed`: the link by environment of the
+   * authority, `{identifier}` and the `{name}` of what its answer gives
+   * filled in. Present only where the pack declares it.
+   */
+  verification_url?: {
+    production: string;
+    test?: string;
+    legal_reference: string | null;
+    source: string | null;
+  };
+  /** What the invoice prints of its validation, by keys of the invoice labels. Present only where the pack declares it. */
+  printed?: {
+    heading?: string;
+    fields: { field: 'identifier' | 'validated_at' | 'reference' | 'submitted_at'; label: string }[];
+  };
   /** How long after validation the issuer may cancel, as an ISO 8601 duration; null where it never may. */
   cancellation_window: string | null;
   /** How long after validation the buyer may reject, as an ISO 8601 duration; null where the buyer cannot. */
@@ -1871,6 +1887,9 @@ function fiscalisationSources(block: PackFiscalisation | null): { path: string; 
     ),
     ...(block.exemption ?? []).map((entry, index) => ({ path: `${where}.exemption[${index}]`, source: entry.source })),
     ...(block.clearance === undefined ? [] : [{ path: `${where}.clearance`, source: block.clearance.source }]),
+    ...(block.clearance?.verification_url === undefined
+      ? []
+      : [{ path: `${where}.clearance.verification_url`, source: block.clearance.verification_url.source }]),
     ...(block.hash === null ? [] : [{ path: `${where}.hash`, source: block.hash.source }]),
     ...(block.qr === null ? [] : [{ path: `${where}.qr`, source: block.qr.source }]),
     ...block.mention.map((entry, index) => ({ path: `${where}.mention[${index}]`, source: entry.source })),
@@ -2794,6 +2813,33 @@ function normaliseFiscalisation(raw: unknown): PackFiscalisation | null {
       : {
           clearance: {
             verification: clearance['verification'] as PackClearance['verification'],
+            ...(clearance['verification_url'] === undefined
+              ? {}
+              : (() => {
+                  const link = clearance['verification_url'] as Record<string, unknown>;
+                  return {
+                    verification_url: {
+                      production: String(link['production']),
+                      ...(link['test'] === undefined ? {} : { test: String(link['test']) }),
+                      legal_reference: textOrNull(link['legal_reference']),
+                      source: textOrNull(link['source']),
+                    },
+                  };
+                })()),
+            ...(clearance['printed'] === undefined
+              ? {}
+              : (() => {
+                  const printed = clearance['printed'] as Record<string, unknown>;
+                  return {
+                    printed: {
+                      ...(printed['heading'] === undefined ? {} : { heading: String(printed['heading']) }),
+                      fields: ((printed['fields'] ?? []) as Record<string, unknown>[]).map((entry) => ({
+                        field: entry['field'] as NonNullable<PackClearance['printed']>['fields'][number]['field'],
+                        label: String(entry['label']),
+                      })),
+                    },
+                  };
+                })()),
             cancellation_window: textOrNull(clearance['cancellation_window']),
             rejection_window: textOrNull(clearance['rejection_window']),
             legal_reference: textOrNull(clearance['legal_reference']),
@@ -2987,6 +3033,24 @@ function fiscalisationReferences(block: PackFiscalisation | null, taxCodes: Set<
   }
   if (block.clearance !== undefined && block.hash !== null) {
     issues.push({ path: `${where}.clearance`, message: 'is given beside hash: a regime either chains its records, with hash, or has its invoices cleared by the authority, with clearance' });
+  }
+  if (block.clearance !== undefined) {
+    const path = `${where}.clearance`;
+    const { verification, verification_url: link, printed } = block.clearance;
+    if (verification === 'computed' && link === undefined) {
+      issues.push({ path: `${path}.verification_url`, message: 'is missing: a link the issuer computes is computed from a template the pack gives' });
+    }
+    if (verification !== 'computed' && link !== undefined) {
+      issues.push({ path: `${path}.verification_url`, message: `is given while verification is ${verification}: the issuer builds the link only where it is computed` });
+    }
+    const words = new Set<string>(INVOICE_LABEL_KEYS);
+    for (const [index, key] of [printed?.heading, ...(printed?.fields ?? []).map((entry) => entry.label)].entries()) {
+      if (key !== undefined && !words.has(key)) {
+        issues.push({ path: `${path}.printed`, message: `names the label ${key}${index === 0 ? ' as its heading' : ''}, which the invoice layout does not have (${[...words].filter((w) => w.startsWith('clearance')).join(', ')} are its words for a validation)` });
+      }
+    }
+    const fields = (printed?.fields ?? []).map((entry) => entry.field);
+    if (new Set(fields).size !== fields.length) issues.push({ path: `${path}.printed.fields`, message: 'names a column twice' });
   }
   if (block.clearance !== undefined && block.submission.modes.includes('none')) {
     issues.push({ path: `${where}.submission.modes`, message: 'names none under a clearance regime: an invoice the authority never receives is never validated' });

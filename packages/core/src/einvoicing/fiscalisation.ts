@@ -149,6 +149,10 @@ export interface FiscalRegime {
   /** What a clearance regime says of the authority's answer; absent for the other two. */
   clearance?: {
     verification: 'returned' | 'computed' | 'none';
+    /** Where `verification` is `computed`: the link, by environment of the authority, with `{name}` for what its answer gives. */
+    verification_url?: ClearanceLinkTemplate;
+    /** What the invoice prints of its validation; absent, the layout's own words for the identifier and the moment. */
+    printed?: ClearancePrinted;
     cancellation_window: string | null;
     rejection_window: string | null;
     legal_reference: string | null;
@@ -159,7 +163,12 @@ export interface FiscalRegime {
   announced_by: string | null;
   announced_on: string | null;
   hash: { algorithm: string; separator: string | null; fields: Partial<Record<FiscalRecordKind | '*', string[]>> } | null;
-  qr: { size_mm: { min: number; max: number }; error_correction: string; label: string | null } | null;
+  qr: {
+    size_mm: { min: number; max: number };
+    quiet_zone_mm?: { min: number; recommended: number | null } | null;
+    error_correction: string;
+    label: string | null;
+  } | null;
   mention: { text: string; alternatives: string[]; modes: FiscalSubmissionMode[] }[];
   submission: { mode: FiscalSubmissionMode; modes: FiscalSubmissionMode[]; channel: string | null; cadence: Row[] };
   events: { summary_every_hours: number; modes: FiscalSubmissionMode[] } | null;
@@ -169,6 +178,35 @@ export interface FiscalRegime {
   line_attributes?: Record<string, string>;
   legal_reference: string;
   source: string;
+}
+
+/**
+ * The link to the authority's verification of an invoice, where the issuer
+ * builds it: one per environment of the authority, each an `https://`
+ * address in which `{identifier}` is the identifier the authority gave the
+ * invoice and any other `{name}` the value of `name` in its answer, as the
+ * authority wrote it.
+ */
+export interface ClearanceLinkTemplate {
+  production: string;
+  test?: string;
+  legal_reference?: string | null;
+  source?: string | null;
+}
+
+/** A column of `einvoicing.clearances` an invoice may print. */
+export type ClearancePrintedField = 'identifier' | 'validated_at' | 'reference' | 'submitted_at';
+
+export const CLEARANCE_PRINTED_FIELDS: readonly ClearancePrintedField[] = ['identifier', 'validated_at', 'reference', 'submitted_at'];
+
+/**
+ * What an invoice prints of its validation beside the QR code: a heading and
+ * lines, each a column of the clearance under a word of the layout — a key
+ * of `InvoiceLabels`, which the caller gives in the language of the document.
+ */
+export interface ClearancePrinted {
+  heading?: string | null;
+  fields: { field: ClearancePrintedField; label: string }[];
 }
 
 /** The fiscalisation regime of a company's fiscal country, or null. */
@@ -645,6 +683,47 @@ export interface ClearanceAnswer {
   at?: string;
   /** The answer itself, as the authority gave it. */
   answer?: Row;
+  /**
+   * The environment of the authority that answered, where the regime builds
+   * the verification link: its production service (the default) or its test
+   * service.
+   */
+  environment?: 'production' | 'test';
+}
+
+const PLACEHOLDER = /\{([A-Za-z][A-Za-z0-9_]*)\}/g;
+
+/**
+ * The verification link of a validated invoice, built from the pack's
+ * template, the identifier and the authority's answer. Every placeholder is
+ * filled from what the authority said, encoded as a part of a URL, or the
+ * link is refused by name: a link that points nowhere is worse than none.
+ */
+export function clearanceLink(
+  template: ClearanceLinkTemplate,
+  values: { identifier: string; answer?: Row | undefined },
+  environment: 'production' | 'test' = 'production',
+): string {
+  const pattern = environment === 'test' ? template.test : template.production;
+  if (pattern === undefined) {
+    throw new BooksError(`clearance_environment_unknown: the country pack gives the verification link of its ${environment} environment no address.`);
+  }
+  const missing: string[] = [];
+  const url = pattern.replace(PLACEHOLDER, (_whole, name: string) => {
+    const value = name === 'identifier' ? values.identifier : values.answer?.[name];
+    if ((typeof value !== 'string' && typeof value !== 'number') || String(value).trim() === '') {
+      missing.push(name);
+      return '';
+    }
+    return encodeURIComponent(String(value).trim());
+  });
+  if (missing.length > 0) {
+    throw new BooksError(
+      `clearance_verification_unbuilt: the country pack builds the verification link of a validated invoice from ${missing.map((n) => `{${n}}`).join(', ')}, and the authority's answer given here carries no ${missing.join(', ')}. ` +
+        'Record the validation with the answer as the authority gave it (--detail, answer), or with the link itself.',
+    );
+  }
+  return url;
 }
 
 /** The arguments of a call, without the ones nobody gave: the function's own default then holds. */
@@ -686,6 +765,16 @@ export async function recordClearanceSubmission(backend: Backend, documentId: st
  * raises on one that cannot have happened.
  */
 export async function recordClearanceAnswer(backend: Backend, documentId: string, answer: ClearanceAnswer): Promise<Row> {
+  let verificationUrl = answer.verificationUrl;
+  // Where the regime builds the link, the books build it from what the authority answered.
+  if (answer.state === 'validated' && verificationUrl === undefined && answer.identifier !== undefined) {
+    const [document] = await backend.select<Row>({ table: 'documents', columns: ['company_id'], where: [{ column: 'id', op: 'eq', value: documentId }] });
+    const regime = document === undefined ? null : await fiscalRegime(backend, String(document['company_id']));
+    const template = regime?.clearance?.verification === 'computed' ? regime.clearance.verification_url : undefined;
+    if (template !== undefined) {
+      verificationUrl = clearanceLink(template, { identifier: answer.identifier, answer: answer.answer }, answer.environment ?? 'production');
+    }
+  }
   const [row] = await backend.rpc<Row>(
     'record_clearance_answer',
     given({
@@ -693,7 +782,7 @@ export async function recordClearanceAnswer(backend: Backend, documentId: string
       p_state: answer.state,
       p_identifier: answer.identifier,
       p_validated_at: answer.validatedAt,
-      p_verification_url: answer.verificationUrl,
+      p_verification_url: verificationUrl,
       p_reason: answer.reason,
       p_by: answer.by,
       p_at: answer.at,

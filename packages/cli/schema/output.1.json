@@ -62,7 +62,7 @@
       }
     },
     "documentPdf": {
-      "$comment": "The PDF of a sale invoice or credit note, rendered from the views by renderDocumentPdf() and written to `written_to`; the file itself is never in the document. `logo` is `embedded`, `none`, or why the logo the company names was not used. `factur_x` is null without --factur-x; with it, the rules of EN 16931 the embedded CII breaks, which end on exit code 1. Nothing was recorded.",
+      "$comment": "The PDF of a sale invoice or credit note, rendered from the views by renderDocumentPdf() and written to `written_to`; the file itself is never in the document. `logo` is `embedded`, `none`, or why the logo the company names was not used. `verification_url` is the link whose QR code the PDF carries, where the tax authority validated the document or its fiscal record is chained, and null otherwise. `factur_x` is null without --factur-x; with it, the rules of EN 16931 the embedded CII breaks, which end on exit code 1. Nothing was recorded.",
       "type": "object",
       "required": ["document_id", "doc_type", "filename", "title", "media_type", "byte_size", "page_count", "logo", "factur_x", "written_to"],
       "properties": {
@@ -77,6 +77,7 @@
         "byte_size": { "type": "integer" },
         "page_count": { "type": "integer" },
         "logo": { "type": "string" },
+        "verification_url": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
         "factur_x": {
           "oneOf": [
             { "type": "null" },

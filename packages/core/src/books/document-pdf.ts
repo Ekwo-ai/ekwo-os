@@ -12,6 +12,12 @@
  * the same document with the Factur-X adapter of the e-invoicing formats and
  * embed it, so that the PDF is a Factur-X invoice.
  *
+ * Where the country has a fiscalisation regime and the document was
+ * validated by the authority, or has its fiscal record in the chain, the PDF
+ * carries the QR code of its verification link and what the pack says to
+ * print beside it: `readVerification()` reads both from the `einvoicing`
+ * module, and the brick draws them without knowing any authority.
+ *
  * Nothing is recorded. A posted document reproduces from the books; the copy
  * that was sent to a customer is another thing, and keeping it is not done
  * here.
@@ -19,6 +25,7 @@
 
 import { embedFacturX } from '@ekwo-ai/factur-x/pdf';
 import {
+  ENGLISH_LABELS,
   InvoicePdfError,
   renderFacturXPdf,
   renderInvoicePdf,
@@ -29,8 +36,11 @@ import {
   type InvoiceLabels,
   type InvoicePdfInput,
   type InvoiceTheme,
+  type InvoiceVerification,
   type PageSize,
+  type QrErrorCorrection,
 } from '@ekwo-ai/invoice-pdf';
+import { fiscalRegime, type ClearancePrinted, type FiscalRegime } from '../einvoicing/fiscalisation.js';
 import { EINVOICE_FORMATS, type EinvoiceViolation } from '../einvoicing/formats.js';
 import { readEinvoiceSource } from '../einvoicing/issue.js';
 import { BooksError, type Backend, type Row } from './backend.js';
@@ -128,6 +138,105 @@ export async function readInvoiceTheme(backend: Backend, companyId: string): Pro
   };
 }
 
+/** Every word of the invoice layout, by key: what a pack may name for the PDF to print. */
+export const INVOICE_LABEL_KEYS: readonly string[] = Object.keys(ENGLISH_LABELS).filter((key) => key !== 'units');
+
+/** The module that keeps the validations and the fiscal records, by its code. */
+const EINVOICING = 'einvoicing';
+
+/** What an invoice prints of its validation where the pack says nothing more: the layout's own words. */
+const DEFAULT_PRINTED: ClearancePrinted = {
+  heading: 'clearanceVerification',
+  fields: [
+    { field: 'identifier', label: 'clearanceIdentifier' },
+    { field: 'validated_at', label: 'clearanceValidatedAt' },
+  ],
+};
+
+const MOMENTS = new Set(['validated_at', 'submitted_at']);
+const LEVELS = new Set(['L', 'M', 'Q', 'H']);
+
+/** How the pack draws the QR code: its level, its size and its quiet zone, where it prescribes them. */
+function qrOf(regime: FiscalRegime): Pick<InvoiceVerification, 'errorCorrection' | 'sizeMm' | 'quietZoneMm'> {
+  const qr = regime.qr;
+  if (qr === null) return {};
+  const quiet = qr.quiet_zone_mm?.recommended ?? qr.quiet_zone_mm?.min;
+  return {
+    ...(LEVELS.has(qr.error_correction) ? { errorCorrection: qr.error_correction as QrErrorCorrection } : {}),
+    ...(Number.isFinite(qr.size_mm?.min) ? { sizeMm: qr.size_mm.min } : {}),
+    ...(quiet === undefined || quiet === null ? {} : { quietZoneMm: quiet }),
+  };
+}
+
+/**
+ * What the PDF of a document prints of its verification by the tax
+ * authority, or null where there is none to print: the company does not use
+ * the `einvoicing` module, its country has no regime, or the document has no
+ * link to print yet.
+ *
+ * Under a clearance regime, the latest submission of the document, once
+ * validated with a link: the QR code of the link and the columns the pack's
+ * `clearance.printed` names. Under a chained regime, the document's latest
+ * record in the chain, where it is the record of its issue: the QR code of
+ * the link the brick computed, the words the pack's `qr.label` prescribes and
+ * the mention of the mode the record was sent in. Nothing is computed here
+ * that the books did not record.
+ */
+export async function readVerification(backend: Backend, documentId: string, companyId: string): Promise<InvoiceVerification | null> {
+  const [enabled] = await backend.rpc<unknown>('module_enabled', { p_company_id: companyId, p_code: EINVOICING });
+  if (enabled !== true) return null;
+  const regime = await fiscalRegime(backend, companyId);
+  if (regime === null) return null;
+  const where = [{ column: 'document_id', op: 'eq' as const, value: documentId }];
+
+  if (regime.kind === 'clearance') {
+    const [latest] = await backend.select<Row>({
+      schema: EINVOICING,
+      table: 'clearances',
+      columns: ['state', 'identifier', 'validated_at::text', 'reference', 'submitted_at::text', 'verification_url'],
+      where,
+      order: [{ column: 'attempt', ascending: false }],
+      limit: 1,
+    });
+    const url = latest?.['verification_url'];
+    if (latest === undefined || latest['state'] !== 'validated' || typeof url !== 'string' || url === '') return null;
+    const printed = regime.clearance?.printed ?? DEFAULT_PRINTED;
+    return {
+      url,
+      heading: printed.heading ?? null,
+      fields: printed.fields
+        .filter((entry) => latest[entry.field] !== null && latest[entry.field] !== undefined)
+        .map((entry) => ({
+          label: entry.label,
+          value: String(latest[entry.field]),
+          kind: MOMENTS.has(entry.field) ? ('datetime' as const) : ('text' as const),
+        })),
+      ...qrOf(regime),
+    };
+  }
+
+  if (regime.hash !== null) {
+    const [latest] = await backend.select<Row>({
+      schema: EINVOICING,
+      table: 'fiscal_chain',
+      columns: ['kind', 'mode', 'verification_url'],
+      where,
+      order: [{ column: 'recorded_at', ascending: false }, { column: 'seq', ascending: false }],
+      limit: 1,
+    });
+    const url = latest?.['verification_url'];
+    if (latest === undefined || latest['kind'] !== 'alta' || typeof url !== 'string' || url === '') return null;
+    const mode = String(latest['mode']);
+    return {
+      url,
+      heading: regime.qr?.label ?? null,
+      notes: regime.mention.filter((entry) => entry.modes.length === 0 || (entry.modes as string[]).includes(mode)).map((entry) => entry.text),
+      ...qrOf(regime),
+    };
+  }
+  return null;
+}
+
 /** What a logo fetch may be handed: the global `fetch`, or a test's. */
 export type LogoFetch = (url: string, init: { signal: AbortSignal; redirect: 'follow' | 'error' }) => Promise<{
   ok: boolean;
@@ -217,6 +326,8 @@ export interface DocumentPdf {
   page_count: number;
   /** `embedded`, `none` (the company names no logo), or why the one it names was not used. */
   logo: string;
+  /** The link the QR code of the authority's verification encodes, or null where the PDF carries none. */
+  verification_url: string | null;
   /** Null without --factur-x; otherwise the rules of EN 16931 the embedded XML breaks, as the e-invoicing adapter names them. */
   factur_x: { profile: 'en16931'; violations: EinvoiceViolation[] } | null;
   file: Uint8Array;
@@ -249,6 +360,9 @@ export async function renderDocumentPdf(
       } else logo = fetched.skipped;
     }
   }
+
+  const verification = await readVerification(backend, args.document_id, String(header.company_id));
+  if (verification !== null) input.verification = verification;
 
   const options = {
     theme: await readInvoiceTheme(backend, String(header.company_id)),
@@ -294,6 +408,7 @@ export async function renderDocumentPdf(
     byte_size: rendered.file.byteLength,
     page_count: rendered.pageCount,
     logo,
+    verification_url: verification?.url ?? null,
     factur_x: factur,
     file: rendered.file,
   };

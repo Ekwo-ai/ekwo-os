@@ -2,7 +2,7 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MY",
   "name": "Malaysia",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "schema_min": "20261019161437",
   "seed_sequence": 39,
   "released_at": "2026-10-19",
@@ -118,6 +118,14 @@
         "title": "MyInvois SDK — the code tables of the e-Invoice (tax types: 01 Sales Tax, 02 Service Tax, 03 Tourism Tax, 04 High-Value Goods Tax, 05 Sales Tax on Low Value Goods, 06 Not Applicable, E Tax exemption (where applicable); the 45 classification codes, 022 Others among them), and the data structure of the e-Invoice v1.1, whose fields \"Details of Tax Exemption\" and \"Amount Exempted from Tax\" are mandatory where a tax exemption is applicable and name as examples \"Buyer's sales tax exemption certificate number, special exemption as per gazette orders\"",
         "publisher": "Inland Revenue Board of Malaysia (Lembaga Hasil Dalam Negeri Malaysia, LHDNM)",
         "url": "https://sdk.myinvois.hasil.gov.my/codes/tax-types/",
+        "consulted_on": "2026-10-19",
+        "kind": "standard"
+      },
+      {
+        "key": "myinvois-validation-link",
+        "title": "MyInvois SDK, Frequently Asked Questions — Integration Practices, \"How to get validation link and generate QR code?\": the validation link is created as {envbaseurl}/uuid-of-document/share/longid, the uuid and the long ID being returned by the Get Submission, Get Document or Get Document Details API, and a QR code is generated from that link; General, \"What are the environment URLs?\": the invoicing portal is myinvois.hasil.gov.my in production and preprod.myinvois.hasil.gov.my in the sandbox. The Get Document API names the fields uuid, longId and dateTimeValidated, and returns longId only for a valid document",
+        "publisher": "Inland Revenue Board of Malaysia (Lembaga Hasil Dalam Negeri Malaysia, LHDNM)",
+        "url": "https://sdk.myinvois.hasil.gov.my/faq/",
         "consulted_on": "2026-10-19",
         "kind": "standard"
       }
@@ -255,10 +263,23 @@
       ],
       "format": "myinvois",
       "clearance": {
-        "verification": "returned",
+        "verification": "computed",
+        "verification_url": {
+          "production": "https://myinvois.hasil.gov.my/{identifier}/share/{longId}",
+          "test": "https://preprod.myinvois.hasil.gov.my/{identifier}/share/{longId}",
+          "legal_reference": "MyInvois SDK, FAQ, Integration Practices: the validation link is {envbaseurl}/uuid-of-document/share/longid, where envbaseurl is the MyInvois portal of the environment — myinvois.hasil.gov.my in production, preprod.myinvois.hasil.gov.my in the sandbox — and the uuid and longId are those the Get Document API returns for a valid document. The identifier recorded on validation is that uuid, LHDNM's Unique Identifier Number; longId is read from the answer recorded with it.",
+          "source": "myinvois-validation-link"
+        },
+        "printed": {
+          "heading": "clearanceVerification",
+          "fields": [
+            { "field": "identifier", "label": "clearanceIdentifier" },
+            { "field": "validated_at", "label": "clearanceValidatedAt" }
+          ]
+        },
         "cancellation_window": "PT72H",
         "rejection_window": "PT72H",
-        "legal_reference": "e-Invoice Guideline, the MyInvois validation flow: the taxpayer submits the e-Invoice to LHDNM, which validates it and returns its Unique Identifier Number, the moment of validation and the link to its validation, which the e-Invoice carries as a QR code when it is shared with the buyer. Within 72 hours of the validation the supplier may cancel the e-Invoice, giving a reason, and the buyer may reject it, giving a reason; past that window an e-Invoice is corrected by a credit note, debit note or refund note.",
+        "legal_reference": "e-Invoice Guideline, the MyInvois validation flow: the taxpayer submits the e-Invoice to LHDNM, which validates it and returns its Unique Identifier Number and the moment of validation; the link to its validation, which the e-Invoice carries as a QR code when it is shared with the buyer, is built by the issuer from that number and the long ID LHDNM returns with a valid document (verification_url). Within 72 hours of the validation the supplier may cancel the e-Invoice, giving a reason, and the buyer may reject it, giving a reason; past that window an e-Invoice is corrected by a credit note, debit note or refund note.",
         "source": "einvoice-guideline"
       },
       "submission": {

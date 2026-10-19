@@ -57,6 +57,9 @@ export const ENGLISH_LABELS: InvoiceLabels = {
   bic: 'BIC',
   note: 'Note',
   page: 'Page {page} of {pages}',
+  clearanceVerification: 'Validated by the tax authority',
+  clearanceIdentifier: 'Unique identifier',
+  clearanceValidatedAt: 'Validated on',
   units: {
     C62: '',
     H87: '',

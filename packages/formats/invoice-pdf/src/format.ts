@@ -47,6 +47,8 @@ export interface Formatter {
   rate(value: string): string;
   quantity(value: string): string;
   date(value: string): string;
+  /** A moment, ISO 8601 with its offset, written in UTC and said to be: the offset of the reader is not known here. */
+  dateTime(value: string): string;
   country(code: string): string;
 }
 
@@ -66,6 +68,10 @@ export function formatterFor(locale: string, currency: string): Formatter {
   const percent = new Intl.NumberFormat(canonical, { style: 'percent', maximumFractionDigits: 4 });
   const plain = new Intl.NumberFormat(canonical, { maximumFractionDigits: 6 });
   const day = new Intl.DateTimeFormat(canonical, { dateStyle: 'medium', timeZone: 'UTC' });
+  const moment = new Intl.DateTimeFormat(canonical, {
+    year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit',
+    timeZone: 'UTC', timeZoneName: 'short',
+  });
   let regions: Intl.DisplayNames | undefined;
   try {
     regions = new Intl.DisplayNames([canonical], { type: 'region' });
@@ -82,6 +88,13 @@ export function formatterFor(locale: string, currency: string): Formatter {
       const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(value);
       if (match === null) throw new InvoicePdfError('invalid_value', `the date "${value}" is not YYYY-MM-DD`);
       return day.format(new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]))));
+    },
+    dateTime(value) {
+      // Postgres writes a timestamptz as `2026-01-15 02:31:00+00`; ISO 8601 has a `T` and a full offset.
+      const iso = value.trim().replace(' ', 'T').replace(/([+-]\d{2})$/, '$1:00');
+      const at = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(iso) ? new Date(iso) : new Date(Number.NaN);
+      if (Number.isNaN(at.getTime())) throw new InvoicePdfError('invalid_value', `the moment "${value}" is not an ISO 8601 date and time`);
+      return moment.format(at);
     },
     country(code) {
       try {

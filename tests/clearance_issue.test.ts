@@ -5,7 +5,9 @@ import {
   fiscalisationStatus,
   issueEinvoice,
   recordClearanceAnswer,
+  readVerification,
   recordClearanceSubmission,
+  renderDocumentPdf,
   validateEinvoice,
   type Backend,
   type Row,
@@ -182,5 +184,66 @@ describe('a sale whose buyer has no tax identification number in the books', () 
     });
     expect(result['sendable']).toBe(false);
     expect((result['violations'] as { code: string }[]).map((v) => v.code)).toEqual(['input:buyer_tin']);
+  });
+});
+
+describe('a sale validated under a regime whose issuer builds the verification link', () => {
+  const unreached = saleRef((tax) => typeOf(tax) === '06');
+  const template = regime.clearance?.verification_url;
+  const placeholders = [...(template?.production ?? '').matchAll(/\{([A-Za-z][A-Za-z0-9_]*)\}/g)].map((m) => m[1] as string);
+  const IDENTIFIER = 'INVENTEDUIN000000000000002';
+  // The authority's answer carries every value the template names but the identifier, invented.
+  const answer = Object.fromEntries(placeholders.filter((name) => name !== 'identifier').map((name) => [name, `INVENTED${name.toUpperCase()}0001`]));
+  const link = (environment: 'production' | 'test'): string =>
+    String(environment === 'test' ? template?.test : template?.production).replace(/\{([A-Za-z][A-Za-z0-9_]*)\}/g, (_w, name: string) =>
+      name === 'identifier' ? IDENTIFIER : String(answer[name]),
+    );
+
+  it('is declared so by the pack, with a link for production and one for the test environment', () => {
+    expect(regime.clearance?.verification).toBe('computed');
+    expect(template?.production).toMatch(/^https:\/\//);
+    expect(template?.test).toMatch(/^https:\/\//);
+    expect(placeholders).toContain('identifier');
+  });
+
+  it('refuses a validation whose answer lacks what the link is built from, and records nothing', async () => {
+    await recordClearanceSubmission(backend, documentOf(unreached.ref), { reference: 'INVENTED-SUBMISSION-2' });
+    if (placeholders.length > 1) {
+      await expect(
+        recordClearanceAnswer(backend, documentOf(unreached.ref), { state: 'validated', identifier: IDENTIFIER, validatedAt: '2026-01-20T03:00:00Z' }),
+      ).rejects.toThrow(/clearance_verification_unbuilt/);
+    }
+  });
+
+  it('builds the link of the environment that answered from the identifier and the answer', async () => {
+    const result = await recordClearanceAnswer(backend, documentOf(unreached.ref), {
+      state: 'validated',
+      identifier: IDENTIFIER,
+      validatedAt: '2026-01-20T03:00:00Z',
+      answer,
+      environment: 'test',
+    });
+    expect(result['clearance']).toMatchObject({ state: 'validated', identifier: IDENTIFIER, verification_url: link('test') });
+  });
+
+  it('prints the QR code of that link on the PDF, with what the pack names beside it', async () => {
+    const pdf = await renderDocumentPdf(backend, { document_id: documentOf(unreached.ref) });
+    expect(pdf.verification_url).toBe(link('test'));
+    const verification = await readVerification(backend, documentOf(unreached.ref), companyId);
+    const printed = regime.clearance?.printed;
+    expect(verification).toMatchObject({ url: link('test'), heading: printed?.heading });
+    const values: Record<string, string> = { identifier: IDENTIFIER, validated_at: '2026-01-20 03:00:00+00' };
+    expect(verification?.fields).toEqual(
+      (printed?.fields ?? []).map((entry) => ({
+        label: entry.label,
+        value: values[entry.field],
+        kind: entry.field.endsWith('_at') ? 'datetime' : 'text',
+      })),
+    );
+  });
+
+  it('prints nothing of a validation on a sale that has none', async () => {
+    const pdf = await renderDocumentPdf(backend, { document_id: documentOf(saleRef((tax) => typeOf(tax) === 'E').ref) });
+    expect(pdf.verification_url).toBeNull();
   });
 });
