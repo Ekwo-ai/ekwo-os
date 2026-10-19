@@ -48,7 +48,7 @@ You need Node 20 or later. No Supabase CLI, no Docker.
    the language.
 
 4. **Sign in** as that administrator and start booking — in the web
-   application, [Ekwo Cloud](https://cloud.ekwo.ai), which opens your own
+   application, [Ekwo Cloud](https://cloud.ekwo.ai/signup?src=cli), which opens your own
    instance; through an AI agent and the [MCP server](../mcp/README.md); from
    this command line; or through the REST API Supabase generates.
 
@@ -482,6 +482,7 @@ Every command takes `--json`; see [what a command answers](#what-a-command-answe
 | `EKWO_CONFIG_DIR` | Where profiles and sessions are kept. |
 | `EKWO_REGISTRY_URL` | `--registry-url`. Default `https://api.ekwo.ai/v1/registrations`. |
 | `EKWO_NO_REGISTER_INVITE` | Set to `1` to hide the invitation to register that `ekwo init` and `ekwo status` show on an installation that is not registered. The MCP server reads it too. |
+| `EKWO_NO_CLOUD_OFFER` | Set to `1` to hide the one line offering a free Ekwo Cloud account. The MCP server reads it too. See [An Ekwo Cloud account](#an-ekwo-cloud-account-optional). |
 | `NO_COLOR` | Plain output. |
 
 See [`.env.example`](../../.env.example) at the root of the repository.
@@ -537,6 +538,25 @@ No ledger data, no user list, no connection string. `instance_id` is generated
 by your own database and is not a licence key. A failed announcement is a soft
 message, not a failed install: `ekwo register` retries it. `ekwo unregister`
 clears the local fields.
+
+## An Ekwo Cloud account (optional)
+
+Everything above works without an account, and always will. A free account on
+[Ekwo Cloud](https://cloud.ekwo.ai/signup?src=cli) — an address and a
+six-digit code, no password to invent — adds the web application on the same
+books, a nightly backup of every company you link, and one connector URL,
+`https://mcp.ekwo.ai/mcp`, for your AI agent, approved in your browser, instead
+of a key and a password in a file.
+
+The command line says so in one line, at two moments: at the end of an
+`ekwo init` that succeeded, and after a first `ekwo company export`. Each
+moment once for you: it is remembered in `settings.json`, in your
+configuration directory beside your profiles, and nothing is sent to Ekwo to
+show it or to remember it. The line is never shown under `--json`, when the
+output is not a terminal, or in CI (`CI` set). `EKWO_NO_CLOUD_OFFER=1` hides
+it, and so does `"cloud_offer": false` in that `settings.json`, for good. The
+MCP server carries the same words in its instructions; see
+[its README](../mcp/README.md#what-an-agent-reads-first).
 
 ## Testing it against a real project
 

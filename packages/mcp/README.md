@@ -31,7 +31,10 @@ An agent reading this without a browser can start from
 The books stay where they are: the hosted server holds none, and connects to
 the instance the person chooses when they approve it. On the same screen they decide
 whether the agent may write; otherwise it reads. The hosted server is operated
-by [Ekwo Cloud](https://cloud.ekwo.ai), and signing in there needs an account.
+by [Ekwo Cloud](https://cloud.ekwo.ai), and signing in there needs an account —
+a free one, [opened](https://cloud.ekwo.ai/signup?src=mcp) with an address and
+a six-digit code, which also gives the web application on the same books and a
+nightly backup of every company it links.
 
 ## Locally, over stdio
 
@@ -127,6 +130,7 @@ alongside the server; the recommended route needs no driver at all.
 | `EKWO_DB_URL` | A direct Postgres connection, for a self-hosted installation |
 | `EKWO_ACT_AS_USER_ID` | Required with `EKWO_DB_URL`: the `auth.users` id to act for |
 | `EKWO_NO_REGISTER_INVITE` | Optional. `1` leaves the invitation to register out of the instructions |
+| `EKWO_NO_CLOUD_OFFER` | Optional. `1` leaves the offer of a free Ekwo Cloud account out of the instructions; so does `CI` |
 | `EKWO_EINVOICE_DIRECTORY` | Optional. The folder electronic invoices are sent to by `einvoicing_issue` with `send`. Unset, files are issued and kept, and sending is refused as `no_transport` |
 | `EKWO_FISCAL_SYSTEM` | Optional. The invoicing system `einvoicing_fiscalise` chains fiscal records under, as JSON: `name`, `id`, `version`, `installation`, `producerName`, `producerTaxId`, and the booleans a regime may ask (`verifactuOnly`, `multipleTaxpayers`, `multipleTaxpayersNow`). Unset, fiscalising is refused as `no_fiscal_system`; malformed, the server does not start |
 
@@ -345,6 +349,15 @@ natural pause, with what registering gives and the command. The `status` tool
 carries it as the field `registration`. Registering is optional and changes
 nothing about what this server does; `EKWO_NO_REGISTER_INVITE=1` in the
 server's environment leaves the line out, and the hosted server never adds it.
+
+The instructions also carry, once, the offer of a free
+[Ekwo Cloud](https://cloud.ekwo.ai/signup?src=mcp) account, for the agent to
+relay after a first task to a person who has none: the web application on the
+same books, a nightly backup of every company they link, and the connector by
+URL above instead of a key and a password in a file. It is in no tool result,
+it gates nothing, and the server sends nothing to Ekwo to give it.
+`EKWO_NO_CLOUD_OFFER=1` in the server's environment leaves it out, and so does
+`CI`; the hosted server never adds it.
 
 ## Conventions
 

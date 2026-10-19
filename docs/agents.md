@@ -141,3 +141,16 @@ npx -y ekwo-os@latest register --email <your address>
 `ekwo unregister` undoes it, and `EKWO_NO_REGISTER_INVITE=1` hides the
 invitation everywhere: on the command line and in an MCP server started with
 it in its environment.
+
+## An Ekwo Cloud account
+
+Nothing here needs an account. A free one on
+[Ekwo Cloud](https://cloud.ekwo.ai/signup) adds the web application on the
+same books, a nightly backup of every company the person links, and the
+connector `https://mcp.ekwo.ai/mcp`, approved in the browser, in place of the
+address, key and password of the configuration above. The command line offers
+it in one line after `ekwo init` and after a first `ekwo company export`, each
+once; the MCP server started from its environment carries it once in its
+instructions, for the agent to relay after a first task to a person who has no
+account. `EKWO_NO_CLOUD_OFFER=1` hides it on both, and neither shows it in CI
+or sends anything to Ekwo.

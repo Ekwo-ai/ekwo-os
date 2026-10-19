@@ -65,6 +65,8 @@ Optional:
 
   EKWO_NO_REGISTER_INVITE 1 leaves the invitation to register out of the
                           instructions of an unregistered installation
+  EKWO_NO_CLOUD_OFFER     1 leaves the offer of a free Ekwo Cloud account
+                          out of the instructions (so does CI)
 
 Row level security applies either way. This server has no privileges of its
 own and refuses a service_role key.
