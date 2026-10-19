@@ -9,8 +9,32 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.15.1] — 2026-10-19
+
+### Changed
+
+- **The schema stays 0.15.0, and so does the floor of the packages.** This
+  release redefines `suggest_duplicate_contacts()`, `filing_tax_movements()`
+  and `prepare_filing()` and fills `tax_filings.due_date`, a column 0.15.0
+  already has; no package reads anything a 0.15.0 database lacks. An
+  installation at 0.15.0 runs `ekwo migrate` for the two migrations
+  (`20261019140000`, `20261019161437`) before installing Malaysia 0.3.1. The
+  end-to-end run against a real Supabase project was not run for this
+  release.
+
 ### Fixed
 
+- **A pair of contacts by name weighs its words** (socle migration
+  `20261019140000`, decision 0075 amended). `suggest_duplicate_contacts()`
+  proposed "LG SERVICES" and "ASBL UCM SERVICES", "Parking" and "Parking
+  Cathédrale SA", "DKV Belgium" and "APPLE RETAIL BELGIUM BV": one shared
+  trade, place or legal form. Each word now weighs 1 over the contacts of the
+  company that carry it, every word of the name counts at any length, and a
+  pair needs the rarest significant word of the shorter name in the longer,
+  with what only one of the two says weighing no more than what they share;
+  the words the longer adds below the minimum length — a legal form — are not
+  counted against it. The same name is always a pair. Scores, identifiers
+  (VAT, registration, bank account) and `contact_candidates()` are unchanged.
 - **A return settles the tax of its own form.** `filing_tax_movements()` —
   what `settle_filing()` clears and `lock_filed_period()` waits for — summed
   every tax line of the period, and so carried into the debt of the periodic
@@ -227,20 +251,6 @@ somewhere has already run it.
   is published for the first time, as a dependency of `@ekwo-ai/core`. The
   end-to-end run against a real Supabase project was not run for this
   release.
-
-### Fixed
-
-- **A pair of contacts by name weighs its words** (socle migration
-  `20261019140000`, decision 0075 amended). `suggest_duplicate_contacts()`
-  proposed "LG SERVICES" and "ASBL UCM SERVICES", "Parking" and "Parking
-  Cathédrale SA", "DKV Belgium" and "APPLE RETAIL BELGIUM BV": one shared
-  trade, place or legal form. Each word now weighs 1 over the contacts of the
-  company that carry it, every word of the name counts at any length, and a
-  pair needs the rarest significant word of the shorter name in the longer,
-  with what only one of the two says weighing no more than what they share;
-  the words the longer adds below the minimum length — a legal form — are not
-  counted against it. The same name is always a pair. Scores, identifiers
-  (VAT, registration, bank account) and `contact_candidates()` are unchanged.
 
 ## [0.14.0] — 2026-10-18
 
@@ -5374,7 +5384,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.15.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.15.1...HEAD
+[0.15.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.2...v0.13.0
