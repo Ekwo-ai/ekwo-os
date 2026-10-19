@@ -11,7 +11,9 @@ rule now is; the history of the change is in the git log and in
 
 A record has five parts: **Status**, **Context**, **Decision**,
 **Consequences** and **See also** (the files, migrations, tests and other
-records it relies on). New records take the next free number.
+records it relies on). New records take the next free number. A record whose
+status is `proposed` is a design no code carries yet: it says what would hold
+and what it waits for, and it becomes `accepted` in the change that builds it.
 
 **A weakness that is still open is not written here.** The records are public,
 and a record describing a gap an attacker could still use would be a recipe.
@@ -56,6 +58,7 @@ consequence.
 - [0021](0021-cash-basis-vat-and-realised-exchange-differences.md) — Cash-basis VAT waits; exchange differences are realised
 - [0022](0022-a-price-that-holds-its-tax.md) — A price that holds its tax is converted per group
 - [0077](0077-a-tax-computed-inside-its-own-base.md) — A tax computed inside its own base is one key of the tax
+- [0079](0079-tax-on-a-presumed-base.md) — A tax collected for the next links of the chain, on a presumed base (proposed)
 - [0023](0023-declaration-boxes-are-data.md) — Declaration boxes are data, with no expression language
 - [0024](0024-a-tax-follows-the-territory-of-the-parties.md) — A tax follows the territory of the parties
 

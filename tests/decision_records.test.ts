@@ -55,7 +55,9 @@ describe('the decision records', () => {
   it.each(records)('%s follows the template', (name) => {
     const body = text(name);
     expect(body.split('\n')[0]).toMatch(/^# \S/);
-    expect(body).toMatch(/^> Status: (accepted|superseded by \d{4})$/m);
+    // `proposed`: a design written down before any code, which says what
+    // would hold and what it waits for; it becomes `accepted` with the code.
+    expect(body).toMatch(/^> Status: (accepted|proposed|superseded by \d{4})$/m);
     for (const part of ['## Context', '## Decision', '## Consequences', '## See also']) {
       expect(body, `${name} has no "${part}"`).toContain(`\n${part}\n`);
     }
