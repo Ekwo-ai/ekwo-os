@@ -2772,6 +2772,225 @@ Constraints:
 | `archive_tables()` | What an archive of one company does with each table of this module. Read by `public.company_archive_tables()`. |
 | `variance(p_company_id uuid, p_budget_id uuid, p_from date, p_to date)` | Budget against ledger, per account, over a period, at the decimals of the company's currency. Both figures are in the sign a business states them in — an income account's credit balance is flipped — and the variance is the actual less the plan. Reads posted entries of kind `normal` only: a closing or appropriation entry is not what a period earned. |
 
+## `crm` — Customer relationship
+
+The record of a relationship, kept beside the books on the same contacts: cards, segments, pipelines, deals and activities, exposed as functions an agent or a screen calls. A deal won makes its party a customer. Knows no country, and writes nothing to the ledger.
+
+### Tables
+
+| Table | Purpose |
+|---|---|
+| [`activities`](#crm-activities) | Everything that happened with a contact, one row each: a note, an e-mail, a call, a meeting, a signal, a deal moving. Optionally about one deal. An activity read from elsewhere carries its source and its identifier there, and is written once. |
+| [`cards`](#crm-cards) | One card per contact the company follows: where the relationship stands, how much it matters, who works it and when anything last happened. The contact itself — its name, e-mail, country, organisation — is the socle's row and is not repeated here. |
+| [`deals`](#crm-deals) | A piece of business with one contact, moving through the stages of one pipeline. Closed, with its date and its outcome, when it reaches a won or a lost stage. An amount is in a currency, always named. |
+| [`pipelines`](#crm-pipelines) | A sequence of stages a deal moves through: sales, partnerships, hiring. None is created for a company: a pipeline is a decision of the company, written by insertion. |
+| [`segment_members`](#crm-segment_members) | A contact in a segment. A contact who leaves keeps the row, with left_at set; joining again clears it. One row per segment and contact. |
+| [`segments`](#crm-segments) | A group of contacts, in a tree: a taxonomy branch, a target, a cohort, a brand. A parent belongs to the same company, and the chain of parents has no cycle and at most 32 levels. |
+| [`stages`](#crm-stages) | One step of a pipeline, in the order of position. A deal opens at the first open stage; reaching a won or a lost stage closes it. |
+
+<a id="crm-activities"></a>
+
+#### `activities`
+
+Everything that happened with a contact, one row each: a note, an e-mail, a call, a meeting, a signal, a deal moving. Optionally about one deal. An activity read from elsewhere carries its source and its identifier there, and is written once.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `contact_id` | `uuid` | not null |
+| `deal_id` | `uuid` |  |
+| `kind` | `crm.activity_kind` | not null |
+| `actor` | `text` | Who did it, as a handle: a member, an agent, the contact. Free text. |
+| `occurred_at` | `timestamp with time zone` | not null |
+| `subject` | `text` |  |
+| `body` | `text` |  |
+| `link` | `text` |  |
+| `payload` | `jsonb` | not null — Whatever structured detail came with the activity, as a JSON object. |
+| `source` | `text` | Where the activity was read from: a mailbox, a calendar, a messaging service, an import. With source_ref, unique in the company. |
+| `source_ref` | `text` | The identifier of the activity at its source — a message identifier, an event identifier. The same pair twice is the same activity. |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((jsonb_typeof(payload) = 'object'::text))`
+- `PRIMARY KEY (id)`
+
+<a id="crm-cards"></a>
+
+#### `cards`
+
+One card per contact the company follows: where the relationship stands, how much it matters, who works it and when anything last happened. The contact itself — its name, e-mail, country, organisation — is the socle's row and is not repeated here.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `contact_id` | `uuid` | not null |
+| `status` | `crm.relationship_status` | not null |
+| `priority` | `crm.priority` | not null |
+| `owner` | `text` | Who works the relationship, as a handle: a member, an agent, a team. Free text: the module holds no list of who may. |
+| `job_title` | `text` |  |
+| `linkedin_url` | `text` |  |
+| `source` | `text` | Where the contact came from — an import, a form, an event — in the words of whoever recorded it. |
+| `tags` | `text[]` | not null |
+| `no_outbound` | `boolean` | not null — True when the contact is not to be approached first: no prospecting e-mail, no unsolicited message. An answer to the contact is still an answer. |
+| `custom` | `jsonb` | not null — The fields a company keeps that the module does not name, as a JSON object. |
+| `last_activity_at` | `timestamp with time zone` | The latest occurred_at of the contact's activities, kept by a trigger on crm.activities. Null while nothing has happened. |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((jsonb_typeof(custom) = 'object'::text))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (contact_id)`
+
+<a id="crm-deals"></a>
+
+#### `deals`
+
+A piece of business with one contact, moving through the stages of one pipeline. Closed, with its date and its outcome, when it reaches a won or a lost stage. An amount is in a currency, always named.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `pipeline_id` | `uuid` | not null |
+| `stage_id` | `uuid` | not null |
+| `contact_id` | `uuid` | not null — Who the deal is with: an organisation, or a person of one. Winning it makes the organisation at the root of the contact's chain a customer. |
+| `title` | `text` | not null |
+| `amount` | `numeric(18,2)` |  |
+| `currency_code` | `character(3)` |  |
+| `expected_on` | `date` |  |
+| `external_url` | `text` | Where the deal is described elsewhere: a proposal, a tender, a thread. |
+| `owner` | `text` |  |
+| `closed_at` | `timestamp with time zone` |  |
+| `closed_outcome` | `crm.stage_outcome` | won or lost once the deal is closed, null while it is open. Written by crm.move_deal() with closed_at. |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK (((amount IS NULL) OR (currency_code IS NOT NULL)))`
+- `CHECK (((closed_at IS NULL) = (closed_outcome IS NULL)))`
+- `CHECK (((closed_outcome IS NULL) OR (closed_outcome <> 'open'::crm.stage_outcome)))`
+- `PRIMARY KEY (id)`
+
+<a id="crm-pipelines"></a>
+
+#### `pipelines`
+
+A sequence of stages a deal moves through: sales, partnerships, hiring. None is created for a company: a pipeline is a decision of the company, written by insertion.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `name` | `text` | not null |
+| `slug` | `text` | not null |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((slug ~ '^[a-z0-9][a-z0-9_-]*$'::text))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, slug)`
+
+<a id="crm-segment_members"></a>
+
+#### `segment_members`
+
+A contact in a segment. A contact who leaves keeps the row, with left_at set; joining again clears it. One row per segment and contact.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `segment_id` | `uuid` | not null |
+| `contact_id` | `uuid` | not null |
+| `added_by` | `text` | Who put the contact in the segment, as a handle. Free text. |
+| `joined_at` | `timestamp with time zone` | not null |
+| `left_at` | `timestamp with time zone` | When the contact left the segment. Null while the contact is in it. |
+| `note` | `text` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `PRIMARY KEY (id)`
+- `UNIQUE (segment_id, contact_id)`
+
+<a id="crm-segments"></a>
+
+#### `segments`
+
+A group of contacts, in a tree: a taxonomy branch, a target, a cohort, a brand. A parent belongs to the same company, and the chain of parents has no cycle and at most 32 levels.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `parent_id` | `uuid` |  |
+| `kind` | `crm.segment_kind` | not null |
+| `name` | `text` | not null |
+| `slug` | `text` | not null — The segment's name for a machine: lower case, digits, hyphens and underscores, unique in the company. |
+| `description` | `text` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK (((parent_id IS NULL) OR (parent_id <> id)))`
+- `CHECK ((slug ~ '^[a-z0-9][a-z0-9_-]*$'::text))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (id, company_id)`
+- `UNIQUE (company_id, slug)`
+
+<a id="crm-stages"></a>
+
+#### `stages`
+
+One step of a pipeline, in the order of position. A deal opens at the first open stage; reaching a won or a lost stage closes it.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `pipeline_id` | `uuid` | not null |
+| `name` | `text` | not null |
+| `position` | `smallint` | not null |
+| `outcome` | `crm.stage_outcome` | not null — open while a deal at this stage is still being worked; won or lost when reaching it closes the deal. |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `PRIMARY KEY (id)`
+- `UNIQUE (id, pipeline_id)`
+- `UNIQUE (pipeline_id, "position")`
+
+### Functions
+
+| Function | Purpose |
+|---|---|
+| `archive_tables()` | What an archive of one company does with each table of this module: all seven travel — a relationship is the company's as much as its books. Read by `public.company_archive_tables()`. |
+| `card_of(p_company_id uuid, p_contact_id uuid)` | Everything on one contact, as one JSON object: the contact as the socle holds it, its organisation, its card, the segments it is in now, the open deals with it — and, for an organisation, with its people — and its 20 latest activities. Needs crm.read. |
+| `fold_card_on_merge()` | During merge_contacts(), and only then: when the kept contact already has a card, folds it with the absorbed contact's card into one — the kept card's answers first, the absorbed one's filling the gaps, the tags joined, a no_outbound on either side kept — so the merge does not collide with the one card per contact. |
+| `fold_membership_on_merge()` | During merge_contacts(), and only then: when the kept contact is already in the segment, folds the two memberships into one — the earliest joining, still in it if either was — so the merge does not collide with the one membership per segment and contact. |
+| `guard_segment_parent()` | Refuses a parent that would make the tree of segments a cycle (crm_segment_cycle) or deeper than 32 levels (crm_segment_too_deep), the bound commercial_entity() keeps on contacts. |
+| `join_segment(p_company_id uuid, p_segment_id uuid, p_contact_id uuid, p_added_by text, p_note text)` | Puts a contact in a segment of the same company. A contact who had left joins again on the same row: left_at goes back to null and joined_at is the day of the return. A contact already in it stays as it is, with the note replaced when one is given. Needs crm.write. |
+| `leave_segment(p_company_id uuid, p_segment_id uuid, p_contact_id uuid)` | Takes a contact out of a segment by setting left_at; the row stays, so the membership is remembered. Leaving twice keeps the first date. Refuses a contact that was never in it, crm_not_a_member. Needs crm.write. |
+| `log_activity(p_company_id uuid, p_contact_id uuid, p_kind crm.activity_kind, p_subject text, p_body text, p_deal_id uuid, p_actor text, p_occurred_at timestamp with time zone, p_link text, p_payload jsonb, p_source text, p_source_ref text)` | Writes one activity of a contact, optionally about one deal of the same company, and moves the card's last_activity_at. An activity read from elsewhere names its source and its identifier there: the same pair a second time writes nothing and returns the activity already kept, which is what makes an import idempotent. Needs crm.write. |
+| `move_deal(p_company_id uuid, p_deal_id uuid, p_stage_id uuid)` | Moves a deal to another stage of its pipeline and logs it as a system activity. Reaching a won or a lost stage closes the deal with its date and its outcome; going back to an open stage opens it again. A deal won makes the organisation at the root of its contact's chain a customer — other becomes customer, supplier becomes both — which needs contacts.write. The same stage again changes nothing. Needs crm.write. |
+| `open_deal(p_company_id uuid, p_pipeline_id uuid, p_contact_id uuid, p_title text, p_amount numeric, p_currency_code character, p_expected_on date, p_external_url text, p_owner text)` | Opens a deal with a contact at the first open stage of a pipeline of the same company, and logs it as a system activity. An amount given without a currency is in the company's own currency. Refuses a pipeline with no open stage, crm_pipeline_without_open_stage. Needs crm.write. |
+| `require(p_company_id uuid, p_capability text, p_what text)` | Raises crm_module_not_enabled when the module is off for the company or the caller is not a member of it, and crm_not_allowed when the caller does not hold the capability. The first lines of every function of this module; the policies still decide every row. |
+| `search_cards(p_company_id uuid, p_query text, p_status crm.relationship_status, p_segment_id uuid, p_stage_id uuid, p_country character, p_language character, p_owner text, p_no_outbound boolean, p_active_since timestamp with time zone, p_inactive_since timestamp with time zone, p_limit integer)` | The cards of a company, filtered: a text found in the name, the e-mail or the organisation's name, a status, a segment the contact is in now, a stage one of its deals is at, a country and a language (the contact's, or its organisation's where it has none), an owner, no_outbound, active since or inactive since a moment. Every filter is optional. Merged contacts are left out. Most recently active first, at most p_limit rows (50). |
+| `touch_card()` | After an activity is written, moves the last_activity_at of the contact's card to its occurred_at when that is later. Does nothing where the contact has no card. |
+| `upsert_card(p_company_id uuid, p_contact_id uuid, p_patch jsonb)` | Creates the card of a contact, or changes it: each field the patch names takes its value, every other one keeps its own. The fields are status, priority, owner, job_title, linkedin_url, source, tags, no_outbound and custom; any other key is refused by name, crm_unknown_field. Needs crm.write. Returns the card. |
+
 ## `einvoicing` — Electronic invoicing
 
 The electronic invoice of a posted sale in the profile its country pack declares, and the fiscal record or the clearance by the authority its pack's fiscalisation regime requires: the exact files with the rules they break, the chain, the validations, and every sending with what came back, word for word. Knows no country, names no provider, and writes nothing to the ledger.
