@@ -37,6 +37,9 @@ const LATER = [
   // Replaces merge_contacts(), which answers a row of contact_merges, and
   // contact_candidates(), which the migration before it defined.
   '20261019104812_the_contacts_that_are_probably_one_party.sql',
+  // Redefines merge_contacts(), which returns the record 20261019090000
+  // creates.
+  '20261019130000_an_analytic_value_is_entered_on_the_line.sql',
 ];
 
 let db: PGlite;

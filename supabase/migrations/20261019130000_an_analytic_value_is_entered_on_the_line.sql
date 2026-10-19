@@ -14,15 +14,29 @@
 --     writes. From then on the ledger line is the one truth; no report reads
 --     the document split again. `cancel_document()` gives the credit note the
 --     split of the invoice it cancels.
---   * Only a result account carries a split: `accounts.internal_group` is
---     `income` or `expense`, which every chart of every pack says through the
---     account type of each account. Anything else is refused by name,
---     `analytic_not_on_result_account`. No account code is read.
+--   * A result account carries a split — `accounts.internal_group` is
+--     `income` or `expense` — and so does a fixed-asset account, account type
+--     `asset_fixed`, so that what a project buys is read with what it costs.
+--     Every chart of every pack says both through the account type of each
+--     account. Anything else — a receivable, a payable, a tax, a bank — is
+--     refused by name, `analytic_not_on_this_account`. No account code is read.
 --   * On one axis the shares of a line add up to at most 100
 --     (`analytic_split_over_100`); less leaves the rest unassigned. The
---     `amount` of a share is the database's, derived from the line.
---   * A product, and a contact, may carry a default value. It pre-fills a
+--     `amount` of a share is the database's, derived from the line. A retired
+--     value (`active = false`) is refused on a new share
+--     (`analytic_value_retired`); the shares that name it stay.
+--   * The split of a posted ledger line moves only in an open period: the
+--     lock date and a closed fiscal year refuse it as they refuse every
+--     posted change (`period_locked`, `fiscal_year_closed`).
+--   * A product, and a contact — or, when the contact has none, the contact
+--     it belongs to, one level up — may carry a default value. It pre-fills a
 --     line and never constrains it, as a product's account and price do.
+--   * An axis may be required (`analytic_axes.required_on`: `none`, the
+--     default, `expense`, `income` or `result`). A document, or an entry
+--     keyed by a person, whose line of that group leaves part of it off the
+--     axis is refused at posting (`analytic_axis_required`).
+--   * `merge_contacts()` gives the kept contact the absorbed one's default
+--     when it has none, as it does every empty field.
 --
 -- The report that reads it, `analytic_report()`, is the next file.
 
@@ -100,16 +114,33 @@ alter table contacts
 create index contacts_analytic_value_company_idx on contacts (analytic_value_id, company_id);
 
 comment on column contacts.analytic_value_id is
-  'The analytic value the lines of a document naming this contact start with, at 100 %, on an axis the product left free. Pre-fills the line, never constrains it.';
+  'The analytic value the lines of a document naming this contact start with, at 100 %, on an axis the product left free; a contact that has none takes its parent''s, one level up. Pre-fills the line, never constrains it.';
 
 -- ---------------------------------------------------------------------------
--- 3. Only a result account carries a split
+-- 3. A result account, or a fixed asset, carries a split
 --
 -- One question, asked of an account: is it in the `income` or the `expense`
--- group? `internal_group` is derived from the account type, and the account
--- type is what the country pack gives every account of its chart. A null
--- account — a section or a note line — is not one.
+-- group, or a fixed asset? `internal_group` is derived from the account type,
+-- and the account type is what the country pack gives every account of its
+-- chart. A null account — a section or a note line — is not one.
 -- ---------------------------------------------------------------------------
+
+create or replace function account_carries_analytics(p_account_id uuid)
+returns boolean
+language sql
+stable
+as $$
+  select coalesce(
+    (select a.internal_group in ('income', 'expense') or a.account_type = 'asset_fixed'
+       from accounts a where a.id = p_account_id),
+    false);
+$$;
+
+comment on function account_carries_analytics(uuid) is
+  'Whether a line on this account may carry an analytic split: an income or expense account (accounts.internal_group), or a fixed asset (account type asset_fixed). Read from the account type the pack gives the account, never from its code.';
+
+revoke execute on function account_carries_analytics(uuid) from public, anon;
+grant execute on function account_carries_analytics(uuid) to authenticated, service_role;
 
 -- Security invoker, like the two refresh functions below: the guards that
 -- call them are definers and lend them their rights, and a client calling one
@@ -122,20 +153,19 @@ stable
 as $$
 declare
   v_code  text;
-  v_group text;
 begin
-  select a.code, a.internal_group into v_code, v_group from accounts a where a.id = p_account_id;
-  if v_group is null or v_group not in ('income', 'expense') then
-    raise exception 'analytic_not_on_result_account: % is on %, and only an income or an expense account carries an analytic split',
+  if not account_carries_analytics(p_account_id) then
+    select a.code into v_code from accounts a where a.id = p_account_id;
+    raise exception 'analytic_not_on_this_account: % is on %, and only an income, an expense or a fixed-asset account carries an analytic split',
       p_what, coalesce('account ' || v_code, 'no account')
       using errcode = 'check_violation',
-            hint = 'a receivable, a payable, a tax or a bank line is not for an activity; split the income or expense line it belongs to';
+            hint = 'a receivable, a payable, a tax or a bank line is not for an activity; split the income, expense or fixed-asset line it belongs to';
   end if;
 end;
 $$;
 
 comment on function assert_analytic_account(uuid, text) is
-  'Refuses analytic_not_on_result_account unless the account is in the income or expense group (accounts.internal_group, from its account type). Read by the guards of document_line_analytics and entry_line_analytics.';
+  'Refuses analytic_not_on_this_account unless account_carries_analytics() says the account carries a split: income, expense or fixed asset, from its account type. Read by the guards of document_line_analytics and entry_line_analytics.';
 
 revoke execute on function assert_analytic_account(uuid, text) from public, anon;
 grant execute on function assert_analytic_account(uuid, text) to authenticated, service_role;
@@ -143,12 +173,46 @@ grant execute on function assert_analytic_account(uuid, text) to authenticated, 
 -- ---------------------------------------------------------------------------
 -- 4. The guards of a split
 --
--- The same three questions on both tables: is the line on a result account,
--- do the shares of this axis stay within 100, and — on a document — is the
--- document still a draft. An update that moves nothing but the derived
--- `amount` is the database writing it, and passes: it is also how a split
--- written before this file is left as it was.
+-- The same questions on both tables: is the line on an account that carries
+-- a split, do the shares of this axis stay within 100, is a new share on a
+-- value still in use — and, on a document, is the document still a draft; on
+-- a posted ledger line, is its period still open. An update that moves
+-- nothing but the derived `amount` is the database writing it, and passes: it
+-- is also how a split written before this file is left as it was.
+--
+-- A retired value stays on the shares that already name it, and on the copy
+-- of them that undoes or carries them: the credit note `cancel_document()`
+-- writes (under `ekwo.crediting_document`, holding that credit note), the
+-- ledger lines `post_document()` writes for a document — a draft entry of a
+-- document exists only inside that function — and the mirror of an entry,
+-- which names it in `reversed_entry_id`.
 -- ---------------------------------------------------------------------------
+
+create or replace function assert_analytic_value_in_use(p_value_id uuid, p_company_id uuid, p_what text)
+returns void
+language plpgsql
+stable
+as $$
+declare
+  v_code   text;
+  v_active boolean;
+begin
+  select v.code, v.active into v_code, v_active
+    from analytic_values v where v.id = p_value_id and v.company_id = p_company_id;
+  if v_active = false then
+    raise exception 'analytic_value_retired: analytic value % is retired, and % takes no new share of it',
+      v_code, p_what
+      using errcode = 'check_violation',
+            hint = 'choose a value in use, or make this one active again; the shares already on it stay';
+  end if;
+end;
+$$;
+
+comment on function assert_analytic_value_in_use(uuid, uuid, text) is
+  'Refuses analytic_value_retired when the value is retired (analytic_values.active = false). Read by the guards of document_line_analytics and entry_line_analytics on a new share.';
+
+revoke execute on function assert_analytic_value_in_use(uuid, uuid, text) from public, anon;
+grant execute on function assert_analytic_value_in_use(uuid, uuid, text) to authenticated, service_role;
 
 create or replace function document_line_analytics_guard()
 returns trigger
@@ -164,6 +228,7 @@ declare
   v_seq     integer;
   v_axis    uuid;
   v_total   numeric;
+  v_document uuid;
 begin
   if tg_op = 'UPDATE'
      and (new.document_line_id, new.analytic_value_id, new.percentage, new.company_id)
@@ -183,8 +248,8 @@ begin
     perform assert_writes_into_known_company(new.company_id);
   end if;
 
-  select d.state, d.number, d.doc_type, l.account_id, l.sequence
-    into v_state, v_number, v_type, v_account, v_seq
+  select d.state, d.number, d.doc_type, l.account_id, l.sequence, d.id
+    into v_state, v_number, v_type, v_account, v_seq, v_document
     from document_lines l
     join documents d on d.id = l.document_id
    where l.id = coalesce(new.document_line_id, old.document_line_id)
@@ -208,6 +273,12 @@ begin
 
   perform assert_analytic_account(v_account, format('line %s of %s %s', v_seq, v_type, coalesce(v_number, '(draft)')));
 
+  if (tg_op = 'INSERT' or new.analytic_value_id is distinct from old.analytic_value_id)
+     and coalesce(current_setting('ekwo.crediting_document', true), '') <> v_document::text then
+    perform assert_analytic_value_in_use(new.analytic_value_id, new.company_id,
+      format('line %s of %s %s', v_seq, v_type, coalesce(v_number, '(draft)')));
+  end if;
+
   select v.axis_id into v_axis from analytic_values v
    where v.id = new.analytic_value_id and v.company_id = new.company_id;
   select coalesce(sum(x.percentage), 0) into v_total
@@ -230,7 +301,7 @@ end;
 $$;
 
 comment on function document_line_analytics_guard() is
-  'The split of a document line: refused on a document that is no longer a draft (document_posted), on a line whose account is not an income or expense account (analytic_not_on_result_account), and beyond 100 % on one axis (analytic_split_over_100).';
+  'The split of a document line: refused on a document that is no longer a draft (document_posted), on a line whose account carries no split (analytic_not_on_this_account), on a new share of a retired value (analytic_value_retired) but on the credit note cancel_document() writes, and beyond 100 % on one axis (analytic_split_over_100).';
 
 revoke execute on function document_line_analytics_guard() from public, anon, authenticated, service_role;
 
@@ -245,11 +316,15 @@ security definer
 set search_path = public, pg_temp
 as $$
 declare
-  v_account uuid;
-  v_seq     integer;
-  v_number  text;
-  v_axis    uuid;
-  v_total   numeric;
+  v_account  uuid;
+  v_seq      integer;
+  v_number   text;
+  v_state    entry_state;
+  v_date     date;
+  v_document uuid;
+  v_reversed uuid;
+  v_axis     uuid;
+  v_total    numeric;
 begin
   if tg_op = 'UPDATE'
      and (new.entry_line_id, new.analytic_value_id, new.percentage, new.company_id)
@@ -257,20 +332,54 @@ begin
     return new;
   end if;
 
-  -- As on a document line: the writer's company first, and its rows only.
-  perform assert_writes_into_known_company(new.company_id);
+  -- The company is being deleted, and everything of it with it.
+  if tg_op = 'DELETE' and not exists (select 1 from companies c where c.id = old.company_id) then
+    return old;
+  end if;
 
-  select l.account_id, l.sequence, e.number
-    into v_account, v_seq, v_number
+  -- As on a document line: the writer's company first, and its rows only.
+  if tg_op <> 'DELETE' then
+    perform assert_writes_into_known_company(new.company_id);
+  end if;
+
+  select l.account_id, l.sequence, e.number, e.state, e.entry_date, e.document_id, e.reversed_entry_id
+    into v_account, v_seq, v_number, v_state, v_date, v_document, v_reversed
     from entry_lines l
     join entries e on e.id = l.entry_id
-   where l.id = new.entry_line_id
-     and l.company_id = new.company_id;
+   where l.id = coalesce(new.entry_line_id, old.entry_line_id)
+     and l.company_id = coalesce(new.company_id, old.company_id);
+  -- No line: it is being deleted, a draft's, and its split with it; or it
+  -- does not exist, which is the foreign key's to say.
   if not found then
-    return new;
+    return coalesce(new, old);
+  end if;
+
+  -- A posted line is split in an open period only, as every posted change
+  -- is: the lock date and a closed fiscal year refuse it, by name. On both
+  -- dates of a share that moves from one line to another.
+  if v_state <> 'draft' then
+    perform assert_period_open(coalesce(new.company_id, old.company_id), v_date);
+  end if;
+  if tg_op = 'UPDATE' and new.entry_line_id <> old.entry_line_id then
+    perform assert_period_open(old.company_id, e.entry_date)
+       from entry_lines l join entries e on e.id = l.entry_id
+      where l.id = old.entry_line_id and e.state <> 'draft';
+  end if;
+
+  if tg_op = 'DELETE' then
+    return old;
   end if;
 
   perform assert_analytic_account(v_account, format('line %s of entry %s', v_seq, coalesce(v_number, '(draft)')));
+
+  -- A retired value takes no new share, but on what carries or undoes a
+  -- share that named it: the entry post_document() is writing for its
+  -- document, and the mirror of an entry.
+  if (tg_op = 'INSERT' or new.analytic_value_id is distinct from old.analytic_value_id)
+     and not (v_state = 'draft' and (v_document is not null or v_reversed is not null)) then
+    perform assert_analytic_value_in_use(new.analytic_value_id, new.company_id,
+      format('line %s of entry %s', v_seq, coalesce(v_number, '(draft)')));
+  end if;
 
   select v.axis_id into v_axis from analytic_values v
    where v.id = new.analytic_value_id and v.company_id = new.company_id;
@@ -292,12 +401,12 @@ end;
 $$;
 
 comment on function entry_line_analytics_guard() is
-  'The split of a ledger line: refused on a line whose account is not an income or expense account (analytic_not_on_result_account), and beyond 100 % on one axis (analytic_split_over_100).';
+  'The split of a ledger line: refused on a posted line whose period is locked or whose fiscal year is closed (period_locked, fiscal_year_closed, from assert_period_open()), on a line whose account carries no split (analytic_not_on_this_account), on a new share of a retired value (analytic_value_retired) but on the entry post_document() writes and on a mirror, and beyond 100 % on one axis (analytic_split_over_100).';
 
 revoke execute on function entry_line_analytics_guard() from public, anon, authenticated, service_role;
 
 create trigger entry_line_analytics_guard
-  before insert or update on entry_line_analytics
+  before insert or update or delete on entry_line_analytics
   for each row execute function entry_line_analytics_guard();
 
 -- ---------------------------------------------------------------------------
@@ -437,8 +546,8 @@ create trigger entry_line_analytics_refresh
   for each row execute function entry_line_analytics_refresh();
 
 -- A line that changes amount or account takes its split with it: the shares
--- are worked out again, and a split on a line moved to a balance-sheet
--- account is refused as it would be on insert.
+-- are worked out again, and a split on a line moved to an account that
+-- carries none is refused as it would be on insert.
 
 create or replace function document_lines_analytics_follow()
 returns trigger
@@ -500,9 +609,12 @@ create trigger entry_lines_analytics_follow
 --
 -- When a line is written, or its product changes, each default whose axis
 -- the line has no share on yet is added at 100 %: the product's first, then
--- the contact's of the document. Only on a result account: a default does
--- not apply to a line that cannot carry it, and says nothing. What it wrote
--- is a row like any other, which the person changes or removes.
+-- the contact's of the document — or, when that contact has none, the one of
+-- the contact it belongs to (`parent_id`), one level up and no further. Only
+-- on an account that carries a split: a default does not apply to a line
+-- that cannot carry it, and says nothing; nor does a retired value, which
+-- would be refused. What it wrote is a row like any other, which the person
+-- changes or removes.
 -- ---------------------------------------------------------------------------
 
 create or replace function document_lines_analytic_defaults()
@@ -514,9 +626,7 @@ as $$
 declare
   v_value uuid;
 begin
-  if new.line_type <> 'product'
-     or not exists (select 1 from accounts a
-                     where a.id = new.account_id and a.internal_group in ('income', 'expense')) then
+  if new.line_type <> 'product' or not account_carries_analytics(new.account_id) then
     return null;
   end if;
 
@@ -526,11 +636,14 @@ begin
         select p.analytic_value_id as value, 1 as rank
           from products p where p.id = new.product_id
         union all
-        select k.analytic_value_id, 2
-          from documents d join contacts k on k.id = d.contact_id
+        select coalesce(k.analytic_value_id, up.analytic_value_id), 2
+          from documents d
+          join contacts k on k.id = d.contact_id
+          left join contacts up on up.id = k.parent_id and up.company_id = k.company_id
          where d.id = new.document_id
       ) c
-     where c.value is not null
+      join analytic_values v on v.id = c.value and v.company_id = new.company_id
+     where v.active
      order by c.rank
   loop
     if not exists (
@@ -549,7 +662,7 @@ end;
 $$;
 
 comment on function document_lines_analytic_defaults() is
-  'Pre-fills the analytic split of a document line from the default value of its product, then of the document''s contact, at 100 % on each axis the line has no share on yet, and only on an income or expense account. Never replaces what the line carries.';
+  'Pre-fills the analytic split of a document line from the default value of its product, then of the document''s contact or, when it has none, of that contact''s parent one level up, at 100 % on each axis the line has no share on yet, only on an account that carries a split and only with a value in use. Never replaces what the line carries.';
 
 revoke execute on function document_lines_analytic_defaults() from public, anon, authenticated, service_role;
 
@@ -596,13 +709,174 @@ revoke execute on function document_line_split_key(uuid) from public, anon;
 grant execute on function document_line_split_key(uuid) to authenticated, service_role;
 
 -- ---------------------------------------------------------------------------
--- 8. post_document, which carries the split onto the ledger
+-- 8. A required axis
 --
--- `20260921145425` as it was, with two changes: the bases, and the share of a
--- tax booked on the accounts of the lines, are grouped by the analytic split
--- of the lines as well as by account and tax; and each ledger line written for
--- a group takes the split of that group. A document whose lines carry no split
--- groups and books exactly as before.
+-- An axis is optional unless the company says otherwise: `required_on` is
+-- `none` by default, and `expense`, `income` or `result` (both) make every
+-- line of that group carry the axis whole — its shares on the axis add up to
+-- 100, since a part left off is a part nobody can read by it. It is asked at
+-- posting, of what a person keys: the lines of a document, in
+-- `post_document()`, before anything reaches the ledger; and the lines of an
+-- entry, as it is posted. What the database writes on its own is not asked,
+-- for no person keyed it and no person could split it: the mirror of an entry
+-- or a credit note that names what it undoes, which carries what the
+-- original carried; an opening, a closing, an appropriation; an entry of a
+-- module; a difference or a fee booked while a matching or a bank line is
+-- settled. A retired axis requires nothing. A fixed-asset line is never
+-- required to carry one.
+-- ---------------------------------------------------------------------------
+
+alter table analytic_axes
+  add column if not exists required_on text not null default 'none';
+alter table analytic_axes
+  add constraint analytic_axes_required_on
+    check (required_on in ('none', 'expense', 'income', 'result'));
+
+comment on column analytic_axes.required_on is
+  'Which lines must carry this axis whole at posting: none (the default), expense, income, or result (both). A document or an entry keyed by a person whose line of that group has less than 100 % on the axis is refused, analytic_axis_required.';
+
+create or replace function analytic_axis_required_for(p_required_on text, p_group text)
+returns boolean
+language sql
+immutable
+as $$
+  select case p_required_on
+           when 'expense' then p_group = 'expense'
+           when 'income'  then p_group = 'income'
+           when 'result'  then p_group in ('income', 'expense')
+           else false
+         end;
+$$;
+
+comment on function analytic_axis_required_for(text, text) is
+  'Whether an axis required on p_required_on (analytic_axes.required_on) is required on a line of the account group p_group (accounts.internal_group).';
+
+revoke execute on function analytic_axis_required_for(text, text) from public, anon;
+grant execute on function analytic_axis_required_for(text, text) to authenticated, service_role;
+
+-- Definers, reading only the rows of the document's or the entry's own
+-- company: a person who may post but not read the settings is held to the
+-- axes all the same.
+
+create or replace function assert_document_analytic_axes(p_document_id uuid)
+returns void
+language plpgsql
+stable
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  r record;
+begin
+  select l.sequence, d.doc_type, d.number, a.code as account, x.code as axis, x.required_on,
+         coalesce((select sum(s.percentage)
+                     from document_line_analytics s
+                     join analytic_values v on v.id = s.analytic_value_id
+                    where s.document_line_id = l.id and v.axis_id = x.id), 0) as carried
+    into r
+    from documents d
+    join document_lines l on l.document_id = d.id and l.company_id = d.company_id
+    join accounts a on a.id = l.account_id and a.company_id = d.company_id
+    join analytic_axes x on x.company_id = d.company_id and x.active
+   where d.id = p_document_id
+     -- A credit note that names what it undoes carries what the original
+     -- carried, and is not asked again.
+     and d.reversed_document_id is null
+     and l.line_type = 'product'
+     and l.amount_untaxed <> 0
+     and analytic_axis_required_for(x.required_on, a.internal_group)
+     and coalesce((select sum(s.percentage)
+                     from document_line_analytics s
+                     join analytic_values v on v.id = s.analytic_value_id
+                    where s.document_line_id = l.id and v.axis_id = x.id), 0) < 100
+   order by l.sequence, x.code
+   limit 1;
+  if found then
+    raise exception 'analytic_axis_required: line % of % % carries % %% of analytic axis %, which every % line carries whole',
+      r.sequence, r.doc_type, coalesce(r.number, '(draft)'), r.carried, r.axis,
+      case r.required_on when 'result' then 'income and expense' else r.required_on end
+      using errcode = 'check_violation',
+            hint = 'split the line on that axis up to 100 %, or set the axis''s required_on to none';
+  end if;
+end;
+$$;
+
+comment on function assert_document_analytic_axes(uuid) is
+  'Refuses analytic_axis_required when a billable line of the document, on an account of a group an active axis is required on (analytic_axes.required_on), carries less than 100 % of that axis. A credit note naming what it undoes is not asked. Called by post_document() before it writes the entry.';
+
+revoke execute on function assert_document_analytic_axes(uuid) from public, anon;
+grant execute on function assert_document_analytic_axes(uuid) to authenticated, service_role;
+
+create or replace function entries_require_analytic_axes()
+returns trigger
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  r record;
+begin
+  -- What a person keyed, and nothing the database writes on its own.
+  if new.document_id is not null
+     or new.reversed_entry_id is not null
+     or new.kind <> 'normal'
+     or new.module_code is not null
+     or coalesce(current_setting('ekwo.reconciling', true), '') = 'on'
+     or coalesce(current_setting('ekwo.settling_statement', true), '') = 'on' then
+    return new;
+  end if;
+
+  select l.sequence, a.code as account, x.code as axis, x.required_on,
+         coalesce((select sum(s.percentage)
+                     from entry_line_analytics s
+                     join analytic_values v on v.id = s.analytic_value_id
+                    where s.entry_line_id = l.id and v.axis_id = x.id), 0) as carried
+    into r
+    from entry_lines l
+    join accounts a on a.id = l.account_id and a.company_id = l.company_id
+    join analytic_axes x on x.company_id = l.company_id and x.active
+   where l.entry_id = new.id
+     and l.company_id = new.company_id
+     and l.balance <> 0
+     and analytic_axis_required_for(x.required_on, a.internal_group)
+     and coalesce((select sum(s.percentage)
+                     from entry_line_analytics s
+                     join analytic_values v on v.id = s.analytic_value_id
+                    where s.entry_line_id = l.id and v.axis_id = x.id), 0) < 100
+   order by l.sequence, x.code
+   limit 1;
+  if found then
+    raise exception 'analytic_axis_required: line % of entry % (account %) carries % %% of analytic axis %, which every % line carries whole',
+      r.sequence, coalesce(new.number, new.id::text), r.account, r.carried, r.axis,
+      case r.required_on when 'result' then 'income and expense' else r.required_on end
+      using errcode = 'check_violation',
+            hint = 'split the line on that axis up to 100 % before posting, or set the axis''s required_on to none';
+  end if;
+  return new;
+end;
+$$;
+
+comment on function entries_require_analytic_axes() is
+  'As an entry keyed by a person is posted, refuses analytic_axis_required when one of its lines, on an account of a group an active axis is required on, carries less than 100 % of that axis. Not asked of a document''s entry (post_document() asked its lines), a mirror, an opening, a closing, an appropriation, a module''s entry, or what a matching or a bank line settles.';
+
+revoke execute on function entries_require_analytic_axes() from public, anon, authenticated, service_role;
+
+create trigger entries_require_analytic_axes
+  before update of state on entries
+  for each row
+  when (old.state = 'draft' and new.state = 'posted')
+  execute function entries_require_analytic_axes();
+
+-- ---------------------------------------------------------------------------
+-- 9. post_document, which carries the split onto the ledger
+--
+-- `20260921145425` as it was — no later file changes it — with three changes:
+-- the bases, and the share of a tax booked on the accounts of the lines, are
+-- grouped by the analytic split of the lines as well as by account and tax;
+-- each ledger line written for a group takes the split of that group; and an
+-- axis the company requires is asked of the lines first. A document whose
+-- lines carry no split, in a company that requires no axis, groups and books
+-- exactly as before.
 -- ---------------------------------------------------------------------------
 
 create or replace function post_document(p_document_id uuid)
@@ -699,6 +973,10 @@ begin
   ) then
     raise exception 'document_empty: document % has no billable line', p_document_id;
   end if;
+
+  -- An axis the company requires is carried whole by the lines it is
+  -- required on, or nothing is booked (decision 0075).
+  perform assert_document_analytic_axes(p_document_id);
 
   -- A fixed-amount tax has no basis to spread over lines; refuse rather than
   -- guess.
@@ -1179,10 +1457,10 @@ end;
 $$;
 
 comment on function post_document(uuid) is
-  'Books a document: one entry, the bases on the accounts of the lines, the tax of each group rounded once and shared over the postings of the tax, each ledger line naming the posting type that wrote it. Refuses a tax whose applies_*_territory the document contradicts — read with territory_within_for_tax(), so a territory outside its parent''s tax does not satisfy a condition naming the parent — or whose applies_supply_vs_seller it contradicts, by name, before anything reaches the ledger; chooses no tax for anybody. Writes the three territories it resolved on the document (seller_territory_code, buyer_territory_code, supply_territory_resolved). Groups the lines by account, tax and analytic split, and copies the split of each group onto the ledger line it writes (decision 0075).';
+  'Books a document: one entry, the bases on the accounts of the lines, the tax of each group rounded once and shared over the postings of the tax, each ledger line naming the posting type that wrote it. Refuses a tax whose applies_*_territory the document contradicts — read with territory_within_for_tax(), so a territory outside its parent''s tax does not satisfy a condition naming the parent — or whose applies_supply_vs_seller it contradicts, by name, before anything reaches the ledger; chooses no tax for anybody. Writes the three territories it resolved on the document (seller_territory_code, buyer_territory_code, supply_territory_resolved). Groups the lines by account, tax and analytic split, and copies the split of each group onto the ledger line it writes; refuses analytic_axis_required, before anything is written, when a line leaves part of a required axis off (decision 0075).';
 
 -- ---------------------------------------------------------------------------
--- 9. cancel_document, whose credit note takes the split of the invoice
+-- 10. cancel_document, whose credit note takes the split of the invoice
 --
 -- `20260919090000` as it was, with the analytic split of each line copied onto
 -- the line of the credit note that undoes it. The invoice's ledger lines carry
@@ -1287,7 +1565,9 @@ begin
 
   -- Line by line, so each line of the credit note knows the line it undoes:
   -- it takes that line's analytic split as it was issued, over whatever a
-  -- product or a contact pre-filled since.
+  -- product or a contact pre-filled since — a value retired since included,
+  -- which the guard lets through for this credit note alone.
+  perform set_config('ekwo.crediting_document', v_credit.id::text, true);
   for r in
     select l.* from document_lines l
      where l.document_id = v_doc.id
@@ -1307,6 +1587,7 @@ begin
       from document_line_analytics x
      where x.document_line_id = r.id;
   end loop;
+  perform set_config('ekwo.crediting_document', '', true);
 
   select * into v_credit from documents where id = v_credit.id;
   if (v_credit.amount_untaxed, v_credit.amount_tax, v_credit.amount_total)
@@ -1328,3 +1609,389 @@ $$;
 
 comment on function cancel_document(uuid, date) is
   'Undoes a posted invoice: writes its credit note — the same lines, taxes, accounts, contact, currency, rate and analytic split — naming it in reversed_document_id, posts it through post_document(), matches the two entries and marks the invoice cancelled. Returns the credit note. Dated on the invoice''s booking day while that period is open, and otherwise refused until a date is given (reversal_date_needed). Refused for a document that is not a posted invoice, is already cancelled or credited, or is settled in part or in full (unreconcile() first).';
+
+-- ---------------------------------------------------------------------------
+-- 11. merge_contacts, which carries the default too
+--
+-- `20261019090000` as it was, with one field more among the empty fields of
+-- the kept contact it fills from the absorbed one: `analytic_value_id`. The
+-- column points at a value, not at a contact, so the walk over the foreign
+-- keys to `contacts` does not see it.
+-- ---------------------------------------------------------------------------
+
+create or replace function merge_contacts(p_keep uuid, p_absorb uuid)
+returns contact_merges
+language plpgsql
+volatile
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  v_keep     contacts;
+  v_absorb   contacts;
+  v_new      contacts;
+  v_company  uuid;
+  v_filled   text[] := '{}';
+  v_moved    jsonb := '{}';
+  v_folded   integer := 0;
+  v_pmoved   integer := 0;
+  v_n        integer;
+  v_chain    uuid;
+  v_depth    integer;
+  r          record;
+  v_twin     uuid;
+  v_bad      record;
+  v_merge    uuid;
+  v_record   contact_merges;
+begin
+  -- A contact the caller may not read is a contact that does not exist, here
+  -- as under row level security.
+  select * into v_keep from contacts c where c.id = p_keep;
+  if not found or not (is_installer() or has_capability(v_keep.company_id, 'contacts.read')) then
+    raise exception 'unknown_contact: no contact %', p_keep
+      using errcode = 'no_data_found';
+  end if;
+  v_company := v_keep.company_id;
+
+  if not is_installer() and not has_capability(v_company, 'contacts.write') then
+    raise exception 'not_allowed: merging two contacts in this company needs contacts.write'
+      using errcode = '42501';
+  end if;
+  if not is_installer() and not has_capability(v_company, 'reconcile.write') then
+    raise exception 'not_allowed: merging two contacts in this company needs reconcile.write, since it restates who each of their items belongs to'
+      using errcode = '42501';
+  end if;
+
+  if p_absorb is not distinct from p_keep then
+    raise exception 'same_contact: % is one contact, and a merge joins two', v_keep.name
+      using errcode = '22023';
+  end if;
+
+  select * into v_absorb from contacts c where c.id = p_absorb and c.company_id = v_company;
+  if not found then
+    raise exception 'unknown_contact: no contact % in the company of %', p_absorb, v_keep.name
+      using errcode = 'no_data_found';
+  end if;
+
+
+  -- Two merges of one contact wait for each other, in one order whoever asks.
+  perform 1 from contacts c where c.id in (p_keep, p_absorb) order by c.id for update;
+  select * into v_keep from contacts c where c.id = p_keep;
+  select * into v_absorb from contacts c where c.id = p_absorb;
+
+  if v_absorb.merged_into is not null then
+    raise exception 'already_merged: % was merged into % before, and has nothing left to move',
+      v_absorb.name, coalesce((select k.name from contacts k where k.id = v_absorb.merged_into), v_absorb.merged_into::text)
+      using errcode = '55006';
+  end if;
+  if v_keep.merged_into is not null then
+    raise exception 'already_merged: % was merged into % (%), which holds its history: merge into that one',
+      v_keep.name, coalesce((select k.name from contacts k where k.id = v_keep.merged_into), v_keep.merged_into::text),
+      v_keep.merged_into
+      using errcode = '55006';
+  end if;
+
+  -- Two numbers are two legal persons, whatever their names say; and a
+  -- declaration reads the number.
+  if upper(regexp_replace(coalesce(v_keep.vat_number, ''), '[^0-9A-Za-z]', '', 'g'))
+       <> upper(regexp_replace(coalesce(v_absorb.vat_number, ''), '[^0-9A-Za-z]', '', 'g'))
+     and coalesce(btrim(v_keep.vat_number), '') <> ''
+     and coalesce(btrim(v_absorb.vat_number), '') <> '' then
+    raise exception 'different_identifiers: % carries the VAT number % and % carries %: two numbers are two parties, and are not merged',
+      v_keep.name, v_keep.vat_number, v_absorb.name, v_absorb.vat_number
+      using errcode = '55006';
+  end if;
+  if upper(regexp_replace(coalesce(v_keep.registration_number, ''), '[^0-9A-Za-z]', '', 'g'))
+       <> upper(regexp_replace(coalesce(v_absorb.registration_number, ''), '[^0-9A-Za-z]', '', 'g'))
+     and coalesce(btrim(v_keep.registration_number), '') <> ''
+     and coalesce(btrim(v_absorb.registration_number), '') <> '' then
+    raise exception 'different_identifiers: % carries the registration number % and % carries %: two numbers are two parties, and are not merged',
+      v_keep.name, v_keep.registration_number, v_absorb.name, v_absorb.registration_number
+      using errcode = '55006';
+  end if;
+
+  -- -------------------------------------------------------------------------
+  -- The kept contact, completed and never overwritten
+  -- -------------------------------------------------------------------------
+  v_new := v_keep;
+
+  if coalesce(btrim(v_new.vat_number), '') = '' and coalesce(btrim(v_absorb.vat_number), '') <> '' then
+    v_new.vat_number := v_absorb.vat_number; v_filled := v_filled || 'vat_number'::text;
+  end if;
+  if coalesce(btrim(v_new.registration_number), '') = '' and coalesce(btrim(v_absorb.registration_number), '') <> '' then
+    v_new.registration_number := v_absorb.registration_number; v_filled := v_filled || 'registration_number'::text;
+  end if;
+  if coalesce(btrim(v_new.auxiliary_code), '') = '' and coalesce(btrim(v_absorb.auxiliary_code), '') <> '' then
+    v_new.auxiliary_code := v_absorb.auxiliary_code; v_filled := v_filled || 'auxiliary_code'::text;
+  end if;
+  if coalesce(btrim(v_new.email), '') = '' and coalesce(btrim(v_absorb.email), '') <> '' then
+    v_new.email := v_absorb.email; v_filled := v_filled || 'email'::text;
+  end if;
+  if coalesce(btrim(v_new.phone), '') = '' and coalesce(btrim(v_absorb.phone), '') <> '' then
+    v_new.phone := v_absorb.phone; v_filled := v_filled || 'phone'::text;
+  end if;
+  if v_new.language is null and v_absorb.language is not null then
+    v_new.language := v_absorb.language; v_filled := v_filled || 'language'::text;
+  end if;
+  if v_new.currency_code is null and v_absorb.currency_code is not null then
+    v_new.currency_code := v_absorb.currency_code; v_filled := v_filled || 'currency_code'::text;
+  end if;
+  if v_new.receivable_account_id is null and v_absorb.receivable_account_id is not null then
+    v_new.receivable_account_id := v_absorb.receivable_account_id; v_filled := v_filled || 'receivable_account_id'::text;
+  end if;
+  if v_new.payable_account_id is null and v_absorb.payable_account_id is not null then
+    v_new.payable_account_id := v_absorb.payable_account_id; v_filled := v_filled || 'payable_account_id'::text;
+  end if;
+  if coalesce(btrim(v_new.notes), '') = '' and coalesce(btrim(v_absorb.notes), '') <> '' then
+    v_new.notes := v_absorb.notes; v_filled := v_filled || 'notes'::text;
+  end if;
+  -- The analytic value its lines start with (decision 0075), taken where the
+  -- kept contact names none.
+  if v_new.analytic_value_id is null and v_absorb.analytic_value_id is not null then
+    v_new.analytic_value_id := v_absorb.analytic_value_id; v_filled := v_filled || 'analytic_value_id'::text;
+  end if;
+
+  -- The postal address is one fact: taken whole, where the kept contact has
+  -- none, and not from another country than the one it already names.
+  if coalesce(btrim(v_new.address_line1), '') = '' and coalesce(btrim(v_new.address_line2), '') = ''
+     and coalesce(btrim(v_new.postal_code), '') = '' and coalesce(btrim(v_new.city), '') = ''
+     and coalesce(btrim(v_new.region), '') = ''
+     and (coalesce(btrim(v_absorb.address_line1), '') <> '' or coalesce(btrim(v_absorb.city), '') <> ''
+          or coalesce(btrim(v_absorb.postal_code), '') <> '')
+     and (v_new.country is null or v_absorb.country is null or v_new.country = v_absorb.country) then
+    v_new.address_line1 := v_absorb.address_line1;
+    v_new.address_line2 := v_absorb.address_line2;
+    v_new.postal_code   := v_absorb.postal_code;
+    v_new.city          := v_absorb.city;
+    v_new.region        := v_absorb.region;
+    v_filled := v_filled || array['address_line1', 'address_line2', 'postal_code', 'city', 'region'];
+  end if;
+  if v_new.country is null and v_absorb.country is not null then
+    v_new.country := v_absorb.country;
+    v_new.territory_code := coalesce(v_new.territory_code, v_absorb.territory_code);
+    v_filled := v_filled || array['country', 'territory_code'];
+  end if;
+
+  -- A bank account and its BIC, an electronic address and its scheme: the
+  -- one without the other is somebody else's.
+  if coalesce(btrim(v_new.iban), '') = '' and coalesce(btrim(v_absorb.iban), '') <> '' then
+    v_new.iban := v_absorb.iban;
+    v_new.bic  := v_absorb.bic;
+    v_filled := v_filled || array['iban', 'bic'];
+  end if;
+  if coalesce(btrim(v_new.peppol_identifier), '') = '' and coalesce(btrim(v_absorb.peppol_identifier), '') <> '' then
+    v_new.peppol_scheme     := v_absorb.peppol_scheme;
+    v_new.peppol_identifier := v_absorb.peppol_identifier;
+    v_filled := v_filled || array['peppol_scheme', 'peppol_identifier'];
+  end if;
+
+  -- A customer who is also a supplier is both; a contact nobody typed takes
+  -- the type of the one it absorbs.
+  if v_new.contact_type = 'other' and v_absorb.contact_type <> 'other' then
+    v_new.contact_type := v_absorb.contact_type; v_filled := v_filled || 'contact_type'::text;
+  elsif v_new.contact_type in ('customer', 'supplier')
+        and v_absorb.contact_type in ('customer', 'supplier', 'both')
+        and v_absorb.contact_type <> v_new.contact_type then
+    v_new.contact_type := 'both'; v_filled := v_filled || 'contact_type'::text;
+  end if;
+
+  -- The parent. A branch of the absorbed contact that is the kept one goes up
+  -- to the absorbed contact's own parent; a kept contact with no parent takes
+  -- the absorbed one's, unless that parent is below the kept contact.
+  if v_new.parent_id = p_absorb then
+    v_new.parent_id := v_absorb.parent_id;
+  end if;
+  if v_new.parent_id is null and v_absorb.parent_id is not null and v_absorb.parent_id <> p_keep then
+    v_chain := v_absorb.parent_id;
+    v_depth := 0;
+    while v_chain is not null and v_chain <> p_keep and v_depth <= 32 loop
+      select c.parent_id into v_chain from contacts c where c.id = v_chain and c.company_id = v_company;
+      v_depth := v_depth + 1;
+    end loop;
+    if v_chain is null then
+      v_new.parent_id := v_absorb.parent_id; v_filled := v_filled || 'parent_id'::text;
+    end if;
+  end if;
+
+  -- An auxiliary code is unique in the company: the absorbed contact gives
+  -- its own up before the kept one takes it.
+  if 'auxiliary_code' = any (v_filled) then
+    update contacts c set auxiliary_code = null where c.id = p_absorb;
+  end if;
+
+  update contacts c
+     set vat_number            = v_new.vat_number,
+         registration_number   = v_new.registration_number,
+         auxiliary_code        = v_new.auxiliary_code,
+         email                 = v_new.email,
+         phone                 = v_new.phone,
+         language              = v_new.language,
+         currency_code         = v_new.currency_code,
+         receivable_account_id = v_new.receivable_account_id,
+         payable_account_id    = v_new.payable_account_id,
+         notes                 = v_new.notes,
+         analytic_value_id     = v_new.analytic_value_id,
+         address_line1         = v_new.address_line1,
+         address_line2         = v_new.address_line2,
+         postal_code           = v_new.postal_code,
+         city                  = v_new.city,
+         region                = v_new.region,
+         country               = v_new.country,
+         territory_code        = v_new.territory_code,
+         iban                  = v_new.iban,
+         bic                   = v_new.bic,
+         peppol_scheme         = v_new.peppol_scheme,
+         peppol_identifier     = v_new.peppol_identifier,
+         contact_type          = v_new.contact_type,
+         parent_id             = v_new.parent_id
+   where c.id = p_keep
+     and (v_filled <> '{}' or c.parent_id is distinct from v_new.parent_id);
+
+  -- -------------------------------------------------------------------------
+  -- Every reference, read from the catalogue
+  -- -------------------------------------------------------------------------
+  -- The record the guards read: in this transaction, and only for these two.
+  insert into contact_merges (company_id, kept_id, absorbed_id, merged_by)
+  values (v_company, p_keep, p_absorb, acting_user())
+  returning id into v_merge;
+
+  for r in
+    select c.conrelid::regclass as tbl, a.attname
+      from pg_constraint c
+      join unnest(c.conkey) as k(attnum) on true
+      join pg_attribute a on a.attrelid = c.conrelid and a.attnum = k.attnum
+     where c.contype = 'f'
+       and c.confrelid = 'public.contacts'::regclass
+       and a.attname <> 'company_id'
+       -- By name, below: the contacts themselves and the learned motifs; and
+       -- the record of the merges, which says what happened and stays.
+       and c.conrelid not in ('public.contacts'::regclass, 'public.contact_patterns'::regclass,
+                              'public.contact_merges'::regclass)
+     order by c.conrelid::regclass::text, a.attname
+  loop
+    execute format('update %s set %I = $1 where %I = $2 and company_id = $3', r.tbl, r.attname, r.attname)
+      using p_keep, p_absorb, v_company;
+    get diagnostics v_n = row_count;
+    if v_n > 0 then
+      v_moved := v_moved || jsonb_build_object(
+        case when r.attname = 'contact_id' then r.tbl::text else r.tbl::text || '.' || r.attname end, v_n);
+    end if;
+  end loop;
+
+  -- The branches of the absorbed contact are branches of the kept one.
+  update contacts c set parent_id = p_keep
+   where c.company_id = v_company and c.parent_id = p_absorb and c.id <> p_keep;
+  get diagnostics v_n = row_count;
+  if v_n > 0 then
+    v_moved := v_moved || jsonb_build_object('contacts.parent_id', v_n);
+  end if;
+
+  -- The files attached to the contact, which name it by entity, not by key.
+  update attachments a set entity_id = p_keep
+   where a.company_id = v_company and a.entity_type = 'contact' and a.entity_id = p_absorb;
+  get diagnostics v_n = row_count;
+  if v_n > 0 then
+    v_moved := v_moved || jsonb_build_object('attachments', v_n);
+  end if;
+
+  -- The learned motifs, folded: one motif the two had is one motif with both
+  -- histories, and its confidence is what the two counters say together.
+  for r in
+    select * from contact_patterns p
+     where p.company_id = v_company and p.contact_id = p_absorb
+     order by p.created_at, p.id
+  loop
+    select t.id into v_twin
+      from contact_patterns t
+     where t.company_id = v_company and t.contact_id = p_keep and t.kind = r.kind
+       and ((r.value is not null and t.value = r.value)
+            or (r.value is null and t.value is null
+                and t.amount_min = r.amount_min and t.amount_max = r.amount_max
+                and t.currency_code = r.currency_code))
+     for update;
+    if found then
+      update contact_patterns t
+         set usage_count     = t.usage_count + r.usage_count,
+             success_count   = t.success_count + r.success_count,
+             confidence      = (t.success_count + r.success_count + 1)::numeric
+                               / (t.usage_count + r.usage_count + 2),
+             last_matched_at = greatest(t.last_matched_at, r.last_matched_at),
+             amount_typical  = coalesce(t.amount_typical, r.amount_typical),
+             exclude_words   = case when t.exclude_words is null and r.exclude_words is null then null
+                                    else array(select distinct w
+                                                 from unnest(coalesce(t.exclude_words, '{}') || coalesce(r.exclude_words, '{}')) w
+                                                order by w) end,
+             -- A motif somebody wrote down is an instruction, whoever learned it too.
+             source          = case when 'declared' in (t.source, r.source) then 'declared' else 'learned' end::contact_pattern_source,
+             active          = t.active or r.active
+       where t.id = v_twin;
+      delete from contact_patterns p where p.id = r.id;
+      v_folded := v_folded + 1;
+    else
+      update contact_patterns p set contact_id = p_keep where p.id = r.id;
+      v_pmoved := v_pmoved + 1;
+    end if;
+  end loop;
+  if v_pmoved > 0 then
+    v_moved := v_moved || jsonb_build_object('contact_patterns', v_pmoved);
+  end if;
+  if v_folded > 0 then
+    v_moved := v_moved || jsonb_build_object('contact_patterns_folded', v_folded);
+  end if;
+
+  -- -------------------------------------------------------------------------
+  -- The absorbed contact, retired
+  -- -------------------------------------------------------------------------
+  update contacts c set active = false, merged_into = p_keep where c.id = p_absorb;
+
+  -- A contact merged into the absorbed one before follows it, so that
+  -- merged_into always names a contact in use.
+  update contacts c set merged_into = p_keep
+   where c.company_id = v_company and c.merged_into = p_absorb;
+  get diagnostics v_n = row_count;
+  if v_n > 0 then
+    v_moved := v_moved || jsonb_build_object('contacts.merged_into', v_n);
+  end if;
+
+  -- Every matching of the kept party's items is still of one party: both
+  -- lines in its tree, or one of them naming nobody.
+  with recursive party(id) as (
+    select commercial_entity(p_keep)
+    union
+    select c.id from contacts c join party p on c.parent_id = p.id where c.company_id = v_company
+  )
+  select rc.matching_number, d.id as debit_id, k.id as credit_id,
+         case when d.contact_id in (select id from party) then k.contact_id else d.contact_id end as other
+    into v_bad
+    from reconciliations rc
+    join entry_lines d on d.id = rc.debit_line_id and d.company_id = rc.company_id
+    join entry_lines k on k.id = rc.credit_line_id and k.company_id = rc.company_id
+   where rc.company_id = v_company
+     and d.contact_id is not null and k.contact_id is not null
+     and (d.contact_id in (select id from party)) <> (k.contact_id in (select id from party))
+   limit 1;
+  if found then
+    raise exception 'matching_across_parties: once % is merged into %, matching % would settle lines % and % of two parties — % is not of %''s party. Undo that matching first, with unreconcile(), or give the two contacts one parent.',
+      v_absorb.name, v_keep.name, coalesce(v_bad.matching_number, '?'), v_bad.debit_id, v_bad.credit_id,
+      coalesce((select c.name from contacts c where c.id = v_bad.other), v_bad.other::text), v_keep.name
+      using errcode = '55006';
+  end if;
+
+  select * into v_keep from contacts c where c.id = p_keep;
+  select * into v_absorb from contacts c where c.id = p_absorb;
+
+  update contact_merges m set moved = v_moved, filled = v_filled where m.id = v_merge
+  returning * into v_record;
+
+  perform audit_record(
+    v_company, 'contacts', p_absorb, v_absorb.name,
+    'update', 'contacts_merged',
+    jsonb_build_object('merged_into', null),
+    jsonb_build_object('merged_into', p_keep, 'kept', v_keep.name, 'moved', v_moved, 'filled', to_jsonb(v_filled)));
+
+  return v_record;
+end;
+$$;
+
+comment on function merge_contacts(uuid, uuid) is
+  'Merges two contacts of one company (decision 0074): every reference of p_absorb — every foreign key to contacts, read from the catalogue, posted lines and issued documents included, the branches whose parent it was, the files attached to it — moves onto p_keep in one transaction; its learned motifs are folded into the kept contact''s; the kept contact''s empty fields are filled from the absorbed one, never overwritten; and the absorbed contact is retired, inactive with merged_into = p_keep, never deleted. Needs contacts.write and reconcile.write. Refuses unknown_contact, same_contact, already_merged, different_identifiers (two VAT or registration numbers), matching_across_parties and not_allowed by name. Recorded in contact_merges, which the two guards of what was posted read in this transaction alone, and written to the trail as contacts_merged, with line_contact_merged and document_contact_merged for each posted row moved. Answers the row of contact_merges: the two contacts, who merged them, what moved, table by table, and what was filled.';
