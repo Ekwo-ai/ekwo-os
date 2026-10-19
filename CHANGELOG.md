@@ -203,7 +203,7 @@ somewhere has already run it.
 ### Fixed
 
 - **A pair of contacts by name weighs its words** (socle migration
-  `20261019112919`, decision 0075 amended). `suggest_duplicate_contacts()`
+  `20261019140000`, decision 0075 amended). `suggest_duplicate_contacts()`
   proposed "LG SERVICES" and "ASBL UCM SERVICES", "Parking" and "Parking
   Cathédrale SA", "DKV Belgium" and "APPLE RETAIL BELGIUM BV": one shared
   trade, place or legal form. Each word now weighs 1 over the contacts of the

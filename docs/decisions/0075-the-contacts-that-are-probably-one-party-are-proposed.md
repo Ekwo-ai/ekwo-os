@@ -2,7 +2,7 @@
 
 > Status: accepted
 >
-> Amended 2026-10-19 by `20261019112919`: a pair by name weighs each word by
+> Amended 2026-10-19 by `20261019140000`: a pair by name weighs each word by
 > how few contacts of the company carry it, reads every word of the name at
 > any length, and counts what the longer name adds. The first rule proposed
 > "LG SERVICES" and "ASBL UCM SERVICES" on one shared trade.
@@ -108,7 +108,7 @@ caller may read; a company of somebody else gives no row.
 ## See also
 
 - `supabase/migrations/20261019104812_the_contacts_that_are_probably_one_party.sql`
-- `supabase/migrations/20261019112919_a_pair_by_name_weighs_its_words.sql`
+- `supabase/migrations/20261019140000_a_pair_by_name_weighs_its_words.sql`
 - `tests/duplicate_contacts.test.ts`
 - [0045](0045-recognising-a-counterparty.md) — A counterparty is recognised from learned patterns
 - [0072](0072-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt
