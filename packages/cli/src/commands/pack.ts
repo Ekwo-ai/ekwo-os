@@ -42,6 +42,7 @@ import {
   readFrameworkPack,
   readPack,
   seedOutputDir,
+  type PackExemption,
 } from '../pack/read.js';
 import { setResult } from '../output.js';
 import { bold, dim, fail, heading, line, note, pairs, skipped, step, warn, yellow } from '../ui.js';
@@ -448,6 +449,15 @@ async function describeSubcommand(args: ParsedArgs): Promise<number> {
  * and no file format is the ordinary state of most packs, and a listing that
  * showed only what works would be a brochure.
  */
+/** The threshold of exemption that holds today, and since when, where the pack declares one. */
+function exemptionText(exemption: PackExemption[] | undefined): string {
+  const today = new Date().toISOString().slice(0, 10);
+  const holding = [...(exemption ?? [])].reverse().find((entry) => entry.valid_from <= today);
+  return holding === undefined
+    ? ''
+    : ` · exempted below ${holding.turnover_below.amount} ${holding.turnover_below.currency} since ${holding.valid_from}`;
+}
+
 function describeToTerminal(description: PackDescription): void {
   const c = description.certification;
   line();
@@ -518,14 +528,21 @@ function describeToTerminal(description: PackDescription): void {
     rows.push([
       'fiscalisation',
       `${fiscalisation.format} · ` +
-        (fiscalisation.hash === null ? 'reporting, no chain' : `chained record, ${fiscalisation.hash.algorithm}`) +
+        (fiscalisation.clearance !== undefined
+          ? `cleared by the authority before issue, no chain` +
+            (fiscalisation.clearance.cancellation_window === null ? '' : `, cancelled within ${fiscalisation.clearance.cancellation_window}`) +
+            (fiscalisation.clearance.rejection_window === null ? '' : `, rejected by the buyer within ${fiscalisation.clearance.rejection_window}`)
+          : fiscalisation.hash === null
+            ? 'reporting, no chain'
+            : `chained record, ${fiscalisation.hash.algorithm}`) +
         ` · sent ${fiscalisation.submission.modes.join(' or ')}` +
         (fiscalisation.submission.cadence.length === 0 ? '' : ` by period (${fiscalisation.submission.cadence.length} cadences)`) +
         (fiscalisation.announced_from !== null
           ? ` · announced from ${fiscalisation.announced_from} (${fiscalisation.announced_by ?? 'by nobody named'}, ${fiscalisation.announced_on ?? 'undated'}), no text in force`
           : fiscalisation.mandatory_from.length === 0
             ? ''
-            : ` · from ${fiscalisation.mandatory_from.map((entry) => (entry.who === null ? entry.from : `${entry.from} (${entry.who})`)).join(', ')}`),
+            : ` · from ${fiscalisation.mandatory_from.map((entry) => (entry.who === null ? entry.from : `${entry.from} (${entry.who})`)).join(', ')}`) +
+        exemptionText(fiscalisation.exemption),
     ]);
   }
   rows.push([

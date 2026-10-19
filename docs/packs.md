@@ -1327,11 +1327,15 @@ invoice it issues, a record that cannot be changed, chained to the previous
 one by a hash, often shown on the invoice as a QR code and a sentence, and
 sent to the tax authority at once or later — a **chained-record** regime.
 Others require no chain, no QR code and no sentence, only that the data of
-the documents reach the authority — a **reporting** regime. A pack says
-which in an optional object of its `einvoicing` section: with `hash`, the
-records are chained; without it, they are the documents' data reported, the
-brick `format` names writes the report, and the core keeps no chain for it.
-Left out, the country has no such regime; nothing is defaulted.
+the documents reach the authority — a **reporting** regime. Others again
+have every invoice **submitted to the authority before it is issued**, and
+the invoice is valid only once the authority has validated it — a
+**clearance** regime. A pack says which in an optional object of its
+`einvoicing` section: with `hash`, the records are chained; with
+`clearance`, the invoices are cleared, and nothing is chained; with neither,
+they are the documents' data reported, the brick `format` names writes the
+report, and the core keeps no chain for it. Left out, the country has no such
+regime; nothing is defaulted.
 
 ```json
 "fiscalisation": {
@@ -1364,9 +1368,31 @@ A reporting regime, with a day only announced:
 }
 ```
 
+A clearance regime, phased by size, with a threshold of exemption that has
+moved:
+
+```json
+"fiscalisation": {
+  "mandatory_from": [
+    { "who": "turnover_above_100", "from": "2030-01-01", "turnover_above": { "amount": 100, "currency": "XXX" } },
+    { "who": "turnover_above_10", "from": "2031-01-01", "turnover_above": { "amount": 10, "currency": "XXX" } }
+  ],
+  "exemption": [
+    { "turnover_below": { "amount": 1, "currency": "XXX" }, "valid_from": "2030-06-01", "legal_reference": "…", "source": "<key>" },
+    { "turnover_below": { "amount": 3, "currency": "XXX" }, "valid_from": "2031-06-01", "legal_reference": "…", "source": "<key>" }
+  ],
+  "format": "a-clearance-format",
+  "clearance": { "verification": "returned", "cancellation_window": "PT72H", "rejection_window": "PT72H" },
+  "submission": { "mode": "realtime", "channel": "authority_service" },
+  "legal_reference": "…", "source": "<register key>"
+}
+```
+
 | Field | What it says |
 |---|---|
-| `mandatory_from` | One date, or one per category of taxpayer (`who`, a short name the legal reference explains) |
+| `mandatory_from` | One date, or one per category of taxpayer (`who`, a short name the legal reference explains). Where the law phases the obligation by size, every step carries `turnover_above` — the annual turnover or revenue above which a taxpayer is in it, an `amount` and its `currency` — and may carry its own `legal_reference` and `source` |
+| `exemption` | The thresholds below which a taxpayer is exempted, as a dated history, oldest first: `turnover_below` (an amount and its currency), `valid_from` (the first day it holds, as the text dates it), `legal_reference` and `source`, all four required. Each holds until the next one's `valid_from`; when the threshold moves, an entry is added and none is removed, so a past period keeps its answer |
+| `clearance` | Exclusive of `hash`. `verification` — where the link the invoice carries to the authority's verification comes from: `returned` by the authority with its validation, `computed` by the issuer from the invoice and the authority's answer, or `none` — and, as ISO 8601 durations counted from the validation (`PT72H`, `P15D`), `cancellation_window`, how long the issuer may still cancel a validated invoice, and `rejection_window`, how long the buyer may reject it; each left out where the law grants none, and then the database refuses it |
 | `announced_from` | The day an obligation is announced to start while no text in force sets it, with `announced_by` and `announced_on`: who announced it, and when. Exclusive of `mandatory_from`; an announced day binds nobody, and `fiscalisationStatus()` counts no sale against it |
 | `format` | The brick that writes the record, by the key of `FISCALISATION_FORMATS` in `@ekwo-ai/core`; one no brick writes is refused by name when a record is asked for, `format_without_brick` |
 | `hash` | Left out for a reporting regime. The digest (`SHA-256`, `SHA-384`, `SHA-512`), its code in the authority's list and its encoding, the separator of the `name=value` pairs hashed, and the ordered fields covered — one list, or one per kind of record (`alta`, `anulacion`). The core reads the fields back out of the brick's text and the database recomputes the digest |
@@ -1386,16 +1412,31 @@ without its number, a scope reported twice, a day that does not exist, a mode na
 list, a `batch_max` where batch is not allowed, a QR size whose minimum is
 above its maximum, no production service for a mode the law allows, a field
 named twice in a hash list, and a `tax_attributes` code the pack does not
-carry. The block compiles, normalised (`kind` `chained` or `reporting`,
-`mandatory_from` always a list, `hash` null for a reporting regime,
+carry; a `hash` beside `clearance`, the mode `none` under a clearance regime
+(an invoice the authority never receives is never validated), steps
+of a phased obligation whose thresholds do not fall as the days move on, some
+steps sized and others not, thresholds stated in two currencies, and
+thresholds of exemption out of order. The block compiles, normalised (`kind`
+`chained`, `clearance` or `reporting`, `clearance`, `exemption` and the
+members of a sized step present only where the pack declares them, so a block
+that declares none compiles as before,
+`mandatory_from` always a list, `hash` null unless the regime chains,
 `hash.fields` always by kind, `*` for every kind), into
 `country_defaults.einvoice_fiscalisation`, which the `einvoicing` module
 reads when it chains a record. `fiscaliseDocument()` refuses a reporting
 regime by name — `format_without_brick` while no brick writes its format,
 `fiscal_regime_without_chain` once one does — and `fiscalisationStatus()`
 counts posted sales as missing a record only under a chained regime in force,
-from its earliest `mandatory_from`. The schema names no country: every value of a
-regime is in its pack, with its article.
+from its earliest `mandatory_from`. Under a clearance regime in force it
+counts the posted sales without the authority's validation, from the same
+day: the books do not say a company's turnover, so the status names the
+threshold of exemption that holds today and leaves to the company whether it
+is bound. The submission and every answer are recorded by
+`einvoicing.record_clearance_submission()` and
+`einvoicing.record_clearance_answer()`, which check every transition against
+the windows of the pack ([`modules/einvoicing`](../modules/einvoicing/README.md#clearance-the-invoice-the-authority-validates-before-it-is-issued));
+the call to the authority is the host's. The schema names no country: every
+value of a regime is in its pack, with its article.
 
 ### The mentions, and when each applies
 

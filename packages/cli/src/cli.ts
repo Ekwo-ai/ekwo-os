@@ -194,6 +194,9 @@ ${bold('Connecting')} ${dim('(every command)')}
               fiscalise <document> --system <file> chains the fiscal record the
               country's fiscalisation regime requires; fiscalisation says
               where the chain stands and which sales have no record.
+              clearance <document> submitted|validated|rejected|cancelled
+              records a submission to the authority under a clearance
+              regime, and what came back; it dials nobody.
   ${cyan('peppol')}      validate <file> | lookup <participant> — the Peppol network, with
               no installation and no sign-in. validate reads a UBL invoice or
               credit note as it arrived and names the rules it breaks; lookup
@@ -231,6 +234,15 @@ ${bold('Keeping books')} ${dim('(each verb is one function the MCP server calls 
   --kind alta|anulacion     einvoice fiscalise. anulacion cancels the record.
   --mode <mode>             einvoice fiscalise. realtime, batch or none, among
                             the modes the pack allows; the pack's default.
+  --identifier <id>         einvoice clearance validated. What the authority
+                            named the invoice; with --validated-at <time> and,
+                            where the regime has one, --verification-url <url>.
+  --reason <text>           einvoice clearance rejected|cancelled. Why, as it
+                            was said. --by authority|buyer says who rejected.
+  --reference <ref>         einvoice clearance submitted. What the authority
+                            named the submission; --issue <id>, the file sent.
+  --at <time>               einvoice clearance. When it happened, ISO 8601;
+                            now when left out. --detail <file>: the answer, JSON.
   --date <YYYY-MM-DD>       cancel, reverse. The day the undoing is booked on,
                             which asks cancel for a credit note. Left out: the
                             day of what is undone, while its period is open —

@@ -611,8 +611,49 @@ export type FiscalSubmissionMode = 'realtime' | 'batch' | 'none';
 /** The kinds of record a fiscalisation chain holds. */
 export type FiscalRecordKind = 'alta' | 'anulacion';
 
-/** A chained-record regime chains every record by a hash; a reporting regime reports the documents' data and chains nothing. */
-export type FiscalRegimeKind = 'chained' | 'reporting';
+/**
+ * A chained-record regime chains every record by a hash; a clearance regime
+ * has every invoice validated by the authority before it is issued; a
+ * reporting regime reports the documents' data. The last two chain nothing.
+ */
+export type FiscalRegimeKind = 'chained' | 'clearance' | 'reporting';
+
+/** An annual turnover or revenue, as the law states it. */
+export interface PackTurnover {
+  amount: number;
+  currency: string;
+}
+
+/** What a clearance regime says of the authority's answer, as the pack declares it. */
+export interface PackClearance {
+  /** Where the verification link the invoice carries comes from: given by the authority, built by the issuer, or none. */
+  verification: 'returned' | 'computed' | 'none';
+  /** How long after validation the issuer may cancel, as an ISO 8601 duration; null where it never may. */
+  cancellation_window: string | null;
+  /** How long after validation the buyer may reject, as an ISO 8601 duration; null where the buyer cannot. */
+  rejection_window: string | null;
+  legal_reference: string | null;
+  source: string | null;
+}
+
+/** One threshold of exemption, from the day it holds until the next one's. */
+export interface PackExemption {
+  turnover_below: PackTurnover;
+  valid_from: string;
+  legal_reference: string;
+  source: string | null;
+}
+
+/** One category of taxpayer and the day the obligation binds it. */
+export interface PackObligationStart {
+  /** Null where the law sets one date for all. */
+  who: string | null;
+  from: string;
+  /** Present only where the pack sets the category by size. */
+  turnover_above?: PackTurnover;
+  legal_reference?: string;
+  source?: string | null;
+}
 
 /**
  * `einvoicing.fiscalisation`, normalised: the record a country requires for
@@ -625,10 +666,18 @@ export type FiscalRegimeKind = 'chained' | 'reporting';
  * `country_defaults.einvoice_fiscalisation`.
  */
 export interface PackFiscalisation {
-  /** `chained` where the pack gives a hash, `reporting` where it gives none. */
+  /** `chained` where the pack gives a hash, `clearance` where it gives `clearance`, `reporting` where it gives neither. */
   kind: FiscalRegimeKind;
   /** One entry per category of taxpayer; `who` is null where the law sets one date for all. Empty while the obligation is only announced. */
-  mandatory_from: { who: string | null; from: string }[];
+  mandatory_from: PackObligationStart[];
+  /**
+   * The thresholds of exemption, oldest first. Present only where the pack
+   * declares one, as is `clearance`: a block compiled before either existed
+   * reads the same.
+   */
+  exemption?: PackExemption[];
+  /** What a clearance regime says of the authority's answer. Present only for `kind` clearance. */
+  clearance?: PackClearance;
   /** The day an obligation is announced to start while no text in force sets it, by whom and when; null where a text is in force or nothing is announced. */
   announced_from: string | null;
   announced_by: string | null;
@@ -1810,6 +1859,11 @@ function fiscalisationSources(block: PackFiscalisation | null): { path: string; 
   const where = 'pack.json einvoicing.fiscalisation';
   return [
     { path: where, source: block.source },
+    ...block.mandatory_from.flatMap((entry, index) =>
+      entry.source === undefined ? [] : [{ path: `${where}.mandatory_from[${index}]`, source: entry.source }],
+    ),
+    ...(block.exemption ?? []).map((entry, index) => ({ path: `${where}.exemption[${index}]`, source: entry.source })),
+    ...(block.clearance === undefined ? [] : [{ path: `${where}.clearance`, source: block.clearance.source }]),
     ...(block.hash === null ? [] : [{ path: `${where}.hash`, source: block.hash.source }]),
     ...(block.qr === null ? [] : [{ path: `${where}.qr`, source: block.qr.source }]),
     ...block.mention.map((entry, index) => ({ path: `${where}.mention[${index}]`, source: entry.source })),
@@ -2680,6 +2734,10 @@ const textOrNull = (value: unknown): string | null => (typeof value === 'string'
 const numberOrNull = (value: unknown): number | null => (typeof value === 'number' ? value : null);
 const modesOf = (value: unknown): FiscalSubmissionMode[] =>
   Array.isArray(value) ? (value as FiscalSubmissionMode[]) : [];
+const turnoverOf = (value: unknown): PackTurnover => {
+  const turnover = (value ?? {}) as Record<string, unknown>;
+  return { amount: Number(turnover['amount']), currency: String(turnover['currency'] ?? '') };
+};
 
 /**
  * `einvoicing.fiscalisation`, read into the shape the core and the seed use.
@@ -2698,14 +2756,43 @@ function normaliseFiscalisation(raw: unknown): PackFiscalisation | null {
   const quiet = (qr?.['quiet_zone_mm'] ?? null) as Record<string, unknown> | null;
   const mode = String(submission['mode'] ?? '') as FiscalSubmissionMode;
   const modes = modesOf(submission['modes']);
+  const clearance = (block['clearance'] ?? null) as Record<string, unknown> | null;
+  const exemption = block['exemption'];
   return {
-    kind: hash === null ? 'reporting' : 'chained',
+    kind: clearance !== null ? 'clearance' : hash === null ? 'reporting' : 'chained',
     mandatory_from:
       typeof dates === 'string'
         ? [{ who: null, from: dates }]
         : Array.isArray(dates)
-          ? (dates as Record<string, unknown>[]).map((entry) => ({ who: String(entry['who']), from: String(entry['from']) }))
+          ? (dates as Record<string, unknown>[]).map((entry) => ({
+              who: String(entry['who']),
+              from: String(entry['from']),
+              ...(entry['turnover_above'] === undefined ? {} : { turnover_above: turnoverOf(entry['turnover_above']) }),
+              ...(entry['legal_reference'] === undefined ? {} : { legal_reference: String(entry['legal_reference']) }),
+              ...(entry['source'] === undefined ? {} : { source: textOrNull(entry['source']) }),
+            }))
           : [],
+    ...(Array.isArray(exemption)
+      ? {
+          exemption: (exemption as Record<string, unknown>[]).map((entry) => ({
+            turnover_below: turnoverOf(entry['turnover_below']),
+            valid_from: String(entry['valid_from']),
+            legal_reference: String(entry['legal_reference'] ?? ''),
+            source: textOrNull(entry['source']),
+          })),
+        }
+      : {}),
+    ...(clearance === null
+      ? {}
+      : {
+          clearance: {
+            verification: clearance['verification'] as PackClearance['verification'],
+            cancellation_window: textOrNull(clearance['cancellation_window']),
+            rejection_window: textOrNull(clearance['rejection_window']),
+            legal_reference: textOrNull(clearance['legal_reference']),
+            source: textOrNull(clearance['source']),
+          },
+        }),
     announced_from: textOrNull(block['announced_from']),
     announced_by: textOrNull(block['announced_by']),
     announced_on: textOrNull(block['announced_on']),
@@ -2812,7 +2899,10 @@ function isCalendarDay(day: string): boolean {
  * that says who made it and when, a size whose minimum is not above its
  * maximum, a mode named that the law does not allow, a list that names a
  * field twice, a cadence for a regime that sends no batch, a tax the pack
- * does not carry. The register keys it cites are checked with every other
+ * does not carry, an obligation phased by size whose thresholds do not fall
+ * as the days move on or are stated in two currencies, thresholds of
+ * exemption out of order, a clearance regime that keeps invoices from the
+ * authority. The register keys it cites are checked with every other
  * reference.
  */
 function fiscalisationReferences(block: PackFiscalisation | null, taxCodes: Set<string>): Issue[] {
@@ -2851,6 +2941,41 @@ function fiscalisationReferences(block: PackFiscalisation | null, taxCodes: Set<
   }
   if (block.announced_from !== null && block.announced_on !== null && block.announced_on > block.announced_from) {
     issues.push({ path: `${where}.announced_on`, message: `${block.announced_on} is after the day announced, ${block.announced_from}` });
+  }
+
+  // A phased obligation by size: thresholds that fall as the dates move on, in one currency.
+  const sized = block.mandatory_from.filter((entry) => entry.turnover_above !== undefined);
+  if (sized.length > 0 && sized.length < block.mandatory_from.length) {
+    issues.push({ path: `${where}.mandatory_from`, message: 'sets some categories by turnover_above and not others: a phased obligation by size sizes every step' });
+  }
+  const ordered = [...sized].sort((a, b) => a.from.localeCompare(b.from));
+  for (const [index, entry] of ordered.entries()) {
+    const before = ordered[index - 1];
+    if (before !== undefined && before.turnover_above!.amount <= entry.turnover_above!.amount) {
+      issues.push({
+        path: `${where}.mandatory_from`,
+        message: `${entry.who ?? '(all)'} from ${entry.from} is bound above ${entry.turnover_above!.amount}, not below the ${before.turnover_above!.amount} of the step before it: a phased obligation reaches smaller taxpayers later`,
+      });
+    }
+  }
+  const exemptions = block.exemption ?? [];
+  const currencies = new Set([...sized.map((entry) => entry.turnover_above!.currency), ...exemptions.map((entry) => entry.turnover_below.currency)]);
+  if (currencies.size > 1) {
+    issues.push({ path: where, message: `states its thresholds in ${[...currencies].join(' and ')}: one currency, the one the law states them in` });
+  }
+  for (const [index, entry] of exemptions.entries()) {
+    const path = `${where}.exemption[${index}]`;
+    if (!isCalendarDay(entry.valid_from)) issues.push({ path: `${path}.valid_from`, message: `${entry.valid_from} is not a day of the calendar` });
+    const before = exemptions[index - 1];
+    if (before !== undefined && before.valid_from >= entry.valid_from) {
+      issues.push({ path: `${path}.valid_from`, message: `${entry.valid_from} is not after ${before.valid_from}: the thresholds are listed oldest first, one per day` });
+    }
+  }
+  if (block.clearance !== undefined && block.hash !== null) {
+    issues.push({ path: `${where}.clearance`, message: 'is given beside hash: a regime either chains its records, with hash, or has its invoices cleared by the authority, with clearance' });
+  }
+  if (block.clearance !== undefined && block.submission.modes.includes('none')) {
+    issues.push({ path: `${where}.submission.modes`, message: 'names none under a clearance regime: an invoice the authority never receives is never validated' });
   }
 
   for (const [kind, fields] of Object.entries(block.hash?.fields ?? {})) {

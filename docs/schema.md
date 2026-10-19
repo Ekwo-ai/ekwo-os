@@ -2726,17 +2726,59 @@ Constraints:
 
 ## `einvoicing` — Electronic invoicing
 
-The electronic invoice of a posted sale, in the profile its country pack declares, and the chained fiscal record its pack's fiscalisation regime requires: the exact files with the rules they break, the chain, and every sending with what the service answered, word for word. Knows no country, names no provider, and writes nothing to the ledger.
+The electronic invoice of a posted sale in the profile its country pack declares, and the fiscal record or the clearance by the authority its pack's fiscalisation regime requires: the exact files with the rules they break, the chain, the validations, and every sending with what came back, word for word. Knows no country, names no provider, and writes nothing to the ledger.
 
 ### Tables
 
 | Table | Purpose |
 |---|---|
+| [`clearances`](#einvoicing-clearances) | Every submission of a posted sale to the tax authority under a clearance regime, numbered per document, with the state the authority's answers brought it to and what it gave the invoice: its identifier, the moment of validation, the verification link. Written by einvoicing.record_clearance_submission() and einvoicing.record_clearance_answer() alone; a state only moves forward and nothing is deleted. The answers themselves, verbatim, are in einvoicing.fiscal_events. |
 | [`fiscal_chain`](#einvoicing-fiscal_chain) | The chain of fiscal records of one company in one invoicing system: one row per record, numbered from 1, each carrying the hash of the one before it. Written by einvoicing.append_fiscal_record() alone, never edited and never deleted; einvoicing.verify_fiscal_chain() walks it both ways. |
 | [`fiscal_events`](#einvoicing-fiscal_events) | What an invoicing system records beside its fiscal records where the law asks it to — a summary every so many hours, a start, a stop, an anomaly found in the chain — numbered per company and system. Appended by einvoicing.log_fiscal_event(), never edited, never deleted. |
 | [`issues`](#einvoicing-issues) | One electronic invoice written for one posted sale: the exact file, its SHA-256, the format it follows and every rule of that format it breaks. Written by einvoicing.record_issue(), never edited and never deleted: what was issued is evidence of what was issued. |
 | [`transmission_events`](#einvoicing-transmission_events) | Every state a transmission reached, with what the service said at that moment, word for word, and the structured answer as it came. Appended by einvoicing.record_transmission() and einvoicing.record_transmission_outcome(); never edited, never deleted. |
 | [`transmissions`](#einvoicing-transmissions) | One sending of one issued file: the channel, the service by name, the reference it gave, and a state that only moves forward. A document rejected on the way is sent again by a second row; at most one of its transmissions is ever alive or delivered. |
+
+<a id="einvoicing-clearances"></a>
+
+#### `clearances`
+
+Every submission of a posted sale to the tax authority under a clearance regime, numbered per document, with the state the authority's answers brought it to and what it gave the invoice: its identifier, the moment of validation, the verification link. Written by einvoicing.record_clearance_submission() and einvoicing.record_clearance_answer() alone; a state only moves forward and nothing is deleted. The answers themselves, verbatim, are in einvoicing.fiscal_events.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `document_id` | `uuid` | not null |
+| `attempt` | `integer` | not null — The submission's number among those of its document, from 1. An attempt the authority rejected is followed by the next; a validated or cancelled one is the last. |
+| `format` | `text` | not null |
+| `state` | `einvoicing.clearance_state` | not null |
+| `issue_id` | `uuid` |  |
+| `reference` | `text` |  |
+| `submitted_at` | `timestamp with time zone` | not null |
+| `submitted_by` | `uuid` |  |
+| `identifier` | `text` | The identifier the authority gave the invoice when it validated it. Unique per format: no two invoices carry one. |
+| `validated_at` | `timestamp with time zone` |  |
+| `verification_url` | `text` | The link to the authority's verification of the invoice, which the invoice carries — usually as a QR code — where the regime has one: returned by the authority, or computed by the issuer from its answer, as the pack's clearance.verification says. |
+| `rejected_by` | `text` | Who rejected it: the authority, which did not validate it, or the buyer, after its validation and within the regime's rejection_window. |
+| `rejected_at` | `timestamp with time zone` |  |
+| `rejection_reason` | `text` |  |
+| `cancelled_at` | `timestamp with time zone` |  |
+| `cancellation_reason` | `text` |  |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((attempt >= 1))`
+- `CHECK (((state <> 'cancelled'::einvoicing.clearance_state) OR ((cancelled_at IS NOT NULL) AND (NULLIF(btrim(cancellation_reason), ''::text) IS NOT NULL))))`
+- `CHECK ((NULLIF(btrim(format), ''::text) IS NOT NULL))`
+- `CHECK (((state <> 'rejected'::einvoicing.clearance_state) OR ((rejected_by IS NOT NULL) AND (rejected_at IS NOT NULL) AND (NULLIF(btrim(rejection_reason), ''::text) IS NOT NULL))))`
+- `CHECK (((rejected_by IS NULL) OR (rejected_by = ANY (ARRAY['authority'::text, 'buyer'::text]))))`
+- `CHECK (((state <> 'submitted'::einvoicing.clearance_state) OR ((identifier IS NULL) AND (validated_at IS NULL) AND (rejected_at IS NULL) AND (cancelled_at IS NULL))))`
+- `CHECK (((verification_url IS NULL) OR (verification_url ~ '^https://'::text)))`
+- `CHECK ((((state <> ALL (ARRAY['validated'::einvoicing.clearance_state, 'cancelled'::einvoicing.clearance_state])) AND (NOT ((state = 'rejected'::einvoicing.clearance_state) AND (rejected_by = 'buyer'::text)))) OR ((NULLIF(btrim(identifier), ''::text) IS NOT NULL) AND (validated_at IS NOT NULL))))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (document_id, attempt)`
 
 <a id="einvoicing-fiscal_chain"></a>
 
@@ -2903,15 +2945,19 @@ Constraints:
 | Function | Purpose |
 |---|---|
 | `append_fiscal_record(p_document_id uuid, p_system_id text, p_kind einvoicing.fiscal_record_kind, p_format text, p_mode text, p_issuer_tax_id text, p_series text, p_number text, p_issued_on date, p_record jsonb, p_hash_input text, p_hash text, p_previous_hash text, p_generated_at text, p_verification_url text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb)` | Chains one fiscal record of a posted sale and keeps its file. Checks the company's pack declares a regime in this format and mode (no_fiscalisation_regime, fiscal_format_mismatch, fiscal_mode_not_allowed), that the record breaks no rule (fiscal_record_not_chainable), that its hash is the digest the pack names of the text it came with (fiscal_hash_mismatch) and that it holds every field the hash covers (fiscal_record_fields_missing); that the tail of the chain is intact (fiscal_chain_broken) and is the record it names as previous — none for the first (fiscal_chain_not_first, fiscal_chain_link); and that an invoice is recorded once and cancelled once (fiscal_record_exists, fiscal_nothing_to_cancel). Needs einvoicing.send and documents.read. |
-| `archive_tables()` | What an archive of one company does with each table of this module: all five travel — the files as they were issued, the sendings and what came back, the chain of fiscal records and its events. Read by `public.company_archive_tables()`. |
-| `can_disable(p_company_id uuid)` | Null when the module may be turned off for a company; a sentence while a sending is still on its way, or while a fiscal record that is to be sent has not reached the authority. Turning it off deletes nothing: the files, the chain and the history come back with it. |
+| `archive_tables()` | What an archive of one company does with each table of this module: all six travel — the files as they were issued, the sendings and what came back, the chain of fiscal records and its events, and the submissions to the authority under a clearance regime. Read by `public.company_archive_tables()`. |
+| `can_disable(p_company_id uuid)` | Null when the module may be turned off for a company; a sentence while a sending is still on its way, while a fiscal record that is to be sent has not reached the authority, or while an invoice waits for the authority's validation. Turning it off deletes nothing: the files, the chain, the clearances and the history come back with it. |
+| `clearance_document(p_document_id uuid, p_what text)` | The document a clearance is recorded for, after every check the two clearance functions share: the document exists and the caller may know of it (unknown_document), einvoicing.send and documents.read (not_allowed), a sale (document_not_a_sale) that was posted (document_not_posted), a regime (no_fiscalisation_regime) of kind clearance (fiscal_regime_not_clearance). |
 | `fiscal_digest(p_algorithm text, p_encoding text, p_input text)` | The digest of a text as a fiscalisation regime writes it: SHA-256, SHA-384 or SHA-512 of its UTF-8 bytes, in hexadecimal capitals, lower case or base64 as the pack's hash.encoding says (lower-case hexadecimal where it says nothing). Null for an algorithm it does not know, which the callers refuse. |
 | `fiscal_regime(p_company_id uuid)` | The einvoicing.fiscalisation block of the pack of the company's fiscal country, as the socle compiled it; null where the country has no such regime, or the caller may not know of the company. |
+| `guard_clearance()` | Refuses a delete of a clearance, a change of what was submitted, of what the authority gave on validation or of a rejection once recorded (clearance_recorded), and every move of state but the five forward ones: submitted to validated, submitted to rejected by the authority, validated to rejected by the buyer, validated to cancelled, rejected by the buyer to cancelled (clearance_state_backwards). |
 | `guard_event()` | Refuses every update and every delete of a transmission event: the history of what came back is appended to, never rewritten. |
 | `guard_fiscal()` | Refuses every update and every delete of a fiscal record or a fiscal event: fiscal_record_kept. |
 | `guard_issue()` | Checks the SHA-256 of a file as it is inserted, and refuses every update and every delete of an issue: einvoice_issued. |
 | `guard_transmission()` | Holds a transmission to what it is: never deleted; its document, file, artefact, channel and service fixed; its reference set once; its state only moving forward, and never again once closed; and a reference wherever somebody took the file. |
 | `log_fiscal_event(p_company_id uuid, p_system_id text, p_kind text, p_detail jsonb)` | Appends one event of an invoicing system to the fiscal events of a company, numbered per system. Needs einvoicing.send. |
+| `record_clearance_answer(p_document_id uuid, p_state einvoicing.clearance_state, p_identifier text, p_validated_at timestamp with time zone, p_verification_url text, p_reason text, p_by text, p_at timestamp with time zone, p_answer jsonb)` | Records what the authority answered about the latest submission of a document, and keeps the answer verbatim in fiscal_events: validated, with the identifier it gave, the moment it validated and the verification link where the regime has one (bad_clearance_answer, clearance_verification_missing, clearance_identifier_taken); rejected, with its reason, by the authority (from submitted) or by the buyer (from validated, within the pack's rejection_window: clearance_buyer_cannot_reject, clearance_window_closed); cancelled by the issuer, with its reason, from validated or rejected by the buyer, within the pack's cancellation_window (clearance_not_cancellable, clearance_window_closed). The same answer twice records nothing; any other move is clearance_state_backwards. Calls nobody. Needs einvoicing.send and documents.read. |
+| `record_clearance_submission(p_document_id uuid, p_reference text, p_issue_id uuid, p_submitted_at timestamp with time zone, p_answer jsonb)` | Records that a posted sale was submitted to the authority under its company's clearance regime: the next attempt of the document, the reference the authority gave on receipt where it gave one, the file submitted where this module kept it (an einvoice issue that breaks no rule), the moment, and the answer verbatim in fiscal_events. Calls nobody. Refuses a submission while one waits for its answer (clearance_pending), after a validation (clearance_already_validated) or a cancellation (clearance_cancelled), and everything clearance_document() refuses. Needs einvoicing.send and documents.read. |
 | `record_issue(p_document_id uuid, p_profile text, p_brick text, p_specification text, p_filename text, p_media_type text, p_content text, p_checksum text, p_violations jsonb, p_artefact einvoicing.artefact)` | Keeps the file a brick wrote for a posted sale invoice or credit note, with the rules it breaks: its electronic invoice (artefact einvoice, the default) or the file of a fiscal record (fiscal_record, kept by append_fiscal_record() alone). Refuses a document that is not a posted sale (document_not_a_sale, document_not_posted), a company whose pack declares no profile or no regime (no_einvoicing_profile, no_fiscalisation_regime), a file written in another format than the pack's (einvoice_profile_mismatch, fiscal_format_mismatch) and a checksum that is not the SHA-256 of the text (einvoice_checksum_mismatch). The same file twice returns the first issue. Needs einvoicing.send and documents.read. |
 | `record_transmission(p_issue_id uuid, p_channel einvoicing.channel, p_service text)` | Records that an issued file — an electronic invoice or a fiscal record — is about to be sent, as prepared: the channel, and the service by name where one is used. Refuses a file that breaks a rule, repeating the rules verbatim (einvoice_not_sendable), an older electronic invoice of a document issued again since (einvoice_superseded), and a file already on its way or delivered (einvoice_already_sent). Needs einvoicing.send. |
 | `record_transmission_outcome(p_transmission_id uuid, p_state einvoicing.transmission_state, p_reference text, p_message text, p_detail jsonb, p_occurred_at timestamp with time zone)` | Records what a transport or a service answered about a sending: its new state, its reference where it gave one, and its words verbatim, as one more event. A state only moves forward and a closed sending does not move (transmission_state_backwards, transmission_closed); the same answer twice records nothing. Once an electronic invoice has left, writes the state and the reference on documents.peppol_status and peppol_message_id, which is what keeps unpost_document() from taking it back to draft; a fiscal record writes nothing there. Needs einvoicing.send. |

@@ -299,7 +299,7 @@ startup to know which: `fixed_assets_list`, `fixed_assets_create`,
 `fixed_assets_dispose`, `budgets_list`, `budgets_upsert_lines`,
 `budgets_variance`, `einvoicing_validate`, `einvoicing_issue`,
 `einvoicing_status`, `einvoicing_list`, `einvoicing_fiscalise`,
-`einvoicing_fiscalisation_status`, `tax_estimate`, `tax_parameters`,
+`einvoicing_fiscalisation_status`, `einvoicing_clearance`, `tax_estimate`, `tax_parameters`,
 `tax_declare_parameter`, `tax_adjustments`, `tax_declare_adjustment`,
 `tax_losses`, `tax_record_computation`, `tax_computations`. A module may
 offer prompts too, under the same prefix: `tax_review_year`. A module that is

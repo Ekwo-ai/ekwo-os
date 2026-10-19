@@ -245,3 +245,85 @@ describe('a reporting regime of einvoicing.fiscalisation', () => {
     );
   });
 });
+
+/** A clearance regime of invented values, every one a shape the schema allows. */
+function cleared(): Record<string, unknown> {
+  return {
+    mandatory_from: [
+      { who: 'largest', from: '2030-01-01', turnover_above: { amount: 1000, currency: 'XTS' } },
+      { who: 'others', from: '2031-01-01', turnover_above: { amount: 10, currency: 'XTS' }, legal_reference: 'An invented order' },
+    ],
+    exemption: [
+      { turnover_below: { amount: 5, currency: 'XTS' }, valid_from: '2030-06-01', legal_reference: 'An invented guideline', source: sourceKey },
+      { turnover_below: { amount: 8, currency: 'XTS' }, valid_from: '2031-06-01', legal_reference: 'Its next version', source: sourceKey },
+    ],
+    format: 'invented-clearance',
+    clearance: { verification: 'returned', cancellation_window: 'PT72H', rejection_window: 'P3D', legal_reference: 'An invented article' },
+    submission: { mode: 'realtime', channel: 'authority_service' },
+    legal_reference: 'An invented article',
+    source: sourceKey,
+  };
+}
+
+describe('a clearance regime of einvoicing.fiscalisation', () => {
+  it('reads as clearance, with its windows, an obligation phased by size and the dated thresholds of exemption', async () => {
+    const pack = await readPack(await withRegime(cleared()), dir);
+    const block = pack.documents.einvoice_fiscalisation!;
+    expect(block.kind).toBe('clearance');
+    expect(block.hash).toBeNull();
+    expect(block.clearance).toEqual({
+      verification: 'returned',
+      cancellation_window: 'PT72H',
+      rejection_window: 'P3D',
+      legal_reference: 'An invented article',
+      source: null,
+    });
+    expect(block.mandatory_from[1]).toEqual({
+      who: 'others',
+      from: '2031-01-01',
+      turnover_above: { amount: 10, currency: 'XTS' },
+      legal_reference: 'An invented order',
+    });
+    expect(block.exemption?.map((entry) => entry.valid_from)).toEqual(['2030-06-01', '2031-06-01']);
+  });
+
+  it('adds nothing to a block that declares neither, so what was compiled before reads the same', async () => {
+    const block = (await readPack(await withRegime(regime()), dir)).documents.einvoice_fiscalisation!;
+    expect('clearance' in block).toBe(false);
+    expect('exemption' in block).toBe(false);
+    expect(Object.keys(block.mandatory_from[0]!)).toEqual(['who', 'from']);
+  });
+
+  it('refuses a clearance regime that also chains, a window that is not a duration, and a verification it does not know', async () => {
+    const chained = regime();
+    expect(await refusal({ ...cleared(), hash: chained['hash'] })).toMatch(/clearance: is given beside hash/);
+    expect(await refusal({ ...cleared(), clearance: { verification: 'returned', cancellation_window: '72 hours' } })).toMatch(/cancellation_window: does not match/);
+    expect(await refusal({ ...cleared(), clearance: { verification: 'printed' } })).toMatch(/verification: not one of/);
+    expect(await refusal({ ...cleared(), clearance: {} })).toMatch(/missing "verification"/);
+    expect(await refusal({ ...cleared(), submission: { mode: 'realtime', modes: ['realtime', 'none'] } })).toMatch(
+      /names none under a clearance regime/,
+    );
+  });
+
+  it('refuses a phased obligation whose thresholds do not fall, half sized, or stated in two currencies', async () => {
+    const steps = cleared()['mandatory_from'] as Record<string, unknown>[];
+    expect(await refusal({ ...cleared(), mandatory_from: [steps[0], { ...steps[1], turnover_above: { amount: 2000, currency: 'XTS' } }] })).toMatch(
+      /a phased obligation reaches smaller taxpayers later/,
+    );
+    expect(await refusal({ ...cleared(), mandatory_from: [steps[0], { who: 'others', from: '2031-01-01' }] })).toMatch(
+      /sizes every step/,
+    );
+    expect(await refusal({ ...cleared(), mandatory_from: [steps[0], { ...steps[1], turnover_above: { amount: 10, currency: 'XTT' } }] })).toMatch(
+      /states its thresholds in XTS and XTT/,
+    );
+  });
+
+  it('refuses thresholds of exemption out of order, on a day that does not exist, or citing a text the register does not carry', async () => {
+    const [first, second] = cleared()['exemption'] as Record<string, unknown>[];
+    expect(await refusal({ ...cleared(), exemption: [second, first] })).toMatch(/is not after 2031-06-01/);
+    expect(await refusal({ ...cleared(), exemption: [{ ...first, valid_from: '2030-02-30' }] })).toMatch(/2030-02-30 is not a day of the calendar/);
+    expect(await refusal({ ...cleared(), exemption: [{ ...first, source: 'no-such-text' }] })).toMatch(/exemption\[0\]: names the source no-such-text/);
+    const { legal_reference: _l, ...uncited } = first!;
+    expect(await refusal({ ...cleared(), exemption: [uncited] })).toMatch(/legal_reference/);
+  });
+});

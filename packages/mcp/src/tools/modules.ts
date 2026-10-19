@@ -23,6 +23,7 @@
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Filter, type Row } from '../backend.js';
 import {
+  CLEARANCE_ANSWERS,
   TRANSMISSION_STATES,
   amountIn,
   decimal,
@@ -34,6 +35,8 @@ import {
   issueEinvoice,
   parseFiscalSystem,
   listEinvoiceTransmissions,
+  recordClearanceAnswer,
+  recordClearanceSubmission,
   money,
   moneyFields,
   validateEinvoice,
@@ -554,7 +557,7 @@ const EINVOICING: ModuleToolset = {
       title: 'Where the fiscal records of a company stand',
       readOnly: true,
       description:
-        'The fiscalisation regime of a company, as its country pack declares it, and where its records stand: each chain of an invoicing system, walked both ways (verified, or the first break), the records still to be sent to the authority, the posted sales from the start of the obligation that have no record — named here, never fiscalised on their own — and the latest events. A broken chain is for the company\'s accountant before anything else.',
+        'The fiscalisation regime of a company, as its country pack declares it, and where its records stand: each chain of an invoicing system, walked both ways (verified, or the first break), the records still to be sent to the authority, the posted sales from the start of the obligation that have no record — named here, never fiscalised on their own — and the latest events. Under a clearance regime (kind clearance), missing is the posted sales without the authority\'s validation, and clearance counts those validated, waiting, rejected by the authority or by the buyer, and cancelled at the authority while still posted. A broken chain is for the company\'s accountant before anything else.',
       input: z.object({
         company_id: companyId,
         limit: z.number().int().min(1).max(500).optional().describe('At most this many pending records and missing documents listed. 50 by default.'),
@@ -564,6 +567,51 @@ const EINVOICING: ModuleToolset = {
           fiscalisationStatus(backend, args['company_id'] as unknown as string, {
             ...(args['limit'] === undefined ? {} : { limit: args['limit'] as unknown as number }),
           }),
+        );
+      },
+    },
+    {
+      verb: 'clearance',
+      title: 'Record a submission to the authority, or its answer',
+      readOnly: false,
+      description:
+        'Under a clearance regime — the authority validates every invoice before it is issued, and an invoice is valid only once validated — records what happened to a posted sale: submitted (it left for the authority, with the reference the authority gave on receipt), validated (with the identifier the authority gave it, the moment it validated it and, where the regime has one, the verification link the invoice carries as a QR code), rejected (by the authority, or by the buyer after validation and within the window the pack declares, with the reason) or cancelled (by the issuer, after validation and within the pack\'s window, with the reason). Nothing is sent by this tool: it records what the host that talks to the authority reports, and the answer verbatim in answer. Every transition that cannot have happened is refused by name (clearance_pending, clearance_state_backwards, clearance_window_closed, clearance_not_cancellable, clearance_verification_missing…). Refused where the pack declares no clearance regime (fiscal_regime_not_clearance). Never record an answer nobody received: an invoice recorded as validated is one the books treat as valid.',
+      input: z.object({
+        document_id: documentId,
+        what: z.enum(['submitted', ...CLEARANCE_ANSWERS]).describe('What happened: submitted, then one of validated, rejected, cancelled.'),
+        reference: z.string().min(1).optional().describe('submitted: what the authority named the submission on receipt.'),
+        issue_id: uuid.optional().describe('submitted: the electronic invoice submitted, where this module kept it (einvoicing_status lists them).'),
+        identifier: z.string().min(1).optional().describe('validated: the identifier the authority gave the invoice.'),
+        validated_at: z.string().min(1).optional().describe('validated: when the authority validated it, ISO 8601 with its offset.'),
+        verification_url: z.string().url().optional().describe('validated: the link to the authority\'s verification, where the regime has one.'),
+        reason: z.string().min(1).optional().describe('rejected, cancelled: why, as it was said.'),
+        by: z.enum(['authority', 'buyer']).optional().describe('rejected: who rejected it. The authority when left out.'),
+        at: z.string().min(1).optional().describe('When it happened, ISO 8601 with its offset. Now when left out; the windows of the regime are read against it.'),
+        answer: z.record(z.string(), z.unknown()).optional().describe('What the authority answered, as it answered it.'),
+      }),
+      async run(backend, args) {
+        const documentId = args['document_id'] as unknown as string;
+        const what = args['what'] as unknown as string;
+        const text = (key: string): string | undefined => args[key] as unknown as string | undefined;
+        const answer = args['answer'] as unknown as Record<string, unknown> | undefined;
+        return inSchema('einvoicing', () =>
+          what === 'submitted'
+            ? recordClearanceSubmission(backend, documentId, {
+                ...(text('reference') === undefined ? {} : { reference: text('reference') as string }),
+                ...(text('issue_id') === undefined ? {} : { issueId: text('issue_id') as string }),
+                ...(text('at') === undefined ? {} : { submittedAt: text('at') as string }),
+                ...(answer === undefined ? {} : { answer }),
+              })
+            : recordClearanceAnswer(backend, documentId, {
+                state: what as (typeof CLEARANCE_ANSWERS)[number],
+                ...(text('identifier') === undefined ? {} : { identifier: text('identifier') as string }),
+                ...(text('validated_at') === undefined ? {} : { validatedAt: text('validated_at') as string }),
+                ...(text('verification_url') === undefined ? {} : { verificationUrl: text('verification_url') as string }),
+                ...(text('reason') === undefined ? {} : { reason: text('reason') as string }),
+                ...(text('by') === undefined ? {} : { by: text('by') as 'authority' | 'buyer' }),
+                ...(text('at') === undefined ? {} : { at: text('at') as string }),
+                ...(answer === undefined ? {} : { answer }),
+              }),
         );
       },
     },

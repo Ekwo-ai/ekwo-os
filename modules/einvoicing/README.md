@@ -26,9 +26,9 @@ qualified professional check the set-up of a company and its first invoices.
 | capabilities | `einvoicing.read`, `einvoicing.send` — their area is the module code |
 | pack section | none of its own: it reads the `einvoicing` section every pack already carries |
 | posts to the ledger | no, and a test holds it to that |
-| MCP tools | `einvoicing_validate`, `einvoicing_issue`, `einvoicing_status`, `einvoicing_list`, `einvoicing_fiscalise`, `einvoicing_fiscalisation_status` |
-| command line | `ekwo einvoice validate`, `issue`, `status`, `list`, `fiscalise`, `fiscalisation` |
-| version | 1.1.0 — fiscalisation, the chained record (`20261018015212_einvoicing_fiscalisation.sql`, which reads the socle column of `20261018014537`) |
+| MCP tools | `einvoicing_validate`, `einvoicing_issue`, `einvoicing_status`, `einvoicing_list`, `einvoicing_fiscalise`, `einvoicing_fiscalisation_status`, `einvoicing_clearance` |
+| command line | `ekwo einvoice validate`, `issue`, `status`, `list`, `fiscalise`, `fiscalisation`, `clearance` |
+| version | 1.2.0 — clearance, the invoice the authority validates before it is issued (`20261019120000_einvoicing_clearance.sql`); 1.1.0 was fiscalisation, the chained record (`20261018015212_einvoicing_fiscalisation.sql`, which reads the socle column of `20261018014537`) |
 
 ## What it holds
 
@@ -113,6 +113,97 @@ holds the same JSON for the MCP server, whose tools are
 records is a transport, as for the electronic invoice: the record's issue is
 sent with the same functions (`record_transmission`), and none ships for a
 tax authority — the host brings it.
+
+## Clearance: the invoice the authority validates before it is issued
+
+In a growing number of countries an invoice is **submitted to the tax
+authority before it is issued**: the authority checks it and answers, and
+without its validation the invoice is not an invoice. A pack says so with a
+`clearance` object in its `einvoicing.fiscalisation` block — the third regime,
+beside the chained record and the report — and the socle compiles it with
+`kind` = `clearance`. Nothing is chained under it.
+
+The model was confronted with three such systems before it was written, and
+keeps what they share:
+
+| | Malaysia, MyInvois | Poland, KSeF | Italy, SdI |
+|---|---|---|---|
+| On receipt | a reference for the submission | a reference for the sending | the system's own identifier for the file |
+| Validated with | the document's unique identifier, the moment of validation, a link to its validation page | the KSeF number, the moment it was received | a receipt of delivery, with its moment |
+| Rejected with | the errors found | a code and its description | a rejection notice with the errors; the corrected file is sent again |
+| Verification link on the invoice | returned by the authority, as a QR code | built by the issuer from the invoice | none |
+| The issuer cancels | within 72 hours of validation, with a reason | never: a correcting invoice | never: a credit note |
+| The buyer rejects | within the same 72 hours, with a reason | never | a public buyer, within a period the law sets; a private one never |
+
+So a pack declares `verification` (`returned`, `computed`, `none`), and two
+windows as ISO 8601 durations, each left out where the law grants none:
+`cancellation_window` for the issuer, `rejection_window` for the buyer, both
+counted from the validation. The module keeps:
+
+| Table | What it is |
+|---|---|
+| `einvoicing.clearances` | One submission of one posted sale, numbered per document (`attempt`), in one of four states — `submitted`, `validated`, `rejected` (`rejected_by` the authority or the buyer), `cancelled` — with the reference given on receipt, the file submitted where the module kept it (`issue_id`, an electronic invoice that breaks no rule), and what the authority gave on validation: `identifier`, `validated_at`, `verification_url`. One identifier is one invoice. |
+
+Every submission and every answer is also appended to `einvoicing.fiscal_events`
+under the regime's format — `clearance_submitted`, `clearance_validated`,
+`clearance_rejected`, `clearance_cancelled` — with what the authority said,
+verbatim, in `detail.answer`. No column is named after a country.
+
+```
+submitted ──▶ validated ──▶ cancelled                  (issuer, within cancellation_window)
+    │             │
+    │             └──▶ rejected by the buyer ──▶ cancelled
+    │                   (within rejection_window)
+    └──▶ rejected by the authority          (closed; the corrected invoice is the next attempt)
+```
+
+```sql
+-- It left for the authority: the reference it gave on receipt, the file, the moment, its words.
+select einvoicing.record_clearance_submission(document, 'SUB-1', issue, now(), '{"accepted": 1}');
+-- What came back about the latest attempt.
+select einvoicing.record_clearance_answer(document, 'validated', identifier, validated_at, url);
+select einvoicing.record_clearance_answer(document, 'rejected', p_reason => 'the errors', p_by => 'authority');
+select einvoicing.record_clearance_answer(document, 'cancelled', p_reason => 'issued twice', p_at => now());
+```
+
+What the database refuses, by name: a second submission while one waits
+(`clearance_pending`), after a validation (`clearance_already_validated`) or
+after a cancellation (`clearance_cancelled` — the invoice is void at the
+authority, and the books undo it with `cancel_document`); an answer to nothing
+submitted (`clearance_not_submitted`); a validation without its identifier and
+its moment, or without the link the regime requires (`bad_clearance_answer`,
+`clearance_verification_missing`), an identifier another invoice holds
+(`clearance_identifier_taken`) or that differs from the one given
+(`clearance_identifier_differs`); a rejection or cancellation without its
+reason; a state that does not follow (`clearance_state_backwards`); a
+cancellation or a rejection by the buyer the regime does not grant
+(`clearance_not_cancellable`, `clearance_buyer_cannot_reject`) or that comes
+after its window (`clearance_window_closed`), read against the moment of the
+answer. A trigger refuses every delete, and every rewrite of what was
+submitted or given (`clearance_recorded`). The same answer twice records
+nothing.
+
+**The transport is not here.** Neither function calls anybody: the host that
+talks to the authority reports what it sent and what it received, and Ekwo
+Cloud will be one such host. **Nothing is submitted by a trigger** either: a
+posted sale without a validation is named by `fiscalisationStatus()` —
+`missing` holds the sales within the obligation never submitted or rejected
+by the authority, and `clearance` counts those validated, waiting, rejected by
+the buyer, and cancelled at the authority while still posted here. Under a
+clearance regime the file submitted is the electronic invoice itself, so its
+brick is looked up with the e-invoicing profiles; one no brick of this release
+writes is said by name, `format_without_brick`, and the module still records
+what a host submits.
+
+```sh
+ekwo einvoice clearance <document> submitted --reference SUB-1
+ekwo einvoice clearance <document> validated --identifier <id> --validated-at <time> --verification-url <url>
+ekwo einvoice clearance <document> rejected --reason "…" [--by buyer]
+ekwo einvoice clearance <document> cancelled --reason "…"
+ekwo einvoice fiscalisation                    # validated, waiting, missing, rejected, cancelled
+```
+
+The MCP tool is `einvoicing_clearance`, with `what` one of the four words.
 
 ## The states of a sending
 
@@ -276,6 +367,11 @@ to do.
 - **Unposting a fiscalised document.** `unpost_document()` reads the socle's
   two columns, which a fiscal record does not write; a record is cancelled by
   an `anulacion`, and the document by a credit note.
+- **Submitting to an authority.** A clearance is recorded, not made: the call
+  to the authority, its authentication and its signature are the host's. A
+  validated invoice does not write `documents.peppol_status` either, so under
+  a pack whose `posted_edit_policy` is `unpost_if_untouched` the socle would
+  still take it back to draft.
 
 - **Receiving.** An incoming file turned into a purchase draft needs the UBL
   and CII readers of the format bricks, which are being written. The seam is

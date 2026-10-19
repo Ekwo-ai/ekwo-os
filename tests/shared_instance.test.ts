@@ -782,6 +782,11 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
   // The jsonb it takes is a list of calendar addresses; the subject it names
   // is an argument of its own, and the key is only what it writes on the trail.
   'public.record_filing_proof': { reads: [], writesOnly: ['subject_id'] },
+  // The jsonb they take is the authority's answer, kept verbatim; the
+  // document is an argument of its own, and the keys are what they write on
+  // the fiscal events.
+  'einvoicing.record_clearance_submission': { reads: [], writesOnly: ['clearance_id', 'document_id'] },
+  'einvoicing.record_clearance_answer': { reads: [], writesOnly: ['clearance_id', 'document_id'] },
 };
 
 describe('the other person, signed in', () => {

@@ -1,7 +1,9 @@
 /**
- * `ekwo einvoice validate | issue | status | list | fiscalise | fiscalisation`
- * — the electronic invoice of a posted sale, and the fiscal record its
- * country's fiscalisation regime requires, through the `einvoicing` module.
+ * `ekwo einvoice validate | issue | status | list | fiscalise | fiscalisation | clearance`
+ * — the electronic invoice of a posted sale, the fiscal record its country's
+ * fiscalisation regime requires, and its submission to the authority where
+ * the regime clears invoices before they are issued, through the
+ * `einvoicing` module.
  *
  * Each verb is one function of the core — `validateEinvoice()`,
  * `issueEinvoice()`, `einvoiceStatus()`, `listEinvoiceTransmissions()` — which
@@ -19,6 +21,7 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import {
+  CLEARANCE_ANSWERS,
   FISCAL_RECORD_KINDS,
   FISCAL_SUBMISSION_MODES,
   FISCAL_SYSTEM_ENV,
@@ -29,6 +32,8 @@ import {
   fiscaliseDocument,
   parseFiscalSystem,
   issueEinvoice,
+  recordClearanceAnswer,
+  recordClearanceSubmission,
   listEinvoiceTransmissions,
   resolveDocument,
   validateEinvoice,
@@ -53,6 +58,9 @@ const STATUS_FLAGS = [...BOOKS_FLAGS, 'refresh', 'to'] as const;
 const LIST_FLAGS = [...BOOKS_FLAGS, 'doc', 'state', 'limit'] as const;
 const FISCALISE_FLAGS = [...BOOKS_FLAGS, 'system', 'kind', 'mode', 'rectification', 'dry-run', 'out'] as const;
 const FISCALISATION_FLAGS = [...BOOKS_FLAGS, 'limit'] as const;
+const CLEARANCE_FLAGS = [
+  ...BOOKS_FLAGS, 'reference', 'issue', 'identifier', 'validated-at', 'verification-url', 'reason', 'by', 'at', 'detail',
+] as const;
 
 const USAGE =
   'usage: ekwo einvoice validate <document> [--out <file>]' +
@@ -60,7 +68,10 @@ const USAGE =
   ' | ekwo einvoice status <document> [--refresh --to <directory>]' +
   ' | ekwo einvoice list [--doc <document> --state <state> --limit <n>]' +
   ' | ekwo einvoice fiscalise <document> [--system <file>] [--kind alta|anulacion] [--mode <mode>] [--rectification <code>] [--dry-run] [--out <file>]' +
-  ' | ekwo einvoice fiscalisation [--limit <n>]';
+  ' | ekwo einvoice fiscalisation [--limit <n>]' +
+  ' | ekwo einvoice clearance <document> submitted [--reference <ref>] [--issue <id>] [--at <time>] [--detail <file>]' +
+  ' | ekwo einvoice clearance <document> validated --identifier <id> --validated-at <time> [--verification-url <url>]' +
+  ' | ekwo einvoice clearance <document> rejected|cancelled --reason <text> [--by authority|buyer] [--at <time>]';
 
 const text = (value: unknown): string => (value === null || value === undefined ? '' : String(value));
 
@@ -96,6 +107,8 @@ export async function einvoiceCommand(args: ParsedArgs, deps: BooksDeps = {}): P
       return fiscalise(args, deps);
     case 'fiscalisation':
       return fiscalisation(args, deps);
+    case 'clearance':
+      return clearance(args, deps);
     default:
       throw new UsageError(USAGE);
   }
@@ -342,14 +355,98 @@ async function fiscalisation(args: ParsedArgs, deps: BooksDeps): Promise<number>
     );
   }
   line();
-  pairs([
-    ['to send', text(result['pending_count'])],
-    ['without a record', text(result['missing_count'])],
-  ]);
+  const cleared = result['clearance'] as Row | undefined;
+  pairs(
+    cleared === undefined
+      ? [
+          ['to send', text(result['pending_count'])],
+          ['without a record', text(result['missing_count'])],
+        ]
+      : [
+          ['validated', text(cleared['validated_count'])],
+          ['waiting', text(cleared['awaiting_count'])],
+          ['without validation', text(result['missing_count'])],
+          ['rejected by the buyer', text(cleared['buyer_rejected_count'])],
+          ['cancelled, still posted', text(cleared['cancelled_still_posted_count'])],
+        ],
+  );
   for (const document of result['missing'] as Row[]) {
     line(`    ${text(document['document_date'])}  ${text(document['number'])}  ${dim(text(document['id']))}`);
   }
   line();
   note(dim(text(result['note'])));
   return result['verified'] === true ? EXIT_OK : EXIT_ERROR;
+}
+
+/** What the authority said, from --detail <file>, as JSON; nothing when no file is named. */
+async function detailOf(args: ParsedArgs): Promise<Row | undefined> {
+  const file = stringFlag(args, 'detail');
+  if (file === undefined) return undefined;
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(await readFile(file, 'utf8')) as unknown;
+  } catch (error) {
+    throw new UsageError(`bad_value: --detail ${file} is not JSON: ${error instanceof Error ? error.message : String(error)}`);
+  }
+  if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    throw new UsageError(`bad_value: --detail ${file} holds what the authority answered as one JSON object.`);
+  }
+  return parsed as Row;
+}
+
+/**
+ * Records a submission to the authority, or what came back about it, under
+ * a clearance regime. Nothing is dialled: the host that talks to the
+ * authority says what it sent and what it received, and the database checks
+ * that it can have happened.
+ */
+async function clearance(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, CLEARANCE_FLAGS);
+  const state = required(args.positional[2], 'what happened', 'submitted|validated|rejected|cancelled');
+  const answers: readonly string[] = CLEARANCE_ANSWERS;
+  if (state !== 'submitted' && !answers.includes(state)) {
+    throw new UsageError(`bad_value: what happened is submitted or one of ${CLEARANCE_ANSWERS.join(', ')}, got "${state}".`);
+  }
+  const by = stringFlag(args, 'by');
+  if (by !== undefined && by !== 'authority' && by !== 'buyer') {
+    throw new UsageError(`bad_value: --by is authority or buyer, got "${by}".`);
+  }
+  const detail = await detailOf(args);
+  const { backend, company } = await openBooks(args, deps);
+  const documentId = await resolveDocument(backend, company.id, required(args.positional[1], 'the document', '<document>'));
+  const at = stringFlag(args, 'at');
+
+  const result =
+    state === 'submitted'
+      ? await recordClearanceSubmission(backend, documentId, {
+          ...given({ reference: stringFlag(args, 'reference'), issueId: stringFlag(args, 'issue'), submittedAt: at }),
+          ...(detail === undefined ? {} : { answer: detail }),
+        })
+      : await recordClearanceAnswer(backend, documentId, {
+          state: state as (typeof CLEARANCE_ANSWERS)[number],
+          ...given({
+            identifier: stringFlag(args, 'identifier'),
+            validatedAt: stringFlag(args, 'validated-at'),
+            verificationUrl: stringFlag(args, 'verification-url'),
+            reason: stringFlag(args, 'reason'),
+            at,
+          }),
+          ...(by === undefined ? {} : { by }),
+          ...(detail === undefined ? {} : { answer: detail }),
+        });
+  setResult(result);
+
+  const row = result['clearance'] as Row;
+  heading(`The clearance of ${text(row['format'])} for ${args.positional[1] ?? ''}, in ${company.name}`);
+  pairs([
+    ['attempt', `${text(row['attempt'])}  ${dim(text(row['id']))}`],
+    ['state', text(row['state']) + (row['rejected_by'] === null || row['rejected_by'] === undefined ? '' : ` by the ${text(row['rejected_by'])}`)],
+    ...(row['identifier'] === null ? [] : ([['identifier', `${text(row['identifier'])}  ${dim(text(row['validated_at']))}`]] as [string, string][])),
+    ...(row['verification_url'] === null ? [] : ([['verification', text(row['verification_url'])]] as [string, string][])),
+    ...(row['rejection_reason'] === null ? [] : ([['rejected', text(row['rejection_reason'])]] as [string, string][])),
+    ...(row['cancellation_reason'] === null ? [] : ([['cancelled', text(row['cancellation_reason'])]] as [string, string][])),
+  ]);
+  line();
+  note(dim(text(result['note'])));
+  return EXIT_OK;
 }

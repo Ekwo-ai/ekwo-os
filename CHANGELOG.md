@@ -99,6 +99,35 @@ somewhere has already run it.
   CGI art. 290 and 290 A, with its dates by size and its cadence by VAT
   regime. Neither has a brick yet.
 
+- **Fiscalisation by clearance: the invoice the authority validates before it
+  is issued.** A third regime of `einvoicing.fiscalisation`, beside the
+  chained record and the report, modelled on what MyInvois, KSeF and SdI
+  share: a `clearance` object, exclusive of `hash`, says where the
+  verification link the invoice carries comes from (`returned`, `computed`,
+  `none`) and, as ISO 8601 durations counted from the validation, how long the
+  issuer may cancel (`cancellation_window`) and the buyer reject
+  (`rejection_window`), each left out where the law grants none (`kind`
+  `clearance` once normalised). For an obligation phased by size, each
+  `mandatory_from` entry may carry `turnover_above` (an amount and its
+  currency) and its own text, and `exemption` lists the dated thresholds below
+  which a taxpayer is exempted, oldest first; `ekwo pack check` refuses steps
+  whose thresholds do not fall, two currencies, thresholds out of order and a
+  clearance regime that keeps invoices back (`none`). Blocks that declare
+  neither compile exactly as before. The module, version 1.2.0
+  (`20261019120000`), keeps `einvoicing.clearances` — one submission per
+  attempt, `submitted`, `validated` (identifier, moment, verification link),
+  `rejected` (by the authority or the buyer, with the reason) or `cancelled` —
+  with `record_clearance_submission()` and `record_clearance_answer()`, which
+  raise on every transition that cannot have happened and on a window that
+  has closed, and append each answer verbatim to `fiscal_events`. Neither
+  calls the authority: the transport is the host's. `recordClearanceSubmission()`
+  / `recordClearanceAnswer()` back `ekwo einvoice clearance` and the MCP tool
+  `einvoicing_clearance`; `fiscalisationStatus()` names, under a clearance
+  regime in force, the posted sales without a validation and counts those
+  validated, waiting, rejected by the buyer, or cancelled at the authority and
+  still posted; `fiscaliseDocument()` refuses to chain under it
+  (`fiscal_regime_without_chain`).
+
 - **What each product brought in, and cost.** `product_report(company, from,
   to)` (migration `20261016145816`) reads the posted invoices and credit notes
   dated in a period and gives, for each product named on a line and on each

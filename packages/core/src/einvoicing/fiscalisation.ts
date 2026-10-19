@@ -26,11 +26,18 @@
  * can be checked without trusting this code is checked again by
  * `einvoicing.append_fiscal_record()`: the regime, the digest, the fields, the
  * tail, a record made once.
+ *
+ * **A clearance regime chains nothing.** There the authority validates every
+ * invoice before it is issued, and what the books keep is the submission and
+ * the answer: `recordClearanceSubmission()` and `recordClearanceAnswer()`
+ * write them through `einvoicing.record_clearance_submission()` and
+ * `einvoicing.record_clearance_answer()`, which check every transition. The
+ * call to the authority is the host's; nothing here dials anybody.
  */
 
 import { VERIFACTU } from '@ekwo-ai/verifactu';
 import { BooksError, type Backend, type Row } from '../books/backend.js';
-import type { EinvoiceViolation } from './formats.js';
+import { EINVOICE_FORMATS, type EinvoiceViolation } from './formats.js';
 import { assertPostedSale, einvoiceChecksum, readEinvoiceSource } from './issue.js';
 
 const SCHEMA = 'einvoicing';
@@ -119,17 +126,34 @@ export function fiscalisationFormat(
   return found;
 }
 
+/** An annual turnover or revenue, as the law states it. */
+export interface FiscalTurnover {
+  amount: number;
+  currency: string;
+}
+
 /**
  * The regime of a company as the socle compiled it from its pack, or null
  * where it has none. `chained`: a record for every invoice, chained by a
- * hash. `reporting`: the documents' data reported to the authority, no hash,
- * nothing chained — the core keeps no chain for it.
+ * hash. `clearance`: every invoice validated by the authority before it is
+ * issued, nothing chained. `reporting`: the documents' data reported to the
+ * authority, no hash, nothing chained — the core keeps no chain for it.
  */
 export interface FiscalRegime {
-  kind: 'chained' | 'reporting';
+  kind: 'chained' | 'clearance' | 'reporting';
   format: string;
-  /** Empty while the obligation is only announced. */
-  mandatory_from: { who: string | null; from: string }[];
+  /** Empty while the obligation is only announced. `turnover_above` where the law phases it by size. */
+  mandatory_from: { who: string | null; from: string; turnover_above?: FiscalTurnover }[];
+  /** The thresholds of exemption, oldest first; absent where the pack declares none. */
+  exemption?: { turnover_below: FiscalTurnover; valid_from: string; legal_reference: string; source: string | null }[];
+  /** What a clearance regime says of the authority's answer; absent for the other two. */
+  clearance?: {
+    verification: 'returned' | 'computed' | 'none';
+    cancellation_window: string | null;
+    rejection_window: string | null;
+    legal_reference: string | null;
+    source: string | null;
+  };
   /** A day only announced, no text in force: it binds nobody. */
   announced_from: string | null;
   announced_by: string | null;
@@ -238,6 +262,11 @@ export async function fiscaliseDocument(
     throw new BooksError(
       `no_fiscalisation_regime: the country pack of this company declares no fiscalisation regime, so ${what} has no fiscal record to keep.`,
       { hint: 'A pack declares one in einvoicing.fiscalisation; describe_pack (ekwo pack describe) shows it.' },
+    );
+  }
+  if (regime.kind === 'clearance') {
+    throw new BooksError(
+      `fiscal_regime_without_chain: the country pack of this company declares a clearance regime, ${regime.format}: every invoice is validated by the authority before it is issued and nothing is chained, so ${what} has no record to chain. Its submission and the authority's answer are recorded with einvoicing_clearance (ekwo einvoice clearance).`,
     );
   }
   const format = fiscalisationFormat(regime.format, formats);
@@ -418,12 +447,28 @@ function earliestObligation(regime: FiscalRegime): string | null {
 }
 
 /**
- * Whether the status counts posted sales as missing a record. Only under a
- * chained regime in force: an announced day binds nobody, and a reporting
- * regime keeps no chain — which documents it reports is its brick's to say.
+ * Whether the status counts posted sales as missing a record, or a
+ * validation. Only under a chained or a clearance regime in force: an
+ * announced day binds nobody, and a reporting regime keeps no chain — which
+ * documents it reports is its brick's to say.
  */
 function countsMissing(regime: FiscalRegime | null): boolean {
-  return regime !== null && regime.hash !== null && (regime.announced_from ?? null) === null;
+  return regime !== null && (regime.kind === 'clearance' || regime.hash !== null) && (regime.announced_from ?? null) === null;
+}
+
+/**
+ * The brick that writes what a regime needs written, or null where none of
+ * this release does. Under a clearance regime what is submitted is the
+ * electronic invoice itself, so its brick is looked up with the e-invoicing
+ * profiles; under the other two, with the fiscalisation formats.
+ */
+function brickOf(regime: FiscalRegime): string | null {
+  return (regime.kind === 'clearance' ? EINVOICE_FORMATS[regime.format] : FISCALISATION_FORMATS[regime.format])?.brick ?? null;
+}
+
+/** The threshold of exemption that holds on a day, or null where the pack declares none that does. */
+export function exemptionOn(regime: FiscalRegime, day: string): NonNullable<FiscalRegime['exemption']>[number] | null {
+  return [...(regime.exemption ?? [])].reverse().find((entry) => entry.valid_from <= day) ?? null;
 }
 
 /**
@@ -482,7 +527,7 @@ export async function fiscalisationStatus(backend: Backend, companyId: string, o
   const fiscalised = new Set(records.filter((r) => r['kind'] === 'alta').map((r) => String(r['document_id'])));
   const posted = await backend.select<Row>({
     table: 'documents',
-    columns: ['id', 'doc_type', 'number', 'document_date::text'],
+    columns: ['id', 'doc_type', 'number', 'document_date::text', 'reversed_document_id'],
     where: [
       { column: 'company_id', op: 'eq', value: companyId },
       { column: 'state', op: 'eq', value: 'posted' },
@@ -492,7 +537,12 @@ export async function fiscalisationStatus(backend: Backend, companyId: string, o
   });
   const from = regime === null ? null : earliestObligation(regime);
   const counted = countsMissing(regime);
-  const without = counted ? posted.filter((d) => !fiscalised.has(String(d['id']))) : [];
+  const cleared = regime?.kind === 'clearance' ? await clearanceOf(backend, companyId, posted, limit) : null;
+  const without = !counted
+    ? []
+    : cleared !== null
+      ? posted.filter((d) => cleared.unvalidated.has(String(d['id'])))
+      : posted.filter((d) => !fiscalised.has(String(d['id'])));
   const missing = without.filter((d) => from === null || String(d['document_date']) >= from);
 
   const events = await backend.select<Row>({
@@ -513,8 +563,10 @@ export async function fiscalisationStatus(backend: Backend, companyId: string, o
         : {
             kind: regime.kind,
             format: regime.format,
-            brick: FISCALISATION_FORMATS[regime.format]?.brick ?? null,
+            brick: brickOf(regime),
             mandatory_from: regime.mandatory_from,
+            ...(regime.clearance === undefined ? {} : { clearance: regime.clearance }),
+            ...(regime.exemption === undefined ? {} : { exemption: exemptionOn(regime, today()) }),
             announced_from: regime.announced_from,
             announced_by: regime.announced_by,
             announced_on: regime.announced_on,
@@ -533,18 +585,258 @@ export async function fiscalisationStatus(backend: Backend, companyId: string, o
     missing: missing.slice(0, limit),
     missing_count: missing.length,
     before_obligation_count: without.length - missing.length,
+    ...(cleared === null ? {} : { clearance: cleared.summary }),
     events,
     note:
       regime === null
         ? 'The country pack of this company declares no fiscalisation regime.'
         : !counted
           ? uncountedNote(regime)
-          : broken.length > 0
+          : cleared !== null
+            ? clearanceNote(regime, missing.length, from, cleared.summary)
+            : broken.length > 0
             ? `The chain of ${broken.map((s) => String(s['system_id'])).join(', ')} breaks where break says. Nothing more is chained to it; this is for the company's accountant before anything else.`
             : missing.length > 0
               ? `${missing.length} posted sale(s) dated from ${from ?? 'the start of the obligation'} have no fiscal record. Nothing is fiscalised on its own: einvoicing_fiscalise (ekwo einvoice fiscalise) chains one.`
               : 'Every posted sale within the obligation has its record, and every chain is intact.',
   };
+}
+
+// ---------------------------------------------------------------------------
+// Clearance: the invoice the authority validates before it is issued
+// ---------------------------------------------------------------------------
+
+/** Where one submission of an invoice to the authority stands. */
+export type ClearanceState = 'submitted' | 'validated' | 'rejected' | 'cancelled';
+
+export const CLEARANCE_STATES = ['submitted', 'validated', 'rejected', 'cancelled'] as const;
+
+/** What the authority, the buyer or the issuer can bring a submission to. */
+export const CLEARANCE_ANSWERS = ['validated', 'rejected', 'cancelled'] as const;
+
+/** A submission somebody made to the authority, as the host that made it reports it. */
+export interface ClearanceSubmission {
+  /** What the authority named the submission on receipt, where it named it. */
+  reference?: string;
+  /** The electronic invoice submitted, where `einvoicing.issues` keeps it. */
+  issueId?: string;
+  /** When it was submitted, ISO 8601. Now when left out. */
+  submittedAt?: string;
+  /** What the authority said on receipt, as it said it. */
+  answer?: Row;
+}
+
+/** What came back about the latest submission of a document. */
+export interface ClearanceAnswer {
+  state: (typeof CLEARANCE_ANSWERS)[number];
+  /** The identifier the authority gave the invoice: required on validation. */
+  identifier?: string;
+  /** When the authority validated it, ISO 8601: required on validation. */
+  validatedAt?: string;
+  /** The link to its verification, which the invoice carries, where the regime has one. */
+  verificationUrl?: string;
+  /** Why it was rejected or cancelled, as it was said: required for both. */
+  reason?: string;
+  /** Who rejected it: the authority (the default) or the buyer. */
+  by?: 'authority' | 'buyer';
+  /** When the answer came, ISO 8601. Now when left out; the windows of the regime are read against it. */
+  at?: string;
+  /** The answer itself, as the authority gave it. */
+  answer?: Row;
+}
+
+/** The arguments of a call, without the ones nobody gave: the function's own default then holds. */
+const given = (args: Record<string, unknown>): Record<string, unknown> =>
+  Object.fromEntries(Object.entries(args).filter(([, value]) => value !== undefined));
+
+/**
+ * Records that a posted sale was submitted to the authority under its
+ * company's clearance regime. Calls nobody: the submission is the host's,
+ * and this keeps what it reports. The database refuses a second submission
+ * while one waits, after a validation or after a cancellation.
+ */
+export async function recordClearanceSubmission(backend: Backend, documentId: string, submission: ClearanceSubmission = {}): Promise<Row> {
+  const [row] = await backend.rpc<Row>(
+    'record_clearance_submission',
+    given({
+      p_document_id: documentId,
+      p_reference: submission.reference,
+      p_issue_id: submission.issueId,
+      p_submitted_at: submission.submittedAt,
+      p_answer: submission.answer,
+    }),
+    SCHEMA,
+  );
+  if (row === undefined) throw new BooksError('einvoicing_no_answer: einvoicing.record_clearance_submission answered nothing');
+  return {
+    document_id: documentId,
+    clearance: row,
+    note: `Recorded as attempt ${String(row['attempt'])} of this document, submitted as ${String(row['format'])} and waiting for the authority's answer, which einvoicing_clearance (ekwo einvoice clearance) records. The invoice is valid once the authority has validated it.`,
+  };
+}
+
+/**
+ * Records what came back about the latest submission of a document: its
+ * validation, with the identifier and the moment the authority gave it; a
+ * rejection by the authority or, within the regime's window, by the buyer;
+ * its cancellation by the issuer, within the regime's window. Every
+ * transition is checked by `einvoicing.record_clearance_answer()`, which
+ * raises on one that cannot have happened.
+ */
+export async function recordClearanceAnswer(backend: Backend, documentId: string, answer: ClearanceAnswer): Promise<Row> {
+  const [row] = await backend.rpc<Row>(
+    'record_clearance_answer',
+    given({
+      p_document_id: documentId,
+      p_state: answer.state,
+      p_identifier: answer.identifier,
+      p_validated_at: answer.validatedAt,
+      p_verification_url: answer.verificationUrl,
+      p_reason: answer.reason,
+      p_by: answer.by,
+      p_at: answer.at,
+      p_answer: answer.answer,
+    }),
+    SCHEMA,
+  );
+  if (row === undefined) throw new BooksError('einvoicing_no_answer: einvoicing.record_clearance_answer answered nothing');
+  const state = String(row['state']);
+  return {
+    document_id: documentId,
+    clearance: row,
+    note:
+      state === 'validated'
+        ? `Validated by the authority as ${String(row['identifier'])}: the invoice is valid${row['verification_url'] === null ? '' : ', and carries the link to its verification'}.`
+        : state === 'cancelled'
+          ? 'Cancelled at the authority: the invoice is void there. It is undone in the books with cancel_document.'
+          : row['rejected_by'] === 'buyer'
+            ? 'Rejected by the buyer: the invoice stays valid at the authority until the issuer cancels it, within the regime\'s window, or settles with the buyer.'
+            : 'Rejected by the authority, which did not validate it. The books are corrected and the invoice submitted again: that is the next attempt.',
+  };
+}
+
+const CLEARANCE = [
+  'id', 'document_id', 'attempt', 'format', 'state', 'reference', 'submitted_at', 'identifier', 'validated_at',
+  'verification_url', 'rejected_by', 'rejected_at', 'rejection_reason', 'cancelled_at', 'cancellation_reason',
+];
+
+interface ClearanceSummary {
+  validated_count: number;
+  awaiting: Row[];
+  awaiting_count: number;
+  rejected: Row[];
+  rejected_count: number;
+  buyer_rejected: Row[];
+  buyer_rejected_count: number;
+  cancelled_still_posted: Row[];
+  cancelled_still_posted_count: number;
+}
+
+/**
+ * Where the posted sales of a company stand under a clearance regime, by the
+ * latest submission of each: validated, waiting, rejected by the authority,
+ * rejected by the buyer, or cancelled at the authority while still posted
+ * here. `unvalidated` is the sales never submitted or rejected by the
+ * authority — the ones the status counts as missing. A credit note that
+ * undoes an invoice cancelled at the authority is the books' half of that
+ * cancellation, and is not one of them.
+ */
+async function clearanceOf(
+  backend: Backend,
+  companyId: string,
+  posted: Row[],
+  limit: number,
+): Promise<{ unvalidated: Set<string>; summary: ClearanceSummary }> {
+  const all = await backend.select<Row>({
+    schema: SCHEMA,
+    table: 'clearances',
+    columns: CLEARANCE,
+    where: [{ column: 'company_id', op: 'eq', value: companyId }],
+    order: [{ column: 'document_id' }, { column: 'attempt' }],
+  });
+  const latest = new Map<string, Row>();
+  for (const clearance of all) latest.set(String(clearance['document_id']), clearance);
+  const voided = new Set([...latest.values()].filter((c) => c['state'] === 'cancelled').map((c) => String(c['document_id'])));
+
+  const unvalidated = new Set<string>();
+  const awaiting: Row[] = [];
+  const rejected: Row[] = [];
+  const buyerRejected: Row[] = [];
+  const cancelled: Row[] = [];
+  let validated = 0;
+  for (const document of posted) {
+    const id = String(document['id']);
+    const last = latest.get(id);
+    if (last === undefined) {
+      const undoes = document['reversed_document_id'];
+      if (!(undoes !== null && undoes !== undefined && voided.has(String(undoes)))) unvalidated.add(id);
+      continue;
+    }
+    const { id: clearanceId, ...clearance } = last;
+    const entry = { id, doc_type: document['doc_type'], number: document['number'], document_date: document['document_date'], clearance_id: clearanceId, ...clearance };
+    if (last['state'] === 'validated') validated += 1;
+    else if (last['state'] === 'submitted') awaiting.push(entry);
+    else if (last['state'] === 'cancelled') cancelled.push(entry);
+    else if (last['rejected_by'] === 'buyer') buyerRejected.push(entry);
+    else {
+      unvalidated.add(id);
+      rejected.push(entry);
+    }
+  }
+  return {
+    unvalidated,
+    summary: {
+      validated_count: validated,
+      awaiting: awaiting.slice(0, limit),
+      awaiting_count: awaiting.length,
+      rejected: rejected.slice(0, limit),
+      rejected_count: rejected.length,
+      buyer_rejected: buyerRejected.slice(0, limit),
+      buyer_rejected_count: buyerRejected.length,
+      cancelled_still_posted: cancelled.slice(0, limit),
+      cancelled_still_posted_count: cancelled.length,
+    },
+  };
+}
+
+/** Today, as the calendar day of this machine. */
+const today = (): string => generatedNow().slice(0, 10);
+
+/** What the status says of a company under a clearance regime in force. */
+function clearanceNote(regime: FiscalRegime, missing: number, from: string | null, summary: ClearanceSummary): string {
+  const brick = brickOf(regime);
+  const sentences: string[] = [
+    `The country pack of this company declares a clearance regime, ${regime.format}: an invoice is valid once the authority has validated it, and nothing is chained.`,
+    brick === null
+      ? `No brick of packages/formats/ writes ${regime.format} yet (format_without_brick): Ekwo writes no file to submit, and records the submissions a host makes and the answers it receives.`
+      : `${brick} writes the file submitted.`,
+  ];
+  if (missing > 0) {
+    sentences.push(
+      `${missing} posted sale(s) dated from ${from ?? 'the start of the obligation'} have no validation and none on its way${summary.rejected_count > 0 ? `, ${summary.rejected_count} of them rejected by the authority` : ''}. Nothing is submitted on its own: a host submits them, and einvoicing_clearance (ekwo einvoice clearance) records the submission and the answer.`,
+    );
+  }
+  if (summary.awaiting_count > 0) sentences.push(`${summary.awaiting_count} wait for the authority's answer.`);
+  if (summary.buyer_rejected_count > 0) {
+    sentences.push(`${summary.buyer_rejected_count} were rejected by the buyer after their validation: the issuer cancels them within the regime's window, or settles with the buyer.`);
+  }
+  if (summary.cancelled_still_posted_count > 0) {
+    sentences.push(`${summary.cancelled_still_posted_count} were cancelled at the authority and are still posted here: cancel_document undoes them in the books.`);
+  }
+  if (missing === 0 && summary.awaiting_count + summary.buyer_rejected_count + summary.cancelled_still_posted_count === 0) {
+    sentences.push('Every posted sale within the obligation is validated by the authority.');
+  }
+  const exemption = exemptionOn(regime, today());
+  if (exemption !== null || regime.mandatory_from.some((entry) => entry.turnover_above !== undefined)) {
+    sentences.push(
+      `The obligation depends on the size of the taxpayer${
+        exemption === null
+          ? ''
+          : `, and a taxpayer below ${exemption.turnover_below.amount} ${exemption.turnover_below.currency} of annual turnover is exempted since ${exemption.valid_from}`
+      }; the books do not decide which this company is, so the count starts on the earliest day, ${from ?? 'none declared'}.`,
+    );
+  }
+  return sentences.join(' ');
 }
 
 /** Why the status counts no sale as missing a record under a regime that is announced only, or that reports. */

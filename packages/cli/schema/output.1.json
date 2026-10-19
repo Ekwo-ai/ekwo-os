@@ -782,7 +782,7 @@
         }
       },
       "einvoice fiscalisation": {
-        "$comment": "Where the fiscal records of the company stand: `regime` as its country pack declares it (null where it has none), each chain of an invoicing system in `systems` with `verified` and the first `break`, the records still to be sent in `pending`, the posted sales from the start of the obligation without a record in `missing`, and the latest `events`. A broken chain ends on exit code 1.",
+        "$comment": "Where the fiscal records of the company stand: `regime` as its country pack declares it (null where it has none), each chain of an invoicing system in `systems` with `verified` and the first `break`, the records still to be sent in `pending`, the posted sales from the start of the obligation without a record in `missing` — under a clearance regime, without a validation, with `clearance` saying how many are validated, waiting, rejected by the authority or the buyer, or cancelled at the authority and still posted — and the latest `events`. A broken chain ends on exit code 1.",
         "type": "object",
         "required": ["company_id", "regime", "systems", "verified", "pending", "missing", "events", "note"],
         "properties": {
@@ -795,7 +795,18 @@
           "missing": { "type": "array", "items": { "$ref": "#/$defs/row" } },
           "missing_count": { "type": "integer" },
           "before_obligation_count": { "type": "integer" },
+          "clearance": { "$ref": "#/$defs/row" },
           "events": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "note": { "type": "string" }
+        }
+      },
+      "einvoice clearance": {
+        "$comment": "A submission of a posted sale to the authority under its country pack's clearance regime, or what came back about it, as recorded: `clearance` is the row of einvoicing.clearances — its `attempt`, its `state` (submitted, validated, rejected or cancelled), the `identifier`, `validated_at` and `verification_url` the authority gave, who rejected it and why. Nothing was sent: the host that talks to the authority reports, and the database refuses a transition that cannot have happened (exit code 3).",
+        "type": "object",
+        "required": ["document_id", "clearance", "note"],
+        "properties": {
+          "document_id": { "type": "string" },
+          "clearance": { "$ref": "#/$defs/row" },
           "note": { "type": "string" }
         }
       },

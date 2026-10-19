@@ -346,6 +346,14 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     `insert into einvoicing.fiscal_events (company_id, system_id, seq, kind, detail) values ($1, 'system:1', 1, 'summary', '{"records": 1}')`,
     [companyId],
   );
+  // And the same document as a clearance regime would have seen it: submitted, validated.
+  await db.query(
+    `insert into einvoicing.clearances (company_id, document_id, attempt, format, state, issue_id, reference, submitted_at,
+                                        identifier, validated_at, verification_url)
+     values ($1, $2, 1, 'some-format', 'validated', $3, 'SUB-1', '2026-01-05T10:00:00+01:00',
+             $4, '2026-01-05T10:01:00+01:00', 'https://verify.invalid/' || $4)`,
+    [companyId, issue.document_id, issue.id, `UIN-${tag}`],
+  );
 
   // A piece on a document.
   const someDocument = [...replayed.documents.values()][0] as string;

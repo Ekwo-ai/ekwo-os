@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.14.0",
-  "migration": "20261019090001",
+  "migration": "20261019120000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -11842,9 +11842,90 @@
     },
     {
       "code": "einvoicing",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "schema": "einvoicing",
       "tables": [
+        {
+          "name": "clearances",
+          "columns": [
+            {
+              "name": "attempt",
+              "type": "integer"
+            },
+            {
+              "name": "cancellation_reason",
+              "type": "text"
+            },
+            {
+              "name": "cancelled_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "document_id",
+              "type": "uuid"
+            },
+            {
+              "name": "format",
+              "type": "text"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "identifier",
+              "type": "text"
+            },
+            {
+              "name": "issue_id",
+              "type": "uuid"
+            },
+            {
+              "name": "reference",
+              "type": "text"
+            },
+            {
+              "name": "rejected_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "rejected_by",
+              "type": "text"
+            },
+            {
+              "name": "rejection_reason",
+              "type": "text"
+            },
+            {
+              "name": "state",
+              "type": "einvoicing.clearance_state"
+            },
+            {
+              "name": "submitted_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "submitted_by",
+              "type": "uuid"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "validated_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "verification_url",
+              "type": "text"
+            }
+          ]
+        },
         {
           "name": "fiscal_chain",
           "columns": [
@@ -12186,12 +12267,20 @@
           "arguments": "p_company_id uuid"
         },
         {
+          "name": "clearance_document",
+          "arguments": "p_document_id uuid, p_what text"
+        },
+        {
           "name": "fiscal_digest",
           "arguments": "p_algorithm text, p_encoding text, p_input text"
         },
         {
           "name": "fiscal_regime",
           "arguments": "p_company_id uuid"
+        },
+        {
+          "name": "guard_clearance",
+          "arguments": ""
         },
         {
           "name": "guard_event",
@@ -12212,6 +12301,14 @@
         {
           "name": "log_fiscal_event",
           "arguments": "p_company_id uuid, p_system_id text, p_kind text, p_detail jsonb"
+        },
+        {
+          "name": "record_clearance_answer",
+          "arguments": "p_document_id uuid, p_state einvoicing.clearance_state, p_identifier text, p_validated_at timestamp with time zone, p_verification_url text, p_reason text, p_by text, p_at timestamp with time zone, p_answer jsonb"
+        },
+        {
+          "name": "record_clearance_submission",
+          "arguments": "p_document_id uuid, p_reference text, p_issue_id uuid, p_submitted_at timestamp with time zone, p_answer jsonb"
         },
         {
           "name": "record_issue",
@@ -12244,6 +12341,11 @@
       ],
       "policies": [
         {
+          "table": "clearances",
+          "name": "einvoicing_clearances_select",
+          "command": "select"
+        },
+        {
           "table": "fiscal_chain",
           "name": "einvoicing_fiscal_chain_select",
           "command": "select"
@@ -12270,6 +12372,10 @@
         }
       ],
       "triggers": [
+        {
+          "table": "clearances",
+          "name": "einvoicing_clearances_guard"
+        },
         {
           "table": "fiscal_chain",
           "name": "einvoicing_fiscal_chain_guard"
@@ -12309,6 +12415,16 @@
           ]
         },
         {
+          "name": "clearance_state",
+          "kind": "enum",
+          "labels": [
+            "submitted",
+            "validated",
+            "rejected",
+            "cancelled"
+          ]
+        },
+        {
           "name": "fiscal_record_kind",
           "kind": "enum",
           "labels": [
@@ -12343,6 +12459,16 @@
           ]
         },
         "tables": [
+          {
+            "name": "clearances",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          },
           {
             "name": "fiscal_chain",
             "anon": [],
@@ -12431,6 +12557,17 @@
             ]
           },
           {
+            "name": "clearance_document",
+            "arguments": "p_document_id uuid, p_what text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "fiscal_digest",
             "arguments": "p_algorithm text, p_encoding text, p_input text",
             "anon": [],
@@ -12451,6 +12588,14 @@
             "service_role": [
               "execute"
             ]
+          },
+          {
+            "name": "guard_clearance",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
           },
           {
             "name": "guard_event",
@@ -12487,6 +12632,28 @@
           {
             "name": "log_fiscal_event",
             "arguments": "p_company_id uuid, p_system_id text, p_kind text, p_detail jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "record_clearance_answer",
+            "arguments": "p_document_id uuid, p_state einvoicing.clearance_state, p_identifier text, p_validated_at timestamp with time zone, p_verification_url text, p_reason text, p_by text, p_at timestamp with time zone, p_answer jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "record_clearance_submission",
+            "arguments": "p_document_id uuid, p_reference text, p_issue_id uuid, p_submitted_at timestamp with time zone, p_answer jsonb",
             "anon": [],
             "authenticated": [
               "execute"
