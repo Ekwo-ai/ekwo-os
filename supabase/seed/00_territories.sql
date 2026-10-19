@@ -2784,3 +2784,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('LS', 'iso_3166_1', 'Lesotho', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Lesotho levies a value added tax of its own under the Value Added Tax Act, 2001 (Act No. 9 of 2001), administered by Revenue Services Lesotho: section 12 makes the supply of goods or services by a vendor a taxable supply and section 19 leaves the rates to regulation, at most four including a zero rate, with 15 per cent on most goods and services, 10 per cent on electricity, a zero rate on exports and basic commodities, and the exempt supplies of section 6.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

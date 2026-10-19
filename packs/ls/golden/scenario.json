@@ -1,0 +1,402 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of a VAT-registered Lesotho trading company, filing monthly, for the financial year ended 31 December 2026",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "LS-IFRSSME-SFP",
+    "LS-IFRSSME-PL"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-mas",
+      "name": "Maseru Retail Traders (Pty) Ltd",
+      "type": "customer",
+      "country": "LS"
+    },
+    {
+      "ref": "cust-food",
+      "name": "Berea Wholesale Foods",
+      "type": "customer",
+      "country": "LS"
+    },
+    {
+      "ref": "cust-exp",
+      "name": "Durban Distributors (Pty) Ltd",
+      "type": "customer",
+      "country": "ZA"
+    },
+    {
+      "ref": "cust-school",
+      "name": "Leribe Community School",
+      "type": "customer",
+      "country": "LS"
+    },
+    {
+      "ref": "supp-trade",
+      "name": "Mafeteng Trade Supplies (Pty) Ltd",
+      "type": "supplier",
+      "country": "LS"
+    },
+    {
+      "ref": "supp-power",
+      "name": "Highland Power Supply Co",
+      "type": "supplier",
+      "country": "LS"
+    },
+    {
+      "ref": "supp-venue",
+      "name": "Mohale Function Venue (Pty) Ltd",
+      "type": "supplier",
+      "country": "LS"
+    },
+    {
+      "ref": "supp-food",
+      "name": "Quthing Grain Merchants",
+      "type": "supplier",
+      "country": "LS"
+    },
+    {
+      "ref": "supp-bank",
+      "name": "Highlands Merchant Bank Ltd",
+      "type": "supplier",
+      "country": "LS"
+    },
+    {
+      "ref": "supp-import",
+      "name": "Gauteng Equipment Importers (Pty) Ltd",
+      "type": "supplier",
+      "country": "ZA"
+    },
+    {
+      "ref": "supp-foreign",
+      "name": "CloudStack Software Inc.",
+      "type": "supplier",
+      "country": "US"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "S1",
+      "type": "sale_invoice",
+      "contact": "cust-mas",
+      "date": "2026-01-15",
+      "why": "A standard-rated domestic sale: box 1 carries the VAT-exclusive value, M10 000, and box 6 the VAT at 15 %, M1 500.",
+      "lines": [
+        {
+          "name": "Point-of-sale hardware units",
+          "quantity": 10,
+          "unit_price": 1000,
+          "tax": "LS-S-VAT",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "S2",
+      "type": "sale_invoice",
+      "contact": "cust-mas",
+      "date": "2026-02-20",
+      "why": "A supply of electricity at 10 % (Regulation 6(1)(b) as amended in 2021): box 2 carries M2 000, box 7 the VAT, M200.",
+      "lines": [
+        {
+          "name": "Electricity resold to tenants, February",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "LS-S-VAT-ELEC",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "S3",
+      "type": "sale_invoice",
+      "contact": "cust-food",
+      "date": "2026-01-22",
+      "why": "A basic commodity at the zero rate: box 3 carries the value, no VAT.",
+      "lines": [
+        {
+          "name": "Maize meal, 10 kg bags",
+          "quantity": 500,
+          "unit_price": 12,
+          "tax": "LS-S-ZERO",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "S4",
+      "type": "sale_invoice",
+      "contact": "cust-exp",
+      "date": "2026-02-05",
+      "why": "Goods exported, zero-rated under s. 19(2): box 4, kept apart from box 3.",
+      "lines": [
+        {
+          "name": "Export consignment of hardware units",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "LS-S-EXPORT",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "S5",
+      "type": "sale_invoice",
+      "contact": "cust-school",
+      "date": "2026-01-31",
+      "why": "Education services, an exempt supply under s. 6(2)(a): box 5, no output tax and no credit on what went into it.",
+      "lines": [
+        {
+          "name": "Tuition fees, January term",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "LS-S-EXEMPT",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "S6",
+      "type": "sale_credit_note",
+      "contact": "cust-mas",
+      "date": "2026-01-28",
+      "why": "A credit note on two units returned from S1: box 1 and box 6 go down by M2 000 and M300 in the period it is issued.",
+      "lines": [
+        {
+          "name": "Returned hardware units",
+          "quantity": 2,
+          "unit_price": 1000,
+          "tax": "LS-S-VAT",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supp-trade",
+      "date": "2026-01-12",
+      "why": "A creditable domestic purchase of stock for resale (s. 23(1)(a)(iii)): box 10 takes the VAT, M3 000 on a M20 000 base.",
+      "lines": [
+        {
+          "name": "Trading stock — hardware components",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "LS-P-VAT",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supp-power",
+      "date": "2026-01-25",
+      "why": "An electricity bill at 10 %: box 10 takes the VAT, M100 on a M1 000 base.",
+      "lines": [
+        {
+          "name": "Electricity, January",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "LS-P-VAT-ELEC",
+          "account": "6310"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supp-venue",
+      "date": "2026-02-14",
+      "why": "Client entertainment, the VAT of which the vendor does not claim: the M450 lands on the expense account and no box carries it.",
+      "lines": [
+        {
+          "name": "Client entertainment — restaurant",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "LS-P-VAT-NC",
+          "account": "6390"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supp-food",
+      "date": "2026-01-18",
+      "why": "Basic commodities bought for resale, zero-rated at the supplier: nothing to claim, and no box for the value.",
+      "lines": [
+        {
+          "name": "Maize meal, 10 kg bags — for resale",
+          "quantity": 500,
+          "unit_price": 10,
+          "tax": "LS-P-ZERO",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2026-02-28",
+      "why": "Bank charges, an exempt financial service under s. 6(2)(a): the supplier charged no VAT.",
+      "lines": [
+        {
+          "name": "Monthly bank charges",
+          "quantity": 1,
+          "unit_price": 350,
+          "tax": "LS-P-EXEMPT",
+          "account": "6430"
+        }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "supp-import",
+      "date": "2026-01-30",
+      "why": "An import of equipment cleared by customs (s. 11(2)(a)): box 11 takes the import VAT, M1 800 on a M12 000 value.",
+      "lines": [
+        {
+          "name": "Imported office computer equipment",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "LS-P-IMPORT-GOODS",
+          "account": "1650"
+        }
+      ]
+    },
+    {
+      "ref": "P7",
+      "type": "purchase_invoice",
+      "contact": "supp-foreign",
+      "date": "2026-02-15",
+      "why": "A cloud software subscription from a supplier outside Lesotho, an import of services (s. 11(1)(b)): the M300 is self-assessed in box 8 and booked as a cost, not claimed.",
+      "lines": [
+        {
+          "name": "Cloud software subscription",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "LS-P-RC-IMPORT-SERVICES",
+          "account": "6350"
+        }
+      ]
+    },
+    {
+      "ref": "P8",
+      "type": "purchase_credit_note",
+      "contact": "supp-trade",
+      "date": "2026-02-05",
+      "why": "A credit note on P1 for damaged stock returned: box 10 goes down by M150 in the period it is issued, February.",
+      "lines": [
+        {
+          "name": "Damaged stock returned",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "LS-P-VAT",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1",
+      "direction": "inbound",
+      "date": "2026-01-25",
+      "amount": 11500,
+      "contact": "cust-mas",
+      "journal": "BNK",
+      "match": "S1",
+      "why": "A receipt that settles S1 exactly."
+    },
+    {
+      "ref": "R2",
+      "direction": "inbound",
+      "date": "2026-02-02",
+      "amount": 6000,
+      "contact": "cust-food",
+      "journal": "BNK",
+      "match": "S3",
+      "why": "A receipt that settles S3 exactly."
+    },
+    {
+      "ref": "R3",
+      "direction": "inbound",
+      "date": "2026-03-10",
+      "amount": 2200,
+      "contact": "cust-mas",
+      "journal": "BNK",
+      "match": "S2",
+      "why": "A receipt that settles S2 exactly."
+    },
+    {
+      "ref": "R4",
+      "direction": "inbound",
+      "date": "2026-02-25",
+      "amount": 1000,
+      "contact": "cust-mas",
+      "journal": "BNK",
+      "match": null,
+      "why": "A payment on account that matches no invoice and stays open."
+    },
+    {
+      "ref": "D1",
+      "direction": "outbound",
+      "date": "2026-01-20",
+      "amount": 23000,
+      "contact": "supp-trade",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "A payment that settles P1 exactly."
+    },
+    {
+      "ref": "D2",
+      "direction": "outbound",
+      "date": "2026-02-01",
+      "amount": 1100,
+      "contact": "supp-power",
+      "journal": "BNK",
+      "match": "P2",
+      "why": "A payment that settles P2 exactly."
+    },
+    {
+      "ref": "D3",
+      "direction": "outbound",
+      "date": "2026-01-25",
+      "amount": 5000,
+      "contact": "supp-food",
+      "journal": "BNK",
+      "match": "P4",
+      "why": "A payment that settles P4 exactly."
+    },
+    {
+      "ref": "D4",
+      "direction": "outbound",
+      "date": "2026-02-20",
+      "amount": 3450,
+      "contact": "supp-venue",
+      "journal": "BNK",
+      "match": "P3",
+      "why": "A payment that settles P3 exactly."
+    }
+  ]
+}

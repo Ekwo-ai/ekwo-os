@@ -1,0 +1,138 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "LS-VAT",
+  "name": "Value Added Tax return",
+  "period": [
+    "month"
+  ],
+  "valid_from": "2021-04-01",
+  "legal_reference": "Value Added Tax Act, 2001, s. 1 — the tax period is one month ending on the last day of each month of the calendar year; s. 27(1) — a vendor files a return for each tax period with the Commissioner General; s. 27(2) — the return is in the form the Commissioner prescribes. The boxes below follow the structure of s. 20(1) (output tax A less input tax B); the numbering is this pack's own, because the form RSL prescribes was not published in a text this pack could read — the README says so.",
+  "source": "vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Value Added Tax Act, 2001, s. 27(1) — within twenty days after the end of the period; s. 37(1)(a) — the tax is due and payable on the date the return is to be filed. s. 27(4) lets the Commissioner extend the filing, but not the payment (s. 27(5)).",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Supplies at the standard rate of 15 %, VAT-exclusive",
+      "sequence": 10,
+      "legal_reference": "Value Added Tax Act, 2001, s. 20(1), item A — the tax payable on the taxable supplies made in the period; the base is the taxable value of the supplies at the rate of 15 % (s. 12, s. 14).",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Supplies of electricity at 10 %, VAT-exclusive",
+      "sequence": 20,
+      "legal_reference": "Value Added Tax Regulations, 2003, reg. 6(1)(b), as amended by Legal Notice No. 30 of 2021 — the taxable value of supplies of electricity.",
+      "source": "vat-regs-2021"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Zero-rated supplies, other than exports",
+      "sequence": 30,
+      "legal_reference": "Value Added Tax Act, 2001, s. 19(3) — supplies at the zero rate the regulations prescribe, such as basic commodities.",
+      "source": "vat-act"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Exports, zero-rated",
+      "sequence": 40,
+      "legal_reference": "Value Added Tax Act, 2001, s. 19(2) — exports of goods or services by a vendor at the rate of zero.",
+      "source": "vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 50,
+      "legal_reference": "Value Added Tax Act, 2001, s. 6(2) — exempt supplies carry no tax and no input credit.",
+      "source": "vat-act"
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "Output tax at 15 %",
+      "sequence": 60,
+      "legal_reference": "Value Added Tax Act, 2001, s. 20(1), item A — the value added tax payable on the taxable supplies of box 1.",
+      "source": "vat-act"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Output tax on electricity at 10 %",
+      "sequence": 70,
+      "legal_reference": "Value Added Tax Act, 2001, s. 20(1), item A — the tax payable on the supplies of box 2.",
+      "source": "vat-act"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Tax on imported services, self-assessed",
+      "sequence": 80,
+      "legal_reference": "Value Added Tax Act, 2001, s. 7(1)(b) and s. 11(1)(b) — the tax on an import of services is paid by the importer.",
+      "source": "vat-act"
+    },
+    {
+      "box": "9",
+      "kind": "total",
+      "name": "Total output tax",
+      "sequence": 90,
+      "legal_reference": "Value Added Tax Act, 2001, s. 20(1) — item A, the sum of boxes 6, 7 and 8.",
+      "source": "vat-act",
+      "plus": [
+        "6",
+        "7",
+        "8"
+      ]
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "Input tax on local purchases",
+      "sequence": 100,
+      "legal_reference": "Value Added Tax Act, 2001, s. 20(1), item B, and s. 23(1)(a) — input tax allowed as a credit on taxable supplies to the vendor.",
+      "source": "vat-act"
+    },
+    {
+      "box": "11",
+      "kind": "tax",
+      "name": "Input tax on imported goods",
+      "sequence": 110,
+      "legal_reference": "Value Added Tax Act, 2001, s. 23(1)(a) and s. 24(4)(b) — input tax on a taxable import, evidenced by a bill of entry or other customs document.",
+      "source": "vat-act"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Total input tax",
+      "sequence": 120,
+      "legal_reference": "Value Added Tax Act, 2001, s. 20(1) — item B, the sum of boxes 10 and 11.",
+      "source": "vat-act",
+      "plus": [
+        "10",
+        "11"
+      ]
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Value added tax payable or (refundable)",
+      "sequence": 130,
+      "legal_reference": "Value Added Tax Act, 2001, s. 20(1) — the tax payable for a period is A − B; a negative figure is an excess credit. This pack writes the signed subtraction.",
+      "source": "vat-act",
+      "plus": [
+        "9"
+      ],
+      "minus": [
+        "12"
+      ]
+    }
+  ]
+}

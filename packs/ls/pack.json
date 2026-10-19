@@ -1,0 +1,233 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "LS",
+  "name": "Lesotho",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 208,
+  "released_at": "2026-10-19",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act, 2001 (Act No. 9 of 2001), as published by Revenue Services Lesotho — sections 1, 6, 7, 9, 10, 11, 12, 17, 19, 20, 23, 24 and 27, 37 and Schedule II. This is the 2001 text; the amending Act No. 6 of 2003 listed beside it was not read",
+        "publisher": "Revenue Services Lesotho (the Act is also published on LesLII)",
+        "url": "https://www.rsl.org.ls/sites/default/files/2026-09/VAT%20ACT%20-%202001.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "law"
+      },
+      {
+        "key": "vat-regs-2020",
+        "title": "Value Added Tax (Amendment) Regulations, 2020 (Legal Notice No. 18 of 2020, Government Gazette Vol. 65 No. 17, 20 March 2020) — reg. 6(1)(b) electricity 9 % and (d) telecommunications 15 % from 1 April 2020",
+        "publisher": "Revenue Services Lesotho / Government Printer",
+        "url": "https://www.rsl.org.ls/sites/default/files/2026-09/VAT%20REGULATIONS%20NO.18%20OF%202020.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-regs-2021",
+        "title": "Value Added Tax (Amendment) Regulations, 2021 (Legal Notice No. 30 of 2021, Government Gazette Vol. 66 No. 25, 12 March 2021) — reg. 6(1)(b) electricity raised to 10 % from 1 April 2021",
+        "publisher": "Revenue Services Lesotho / Government Printer",
+        "url": "https://www.rsl.org.ls/sites/default/files/2026-09/VALUE%20ADDED%20TAX%20%28AMENDMENT%29%20REGULATIONS%20LN.30%20OF%202021_0.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "regulation"
+      },
+      {
+        "key": "rsl-tax-rates",
+        "title": "Tax Rates — VAT: 0 % exports and basic commodities, 10 % electricity, 15 % telecommunications, 15 % other goods and services",
+        "publisher": "Revenue Services Lesotho",
+        "url": "https://www.rsl.org.ls/tax-rates",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "vat-registration",
+        "title": "Value Added Tax (VAT) — registration: threshold of M850,000 per annum, and a return filed every month",
+        "publisher": "Revenue Services Lesotho",
+        "url": "https://www.rsl.org.ls/node/106",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "rsl-faqs",
+        "title": "Frequently asked questions — registration threshold of M850,000 per annum; eTax and e-Payments services",
+        "publisher": "Revenue Services Lesotho",
+        "url": "https://www.rsl.org.ls/faqs",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "etax",
+        "title": "RSL eTax — the online filing portal for returns",
+        "publisher": "Revenue Services Lesotho",
+        "url": "https://efiling.rsl.org.ls/rsl-client/login",
+        "consulted_on": "2026-10-19",
+        "kind": "portal"
+      },
+      {
+        "key": "einvoicing-regs",
+        "title": "Value Added Tax (E-Invoicing) Regulations, 2026 (Legal Notice No. 25 of 2026) — in operation on 1 April 2026; invoices issued from an accredited Electronic Billing System and registered on the Invoice Data Management System",
+        "publisher": "Revenue Services Lesotho / Government Printer",
+        "url": "https://www.rsl.org.ls/sites/default/files/2026-09/VAT%20-%20E-Invoicing%20Regulations%20No.25%20of%202026%20%283%29.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "regulation"
+      },
+      {
+        "key": "companies-act",
+        "title": "Companies Act, 2011 (Act No. 18 of 2011), s. 95 — accounts follow the financial reporting framework prescribed by the Lesotho Institute of Accountants, as summarised in the IFRS Foundation's jurisdiction profile for Lesotho",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction/lesotho/",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "ifrs-for-smes",
+        "title": "IFRS for SMEs Accounting Standard — Section 4, Statement of Financial Position, and Section 5, Statement of Comprehensive Income and Income Statement",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/ifrs-for-smes/",
+        "consulted_on": "2026-10-19",
+        "kind": "standard"
+      },
+      {
+        "key": "uncl5305",
+        "title": "UNCL5305 — duty or tax or fee category code",
+        "publisher": "OpenPEPPOL — the list itself is published by UN/CEFACT",
+        "url": "https://docs.peppol.eu/poacc/billing/3.0/codelist/UNCL5305/",
+        "consulted_on": "2026-10-19",
+        "kind": "standard"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "LSL",
+    "fiscal_year_default": "calendar",
+    "language": "en",
+    "closing_style": "retained_earnings",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Lesotho reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "LS-IFRSSME-SFP",
+        "LS-IFRSSME-PL"
+      ],
+      "legal_reference": "There is no chart of accounts prescribed by Lesotho law that this pack could read. Companies Act, 2011 (Act No. 18 of 2011), s. 95 requires a company's accounts to follow the financial reporting framework the Lesotho Institute of Accountants prescribes; the Institute has adopted the IFRS Standards and the IFRS for SMEs Accounting Standard, and a company other than a financial institution may use either (IFRS Foundation jurisdiction profile for Lesotho). This chart is original — four digits, blocked so that each range reaches one line item of Section 4.2 (statement of financial position) and Section 5.5 (statement of comprehensive income) of the IFRS for SMEs Accounting Standard; a company that files nothing keeps the same books and uses the same statements as management accounts. A financial institution applies full IFRS and needs more than this chart.",
+      "source": "companies-act"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, 2001, s. 24 and Schedule III — a vendor making a taxable supply to another vendor provides a value added tax invoice with the particulars of Schedule III; the Act does not, in the text this pack read, require the numbering to be unbroken or to restart each year, so numbering is `sequential`. The pattern in number_format is a business's own choice.",
+        "source": "vat-act"
+      },
+      "payment_terms": {
+        "legal_reference": "No statute of general application that this pack read fixes a payment term between businesses in Lesotho in the absence of an agreement, nor a statutory rate of interest on a late commercial invoice, so legal_payment_days and late_payment_reference are left empty.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, 2001, s. 9(2)(d) — in the ordinary case a supply occurs on the earliest of the date the goods are delivered or made available (or the services completed), the date the invoice is issued, and the date payment, including part payment, is made. `invoice_date` is right when the invoice comes first, which is the ordinary case between vendors; it is a derogation from the earliest-of rule, wrong for goods delivered or paid for before any invoice. s. 9(2)(a) to (c) fix other dates for an auction, an own use and a gift.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Export of goods or services — zero-rated under section 19(2) of the Value Added Tax Act, 2001.",
+        "sequence": 10,
+        "legal_reference": "Value Added Tax Act, 2001, s. 19(2) — the rate on an export by a vendor is zero; Schedule III lists the particulars of a value added tax invoice. Lesotho is outside the VATEX list of the European Union's common system and carries no exemption reason code of its own.",
+        "source": "vat-act"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt supply under section 6 of the Value Added Tax Act, 2001 — no VAT is charged and no input tax on what went into it may be credited.",
+        "sequence": 20,
+        "legal_reference": "Value Added Tax Act, 2001, s. 6(2) — the exempt supplies: public postal, transportation, medical or dental, financial, insurance and education services, unimproved land, certain lettings to manufacturers, water, and the supplies the Minister prescribes.",
+        "source": "vat-act"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Lesotho has no Peppol authority and no published structured-invoice profile that Ekwo's vocabulary can name, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What Lesotho has instead is a clearance-style system: the Value Added Tax (E-Invoicing) Regulations, 2026 (Legal Notice No. 25 of 2026), made under s. 88 of the Value Added Tax Act, 2001, came into operation on 1 April 2026, and provide for an invoice issued from an accredited Electronic Billing System, carrying a QR code and registered on RSL's Invoice Data Management System (the Lekuka portal). Real-time registration with the tax authority and accreditation of billing software are outside what a pack can model; the date from which each vendor must connect, and the penalties, were not read in the regulations and are left to the README.",
+    "source": "einvoicing-regs"
+  }
+}

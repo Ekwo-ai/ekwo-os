@@ -1,0 +1,459 @@
+[
+  {
+    "code": "LS-S-VAT",
+    "name": "Sale, standard rate 15 %",
+    "description": "A taxable supply made by a vendor in the course or furtherance of an enterprise, in Lesotho",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-04-01",
+    "legal_reference": "Value Added Tax Act, 2001 (Act No. 9 of 2001), s. 12(1) — a taxable supply is a supply of goods or services, other than an exempt supply, made in Lesotho by a vendor for consideration in the course or furtherance of an enterprise; s. 19(3) — the rates are prescribed by regulation, at most four including a zero rate. The Revenue Services Lesotho page of tax rates lists 15 % for other goods and services, that is every supply the regulations do not carry at another rate. The pack dates every code from 1 April 2021, the day the last rate change in the regulations it read took effect (electricity at 10 %); earlier dates are left to a later version, since no official text of the earlier standard rate was read.",
+    "source": "rsl-tax-rates",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": 100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "LS-S-VAT-ELEC",
+    "name": "Sale of electricity, rate 10 %",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-04-01",
+    "legal_reference": "Value Added Tax Regulations, 2003 (Legal Notice No. 95 of 2003), reg. 6(1)(b), as amended: the rate on electricity was raised from 8 % to 9 % from 1 April 2020 by the Value Added Tax (Amendment) Regulations, 2020 (Legal Notice No. 18 of 2020), and from 9 % to 10 % from 1 April 2021 by the Value Added Tax (Amendment) Regulations, 2021 (Legal Notice No. 30 of 2021). The RSL page of tax rates still lists 10 % for electricity. The 9 % and 8 % periods are closed and not carried, since no document of this pack falls in them.",
+    "source": "vat-regs-2021",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": 100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "LS-S-ZERO",
+    "name": "Sale, zero-rated, domestic",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-04-01",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Value Added Tax Act, 2001, s. 6(4) and the regulations made under s. 19(3) — the rate of zero applies to the supplies the regulations list; the RSL page of tax rates names exports and basic commodities at 0 %. The list of basic commodities is in the regulations, which RSL amended in 2026 to add zero-rated imported products (fresh produce, cooking oil); the list is not copied into this pack, so the user picks this code only for a supply the regulations name. A zero-rated supply is a taxable supply at a nil charge, not an exempt one (s. 6(4)): the input tax on what went into it stays creditable.",
+    "source": "rsl-tax-rates",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "LS-S-EXPORT",
+    "name": "Export of goods or services, zero-rated",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2021-04-01",
+    "conditions": [
+      "transport_evidence"
+    ],
+    "legal_reference": "Value Added Tax Act, 2001, s. 19(2) — the rate of value added tax imposed on an export of goods or services from Lesotho by a vendor is zero; s. 12(2) — a taxable supply includes an export; s. 10(7) — services supplied from a place of business in Lesotho that would be treated as supplied abroad are considered exported for the purposes of s. 19(2).",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "LS-S-EXEMPT",
+    "name": "Exempt supply",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2021-04-01",
+    "legal_reference": "Value Added Tax Act, 2001, s. 6(2) — exempt supplies: public postal, transportation, medical or dental, financial, insurance and education services (defined in s. 6(1)); unimproved land; the letting of immovable property to a manufacturer that uses it principally for manufacturing; water; and any supply the Minister prescribes in regulations. An exempt supply carries no output tax, and the input tax on what went into it is not creditable. No exemption reason code is carried: the VATEX list names provisions of the European Union's common system that do not bind a Lesotho supplier. Residential rent is not in the list of s. 6(2) as published in 2001 and is therefore not offered here as exempt.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "LS-S-NOT-SUBJECT",
+    "name": "Supply outside the scope of VAT",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2021-04-01",
+    "legal_reference": "Value Added Tax Act, 2001, s. 12(1) and (3) — VAT is levied only on a supply made in Lesotho by a vendor in the course or furtherance of an enterprise; a private sale, or a supply made outside Lesotho (s. 10), is not a taxable supply and appears in no box of the return.",
+    "source": "vat-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "LS-P-VAT",
+    "name": "Purchase, standard rate 15 %",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-04-01",
+    "legal_reference": "Value Added Tax Act, 2001, s. 20(1) — the tax payable for a period is output tax (A) less input tax (B) allowed as a credit; s. 23(1)(a) — the credit is allowed for input tax on a taxable supply to the vendor for use in manufacturing, in construction services or for resale in substantially the same state, and s. 24(4) requires a value added tax invoice in the period of the claim. The conditions of s. 23 are the vendor's to check: this code credits the tax and `LS-P-VAT-NC` does not.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "LS-P-VAT-ELEC",
+    "name": "Purchase of electricity, rate 10 %",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-04-01",
+    "legal_reference": "Value Added Tax Regulations, 2003, reg. 6(1)(b) as amended by Legal Notice No. 30 of 2021 — 10 % on electricity from 1 April 2021; the credit follows Value Added Tax Act, 2001, s. 20(1) and s. 23 as for LS-P-VAT.",
+    "source": "vat-regs-2021",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "LS-P-VAT-NC",
+    "name": "Purchase, standard rate 15 %, input tax not creditable",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-04-01",
+    "recoverable": false,
+    "legal_reference": "Value Added Tax Act, 2001, s. 23(1)(a) — a credit is allowed only for the supplies the paragraph lists, and s. 6(2) read with s. 20(1) leaves none for what went into an exempt supply. Where the vendor cannot claim the VAT on a purchase, the tax is part of its cost and no box of the return carries it.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "LS-P-ZERO",
+    "name": "Purchase, zero-rated",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-04-01",
+    "legal_reference": "The supplier charged VAT at 0 % under Value Added Tax Act, 2001, s. 19; there is no input tax to claim and the return has no box for the value of a purchase that carries no VAT.",
+    "source": "vat-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "LS-P-EXEMPT",
+    "name": "Purchase, exempt",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2021-04-01",
+    "legal_reference": "The supplier made an exempt supply under Value Added Tax Act, 2001, s. 6(2) — bank charges and interest are financial services — and charged no VAT.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "LS-P-NOT-SUBJECT",
+    "name": "Purchase from a person who is not a vendor",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2021-04-01",
+    "legal_reference": "Value Added Tax Act, 2001, s. 17 — only a registered vendor charges VAT; a supplier below the registration threshold charges none, and there is nothing to deduct.",
+    "source": "vat-act",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "LS-P-IMPORT-GOODS",
+    "name": "Importation of goods, VAT 15 %",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2021-04-01",
+    "legal_reference": "Value Added Tax Act, 2001, s. 7(1)(b) — the tax on a taxable import is paid by the importer; s. 11(1)(a) and (2) — an import of goods occurs on the date of clearance under the Customs and Excise Act, 1982; s. 23(1)(a) and s. 24(4)(b) — the credit is allowed on a bill of entry or other customs document. Imported goods carry the 15 % rate.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 170
+  },
+  {
+    "code": "LS-P-RC-IMPORT-SERVICES",
+    "name": "Imported services, reverse charged, not claimed",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2021-04-01",
+    "recoverable": false,
+    "legal_reference": "Value Added Tax Act, 2001, s. 11(1)(b) — an import of services is a supply by a person carrying on an enterprise outside Lesotho for use or consumption in Lesotho; s. 7(1)(b) — the importer pays the tax. The pack books the tax on the service as a cost and as a liability in box 8, and claims no credit; a vendor that is entitled to the credit under s. 23 adjusts it with its accountant.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "8",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 180
+  }
+]
