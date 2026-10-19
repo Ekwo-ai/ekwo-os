@@ -4094,6 +4094,14 @@
             }
           }
         },
+        "line_attributes": {
+          "type": "object",
+          "description": "What the brick needs on every line that the books do not record: attributes passed to the brick on each line of a document, where the format's own list has an entry for whatever is not one of its named cases. `ekwo pack check` refuses an empty object.",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "legal_reference": {
           "type": "string",
           "minLength": 1,

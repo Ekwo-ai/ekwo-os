@@ -1350,6 +1350,7 @@ regime; nothing is defaulted.
                   "batch_max": 1000, "interval_seconds": 60, "retry_seconds": 3600 },
   "events": { "summary_every_hours": 6, "modes": ["none"] },
   "tax_attributes": { "<tax code>": { "<attribute>": "<value>" } },
+  "line_attributes": { "<attribute>": "<value>" },
   "legal_reference": "…", "source": "<register key>"
 }
 ```
@@ -1401,7 +1402,8 @@ moved:
 | `submission` | The default `mode` and every mode the law allows: `realtime` (each record as it is made), `batch` (in messages), `none` (kept, handed over on request); the size of a batch, the wait between sendings, the longest a pending record waits; `channel`, who carries the records (a short name); `cadence`, where the law sets periods: per category of taxpayer (`who`) and kind of data (`data`), the `period` one sending covers (`day`, `week`, `ten_days`, `month`, `two_months`, `quarter`, `half_year`, `year`) and when it is `due` — `days_after_period` with `days`, or `month_after_period_from_day` with `day`, from that day to the end of the month after the period |
 | `events` | How often a summary event is kept, and in which modes |
 | `reported` | What a reporting regime reports — a scope, `what`, a short name the legal reference explains — and who reports it, `by`: `supplier`, `customer` or both (the supplier when left out). A sibling of `events`: those are the records a system keeps of its own life, these the operations the authority is told of |
-| `tax_attributes` | What the brick needs on a tax line that its category does not decide alone, by code of a tax of this pack |
+| `tax_attributes` | What the brick needs on a tax line that its category does not decide alone, by code of a tax of this pack. Under a clearance regime, what the electronic invoice itself needs: the brick of the pack's e-invoicing profile reads them on the rows of `document_tax_summary` — the tax type of the format's own list, for instance |
+| `line_attributes` | What the brick needs on every line that the books do not record, where the format's own list has an entry for whatever is not one of its named cases — a classification `Others`. Given on each line of a document the brick writes; left out, nothing is given. The legal reference says why the entry is the right one and which lines it is wrong for |
 
 Every sub-object may carry its own `legal_reference` and `source`; the block
 carries both, and `ekwo pack check` refuses it without them. It also refuses
@@ -1411,8 +1413,8 @@ sends no batch or naming one kind of data of one category twice, a due rule
 without its number, a scope reported twice, a day that does not exist, a mode named that `submission.modes` does not
 list, a `batch_max` where batch is not allowed, a QR size whose minimum is
 above its maximum, no production service for a mode the law allows, a field
-named twice in a hash list, and a `tax_attributes` code the pack does not
-carry; a `hash` beside `clearance`, the mode `none` under a clearance regime
+named twice in a hash list, a `tax_attributes` code the pack does not
+carry and an empty `line_attributes`; a `hash` beside `clearance`, the mode `none` under a clearance regime
 (an invoice the authority never receives is never validated), steps
 of a phased obligation whose thresholds do not fall as the days move on, some
 steps sized and others not, thresholds stated in two currencies, and
@@ -1437,6 +1439,15 @@ is bound. The submission and every answer are recorded by
 the windows of the pack ([`modules/einvoicing`](../modules/einvoicing/README.md#clearance-the-invoice-the-authority-validates-before-it-is-issued));
 the call to the authority is the host's. The schema names no country: every
 value of a regime is in its pack, with its article.
+
+The identifiers a cleared invoice asks of both parties beyond a VAT number
+and a registration number — a tax identification number, a registration for
+a tax that is not a VAT — are not pack data: they are facts of each company
+and each contact, kept in `companies.identifiers` and
+`contacts.identifiers` by the code of their scheme, `{"<scheme>":
+"<identifier>"}`, as the format names the scheme. The pack's README says
+which schemes its format reads, and the brick reports by name the one a
+party lacks.
 
 ### The mentions, and when each applies
 

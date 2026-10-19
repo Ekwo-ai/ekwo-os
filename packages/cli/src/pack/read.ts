@@ -738,6 +738,13 @@ export interface PackFiscalisation {
   reported: { what: string; by: ('supplier' | 'customer')[]; legal_reference: string | null; source: string | null }[];
   /** By code of a tax of this pack, the attributes handed to the brick on that tax's row. */
   tax_attributes: Record<string, Record<string, string>>;
+  /**
+   * The attributes handed to the brick on every line, where the books record
+   * nothing the brick can read them from and the format's own list has an
+   * entry for whatever is not one of its named cases. Present only where the
+   * pack declares it, so a block that declares none compiles as before.
+   */
+  line_attributes?: Record<string, string>;
   legal_reference: string;
   source: string;
 }
@@ -2882,6 +2889,13 @@ function normaliseFiscalisation(raw: unknown): PackFiscalisation | null {
         Object.fromEntries(Object.entries(attributes).map(([name, value]) => [name, String(value)])),
       ]),
     ),
+    ...(block['line_attributes'] === undefined
+      ? {}
+      : {
+          line_attributes: Object.fromEntries(
+            Object.entries(block['line_attributes'] as Record<string, unknown>).map(([name, value]) => [name, String(value)]),
+          ),
+        }),
     legal_reference: String(block['legal_reference'] ?? ''),
     source: String(block['source'] ?? ''),
   };
@@ -3060,6 +3074,9 @@ function fiscalisationReferences(block: PackFiscalisation | null, taxCodes: Set<
     if (Object.keys(block.tax_attributes[code] ?? {}).length === 0) {
       issues.push({ path: `${where}.tax_attributes.${code}`, message: 'carries no attribute' });
     }
+  }
+  if (block.line_attributes !== undefined && Object.keys(block.line_attributes).length === 0) {
+    issues.push({ path: `${where}.line_attributes`, message: 'carries no attribute: leave it out' });
   }
   return issues;
 }
