@@ -183,23 +183,45 @@ is one `documents.tax_point` per country, so this pack declares
 halves and exact for neither.
 
 **Electronic invoicing is mandatory, phased by turnover, and is a
-pre-issuance clearance the core cannot model.** Income Tax Act 1967, s. 82C,
-with the Income Tax (Issuance of Electronic Invoice) Rules 2024, phases the
-duty in from 1 August 2024 (above RM100 million) to 1 January 2026 (above
-RM1 million), while the exemption threshold below which a taxpayer need not
-yet comply has itself been raised twice since — to RM1,000,000 in December
-2025 and to RM3,000,000 by version 4.8 of LHDNM's own guideline, dated
-30 August 2026. The format has no field for an exemption threshold that moves
-by administrative guideline; this pack states the day the duty first bound
-anyone. More fundamentally: MyInvois validates an invoice **before** it
-reaches the buyer — LHDNM returns a Unique Identifier Number and a QR code, and
-the invoice is not legally the taxpayer's without them. Ekwo has no document
-status for a step that happens between posting and delivery and waits on an
-external answer (see
-[`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet));
-this pack declares the profile (`pint-my`) and the scheme (`0230`, the SSM
-number) without attempting to model the UIN, the QR code, or the 72-hour
-rejection window.
+pre-issuance clearance.** Income Tax Act 1967, s. 82C, with the Income Tax
+(Issuance of Electronic Invoice) Rules 2024, phases the duty in by annual
+turnover or revenue, and the pack carries the calendar as data in
+`einvoicing.fiscalisation.mandatory_from`, one step per threshold:
+
+| From | Bound when the annual turnover or revenue is above |
+|---|---|
+| 1 August 2024 | RM100,000,000 |
+| 1 January 2025 | RM25,000,000 |
+| 1 July 2025 | RM5,000,000 |
+| 1 January 2026 | RM1,000,000 |
+
+`einvoicing.mandatory_from` keeps the first of these, the day the duty first
+bound anyone. The exemption threshold below which a taxpayer need not yet
+comply has been raised twice since — to RM1,000,000 in December 2025 and to
+RM3,000,000 by version 4.8 of LHDNM's own guideline, dated 30 August 2026,
+§ 1.6.1(e) — and `fiscalisation.exemption` carries it as a dated history. Only
+the RM3,000,000 threshold is an entry, from 30 August 2026, the date of the
+guideline that states it: the texts this pack cites do not give the day the
+RM1,000,000 threshold took effect, and none is invented. The books do not say
+a company's turnover, so `ekwo einvoice fiscalisation` counts every posted
+sale from 1 August 2024 and says which threshold holds; whether a company is
+bound, and from which step, is the company's and its accountant's to say.
+
+MyInvois validates an invoice **before** it reaches the buyer: LHDNM returns a
+Unique Identifier Number, the moment of validation and the link of the QR code
+the invoice carries, and the invoice is not legally the taxpayer's without
+them. The pack declares this as a `clearance` regime in format `myinvois`: the
+link is `returned` by the authority, and the supplier may cancel and the buyer
+reject a validated invoice within `PT72H`, 72 hours of its validation, each
+with a reason. The `einvoicing` module records each submission and each answer
+(`ekwo einvoice clearance`, `einvoicing_clearance`) and refuses a cancellation
+or a rejection after the window; a posted sale without a validation is named
+by the status. Two things remain: **no brick writes the MyInvois document
+yet**, which the status says by name (`format_without_brick`), and **Ekwo does
+not call MyInvois** — the submission, its authentication and its signature
+are the host's (see
+[`docs/international.md`](../../docs/international.md#from-malaysia)). The
+profile stays `pint-my` and the scheme `0230`, the SSM number.
 
 **No withholding tax.** Income Tax Act 1967, s. 107A and s. 109 impose
 withholding on payments to a non-resident — contract payments, interest,
@@ -236,6 +258,12 @@ translation is future work and welcome, one file, one contributor, per
   another without the tax applying a second time.
 - **Withholding tax** on a payment to a non-resident, Income Tax Act 1967,
   ss. 107A and 109.
+- **The MyInvois document itself**, and the call to MyInvois. The clearance is
+  recorded, not made: no brick writes the `myinvois` document, and the
+  submission is the host's.
+- **The day the RM1,000,000 exemption threshold took effect**, in December
+  2025: no text this pack cites dates it, so it is not an entry of
+  `fiscalisation.exemption`.
 - **A Malay-language translation of the pack's own labels.**
 
 ## Reviewing this pack

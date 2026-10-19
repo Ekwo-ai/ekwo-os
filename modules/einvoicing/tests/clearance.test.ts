@@ -1,6 +1,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
+  EINVOICE_FORMATS,
   fiscalisationStatus,
   fiscaliseDocument,
   recordClearanceAnswer,
@@ -327,5 +328,44 @@ describe('fiscalisationStatus under a clearance regime', () => {
     expect(status['missing_count']).toBe(0);
     expect((status['missing'] as Record<string, unknown>[]).map((d) => d['id'])).not.toContain(documentId);
     expect(String(status['note'])).toMatch(/only announced/);
+  });
+});
+
+describe('the pack that declares a clearance regime', () => {
+  it('is compiled as it declares it, names its unvalidated sales, and says whether a brick writes its format', async () => {
+    const pack = packWhere(
+      'declares a clearance regime and charges a standard rate',
+      (candidate) => candidate.documents.einvoice_fiscalisation?.kind === 'clearance' && standardTaxOf(candidate) !== undefined,
+    );
+    const regime = pack.documents.einvoice_fiscalisation!;
+    const compiled = await one<{ r: Record<string, unknown> }>(db, `select einvoice_fiscalisation as r from country_defaults where country = $1`, [pack.manifest.country]);
+    expect(compiled.r).toEqual(JSON.parse(JSON.stringify(regime)));
+    expect(compiled.r['hash']).toBeNull();
+
+    const company = await seller(db, pack, 'Declaring Clearance Seller');
+    const from = [...regime.mandatory_from.map((entry) => entry.from)].sort()[0]!;
+    const documentId = await sale(db, company, { date: from });
+    const status = await fiscalisationStatus(company.backend, company.companyId, { limit: 500 });
+    expect((status['missing'] as Record<string, unknown>[]).map((d) => d['id'])).toContain(documentId);
+    const brick = EINVOICE_FORMATS[regime.format]?.brick;
+    expect(status['regime']).toMatchObject({ kind: 'clearance', format: regime.format, brick: brick ?? null });
+    expect(String(status['note'])).toMatch(brick === undefined ? /format_without_brick/ : new RegExp(`${brick} writes the file submitted`));
+
+    // Its windows are the ones the database reads.
+    await recordClearanceSubmission(company.backend, documentId);
+    const validatedAt = '2026-06-20T10:00:00+00:00';
+    await recordClearanceAnswer(company.backend, documentId, {
+      state: 'validated',
+      identifier: 'UIN-DECLARED-1',
+      validatedAt,
+      ...(regime.clearance!.verification === 'none' ? {} : { verificationUrl: 'https://verify.invalid/declared' }),
+    });
+    const cancel = (at: string) => refused(recordClearanceAnswer(company.backend, documentId, { state: 'cancelled', reason: 'Issued twice', at }));
+    if (regime.clearance!.cancellation_window === null) {
+      expect(await cancel(validatedAt)).toMatch(/^clearance_not_cancellable:/);
+    } else {
+      expect(await cancel('2027-06-20T10:00:00+00:00')).toMatch(/^clearance_window_closed:/);
+      expect(await cancel('2026-06-20T10:30:00+00:00')).toBe('accepted');
+    }
   });
 });

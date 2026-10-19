@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MY",
   "name": "Malaysia",
-  "version": "0.1.1",
-  "schema_min": "20261011120000",
+  "version": "0.2.0",
+  "schema_min": "20261018023930",
   "seed_sequence": 39,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-19",
   "certification": {
     "status": "community",
     "sources": [
@@ -189,7 +189,78 @@
     "obligation": "mandatory",
     "party_scheme": "0230",
     "vat_scheme": null,
-    "legal_reference": "Income Tax Act 1967, section 82C imposes a duty to issue an electronic invoice for a transaction in respect of goods sold or services performed, phased in by the Minister; the Income Tax (Issuance of Electronic Invoice) Rules 2024 [P.U. (A) 265/2024] set the particulars, in force 1 October 2024. LHDNM phased the duty by annual turnover or revenue: 1 August 2024 above RM100 million, 1 January 2025 above RM25 million, 1 July 2025 above RM5 million and 1 January 2026 above RM1 million: `mandatory_from` states the first of these, the day the duty first bound any taxpayer. The exemption threshold below which a taxpayer need not comply has since been raised in stages — to RM1,000,000 in December 2025 and to RM3,000,000 by the e-Invoice General Guideline, version 4.8 of 30 August 2026 — which this pack's `released_at` falls after, so a large share of Malaysian companies are, at that date, not yet bound by a duty the statute still imposes on the rest; docs/international.md records that the format has no field for a turnover-dependent exemption threshold that moves by administrative guideline rather than by a dated rule. The profile is PINT MY, built on UBL 2.1 in the same shape as the MyInvois JSON/XML particulars; a taxpayer submitting through a Peppol access point rather than the MyInvois Portal or API directly still submits to LHDNM's MyInvois system for validation, which is a **pre-issuance clearance**: the invoice is not legally the taxpayer's until LHDNM returns a Unique Identifier Number and a QR code, ordinarily before it reaches the buyer. Ekwo has no document status for a step that happens between posting and delivery and waits on an external answer; docs/international.md records that gap under \"From Malaysia\", and this pack does not attempt to model the UIN, the QR code or the 72-hour rejection window. The party scheme, 0230, is the SSM registration number, the identifier PINT MY and the MyInvois particulars both use; `vat_scheme` is empty, as it is for every pack of a country that levies no value added tax: Malaysia's Tax Identification Number (Nombor Pengenalan Cukai, TIN) is a LHDNM identifier with no ISO 6523 scheme of its own found this session.",
-    "source": "ita-1967-82c"
+    "legal_reference": "Income Tax Act 1967, section 82C imposes a duty to issue an electronic invoice for a transaction in respect of goods sold or services performed, phased in by the Minister; the Income Tax (Issuance of Electronic Invoice) Rules 2024 [P.U. (A) 265/2024] set the particulars, in force 1 October 2024. LHDNM phased the duty by annual turnover or revenue, from 1 August 2024 above RM100 million to 1 January 2026 above RM1 million: `mandatory_from` states the first of these, the day the duty first bound any taxpayer, and `fiscalisation.mandatory_from` carries the four steps with their thresholds, and `fiscalisation.exemption` the threshold below which a taxpayer is exempted, as dated data. The profile is PINT MY, built on UBL 2.1 in the same shape as the MyInvois JSON/XML particulars; a taxpayer submitting through a Peppol access point rather than the MyInvois Portal or API directly still submits to LHDNM's MyInvois system for validation, which is a pre-issuance clearance, declared in `fiscalisation`: the invoice is not legally the taxpayer's until LHDNM returns a Unique Identifier Number and the link of its QR code, ordinarily before it reaches the buyer. The party scheme, 0230, is the SSM registration number, the identifier PINT MY and the MyInvois particulars both use; `vat_scheme` is empty, as it is for every pack of a country that levies no value added tax: Malaysia's Tax Identification Number (Nombor Pengenalan Cukai, TIN) is a LHDNM identifier with no ISO 6523 scheme of its own found this session.",
+    "source": "ita-1967-82c",
+    "fiscalisation": {
+      "mandatory_from": [
+        {
+          "who": "turnover_above_rm100m",
+          "from": "2024-08-01",
+          "turnover_above": {
+            "amount": 100000000,
+            "currency": "MYR"
+          },
+          "legal_reference": "e-Invoice Guideline, the phased mandatory implementation timeline: a taxpayer whose annual turnover or revenue is above the threshold of this step is bound from its date.",
+          "source": "einvoice-guideline"
+        },
+        {
+          "who": "turnover_above_rm25m",
+          "from": "2025-01-01",
+          "turnover_above": {
+            "amount": 25000000,
+            "currency": "MYR"
+          },
+          "legal_reference": "e-Invoice Guideline, the phased mandatory implementation timeline: a taxpayer whose annual turnover or revenue is above the threshold of this step is bound from its date.",
+          "source": "einvoice-guideline"
+        },
+        {
+          "who": "turnover_above_rm5m",
+          "from": "2025-07-01",
+          "turnover_above": {
+            "amount": 5000000,
+            "currency": "MYR"
+          },
+          "legal_reference": "e-Invoice Guideline, the phased mandatory implementation timeline: a taxpayer whose annual turnover or revenue is above the threshold of this step is bound from its date.",
+          "source": "einvoice-guideline"
+        },
+        {
+          "who": "turnover_above_rm1m",
+          "from": "2026-01-01",
+          "turnover_above": {
+            "amount": 1000000,
+            "currency": "MYR"
+          },
+          "legal_reference": "e-Invoice Guideline, the phased mandatory implementation timeline: a taxpayer whose annual turnover or revenue is above the threshold of this step is bound from its date.",
+          "source": "einvoice-guideline"
+        }
+      ],
+      "exemption": [
+        {
+          "turnover_below": {
+            "amount": 3000000,
+            "currency": "MYR"
+          },
+          "valid_from": "2026-08-30",
+          "legal_reference": "e-Invoice General Guideline, version 4.8 of 30 August 2026, section 1.6.1(e): a taxpayer with an annual turnover or revenue below RM3,000,000, subject to a related-party carve-out, is exempted from issuing an e-Invoice, including a self-billed e-Invoice. It raises the RM1,000,000 threshold of December 2025, which is not recorded as data: the texts this pack cites do not give the day it took effect, and none is invented. valid_from is the date of the version of the guideline that states RM3,000,000, the earliest day this pack can source.",
+          "source": "einvoice-exemption"
+        }
+      ],
+      "format": "myinvois",
+      "clearance": {
+        "verification": "returned",
+        "cancellation_window": "PT72H",
+        "rejection_window": "PT72H",
+        "legal_reference": "e-Invoice Guideline, the MyInvois validation flow: the taxpayer submits the e-Invoice to LHDNM, which validates it and returns its Unique Identifier Number, the moment of validation and the link to its validation, which the e-Invoice carries as a QR code when it is shared with the buyer. Within 72 hours of the validation the supplier may cancel the e-Invoice, giving a reason, and the buyer may reject it, giving a reason; past that window an e-Invoice is corrected by a credit note, debit note or refund note.",
+        "source": "einvoice-guideline"
+      },
+      "submission": {
+        "mode": "realtime",
+        "channel": "authority_service",
+        "legal_reference": "e-Invoice Guideline: an e-Invoice is submitted to LHDNM's MyInvois system, through the MyInvois Portal, the MyInvois API, or a Peppol service provider, and validated one document at a time before it is shared with the buyer.",
+        "source": "einvoice-guideline"
+      },
+      "legal_reference": "Income Tax Act 1967, section 82C, and the Income Tax (Issuance of Electronic Invoice) Rules 2024 [P.U. (A) 265/2024]: the duty to issue an e-Invoice, which LHDNM's e-Invoice Guideline implements as a validation by MyInvois before the e-Invoice is issued, phased by annual turnover or revenue, with an exemption threshold set and moved by the guideline. No brick of this release writes the MyInvois document yet.",
+      "source": "ita-1967-82c"
+    }
   }
 }

@@ -126,7 +126,11 @@ somewhere has already run it.
   regime in force, the posted sales without a validation and counts those
   validated, waiting, rejected by the buyer, or cancelled at the authority and
   still posted; `fiscaliseDocument()` refuses to chain under it
-  (`fiscal_regime_without_chain`).
+  (`fiscal_regime_without_chain`). The Malaysian pack (0.2.0) declares
+  MyInvois as a clearance regime in format `myinvois`, with its link returned
+  by LHDNM and its two 72-hour windows, the four steps of its calendar by
+  turnover and the RM3,000,000 threshold of exemption of the e-Invoice General
+  Guideline 4.8; no brick writes `myinvois` yet, and the status says so.
 
 - **What each product brought in, and cost.** `product_report(company, from,
   to)` (migration `20261016145816`) reads the posted invoices and credit notes
