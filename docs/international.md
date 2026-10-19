@@ -211,11 +211,15 @@ each submission in `einvoicing.clearances` — `submitted`, `validated` with the
 identifier, the moment and the link, `rejected` by the authority or the buyer,
 `cancelled` — refusing every transition that cannot have happened and every
 cancellation or rejection after its window. The status names each posted sale
-without a validation. What would close the rest: a brick that writes the
-MyInvois document (`myinvois` has none, and the status says
-`format_without_brick`), and a host that calls MyInvois — its authentication,
-and whatever signature the document version asks — and reports back through
-`record_clearance_submission()` and `record_clearance_answer()`. Same family as
+without a validation. The document submitted is written by
+`@ekwo-ai/myinvois` through the ordinary path of issue: the tax type of each
+tax and the classification of each line are attributes the pack gives
+(`tax_attributes`, `line_attributes`), and the identifiers LHDNM asks of both
+parties — a TIN, an SST registration — are `identifiers` of the company and
+of the contact, by the scheme the format names them. What would close the
+rest is a host that calls MyInvois — its authentication, and the signature
+version 1.1 asks — and reports back through `record_clearance_submission()`
+and `record_clearance_answer()`. Same family as
 Poland (KSeF), Italy (SdI), Saudi Arabia (ZATCA, phase 2), India (IRN), Mexico
 (CFDI) and Turkey, each a pack that can declare the same block.
 

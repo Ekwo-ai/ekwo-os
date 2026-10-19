@@ -226,7 +226,12 @@ it: Malaysia's taxes are not a value added tax.
 
 ### What the rows must carry for the document to be complete
 
-None of it is in the views today. The pack, or the caller, gives it:
+None of it is in the three views alone. In Ekwo OS the core gives it, from
+the country pack and from the books (`EINVOICE_FORMATS` in `@ekwo-ai/core`,
+profile `myinvois`): the pack's fiscalisation regime gives each tax its
+`myinvois_tax_type` and every line its `myinvois_classification`, and
+`companies.identifiers` and `contacts.identifiers` give each party its TIN,
+its SST and tourism tax registrations by scheme. Any other caller gives it:
 
 - **`myinvois_tax_type`** on each row of `document_tax_summary` (or on a
   line): `01` Sales Tax, `02` Service Tax, `03` Tourism Tax, `04` High-Value

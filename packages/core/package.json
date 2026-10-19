@@ -56,9 +56,10 @@
     "@ekwo-ai/invoice-pdf": "^0.14.0",
     "@ekwo-ai/journal-items": "^0.14.0",
     "@ekwo-ai/journal-report": "^0.14.0",
+    "@ekwo-ai/myinvois": "^0.14.0",
     "@ekwo-ai/peppol-ubl": "^0.14.0",
-    "@ekwo-ai/trial-balance": "^0.14.0",
     "@ekwo-ai/transaction-journal": "^0.14.0",
+    "@ekwo-ai/trial-balance": "^0.14.0",
     "@ekwo-ai/verifactu": "^0.14.0",
     "@ekwo-ai/xaf": "^0.14.0"
   },

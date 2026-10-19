@@ -28,6 +28,7 @@
 import { createHash } from 'node:crypto';
 import { BooksError, type Backend, type Row } from '../books/backend.js';
 import { onlyVisible } from '../books/shared.js';
+import { fiscalRegime, generatedNow } from './fiscalisation.js';
 import { einvoiceFormat, type EinvoiceSource, type EinvoiceViolation } from './formats.js';
 import {
   CLOSED_STATES,
@@ -56,6 +57,8 @@ const HEADER = [
   'delivery_address_line1', 'delivery_postal_code', 'delivery_city', 'delivery_country',
   'seller_peppol_scheme', 'seller_peppol_identifier', 'buyer_peppol_scheme', 'buyer_peppol_identifier',
   'einvoice_profile',
+  'seller_activity_code', 'seller_activity_scheme', 'seller_activity_description',
+  'seller_identifiers', 'buyer_identifiers', 'buyer_phone',
 ];
 
 /** What the bricks read of `document_line_items`. */
@@ -151,10 +154,44 @@ export async function readEinvoiceSource(backend: Backend, documentId: string): 
       columns: ['number', 'document_date::text'],
       where: [{ column: 'id', op: 'eq', value: credited }],
     });
-    if (original?.number) preceding = { number: original.number, issueDate: original.document_date ?? null };
+    if (original?.number) preceding = { number: original.number, issueDate: original.document_date ?? null, documentId: credited };
   }
-  return { header, lines, taxes, preceding };
+  return { header, lines, taxes, preceding, issuedAt: generatedNow() };
 }
+
+/**
+ * The source as a brick under a fiscalisation regime reads it: each tax with
+ * the attributes the pack gives it, each line with the ones the pack gives
+ * every line, and — for a credit note — the identifier the authority gave the
+ * invoice it credits, where it cleared one. The attributes are the pack's
+ * data, `einvoicing.fiscalisation` compiled; a key the row holds already
+ * stays as the row holds it.
+ */
+async function withRegime(backend: Backend, source: EinvoiceSource): Promise<EinvoiceSource> {
+  const regime = await fiscalRegime(backend, String(source.header['company_id']));
+  const taxAttributes = regime?.tax_attributes ?? {};
+  const lineAttributes = regime?.line_attributes ?? {};
+  let preceding = source.preceding;
+  if (preceding !== null && preceding.documentId !== undefined) {
+    const attempts = await backend.select<{ identifier: string | null }>({
+      schema: SCHEMA,
+      table: 'clearances',
+      columns: ['identifier'],
+      where: [{ column: 'document_id', op: 'eq', value: preceding.documentId }],
+      order: [{ column: 'attempt', ascending: false }],
+    });
+    preceding = { ...preceding, identifier: attempts.find((attempt) => attempt.identifier !== null)?.identifier ?? null };
+  }
+  return {
+    ...source,
+    taxes: source.taxes.map((tax) => ({ ...(taxAttributes[String(tax['tax_code'])] ?? {}), ...withoutNulls(tax) })),
+    lines: source.lines.map((line) => ({ ...lineAttributes, ...withoutNulls(line) })),
+    preceding,
+  };
+}
+
+/** A row without its empty columns, so that an attribute is not hidden by a column that says nothing. */
+const withoutNulls = (row: Row): Row => Object.fromEntries(Object.entries(row).filter(([, value]) => value !== null && value !== undefined));
 
 function addressOf(header: Row, side: 'seller' | 'buyer'): ElectronicAddress | null {
   const scheme = header[`${side}_peppol_scheme`];
@@ -182,16 +219,28 @@ export function assertPostedSale(header: Row, documentId: string): void {
   }
 }
 
+/** What only the caller of a writer can say. */
+export interface ProduceOptions {
+  /**
+   * The moment the file is issued, ISO 8601 with its offset. Now, on this
+   * machine, when left out: a format that carries the moment of issuance
+   * writes the moment it is written, never the date of the books.
+   */
+  issuedAt?: string;
+}
+
 /**
  * Writes the file of a posted sale, in the profile of its company's country
  * pack, and says which rules it breaks. Records nothing.
  */
-export async function produceEinvoice(backend: Backend, documentId: string): Promise<ProducedEinvoice> {
-  const source = await readEinvoiceSource(backend, documentId);
-  const { header } = source;
+export async function produceEinvoice(backend: Backend, documentId: string, options: ProduceOptions = {}): Promise<ProducedEinvoice> {
+  const read = await readEinvoiceSource(backend, documentId);
+  const { header } = read;
   assertPostedSale(header, documentId);
 
   const format = einvoiceFormat(header['einvoice_profile'] as string | null);
+  const timed = options.issuedAt === undefined ? read : { ...read, issuedAt: options.issuedAt };
+  const source = format.readsRegime === true ? await withRegime(backend, timed) : timed;
   const written = format.write(source);
   return {
     document_id: documentId,
@@ -218,11 +267,13 @@ export interface ValidateEinvoiceArgs {
   document_id: string;
   /** Hand the file back too. Left out, the answer is what is wrong with it. */
   include_file?: boolean;
+  /** The moment of issuance a format carries, ISO 8601 with its offset. Now when left out. */
+  issued_at?: string;
 }
 
 /** The file a posted sale would be issued as, and every rule it breaks. Nothing is recorded. */
 export async function validateEinvoice(backend: Backend, args: ValidateEinvoiceArgs): Promise<Row> {
-  const produced = await produceEinvoice(backend, args.document_id);
+  const produced = await produceEinvoice(backend, args.document_id, args.issued_at === undefined ? {} : { issuedAt: args.issued_at });
   const { content, sender, recipient, ...rest } = produced;
   return {
     ...rest,
@@ -241,6 +292,8 @@ export interface IssueEinvoiceArgs {
   send?: boolean;
   /** Hand the file back too. */
   include_file?: boolean;
+  /** The moment of issuance a format carries, ISO 8601 with its offset. Now when left out. */
+  issued_at?: string;
 }
 
 /** Every column of an issue but the file. */
@@ -335,7 +388,7 @@ export async function issueEinvoice(
       { hint: 'ekwo einvoice issue <document> --send --to <directory>; for the MCP server, EKWO_EINVOICE_DIRECTORY.' },
     );
   }
-  const produced = await produceEinvoice(backend, args.document_id);
+  const produced = await produceEinvoice(backend, args.document_id, args.issued_at === undefined ? {} : { issuedAt: args.issued_at });
   const issue = await rpcOne(backend, 'record_issue', {
     p_document_id: produced.document_id,
     p_profile: produced.profile,

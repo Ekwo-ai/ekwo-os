@@ -25,6 +25,8 @@ import { CUSTOMIZATION_ID, PeppolUblError, generatePeppolUbl } from '@ekwo-ai/pe
 import type { DocumentHeaderRow, DocumentLineRow, DocumentTaxRow } from '@ekwo-ai/peppol-ubl';
 import { computeTotals, generateCiiXml, GUIDELINES } from '@ekwo-ai/factur-x';
 import type { Invoice, InvoiceLine, Party, VatCategory } from '@ekwo-ai/factur-x';
+import { MYINVOIS, MyInvoisError } from '@ekwo-ai/myinvois';
+import type { MyInvoisInput, PartyIdentifiers, RegistrationScheme } from '@ekwo-ai/myinvois';
 import { BooksError, type Row } from '../books/backend.js';
 
 /** One rule of the format a file breaks, named as the brick or the published rule names it. */
@@ -39,7 +41,14 @@ export interface EinvoiceSource {
   header: Row;
   lines: Row[];
   taxes: Row[];
-  preceding: { number: string; issueDate: string | null } | null;
+  /**
+   * The invoice a credit note credits. `identifier` is the one the tax
+   * authority gave it when it cleared it, read for a format that reads the
+   * regime and null where it cleared none.
+   */
+  preceding: { number: string; issueDate: string | null; documentId?: string; identifier?: string | null } | null;
+  /** The moment the file is issued, ISO 8601 with its offset, for a format that carries it. */
+  issuedAt?: string;
 }
 
 /** What a writer hands back. */
@@ -58,6 +67,13 @@ export interface EinvoiceFormat {
   mediaType: string;
   /** What the file declares it follows: a customization identifier, a guideline. */
   specification: string;
+  /**
+   * The brick reads what the pack's fiscalisation regime gives the taxes and
+   * the lines (`tax_attributes`, `line_attributes`), and the identifier the
+   * authority gave the invoice a credit note credits. Left out, it reads the
+   * three views alone.
+   */
+  readsRegime?: boolean;
   write(source: EinvoiceSource): WrittenEinvoice;
 }
 
@@ -398,10 +414,121 @@ const FACTUR_X_EN16931: EinvoiceFormat = {
   write: writeFacturX,
 };
 
+// ---------------------------------------------------------------------------
+// MyInvois — UBL 2.1 in its JSON syntax, by @ekwo-ai/myinvois
+//
+// The document a tax authority validates before the invoice is issued. The
+// brick reads the three views as they are and names every rule of the SDK the
+// document breaks; what it asks beyond the views is read from the books and
+// from the pack, never defaulted here:
+//
+//   * the tax type of each tax and the classification of each line are the
+//     attributes the pack's fiscalisation regime gives them (`readsRegime`),
+//     merged into the rows before this adapter sees them;
+//   * the identifiers of both parties are `companies.identifiers` and
+//     `contacts.identifiers`, published as `seller_identifiers` and
+//     `buyer_identifiers`, by the scheme the format names them (`TIN`, `SST`,
+//     `TTX`, and `BRN`, `NRIC`, `PASSPORT`, `ARMY` for the registration where
+//     `registration_number` does not hold it); the supplier's activity is
+//     `activity_code` with `activity_description`, the buyer's telephone
+//     `buyer_phone`;
+//   * the moment of issuance is the moment the file is written, and the
+//     document a credit note adjusts is the invoice it credits with the
+//     identifier the authority gave it, where it cleared one;
+//   * a payment means of the books (UNTDID 4461) is written as the payment
+//     mode of the same meaning in the format's list, where there is one.
+//
+// The version is the brick's default, 1.1, which the host signs before it
+// submits; the core signs nothing and sends nothing. What the books do not
+// hold — a foreign currency's rate to the ringgit, a mode with no
+// counterpart — the brick reports by name.
+// ---------------------------------------------------------------------------
+
+/** UNTDID 4461 payment means, by the payment mode of the format's list that says the same thing. */
+const PAYMENT_MODES: Partial<Record<string, string>> = {
+  '10': '01', // In cash — Cash
+  '20': '02', // Cheque — Cheque
+  '30': '03', // Credit transfer — Bank Transfer
+  '31': '03', // Debit transfer — Bank Transfer
+  '42': '03', // Payment to bank account — Bank Transfer
+  '58': '03', // SEPA credit transfer — Bank Transfer
+  '54': '04', // Credit card — Credit Card
+  '55': '05', // Debit card — Debit Card
+};
+
+const REGISTRATION_SCHEMES: readonly RegistrationScheme[] = ['BRN', 'NRIC', 'PASSPORT', 'ARMY'];
+
+/** The identifiers of one side, by scheme, as the view publishes them. */
+function identifiersOf(header: Row, side: 'seller' | 'buyer'): Record<string, string> {
+  const raw = header[`${side}_identifiers`];
+  const parsed: unknown = typeof raw === 'string' ? JSON.parse(raw) : raw;
+  if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+  return Object.fromEntries(
+    Object.entries(parsed as Record<string, unknown>)
+      .map(([scheme, value]) => [scheme, text(value)] as const)
+      .filter((entry): entry is readonly [string, string] => entry[1] !== null),
+  );
+}
+
+function partyIdentifiers(identifiers: Record<string, string>): PartyIdentifiers {
+  const party: PartyIdentifiers = {};
+  if (identifiers['TIN'] !== undefined) party.tin = identifiers['TIN'];
+  if (identifiers['SST'] !== undefined) party.sst = identifiers['SST'];
+  const scheme = REGISTRATION_SCHEMES.find((each) => identifiers[each] !== undefined);
+  if (scheme !== undefined) party.registration = { scheme, id: identifiers[scheme] as string };
+  return party;
+}
+
+function writeMyInvois(source: EinvoiceSource): WrittenEinvoice {
+  const { header } = source;
+  if (source.issuedAt === undefined) {
+    throw new BooksError('einvoice_unwritable: MyInvois carries the moment of issuance, and none was given');
+  }
+  const seller = identifiersOf(header, 'seller');
+  const buyer = identifiersOf(header, 'buyer');
+  const activity = text(header['seller_activity_code']);
+  const input: MyInvoisInput = {
+    header,
+    lines: source.lines,
+    taxes: source.taxes,
+    issuedAt: source.issuedAt,
+    supplier: {
+      ...partyIdentifiers(seller),
+      ...(seller['TTX'] === undefined ? {} : { tourismTax: seller['TTX'] }),
+      ...(activity === null ? {} : { activity: { msic: activity, description: text(header['seller_activity_description']) ?? '' } }),
+    },
+    buyer: partyIdentifiers(buyer),
+  };
+  const mode = PAYMENT_MODES[text(header['payment_means_code']) ?? ''];
+  if (mode !== undefined) input.paymentMode = mode;
+  const credited = source.preceding;
+  if (credited !== null && text(credited.identifier) !== null) {
+    input.adjusts = [{ number: credited.number, uuid: credited.identifier as string }];
+  }
+  try {
+    const written = MYINVOIS.write(input);
+    return { content: written.content, filename: written.filename, violations: written.violations };
+  } catch (error) {
+    if (error instanceof MyInvoisError) throw new BooksError(`einvoice_unwritable: ${error.message}`);
+    throw error;
+  }
+}
+
+const MYINVOIS_JSON: EinvoiceFormat = {
+  profile: 'myinvois',
+  brick: MYINVOIS.brick,
+  syntax: 'UBL 2.1 (JSON)',
+  mediaType: 'application/json',
+  specification: MYINVOIS.specification,
+  readsRegime: true,
+  write: writeMyInvois,
+};
+
 /** Every profile a brick of this release writes, by the name a pack declares it under. */
 export const EINVOICE_FORMATS: Readonly<Record<string, EinvoiceFormat>> = {
   [PEPPOL_BIS_3.profile]: PEPPOL_BIS_3,
   [FACTUR_X_EN16931.profile]: FACTUR_X_EN16931,
+  [MYINVOIS_JSON.profile]: MYINVOIS_JSON,
 };
 
 /**

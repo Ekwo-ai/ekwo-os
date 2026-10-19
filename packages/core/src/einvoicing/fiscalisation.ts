@@ -165,6 +165,8 @@ export interface FiscalRegime {
   events: { summary_every_hours: number; modes: FiscalSubmissionMode[] } | null;
   reported: { what: string; by: ('supplier' | 'customer')[] }[];
   tax_attributes: Record<string, Record<string, string>>;
+  /** What the brick needs on every line that the books do not record; absent where the pack declares none. */
+  line_attributes?: Record<string, string>;
   legal_reference: string;
   source: string;
 }

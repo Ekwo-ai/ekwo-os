@@ -19,8 +19,34 @@ somewhere has already run it.
   and refund note, the supplier's (`01`–`04`) or self-billed (`11`–`14`),
   version 1.1 by default or 1.0 when asked, with the code tables of the MyInvois SDK and every rule
   the document breaks, by LHDNM's error code where it publishes one. It signs
-  nothing and submits nothing, and is not yet registered as a format of the
-  socle.
+  nothing and submits nothing.
+
+- **A posted sale is issued as the MyInvois document** (socle migration
+  `20261019150000`, pack `my` 0.3.0). `myinvois` is registered in
+  `EINVOICE_FORMATS`, so `ekwo einvoice validate` and `issue`,
+  `einvoicing_validate` and `einvoicing_issue` write the document of a
+  posted sale through `@ekwo-ai/myinvois`, version 1.1 by default, in its
+  JSON syntax, and `fiscalisationStatus()` names the brick instead of
+  `format_without_brick`. What the brick asks beyond the views comes from
+  data, never from a country or a format named in the schema:
+  - a pack's `einvoicing.fiscalisation` gives the brick an attribute of each
+    tax (`tax_attributes`, which the chained regime already had) and of every
+    line (`line_attributes`, new), merged into the rows of a format that
+    reads its regime (`EinvoiceFormat.readsRegime`);
+  - `companies.identifiers` and `contacts.identifiers` (jsonb,
+    `{"<scheme>": "<identifier>"}`) hold every identifier of a party that has
+    no column of its own, by the code of its scheme, and
+    `companies.activity_description` the words of its activity beside its
+    code; `document_header` publishes them as `seller_identifiers`,
+    `buyer_identifiers`, `seller_activity_description`, with `buyer_phone`;
+  - the moment of issuance is the moment the file is written, or `issued_at`
+    of `validateEinvoice()` and `issueEinvoice()`; a credit note adjusts the
+    invoice it credits with the identifier the authority gave it, read from
+    `einvoicing.clearances`; a payment means of UNTDID 4461 is written as the
+    payment mode of the same meaning.
+  `create_contact` takes `registration_number`, `phone` and `identifiers`
+  (and `ekwo contact add --stdin` the same fields); `update_company_profile`
+  takes `identifiers` and `activity_description`.
 
 - **Two contacts of one company are merged** (socle migration
   `20261019090000`, module assets migration `20261019090001`, decision 0074).

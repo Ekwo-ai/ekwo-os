@@ -271,6 +271,7 @@ call.
 |---|---|---|
 | `peppol-bis-3` | `@ekwo-ai/peppol-ubl` | UBL 2.1, Peppol BIS Billing 3.0 |
 | `factur-x-en16931` | `@ekwo-ai/factur-x` | UN/CEFACT CII D16B, EN 16931 profile |
+| `myinvois` | `@ekwo-ai/myinvois` | UBL 2.1 in its JSON syntax, MyInvois e-Invoice version 1.1 |
 
 Every other profile a pack declares is refused by name until its brick exists.
 Adding one is an entry in `EINVOICE_FORMATS` (`packages/core/src/einvoicing/formats.ts`)
@@ -284,6 +285,17 @@ would write is compared with what was posted; a difference of a cent is a
 broken rule. The file kept is the CII XML. The PDF/A-3 that carries it is
 rendered on demand, from the same books, by `ekwo doc pdf --factur-x` and
 `render_invoice_pdf`, and is not kept here.
+
+The MyInvois brick writes the document a tax authority clears before the
+invoice is issued, and reads more than the three views: the attributes the
+pack's fiscalisation regime gives each tax and every line (`tax_attributes`,
+`line_attributes`, merged into the rows before the brick sees them), the
+identifiers of both parties by scheme (`seller_identifiers`,
+`buyer_identifiers` of `document_header`), the moment of issuance — the
+moment the file is written, or `issued_at` — and, for a credit note, the
+identifier the authority gave the invoice it credits, read from
+`einvoicing.clearances`. Version 1.1 is signed by the host before it is
+submitted; nothing here signs or submits it.
 
 ## Transports
 
