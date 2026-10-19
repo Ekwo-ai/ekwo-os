@@ -42,6 +42,9 @@ import {
   validateEinvoice,
   type EinvoiceTransport,
   type FiscalSystem,
+  CRM_ACTIVITY_KINDS,
+  CRM_PRIORITIES,
+  CRM_RELATIONSHIP_STATUSES,
   crmBoard,
   crmCard,
   crmJoinSegment,
@@ -1089,14 +1092,18 @@ const TAX: ModuleToolset = {
 // customer relationship — module code `crm`, schema `crm`
 //
 // Every tool is one function of the schema, called through the core — the same
-// function `ekwo crm …` calls. Which statuses, priorities, kinds and outcomes
-// exist is the schema's: a value is passed as it was given, and Postgres
-// refuses one it does not have. The refusals of the module are named
-// `crm_<code>: …` and travel up word for word.
+// function `ekwo crm …` calls. The statuses, priorities and kinds a model may
+// name are the schema's enums, as the core lists them — a test holds those
+// lists to the schema — so a tool says which values exist instead of letting
+// a model guess. The refusals of the module are named `crm_<code>: …` and
+// travel up word for word.
 // ---------------------------------------------------------------------------
 
 const contactId = uuid.describe('The contact: a person or an organisation of public.contacts. crm_search or search_contacts finds it.');
 const segmentId = uuid.describe('The segment. crm_segments lists them.');
+const words = (values: readonly string[]): string => values.join(', ');
+const status = z.enum(CRM_RELATIONSHIP_STATUSES);
+const activityKind = z.enum(CRM_ACTIVITY_KINDS);
 const timestamp = z
   .string()
   .min(1)
@@ -1116,7 +1123,7 @@ const CRM: ModuleToolset = {
       input: z.object({
         company_id: companyId,
         query: z.string().optional().describe('A text found in the name, the e-mail or the organisation\'s name.'),
-        status: z.string().optional().describe('A relationship status, as the schema spells it (crm.relationship_status); a value it does not have is refused.'),
+        status: status.optional().describe(`Where the relationship stands: one of ${words(CRM_RELATIONSHIP_STATUSES)}.`),
         segment_id: segmentId.optional(),
         stage_id: uuid.optional().describe('A stage one of the contact\'s deals is at. crm_board lists the stages.'),
         country: z.string().length(2).optional().describe('ISO 3166-1 alpha-2.'),
@@ -1132,7 +1139,7 @@ const CRM: ModuleToolset = {
           crmSearch(backend, {
             company_id: args['company_id'] as unknown as string,
             query: args['query'],
-            status: args['status'],
+            status: args['status'] as unknown as (typeof CRM_RELATIONSHIP_STATUSES)[number] | undefined,
             segment_id: args['segment_id'],
             stage_id: args['stage_id'],
             country: args['country'],
@@ -1199,13 +1206,15 @@ const CRM: ModuleToolset = {
       title: 'What happened',
       readOnly: true,
       description:
-        'The activities of one contact, or of one deal — notes, e-mails, calls, meetings, messages, signals, enrichments, tasks, and the moves the module wrote itself — most recent first. Name a contact, a deal, or both. since keeps what happened from that moment on; kinds keeps those kinds only, as the schema spells them (crm.activity_kind), and a kind it does not have is refused.',
+        'The activities of one contact, or of one deal — notes, e-mails, calls, meetings, messages, signals, enrichments, tasks, and the moves the module wrote itself — most recent first. Name a contact, a deal, or both. since keeps what happened from that moment on; kinds keeps those kinds only, each one of ' +
+        words(CRM_ACTIVITY_KINDS) +
+        '.',
       input: z.object({
         company_id: companyId,
         contact_id: contactId.optional(),
         deal_id: uuid.optional().describe('A deal. crm_board or crm_card gives its id.'),
         since: timestamp.optional(),
-        kinds: z.array(z.string().min(1)).min(1).optional().describe('Only these kinds of activity.'),
+        kinds: z.array(activityKind).min(1).optional().describe(`Only these kinds of activity, each one of ${words(CRM_ACTIVITY_KINDS)}.`),
         limit: z.number().int().min(1).max(200).optional().describe('At most this many. 50 by default.'),
       }),
       async run(backend, args) {
@@ -1215,7 +1224,7 @@ const CRM: ModuleToolset = {
             contact_id: args['contact_id'],
             deal_id: args['deal_id'],
             since: args['since'],
-            kinds: args['kinds'] as unknown as string[] | undefined,
+            kinds: args['kinds'] as unknown as (typeof CRM_ACTIVITY_KINDS)[number][] | undefined,
             limit: args['limit'],
           }),
         );
@@ -1226,7 +1235,11 @@ const CRM: ModuleToolset = {
       title: 'Write a card',
       readOnly: false,
       description:
-        'Creates the card of a contact, or changes it: each key the patch names takes its value, every other field keeps its own. The keys are status (where the relationship stands, crm.relationship_status), priority (crm.priority), owner (a handle — a member, a team, an agent — free text), job_title, linkedin_url, source (where the contact came from), tags (a list of words, replacing the list there), no_outbound (true: nobody may approach this contact — respect it everywhere) and custom (a JSON object of your own fields, replacing the one there). Any other key is refused, crm_unknown_field, with the list. Read crm_card first, and ask the user before changing a status, an owner or no_outbound they did not mention.',
+        'Creates the card of a contact, or changes it: each key the patch names takes its value, every other field keeps its own. The keys are status (where the relationship stands: one of ' +
+        words(CRM_RELATIONSHIP_STATUSES) +
+        '), priority (one of ' +
+        words(CRM_PRIORITIES) +
+        '), owner (a handle — a member, a team, an agent — free text), job_title, linkedin_url, source (where the contact came from), tags (a list of words, replacing the list there), no_outbound (true: nobody may approach this contact — respect it everywhere) and custom (a JSON object of your own fields, replacing the one there). Any other key is refused, crm_unknown_field, with the list. Read crm_card first, and ask the user before changing a status, an owner or no_outbound they did not mention.',
       input: z.object({
         company_id: companyId,
         contact_id: contactId,
@@ -1249,11 +1262,13 @@ const CRM: ModuleToolset = {
       title: 'Log an activity',
       readOnly: false,
       description:
-        'Writes one thing that happened with a contact — a note, an e-mail sent or received, a call, a meeting, a message, a signal read elsewhere, an enrichment, a task — optionally about one of the company\'s deals, and moves the card\'s last activity. kind is as the schema spells it (crm.activity_kind). When the activity was read from somewhere else, name source (the mailbox, the network, the calendar) and source_ref (its identifier there, a message-id): the same pair a second time writes nothing and returns the activity already kept, so an import can run twice. A source_ref without its source is refused, crm_bad_activity. Log what the user did or told you; never invent an exchange that did not happen.',
+        'Writes one thing that happened with a contact — a note, an e-mail sent or received, a call, a meeting, a message, a signal read elsewhere, an enrichment, a task — optionally about one of the company\'s deals, and moves the card\'s last activity. kind is one of ' +
+        words(CRM_ACTIVITY_KINDS) +
+        '. When the activity was read from somewhere else, name source (the mailbox, the network, the calendar) and source_ref (its identifier there, a message-id): the same pair a second time writes nothing and returns the activity already kept, so an import can run twice. A source_ref without its source is refused, crm_bad_activity. Log what the user did or told you; never invent an exchange that did not happen.',
       input: z.object({
         company_id: companyId,
         contact_id: contactId,
-        kind: z.string().min(1).describe('What happened, as crm.activity_kind spells it.'),
+        kind: activityKind.describe(`What happened: one of ${words(CRM_ACTIVITY_KINDS)}.`),
         subject: z.string().optional(),
         body: z.string().optional(),
         deal_id: uuid.optional().describe('The deal it is about, of the same company.'),
@@ -1269,7 +1284,7 @@ const CRM: ModuleToolset = {
           crmLogActivity(backend, {
             company_id: args['company_id'] as unknown as string,
             contact_id: args['contact_id'] as unknown as string,
-            kind: args['kind'] as unknown as string,
+            kind: args['kind'] as unknown as (typeof CRM_ACTIVITY_KINDS)[number],
             subject: args['subject'],
             body: args['body'],
             deal_id: args['deal_id'],

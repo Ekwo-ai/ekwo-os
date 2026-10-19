@@ -2,6 +2,13 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, expectError, freshDatabase, one, rows } from '../../../tests/helpers/db.js';
 import { newCompany } from '../../../tests/helpers/factory.js';
+import {
+  CRM_ACTIVITY_KINDS,
+  CRM_PRIORITIES,
+  CRM_RELATIONSHIP_STATUSES,
+  CRM_SEGMENT_KINDS,
+  CRM_STAGE_OUTCOMES,
+} from '@ekwo-ai/core';
 
 // `crm` keeps the record of a relationship on the socle's own contacts: an
 // organisation, a person of it, both prospects (`other`) until a deal is won.
@@ -457,5 +464,20 @@ describe('the module', () => {
     expect(classified.map((t) => t.table_name)).toEqual(tables.map((t) => t.relname));
     expect(new Set(classified.map((t) => t.disposition))).toEqual(new Set(['exported']));
     expect(await rows(db, `select * from company_archive_unclassified() where table_schema = 'crm'`)).toEqual([]);
+  });
+});
+
+describe('the words of the enums', () => {
+  // The core repeats them so that a tool and a command can say which values
+  // exist. The schema is the source: each list is the enum, in its order.
+  it.each([
+    ['relationship_status', CRM_RELATIONSHIP_STATUSES],
+    ['priority', CRM_PRIORITIES],
+    ['segment_kind', CRM_SEGMENT_KINDS],
+    ['stage_outcome', CRM_STAGE_OUTCOMES],
+    ['activity_kind', CRM_ACTIVITY_KINDS],
+  ] as const)('crm.%s is the list the core exports', async (type, words) => {
+    const { values } = await one<{ values: string[] }>(db, `select enum_range(null::crm.${type})::text[] as values`);
+    expect(values).toEqual([...words]);
   });
 });

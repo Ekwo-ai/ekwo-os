@@ -30,7 +30,7 @@ import { statusCommand } from './commands/status.js';
 import { useCommand, whoamiCommand } from './commands/whoami.js';
 import type { BooksDeps } from './books.js';
 import { askedForJson, commandLabel, execute, reportFailure, setResult } from './output.js';
-import { CLOUD_OFFER_ENV, REGISTER_INVITE_ENV } from '@ekwo-ai/core';
+import { CLOUD_OFFER_ENV, CRM_ACTIVITY_KINDS, CRM_PRIORITIES, CRM_RELATIONSHIP_STATUSES, REGISTER_INVITE_ENV } from '@ekwo-ai/core';
 import { bold, cyan, dim, line } from './ui.js';
 
 export function version(): string {
@@ -227,6 +227,9 @@ ${bold('Connecting')} ${dim('(every command)')}
               deal open <pipeline> <contact> --title <title> [--amount
               --currency]; deal move <deal> <stage> — a won stage makes the
               party a customer. The same functions as the crm_* tools.
+              --status ${CRM_RELATIONSHIP_STATUSES.join('|')};
+              --priority ${CRM_PRIORITIES.join('|')};
+              --kind ${CRM_ACTIVITY_KINDS.join('|')}.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
   --profile <name>          Which profile: a demo instance, production, one client

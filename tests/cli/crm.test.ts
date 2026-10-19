@@ -15,7 +15,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { EXIT_REFUSED, run, validate, type OutputDocument } from '../../packages/cli/src/index.js';
+import { EXIT_REFUSED, EXIT_USAGE, run, validate, type OutputDocument } from '../../packages/cli/src/index.js';
 import { asUser, freshDatabase, one, repoRoot, rows } from '../helpers/db.js';
 import { newCompany, newUser } from '../helpers/factory.js';
 import { ANON_KEY, FAKE_URL, fakeSupabase, type FakeSupabase } from './fake-supabase.js';
@@ -184,5 +184,11 @@ describe('ekwo crm', () => {
     const refused = await ekwo(['crm', 'deal', 'move', personId, String(stages['Lost'])]);
     expect(refused.exitCode).toBe(EXIT_REFUSED);
     expect(refused.error).toMatchObject({ kind: 'refusal', name: 'crm_unknown_deal' });
+  });
+
+  it('refuses a status the schema does not have, naming the ones it has', async () => {
+    const bad = await ekwo(['crm', 'search', '--status', 'prospect']);
+    expect(bad.exitCode).toBe(EXIT_USAGE);
+    expect(bad.error?.message).toContain('in_discussion');
   });
 });

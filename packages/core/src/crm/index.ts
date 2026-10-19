@@ -3,9 +3,10 @@
  *
  * Each verb is one function of the `crm` schema, called here once, so the MCP
  * server's `crm_*` tools and `ekwo crm …` run the very same thing. Nothing is
- * decided in this file: which statuses, kinds and outcomes exist, what a patch
- * may name, what a won deal does — the schema holds all of it, and refuses by
- * name (`crm_<code>: …`). What is here is the call, the arguments in the names
+ * decided in this file: what a patch may name, what a won deal does — the
+ * schema holds it, and refuses by name (`crm_<code>: …`). The words of its
+ * enums are repeated below to be shown, and a test holds them to the schema.
+ * What is here is the call, the arguments in the names
  * the functions take, and amounts read back as the decimal strings Postgres
  * holds.
  */
@@ -16,10 +17,40 @@ import { amountIn, money } from '../books/format.js';
 /** The schema the module lives in, and the code of `public.modules`. */
 export const CRM_SCHEMA = 'crm';
 
+// The words of the schema's five enums, in the order the migration declares
+// them, so that a model and a terminal can be told which values exist rather
+// than guess. The enums of the `crm` schema stay the source: a test in
+// `modules/crm/tests` reads each one with `enum_range()` and holds these lists
+// to it, so the two never drift.
+
+/** `crm.relationship_status`: where a relationship stands. */
+export const CRM_RELATIONSHIP_STATUSES = [
+  'new', 'contacted', 'in_discussion', 'client', 'partner', 'declined', 'dormant',
+] as const;
+export type CrmRelationshipStatus = (typeof CRM_RELATIONSHIP_STATUSES)[number];
+
+/** `crm.priority`: how much attention a relationship is meant to get now. */
+export const CRM_PRIORITIES = ['high', 'medium', 'low'] as const;
+export type CrmPriority = (typeof CRM_PRIORITIES)[number];
+
+/** `crm.segment_kind`: what a segment is for. */
+export const CRM_SEGMENT_KINDS = ['taxonomy', 'segment', 'cohort', 'brand'] as const;
+export type CrmSegmentKind = (typeof CRM_SEGMENT_KINDS)[number];
+
+/** `crm.stage_outcome`: what reaching a stage means. */
+export const CRM_STAGE_OUTCOMES = ['open', 'won', 'lost'] as const;
+export type CrmStageOutcome = (typeof CRM_STAGE_OUTCOMES)[number];
+
+/** `crm.activity_kind`: what happened. */
+export const CRM_ACTIVITY_KINDS = [
+  'note', 'email_out', 'email_in', 'call', 'meeting', 'message', 'signal', 'enrichment', 'task', 'system',
+] as const;
+export type CrmActivityKind = (typeof CRM_ACTIVITY_KINDS)[number];
+
 /** The keys `crm.upsert_card()` accepts in its patch. The function refuses any other, by name. */
 export interface CrmCardPatch {
-  status?: string;
-  priority?: string;
+  status?: CrmRelationshipStatus;
+  priority?: CrmPriority;
   owner?: string | null;
   job_title?: string | null;
   linkedin_url?: string | null;
@@ -32,8 +63,7 @@ export interface CrmCardPatch {
 export interface CrmSearchArgs {
   company_id: string;
   query?: string | undefined;
-  /** A `crm.relationship_status`; the database refuses one it does not have. */
-  status?: string | undefined;
+  status?: CrmRelationshipStatus | undefined;
   segment_id?: string | undefined;
   stage_id?: string | undefined;
   country?: string | undefined;
@@ -50,16 +80,14 @@ export interface CrmTimelineArgs {
   contact_id?: string | undefined;
   deal_id?: string | undefined;
   since?: string | undefined;
-  /** `crm.activity_kind` values; the database refuses one it does not have. */
-  kinds?: string[] | undefined;
+  kinds?: CrmActivityKind[] | undefined;
   limit?: number | undefined;
 }
 
 export interface CrmLogActivityArgs {
   company_id: string;
   contact_id: string;
-  /** A `crm.activity_kind`. */
-  kind: string;
+  kind: CrmActivityKind;
   subject?: string | undefined;
   body?: string | undefined;
   deal_id?: string | undefined;

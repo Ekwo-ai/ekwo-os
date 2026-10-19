@@ -233,8 +233,12 @@ describe('the crm toolset', () => {
     await expect(
       call('crm_log_activity', { company_id: companyId, contact_id: personId, kind: 'note', source_ref: 'x' }),
     ).rejects.toThrow(/crm_bad_activity/);
-    // A status the schema does not have is Postgres's refusal, not a list kept here.
-    await expect(call('crm_search', { company_id: companyId, status: 'prospect' })).rejects.toThrow(/relationship_status/);
+    // A status the schema does not have is refused before the call, and the tool says which exist.
+    await expect(call('crm_search', { company_id: companyId, status: 'prospect' })).rejects.toThrow(/status/);
+    const tools = (await client.listTools()).tools;
+    const search = tools.find((tool) => tool.name === 'crm_search');
+    expect(JSON.stringify(search?.inputSchema)).toContain('in_discussion');
+    expect(tools.find((tool) => tool.name === 'crm_log_activity')?.description).toContain('email_out');
   });
 
   it('offers a morning checklist that names its tools and the company', async () => {

@@ -22,10 +22,14 @@ somewhere has already run it.
   and a `crm_morning_review` prompt. The command line has the same verbs —
   `ekwo crm search | card | card set | segments | board | timeline | log |
   join | leave | deal open | deal move` — and both call the same functions of
-  `@ekwo-ai/core`, which call the same functions of the schema. Statuses,
-  kinds and outcomes are the schema's enums, passed as given and refused by
-  Postgres when unknown; the module's refusals, `crm_<code>: …`, travel up
-  word for word.
+  `@ekwo-ai/core`, which call the same functions of the schema. The words of
+  the five enums are exported by the core (`CRM_RELATIONSHIP_STATUSES`,
+  `CRM_PRIORITIES`, `CRM_SEGMENT_KINDS`, `CRM_STAGE_OUTCOMES`,
+  `CRM_ACTIVITY_KINDS`), so the values a tool accepts are named in its
+  description and those a command accepts in its help; the enum of the schema
+  stays the source, and a test holds each list equal to it with
+  `enum_range()`. The module's
+  refusals, `crm_<code>: …`, travel up word for word.
 
 ## [0.16.0] — 2026-10-20
 

@@ -89,9 +89,13 @@ the function of the same name above, called through `@ekwo-ai/core`:
 
 and one prompt, `crm_morning_review`: the cards that went quiet, the deals
 past their expected date, and what to suggest — written only once the user
-agrees. A status, a kind or a stage is passed as given; the schema refuses
-what it does not have, and its `crm_<code>` refusals reach the model word for
-word.
+agrees. The statuses, priorities and kinds a tool accepts are named in its
+description, and those a command accepts in `ekwo crm`'s help: the core
+exports the words of the five enums (`CRM_RELATIONSHIP_STATUSES`,
+`CRM_PRIORITIES`, `CRM_SEGMENT_KINDS`, `CRM_STAGE_OUTCOMES`,
+`CRM_ACTIVITY_KINDS`). The enum of the schema stays the source, and a test in
+`tests/` holds each list equal to it. The `crm_<code>` refusals reach the model word
+for word.
 
 > **You:** We won the Northwind subscription.
 > **Agent:** *(`crm_card` on Northwind Trading, then `crm_board`)* The deal

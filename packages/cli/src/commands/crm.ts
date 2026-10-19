@@ -7,13 +7,17 @@
  * `crmLogActivity()`, `crmJoinSegment()`, `crmLeaveSegment()`,
  * `crmOpenDeal()`, `crmMoveDeal()` — which the MCP server calls for the
  * `crm_*` tool of the same name, and each of those is one function of the
- * `crm` schema. Nothing is decided here: a status, a kind or a stage is passed
- * as it was typed, and the database refuses what it does not have, by name.
- * What a terminal adds is a contact named by its name as well as by its id,
+ * `crm` schema. Nothing is decided here: a status, a priority or a kind is
+ * checked against the words of the schema's enums as the core lists them —
+ * a test holds those lists to the schema — and everything else is refused by
+ * the database, by name. What a terminal adds is a contact named by its name as well as by its id,
  * and a table to read.
  */
 
 import {
+  CRM_ACTIVITY_KINDS,
+  CRM_PRIORITIES,
+  CRM_RELATIONSHIP_STATUSES,
   crmBoard,
   crmCard,
   crmJoinSegment,
@@ -35,6 +39,10 @@ import { dim, heading, line, note, pairs, step, table } from '../ui.js';
 
 type Row = Record<string, unknown>;
 
+const STATUSES = CRM_RELATIONSHIP_STATUSES.join('|');
+const PRIORITIES = CRM_PRIORITIES.join('|');
+const KINDS = CRM_ACTIVITY_KINDS.join('|');
+
 const SEARCH_FLAGS = [
   ...BOOKS_FLAGS, 'query', 'status', 'segment', 'stage', 'country', 'language', 'owner', 'no-outbound',
   'active-since', 'inactive-since', 'limit',
@@ -55,9 +63,9 @@ const DEAL_OPEN_FLAGS = [...BOOKS_FLAGS, 'title', 'amount', 'currency', 'expecte
 const DEAL_MOVE_FLAGS = [...BOOKS_FLAGS] as const;
 
 const USAGE =
-  'usage: ekwo crm search [--query --status --segment --stage --country --language --owner --no-outbound yes|no --active-since --inactive-since --limit]' +
+  'usage: ekwo crm search [--query --status <status> --segment --stage --country --language --owner --no-outbound yes|no --active-since --inactive-since --limit]' +
   ' | ekwo crm card <contact>' +
-  ' | ekwo crm card set <contact> [--status --priority --owner --tag <tag>… --job-title --linkedin --source --no-outbound yes|no --custom <json>]' +
+  ' | ekwo crm card set <contact> [--status <status> --priority <priority> --owner --tag <tag>… --job-title --linkedin --source --no-outbound yes|no --custom <json>]' +
   ' | ekwo crm segments' +
   ' | ekwo crm board [<pipeline-id>] [--closed]' +
   ' | ekwo crm timeline <contact> [--deal <deal-id> --since <moment> --kind <kind>… --limit <n>]' +
@@ -65,7 +73,17 @@ const USAGE =
   ' | ekwo crm join <segment-id> <contact> [--by --note]' +
   ' | ekwo crm leave <segment-id> <contact>' +
   ' | ekwo crm deal open <pipeline-id> <contact> --title <title> [--amount --currency --expected --url --owner]' +
-  ' | ekwo crm deal move <deal-id> <stage-id>';
+  ' | ekwo crm deal move <deal-id> <stage-id>' +
+  ` — <status> is ${STATUSES}; <priority> is ${PRIORITIES}; <kind> is ${KINDS}`;
+
+/** A word of one of the schema's enums, refused here with the list rather than guessed at. */
+function oneOf<T extends string>(values: readonly T[], value: string | undefined, flag: string): T | undefined {
+  if (value === undefined) return undefined;
+  if (!(values as readonly string[]).includes(value)) {
+    throw new UsageError(`bad_value: --${flag} is one of ${values.join(', ')}, got "${value}".`);
+  }
+  return value as T;
+}
 
 const text = (value: unknown): string => (value === null || value === undefined ? '' : String(value));
 
@@ -103,7 +121,7 @@ async function search(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   const result = await crmSearch(backend, given({
     company_id: company.id,
     query: stringFlag(args, 'query'),
-    status: stringFlag(args, 'status'),
+    status: oneOf(CRM_RELATIONSHIP_STATUSES, stringFlag(args, 'status'), 'status'),
     segment_id: segment === undefined ? undefined : uuidArg(segment, '--segment'),
     stage_id: stage === undefined ? undefined : uuidArg(stage, '--stage'),
     country: stringFlag(args, 'country'),
@@ -188,8 +206,8 @@ async function card(args: ParsedArgs, deps: BooksDeps): Promise<number> {
 async function cardSet(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   rejectUnknownFlags(args, CARD_SET_FLAGS);
   const patch: Row = given({
-    status: stringFlag(args, 'status'),
-    priority: stringFlag(args, 'priority'),
+    status: oneOf(CRM_RELATIONSHIP_STATUSES, stringFlag(args, 'status'), 'status'),
+    priority: oneOf(CRM_PRIORITIES, stringFlag(args, 'priority'), 'priority'),
     owner: stringFlag(args, 'owner'),
     job_title: stringFlag(args, 'job-title'),
     linkedin_url: stringFlag(args, 'linkedin'),
@@ -285,7 +303,7 @@ async function board(args: ParsedArgs, deps: BooksDeps): Promise<number> {
 async function timeline(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   rejectUnknownFlags(args, TIMELINE_FLAGS);
   const deal = stringFlag(args, 'deal');
-  const kinds = stringFlags(args, 'kind');
+  const kinds = stringFlags(args, 'kind').map((kind) => oneOf(CRM_ACTIVITY_KINDS, kind, 'kind') as (typeof CRM_ACTIVITY_KINDS)[number]);
   const { backend, company } = await openBooks(args, deps);
   const contact = args.positional[1] === undefined && deal !== undefined
     ? undefined
@@ -313,7 +331,7 @@ async function timeline(args: ParsedArgs, deps: BooksDeps): Promise<number> {
 
 async function log(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   rejectUnknownFlags(args, LOG_FLAGS);
-  const kind = required(stringFlag(args, 'kind'), 'what happened', '--kind <kind>');
+  const kind = oneOf(CRM_ACTIVITY_KINDS, required(stringFlag(args, 'kind'), 'what happened', `--kind ${KINDS}`), 'kind') as (typeof CRM_ACTIVITY_KINDS)[number];
   const deal = stringFlag(args, 'deal');
   const { backend, company } = await openBooks(args, deps);
   const contact = await contactOf(backend, company.id, args.positional[1]);
