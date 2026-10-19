@@ -40,6 +40,9 @@ const LATER = [
   // Redefines merge_contacts(), which returns the record 20261019090000
   // creates.
   '20261019130000_an_analytic_value_is_entered_on_the_line.sql',
+  // Replaces post_document() as 20261019130000 left it, which asks the
+  // analytic axes that migration defines.
+  '20261020072000_a_tax_computed_inside_its_own_base.sql',
 ];
 
 let db: PGlite;

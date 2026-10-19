@@ -57,6 +57,9 @@ const SNAPSHOT = [
   // Replaces document_header again with more columns, so it cannot come
   // before the view it extends.
   '20261019150000_a_party_names_its_identifiers.sql',
+  // Replaces document_tax_summary again, reading the snapshot and the legal
+  // mentions the two above publish.
+  '20261020072000_a_tax_computed_inside_its_own_base.sql',
 ];
 
 /** The treatments each condition of a legal mention covers — the vocabulary of `applies_when`, as the schema documents it. */

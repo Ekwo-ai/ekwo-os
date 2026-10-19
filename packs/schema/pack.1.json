@@ -1151,6 +1151,10 @@
           "type": "boolean",
           "description": "The unit price of a line carrying this tax already holds it (British, Australian and most retail). The engine takes the tax out of the gross of each tax group, rounded once, and shares the base back over the lines. Only a percentage tax may declare it."
         },
+        "base_includes_tax": {
+          "type": "boolean",
+          "description": "The taxable base of this tax contains the tax itself, and the rate is the rate of the law applied to that base: on a net amount N the tax is N × rate / (100 − rate), on a price that holds it (price_include) the price × rate / 100. The box of the base posting reports the base plus the tax. Only a percentage below 100 may declare it. Decision 0077."
+        },
         "recoverable": {
           "type": "boolean",
           "description": "False when the buyer never gets the tax back: American sales tax, Canadian PST. Where the money lands is said by a tax_on_base posting, not by this flag."

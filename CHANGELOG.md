@@ -40,6 +40,15 @@ somewhere has already run it.
   reads, under the same row level security, and add nothing up on the client:
   the MCP tool `journal_book` returns the lines and the totals as the database
   gives them (migration `20261020080000`).
+- **A tax computed inside its own base** (socle migration `20261020072000`,
+  decision 0077). A tax declares `base_includes_tax: true` in `taxes.json`
+  and keeps the rate of its law: on a net amount N the tax is
+  N × rate / (100 − rate), on a price that holds it the price × rate / 100,
+  rounded once on the group. One function, `tax_amount_of()`, is now the
+  arithmetic of every tax for the breakdown, the allocator of an inclusive
+  price and the line; the box of the base reports the base plus the tax, and
+  `document_tax_summary` appends `base_includes_tax` and `taxable_amount`. No
+  pack declares the key yet: every seed and every golden year is unchanged.
 
 ## [0.16.0] — 2026-10-20
 

@@ -22,7 +22,7 @@
  */
 
 import { describeCertification } from './certification.js';
-import { finalCloseOf, sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackSource, type PackStatement } from './read.js';
+import { finalCloseOf, sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackSource, type PackStatement, type PackTax } from './read.js';
 import { compileCorporateTaxSection } from './corporate-tax.js';
 import { compileAnalysis, compileFrameworkAnalysis } from './analysis.js';
 
@@ -572,6 +572,28 @@ function taxes(pack: Pack, country: string): string[] {
     '  applies_buyer_territory  = excluded.applies_buyer_territory,',
     '  applies_supply_territory = excluded.applies_supply_territory,',
     '  applies_supply_vs_seller = excluded.applies_supply_vs_seller;',
+    '',
+    ...insideBase(rows, country),
+  ];
+}
+
+/**
+ * The taxes computed inside their own base (decision 0077), said in a second
+ * statement rather than as one more column of the upsert above, so that the
+ * seed of a pack that never mentions the key is byte for byte what it was.
+ * As soon as one tax of the pack mentions it — `true`, or `false` — the
+ * statement is written for the whole country, every tax it does not name set
+ * back to false. A pack that retires the key from its last tax therefore
+ * writes `"base_includes_tax": false` on it for one version, and the
+ * templates follow.
+ */
+function insideBase(rows: PackTax[], country: string): string[] {
+  if (rows.every((t) => t.base_includes_tax === null)) return [];
+  const inside = rows.filter((t) => t.base_includes_tax === true).map((t) => t.code);
+  return [
+    'update tax_templates',
+    `   set base_includes_tax = code = any (${array(inside)})`,
+    ` where country = ${text(country)};`,
     '',
   ];
 }
