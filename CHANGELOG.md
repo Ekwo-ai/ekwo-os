@@ -42,6 +42,24 @@ somewhere has already run it.
   `refuse_merged_contacts_in()` attaches to every reference of a schema. The
   command line gains `ekwo contact merge <keep> <absorb>` and the MCP server
   `merge_contacts`.
+- **The contacts that are probably one party are proposed** (socle migration
+  `20261019104812`, decision 0075). `suggest_duplicate_contacts(company)`
+  answers one row per probable pair of active contacts of the company,
+  strongest first: `keep_id` (the one more ledger lines and documents name,
+  then the older), `absorb_id`, `score`, `evidence` (`vat_number`,
+  `registration_number`, `account`, `name`, comma-separated) and `because`.
+  The same VAT or registration number and the same bank account, on the
+  contact or in a learned motif, score 1; the same significant words of the
+  name in any order, or every word of one in the other, score as
+  `contact_candidates()` scores a name, capped at 0.600 when the words reach
+  several contacts. Never a pair across companies, an inactive or merged
+  contact, a contact and its own parent, or two different VAT or registration
+  numbers. The score of a name and its cap move into `name_agreement()` and
+  `name_among_several()`, the comparison of an account into `account_key()`
+  and of a number into `party_identifier()`, read by `contact_candidates()`
+  and `merge_contacts()` alike. About 40 ms at 2 000 contacts. The command
+  line gains `ekwo contact duplicates` and the MCP server
+  `suggest_duplicate_contacts`.
 
 ## [0.14.0] — 2026-10-18
 

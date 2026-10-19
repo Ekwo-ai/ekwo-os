@@ -4124,6 +4124,10 @@
         "arguments": "p_company_id uuid, p_code text"
       },
       {
+        "name": "account_key",
+        "arguments": "p_account text"
+      },
+      {
         "name": "account_rule_catches",
         "arguments": "p_rule_kind text, p_code_from text, p_code_to text, p_rule_type account_type, p_side text, p_code text, p_account_type account_type, p_balance numeric"
       },
@@ -4876,6 +4880,14 @@
         "arguments": "p_company_id uuid, p_code text"
       },
       {
+        "name": "name_agreement",
+        "arguments": "p_text text, p_words text[], p_name text, p_name_words text[]"
+      },
+      {
+        "name": "name_among_several",
+        "arguments": "p_score numeric, p_reached bigint"
+      },
+      {
         "name": "next_entry_number",
         "arguments": "p_journal_id uuid, p_date date"
       },
@@ -4914,6 +4926,10 @@
       {
         "name": "pack_upgrade_diff",
         "arguments": "p_company_id uuid, p_country character"
+      },
+      {
+        "name": "party_identifier",
+        "arguments": "p_number text"
       },
       {
         "name": "periodic_return_code",
@@ -5146,6 +5162,10 @@
       {
         "name": "suggest_contacts",
         "arguments": "p_transaction_id uuid"
+      },
+      {
+        "name": "suggest_duplicate_contacts",
+        "arguments": "p_company_id uuid"
       },
       {
         "name": "suggest_item_combinations",
@@ -7830,6 +7850,17 @@
           ]
         },
         {
+          "name": "account_key",
+          "arguments": "p_account text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "account_rule_catches",
           "arguments": "p_rule_kind text, p_code_from text, p_code_to text, p_rule_type account_type, p_side text, p_code text, p_account_type account_type, p_balance numeric",
           "anon": [],
@@ -9748,6 +9779,28 @@
           ]
         },
         {
+          "name": "name_agreement",
+          "arguments": "p_text text, p_words text[], p_name text, p_name_words text[]",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "name_among_several",
+          "arguments": "p_score numeric, p_reached bigint",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "next_entry_number",
           "arguments": "p_journal_id uuid, p_date date",
           "anon": [],
@@ -9849,6 +9902,17 @@
         {
           "name": "pack_upgrade_diff",
           "arguments": "p_company_id uuid, p_country character",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "party_identifier",
+          "arguments": "p_number text",
           "anon": [],
           "authenticated": [
             "execute"
@@ -10463,6 +10527,17 @@
         {
           "name": "suggest_contacts",
           "arguments": "p_transaction_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "suggest_duplicate_contacts",
+          "arguments": "p_company_id uuid",
           "anon": [],
           "authenticated": [
             "execute"
