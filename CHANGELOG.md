@@ -9,6 +9,71 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.16.0] — 2026-10-20
+
+### Added
+
+- **The `crm` module: the record of a relationship, kept on the socle's
+  contacts** (module migration `20261019175503`). A schema of its own —
+  cards, segments and their members, pipelines and stages, deals and
+  activities — every row naming its contact by a composite key with its
+  company. An agent or a screen calls `upsert_card`, `log_activity`
+  (idempotent by source and reference), `join_segment`, `leave_segment`,
+  `open_deal`, `move_deal` (a won deal makes its party a customer),
+  `card_of` and `search_cards`. Row level security through
+  `module_enabled()` and the module's own `crm.read` and `crm.write`; the
+  company archive carries every table of `crm`; `merge_contacts()` folds two
+  cards or memberships into one. It posts nothing to the ledger, and a
+  company enables it on its own (`ekwo module enable crm`).
+- **The PDF of a validated invoice carries the QR code of its
+  verification.** When the tax authority validated a document under a
+  clearance regime, or its fiscal record is chained under a chained regime,
+  `@ekwo-ai/invoice-pdf` prints the QR code of the verification link and,
+  beside it, what the country pack says to print. The brick encodes the QR
+  code itself (ISO/IEC 18004, byte mode) and draws it as vector modules,
+  checked by decoding every case with an independent decoder. A clearance
+  regime whose issuer builds the link declares
+  `clearance.verification_url` per environment; a validation recorded
+  without a link gets it built, or is refused with
+  `clearance_verification_unbuilt`. `ekwo einvoice clearance` takes
+  `--environment`, `einvoicing_clearance` takes `environment`.
+- **A line carries what its electronic invoice format asks** (socle
+  migration `20261019170000`). `products.attributes` and
+  `document_lines.attributes` hold facts the books had no column for — the
+  entry of the authority's list of goods and services a line is, why its
+  tax is exempted. A line filled in from a product takes what it does not
+  carry, a credit note copies the lines it undoes, and a posted line is
+  frozen with them. `create_document`, `update_document_lines`,
+  `add_document_line`, `create_product` and `update_product` take
+  `attributes`; `--line` takes `attr.<name>=<value>`.
+- **A sale in another currency carries its tax in the company's currency.**
+  The source of an electronic invoice gives, for a document in another
+  currency than its company's, the company's currency, the rate the
+  document was posted at and the tax of each tax code as its entry posted
+  it; `@ekwo-ai/myinvois` writes `TaxCurrencyCode` and every tax amount in
+  it.
+- **A free Ekwo Cloud account is offered once, at the moment it helps.** One
+  line after `ekwo init` and after a first `company export`, remembered per
+  person in the configuration directory; one paragraph of the instructions
+  of the MCP server started from the environment. Silent under `--json`,
+  outside a terminal, in CI, with `EKWO_NO_CLOUD_OFFER`, or once
+  `settings.json` says `"cloud_offer": false`. Nothing is sent to Ekwo.
+- **Malaysia 0.4.0.** MyInvois builds its verification link as
+  `{envbaseurl}/{uuid}/share/{longId}`, `myinvois.hasil.gov.my` in
+  production and `preprod.myinvois.hasil.gov.my` in the sandbox, from the
+  SDK FAQ, now a source of the pack. Every tax under `E` carries the
+  `exemption_reason` the provision it cites gives, and a line or a product
+  names its own classification, checked against LHDNM's list (CV302).
+
+### Changed
+
+- **The schema is 0.16.0 (`20261020000000`), and so is the floor of the
+  packages.** `@ekwo-ai/core` reads `document_lines.attributes` and
+  `products.attributes` to write an electronic invoice, and `@ekwo-ai/mcp`
+  writes them, neither of which a 0.15.0 database has. An installation runs
+  `ekwo migrate` before upgrading the packages. The end-to-end run against a
+  real Supabase project was not run for this release.
+
 ## [0.15.1] — 2026-10-19
 
 ### Changed
@@ -5384,7 +5449,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.15.1...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.16.0...HEAD
+[0.16.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.15.1...v0.16.0
 [0.15.1]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.15.0...v0.15.1
 [0.15.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.13.0...v0.14.0

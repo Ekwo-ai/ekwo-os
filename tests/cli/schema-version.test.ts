@@ -27,23 +27,22 @@ import {
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
 
 /** The schema this release defines. */
-const RELEASE = '0.15.0';
+const RELEASE = '0.16.0';
 
 /** What `ekwo_schema_version()` returned before the migration of this release. */
-const PREVIOUS = '0.14.0';
+const PREVIOUS = '0.15.0';
 
 /** The migration that carries the number, and nothing else. */
-const BUMP = 'schema_version_0_15_0';
+const BUMP = 'schema_version_0_16_0';
 
 /**
  * The floor the packages of this release declare. It rises only when a
- * package reads something an older schema does not have; 0.15.0 does —
- * `@ekwo-ai/core` reads the identifiers `document_header` publishes and
- * `einvoicing.clearances`, and `@ekwo-ai/mcp` calls
- * `record_clearance_submission()`, `record_clearance_answer()` and
- * `merge_contacts()`, none of which 0.14.0 has.
+ * package reads something an older schema does not have; 0.16.0 does —
+ * `@ekwo-ai/core` reads `document_lines.attributes` and `products.attributes`
+ * to write an electronic invoice, and `@ekwo-ai/mcp` writes them, none of
+ * which 0.15.0 has.
  */
-const FLOOR = '0.15.0';
+const FLOOR = '0.16.0';
 
 let db: SqlClient;
 let migrations: Migration[];
