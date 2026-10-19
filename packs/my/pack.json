@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MY",
   "name": "Malaysia",
-  "version": "0.3.0",
-  "schema_min": "20261018023930",
+  "version": "0.3.1",
+  "schema_min": "20261019161437",
   "seed_sequence": 39,
   "released_at": "2026-10-19",
   "certification": {

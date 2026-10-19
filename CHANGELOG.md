@@ -32,6 +32,10 @@ somewhere has already run it.
   `deadline.rule` — and fills it on a draft that has none; the filings
   already written get theirs. The debt `settle_filing()` posts matures on it.
   A pack with no rule, or `depends_on_taxpayer`, leaves it empty.
+- **Malaysia 0.3.1.** The README says that settling SST-02 leaves `2102`, the
+  self-assessed Service Tax of `MY-P-SVT-IMPORT`, for form SST-02A, which the
+  pack does not carry, and how to clear it with one entry. `schema_min`
+  rises to `20261019161437`.
 
 ## [0.15.0] — 2026-10-19
 

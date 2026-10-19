@@ -132,7 +132,20 @@ the buyer and settle with nobody's periodic return.
 
 **SST-02, the joint return of Sales Tax and Service Tax**, filed bimonthly
 (Sales Tax Act 2018 and Service Tax Act 2018, each s. 26) and due, with
-payment, by the last day of the month following the taxable period.
+payment, by the last day of the month following the taxable period. A
+filing carries that date (`tax_filings.due_date`), and the debt its settlement
+posts matures on it.
+
+**Settling SST-02 clears `2100` and `2101`, never `2102`.** The settlement of a
+return clears the tax its form carries, and no box of SST-02 carries the
+self-assessed Service Tax of `MY-P-SVT-IMPORT`. `2102` keeps it after SST-02 is
+settled. It is owed to RMCD on **form SST-02A**, which this pack does not carry:
+the pack schema has one declaration form per pack (`tax_report.json`). Once
+SST-02A is filed, write one entry yourself, dated on the day of payment: debit
+`2102` with the tax the form declares, credit the bank account the payment
+leaves from, or credit an RMCD payable if you settle it later. The golden year
+leaves 80.00 on `2102` for January–February 2026, the tax on its one imported
+service.
 
 **The item numbers this pack states are a mixture of two kinds of confidence.**
 Items 11(a) to 11(c), 18(a), 18(b)(ii), 18(d) and 19 are RMCD's own, read from
@@ -307,7 +320,10 @@ translation is future work and welcome, one file, one contributor, per
   transcribes — construction, private healthcare, education and the groups the
   2025 expansion added each keep their own rate and their own threshold.
 - **Form SST-02A**, the return for an imported taxable service.
-  `MY-P-SVT-IMPORT` books the cost and the liability and reaches no box.
+  `MY-P-SVT-IMPORT` books the cost and the liability and reaches no box, so
+  settling SST-02 leaves `2102` alone; an entry the company writes clears it
+  once SST-02A is paid (see "The return"). A second form needs the pack
+  schema to carry more than one `tax_report.json`.
 - **Confirmed item numbers of SST-02 for the amount of tax due**, named above:
   the pack's own placement, not a confirmed reading of the form.
 - **Bad debt relief, the credit-note deduction item (13), penalties, interest
