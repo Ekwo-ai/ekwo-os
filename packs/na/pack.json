@@ -1,0 +1,206 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "NA",
+  "name": "Namibia",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 206,
+  "released_at": "2026-10-19",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value-Added Tax Act, 2000 (Act No. 10 of 2000), annotated consolidation: ss. 6, 7, 9, 10, 12, 14, 18, 19, 21, 22, 23, 24 and Schedules III (zero-rated supplies), IV (exempt supplies) and VI (tax invoices, credit and debit notes)",
+        "publisher": "Republic of Namibia, annotated statutes published by the Legal Assistance Centre",
+        "url": "https://www.lac.org.na/laws/annoSTAT/Value-Added%20Tax%20Act%2010%20of%202000.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "law"
+      },
+      {
+        "key": "vat-amendment-2024",
+        "title": "Value-Added Tax Amendment Act, 2024 (Act No. 5 of 2024), Government Gazette No. 8443 of 16 September 2024: s. 3 (registration threshold N$1 000 000), s. 4 (cash sales without a tax invoice up to N$1 000), s. 2 (imported services declared within 20 days following the month of import); s. 7 (commences on a date the Minister fixes by notice in the Gazette)",
+        "publisher": "Republic of Namibia, Government Gazette",
+        "url": "https://archive.gazettes.africa/archive/na/2024/na-government-gazette-dated-2024-09-16-no-8443.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "law"
+      },
+      {
+        "key": "vat2-return",
+        "title": "Return for Value Added Tax, form VAT 2: blocks 5 to 7 (output tax, input tax, amount due or repayable), rows 8 to 12 (VAT declared, outputs) and rows 13 to 19 (VAT claimed, inputs)",
+        "publisher": "Ministry of Finance, Inland Revenue, published by the Namibia Revenue Agency",
+        "url": "https://www.namra.org.na/documents/cms/uploaded/return-for-value-added-tax-f8b15298a9.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "form"
+      },
+      {
+        "key": "vat-brochure",
+        "title": "Value Added Tax brochure: standard rate of 15 %, return due on or before the 25th day of the month following the end of the period, tax invoice particulars, input tax that cannot be claimed (passenger vehicle, entertainment, club subscriptions, private use)",
+        "publisher": "Ministry of Finance, Inland Revenue Department, published on the NamRA ITAS portal",
+        "url": "https://itas.namra.org.na/assets/documents/other-forms/Value_Added_Tax_Brochure.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "namra-general-information",
+        "title": "Information brochure — general tax information: the due date of each tax, VAT 25th day of the month following the end of the period",
+        "publisher": "Namibia Revenue Agency",
+        "url": "https://www.namra.org.na/documents/cms/uploaded/information-brochure--general-tax-information--66d64f0d7f.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "itas-portal",
+        "title": "Integrated Tax Administration System (ITAS) — the NamRA portal where a taxpayer registers, files the VAT return and pays",
+        "publisher": "Namibia Revenue Agency",
+        "url": "https://itas.namra.org.na",
+        "consulted_on": "2026-10-19",
+        "kind": "portal"
+      },
+      {
+        "key": "iso-4217",
+        "title": "ISO 4217 currency code list, list one — NAMIBIA, Namibia Dollar, NAD, 516, two minor units (the South African rand is listed under the same country and is not this pack's currency)",
+        "publisher": "SIX Financial Information, maintenance agency of ISO 4217",
+        "url": "https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list-one.xml",
+        "consulted_on": "2026-10-19",
+        "kind": "standard"
+      },
+      {
+        "key": "ifac-namibia",
+        "title": "Namibia — member profile: the Institute of Chartered Accountants of Namibia (ICAN) adopted IFRS Accounting Standards and the IFRS for SMEs Accounting Standard",
+        "publisher": "International Federation of Accountants",
+        "url": "https://www.ifac.org/about-ifac/membership/profile/namibia",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "NAD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Namibia reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "NA-ICAN-SFP",
+        "NA-ICAN-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Namibia. The Companies Act, 2004 requires accounting records and annual financial statements, and the Institute of Chartered Accountants of Namibia (ICAN) has adopted IFRS Accounting Standards and the IFRS for SMEs Accounting Standard for them. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-based statements, with the accounts a Namibian company keeps — a Namibia dollar current account and a foreign currency account side by side, VAT output and input tax, the net VAT settlement account, import VAT owed to the Namibia Revenue Agency (NamRA) on an import declaration, PAYE and social security payable, withholding tax and the irrecoverable VAT of s. 19(2) of the Value-Added Tax Act.",
+      "source": "ifac-namibia"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value-Added Tax Act, 2000, s. 21 and Schedule VI, paragraph 1(d) — a tax invoice carries an individualised serial number and its date of issue. The Act asks for a serial number, not for a series without gaps restarting each year, so `numbering` is `sequential`.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value-Added Tax Act, 2000, s. 7(1) — a supply takes place when an invoice is issued or a payment is received, whichever is earlier. Delivery is not a time of supply in the general rule, but Ekwo's closed vocabulary offers `earliest_of_delivery_or_payment` as the nearest value; the sections 7(2) to 7(8) special cases (connected persons, goods under a credit agreement, continuous supplies and others) are not modelled and a gap is recorded in the README.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": [
+      {
+        "code": "export",
+        "applies_when": "export",
+        "text": "Zero-rated supply under section 9 and paragraph 2 of Schedule III to the Value-Added Tax Act, 2000.",
+        "sequence": 20,
+        "legal_reference": "Value-Added Tax Act, 2000, s. 9(1) and Schedule III, paragraph 2(a) and (b) — a supply of goods the supplier has entered for export and exported, or that the Commissioner is satisfied has been exported, is charged at zero per cent; s. 9(2) — the registered person obtains and keeps the documentary proof the Commissioner accepts. Namibia is outside the European Union's common system and carries no VATEX code, so the sentence names the section the zero rate is claimed under.",
+        "source": "vat-act"
+      },
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt supply under section 10 and paragraph 2 of Schedule IV to the Value-Added Tax Act, 2000: no VAT is charged.",
+        "sequence": 30,
+        "legal_reference": "Value-Added Tax Act, 2000, s. 10(1) and Schedule IV, paragraph 2 — the supplies exempt from the tax of s. 6(1)(a), among them financial services, accommodation in a dwelling let under a lease, leasehold land let, education, public transport and medical or paramedical services.",
+        "source": "vat-act"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Namibian statute or notice the pack could open obliges a business to exchange a structured electronic invoice: there is no Peppol authority, no published profile and no scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What the Value-Added Tax Act, 2000 requires is a tax invoice carrying the particulars of Schedule VI, paragraph 1, on paper or in any form. Trade and tax press report that the Ministry of Finance planned an e-invoicing system connected to NamRA's ITAS, first dated April 2026, then moved to a phased rollout over the 2026/27 to 2028/29 budget period without a fixed date; the pack found no NamRA or Ministry document that sets a date, a profile or a platform, so it records none and the gap is written in the README.",
+    "source": "vat-act"
+  }
+}

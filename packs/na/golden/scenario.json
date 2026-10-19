@@ -1,0 +1,349 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Two months of books of a Windhoek trading and services company, VAT-registered in Category B and filing every two months",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-07/08",
+      "from": "2026-07-01",
+      "to": "2026-08-31"
+    }
+  ],
+  "statements": [
+    "NA-ICAN-SFP",
+    "NA-ICAN-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-windhoek",
+      "name": "Klein Hardware Supplies (Pty) Ltd",
+      "type": "customer",
+      "country": "NA"
+    },
+    {
+      "ref": "cust-tenant",
+      "name": "T. Shikongo",
+      "type": "customer",
+      "country": "NA"
+    },
+    {
+      "ref": "cust-gaborone",
+      "name": "Gaborone Timber Merchants (Pty) Ltd",
+      "type": "customer",
+      "country": "BW"
+    },
+    {
+      "ref": "supp-windhoek",
+      "name": "Southern Wholesale (Pty) Ltd",
+      "type": "supplier",
+      "country": "NA"
+    },
+    {
+      "ref": "supp-bank",
+      "name": "Kalahari Commercial Bank Limited",
+      "type": "supplier",
+      "country": "NA"
+    },
+    {
+      "ref": "supp-johannesburg",
+      "name": "Rand Building Materials (Pty) Ltd",
+      "type": "supplier",
+      "country": "ZA"
+    },
+    {
+      "ref": "supp-london",
+      "name": "Thames Advisory Ltd",
+      "type": "supplier",
+      "country": "GB"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-windhoek",
+      "date": "2026-08-04",
+      "why": "A domestic sale of goods at the standard rate of 15 % (s. 6(1)): value and output tax on row 8 of the VAT 2 return, in the 15 % column. 10 × 2000 = 20000, tax 3000.",
+      "lines": [
+        {
+          "name": "Hardware supplies, wholesale",
+          "quantity": 10,
+          "unit_price": 2000,
+          "tax": "NA-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-windhoek",
+      "date": "2026-08-06",
+      "why": "A domestic service at 15 %: row 8 again, so the rows 8 value is 28000 and the tax 4200 before the credit note.",
+      "lines": [
+        {
+          "name": "Installation services, August",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "NA-S-15",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-gaborone",
+      "date": "2026-08-10",
+      "why": "An export of goods to Botswana that the supplier entered for export and exported, zero-rated under s. 9 and Schedule III, paragraph 2(a): row 8, zero-rated column, no output tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Processed timber, export consignment",
+          "quantity": 100,
+          "unit_price": 500,
+          "tax": "NA-S-Z-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-tenant",
+      "date": "2026-08-12",
+      "why": "A residential letting, exempt under s. 10 and Schedule IV, paragraph 2: row 8, exempt column, no output tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Monthly rent, residential flat in Windhoek",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "NA-S-EX",
+          "account": "4520"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-windhoek",
+      "date": "2026-08-13",
+      "why": "A local supply of maize meal, zero-rated under Schedule III, paragraph 2(s): row 8, zero-rated column, and no output tax although the supply stays in Namibia.",
+      "lines": [
+        {
+          "name": "Maize meal, 12.5 kg bags",
+          "quantity": 200,
+          "unit_price": 60,
+          "tax": "NA-S-Z",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-windhoek",
+      "date": "2026-08-18",
+      "why": "The sale of a used computer of the business at the standard rate: row 9, capital goods sold, 15 % column. 3000 plus 450 of tax.",
+      "lines": [
+        {
+          "name": "Used office computer sold",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "NA-S-15-CAP",
+          "account": "4750"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-windhoek",
+      "date": "2026-08-14",
+      "why": "A credit note for one unit of INV-001 returned: it does not reduce row 8 but goes to row 10, output adjustments, where it takes 2000 of value and 300 of tax off the period (s. 22).",
+      "lines": [
+        {
+          "name": "Hardware supplies, wholesale — one unit returned",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "NA-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-windhoek",
+      "date": "2026-08-05",
+      "why": "A domestic purchase of stock at 15 % on a tax invoice: row 13, value 30000 and input tax 4500, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "NA-P-15",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-bank",
+      "date": "2026-08-07",
+      "why": "Bank charges, a financial service exempt under Schedule IV: row 13, exempt column, and no input tax.",
+      "lines": [
+        {
+          "name": "Bank service charges, August",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "NA-P-EX",
+          "account": "6450"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-johannesburg",
+      "date": "2026-08-11",
+      "why": "An import of goods from South Africa: import VAT at 15 % on the value of the import paid to NamRA on the import declaration (s. 6(1)(b), s. 14(1)): row 15, value 40000 and input tax 6000, the tax owed on account 2125 until paid.",
+      "lines": [
+        {
+          "name": "Imported building materials for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "NA-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-london",
+      "date": "2026-08-17",
+      "why": "A consulting service from a supplier in the United Kingdom: the recipient pays the tax on the import declaration (s. 6(2)(c), s. 14(2)) and deducts it, row 15, value 6000 and tax 900. The placement of imported services on the form is an assumption written in the README.",
+      "lines": [
+        {
+          "name": "Advisory services from abroad",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "NA-P-RC-SVC",
+          "account": "6420"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-windhoek",
+      "date": "2026-08-19",
+      "why": "Client entertainment, whose input tax s. 19(2)(b) refuses: the 15 % follows the expense to account 6530 and reaches no row of the return.",
+      "lines": [
+        {
+          "name": "Client entertainment, product launch",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "NA-P-15-ND",
+          "account": "6390"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-windhoek",
+      "date": "2026-08-20",
+      "why": "Computers bought locally as capital goods: row 14, apart from ordinary purchases. 2 × 5000 = 10000, tax 1500.",
+      "lines": [
+        {
+          "name": "Laptop computers for the office",
+          "quantity": 2,
+          "unit_price": 5000,
+          "tax": "NA-P-15-CAP",
+          "account": "1640"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-007",
+      "type": "purchase_invoice",
+      "contact": "supp-windhoek",
+      "date": "2026-08-22",
+      "why": "Diesel for the delivery vehicle, zero-rated under Schedule III, paragraph 2(r): row 13, zero-rated column, no input tax.",
+      "lines": [
+        {
+          "name": "Diesel, delivery vehicle",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "NA-P-Z",
+          "account": "6380"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-windhoek",
+      "date": "2026-08-21",
+      "why": "A credit note received for a short delivery on PINV-001: row 17, input adjustments, 1000 of value and 150 of tax off the input tax.",
+      "lines": [
+        {
+          "name": "Trading stock — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "NA-P-15",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-09-02",
+      "amount": 12000,
+      "contact": "cust-tenant",
+      "journal": "BNK",
+      "match": "INV-004",
+      "why": "The rent of INV-004 collected in full: a matched inbound payment on an exempt supply."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-09-04",
+      "amount": 50000,
+      "contact": "cust-gaborone",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-09-07",
+      "amount": 34500,
+      "contact": "supp-windhoek",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, 30000 plus 4500 of VAT: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-09-09",
+      "amount": 5000,
+      "contact": "cust-windhoek",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from a customer before its next order, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

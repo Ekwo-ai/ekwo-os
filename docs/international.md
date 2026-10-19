@@ -268,3 +268,21 @@ regulations the pack could not open.
 **A suspension by notice.** The charging of VAT on private medical services was
 suspended by a public notice of 30 July 2026; the Act itself still makes them
 taxable. The pack carries no code for them rather than invent a treatment.
+
+## From Namibia
+
+Namibia levies a value-added tax at 15 % (Value-Added Tax Act, 2000, s. 6(1)),
+filed on the Namibia Revenue Agency's ITAS portal on a two-month tax period by
+the 25th of the month after it. The pack (`packs/na`) fits the format without a
+change to the core; what it could not carry is written in its README:
+
+- **The registration threshold** is data the format has no field for. The
+  Amendment Act, 2024 raises it from N$500 000 to N$1 000 000 on a date the
+  Minister fixes by notice in the Gazette, which the pack did not find.
+- **Category A periods.** `bimonth` is anchored on January–February, the
+  Category B of the Act; Category A (ending January, March…) is not
+  expressible.
+- **Imported services** are declared on an import declaration and the form does
+  not say on which row; the pack assumes row 15 and says so.
+- **E-invoicing** has no official date or platform yet, so the obligation is
+  `none`.

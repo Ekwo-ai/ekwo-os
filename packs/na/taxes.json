@@ -1,0 +1,483 @@
+[
+  {
+    "code": "NA-S-15",
+    "name": "Sale, standard rate 15 %",
+    "description": "The general rate on a taxable supply of goods or services by a registered person",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 6(1) — tax is levied at the rate of 15 per cent on the value of every taxable supply by a registered person and of every import of goods or services other than an exempt import; s. 6(2) — the supplier accounts for it on a supply, the importer pays it on goods, the recipient pays it on imported services. Declared on row 8 of the VAT 2 return, \"Trading: Sales/fees\", in the 15 % column; a credit note goes to row 10, output adjustments. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "NA-S-15-CAP",
+    "name": "Sale of a capital good, standard rate 15 %",
+    "description": "The sale of an asset of the business, charged at the general rate",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 6(1) — tax is levied at the rate of 15 per cent on the value of every taxable supply by a registered person and of every import of goods or services other than an exempt import; s. 6(2) — the supplier accounts for it on a supply, the importer pays it on goods, the recipient pays it on imported services. Declared on row 9 of the VAT 2 return, \"Capital goods sold\", in the 15 % column; a credit note goes to row 10. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat2-return",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 15
+  },
+  {
+    "code": "NA-S-Z-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "Goods exported by the supplier, and services to a non-resident outside Namibia",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 9 and Schedule III, paragraph 2 — (a) goods the supplier has entered for export under the Customs and Excise Act and exported; (b) goods the Commissioner is satisfied have been exported by the supplier; (h) international transport services; (o) services to a non-resident person who is outside Namibia when they are supplied, with the exceptions the paragraph lists; s. 9(2) — the supplier obtains and keeps the documentary proof the Commissioner accepts. Declared on row 8 of the VAT 2 return in the zero-rated column, the only zero column the form has. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8Z"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10Z",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "NA-S-Z",
+    "name": "Sale, zero-rated (local)",
+    "description": "A supply charged at zero per cent without leaving Namibia: maize meal and mahango, fuel, residential utilities, bread and other listed basic foods, and the other items of Schedule III",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 9 and Schedule III, paragraph 2 — among the supplies charged at zero per cent: (r) petrol and distillate fuels subject to the fuel levy; (s) mahango, mahango meal and maize meal; (w) electricity, water, refuse removal and sewerage to a residential account; (z) telecommunication services to a residential account; (aa) livestock other than game; (ee) fresh and dried beans, sunflower cooking oil, bread and cake flour and bread; (ff) dry white and brown granular sugar and fresh milk; (ii) funeral undertaking services; (jj) sanitary pads, none of them when furnished as a meal or as cooked or prepared food. The list is long and is amended by Finance Acts: the pack carries the code, and the accountant checks the item against the current Schedule III. Declared on row 8 of the VAT 2 return in the zero-rated column. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8Z"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10Z",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "NA-S-EX",
+    "name": "Sale, exempt",
+    "description": "Financial services, residential accommodation let under a lease, education, public transport and medical services",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 10 and Schedule IV, paragraph 2 — among the exempt supplies: financial services, accommodation in a dwelling under a lease, leasehold land, education services, public transport services, a supply of goods or services as a fringe benefit to an employee, and medical or paramedical services by the practitioners the Schedule names; s. 10(2) — a supply the Act zero-rates is never exempt. An exempt supply gives no right to deduct the input tax of what it costs (s. 19(3)). Declared on row 8 of the VAT 2 return in the exempt column. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8E"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10E",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "NA-P-15",
+    "name": "Purchase, standard rate 15 %, deductible",
+    "description": "A local purchase at the general rate, made to carry on a taxable activity, on a tax invoice",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 18 and s. 19 — input tax is deducted from output tax for the period, on a tax invoice, tax debit note or tax credit note held when the return is furnished (s. 18(2)(a)); no deduction is made for what s. 19(2) lists. Declared on row 13 of the VAT 2 return, \"Local Purchases\", in the 15 % column; a credit note received goes to row 17, input adjustments. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "13"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "13"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "17",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "17",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "NA-P-15-CAP",
+    "name": "Purchase of a capital good, 15 %, deductible",
+    "description": "A local purchase of a capital good used to carry on a taxable activity",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 18 and s. 19, and the VAT 2 return, row 14 \"Capital goods purchased locally\", in the 15 % column; a credit note received goes to row 17. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat2-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "14"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "17",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "17",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 115
+  },
+  {
+    "code": "NA-P-15-ND",
+    "name": "Purchase, standard rate 15 %, input tax not deductible",
+    "description": "A passenger vehicle, entertainment, club subscriptions and the other purchases whose input tax s. 19(2) refuses",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 19(2) — no input tax is deducted on a taxable supply to, or import by, the registered person of (a) a passenger vehicle, unless the person deals in or hires out passenger vehicles, is a tour operator and the like; (b) goods or services acquired for entertainment, unless the person provides entertainment as a business; (c) petroleum products not wholly for use in the business; (d) fees or subscriptions to a sporting, social or recreational club. The tax follows the expense to account 6530 and reaches no row of the return. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "NA-P-Z",
+    "name": "Purchase, zero-rated (local)",
+    "description": "A local purchase charged at zero per cent by the supplier",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 9 — a supply charged at zero per cent carries no tax to deduct. Declared on row 13 of the VAT 2 return in the zero-rated column; a credit note received goes to row 17 in the same column. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat2-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "13Z"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "17Z",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "NA-P-EX",
+    "name": "Purchase, exempt (local)",
+    "description": "Bank charges, insurance, residential rent and the other exempt supplies bought locally",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 10 and Schedule IV — the supply is exempt, so there is no input tax. Declared on row 13 of the VAT 2 return in the exempt column; a credit note received goes to row 17 in the same column. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat2-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "13E"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "17E",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "NA-P-IMP",
+    "name": "Import of goods, VAT paid on the import",
+    "description": "VAT on goods entered for home consumption, paid by the importer on an import declaration and claimed as input tax",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 6(1)(b) and (2)(b) — tax is levied on the import of goods and paid by the importer, at 15 per cent of the value of the import fixed by s. 12(2); s. 14(1) — the importer furnishes an import declaration and pays on entry for home consumption, or by the 20th day of the month after the import where the goods are imported on a VAT import account; s. 18(2)(b) — the deduction needs the bill of entry. Declared on row 15 of the VAT 2 return, \"Imported purchases\". The tax is owed to NamRA and not to the supplier, so it waits on account 2125 until the import declaration is paid. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "15"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "15"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "15",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "15",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "NA-P-IMP-CAP",
+    "name": "Import of a capital good, VAT paid on the import",
+    "description": "VAT on a capital good imported to carry on a taxable activity",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 6(1)(b), s. 12 and s. 14 as for NA-P-IMP; row 16 of the VAT 2 return, \"Imported capital goods\". The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat2-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "16"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "16"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "16",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 155
+  },
+  {
+    "code": "NA-P-RC-SVC",
+    "name": "Imported service, tax paid by the recipient and claimed back",
+    "description": "A service supplied by a non-resident: the recipient declares and pays the tax, then deducts it as input tax",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Value-Added Tax Act, 2000, s. 6(1)(b) and (2)(c) — tax is levied on an import of services and paid by the recipient; s. 14(2) as amended by the Value-Added Tax Amendment Act, 2024, s. 2 — the recipient furnishes an import declaration and pays within 20 days following the month in which the import was made (the amendment commences on a date the Minister fixes); s. 18 — the tax paid on an import is input tax. The VAT 2 form does not say where an import of services goes: the pack declares it on row 15, \"Imported purchases\", and the accountant must confirm that placement. The tax waits on account 2125 until the import declaration is paid. The start date is the earliest day the pack claims, not the history of the rule: this pack is written for books from 2024, and the 15 % of s. 6(1) is the rate of the consolidated text it read.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "15"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "15"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "15",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "15",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 160
+  }
+]

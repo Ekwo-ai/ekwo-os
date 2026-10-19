@@ -1,0 +1,254 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "NA-VAT2",
+  "name": "VAT 2 — Return for Value Added Tax",
+  "period": [
+    "month",
+    "bimonth"
+  ],
+  "valid_from": "2024-01-01",
+  "legal_reference": "Value-Added Tax Act, 2000, s. 23(2) — the tax period of a registered person is two calendar months: Category A, ending in January, March, May, July, September and November; Category B, ending in February, April, June, August, October and December, the Commissioner choosing the category (s. 23(3)); a farmer may elect two, four, six or twelve months, and a person registered under s. 15(4) six months. s. 24(1) — a return is furnished for every period whether or not tax is payable. `bimonth` is anchored on January–February, which is Category B; a Category A taxpayer (December–January, February–March…) is not expressible by this format and is recorded in the README. The category is NamRA's decision about the taxpayer, so no period_default is declared and `ekwo init` asks.",
+  "source": "vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "Value-Added Tax Act, 2000, s. 24(1) — not later than the twenty-fifth day of the month following the end of the tax period; the NamRA brochures say the same. The Commissioner may extend the time to furnish a return but not the time to pay (s. 24(4) and (5)).",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Row 8 — Trading: sales/fees — value excluding VAT, 15 % column",
+      "sequence": 10,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT declared (Outputs), row 8, 15 % column: the value excluding VAT and the output tax (the form asks whole Namibia dollars and ignores cents).",
+      "source": "vat2-return"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Row 8 — Trading: sales/fees — output tax",
+      "sequence": 15,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT declared (Outputs), row 8, 15 % column: the value excluding VAT and the output tax (the form asks whole Namibia dollars and ignores cents).",
+      "source": "vat2-return"
+    },
+    {
+      "box": "8Z",
+      "kind": "base",
+      "name": "Row 8Z — Trading: sales/fees — zero-rated",
+      "sequence": 20,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT declared (Outputs), row 8, zero-rated column: exports and the local zero-rated supplies of Schedule III.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "8E",
+      "kind": "base",
+      "name": "Row 8E — Trading: sales/fees — exempt",
+      "sequence": 25,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT declared (Outputs), row 8, exempt column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Row 9 — Capital goods sold — value excluding VAT, 15 % column",
+      "sequence": 30,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT declared (Outputs), row 9, 15 % column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Row 9 — Capital goods sold — output tax",
+      "sequence": 35,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT declared (Outputs), row 9, 15 % column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Row 10 — Output adjustments — value excluding VAT, 15 % column",
+      "sequence": 40,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT declared (Outputs), row 10, 15 % column: credit notes issued (Value-Added Tax Act, 2000, s. 22) reduce the output tax; the pack holds them negative.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "Row 10 — Output adjustments — output tax",
+      "sequence": 45,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT declared (Outputs), row 10, 15 % column: credit notes issued (Value-Added Tax Act, 2000, s. 22) reduce the output tax; the pack holds them negative.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "10Z",
+      "kind": "base",
+      "name": "Row 10Z — Output adjustments — zero-rated",
+      "sequence": 50,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT declared (Outputs), row 10, zero-rated column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "10E",
+      "kind": "base",
+      "name": "Row 10E — Output adjustments — exempt",
+      "sequence": 55,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT declared (Outputs), row 10, exempt column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Row 12 — Total output tax (to block 5)",
+      "sequence": 60,
+      "plus": [
+        "8:tax",
+        "9:tax",
+        "10:tax"
+      ],
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), row 12: the total output tax due, carried to block 5. The totals of row 11 are column sums of the rows above and are not repeated.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "13",
+      "kind": "base",
+      "name": "Row 13 — Local purchases — value excluding VAT, 15 % column",
+      "sequence": 65,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 13, 15 % column: the value excluding VAT and the input tax.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Row 13 — Local purchases — input tax",
+      "sequence": 70,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 13, 15 % column: the value excluding VAT and the input tax.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "13Z",
+      "kind": "base",
+      "name": "Row 13Z — Local purchases — zero-rated",
+      "sequence": 75,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 13, zero-rated column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "13E",
+      "kind": "base",
+      "name": "Row 13E — Local purchases — exempt",
+      "sequence": 80,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 13, exempt column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "14",
+      "kind": "base",
+      "name": "Row 14 — Capital goods purchased locally — value excluding VAT, 15 % column",
+      "sequence": 85,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 14, 15 % column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Row 14 — Capital goods purchased locally — input tax",
+      "sequence": 90,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 14, 15 % column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "15",
+      "kind": "base",
+      "name": "Row 15 — Imported purchases — value excluding VAT, 15 % column",
+      "sequence": 95,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 15, 15 % column: the value on the bill of entry or import declaration and the tax paid on it.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "15",
+      "kind": "tax",
+      "name": "Row 15 — Imported purchases — input tax",
+      "sequence": 100,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 15, 15 % column: the value on the bill of entry or import declaration and the tax paid on it.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "16",
+      "kind": "base",
+      "name": "Row 16 — Imported capital goods — value excluding VAT, 15 % column",
+      "sequence": 105,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 16, 15 % column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "16",
+      "kind": "tax",
+      "name": "Row 16 — Imported capital goods — input tax",
+      "sequence": 110,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 16, 15 % column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "17",
+      "kind": "base",
+      "name": "Row 17 — Input adjustments — value excluding VAT, 15 % column",
+      "sequence": 115,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 17, 15 % column: credit notes received reduce the input tax; the pack holds them negative.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "17",
+      "kind": "tax",
+      "name": "Row 17 — Input adjustments — input tax",
+      "sequence": 120,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 17, 15 % column: credit notes received reduce the input tax; the pack holds them negative.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "17Z",
+      "kind": "base",
+      "name": "Row 17Z — Input adjustments — zero-rated",
+      "sequence": 125,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 17, zero-rated column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "17E",
+      "kind": "base",
+      "name": "Row 17E — Input adjustments — exempt",
+      "sequence": 130,
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), VAT claimed (Inputs), row 17, exempt column.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "19",
+      "kind": "total",
+      "name": "Row 19 — Total input tax claimed (to block 6)",
+      "sequence": 135,
+      "plus": [
+        "13:tax",
+        "14:tax",
+        "15:tax",
+        "16:tax",
+        "17:tax"
+      ],
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), row 19: the total input tax claimed, carried to block 6.",
+      "source": "vat2-return"
+    },
+    {
+      "box": "7",
+      "kind": "total",
+      "name": "Block 7 — Amount due / repayable (block 5 less block 6)",
+      "sequence": 140,
+      "plus": [
+        "12"
+      ],
+      "minus": [
+        "19"
+      ],
+      "legal_reference": "VAT 2 return (Ministry of Finance, Inland Revenue), blocks 5 to 7: total output tax due, less input tax claimed, gives the amount due or repayable. A negative figure is a refund under s. 38 of the Value-Added Tax Act, 2000.",
+      "source": "vat2-return"
+    }
+  ]
+}
