@@ -1,0 +1,213 @@
+[
+  {
+    "code": "GM-S-15",
+    "name": "Sale, standard rate 15 %",
+    "description": "The general rate on a taxable supply made in The Gambia",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "legal_reference": "The GRA brochure, § 2: the standard VAT rate is 15 percent and applies to all goods and services unless they are specifically exempted; § 4: all taxable supplies by a registered supplier are VAT inclusive, the VAT element being the selling price divided by 115 and multiplied by 15. Ekwo computes the tax on a price excluding VAT; the invoice shows the VAT-inclusive total. Box numbers are this pack's own (see the README).",
+    "source": "vat-brochure",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1S"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1S",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "GM-S-Z-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "A supply of goods or services exported from The Gambia",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2013-01-01",
+    "legal_reference": "The GRA brochure, § 2, and the Domestic Taxes FAQs: zero percent is applied to exports of goods and services. The brochure (§ 12) lets a registrant with at least 50 % of its supplies in the preceding twelve months zero-rated, such as an exporter, apply for a refund of its input tax. The conditions of export (evidence, customs entry) are not stated in the sources this pack could open and are not modelled.",
+    "source": "vat-brochure",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "GM-S-EX",
+    "name": "Sale, exempt",
+    "description": "An exempt supply: basic foods, unprocessed agricultural products, education, prescription drugs, medical, dental, veterinary and optical services, life and health insurance, residential rent, domestic transport (not tourism), small electricity and water consumption",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2013-01-01",
+    "legal_reference": "The GRA brochure, § 6: exempt supplies are goods and services on which no VAT is charged — basic foods such as rice, sugar, flour, cooking oil, onions and potatoes; educational services; prescription drugs; medical, dental, veterinary and optical services; agriculture and aquaculture products, inputs and equipment, and unprocessed agricultural and aquacultural products; life and health insurance; financial services not rendered for a fee or commission; domestic transportation and ferry services excluding tourism-related transport; rental or supply of residential properties; monthly domestic electricity consumption below 1,000 kWh and water below 250 cubic metres. The list is the brochure's summary and not the Schedule of the Act; one code carries all of them and the user picks it per line. Input tax attributable to an exempt supply is not deductible.",
+    "source": "vat-brochure",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EX",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "GM-P-15",
+    "name": "Purchase, standard rate 15 %, deductible",
+    "description": "A local purchase at the general rate, used in the business of a VAT registrant",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2013-01-01",
+    "legal_reference": "The GRA brochure, § 8: VAT registrants are able to claim input VAT credits, the VAT paid on any expenditure being recoverable from GRA. Which purchases are blocked (entertainment, passenger vehicles…) is not stated in the sources this pack could open and no blocked-input code is offered; see the README.",
+    "source": "vat-brochure",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "GM-P-EX",
+    "name": "Purchase, exempt",
+    "description": "An exempt supply bought for the business, such as a life or health insurance premium",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2013-01-01",
+    "legal_reference": "The GRA brochure, § 6: exempt supplies carry no VAT, so there is no input tax to claim.",
+    "source": "vat-brochure",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "GM-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "VAT charged on the importation of taxable goods, paid to the Authority before release and claimed as input tax",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2013-01-01",
+    "legal_reference": "The GRA brochure, § 5: VAT is collected at the point of imports; § 10: import VAT is payable before the goods are released. The Authority's customs clearance is not modelled; the VAT is posted against a payable account (2125) the user settles when the border payment is made.",
+    "source": "vat-brochure",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 60
+  }
+]

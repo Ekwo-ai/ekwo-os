@@ -370,6 +370,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`ge`](../packs/ge/) | საქართველო | `110_pack_ge.sql` | ka, en | `community` |
 | [`gg`](../packs/gg/) | Guernsey | `141_pack_gg.sql` | en | `community` |
 | [`gh`](../packs/gh/) | Ghana | `119_pack_gh.sql` | en | `community` |
+| [`gm`](../packs/gm/) | The Gambia | `300_pack_gm.sql` | en | `community` |
 | [`gn`](../packs/gn/) | Guinée | `29_pack_gn.sql` | fr | `community` |
 | [`gq`](../packs/gq/) | Guinée équatoriale | `31_pack_gq.sql` | fr | `community` |
 | [`gr`](../packs/gr/) | Ελλάδα | `76_pack_gr.sql` | el, en | `community` |

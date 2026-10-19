@@ -2797,3 +2797,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — The Gambia
+--
+-- A third country to the common system of VAT of Directive 2006/112/EC,
+-- article 5(2), which applies only in the territory of the Community as the
+-- Treaties define it. The Gambia levies its own value added tax under the
+-- Income and Value Added Tax Act, 2012, unrelated to the Union's common
+-- system. `vat_prefix` is null: a Gambian taxpayer is identified by the
+-- Taxpayer Identification Number (TIN) the Gambia Revenue Authority assigns,
+-- which carries no ISO country prefix.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('GM', 'iso_3166_1', 'The Gambia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and The Gambia is a third country to it. The Gambia levies a value added tax of its own under the Income and Value Added Tax Act, 2012, administered by the Gambia Revenue Authority, at a standard rate of fifteen per cent (15 %), with a rate of zero per cent (0 %) on exports of goods and services and a list of exempt supplies.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

@@ -1,0 +1,251 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Serrekunda trading company, VAT-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-08",
+      "from": "2026-08-01",
+      "to": "2026-08-31"
+    }
+  ],
+  "statements": [
+    "GM-IFRS-SFP",
+    "GM-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-local",
+      "name": "Kairaba Avenue General Traders Ltd",
+      "type": "customer",
+      "country": "GM"
+    },
+    {
+      "ref": "cust-senegal",
+      "name": "Dakar Peanut Oil Distributors SARL",
+      "type": "customer",
+      "country": "SN"
+    },
+    {
+      "ref": "supp-local",
+      "name": "Banjul Wholesale Supplies Ltd",
+      "type": "supplier",
+      "country": "GM"
+    },
+    {
+      "ref": "supp-china",
+      "name": "Guangzhou Trading Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-local",
+      "date": "2026-08-05",
+      "why": "A domestic sale at the standard rate of 15 %: the value in box 1S and the output VAT of box 1.",
+      "lines": [
+        {
+          "name": "Office stationery, retail sale",
+          "quantity": 5,
+          "unit_price": 2000,
+          "tax": "GM-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-local",
+      "date": "2026-08-07",
+      "why": "A residential lease, exempt under § 6 of the GRA brochure: the exempt row, no output VAT, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Monthly rent, residential unit",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "GM-S-EX",
+          "account": "4520"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-senegal",
+      "date": "2026-08-10",
+      "why": "An export of goods, zero-rated: the export row, no output VAT, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Groundnut oil, export consignment",
+          "quantity": 500,
+          "unit_price": 60,
+          "tax": "GM-S-Z-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-local",
+      "date": "2026-08-12",
+      "why": "Educational services, exempt: a second exempt supply, in the same row as the rent, with no output VAT.",
+      "lines": [
+        {
+          "name": "Tuition, term fees",
+          "quantity": 10,
+          "unit_price": 800,
+          "tax": "GM-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-local",
+      "date": "2026-08-13",
+      "why": "A wholesale sale of rice, a basic food exempt under § 6 of the brochure: no output VAT, the exempt row.",
+      "lines": [
+        {
+          "name": "Rice, 50 kg bags",
+          "quantity": 100,
+          "unit_price": 45,
+          "tax": "GM-S-EX",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-local",
+      "date": "2026-08-14",
+      "why": "A credit note for one unit returned from INV-001, so the standard-rated value and the output VAT fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office stationery, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "GM-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-local",
+      "date": "2026-08-06",
+      "why": "A domestic purchase at the standard rate, deductible in full: box 2 and its value row, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "GM-P-15",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-local",
+      "date": "2026-08-11",
+      "why": "A life insurance premium, exempt under § 6 of the brochure: no input tax, and the return has no row for an exempt purchase.",
+      "lines": [
+        {
+          "name": "Annual life insurance premium",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "GM-P-EX",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-08-17",
+      "why": "Goods imported from abroad: the import VAT is paid at the border, claimed in box 3 and owed to the Authority on account 2125.",
+      "lines": [
+        {
+          "name": "Electronic goods, imported consignment",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "GM-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-local",
+      "date": "2026-08-20",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 2 and its value row fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "GM-P-15",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-09-05",
+      "amount": 15000,
+      "contact": "cust-local",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The residential rent of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-09-06",
+      "amount": 30000,
+      "contact": "cust-senegal",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-09-07",
+      "amount": 23000,
+      "contact": "supp-local",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included (20,000 plus 3,000 of VAT): a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-09-10",
+      "amount": 5000,
+      "contact": "cust-senegal",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Dakar Peanut Oil Distributors SARL before its next shipment, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

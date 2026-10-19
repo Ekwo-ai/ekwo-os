@@ -1,0 +1,121 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "GM-VAT-RETURN",
+  "name": "Monthly Value Added Tax return",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2013-01-01",
+  "legal_reference": "The GRA brochure, § 10: VAT registrants file the prescribed VAT return form and pay all amounts due monthly, even where there were no transactions (§ 13); § 11: returns are submitted at any Domestic Taxes Department office. The prescribed return form itself could not be opened from the machine this pack was written on, so the box numbers below are this pack's own presentation of output tax, input tax and the balance, and not the numbering of a GRA form. The gap is recorded in this pack's README.",
+  "source": "vat-brochure",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "The GRA brochure, § 10: the due date for each month's filing and payment is the 15th of the following month; the Domestic Taxes FAQs word the same rule as 15 days after the month end. Import VAT is payable before the goods are released. Penalties and the treatment of a 15th that falls on a non-working day are not modelled.",
+    "source": "vat-brochure"
+  },
+  "boxes": [
+    {
+      "box": "ZE",
+      "kind": "base",
+      "name": "Zero-rated supplies — exports",
+      "sequence": 10,
+      "legal_reference": "The value of exports of goods and services, taxed at zero percent (brochure § 2). A reporting row of this pack.",
+      "source": "vat-brochure"
+    },
+    {
+      "box": "EX",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 20,
+      "legal_reference": "The value of the exempt supplies of the brochure's § 6. A reporting row of this pack.",
+      "source": "vat-brochure"
+    },
+    {
+      "box": "1S",
+      "kind": "base",
+      "name": "Standard-rated supplies — value",
+      "sequence": 30,
+      "legal_reference": "The sales on which the output VAT is charged at 15 % (brochure § 2). A reporting row of this pack.",
+      "source": "vat-brochure"
+    },
+    {
+      "box": "1S",
+      "kind": "tax",
+      "name": "Output VAT on standard-rated supplies",
+      "sequence": 40,
+      "legal_reference": "Output VAT on sales, net of credit notes given (brochure §§ 2, 4, 5).",
+      "source": "vat-brochure"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Box 1 — Output VAT",
+      "sequence": 50,
+      "plus": [
+        "1S:tax"
+      ],
+      "legal_reference": "Total output VAT of the period. This pack's own total.",
+      "source": "vat-brochure"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Standard-rated local purchases — value",
+      "sequence": 60,
+      "legal_reference": "The purchases on which input VAT is incurred. A reporting row of this pack.",
+      "source": "vat-brochure"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Box 2 — Input VAT on domestic purchases",
+      "sequence": 70,
+      "legal_reference": "Input VAT credit on local expenditure (brochure § 8).",
+      "source": "vat-brochure"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Imports of goods — value",
+      "sequence": 80,
+      "legal_reference": "The customs value of imports on which import VAT is paid at the border (brochure §§ 5, 10). A reporting row of this pack.",
+      "source": "vat-brochure"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Box 3 — Input VAT on imports",
+      "sequence": 90,
+      "legal_reference": "Import VAT claimed as input tax (brochure §§ 5, 8).",
+      "source": "vat-brochure"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Box 4 — Total input VAT",
+      "sequence": 100,
+      "plus": [
+        "2:tax",
+        "3:tax"
+      ],
+      "legal_reference": "Box 2 plus box 3. This pack's own total.",
+      "source": "vat-brochure"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Box 5 — VAT payable or repayable",
+      "sequence": 110,
+      "plus": [
+        "1"
+      ],
+      "minus": [
+        "4"
+      ],
+      "legal_reference": "Box 1 minus box 4. A positive figure is payable on the 15th of the following month; a negative figure is input VAT in excess, which the registrant may claim as a refund when it has been in credit for three consecutive months or exports at least half of its supplies (brochure §§ 8, 12).",
+      "source": "vat-brochure"
+    }
+  ]
+}
