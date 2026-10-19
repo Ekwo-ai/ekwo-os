@@ -65,22 +65,35 @@ somewhere has already run it.
   (socle migration `20261019130000`, decision 0075). `document_line_analytics`
   is the split of a document line, in percent per axis; `post_document()`
   groups the lines by account, tax and split and copies the split of each
-  group onto the ledger line it writes, so the ledger stays the one source of
+  group onto the ledger line it writes — the share of a tax nobody gets back
+  booked on the expense included — so the ledger stays the one source of
   every report. `cancel_document()` gives the credit note the split of the
   invoice. A split is refused outside the income and expense groups of
-  `accounts.internal_group` (`analytic_not_on_result_account`) and beyond
-  100 % on one axis (`analytic_split_over_100`); its `amount` is derived by the
-  database and a whole split adds up to its line to the cent.
+  `accounts.internal_group` and the fixed assets (account type
+  `asset_fixed`) — `analytic_not_on_this_account` — beyond 100 % on one axis
+  (`analytic_split_over_100`), and on a new share of a retired value
+  (`analytic_value_retired`); the split of a posted ledger line moves only in
+  an open period (`period_locked`, `fiscal_year_closed`). Its `amount` is
+  derived by the database and a whole split adds up to its line to the cent.
   `products.analytic_value_id` and `contacts.analytic_value_id` pre-fill a
-  line at 100 % on an axis it leaves free, and never constrain it. A document
-  with no split posts exactly as before.
+  line at 100 % on an axis it leaves free — a contact with none takes its
+  parent's, one level up — and never constrain it; `merge_contacts()` gives
+  the kept contact the absorbed one's default when it has none.
+  `analytic_axes.required_on` (`none` by default, `expense`, `income`,
+  `result`) makes an axis required: a document or an entry keyed by a person
+  whose line of that group leaves part of it off is refused at posting
+  (`analytic_axis_required`). A document with no split, in a company that
+  requires no axis, posts exactly as before.
 
 - **The result by activity** (socle migration `20261019130500`, decision 0075).
   `analytic_report(company, axis, from, to)` reads the posted ledger: the
   income, expense and result of each value of an axis, from the whole income
-  statement — salaries, rent and depreciation included — and one row for the
-  part no share of the axis reaches, so the rows add up to the result of the
-  period, closing entry left out. It needs `entries.read` and
+  statement — salaries, rent and depreciation included — and `fixed_assets`,
+  the net movement of the fixed-asset accounts, beside the result. A parent
+  value holds the subtotal of the values below it, its own amount in the
+  `direct_` columns; one row holds the part no share of the axis reaches and
+  one the total of the period, closing entry left out, which the direct
+  amounts and the unassigned row add up to. It needs `entries.read` and
   `settings.read`, and refuses `unknown_analytic_axis` and `invalid_period`.
   The MCP server gains `list_analytic_axes` and `analytic_report`; the command
   line gains `ekwo analytic axes` and `ekwo analytic report --axis <code>
