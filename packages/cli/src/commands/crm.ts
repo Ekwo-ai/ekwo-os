@@ -256,7 +256,7 @@ async function segments(args: ParsedArgs, deps: BooksDeps): Promise<number> {
     table(
       [{ title: 'segment' }, { title: 'kind' }, { title: 'members', align: 'right' }, { title: 'id' }],
       result.segments.map((s) => [
-        `${'  '.repeat(Number(s['depth'] ?? 0))}${text(s['name'])} ${dim(text(s['slug']))}`,
+        `${'  '.repeat(typeof s['depth'] === 'number' ? s['depth'] : 0)}${text(s['name'])} ${dim(text(s['slug']))}`,
         text(s['kind']),
         text(s['members']),
         dim(text(s['id'])),
