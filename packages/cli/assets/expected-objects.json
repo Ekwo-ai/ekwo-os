@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.14.0",
-  "migration": "20261019120000",
+  "migration": "20261019130500",
   "socle": {
     "schema": "public",
     "tables": [
@@ -254,6 +254,10 @@
           },
           {
             "name": "name",
+            "type": "text"
+          },
+          {
+            "name": "required_on",
             "type": "text"
           },
           {
@@ -1354,6 +1358,10 @@
             "type": "text"
           },
           {
+            "name": "analytic_value_id",
+            "type": "uuid"
+          },
+          {
             "name": "auxiliary_code",
             "type": "text"
           },
@@ -1844,6 +1852,39 @@
           {
             "name": "source",
             "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "document_line_analytics",
+        "columns": [
+          {
+            "name": "amount",
+            "type": "numeric(16,2)"
+          },
+          {
+            "name": "analytic_value_id",
+            "type": "uuid"
+          },
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "document_line_id",
+            "type": "uuid"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "percentage",
+            "type": "numeric(7,3)"
           }
         ]
       },
@@ -3027,6 +3068,10 @@
             "type": "boolean"
           },
           {
+            "name": "analytic_value_id",
+            "type": "uuid"
+          },
+          {
             "name": "code",
             "type": "text"
           },
@@ -4120,6 +4165,10 @@
         "arguments": "p_token text"
       },
       {
+        "name": "account_carries_analytics",
+        "arguments": "p_account_id uuid"
+      },
+      {
         "name": "account_id_by_code",
         "arguments": "p_company_id uuid, p_code text"
       },
@@ -4152,6 +4201,22 @@
         "arguments": "p_rounding money_rounding"
       },
       {
+        "name": "analytic_axis_required_for",
+        "arguments": "p_required_on text, p_group text"
+      },
+      {
+        "name": "analytic_refresh_document_line",
+        "arguments": "p_line_id uuid"
+      },
+      {
+        "name": "analytic_refresh_entry_line",
+        "arguments": "p_line_id uuid"
+      },
+      {
+        "name": "analytic_report",
+        "arguments": "p_company_id uuid, p_axis_id uuid, p_from date, p_to date"
+      },
+      {
         "name": "api_key_on_company",
         "arguments": "p_company_id uuid"
       },
@@ -4162,6 +4227,18 @@
       {
         "name": "archive_under_current_names",
         "arguments": "p_archive jsonb"
+      },
+      {
+        "name": "assert_analytic_account",
+        "arguments": "p_account_id uuid, p_what text"
+      },
+      {
+        "name": "assert_analytic_value_in_use",
+        "arguments": "p_value_id uuid, p_company_id uuid, p_what text"
+      },
+      {
+        "name": "assert_document_analytic_axes",
+        "arguments": "p_document_id uuid"
       },
       {
         "name": "assert_may_close_year",
@@ -4468,7 +4545,27 @@
         "arguments": "p_document_id uuid"
       },
       {
+        "name": "document_line_analytics_guard",
+        "arguments": ""
+      },
+      {
+        "name": "document_line_analytics_refresh",
+        "arguments": ""
+      },
+      {
+        "name": "document_line_split_key",
+        "arguments": "p_line_id uuid"
+      },
+      {
         "name": "document_lines_amount_untaxed",
+        "arguments": ""
+      },
+      {
+        "name": "document_lines_analytic_defaults",
+        "arguments": ""
+      },
+      {
+        "name": "document_lines_analytics_follow",
         "arguments": ""
       },
       {
@@ -4569,6 +4666,22 @@
       },
       {
         "name": "entries_refresh_totals",
+        "arguments": ""
+      },
+      {
+        "name": "entries_require_analytic_axes",
+        "arguments": ""
+      },
+      {
+        "name": "entry_line_analytics_guard",
+        "arguments": ""
+      },
+      {
+        "name": "entry_line_analytics_refresh",
+        "arguments": ""
+      },
+      {
+        "name": "entry_lines_analytics_follow",
         "arguments": ""
       },
       {
@@ -5566,6 +5679,16 @@
         "command": "select"
       },
       {
+        "table": "document_line_analytics",
+        "name": "document_line_analytics_select",
+        "command": "select"
+      },
+      {
+        "table": "document_line_analytics",
+        "name": "document_line_analytics_write",
+        "command": "all"
+      },
+      {
         "table": "document_lines",
         "name": "document_lines_select",
         "command": "select"
@@ -6086,12 +6209,28 @@
         "name": "country_packs_audit"
       },
       {
+        "table": "document_line_analytics",
+        "name": "document_line_analytics_guard"
+      },
+      {
+        "table": "document_line_analytics",
+        "name": "document_line_analytics_refresh"
+      },
+      {
         "table": "document_lines",
         "name": "document_lines_00_guard_posted"
       },
       {
         "table": "document_lines",
         "name": "document_lines_amount_untaxed"
+      },
+      {
+        "table": "document_lines",
+        "name": "document_lines_analytic_defaults"
+      },
+      {
+        "table": "document_lines",
+        "name": "document_lines_analytics_follow"
       },
       {
         "table": "document_lines",
@@ -6195,7 +6334,23 @@
       },
       {
         "table": "entries",
+        "name": "entries_require_analytic_axes"
+      },
+      {
+        "table": "entries",
         "name": "entries_set_updated_at"
+      },
+      {
+        "table": "entry_line_analytics",
+        "name": "entry_line_analytics_guard"
+      },
+      {
+        "table": "entry_line_analytics",
+        "name": "entry_line_analytics_refresh"
+      },
+      {
+        "table": "entry_lines",
+        "name": "entry_lines_analytics_follow"
       },
       {
         "table": "entry_lines",
@@ -7254,6 +7409,22 @@
           ]
         },
         {
+          "name": "document_line_analytics",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
           "name": "document_lines",
           "anon": [],
           "authenticated": [
@@ -7839,6 +8010,17 @@
           ]
         },
         {
+          "name": "account_carries_analytics",
+          "arguments": "p_account_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "account_id_by_code",
           "arguments": "p_company_id uuid, p_code text",
           "anon": [],
@@ -7924,6 +8106,50 @@
           ]
         },
         {
+          "name": "analytic_axis_required_for",
+          "arguments": "p_required_on text, p_group text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "analytic_refresh_document_line",
+          "arguments": "p_line_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "analytic_refresh_entry_line",
+          "arguments": "p_line_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "analytic_report",
+          "arguments": "p_company_id uuid, p_axis_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "api_key_on_company",
           "arguments": "p_company_id uuid",
           "anon": [
@@ -7950,6 +8176,39 @@
         {
           "name": "archive_under_current_names",
           "arguments": "p_archive jsonb",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "assert_analytic_account",
+          "arguments": "p_account_id uuid, p_what text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "assert_analytic_value_in_use",
+          "arguments": "p_value_id uuid, p_company_id uuid, p_what text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "assert_document_analytic_axes",
+          "arguments": "p_document_id uuid",
           "anon": [],
           "authenticated": [
             "execute"
@@ -8702,7 +8961,50 @@
           ]
         },
         {
+          "name": "document_line_analytics_guard",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "document_line_analytics_refresh",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "document_line_split_key",
+          "arguments": "p_line_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "document_lines_amount_untaxed",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "document_lines_analytic_defaults",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "document_lines_analytics_follow",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -8932,6 +9234,38 @@
         },
         {
           "name": "entries_refresh_totals",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "entries_require_analytic_axes",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "entry_line_analytics_guard",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "entry_line_analytics_refresh",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "entry_lines_analytics_follow",
           "arguments": "",
           "trigger": true,
           "anon": [],

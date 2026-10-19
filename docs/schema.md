@@ -200,6 +200,7 @@ bank charge that pays no item.
 | [`country_packs`](#country_packs) | Country packs loaded in this installation, with their version and certification. |
 | [`currencies`](#currencies) | ISO 4217 currencies known to this instance. |
 | [`currency_rates`](#currency_rates) | Dated exchange rates. A document stores the rate it used; this table is the history. |
+| [`document_line_analytics`](#document_line_analytics) | Analytic split of a document line, one row per value, share in percent. Copied onto the ledger line by post_document(); after posting the ledger split is the one read. |
 | [`document_lines`](#document_lines) | Document lines in a table, not JSON: EN 16931 needs a VAT category per line and the FEC needs the detail. |
 | [`document_shares`](#document_shares) | Public links onto a document. The token is handed over once and kept only as a sha256; the link is withdrawn by revoking it, never by editing it. |
 | [`document_unpostings`](#document_unpostings) | Every posted document put back to draft by unpost_document(): the entry that was taken away, its number, journal and day, and whether the number went back to the counter. Written by unpost_document() and by nothing else — no role may insert — so the guards read a row here, written in the same transaction, as the one exception to "a posted document does not go back to draft" and "a posted entry is not deleted". |
@@ -387,9 +388,11 @@ Analytic dimensions: cost centre, project, activity.
 | `active` | `boolean` | not null |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
+| `required_on` | `text` | not null — Which lines must carry this axis whole at posting: none (the default), expense, income, or result (both). A document or an entry keyed by a person whose line of that group has less than 100 % on the axis is refused, analytic_axis_required. |
 
 Constraints:
 
+- `CHECK ((required_on = ANY (ARRAY['none'::text, 'expense'::text, 'income'::text, 'result'::text])))`
 - `PRIMARY KEY (id)`
 - `UNIQUE (company_id, code)`
 
@@ -941,6 +944,7 @@ Third parties. `contact_type` is explicit rather than two hidden counters.
 | `name_words` | `text[]` | generated — Every word of the name, lowercased and deduplicated by significant_words(). Generated. Read by suggest_contacts() to set aside, with one array operator, the contacts whose name shares no word with a statement line — before it scores the ones that do. |
 | `client_ref` | `text` | A reference chosen by whoever created the row, unique per company where given. It exists so a caller that repeats a creation after a dropped connection finds the first one instead of making a second. It means nothing to the books. |
 | `merged_into` | `uuid` | The contact this one was merged into by merge_contacts(), which moved every reference of this one onto it (decision 0074). Null for a contact in use. A merged contact is inactive, stays as the record of what was imported, and is named by no row again. |
+| `analytic_value_id` | `uuid` | The analytic value the lines of a document naming this contact start with, at 100 %, on an axis the product left free; a contact that has none takes its parent's, one level up. Pre-fills the line, never constrains it. |
 
 Constraints:
 
@@ -1104,6 +1108,26 @@ Constraints:
 - `CHECK ((rate > (0)::numeric))`
 - `PRIMARY KEY (id)`
 - `UNIQUE (currency_code, rate_date)`
+
+### `document_line_analytics`
+
+Analytic split of a document line, one row per value, share in percent. Copied onto the ledger line by post_document(); after posting the ledger split is the one read.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `document_line_id` | `uuid` | not null |
+| `analytic_value_id` | `uuid` | not null |
+| `percentage` | `numeric(7,3)` | not null |
+| `amount` | `numeric(16,2)` | The share of the line's untaxed amount in the document's currency, derived by the database. The shares of one axis are rounded in the order of their codes, so a whole split adds up to its line. |
+| `created_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK (((percentage > (0)::numeric) AND (percentage <= (100)::numeric)))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (document_line_id, analytic_value_id, company_id)`
 
 ### `document_lines`
 
@@ -1298,7 +1322,7 @@ Analytic split of a ledger line. One row per value, share in percent.
 | `entry_line_id` | `uuid` | not null |
 | `analytic_value_id` | `uuid` | not null |
 | `percentage` | `numeric(7,3)` | not null |
-| `amount` | `numeric(16,2)` |  |
+| `amount` | `numeric(16,2)` | The share of the line's balance (debit minus credit) in the company's currency, derived by the database. The shares of one axis are rounded in the order of their codes, so a whole split adds up to its line. |
 | `created_at` | `timestamp with time zone` | not null |
 
 Constraints:
@@ -1671,6 +1695,7 @@ What a document line is filled in from: code, name, unit, price, account and tax
 | `active` | `boolean` | not null |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
+| `analytic_value_id` | `uuid` | The analytic value a line filled in from this product starts with, at 100 %. Pre-fills the line, never constrains it. |
 
 Constraints:
 
@@ -2191,6 +2216,7 @@ Constraints:
 | Function | Purpose |
 |---|---|
 | `accept_invitation(p_token text)` | Turns an invitation into a membership for the signed-in user, whose address has to be the one invited. Single use, and refused once expired. |
+| `account_carries_analytics(p_account_id uuid)` | Whether a line on this account may carry an analytic split: an income or expense account (accounts.internal_group), or a fixed asset (account type asset_fixed). Read from the account type the pack gives the account, never from its code. |
 | `account_id_by_code(p_company_id uuid, p_code text)` | Account of a company by its code, or NULL. |
 | `account_key(p_account text)` | A bank account as two of them are compared: without spaces, upper case; null when nothing is left. Read by contact_candidates() and suggest_duplicate_contacts(). |
 | `account_rule_catches(p_rule_kind text, p_code_from text, p_code_to text, p_rule_type account_type, p_side text, p_code text, p_account_type account_type, p_balance numeric)` | Whether a rule takes an account with this code, type and balance: by one code, by the head of the code, by a range of heads or by account type, on the side the rule names. The one spelling of that test, read through statement_rule_catches() by the statements and directly by financial_analysis(). |
@@ -2199,9 +2225,16 @@ Constraints:
 | `acting_user()` | The person a write is recorded against: the signed-in user, or the person who issued the machine key presented in this transaction (api_keys.created_by). Null on a direct connection and for a key the installation issued itself. It attributes and never authorises: what a key may do is still has_capability(), and auth.uid() stays null for a key. |
 | `aged_balance(p_company_id uuid, p_at date, p_group text)` | Ageing of what is still open, read from the ledger and from the matching, written at the decimals of the company's currency. Two groups, receivable and payable; anything else is refused by name. |
 | `amount_text_format(p_rounding money_rounding)` | The to_char mask an amount of this currency is written with. Two decimals for the euro, none for the yen, three for the dinar. |
+| `analytic_axis_required_for(p_required_on text, p_group text)` | Whether an axis required on p_required_on (analytic_axes.required_on) is required on a line of the account group p_group (accounts.internal_group). |
+| `analytic_refresh_document_line(p_line_id uuid)` | Writes the amount of every share of a document line's split from its untaxed amount, rounded at the document's currency, cumulated in the order of the value codes on each axis. |
+| `analytic_refresh_entry_line(p_line_id uuid)` | Writes the amount of every share of a ledger line's split from its balance (debit minus credit) in the company's currency, cumulated in the order of the value codes on each axis. |
+| `analytic_report(p_company_id uuid, p_axis_id uuid, p_from date, p_to date)` | The result of each value of an analytic axis over a period, read from the posted ledger, in the company's currency. One row per value a share of the axis reaches, itself or below it (row_kind value), in the order of the tree, with level its depth: income, expense, result and fixed_assets (the net movement of the fixed-asset accounts, ordinary entries only) of the value and every value below it; the direct_ columns hold its own amount alone. Then row_kind unassigned, the part no share of the axis reaches, and total, the whole income statement of the period and the whole movement of the fixed assets. The direct_ columns of the values and the unassigned row add up to the total, closing entry left out. Refuses unknown_company, not_allowed (entries.read and settings.read), invalid_period and unknown_analytic_axis. |
 | `api_key_on_company(p_company_id uuid)` | Whether the machine key presented in this transaction reaches anything on this company — at least one capability of its list that key_holds() still grants there. What is_company_member() asks for a key. False, never NULL, and false without a key. |
 | `archive_statement_timeout()` | The statement_timeout a request is given when it carries a whole company: export_company(), its manifest and tables, and import_company(). Applied by ekwo_pre_request(), only ever upwards. |
 | `archive_under_current_names(p_archive jsonb)` | A company archive with every table a module has since renamed filed under its name of today, as each module declares in `<schema>.archive_former_names()`. Only names move: the rows, and the checksums over them, are untouched. |
+| `assert_analytic_account(p_account_id uuid, p_what text)` | Refuses analytic_not_on_this_account unless account_carries_analytics() says the account carries a split: income, expense or fixed asset, from its account type. Read by the guards of document_line_analytics and entry_line_analytics. |
+| `assert_analytic_value_in_use(p_value_id uuid, p_company_id uuid, p_what text)` | Refuses analytic_value_retired when the value is retired (analytic_values.active = false). Read by the guards of document_line_analytics and entry_line_analytics on a new share. |
+| `assert_document_analytic_axes(p_document_id uuid)` | Refuses analytic_axis_required when a billable line of the document, on an account of a group an active axis is required on (analytic_axes.required_on), carries less than 100 % of that axis. A credit note naming what it undoes is not asked. Called by post_document() before it writes the entry. |
 | `assert_may_export_company(p_company_id uuid)` | The two conditions of leaving: company.export on the company, and a caller that row level security applies to. Invoker, so `current_user` is the role that asked. |
 | `assert_period_open(p_company_id uuid, p_date date, p_is_tax boolean)` | Raises when a date is protected by a lock date or a closed fiscal year. |
 | `assert_references_within_company(p_schema text)` | Raises reference_across_companies, naming every table and column and how many rows, when a row of the schema names a row of another company by a key scope_references_to_company() is about to make composite. One anti-join per key, run before anything changes. For migrations (decision 0065). |
@@ -2223,7 +2256,7 @@ Constraints:
 | `bank_transactions_guard()` | Keeps a statement line honest about whether it is settled. state moves between pending and ignored by hand; reconciled and entry_id are written by settle_from_statement() alone, under the setting ekwo.settling_statement, honoured for a caller holding reconcile.write (bank_transaction_settled_by_rpc otherwise, and on an insert that arrives settled). A line pointing at an entry keeps its amount, day, currency and bank account (bank_transaction_settled). When the entry is gone, the foreign key nulls entry_id and the line is pending again. The installer passes. |
 | `caller_companies()` | The companies the current caller is on — the question is_company_member() answers, asked once for all of them, over the only companies where its answer can be yes. What a row level security policy compares company_id against, inside a sub-select, so that it is worked out once per statement instead of once per row. |
 | `can_write_company(p_company_id uuid)` | Whether the current caller may write the books of a company. One capability, not a role, and false rather than NULL for a stranger. |
-| `cancel_document(p_document_id uuid, p_date date)` | Undoes a posted invoice: writes its credit note — the same lines, taxes, accounts, contact, currency and rate — naming it in reversed_document_id, posts it through post_document(), matches the two entries and marks the invoice cancelled. Returns the credit note. Dated on the invoice's booking day while that period is open, and otherwise refused until a date is given (reversal_date_needed). Refused for a document that is not a posted invoice, is already cancelled or credited, or is settled in part or in full (unreconcile() first). |
+| `cancel_document(p_document_id uuid, p_date date)` | Undoes a posted invoice: writes its credit note — the same lines, taxes, accounts, contact, currency, rate and analytic split — naming it in reversed_document_id, posts it through post_document(), matches the two entries and marks the invoice cancelled. Returns the credit note. Dated on the invoice's booking day while that period is open, and otherwise refused until a date is given (reversal_date_needed). Refused for a document that is not a posted invoice, is already cancelled or credited, or is settled in part or in full (unreconcile() first). |
 | `canonical_json(p_value jsonb)` | A value with every number it holds, at any depth, re-rendered through trim_scale(): the form two sides agree on once a JSON parser has been between them. What the `values_sha256` of an archive is computed over. Normalises notation and never magnitude. |
 | `catch_up_journal_sequence(p_journal_id uuid, p_date date, p_number text)` | Advances the counter of a journal to the counter inside a number that was written by hand, so the next automatic number continues the series. Definer, because nobody writes `journal_sequences` directly — and guarded like `next_entry_number()`: the installer, or entries.post on the company of the journal. |
 | `claim_instance_admin(p_user_id uuid)` | Makes a user an instance administrator. The first claim is open; afterwards only an administrator may appoint one. |
@@ -2270,7 +2303,10 @@ Constraints:
 | `default_statement_code(p_company_id uuid, p_kind text, p_at date)` | The statement of a kind this company reports on: one its chart declares, else one of its country, else the generic framework. Null when it has none of that kind. The one place that choice is made, so two readers cannot disagree about which balance sheet is the company's. |
 | `disable_module(p_company_id uuid, p_code text)` | Disables a module on a company, unless the module says it still holds data — `<schema>.can_disable(company)` returning a sentence refuses, returning null allows. Nothing the module wrote is deleted. Needs company.write. |
 | `document_amount_paid(p_document_id uuid)` | What a document has been settled by: the matched amounts on the third-party lines of its entry, in the document's currency. The one definition — documents_refresh_amount_paid() writes it and documents_guard_posted() accepts no other figure. |
+| `document_line_analytics_guard()` | The split of a document line: refused on a document that is no longer a draft (document_posted), on a line whose account carries no split (analytic_not_on_this_account), on a new share of a retired value (analytic_value_retired) but on the credit note cancel_document() writes, and beyond 100 % on one axis (analytic_split_over_100). |
+| `document_line_split_key(p_line_id uuid)` | The analytic split of a document line as one text, null when it has none. post_document() groups lines by it. |
 | `document_lines_amount_untaxed()` | Derives a line's amounts from its quantity, price and discount, rounded once at the decimals of the document's currency: the net, the gross where the price includes the tax, and the snapshot of whether it does. |
+| `document_lines_analytic_defaults()` | Pre-fills the analytic split of a document line from the default value of its product, then of the document's contact or, when it has none, of that contact's parent one level up, at 100 % on each axis the line has no share on yet, only on an account that carries a split and only with a value in use. Never replaces what the line carries. |
 | `document_lines_guard_posted()` | Once a document has left draft, its lines are the lines that were issued: no insert, no delete, no column changed. Refuses document_posted, by name, to everybody. |
 | `document_lines_refresh_totals()` | After a line of a draft moves: shares out the base of every tax group quoted with its tax in it, then refreshes the three totals of the document. A document that is no longer a draft keeps the totals it was posted, or loaded, with. |
 | `document_lines_snapshot_tax()` | Writes BT-151 and BT-152 on a line from its tax for as long as the document is a draft. Once it is not, document_lines_guard_posted() refuses any change to the line, these two columns included. |
@@ -2293,6 +2329,8 @@ Constraints:
 | `entries_guard_posted()` | Once an entry has left draft: its state does not change and no column moves (entry_posted); it is not deleted, but for the entry of a document unpost_document() has put back to draft, recorded in document_unpostings in the same transaction and pointed at by no document any more; nobody inserts one that is already posted (entry_born_posted). Becoming posted is held to what post_entry() produces, read on the row and in the counter — an instant it was posted at, no financial year but the one its date falls in, at least one line, an open period, and, where the country numbers without a hole and the caller does not hold entries.import, the number the counter of its journal has just delivered: entry_posted_by_hand otherwise. |
 | `entries_match_reversal_on_posting()` | As an entry that names what it undoes (reversed_entry_id) is posted, matches its third-party lines with that entry's through match_reversal(), when the caller may match (may_match_on_posting()). Whatever wrote the reversal: reverse_entry(), a draft keyed by hand, the mirror unreconcile() posts (decision 0073). |
 | `entries_refresh_totals()` | Keeps the totals of a draft entry in step with its lines. A posted entry keeps the totals it was posted, or loaded, with. |
+| `entries_require_analytic_axes()` | As an entry keyed by a person is posted, refuses analytic_axis_required when one of its lines, on an account of a group an active axis is required on, carries less than 100 % of that axis. Not asked of a document's entry (post_document() asked its lines), a mirror, an opening, a closing, an appropriation, a module's entry, or what a matching or a bank line settles. |
+| `entry_line_analytics_guard()` | The split of a ledger line: refused on a posted line whose period is locked or whose fiscal year is closed (period_locked, fiscal_year_closed, from assert_period_open()), on a line whose account carries no split (analytic_not_on_this_account), on a new share of a retired value (analytic_value_retired) but on the entry post_document() writes and on a mirror, and beyond 100 % on one axis (analytic_split_over_100). |
 | `entry_lines_box_from_posting()` | Refuses a ledger line whose declaration box is not one its tax posting writes — a line naming a box names a tax, and a posting of that tax writes that box: a tax posting for a tax line, a base or tax_on_base posting otherwise, of the line's own posting_type when it states one (declaration_box_without_posting) — and freezes on the line what the posting says about the box: declaration_boxes and report_code, from declaration_boxes_of(). A reversal mirroring a line of the entry it reverses takes that line's box and frozen columns. Fires on insert and on a change of the box, the tax, tax_line, posting_type or the two frozen columns; changed while nothing they are read from moved, they are refused (declaration_boxes_from_posting). The installer is not checked, and is frozen like everybody. |
 | `entry_lines_guard_posted()` | Once an entry has left draft, its lines are the lines that were posted: no insert, no delete, and no column changed but the two the matching writes, matching_number and matched_amount. Refuses entry_posted, by name, to everybody. Two exemptions, contact_id alone each time: from null to a contact, on an unmatched line of a receivable or payable account, under the setting ekwo.naming_line_contact holding that line's id — raised by set_line_contact() — for a caller holding reconcile.write, written to the trail as line_contact_named (decision 0070); and from the absorbed contact to the kept one, in the transaction in which merge_contacts() recorded that merge in contact_merges, written to the trail as line_contact_merged (decision 0074). |
 | `entry_lines_set_declared_on()` | Writes entry_lines.declared_on from the rule of declared_on_of(), before every insert of a line and every update of its tax point, of its entry or of the column itself. Definer, so the date of the entry is read whoever the caller is. |
@@ -2385,7 +2423,7 @@ Constraints:
 | `pin_referenced_accounts(p_company_id uuid)` | Pins every account this company points at by a role, a journal, a tax posting or a cash-basis transition, and returns how many accounts are pinned afterwards. Called by install_country_template(); callable again after an upgrade added a tax. |
 | `portfolio_filings_touched_since(p_from date, p_to date)` | Declarations that have gone and whose period the ledger moved afterwards, in every company the caller holds filings.read on, and in no other — filings_touched_since() with the company named, the latest disturbance first. Every company of the portfolio is in the answer at least once: one that was not disturbed is a row with no filing, and `filed` says how many of its declarations were looked at. Invoker: it reads what the caller could have read company by company. |
 | `portfolio_upcoming_filings(p_from date, p_to date)` | What falls due between two dates in every company the caller holds filings.read on, and in no other: the periods upcoming_filings() produces, kept when the day they are due is in the window. Every company of the portfolio is in the answer at least once, and a row without a date says why in `reason` — no_deadline_rule where the pack names no day for the form, nothing_due where nothing of the company falls in the window, no_form where the installation carries no return for it. Invoker: it reads what the caller could have read company by company. |
-| `post_document(p_document_id uuid)` | Books a document: one entry, the bases on the accounts of the lines, the tax of each group rounded once and shared over the postings of the tax, each ledger line naming the posting type that wrote it. Refuses a tax whose applies_*_territory the document contradicts — read with territory_within_for_tax(), so a territory outside its parent's tax does not satisfy a condition naming the parent — or whose applies_supply_vs_seller it contradicts, by name, before anything reaches the ledger; chooses no tax for anybody. Writes the three territories it resolved on the document (seller_territory_code, buyer_territory_code, supply_territory_resolved). |
+| `post_document(p_document_id uuid)` | Books a document: one entry, the bases on the accounts of the lines, the tax of each group rounded once and shared over the postings of the tax, each ledger line naming the posting type that wrote it. Refuses a tax whose applies_*_territory the document contradicts — read with territory_within_for_tax(), so a territory outside its parent's tax does not satisfy a condition naming the parent — or whose applies_supply_vs_seller it contradicts, by name, before anything reaches the ledger; chooses no tax for anybody. Writes the three territories it resolved on the document (seller_territory_code, buyer_territory_code, supply_territory_resolved). Groups the lines by account, tax and analytic split, and copies the split of each group onto the ledger line it writes; refuses analytic_axis_required, before anything is written, when a line leaves part of a required axis off (decision 0075). |
 | `post_entry(p_entry_id uuid)` | Validates, numbers and posts an entry. Raises rather than warning: a swallowed error is a missing entry. Where the country forbids a hole in the sequence it refuses a number chosen by hand, unless the caller holds entries.import — and then the counter catches up to it. |
 | `post_module_entry(p_company_id uuid, p_module_code text, p_ref text, p_date date, p_description text, p_lines jsonb, p_journal_id uuid)` | The only way a module reaches the ledger: it hands over lines as data and this builds the draft and calls post_entry(). The tag (module_code, ref) is unique per company, so posting the same thing twice is refused by the database. |
 | `post_payment(p_payment_id uuid)` | Books a payment: the bank side from the payment's bank account or its journal, the third-party side by role, both in the company currency at the payment's rate. Matches nothing. |
