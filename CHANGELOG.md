@@ -9,6 +9,24 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **The reads of the `crm` module an agent and a terminal share** (module
+  migration `20261019220549`): `crm.segment_tree()`, `crm.board()` (a
+  pipeline, or all of them, stage by stage, with totals by currency) and
+  `crm.timeline()`.
+- **The crm toolset and `ekwo crm`.** Eleven MCP tools, offered once
+  `public.modules` carries `crm`: `crm_search`, `crm_card`, `crm_segments`,
+  `crm_board`, `crm_timeline`, `crm_upsert_card`, `crm_log_activity`,
+  `crm_join_segment`, `crm_leave_segment`, `crm_open_deal`, `crm_move_deal`,
+  and a `crm_morning_review` prompt. The command line has the same verbs —
+  `ekwo crm search | card | card set | segments | board | timeline | log |
+  join | leave | deal open | deal move` — and both call the same functions of
+  `@ekwo-ai/core`, which call the same functions of the schema. Statuses,
+  kinds and outcomes are the schema's enums, passed as given and refused by
+  Postgres when unknown; the module's refusals, `crm_<code>: …`, travel up
+  word for word.
+
 ## [0.16.0] — 2026-10-20
 
 ### Added

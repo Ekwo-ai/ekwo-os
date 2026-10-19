@@ -33,6 +33,9 @@ and exposes them as functions an agent or a screen calls.
 | `crm.move_deal(company, deal, stage)` | Moves a deal; a `won` or `lost` stage closes it, and a won deal makes its party a customer. |
 | `crm.card_of(company, contact)` | One contact as one JSON object: the contact, its organisation, its card, its segments, its open deals, its 20 latest activities. |
 | `crm.search_cards(company, query, status, segment, stage, country, language, owner, no_outbound, active_since, inactive_since, limit)` | The cards, filtered; every filter optional. |
+| `crm.segment_tree(company)` | Every segment as a tree — parent, depth, path of slugs — with how many contacts are in it now. |
+| `crm.board(company, pipeline, include_closed)` | One pipeline, or all of them: the stages in order, the deals at each, the totals by currency per stage and per pipeline. |
+| `crm.timeline(company, contact, deal, since, kinds, limit)` | The activities of a contact or of a deal, latest first. |
 
 ```sql
 -- An organisation and one of its people, both prospects.
@@ -65,6 +68,54 @@ insert into crm.stages (company_id, pipeline_id, name, position, outcome) values
   (:company, :pipeline, 'Proposal',  4, 'open'),
   (:company, :pipeline, 'Won',       5, 'won'),
   (:company, :pipeline, 'Lost',      6, 'lost');
+```
+
+## From an agent
+
+Once `public.modules` carries `crm`, the MCP server offers eleven tools, each
+the function of the same name above, called through `@ekwo-ai/core`:
+
+| Tool | Function | Writes |
+|---|---|---|
+| `crm_search` | `crm.search_cards()` | no |
+| `crm_card` | `crm.card_of()` | no |
+| `crm_segments` | `crm.segment_tree()` — every segment, in tree order, with its members now | no |
+| `crm_board` | `crm.board()` — a pipeline, or all of them: stages in order, their deals, totals by currency | no |
+| `crm_timeline` | `crm.timeline()` — the activities of a contact or of a deal | no |
+| `crm_upsert_card` | `crm.upsert_card()` | yes |
+| `crm_log_activity` | `crm.log_activity()` | yes |
+| `crm_join_segment` / `crm_leave_segment` | `crm.join_segment()` / `crm.leave_segment()` | yes |
+| `crm_open_deal` / `crm_move_deal` | `crm.open_deal()` / `crm.move_deal()` | yes |
+
+and one prompt, `crm_morning_review`: the cards that went quiet, the deals
+past their expected date, and what to suggest — written only once the user
+agrees. A status, a kind or a stage is passed as given; the schema refuses
+what it does not have, and its `crm_<code>` refusals reach the model word for
+word.
+
+> **You:** We won the Northwind subscription.
+> **Agent:** *(`crm_card` on Northwind Trading, then `crm_board`)* The deal
+> "Annual subscription", 12000.00 at Proposal. Move it to Won? Northwind
+> becomes a customer.
+> **You:** Yes. *(`crm_move_deal`)* Done — Northwind Trading is a customer;
+> the move is on its timeline.
+
+## From the terminal
+
+The same functions, as `ekwo crm`, on the company in use. A contact is named
+by its id or by its name; add `--json` to any of them.
+
+```sh
+ekwo crm search --status contacted --inactive-since 2026-10-01
+ekwo crm card "Ada Lovelace"
+ekwo crm card set "Ada Lovelace" --status in_discussion --owner sales --tag event --tag fair
+ekwo crm segments
+ekwo crm board                      # every pipeline; or: ekwo crm board <pipeline-id> --closed
+ekwo crm timeline "Ada Lovelace" --kind email_out --kind call
+ekwo crm log "Ada Lovelace" --kind note --subject "Asked for a quote" [--deal <deal-id>]
+ekwo crm join <segment-id> "Ada Lovelace"      # leave: ekwo crm leave <segment-id> <contact>
+ekwo crm deal open <pipeline-id> "Northwind Trading" --title "Annual subscription" --amount 12000 [--currency <code>]
+ekwo crm deal move <deal-id> <stage-id>
 ```
 
 ## Decisions worth knowing
