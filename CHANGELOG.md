@@ -11,6 +11,17 @@ somewhere has already run it.
 
 ### Added
 
+- **Two contacts that are probably one party are found** (socle migration
+  `20261019093817`, decision 0075). `suggest_contact_duplicates(company)`
+  answers the pairs of contacts of a company that are probably one party,
+  each once, strongest first: the same VAT number, registration number or
+  bank account (1), the same name (0.950), every word of one name inside the
+  other's, in any order (0.900) — the scale of `contact_candidates()`. A pair
+  `merge_contacts()` would refuse (two different VAT or registration numbers,
+  a merged or inactive contact) is not proposed. Each pair proposes the
+  contact more ledger lines and documents name as the one to keep, and says
+  its evidence; it writes nothing. The command line gains
+  `ekwo contact duplicates` and the MCP server `suggest_contact_duplicates`.
 - **Two contacts of one company are merged** (socle migration
   `20261019090000`, module assets migration `20261019090001`, decision 0074).
   `merge_contacts(keep, absorb)` moves every reference of the absorbed contact
