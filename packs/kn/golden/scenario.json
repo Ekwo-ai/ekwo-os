@@ -1,0 +1,344 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Two months of a trading company of Saint Kitts and Nevis, a VAT filer",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Year ended 31 December 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "KN-IFRS-SME-SFP",
+    "KN-IFRS-SME-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-a",
+      "name": "Basseterre Trading Company Limited",
+      "type": "customer",
+      "country": "KN"
+    },
+    {
+      "ref": "cust-b",
+      "name": "Charlestown Consulting Limited",
+      "type": "customer",
+      "country": "KN"
+    },
+    {
+      "ref": "cust-c",
+      "name": "Frigate Bay Guest House Limited",
+      "type": "customer",
+      "country": "KN"
+    },
+    {
+      "ref": "cust-d",
+      "name": "Caribbean Exports Inc",
+      "type": "customer",
+      "country": "US"
+    },
+    {
+      "ref": "supp-a",
+      "name": "Bay Road Wholesale Limited",
+      "type": "supplier",
+      "country": "KN"
+    },
+    {
+      "ref": "supp-b",
+      "name": "Cayon Street Building Supplies Limited",
+      "type": "supplier",
+      "country": "KN"
+    },
+    {
+      "ref": "supp-c",
+      "name": "Miami Components LLC",
+      "type": "supplier",
+      "country": "US"
+    },
+    {
+      "ref": "supp-d",
+      "name": "Sandy Point Printing Works",
+      "type": "supplier",
+      "country": "KN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-10",
+      "why": "A domestic sale of goods at the standard rate: 10,000.00 to box 1 and 1,700.00 of tax (17 %) to box 7.",
+      "lines": [
+        {
+          "name": "Trading stock",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "KN-S-17",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-15",
+      "why": "A retail sale whose price already holds the VAT: 5,850.00 inclusive is 5,000.00 plus 850.00 (5,850 x 17/117), 5,000.00 to box 1 and 850.00 to box 7.",
+      "lines": [
+        {
+          "name": "Retail goods, VAT-inclusive price",
+          "quantity": 1,
+          "unit_price": 5850,
+          "tax": "KN-S-17-INC",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cust-c",
+      "date": "2026-01-18",
+      "why": "A sale of hotel accommodation at 10 %: 4,000.00 to box 2 and 400.00 to box 8.",
+      "lines": [
+        {
+          "name": "Guest accommodation",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "KN-S-10",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cust-d",
+      "date": "2026-01-22",
+      "why": "An export, zero-rated: 20,000.00 to box 4 and no tax posted.",
+      "lines": [
+        {
+          "name": "Export of goods",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "KN-S-0",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-01-28",
+      "why": "A supply the Act exempts (a financial service, the Third Schedule): 3,000.00 to box 5, no tax.",
+      "lines": [
+        {
+          "name": "Financial service, exempt",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "KN-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-01-29",
+      "why": "The dive activity portion of a dive package at 10 %: 2,000.00 to box 2 and 200.00 to box 8.",
+      "lines": [
+        {
+          "name": "Dive activity portion of a dive package",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "KN-S-10",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-30",
+      "why": "A domestic zero-rated supply of the Second Schedule: 1,200.00 to box 4, no tax.",
+      "lines": [
+        {
+          "name": "Flour, zero-rated",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "KN-S-Z",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-01-08",
+      "why": "A local purchase at 17 %: 6,000.00 to box 12 and 1,020.00 of input tax to box 14.",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "KN-P-17",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "supp-c",
+      "date": "2026-01-12",
+      "why": "An imported purchase: 8,000.00 to box 11 and the 1,360.00 paid to the Comptroller of Customs to box 13.",
+      "lines": [
+        {
+          "name": "Components imported",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "KN-P-17-IMP",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "supp-d",
+      "date": "2026-01-20",
+      "why": "A purchase without VAT: 1,500.00 to box 12 and no input tax.",
+      "lines": [
+        {
+          "name": "Printing, bought without VAT",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "KN-P-EX",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "V9",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-25",
+      "why": "A supply by a restaurant at 10 %: 3,000.00 to box 3 and 300.00 of tax to box 9.",
+      "lines": [
+        {
+          "name": "Catering service",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "KN-S-10-R",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cust-a",
+      "date": "2026-02-05",
+      "why": "A credit note in February: it lowers February's boxes 1 (by 2,000.00) and 7 (by 340.00), January stays as filed.",
+      "lines": [
+        {
+          "name": "Return of trading stock",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "KN-S-17",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-02-10",
+      "why": "A second month's sale: 20,000.00 plus 3,400.00.",
+      "lines": [
+        {
+          "name": "Trading stock",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "KN-S-17",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-02-15",
+      "why": "A large purchase of equipment, 40,000.00 plus 6,800.00 of input tax, more than February's output tax: the period ends with a VAT refundable (box 17), not a VAT payable.",
+      "lines": [
+        {
+          "name": "Office equipment",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "KN-P-17",
+          "account": "1640"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-02",
+      "amount": 11700,
+      "contact": "cust-a",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Exactly settles V1: a matched receipt."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 2000,
+      "contact": "cust-b",
+      "journal": "BNK",
+      "match": null,
+      "why": "A part-payment on account, matched to nothing: the open item a return must survive."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-02-06",
+      "amount": 7020,
+      "contact": "supp-a",
+      "journal": "BNK",
+      "match": "C1",
+      "why": "Exactly settles C1: a matched payment."
+    },
+    {
+      "ref": "E4",
+      "direction": "outbound",
+      "date": "2026-02-25",
+      "amount": 1000,
+      "contact": "supp-c",
+      "journal": "BNK",
+      "match": null,
+      "why": "A part-payment on account to a supplier, matched to nothing."
+    }
+  ]
+}

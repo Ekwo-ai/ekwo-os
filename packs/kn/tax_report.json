@@ -1,0 +1,186 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "KN-VAT-RETURN",
+  "name": "VAT return (box layout of this pack)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2010-07-01",
+  "legal_reference": "Value Added Tax Act, 2010, s. 45 — the tax period is the calendar month; s. 46(1) — every taxable person files a tax return for each tax period with the Comptroller within fifteen calendar days after the end of the period, whether or not tax is payable; s. 46(2) — in the form and manner the Comptroller prescribes (the Inland Revenue Department's form VAT-01 was not read as a text); s. 50 — the tax is due by the due date for the return.",
+  "source": "kn-vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Value Added Tax Act, 2010, s. 46(1) and s. 50(1)(a) — the return is filed within fifteen calendar days after the end of the tax period and the tax is due by the same date: for a month, the 15th of the next month. Unpaid tax bears interest at 1.25 % a month or part of a month (s. 42); the penalties for a late return are not modelled. An extension of time to file does not move the date of payment (s. 47(2)). Weekend roll-forward is not expressible",
+    "source": "kn-vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard-rated supplies (17 %), net of VAT",
+      "sequence": 10,
+      "legal_reference": "Taxable supplies at 17 percent (s. 26(1)(a)). Box number and label are this pack's own: the layout of form VAT-01 was not read as a text, so the boxes follow what the Act makes the tax payable carry — the output tax of the period less the input tax deduction allowed (s. 38(1)).",
+      "source": "kn-vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Accommodation supplies (10 %), net of VAT",
+      "sequence": 20,
+      "legal_reference": "Taxable supplies of accommodation at 10 percent (s. 26(1)(d)(i), (ii)).",
+      "source": "kn-vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Restaurant and tour operator supplies (10 %), net of VAT",
+      "sequence": 30,
+      "legal_reference": "Taxable supplies by a restaurant or a tour operator at 10 percent (s. 26(1)(d)(iii), (iv); Regulations 2011, regulations 10 and 11).",
+      "source": "kn-vat-regs-2011"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Zero-rated supplies, including exports",
+      "sequence": 40,
+      "legal_reference": "Taxable supplies at zero percent (s. 33; Second Schedule); they stay on the return (s. 46(1) asks for a return even when no tax is payable).",
+      "source": "kn-vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 50,
+      "legal_reference": "Supplies of the Third Schedule (s. 34), reported for information; the input tax of what is acquired to make them is not deductible (s. 40).",
+      "source": "kn-vat-act"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Total supplies",
+      "sequence": 60,
+      "legal_reference": "Sum of boxes 1 to 5 — the sum is this pack's reading, the form is the Comptroller's (s. 46(2)).",
+      "source": "kn-vat-act",
+      "plus": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 70,
+      "legal_reference": "Tax at 17 % on box 1 (s. 26(1)(a)).",
+      "source": "kn-vat-act"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Output tax on accommodation",
+      "sequence": 80,
+      "legal_reference": "Tax at 10 % on box 2 (s. 26(1)(d)).",
+      "source": "kn-vat-act"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Output tax on restaurant and tour operator supplies",
+      "sequence": 90,
+      "legal_reference": "Tax at 10 % on box 3 (s. 26(1)(d)).",
+      "source": "kn-vat-regs-2011"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Total output tax for the period",
+      "sequence": 100,
+      "legal_reference": "The output tax payable on the taxable supplies of the period (s. 38(1)); a credit note posts a negative amount to its own boxes (s. 44).",
+      "source": "kn-vat-act",
+      "plus": [
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Value of imports",
+      "sequence": 110,
+      "legal_reference": "Goods imported on which tax was paid to the Comptroller of Customs (s. 10, s. 26(1)(b)).",
+      "source": "kn-vat-act"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Value of local purchases",
+      "sequence": 120,
+      "legal_reference": "Purchases made in Saint Christopher and Nevis for the taxable activity, taxable, zero-rated and exempt.",
+      "source": "kn-vat-act"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "VAT paid on imports",
+      "sequence": 130,
+      "legal_reference": "Tax paid on imported goods, deductible as input tax for a taxable activity (s. 39).",
+      "source": "kn-vat-act"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "VAT paid on local purchases",
+      "sequence": 140,
+      "legal_reference": "Tax charged on purchases, deductible on a tax invoice (s. 39, s. 43).",
+      "source": "kn-vat-act"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Total input tax deduction for the period",
+      "sequence": 150,
+      "legal_reference": "Sum of boxes 13 and 14: the input tax deduction allowed for the period (s. 38(1), s. 39).",
+      "source": "kn-vat-act",
+      "plus": [
+        "13",
+        "14"
+      ]
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "VAT payable",
+      "sequence": 160,
+      "legal_reference": "Output tax less the input tax deduction when positive (s. 38(1)), due by the date the return is due (s. 50(1)(a)). Interest (s. 42) and penalties are not modelled.",
+      "source": "kn-vat-act",
+      "plus": [
+        "10"
+      ],
+      "minus": [
+        "15"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "VAT refundable",
+      "sequence": 170,
+      "legal_reference": "The excess of the input tax deduction over the output tax (s. 38(2)), dealt with under s. 61 (carry forward of excess credits and refund of tax), whose conditions the pack does not model. The pack only reports box 17.",
+      "source": "kn-vat-act",
+      "plus": [
+        "15"
+      ],
+      "minus": [
+        "10"
+      ],
+      "floor_zero": true
+    }
+  ]
+}

@@ -1,0 +1,399 @@
+[
+  {
+    "code": "KN-S-17",
+    "name": "Sale, VAT 17 %",
+    "description": "A taxable supply made in Saint Christopher and Nevis by a taxable person, standard-rated",
+    "kind": "vat",
+    "rate": 17,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Value Added Tax Act, 2010, s. 26(1)(a) — 17 percent of the value of every taxable supply by a taxable person in Saint Christopher and Nevis (the same rate applies to imports, s. 26(1)(b)); s. 38 — the tax payable for a period is the output tax less the input tax deduction of s. 39. The base posts to box 1 net of the tax, the tax to box 7 (box numbers are this pack's, see tax_report.json). valid_from is 1 July 2010 for the Act, whose commencement date was not read: a reviewer should confirm it. A secondary source reports a temporary cut of the rate to 13 % before a return to 17 % on 1 July 2025; no official text for it was found and the pack carries the 17 % of the Act.",
+    "source": "kn-vat-act",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "KN-S-17-INC",
+    "name": "Retail sale, VAT 17 %, the price includes the tax",
+    "description": "A standard-rated sale whose price already holds the VAT",
+    "kind": "vat",
+    "rate": 17,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Value Added Tax Act, 2010, s. 26(1)(a) at 17 percent, and the tax fraction of s. 1 (the value of a supply whose price includes the tax is the price reduced by the tax fraction multiplied by the price) — what price_include does: 117.00 holds 100.00 and 17.00. Same boxes as KN-S-17.",
+    "source": "kn-vat-act",
+    "vat_category": "S",
+    "sequence": 20,
+    "price_include": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "KN-S-10",
+    "name": "Sale of accommodation, VAT 10 %",
+    "description": "Hotel, guest house, inn or similar accommodation, or an apartment or room furnished with utilities, at the reduced rate",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Value Added Tax Act, 2010, s. 26(1)(d)(i) and (ii) — to the extent provided in regulations, 10 percent of the value of accommodation services by a hotel, guest house, inn or similar establishment, and of accommodation in an apartment or room with utilities and furnishings provided by the lessor, not including services to a renter in a private home; Value Added Tax Regulations, 2011, regulation 9 (reduced rate on specified accommodations: the pack does not decide which accommodation qualifies). Base to box 2, tax to box 8.",
+    "source": "kn-vat-act",
+    "vat_category": "S",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "8",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "KN-S-10-R",
+    "name": "Sale by a restaurant or tour operator, VAT 10 %",
+    "description": "Supplies by a restaurant or a tour operator, as the regulations define them, at the reduced rate",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Value Added Tax Act, 2010, s. 26(1)(d)(iii) and (iv) — to the extent provided in regulations, 10 percent of the value of supplies by a tour operator and by a restaurant, as defined in the regulations; Value Added Tax Regulations, 2011, regulations 10 (specified services by a tour operator) and 11 (specified supplies by a restaurant): the pack does not decide which supplies qualify. Base to box 3, tax to box 9.",
+    "source": "kn-vat-regs-2011",
+    "vat_category": "S",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "2103",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2103",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "KN-S-0",
+    "name": "Zero-rated supply (export)",
+    "description": "An export of goods or a service consumed abroad, zero-rated",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Value Added Tax Act, 2010, s. 33 and the Second Schedule — goods exported from Saint Christopher and Nevis (Part II) and the other supplies listed there are zero rated; the supplier must hold documentary proof acceptable to the Comptroller (s. 33(2)). A zero-rated supply is a taxable supply: the input tax of what produces it stays deductible (s. 39). Base to box 4.",
+    "source": "kn-vat-act",
+    "vat_category": "G",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "KN-S-Z",
+    "name": "Zero-rated supply in Saint Kitts and Nevis",
+    "description": "A domestic supply of the Second Schedule at zero per cent (flour, sugar, milk, rice, oats, infant formula, diapers, plain bread, fuel)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Value Added Tax Act, 2010, s. 33 and the Second Schedule — among the supplies zero rated at home: certain foods by customs tariff heading (sugar, flour, milk, infant formula, oats), infant and adult disposable diapers, bread made in the Federation without added sweeteners, icing, fruit, chocolate or meat, and fuel (motor spirit, kerosene, gas oils, fuel oils, petroleum gases). The Inland Revenue Department lists rice among its examples. The pack does not reproduce the Schedule: the user checks the item against it. Base to box 4.",
+    "source": "kn-vat-act",
+    "vat_category": "Z",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "KN-S-EX",
+    "name": "Exempt supply",
+    "description": "A supply of the Third Schedule (financial services, insurance, education, health, residential rent, passenger transport, domestic water and electricity), outside the tax",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2010-07-01",
+    "legal_reference": "Value Added Tax Act, 2010, s. 34 and the Third Schedule — supplies exempt 'to the extent provided in regulations' include financial services and insurance, education services, international transport, most services of doctors and dentists, dwellings let for residence and domestic water; the Inland Revenue Department's introduction also lists electricity. Where a supply is both exempt and zero-rated, zero-rating takes priority (s. 34(2)). The pack does not reproduce the Schedule. The input tax of what is acquired to make exempt supplies is not deductible (s. 40). Base to box 5.",
+    "source": "kn-vat-act",
+    "vat_category": "E",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "KN-P-17",
+    "name": "Purchase, VAT 17 %",
+    "description": "A purchase from a taxable person, standard-rated, with a tax invoice",
+    "kind": "vat",
+    "rate": 17,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, 2010, s. 39 — an input tax deduction for the tax paid on a purchase for the taxable activity, on a tax invoice (s. 43) or a credit or debit note (s. 44); the limits of s. 40 (allocation to exempt supplies, disallowed items) are the user's. Base to box 12, tax to box 14.",
+    "source": "kn-vat-act",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "KN-P-10",
+    "name": "Purchase of accommodation, restaurant or tour services, VAT 10 %",
+    "description": "Accommodation, restaurant or tour services bought for the business at the reduced rate",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2010-07-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, 2010, s. 26(1)(d) and s. 39 — input tax at 10 percent is deductible on the same conditions as at 17 percent, subject to s. 40. Base to box 12, tax to box 14.",
+    "source": "kn-vat-act",
+    "sequence": 90,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "14",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "KN-P-17-IMP",
+    "name": "Import of goods, VAT 17 %",
+    "description": "Goods imported: the VAT paid to the Comptroller of Customs",
+    "kind": "vat",
+    "rate": 17,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2010-07-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, 2010, s. 26(1)(b), s. 27 and s. 28 — 17 percent of the value of imported goods other than exempt imported goods (First Schedule), paid on the import declaration (s. 10); the tax paid is deductible under s. 39. The value for tax is the customs entry's; the pack applies the rate to the invoice value it is given. Base to box 11, tax to box 13.",
+    "source": "kn-vat-act",
+    "sequence": 100,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "13"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "13",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "KN-P-EX",
+    "name": "Purchase without VAT",
+    "description": "A purchase of a zero-rated or exempt supply, or from a person who charges no VAT: no input tax to claim",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2010-07-01",
+    "recoverable": false,
+    "legal_reference": "Value Added Tax Act, 2010, s. 33 and s. 34 — a zero-rated supply carries tax at zero per cent and an exempt supply none, so the purchaser has no input tax to deduct; the value is still reported among the purchases (box 12).",
+    "source": "kn-vat-act",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]
