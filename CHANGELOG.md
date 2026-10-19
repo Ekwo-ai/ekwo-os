@@ -9,7 +9,63 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.15.0] — 2026-10-19
+
 ### Added
+
+- **Fiscalisation by clearance: the invoice the authority validates before it
+  is issued.** A third regime of `einvoicing.fiscalisation`, beside the
+  chained record and the report, modelled on what MyInvois, KSeF and SdI
+  share: a `clearance` object, exclusive of `hash`, says where the
+  verification link the invoice carries comes from (`returned`, `computed`,
+  `none`) and, as ISO 8601 durations counted from the validation, how long the
+  issuer may cancel (`cancellation_window`) and the buyer reject
+  (`rejection_window`), each left out where the law grants none (`kind`
+  `clearance` once normalised). For an obligation phased by size, each
+  `mandatory_from` entry may carry `turnover_above` (an amount and its
+  currency) and its own text, and `exemption` lists the dated thresholds below
+  which a taxpayer is exempted, oldest first; `ekwo pack check` refuses steps
+  whose thresholds do not fall, two currencies, thresholds out of order and a
+  clearance regime that keeps invoices back (`none`). Blocks that declare
+  neither compile exactly as before. The module, version 1.2.0
+  (`20261019120000`), keeps `einvoicing.clearances` — one submission per
+  attempt, `submitted`, `validated` (identifier, moment, verification link),
+  `rejected` (by the authority or the buyer, with the reason) or `cancelled` —
+  with `record_clearance_submission()` and `record_clearance_answer()`, which
+  raise on every transition that cannot have happened and on a window that
+  has closed, and append each answer verbatim to `fiscal_events`. Neither
+  calls the authority: the transport is the host's. `recordClearanceSubmission()`
+  / `recordClearanceAnswer()` back `ekwo einvoice clearance` and the MCP tool
+  `einvoicing_clearance`; `fiscalisationStatus()` names, under a clearance
+  regime in force, the posted sales without a validation and counts those
+  validated, waiting, rejected by the buyer, or cancelled at the authority and
+  still posted; `fiscaliseDocument()` refuses to chain under it
+  (`fiscal_regime_without_chain`). The Malaysian pack (0.2.0) declares
+  MyInvois as a clearance regime in format `myinvois`, with its link returned
+  by LHDNM and its two 72-hour windows, the four steps of its calendar by
+  turnover and the RM3,000,000 threshold of exemption of the e-Invoice General
+  Guideline 4.8, and its e-invoicing profile is now `myinvois`, the document
+  submitted to the MyInvois API, in place of `pint-my`, the Peppol channel.
+
+- **A ledger line that names nobody is named once** (socle migrations
+  `20261018180416`, `20261018210000`, `20261018210500`, `20261018230000`,
+  decisions 0070 to 0073). A receivable or payable line posted without a
+  contact is suggested its contact and named once (`suggest_line_contacts()`,
+  `set_line_contact()`), or left unnamed on purpose (`leave_line_unnamed()`);
+  `open_items()` can keep to the lines that name a third party. Several open
+  items settle together (`suggest_item_combinations()`, `reconcile_many()`),
+  a small difference is booked on the way (`reconcile_with_difference()`), and
+  the pairs that leave no doubt are matched in one gesture
+  (`suggest_sure_pairs()`, `reconcile_batch()`, undone by
+  `unreconcile_batch()`). A reversal and a credit note are matched with what
+  they undo as they are posted. The command line gains `ekwo line contacts
+  suggest` and `ekwo line contact set`, and the MCP server their tools.
+
+- **Two country packs more, in the Caribbean.** Saint Kitts and Nevis and
+  Saint Lucia, each at version 0.1.0 and `community`: a chart of accounts, the
+  taxes of the country with their articles, the return and the financial
+  statements, each with its golden year. The packs carry their sources and
+  have not been read by a professional.
 
 - **`@ekwo-ai/myinvois`, the Malaysian MyInvois e-Invoice**, a new brick
   under `packages/formats/`. From the three views of a posted document and
@@ -125,6 +181,25 @@ somewhere has already run it.
   line gains `ekwo analytic axes` and `ekwo analytic report --axis <code>
   --from <date> --to <date>`, both through `analyticReport()` of the core.
 
+### Changed
+
+- **The schema of this release is 0.15.0, and the packages refuse an older
+  one** (`20261019160000`). It carries the clearance of an invoice before it
+  is issued, the identifiers of a party by scheme and the attributes a brick
+  needs on a line, the matching of a line that names nobody, of several lines
+  together and of sure pairs, the merge of two contacts and the proposal of
+  those that are probably one party, and the analytic value of a line and the
+  result by activity. `@ekwo-ai/core`
+  issues the MyInvois document from the identifiers `document_header`
+  publishes and reads `einvoicing.clearances`, and `@ekwo-ai/mcp` calls
+  `record_clearance_submission()`, `record_clearance_answer()` and
+  `merge_contacts()`, none of which a 0.14.0 database has, so the floor of
+  `ekwo-os`, `@ekwo-ai/core` and `@ekwo-ai/mcp` rises to 0.15.0 and an
+  installation left behind is told to run `ekwo migrate`. `@ekwo-ai/myinvois`
+  is published for the first time, as a dependency of `@ekwo-ai/core`. The
+  end-to-end run against a real Supabase project was not run for this
+  release.
+
 ## [0.14.0] — 2026-10-18
 
 ### Added
@@ -191,42 +266,6 @@ somewhere has already run it.
   the French pack (1.20.0) the e-reporting of transaction and payment data of
   CGI art. 290 and 290 A, with its dates by size and its cadence by VAT
   regime. Neither has a brick yet.
-
-- **Fiscalisation by clearance: the invoice the authority validates before it
-  is issued.** A third regime of `einvoicing.fiscalisation`, beside the
-  chained record and the report, modelled on what MyInvois, KSeF and SdI
-  share: a `clearance` object, exclusive of `hash`, says where the
-  verification link the invoice carries comes from (`returned`, `computed`,
-  `none`) and, as ISO 8601 durations counted from the validation, how long the
-  issuer may cancel (`cancellation_window`) and the buyer reject
-  (`rejection_window`), each left out where the law grants none (`kind`
-  `clearance` once normalised). For an obligation phased by size, each
-  `mandatory_from` entry may carry `turnover_above` (an amount and its
-  currency) and its own text, and `exemption` lists the dated thresholds below
-  which a taxpayer is exempted, oldest first; `ekwo pack check` refuses steps
-  whose thresholds do not fall, two currencies, thresholds out of order and a
-  clearance regime that keeps invoices back (`none`). Blocks that declare
-  neither compile exactly as before. The module, version 1.2.0
-  (`20261019120000`), keeps `einvoicing.clearances` — one submission per
-  attempt, `submitted`, `validated` (identifier, moment, verification link),
-  `rejected` (by the authority or the buyer, with the reason) or `cancelled` —
-  with `record_clearance_submission()` and `record_clearance_answer()`, which
-  raise on every transition that cannot have happened and on a window that
-  has closed, and append each answer verbatim to `fiscal_events`. Neither
-  calls the authority: the transport is the host's. `recordClearanceSubmission()`
-  / `recordClearanceAnswer()` back `ekwo einvoice clearance` and the MCP tool
-  `einvoicing_clearance`; `fiscalisationStatus()` names, under a clearance
-  regime in force, the posted sales without a validation and counts those
-  validated, waiting, rejected by the buyer, or cancelled at the authority and
-  still posted; `fiscaliseDocument()` refuses to chain under it
-  (`fiscal_regime_without_chain`). The Malaysian pack (0.2.0) declares
-  MyInvois as a clearance regime in format `myinvois`, with its link returned
-  by LHDNM and its two 72-hour windows, the four steps of its calendar by
-  turnover and the RM3,000,000 threshold of exemption of the e-Invoice General
-  Guideline 4.8, and its e-invoicing profile is now `myinvois`, the document
-  submitted to the MyInvois API, in place of `pint-my`, the Peppol channel;
-  the core does not hand a sale to the `myinvois` brick yet, and the status
-  says so.
 
 - **What each product brought in, and cost.** `product_report(company, from,
   to)` (migration `20261016145816`) reads the posted invoices and credit notes
@@ -5293,7 +5332,8 @@ against the latest tag, and a mistake is corrected by a new migration, always.
   period locks, reports, row level security, the instance singleton and its
   roles, and a golden FEC export.
 
-[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.2...v0.13.0
 [0.12.2]: https://github.com/Ekwo-ai/ekwo-os/compare/v0.12.1...v0.12.2
