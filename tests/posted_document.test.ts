@@ -227,6 +227,8 @@ function another(column: { name: string; type: string; udt: string }, row: Recor
     case 'text':
     case 'character':
       return `'changed'`;
+    case 'jsonb':
+      return `'{"CHANGED": "changed"}'::jsonb`;
     default:
       return null;
   }

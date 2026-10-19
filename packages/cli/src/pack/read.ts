@@ -979,6 +979,8 @@ export interface Pack {
   slug: string;
   dir: string;
   manifest: Manifest;
+  /** `classifications` of the manifest: the schemes a line may name. Empty where the pack declares none. */
+  classifications: PackClassificationScheme[];
   /** Zones the country declares, e.g. `european-union`. Empty where it declares none. */
   zones: string[];
   /** Charts of this country, the default one first. Never empty. */
@@ -1052,6 +1054,8 @@ export interface Manifest {
   };
   /** What the country leaves untaxed in a buyer's hands, with the article; see `foreignServices`. */
   not_taxed?: { treatment: string; legal_reference: string; source: string }[];
+  /** The classifications a line may name; see `PackClassificationScheme`. */
+  classifications?: { scheme: string; name: string; pattern: string; legal_reference: string; source?: string }[];
   /** Zones the country belongs to, e.g. `european-union`; each has a page under docs/zones/. */
   zones?: string[];
   languages?: string[];
@@ -1068,6 +1072,22 @@ export interface Manifest {
     source?: string | null;
   }[];
   [key: string]: unknown;
+}
+
+/**
+ * One classification of goods or services the country uses on its documents
+ * (decision 0078): the scheme a line names its code by, the anchored pattern
+ * every code matches, and the article that prescribes it.
+ */
+export interface PackClassificationScheme {
+  /** BT-158-1, or the list identifier of a national format. Upper case. */
+  scheme: string;
+  name: string;
+  /** Anchored, in the subset Postgres and JavaScript read alike. */
+  pattern: string;
+  legal_reference: string;
+  source: string | null;
+  sequence: number;
 }
 
 /** `packs/generic/pack.json`: a framework of statements, with no country. */
@@ -1529,6 +1549,9 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   // The register, and every rule that points into it. Last of the cross-checks,
   // because a source is named by a tax, a box, a statement line and a mention,
   // and all four have to have been read before the references can be resolved.
+  const classifications = classificationSchemes(manifest);
+  issues.push(...classifications.issues);
+
   const register = sourceRegister(manifest, charts, taxes, report, statements, analysis, documents, fixedAssets, corporateTax);
   issues.push(...register.issues);
   warnings.push(...register.warnings);
@@ -1553,6 +1576,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     slug,
     dir: root,
     manifest,
+    classifications: classifications.schemes,
     zones: manifest.zones ?? [],
     charts,
     accounts,
@@ -1717,6 +1741,11 @@ function sourceRegister(
     ...(manifest.not_taxed ?? []).map((entry) => ({
       path: `pack.json not_taxed.${entry.treatment}`,
       source: entry.source,
+      kind: 'rule' as const,
+    })),
+    ...(manifest.classifications ?? []).map((entry) => ({
+      path: `pack.json classifications.${entry.scheme}`,
+      source: entry.source ?? null,
       kind: 'rule' as const,
     })),
     ...taxes.map((tax) => ({ path: `taxes.json ${tax.code}`, source: tax.source, kind: 'tax' as const })),
@@ -4464,4 +4493,45 @@ function parseInteger(value: string | undefined, where: string, fallback: number
   const parsed = Number(value);
   if (!Number.isInteger(parsed)) throw new PackError(`pack_invalid: ${where}: "${value}" is not a whole number`);
   return parsed;
+}
+
+/**
+ * The classifications a pack declares (decision 0078), read and checked.
+ *
+ * A scheme is written once per country, in upper case. Its pattern is the one
+ * thing the database applies to a code, so it has to mean the same there and
+ * here: anchored at both ends, and compiling as a JavaScript expression — the
+ * classes, ranges and quantifiers a code needs read alike in both dialects.
+ */
+function classificationSchemes(manifest: Manifest): { schemes: PackClassificationScheme[]; issues: Issue[] } {
+  const issues: Issue[] = [];
+  const schemes: PackClassificationScheme[] = [];
+  const seen = new Set<string>();
+  for (const [index, raw] of (manifest.classifications ?? []).entries()) {
+    const path = `pack.json classifications.${raw.scheme ?? index}`;
+    if (!/^[A-Z0-9][A-Z0-9_-]{0,15}$/.test(String(raw.scheme))) {
+      issues.push({ path, message: 'a scheme is a code in upper case, letters, digits, - and _, at most sixteen' });
+    }
+    if (seen.has(raw.scheme)) issues.push({ path, message: 'the scheme is declared twice' });
+    seen.add(raw.scheme);
+    const pattern = String(raw.pattern);
+    let compiles = true;
+    try {
+      new RegExp(pattern);
+    } catch {
+      compiles = false;
+    }
+    if (!compiles || !pattern.startsWith('^') || !pattern.endsWith('$')) {
+      issues.push({ path, message: `the pattern ${pattern} is not an anchored regular expression (^…$)` });
+    }
+    schemes.push({
+      scheme: String(raw.scheme),
+      name: String(raw.name),
+      pattern,
+      legal_reference: String(raw.legal_reference),
+      source: raw.source ?? null,
+      sequence: (index + 1) * 10,
+    });
+  }
+  return { schemes, issues };
 }

@@ -460,7 +460,15 @@ const REGISTRATION_SCHEMES: readonly RegistrationScheme[] = ['BRN', 'NRIC', 'PAS
 
 /** The identifiers of one side, by scheme, as the view publishes them. */
 function identifiersOf(header: Row, side: 'seller' | 'buyer'): Record<string, string> {
-  const raw = header[`${side}_identifiers`];
+  return byScheme(header[`${side}_identifiers`]);
+}
+
+/**
+ * A column of codes by scheme — the identifiers of a party, the
+ * classifications of a line (decision 0078) — as an object of texts, however
+ * the backend handed the JSON over.
+ */
+function byScheme(raw: unknown): Record<string, string> {
   const parsed: unknown = typeof raw === 'string' ? JSON.parse(raw) : raw;
   if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
   return Object.fromEntries(
@@ -489,7 +497,13 @@ function writeMyInvois(source: EinvoiceSource): WrittenEinvoice {
   const activity = text(header['seller_activity_code']);
   const input: MyInvoisInput = {
     header,
-    lines: source.lines,
+    // A line that names a code of LHDNM's list (`CLASS`, the list identifier
+    // the document writes) by its own classification gives it over the
+    // default the regime gives every line.
+    lines: source.lines.map((line) => {
+      const own = byScheme(line['classifications'])['CLASS'];
+      return own === undefined ? line : { ...line, myinvois_classification: own };
+    }),
     taxes: source.taxes,
     issuedAt: source.issuedAt,
     supplier: {

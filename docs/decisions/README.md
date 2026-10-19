@@ -90,6 +90,7 @@ consequence.
 - [0042](0042-a-document-is-shared-by-a-link.md) — A document is shared by a link that is the whole secret
 - [0043](0043-a-company-leaves-with-its-books.md) — A company leaves with its books
 - [0044](0044-a-product-is-a-catalogue-entry-in-the-core.md) — A product is a catalogue entry in the core, not stock
+- [0078](0078-a-line-names-what-was-sold.md) — A line names what was sold, by the classification its country declares
 - [0045](0045-recognising-a-counterparty.md) — A counterparty is recognised from learned patterns
 - [0046](0046-settling-applies-identification-and-offers-resemblance.md) — Settling applies identification, offers resemblance
 - [0047](0047-a-statement-is-imported-once.md) — A bank statement is imported once

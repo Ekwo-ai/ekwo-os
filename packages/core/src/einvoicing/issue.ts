@@ -66,6 +66,8 @@ const LINES = [
   'sequence', 'line_type', 'item_name', 'item_description', 'seller_item_identifier',
   'quantity::text', 'unit_code', 'unit_price::text', 'discount_percent::text', 'unit_price_includes_tax',
   'amount_untaxed::text', 'vat_category', 'vat_rate::text', 'tax_exemption_code',
+  // BT-158 by its scheme, {"<scheme>": "<code>"} (decision 0078).
+  'classifications',
 ];
 
 /** What the bricks read of `document_tax_summary`. */

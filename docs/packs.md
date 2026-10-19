@@ -1457,6 +1457,43 @@ and each contact, kept in `companies.identifiers` and
 which schemes its format reads, and the brick reports by name the one a
 party lacks.
 
+### What was sold, by the classification of the country: `classifications`
+
+A country whose documents name the goods by a nomenclature — a customs code
+of the Harmonized System, a national extension of it at eight or ten digits,
+the list of an authority's own e-invoicing format — declares each scheme in
+`pack.json`, with the pattern of its codes and the text that prescribes it
+([decision 0078](decisions/0078-a-line-names-what-was-sold.md)):
+
+```json
+"classifications": [
+  {
+    "scheme": "HS",
+    "name": "Harmonized System heading",
+    "pattern": "^[0-9]{6}$",
+    "legal_reference": "The article that asks for the code on an invoice",
+    "source": "a-key-of-the-register"
+  }
+]
+```
+
+`scheme` is the code a format knows the classification by — EN 16931
+BT-158-1, from UNTDID 7143, or the list identifier of a national format —
+in upper case. `pattern` is anchored (`^…$`) and kept to the classes, ranges
+and quantifiers Postgres and JavaScript read alike; `ekwo pack check` refuses
+an unanchored or broken one and a scheme declared twice.
+
+The codes are facts of each sale, not pack data: a product carries
+`products.classifications` and a document line `document_lines.classifications`,
+both `{"<scheme>": "<code>"}`. A line that names a product and no code of its
+own takes the product's. The database refuses a scheme the pack of the
+company's country does not declare (`classification_scheme_unknown`) and a code
+off its pattern (`classification_code_invalid`); a posted line keeps its codes.
+`document_line_items.classifications` publishes them, and an e-invoicing
+format reads the scheme it writes there — MyInvois writes `CLASS` over the
+`line_attributes` default of its regime. A pack that declares no
+classification says nothing in the seed, and its lines carry none.
+
 ### The mentions, and when each applies
 
 `applies_when` is a closed vocabulary and never an expression: an accountant

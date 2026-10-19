@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.15.0",
-  "migration": "20261019194512",
+  "migration": "20261019195512",
   "socle": {
     "schema": "public",
     "tables": [
@@ -830,6 +830,39 @@
           {
             "name": "statements",
             "type": "text[]"
+          }
+        ]
+      },
+      {
+        "name": "classification_schemes",
+        "columns": [
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "name",
+            "type": "text"
+          },
+          {
+            "name": "pattern",
+            "type": "text"
+          },
+          {
+            "name": "scheme",
+            "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "integer"
+          },
+          {
+            "name": "source_key",
+            "type": "text"
           }
         ]
       },
@@ -1918,6 +1951,10 @@
           {
             "name": "base_includes_tax",
             "type": "boolean"
+          },
+          {
+            "name": "classifications",
+            "type": "jsonb"
           },
           {
             "name": "company_id",
@@ -3086,6 +3123,10 @@
           {
             "name": "analytic_value_id",
             "type": "uuid"
+          },
+          {
+            "name": "classifications",
+            "type": "jsonb"
           },
           {
             "name": "code",
@@ -4261,6 +4302,10 @@
         "arguments": "p_value_id uuid, p_company_id uuid, p_what text"
       },
       {
+        "name": "assert_classifications",
+        "arguments": "p_company_id uuid, p_classifications jsonb, p_what text"
+      },
+      {
         "name": "assert_document_analytic_axes",
         "arguments": "p_document_id uuid"
       },
@@ -4590,6 +4635,10 @@
       },
       {
         "name": "document_lines_analytics_follow",
+        "arguments": ""
+      },
+      {
+        "name": "document_lines_check_classifications",
         "arguments": ""
       },
       {
@@ -5125,6 +5174,10 @@
         "arguments": "p_company_id uuid, p_from date, p_to date"
       },
       {
+        "name": "products_check_classifications",
+        "arguments": ""
+      },
+      {
         "name": "purge_audit_log",
         "arguments": "p_before date"
       },
@@ -5584,6 +5637,11 @@
       {
         "table": "chart_templates",
         "name": "chart_templates_select",
+        "command": "select"
+      },
+      {
+        "table": "classification_schemes",
+        "name": "classification_schemes_select",
         "command": "select"
       },
       {
@@ -6262,6 +6320,10 @@
       },
       {
         "table": "document_lines",
+        "name": "document_lines_check_classifications"
+      },
+      {
+        "table": "document_lines",
         "name": "document_lines_refresh_totals"
       },
       {
@@ -6499,6 +6561,10 @@
       {
         "table": "products",
         "name": "products_audit"
+      },
+      {
+        "table": "products",
+        "name": "products_check_classifications"
       },
       {
         "table": "products",
@@ -7252,6 +7318,16 @@
         },
         {
           "name": "chart_templates",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "classification_schemes",
           "anon": [],
           "authenticated": [
             "select"
@@ -8235,6 +8311,17 @@
           ]
         },
         {
+          "name": "assert_classifications",
+          "arguments": "p_company_id uuid, p_classifications jsonb, p_what text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "assert_document_analytic_axes",
           "arguments": "p_document_id uuid",
           "anon": [],
@@ -9033,6 +9120,14 @@
         },
         {
           "name": "document_lines_analytics_follow",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "document_lines_check_classifications",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -10438,6 +10533,14 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "products_check_classifications",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "purge_audit_log",

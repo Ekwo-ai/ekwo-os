@@ -20,6 +20,16 @@ somewhere has already run it.
   price and the line; the box of the base reports the base plus the tax, and
   `document_tax_summary` appends `base_includes_tax` and `taxable_amount`. No
   pack declares the key yet: every seed and every golden year is unchanged.
+- **A line names what was sold, by the classification its country declares**
+  (socle migration `20261019195512`, decision 0078). A pack declares
+  `classifications` in `pack.json` — a scheme, the anchored pattern of its
+  codes, the text that prescribes it — compiled into `classification_schemes`.
+  `products.classifications` and `document_lines.classifications` hold
+  `{"<scheme>": "<code>"}` (EN 16931 BT-158 by BT-158-1); a line takes its
+  product's; the database refuses `classification_scheme_unknown` and
+  `classification_code_invalid`; `document_line_items` publishes the column
+  and the MyInvois writer reads its `CLASS` code over the regime's default. No
+  pack declares one yet: every seed is unchanged.
 
 ## [0.15.1] — 2026-10-19
 

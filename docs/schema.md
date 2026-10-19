@@ -186,6 +186,7 @@ bank charge that pays no item.
 | [`book_imports`](#book_imports) | One row per set of books taken over by import_books(): which reader, the checksum of the files, how many entries and lines, and the numbers they were posted under. The same files twice in one company are refused by the unique checksum. |
 | [`capabilities`](#capabilities) | Everything a member may be allowed to do, one row per code. Seeded by this migration for the core; a module adds its own with `area` set to the module code. |
 | [`chart_templates`](#chart_templates) | Charts of accounts a country offers, from the `charts` list of packs/<cc>/pack.json. One of them is the default `ekwo init` installs when nobody names one. |
+| [`classification_schemes`](#classification_schemes) | The classifications of goods and services a country uses on its documents, compiled from its pack: the scheme code (BT-158-1, or the list identifier of a national format), its name, the anchored pattern of its codes and the article that prescribes it. A line or a product carries a code only of a scheme its company's country declares here (decision 0078). |
 | [`companies`](#companies) | Legal entities kept in this instance. One instance may hold several. |
 | [`company_archive_registry`](#company_archive_registry) | What an archive of one company does with each table of the socle that belongs to a company: `exported`, or `excluded` with the reason. A table of a company that is not named here stops every export. Modules answer for their own tables through `<schema>.archive_tables()`. |
 | [`company_filing_periods`](#company_filing_periods) | How often this company files each declaration it is subject to: one row per form of tax_report_templates, and no row where nothing has been recorded. A company files its periodic return on one cadence and its recapitulative statement on another, and the second is not derivable from the first in any country read so far. |
@@ -656,6 +657,27 @@ Constraints:
 
 - `CHECK ((country ~ '^[A-Z]{2}$'::text))`
 - `PRIMARY KEY (country, code)`
+
+### `classification_schemes`
+
+The classifications of goods and services a country uses on its documents, compiled from its pack: the scheme code (BT-158-1, or the list identifier of a national format), its name, the anchored pattern of its codes and the article that prescribes it. A line or a product carries a code only of a scheme its company's country declares here (decision 0078).
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `scheme` | `text` | not null |
+| `name` | `text` | not null |
+| `pattern` | `text` | not null |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+| `sequence` | `integer` | not null |
+
+Constraints:
+
+- `CHECK ((country ~ '^[A-Z]{2}$'::text))`
+- `CHECK ((pattern ~ '^\^.*\$$'::text))`
+- `CHECK ((scheme ~ '^[A-Z0-9][A-Z0-9_-]{0,15}$'::text))`
+- `PRIMARY KEY (country, scheme)`
 
 ### `companies`
 
@@ -1162,10 +1184,12 @@ Document lines in a table, not JSON: EN 16931 needs a VAT category per line and 
 | `unit_price_includes_tax` | `boolean` | not null — The unit price of this line was quoted with the tax in it. Derived from the tax while the document is a draft and frozen when it is posted, like BT-151 and BT-152, so a later change to the tax cannot rewrite an invoice that has been sent. |
 | `amount_incl_tax` | `numeric(16,2)` | quantity x unit_price less the discount, tax included, as the line was quoted. Null where the price excludes the tax, which is every line of every pack but a retail one. |
 | `base_includes_tax` | `boolean` | not null — The tax of this line is computed inside its own base. Derived from the tax while the document is a draft and kept when it is posted, like unit_price_includes_tax, so a later change to the tax cannot rewrite an invoice that has been sent. |
+| `classifications` | `jsonb` | not null — EN 16931 BT-158 by its scheme BT-158-1: {"<scheme>": "<code>"}, each scheme one the pack of the company's country declares in classification_schemes and each code matching its pattern. Taken from the product on insert when the line names one and says nothing of its own; frozen with the document once it is posted. Empty, not null, where there is none. |
 
 Constraints:
 
 - `CHECK (((NOT base_includes_tax) OR (tax_id IS NOT NULL)))`
+- `CHECK (((jsonb_typeof(classifications) = 'object'::text) AND (NOT (classifications ? ''::text)) AND (NOT jsonb_path_exists(classifications, '$.*?(@.type() != "string" || @ like_regex "^\\s*$")'::jsonpath))))`
 - `CHECK (((discount_percent >= (0)::numeric) AND (discount_percent < (100)::numeric)))`
 - `CHECK (((NOT unit_price_includes_tax) OR (tax_id IS NOT NULL)))`
 - `CHECK (((line_type <> 'product'::document_line_type) OR (account_id IS NOT NULL)))`
@@ -1703,9 +1727,11 @@ What a document line is filled in from: code, name, unit, price, account and tax
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
 | `analytic_value_id` | `uuid` | The analytic value a line filled in from this product starts with, at 100 %. Pre-fills the line, never constrains it. |
+| `classifications` | `jsonb` | not null — What the product is, by the code of each classification its company's country declares in classification_schemes: {"<scheme>": "<code>"}. Copied onto a document line that names the product and says nothing of its own. Empty, not null, where there is none. |
 
 Constraints:
 
+- `CHECK (((jsonb_typeof(classifications) = 'object'::text) AND (NOT (classifications ? ''::text)) AND (NOT jsonb_path_exists(classifications, '$.*?(@.type() != "string" || @ like_regex "^\\s*$")'::jsonpath))))`
 - `CHECK ((length(btrim(code)) > 0))`
 - `CHECK (((purchase_price IS NULL) OR (purchase_price >= (0)::numeric)))`
 - `CHECK (((sale_price IS NULL) OR (sale_price >= (0)::numeric)))`
@@ -2245,6 +2271,7 @@ Constraints:
 | `archive_under_current_names(p_archive jsonb)` | A company archive with every table a module has since renamed filed under its name of today, as each module declares in `<schema>.archive_former_names()`. Only names move: the rows, and the checksums over them, are untouched. |
 | `assert_analytic_account(p_account_id uuid, p_what text)` | Refuses analytic_not_on_this_account unless account_carries_analytics() says the account carries a split: income, expense or fixed asset, from its account type. Read by the guards of document_line_analytics and entry_line_analytics. |
 | `assert_analytic_value_in_use(p_value_id uuid, p_company_id uuid, p_what text)` | Refuses analytic_value_retired when the value is retired (analytic_values.active = false). Read by the guards of document_line_analytics and entry_line_analytics on a new share. |
+| `assert_classifications(p_company_id uuid, p_classifications jsonb, p_what text)` | Refuses classification_scheme_unknown when a classification names a scheme the pack of the company's country does not declare in classification_schemes, and classification_code_invalid when a code does not match its scheme's pattern. The one check of products.classifications and document_lines.classifications. |
 | `assert_document_analytic_axes(p_document_id uuid)` | Refuses analytic_axis_required when a billable line of the document, on an account of a group an active axis is required on (analytic_axes.required_on), carries less than 100 % of that axis. A credit note naming what it undoes is not asked. Called by post_document() before it writes the entry. |
 | `assert_may_export_company(p_company_id uuid)` | The two conditions of leaving: company.export on the company, and a caller that row level security applies to. Invoker, so `current_user` is the role that asked. |
 | `assert_period_open(p_company_id uuid, p_date date, p_is_tax boolean)` | Raises when a date is protected by a lock date or a closed fiscal year. |
@@ -2318,6 +2345,7 @@ Constraints:
 | `document_line_split_key(p_line_id uuid)` | The analytic split of a document line as one text, null when it has none. post_document() groups lines by it. |
 | `document_lines_amount_untaxed()` | Derives a line's amounts from its quantity, price and discount, rounded once at the decimals of the document's currency: the net, the gross where the price includes the tax, and the snapshots of whether it does and of whether its tax is computed inside its own base (decision 0077). |
 | `document_lines_analytic_defaults()` | Pre-fills the analytic split of a document line from the default value of its product, then of the document's contact or, when it has none, of that contact's parent one level up, at 100 % on each axis the line has no share on yet, only on an account that carries a split and only with a value in use. Never replaces what the line carries. |
+| `document_lines_check_classifications()` | Gives a line that names a product and no classification of its own the product's, on insert, and asks assert_classifications() of what the line carries. |
 | `document_lines_guard_posted()` | Once a document has left draft, its lines are the lines that were issued: no insert, no delete, no column changed. Refuses document_posted, by name, to everybody. |
 | `document_lines_refresh_totals()` | After a line of a draft moves: shares out the base of every tax group quoted with its tax in it, then refreshes the three totals of the document. A document that is no longer a draft keeps the totals it was posted, or loaded, with. |
 | `document_lines_snapshot_tax()` | Writes BT-151 and BT-152 on a line from its tax for as long as the document is a draft. Once it is not, document_lines_guard_posted() refuses any change to the line, these two columns included. |
@@ -2444,6 +2472,7 @@ Constraints:
 | `prepare_filing(p_company_id uuid, p_from date, p_to date, p_report_code text)` | Computes the declaration and keeps the answer, box by box and kind by kind, each figure at the unit the form is filed in (filing_rounding()), with the day it is due under the pack's rule (filing_deadline()) — written when the filing is created, filled on a draft that has none, never overwritten. Called again on a draft it refreshes; on a declaration that has gone it refuses and says the word for what is needed instead — a corrective. |
 | `present_api_key(p_secret text)` | Presents a machine key for the current transaction and answers nothing. What `ekwo_pre_request()` calls, and the only form of the question an anonymous caller may ask: the refusals of use_api_key() word for word, and no row. |
 | `product_report(p_company_id uuid, p_from date, p_to date)` | What each product brought in and cost over a period, read from the posted invoices and credit notes dated in it: for each product named on a line, on each side (sale, purchase), the documents that named it, the quantity and the untaxed amount in the company's currency, a credit note counting against its invoice. Drafts, quotes, orders and lines naming no product say nothing. A retired product keeps reporting, with active false. Security invoker: documents.read, through the row level security of the lines. |
+| `products_check_classifications()` | Asks assert_classifications() of a product whose classifications are written. |
 | `purge_audit_log(p_before date)` | Drops audit rows older than a date the caller names; the table checks the date again and records the purge. service_role only: retention is the operator's decision and no signed-in user may make it. |
 | `reconcile(p_line_a uuid, p_line_b uuid, p_amount numeric)` | Matches a debit line against a credit line of one counterparty — two lines that both name one have the same commercial_entity() (reconcile_contact_mismatch otherwise), and a line naming nobody is attributed by the matching — in the currency the two share when it is not the company's, and books what the matching reveals: the realised exchange difference, and the share of a cash-basis tax that has become due. The one writer of reconciliations, with unreconcile(). |
 | `reconcile_batch(p_pairs jsonb)` | Matches several pairs of lines in one gesture — the pairs suggest_sure_pairs() gives, or any a person accepts — and records it in reconciliation_batches, named on each matching. p_pairs is a JSON array of {"debit_line_id", "credit_line_id"} objects or of [line, line] arrays. Each pair goes through match_lines(), the checks of reconcile_many(): posted, one company, one reconcilable account, one counterparty, the company's currency, open, a debit and a credit, equal to the cent. All or nothing: the first refusal refuses the batch, with its name first and the pair it was given for, "(pair k of n)". Refuses before that no_pairs_named, pair_malformed, duplicate_line, unknown_line, reconcile_company_mismatch and not_allowed (reconcile.write). Returns the batch; unreconcile_batch() undoes it. |

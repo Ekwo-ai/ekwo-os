@@ -11,7 +11,7 @@ import {
   type Row,
 } from '@ekwo-ai/core';
 import type { Pack, PackGolden } from '../packages/cli/src/index.js';
-import { asUser, freshDatabase, one } from './helpers/db.js';
+import { asUser, freshDatabase, one, withoutTrigger } from './helpers/db.js';
 import { newCompany } from './helpers/factory.js';
 import { replayScenario, type Replayed } from './helpers/golden-scenario.js';
 import { packWhere } from './helpers/packs.js';
@@ -146,6 +146,37 @@ describe(`a posted sale of the golden year of ${pack.slug}, issued in ${PROFILE}
     expect(text).toContain('"_":"2026-01-15"');
     expect(text).toContain('"_":"02:30:00Z"');
     expect(text).toContain(`"_":${Number(header.amount_total)}`);
+  });
+
+  it('writes the classification the line names by its scheme, over the one the regime gives every line', async () => {
+    // The scheme is the list identifier the format writes, declared here for
+    // the test as a pack would declare it (decision 0078); the code is one of
+    // the list that is not the regime's default.
+    const fallback = regime.line_attributes?.['myinvois_classification'] as string;
+    const own = fallback === '003' ? '004' : '003';
+    await db.query(
+      `insert into classification_schemes (country, scheme, name, pattern, legal_reference)
+       values ($1, 'CLASS', 'Invented copy of the format''s classification list', '^[0-9]{3}$', 'Invented for the test')
+       on conflict do nothing`,
+      [pack.manifest.country],
+    );
+    // The sale is posted, and a posted line is frozen: the guard is set aside
+    // to give it the code it would have been keyed with.
+    await withoutTrigger(db, 'document_lines', 'document_lines_00_guard_posted', () =>
+      db.query(`update document_lines set classifications = $2 where document_id = $1`, [
+        documentOf(goods.ref),
+        { CLASS: own },
+      ]),
+    );
+    const result = await validateEinvoice(backend, {
+      document_id: documentOf(goods.ref),
+      issued_at: '2026-01-15T10:30:00+08:00',
+      include_file: true,
+    });
+    expect(result['violations']).toEqual([]);
+    const text = JSON.stringify(JSON.parse(String(result['file'])));
+    expect(text).toContain(`"_":"${own}","listID":"CLASS"`);
+    expect(text).not.toContain(`"_":"${fallback}","listID":"CLASS"`);
   });
 
   it('is no longer missing once the authority has validated it, and the status says the brick writes it', async () => {
