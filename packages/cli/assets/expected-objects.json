@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.14.0",
-  "migration": "20261019090001",
+  "migration": "20261019093817",
   "socle": {
     "schema": "public",
     "tables": [
@@ -5142,6 +5142,10 @@
       {
         "name": "suggest_combination",
         "arguments": "p_transaction_id uuid"
+      },
+      {
+        "name": "suggest_contact_duplicates",
+        "arguments": "p_company_id uuid"
       },
       {
         "name": "suggest_contacts",
@@ -10452,6 +10456,17 @@
         {
           "name": "suggest_combination",
           "arguments": "p_transaction_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "suggest_contact_duplicates",
+          "arguments": "p_company_id uuid",
           "anon": [],
           "authenticated": [
             "execute"
