@@ -372,6 +372,59 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     [companyId, issue.document_id, issue.id, `UIN-${tag}`],
   );
 
+  // A fifth module: the relationship with a contact of the books — a card, a
+  // segment under a parent, a deal at a stage of a pipeline, and an activity
+  // about it. Written by hand: what travels is the subject.
+  await asUser(db, ownerId, async () => {
+    await db.query(`select enable_module($1, 'crm')`, [companyId]);
+  });
+  const party = await one<{ id: string }>(
+    db,
+    `select id from contacts where company_id = $1 and merged_into is null order by name, id limit 1`,
+    [companyId],
+  );
+  await db.query(`insert into crm.cards (company_id, contact_id, status, tags) values ($1, $2, 'client', '{archive}')`, [
+    companyId,
+    party.id,
+  ]);
+  const parentSegment = await one<{ id: string }>(
+    db,
+    `insert into crm.segments (company_id, kind, name, slug) values ($1, 'taxonomy', 'Industry', 'industry') returning id`,
+    [companyId],
+  );
+  const segment = await one<{ id: string }>(
+    db,
+    `insert into crm.segments (company_id, parent_id, kind, name, slug)
+     values ($1, $2, 'segment', $3, 'retail') returning id`,
+    [companyId, parentSegment.id, `Retail ${tag}`],
+  );
+  await db.query(`insert into crm.segment_members (company_id, segment_id, contact_id) values ($1, $2, $3)`, [
+    companyId,
+    segment.id,
+    party.id,
+  ]);
+  const pipeline = await one<{ id: string }>(
+    db,
+    `insert into crm.pipelines (company_id, name, slug) values ($1, 'Sales', 'sales') returning id`,
+    [companyId],
+  );
+  const stage = await one<{ id: string }>(
+    db,
+    `insert into crm.stages (company_id, pipeline_id, name, position, outcome) values ($1, $2, 'Won', 1, 'won') returning id`,
+    [companyId, pipeline.id],
+  );
+  const deal = await one<{ id: string }>(
+    db,
+    `insert into crm.deals (company_id, pipeline_id, stage_id, contact_id, title, amount, currency_code, closed_at, closed_outcome)
+     select $1, $2, $3, $4, $5, 1000, c.currency_code, now(), 'won' from companies c where c.id = $1 returning id`,
+    [companyId, pipeline.id, stage.id, party.id, `Deal ${tag}`],
+  );
+  await db.query(
+    `insert into crm.activities (company_id, contact_id, deal_id, kind, subject, source, source_ref)
+     values ($1, $2, $3, 'note', 'Signed', 'archive-test', $4)`,
+    [companyId, party.id, deal.id, `note-${tag}`],
+  );
+
   // A piece on a document.
   const someDocument = [...replayed.documents.values()][0] as string;
   await db.query(
