@@ -152,3 +152,41 @@ export async function mergeContacts(backend: Backend, args: MergeContactsArgs): 
     note: 'Everything that named the absorbed contact names the kept one now, posted lines and issued documents included; the absorbed contact is retired, kept as the record of what was imported, and is named by no row again. There is no unmerge: the audit trail lists every line and document that moved.',
   };
 }
+
+export interface SuggestContactDuplicatesArgs {
+  company_id: string;
+}
+
+/** One pair of contacts that are probably one party, as `suggest_contact_duplicates()` answers it. */
+export interface ContactDuplicate {
+  keep: { id: string; name: string; rows: number };
+  absorb: { id: string; name: string; rows: number };
+  score: number;
+  method: string;
+  because: string;
+  evidence: string[];
+}
+
+/**
+ * The pairs of contacts of a company that are probably one party, through
+ * `suggest_contact_duplicates()` (decision 0075): the same VAT number,
+ * registration number or bank account, the same name, or the words of one
+ * name inside the other's. Each pair proposes the contact more rows name as
+ * the one to keep; the person chooses, and `mergeContacts()` joins them.
+ */
+export async function suggestContactDuplicates(backend: Backend, args: SuggestContactDuplicatesArgs): Promise<unknown> {
+  const found = await backend.rpc<Row>('suggest_contact_duplicates', { p_company_id: args.company_id });
+  const pairs: ContactDuplicate[] = found.map((row) => ({
+    keep: { id: String(row['keep_id']), name: String(row['keep_name']), rows: Number(row['keep_rows']) },
+    absorb: { id: String(row['absorb_id']), name: String(row['absorb_name']), rows: Number(row['absorb_rows']) },
+    score: Number(row['score']),
+    method: String(row['method']),
+    because: String(row['because']),
+    evidence: (row['evidence'] as string[] | null) ?? [],
+  }));
+  return {
+    pairs,
+    count: pairs.length,
+    note: 'Each pair is a proposal: the contact more ledger lines and documents name is proposed as the one to keep. Nothing is merged until a person chooses; merge_contacts joins a pair in either order. Two different VAT or registration numbers are two parties and are never proposed.',
+  };
+}

@@ -202,6 +202,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'suggest_contact_duplicates',
+    {
+      title: 'Find contacts that are one party',
+      description:
+        'The pairs of contacts of a company that are probably one party created twice — two imports, two spellings: the same VAT number, registration number or bank account (score 1), the same name (0.950), or every word of one name inside the other\'s, in any order (0.900). Each pair proposes as the one to keep the contact more ledger lines and documents name, with the evidence in a sentence. Two different VAT or registration numbers are two parties and are never proposed. It writes nothing: show the pairs to the user, and call merge_contacts only for a pair they confirm, keeping the contact they choose.',
+      inputSchema: read.SuggestContactDuplicatesInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.suggestContactDuplicates(backend, args)),
+  );
+
+  server.registerTool(
     'list_documents',
     {
       title: 'List documents',

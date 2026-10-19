@@ -1,8 +1,9 @@
 /**
- * `ekwo contact add`, `ekwo contact list` and `ekwo contact merge` —
- * `createContact()`, `searchContacts()` and `mergeContacts()` of the core,
- * which are the MCP server's `create_contact`, `search_contacts` and
- * `merge_contacts`.
+ * `ekwo contact add`, `ekwo contact list`, `ekwo contact duplicates` and
+ * `ekwo contact merge` — `createContact()`, `searchContacts()`,
+ * `suggestContactDuplicates()` and `mergeContacts()` of the core, which are
+ * the MCP server's `create_contact`, `search_contacts`,
+ * `suggest_contact_duplicates` and `merge_contacts`.
  */
 
 import {
@@ -11,6 +12,8 @@ import {
   mergeContacts,
   resolveContact,
   searchContacts,
+  suggestContactDuplicates,
+  type ContactDuplicate,
   type ContactType,
   type CreateContactArgs,
 } from '@ekwo-ai/core';
@@ -22,9 +25,10 @@ import { dim, heading, note, pairs, step, table } from '../ui.js';
 const ADD_FLAGS = [...CREATE_FLAGS, 'type', 'vat', 'email', 'country', 'terms', 'aux', 'address', 'postal-code', 'city'] as const;
 const LIST_FLAGS = [...BOOKS_FLAGS, 'query', 'type', 'vat', 'limit'] as const;
 const MERGE_FLAGS = [...BOOKS_FLAGS] as const;
+const DUPLICATES_FLAGS = [...BOOKS_FLAGS] as const;
 
 const USAGE =
-  'usage: ekwo contact add <name> [--type --vat --email --country --terms --ref] | ekwo contact list [--query --type --vat] | ekwo contact merge <keep> <absorb>';
+  'usage: ekwo contact add <name> [--type --vat --email --country --terms --ref] | ekwo contact list [--query --type --vat] | ekwo contact duplicates | ekwo contact merge <keep> <absorb>';
 
 const ADD_FIELDS = [
   'name', 'contact_type', 'vat_number', 'email', 'country', 'payment_terms_days', 'auxiliary_code',
@@ -43,6 +47,7 @@ export async function contactCommand(args: ParsedArgs, deps: BooksDeps = {}): Pr
   const action = args.positional[0];
   if (action === 'add') return add(args, deps);
   if (action === 'list') return list(args, deps);
+  if (action === 'duplicates') return duplicates(args, deps);
   if (action === 'merge') return merge(args, deps);
   throw new UsageError(USAGE);
 }
@@ -103,6 +108,38 @@ async function list(args: ParsedArgs, deps: BooksDeps): Promise<number> {
       result.contacts.map((c) => [String(c['name']), String(c['contact_type']), String(c['vat_number'] ?? ''), dim(String(c['id']))]),
     );
   }
+  return 0;
+}
+
+async function duplicates(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, DUPLICATES_FLAGS);
+  const { backend, company } = await openBooks(args, deps);
+
+  const result = (await suggestContactDuplicates(backend, { company_id: company.id })) as {
+    pairs: ContactDuplicate[];
+    count: number;
+    note: string;
+  };
+  setResult(result);
+
+  heading(`Contacts that are probably one party, in ${company.name}`);
+  if (result.pairs.length === 0) {
+    note(dim('None: no two contacts share a number, an account or a name.'));
+    return 0;
+  }
+  table(
+    [{ title: 'keep' }, { title: 'rows' }, { title: 'absorb' }, { title: 'rows' }, { title: 'score' }, { title: 'because' }],
+    result.pairs.map((pair) => [
+      pair.keep.name,
+      String(pair.keep.rows),
+      pair.absorb.name,
+      String(pair.absorb.rows),
+      String(pair.score),
+      dim(pair.because),
+    ]),
+  );
+  note(dim(result.note));
+  note(dim('To join a pair: ekwo contact merge <keep> <absorb>.'));
   return 0;
 }
 

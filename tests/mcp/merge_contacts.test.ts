@@ -8,7 +8,7 @@
 
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { explain, writeTools, type Backend } from '../../packages/mcp/src/index.js';
+import { explain, readTools, writeTools, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase } from '../helpers/db.js';
 import { newCompany, newContact, type Fixture } from '../helpers/factory.js';
 import { somePack } from '../helpers/packs.js';
@@ -28,6 +28,27 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await db.close();
+});
+
+describe('suggest_contact_duplicates', () => {
+  it('proposes the pair, the contact to keep and the evidence, and merges nothing', async () => {
+    const first = await newContact(db, fx.companyId, { country: pack.manifest.country, name: 'Corwin Atelier' });
+    const second = await newContact(db, fx.companyId, { country: pack.manifest.country, name: 'Atelier Corwin' });
+
+    const answer = record(await readTools.suggestContactDuplicates(backend, { company_id: fx.companyId }));
+    expect(answer['pairs']).toEqual([
+      expect.objectContaining({
+        keep: { id: first, name: 'Corwin Atelier', rows: 0 },
+        absorb: { id: second, name: 'Atelier Corwin', rows: 0 },
+        score: 0.9,
+        method: 'name',
+        evidence: ['name'],
+      }),
+    ]);
+    expect(answer['count']).toBe(1);
+    await writeTools.mergeContacts(backend, { keep_contact_id: first, absorb_contact_id: second });
+    expect(record(await readTools.suggestContactDuplicates(backend, { company_id: fx.companyId }))['count']).toBe(0);
+  });
 });
 
 describe('merge_contacts', () => {

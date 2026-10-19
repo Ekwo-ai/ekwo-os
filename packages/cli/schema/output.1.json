@@ -500,6 +500,30 @@
         "required": ["contacts", "count"],
         "properties": { "contacts": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
       },
+      "contact duplicates": {
+        "$comment": "What suggestContactDuplicates() of @ekwo-ai/core answers — the MCP server's suggest_contact_duplicates. One pair per row, strongest first: keep is the contact proposed to keep (more ledger lines and documents name it), absorb the other; rows counts what names each. method is the strongest evidence — vat_number, registration_number, account or name — and evidence every kind found.",
+        "type": "object",
+        "required": ["pairs", "count", "note"],
+        "properties": {
+          "pairs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["keep", "absorb", "score", "method", "because", "evidence"],
+              "properties": {
+                "keep": { "type": "object", "required": ["id", "name", "rows"] },
+                "absorb": { "type": "object", "required": ["id", "name", "rows"] },
+                "score": { "type": "number" },
+                "method": { "type": "string" },
+                "because": { "type": "string" },
+                "evidence": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          },
+          "count": { "type": "integer" },
+          "note": { "type": "string" }
+        }
+      },
       "contact merge": {
         "$comment": "What mergeContacts() of @ekwo-ai/core answers — the MCP server's merge_contacts. merge is the row of contact_merges: moved counts the rows that moved onto the kept contact, by table; filled names the fields of the kept contact taken from the absorbed one. kept and absorbed are the two contacts as they stand; the absorbed one is inactive with merged_into naming the kept one.",
         "type": "object",

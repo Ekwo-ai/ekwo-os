@@ -215,6 +215,7 @@ Every write names its company explicitly.
 | `get_company` | Financial years, lock dates, journals, default accounts |
 | `list_accounts` | The accounts a company works with, by code prefix, type or name. `include_all` for the whole chart |
 | `search_contacts` | Customers and suppliers, by name, type or VAT number |
+| `suggest_contact_duplicates` | The pairs of contacts that are probably one party: the same VAT number, registration number or bank account, the same name, or the words of one name inside the other's; proposes the one to keep, writes nothing |
 | `search_products` | The catalogue: code, unit, price, account and tax of what is sold and bought |
 | `list_documents` | Invoices, credit notes and quotes, filtered |
 | `get_document` | One document with its lines and the entry it produced |

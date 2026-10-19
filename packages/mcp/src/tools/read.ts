@@ -641,6 +641,16 @@ export const SuggestLineContactsInput = z.object({
     .describe('The ledger lines to ask about. Left out: every open line of the company on a receivable or payable account that names no contact.'),
 });
 
+// ---------------------------------------------------------------------------
+// Contacts that are one party
+// ---------------------------------------------------------------------------
+
+export { suggestContactDuplicates } from '@ekwo-ai/core';
+
+export const SuggestContactDuplicatesInput = z.object({
+  company_id: companyId,
+});
+
 export const VatReturnInput = z.object({
   company_id: companyId,
   from: isoDate,
