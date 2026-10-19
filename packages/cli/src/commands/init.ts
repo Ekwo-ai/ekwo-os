@@ -38,6 +38,7 @@ import {
   installedPacks,
 } from '../bootstrap.js';
 import { printOperatorChecklist } from '../checklist.js';
+import { offerCloud } from '../cloud-offer.js';
 import { printInvitation, registrationField, type RegistrationField } from '../invitation.js';
 import {
   chooseChart,
@@ -448,6 +449,8 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
     // Last, and once: an installation that was not asked — `--yes`, `--json` —
     // is told what registering gives and how, and nothing waits on it.
     printInvitation(registration.invitation);
+    // Then the offer of an Ekwo Cloud account: one line, once for this person.
+    await offerCloud('install');
     line();
     return 0;
   } finally {
@@ -584,6 +587,7 @@ async function installWithoutCompany(
 
   printOperatorChecklist();
   printInvitation(registration.invitation);
+  await offerCloud('install');
   line();
   return 0;
 }

@@ -53,10 +53,15 @@ export const REGISTRATION_INVITATION: RegistrationInvitation = {
   silence: `${REGISTER_INVITE_ENV}=1 hides this invitation.`,
 };
 
+/** True when a variable is set to anything but empty, `0` or `false`. */
+export function environmentFlag(env: EnvironmentVariables, name: string): boolean {
+  const value = env[name]?.trim().toLowerCase();
+  return value !== undefined && value.length > 0 && value !== '0' && value !== 'false';
+}
+
 /** True when the environment asked for no invitation. */
 export function registerInviteSilenced(env: EnvironmentVariables): boolean {
-  const value = env[REGISTER_INVITE_ENV]?.trim().toLowerCase();
-  return value !== undefined && value.length > 0 && value !== '0' && value !== 'false';
+  return environmentFlag(env, REGISTER_INVITE_ENV);
 }
 
 /**

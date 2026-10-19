@@ -12,7 +12,7 @@ import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mc
 import type { CallToolResult, ToolAnnotations } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from './backend.js';
-import { columns, relayableInvitation, type EinvoiceTransport, type FiscalSystem, type LogoFetch } from '@ekwo-ai/core';
+import { columns, relayableCloudOffer, relayableInvitation, type EinvoiceTransport, type FiscalSystem, type LogoFetch } from '@ekwo-ai/core';
 import * as read from './tools/read.js';
 import * as write from './tools/write.js';
 import { toolsetsFor } from './tools/modules.js';
@@ -74,6 +74,14 @@ export interface ServerOptions {
    */
   inviteToRegister?: boolean;
   /**
+   * Adds one paragraph to the instructions: the offer of a free Ekwo Cloud
+   * account, for the agent to relay once, after a first task, to a person
+   * who has none. `start.ts` sets it unless `EKWO_NO_CLOUD_OFFER` or `CI` is
+   * set; the hosted connector, whose users have an account already, and the
+   * tests leave it off. It is in no tool result.
+   */
+  offerCloud?: boolean;
+  /**
    * How an electronic invoice leaves, for `einvoicing_issue` and
    * `einvoicing_status`. Built by whoever runs the server — `start.ts` makes
    * the folder transport from `EKWO_EINVOICE_DIRECTORY` — and never by a
@@ -113,9 +121,13 @@ export const INSTRUCTIONS = [
   'When the database refuses, the message starts with a name — period_locked, entry_unbalanced, document_total_mismatch, reversal_date_needed — followed by a sentence saying what to do next. Report it to the user and follow that sentence rather than working around it.',
 ].join('\n\n');
 
-/** The instructions, with the invitation to register when it applies. */
+/** The instructions, with the invitation to register and the Cloud offer when they apply. */
 export function instructionsFor(options: ServerOptions = {}): string {
-  return options.inviteToRegister === true ? `${INSTRUCTIONS}\n\n${relayableInvitation()}` : INSTRUCTIONS;
+  return [
+    INSTRUCTIONS,
+    ...(options.inviteToRegister === true ? [relayableInvitation()] : []),
+    ...(options.offerCloud === true ? [relayableCloudOffer()] : []),
+  ].join('\n\n');
 }
 
 /**

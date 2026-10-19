@@ -46,6 +46,7 @@ import { join, resolve } from 'node:path';
 import { boolFlag, numberFlag, rejectUnknownFlags, stringFlag, UsageError, type ParsedArgs } from '../args.js';
 import { getCompany, type Row } from '@ekwo-ai/core';
 import { BOOKS_FLAGS, openBooks, type BooksDeps } from '../books.js';
+import { offerCloud } from '../cloud-offer.js';
 import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
 import { setResult } from '../output.js';
 import { isInteractive } from '../prompt.js';
@@ -441,6 +442,9 @@ async function exportCommand(db: SqlClient, args: ParsedArgs): Promise<number> {
     rows: written.total,
     files: { listed: files, transported: false },
   });
+  // A copy written by hand: the moment an account that takes one every night
+  // is worth one line, once.
+  await offerCloud('backup');
   line();
   return 0;
 }

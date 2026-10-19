@@ -100,7 +100,7 @@ export function assertOutsideRepository(dir: string): void {
   }
 }
 
-async function readJson(path: string): Promise<unknown> {
+export async function readJson(path: string): Promise<unknown> {
   try {
     return JSON.parse(await readFile(path, 'utf8')) as unknown;
   } catch (error) {
@@ -110,7 +110,7 @@ async function readJson(path: string): Promise<unknown> {
 }
 
 /** Written beside the file and moved over it: a rotated refresh token is never half there. */
-async function writePrivate(dir: string, file: string, value: unknown): Promise<void> {
+export async function writePrivate(dir: string, file: string, value: unknown): Promise<void> {
   assertOutsideRepository(dir);
   await mkdir(dir, { recursive: true, mode: 0o700 });
   const path = join(dir, file);

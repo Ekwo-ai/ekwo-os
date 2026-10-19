@@ -29,7 +29,7 @@ import { statusCommand } from './commands/status.js';
 import { useCommand, whoamiCommand } from './commands/whoami.js';
 import type { BooksDeps } from './books.js';
 import { askedForJson, commandLabel, execute, reportFailure, setResult } from './output.js';
-import { REGISTER_INVITE_ENV } from '@ekwo-ai/core';
+import { CLOUD_OFFER_ENV, REGISTER_INVITE_ENV } from '@ekwo-ai/core';
 import { bold, cyan, dim, line } from './ui.js';
 
 export function version(): string {
@@ -415,6 +415,11 @@ ${bold('Environment')}
   EKWO_REGISTRY_URL         Where registrations are announced.
   ${REGISTER_INVITE_ENV}   Set to 1 to hide the invitation to register that
                             init and status show on an unregistered installation.
+  ${CLOUD_OFFER_ENV}       Set to 1 to hide the one line offering a free Ekwo
+                            Cloud account after init and a first company export.
+                            Never shown under --json, outside a terminal or in CI;
+                            "cloud_offer": false in settings.json, in the
+                            configuration directory, hides it for good.
   NO_COLOR                  Plain output.
 
 ${bold('What this CLI does not do')}

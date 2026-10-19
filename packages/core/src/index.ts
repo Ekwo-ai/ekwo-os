@@ -28,6 +28,19 @@ export {
   type EnvironmentVariables,
   type RegistrationInvitation,
 } from './registration.js';
+export {
+  CLOUD_OFFER_ENV,
+  CLOUD_OFFER_GIVES,
+  CLOUD_OFFER_MOMENTS,
+  CLOUD_OFFER_SILENCE,
+  CLOUD_SIGNUP_URL,
+  cloudOfferLine,
+  cloudOfferSilenced,
+  cloudSignupUrl,
+  relayableCloudOffer,
+  type CloudOfferMoment,
+  type CloudOfferSource,
+} from './cloud-offer.js';
 export * from './books/index.js';
 export * from './proofs/index.js';
 export * from './einvoicing/index.js';

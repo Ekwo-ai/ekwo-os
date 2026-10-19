@@ -7,7 +7,7 @@
  */
 
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { FISCAL_SYSTEM_ENV, directoryTransport, parseFiscalSystem, registrationInvitation, type EinvoiceTransport, type FiscalSystem } from '@ekwo-ai/core';
+import { FISCAL_SYSTEM_ENV, cloudOfferSilenced, directoryTransport, parseFiscalSystem, registrationInvitation, type EinvoiceTransport, type FiscalSystem } from '@ekwo-ai/core';
 import type { Backend } from './backend.js';
 import { ENV, openBackend, readConfig } from './config.js';
 import { assertSchemaSupported } from './schema.js';
@@ -55,6 +55,7 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
     server: buildServer(backend, {
       modules,
       inviteToRegister,
+      offerCloud: !cloudOfferSilenced(env),
       ...(einvoiceTransport === undefined ? {} : { einvoiceTransport }),
       ...(fiscalSystem === undefined ? {} : { fiscalSystem }),
     }),
