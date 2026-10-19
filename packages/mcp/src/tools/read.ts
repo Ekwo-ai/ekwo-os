@@ -33,7 +33,7 @@ import {
 
 // Moved to the core with the writing half they are read back by; exported
 // from here under the names they always had.
-export { getDocument, listDocuments, searchContacts } from '@ekwo-ai/core';
+export { getDocument, listDocuments, searchContacts, suggestDuplicateContacts } from '@ekwo-ai/core';
 
 export const uuid = z.string().uuid();
 export const isoDate = z
@@ -185,6 +185,10 @@ export const SearchContactsInput = z.object({
   contact_type: z.enum(['customer', 'supplier', 'both', 'employee', 'other']).optional(),
   vat_number: z.string().min(1).optional().describe('Exact match, e.g. BE0123456749.'),
   limit: z.number().int().min(1).max(200).optional(),
+});
+
+export const SuggestDuplicateContactsInput = z.object({
+  company_id: companyId,
 });
 
 // ---------------------------------------------------------------------------

@@ -500,6 +500,31 @@
         "required": ["contacts", "count"],
         "properties": { "contacts": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
       },
+      "contact duplicates": {
+        "$comment": "What suggestDuplicateContacts() of @ekwo-ai/core answers — the MCP server's suggest_duplicate_contacts. One pair per row of suggest_duplicate_contacts(), strongest first: keep_id and absorb_id with their names, score from 0 to 1, evidence the kinds strongest first (vat_number, registration_number, account, name), because the evidence in sentences. Nothing is written.",
+        "type": "object",
+        "required": ["pairs", "count", "note"],
+        "properties": {
+          "pairs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["keep_id", "keep_name", "absorb_id", "absorb_name", "score", "evidence", "because"],
+              "properties": {
+                "keep_id": { "type": "string" },
+                "keep_name": { "type": "string" },
+                "absorb_id": { "type": "string" },
+                "absorb_name": { "type": "string" },
+                "score": { "type": "number" },
+                "evidence": { "type": "array", "items": { "enum": ["vat_number", "registration_number", "account", "name"] } },
+                "because": { "type": "string" }
+              }
+            }
+          },
+          "count": { "type": "integer" },
+          "note": { "type": "string" }
+        }
+      },
       "contact merge": {
         "$comment": "What mergeContacts() of @ekwo-ai/core answers — the MCP server's merge_contacts. merge is the row of contact_merges: moved counts the rows that moved onto the kept contact, by table; filled names the fields of the kept contact taken from the absorbed one. kept and absorbed are the two contacts as they stand; the absorbed one is inactive with merged_into naming the kept one.",
         "type": "object",

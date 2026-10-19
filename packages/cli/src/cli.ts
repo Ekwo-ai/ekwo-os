@@ -143,7 +143,8 @@ ${bold('Connecting')} ${dim('(every command)')}
                             Needed to create a user.
 
   ${cyan('contact')}     add <name> | list — the people and companies the books name;
-              merge <keep> <absorb> — one party created twice: everything that
+              duplicates — the pairs that are probably one party, with the
+              one to keep and the evidence; merge <keep> <absorb> — one party created twice: everything that
               names the second, posted lines and issued documents included,
               names the first, and the second is retired. By name or id.
   ${cyan('doc')}         new | line add <document> — a draft and its lines; list | show

@@ -152,3 +152,51 @@ export async function mergeContacts(backend: Backend, args: MergeContactsArgs): 
     note: 'Everything that named the absorbed contact names the kept one now, posted lines and issued documents included; the absorbed contact is retired, kept as the record of what was imported, and is named by no row again. There is no unmerge: the audit trail lists every line and document that moved.',
   };
 }
+
+export interface SuggestDuplicateContactsArgs {
+  company_id: string;
+}
+
+/** One probable pair, as `suggest_duplicate_contacts()` answers it, with the two names. */
+export interface DuplicateContactPair {
+  keep_id: string;
+  keep_name: string;
+  absorb_id: string;
+  absorb_name: string;
+  score: number;
+  /** The kinds of evidence, strongest first: `vat_number`, `registration_number`, `account`, `name`. */
+  evidence: string[];
+  because: string;
+}
+
+/**
+ * The contacts of a company that are probably one party, through
+ * `suggest_duplicate_contacts()` (decision 0075): one pair per row, strongest
+ * first, with the contact to keep, the score and the evidence. The pairs, the
+ * scores and which one to keep are the database's; this puts the two names
+ * beside the ids. It writes nothing: `mergeContacts()` joins a pair once a
+ * person has chosen it.
+ */
+export async function suggestDuplicateContacts(backend: Backend, args: SuggestDuplicateContactsArgs): Promise<unknown> {
+  const found = await backend.rpc<Row>('suggest_duplicate_contacts', { p_company_id: args.company_id });
+  const ids = [...new Set(found.flatMap((row) => [String(row['keep_id']), String(row['absorb_id'])]))];
+  const named =
+    ids.length === 0
+      ? []
+      : await backend.select<Row>({ table: 'contacts', columns: ['id', 'name'], where: [{ column: 'id', op: 'in', value: ids }] });
+  const nameOf = new Map(named.map((contact) => [String(contact['id']), String(contact['name'])]));
+  const pairs: DuplicateContactPair[] = found.map((row) => ({
+    keep_id: String(row['keep_id']),
+    keep_name: nameOf.get(String(row['keep_id'])) ?? '',
+    absorb_id: String(row['absorb_id']),
+    absorb_name: nameOf.get(String(row['absorb_id'])) ?? '',
+    score: Number(row['score']),
+    evidence: String(row['evidence']).split(','),
+    because: String(row['because']),
+  }));
+  return {
+    pairs,
+    count: pairs.length,
+    note: 'Probable pairs, strongest first; nothing was written. The contact to keep is the one more ledger lines and documents name, then the older. Show the user both contacts and merge a pair only once they confirm it, with the contact they choose to keep.',
+  };
+}

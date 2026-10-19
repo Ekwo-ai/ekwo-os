@@ -202,6 +202,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'suggest_duplicate_contacts',
+    {
+      title: 'Find the contacts that are probably one party',
+      description:
+        'The pairs of active contacts of a company that are probably one party — two spellings of one customer, two imports of one supplier — strongest first. Each pair names the contact to keep (the one more ledger lines and documents name, then the older) and the one to absorb, a score from 0 to 1, the kinds of evidence (vat_number, registration_number, account: the same number or bank account, score 1; name: the same significant words in any order, or every word of one in the other, 0.950 for the same name, 0.900 otherwise, 0.600 when those words reach several contacts) and the evidence in sentences. Two contacts with different VAT or registration numbers, a contact and its own parent, and inactive or merged contacts are never proposed. It writes nothing: show the user both contacts and call merge_contacts only on a pair they confirm, with the contact they choose to keep.',
+      inputSchema: read.SuggestDuplicateContactsInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.suggestDuplicateContacts(backend, args)),
+  );
+
+  server.registerTool(
     'list_documents',
     {
       title: 'List documents',
@@ -572,7 +584,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Merge two contacts of one company',
       description:
-        'One party created twice — two spellings of one customer, two imports of one supplier: everything that names the absorbed contact names the kept one afterwards, in one transaction — posted ledger lines and issued documents included, statement lines, payments, branches, files and learned motifs — and the kept contact\'s empty fields (VAT number, IBAN, address, email…) are filled from the absorbed one without overwriting any. The absorbed contact is retired, never deleted, and no row may name it again. No amount, account, date or tax box moves, and there is no unmerge. Refused by name: unknown_contact (also a contact of another company), same_contact, already_merged, different_identifiers (two different VAT or registration numbers are two parties), matching_across_parties, not_allowed. Show the user the two contacts side by side with search_contacts and ask which one to keep before calling it; never decide that two contacts are one yourself.',
+        'One party created twice — two spellings of one customer, two imports of one supplier: everything that names the absorbed contact names the kept one afterwards, in one transaction — posted ledger lines and issued documents included, statement lines, payments, branches, files and learned motifs — and the kept contact\'s empty fields (VAT number, IBAN, address, email…) are filled from the absorbed one without overwriting any. The absorbed contact is retired, never deleted, and no row may name it again. No amount, account, date or tax box moves, and there is no unmerge. Refused by name: unknown_contact (also a contact of another company), same_contact, already_merged, different_identifiers (two different VAT or registration numbers are two parties), matching_across_parties, not_allowed. suggest_duplicate_contacts proposes the pairs. Show the user the two contacts side by side with search_contacts and ask which one to keep before calling it; never decide that two contacts are one yourself.',
       inputSchema: write.MergeContactsInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },

@@ -1,14 +1,17 @@
 /**
- * Two contacts of one company merged through the tool (decision 0074).
+ * Two contacts of one company proposed as one party (decision 0075) and
+ * merged through the tools (decision 0074).
  *
- * The tool is a thin call on `merge_contacts()`: it answers the record of the
- * merge and the two contacts as they stand, and a refusal is the database's
- * own sentence with the hint that says what to do.
+ * The tools are thin calls on `suggest_duplicate_contacts()` and
+ * `merge_contacts()`: the first answers the pairs with the two names beside
+ * the ids, the second the record of the merge and the two contacts as they
+ * stand, and a refusal is the database's own sentence with the hint that says
+ * what to do.
  */
 
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { explain, writeTools, type Backend } from '../../packages/mcp/src/index.js';
+import { explain, readTools, writeTools, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase } from '../helpers/db.js';
 import { newCompany, newContact, type Fixture } from '../helpers/factory.js';
 import { somePack } from '../helpers/packs.js';
@@ -28,6 +31,30 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await db.close();
+});
+
+describe('suggest_duplicate_contacts', () => {
+  it('proposes the two spellings of one party, with the one to keep and the evidence', async () => {
+    const older = await newContact(db, fx.companyId, { country: pack.manifest.country, name: 'Pemberton Ashdown' });
+    const newer = await newContact(db, fx.companyId, { country: pack.manifest.country, name: 'Ashdown Pemberton' });
+    await db.query(`update contacts set created_at = now() - interval '1 day' where id = $1`, [older]);
+
+    const answer = record(await readTools.suggestDuplicateContacts(backend, { company_id: fx.companyId }));
+    expect(answer['pairs']).toEqual([
+      expect.objectContaining({
+        keep_id: older,
+        keep_name: 'Pemberton Ashdown',
+        absorb_id: newer,
+        absorb_name: 'Ashdown Pemberton',
+        score: 0.9,
+        evidence: ['name'],
+      }),
+    ]);
+    expect(answer['count']).toBe(1);
+
+    await writeTools.mergeContacts(backend, { keep_contact_id: older, absorb_contact_id: newer });
+    expect(record(await readTools.suggestDuplicateContacts(backend, { company_id: fx.companyId }))['pairs']).toEqual([]);
+  });
 });
 
 describe('merge_contacts', () => {
