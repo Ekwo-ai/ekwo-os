@@ -126,7 +126,7 @@ async function duplicates(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   else {
     table(
       [{ title: 'keep' }, { title: 'absorb' }, { title: 'score', align: 'right' }, { title: 'evidence' }],
-      result.pairs.map((p) => [p.keep_name, p.absorb_name, p.score.toFixed(3), p.evidence.join(', ')]),
+      result.pairs.map((p) => [p.keep_name, p.absorb_name, String(p.score), p.evidence.join(', ')]),
     );
     note(dim('ekwo contact merge <keep> <absorb> joins a pair; --json gives the ids and the evidence in sentences.'));
   }
