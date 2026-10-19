@@ -1,9 +1,13 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { CLASSIFICATION_CODES } from '@ekwo-ai/myinvois';
 import {
+  cancelDocument,
+  createDocument,
   EINVOICE_FORMATS,
   fiscalisationStatus,
   issueEinvoice,
+  postDocument,
   recordClearanceAnswer,
   readVerification,
   recordClearanceSubmission,
@@ -245,5 +249,98 @@ describe('a sale validated under a regime whose issuer builds the verification l
   it('prints nothing of a validation on a sale that has none', async () => {
     const pdf = await renderDocumentPdf(backend, { document_id: documentOf(saleRef((tax) => typeOf(tax) === 'E').ref) });
     expect(pdf.verification_url).toBeNull();
+  });
+});
+
+describe('a line that says what the format asks of it', () => {
+  const exempt = saleRef((tax) => typeOf(tax) === 'E');
+  const scenario = golden.documents.find((document) => document.ref === exempt.ref) as PackGolden['documents'][number];
+  const scenarioLine = scenario.lines[0] as PackGolden['documents'][number]['lines'][number];
+  // The attribute the pack gives every line, and an entry of the format's own list that is not the pack's.
+  const CLASSIFICATION = Object.keys(regime.line_attributes ?? {})[0] as string;
+  const named = Object.keys(CLASSIFICATION_CODES).find((code) => code !== regime.line_attributes?.[CLASSIFICATION]) as string;
+  const OWN_REASON = 'Exemption certificate INVENTED-0002.';
+  const packReason = (): string | undefined => regime.tax_attributes[exempt.tax]?.['exemption_reason'];
+  let invoiceId: string;
+
+  /** A sale of the scenario's exempted line, from a product of the catalogue, with what the line says of itself. */
+  async function sale(attributes: Record<string, string>): Promise<string> {
+    const created = (await createDocument(backend, {
+      company_id: companyId,
+      doc_type: 'sale_invoice',
+      contact_id: contactOf(exempt.contact),
+      document_date: scenario.date,
+      lines: [
+        {
+          product_code: 'INVENTED-ITEM',
+          unit_price: scenarioLine.unit_price,
+          quantity: scenarioLine.quantity,
+          tax_code: scenarioLine.tax,
+          account_code: scenarioLine.account,
+          attributes,
+        },
+      ],
+    })) as Row;
+    const id = String((created['document'] as Row | undefined)?.['id'] ?? created['id']);
+    await postDocument(backend, { document_id: id });
+    return id;
+  }
+
+  beforeAll(async () => {
+    await completeBuyer(contactOf(exempt.contact));
+    // A buyer abroad has no state of the country: the format's list has an entry for that.
+    await db.query(
+      `update contacts set region = '17' where id = $1 and country is distinct from (select fiscal_country from companies where id = $2)`,
+      [contactOf(exempt.contact), companyId],
+    );
+    await db.query(
+      `insert into products (company_id, code, name, kind, unit_code, currency_code, attributes)
+       select $1, 'INVENTED-ITEM', 'Invented item', 'goods', 'C62', currency_code, $2 from companies where id = $1`,
+      [companyId, { [CLASSIFICATION]: named }],
+    );
+    invoiceId = await sale({ exemption_reason: OWN_REASON });
+  });
+
+  it('is declared by the pack with a reason for every exempted tax', () => {
+    for (const [code, attributes] of Object.entries(regime.tax_attributes)) {
+      if (attributes['myinvois_tax_type'] === 'E') expect(attributes['exemption_reason'], code).toMatch(/\S/);
+    }
+  });
+
+  it('takes the classification of its product and its own reason of exemption, over the pack\'s', async () => {
+    const [line] = await db.query<{ attributes: Record<string, string> }>(`select attributes from document_lines where document_id = $1`, [invoiceId]).then((r) => r.rows);
+    expect(line?.attributes).toEqual({ [CLASSIFICATION]: named, exemption_reason: OWN_REASON });
+
+    const result = await validateEinvoice(backend, { document_id: invoiceId, issued_at: '2026-01-25T09:00:00+08:00', include_file: true });
+    expect(result['violations']).toEqual([]);
+    const text = JSON.stringify(JSON.parse(String(result['file'])));
+    expect(text).toContain(`"_":"${named}","listID":"CLASS"`);
+    expect(text).not.toContain(`"_":"${regime.line_attributes?.[CLASSIFICATION] as string}","listID":"CLASS"`);
+    expect(text).toContain(OWN_REASON);
+    if (packReason() !== undefined) expect(text).not.toContain(packReason() as string);
+  });
+
+  it('gives the reason of the pack where the line says none', async () => {
+    const plain = await sale({});
+    const result = await validateEinvoice(backend, { document_id: plain, issued_at: '2026-01-25T09:00:00+08:00', include_file: true });
+    expect(result['violations']).toEqual([]);
+    expect(String(result['file'])).toContain(packReason() as string);
+  });
+
+  it('is checked against the format\'s own list of classifications', async () => {
+    const unknown = '9'.repeat(named.length);
+    expect(CLASSIFICATION_CODES[unknown]).toBeUndefined();
+    const wrong = await sale({ [CLASSIFICATION]: unknown });
+    const result = await validateEinvoice(backend, { document_id: wrong, issued_at: '2026-01-25T09:00:00+08:00' });
+    const messages = (result['violations'] as { message: string }[]).map((v) => v.message);
+    expect(messages.some((m) => m.includes(unknown) && m.includes('ClassificationCodes'))).toBe(true);
+  });
+
+  it('is frozen with its document once posted, and copied by the credit note that cancels it', async () => {
+    await expect(db.query(`update document_lines set attributes = '{}' where document_id = $1`, [invoiceId])).rejects.toThrow();
+    const cancelled = (await cancelDocument(backend, { document_id: invoiceId })) as Row;
+    const creditId = String((cancelled['credit_note'] as Row)['id']);
+    const [line] = await db.query<{ attributes: Record<string, string> }>(`select attributes from document_lines where document_id = $1`, [creditId]).then((r) => r.rows);
+    expect(line?.attributes).toEqual({ [CLASSIFICATION]: named, exemption_reason: OWN_REASON });
   });
 });

@@ -263,13 +263,21 @@ the pack states them with their source:
   no tax reaches the supply at all: `MY-SVT-EXEMPT` and `MY-P-EXEMPT`. Where
   the reading could go either way, `E` is the more cautious: it makes the
   document state the reason of the exemption, which `06` leaves unsaid.
+  Each tax under `E` carries its `exemption_reason`, the "Details of Tax
+  Exemption" the document states: the provision this pack already cites for
+  it, in one sentence. A line whose exemption rests on something of its own —
+  the buyer's exemption certificate number, a gazette order — says so in its
+  own `attributes` (`exemption_reason`), which win over the tax's; the
+  breakdown then states the reasons of its lines.
 - **`line_attributes`: the classification of every line**, `022` *Others*,
   the entry of LHDNM's list of classification codes for what none of its
   named cases is. The SDK does not call it a default. A line that is one of
   the named cases — a computer or a smartphone (`003`), a motor vehicle
-  (`025`), a repair (`030`) — is written as `022` until the books can say it
-  per line, which they cannot yet; a company that sells such goods checks
-  its documents before it submits them.
+  (`025`), a repair (`030`) — says so in its own `attributes`
+  (`myinvois_classification`, one code or several separated by commas), or in
+  those of the product it sells, which a line filled in from it takes; the
+  code is checked against LHDNM's list when the document is written, and a
+  code outside it is reported (`CV302`).
 
 From the books, by what each column already means:
 
@@ -287,13 +295,25 @@ From the books, by what each column already means:
 | Moment of issuance | the moment the document is written |
 
 What a sale of this pack's golden year gives, once both parties are complete:
-a sale under `01`, `02` or `06` carries no violation; an export or a sale of
-exempted goods (`E`) is reported until the books carry the reason of its
-exemption (`required:…/TaxExemptionReason`), because this pack declares no
-sentence for those treatments; a credit note is reported until the invoice
+a sale under `01`, `02`, `06` or `E` carries no violation, the reason of an
+exemption being the tax's or the line's; a credit note is reported until the invoice
 it credits has been validated (`input:adjusts`); a document in another
 currency is reported until the books publish its rate to the ringgit
 (`input:exchange_rate`).
+
+**The validation link and the QR code.** LHDNM answers a valid document
+with its Unique Identifier Number (`uuid`), the moment of validation
+(`dateTimeValidated`) and a long ID (`longId`), and the issuer builds the
+link the e-Invoice carries as a QR code: `{envbaseurl}/{uuid}/share/{longId}`,
+`myinvois.hasil.gov.my` in production and `preprod.myinvois.hasil.gov.my` in
+the sandbox (MyInvois SDK, FAQ). `clearance.verification` is therefore
+`computed`, and `clearance.verification_url` gives both: a validation recorded
+with the answer of the Get Document API (`ekwo einvoice clearance <document>
+validated --identifier <uuid> --validated-at <time> --detail answer.json`,
+`--environment test` for the sandbox) gets its link built. The PDF of the
+validated sale (`ekwo doc pdf`) then carries the QR code of that link, the
+Unique Identifier Number and the moment of validation (`clearance.printed`),
+under the words of the invoice labels.
 
 **No withholding tax.** Income Tax Act 1967, s. 107A and s. 109 impose
 withholding on payments to a non-resident — contract payments, interest,

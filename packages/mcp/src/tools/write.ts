@@ -156,6 +156,10 @@ export const CreateProductInput = z.object({
   sale_tax_code: z.string().min(1).optional().describe('Tax applied when it is sold, by code.'),
   purchase_tax_id: uuid.optional(),
   purchase_tax_code: z.string().min(1).optional(),
+  attributes: z
+    .record(z.string().min(1), z.string().min(1))
+    .optional()
+    .describe('What the electronic invoice format of the country asks of a line selling this item that no other field says, by the name its brick reads — describe_pack lists them (line_attributes). A line filled in from the product takes the names it does not give itself.'),
 });
 
 /** Turns the four `*_code` arguments into ids, in one query per table. */
@@ -215,6 +219,7 @@ export async function createProduct(
           sale_tax_id: args.sale_tax_id ?? (args.sale_tax_code === undefined ? null : taxes.get(args.sale_tax_code)),
           purchase_tax_id:
             args.purchase_tax_id ?? (args.purchase_tax_code === undefined ? null : taxes.get(args.purchase_tax_code)),
+          attributes: args.attributes ?? {},
         },
       ],
       columns.PRODUCT,
@@ -243,6 +248,10 @@ export const UpdateProductInput = z.object({
   sale_tax_code: z.string().min(1).optional(),
   purchase_tax_code: z.string().min(1).optional(),
   active: z.boolean().optional().describe('False retires it: searches stop offering it and the lines that already carry it are untouched.'),
+  attributes: z
+    .record(z.string().min(1), z.string().min(1))
+    .optional()
+    .describe('The whole new set of attributes, replacing what is there; {} clears them. Lines already written keep theirs.'),
 });
 
 /**
@@ -294,6 +303,7 @@ export async function updateProduct(
   if (args.sale_tax_code !== undefined) patch['sale_tax_id'] = taxes.get(args.sale_tax_code);
   if (args.purchase_tax_code !== undefined) patch['purchase_tax_id'] = taxes.get(args.purchase_tax_code);
   if (args.active !== undefined) patch['active'] = args.active;
+  if (args.attributes !== undefined) patch['attributes'] = args.attributes;
 
   if (Object.keys(patch).length === 0) {
     throw new EkwoMcpError('nothing_to_update: give at least one field to change.');
@@ -331,6 +341,10 @@ const LineInput = z.object({
   account_code: z.string().min(1).optional().describe('The income or expense account, by code. Left out: the product, then the company default, then the one its country model names. A company with none of them refuses the line.'),
   tax_id: uuid.optional(),
   tax_code: z.string().min(1).optional().describe('The tax, by code, e.g. BE-S-21. Left out, the tax of the product. With no product either, the line books a base with no VAT box, which is not the same as 0 %.'),
+  attributes: z
+    .record(z.string().min(1), z.string().min(1))
+    .optional()
+    .describe('What the electronic invoice format of the country asks of this line that no other field says, by the name its brick reads — describe_pack lists the names its format reads (line_attributes, tax_attributes). The product fills in the names the line leaves out; the line wins over the pack.'),
 });
 
 export const CreateDocumentInput = z.object({

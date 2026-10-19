@@ -178,6 +178,34 @@ describe('the codes and the fields of the SDK', () => {
     expect(exempted.content).toContain('"TaxExemptionReason"');
   });
 
+  it('writes the reason of a line over the reason of its tax, and the amount exempted beside it', () => {
+    const tax = { ...SALES_TAX, tax_charged: '0.00', myinvois_tax_type: 'E', exemption_reason: 'The reason of the tax.' };
+    const header = { ...INVOICE, amount_tax: '0.00', amount_total: '2000.00' };
+    const own = { ...(LINES[1] as Row), tax_amount: '0.00', exemption_reason: 'Exemption certificate INVENTED-0001.' };
+    const written = MYINVOIS.write(invoice({ header, lines: [own], taxes: [tax] }));
+    expect(written.violations).toEqual([]);
+    const document = JSON.parse(written.content) as { Invoice: Record<string, unknown>[] };
+    const reasons = (subtotals: unknown): string[] =>
+      (subtotals as Record<string, unknown>[]).flatMap((subtotal) =>
+        ((subtotal['TaxCategory'] as Record<string, unknown>[])[0]?.['TaxExemptionReason'] as { _: string }[] | undefined ?? []).map((each) => each._),
+      );
+    const invoiceOf = document.Invoice[0] as Record<string, unknown>;
+    const total = (invoiceOf['TaxTotal'] as Record<string, unknown>[])[0] as Record<string, unknown>;
+    // The breakdown carries the reason of its lines, and the base exempted as its taxable amount.
+    expect(reasons(total['TaxSubtotal'])).toEqual(['Exemption certificate INVENTED-0001.']);
+    expect(((total['TaxSubtotal'] as Record<string, unknown>[])[0]?.['TaxableAmount'] as { _: number }[])[0]?._).toBe(2000);
+    const line = (invoiceOf['InvoiceLine'] as Record<string, unknown>[])[0] as Record<string, unknown>;
+    expect(reasons(((line['TaxTotal'] as Record<string, unknown>[])[0] as Record<string, unknown>)['TaxSubtotal'])).toEqual([
+      'Exemption certificate INVENTED-0001.',
+    ]);
+
+    // Without a reason of its own, the line says its tax's.
+    const plain = MYINVOIS.write(invoice({ header, lines: [{ ...own, exemption_reason: null }], taxes: [tax] }));
+    expect(plain.violations).toEqual([]);
+    expect(plain.content).toContain('The reason of the tax.');
+    expect(plain.content).not.toContain('INVENTED-0001');
+  });
+
   it('names a state of Malaysia outside Malaysia, and 17 inside it', () => {
     expect(codes(invoice({ header: { ...INVOICE, buyer_country: 'SG', buyer_region: '10' } }))).toEqual(['CV316']);
     expect(codes(invoice({ header: { ...INVOICE, buyer_region: '17' } }))).toEqual(['CV317']);

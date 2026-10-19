@@ -65,7 +65,7 @@ const HEADER = [
 const LINES = [
   'sequence', 'line_type', 'item_name', 'item_description', 'seller_item_identifier',
   'quantity::text', 'unit_code', 'unit_price::text', 'discount_percent::text', 'unit_price_includes_tax',
-  'amount_untaxed::text', 'vat_category', 'vat_rate::text', 'tax_exemption_code',
+  'amount_untaxed::text', 'vat_category', 'vat_rate::text', 'tax_exemption_code', 'attributes',
 ];
 
 /** What the bricks read of `document_tax_summary`. */
@@ -162,7 +162,7 @@ export async function readEinvoiceSource(backend: Backend, documentId: string): 
 /**
  * The source as a brick under a fiscalisation regime reads it: each tax with
  * the attributes the pack gives it, each line with the ones the pack gives
- * every line, and — for a credit note — the identifier the authority gave the
+ * every line under its own (`document_lines.attributes`, which win), and — for a credit note — the identifier the authority gave the
  * invoice it credits, where it cleared one. The attributes are the pack's
  * data, `einvoicing.fiscalisation` compiled; a key the row holds already
  * stays as the row holds it.
@@ -185,9 +185,16 @@ async function withRegime(backend: Backend, source: EinvoiceSource): Promise<Ein
   return {
     ...source,
     taxes: source.taxes.map((tax) => ({ ...(taxAttributes[String(tax['tax_code'])] ?? {}), ...withoutNulls(tax) })),
-    lines: source.lines.map((line) => ({ ...lineAttributes, ...withoutNulls(line) })),
+    lines: source.lines.map(({ attributes, ...line }) => ({ ...lineAttributes, ...attributesOf(attributes), ...withoutNulls(line) })),
     preceding,
   };
+}
+
+/** A line's own attributes, as the view publishes them: an object of texts, or JSON text of one. */
+function attributesOf(value: unknown): Row {
+  const parsed: unknown = typeof value === 'string' ? JSON.parse(value) : value;
+  if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+  return parsed as Row;
 }
 
 /** A row without its empty columns, so that an attribute is not hidden by a column that says nothing. */

@@ -133,6 +133,7 @@ export const LINE_FIELDS = [
   'account_code',
   'tax_id',
   'tax_code',
+  'attributes',
 ] as const;
 
 /** The short keys `--line` accepts, and the field each one is. */
@@ -158,15 +159,22 @@ const LINE_KEYS: Record<string, (typeof LINE_FIELDS)[number]> = {
  * be misread; a comma inside a value is written `\,`. Anything richer goes
  * through `--stdin`, which is the form that is authoritative.
  */
-export function parseLine(text: string): Record<string, string> {
-  const line: Record<string, string> = {};
+export function parseLine(text: string): Record<string, string | Record<string, string>> {
+  const line: Record<string, string | Record<string, string>> = {};
   for (const part of text.split(/(?<!\\),/)) {
     const equals = part.indexOf('=');
     const key = (equals === -1 ? part : part.slice(0, equals)).trim();
+    // `attr.<name>=<value>`: what the country's electronic invoice format asks of the line, by name.
+    if (equals !== -1 && /^attr\.[A-Za-z][A-Za-z0-9_]*$/.test(key)) {
+      const attributes = (line['attributes'] ?? {}) as Record<string, string>;
+      attributes[key.slice('attr.'.length)] = part.slice(equals + 1).trim().replace(/\\,/g, ',');
+      line['attributes'] = attributes;
+      continue;
+    }
     const field = LINE_KEYS[key];
     if (equals === -1 || field === undefined) {
       throw new UsageError(
-        `bad_line: "${part.trim()}" is not key=value with a key among ${Object.keys(LINE_KEYS).join(', ')}. Example: --line "name=Audit,price=1500.00,tax=<tax code>".`,
+        `bad_line: "${part.trim()}" is not key=value with a key among ${Object.keys(LINE_KEYS).join(', ')}, or attr.<name>. Example: --line "name=Audit,price=1500.00,tax=<tax code>".`,
       );
     }
     line[field] = part.slice(equals + 1).trim().replace(/\\,/g, ',');

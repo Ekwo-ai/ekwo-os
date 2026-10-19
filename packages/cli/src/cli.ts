@@ -232,7 +232,9 @@ ${bold('Keeping books')} ${dim('(each verb is one function the MCP server calls 
                             the fields of the MCP tool of the same meaning.
                             The form that is authoritative; flags beside it win.
   --line "k=v,k=v"          doc new, repeatable. Keys: name, price, qty,
-                            account, tax, product, unit, discount, description.
+                            account, tax, product, unit, discount, description,
+                            and attr.<name> for what the country's electronic
+                            invoice format asks of the line (pack describe).
                             Codes, never rates; a comma in a value is \\,.
   --dry-run                 post. Ask the database what it would write.
                             einvoice fiscalise. Write the record, chain nothing.

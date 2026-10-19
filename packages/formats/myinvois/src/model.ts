@@ -414,7 +414,7 @@ export function buildModel(input: MyInvoisInput): { model: DocumentModel; violat
         rate: optionalAmount(row.vat_rate, `the tax rate of line ${id}`) ?? optionalAmount(taxRow?.tax_rate, 'a tax rate'),
         base: net,
         amount: taxes[index] ?? null,
-        reason: text(taxRow?.exemption_reason),
+        reason: text(row.exemption_reason) ?? text(taxRow?.exemption_reason),
       },
     };
   });
@@ -436,8 +436,11 @@ export function buildModel(input: MyInvoisInput): { model: DocumentModel; violat
     const group = groups.get(type) ?? { type, base: ZERO, tax: ZERO, reason: null, reasons: new Set<string>() };
     group.base = add(group.base, amount(row.base_amount, 'a base of the breakdown'));
     group.tax = add(group.tax, amount(row.tax_charged, 'a tax of the breakdown'));
-    const reason = text(row.exemption_reason);
-    if (reason !== null) group.reasons.add(reason);
+    // The reasons of the group are those of its lines, each the line's own or
+    // its tax's; a row no line names gives its own.
+    const own = lines.filter((_, index) => lineRows[index] === row);
+    const reasons = own.length > 0 ? own.map((line) => line.tax.reason) : [text(row.exemption_reason)];
+    for (const reason of reasons) if (reason !== null) group.reasons.add(reason);
     groups.set(type, group);
   }
 

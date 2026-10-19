@@ -293,13 +293,22 @@
         "MY-S-STD": { "myinvois_tax_type": "01" },
         "MY-SVT-FB": { "myinvois_tax_type": "02" },
         "MY-SVT-STD": { "myinvois_tax_type": "02" },
-        "MY-S-ZERO": { "myinvois_tax_type": "E" },
-        "MY-S-EXEMPT": { "myinvois_tax_type": "E" },
+        "MY-S-ZERO": {
+          "myinvois_tax_type": "E",
+          "exemption_reason": "Exported goods: Sales Tax is not charged on taxable goods proved to have been exported (Sales Tax Act 2018, section 41)."
+        },
+        "MY-S-EXEMPT": {
+          "myinvois_tax_type": "E",
+          "exemption_reason": "Goods exempted from Sales Tax under Schedule B of the Sales Tax (Goods Exempted From Sales Tax) Order 2018."
+        },
         "MY-SVT-EXEMPT": { "myinvois_tax_type": "06" },
         "MY-P-RED": { "myinvois_tax_type": "01" },
         "MY-P-STD": { "myinvois_tax_type": "01" },
         "MY-P-IMPORT": { "myinvois_tax_type": "01" },
-        "MY-P-RAWMAT-EXEMPT": { "myinvois_tax_type": "E" },
+        "MY-P-RAWMAT-EXEMPT": {
+          "myinvois_tax_type": "E",
+          "exemption_reason": "Raw material, component or packaging material purchased free of Sales Tax by an approved manufacturer against its exemption certificate (Sales Tax (Persons Exempted From Payment of Tax) Order 2018, Schedule C)."
+        },
         "MY-P-SVT-FB": { "myinvois_tax_type": "02" },
         "MY-P-SVT-STD": { "myinvois_tax_type": "02" },
         "MY-P-SVT-IMPORT": { "myinvois_tax_type": "02" },

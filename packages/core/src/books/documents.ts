@@ -41,6 +41,13 @@ export interface LineArgs {
   account_code?: string | undefined;
   tax_id?: string | undefined;
   tax_code?: string | undefined;
+  /**
+   * What an electronic invoice format asks of this line that no other field
+   * says, by the name its brick reads: `{"<name>": "<value>"}`. The product
+   * fills in the names the line does not give; the line's win over the
+   * country pack's.
+   */
+  attributes?: Record<string, string> | undefined;
 }
 
 export interface CreateDocumentArgs {
@@ -157,6 +164,8 @@ interface ResolvedLine {
   discount_percent: string;
   account_id: string | null;
   tax_id: string | null;
+  /** The line's own; the database adds the product's it does not carry. */
+  attributes: Record<string, string>;
 }
 
 function isSale(docType: DocType): boolean {
@@ -253,6 +262,7 @@ async function resolveLineInputs(
         (line.tax_code === undefined
           ? (typeof productTax === 'string' ? productTax : null)
           : (taxes.get(line.tax_code) ?? null)),
+      attributes: line.attributes ?? {},
     };
   });
 }

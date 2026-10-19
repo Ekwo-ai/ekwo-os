@@ -268,6 +268,7 @@ export const PRODUCT = [
   'sale_tax_id',
   'purchase_tax_id',
   'active',
+  'attributes',
 ];
 
 export const DOCUMENT_LINE = [
@@ -289,6 +290,7 @@ export const DOCUMENT_LINE = [
   'amount_untaxed::text',
   'unit_price_includes_tax',
   'amount_incl_tax::text',
+  'attributes',
 ];
 
 export const ENTRY = [

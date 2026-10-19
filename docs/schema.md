@@ -1161,9 +1161,11 @@ Document lines in a table, not JSON: EN 16931 needs a VAT category per line and 
 | `description` | `text` | Item description, EN 16931 BT-154. `name` is BT-153. |
 | `unit_price_includes_tax` | `boolean` | not null — The unit price of this line was quoted with the tax in it. Derived from the tax while the document is a draft and frozen when it is posted, like BT-151 and BT-152, so a later change to the tax cannot rewrite an invoice that has been sent. |
 | `amount_incl_tax` | `numeric(16,2)` | quantity x unit_price less the discount, tax included, as the line was quoted. Null where the price excludes the tax, which is every line of every pack but a retail one. |
+| `attributes` | `jsonb` | not null — What an electronic invoice format asks of this line that no other column says, by the name the format's brick reads: {"<name>": "<value>"}, as products.attributes. Wins over the country pack's line_attributes and tax_attributes for this line. Pre-filled from the product with the names the line does not carry; frozen with the document once posted. Empty, not null, where there is none. |
 
 Constraints:
 
+- `CHECK (((jsonb_typeof(attributes) = 'object'::text) AND (NOT (attributes ? ''::text)) AND (NOT jsonb_path_exists(attributes, '$.*?(@.type() != "string" || @ like_regex "^\\s*$")'::jsonpath))))`
 - `CHECK (((discount_percent >= (0)::numeric) AND (discount_percent < (100)::numeric)))`
 - `CHECK (((NOT unit_price_includes_tax) OR (tax_id IS NOT NULL)))`
 - `CHECK (((line_type <> 'product'::document_line_type) OR (account_id IS NOT NULL)))`
@@ -1701,9 +1703,11 @@ What a document line is filled in from: code, name, unit, price, account and tax
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
 | `analytic_value_id` | `uuid` | The analytic value a line filled in from this product starts with, at 100 %. Pre-fills the line, never constrains it. |
+| `attributes` | `jsonb` | not null — What an electronic invoice format asks of a line selling this product that no other column says, by the name the format's brick reads: {"<name>": "<value>"} — the entry of a tax authority's list of goods and services, the reason of an exemption. The country pack says which names its format reads. A line filled in from the product takes the ones it does not carry. Empty, not null, where there is none. |
 
 Constraints:
 
+- `CHECK (((jsonb_typeof(attributes) = 'object'::text) AND (NOT (attributes ? ''::text)) AND (NOT jsonb_path_exists(attributes, '$.*?(@.type() != "string" || @ like_regex "^\\s*$")'::jsonpath))))`
 - `CHECK ((length(btrim(code)) > 0))`
 - `CHECK (((purchase_price IS NULL) OR (purchase_price >= (0)::numeric)))`
 - `CHECK (((sale_price IS NULL) OR (sale_price >= (0)::numeric)))`
@@ -2261,7 +2265,7 @@ Constraints:
 | `bank_transactions_guard()` | Keeps a statement line honest about whether it is settled. state moves between pending and ignored by hand; reconciled and entry_id are written by settle_from_statement() alone, under the setting ekwo.settling_statement, honoured for a caller holding reconcile.write (bank_transaction_settled_by_rpc otherwise, and on an insert that arrives settled). A line pointing at an entry keeps its amount, day, currency and bank account (bank_transaction_settled). When the entry is gone, the foreign key nulls entry_id and the line is pending again. The installer passes. |
 | `caller_companies()` | The companies the current caller is on — the question is_company_member() answers, asked once for all of them, over the only companies where its answer can be yes. What a row level security policy compares company_id against, inside a sub-select, so that it is worked out once per statement instead of once per row. |
 | `can_write_company(p_company_id uuid)` | Whether the current caller may write the books of a company. One capability, not a role, and false rather than NULL for a stranger. |
-| `cancel_document(p_document_id uuid, p_date date)` | Undoes a posted invoice: writes its credit note — the same lines, taxes, accounts, contact, currency, rate and analytic split — naming it in reversed_document_id, posts it through post_document(), matches the two entries and marks the invoice cancelled. Returns the credit note. Dated on the invoice's booking day while that period is open, and otherwise refused until a date is given (reversal_date_needed). Refused for a document that is not a posted invoice, is already cancelled or credited, or is settled in part or in full (unreconcile() first). |
+| `cancel_document(p_document_id uuid, p_date date)` | Undoes a posted invoice: writes its credit note — the same lines, taxes, accounts, attributes, contact, currency, rate and analytic split — naming it in reversed_document_id, posts it through post_document(), matches the two entries and marks the invoice cancelled. Returns the credit note. Dated on the invoice's booking day while that period is open, and otherwise refused until a date is given (reversal_date_needed). Refused for a document that is not a posted invoice, is already cancelled or credited, or is settled in part or in full (unreconcile() first). |
 | `canonical_json(p_value jsonb)` | A value with every number it holds, at any depth, re-rendered through trim_scale(): the form two sides agree on once a JSON parser has been between them. What the `values_sha256` of an archive is computed over. Normalises notation and never magnitude. |
 | `catch_up_journal_sequence(p_journal_id uuid, p_date date, p_number text)` | Advances the counter of a journal to the counter inside a number that was written by hand, so the next automatic number continues the series. Definer, because nobody writes `journal_sequences` directly — and guarded like `next_entry_number()`: the installer, or entries.post on the company of the journal. |
 | `claim_instance_admin(p_user_id uuid)` | Makes a user an instance administrator. The first claim is open; afterwards only an administrator may appoint one. |
@@ -2312,6 +2316,7 @@ Constraints:
 | `document_line_split_key(p_line_id uuid)` | The analytic split of a document line as one text, null when it has none. post_document() groups lines by it. |
 | `document_lines_amount_untaxed()` | Derives a line's amounts from its quantity, price and discount, rounded once at the decimals of the document's currency: the net, the gross where the price includes the tax, and the snapshot of whether it does. |
 | `document_lines_analytic_defaults()` | Pre-fills the analytic split of a document line from the default value of its product, then of the document's contact or, when it has none, of that contact's parent one level up, at 100 % on each axis the line has no share on yet, only on an account that carries a split and only with a value in use. Never replaces what the line carries. |
+| `document_lines_attributes_from_product()` | Pre-fills the attributes of a document line from those of its product, for every name the line does not carry, when the line is written or its product changes. Never replaces what the line carries, and leaves alone the lines a credit note copies from the invoice it undoes. |
 | `document_lines_guard_posted()` | Once a document has left draft, its lines are the lines that were issued: no insert, no delete, no column changed. Refuses document_posted, by name, to everybody. |
 | `document_lines_refresh_totals()` | After a line of a draft moves: shares out the base of every tax group quoted with its tax in it, then refreshes the three totals of the document. A document that is no longer a draft keeps the totals it was posted, or loaded, with. |
 | `document_lines_snapshot_tax()` | Writes BT-151 and BT-152 on a line from its tax for as long as the document is a draft. Once it is not, document_lines_guard_posted() refuses any change to the line, these two columns included. |

@@ -128,6 +128,12 @@ export interface DocumentLineRow {
    * books do not record; absent, it is reported.
    */
   myinvois_classification?: string | readonly string[] | null;
+  /**
+   * `cac:InvoiceLine/cac:TaxTotal/cac:TaxSubtotal/cac:TaxCategory/cbc:TaxExemptionReason`
+   * of this line alone — a buyer's exemption certificate, a gazette order —
+   * where it differs from the reason of its tax. Wins over the tax's.
+   */
+  exemption_reason?: string | null;
 }
 
 /** The columns of `document_tax_summary` a document reads: the taxes of the document, one row per tax. */
