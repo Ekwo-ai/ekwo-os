@@ -9,6 +9,29 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **Two contacts of one company are merged** (socle migration
+  `20261019090000`, module assets migration `20261019090001`, decision 0074).
+  `merge_contacts(keep, absorb)` moves every reference of the absorbed contact
+  onto the kept one in one transaction — every foreign key to `contacts`, read
+  from the catalogue, posted ledger lines and issued documents included, the
+  branches whose parent it was, the files attached to it — folds its learned
+  motifs into the kept contact's, fills the kept contact's empty fields
+  without overwriting any, and retires it: inactive, `contacts.merged_into`
+  naming the kept contact, never deleted. It asks `contacts.write` and
+  `reconcile.write`, and refuses `unknown_contact`, `same_contact`,
+  `already_merged`, `different_identifiers` (two VAT or registration
+  numbers) and `matching_across_parties` by name. Each merge is recorded in
+  `contact_merges`, which the guards of a posted line and of an issued
+  document read, in that transaction alone, as the one exemption that lets
+  `contact_id` move; the trail gets `contacts_merged`, `line_contact_merged`
+  and `document_contact_merged`. A row naming a merged contact is refused
+  afterwards (`contact_merged`), by a trigger that
+  `refuse_merged_contacts_in()` attaches to every reference of a schema. The
+  command line gains `ekwo contact merge <keep> <absorb>` and the MCP server
+  `merge_contacts`.
+
 ## [0.14.0] — 2026-10-18
 
 ### Added

@@ -105,7 +105,7 @@ Everything the database holds about the company:
 |---|---|
 | The company and its settings | `companies`, `company_packs`, `company_modules`, `company_filing_periods`, `matching_settings` |
 | The chart and what books on it | `fiscal_years`, `accounts`, `journals`, `taxes`, `tax_postings`, `analytic_axes`, `analytic_values`, `products` |
-| Third parties | `contacts`, `contact_patterns` |
+| Third parties | `contacts`, `contact_patterns`, and which contacts were merged into which, with what moved, in `contact_merges` |
 | The ledger | `entries`, `entry_lines`, `entry_line_analytics`, the counters that number it: `journal_sequences`, `matching_sequences`, which files its history was taken over from, in `book_imports`, and the lines left without a contact on purpose, in `lines_left_unnamed` |
 | Documents and money | `documents`, `document_lines`, `payments`, `reconciliations`, the gestures several of them were made in, in `reconciliation_batches`, and which posted documents went back to draft, with the entry each gave up, in `document_unpostings` |
 | The bank | `bank_accounts`, `bank_statements`, `bank_transactions`, and which lines each statement lists in `bank_statement_lines` |

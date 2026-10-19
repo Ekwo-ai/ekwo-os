@@ -181,6 +181,21 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
        from contacts c where c.company_id = $1 order by c.name limit 1`,
     [companyId, `Variation ${tag}`],
   );
+  // A contact taken over twice, merged into the first: the record of the merge
+  // travels, and the retired contact with it.
+  const kept = await one<{ id: string }>(
+    db,
+    `select id from contacts where company_id = $1 order by name limit 1`,
+    [companyId],
+  );
+  const twin = await one<{ id: string }>(
+    db,
+    `insert into contacts (company_id, name, notes) values ($1, $2, $3) returning id`,
+    [companyId, `Twin ${tag}`, tag],
+  );
+  await asUser(db, ownerId, async () => {
+    await db.query(`select merge_contacts($1, $2)`, [kept.id, twin.id]);
+  });
   await db.query(`insert into matching_settings (company_id, date_window_days) values ($1, 9)`, [companyId]);
 
   // A module with rows of its own.

@@ -907,6 +907,12 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select confirm_contact($1, $2)`,
         params: [mine.bankTransactionId, mine.contactId],
       },
+      // Merging two contacts is contacts.write and reconcile.write, asked as
+      // soon as the kept contact is read (decision 0074).
+      'public.merge_contacts': {
+        sql: `select merge_contacts($1, $1)`,
+        params: [mine.contactId],
+      },
       // Naming a line is reconcile.write, asked before the line is read further.
       'public.set_line_contact': {
         sql: `select set_line_contact($1, $2)`,

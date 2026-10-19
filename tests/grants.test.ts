@@ -72,6 +72,7 @@ const RESERVED = [
   'company_column',
   'company_references_by_id',
   'purge_audit_log',
+  'refuse_merged_contacts_in',
   'scope_references_to_company',
   'touch_api_key',
 ];
@@ -338,7 +339,7 @@ describe('what the grants say, against what the policies say', () => {
     expect(callable).toEqual([]);
   });
 
-  it('reserves eight functions to the connections that are not a client', () => {
+  it('reserves nine functions to the connections that are not a client', () => {
     const socle = sections.find((s) => s.schema === 'public');
     const closed = (socle?.functions ?? [])
       .filter((f) => f.trigger !== true && f.authenticated.length === 0)
@@ -352,7 +353,10 @@ describe('what the grants say, against what the policies say', () => {
     // `scope_references_to_company` rewrites the foreign keys of a schema, and
     // is the migrations' own, with the three it reads the catalogue and the
     // rows through: `company_column`, `company_references_by_id` and
-    // `assert_references_within_company`. `assert_writes_into_known_company`
+    // `assert_references_within_company`. `refuse_merged_contacts_in`
+    // attaches the refusal of a merged contact to every reference of a schema,
+    // and is the migrations' too, the socle's and the modules'.
+    // `assert_writes_into_known_company`
     // is what the definer guards ask before they read a row's company: they
     // call it as its owner.
     expect(closed).toEqual(RESERVED);

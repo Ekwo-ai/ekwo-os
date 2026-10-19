@@ -31,6 +31,9 @@ const LATER = [
   // Reads open_items() as 20261018180416 left it, and makes its references
   // composite with scope_references_to_company().
   '20261018230000_sure_pairs_are_matched_in_one_gesture.sql',
+  // Replaces the guards of a posted line and of an issued document with the
+  // bodies of MIGRATION, and its record names contacts by composite keys.
+  '20261019090000_two_contacts_of_one_company_are_merged.sql',
 ];
 
 let db: PGlite;
