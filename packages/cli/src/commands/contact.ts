@@ -31,8 +31,8 @@ const USAGE =
   'usage: ekwo contact add <name> [--type --vat --email --country --terms --ref] | ekwo contact list [--query --type --vat] | ekwo contact duplicates | ekwo contact merge <keep> <absorb>';
 
 const ADD_FIELDS = [
-  'name', 'contact_type', 'vat_number', 'email', 'country', 'payment_terms_days', 'auxiliary_code',
-  'address_line1', 'postal_code', 'city', 'client_ref',
+  'name', 'contact_type', 'vat_number', 'registration_number', 'identifiers', 'email', 'phone', 'country',
+  'payment_terms_days', 'auxiliary_code', 'address_line1', 'postal_code', 'city', 'client_ref',
 ] as const;
 
 function contactType(value: string | undefined): ContactType | undefined {

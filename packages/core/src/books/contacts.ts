@@ -15,7 +15,12 @@ export interface CreateContactArgs {
   /** Left out, the database's own default applies. */
   contact_type?: ContactType | undefined;
   vat_number?: string | undefined;
+  /** The number of the commercial register of its country. */
+  registration_number?: string | undefined;
+  /** Every identifier with no column of its own, by the code of its scheme: `{ "<scheme>": "<identifier>" }`. */
+  identifiers?: Record<string, string> | undefined;
   email?: string | undefined;
+  phone?: string | undefined;
   country?: string | undefined;
   payment_terms_days?: number | undefined;
   auxiliary_code?: string | undefined;

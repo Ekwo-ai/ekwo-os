@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.14.0",
-  "migration": "20261019130500",
+  "migration": "20261019150000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -841,6 +841,10 @@
             "type": "text"
           },
           {
+            "name": "activity_description",
+            "type": "text"
+          },
+          {
             "name": "activity_scheme",
             "type": "text"
           },
@@ -899,6 +903,10 @@
           {
             "name": "id",
             "type": "uuid"
+          },
+          {
+            "name": "identifiers",
+            "type": "jsonb"
           },
           {
             "name": "invoice_accent_color",
@@ -1408,6 +1416,10 @@
           {
             "name": "id",
             "type": "uuid"
+          },
+          {
+            "name": "identifiers",
+            "type": "jsonb"
           },
           {
             "name": "is_company",

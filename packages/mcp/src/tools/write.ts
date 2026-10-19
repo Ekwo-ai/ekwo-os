@@ -68,7 +68,13 @@ export const CreateContactInput = z.object({
   name: z.string().min(1),
   contact_type: z.enum(['customer', 'supplier', 'both', 'employee', 'other']),
   vat_number: z.string().min(1).optional(),
+  registration_number: z.string().min(1).optional().describe('The number of the commercial register of its country.'),
+  identifiers: z
+    .record(z.string().min(1), z.string().min(1))
+    .optional()
+    .describe("Every identifier with no column of its own, by the code of its scheme — {\"<scheme>\": \"<identifier>\"}. The schemes a country's e-invoice reads are on its set-up page and in describe_pack."),
   email: z.string().min(1).optional(),
+  phone: z.string().min(1).optional().describe('As the party writes it, international form where the e-invoice of its country asks for one.'),
   country: z.string().length(2).optional().describe('ISO country code, e.g. BE.'),
   payment_terms_days: z.number().int().min(0).max(365).optional(),
   auxiliary_code: z.string().min(1).optional().describe('Sub-ledger code; the French FEC reports it.'),
@@ -817,6 +823,15 @@ export const UpdateCompanyProfileInput = z.object({
     .describe("Left out, the company's own currency."),
   activity_code: z.string().nullable().optional().describe('NACE, APE, SIC — the code itself.'),
   activity_scheme: z.string().nullable().optional().describe('Which register the code belongs to.'),
+  activity_description: z
+    .string()
+    .nullable()
+    .optional()
+    .describe("The company's own words for its activity, which an e-invoice carries beside the code."),
+  identifiers: z
+    .record(z.string().min(1), z.string().min(1))
+    .optional()
+    .describe("Every identifier with no column of its own, by the code of its scheme — {\"<scheme>\": \"<identifier>\"}: replaces the whole set. The schemes a country's e-invoice reads are on its set-up page and in describe_pack."),
   default_bank_account_id: uuid
     .nullable()
     .optional()

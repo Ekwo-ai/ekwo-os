@@ -710,6 +710,8 @@ Legal entities kept in this instance. One instance may hold several.
 | `created_by` | `uuid` | The person who created the company — acting_user() when it was written — or null when the installation did (the installer, a migration, an archive brought in). Written once and never changed: it is what companies_per_person counts on a shared installation, whoever owns the company today (decision 0065). No foreign key: it outlives the account, like the trail. |
 | `invoice_accent_color` | `text` | The accent colour of this company's invoice PDF, written #rrggbb: the title, the rules and the bands of the layout. Null is the default of @ekwo-ai/invoice-pdf. |
 | `invoice_logo_position` | `text` | The side of this company's invoice PDF its logo is printed on: left or right. Null is the default of @ekwo-ai/invoice-pdf (left). |
+| `identifiers` | `jsonb` | not null — Every identifier of the company that has no column of its own, by the code of its scheme: {"<scheme>": "<identifier>"}. The scheme is the code the register or the e-invoicing format of the country names it by — a tax identification number, a registration for a tax that is not a VAT — and the country pack says which ones its format reads. vat_number and registration_number keep their own columns and are not repeated here. Empty, not null, where there is none. |
+| `activity_description` | `text` | The company's own words for its activity, beside activity_code and activity_scheme. A format that carries the code of the activity carries its description too, and the description of a register's code is not always the words the company uses. |
 
 Constraints:
 
@@ -717,6 +719,7 @@ Constraints:
 - `CHECK ((currency_code ~ '^[A-Z]{3}$'::text))`
 - `CHECK (((peppol_scheme IS NULL) = (peppol_identifier IS NULL)))`
 - `CHECK ((fiscal_country ~ '^[A-Z]{2}$'::text))`
+- `CHECK (((jsonb_typeof(identifiers) = 'object'::text) AND (NOT (identifiers ? ''::text)) AND (NOT jsonb_path_exists(identifiers, '$.*?(@.type() != "string" || @ like_regex "^\\s*$")'::jsonpath))))`
 - `CHECK ((invoice_accent_color ~ '^#[0-9A-Fa-f]{6}$'::text))`
 - `CHECK ((invoice_logo_position = ANY (ARRAY['left'::text, 'right'::text])))`
 - `CHECK (((share_capital IS NULL) OR (share_capital_currency IS NOT NULL)))`
@@ -945,11 +948,13 @@ Third parties. `contact_type` is explicit rather than two hidden counters.
 | `client_ref` | `text` | A reference chosen by whoever created the row, unique per company where given. It exists so a caller that repeats a creation after a dropped connection finds the first one instead of making a second. It means nothing to the books. |
 | `merged_into` | `uuid` | The contact this one was merged into by merge_contacts(), which moved every reference of this one onto it (decision 0074). Null for a contact in use. A merged contact is inactive, stays as the record of what was imported, and is named by no row again. |
 | `analytic_value_id` | `uuid` | The analytic value the lines of a document naming this contact start with, at 100 %, on an axis the product left free; a contact that has none takes its parent's, one level up. Pre-fills the line, never constrains it. |
+| `identifiers` | `jsonb` | not null — Every identifier of the party that has no column of its own, by the code of its scheme: {"<scheme>": "<identifier>"}, as companies.identifiers. Empty, not null, where there is none. |
 
 Constraints:
 
 - `CHECK (((client_ref IS NULL) OR ((client_ref = btrim(client_ref)) AND ((length(client_ref) >= 1) AND (length(client_ref) <= 200)))))`
 - `CHECK (((country IS NULL) OR (country ~ '^[A-Z]{2}$'::text)))`
+- `CHECK (((jsonb_typeof(identifiers) = 'object'::text) AND (NOT (identifiers ? ''::text)) AND (NOT jsonb_path_exists(identifiers, '$.*?(@.type() != "string" || @ like_regex "^\\s*$")'::jsonpath))))`
 - `CHECK (((merged_into IS NULL) OR ((merged_into <> id) AND (NOT active))))`
 - `CHECK (((parent_id IS NULL) OR (parent_id <> id)))`
 - `CHECK ((payment_terms_days >= 0))`
