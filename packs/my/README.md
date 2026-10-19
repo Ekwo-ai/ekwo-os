@@ -218,15 +218,69 @@ reject a validated invoice within `PT72H`, 72 hours of its validation, each
 with a reason. The `einvoicing` module records each submission and each answer
 (`ekwo einvoice clearance`, `einvoicing_clearance`) and refuses a cancellation
 or a rejection after the window; a posted sale without a validation is named
-by the status. Two things remain: **the core does not hand a posted sale to
-the brick yet** — `@ekwo-ai/myinvois` writes the MyInvois document, and until
-the core registers it the status says so by name (`format_without_brick`) —
-and **Ekwo does not call MyInvois**: the submission, its authentication and
-its signature are the host's (see
+by the status. A posted sale is written as the MyInvois document by
+`@ekwo-ai/myinvois` through the ordinary path of issue (`ekwo einvoice
+issue`, `einvoicing_issue`), as below. One thing remains: **Ekwo does not call
+MyInvois** — the signature of a version 1.1 document, the submission and its
+authentication are the host's (see
 [`docs/international.md`](../../docs/international.md#from-malaysia)). The
 profile is `myinvois`, the document submitted to the MyInvois API directly —
 PINT MY, through a Peppol access point, is the other channel and not the one
 declared — and the scheme is `0230`, the SSM number.
+
+## MyInvois
+
+The document of a posted sale is written from the three views of the books,
+from what the books hold of both parties, and from two attributes this pack
+gives in `einvoicing.fiscalisation`. Nothing in the books decides them, so
+the pack states them with their source:
+
+- **`tax_attributes`: the tax type of each tax**, in LHDNM's list (MyInvois
+  SDK, *Tax Types*). `01` Sales Tax for `MY-S-RED`, `MY-S-STD` and the Sales
+  Tax a purchase bears (`MY-P-RED`, `MY-P-STD`, `MY-P-IMPORT`); `02` Service
+  Tax for `MY-SVT-FB`, `MY-SVT-STD`, `MY-P-SVT-FB`, `MY-P-SVT-STD` and
+  `MY-P-SVT-IMPORT`. The SDK lists `06` *Not Applicable* and `E` *Tax
+  exemption* without saying when each applies; it ties `E` to the "Details of
+  Tax Exemption", mandatory where an exemption applies, with "special
+  exemption as per gazette orders" among its examples. Read with the Acts, `E`
+  is given where an Act or an order made under it exempts goods from a tax
+  that would otherwise reach them — `MY-S-ZERO` (section 41, goods proved
+  exported), `MY-S-EXEMPT` (the Goods Exempted From Sales Tax Order 2018),
+  `MY-P-RAWMAT-EXEMPT` (Schedule C, against a certificate) — and `06` where
+  no tax reaches the supply at all: `MY-SVT-EXEMPT` and `MY-P-EXEMPT`. Where
+  the reading could go either way, `E` is the more cautious: it makes the
+  document state the reason of the exemption, which `06` leaves unsaid.
+- **`line_attributes`: the classification of every line**, `022` *Others*,
+  the entry of LHDNM's list of classification codes for what none of its
+  named cases is. The SDK does not call it a default. A line that is one of
+  the named cases — a computer or a smartphone (`003`), a motor vehicle
+  (`025`), a repair (`030`) — is written as `022` until the books can say it
+  per line, which they cannot yet; a company that sells such goods checks
+  its documents before it submits them.
+
+From the books, by what each column already means:
+
+| MyInvois | Read from |
+|---|---|
+| TIN of each party | `identifiers.TIN` of the company and of the contact |
+| BRN | `registration_number`, or `identifiers.NRIC`, `PASSPORT`, `ARMY` for a person |
+| SST and tourism tax registration of the supplier | `identifiers.SST`, `identifiers.TTX` of the company — `NA` where it is not registered, as the SDK asks |
+| SST registration of the buyer | `identifiers.SST` of the contact; `NA` where the books hold none |
+| MSIC code and business activity description | `activity_code` and `activity_description` of the company |
+| Telephone of each party | `phone` of the company and of the contact |
+| State | `region`: a state code `01`–`16`, or its name |
+| Payment mode | the payment means of the document, where its code means a mode of LHDNM's list |
+| Document a credit note adjusts | the invoice it credits, with the Unique Identifier Number recorded when LHDNM validated it |
+| Moment of issuance | the moment the document is written |
+
+What a sale of this pack's golden year gives, once both parties are complete:
+a sale under `01`, `02` or `06` carries no violation; an export or a sale of
+exempted goods (`E`) is reported until the books carry the reason of its
+exemption (`required:…/TaxExemptionReason`), because this pack declares no
+sentence for those treatments; a credit note is reported until the invoice
+it credits has been validated (`input:adjusts`); a document in another
+currency is reported until the books publish its rate to the ringgit
+(`input:exchange_rate`).
 
 **No withholding tax.** Income Tax Act 1967, s. 107A and s. 109 impose
 withholding on payments to a non-resident — contract payments, interest,
@@ -263,9 +317,12 @@ translation is future work and welcome, one file, one contributor, per
   another without the tax applying a second time.
 - **Withholding tax** on a payment to a non-resident, Income Tax Act 1967,
   ss. 107A and 109.
-- **The MyInvois document itself**, and the call to MyInvois. The clearance is
-  recorded, not made: no brick writes the `myinvois` document, and the
-  submission is the host's.
+- **The call to MyInvois.** The document is written and the clearance
+  recorded, not made: the signature and the submission are the host's.
+- **The reason of an exemption** for `MY-S-ZERO`, `MY-S-EXEMPT` and
+  `MY-P-RAWMAT-EXEMPT`, which MyInvois asks under `E`: no text read for this
+  pack prescribes the sentence, so none is declared.
+- **A classification per line** other than `022`, named above.
 - **The day the RM1,000,000 exemption threshold took effect**, in December
   2025: no text this pack cites dates it, so it is not an entry of
   `fiscalisation.exemption`.
