@@ -79,7 +79,7 @@ describe('the loader', () => {
     const client = await connect([]);
     const names = (await client.listTools()).tools.map((tool) => tool.name);
     expect(
-      names.filter((name) => /^(fixed_assets|assets|budgets|einvoicing|tax)_/.test(name)),
+      names.filter((name) => /^(fixed_assets|assets|budgets|einvoicing|tax|crm)_/.test(name)),
     ).toEqual([]);
     await client.close();
   });
@@ -91,7 +91,7 @@ describe('the loader', () => {
         module.manifest,
       ]),
     );
-    const client = await connect(['assets', 'budgets', 'einvoicing', 'tax']);
+    const client = await connect(['assets', 'budgets', 'einvoicing', 'tax', 'crm']);
     const names = (await client.listTools()).tools.map((tool) => tool.name);
 
     for (const toolset of MODULE_TOOLSETS) {
@@ -135,12 +135,26 @@ describe('the loader', () => {
       'tax_parameters',
       'tax_record_computation',
     ]);
+    expect(names.filter((name) => name.startsWith('crm_')).sort()).toEqual([
+      'crm_board',
+      'crm_card',
+      'crm_join_segment',
+      'crm_leave_segment',
+      'crm_log_activity',
+      'crm_move_deal',
+      'crm_open_deal',
+      'crm_search',
+      'crm_segments',
+      'crm_timeline',
+      'crm_upsert_card',
+    ]);
     // A module's prompts come with its tools, under the same prefix.
     const prompts = (await client.listPrompts()).prompts.map((prompt) => prompt.name);
     for (const toolset of MODULE_TOOLSETS) {
       for (const prompt of toolset.prompts ?? []) expect(prompts).toContain(`${toolset.prefix}_${prompt.name}`);
     }
     expect(prompts).toContain('tax_review_year');
+    expect(prompts).toContain('crm_morning_review');
     // The former `assets_*` names were removed in 0.11.0.
     expect(names.filter((name) => name.startsWith('assets_'))).toEqual([]);
     await client.close();
