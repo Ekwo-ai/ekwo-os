@@ -1,0 +1,163 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "BW-VAT-RETURN",
+  "name": "Value Added Tax return",
+  "period": [
+    "month",
+    "bimonth"
+  ],
+  "valid_from": "2026-07-01",
+  "legal_reference": "Value Added Tax Act, 2026, s. 54 — a registered person's tax period is one month (Category C: taxable supplies above P12 million, by authorisation, or by notice for regular default) or two months (Category A, ending January, March, May, July, September and November; Category B, ending February, April, June, August, October and December, allocated by the Commissioner General); s. 65(1) — a return is lodged for every period whether or not VAT is payable. Category A periods run December–January, February–March and so on; Ekwo's `bimonth` is anchored on January (January–February…) and so fits Category B only, which the README records as a gap. The approved return form (VAT 002.1) could not be opened, so only the components of the s. 55(1) formula are sourced; the value rows are this pack's own. No cadence is declared as the default because it depends on the taxpayer's category.",
+  "source": "vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 28,
+    "legal_reference": "Value Added Tax Act, 2026, s. 65(1) — a registered person lodges the return within 28 days after the end of the tax period, and s. 66(1) — the VAT is payable by the same date. Twenty-eight days after the last day of any month falls on the 28th of the next month. Penalties and the interest of Schedule 5, para 6 (1 per cent a month) are not modelled.",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "ZE",
+      "kind": "base",
+      "name": "Zero-rated supplies — exports",
+      "sequence": 10,
+      "legal_reference": "Value Added Tax Act, 2026, Schedule 1, Parts I and II — the value of exports of goods and services and international transport. A reporting row of this pack: the approved return form could not be opened, so its box numbers are not reproduced.",
+      "source": "vat-act"
+    },
+    {
+      "box": "ZL",
+      "kind": "base",
+      "name": "Zero-rated supplies — local",
+      "sequence": 20,
+      "legal_reference": "Value Added Tax Act, 2026, Schedule 1, Part III — the value of local supplies taxed at nil. A reporting row of this pack: the approved return form could not be opened, so its box numbers are not reproduced.",
+      "source": "vat-act"
+    },
+    {
+      "box": "EX",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 30,
+      "legal_reference": "Value Added Tax Act, 2026, Schedule 2 — the value of exempt supplies. A reporting row of this pack: the approved return form could not be opened, so its box numbers are not reproduced.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1S",
+      "kind": "base",
+      "name": "Standard-rated supplies — value",
+      "sequence": 40,
+      "legal_reference": "Value Added Tax Act, 2026, s. 7(2)(b) — the sales on which output tax is charged at 14 %. A reporting row of this pack: the approved return form could not be opened, so its box numbers are not reproduced.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1S",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 45,
+      "legal_reference": "Value Added Tax Act, 2026, s. 55(1), component A — the output tax receivable on taxable supplies made in the period, net of credit notes issued.",
+      "source": "vat-act"
+    },
+    {
+      "box": "RC",
+      "kind": "base",
+      "name": "Reverse charged supplies — value",
+      "sequence": 50,
+      "legal_reference": "Value Added Tax Act, 2026, s. 7(1)(c) — the value of remote services received on which the registered recipient accounts for the VAT. A reporting row of this pack: the approved return form could not be opened, so its box numbers are not reproduced.",
+      "source": "vat-act"
+    },
+    {
+      "box": "RC",
+      "kind": "tax",
+      "name": "Reverse charged VAT",
+      "sequence": 55,
+      "legal_reference": "Value Added Tax Act, 2026, s. 55(1), component B — the reverse charged VAT the registered person is liable for in the period.",
+      "source": "vat-act"
+    },
+    {
+      "box": "OUT",
+      "kind": "total",
+      "name": "Output VAT (A + B)",
+      "sequence": 60,
+      "legal_reference": "Value Added Tax Act, 2026, s. 55(1) — components A and B of the net VAT formula: output tax on supplies plus reverse charged VAT.",
+      "source": "vat-act",
+      "plus": [
+        "1S:tax",
+        "RC:tax"
+      ]
+    },
+    {
+      "box": "ZP",
+      "kind": "base",
+      "name": "Zero-rated purchases — value",
+      "sequence": 70,
+      "legal_reference": "Value Added Tax Act, 2026, Schedule 1 — the value of local purchases taxed at nil. A reporting row of this pack: the approved return form could not be opened, so its box numbers are not reproduced.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Standard-rated local purchases — value",
+      "sequence": 80,
+      "legal_reference": "Value Added Tax Act, 2026, s. 31 — the purchases on which input tax is claimed. A reporting row of this pack: the approved return form could not be opened, so its box numbers are not reproduced.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Input tax on local purchases",
+      "sequence": 85,
+      "legal_reference": "Value Added Tax Act, 2026, s. 55(1), component C — input tax credits allowed on local acquisitions, net of credits received.",
+      "source": "vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Imports of goods — value",
+      "sequence": 90,
+      "legal_reference": "Value Added Tax Act, 2026, s. 7(1)(b) — the value of taxable imports on which VAT was paid at the border. A reporting row of this pack: the approved return form could not be opened, so its box numbers are not reproduced.",
+      "source": "vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Input tax on imports",
+      "sequence": 95,
+      "legal_reference": "Value Added Tax Act, 2026, s. 55(1) and (3) — input tax credit on taxable imports, claimed in the period of the import or the next.",
+      "source": "vat-act"
+    },
+    {
+      "box": "RCI",
+      "kind": "tax",
+      "name": "Input tax on reverse charged supplies",
+      "sequence": 97,
+      "legal_reference": "Value Added Tax Act, 2026, s. 55(1), component C — the input tax credit allowed on reverse charged supplies used in the taxable activity.",
+      "source": "reverse-charge-guidance"
+    },
+    {
+      "box": "IN",
+      "kind": "total",
+      "name": "Input tax credits (C)",
+      "sequence": 100,
+      "legal_reference": "Value Added Tax Act, 2026, s. 55(1), component C — the total input tax credit allowed for the period.",
+      "source": "vat-act",
+      "plus": [
+        "2:tax",
+        "3:tax",
+        "RCI:tax"
+      ]
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "Net VAT payable or refundable",
+      "sequence": 110,
+      "legal_reference": "Value Added Tax Act, 2026, s. 55(1) — (A + B) − C. A positive figure is payable by the due date of the return (s. 66(1)); an excess credit is carried forward (s. 56) or refunded within 28 days of the return (s. 57).",
+      "source": "vat-act",
+      "plus": [
+        "OUT"
+      ],
+      "minus": [
+        "IN"
+      ]
+    }
+  ]
+}

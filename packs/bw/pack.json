@@ -1,0 +1,189 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BW",
+  "name": "Botswana",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 205,
+  "released_at": "2026-10-19",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act, 2026 (Act No. 15 of 2026), published in Supplement A to the Extraordinary Gazette of 1 July 2026: ss. 7, 8, 9, 12, 31, 32, 54, 55, 59, 65, 66 and Schedules 1, 2, 3 and 5",
+        "publisher": "Parliament of Botswana, published by Botswana Unified Revenue Service",
+        "url": "https://www.burs.org.bw/index.php/tax/tax-laws-2026?download=958:value-added-tax-act-2026",
+        "consulted_on": "2026-10-19",
+        "kind": "law"
+      },
+      {
+        "key": "vat-regulations",
+        "title": "Value Added Tax Regulations, 2026 (Statutory Instrument No. 94 of 2026), published on 30 June 2026, with the Value Added Tax (Remote Services) Regulations, 2026 (S.I. No. 74 of 2026) and the Value Added Tax (Government Entities and Large Unregistered Persons) Regulations, 2026 (S.I. No. 73 of 2026)",
+        "publisher": "Government of Botswana, published by Botswana Unified Revenue Service",
+        "url": "https://www.burs.org.bw/images/VAT%20Added%20Tax%20Regulations%202026.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "regulation"
+      },
+      {
+        "key": "zero-rated-foodstuffs-notice",
+        "title": "Public notice of 9 July 2026 — Zero-rated foodstuffs under the Value Added Tax Act, 2026: the revised list, and the statement that any food not on it bears VAT at 14 %",
+        "publisher": "Botswana Unified Revenue Service",
+        "url": "https://www.burs.org.bw/images/Zero-Rated%20FoodStuff-%20Under%20Vat%20Act%20of%202026.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "medical-services-notice",
+        "title": "Public notice of 30 July 2026 — Value Added Tax on medical services: the charging of VAT on medical services is suspended pending consultation",
+        "publisher": "Botswana Unified Revenue Service",
+        "url": "https://www.burs.org.bw/images/Value%20Added%20Tax%20on%20Medical%20Services%20Suspension.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "reverse-charge-guidance",
+        "title": "Guidance note for reporting VAT on reverse charged supplies by VAT registered persons, Government entities and large unregistered persons, September 2026: recipient-created tax invoices, tax-period categories A, B and C and the 28-day return",
+        "publisher": "Botswana Unified Revenue Service",
+        "url": "https://www.burs.org.bw/images/Guidance%20for%20Reporting%20VAT%20on%20Reverse%20Charged%20Supplies.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "tax-administration-act",
+        "title": "Tax Administration Act, 2026: s. 15 (use of an electronic billing system) and s. 100 (penalty for failure to use it)",
+        "publisher": "Parliament of Botswana, published by Botswana Unified Revenue Service",
+        "url": "https://www.burs.org.bw/index.php/tax/tax-laws-2026?download=955:tax-administration-act-2026",
+        "consulted_on": "2026-10-19",
+        "kind": "law"
+      },
+      {
+        "key": "burs-eservices",
+        "title": "BURS e-Services (e-Tax) — the taxpayer portal of the Botswana Unified Revenue Service",
+        "publisher": "Botswana Unified Revenue Service",
+        "url": "https://eservices.burs.org.bw/",
+        "consulted_on": "2026-10-19",
+        "kind": "portal"
+      },
+      {
+        "key": "ifrs-botswana",
+        "title": "Use of IFRS Standards by jurisdiction — Botswana: IFRS Accounting Standards, IFRS for SMEs and the role of the Botswana Institute of Chartered Accountants",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction/botswana/",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BWP",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Botswana reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "BW-BICA-SFP",
+        "BW-BICA-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Botswana. The Botswana Institute of Chartered Accountants (BICA) regulates the profession under the Accountants Act, 2010, and IFRS Accounting Standards are the reporting basis of public companies and non-exempt private companies; IFRS for SMEs is permitted for smaller entities. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-based statements below, with the accounts a Botswana company actually keeps — VAT input and output tax, import VAT owed at the border, PAYE, withholding tax, pension contributions, training levy, excise and customs duty payable, and the irrecoverable VAT of s. 32 of the Value Added Tax Act, 2026.",
+      "source": "ifrs-botswana"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, 2026, s. 59(7) and Schedule 4 — a tax invoice carries an individualised serial number and the date it is issued, together with the words \"original tax invoice\" and the VAT registration numbers of supplier and recipient. The law asks for an individualised serial number and not for a series with no gap, which is why `numbering` is `sequential`.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, 2026, s. 7(4) — the liability for VAT on a taxable supply arises at the time of the supply, and the Act's time-of-supply rules (invoice, payment, delivery) are not reproduced in the closed vocabulary; `earliest_of_delivery_or_payment` is the nearest value and the gap is recorded in this pack's README.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Tax Administration Act, 2026, s. 15 — a taxpayer who supplies goods, renders services or receives payment for them shall issue an electronic invoice using an electronic billing system, and s. 59(8) and s. 60(4) of the Value Added Tax Act, 2026 say the same of a registered person's tax invoices, credit notes and debit notes; s. 100 of the Tax Administration Act fixes a penalty of P10 000 for each month of failure once the person is required to use the system. The system is a billing system approved by the Botswana Unified Revenue Service that reports to the administration, not a peer-to-peer exchange: Botswana has no Peppol authority, no published profile and no scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none` in Ekwo's vocabulary. The date from which the system is binding is set by the Tax Administration Regulations, 2026 (reported by secondary commentary as nine months after commencement, around 1 April 2027), a text this pack could not open, so `mandatory_from` is null. The gap is recorded in this pack's README and the socle is not patched to fit it.",
+    "source": "tax-administration-act"
+  }
+}

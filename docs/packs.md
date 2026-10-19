@@ -338,6 +338,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`bn`](../packs/bn/) | Brunei Darussalam | `144_pack_bn.sql` | en | `community` |
 | [`bo`](../packs/bo/) | Bolivia | `102_pack_bo.sql` | es, en | `community` |
 | [`bs`](../packs/bs/) | The Bahamas | `401_pack_bs.sql` | en | `community` |
+| [`bw`](../packs/bw/) | Botswana | `205_pack_bw.sql` | en | `community` |
 | [`ca`](../packs/ca/) | Canada | `58_pack_ca.sql` | en, fr | `community` |
 | [`cd`](../packs/cd/) | République démocratique du Congo | `34_pack_cd.sql` | fr | `community` |
 | [`cf`](../packs/cf/) | Centrafrique | `25_pack_cf.sql` | fr | `community` |

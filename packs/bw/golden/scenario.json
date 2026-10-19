@@ -1,0 +1,305 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Gaborone trading company, VAT-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-08",
+      "from": "2026-08-01",
+      "to": "2026-08-31"
+    }
+  ],
+  "statements": [
+    "BW-BICA-SFP",
+    "BW-BICA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-gaborone",
+      "name": "Main Mall General Traders (Pty) Ltd",
+      "type": "customer",
+      "country": "BW"
+    },
+    {
+      "ref": "cust-za",
+      "name": "Limpopo Valley Coffee (Pty) Ltd",
+      "type": "customer",
+      "country": "ZA"
+    },
+    {
+      "ref": "supp-gaborone",
+      "name": "Broadhurst Wholesalers (Pty) Ltd",
+      "type": "supplier",
+      "country": "BW"
+    },
+    {
+      "ref": "supp-za",
+      "name": "Johannesburg Hardware Supplies (Pty) Ltd",
+      "type": "supplier",
+      "country": "ZA"
+    },
+    {
+      "ref": "supp-us",
+      "name": "Meridian Advisory Inc.",
+      "type": "supplier",
+      "country": "US"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-gaborone",
+      "date": "2026-08-05",
+      "why": "A domestic sale at the standard rate of 14 %: the value in box 1S and the output tax of component A.",
+      "lines": [
+        {
+          "name": "Office stationery, retail sale",
+          "quantity": 5,
+          "unit_price": 2000,
+          "tax": "BW-S-14",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-gaborone",
+      "date": "2026-08-07",
+      "why": "A lease of a residential unit, exempt under Schedule 2 paragraph 1(i): the exempt row, no output tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Monthly rent, residential unit",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "BW-S-EX",
+          "account": "4520"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-za",
+      "date": "2026-08-10",
+      "why": "An export of goods, zero-rated under Schedule 1 Part I even though the buyer sits in a Southern African Customs Union partner country: the export row, no output tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Roasted coffee beans, export consignment",
+          "quantity": 300,
+          "unit_price": 50,
+          "tax": "BW-S-Z-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-gaborone",
+      "date": "2026-08-12",
+      "why": "A domestic sale of maize meal, a foodstuff Schedule 1 Part III zero-rates without it leaving Botswana: a zero rate that is neither an export nor an exemption, so input tax stays deductible.",
+      "lines": [
+        {
+          "name": "Maize meal, wholesale",
+          "quantity": 400,
+          "unit_price": 25,
+          "tax": "BW-S-Z-DOM",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-gaborone",
+      "date": "2026-08-13",
+      "why": "A service at the standard rate of 14 %, to prove a second line of box 1S and a different income account.",
+      "lines": [
+        {
+          "name": "Installation and consulting services",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "BW-S-14",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-gaborone",
+      "date": "2026-08-14",
+      "why": "A credit note for one unit returned from INV-001, so the standard-rated value and the output tax fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office stationery, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "BW-S-14",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-gaborone",
+      "date": "2026-08-06",
+      "why": "A domestic purchase at the standard rate, deductible in full: box 2 and its value row, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "BW-P-14",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-gaborone",
+      "date": "2026-08-08",
+      "why": "A purchase of a zero-rated good from a registered supplier: no input tax, reported only in the zero-rated purchases row.",
+      "lines": [
+        {
+          "name": "Maize meal purchased for resale",
+          "quantity": 300,
+          "unit_price": 30,
+          "tax": "BW-P-Z",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-gaborone",
+      "date": "2026-08-11",
+      "why": "Bank charges, a financial service exempt under Schedule 2 paragraph 1(a): no input tax, and the return has no row for an exempt purchase.",
+      "lines": [
+        {
+          "name": "Bank charges and interest",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "BW-P-EX",
+          "account": "6450"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-za",
+      "date": "2026-08-15",
+      "why": "An import of goods from a Southern African Customs Union partner: VAT charged at the border under s. 7(7), claimed as input tax through box 3, and held on the border control account until settled.",
+      "lines": [
+        {
+          "name": "Imported hardware for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "BW-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-08-18",
+      "why": "A remote service from a supplier with no place of business in Botswana: the registered recipient accounts for the reverse charged VAT (component B) and claims the same amount as input tax (component C), so the ledger nets to nil and both sides reach the return.",
+      "lines": [
+        {
+          "name": "Consulting services from abroad",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "BW-P-RC-SVC",
+          "account": "6350"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-gaborone",
+      "date": "2026-08-19",
+      "why": "Business entertainment, whose input tax s. 32(1)(c) denies: the 14 % is charged by the supplier but follows the expense to account 6530 and reaches no box.",
+      "lines": [
+        {
+          "name": "Client entertainment",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "BW-P-14-ND",
+          "account": "6390"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-gaborone",
+      "date": "2026-08-20",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 2 and its value row fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "BW-P-14",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-09-05",
+      "amount": 12000,
+      "contact": "cust-gaborone",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The residential rent of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-09-06",
+      "amount": 15000,
+      "contact": "cust-za",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-09-07",
+      "amount": 22800,
+      "contact": "supp-gaborone",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-09-10",
+      "amount": 5000,
+      "contact": "cust-za",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Limpopo Valley Coffee (Pty) Ltd before its next shipment, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

@@ -1,0 +1,355 @@
+[
+  {
+    "code": "BW-S-14",
+    "name": "Sale, standard rate 14 %",
+    "description": "The general rate on a taxable supply made in Botswana",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax Act, 2026 (Act No. 15 of 2026), s. 7(1)(a) and (2)(b) — VAT is levied on a taxable supply made by a registered person at 14 per cent for any taxable supply that is not zero-rated; s. 7(3) — the tax is the rate applied to the value of the supply. The Act commenced on 1 July 2026 and re-enacts the 14 % rate that applied before it; this pack's tax codes start at the commencement date. A public notice of 9 July 2026 repeats that food outside the zero-rated list bears 14 %.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1S"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1S",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "BW-S-Z-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "An export of goods, or a service for use or consumption outside Botswana, or international transport",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax Act, 2026, s. 8(1) and Schedule 1, Part I — a supply of goods the supplier has entered for export to an export country and has exported, or that the Commissioner General is satisfied were exported (para 1(a), (b)); Part II — a supply of services for use or consumption in an export country, evidenced by documentary proof, and international transport services (para 1(a), (c)); s. 8(2) — the registered person keeps the documentary proof the Commissioner General accepts (Value Added Tax Regulations, 2026, regs 8 to 11). A zero-rated supply is a taxable supply: input tax stays deductible. Services directly in relation to immovable property in Botswana and inbound tourism products are excluded from Part II.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "BW-S-Z-DOM",
+    "name": "Sale, zero-rated (domestic — basic foodstuffs, fuel, prescription medicines, fertilisers)",
+    "description": "A local supply the First Schedule taxes at nil without it leaving Botswana",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax Act, 2026, s. 8(1) and Schedule 1, Part III, para 1 — (b) and (c) the foodstuffs in their natural state the Schedule names (maize and sorghum meal, millet, wheat, sugar, brown bread, fresh vegetables and fruit of the listed headings, rice, samp, bread flour, cooking oil), liquid petroleum gas, infant formula, baby diapers, sanitary pads and tampons, pesticides, fertilisers and the first 5 000 litres of water a month to a residence; (d) the listed agricultural implements and tractors; (e) petrol, diesel and illuminating paraffin; (f) condoms; (g) prescription medicines for humans. Public notice of 9 July 2026: any food not on the list bears 14 %. The going-concern transfer of para 1(a) is also zero-rated but is reported on the same row; the customs-heading conditions are the Act's and are not applied by the pack.",
+    "source": "vat-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZL"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZL",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "BW-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply Schedule 2 lists: financial services, residential lease, education, public medical facilities, public transport, precious metals",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax Act, 2026, s. 9 and Schedule 2, para 1 — (a) financial services as defined; (b) a precious metal; (c) services specified in the regulations by a public (Government operated or aided) medical facility; (d) donated goods or services of a non-profit body; (e) education services of a school, technical college, university or adult-education institution; (f) public transport services regulated by Government; (i) the lease of residential premises, other than a lease of less than 45 days; also homeowners' association services and nominal-consideration supplies of Government entities and non-profit bodies. An exempt supplier is not entitled to input tax on what it uses to make the supply. A supply that is both zero-rated and exempt is zero-rated (s. 9(2)). Private medical services are taxable under the Act but the charging of VAT on them was suspended by BURS on 30 July 2026; this code is not for them and the README records the gap.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EX",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "BW-P-14",
+    "name": "Purchase, standard rate 14 %, deductible",
+    "description": "A local purchase at the general rate, used in the taxable activity of a registered person",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax Act, 2026, s. 55(1) — component C of the net VAT formula is the total input tax credit allowed for the period; s. 31 — the conditions for an input tax credit, including the tax invoice the supplier issues under s. 59; s. 55(2) — a credit not claimed in its period may be claimed up to six tax periods later (Category A and B) or twelve (Category C). Input tax is not allowed on every purchase (s. 32): a purchase of that kind takes code BW-P-14-ND.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "BW-P-14-ND",
+    "name": "Purchase, standard rate 14 %, input tax not deductible",
+    "description": "A purchase whose input tax s. 32 denies — passenger vehicles, entertainment, club subscriptions",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax Act, 2026, s. 32(1) — no input tax credit is allowed on (a) the acquisition of a passenger vehicle (a road vehicle for nine or fewer seated persons) unless the person deals in or hires such vehicles or supplies it to a customer for promotion; (c) goods or services acquired for entertainment (food, beverages, recreation, tobacco, hospitality), with three exceptions; (d) fees or subscriptions for membership of a sporting, social or recreational club. The tax follows the expense to account 6530. Half of the cost of repair and maintenance of such a vehicle is denied (s. 32(1)(b)): the pack has no code for a split purchase and the README records the gap.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ]
+    },
+    "sequence": 115
+  },
+  {
+    "code": "BW-P-Z",
+    "name": "Purchase, zero-rated (local)",
+    "description": "A local purchase of a good Schedule 1 taxes at nil, from a registered supplier",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax Act, 2026, s. 8(1) and Schedule 1, Part III — there is no input tax to deduct on a supply taxed at nil; the value is reported in its own row.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "BW-P-EX",
+    "name": "Purchase, exempt",
+    "description": "An exempt supply bought for the business — a financial service, bank charges, a residential lease",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax Act, 2026, s. 9 and Schedule 2 — an exempt supply bears no VAT, so there is no input tax to deduct. The return carries no row for an exempt purchase.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "BW-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "VAT charged on a taxable import, paid at the time of import and claimed as input tax",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax Act, 2026, s. 7(1)(b) and (7) — VAT is levied on a taxable import by any person, the liability arises at the time of the import and is payable by the importer at that time (s. 66(3), s. 67(1)(c)); s. 55(3) — a registered importer claims the credit no later than the following tax period; s. 10 and Schedule 3 list the exempt imports. The tax is owed at the border and not to the supplier, so it waits on 2125 until the import declaration is settled. Imports from Namibia, Lesotho, South Africa and Eswatini (the Southern African Customs Union partners) are not special in the Act: VAT is charged on entry like any other import (Schedule 3 only names them for allowances and returned goods).",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "BW-P-RC-SVC",
+    "name": "Remote service received, reverse charged",
+    "description": "A service supplied remotely from outside Botswana to a registered person, who accounts for the VAT and recovers it",
+    "kind": "vat",
+    "rate": 14,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-07-01",
+    "legal_reference": "Value Added Tax Act, 2026, s. 7(1)(c), (2)(b) and (8) — VAT is levied on a reverse charged supply made to a registered person, the liability arises at the time of the supply and the recipient accounts for it; s. 55(1) — component B of the net VAT formula is the reverse charged VAT for the period, and component C allows the matching input tax credit where the service is used in the taxable activity; s. 59(4) — the registered recipient prepares a recipient-created tax invoice at the time of supply; s. 64 — it notifies the supplier in writing that it is a registered person. Reporting by registered persons starts with the August/September 2026 period (Category A), the September/October period (Category B) and the August 2026 return (Category C), per the BURS guidance note of September 2026. A service used for exempt supplies, or in part, is not fully recoverable: the README records the gap.",
+    "source": "reverse-charge-guidance",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "RC"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "RC"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "RCI"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "RC",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "RC",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "RCI",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 150
+  }
+]

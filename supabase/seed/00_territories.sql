@@ -2733,3 +2733,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('BW', 'iso_3166_1', 'Botswana', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Botswana levies a value added tax of its own under the Value Added Tax Act, 2026 (Act No. 15 of 2026), in force on 1 July 2026 and administered by the Botswana Unified Revenue Service: section 7 imposes it on the taxable supply, the taxable import and the reverse charged supply at 14 per cent, with a zero rate for the supplies of Schedule 1 and exemption for those of Schedule 2. Botswana is a member of the Southern African Customs Union.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

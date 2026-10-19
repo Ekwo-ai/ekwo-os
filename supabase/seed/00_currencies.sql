@@ -102,5 +102,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('KGS', 'Kyrgyzstani som', E'сом', 2),
   ('SRD', 'Surinamese dollar', 'Sr$', 2),
   ('TTD', 'Trinidad and Tobago dollar', 'TT$', 2),
-  ('BBD', 'Barbadian dollar', 'Bds$', 2)
+  ('BBD', 'Barbadian dollar', 'Bds$', 2),
+  ('BWP', 'Botswana pula', 'P', 2)
 on conflict (code) do nothing;
