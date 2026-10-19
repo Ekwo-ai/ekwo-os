@@ -893,6 +893,91 @@
           "smp": { "type": ["string", "null"] }
         }
       },
+      "crm search": {
+        "$comment": "The cards of the company in use, filtered, as crm.search_cards() returns them: the contact, its organisation's name, its status, priority, owner, last activity and the slugs of its segments. Most recently active first.",
+        "type": "object",
+        "required": ["cards", "count"],
+        "properties": {
+          "cards": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "count": { "type": "integer" }
+        }
+      },
+      "crm card": {
+        "$comment": "One contact as crm.card_of() builds it: the contact, its organisation, its card (null when it has none), its segments now, its open deals and its 20 latest activities.",
+        "type": "object",
+        "required": ["contact", "organisation", "card", "segments", "deals", "activities"],
+        "properties": {
+          "contact": { "$ref": "#/$defs/row" },
+          "organisation": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "card": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "segments": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "deals": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "activities": { "type": "array", "items": { "$ref": "#/$defs/row" } }
+        }
+      },
+      "crm card set": {
+        "$comment": "The card as crm.upsert_card() left it: the fields the flags named changed, every other one as it was.",
+        "type": "object",
+        "required": ["card"],
+        "properties": { "card": { "$ref": "#/$defs/row" } }
+      },
+      "crm segments": {
+        "$comment": "Every segment of the company as crm.segment_tree() returns it: parent, depth, path of slugs and the number of contacts in it now. A parent comes just before its children.",
+        "type": "object",
+        "required": ["segments", "count"],
+        "properties": {
+          "segments": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "count": { "type": "integer" }
+        }
+      },
+      "crm board": {
+        "$comment": "crm.board(): each pipeline asked for — one, or all of them — with its stages in order, the deals at each, and the totals by currency, per stage and per pipeline. Amounts are decimal strings, never summed across currencies.",
+        "type": "object",
+        "required": ["include_closed", "pipelines"],
+        "properties": {
+          "include_closed": { "type": "boolean" },
+          "pipelines": { "type": "array", "items": { "$ref": "#/$defs/row" } }
+        }
+      },
+      "crm timeline": {
+        "$comment": "The activities of a contact or of a deal, as crm.timeline() returns them, most recent first.",
+        "type": "object",
+        "required": ["activities", "count"],
+        "properties": {
+          "activities": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "count": { "type": "integer" }
+        }
+      },
+      "crm log": {
+        "$comment": "The activity crm.log_activity() wrote — or the one already kept under the same source and source reference, unchanged.",
+        "type": "object",
+        "required": ["activity"],
+        "properties": { "activity": { "$ref": "#/$defs/row" } }
+      },
+      "crm join": {
+        "$comment": "The membership crm.join_segment() left: left_at null.",
+        "type": "object",
+        "required": ["membership"],
+        "properties": { "membership": { "$ref": "#/$defs/row" } }
+      },
+      "crm leave": {
+        "$comment": "The membership crm.leave_segment() kept, with the moment it ended in left_at.",
+        "type": "object",
+        "required": ["membership"],
+        "properties": { "membership": { "$ref": "#/$defs/row" } }
+      },
+      "crm deal open": {
+        "$comment": "The deal crm.open_deal() opened, at the first open stage of its pipeline. Its amount is a decimal string, in currency_code.",
+        "type": "object",
+        "required": ["deal"],
+        "properties": { "deal": { "$ref": "#/$defs/row" } }
+      },
+      "crm deal move": {
+        "$comment": "The deal as crm.move_deal() left it. closed_at and closed_outcome are set at a won or lost stage; a won deal has made its party a customer.",
+        "type": "object",
+        "required": ["deal"],
+        "properties": { "deal": { "$ref": "#/$defs/row" } }
+      },
       "import": {
         "oneOf": [
           {

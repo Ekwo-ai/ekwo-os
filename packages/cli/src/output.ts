@@ -102,7 +102,7 @@ export function setResult(data: unknown): void {
   result = data;
 }
 
-const TWO_WORDS = new Set(['module', 'pack', 'company', 'contact', 'invoice', 'document', 'payment', 'doc', 'proof', 'einvoice', 'peppol', 'line', 'analytic']);
+const TWO_WORDS = new Set(['module', 'pack', 'company', 'contact', 'invoice', 'document', 'payment', 'doc', 'proof', 'einvoice', 'peppol', 'line', 'analytic', 'crm']);
 
 /** `module list`, `pack upgrade`, `status`: the words that named the command. */
 export function commandLabel(args: ParsedArgs): string {
@@ -118,6 +118,11 @@ export function commandLabel(args: ParsedArgs): string {
   // label repeats the words that were typed.
   if ((command === 'doc' || command === 'invoice' || command === 'document') && action === 'line' && args.positional[1] !== undefined) {
     return `${command} line ${args.positional[1]}`;
+  }
+  // `crm card set` and `crm deal open|move`: a noun and its verb. `crm card
+  // <contact>` is a verb followed by a contact.
+  if (command === 'crm' && (action === 'deal' || (action === 'card' && args.positional[1] === 'set')) && args.positional[1] !== undefined) {
+    return `crm ${action} ${args.positional[1]}`;
   }
   return `${command} ${action}`;
 }

@@ -9,6 +9,7 @@ import { UsageError, boolFlag, parseArgs, type ParsedArgs } from './args.js';
 import { analyticCommand } from './commands/analytic.js';
 import { companyCommand } from './commands/company.js';
 import { contactCommand } from './commands/contact.js';
+import { crmCommand } from './commands/crm.js';
 import { demoCommand } from './commands/demo.js';
 import { cancelCommand, docCommand, postCommand } from './commands/document.js';
 import { reverseCommand } from './commands/entry.js';
@@ -70,6 +71,7 @@ export const COMMANDS = [
   'proof',
   'einvoice',
   'peppol',
+  'crm',
   // Aliases, last: `invoice` is what `doc` used to be called, and `document` is its whole word.
   'invoice',
   'document',
@@ -211,6 +213,20 @@ ${bold('Connecting')} ${dim('(every command)')}
               checks an identifier (0208:0999999922) and asks the SML whether
               it is registered, and with which SMP. --test: the acceptance
               network.
+  ${cyan('crm')}         The crm module: the record of each relationship, beside the
+              books, on the same contacts. search [--query --status --segment
+              --stage --country --language --owner --no-outbound yes|no
+              --active-since --inactive-since] — the cards; card <contact> —
+              one contact, whole; card set <contact> [--status --priority
+              --owner --tag <tag>… --job-title --linkedin --source
+              --no-outbound yes|no --custom <json>]; segments — the tree, with
+              its members; board [<pipeline>] [--closed] — the stages, their
+              deals and totals by currency; timeline <contact> [--deal --since
+              --kind <kind>…]; log <contact> --kind <kind> [--subject --body
+              --deal --source --source-ref]; join | leave <segment> <contact>;
+              deal open <pipeline> <contact> --title <title> [--amount
+              --currency]; deal move <deal> <stage> — a won stage makes the
+              party a customer. The same functions as the crm_* tools.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
   --profile <name>          Which profile: a demo instance, production, one client
@@ -549,6 +565,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await einvoiceCommand(args, deps);
       case 'peppol':
         return await peppolCommand(args, deps);
+      case 'crm':
+        return await crmCommand(args, deps);
       default:
         throw new UsageError(`unknown command: ${args.command}\nRun \`ekwo --help\` for the list.`);
     }
