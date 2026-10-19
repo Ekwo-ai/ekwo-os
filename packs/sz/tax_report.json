@@ -1,0 +1,154 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "SZ-VAT-RETURN",
+  "name": "Monthly Value Added Tax return",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2012-04-01",
+  "legal_reference": "Value Added Tax Act, 2011, s. 31(1) — the tax period is one month ending on the last day of each calendar month, unless the Minister authorises another for a class of persons (s. 31(2)); s. 32(1) — a taxable person submits a return for each tax period within 20 days after its end; s. 32(2) — the return is in the form the Commissioner-General prescribes and states the tax payable, the output tax and the input tax; s. 25 — the tax payable is the output tax less the input tax credits. The form on TaxEase could not be opened from the machine this pack was written on: the rows below are this pack's own, grouped under those three figures, and the gap is recorded in this pack's README.",
+  "source": "vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Value Added Tax Act, 2011, s. 32(1) — within 20 days after the end of the tax period. Press reports on the Authority's notices of 2025 (VAT schedules submitted on TaxEase) give the 27th of the month; no text of the Authority's own states it, so the pack carries the Act's 20 days and flags the difference in its README. Penalties for late filing (2 % a month) are not modelled.",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "ZE",
+      "kind": "base",
+      "name": "Zero-rated supplies — exports and international transport",
+      "sequence": 10,
+      "legal_reference": "Value Added Tax Act, 2011, Second Schedule, paragraph 1(a) and (b) — the value of exports and international transport. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "ZL",
+      "kind": "base",
+      "name": "Zero-rated supplies — local (Second Schedule)",
+      "sequence": 20,
+      "legal_reference": "Value Added Tax Act, 2011, Second Schedule, paragraph 1(c) to (q) — the value of local supplies taxed at nil. A reporting row of this pack.",
+      "source": "ers-zero-rated"
+    },
+    {
+      "box": "EX",
+      "kind": "base",
+      "name": "Exempt supplies (First Schedule)",
+      "sequence": 30,
+      "legal_reference": "Value Added Tax Act, 2011, First Schedule — the value of exempt supplies. A reporting row of this pack.",
+      "source": "ers-exempt"
+    },
+    {
+      "box": "1S",
+      "kind": "base",
+      "name": "Standard-rated supplies — value",
+      "sequence": 40,
+      "legal_reference": "Value Added Tax Act, 2011, s. 24 — the sales on which the output tax is charged. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1S",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 45,
+      "legal_reference": "Value Added Tax Act, 2011, ss. 25 and 32(2) — output tax on standard-rated supplies, net of credit notes given.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1R",
+      "kind": "base",
+      "name": "Imported services — value",
+      "sequence": 50,
+      "legal_reference": "Value Added Tax Act, 2011, ss. 3(c) and 16 — the value of an imported service on which the recipient pays the tax. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1R",
+      "kind": "tax",
+      "name": "Output VAT on imported services",
+      "sequence": 55,
+      "legal_reference": "Value Added Tax Act, 2011, s. 16(3) — the tax the recipient of an imported service declares and pays; included in output tax.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Total output tax",
+      "sequence": 60,
+      "plus": [
+        "1S:tax",
+        "1R:tax"
+      ],
+      "legal_reference": "Value Added Tax Act, 2011, ss. 25 and 32(2) — total output tax: the tax on standard-rated supplies plus the reverse-charged tax of imported services.",
+      "source": "vat-act"
+    },
+    {
+      "box": "ZP",
+      "kind": "base",
+      "name": "Zero-rated purchases — value",
+      "sequence": 70,
+      "legal_reference": "Value Added Tax Act, 2011, Second Schedule — the value of local purchases taxed at nil. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Standard-rated local purchases — value",
+      "sequence": 80,
+      "legal_reference": "Value Added Tax Act, 2011, s. 28(1)(a) — the purchases on which input tax is incurred. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Input tax on local purchases",
+      "sequence": 85,
+      "legal_reference": "Value Added Tax Act, 2011, s. 28(1)(a) — input tax credit on local purchases, net of credits received.",
+      "source": "vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Imports of goods — value",
+      "sequence": 90,
+      "legal_reference": "Value Added Tax Act, 2011, ss. 3(b) and 23 — the customs value of imports on which import tax is paid. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Input tax on imports",
+      "sequence": 95,
+      "legal_reference": "Value Added Tax Act, 2011, s. 28(1)(b) — input tax credit on tax paid on imports of goods.",
+      "source": "vat-act"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Total input tax",
+      "sequence": 100,
+      "plus": [
+        "2:tax",
+        "3:tax"
+      ],
+      "legal_reference": "Value Added Tax Act, 2011, ss. 25 and 28 — total input tax credit: local purchases plus imports.",
+      "source": "vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Tax payable or repayable",
+      "sequence": 110,
+      "plus": [
+        "1"
+      ],
+      "minus": [
+        "4"
+      ],
+      "legal_reference": "Value Added Tax Act, 2011, s. 25 — the tax payable: output tax less input tax credit. A negative figure is refunded to the taxable person under s. 47(1).",
+      "source": "vat-act"
+    }
+  ]
+}

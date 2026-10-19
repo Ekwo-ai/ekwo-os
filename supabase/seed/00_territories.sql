@@ -2759,3 +2759,28 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The row — Eswatini
+--
+-- A third country to the common system of VAT of Directive 2006/112/EC,
+-- article 5(2), which applies only in the territory of the Community as
+-- defined by the Treaties. Eswatini (named Swaziland until 2018) levies its
+-- own value added tax under the Value Added Tax Act, 2011 (Act No. 12 of
+-- 2011). `vat_prefix` is null: an Eswatini taxpayer is identified by the
+-- Taxpayer Identification Number the Eswatini Revenue Service assigns, which
+-- carries no ISO country prefix.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('SZ', 'iso_3166_1', 'Eswatini', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Eswatini is a third country to it. Eswatini levies a value added tax of its own under the Value Added Tax Act, 2011 (Act No. 12 of 2011), section 3, at a rate of fifteen per cent (15 %) since 1 August 2018 (Legal Notice No. 112 of 2018), with a rate of zero per cent (0 %) on exports and the supplies of the Second Schedule, and the exempt supplies of the First Schedule.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

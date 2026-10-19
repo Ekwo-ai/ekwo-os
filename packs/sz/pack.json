@@ -1,0 +1,197 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "SZ",
+  "name": "Eswatini",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 207,
+  "released_at": "2026-10-19",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act, 2011 (Act No. 12 of 2011), as published by the Eswatini Revenue Service: ss. 3, 4, 6, 14, 16, 19, 24, 28, 29, 30, 31, 32 and the First and Second Schedules",
+        "publisher": "Eswatini Revenue Service",
+        "url": "https://www.ers.org.sz/documents/EswatiniTax-VAT_Act_2011.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "law"
+      },
+      {
+        "key": "vat-regulations",
+        "title": "Value Added Tax Regulations (Legal Notice No. 52 of 2012): credit for input tax (reg. 7), reverse charge on imported services (reg. 18), zero rate on aid-funded contracts",
+        "publisher": "Eswatini Revenue Service",
+        "url": "https://www.ers.org.sz/documents/EswatiniTax-VAT_Regulations.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-rate-2018",
+        "title": "Value Added Tax (Rates) (Amendment) Regulations, 2018 (Legal Notice No. 112 of 2018, Swaziland Government Gazette Extraordinary No. 102 of 9 July 2018): the rate of Value Added Tax is fifteen per cent, from 1 August 2018",
+        "publisher": "Eswatini Revenue Service",
+        "url": "https://www.ers.org.sz/documents/VATRateAmendmentRegulation2018.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "regulation"
+      },
+      {
+        "key": "ers-registration",
+        "title": "VAT Registration — who must register, the annual taxable turnover threshold of E900 000, voluntary registration",
+        "publisher": "Eswatini Revenue Service",
+        "url": "https://www.ers.org.sz/Registration",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "ers-zero-rated",
+        "title": "Zero Rated Goods & Services — the lists of the Second Schedule as the Authority publishes them",
+        "publisher": "Eswatini Revenue Service",
+        "url": "https://www.ers.org.sz/VAT/ZeroRated",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "ers-exempt",
+        "title": "Exempt Supplies of Goods & Services — the First Schedule as the Authority publishes it",
+        "publisher": "Eswatini Revenue Service",
+        "url": "https://www.ers.org.sz/ExemptSupplies",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "ers-einvoicing",
+        "title": "e-Invoicing — the Authority's rollout of electronic fiscal devices and approved vendors",
+        "publisher": "Eswatini Revenue Service",
+        "url": "https://www.ers.org.sz/e-invoicing",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "taxease",
+        "title": "TaxEase — the Authority's taxpayer portal, where VAT returns are filed",
+        "publisher": "Eswatini Revenue Service",
+        "url": "https://taxease.ers.org.sz/",
+        "consulted_on": "2026-10-19",
+        "kind": "portal"
+      },
+      {
+        "key": "ifrs-profile",
+        "title": "Eswatini — use of IFRS Standards by jurisdiction: Companies Act, 2009 requires financial statements in conformity with Swaziland and International Financial Reporting Standards; IFRS for SMEs permitted",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction/eswatini/",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "ZMW",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Eswatini reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "SZ-IFRS-SFP",
+        "SZ-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Eswatini. The Companies Act, 2009 requires annual financial statements in conformity with Swaziland and International Financial Reporting Standards, the Eswatini Institute of Accountants has approved IFRS Standards and the IFRS for SMEs Standard, and small companies may choose the latter. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-based statements below, with the accounts an Eswatini company actually keeps — VAT input and output tax, the VAT settlement account owed to or by the Eswatini Revenue Service, import VAT owed at the border, PAYE and withholding tax payable, provident fund contributions, and the irrecoverable VAT that the Act leaves with a buyer of an imported service or of entertainment.",
+      "source": "ifrs-profile"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, 2011, s. 29(4) and the Third Schedule, section 1 — a tax invoice carries the particulars the Schedule lists, among them a serial number; the Act asks for a serial number and not for a series with no gap, which is why `numbering` is `sequential` and not `gapless_per_year`.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, 2011, s. 14(1)(c) — goods and services are supplied at the earliest of delivery or completion, payment and issue of a tax invoice. That is a three-way earliest test and Ekwo's closed vocabulary only expresses a two-way one; `earliest_of_delivery_or_payment` is the nearest value, and the gap — an invoice issued ahead of both delivery and payment, which s. 14 still makes the tax point — is recorded in this pack's README.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Eswatini statute obliges a business to exchange a structured electronic invoice with another business in the sense Ekwo's vocabulary gives the word: there is no Peppol authority, no published profile and no scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What the Eswatini Revenue Service is rolling out instead (its e-Invoicing page) is a fiscal-device regime: a taxpayer issues invoices through an approved electronic fiscal device or an approved vendor's software, and the data reaches the Authority's e-invoicing system. That is clearance with the tax administration and not a peer-to-peer exchange; the gap is recorded in this pack's README, and the core is not patched to fit it.",
+    "source": "ers-einvoicing"
+  }
+}

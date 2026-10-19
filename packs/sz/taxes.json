@@ -1,0 +1,352 @@
+[
+  {
+    "code": "SZ-S-15",
+    "name": "Sale, standard rate 15 %",
+    "description": "The general rate on a taxable supply made in Eswatini",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2018-08-01",
+    "legal_reference": "Value Added Tax Act, 2011, s. 3(a) — tax is charged on every taxable supply in Eswatini made by a taxable person; s. 24(1) and (3) — it is calculated by applying the rate specified in the VAT Regulations to the taxable value; Legal Notice No. 112 of 2018 — \"The rate of Value Added Tax shall be fifteen percent (15%)\", in force on 1 August 2018, replacing the rate set by Legal Notice No. 52 of 2012 (the tax was introduced on 1 April 2012). Every supply that is neither exempt (First Schedule) nor zero-rated (Second Schedule) is standard-rated.",
+    "source": "vat-rate-2018",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1S"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1S",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "SZ-S-Z-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "A supply of goods or services exported from Eswatini, or the international transport of goods or passengers",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2012-04-01",
+    "legal_reference": "Value Added Tax Act, 2011, s. 24(4) and the Second Schedule, paragraph 1(a) and (b) — the supply of goods or services exported from Eswatini as part of the supply, and international transport of goods or passengers by road, rail or air; paragraph 2 — goods are exported when delivered or made available at an address outside Eswatini, services when supplied for use or consumption outside Eswatini, in each case as evidenced by documentary proof acceptable to the Commissioner-General. A zero-rated supply is a taxable supply: input tax stays deductible.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "SZ-S-Z-DOM",
+    "name": "Sale, zero-rated (domestic — basic foodstuffs, farm inputs, medicines, school text books)",
+    "description": "A local supply the Second Schedule taxes at nil: maize meal, maize, beans, brown bread, milk, fresh fruit and vegetables, eggs, rice, vegetable oil, paraffin, fertilizers, seeds, pesticides, animal feeds, prescription drugs and medicines, school text books",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2012-04-01",
+    "legal_reference": "Value Added Tax Act, 2011, s. 24(4) and the Second Schedule, paragraph 1(c) to (q) — maize meal, maize, beans, agricultural inputs (fertilizers, seeds, pesticides), paraffin for cooking, illuminating and heating, milk, brown bread, animal feeds, samp, fresh fruit and vegetables, fresh eggs, rice, vegetable oil other than olive oil, prescription drugs and medicines, and school text books approved by the Ministry of Education. The Authority's page lists the same goods with their tariff headings. Zero-rating a good is not exempting it: input tax stays deductible. The company picks this code for any of those lines and names the item on the invoice.",
+    "source": "ers-zero-rated",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZL"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZL",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "SZ-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply the First Schedule lists: financial and insurance services, residential property and long lets, education, medical, dental and nursing services, passenger transport, water and sewage, burial and cremation",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2012-04-01",
+    "legal_reference": "Value Added Tax Act, 2011, s. 19 and the First Schedule, paragraph 1 — postage stamps; financial services; insurance services; land and buildings other than for commercial and industrial use; lease or letting of immovable property other than commercial premises, hotel or holiday accommodation, residential accommodation for periods not exceeding 45 days and parking or storage space; education services; medical, dental and nursing services; social welfare services; betting, lotteries and gambling; transfer of a business as a going concern between taxable persons; burial and cremation; passenger transportation other than by registered tour operators; tap water and sewage; non-profit cultural, amateur sporting and charity activities. An exempt supplier charges no tax and recovers no input tax on what it uses to make exempt supplies (s. 28(7)).",
+    "source": "ers-exempt",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EX",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "SZ-P-15",
+    "name": "Purchase, standard rate 15 %, deductible",
+    "description": "A local purchase at the general rate, used in the business of a taxable person",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-08-01",
+    "legal_reference": "Value Added Tax Act, 2011, s. 28(1)(a) — a credit is allowed for the tax payable on all taxable supplies made to the taxable person during the tax period, for goods and services used in the business; s. 29 — the credit rests on a tax invoice with the particulars of the Third Schedule; s. 28(5) and regulation 7 — some purchases carry no credit, and those take code SZ-P-15-ND. Rate: Legal Notice No. 112 of 2018, 15 % from 1 August 2018.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "SZ-P-15-ND",
+    "name": "Purchase, standard rate 15 %, input tax not deductible",
+    "description": "A purchase whose input tax the Act blocks — entertainment, passenger automobiles and their repairs",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2018-08-01",
+    "legal_reference": "Value Added Tax Act, 2011, s. 28(5) — no input tax credit for a passenger automobile, including spare parts, repairs and maintenance, unless it is acquired for dealing in or hiring passenger automobiles; for entertainment, unless the taxable person is in the business of providing entertainment; and for mobile telephone services up to a limit the Minister sets. Regulation 7 lists what counts as entertainment (staff refreshments and meals, hospitality for clients, staff parties and gifts) and allows only 50 % of the tax on mobile telephone services. The tax follows the expense to account 6530. The 50 % telephone credit is not modelled: a company books the blocked half on this code and splits the line.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ]
+    },
+    "sequence": 115
+  },
+  {
+    "code": "SZ-P-Z",
+    "name": "Purchase, zero-rated (local)",
+    "description": "A local purchase of a good the Zero-Rating Order taxes at nil, from a registered supplier",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2012-04-01",
+    "legal_reference": "Value Added Tax Act, 2011, s. 24(4) and the Second Schedule — there is no input tax to deduct on a supply taxed at nil.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "SZ-P-EX",
+    "name": "Purchase, exempt",
+    "description": "An insurance premium, or another exempt supply bought for the business",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2012-04-01",
+    "legal_reference": "Value Added Tax Act, 2011, s. 19 and the First Schedule — insurance and financial services are exempt, so there is no VAT to deduct. The return carries no row for an exempt purchase.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "SZ-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "VAT charged on the importation of taxable goods, paid at the border and claimed as input tax",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2018-08-01",
+    "legal_reference": "Value Added Tax Act, 2011, s. 3(b) — tax is charged on every import of goods other than an exempt import; s. 17 — an import takes place on the date customs duty is payable or, failing that, the date the goods are brought into Eswatini; s. 28(1)(b) — a credit is allowed for the tax paid on imports of goods by the taxable person. The tax is owed at the border and not to the supplier, so it waits on 2125 until the import declaration is settled.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "SZ-P-RC-SVC",
+    "name": "Imported service, reverse-charged, not recoverable",
+    "description": "A service listed in s. 16(2) supplied by a person outside Eswatini, taxed to the recipient who cannot deduct the tax",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2018-08-01",
+    "legal_reference": "Value Added Tax Act, 2011, s. 3(c) — tax is charged on the supply of imported services; s. 16(2) lists them (consultants, engineers, lawyers, accountants, data processing, financial and insurance transactions, supply of staff, hire of movable property, telecommunications, broadcasting, electronically supplied services); s. 16(3) — the recipient declares and pays the tax within 30 days of the earlier of invoice or payment; s. 16(4) — the obligation does not apply to a taxable person with the right to full deduction of input tax; regulation 18 — the reverse charge, and private individuals only above E5 000 a month. This code is for the recipient who cannot recover the tax (an exempt or partly exempt business): the self-charge is output tax with no input offset, so it lands in the cost account 6520. Whether a partly exempt recipient may recover part of it is for the accountant; the pack takes the prudent reading.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1R"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R"
+        },
+        {
+          "type": "tax",
+          "account": "6520"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "6520"
+        }
+      ]
+    },
+    "sequence": 150
+  }
+]
