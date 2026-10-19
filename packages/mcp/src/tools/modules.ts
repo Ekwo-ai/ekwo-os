@@ -2,8 +2,8 @@
  * The tools of the modules, and the loader that puts them on the server.
  *
  * A module is a schema of its own, so its tools are named after it —
- * `fixed_assets_list`, `budgets_variance` — and a model reading a tool list
- * can tell which module answers for what. The prefix is in `module.json`, and
+ * `fixed_assets_list`, `budgets_variance`, `crm_search` — and a model
+ * reading a tool list can tell which module answers for what. The prefix is in `module.json`, and
  * a test holds the tool names to it.
  *
  * **Nothing here decides what is installed.** `public.modules` does, and the
@@ -42,6 +42,17 @@ import {
   validateEinvoice,
   type EinvoiceTransport,
   type FiscalSystem,
+  crmBoard,
+  crmCard,
+  crmJoinSegment,
+  crmLeaveSegment,
+  crmLogActivity,
+  crmMoveDeal,
+  crmOpenDeal,
+  crmSearch,
+  crmSegments,
+  crmTimeline,
+  crmUpsertCard,
 } from '@ekwo-ai/core';
 import { companyId, isoDate, uuid } from './read.js';
 
@@ -1074,8 +1085,329 @@ const TAX: ModuleToolset = {
   ],
 };
 
+// ---------------------------------------------------------------------------
+// customer relationship — module code `crm`, schema `crm`
+//
+// Every tool is one function of the schema, called through the core — the same
+// function `ekwo crm …` calls. Which statuses, priorities, kinds and outcomes
+// exist is the schema's: a value is passed as it was given, and Postgres
+// refuses one it does not have. The refusals of the module are named
+// `crm_<code>: …` and travel up word for word.
+// ---------------------------------------------------------------------------
+
+const contactId = uuid.describe('The contact: a person or an organisation of public.contacts. crm_search or search_contacts finds it.');
+const segmentId = uuid.describe('The segment. crm_segments lists them.');
+const timestamp = z
+  .string()
+  .min(1)
+  .describe('A moment, ISO 8601 — a date, or a date and a time with its offset.');
+
+const CRM: ModuleToolset = {
+  code: 'crm',
+  prefix: 'crm',
+  schema: 'crm',
+  tools: [
+    {
+      verb: 'search',
+      title: 'Search the cards',
+      readOnly: true,
+      description:
+        'The contacts the company follows — one card each — filtered: a text found in the name, the e-mail or the organisation\'s name, a relationship status, a segment the contact is in now, a stage one of its deals is at, a country and a language (ISO codes; the organisation\'s where the person has none), an owner, no_outbound, active since or inactive since a moment (inactive includes a card on which nothing ever happened). Every filter is optional. Most recently active first. Each row is the contact, its organisation\'s name, its status, priority, owner, last activity and the slugs of its segments. A contact without a card is not here: crm_upsert_card creates one. Merged contacts are left out.',
+      input: z.object({
+        company_id: companyId,
+        query: z.string().optional().describe('A text found in the name, the e-mail or the organisation\'s name.'),
+        status: z.string().optional().describe('A relationship status, as the schema spells it (crm.relationship_status); a value it does not have is refused.'),
+        segment_id: segmentId.optional(),
+        stage_id: uuid.optional().describe('A stage one of the contact\'s deals is at. crm_board lists the stages.'),
+        country: z.string().length(2).optional().describe('ISO 3166-1 alpha-2.'),
+        language: z.string().length(2).optional().describe('ISO 639-1.'),
+        owner: z.string().optional().describe('The handle on the card, exactly.'),
+        no_outbound: z.boolean().optional().describe('true: only the contacts nobody may approach; false: only the others.'),
+        active_since: timestamp.optional().describe('Something happened on or after this moment.'),
+        inactive_since: timestamp.optional().describe('Nothing has happened since this moment, or ever.'),
+        limit: z.number().int().min(1).max(200).optional().describe('At most this many cards. 50 by default.'),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmSearch(backend, {
+            company_id: args['company_id'] as unknown as string,
+            query: args['query'],
+            status: args['status'],
+            segment_id: args['segment_id'],
+            stage_id: args['stage_id'],
+            country: args['country'],
+            language: args['language'],
+            owner: args['owner'],
+            no_outbound: args['no_outbound'],
+            active_since: args['active_since'],
+            inactive_since: args['inactive_since'],
+            limit: args['limit'],
+          }),
+        );
+      },
+    },
+    {
+      verb: 'card',
+      title: 'One contact, whole',
+      readOnly: true,
+      description:
+        'Everything on one contact in one object: the contact as the books hold it (its contact_type says whether it is a prospect — other — or a customer), its organisation, its card (null when it has none yet), the segments it is in now, the open deals with it — for an organisation, with its people too — and its 20 latest activities. Read this before writing anything about a contact. A contact of another company is refused, crm_unknown_contact.',
+      input: z.object({ company_id: companyId, contact_id: contactId }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmCard(backend, {
+            company_id: args['company_id'] as unknown as string,
+            contact_id: args['contact_id'] as unknown as string,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'segments',
+      title: 'The segments',
+      readOnly: true,
+      description:
+        'Every segment of the company as a tree — a taxonomy branch, a target segment, a cohort, a brand — each with its parent, its depth, the path of slugs from its root, and how many contacts are in it now (one who left is not counted). A parent comes just before its children. Start here for crm_join_segment, crm_leave_segment or a search by segment.',
+      input: z.object({ company_id: companyId }),
+      async run(backend, args) {
+        return inSchema('crm', () => crmSegments(backend, { company_id: args['company_id'] as unknown as string }));
+      },
+    },
+    {
+      verb: 'board',
+      title: 'A pipeline, stage by stage',
+      readOnly: true,
+      description:
+        'A pipeline as a board: its stages in order — each open, won or lost — the deals at each stage with their contact, amount, currency, expected date and owner, how many there are, and the sum of the amounts by currency, for each stage and for the pipeline. Amounts are never added across currencies. Without pipeline_id, every pipeline of the company: that is where the pipeline and stage ids for crm_open_deal and crm_move_deal come from. Open deals only, unless include_closed. A company starts with no pipeline: one is created by its users, not by this server.',
+      input: z.object({
+        company_id: companyId,
+        pipeline_id: uuid.optional().describe('One pipeline. Left out, all of them.'),
+        include_closed: z.boolean().optional().describe('Show the deals already won or lost too.'),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmBoard(backend, {
+            company_id: args['company_id'] as unknown as string,
+            pipeline_id: args['pipeline_id'],
+            include_closed: args['include_closed'],
+          }),
+        );
+      },
+    },
+    {
+      verb: 'timeline',
+      title: 'What happened',
+      readOnly: true,
+      description:
+        'The activities of one contact, or of one deal — notes, e-mails, calls, meetings, messages, signals, enrichments, tasks, and the moves the module wrote itself — most recent first. Name a contact, a deal, or both. since keeps what happened from that moment on; kinds keeps those kinds only, as the schema spells them (crm.activity_kind), and a kind it does not have is refused.',
+      input: z.object({
+        company_id: companyId,
+        contact_id: contactId.optional(),
+        deal_id: uuid.optional().describe('A deal. crm_board or crm_card gives its id.'),
+        since: timestamp.optional(),
+        kinds: z.array(z.string().min(1)).min(1).optional().describe('Only these kinds of activity.'),
+        limit: z.number().int().min(1).max(200).optional().describe('At most this many. 50 by default.'),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmTimeline(backend, {
+            company_id: args['company_id'] as unknown as string,
+            contact_id: args['contact_id'],
+            deal_id: args['deal_id'],
+            since: args['since'],
+            kinds: args['kinds'] as unknown as string[] | undefined,
+            limit: args['limit'],
+          }),
+        );
+      },
+    },
+    {
+      verb: 'upsert_card',
+      title: 'Write a card',
+      readOnly: false,
+      description:
+        'Creates the card of a contact, or changes it: each key the patch names takes its value, every other field keeps its own. The keys are status (where the relationship stands, crm.relationship_status), priority (crm.priority), owner (a handle — a member, a team, an agent — free text), job_title, linkedin_url, source (where the contact came from), tags (a list of words, replacing the list there), no_outbound (true: nobody may approach this contact — respect it everywhere) and custom (a JSON object of your own fields, replacing the one there). Any other key is refused, crm_unknown_field, with the list. Read crm_card first, and ask the user before changing a status, an owner or no_outbound they did not mention.',
+      input: z.object({
+        company_id: companyId,
+        contact_id: contactId,
+        patch: z
+          .record(z.string(), z.unknown())
+          .describe('The fields to set: status, priority, owner, job_title, linkedin_url, source, tags, no_outbound, custom.'),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmUpsertCard(backend, {
+            company_id: args['company_id'] as unknown as string,
+            contact_id: args['contact_id'] as unknown as string,
+            patch: args['patch'] as unknown as Record<string, unknown>,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'log_activity',
+      title: 'Log an activity',
+      readOnly: false,
+      description:
+        'Writes one thing that happened with a contact — a note, an e-mail sent or received, a call, a meeting, a message, a signal read elsewhere, an enrichment, a task — optionally about one of the company\'s deals, and moves the card\'s last activity. kind is as the schema spells it (crm.activity_kind). When the activity was read from somewhere else, name source (the mailbox, the network, the calendar) and source_ref (its identifier there, a message-id): the same pair a second time writes nothing and returns the activity already kept, so an import can run twice. A source_ref without its source is refused, crm_bad_activity. Log what the user did or told you; never invent an exchange that did not happen.',
+      input: z.object({
+        company_id: companyId,
+        contact_id: contactId,
+        kind: z.string().min(1).describe('What happened, as crm.activity_kind spells it.'),
+        subject: z.string().optional(),
+        body: z.string().optional(),
+        deal_id: uuid.optional().describe('The deal it is about, of the same company.'),
+        actor: z.string().optional().describe('Who did it: a handle, free text.'),
+        occurred_at: timestamp.optional().describe('When it happened. Now when left out.'),
+        link: z.string().optional().describe('Where to read it: a URL.'),
+        payload: z.record(z.string(), z.unknown()).optional().describe('Anything else, as a JSON object.'),
+        source: z.string().optional().describe('Where it was read from.'),
+        source_ref: z.string().optional().describe('Its identifier at that source. Needs source.'),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmLogActivity(backend, {
+            company_id: args['company_id'] as unknown as string,
+            contact_id: args['contact_id'] as unknown as string,
+            kind: args['kind'] as unknown as string,
+            subject: args['subject'],
+            body: args['body'],
+            deal_id: args['deal_id'],
+            actor: args['actor'],
+            occurred_at: args['occurred_at'],
+            link: args['link'],
+            payload: args['payload'] as unknown as Record<string, unknown> | undefined,
+            source: args['source'],
+            source_ref: args['source_ref'],
+          }),
+        );
+      },
+    },
+    {
+      verb: 'join_segment',
+      title: 'Put a contact in a segment',
+      readOnly: false,
+      description:
+        'Puts a contact in a segment of the company, or back in it: a contact who had left is in again, with the same membership. added_by is who did it, a handle; note is why. A segment of another company is refused, crm_unknown_segment.',
+      input: z.object({
+        company_id: companyId,
+        segment_id: segmentId,
+        contact_id: contactId,
+        added_by: z.string().optional(),
+        note: z.string().optional(),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmJoinSegment(backend, {
+            company_id: args['company_id'] as unknown as string,
+            segment_id: args['segment_id'] as unknown as string,
+            contact_id: args['contact_id'] as unknown as string,
+            added_by: args['added_by'],
+            note: args['note'],
+          }),
+        );
+      },
+    },
+    {
+      verb: 'leave_segment',
+      title: 'Take a contact out of a segment',
+      readOnly: false,
+      description:
+        'Takes a contact out of a segment. The membership is kept with the moment it ended, so the history stays readable and crm_join_segment can put the contact back. A contact that was never in the segment is refused, crm_not_a_member.',
+      input: z.object({ company_id: companyId, segment_id: segmentId, contact_id: contactId }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmLeaveSegment(backend, {
+            company_id: args['company_id'] as unknown as string,
+            segment_id: args['segment_id'] as unknown as string,
+            contact_id: args['contact_id'] as unknown as string,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'open_deal',
+      title: 'Open a deal',
+      readOnly: false,
+      description:
+        'Opens a piece of business with one contact in one pipeline, at the first open stage of that pipeline. An amount is always in a currency: name currency_code (ISO 4217), or the company\'s own currency is taken. Nothing is written to the books. A pipeline of another company is refused, crm_unknown_pipeline; one with no open stage, crm_pipeline_without_open_stage. Ask the user before opening a deal they did not ask for.',
+      input: z.object({
+        company_id: companyId,
+        pipeline_id: uuid.describe('The pipeline. crm_board without pipeline_id lists them.'),
+        contact_id: contactId.describe('Who the business is with: a person or an organisation. The organisation becomes the customer if it is won.'),
+        title: z.string().min(1),
+        amount: z.union([z.string(), z.number()]).optional().describe('What it is worth, excluding tax.'),
+        currency_code: z.string().length(3).optional().describe('ISO 4217. The company\'s currency when left out.'),
+        expected_on: isoDate.optional().describe('When it is expected to close.'),
+        external_url: z.string().optional().describe('Where else it is followed: a URL.'),
+        owner: z.string().optional().describe('Who works it: a handle.'),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmOpenDeal(backend, {
+            company_id: args['company_id'] as unknown as string,
+            pipeline_id: args['pipeline_id'] as unknown as string,
+            contact_id: args['contact_id'] as unknown as string,
+            title: args['title'] as unknown as string,
+            amount: args['amount'] as unknown as string | number | undefined,
+            currency_code: args['currency_code'],
+            expected_on: args['expected_on'],
+            external_url: args['external_url'],
+            owner: args['owner'],
+          }),
+        );
+      },
+    },
+    {
+      verb: 'move_deal',
+      title: 'Move a deal',
+      readOnly: false,
+      description:
+        'Moves a deal to another stage of its own pipeline and logs the move as an activity. A won stage closes the deal and makes its party a customer — the organisation at the root of the contact\'s chain: a prospect becomes customer, a supplier becomes both — which also needs the right to write contacts; a lost stage closes it too; going back to an open stage opens it again. The same stage again changes nothing. A stage of another pipeline is refused, crm_stage_not_in_pipeline. Confirm with the user before moving a deal to won or lost.',
+      input: z.object({
+        company_id: companyId,
+        deal_id: uuid.describe('The deal. crm_board or crm_card gives its id.'),
+        stage_id: uuid.describe('The stage to move it to, of the same pipeline. crm_board lists them.'),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmMoveDeal(backend, {
+            company_id: args['company_id'] as unknown as string,
+            deal_id: args['deal_id'] as unknown as string,
+            stage_id: args['stage_id'] as unknown as string,
+          }),
+        );
+      },
+    },
+  ],
+  prompts: [
+    {
+      name: 'morning_review',
+      title: 'Where the relationships stand this morning',
+      description:
+        'The relationships that went quiet, the deals past their expected date, and what to suggest to the user — with nothing written without asking.',
+      args: {
+        company_id: 'The company.',
+        quiet_days: 'How many days without an activity make a relationship quiet. 14 if left empty.',
+      },
+      text: ({ company_id, quiet_days }) => {
+        const days = /^\d+$/.test(quiet_days ?? '') ? Number(quiet_days) : 14;
+        return [
+          `Review the customer relationships of company ${company_id} for this morning. Work through this in order and report what you find; write nothing without asking.`,
+          '',
+          `1. crm_search with inactive_since set to ${days} days before today: the cards on which nothing has happened for ${days} days or more. Leave out the ones with no_outbound. Group them by status and by owner.`,
+          '2. crm_board without pipeline_id: every open deal whose expected_on is already past, with its stage, its contact and its amount in its currency. Never add amounts of two currencies together.',
+          '3. For the three that matter most — a high priority, a large amount, a deal at a late stage — read crm_card and crm_timeline, and say in one sentence what last happened.',
+          '',
+          'Finish with what you suggest, one line each: who to get back to and why, which deal to move or to close, which card to mark dormant. Each suggestion is a question for the user. Only once they agree, write it with crm_log_activity, crm_upsert_card or crm_move_deal — and never write a contact no_outbound forbids approaching.',
+        ].join('\n');
+      },
+    },
+  ],
+};
+
 /** Every module this release knows how to expose, by module code. */
-export const MODULE_TOOLSETS: readonly ModuleToolset[] = [FIXED_ASSETS, BUDGETS, EINVOICING, TAX];
+export const MODULE_TOOLSETS: readonly ModuleToolset[] = [FIXED_ASSETS, BUDGETS, EINVOICING, TAX, CRM];
 
 /** The toolsets for a set of installed module codes, in a fixed order. */
 export function toolsetsFor(installed: readonly string[]): ModuleToolset[] {
