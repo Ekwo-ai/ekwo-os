@@ -34,6 +34,9 @@ const LATER = [
   // Replaces the guards of a posted line and of an issued document with the
   // bodies of MIGRATION, and its record names contacts by composite keys.
   '20261019090000_two_contacts_of_one_company_are_merged.sql',
+  // Replaces merge_contacts(), which answers a row of contact_merges, and
+  // contact_candidates(), which the migration before it defined.
+  '20261019104812_the_contacts_that_are_probably_one_party.sql',
 ];
 
 let db: PGlite;
