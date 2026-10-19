@@ -84,6 +84,7 @@ it. How a professional reviews a pack is in
 |---|---|
 | A country as a versioned pack, upgraded in place | **Done** — `ekwo pack status` and `ekwo pack upgrade` |
 | The rules of an invoice: numbering, payment terms, tax point, legal mentions, e-invoicing profile | **Done**, as pack data |
+| The fiscalisation of invoices: a record chained by a hash, a clearance by the authority before issue, the data reported | **Done**, as pack data and the `einvoicing` module; the call to an authority is the host's |
 | Opening balances and a year-end close | **Done** — `opening_balance()`, `close_fiscal_year()`, `reopen_fiscal_year()`, and the final close `close_fiscal_year_finally()`, required where the pack says so |
 | A tax engine beyond the European value added tax | **Done** — GST, sales and use taxes, withholding, non-recoverable and tax-inclusive taxes, several taxes on one line |
 | Taxes due on collection | **Done**; cash accounting as a ledger is not |
@@ -190,3 +191,58 @@ value is `earliest_of_delivery_or_payment`.
 
 **No TIN field.** Zimbabwe has a TIN (ten digits) and a VAT number (nine); the
 pack maps the TIN onto the registration number.
+
+## From Malaysia
+
+**An invoice the authority validates before it is issued.** Under the Income
+Tax Act 1967, s. 82C, and the Income Tax (Issuance of Electronic Invoice) Rules
+2024, an e-Invoice is submitted to LHDNM's MyInvois system — through its
+portal, its API or a Peppol service provider — and is the taxpayer's only once
+MyInvois has validated it: LHDNM returns a Unique Identifier Number, the moment
+of validation and the link to its validation page, which the e-Invoice carries
+as a QR code when it is shared with the buyer. Within 72 hours of the
+validation the supplier may cancel it and the buyer reject it, each with a
+reason; afterwards it is corrected by a credit note. The core holds this shape
+as a **clearance** regime of `einvoicing.fiscalisation`, beside the chained
+record and the report, written after comparing MyInvois with Poland's KSeF and
+Italy's SdI: the pack says where the verification link comes from (here,
+`returned`) and the two windows (`PT72H`), and the `einvoicing` module keeps
+each submission in `einvoicing.clearances` — `submitted`, `validated` with the
+identifier, the moment and the link, `rejected` by the authority or the buyer,
+`cancelled` — refusing every transition that cannot have happened and every
+cancellation or rejection after its window. The status names each posted sale
+without a validation. What would close the rest: a brick that writes the
+MyInvois document (`myinvois` has none, and the status says
+`format_without_brick`), and a host that calls MyInvois — its authentication,
+and whatever signature the document version asks — and reports back through
+`record_clearance_submission()` and `record_clearance_answer()`. Same family as
+Poland (KSeF), Italy (SdI), Saudi Arabia (ZATCA, phase 2), India (IRN), Mexico
+(CFDI) and Turkey, each a pack that can declare the same block.
+
+**An obligation by size, and a threshold that moves by guideline.** LHDNM
+phased the duty by annual turnover or revenue — above RM100 million from
+1 August 2024, RM25 million from 1 January 2025, RM5 million from 1 July 2025,
+RM1 million from 1 January 2026 — and its guideline sets the threshold below
+which a taxpayer is exempted, raised to RM1,000,000 in December 2025 and to
+RM3,000,000 by version 4.8 of 30 August 2026, § 1.6.1(e). The pack carries
+both as dated data: each step of `mandatory_from` with its `turnover_above`,
+and `exemption` as a history that gains an entry when the threshold moves.
+Two gaps stay. The books do not hold a company's turnover, so the status
+cannot tell which step binds a company, or whether it is exempted: it counts
+from the earliest step and says the threshold in force, and the answer is the
+company's. And the RM1,000,000 threshold is not an entry, because no text the
+pack cites gives the day it took effect; the RM3,000,000 one is dated from the
+guideline that states it.
+
+**Cancelled at the authority, undone in the books.** A cancellation in
+MyInvois voids the e-Invoice; the ledger still holds the posted sale until
+`cancel_document()` undoes it, with a credit note in the books. The status
+lists a sale cancelled at the authority and still posted, and does not count
+the credit note that undoes it as missing a validation of its own. A buyer's
+rejection leaves the e-Invoice valid until the supplier cancels it; the status
+lists it apart.
+
+**No VAT number, and a TIN with no scheme.** Malaysia levies Sales Tax and
+Service Tax, not a value added tax, so `vat_scheme` is empty; the Tax
+Identification Number is a LHDNM identifier with no ISO 6523 scheme found, and
+the party scheme is the SSM registration number, `0230`.
