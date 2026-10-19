@@ -49,6 +49,15 @@ export interface EinvoiceSource {
   preceding: { number: string; issueDate: string | null; documentId?: string; identifier?: string | null } | null;
   /** The moment the file is issued, ISO 8601 with its offset, for a format that carries it. */
   issuedAt?: string;
+  /**
+   * Where the document is in another currency than its company's: the
+   * company's currency, the rate the document was posted at — units of the
+   * document's currency for one unit of the company's, as
+   * `documents.exchange_rate` holds it — and, by tax code, the tax as its
+   * entry posted it in the company's currency. Null or absent for a
+   * document in the company's currency.
+   */
+  accounting?: { currency: string; rate: string; taxes: Record<string, string> } | null;
 }
 
 /** What a writer hands back. */
@@ -438,10 +447,14 @@ const FACTUR_X_EN16931: EinvoiceFormat = {
 //   * a payment means of the books (UNTDID 4461) is written as the payment
 //     mode of the same meaning in the format's list, where there is one.
 //
+// A document in another currency than its company's carries the rate it was
+// posted at, inverted to the way the format states it, and its tax as the
+// entry posted it in the company's currency (`EinvoiceSource.accounting`),
+// which the brick writes as the tax currency.
+//
 // The version is the brick's default, 1.1, which the host signs before it
 // submits; the core signs nothing and sends nothing. What the books do not
-// hold — a foreign currency's rate to the ringgit, a mode with no
-// counterpart — the brick reports by name.
+// hold — a mode with no counterpart — the brick reports by name.
 // ---------------------------------------------------------------------------
 
 /** UNTDID 4461 payment means, by the payment mode of the format's list that says the same thing. */
@@ -479,6 +492,26 @@ function partyIdentifiers(identifiers: Record<string, string>): PartyIdentifiers
   return party;
 }
 
+/**
+ * The inverse of a rate, to `places` decimals, half away from zero, in exact
+ * decimal arithmetic. MyInvois states the rate as ringgit for one unit of
+ * the document's currency; the books hold it the other way round, to eight
+ * decimals, and its inverse is written to as many.
+ */
+export function invertRate(rate: string, places = 8): string {
+  const match = /^(\d+)(?:\.(\d+))?$/.exec(rate.trim());
+  if (match === null) throw new BooksError(`einvoice_unwritable: the exchange rate ${rate} is not a positive decimal`);
+  const fraction = match[2] ?? '';
+  const units = BigInt(`${match[1] as string}${fraction}`);
+  if (units === 0n) throw new BooksError('einvoice_unwritable: an exchange rate of zero has no inverse');
+  const numerator = 10n ** BigInt(fraction.length + places);
+  const scaled = (2n * numerator + units) / (2n * units);
+  const digits = scaled.toString().padStart(places + 1, '0');
+  const whole = digits.slice(0, digits.length - places);
+  const decimals = digits.slice(digits.length - places).replace(/0+$/, '');
+  return decimals === '' ? whole : `${whole}.${decimals}`;
+}
+
 function writeMyInvois(source: EinvoiceSource): WrittenEinvoice {
   const { header } = source;
   if (source.issuedAt === undefined) {
@@ -499,6 +532,13 @@ function writeMyInvois(source: EinvoiceSource): WrittenEinvoice {
     },
     buyer: partyIdentifiers(buyer),
   };
+  // A document in another currency: its rate, and its tax as the entry posted it in the company's currency.
+  const accounting = source.accounting ?? null;
+  if (accounting !== null) {
+    input.taxCurrency = accounting.currency;
+    input.exchangeRate = invertRate(accounting.rate);
+    input.taxes = source.taxes.map((tax) => ({ ...tax, tax_charged_in_tax_currency: accounting.taxes[String(tax['tax_code'])] ?? null }));
+  }
   const mode = PAYMENT_MODES[text(header['payment_means_code']) ?? ''];
   if (mode !== undefined) input.paymentMode = mode;
   const credited = source.preceding;

@@ -268,6 +268,10 @@ export function check(model: DocumentModel): Violation[] {
     if (group.type !== null && taxes.every((each): each is Decimal => each !== null)) {
       math(violations, 'TaxSubtotal/TaxAmount', `Total Tax Amount Per Tax Type ${group.type}`, group.tax, sum(taxes));
     }
+    const inTaxCurrency = lines.map((each) => each.tax.amountInTaxCurrency);
+    if (model.taxCurrency !== null && group.type !== null && group.taxInTaxCurrency !== null && inTaxCurrency.every((each): each is Decimal => each !== null)) {
+      math(violations, 'TaxSubtotal/TaxAmount', `Total Tax Amount Per Tax Type ${group.type} in ${model.taxCurrency}`, group.taxInTaxCurrency, sum(inTaxCurrency));
+    }
     if (group.type !== null && group.type !== 'E') {
       math(violations, 'TaxSubtotal/TaxableAmount', `Total Taxable Amount Per Tax Type ${group.type}`, group.base, sum(lines.map((each) => each.net)));
     }

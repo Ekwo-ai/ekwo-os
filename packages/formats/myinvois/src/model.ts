@@ -76,6 +76,8 @@ export interface LineTaxModel {
   rate: Decimal | null;
   base: Decimal;
   amount: Decimal | null;
+  /** The same tax in the tax currency of the document, where it has one. */
+  amountInTaxCurrency: Decimal | null;
   reason: string | null;
 }
 
@@ -99,6 +101,8 @@ export interface TaxGroupModel {
   type: string | null;
   base: Decimal;
   tax: Decimal;
+  /** The same tax in the tax currency of the document, where it has one. */
+  taxInTaxCurrency: Decimal | null;
   reason: string | null;
 }
 
@@ -112,6 +116,10 @@ export interface DocumentModel {
   issueTime: string;
   currency: string;
   exchangeRate: Decimal | null;
+  /** `cbc:TaxCurrencyCode`, where every tax amount is written in it: null, they are in `currency`. */
+  taxCurrency: string | null;
+  /** The total tax in `taxCurrency`. */
+  taxTotalInTaxCurrency: Decimal | null;
   billReference: string | null;
   adjusts: AdjustedDocument[];
   supplier: PartyModel;
@@ -414,6 +422,7 @@ export function buildModel(input: MyInvoisInput): { model: DocumentModel; violat
         rate: optionalAmount(row.vat_rate, `the tax rate of line ${id}`) ?? optionalAmount(taxRow?.tax_rate, 'a tax rate'),
         base: net,
         amount: taxes[index] ?? null,
+        amountInTaxCurrency: null,
         reason: text(row.exemption_reason) ?? text(taxRow?.exemption_reason),
       },
     };
@@ -433,7 +442,7 @@ export function buildModel(input: MyInvoisInput): { model: DocumentModel; violat
         message: `The tax ${text(row.tax_code) ?? 'of the breakdown'} carries no LHDNM tax type (myinvois_tax_type), and ${types.size > 1 ? `its lines say ${[...types].sort().join(' and ')}` : 'no line says one'}.`,
       });
     }
-    const group = groups.get(type) ?? { type, base: ZERO, tax: ZERO, reason: null, reasons: new Set<string>() };
+    const group = groups.get(type) ?? { type, base: ZERO, tax: ZERO, taxInTaxCurrency: null, reason: null, reasons: new Set<string>() };
     group.base = add(group.base, amount(row.base_amount, 'a base of the breakdown'));
     group.tax = add(group.tax, amount(row.tax_charged, 'a tax of the breakdown'));
     // The reasons of the group are those of its lines, each the line's own or
@@ -441,7 +450,49 @@ export function buildModel(input: MyInvoisInput): { model: DocumentModel; violat
     const own = lines.filter((_, index) => lineRows[index] === row);
     const reasons = own.length > 0 ? own.map((line) => line.tax.reason) : [text(row.exemption_reason)];
     for (const reason of reasons) if (reason !== null) group.reasons.add(reason);
+    const inTaxCurrency = optionalAmount(row.tax_charged_in_tax_currency, `the tax ${text(row.tax_code) ?? ''} in the tax currency`);
+    if (inTaxCurrency !== null) group.taxInTaxCurrency = add(group.taxInTaxCurrency ?? ZERO, inTaxCurrency);
     groups.set(type, group);
+  }
+
+  // The tax of a document in another currency, in the currency it is accounted in.
+  let taxCurrency = text(input.taxCurrency)?.toUpperCase() ?? null;
+  if (taxCurrency === currency) taxCurrency = null;
+  let taxTotalInTaxCurrency: Decimal | null = null;
+  if (taxCurrency !== null && taxCurrency !== RINGGIT) {
+    violations.push({
+      code: 'input:tax_currency',
+      message: `The tax of this document is accounted in ${taxCurrency}, and MyInvois writes the tax of a document in another currency in ringgit (cbc:TaxCurrencyCode ${RINGGIT}); it is written in ${currency}, the document's currency.`,
+    });
+    taxCurrency = null;
+  }
+  if (taxCurrency !== null) {
+    const inTaxCurrency = rows.map((row) => optionalAmount(row.tax_charged_in_tax_currency, `the tax ${text(row.tax_code) ?? ''} in ${taxCurrency as string}`));
+    const missing = rows.filter((_, index) => inTaxCurrency[index] === null).map((row) => text(row.tax_code) ?? '?');
+    if (missing.length > 0) {
+      violations.push({
+        code: 'input:tax_in_tax_currency',
+        message: `The books hold no amount in ${taxCurrency} for the tax ${missing.join(', ')} of this document in ${currency}: the tax is written in ${currency}, the document's currency.`,
+      });
+      taxCurrency = null;
+    } else {
+      taxTotalInTaxCurrency = sum(inTaxCurrency as Decimal[]);
+      // A line's tax in that currency is a figure the books hold only where the line is alone in its tax, or the tax is nil.
+      for (const [index, line] of lines.entries()) {
+        const row = lineRows[index] ?? null;
+        const at = row === null ? -1 : rows.indexOf(row);
+        const posted = at < 0 ? null : (inTaxCurrency[at] as Decimal);
+        const alone = row !== null && lineRows.filter((each) => each === row).length === 1;
+        if (posted !== null && (alone || isZero(posted))) line.tax.amountInTaxCurrency = posted;
+        else {
+          violations.push({
+            code: 'input:line_tax_in_tax_currency',
+            line: line.id,
+            message: `The books hold the tax in ${taxCurrency} of the group this line shares with others, posted once, and not the tax of the line: splitting it is a rounding the books have not made.`,
+          });
+        }
+      }
+    }
   }
 
   const rate = optionalAmount(input.exchangeRate, 'the exchange rate');
@@ -481,6 +532,8 @@ export function buildModel(input: MyInvoisInput): { model: DocumentModel; violat
       issueTime: issued.time,
       currency,
       exchangeRate: currency === RINGGIT ? null : rate,
+      taxCurrency,
+      taxTotalInTaxCurrency,
       billReference: text(header.payment_reference),
       adjusts,
       supplier,
@@ -491,6 +544,7 @@ export function buildModel(input: MyInvoisInput): { model: DocumentModel; violat
       taxTotal: amount(header.amount_tax, 'the total tax'),
       groups: [...groups.values()].map(({ reasons, ...group }) => ({
         ...group,
+        taxInTaxCurrency: taxCurrency === null ? null : group.taxInTaxCurrency,
         // Several reasons for one tax type are several sentences, and a
         // sentence can be joined to another.
         reason: reasons.size > 0 ? [...reasons].join(' ') : null,

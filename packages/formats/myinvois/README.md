@@ -60,6 +60,7 @@ interface MyInvoisInput {
   buyer: PartyIdentifiers;
   adjusts?: { number: string; uuid: string }[];   // what a note adjusts
   exchangeRate?: Numeric;                 // ringgit per unit, where the currency is not MYR
+  taxCurrency?: string;                   // 'MYR': the tax written in ringgit, from tax_charged_in_tax_currency
   paymentMode?: string;                   // a code of LHDNM's payment modes
 }
 
@@ -215,12 +216,23 @@ that a document is not a duplicate, and the signature.
 | `item_name`, else `item_description` | `cac:Item/cbc:Description` |
 | `vat_rate` | `cac:TaxSubtotal/cbc:Percent` |
 | `tax_code`, else `vat_category` and `vat_rate` | Which tax of the breakdown the line was booked under |
+| `myinvois_classification` | `cac:CommodityClassification/cbc:ItemClassificationCode[@listID="CLASS"]`, one code or several separated by commas, each checked against LHDNM's list |
+| `exemption_reason` | The `TaxExemptionReason` of this line, over the one of its tax |
 
 ### `document_tax_summary`: the taxes, one `cac:TaxSubtotal` per tax type
 
 `base_amount` and `tax_charged` of every row of one LHDNM tax type are added
 into one `TaxableAmount` and one `TaxAmount`; `exemption_reason` is the
-`TaxExemptionReason` of an exemption (`E`). `cac:TaxScheme/cbc:ID` is `OTH`
+`TaxExemptionReason` of an exemption (`E`) — in the breakdown, the reasons
+of its lines, each the line's own or its tax's — and `TaxableAmount` the
+amount exempted. Where `taxCurrency` is given for a document in another
+currency, as LHDNM's foreign currency sample does, `cbc:TaxCurrencyCode` is
+written, and every `TaxAmount` — of the document, of each subtotal, of each
+line — is in it, from `tax_charged_in_tax_currency` of each row: the tax as
+the books posted it in ringgit. The taxable amounts and the totals stay in
+the document's currency. A line that shares its tax with others has no tax
+of its own in ringgit, which the books posted once for the group, and is
+reported (`input:line_tax_in_tax_currency`). `cac:TaxScheme/cbc:ID` is `OTH`
 in the scheme `UN/ECE 5153`, agency `6`, as every sample of the SDK writes
 it: Malaysia's taxes are not a value added tax.
 
@@ -269,14 +281,6 @@ the books do not hold it, or because it is not a document's to do:
   the Incoterms, the free trade agreement, the certified exporter's
   authorisation, the product tariff code (`PTC`) and the country of origin:
   the views carry none of them.
-- **The tax in ringgit of a document in another currency.** LHDNM's foreign
-  currency sample writes `TaxCurrencyCode` `MYR` and its tax amounts in
-  ringgit; its currency validator also says that every amount is in the
-  document's currency (DC502), and that tax amounts are in `TaxCurrencyCode`
-  where one is given (DC501). The books hold the tax of a document in that
-  document's currency, so this package writes every amount in it, gives the
-  exchange rate, and leaves `TaxCurrencyCode`, which is optional, out. That
-  reading has not been checked against the sandbox.
 - **The special characters of a reason of exemption.** The SDK limits the
   text to letters, digits and `. - , ( )`, and its own example, "Reference
   No: ABC.TAX(S)012-3/4/56(7)", holds a colon and slashes. The rule is not

@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { MYINVOIS, MyInvoisError, type MyInvoisInput, type Row } from '../src/index.js';
-import { INVOICE, LINES, PURCHASE, V1_UUID, creditNote, invoice, selfBilled } from './fixtures.js';
+import { INVOICE, LINES, PURCHASE, SALES_TAX, V1_UUID, creditNote, invoice, selfBilled } from './fixtures.js';
 
 const fixtures = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
 
@@ -131,6 +131,43 @@ describe('an invoice of the Malaysian golden year', () => {
     });
     expect(document.TaxCurrencyCode).toBeUndefined();
     expect(written.content).not.toContain('"currencyID": "MYR"');
+  });
+
+  it('writes the tax of a document in another currency in ringgit where the books give it, as the foreign currency sample does', () => {
+    const taxes = [{ ...SALES_TAX, base_amount: '2000.00', tax_charged: '200.00', tax_charged_in_tax_currency: '944.00' }];
+    const written = MYINVOIS.write(
+      invoice({ header: { ...INVOICE, currency_code: 'USD' }, exchangeRate: '4.72', taxCurrency: 'MYR', taxes }),
+    );
+    expect(written.violations).toEqual([]);
+    const document = JSON.parse(written.content).Invoice[0];
+    expect(document.DocumentCurrencyCode).toEqual([{ _: 'USD' }]);
+    expect(document.TaxCurrencyCode).toEqual([{ _: 'MYR' }]);
+    expect(document.TaxTotal[0].TaxAmount).toEqual([{ _: 944, currencyID: 'MYR' }]);
+    expect(document.TaxTotal[0].TaxSubtotal[0].TaxableAmount).toEqual([{ _: 2000, currencyID: 'USD' }]);
+    expect(document.TaxTotal[0].TaxSubtotal[0].TaxAmount).toEqual([{ _: 944, currencyID: 'MYR' }]);
+    const line = document.InvoiceLine[0];
+    expect(line.TaxTotal[0].TaxAmount).toEqual([{ _: 944, currencyID: 'MYR' }]);
+    expect(line.LineExtensionAmount).toEqual([{ _: 2000, currencyID: 'USD' }]);
+    expect(document.LegalMonetaryTotal[0].PayableAmount).toEqual([{ _: 2200, currencyID: 'USD' }]);
+  });
+
+  it('writes the tax in the document currency, and says why, where the books hold none in ringgit or a line shares its tax', () => {
+    const header = { ...INVOICE, currency_code: 'USD' };
+    const missing = MYINVOIS.write(invoice({ header, exchangeRate: '4.72', taxCurrency: 'MYR' }));
+    expect(missing.violations.map((each) => each.code)).toEqual(['input:tax_in_tax_currency']);
+    expect(JSON.parse(missing.content).Invoice[0].TaxCurrencyCode).toBeUndefined();
+
+    const other = MYINVOIS.write(invoice({ header, exchangeRate: '4.72', taxCurrency: 'EUR' }));
+    expect(other.violations.map((each) => each.code)).toEqual(['input:tax_currency']);
+
+    const shared = [
+      { ...(LINES[1] as Row), sequence: 2, amount_untaxed: '1000.00', quantity: '10.0000' },
+      { ...(LINES[1] as Row), sequence: 3, amount_untaxed: '1000.00', quantity: '10.0000' },
+    ];
+    const split = MYINVOIS.write(
+      invoice({ header, lines: shared, exchangeRate: '4.72', taxCurrency: 'MYR', taxes: [{ ...SALES_TAX, tax_charged_in_tax_currency: '944.00' }] }),
+    );
+    expect(split.violations.map((each) => each.code)).toEqual(['input:line_tax_in_tax_currency', 'input:line_tax_in_tax_currency']);
   });
 
   it('writes a payment mode with the account to pay into', () => {

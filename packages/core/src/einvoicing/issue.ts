@@ -27,7 +27,7 @@
 
 import { createHash } from 'node:crypto';
 import { BooksError, type Backend, type Row } from '../books/backend.js';
-import { onlyVisible } from '../books/shared.js';
+import { companyCurrency, onlyVisible } from '../books/shared.js';
 import { fiscalRegime, generatedNow } from './fiscalisation.js';
 import { einvoiceFormat, type EinvoiceSource, type EinvoiceViolation } from './formats.js';
 import {
@@ -70,7 +70,7 @@ const LINES = [
 
 /** What the bricks read of `document_tax_summary`. */
 const TAXES = [
-  'tax_code', 'vat_category', 'tax_rate::text', 'base_amount::text', 'tax_charged::text',
+  'tax_id', 'tax_code', 'vat_category', 'tax_rate::text', 'base_amount::text', 'tax_charged::text',
   'exemption_code', 'exemption_reason',
 ];
 
@@ -139,9 +139,9 @@ export async function readEinvoiceSource(backend: Backend, documentId: string): 
       where: [{ column: 'document_id', op: 'eq', value: documentId }],
       order: [{ column: 'tax_code' }],
     }),
-    backend.select<{ reversed_document_id: string | null }>({
+    backend.select<{ reversed_document_id: string | null; entry_id: string | null; exchange_rate: string; company_id: string }>({
       table: 'documents',
-      columns: ['reversed_document_id'],
+      columns: ['reversed_document_id', 'entry_id', 'exchange_rate::text', 'company_id'],
       where: [{ column: 'id', op: 'eq', value: documentId }],
     }),
   ]);
@@ -156,7 +156,56 @@ export async function readEinvoiceSource(backend: Backend, documentId: string): 
     });
     if (original?.number) preceding = { number: original.number, issueDate: original.document_date ?? null, documentId: credited };
   }
-  return { header, lines, taxes, preceding, issuedAt: generatedNow() };
+  const accounting = documents[0] === undefined ? null : await accountingOf(backend, documents[0], header, taxes);
+  return { header, lines, taxes, preceding, issuedAt: generatedNow(), accounting };
+}
+
+/** Decimal texts added up exactly, at the largest scale among them. */
+function addDecimals(values: readonly string[]): string {
+  const scale = Math.max(0, ...values.map((value) => (value.split('.')[1] ?? '').length));
+  const total = values.reduce((sum, value) => {
+    const negative = value.trim().startsWith('-');
+    const [whole = '0', fraction = ''] = value.trim().replace(/^[-+]/, '').split('.');
+    const units = BigInt(`${whole}${fraction.padEnd(scale, '0')}`);
+    return sum + (negative ? -units : units);
+  }, 0n);
+  const negative = total < 0n;
+  const digits = (negative ? -total : total).toString().padStart(scale + 1, '0');
+  const out = scale === 0 ? digits : `${digits.slice(0, -scale)}.${digits.slice(-scale)}`;
+  return negative ? `-${out}` : out;
+}
+
+/**
+ * The company's side of a document in another currency: its currency, the
+ * rate the document was posted at, and the tax of each tax code as the
+ * entry posted it — the tax lines of the entry, in the company's currency,
+ * by tax. Null for a document in the company's currency, or not posted.
+ */
+async function accountingOf(
+  backend: Backend,
+  document: { entry_id: string | null; exchange_rate: string; company_id: string },
+  header: Row,
+  taxes: Row[],
+): Promise<EinvoiceSource['accounting']> {
+  const currency = await companyCurrency(backend, document.company_id);
+  if (String(header['currency_code']).toUpperCase() === currency.toUpperCase() || document.entry_id === null) return null;
+  const posted = await backend.select<{ tax_id: string | null; debit: string; credit: string }>({
+    table: 'entry_lines',
+    columns: ['tax_id', 'debit::text', 'credit::text'],
+    where: [
+      { column: 'entry_id', op: 'eq', value: document.entry_id },
+      { column: 'tax_line', op: 'eq', value: true },
+      { column: 'posting_type', op: 'eq', value: 'tax' },
+    ],
+  });
+  const byTax: Record<string, string> = {};
+  for (const tax of taxes) {
+    const lines = posted.filter((line) => line.tax_id !== null && line.tax_id === tax['tax_id']);
+    // A tax is charged on one side of the entry: its amount is the size of the difference.
+    const net = addDecimals(lines.flatMap((line) => [line.credit, `-${line.debit}`]));
+    byTax[String(tax['tax_code'])] = net.replace(/^-/, '');
+  }
+  return { currency, rate: document.exchange_rate, taxes: byTax };
 }
 
 /**

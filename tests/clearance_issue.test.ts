@@ -6,6 +6,7 @@ import {
   createDocument,
   EINVOICE_FORMATS,
   fiscalisationStatus,
+  invertRate,
   issueEinvoice,
   postDocument,
   recordClearanceAnswer,
@@ -273,10 +274,10 @@ describe('a line that says what the format asks of it', () => {
       lines: [
         {
           product_code: 'INVENTED-ITEM',
-          unit_price: scenarioLine.unit_price,
-          quantity: scenarioLine.quantity,
-          tax_code: scenarioLine.tax,
-          account_code: scenarioLine.account,
+          unit_price: scenarioLine.unit_price ?? undefined,
+          quantity: scenarioLine.quantity ?? undefined,
+          tax_code: scenarioLine.tax ?? undefined,
+          account_code: scenarioLine.account ?? undefined,
           attributes,
         },
       ],
@@ -342,5 +343,87 @@ describe('a line that says what the format asks of it', () => {
     const creditId = String((cancelled['credit_note'] as Row)['id']);
     const [line] = await db.query<{ attributes: Record<string, string> }>(`select attributes from document_lines where document_id = $1`, [creditId]).then((r) => r.rows);
     expect(line?.attributes).toEqual({ [CLASSIFICATION]: named, exemption_reason: OWN_REASON });
+  });
+});
+
+describe('a sale in another currency than the company\'s', () => {
+  const goods = saleRef((tax) => typeOf(tax) === '01');
+  const scenario = golden.documents.find((document) => document.ref === goods.ref) as PackGolden['documents'][number];
+  const scenarioLine = scenario.lines[0] as PackGolden['documents'][number]['lines'][number];
+  // Units of the document's currency for one unit of the company's, as the books hold a rate: its inverse is exact.
+  const RATE = '0.25000000';
+
+  it('states the rate the other way round, exactly to eight decimals', () => {
+    expect(invertRate('0.25000000')).toBe('4');
+    expect(invertRate('0.21186441')).toBe('4.71999993');
+    expect(invertRate('3')).toBe('0.33333333');
+    expect(invertRate('0.00213000')).toBe('469.48356808');
+    expect(() => invertRate('0')).toThrow(/zero/);
+    expect(() => invertRate('-1')).toThrow(/positive/);
+  });
+
+  it('carries its currency, the company\'s as the tax currency, the rate it was posted at and the tax its entry posted', async () => {
+    const company = await one<{ currency_code: string; decimals: number }>(
+      db,
+      `select c.currency_code, cur.decimal_places as decimals from companies c join currencies cur on cur.code = c.currency_code where c.id = $1`,
+      [companyId],
+    );
+    // Another currency of the reference data, with as many decimals as the company's.
+    const other = (
+      await one<{ code: string }>(
+        db,
+        `select code from currencies where code <> $1 and decimal_places = $2 order by code limit 1`,
+        [company.currency_code, company.decimals],
+      )
+    ).code;
+    const created = (await createDocument(backend, {
+      company_id: companyId,
+      doc_type: 'sale_invoice',
+      contact_id: contactOf(goods.contact),
+      document_date: scenario.date,
+      currency_code: other,
+      lines: [
+        {
+          name: scenarioLine.name ?? 'Invented goods',
+          unit_price: scenarioLine.unit_price ?? undefined,
+          quantity: scenarioLine.quantity ?? undefined,
+          tax_code: scenarioLine.tax ?? undefined,
+          account_code: scenarioLine.account ?? undefined,
+        },
+      ],
+    })) as Row;
+    const id = String((created['document'] as Row | undefined)?.['id'] ?? created['id']);
+    await db.query(`update documents set exchange_rate = $2 where id = $1`, [id, RATE]);
+    await postDocument(backend, { document_id: id });
+    await completeBuyer(contactOf(goods.contact));
+
+    const posted = await one<{ tax: string; doc_tax: string }>(
+      db,
+      `select (select sum(l.credit - l.debit)::text from entry_lines l
+                where l.entry_id = d.entry_id and l.tax_line and l.posting_type = 'tax') as tax,
+              d.amount_tax::text as doc_tax
+         from documents d where d.id = $1`,
+      [id],
+    );
+    expect(Number(posted.tax)).toBeGreaterThan(0);
+
+    const result = await validateEinvoice(backend, { document_id: id, issued_at: '2026-01-26T09:00:00+08:00', include_file: true });
+    expect(result['violations']).toEqual([]);
+    const document = (JSON.parse(String(result['file'])) as { Invoice: Record<string, unknown>[] }).Invoice[0] as Record<string, unknown>;
+    expect(document['DocumentCurrencyCode']).toEqual([{ _: other }]);
+    expect(document['TaxCurrencyCode']).toEqual([{ _: company.currency_code }]);
+    expect(document['TaxExchangeRate']).toEqual([
+      {
+        SourceCurrencyCode: [{ _: other }],
+        TargetCurrencyCode: [{ _: company.currency_code }],
+        CalculationRate: [{ _: 1 / Number(RATE) }],
+      },
+    ]);
+    const total = (document['TaxTotal'] as Record<string, unknown>[])[0] as Record<string, unknown>;
+    expect(total['TaxAmount']).toEqual([{ _: Number(posted.tax), currencyID: company.currency_code }]);
+    const monetary = (document['LegalMonetaryTotal'] as Record<string, unknown>[])[0] as Record<string, { currencyID: string }[]>;
+    expect(monetary['PayableAmount']?.[0]?.currencyID).toBe(other);
+    // The tax of the entry is the document's, converted at the rate it was posted at.
+    expect(Number(posted.tax)).toBeCloseTo(Number(posted.doc_tax) / Number(RATE), 2);
   });
 });

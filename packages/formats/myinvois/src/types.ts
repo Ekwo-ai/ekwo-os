@@ -154,6 +154,14 @@ export interface DocumentTaxRow {
    * at 10 % is Sales Tax in one pack and could be another tax in the next.
    */
   myinvois_tax_type?: string | null;
+  /**
+   * Not in the view today. Where the document is in another currency than
+   * the one its tax is accounted in (`taxCurrency`): this tax as the books
+   * posted it in that currency. `cac:TaxSubtotal/cbc:TaxAmount` is then
+   * written from it, in that currency, as LHDNM's foreign currency sample
+   * does.
+   */
+  tax_charged_in_tax_currency?: Numeric | null;
 }
 
 /** How LHDNM identifies a party besides its TIN. */
@@ -235,6 +243,13 @@ export interface MyInvoisInput {
   adjusts?: readonly AdjustedDocument[];
   /** `cac:TaxExchangeRate/cbc:CalculationRate`: ringgit per unit of the document's currency, where it is not MYR. */
   exchangeRate?: Numeric | null;
+  /**
+   * `cbc:TaxCurrencyCode`: the currency the tax of a document in another
+   * currency is accounted in, which MyInvois asks to be the ringgit. Given,
+   * every tax amount is written in it, from `tax_charged_in_tax_currency` of
+   * each tax; absent, every amount is in the document's currency.
+   */
+  taxCurrency?: string | null;
   /** `cac:PaymentMeans/cbc:PaymentMeansCode`, a code of LHDNM's list of payment modes. */
   paymentMode?: string | null;
 }

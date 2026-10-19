@@ -297,9 +297,13 @@ From the books, by what each column already means:
 What a sale of this pack's golden year gives, once both parties are complete:
 a sale under `01`, `02`, `06` or `E` carries no violation, the reason of an
 exemption being the tax's or the line's; a credit note is reported until the invoice
-it credits has been validated (`input:adjusts`); a document in another
-currency is reported until the books publish its rate to the ringgit
-(`input:exchange_rate`).
+it credits has been validated (`input:adjusts`). A document in another
+currency carries its currency, the ringgit as its tax currency, the rate it
+was posted at — inverted to ringgit for one unit, as MyInvois states it — and
+the tax its entry posted in ringgit, as LHDNM's foreign currency sample
+writes them; where several lines share one tax, the tax of each line in
+ringgit is not in the books and is reported
+(`input:line_tax_in_tax_currency`).
 
 **The validation link and the QR code.** LHDNM answers a valid document
 with its Unique Identifier Number (`uuid`), the moment of validation

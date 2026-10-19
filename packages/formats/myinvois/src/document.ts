@@ -61,16 +61,22 @@ function category(type: string | null, reason: string | null) {
   ]);
 }
 
-function subtotal(model: TaxGroupModel, currency: string) {
+/**
+ * A subtotal of the breakdown: its base in the document's currency, its tax
+ * in the tax currency where the document has one — LHDNM's foreign currency
+ * sample writes them so.
+ */
+function subtotal(model: TaxGroupModel, currency: string, taxCurrency: string | null) {
   return group('TaxSubtotal', [
     money('TaxableAmount', model.base, currency),
-    money('TaxAmount', model.tax, currency),
+    taxCurrency === null ? money('TaxAmount', model.tax, currency) : money('TaxAmount', model.taxInTaxCurrency, taxCurrency),
     category(model.type, model.reason),
   ]);
 }
 
-function line(model: LineModel, currency: string) {
+function line(model: LineModel, currency: string, taxCurrency: string | null) {
   const tax = model.tax;
+  const taxAmount = taxCurrency === null ? money('TaxAmount', tax.amount, currency) : money('TaxAmount', tax.amountInTaxCurrency, taxCurrency);
   return group('InvoiceLine', [
     leaf('ID', { text: model.id }),
     number('InvoicedQuantity', model.quantity, { unitCode: model.unitCode }),
@@ -83,10 +89,10 @@ function line(model: LineModel, currency: string) {
           money('Amount', model.discount.amount, currency),
         ]),
     group('TaxTotal', [
-      money('TaxAmount', tax.amount, currency),
+      taxAmount,
       group('TaxSubtotal', [
         money('TaxableAmount', tax.base, currency),
-        money('TaxAmount', tax.amount, currency),
+        taxAmount,
         number('Percent', tax.rate),
         category(tax.type, tax.reason),
       ]),
@@ -110,6 +116,7 @@ export function documentOf(model: DocumentModel): UblElement[] {
     leaf('IssueTime', { text: model.issueTime }),
     leaf('InvoiceTypeCode', { text: model.typeCode }, { listVersionID: model.version }),
     leaf('DocumentCurrencyCode', { text: currency }),
+    model.taxCurrency === null ? null : leaf('TaxCurrencyCode', { text: model.taxCurrency }),
     ...model.adjusts.map((each) =>
       group('BillingReference', [
         group('InvoiceDocumentReference', [leaf('ID', textOf(each.number)), leaf('UUID', textOf(each.uuid))]),
@@ -133,8 +140,10 @@ export function documentOf(model: DocumentModel): UblElement[] {
           number('CalculationRate', model.exchangeRate),
         ]),
     group('TaxTotal', [
-      money('TaxAmount', model.taxTotal, currency),
-      ...model.groups.map((each) => subtotal(each, currency)),
+      model.taxCurrency === null
+        ? money('TaxAmount', model.taxTotal, currency)
+        : money('TaxAmount', model.taxTotalInTaxCurrency, model.taxCurrency),
+      ...model.groups.map((each) => subtotal(each, currency, model.taxCurrency)),
     ]),
     // There is no allowance or charge on the document in the books, so the
     // sum of the lines and the total excluding tax are one figure, and the
@@ -146,7 +155,7 @@ export function documentOf(model: DocumentModel): UblElement[] {
       money('TaxInclusiveAmount', model.taxInclusive, currency),
       money('PayableAmount', model.taxInclusive, currency),
     ]),
-    ...model.lines.map((each) => line(each, currency)),
+    ...model.lines.map((each) => line(each, currency, model.taxCurrency)),
   ];
   return elements.filter((element): element is UblElement => element !== null);
 }
