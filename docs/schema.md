@@ -2845,7 +2845,7 @@ Constraints:
 
 - `CHECK ((jsonb_typeof(custom) = 'object'::text))`
 - `PRIMARY KEY (id)`
-- `UNIQUE (contact_id)`
+- `UNIQUE (company_id, contact_id)`
 
 <a id="crm-deals"></a>
 
@@ -2921,7 +2921,7 @@ A contact in a segment. A contact who leaves keeps the row, with left_at set; jo
 Constraints:
 
 - `PRIMARY KEY (id)`
-- `UNIQUE (segment_id, contact_id)`
+- `UNIQUE (company_id, segment_id, contact_id)`
 
 <a id="crm-segments"></a>
 
@@ -2969,8 +2969,8 @@ One step of a pipeline, in the order of position. A deal opens at the first open
 Constraints:
 
 - `PRIMARY KEY (id)`
+- `UNIQUE (company_id, pipeline_id, "position")`
 - `UNIQUE (id, pipeline_id)`
-- `UNIQUE (pipeline_id, "position")`
 
 ### Functions
 

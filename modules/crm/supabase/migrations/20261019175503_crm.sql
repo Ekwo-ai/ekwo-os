@@ -95,7 +95,10 @@ create table crm.cards (
   last_activity_at timestamptz,
   created_at       timestamptz not null default now(),
   updated_at       timestamptz not null default now(),
-  unique (contact_id),
+  -- One card per contact. The company is in the key on purpose: a row that
+  -- names a contact of another company must fail on the foreign key, never
+  -- answer "duplicate" and so say that the other company follows it.
+  unique (company_id, contact_id),
   foreign key (contact_id, company_id) references public.contacts (id, company_id) on delete cascade,
   constraint crm_cards_custom_object check (jsonb_typeof(custom) = 'object')
 );
@@ -168,7 +171,8 @@ create table crm.segment_members (
   note        text,
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now(),
-  unique (segment_id, contact_id),
+  -- The company leads the key, for the same reason as on cards.
+  unique (company_id, segment_id, contact_id),
   foreign key (segment_id, company_id) references crm.segments (id, company_id) on delete cascade,
   foreign key (contact_id, company_id) references public.contacts (id, company_id) on delete cascade
 );
@@ -220,7 +224,9 @@ create table crm.stages (
   outcome     crm.stage_outcome not null default 'open',
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now(),
-  unique (pipeline_id, position),
+  -- The company leads the key: a stage named with the pipeline of another
+  -- company fails on the foreign key, never on "duplicate".
+  unique (company_id, pipeline_id, position),
   unique (id, pipeline_id),
   foreign key (pipeline_id, company_id) references crm.pipelines (id, company_id) on delete cascade
 );
@@ -274,6 +280,8 @@ create unique index crm_deals_id_company_idx on crm.deals (id, company_id);
 create index crm_deals_contact_company_idx on crm.deals (contact_id, company_id);
 create index crm_deals_pipeline_company_idx on crm.deals (pipeline_id, company_id);
 create index crm_deals_stage_pipeline_idx on crm.deals (stage_id, pipeline_id);
+create index crm_deals_company_idx on crm.deals (company_id);
+create index crm_deals_currency_idx on crm.deals (currency_code);
 
 create trigger crm_deals_set_updated_at
   before update on crm.deals
@@ -532,7 +540,7 @@ begin
   end if;
 
   insert into crm.cards (company_id, contact_id) values (p_company_id, p_contact_id)
-  on conflict (contact_id) do nothing;
+  on conflict (company_id, contact_id) do nothing;
   select * into v_card from crm.cards k
    where k.contact_id = p_contact_id and k.company_id = p_company_id
    for update;
@@ -634,7 +642,7 @@ begin
   perform crm.require(p_company_id, 'crm.write', 'putting a contact in a segment');
   insert into crm.segment_members (company_id, segment_id, contact_id, added_by, note)
   values (p_company_id, p_segment_id, p_contact_id, p_added_by, p_note)
-  on conflict (segment_id, contact_id) do update
+  on conflict (company_id, segment_id, contact_id) do update
      set left_at   = null,
          joined_at = case when crm.segment_members.left_at is null then crm.segment_members.joined_at else now() end,
          added_by  = case when crm.segment_members.left_at is null
