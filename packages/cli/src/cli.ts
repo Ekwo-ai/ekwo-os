@@ -179,10 +179,10 @@ ${bold('Connecting')} ${dim('(every command)')}
               a fee or a charge the line is net of in the same entry, and
               --extra alone settles a bank charge. It balances to the cent.
   ${cyan('analytic')}    axes — the analytic axes of the company and their values; report
-              --axis <code> --from <date> --to <date> — the income, expense
-              and result of each value of the axis, from the posted ledger,
-              and the part no share of the axis reaches. They add up to the
-              result of the period.
+              --axis <code> --from <date> --to <date> — the income, expense,
+              result and fixed-asset movement of each value of the axis, from
+              the posted ledger, a parent with the subtotal of the values
+              below it, the part no share of the axis reaches, and the total.
   ${cyan('import')}      <source> <file>… — books kept elsewhere, whole or not at all:
               trial-balance, fec, journal-items, journal-report,
               transaction-journal, xaf, or the export of another ledger by

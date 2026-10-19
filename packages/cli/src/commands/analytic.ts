@@ -4,9 +4,9 @@
  * `list_analytic_axes` and `analytic_report`.
  *
  * The report is `analytic_report()` of the schema: the result of each value
- * of one axis, read from the posted ledger, and the part of the income
- * statement no share of the axis reaches. Every figure is the database's and
- * is printed as it came (decision 0056).
+ * of one axis, read from the posted ledger, a parent with the subtotal of
+ * the values below it, the part no share of the axis reaches, and the total.
+ * Every figure is the database's and is printed as it came (decision 0056).
  */
 
 import { analyticReport, listAnalyticAxes } from '@ekwo-ai/core';
@@ -38,7 +38,8 @@ async function axes(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   heading(`Analytic axes of ${company.name}`);
   if (result.axes.length === 0) note(dim('None.'));
   for (const axis of result.axes) {
-    note(`${text(axis['code'])} ${dim(text(axis['name']))}${axis['active'] === false ? dim(' (retired)') : ''}`);
+    const required = axis['required_on'] !== undefined && axis['required_on'] !== 'none' ? dim(` (required on ${text(axis['required_on'])})`) : '';
+    note(`${text(axis['code'])} ${dim(text(axis['name']))}${axis['active'] === false ? dim(' (retired)') : ''}${required}`);
     table(
       [{ title: 'code' }, { title: 'name' }, { title: 'active' }],
       axis.values.map((value) => [text(value['code']), text(value['name']), value['active'] === false ? 'no' : 'yes']),
@@ -59,15 +60,21 @@ async function report(args: ParsedArgs, deps: BooksDeps): Promise<number> {
     axis: Row;
     values: Row[];
     unassigned: Row | null;
+    total: Row | null;
     note: string;
   };
   setResult(result);
 
   heading(`Result by ${text(result.axis['code'])}, ${from} to ${to}, in ${company.name}`);
-  const rows = result.values.map((value) => [text(value['code']), text(value['name']), text(value['income']), text(value['expense']), text(value['result'])]);
-  if (result.unassigned !== null) {
-    rows.push([dim('unassigned'), '', text(result.unassigned['income']), text(result.unassigned['expense']), text(result.unassigned['result'])]);
-  }
+  const figures = (row: Row): string[] => [text(row['income']), text(row['expense']), text(row['result']), text(row['fixed_assets'])];
+  // A value below another is indented under it; its figures are the subtotal.
+  const rows = result.values.map((value) => [
+    '  '.repeat(typeof value['level'] === 'number' ? value['level'] : 0) + text(value['code']),
+    text(value['name']),
+    ...figures(value),
+  ]);
+  if (result.unassigned !== null) rows.push([dim('unassigned'), '', ...figures(result.unassigned)]);
+  if (result.total !== null) rows.push(['total', '', ...figures(result.total)]);
   table(
     [
       { title: 'value' },
@@ -75,6 +82,7 @@ async function report(args: ParsedArgs, deps: BooksDeps): Promise<number> {
       { title: 'income', align: 'right' },
       { title: 'expense', align: 'right' },
       { title: 'result', align: 'right' },
+      { title: 'fixed assets', align: 'right' },
     ],
     rows,
   );

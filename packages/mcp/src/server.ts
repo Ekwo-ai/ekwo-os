@@ -486,7 +486,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Analytic axes',
       description:
-        'The analytic axes of a company — a cost centre, a project, a site, a business unit — each with its values, which may nest under a parent_id. A value says what a cost or a revenue is for; a product says what was sold or bought. Read it before analytic_report, which takes an axis by its code.',
+        'The analytic axes of a company — a cost centre, a project, a site, a business unit — each with its values, which may nest under a parent_id, and required_on: none, or expense, income or result — the lines that must carry the axis whole, or posting refuses them (analytic_axis_required). A value says what a cost, a revenue or a fixed asset is for; a product says what was sold or bought. A retired value takes no new share. Read it before analytic_report, which takes an axis by its code.',
       inputSchema: read.ListAnalyticAxesInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -498,7 +498,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Result by analytic value',
       description:
-        'The result of each value of one analytic axis over a period, read from the posted ledger: the income, the expense and their difference per value, in the company\'s currency, from the whole income statement — salaries, rent and depreciation included, wherever they were split. unassigned is the part no share of the axis reaches; the values and unassigned add up to the result of the period, so say how large unassigned is rather than presenting the values as the whole. The margin of each product is a different question, read from the invoices. It prepares figures; it files nothing.',
+        'The result of each value of one analytic axis over a period, read from the posted ledger: the income, the expense and their difference per value, in the company\'s currency, from the whole income statement — salaries, rent and depreciation included, wherever they were split — and fixed_assets, the net movement of the fixed-asset accounts, beside the result and never in it. A value with others below it holds their subtotal; its own amount alone is in the direct_ columns, and level is its depth. unassigned is the part no share of the axis reaches and total the whole period: the direct_ amounts and unassigned add up to total, so say how large unassigned is rather than presenting the values as the whole, and never add a parent to its children. The margin of each product is a different question, read from the invoices. It prepares figures; it files nothing.',
       inputSchema: read.AnalyticReportInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },

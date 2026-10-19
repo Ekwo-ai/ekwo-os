@@ -4,17 +4,20 @@
  * decision 0075).
  *
  * What is guarded: a product and a contact pre-fill the split of a line at
- * 100 % on an axis the line leaves free, only on a result account, and the
- * person replaces what they pre-filled; the shares of one axis stay within
- * 100; a split on a balance-sheet account is refused by name, on a document
- * line, on a ledger line, and when a line moves there; the amounts are the
+ * 100 % on an axis the line leaves free, only on an account that carries a
+ * split, and the person replaces what they pre-filled; the shares of one axis
+ * stay within 100; a split on a receivable or a bank account is refused by
+ * name, on a document line, on a ledger line, and when a line moves there; the amounts are the
  * database's, adding up to their line to the cent; `post_document()` writes a
  * ledger line per split and copies the split onto it, and nothing onto the
  * tax and the counterpart; an entry with no document is split on its own
  * lines; the split of a posted document is frozen; the credit note of a
  * cancelled invoice carries its split; and `analytic_report()` gives the
  * result of each value and of the unassigned part, which add up to the
- * income statement of the period, with its refusals by name.
+ * income statement of the period, with its refusals by name. The answers of
+ * 19/10/2026 — locks, the contact's parent, retired values, subtotals, a
+ * required axis, fixed assets, a non-deductible tax — are in
+ * `analytics-rules.test.ts`.
  */
 
 import type { PGlite } from '@electric-sql/pglite';
@@ -45,6 +48,7 @@ interface Share {
 }
 
 interface Row {
+  row_kind: 'value' | 'unassigned' | 'total';
   analytic_value_id: string | null;
   code: string | null;
   name: string | null;
@@ -217,7 +221,7 @@ describe('the defaults of a line', () => {
   });
 });
 
-describe('a split on a balance-sheet account', () => {
+describe('a split on a third-party or a bank account', () => {
   it('is refused on a document line, by name', async () => {
     const odd = await newDocument(db, companyId, {
       docType: 'purchase_invoice',
@@ -229,7 +233,7 @@ describe('a split on a balance-sheet account', () => {
       `insert into document_line_analytics (company_id, document_line_id, analytic_value_id) values ($1, $2, $3)`,
       [companyId, await lineOf(odd, 'On the bank'), values.alpha],
     );
-    expect(message).toMatch(/analytic_not_on_result_account/);
+    expect(message).toMatch(/analytic_not_on_this_account/);
     await db.query(`delete from documents where id = $1`, [odd]);
   });
 
@@ -246,7 +250,7 @@ describe('a split on a balance-sheet account', () => {
       bank,
       line,
     ]);
-    expect(message).toMatch(/analytic_not_on_result_account/);
+    expect(message).toMatch(/analytic_not_on_this_account/);
     await db.query(`delete from documents where id = $1`, [moving]);
   });
 
@@ -260,7 +264,7 @@ describe('a split on a balance-sheet account', () => {
       `insert into entry_line_analytics (company_id, entry_line_id, analytic_value_id) values ($1, $2, $3)`,
       [companyId, counterpart, values.alpha],
     );
-    expect(message).toMatch(/analytic_not_on_result_account/);
+    expect(message).toMatch(/analytic_not_on_this_account/);
     await db.query(`delete from entries where id = $1`, [entry]);
   });
 });
@@ -406,7 +410,8 @@ describe('posting', () => {
 
 describe('analytic_report', () => {
   it('gives the result of each value, and the unassigned part, adding up to the income statement', async () => {
-    const lines = await report(project);
+    const all = await report(project);
+    const lines = all.filter((l) => l.row_kind !== 'total');
     const byCode = Object.fromEntries(lines.map((l) => [l.code ?? '(none)', [Number(l.income), Number(l.expense), Number(l.result)]]));
     expect(byCode).toEqual({
       ALPHA: [600, 33.33, 566.67],
@@ -415,23 +420,26 @@ describe('analytic_report', () => {
       GAMMA: [0, 33.33, -33.33],
       '(none)': [300, 0, 300],
     });
-    expect(lines.at(-1)?.analytic_value_id).toBeNull();
+    expect(lines.at(-1)?.row_kind).toBe('unassigned');
+    expect(all.at(-1)?.row_kind).toBe('total');
     const total = lines.reduce((sum, l) => sum + Number(l.result), 0);
     expect(total).toBeCloseTo(await resultOfPeriod(), 10);
+    expect(Number(all.at(-1)!.result)).toBeCloseTo(await resultOfPeriod(), 10);
   });
 
   it('reads every axis on its own: what one axis does not reach is unassigned on it', async () => {
     const lines = await report(site);
-    expect(lines.map((l) => l.code)).toEqual([null]);
+    expect(lines.map((l) => l.row_kind)).toEqual(['unassigned', 'total']);
     expect(Number(lines[0]!.result)).toBeCloseTo(await resultOfPeriod(), 10);
   });
 
   it('reads the period as asked', async () => {
     const march = await report(project, '2026-03-01', '2026-03-31');
-    expect(march.map((l) => [l.code, Number(l.result)])).toEqual([
-      ['ALPHA', 600],
-      ['BETA', 900],
-      [null, 300],
+    expect(march.map((l) => [l.row_kind, l.code, Number(l.result)])).toEqual([
+      ['value', 'ALPHA', 600],
+      ['value', 'BETA', 900],
+      ['unassigned', null, 300],
+      ['total', null, 1800],
     ]);
   });
 

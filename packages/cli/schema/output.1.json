@@ -672,7 +672,7 @@
         }
       },
       "analytic axes": {
-        "$comment": "The analytic axes of the company, each with its values.",
+        "$comment": "The analytic axes of the company, each with its values and required_on: none, expense, income or result, the lines that must carry the axis whole at posting.",
         "type": "object",
         "required": ["axes", "count"],
         "properties": {
@@ -681,14 +681,15 @@
         }
       },
       "analytic report": {
-        "$comment": "analytic_report() of the schema: income, expense and result per value of one axis, read from the posted ledger, and the part no share of the axis reaches. Amounts are decimal strings.",
+        "$comment": "analytic_report() of the schema: income, expense, result and fixed_assets per value of one axis, read from the posted ledger, a parent with the subtotal of the values below it (its own amount in the direct_ columns, its depth in level), the part no share of the axis reaches (unassigned) and the whole period (total). Amounts are decimal strings.",
         "type": "object",
-        "required": ["period", "axis", "values", "unassigned", "note"],
+        "required": ["period", "axis", "values", "unassigned", "total", "note"],
         "properties": {
           "period": { "type": "object", "required": ["from", "to"] },
           "axis": { "$ref": "#/$defs/row" },
           "values": { "type": "array", "items": { "$ref": "#/$defs/row" } },
           "unassigned": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "total": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
           "note": { "type": "string" }
         }
       },

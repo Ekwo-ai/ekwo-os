@@ -72,11 +72,12 @@ describe('list_analytic_axes', () => {
     const axes = list(answer['axes']);
     expect(axes.map((axis) => axis['code'])).toEqual(['PROJECT']);
     expect(list(axes[0]!['values']).map((value) => value['code'])).toEqual(['ALPHA']);
+    expect(axes[0]!['required_on']).toBe('none');
   });
 });
 
 describe('analytic_report', () => {
-  it('finds the axis by its code and puts the unassigned part beside the values', async () => {
+  it('finds the axis by its code and puts the unassigned part and the total beside the values', async () => {
     const answer = record(
       await readTools.analyticReport(accountant, { company_id: company.companyId, axis: 'PROJECT', from: '2026-01-01', to: '2026-12-31' }),
     );
@@ -84,7 +85,18 @@ describe('analytic_report', () => {
     expect(list(answer['values']).map((value) => [value['code'], value['income'], value['expense'], value['result']])).toEqual([
       ['ALPHA', '400.00', '0.00', '400.00'],
     ]);
-    expect(answer['unassigned']).toEqual({ income: '100.00', expense: '0.00', result: '100.00' });
+    expect(answer['unassigned']).toEqual({
+      income: '100.00',
+      expense: '0.00',
+      result: '100.00',
+      fixed_assets: '0.00',
+      direct_income: '100.00',
+      direct_expense: '0.00',
+      direct_result: '100.00',
+      direct_fixed_assets: '0.00',
+    });
+    expect(record(answer['total'])['result']).toBe('500.00');
+    expect(list(answer['values'])[0]).toMatchObject({ level: 0, direct_result: '400.00' });
   });
 
   it('answers a viewer as it answers an accountant', async () => {

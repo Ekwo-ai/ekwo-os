@@ -2,17 +2,29 @@
  * The analytic plan, and the result of each of its values.
  *
  * `analytic_report()` of the schema reads the posted ledger and gives, for
- * each value of one axis, the income, the expense and the result, with one
- * more row for the part of the income statement no share of the axis
- * reaches (decision 0075). This file finds the axis by its code, calls the
- * function, and puts the unassigned row beside the others rather than among
- * them. It adds nothing up: the rows add up to the income statement because
- * the database says they do, and a total worked out here would be a second
- * answer (decision 0056).
+ * each value of one axis, the income, the expense, the result and the
+ * movement of the fixed assets — a parent with the subtotal of the values
+ * below it, its own amount in the `direct_` columns — with one more row for
+ * the part no share of the axis reaches, and one for the total (decision
+ * 0075). This file finds the axis by its code, calls the function, and puts
+ * the unassigned and the total rows beside the values rather than among
+ * them. It adds nothing up: the subtotals and the total are the database's,
+ * and a sum worked out here would be a second answer (decision 0056).
  */
 
 import { BooksError, type Backend, type Row } from './backend.js';
 import { moneyFields } from './format.js';
+
+const MONEY = [
+  'income',
+  'expense',
+  'result',
+  'fixed_assets',
+  'direct_income',
+  'direct_expense',
+  'direct_result',
+  'direct_fixed_assets',
+];
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -28,12 +40,16 @@ export interface AnalyticReportArgs {
   to: string;
 }
 
-/** The axes of a company, each with its values, in the order of their codes. */
+/**
+ * The axes of a company, each with its values, in the order of their codes.
+ * `required_on` says which lines must carry the axis whole at posting: none,
+ * expense, income or result.
+ */
 export async function listAnalyticAxes(backend: Backend, args: ListAnalyticAxesArgs): Promise<unknown> {
   const [axes, values] = await Promise.all([
     backend.select<Row>({
       table: 'analytic_axes',
-      columns: ['id', 'code', 'name', 'active'],
+      columns: ['id', 'code', 'name', 'active', 'required_on'],
       where: [{ column: 'company_id', op: 'eq', value: args.company_id }],
       order: [{ column: 'code' }],
     }),
@@ -83,19 +99,20 @@ export async function analyticReport(backend: Backend, args: AnalyticReportArgs)
       p_from: args.from,
       p_to: args.to,
     }),
-    ['income', 'expense', 'result'],
+    MONEY,
   );
-  const unassigned = rows.find((row) => row['analytic_value_id'] === null) ?? null;
+  const only = (kind: string): Row | null => {
+    const row = rows.find((r) => r['row_kind'] === kind);
+    return row === undefined ? null : Object.fromEntries(MONEY.map((key) => [key, row[key]]));
+  };
 
   return {
     period: { from: args.from, to: args.to },
     axis,
-    values: rows.filter((row) => row['analytic_value_id'] !== null),
-    unassigned:
-      unassigned === null
-        ? null
-        : { income: unassigned['income'], expense: unassigned['expense'], result: unassigned['result'] },
+    values: rows.filter((row) => row['row_kind'] === 'value').map(({ row_kind: _kind, ...row }) => row),
+    unassigned: only('unassigned'),
+    total: only('total'),
     note:
-      'Read from the posted ledger, closing entry left out, in the company\'s currency: income on the income accounts, expense on the expense accounts, result the difference. unassigned is the part of the income statement no share of this axis reaches, so the values and unassigned add up to the result of the period. Values that nest are each on their own row with their parent_id; a total per parent is a sum of rows, not a figure of its own.',
+      'Read from the posted ledger, closing entry left out, in the company\'s currency: income on the income accounts, expense on the expense accounts, result the difference, and fixed_assets the net movement of the fixed-asset accounts (debit less credit, ordinary entries only), beside the result and never in it. A value with others below it (parent_id, level) holds the subtotal of all of them; its own amount alone is in the direct_ columns. unassigned is the part no share of this axis reaches, and total the whole period: the direct_ amounts of the values and unassigned add up to total, and so do the values of level 0 and unassigned.',
   };
 }
