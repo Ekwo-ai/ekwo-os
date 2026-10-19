@@ -42,6 +42,21 @@ adds two reconcilable sub-accounts named after what they hold.
 return read; the debt is what they sum to. `filing_drift()` says how far the
 boxes and the ledger differ; no account absorbs the difference.
 
+**It settles the tax of its own form** (amended 19 October 2026,
+`20261019161437`). A tax line is cleared when the box it names is on the
+filing's form, or when it names none, its tax writes a box of that form
+through another posting — the form prints the base and computes the tax — and
+it is not on the account a tax due on collection waits on. A tax booked on a
+liability no box of the form carries — self-assessed on a service bought from
+abroad, withheld, levied by a province beside the federal return — stays where
+it was posted, for the return that declares it or an entry somebody writes.
+Before, every tax line of the period was cleared, and the debt of the return
+could exceed its boxes.
+
+**A filing knows when it is due.** `prepare_filing()` writes
+`tax_filings.due_date` from `filing_deadline()`, and the debt the settlement
+posts matures on it. No rule in the pack, no date.
+
 **A credit has two outcomes and no default.** Carried forward or claimed back
 is the company's choice, which `settle_filing()` requires and records.
 

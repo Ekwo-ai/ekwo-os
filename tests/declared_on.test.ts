@@ -45,6 +45,13 @@ const MIGRATIONS = [
  */
 const LATER = ['20261011160431_a_line_keeps_the_boxes_it_was_posted_in.sql'];
 
+/**
+ * Published after them too, and changing on purpose which tax lines a filing
+ * settles: left out, and not applied, because the upgrade under test is the
+ * one that must not move what a filing settles.
+ */
+const SINCE = ['20261019161437_a_return_settles_what_it_carries.sql'];
+
 const withGolden = allPacks.filter((pack) => pack.golden !== null);
 
 interface Box {
@@ -92,7 +99,7 @@ describe('an installation upgraded with books already in it', () => {
   let touchedBefore = '';
 
   beforeAll(async () => {
-    db = await freshDatabase({ withoutMigrations: [...MIGRATIONS, ...LATER] });
+    db = await freshDatabase({ withoutMigrations: [...MIGRATIONS, ...LATER, ...SINCE] });
     for (const pack of withGolden) {
       const golden = pack.golden as PackGolden;
       // country-literal: every pack of the checkout books its own year, on its

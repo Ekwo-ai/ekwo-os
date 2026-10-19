@@ -10,7 +10,7 @@ import { allPacks, monthsOf } from './helpers/packs.js';
 /**
  * The proof, pack by pack: a year of books becomes a declaration, the
  * declaration is frozen, the file is written and read back, and the settlement
- * empties the tax accounts.
+ * empties the tax accounts of its form.
  *
  * Every pack of this checkout walks as far as it can, and **how far it got is
  * the assertion**. A pack that names no file format files on a portal, which is
@@ -148,6 +148,19 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       expect(boxes, `${slug} froze what the return answered`).toEqual(live);
       expect(boxes.length, `${slug} books something in its busiest period`).toBeGreaterThan(0);
 
+      // The filing carries the day its pack's rule says it is due, and none
+      // where the pack names no rule.
+      const due = await one<{ due: string | null; rule: string | null }>(
+        db,
+        `select f.due_date::text as due, filing_deadline(f.company_id, f.report_code, f.period_end)::text as rule
+           from tax_filings f where f.id = $1`,
+        [filingId],
+      );
+      expect(due.due, `${slug} is due on the day its rule gives`).toBe(due.rule);
+      if (ready.deadlineRule !== null && ready.deadlineRule !== 'depends_on_taxpayer') {
+        expect(due.due, `${slug} names a rule, so its filing has a date`).not.toBeNull();
+      }
+
       // Nothing has moved since, so the two agree and the drift is empty.
       await db.query(`select file_filing($1, $2)`, [filingId, `GOLDEN-${slug.toUpperCase()}`]);
       const drift = await rows(db, `select * from filing_drift($1)`, [filingId]);
@@ -208,7 +221,25 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
               and e.entry_date between $3::date and $4::date`,
           [companyId, account.account_id, period.from, period.to],
         );
-        expect(Number(left.balance), `${slug} left a tax account with a balance`).toBeCloseTo(0, 2);
+        // What stays is what the form does not carry: a tax no posting prints
+        // in a box, declared on another return, and a tax due on collection
+        // still waiting on its transition account.
+        const waiting = await one<{ balance: string }>(
+          db,
+          `select coalesce(sum(l.balance), 0)::text as balance
+             from declared_lines($1, $3::date, $4::date) l
+             join entries e on e.id = l.entry_id and e.state = 'posted'
+             join taxes t   on t.id = l.tax_id
+            where l.account_id = $2 and l.tax_line and l.declaration_box is null
+              and (l.account_id = t.cash_basis_transition_account_id
+                   or not exists (select 1 from tax_postings tp
+                                   where tp.tax_id = t.id and tp.declaration_box is not null))`,
+          [companyId, account.account_id, period.from, period.to],
+        );
+        expect(Number(left.balance), `${slug} left a tax account with a balance`).toBeCloseTo(
+          Number(waiting.balance),
+          2,
+        );
       }
       walk.settled = true;
     });

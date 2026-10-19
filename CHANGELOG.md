@@ -9,6 +9,30 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A return settles the tax of its own form.** `filing_tax_movements()` —
+  what `settle_filing()` clears and `lock_filed_period()` waits for — summed
+  every tax line of the period, and so carried into the debt of the periodic
+  return a tax no box of it prints: a self-assessed tax on a service bought
+  from abroad, a withholding, a provincial tax beside a federal return. It
+  now keeps a tax line whose box is on the filing's form, or a tax line with
+  no box whose tax prints a box of that form through another posting and
+  which is not on the account a tax due on collection waits on
+  (`20261019161437`). A period in which nothing else moved refuses with
+  `nothing_to_settle`. No figure of any return changes. On the golden years,
+  the settlement now leaves alone: the self-assessed or withheld taxes of GA,
+  GH, GN, IT, KM, KR, KZ, MY, PE, PK, SG, TH and VN; the blocked input tax
+  ZM and ZW book on an expense account; and the cash-basis tax still waiting
+  on its transition account in AU, AZ, BF, BJ, CI, CL, DZ, FR, GA, IE, MA, MX,
+  NZ, TG and ZA, settled in the period it is collected, the period its box
+  reads.
+- **A filing knows the day it is due.** `prepare_filing()` writes
+  `tax_filings.due_date` from `filing_deadline()` — the pack's
+  `deadline.rule` — and fills it on a draft that has none; the filings
+  already written get theirs. The debt `settle_filing()` posts matures on it.
+  A pack with no rule, or `depends_on_taxpayer`, leaves it empty.
+
 ## [0.15.0] — 2026-10-19
 
 ### Added

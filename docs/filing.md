@@ -113,10 +113,21 @@ Only the hash leaves. [`filing-proofs.md`](filing-proofs.md) is the detail.
 ### 7. Settle and pay
 
 `settle_filing(filing, credit, reference, contact, date)` clears the tax
-accounts the declared period moved and carries the net to the account **the pack
-names** — `tax_payable`, or `tax_receivable` where the period ends in a credit
-and the chart keeps the two apart. One entry per declaration, through
-`post_entry()`, and a unique index so replaying is refused by the database.
+accounts the declared period moved **on that form** and carries the net to the
+account **the pack names** — `tax_payable`, or `tax_receivable` where the period
+ends in a credit and the chart keeps the two apart. One entry per declaration,
+through `post_entry()`, and a unique index so replaying is refused by the
+database. The debt matures on the filing's `due_date`, which `prepare_filing()`
+writes from the pack's deadline rule.
+
+What "on that form" means is `filing_tax_movements()`: a tax line whose box is
+on the form, or a tax line with no box whose tax prints its base in a box of
+the form — the form that computes the tax from the base. A tax the pack books
+on a liability no box of the form carries — the buyer's self-assessed tax on a
+service from abroad, a withholding, a second return of another authority —
+stays on its account, for its own return or an entry the company writes; so
+does a tax due on collection that still waits on its transition account. A
+period in which nothing else moved has nothing to settle, and says so.
 
 A credit is not settled until the company says what happens to it: carried to
 the next declaration, or claimed back. Both are ordinary, and the choice is not

@@ -31,6 +31,9 @@ import { allPacks } from './helpers/packs.js';
 
 const MIGRATION = '20261011160431_a_line_keeps_the_boxes_it_was_posted_in.sql';
 
+/** Published after it and reading the columns it adds: left out, applied after it. */
+const LATER = ['20261019161437_a_return_settles_what_it_carries.sql'];
+
 const withGolden = allPacks.filter((pack) => pack.golden !== null);
 
 interface Box {
@@ -60,7 +63,7 @@ describe('an installation upgraded with books already in it', () => {
   let touchedBefore = '';
 
   beforeAll(async () => {
-    db = await freshDatabase({ withoutMigrations: [MIGRATION] });
+    db = await freshDatabase({ withoutMigrations: [MIGRATION, ...LATER] });
     for (const pack of withGolden) {
       const golden = pack.golden as PackGolden;
       // country-literal: every pack of the checkout books its own year, on its
@@ -79,7 +82,9 @@ describe('an installation upgraded with books already in it', () => {
     touchedBefore = (
       await one<{ h: string }>(db, `select md5(string_agg(id::text || updated_at::text, ',' order by id)) as h from entry_lines`)
     ).h;
-    await db.exec(await readFile(join(repoRoot, 'supabase', 'migrations', MIGRATION), 'utf8'));
+    for (const file of [MIGRATION, ...LATER]) {
+      await db.exec(await readFile(join(repoRoot, 'supabase', 'migrations', file), 'utf8'));
+    }
   }, 1_200_000);
 
   afterAll(async () => {

@@ -839,6 +839,13 @@ carries a `report_code`, which the compiler fills from the `code` of
 `tax_report.json` — `BE-VAT-PERIODIC`, `FR-CA3` — and which a posting may
 override with `"report": "…"` when a country files more than one.
 
+A tax whose postings name no box at all is on no form of the pack: the return
+does not print it and `settle_filing()` does not clear it. That is the place
+for a tax declared on a return the pack does not carry — a self-assessed tax on
+a service bought from abroad, a withholding — and it stays on the liability
+its `tax` posting names until an entry, or the return that declares it,
+clears it. Say which in the pack's README.
+
 ## The boxes of a declaration, and how a total is computed
 
 `tax_report.json` is one form — `BE-VAT-PERIODIC`, `FR-CA3` — and its boxes.
