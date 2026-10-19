@@ -1,0 +1,137 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "SL-GST-RETURN",
+  "name": "Monthly Goods and Services Tax return",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2009-09-01",
+  "legal_reference": "Goods and Services Tax Act, 2009, s. 37(1) — a taxable person lodges a GST return for each tax period, with the National Revenue Authority in the prescribed form (s. 37(2)); s. 2 — a tax period is a month or such other period as is prescribed; s. 27 — the net amount of GST to remit for a tax period is the output tax less the input tax credits, a negative result being refundable under s. 41. The Authority's page adds that the period is one calendar month for a taxpayer with an annual taxable turnover above Le 600,000,000 and two months for the others, a threshold stated in old leones before the 2022 redenomination and not confirmed since. The prescribed form (GST return) is filed on the ITAS portal and its box numbering could not be opened from the machine this pack was written on, so the boxes below are this pack's own presentation of the s. 27 calculation, and the gap is recorded in this pack's README.",
+  "source": "gst-act",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Goods and Services Tax Act, 2009, s. 37(1) — the return is lodged not later than the end of the month following the tax period — and s. 38(1) — the GST payable is due on the due date for lodging the return. The Authority's page says the same. Penalties for late filing are not modelled. A return for a two-month tax period is not modelled (see the README).",
+    "source": "nra-gst"
+  },
+  "boxes": [
+    {
+      "box": "ZE",
+      "kind": "base",
+      "name": "Zero-rated supplies — exports and stores",
+      "sequence": 10,
+      "legal_reference": "Goods and Services Tax Act, 2009, First Schedule — the value of exports of goods (minerals excepted) and of goods shipped as stores on vessels and aircraft leaving Sierra Leone. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "EX",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 30,
+      "legal_reference": "Goods and Services Tax Act, 2009, s. 9 and the Second Schedule as replaced by the Finance Act 2023 — the value of exempt supplies. A reporting row of this pack.",
+      "source": "finance-act-2023"
+    },
+    {
+      "box": "1S",
+      "kind": "base",
+      "name": "Standard-rated supplies — value",
+      "sequence": 40,
+      "legal_reference": "Goods and Services Tax Act, 2009, s. 14(3)(b) — the GST-exclusive value of the supplies taxed at 15 per cent. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "1S",
+      "kind": "tax",
+      "name": "Output GST on standard-rated supplies",
+      "sequence": 45,
+      "legal_reference": "Goods and Services Tax Act, 2009, s. 27 — output tax on taxable supplies, net of credit notes given.",
+      "source": "gst-act"
+    },
+    {
+      "box": "1R",
+      "kind": "base",
+      "name": "Imported services — value",
+      "sequence": 50,
+      "legal_reference": "Goods and Services Tax Act, 2009, s. 24(1) — the value of a service imported from a non-resident that the recipient uses for exempt supplies, private use or entertainment. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "1R",
+      "kind": "tax",
+      "name": "Output GST on imported services",
+      "sequence": 55,
+      "legal_reference": "Goods and Services Tax Act, 2009, s. 24(1) — the tax the recipient accounts for on such a service, included in the output tax.",
+      "source": "gst-act"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Box 1 — Output GST",
+      "sequence": 60,
+      "plus": [
+        "1S:tax",
+        "1R:tax"
+      ],
+      "legal_reference": "Goods and Services Tax Act, 2009, s. 27 — total output tax of the tax period.",
+      "source": "gst-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Standard-rated local purchases — value",
+      "sequence": 80,
+      "legal_reference": "Goods and Services Tax Act, 2009, s. 29 — the GST-exclusive value of the domestic purchases whose input tax is claimed. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Box 2 — Input GST on domestic purchases",
+      "sequence": 85,
+      "legal_reference": "Goods and Services Tax Act, 2009, ss. 27 and 29 — input tax credits on domestic acquisitions, net of credit notes received.",
+      "source": "gst-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Imports of goods — value",
+      "sequence": 90,
+      "legal_reference": "Goods and Services Tax Act, 2009, s. 26 — the customs value on which import GST is charged. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Box 3 — Input GST on imports",
+      "sequence": 95,
+      "legal_reference": "Goods and Services Tax Act, 2009, ss. 29 and 39 — the GST paid on imports, claimed as input tax.",
+      "source": "gst-act"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Box 4 — Total input GST",
+      "sequence": 100,
+      "plus": [
+        "2:tax",
+        "3:tax"
+      ],
+      "legal_reference": "Goods and Services Tax Act, 2009, s. 27 — total input tax credits of the tax period.",
+      "source": "gst-act"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Box 5 — GST payable or refundable",
+      "sequence": 110,
+      "plus": [
+        "1"
+      ],
+      "minus": [
+        "4"
+      ],
+      "legal_reference": "Goods and Services Tax Act, 2009, s. 27 (net amount), s. 38 (payable by the due date of the return) and s. 41 (a negative amount is refundable).",
+      "source": "gst-act"
+    }
+  ]
+}

@@ -107,5 +107,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('NAD', 'Namibia dollar', 'N$', 2),
   ('SZL', 'Swazi lilangeni', 'E', 2),
   ('LSL', 'Lesotho loti', 'L', 2),
-  ('GMD', 'Gambian dalasi', 'D', 2)
+  ('GMD', 'Gambian dalasi', 'D', 2),
+  ('SLE', 'Sierra Leonean leone', 'Le', 2)
 on conflict (code) do nothing;

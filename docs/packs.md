@@ -439,6 +439,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`sg`](../packs/sg/) | Singapore | `50_pack_sg.sql` | en | `community` |
 | [`si`](../packs/si/) | Slovenia | `75_pack_si.sql` | sl, en | `community` |
 | [`sk`](../packs/sk/) | Slovensko | `69_pack_sk.sql` | sk | `community` |
+| [`sl`](../packs/sl/) | Sierra Leone | `301_pack_sl.sql` | en | `community` |
 | [`sn`](../packs/sn/) | Sénégal | `20_pack_sn.sql` | fr | `community` |
 | [`sr`](../packs/sr/) | Suriname | `205_pack_sr.sql` | nl, en | `community` |
 | [`sv`](../packs/sv/) | El Salvador | `131_pack_sv.sql` | es | `community` |

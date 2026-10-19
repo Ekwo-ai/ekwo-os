@@ -1,0 +1,181 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "SL",
+  "name": "Sierra Leone",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 301,
+  "released_at": "2026-10-19",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "gst-act",
+        "title": "Goods and Services Tax Act, 2009 (Act No. 6 of 2009), Supplement to the Sierra Leone Gazette Vol. CXL, No. 37 of 20 August 2009: ss. 8 to 10 (taxable, exempt and zero-rated supply), 14 (imposition and the 15 per cent rate), 15 (registration threshold), 24 (reverse charge on imported services), 27 (net amount of GST), 28 and 29 (input tax credits), 31 (GST invoices), 37 to 40 (returns, payment, imports); First, Second, Third and Fourth Schedules",
+        "publisher": "Parliament of Sierra Leone, as published in the Sierra Leone Gazette",
+        "url": "https://www.sierra-leone.org/Laws/2009-06.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "law"
+      },
+      {
+        "key": "finance-act-2023",
+        "title": "The Finance Act, 2023 — s. 5 (digital services, amending s. 8(h) of the GST Act), s. 6 (the Second Schedule of the GST Act, exempt supplies, repealed and replaced by 25 items) and s. 7 (a 2 per cent tourism levy collected under the GST Act's filing and payment rules, paid by the 15th of the following month); the copy consulted is the Bill supplement to the Gazette of 28 March 2023 and states that the Act operates from 1 April 2023",
+        "publisher": "Government of Sierra Leone, as published in the Sierra Leone Gazette",
+        "url": "https://archive.gazettes.africa/archive/sl/2023/sl-government-gazette-supplement-dated-2023-03-28-no-15.pdf",
+        "consulted_on": "2026-10-19",
+        "kind": "law"
+      },
+      {
+        "key": "nra-gst",
+        "title": "Goods & Services Tax — the single 15 per cent rate, the four categories of supply, zero-rated and exempt examples, GST invoice contents, returns and payment not later than the end of the month following the tax period, the tax period, returns in leones",
+        "publisher": "National Revenue Authority of Sierra Leone",
+        "url": "https://mail.nra.gov.sl/node/128",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "nra-tax-table",
+        "title": "Domestic Taxes & Rates — the Authority's table of rates and due dates (withholding tax, PAYE, payroll tax, rent tax and the other taxes this pack documents and does not compute)",
+        "publisher": "National Revenue Authority of Sierra Leone",
+        "url": "https://mail.nra.gov.sl/node/131",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "nra-ecr",
+        "title": "Electronic Cash Register — s. 34 of the GST Act as replaced by s. 34 of the Finance Act 2020: every registered GST business keeps an electronic cash register specified by the Commissioner-General, made of a Certified Invoicing System and a Sales Data Controller that signs each receipt and sends it to the Authority's server",
+        "publisher": "National Revenue Authority of Sierra Leone",
+        "url": "https://mail.nra.gov.sl/node/916",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      },
+      {
+        "key": "nra-itas",
+        "title": "ITAS — the Authority's Domestic Tax Information System, the taxpayer portal for registration, returns and payments",
+        "publisher": "National Revenue Authority of Sierra Leone",
+        "url": "https://itas.nra.gov.sl",
+        "consulted_on": "2026-10-19",
+        "kind": "portal"
+      },
+      {
+        "key": "ifrs-profile",
+        "title": "Sierra Leone — use of IFRS Standards: IFRS Standards required of listed companies, banks and insurers; IFRS for SMEs adopted by CSAAG resolution BPR2/2009 and permitted for other entities; standards set by CSAAG under authority delegated by the Institute of Chartered Accountants of Sierra Leone",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction/sierra-leone/",
+        "consulted_on": "2026-10-19",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "SLE",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Sierra Leone reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "SL-IFRS-SFP",
+        "SL-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Sierra Leone. IFRS Standards are required of listed companies, banks and insurers, and IFRS for SMEs, adopted by CSAAG resolution BPR2/2009 under authority delegated by the Institute of Chartered Accountants of Sierra Leone (ICASL), is permitted for the other entities. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-based statements below, with the accounts a Sierra Leonean company actually keeps — GST input and output tax, import GST owed to the National Revenue Authority at the border, NASSIT contributions, PAYE, payroll tax, withholding tax, the 2 per cent tourism levy and excise duty payable, and the irrecoverable GST that the Act leaves with a buyer.",
+      "source": "ifrs-profile"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Goods and Services Tax Act, 2009, s. 31 and the Authority's page on GST invoices — a GST invoice carries the number of the invoice taken from a consecutive series, and s. 34 as replaced by the Finance Act 2020 makes the invoice or the electronic cash register receipt the document of record. A consecutive series is what the text asks for; whether it must be without gap is not stated, which is why `numbering` is `sequential` and not `gapless_per_year`.",
+        "source": "nra-gst"
+      },
+      "tax_point": {
+        "legal_reference": "Goods and Services Tax Act, 2009, Part IV (time of supply, s. 19): the supply is made at the earliest of the events the Act lists — delivery or making available, payment, invoice. Ekwo's closed vocabulary expresses a two-way earliest test; `earliest_of_delivery_or_payment` is the nearest value and the gap — an invoice issued ahead of both delivery and payment — is written in this pack's README.",
+        "source": "gst-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Sierra Leonean statute obliges a business to exchange a structured electronic invoice with another business in the sense Ekwo's vocabulary gives the word: there is no Peppol authority, no published profile and no scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What Sierra Leone has instead is the electronic cash register: s. 34 of the GST Act, replaced by s. 34 of the Finance Act 2020, requires every GST-registered business to keep an electronic cash register specified by the Commissioner-General, made of a Certified Invoicing System and a Sales Data Controller that signs each receipt and sends it to the Authority's server. That is fiscal-device reporting to the tax administration and not a peer-to-peer exchange; the gap is recorded in this pack's README and the core is not patched to fit it.",
+    "source": "nra-ecr"
+  }
+}

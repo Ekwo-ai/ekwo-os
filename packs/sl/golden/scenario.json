@@ -1,0 +1,305 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Freetown trading company, GST-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-08",
+      "from": "2026-08-01",
+      "to": "2026-08-31"
+    }
+  ],
+  "statements": [
+    "SL-IFRS-SFP",
+    "SL-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-freetown",
+      "name": "Siaka Stevens Street Traders Ltd",
+      "type": "customer",
+      "country": "SL"
+    },
+    {
+      "ref": "cust-guinea",
+      "name": "Conakry Cocoa Imports SARL",
+      "type": "customer",
+      "country": "GN"
+    },
+    {
+      "ref": "supp-freetown",
+      "name": "Kissy Road Wholesalers Ltd",
+      "type": "supplier",
+      "country": "SL"
+    },
+    {
+      "ref": "supp-china",
+      "name": "Guangzhou Trading Co.",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supp-us",
+      "name": "Meridian Advisory Inc.",
+      "type": "supplier",
+      "country": "US"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-freetown",
+      "date": "2026-08-05",
+      "why": "A domestic sale at the standard rate of 15 %: the value in box 1S and the output GST of box 1.",
+      "lines": [
+        {
+          "name": "Office stationery, retail sale",
+          "quantity": 5,
+          "unit_price": 2000,
+          "tax": "SL-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-freetown",
+      "date": "2026-08-07",
+      "why": "A residential lease exempt under item 13 of the Second Schedule (rights to occupy land and buildings): the exempt row, no output GST, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Monthly rent, residential unit",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "SL-S-EX",
+          "account": "4520"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-guinea",
+      "date": "2026-08-10",
+      "why": "An export of goods, zero-rated under item 1 of the First Schedule: the export row, no output GST, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Cocoa beans, export consignment",
+          "quantity": 500,
+          "unit_price": 60,
+          "tax": "SL-S-Z-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-freetown",
+      "date": "2026-08-12",
+      "why": "Medical services, exempt under item 7 of the Second Schedule: the exempt row again, a supply that is neither taxable nor an export.",
+      "lines": [
+        {
+          "name": "Clinic consultation services, monthly contract",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "SL-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-freetown",
+      "date": "2026-08-13",
+      "why": "Goods shipped as stores on a vessel leaving Sierra Leone, zero-rated under item 2 of the First Schedule: they land in the same zero-rated row as an export, and input tax stays deductible.",
+      "lines": [
+        {
+          "name": "Provisions shipped as vessel stores",
+          "quantity": 100,
+          "unit_price": 40,
+          "tax": "SL-S-Z-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-freetown",
+      "date": "2026-08-14",
+      "why": "A credit note for one unit returned from INV-001, so the standard-rated value and the output GST fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office stationery, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "SL-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-freetown",
+      "date": "2026-08-06",
+      "why": "A domestic purchase at the standard rate, deductible in full: box 2 and its value row, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "SL-P-15",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-freetown",
+      "date": "2026-08-08",
+      "why": "A purchase of an exempt supply (veterinary and medical services): no input tax and no row on the return.",
+      "lines": [
+        {
+          "name": "Medical services bought for staff",
+          "quantity": 300,
+          "unit_price": 40,
+          "tax": "SL-P-EX",
+          "account": "6070"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-freetown",
+      "date": "2026-08-11",
+      "why": "An insurance premium, exempt under item 11 of the Second Schedule: no input tax, and the return has no row for an exempt purchase.",
+      "lines": [
+        {
+          "name": "Annual business insurance premium",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "SL-P-EX",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-08-15",
+      "why": "An import of goods: GST charged at the border under section 14, claimed as input tax through box 3, and held on the customs control account until settled.",
+      "lines": [
+        {
+          "name": "Imported hardware for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "SL-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-08-18",
+      "why": "A service imported from a supplier with no place of business in Sierra Leone, used for a non-creditable purpose under section 24: the recipient accounts for the tax as output tax in box 1R and the matching 1 500 stays in the cost account 6520.",
+      "lines": [
+        {
+          "name": "Consulting services from abroad",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "SL-P-RC-SVC",
+          "account": "6350"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-freetown",
+      "date": "2026-08-19",
+      "why": "Business entertainment, whose input tax section 28 bars: the 15 % is charged by the supplier but follows the expense to account 6530 and reaches no box.",
+      "lines": [
+        {
+          "name": "Client entertainment",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "SL-P-15-ND",
+          "account": "6390"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-freetown",
+      "date": "2026-08-20",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 2 and its value row fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "SL-P-15",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-09-05",
+      "amount": 15000,
+      "contact": "cust-freetown",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The residential rent of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-09-06",
+      "amount": 30000,
+      "contact": "cust-guinea",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-09-07",
+      "amount": 23000,
+      "contact": "supp-freetown",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, GST included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-09-10",
+      "amount": 5000,
+      "contact": "cust-guinea",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Conakry Cocoa Imports SARL before its next shipment, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

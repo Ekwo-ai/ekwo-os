@@ -1,0 +1,295 @@
+[
+  {
+    "code": "SL-S-15",
+    "name": "Sale, standard rate 15 %",
+    "description": "The single rate on a taxable supply made in Sierra Leone, imports included",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2009-09-01",
+    "legal_reference": "Goods and Services Tax Act, 2009, s. 14(1) — GST is imposed on a taxable supply made in Sierra Leone and on a taxable import; s. 14(3), the rate of GST on a taxable supply or import is zero per cent where it is zero-rated under the First Schedule and 15 per cent in any other case, applied to the GST-exclusive value. The Authority's page confirms a single standard rate of fifteen per cent from 1 September 2009 on all goods and services not zero-rated, exempt or outside the scope of the tax.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1S"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1S",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "SL-S-Z-EXP",
+    "name": "Sale, zero-rated (export and ship or aircraft stores)",
+    "description": "Export of goods other than minerals, or goods shipped as stores on a vessel or aircraft leaving Sierra Leone",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2009-09-01",
+    "legal_reference": "Goods and Services Tax Act, 2009, s. 10 and the First Schedule — a taxable supply of goods is zero-rated if it is (1) the export of goods, excluding rutile and its by-products, iron ore, bauxite, gold, diamonds and other minerals, or (2) goods shipped as stores on vessels and aircraft leaving Sierra Leone. A zero-rated supply is a taxable supply: input tax stays deductible and the supply counts towards the registration threshold (Authority's page, Note 7). Exports of minerals are not zero-rated: the Second Schedule of the 2009 Act lists the export of all minerals among the exempt supplies; whether the schedule as replaced in 2023 keeps that item could not be confirmed from the copy consulted, so this pack carries no separate code for it. Only services are absent from the zero-rate list.",
+    "source": "gst-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "SL-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply the Second Schedule lists: financial services, insurance, medical, veterinary and dental services, education, passenger transport, fuel, land and buildings and the rights to occupy land, funeral services, raw rice, water, books and newspapers",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2009-09-01",
+    "legal_reference": "Goods and Services Tax Act, 2009, s. 9 — a supply listed in the Second Schedule is an exempt supply and is not subject to GST; the Second Schedule was repealed and replaced by s. 6 of the Finance Act 2023 with 25 items, among them raw rice (2), water other than bottled (4), books and newspapers (5), education services (6), medical, veterinary, dental and nursing services (7), passenger transport by road, ferry and train (8), petrol, diesel, LPG and kerosene (9), financial services (10), insurance (11), land, buildings and the rights to occupy land (13), wheat flour (18), baby foods (20) and funeral services (25). An exempt supplier cannot register for GST if it makes only exempt supplies, and recovers no input tax (Authority's page). The copy of the 2023 Act consulted is the Bill supplement to the Gazette; the list must be confirmed against the enacted text, and later Finance Acts amend it (see the README).",
+    "source": "finance-act-2023",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EX",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "SL-P-15",
+    "name": "Purchase, standard rate 15 %, input tax deductible",
+    "description": "A domestic purchase at the standard rate, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2009-09-01",
+    "legal_reference": "Goods and Services Tax Act, 2009, ss. 28 and 29 — a taxable person is allowed an input tax credit for GST on a taxable acquisition made in the course or furtherance of its taxable activity, held against a GST invoice (s. 31); the credit is offset in the net amount of s. 27. The Authority's page: registered businesses deduct the GST incurred on raw materials, goods for resale and other expenses directly related to taxable supplies.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "SL-P-15-ND",
+    "name": "Purchase, standard rate 15 %, input tax not recoverable",
+    "description": "A purchase whose GST the Act bars from credit: entertainment, a motor vehicle designed for twelve or fewer passengers and its spare parts and repairs, a mobile phone handset, or a use outside the taxable activity",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2009-09-01",
+    "legal_reference": "Goods and Services Tax Act, 2009, s. 28(2) — no input tax credit arises to the extent that the acquisition is not made in the course of the taxable activity, or is of a motor vehicle (a vehicle for twelve or fewer seated passengers) or of its spare parts or repair, or is entertainment (food, beverages, tobacco, amusement, recreation or hospitality of any kind, including gambling), or is a mobile phone handset. The GST charged by the supplier follows the expense to account 6530 and reaches no box. The full text of s. 28(2) beyond its paragraphs (a) and (b) was read in a two-column extraction and should be confirmed against the Gazette.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "SL-P-EX",
+    "name": "Purchase, exempt or outside GST",
+    "description": "A purchase of an exempt supply: no GST is charged and none is recovered",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2009-09-01",
+    "legal_reference": "Goods and Services Tax Act, 2009, s. 9 and the Second Schedule — an exempt supply bears no GST, so there is no input tax to claim and the return has no row for it.",
+    "source": "finance-act-2023",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "SL-P-IMP",
+    "name": "Purchase, import of goods, GST charged at the border",
+    "description": "Goods imported into Sierra Leone: GST at 15 % collected by Customs on the import, claimed as input tax",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2009-09-01",
+    "legal_reference": "Goods and Services Tax Act, 2009, s. 14 (GST is imposed on a taxable import), ss. 25 and 26 (time and value of an import), s. 39 (GST payable on imports) and s. 40 (due when the goods are imported, to the Authority's customs administration); the importer claims the GST paid as an input tax credit under s. 29 against the import documents. The tax sits on the customs control account 2125 until the entry is settled.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "SL-P-RC-SVC",
+    "name": "Purchase, service imported — reverse charge on a non-creditable use",
+    "description": "A service supplied by a non-resident with no resident agent, to the extent the recipient uses it for exempt supplies, private use or entertainment",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2009-09-01",
+    "legal_reference": "Goods and Services Tax Act, 2009, s. 24(1) — where a non-resident makes a supply of services to a taxable person in Sierra Leone otherwise than through a resident agent, the supply is not a taxable supply but would have been one if made by a registered resident, and it is not zero-rated, it is treated as a taxable supply made by the recipient at the same time and for the same consideration, but only to the extent that the recipient uses it to make exempt supplies, for private or domestic use, or to provide entertainment. A recipient that uses the service in taxable supplies accounts for no tax. The GST is posted as output tax in box 1R and, being owed on a use that bars recovery, stays in the cost account 6520 and reaches no input box. Use this code only for that share of the service.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1R"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R"
+        },
+        {
+          "type": "tax",
+          "account": "6520"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "6520"
+        }
+      ]
+    },
+    "sequence": 80
+  }
+]
