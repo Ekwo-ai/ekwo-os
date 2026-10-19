@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.14.0",
-  "migration": "20261018230000",
+  "migration": "20261019090001",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1221,6 +1221,47 @@
         ]
       },
       {
+        "name": "contact_merges",
+        "columns": [
+          {
+            "name": "absorbed_id",
+            "type": "uuid"
+          },
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "filled",
+            "type": "text[]"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "kept_id",
+            "type": "uuid"
+          },
+          {
+            "name": "merged_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "merged_by",
+            "type": "uuid"
+          },
+          {
+            "name": "moved",
+            "type": "jsonb"
+          },
+          {
+            "name": "transaction_id",
+            "type": "bigint"
+          }
+        ]
+      },
+      {
         "name": "contact_patterns",
         "columns": [
           {
@@ -1367,6 +1408,10 @@
           {
             "name": "language",
             "type": "character(2)"
+          },
+          {
+            "name": "merged_into",
+            "type": "uuid"
           },
           {
             "name": "name",
@@ -4351,6 +4396,10 @@
         "arguments": "p_company_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[]"
       },
       {
+        "name": "contacts_guard_merged",
+        "arguments": ""
+      },
+      {
         "name": "contacts_language_reaches_drafts",
         "arguments": ""
       },
@@ -4807,6 +4856,10 @@
         "arguments": "p_member company_members, p_capability text"
       },
       {
+        "name": "merge_contacts",
+        "arguments": "p_keep uuid, p_absorb uuid"
+      },
+      {
         "name": "module_enabled",
         "arguments": "p_company_id uuid, p_code text"
       },
@@ -4961,6 +5014,14 @@
       {
         "name": "record_filing_proof",
         "arguments": "p_subject_kind filing_proof_subject, p_subject_id uuid, p_sha256 text, p_method filing_proof_method, p_proof_base64 text, p_calendars jsonb, p_attachment_id uuid, p_values_sha256 text"
+      },
+      {
+        "name": "refuse_merged_contact",
+        "arguments": ""
+      },
+      {
+        "name": "refuse_merged_contacts_in",
+        "arguments": "p_schema text"
       },
       {
         "name": "register_instance",
@@ -5440,6 +5501,11 @@
         "command": "all"
       },
       {
+        "table": "contact_merges",
+        "name": "contact_merges_select",
+        "command": "select"
+      },
+      {
         "table": "contact_patterns",
         "name": "contact_patterns_select",
         "command": "select"
@@ -5861,6 +5927,10 @@
       },
       {
         "table": "bank_transactions",
+        "name": "bank_transactions_contact_id_not_merged"
+      },
+      {
+        "table": "bank_transactions",
         "name": "bank_transactions_currency_of_bank_account"
       },
       {
@@ -5944,8 +6014,20 @@
         "name": "company_packs_audit"
       },
       {
+        "table": "contact_merges",
+        "name": "contact_merges_absorbed_id_not_merged"
+      },
+      {
+        "table": "contact_merges",
+        "name": "contact_merges_kept_id_not_merged"
+      },
+      {
         "table": "contact_patterns",
         "name": "contact_patterns_audit"
+      },
+      {
+        "table": "contact_patterns",
+        "name": "contact_patterns_contact_id_not_merged"
       },
       {
         "table": "contact_patterns",
@@ -5957,7 +6039,19 @@
       },
       {
         "table": "contacts",
+        "name": "contacts_guard_merged"
+      },
+      {
+        "table": "contacts",
         "name": "contacts_language_reaches_drafts"
+      },
+      {
+        "table": "contacts",
+        "name": "contacts_merged_into_not_merged"
+      },
+      {
+        "table": "contacts",
+        "name": "contacts_parent_id_not_merged"
       },
       {
         "table": "contacts",
@@ -6010,6 +6104,10 @@
       {
         "table": "documents",
         "name": "documents_audit_state"
+      },
+      {
+        "table": "documents",
+        "name": "documents_contact_id_not_merged"
       },
       {
         "table": "documents",
@@ -6082,6 +6180,10 @@
       {
         "table": "entry_lines",
         "name": "entry_lines_box_from_posting"
+      },
+      {
+        "table": "entry_lines",
+        "name": "entry_lines_contact_id_not_merged"
       },
       {
         "table": "entry_lines",
@@ -6178,6 +6280,10 @@
       {
         "table": "payments",
         "name": "payments_audit_state"
+      },
+      {
+        "table": "payments",
+        "name": "payments_contact_id_not_merged"
       },
       {
         "table": "payments",
@@ -7043,6 +7149,16 @@
             "insert",
             "select",
             "update"
+          ]
+        },
+        {
+          "name": "contact_merges",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
           ]
         },
         {
@@ -8380,6 +8496,14 @@
           ]
         },
         {
+          "name": "contacts_guard_merged",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "contacts_language_reaches_drafts",
           "arguments": "",
           "trigger": true,
@@ -9567,6 +9691,17 @@
           ]
         },
         {
+          "name": "merge_contacts",
+          "arguments": "p_keep uuid, p_absorb uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "module_enabled",
           "arguments": "p_company_id uuid, p_code text",
           "anon": [
@@ -9984,6 +10119,21 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "refuse_merged_contact",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "refuse_merged_contacts_in",
+          "arguments": "p_schema text",
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "register_instance",
@@ -11107,7 +11257,15 @@
         },
         {
           "table": "disposals",
+          "name": "disposals_contact_id_not_merged"
+        },
+        {
+          "table": "disposals",
           "name": "fixed_assets_disposals_assert_may_post"
+        },
+        {
+          "table": "fixed_assets",
+          "name": "fixed_assets_contact_id_not_merged"
         },
         {
           "table": "fixed_assets",
