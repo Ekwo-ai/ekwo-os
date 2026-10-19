@@ -96,6 +96,7 @@ consequence.
 - [0072](0072-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt
 - [0073](0073-sure-pairs-are-matched-in-one-gesture.md) — The sure pairs are matched in one gesture, and what undoes an entry is matched as it is posted
 - [0074](0074-two-contacts-of-one-company-are-merged.md) — Two contacts of one company are merged, and the absorbed one is retired
+- [0075](0075-the-contacts-that-are-probably-one-party-are-proposed.md) — The contacts that are probably one party are proposed
 
 ## Formats and modules
 
