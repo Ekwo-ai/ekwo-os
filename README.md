@@ -459,8 +459,9 @@ Three ways to get help, from the open to the dedicated:
 - **In the open, for everyone.** [Issues](https://github.com/Ekwo-ai/ekwo-os/issues)
   for a bug or a rule that is wrong for your country, with the text of law
   cited; [Discussions](https://github.com/Ekwo-ai/ekwo-os/discussions) for a
-  question or an idea. The team reads both, and a fix lands in this repository
-  for everyone.
+  question or an idea; the [Ekwo AI Discord](https://discord.gg/dhAQAVhWMG) to
+  talk it through with the people who use, build on and write Ekwo. The team
+  reads all three, and a fix lands in this repository for everyone.
 - **By e-mail, with Hosted and Pro.** A company or a firm on
   [Ekwo Cloud](https://cloud.ekwo.ai) writes from its Support page and gets a
   written answer from the people who write Ekwo. What each plan includes:
