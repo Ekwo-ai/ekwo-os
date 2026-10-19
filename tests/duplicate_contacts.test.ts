@@ -132,19 +132,30 @@ describe('suggest_duplicate_contacts() proposes a pair', () => {
   });
 
   it('when every word of one name is in the other, and doubts it when the words reach several', async () => {
+    // `holdings` is carried by three contacts: what the longer name adds is
+    // common, and weighs less than the word the two share.
     const short = await contact('Quillfeather');
     const long = await contact('Quillfeather Holdings');
+    await contact('Ashgrove Holdings');
+    await contact('Bellmoor Holdings');
     expect(await pairOf(short, long)).toMatchObject({ score: '0.900', evidence: 'name' });
     expect((await pairOf(short, long))?.because).toMatch(/every word of Quillfeather is in Quillfeather Holdings/);
 
+    // What the longer names add is below the minimum length: a legal form.
     const crowded = await contact('Brindlewood');
-    const farms = await contact('Brindlewood Farms');
-    const garage = await contact('Brindlewood Garage');
-    expect(await pairOf(crowded, farms)).toMatchObject({ score: '0.600' });
-    expect(await pairOf(crowded, garage)).toMatchObject({ score: '0.600' });
-    expect((await pairOf(crowded, farms))?.because).toMatch(/in the names of 2 contacts/);
+    const limited = await contact('Brindlewood Ltd');
+    const anonyme = await contact('Brindlewood SA');
+    expect(await pairOf(crowded, limited)).toMatchObject({ score: '0.600' });
+    expect(await pairOf(crowded, anonyme)).toMatchObject({ score: '0.600' });
+    expect((await pairOf(crowded, limited))?.because).toMatch(/in the names of 2 contacts/);
     // Two names that merely share a word are two parties.
-    expect(await pairOf(farms, garage)).toBeUndefined();
+    expect(await pairOf(limited, anonyme)).toBeUndefined();
+  });
+
+  it('never when the longer name adds a word as rare as the one they share', async () => {
+    const short = await contact('Wrenfield');
+    const long = await contact('Wrenfield Orchards');
+    expect(await pairOf(short, long)).toBeUndefined();
   });
 
   it('never on a shared word alone, however common', async () => {
@@ -166,6 +177,66 @@ describe('suggest_duplicate_contacts() proposes a pair', () => {
     const scores = all.map((p) => Number(p.score));
     expect(scores).toEqual([...scores].sort((x, y) => y - x));
     expect(all.length).toBeGreaterThan(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The names of real books
+// ---------------------------------------------------------------------------
+
+describe('a pair by name, on the names of books of about two hundred contacts', () => {
+  // The pairs the first rule proposed at 0.900 or 0.600 on real books, the
+  // name of the company that kept them replaced: one word in common — a
+  // trade, a place, a legal form — and a mark only one of the two carries.
+  const twoParties: [string, string][] = [
+    ['LG SERVICES', 'ASBL UCM SERVICES'],
+    ['P & V Verzekeringen', 'KBC Verzekeringen'],
+    ['T-Il Sprl', 'Brayfield SPRL'],
+    ['CE Greenbizz', 'Brussels Greenbizz'],
+    ['ATELIER GROOT EILAND VZW', "L'Atelier CR"],
+    ['Parking', 'Parking Cathédrale SA'],
+    ['DKV Belgium', 'APPLE RETAIL BELGIUM BV'],
+  ];
+  // The pairs that are one party: the shorter name whole in the longer, which
+  // adds a legal form or a word that weighs less than the ones they share.
+  // Au Savoy and Savoy SRL are joined through the name that carries both.
+  const oneParty: [string, string][] = [
+    ['Anthropic', 'Anthropic, PBC'],
+    ['Supabase Pte Ltd', 'Supabase'],
+    ['ISABEL NV', 'Isabel'],
+    ['Au Savoy', 'Au Savoy (Savoy SRL)'],
+    ['Au Savoy (Savoy SRL)', 'Savoy SRL'],
+    ['Garage Annez', 'Garage Annez et fils'],
+  ];
+  // Doubtful, and left out: `ai` and `inc` are carried by one of the two only.
+  const doubtful = ['Read Meeting Manager', 'Read AI, Inc.'];
+
+  let books: string;
+  let reader: string;
+  const ids = new Map<string, string>();
+
+  beforeAll(async () => {
+    books = (await newCompany(db, { name: 'Two Hundred Contacts' })).companyId;
+    reader = await newMember(db, books, 'accountant');
+    for (const name of new Set([...twoParties.flat(), ...oneParty.flat(), ...doubtful])) {
+      ids.set(name, await contact(name, { companyId: books }));
+    }
+  });
+
+  const named = (pairs: Pair[], a: string, b: string) =>
+    pairs.find((p) => [p.keep_id, p.absorb_id].sort().join() === [ids.get(a), ids.get(b)].sort().join());
+
+  it('proposes none of the pairs a shared generic word made', async () => {
+    const pairs = await suggestions(books, reader);
+    for (const [a, b] of twoParties) expect(named(pairs, a, b), `${a} and ${b}`).toBeUndefined();
+  });
+
+  it('proposes every pair that is one party, by name, and nothing else', async () => {
+    const pairs = await suggestions(books, reader);
+    for (const [a, b] of oneParty) {
+      expect(named(pairs, a, b), `${a} and ${b}`).toMatchObject({ score: '0.900', evidence: 'name' });
+    }
+    expect(pairs).toHaveLength(oneParty.length);
   });
 });
 
