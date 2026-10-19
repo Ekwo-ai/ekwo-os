@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ekwo.ai/schemas/module/1.json",
+  "code": "crm",
+  "name": "Customer relationship",
+  "description": "The record of a relationship, kept beside the books on the same contacts: a card per contact followed, segments, pipelines and their stages, deals, and every activity, exposed as functions an agent or a screen calls. A deal won makes its party a customer. Knows no country, and writes nothing to the ledger.",
+  "schema": "crm",
+  "version": "0.1.0",
+  "status": "available",
+  "requires_socle_min": "20261019150000",
+  "posts": false,
+  "mcp": { "prefix": "crm" }
+}
