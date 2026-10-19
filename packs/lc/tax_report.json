@@ -1,0 +1,186 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "LC-VAT-RETURN",
+  "name": "VAT return (box layout of this pack)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2010-02-01",
+  "legal_reference": "Value Added Tax Act, Cap. 15.42 (Act No. 7 of 2012), s. 36 — the tax period is the calendar month; s. 37(1) — a taxable person files a return for each tax period within twenty-one calendar days after the end of the period, whether or not tax is payable; s. 37(2) — in the form and manner the Comptroller approves; s. 46(1)(a) — the tax is payable by the due date of the return. The Inland Revenue Department (VAT Section) takes the \"Value Added Tax Remittance Form and Return\" (the service page of the Ministry of Finance).",
+  "source": "lc-vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 21,
+    "legal_reference": "Value Added Tax Act, Cap. 15.42 (Act No. 7 of 2012), s. 37(1) and s. 46(1)(a) — the return is filed within twenty-one calendar days after the end of the tax period and the tax is paid by the same date: for a month, the 21st of the next month; the Ministry of Finance service page says the same. Unpaid tax bears interest at 1.25 % a month or part of a month (s. 33) and a person who fails to pay by the due date is liable to a penalty of ten per cent of the tax due (s. 47(4)); an extension to file does not move the date of payment (s. 38(2)). Weekend roll-forward is not expressible",
+    "source": "lc-vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard-rated supplies (12.5 %), net of VAT",
+      "sequence": 10,
+      "legal_reference": "Box number and label are this pack's own: the Value Added Tax Remittance Form and Return of the Inland Revenue Department was not found as a text, so the boxes follow what the Act makes the tax payable carry — the output tax of the period less the input tax deduction allowed (s. 29(1)). Taxable supplies at 12.5 % (s. 10(1)).",
+      "source": "lc-vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Restaurant, water sport, tour and attraction supplies (10 %), net of VAT",
+      "sequence": 20,
+      "legal_reference": "Taxable supplies at ten per cent: restaurant food and beverages, water sports, tours and admission to attractions (S.I. 188 of 2020, art. 3(b)).",
+      "source": "lc-tourism-order-2020"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Tourism accommodation supplies (7 %), net of VAT",
+      "sequence": 30,
+      "legal_reference": "Taxable supplies of tourism accommodation at seven per cent (S.I. 188 of 2020, art. 3(a)).",
+      "source": "lc-tourism-order-2020"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Zero-rated supplies, including exports",
+      "sequence": 40,
+      "legal_reference": "Taxable supplies at zero per cent (s. 16; First Schedule); they stay on the return (s. 37(1) asks for a return for each tax period).",
+      "source": "lc-vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 50,
+      "legal_reference": "Supplies of the Second Schedule (s. 17), reported for information; the input tax of what is acquired to make them is not deductible (s. 30).",
+      "source": "lc-vat-act"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Total supplies",
+      "sequence": 60,
+      "legal_reference": "Sum of boxes 1 to 5 — the sum is this pack's reading, the form is the Comptroller's (s. 37(2)).",
+      "source": "lc-vat-act",
+      "plus": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 70,
+      "legal_reference": "Tax at 12.5 % on box 1 (s. 10(1)).",
+      "source": "lc-vat-act"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Output tax on restaurant, water sport, tour and attraction supplies",
+      "sequence": 80,
+      "legal_reference": "Tax at 10 % on box 2 (S.I. 188 of 2020, art. 3(b)).",
+      "source": "lc-tourism-order-2020"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Output tax on tourism accommodation",
+      "sequence": 90,
+      "legal_reference": "Tax at 7 % on box 3 (S.I. 188 of 2020, art. 3(a)).",
+      "source": "lc-tourism-order-2020"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Total output tax for the period",
+      "sequence": 100,
+      "legal_reference": "The output tax chargeable on the taxable supplies of the period (s. 29(1)); a tax credit note posts a negative amount to its own boxes (s. 35).",
+      "source": "lc-vat-act",
+      "plus": [
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Value of imports",
+      "sequence": 110,
+      "legal_reference": "Goods imported on which tax was paid to the Comptroller of Customs (s. 9(1)(b), s. 22 to 25).",
+      "source": "lc-vat-act"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Value of local purchases",
+      "sequence": 120,
+      "legal_reference": "Purchases made in Saint Lucia for the taxable activity, taxable, zero-rated and exempt.",
+      "source": "lc-vat-act"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "VAT paid on imports",
+      "sequence": 130,
+      "legal_reference": "Input tax paid on the import of goods, deductible for use in a taxable activity (s. 30(1)(a)).",
+      "source": "lc-vat-act"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "VAT paid on local purchases",
+      "sequence": 140,
+      "legal_reference": "Input tax payable on taxable supplies made to the person, deductible on a tax invoice (s. 30, s. 34).",
+      "source": "lc-vat-act"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Total input tax credits for the period",
+      "sequence": 150,
+      "legal_reference": "Sum of boxes 13 and 14: the input tax deduction allowed for the period (s. 29(1), s. 30).",
+      "source": "lc-vat-act",
+      "plus": [
+        "13",
+        "14"
+      ]
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "VAT payable",
+      "sequence": 160,
+      "legal_reference": "Output tax less input tax deduction when positive (s. 29(1)), due by the date the return is due (s. 46(1)(a)). Interest (s. 33) and the penalty of s. 47(4) are not modelled.",
+      "source": "lc-vat-act",
+      "plus": [
+        "10"
+      ],
+      "minus": [
+        "15"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "VAT refundable",
+      "sequence": 170,
+      "legal_reference": "The excess of the input tax deduction over the output tax (s. 29(2), s. 57): carried forward as an input tax deduction of the next period; after three consecutive periods the remainder can be claimed as a refund, paid by the end of the month after the claim (s. 57(3) and (4)); a person at least half of whose supplies are zero-rated may claim the excess of each period (s. 57(5) and (6)). The pack only reports box 17.",
+      "source": "lc-vat-act",
+      "plus": [
+        "15"
+      ],
+      "minus": [
+        "10"
+      ],
+      "floor_zero": true
+    }
+  ]
+}
