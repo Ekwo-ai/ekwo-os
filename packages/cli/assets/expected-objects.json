@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.15.0",
-  "migration": "20261019161437",
+  "migration": "20261019194512",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1914,6 +1914,10 @@
           {
             "name": "amount_untaxed",
             "type": "numeric(16,2)"
+          },
+          {
+            "name": "base_includes_tax",
+            "type": "boolean"
           },
           {
             "name": "company_id",
@@ -3866,6 +3870,10 @@
             "type": "tax_scope"
           },
           {
+            "name": "base_includes_tax",
+            "type": "boolean"
+          },
+          {
             "name": "cash_basis",
             "type": "boolean"
           },
@@ -3985,6 +3993,10 @@
           {
             "name": "applies_to",
             "type": "tax_scope"
+          },
+          {
+            "name": "base_includes_tax",
+            "type": "boolean"
           },
           {
             "name": "cash_basis",
@@ -5311,6 +5323,10 @@
       {
         "name": "supersede_filing",
         "arguments": "p_filing_id uuid"
+      },
+      {
+        "name": "tax_amount_of",
+        "arguments": "p_amount numeric, p_rate numeric, p_price_include boolean, p_base_includes_tax boolean"
       },
       {
         "name": "tax_filing_boxes_are_frozen",
@@ -10939,6 +10955,17 @@
         {
           "name": "supersede_filing",
           "arguments": "p_filing_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "tax_amount_of",
+          "arguments": "p_amount numeric, p_rate numeric, p_price_include boolean, p_base_includes_tax boolean",
           "anon": [],
           "authenticated": [
             "execute"

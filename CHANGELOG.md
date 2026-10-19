@@ -9,6 +9,18 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A tax computed inside its own base** (socle migration `20261019194512`,
+  decision 0077). A tax declares `base_includes_tax: true` in `taxes.json`
+  and keeps the rate of its law: on a net amount N the tax is
+  N × rate / (100 − rate), on a price that holds it the price × rate / 100,
+  rounded once on the group. One function, `tax_amount_of()`, is now the
+  arithmetic of every tax for the breakdown, the allocator of an inclusive
+  price and the line; the box of the base reports the base plus the tax, and
+  `document_tax_summary` appends `base_includes_tax` and `taxable_amount`. No
+  pack declares the key yet: every seed and every golden year is unchanged.
+
 ## [0.15.1] — 2026-10-19
 
 ### Changed

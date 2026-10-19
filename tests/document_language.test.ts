@@ -54,6 +54,9 @@ const READS_THE_COLUMN = [
   // Replaces document_header again, with the identifiers of the parties, and
   // reads the column as the view before it did.
   '20261019150000_a_party_names_its_identifiers.sql',
+  // Replaces document_tax_summary, which reads the column for the legal
+  // mention of a group in the language of its document.
+  '20261019194512_a_tax_computed_inside_its_own_base.sql',
 ];
 
 let db: PGlite;

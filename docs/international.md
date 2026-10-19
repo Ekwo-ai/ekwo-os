@@ -86,7 +86,7 @@ it. How a professional reviews a pack is in
 | The rules of an invoice: numbering, payment terms, tax point, legal mentions, e-invoicing profile | **Done**, as pack data |
 | The fiscalisation of invoices: a record chained by a hash, a clearance by the authority before issue, the data reported | **Done**, as pack data and the `einvoicing` module; the call to an authority is the host's |
 | Opening balances and a year-end close | **Done** — `opening_balance()`, `close_fiscal_year()`, `reopen_fiscal_year()`, and the final close `close_fiscal_year_finally()`, required where the pack says so |
-| A tax engine beyond the European value added tax | **Done** — GST, sales and use taxes, withholding, non-recoverable and tax-inclusive taxes, several taxes on one line |
+| A tax engine beyond the European value added tax | **Done** — GST, sales and use taxes, withholding, non-recoverable and tax-inclusive taxes, taxes computed inside their own base, several taxes on one document |
 | Taxes due on collection | **Done**; cash accounting as a ledger is not |
 | Exchange differences | **Realised differences done**; revaluation of open items not yet |
 | A cash-flow statement | **Not yet** — the format accepts one, and no pack prescribes it yet |

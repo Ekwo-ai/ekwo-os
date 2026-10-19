@@ -353,6 +353,14 @@ export interface PackTax {
   /** The unit price already holds the tax. */
   price_include: boolean;
   /**
+   * The taxable base of this tax contains the tax itself: on a net amount N
+   * at rate r the tax is N x r / (100 - r), on a price that holds it the
+   * price x r / 100. The rate stays the rate of the law (decision 0077).
+   * Null where the tax does not say, which is false — kept apart so that the
+   * compiler knows whether the pack spoke of it at all.
+   */
+  base_includes_tax: boolean | null;
+  /**
    * What this tax turns on that the ledger cannot see, from a closed
    * vocabulary. What the question is, never how to answer it: no value, no
    * operator, no expression — the article that sets a threshold or prescribes
@@ -2354,6 +2362,7 @@ function normaliseTax(raw: Record<string, unknown>, index: number): PackTax {
     conditions: Array.isArray(raw['conditions']) ? (raw['conditions'] as unknown[]).map(String) : [],
     recoverable: typeof raw['recoverable'] === 'boolean' ? raw['recoverable'] : true,
     price_include: typeof raw['price_include'] === 'boolean' ? raw['price_include'] : false,
+    base_includes_tax: typeof raw['base_includes_tax'] === 'boolean' ? raw['base_includes_tax'] : null,
     jurisdiction: (raw['jurisdiction'] as string | undefined) ?? null,
     applies_seller_territory: appliesWhen(raw, 'seller_in'),
     applies_buyer_territory: appliesWhen(raw, 'buyer_in'),
@@ -4162,6 +4171,16 @@ function crossReferences(manifest: Manifest, charts: PackChart[], taxes: PackTax
         path: `taxes.json ${tax.code}`,
         message:
           'a price that already holds its tax needs a rate to take it back out, and a fixed amount is not one',
+      });
+    }
+    // A tax computed inside its own base divides by one hundred less the
+    // rate: a fixed amount has no rate, and a rate of one hundred or more has
+    // no base that could contain it. The schema refuses both as well.
+    if (tax.base_includes_tax && (tax.amount_type !== 'percent' || !(tax.rate < 100))) {
+      issues.push({
+        path: `taxes.json ${tax.code}`,
+        message:
+          'a tax computed inside its own base needs a percentage below 100: the base is the net divided by one less the rate',
       });
     }
     for (const [kind, postings] of Object.entries(tax.postings)) {

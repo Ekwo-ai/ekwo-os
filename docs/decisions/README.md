@@ -55,6 +55,7 @@ consequence.
 - [0020](0020-one-tax-engine-several-kinds-of-tax.md) — One tax engine, several kinds of tax
 - [0021](0021-cash-basis-vat-and-realised-exchange-differences.md) — Cash-basis VAT waits; exchange differences are realised
 - [0022](0022-a-price-that-holds-its-tax.md) — A price that holds its tax is converted per group
+- [0077](0077-a-tax-computed-inside-its-own-base.md) — A tax computed inside its own base is one key of the tax
 - [0023](0023-declaration-boxes-are-data.md) — Declaration boxes are data, with no expression language
 - [0024](0024-a-tax-follows-the-territory-of-the-parties.md) — A tax follows the territory of the parties
 
