@@ -1,0 +1,297 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of books of an Uzbek VAT payer filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    },
+    {
+      "code": "2026-05",
+      "from": "2026-05-01",
+      "to": "2026-05-31"
+    }
+  ],
+  "statements": [
+    "UZ-BS",
+    "UZ-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-uz",
+      "name": "Namuna Savdo MChJ (fictitious)",
+      "type": "customer",
+      "country": "UZ"
+    },
+    {
+      "ref": "client-foreign",
+      "name": "Muster Handels GmbH",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "supplier-uz",
+      "name": "Namuna Ta'minot MChJ (fictitious)",
+      "type": "supplier",
+      "country": "UZ"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-uz",
+      "date": "2026-01-15",
+      "why": "Sale of goods at the standard rate of 12 %: base and tax of box TAXABLE (article 258, first part).",
+      "lines": [
+        {
+          "name": "Building materials",
+          "quantity": 10,
+          "unit_price": 5000,
+          "tax": "UZ-S-12",
+          "account": "9020"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-01-20",
+      "why": "Export of goods: zero-rated supply, box ZERO (articles 258 and 260).",
+      "lines": [
+        {
+          "name": "Consignment for export",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "UZ-S-ZERO-EXPORT",
+          "account": "9020"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-uz",
+      "date": "2026-01-12",
+      "why": "Purchase of goods with 12 % VAT creditable on a tax invoice: box INPUT, inventory 2910 (article 266).",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "UZ-P-12",
+          "account": "2910"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-uz",
+      "date": "2026-02-10",
+      "why": "Education services: supply exempt from VAT, box EXEMPT (article 243, first part, item 10).",
+      "lines": [
+        {
+          "name": "Tuition fees",
+          "quantity": 10,
+          "unit_price": 300,
+          "tax": "UZ-S-EXEMPT-EDU",
+          "account": "9020"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-uz",
+      "date": "2026-02-18",
+      "why": "Second sale at 12 %, from which one unit comes back in February.",
+      "lines": [
+        {
+          "name": "Office furniture",
+          "quantity": 4,
+          "unit_price": 7500,
+          "tax": "UZ-S-12",
+          "account": "9020"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-uz",
+      "date": "2026-02-25",
+      "why": "Return of one unit of V4: reduces the base and the tax of box TAXABLE in the month of the return (article 257, item 1).",
+      "lines": [
+        {
+          "name": "Return of office furniture",
+          "quantity": 1,
+          "unit_price": 7500,
+          "tax": "UZ-S-12",
+          "account": "9020"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-uz",
+      "date": "2026-02-14",
+      "why": "Purchase of services booked to administrative expenses 9420, 12 % VAT creditable (article 266).",
+      "lines": [
+        {
+          "name": "Equipment maintenance services",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "UZ-P-12",
+          "account": "9420"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-uz",
+      "date": "2026-03-10",
+      "why": "Large purchase in March: the credit exceeds the tax charged, box EXCESS (article 272, third part).",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "UZ-P-12",
+          "account": "2910"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-uz",
+      "date": "2026-04-08",
+      "why": "Sale at 12 % in April.",
+      "lines": [
+        {
+          "name": "Building materials",
+          "quantity": 8,
+          "unit_price": 2500,
+          "tax": "UZ-S-12",
+          "account": "9020"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-04-20",
+      "why": "International transport services: zero-rated, box ZERO (articles 258 and 263).",
+      "lines": [
+        {
+          "name": "International freight transport",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "UZ-S-ZERO-TRANSPORT",
+          "account": "9020"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-uz",
+      "date": "2026-04-12",
+      "why": "Purchase in April with 12 % VAT creditable.",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "UZ-P-12",
+          "account": "2910"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-uz",
+      "date": "2026-05-06",
+      "why": "Banking operation: financial service exempt from VAT, box EXEMPT (articles 243 item 27 and 244).",
+      "lines": [
+        {
+          "name": "Interest on a loan granted",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "UZ-S-EXEMPT-FINANCIAL",
+          "account": "9020"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-01",
+      "amount": 56000,
+      "contact": "client-uz",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Receipt closing V1 exactly (50 000 + 6 000 VAT)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 20000,
+      "contact": "client-foreign",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Receipt closing V2 exactly."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-01",
+      "amount": 5000,
+      "contact": "client-uz",
+      "journal": "BNK",
+      "match": null,
+      "why": "Unmatched receipt on account."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 33600,
+      "contact": "supplier-uz",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Payment closing P1 exactly."
+    }
+  ]
+}

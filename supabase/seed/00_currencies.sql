@@ -115,3 +115,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('BRL', 'Brazilian real', 'R$', 2)
 on conflict (code) do nothing;
+
+-- Uzbekistani som, ISO 4217 list one, two decimals (packs/uz/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('UZS', 'Uzbekistani som', E'so''m', 2)
+on conflict (code) do nothing;
