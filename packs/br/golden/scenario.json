@@ -10,9 +10,9 @@
   ],
   "statements": ["BR-BP", "BR-DRE"],
   "contacts": [
-    { "ref": "cliente-sp", "name": "Comercial Paulista de Ferragens Ltda.", "type": "customer", "country": "BR" },
+    { "ref": "cliente-sp", "name": "Comércio Exemplo de Ferragens Ltda.", "type": "customer", "country": "BR" },
     { "ref": "cliente-rj", "name": "Clínica Exemplo do Rio Ltda.", "type": "customer", "country": "BR" },
-    { "ref": "cliente-us", "name": "Northwind Analytics Inc.", "type": "customer", "country": "US" },
+    { "ref": "cliente-us", "name": "Example Analytics Inc.", "type": "customer", "country": "US" },
     { "ref": "locador", "name": "Imobiliária Fictícia Ltda.", "type": "supplier", "country": "BR" },
     { "ref": "fornecedor-sw", "name": "Software Exemplo Ltda.", "type": "supplier", "country": "BR" },
     { "ref": "contador", "name": "Escritório Contábil Exemplo Ltda.", "type": "supplier", "country": "BR" },
