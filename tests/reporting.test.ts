@@ -227,3 +227,96 @@ describe('general_ledger', () => {
     expect(n(opening.opening_balance)).not.toBeNaN();
   });
 });
+
+describe('journal_book and journal_totals', () => {
+  it('reads every posted line of the period, in the order a book is read', async () => {
+    const lines = await rows<{
+      journal_code: string;
+      entry_number: string | null;
+      entry_date: string;
+      line_sequence: number;
+      debit: string;
+      credit: string;
+    }>(
+      db,
+      `select entry_date::text as entry_date, journal_code, entry_number, line_sequence, debit, credit
+         from journal_book($1, '2026-01-01', '2026-12-31')`,
+      [companyId],
+    );
+    expect(lines.length).toBeGreaterThan(0);
+
+    // The same lines the ledger holds, account by account: neither reading leaves one out.
+    const ledger = await one<{ n: number }>(
+      db,
+      `select count(*)::int as n from general_ledger($1, '2026-01-01', '2026-12-31')`,
+      [companyId],
+    );
+    expect(lines.length).toBe(ledger.n);
+
+    // Day, journal, number, line: a book is read in that order and no other.
+    const keys = lines.map((l) => [l.entry_date, l.journal_code, l.entry_number ?? '', String(l.line_sequence).padStart(6, '0')].join('|'));
+    const sorted = [...keys].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+    expect(keys).toEqual(sorted);
+  });
+
+  it('reads one journal alone, and its totals are the head of that book', async () => {
+    const totals = await rows<{
+      journal_id: string;
+      journal_code: string;
+      entries: number;
+      lines: number;
+      debit: string;
+      credit: string;
+    }>(db, `select * from journal_totals($1, '2026-01-01', '2026-12-31')`, [companyId]);
+    const every = await rows<{ code: string }>(db, `select code from journals where company_id = $1 order by code`, [companyId]);
+    // Every journal of the company has its row, the quiet ones at zero.
+    expect(totals.map((t) => t.journal_code)).toEqual(every.map((j) => j.code));
+
+    const busy = totals.find((t) => Number(t.entries) > 0);
+    expect(busy).toBeDefined();
+    const book = await rows<{ entry_id: string; journal_code: string; debit: string; credit: string }>(
+      db,
+      `select entry_id, journal_code, debit, credit from journal_book($1, '2026-01-01', '2026-12-31', array[$2::uuid])`,
+      [companyId, busy!.journal_id],
+    );
+    expect(book.length).toBe(Number(busy!.lines));
+    expect(new Set(book.map((l) => l.journal_code))).toEqual(new Set([busy!.journal_code]));
+    expect(new Set(book.map((l) => l.entry_id)).size).toBe(Number(busy!.entries));
+    expect(book.reduce((sum, l) => sum + n(l.debit), 0)).toBeCloseTo(n(busy!.debit), 2);
+    expect(book.reduce((sum, l) => sum + n(l.credit), 0)).toBeCloseTo(n(busy!.credit), 2);
+    // A journal's book balances: what it debits, it credits.
+    expect(n(busy!.debit)).toBeCloseTo(n(busy!.credit), 2);
+  });
+
+  it('leaves draft entries out of the book and of the totals', async () => {
+    const before = await one<{ lines: number }>(
+      db,
+      `select lines from journal_totals($1, '2026-01-01', '2026-12-31') where journal_code = 'MISC'`,
+      [companyId],
+    );
+    const entry = await one<{ id: string }>(
+      db,
+      `insert into entries (company_id, journal_id, entry_date, description, state)
+       select $1, id, date '2026-09-02', 'Brouillon', 'draft' from journals
+        where company_id = $1 and code = 'MISC' returning id`,
+      [companyId],
+    );
+    await db.query(
+      `insert into entry_lines (entry_id, company_id, account_id, sequence, debit, credit)
+       values ($1, $2, account_id_by_code($2, '704000'), 10, 0, 42)`,
+      [entry.id, companyId],
+    );
+    const after = await one<{ lines: number }>(
+      db,
+      `select lines from journal_totals($1, '2026-01-01', '2026-12-31') where journal_code = 'MISC'`,
+      [companyId],
+    );
+    expect(Number(after.lines)).toBe(Number(before.lines));
+    const drafts = await rows<{ entry_id: string }>(
+      db,
+      `select entry_id from journal_book($1, '2026-01-01', '2026-12-31') where entry_id = $2`,
+      [companyId, entry.id],
+    );
+    expect(drafts).toEqual([]);
+  });
+});

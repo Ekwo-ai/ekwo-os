@@ -66,7 +66,7 @@ describe('migrations', () => {
     for (const expected of [
       'post_document', 'post_entry', 'next_entry_number', 'assert_period_open',
       'reconcile', 'unreconcile', 'next_matching_number',
-      'trial_balance', 'general_ledger', 'aged_balance', 'vat_return', 'fec_lines',
+      'trial_balance', 'general_ledger', 'journal_book', 'journal_totals', 'aged_balance', 'vat_return', 'fec_lines',
       'evaluate_totals', 'financial_statement', 'unmapped_accounts', 'available_statements',
       'default_statement_code', 'financial_statement_of_kind', 'installed_schema_version',
       'api_key_on_company', 'member_holds', 'key_holds', 'is_known_caller', 'present_api_key', 'ekwo_pre_request',

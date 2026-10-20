@@ -30,6 +30,16 @@ somewhere has already run it.
   stays the source, and a test holds each list equal to it with
   `enum_range()`. The module's
   refusals, `crm_<code>: …`, travel up word for word.
+- **A journal reads as a book.** `journal_book()` reads every line of every
+  posted entry of a period, for one journal, several or all of them, in the
+  order a book is read — day, journal, entry number, line — each line naming
+  its entry, the document behind it and that document's type, its account and
+  its contact. `journal_totals()` is the head of each book: one row per
+  journal of the company with its posted entries, lines, debit and credit over
+  the period, zero where nothing went through. Both read what `general_ledger()`
+  reads, under the same row level security, and add nothing up on the client:
+  the MCP tool `journal_book` returns the lines and the totals as the database
+  gives them (migration `20261020080000`).
 
 ## [0.16.0] — 2026-10-20
 

@@ -228,6 +228,7 @@ Every write names its company explicitly.
 | `list_bank_transactions` | Statement lines, pending by default |
 | `trial_balance` | Opening, movements and closing per account |
 | `general_ledger` | Every posted line of an account, with a running balance |
+| `journal_book` | The book of one journal, or of all of them: every posted line of the period in the order a book is read, with the totals of each journal at the head |
 | `suggest_line_contacts` | The contacts an open receivable or payable line that names nobody could be, best first, each with its evidence and how many contacts that evidence reached. Writes nothing |
 | `suggest_item_combinations` | For each open receivable or payable line of one counterparty, the lines of the other side that settle it: an exact pair, several lines to the cent, or within the company's difference tolerance, with the difference. Writes nothing |
 | `matching_difference_options` | The reasons a difference may be booked for, with the account the pack gives for each, and the company's tolerance |

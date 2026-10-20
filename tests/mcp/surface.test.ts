@@ -37,6 +37,7 @@ const READ_TOOLS = [
   'list_shares',
   'trial_balance',
   'general_ledger',
+  'journal_book',
   'suggest_line_contacts',
   'suggest_item_combinations',
   'matching_difference_options',

@@ -591,6 +591,64 @@ export async function generalLedger(
   };
 }
 
+export const JournalBookInput = z.object({
+  company_id: companyId,
+  from: isoDate,
+  to: isoDate,
+  journal_code: z.string().min(1).optional().describe('The journal to read, by its code, e.g. "SAL". Leave both out for the book of every journal.'),
+  journal_ids: z.array(uuid).optional().describe('The journals to read, by id.'),
+});
+
+/**
+ * The book of a journal — every line of every posted entry of the period, in
+ * the order a book is read — and the head of each journal, the totals the
+ * database adds up (`journal_totals()`). Both are the core's functions; this
+ * only names a journal by its code.
+ */
+export async function journalBook(
+  backend: Backend,
+  args: z.infer<typeof JournalBookInput>,
+): Promise<unknown> {
+  let ids = args.journal_ids ?? null;
+  if (args.journal_code !== undefined) {
+    const journals = await backend.select<{ id: string }>({
+      table: 'journals',
+      columns: ['id'],
+      where: [
+        { column: 'company_id', op: 'eq', value: args.company_id },
+        { column: 'code', op: 'eq', value: args.journal_code },
+      ],
+    });
+    ids = [...(ids ?? []), ...journals.map((journal) => journal.id)];
+    if (ids.length === 0) {
+      throw new EkwoMcpError(`not_found: no journal ${args.journal_code} in this company.`);
+    }
+  }
+
+  const totals = await backend.rpc<Record<string, unknown>>('journal_totals', {
+    p_company_id: args.company_id,
+    p_from: args.from,
+    p_to: args.to,
+  });
+  const lines = await backend.rpc<Record<string, unknown>>('journal_book', {
+    p_company_id: args.company_id,
+    p_from: args.from,
+    p_to: args.to,
+    p_journal_ids: ids,
+  });
+  const asked = ids === null ? null : new Set(ids);
+
+  return {
+    period: { from: args.from, to: args.to },
+    journals: moneyFields(
+      totals.filter((row) => asked === null || asked.has(String(row['journal_id']))),
+      ['debit', 'credit'],
+    ),
+    lines: moneyFields(lines, ['debit', 'credit']),
+    count: lines.length,
+  };
+}
+
 export const AgedBalanceInput = z.object({
   company_id: companyId,
   at: isoDate.optional().describe('The day to age at. Defaults to today.'),

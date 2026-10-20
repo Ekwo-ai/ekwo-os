@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.16.0",
-  "migration": "20261020000000",
+  "migration": "20261020080000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4919,6 +4919,14 @@
       {
         "name": "is_known_caller",
         "arguments": ""
+      },
+      {
+        "name": "journal_book",
+        "arguments": "p_company_id uuid, p_from date, p_to date, p_journal_ids uuid[]"
+      },
+      {
+        "name": "journal_totals",
+        "arguments": "p_company_id uuid, p_from date, p_to date"
       },
       {
         "name": "key_holds",
@@ -9878,6 +9886,28 @@
           "anon": [
             "execute"
           ],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "journal_book",
+          "arguments": "p_company_id uuid, p_from date, p_to date, p_journal_ids uuid[]",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "journal_totals",
+          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
           "authenticated": [
             "execute"
           ],

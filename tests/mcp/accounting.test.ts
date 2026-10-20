@@ -279,6 +279,30 @@ describe('the books, through the tools', () => {
     expect(list(after['rows'])).toEqual([]);
   });
 
+  it('reads the book of the bank journal back, with its totals at the head', async () => {
+    const book = record(
+      await readTools.journalBook(backend, {
+        company_id: fx.companyId,
+        from: '2026-01-01',
+        to: '2026-12-31',
+        journal_code: 'BNK',
+      }),
+    );
+    const journals = list(book['journals']);
+    expect(journals.map((journal) => journal['journal_code'])).toEqual(['BNK']);
+    const lines = list(book['lines']);
+    expect(lines.length).toBeGreaterThan(0);
+    expect(new Set(lines.map((line) => line['journal_code']))).toEqual(new Set(['BNK']));
+    const debit = lines.reduce((sum, line) => sum + Number(line['debit']), 0).toFixed(2);
+    expect(debit).toBe(journals[0]?.['debit']);
+    expect(journals[0]?.['debit']).toBe(journals[0]?.['credit']);
+
+    // Asked for a journal the company does not have, it says so by name.
+    await expect(
+      readTools.journalBook(backend, { company_id: fx.companyId, from: '2026-01-01', to: '2026-12-31', journal_code: 'NOPE' }),
+    ).rejects.toThrow(/not_found/);
+  });
+
   it('reads the trial balance back, and it balances', async () => {
     const balance = record(
       await readTools.trialBalance(backend, {
