@@ -7,6 +7,17 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- **A credit under the foot.** `options.credit: { text, url }` prints a small
+  link right-aligned under the foot of every page; the address is `https`
+  or refused, and nothing is printed without the option.
+
+### Changed
+- **`elegant` is the default typeface.** A theme that names none prints in
+  Inter, with Fraunces for the title, the names and the headings;
+  `typeface: 'classic'` keeps Noto Sans everywhere. `DEFAULT_THEME` no
+  longer carries `font`, which the typeface now decides.
+
+### Added
 - **A second pair of typefaces, `elegant`.** `theme.typeface: 'elegant'`
   draws the text and every figure in Inter 4.1 and the title, the names, the
   headings of the sections and the labels of the totals in Fraunces

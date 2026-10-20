@@ -12,13 +12,12 @@ import INTER_REGULAR from './fonts/inter-regular.js';
 import { decodeBase64 } from './text.js';
 import type { ExtraFont, InvoiceTheme } from './types.js';
 
-/** A dark slate blue, the Noto Sans the package embeds, the logo on the left. */
+/** A dark slate blue, the elegant pair the package embeds, the logo on the left. */
 export const DEFAULT_THEME = {
   accent: '#1F3A5F',
-  font: 'Noto Sans',
   logoPosition: 'left',
-  typeface: 'classic',
-} as const satisfies Required<Omit<InvoiceTheme, 'headingFont'>>;
+  typeface: 'elegant',
+} as const satisfies Required<Omit<InvoiceTheme, 'font' | 'headingFont'>>;
 
 /** The typefaces a theme may name, each a text font and a heading font, or null for Noto Sans. */
 export const TYPEFACES = ['classic', 'elegant'] as const;

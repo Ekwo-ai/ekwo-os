@@ -131,7 +131,7 @@ describe('the logo', () => {
 
 describe('the theme', () => {
   it('is sober by default', () => {
-    expect(DEFAULT_THEME).toEqual({ accent: '#1F3A5F', font: 'Noto Sans', logoPosition: 'left', typeface: 'classic' });
+    expect(DEFAULT_THEME).toEqual({ accent: '#1F3A5F', logoPosition: 'left', typeface: 'elegant' });
   });
 
   it('draws the bands in the accent colour, with white text on a dark one and ink on a light one', async () => {
@@ -154,7 +154,7 @@ describe('the theme', () => {
   it('draws with the caller’s typeface, Noto Sans only where it lacks a character', async () => {
     // Noto Sans Bold, handed over as a caller's font: every word is then drawn in it.
     const font = { regular: decodeBase64(NOTO_SANS_BOLD) };
-    const names = await fontNames((await renderInvoicePdf(englishInvoice(), { date, theme: { font } })).file);
+    const names = await fontNames((await renderInvoicePdf(englishInvoice(), { date, theme: { typeface: 'classic', font } })).file);
     expect(names.length).toBeGreaterThan(0);
     for (const name of names) expect(name).toMatch(/^\/NotoSans-Bold-/);
   });
@@ -169,7 +169,7 @@ describe('the theme', () => {
   });
 
   it('prints the same words in the elegant typeface as in the classic one', async () => {
-    const classic = await pdfText((await renderInvoicePdf(englishInvoice(), { date })).file);
+    const classic = await pdfText((await renderInvoicePdf(englishInvoice(), { date, theme: { typeface: 'classic' } })).file);
     const elegant = await pdfText((await renderInvoicePdf(englishInvoice(), { date, theme: { typeface: 'elegant' } })).file);
     expect(elegant).toEqual(classic);
   });
@@ -184,6 +184,27 @@ describe('the theme', () => {
     const names = await fontNames((await renderInvoicePdf(englishInvoice(), { date, theme: { typeface: 'elegant', font } })).file);
     expect(names.some((name) => name.includes('Inter'))).toBe(false);
     expect(names.some((name) => name.includes('Fraunces'))).toBe(true);
+  });
+
+  it('prints a credit under the foot of every page, a link to its address, and nothing without one', async () => {
+    const credit = { text: 'Ekwo.ai', url: 'https://ekwo.ai' };
+    const rendered = await renderInvoicePdf(englishInvoice(), { date, credit });
+    expect(rendered.text.every((page) => page.includes('Ekwo.ai'))).toBe(true);
+    const doc = await PDFDocument.load(rendered.file);
+    const annots = doc.getPage(0).node.Annots();
+    expect(annots?.size()).toBe(1);
+    const link = annots?.lookup(0, PDFDict);
+    expect(String(link?.get(PDFName.of('Subtype')))).toBe('/Link');
+    expect(String((link?.lookup(PDFName.of('A'), PDFDict))?.get(PDFName.of('URI')))).toBe('(https://ekwo.ai/)');
+
+    const plain = await renderInvoicePdf(englishInvoice(), { date });
+    expect(plain.text.flat()).not.toContain('Ekwo.ai');
+    expect((await PDFDocument.load(plain.file)).getPage(0).node.Annots()?.size() ?? 0).toBe(0);
+  });
+
+  it('refuses a credit without words or with an address that is not https', async () => {
+    expect((await refusal(() => renderInvoicePdf(englishInvoice(), { credit: { text: ' ', url: 'https://ekwo.ai' } }))).code).toBe('invalid_value');
+    expect((await refusal(() => renderInvoicePdf(englishInvoice(), { credit: { text: 'Ekwo.ai', url: 'http://ekwo.ai' } }))).code).toBe('invalid_value');
   });
 
   it('refuses a colour it cannot read, and a side that is not one', async () => {

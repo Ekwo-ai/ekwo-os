@@ -98,7 +98,8 @@ describe('an English invoice', () => {
   });
 
   it('embeds every font it draws with, as a subset, and declares an sRGB output intent', async () => {
-    const rendered = await renderInvoicePdf(englishInvoice());
+    // The classic pair, whose every font is a Noto; the elegant one is the theme's tests.
+    const rendered = await renderInvoicePdf(englishInvoice(), { theme: { typeface: 'classic' } });
     const fonts = await fontsOf(rendered.file);
     expect(fonts.length).toBeGreaterThan(0);
     for (const font of fonts) {
@@ -195,11 +196,19 @@ describe('another language and another script', () => {
   });
 
   it('draws Thai with the embedded Noto Sans Thai, beside Latin on the same page', async () => {
-    const rendered = await renderInvoicePdf(thaiInvoice());
+    const rendered = await renderInvoicePdf(thaiInvoice(), { theme: { typeface: 'classic' } });
     expect(all(rendered.text)).toContain('บริษัท ลูกค้าสมมติ จำกัด');
     const names = (await fontsOf(rendered.file)).map((f) => f.name);
     expect(names.some((n) => n.includes('NotoSansThai'))).toBe(true);
     expect(names.some((n) => n.startsWith('/NotoSans-Regular'))).toBe(true);
+  });
+
+  it('draws Thai with Noto Sans Thai in the default, elegant, pair too', async () => {
+    const rendered = await renderInvoicePdf(thaiInvoice());
+    expect(all(rendered.text)).toContain('บริษัท ลูกค้าสมมติ จำกัด');
+    const names = (await fontsOf(rendered.file)).map((f) => f.name);
+    expect(names.some((n) => n.includes('NotoSansThai'))).toBe(true);
+    expect(names.some((n) => n.includes('Inter'))).toBe(true);
   });
 
   it('refuses a character no font has, by name, rather than print an empty box', async () => {

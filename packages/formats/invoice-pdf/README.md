@@ -147,7 +147,7 @@ CC0 ([`licenses/CC0-sRGB-profile.txt`](licenses/CC0-sRGB-profile.txt)).
 import { DEFAULT_THEME, renderInvoicePdf } from '@ekwo-ai/invoice-pdf';
 
 await renderInvoicePdf(input, { theme: { accent: '#7A1F2B', typeface: 'elegant', logoPosition: 'right' } });
-// DEFAULT_THEME: { accent: '#1F3A5F', font: 'Noto Sans', logoPosition: 'left', typeface: 'classic' }
+// DEFAULT_THEME: { accent: '#1F3A5F', logoPosition: 'left', typeface: 'elegant' }
 ```
 
 A few fields, all optional, and nothing else, on purpose: they are what a
@@ -159,8 +159,13 @@ is on.
 | `accent` | `#rrggbb`. The title, the rule under the heading, the band of the column headings and of the amount due. The text on a band is white, or ink where the colour is light — whichever contrasts more. |
 | `font` | `'Noto Sans'`, or the caller's TrueType or OpenType bytes, `{ regular, bold? }`, drawn first, with the embedded fonts for any character they lack. Embedded as a subset like the others. |
 | `logoPosition` | `left`: the logo above the seller's address. `right`: above the title, the seller's name on the left. |
-| `typeface` | A pair the package embeds, by name. `classic`: Noto Sans everywhere. `elegant`: Inter for the text and every figure, Fraunces for the title, the seller's and the buyer's names, the headings of the sections and the labels of the totals. `font` and `headingFont`, where given, take the place of the pair's. |
+| `typeface` | A pair the package embeds, by name. `elegant`, the default: Inter for the text and every figure, Fraunces for the title, the seller's and the buyer's names, the headings of the sections and the labels of the totals. `classic`: Noto Sans everywhere. `font` and `headingFont`, where given, take the place of the pair's. |
 | `headingFont` | The caller's bytes, `{ regular, bold? }`, for the title, the names and the headings; `font` draws any character it lacks. |
+
+**A credit.** `options.credit: { text: 'Ekwo.ai', url: 'https://ekwo.ai' }`
+prints its words small, right-aligned, under the foot of every page, with a
+link over them; the address is `https` or refused (`invalid_value`). Without
+the option nothing is printed.
 
 A colour that is not `#rrggbb`, a side that is neither or a typeface the
 package does not embed is refused, `invalid_value`. Nothing in the theme

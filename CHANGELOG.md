@@ -9,6 +9,24 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A discreet Ekwo.ai link under the foot of every invoice.**
+  `@ekwo-ai/invoice-pdf` takes `credit: { text, url }` and prints it small
+  under the foot of each page, with a link over its words (an `https`
+  address, refused otherwise; nothing printed without it). The PDF that
+  `ekwo doc pdf` and `render_invoice_pdf` make carries `Ekwo.ai`, opening
+  https://ekwo.ai; PDF/A-3b still passes veraPDF.
+
+### Changed
+
+- **Invoices print in the elegant typeface unless a company chooses
+  classic.** `@ekwo-ai/invoice-pdf` makes `elegant` its default, so a company
+  whose `invoice_typeface` is null prints in Inter with Fraunces for the
+  title, the names and the headings, in `ekwo doc pdf`, `render_invoice_pdf`
+  and every client of the package; `classic` keeps Noto Sans. The comment of
+  the column says so (migration `20261020190000`).
+
 ## [0.17.0] — 2026-10-20
 
 ### Added

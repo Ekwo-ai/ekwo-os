@@ -156,7 +156,7 @@ describe('render_invoice_pdf', () => {
     expect(plain).not.toMatch(onTheRight);
   });
 
-  it('prints in the typeface the company chose, and in the default once it is cleared', async () => {
+  it('prints in the typeface the company chose, and in the default, elegant, once it is cleared', async () => {
     const documentId = await sale(db, s);
     const fonts = (file: Uint8Array): string => new TextDecoder('latin1').decode(file);
 
@@ -165,10 +165,17 @@ describe('render_invoice_pdf', () => {
     expect(elegant).toContain('Fraunces');
     expect(elegant).toContain('Inter');
 
-    await db.query(`update companies set invoice_typeface = null where id = $1`, [s.companyId]);
+    await db.query(`update companies set invoice_typeface = 'classic' where id = $1`, [s.companyId]);
     const classic = fonts(pdfOf((await render({ document_id: documentId })).content));
     expect(classic).not.toContain('Fraunces');
     expect(classic).toContain('NotoSans');
+
+    // Cleared, the company prints in the package's default: elegant.
+    await db.query(`update companies set invoice_typeface = null where id = $1`, [s.companyId]);
+    const cleared = fonts(pdfOf((await render({ document_id: documentId })).content));
+    expect(cleared).toContain('Fraunces');
+    // And under the foot, the link to where the books were kept.
+    expect(cleared).toContain('(https://ekwo.ai/)');
   });
 
   it('never fetches a logo from a local or private address, and renders without it', async () => {

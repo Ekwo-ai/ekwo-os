@@ -284,9 +284,9 @@ export interface InvoiceTheme {
    */
   headingFont?: ExtraFont;
   /**
-   * A pair of typefaces the package embeds, chosen by name. `classic` (the
-   * default): Noto Sans everywhere. `elegant`: Inter for the text and the
-   * figures, Fraunces for the title, the names and the headings. `font` and
+   * A pair of typefaces the package embeds, chosen by name. `elegant` (the
+   * default): Inter for the text and the figures, Fraunces for the title,
+   * the names and the headings. `classic`: Noto Sans everywhere. `font` and
    * `headingFont`, where given, take the place of the pair's.
    */
   typeface?: 'classic' | 'elegant';
@@ -356,6 +356,17 @@ export interface InvoicePdfOptions {
   date?: Date;
   /** Written in the PDF's metadata. Defaults to `@ekwo-ai/invoice-pdf`. */
   producer?: string;
+  /**
+   * A small link printed under the foot of every page, right-aligned: the
+   * words, and the `https` address they open. Nothing is printed without it.
+   */
+  credit?: InvoiceCredit;
+}
+
+/** The words of a credit and the `https` address a click on them opens. */
+export interface InvoiceCredit {
+  text: string;
+  url: string;
 }
 
 /** What {@link renderInvoicePdf} returns. */

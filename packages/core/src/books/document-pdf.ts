@@ -46,6 +46,9 @@ import { readEinvoiceSource } from '../einvoicing/issue.js';
 import { BooksError, type Backend, type Row } from './backend.js';
 import { onlyVisible } from './shared.js';
 
+/** The small link under the foot of every invoice the books print: where they were kept. */
+export const EKWO_CREDIT = { text: 'Ekwo.ai', url: 'https://ekwo.ai' } as const;
+
 /** Every column of `document_header`, dates and figures as the text the database holds. */
 const HEADER = [
   'document_id', 'company_id', 'doc_type', 'state', 'payment_state', 'number', 'supplier_reference',
@@ -371,6 +374,7 @@ export async function renderDocumentPdf(
     ...(args.page_size === undefined ? {} : { pageSize: args.page_size }),
     ...(args.labels === undefined ? {} : { labels: args.labels }),
     producer: '@ekwo-ai/core',
+    credit: EKWO_CREDIT,
   };
 
   let factur: DocumentPdf['factur_x'] = null;

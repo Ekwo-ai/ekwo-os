@@ -874,7 +874,7 @@ export const UpdateCompanyProfileInput = z.object({
     .enum(['classic', 'elegant'])
     .nullable()
     .optional()
-    .describe('The typefaces of its invoice PDF: classic (Noto Sans) or elegant (Inter, with Fraunces for the title, the names and the headings). Null puts back the default, classic.'),
+    .describe('The typefaces of its invoice PDF: elegant (Inter, with Fraunces for the title, the names and the headings) or classic (Noto Sans). Null puts back the default, elegant.'),
 });
 
 export async function updateCompanyProfile(

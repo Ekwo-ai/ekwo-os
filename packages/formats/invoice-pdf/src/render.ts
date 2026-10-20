@@ -18,7 +18,7 @@
  * books.
  */
 
-import { PDFDocument, rgb, type PDFPage, type RGB } from 'pdf-lib';
+import { PDFDocument, PDFString, rgb, type PDFPage, type RGB } from 'pdf-lib';
 import { prepareForArchive } from './archive.js';
 import { InvoicePdfError } from './errors.js';
 import { decimal, formatterFor, groupIban, isZero, type Formatter } from './format.js';
@@ -29,6 +29,7 @@ import { clean, refuseRightToLeft, typesetter, type Typesetter } from './text.js
 import { INK, resolveTheme } from './theme.js';
 import type {
   DocumentHeaderRow,
+  InvoiceCredit,
   InvoiceLabels,
   InvoicePdfInput,
   InvoicePdfOptions,
@@ -45,6 +46,8 @@ const SHADE = rgb(0.94, 0.94, 0.95);
 
 const BODY = 9;
 const SMALL = 7.5;
+/** The size of the credit under the foot. */
+const CREDIT = 6.5;
 const LEADING = 1.38;
 
 const text = (value: unknown): string | null => {
@@ -59,6 +62,21 @@ interface Style {
   /** Drawn in the heading typeface of the theme, where it has one. */
   heading?: boolean;
   color?: RGB;
+}
+
+/** The credit to print, checked: words, and an `https` address. */
+function creditOf(credit: InvoiceCredit | undefined): InvoiceCredit | null {
+  if (credit === undefined) return null;
+  const words = text(credit.text);
+  if (words === null) throw new InvoicePdfError('invalid_value', 'credit.text is empty');
+  let url: URL;
+  try {
+    url = new URL(credit.url);
+  } catch {
+    throw new InvoicePdfError('invalid_value', `credit.url "${credit.url}" is not an address`);
+  }
+  if (url.protocol !== 'https:') throw new InvoicePdfError('invalid_value', `credit.url "${credit.url}" is not an https address`);
+  return { text: words, url: url.href };
 }
 
 /** Pages, a cursor running down them, and every string drawn on each. */
@@ -297,6 +315,7 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   );
 
   const ts = typesetter(doc, options.fonts ?? [], f.locale, theme.font, theme.heading);
+  const footCredit = creditOf(options.credit);
   const [width, height] = SIZES[options.pageSize ?? 'A4'];
   const canvas = new Canvas(doc, ts, width, height);
   const contentWidth = canvas.right - canvas.left;
@@ -783,6 +802,20 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
     }
     const pageLabel = labels.page.replace('{page}', String(i + 1)).replace('{pages}', String(pageCount));
     await canvas.text(pageLabel, canvas.right, top - lineHeight(SMALL) + 2, { size: SMALL, color: MUTED }, 'right');
+    if (footCredit !== null) {
+      // In the margin under the foot, quieter than it, and a link over its words.
+      const baseline = MARGIN - lineHeight(CREDIT) - 2;
+      const width = await canvas.text(footCredit.text, canvas.right, baseline, { size: CREDIT, color: MUTED }, 'right');
+      const link = doc.context.obj({
+        Type: 'Annot',
+        Subtype: 'Link',
+        Rect: [canvas.right - width, baseline - 2, canvas.right, baseline + CREDIT],
+        Border: [0, 0, 0],
+        F: 4,
+        A: { Type: 'Action', S: 'URI', URI: PDFString.of(footCredit.url) },
+      });
+      canvas.page.node.addAnnot(doc.context.register(link));
+    }
   }
 
   const file = await doc.save({ useObjectStreams: false });

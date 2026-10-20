@@ -740,7 +740,7 @@ Legal entities kept in this instance. One instance may hold several.
 | `activity_description` | `text` | The company's own words for its activity, beside activity_code and activity_scheme. A format that carries the code of the activity carries its description too, and the description of a register's code is not always the words the company uses. |
 | `archived_at` | `timestamp with time zone` | When the owner archived the company; null while its books are kept. An archived company is read-only for the ledger: posting an entry, booking a document or a payment and closing a year are refused with company_archived, while reading, exporting, the members and the profile stay available. Set by archive_company() and cleared by unarchive_company(), never written by hand. |
 | `number_format` | `text` | This company's pattern of a document number, in the grammar of country_defaults.number_format: {CODE}, {YYYY} or {YY}, {MM}, {N...}. Carries {CODE}. Null keeps the pattern of the country pack. |
-| `invoice_typeface` | `text` | The pair of typefaces of this company's invoice PDF, by the name @ekwo-ai/invoice-pdf embeds it under: classic (Noto Sans) or elegant (Inter, with Fraunces for the title, the names and the headings). Null is the default, classic. |
+| `invoice_typeface` | `text` | The pair of typefaces of this company's invoice PDF, by the name @ekwo-ai/invoice-pdf embeds it under: elegant (Inter, with Fraunces for the title, the names and the headings) or classic (Noto Sans). Null is the default, elegant. |
 
 Constraints:
 

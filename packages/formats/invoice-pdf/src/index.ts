@@ -13,6 +13,7 @@ export type {
   InvoiceLabels,
   InvoicePdfInput,
   InvoicePdfOptions,
+  InvoiceCredit,
   InvoiceTheme,
   InvoiceVerification,
   InvoiceVerificationField,
