@@ -162,6 +162,13 @@ beforeAll(async () => {
         order by f.id, a.id limit 1`,
       [company],
     );
+    // And a company of the installation in the group these books consolidate:
+    // the one table an archive leaves behind, since it names another company.
+    await db.query(
+      `insert into consolidation.members (group_id, company_id, member_company_id, method, ownership_rate, entered_on)
+       select g.id, g.company_id, $2, 'full', 100, $3::date from consolidation.groups g where g.company_id = $1`,
+      [company, demoCompany, openDay],
+    );
   }
 }, 600_000);
 

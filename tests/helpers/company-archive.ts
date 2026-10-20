@@ -463,6 +463,13 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
      values ($1, $2, $3, $4, $5::date, $5::date)`,
     [companyId, contract.id, schedule.id, [...replayed.documents.values()][0], golden.fiscalYear.start],
   );
+  // A seventh module: a group the company consolidates. Its members name
+  // other companies of the installation and stay behind; the group travels.
+  await asUser(db, ownerId, async () => {
+    await db.query(`select enable_module($1, 'consolidation')`, [companyId]);
+  });
+  await db.query(`insert into consolidation.groups (company_id, code, name, currency_code)
+                  select $1, 'main', $2, c.currency_code from companies c where c.id = $1`, [companyId, `Group ${tag}`]);
 
   // A piece on a document.
   const someDocument = [...replayed.documents.values()][0] as string;
