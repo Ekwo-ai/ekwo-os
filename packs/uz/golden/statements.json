@@ -1,0 +1,65 @@
+{
+  "statements": [
+    {
+      "code": "UZ-BS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "AS-PPE": "0.00",
+        "AS-INTANG": "0.00",
+        "AS-LTINV": "0.00",
+        "AS-CAPEX": "0.00",
+        "AS-LTREC": "0.00",
+        "AS-NCA-TOTAL": "0.00",
+        "AS-INV": "78000.00",
+        "AS-PREP": "0.00",
+        "AS-REC": "83160.00",
+        "AS-CASH": "47400.00",
+        "AS-OCA": "0.00",
+        "AS-CA-TOTAL": "208560.00",
+        "AS-TOTAL": "208560.00",
+        "EQ-CAPITAL": "0.00",
+        "EQ-ADDL": "0.00",
+        "EQ-RESERVE": "0.00",
+        "EQ-RETAINED": "132500.00",
+        "EQ-OTHER": "0.00",
+        "EQ-TOTAL": "132500.00",
+        "LI-PAY": "64960.00",
+        "LI-DEF": "0.00",
+        "LI-ADV": "0.00",
+        "LI-TAX": "11100.00",
+        "LI-STAFF": "0.00",
+        "LI-DEBT": "0.00",
+        "LI-OTHER": "0.00",
+        "LI-CL-TOTAL": "76060.00",
+        "LI-LT": "0.00",
+        "LI-NCL-TOTAL": "0.00",
+        "EQLI-TOTAL": "208560.00"
+      }
+    },
+    {
+      "code": "UZ-IS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "IS-REV": "142500.00",
+        "IS-COGS": "0.00",
+        "IS-GROSS": "142500.00",
+        "IS-DISP": "0.00",
+        "IS-OPINC": "0.00",
+        "IS-SELL": "0.00",
+        "IS-ADMIN": "10000.00",
+        "IS-OPEXP": "0.00",
+        "IS-OPRESULT": "132500.00",
+        "IS-FININC": "0.00",
+        "IS-FINEXP": "0.00",
+        "IS-EXTINC": "0.00",
+        "IS-EXTEXP": "0.00",
+        "IS-PRETAX": "132500.00",
+        "IS-TAX": "0.00",
+        "IS-NET": "132500.00",
+        "IS-CLOSE": "0.00"
+      }
+    }
+  ]
+}
