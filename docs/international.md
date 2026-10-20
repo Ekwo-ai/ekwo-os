@@ -345,3 +345,20 @@ it to a non-recoverable VAT expense against the collected-VAT account.
 **A return form with no readable text.** The boxes follow articles 264 to 266
 and are named by the pack, since the form approved by the finance authority was not
 found in a readable text.
+
+## From Turkmenistan
+
+**A fifteen per cent VAT with a return on the 20th.** The Tax Code fixes 15 %
+(article 103), a zero rate and an exemption list (articles 105 and 106), and the
+monthly return by the 20th of the following month and payment by the 25th
+(article 111). Legal entities of private ownership are not VAT payers under
+article 95; the pack describes no registration rule and says so.
+
+**Input tax follows payment.** Article 110 credits the tax paid to suppliers; the
+core posts the credit on the invoice, so a purchase not yet paid at the month end
+needs a manual correction.
+
+**Chart and return form not readable.** The standard chart of accounts and the
+approved return form could not be read from an open source: the chart's classes
+and the boxes' names are the pack's own, and the README says so. The state
+language is not carried yet; names are in Russian with English in `i18n`.

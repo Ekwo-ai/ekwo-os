@@ -1,0 +1,297 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Годовая книга налогоплательщика НДС в Туркменистане, представляющего ежемесячную декларацию",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Финансовый год 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    },
+    {
+      "code": "2026-05",
+      "from": "2026-05-01",
+      "to": "2026-05-31"
+    }
+  ],
+  "statements": [
+    "TM-BS",
+    "TM-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-tm",
+      "name": "Учебный клиент Ашхабад (вымышленный)",
+      "type": "customer",
+      "country": "TM"
+    },
+    {
+      "ref": "client-foreign",
+      "name": "Muster Handels GmbH",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "supplier-tm",
+      "name": "Учебный поставщик Ашхабад (вымышленный)",
+      "type": "supplier",
+      "country": "TM"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-tm",
+      "date": "2026-01-15",
+      "why": "Продажа товара по общей ставке 15 % (статья 103): основа и налог в ячейке TAXABLE.",
+      "lines": [
+        {
+          "name": "Строительные материалы",
+          "quantity": 10,
+          "unit_price": 5000,
+          "tax": "TM-S-15",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-01-20",
+      "why": "Экспорт товара за пределы Туркменистана — нулевая ставка, ячейка ZERO (статья 105).",
+      "lines": [
+        {
+          "name": "Партия экспортной продукции",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "TM-S-ZERO-EXPORT",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-tm",
+      "date": "2026-01-12",
+      "why": "Товар для перепродажи с НДС 15 % — налог к зачёту, ячейка INPUT (статья 110).",
+      "lines": [
+        {
+          "name": "Товар для перепродажи",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "TM-P-15",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-tm",
+      "date": "2026-02-10",
+      "why": "Плата за обучение — услуга в системе образования, освобождена от НДС, ячейка EXEMPT (статья 106).",
+      "lines": [
+        {
+          "name": "Плата за обучение",
+          "quantity": 10,
+          "unit_price": 300,
+          "tax": "TM-S-EXEMPT-EDUCATION",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-tm",
+      "date": "2026-02-18",
+      "why": "Продажа товара по ставке 15 % во втором месяце.",
+      "lines": [
+        {
+          "name": "Офисная мебель",
+          "quantity": 4,
+          "unit_price": 7500,
+          "tax": "TM-S-15",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-tm",
+      "date": "2026-02-25",
+      "why": "Возврат одной единицы из V4 — уменьшает базу и налог ячейки TAXABLE в месяце возврата.",
+      "lines": [
+        {
+          "name": "Возвращённая офисная мебель",
+          "quantity": 1,
+          "unit_price": 7500,
+          "tax": "TM-S-15",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-tm",
+      "date": "2026-02-14",
+      "why": "Услуги стороннего подрядчика с НДС 15 % — ячейка INPUT.",
+      "lines": [
+        {
+          "name": "Услуги стороннего подрядчика",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "TM-P-15",
+          "account": "8150"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-tm",
+      "date": "2026-03-10",
+      "why": "Закупка товара с НДС 15 %; налог к зачёту больше начисленного — ячейка EXCESS (статья 108, часть 6).",
+      "lines": [
+        {
+          "name": "Товар для перепродажи",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "TM-P-15",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-tm",
+      "date": "2026-04-08",
+      "why": "Продажа за апрель по ставке 15 %.",
+      "lines": [
+        {
+          "name": "Товары повседневного спроса",
+          "quantity": 8,
+          "unit_price": 2500,
+          "tax": "TM-S-15",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-04-20",
+      "why": "Международная перевозка груза — нулевая ставка, ячейка ZERO (статья 105).",
+      "lines": [
+        {
+          "name": "Международная перевозка груза",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "TM-S-ZERO-TRANSPORT",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-tm",
+      "date": "2026-04-12",
+      "why": "Апрельская закупка с НДС 15 %.",
+      "lines": [
+        {
+          "name": "Товар для перепродажи",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "TM-P-15",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-tm",
+      "date": "2026-05-06",
+      "why": "Продажа лекарственных средств — освобождена от НДС, ячейка EXEMPT (статья 106).",
+      "lines": [
+        {
+          "name": "Лекарственные средства",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "TM-S-EXEMPT-MEDICINES",
+          "account": "6110"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-01",
+      "amount": 57500,
+      "contact": "client-tm",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Поступление, точно закрывающее V1 (50 000 + 7 500 НДС)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 20000,
+      "contact": "client-foreign",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Поступление, точно закрывающее экспортный счёт V2 (без НДС)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-01",
+      "amount": 5000,
+      "contact": "client-tm",
+      "journal": "BNK",
+      "match": null,
+      "why": "Поступление без привязки к документу — остаётся открытым на счёте клиента."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 34500,
+      "contact": "supplier-tm",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Платёж, точно закрывающий P1 (30 000 + 4 500 НДС)."
+    }
+  ]
+}
