@@ -320,3 +320,23 @@ describe('journal_book and journal_totals', () => {
     expect(drafts).toEqual([]);
   });
 });
+
+describe('general_ledger names the contact of a line', () => {
+  it('gives the contact itself beside its name, and nothing where the line names nobody', async () => {
+    const lines = await rows<{ entry_line_id: string; contact_id: string | null; contact_name: string | null }>(
+      db,
+      `select entry_line_id, contact_id, contact_name from general_ledger($1, '2026-01-01', '2026-12-31')`,
+      [companyId],
+    );
+    expect(lines.some((l) => l.contact_id !== null)).toBe(true);
+    for (const line of lines) {
+      const said = await one<{ contact_id: string | null; name: string | null }>(
+        db,
+        `select l.contact_id, c.name from entry_lines l left join contacts c on c.id = l.contact_id where l.id = $1`,
+        [line.entry_line_id],
+      );
+      expect(line.contact_id).toBe(said.contact_id);
+      expect(line.contact_name).toBe(said.name);
+    }
+  });
+});
