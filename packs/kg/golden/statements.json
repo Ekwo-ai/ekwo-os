@@ -1,0 +1,60 @@
+{
+  "statements": [
+    {
+      "code": "KG-BS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "AS-CASH": "47400.00",
+        "AS-STINV": "0.00",
+        "AS-REC": "72600.00",
+        "AS-OREC": "10560.00",
+        "AS-INV": "78000.00",
+        "AS-OCA": "0.00",
+        "AS-CA-TOTAL": "208560.00",
+        "AS-PPE": "0.00",
+        "AS-ONCA": "0.00",
+        "AS-INTANG": "0.00",
+        "AS-NCA-TOTAL": "0.00",
+        "AS-TOTAL": "208560.00",
+        "EQ-SHARE": "0.00",
+        "EQ-APIC": "0.00",
+        "EQ-RETAINED": "132500.00",
+        "EQ-RESERVE": "0.00",
+        "EQ-SUMMARY": "0.00",
+        "EQ-TOTAL": "132500.00",
+        "LI-PAY": "64960.00",
+        "LI-ADV": "0.00",
+        "LI-DEBT": "0.00",
+        "LI-TAX": "11100.00",
+        "LI-ACCR": "0.00",
+        "LI-OTHER": "0.00",
+        "LI-PROV": "0.00",
+        "LI-CL-TOTAL": "76060.00",
+        "LI-LT": "0.00",
+        "LI-NCL-TOTAL": "0.00",
+        "EQLI-TOTAL": "208560.00"
+      }
+    },
+    {
+      "code": "KG-IS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "IS-REV": "142500.00",
+        "IS-COGS": "0.00",
+        "IS-GROSS": "142500.00",
+        "IS-SELL": "0.00",
+        "IS-ADMIN": "10000.00",
+        "IS-OPINC": "0.00",
+        "IS-OPEXP": "0.00",
+        "IS-OPRESULT": "132500.00",
+        "IS-NONINC": "0.00",
+        "IS-NONEXP": "0.00",
+        "IS-PRETAX": "132500.00",
+        "IS-TAX": "0.00",
+        "IS-NET": "132500.00"
+      }
+    }
+  ]
+}

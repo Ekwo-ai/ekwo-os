@@ -98,5 +98,6 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('XCD', 'East Caribbean dollar', 'EC$', 2),
   ('BSD', 'Bahamian dollar', 'B$', 2),
   ('GYD', 'Guyanese dollar', 'G$', 2),
-  ('JMD', 'Jamaican dollar', 'J$', 2)
+  ('JMD', 'Jamaican dollar', 'J$', 2),
+  ('KGS', 'Kyrgyzstani som', E'сом', 2)
 on conflict (code) do nothing;
