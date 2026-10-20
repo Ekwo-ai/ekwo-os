@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ekwo.ai/schemas/module/1.json",
+  "code": "consolidation",
+  "name": "Consolidation",
+  "description": "Groups of companies of the installation: who is in each and for which period, by which method and at which percentage of interest, the share each brings in derived from them. Reads the members' books under their own row level security, and writes nothing in them or to the ledger. Knows no country.",
+  "schema": "consolidation",
+  "version": "0.1.0",
+  "status": "available",
+  "requires_socle_min": "20261007060225",
+  "posts": false,
+  "mcp": { "prefix": "consolidation" }
+}
