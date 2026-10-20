@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.17.0",
-  "migration": "20261020190000",
+  "migration": "20261020210000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -4898,6 +4898,10 @@
         "arguments": ""
       },
       {
+        "name": "document_lines_guard_tax_account",
+        "arguments": ""
+      },
+      {
         "name": "document_lines_refresh_totals",
         "arguments": ""
       },
@@ -6662,6 +6666,10 @@
       {
         "table": "document_lines",
         "name": "document_lines_check_classifications"
+      },
+      {
+        "table": "document_lines",
+        "name": "document_lines_guard_tax_account"
       },
       {
         "table": "document_lines",
@@ -9604,6 +9612,14 @@
         },
         {
           "name": "document_lines_guard_posted",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "document_lines_guard_tax_account",
           "arguments": "",
           "trigger": true,
           "anon": [],

@@ -61,6 +61,12 @@ the four template tables plus `country_defaults` that
    is attached to the document (`attachments.entity_type = 'document'`). An
    entry that a document posted refuses a file and names the document to use;
    an entry no document posted keeps its own piece (decision 0069).
+9. **A tax lands by its code, not on a line.** A document line carries its
+   base and names its tax (`document_lines.tax_id`); the posting writes the
+   tax on the account the tax points to (`tax_postings`). A line put on such
+   an account is refused (`tax_account_on_a_line`), with the taxes that land
+   there named; the credit note of a document that already carries one copies
+   it, so the document can still be undone (decision 0083).
 
 ## Registration is opt-in
 
@@ -203,7 +209,7 @@ bank charge that pays no item.
 | [`currencies`](#currencies) | ISO 4217 currencies known to this instance. |
 | [`currency_rates`](#currency_rates) | Dated exchange rates. A document stores the rate it used; this table is the history. |
 | [`document_line_analytics`](#document_line_analytics) | Analytic split of a document line, one row per value, share in percent. Copied onto the ledger line by post_document(); after posting the ledger split is the one read. |
-| [`document_lines`](#document_lines) | Document lines in a table, not JSON: EN 16931 needs a VAT category per line and the FEC needs the detail. |
+| [`document_lines`](#document_lines) | Lines of a document. A product line carries its base, its account and its tax (tax_id); the tax itself is written by the posting on the account the tax points to, and a line on such an account is refused (trigger document_lines_guard_tax_account). |
 | [`document_shares`](#document_shares) | Public links onto a document. The token is handed over once and kept only as a sha256; the link is withdrawn by revoking it, never by editing it. |
 | [`document_unpostings`](#document_unpostings) | Every posted document put back to draft by unpost_document(): the entry that was taken away, its number, journal and day, and whether the number went back to the counter. Written by unpost_document() and by nothing else — no role may insert — so the guards read a row here, written in the same transaction, as the one exception to "a posted document does not go back to draft" and "a posted entry is not deleted". |
 | [`documents`](#documents) | Sales and purchase invoices, credit notes, quotes and orders. `state` is the document, `payment_state` the settlement. |
@@ -1187,7 +1193,7 @@ Constraints:
 
 ### `document_lines`
 
-Document lines in a table, not JSON: EN 16931 needs a VAT category per line and the FEC needs the detail.
+Lines of a document. A product line carries its base, its account and its tax (tax_id); the tax itself is written by the posting on the account the tax points to, and a line on such an account is refused (trigger document_lines_guard_tax_account).
 
 | Column | Type | Notes |
 |---|---|---|
@@ -2468,6 +2474,7 @@ Constraints:
 | `document_lines_attributes_from_product()` | Pre-fills the attributes of a document line from those of its product, for every name the line does not carry, when the line is written or its product changes. Never replaces what the line carries, and leaves alone the lines a credit note copies from the invoice it undoes. |
 | `document_lines_check_classifications()` | Asks assert_classifications() of a document line whose attributes or product are written, after the product has pre-filled them. |
 | `document_lines_guard_posted()` | Once a document has left draft, its lines are the lines that were issued: no insert, no delete, no column changed. Refuses document_posted, by name, to everybody. |
+| `document_lines_guard_tax_account()` | Refuses a document line on an account that a tax of the company lands on (tax_postings, posting_type = tax): the tax of a line is its tax_id, and the posting writes it there. Lets the credit note of a cancelled document copy such a line, so a document posted before the guard can still be undone. |
 | `document_lines_refresh_totals()` | After a line of a draft moves: shares out the base of every tax group quoted with its tax in it, then refreshes the three totals of the document. A document that is no longer a draft keeps the totals it was posted, or loaded, with. |
 | `document_lines_snapshot_tax()` | Writes BT-151 and BT-152 on a line from its tax for as long as the document is a draft. Once it is not, document_lines_guard_posted() refuses any change to the line, these two columns included. |
 | `document_share_refusal(p_document documents)` | Why this document may not be shared, or null when it may. Sales only, never cancelled, never an unposted invoice, always numbered. |

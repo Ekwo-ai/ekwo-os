@@ -9,6 +9,19 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A tax lands by its code, not on a line** (socle migration
+  `20261020210000`, decision 0083). A document line carries its base and
+  names its tax; the posting writes the tax on the account the tax points to.
+  The trigger `document_lines_guard_tax_account` refuses a line put on such an
+  account, with `tax_account_on_a_line` naming the taxes that land there, so
+  the VAT of a purchase keyed or imported as a second line at 0 % cannot give
+  a document whose tax is zero while its ledger is right. The credit note of a
+  document that already carries such a line copies it: an older document is
+  still undone by `cancel_document()`. `docs/import.md` says how an invoice
+  taken over as a document carries its tax.
+
 ## [0.18.0] — 2026-10-20
 
 ### Added

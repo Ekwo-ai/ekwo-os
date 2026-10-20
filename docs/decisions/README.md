@@ -62,6 +62,7 @@ consequence.
 - [0079](0079-tax-on-a-presumed-base.md) — A tax collected for the next links of the chain, on a presumed base (proposed)
 - [0023](0023-declaration-boxes-are-data.md) — Declaration boxes are data, with no expression language
 - [0024](0024-a-tax-follows-the-territory-of-the-parties.md) — A tax follows the territory of the parties
+- [0083](0083-a-tax-lands-by-its-code-not-on-a-line.md) — A tax lands by its code, not on a line
 
 ## Country packs
 

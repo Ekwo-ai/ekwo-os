@@ -61,6 +61,12 @@ the four template tables plus `country_defaults` that
    is attached to the document (`attachments.entity_type = 'document'`). An
    entry that a document posted refuses a file and names the document to use;
    an entry no document posted keeps its own piece (decision 0069).
+9. **A tax lands by its code, not on a line.** A document line carries its
+   base and names its tax (`document_lines.tax_id`); the posting writes the
+   tax on the account the tax points to (`tax_postings`). A line put on such
+   an account is refused (`tax_account_on_a_line`), with the taxes that land
+   there named; the credit note of a document that already carries one copies
+   it, so the document can still be undone (decision 0083).
 
 ## Registration is opt-in
 

@@ -204,7 +204,11 @@ documents as they are, since a piece is not a change of the books.
 - **No tax.** A line arrives with an account and an amount, not with the tax
   that produced it. The history feeds the ledger, the trial balance and the
   financial statements, and no box of a VAT return: a period kept elsewhere
-  was declared from where it was kept.
+  was declared from where it was kept. An invoice brought in as a document is
+  the exception: it carries its tax as the tax of its lines (`tax_id`), never
+  as a line on the VAT account — the VAT line of the former ledger is read as
+  the tax of the base lines, and a document line on an account a tax lands on
+  is refused (`tax_account_on_a_line`, decision 0083).
 - **No matching yet.** The readers keep the reconciliation mark of each line
   (`matching`), and the import does not re-apply it: an open receivable is
   matched against its payment in Ekwo, with `reconcile`.
