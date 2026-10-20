@@ -610,6 +610,8 @@ describe('a module’s own capabilities', () => {
       { code: 'assets.write', area: 'assets' },
       { code: 'budgets.read', area: 'budgets' },
       { code: 'budgets.write', area: 'budgets' },
+      { code: 'consolidation.read', area: 'consolidation' },
+      { code: 'consolidation.write', area: 'consolidation' },
       { code: 'crm.read', area: 'crm' },
       { code: 'crm.write', area: 'crm' },
       { code: 'einvoicing.read', area: 'einvoicing' },
@@ -633,13 +635,22 @@ describe('a module’s own capabilities', () => {
         )
       ).map((r) => r.capability);
 
-    expect(await preset('viewer')).toEqual(['assets.read', 'budgets.read', 'crm.read', 'einvoicing.read', 'tax.read']);
+    expect(await preset('viewer')).toEqual([
+      'assets.read',
+      'budgets.read',
+      'consolidation.read',
+      'crm.read',
+      'einvoicing.read',
+      'tax.read',
+    ]);
     expect(await preset('accountant')).toEqual([
       'assets.post',
       'assets.read',
       'assets.write',
       'budgets.read',
       'budgets.write',
+      'consolidation.read',
+      'consolidation.write',
       'crm.read',
       'crm.write',
       'einvoicing.read',
@@ -655,6 +666,8 @@ describe('a module’s own capabilities', () => {
       'assets.write',
       'budgets.read',
       'budgets.write',
+      'consolidation.read',
+      'consolidation.write',
       'crm.read',
       'crm.write',
       'einvoicing.read',
