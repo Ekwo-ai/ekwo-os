@@ -2707,3 +2707,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('VC', 'iso_3166_1', 'Saint Vincent and the Grenadines', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Saint Vincent and the Grenadines levies a value added tax of its own under the Value Added Tax Act, Cap. 445, administered by the Inland Revenue Department: section 8 imposes it on the taxable supply and the taxable import, with a standard rate of 16 per cent and a reduced rate of 11 per cent for accommodation according to the Department, a zero rate for the supplies of the First, Second and Third Schedules and exemption for those of the Fourth.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

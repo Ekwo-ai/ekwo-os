@@ -1,0 +1,192 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "VC",
+  "name": "Saint Vincent and the Grenadines",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 404,
+  "released_at": "2026-10-20",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vc-vat-act",
+        "title": "Value Added Tax Act, Cap. 445 (Act No. 25 of 2006, amended by Act No. 11 of 2007, S.R.O. 41 of 2007 and Act No. 1 of 2008), Revised Edition, issue 1/2009, as published on the Inland Revenue Department's legislation page; the scan states the rates of 2009 (15 and 10 percent) and later amendments are not applied",
+        "publisher": "Government of Saint Vincent and the Grenadines (Inland Revenue Department)",
+        "url": "https://ird.gov.vc/images/pdf/VAT_Act_Cap_445.pdf",
+        "consulted_on": "2026-10-20",
+        "kind": "law"
+      },
+      {
+        "key": "vc-ird-taxes",
+        "title": "Taxes — VAT: who registers, the 15th-of-the-month filing and payment date, the current rates (standard 16 %, accommodation 11 %, zero-rated, exempt) and interest of 1.5 % a month",
+        "publisher": "Inland Revenue Department, Government of Saint Vincent and the Grenadines",
+        "url": "https://ird.gov.vc/index.php/taxes",
+        "consulted_on": "2026-10-20",
+        "kind": "guidance"
+      },
+      {
+        "key": "vc-ird-faqs",
+        "title": "Frequently asked questions — VAT rates, registration threshold of $300,000, VAT invoice and sales receipt, reverse charge on services bought abroad, tax period of a calendar month",
+        "publisher": "Inland Revenue Department, Government of Saint Vincent and the Grenadines",
+        "url": "https://ird.gov.vc/index.php/faqs",
+        "consulted_on": "2026-10-20",
+        "kind": "guidance"
+      },
+      {
+        "key": "vc-cabinet-zero-rating-2025",
+        "title": "Zero-Rating of Value Added Tax (VAT) on Additional Food Items and Adult Pampers — Cabinet decision of 29 October 2025, with effect from 3 November 2025",
+        "publisher": "Agency for Public Information, Government of Saint Vincent and the Grenadines",
+        "url": "https://www.gov.vc/index.php/media-center/4066-zero-rating-of-valued-added-tax-vat-on-additional-food-items-and-adult-pampers",
+        "consulted_on": "2026-10-20",
+        "kind": "guidance"
+      },
+      {
+        "key": "vc-budget-2017-news",
+        "title": "Vincentians to pay more taxes in 2017 — press report of the 2017 Budget Address: standard VAT rate raised to 16 per cent as of 1 May 2017 (the only text found for the date; the Act itself was not found in its amended form)",
+        "publisher": "iWitness News",
+        "url": "https://www.iwnsvg.com/2017/02/06/vincentians-to-pay-more-taxes-in-2017/",
+        "consulted_on": "2026-10-20",
+        "kind": "guidance"
+      },
+      {
+        "key": "iasb-ifrs-sme",
+        "title": "IFRS for SMEs Accounting Standard",
+        "publisher": "IFRS Foundation / International Accounting Standards Board",
+        "url": "https://www.ifrs.org/issued-standards/ifrs-for-smes/",
+        "consulted_on": "2026-10-20",
+        "kind": "standard"
+      },
+      {
+        "key": "vc-ird-portal",
+        "title": "Website of the Inland Revenue Department, the Comptroller's administration (forms, legislation, rates and the link to the e-Tax filing service)",
+        "publisher": "Inland Revenue Department, Government of Saint Vincent and the Grenadines",
+        "url": "https://ird.gov.vc",
+        "consulted_on": "2026-10-20",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "XCD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460",
+      "tax_payable": "2100",
+      "tax_receivable": "1172"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Saint Vincent and the Grenadines reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "VC-IFRS-SME-SFP",
+        "VC-IFRS-SME-IS"
+      ],
+      "legal_reference": "This pack found no legal chart of accounts in Saint Vincent and the Grenadines, and opened neither the Companies Act nor the Income Tax Act: no section of either is cited. What the Value Added Tax Act, Cap. 445 asks of a registered person is a VAT invoice or a sales receipt (s. 32 and 33) and records kept (s. 38). This chart is original: four digits, blocked so that each range reaches one line of a statement of financial position and an income statement presented in the manner of IFRS for SMEs, which is a choice of this pack and not a text the country imposes. The settlement account of the VAT return (2100, refundable 1172) is distinct from the accounts the tax posts to (2101, 2102 and 2103 collected, 1170 and 1171 recoverable). See README.md",
+      "source": "vc-vat-act"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act, Cap. 445, s. 32 — a registered supplier making a taxable supply to a registered recipient issues an original VAT invoice at the time of the supply, with the information the Regulations prescribe (a sales receipt may stand in for a supply paid in money not exceeding fifty dollars); s. 33 — to a recipient who is not registered the supplier issues a sales receipt and may not issue a VAT invoice; s. 34 — VAT credit and debit notes. The Act, as read for this pack, does not say that the series of numbers may have no gap, which is why `numbering` is `sequential` and not `gapless`; `number_format` is a convention this pack proposes. The particulars are in the Regulations, which were not read, and are not printed as mentions. The distinction between VAT invoice and sales receipt is the user's",
+        "source": "vc-vat-act"
+      },
+      "payment_terms": {
+        "legal_reference": "No text of Saint Vincent and the Grenadines read for this pack sets a payment term between two businesses or a rate of interest on a commercial debt paid late: the interest of 1.5 % a month on tax paid late (Department's page \"Taxes\") and the late payment penalty of s. 41(3) are charges on the taxable person towards the Comptroller, not a term between two businesses. `legal_payment_days` and `late_payment_reference` are empty",
+        "source": "vc-vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act, Cap. 445, s. 13 (time of supply) — the section was read in its title only: the particular cases are not modelled. `earliest_of_delivery_or_payment` is the nearest value of the closed vocabulary and is to be checked against s. 13 by a reviewer",
+        "source": "vc-vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No text of Saint Vincent and the Grenadines read for this pack obliges a business to issue or accept an electronic invoice: the Value Added Tax Act, Cap. 445, s. 32 asks for a VAT invoice with the information the Regulations prescribe, without naming a platform, a format or a Peppol profile. No Peppol authority was looked for. `profile`, `party_scheme` and `vat_scheme` are null: there is no domestic profile to name",
+    "source": "vc-vat-act"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Not modelled, and not a finding that the service is untaxed. Value Added Tax Act, Cap. 445, s. 18 treats a supply of services by a non-resident to a taxable person as a taxable supply made by the recipient, but only to the extent that the recipient uses it to make exempt supplies, for private or domestic use, or for entertainment; the Department's FAQ describes the reverse charge as applying to a person who is VAT registered. The pack carries no code for this self-assessment (the tax would be both collected and deducted, and the declaration line was not found): such a purchase is entered with VC-P-EX and the user, with their accountant, accounts for the tax outside the pack. See README.md",
+      "source": "vc-vat-act"
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "VC-VAT-RETURN",
+  "name": "VAT return (box layout of this pack)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2007-05-01",
+  "legal_reference": "Value Added Tax Act, Cap. 445, s. 39(1) — a taxable person lodges a VAT return for each tax period no later than fifteen calendar days after the end of the period; s. 39(2) — with the Comptroller, in the form the Comptroller prescribes (the Department's VAT return form was not read as a text); s. 41(1) — the tax is due by the due date for lodgement. The Department's FAQ makes the tax period a calendar month and asks for a return even with no transactions; the page \"Taxes\" gives the 15th of the month following the period for filing and payment.",
+  "source": "vc-vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Value Added Tax Act, Cap. 445, s. 39(1) and s. 41(1) — the return is lodged within fifteen calendar days after the end of the tax period and the tax is due by the same date: for a month, the 15th of the next month (confirmed by the Department's page \"Taxes\"). Tax paid late bears a penalty of twenty percent of the amount unpaid (s. 41(3)) and, according to the Department, interest of 1.5 % a month; the penalties for a late return are not modelled. Permission to lodge late does not move the date of payment (s. 39(4)). Weekend roll-forward is not expressible",
+    "source": "vc-vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard-rated supplies (16 %), net of VAT",
+      "sequence": 10,
+      "legal_reference": "Taxable supplies at the standard rate (s. 8(3)(d)). Box number and label are this pack's own: the Department's form was not read as a text, so the boxes follow what the Act makes the tax payable carry — output tax less the input tax credit (s. 27, s. 29).",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Accommodation supplies (11 %), net of VAT",
+      "sequence": 20,
+      "legal_reference": "Taxable supplies of holiday or hotel accommodation at the reduced rate (s. 8(3)(b)(i), (ii)).",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Tourist services (11 %), net of VAT",
+      "sequence": 30,
+      "legal_reference": "Taxable supplies of diving, marine or land tour services and other services ordinarily provided to tourists at the reduced rate (s. 8(3)(b)(iii)).",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Zero-rated supplies, including exports",
+      "sequence": 40,
+      "legal_reference": "Taxable supplies at zero percent (s. 8(3)(a); First, Second and Third Schedules); they stay on the return (the Department asks for a return even when there is no activity).",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 50,
+      "legal_reference": "Supplies of the Fourth Schedule, reported for information; the input tax of what is acquired to make them is not deductible.",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Total supplies",
+      "sequence": 60,
+      "legal_reference": "Sum of boxes 1 to 5 — the sum is this pack's reading, the form is the Comptroller's (s. 39(2)).",
+      "source": "vc-vat-act",
+      "plus": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 70,
+      "legal_reference": "Tax at 16 % on box 1 (s. 8(3)(d)).",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Output tax on accommodation",
+      "sequence": 80,
+      "legal_reference": "Tax at 11 % on box 2 (s. 8(3)(b)).",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Output tax on tourist services",
+      "sequence": 90,
+      "legal_reference": "Tax at 11 % on box 3 (s. 8(3)(b)(iii)).",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Total output tax for the period",
+      "sequence": 100,
+      "legal_reference": "Sum of boxes 7 to 9.",
+      "source": "vc-vat-act",
+      "plus": [
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Value of imports",
+      "sequence": 110,
+      "legal_reference": "Value of taxable imports of the period (s. 8(1)(b)).",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Value of local purchases",
+      "sequence": 120,
+      "legal_reference": "Value of purchases from registered persons and others, net of VAT.",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "VAT paid on imports",
+      "sequence": 130,
+      "legal_reference": "VAT paid on imports, recoverable (s. 29).",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "VAT paid on local purchases",
+      "sequence": 140,
+      "legal_reference": "VAT charged by suppliers on local purchases, recoverable (s. 29).",
+      "source": "vc-vat-act"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Total input tax credit for the period",
+      "sequence": 150,
+      "legal_reference": "Sum of boxes 13 and 14 (s. 29).",
+      "source": "vc-vat-act",
+      "plus": [
+        "13",
+        "14"
+      ]
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "VAT payable",
+      "sequence": 160,
+      "legal_reference": "Output tax less input tax credit when positive; due by the due date for lodgement (s. 41(1)).",
+      "source": "vc-vat-act",
+      "plus": [
+        "10"
+      ],
+      "minus": [
+        "15"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "VAT refundable",
+      "sequence": 170,
+      "legal_reference": "Input tax credit less output tax when positive. The Department's FAQ carries a credit of less than $100 forward and allows a refund after three consecutive months of credit; the Comptroller applies s. 44.",
+      "source": "vc-ird-faqs",
+      "plus": [
+        "15"
+      ],
+      "minus": [
+        "10"
+      ],
+      "floor_zero": true
+    }
+  ]
+}
