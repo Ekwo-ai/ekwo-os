@@ -1,0 +1,414 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Twee maanden van een handelsonderneming in Suriname die maandelijks BTW-aangifte doet",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Boekjaar 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "SR-IFRS-SME-SFP",
+    "SR-IFRS-SME-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-a",
+      "name": "Paramaribo Handelsmaatschappij N.V.",
+      "type": "customer",
+      "country": "SR"
+    },
+    {
+      "ref": "cust-b",
+      "name": "Nickerie Distributie N.V.",
+      "type": "customer",
+      "country": "SR"
+    },
+    {
+      "ref": "cust-c",
+      "name": "Wanica Auto Import N.V.",
+      "type": "customer",
+      "country": "SR"
+    },
+    {
+      "ref": "cust-d",
+      "name": "Rotterdam Trading B.V.",
+      "type": "customer",
+      "country": "NL"
+    },
+    {
+      "ref": "supp-a",
+      "name": "Commewijne Groothandel N.V.",
+      "type": "supplier",
+      "country": "SR"
+    },
+    {
+      "ref": "supp-b",
+      "name": "Paramaribo Brandstof N.V.",
+      "type": "supplier",
+      "country": "SR"
+    },
+    {
+      "ref": "supp-c",
+      "name": "Miami Components LLC",
+      "type": "supplier",
+      "country": "US"
+    },
+    {
+      "ref": "supp-d",
+      "name": "Amsterdam Advies B.V.",
+      "type": "supplier",
+      "country": "NL"
+    },
+    {
+      "ref": "supp-e",
+      "name": "Marowijne Kleinhandel",
+      "type": "supplier",
+      "country": "SR"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-10",
+      "why": "Een binnenlandse verkoop van goederen tegen het algemene tarief: 10.000,00 omzet in rubriek 1a en 1.000,00 BTW.",
+      "lines": [
+        {
+          "name": "Handelsgoederen",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "SR-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-15",
+      "why": "Een kleinhandelsverkoop waarvan de prijs de BTW bevat (artikel 10): 5.500,00 inclusief is 5.000,00 plus 500,00 (5.500 x 10/110), omzet in 1a en BTW in 1a.",
+      "lines": [
+        {
+          "name": "Kleinhandelsgoederen, prijs inclusief BTW",
+          "quantity": 1,
+          "unit_price": 5500,
+          "tax": "SR-S-10-INC",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-01-18",
+      "why": "Een verkoop van motorbrandstof tegen het verlaagde tarief van 5 %: 4.000,00 omzet in rubriek 1c en 200,00 BTW.",
+      "lines": [
+        {
+          "name": "Dieselolie",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "SR-S-05",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cust-c",
+      "date": "2026-01-20",
+      "why": "Een verkoop van een personenauto van bijlage 3 tegen 25 %: 50.000,00 omzet in rubriek 1d en 12.500,00 BTW.",
+      "lines": [
+        {
+          "name": "Personenauto boven 2.500 cm³",
+          "quantity": 1,
+          "unit_price": 50000,
+          "tax": "SR-S-25",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cust-b",
+      "date": "2026-01-22",
+      "why": "Een binnenlandse levering van basisvoedsel van bijlage 1 tegen 0 %: 3.000,00 omzet in rubriek 1b, geen BTW.",
+      "lines": [
+        {
+          "name": "Rijst en meel",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "SR-S-00",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "cust-d",
+      "date": "2026-01-24",
+      "why": "Een uitvoer van goederen, 0 %: 20.000,00 omzet in rubriek 2a, geen BTW.",
+      "lines": [
+        {
+          "name": "Uitvoer van goederen",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "SR-S-EXP-G",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "cust-d",
+      "date": "2026-01-26",
+      "why": "Outsourcingdiensten voor een afnemer buiten Suriname, 0 %: 6.000,00 omzet in rubriek 2b, geen BTW.",
+      "lines": [
+        {
+          "name": "Outsourcingdiensten",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "SR-S-EXP-D",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-01-28",
+      "why": "Een vrijgestelde dienst van bijlage 2 (paramedische zorg): 8.000,00 die in geen rubriek komt en geen BTW draagt.",
+      "lines": [
+        {
+          "name": "Vrijgestelde dienst",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "SR-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "C1",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-01-08",
+      "why": "Een binnenlandse inkoop tegen 10 %: 6.000,00 inkoop en 600,00 voorbelasting in rubriek 4b.",
+      "lines": [
+        {
+          "name": "Handelsgoederen",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "SR-P-10",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "C2",
+      "type": "purchase_invoice",
+      "contact": "supp-c",
+      "date": "2026-01-12",
+      "why": "Een invoer van goederen: de 800,00 BTW betaald bij de Douane staan in rubriek 4d.",
+      "lines": [
+        {
+          "name": "Ingevoerde onderdelen",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "SR-P-IMP-10",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "C3",
+      "type": "purchase_invoice",
+      "contact": "supp-d",
+      "date": "2026-01-14",
+      "why": "Een dienst van een ondernemer buiten Suriname: 3.000,00 in rubriek 3d met 300,00 verschuldigde BTW, en 300,00 aftrek in rubriek 4c; de boeking is nul.",
+      "lines": [
+        {
+          "name": "Advies van een buitenlandse ondernemer",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "SR-P-RC-10",
+          "account": "6230"
+        }
+      ]
+    },
+    {
+      "ref": "C4",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-01-16",
+      "why": "Een inkoop van brandstof tegen 5 %: 2.000,00 inkoop en 100,00 voorbelasting in rubriek 4b, samen met C1.",
+      "lines": [
+        {
+          "name": "Motorbrandstof",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "SR-P-05",
+          "account": "6320"
+        }
+      ]
+    },
+    {
+      "ref": "C5",
+      "type": "purchase_invoice",
+      "contact": "supp-b",
+      "date": "2026-01-19",
+      "why": "Een restaurantrekening: de BTW van 100,00 is niet aftrekbaar (artikel 14) en valt op de kosten, 1.100,00 in totaal; geen rubriek.",
+      "lines": [
+        {
+          "name": "Representatie, spijzen en dranken",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "SR-P-10-ND",
+          "account": "6340"
+        }
+      ]
+    },
+    {
+      "ref": "C6",
+      "type": "purchase_invoice",
+      "contact": "supp-e",
+      "date": "2026-01-25",
+      "why": "Een inkoop zonder BTW (leverancier onder de drempel): 1.500,00, geen voorbelasting.",
+      "lines": [
+        {
+          "name": "Inkoop zonder BTW",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "SR-P-EX",
+          "account": "5010"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cust-a",
+      "date": "2026-02-05",
+      "why": "Een creditnota in februari: ze verlaagt rubriek 1a van februari (met 2.000,00) en de BTW (met 200,00); januari blijft zoals aangegeven.",
+      "lines": [
+        {
+          "name": "Teruggenomen handelsgoederen",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "SR-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "V9",
+      "type": "sale_invoice",
+      "contact": "cust-a",
+      "date": "2026-02-10",
+      "why": "De verkoop van een tweede maand: 20.000,00 plus 2.000,00 BTW.",
+      "lines": [
+        {
+          "name": "Handelsgoederen",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "SR-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "C7",
+      "type": "purchase_invoice",
+      "contact": "supp-a",
+      "date": "2026-02-15",
+      "why": "Een grote aankoop van apparatuur, 40.000,00 plus 4.000,00 voorbelasting, meer dan de verschuldigde belasting van februari: het tijdvak eindigt met een teruggaaf (4jTerug), niet met een betaling.",
+      "lines": [
+        {
+          "name": "Kantoorapparatuur",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "SR-P-10",
+          "account": "1640"
+        }
+      ]
+    },
+    {
+      "ref": "CP1",
+      "type": "purchase_credit_note",
+      "contact": "supp-a",
+      "date": "2026-02-20",
+      "why": "Een creditnota van de leverancier van C1 (retour van 1.000,00): ze verlaagt de voorbelasting van februari met 100,00.",
+      "lines": [
+        {
+          "name": "Teruggestuurde handelsgoederen",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "SR-P-10",
+          "account": "5010"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-02",
+      "amount": 11000,
+      "contact": "cust-a",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Vereffent V1 precies (10.000,00 plus 1.000,00 BTW): een geletterde ontvangst."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 2000,
+      "contact": "cust-b",
+      "journal": "BNK",
+      "match": null,
+      "why": "Een gedeeltelijke betaling op rekening, aan niets geletterd: de open post die een aangifte moet overleven."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-02-06",
+      "amount": 6600,
+      "contact": "supp-a",
+      "journal": "BNK",
+      "match": "C1",
+      "why": "Vereffent C1 precies (6.000,00 plus 600,00 BTW): een geletterde betaling."
+    },
+    {
+      "ref": "E4",
+      "direction": "outbound",
+      "date": "2026-02-25",
+      "amount": 1000,
+      "contact": "supp-c",
+      "journal": "BNK",
+      "match": null,
+      "why": "Een gedeeltelijke betaling op rekening aan een leverancier, aan niets geletterd."
+    }
+  ]
+}

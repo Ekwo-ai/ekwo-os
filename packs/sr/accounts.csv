@@ -1,0 +1,119 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,Kas,10
+1010,,asset_cash,false,Bank — rekening-courant,20
+1020,,asset_cash,false,Bank — spaarrekening,30
+1030,,asset_cash,false,Bankrekening in vreemde valuta,40
+1040,,asset_cash,false,Afwikkelrekening betalingsplatform en kaarten,50
+1050,,asset_cash,false,Termijndeposito's tot drie maanden,60
+1060,,asset_cash,false,Geld onderweg,70
+1100,,asset_receivable,true,Debiteuren,80
+1105,,asset_current,false,Voorziening voor verwachte kredietverliezen,90
+1110,,asset_current,false,Vorderingen op groepsmaatschappijen,100
+1120,,asset_current,false,Overige vorderingen,110
+1130,,asset_current,false,Nog te ontvangen opbrengsten,120
+1140,,asset_current,false,Voorschotten en leningen aan personeel,130
+1150,,asset_current,false,Betaalde deposito's invoerrechten,140
+1160,,asset_current,false,Te vorderen inkomstenbelasting,150
+1170,,asset_current,false,BTW voorbelasting — binnenlandse inkopen,160
+1171,,asset_current,false,BTW voorbelasting — betaald bij invoer,170
+1172,,asset_current,true,BTW terug te ontvangen — afrekening van de aangifte,180
+1173,,asset_current,false,BTW voorbelasting — verlegd (diensten uit het buitenland),190
+1200,,asset_current,false,Voorraad grond- en hulpstoffen,200
+1210,,asset_current,false,Voorraad onderhanden werk,210
+1220,,asset_current,false,Voorraad gereed product en handelsgoederen,220
+1230,,asset_current,false,Goederen onderweg,230
+1300,,asset_current,false,Termijndeposito's langer dan drie maanden,240
+1310,,asset_current,false,Beleggingen voor handelsdoeleinden,250
+1320,,asset_current,false,Vorderingen op groepsmaatschappijen — niet-handel,260
+1400,,asset_prepayments,false,Vooruitbetaalde kosten,270
+1410,,asset_prepayments,false,Betaalde waarborgsommen huur en nutsvoorzieningen,280
+1420,,asset_prepayments,false,Vooruitbetalingen aan leveranciers,290
+1600,,asset_fixed,false,Gebouwen en terreinen,300
+1610,,asset_fixed,false,Verbouwingen,310
+1620,,asset_fixed,false,Meubilair en inrichting,320
+1630,,asset_fixed,false,Kantoorapparatuur,330
+1640,,asset_fixed,false,Computerapparatuur en software,340
+1650,,asset_fixed,false,Vervoermiddelen,350
+1660,,asset_fixed,false,Machines en installaties,360
+1670,,asset_fixed,false,Gebruiksrechten (leases),370
+1690,,asset_fixed,false,Cumulatieve afschrijvingen — materiële vaste activa,380
+1695,,asset_fixed,false,Cumulatieve afschrijvingen — gebruiksrechten,390
+1800,,asset_non_current,false,Goodwill,400
+1810,,asset_non_current,false,Overige immateriële vaste activa,410
+1820,,asset_non_current,false,Cumulatieve afschrijvingen — immateriële vaste activa,420
+1900,,asset_non_current,false,Deelnemingen in dochtermaatschappijen,430
+1910,,asset_non_current,false,Deelnemingen in geassocieerde maatschappijen,440
+1920,,asset_non_current,false,Overige langlopende beleggingen,450
+1930,,asset_non_current,false,Waarborgsommen — langlopend,460
+1990,,asset_non_current,false,Latente belastingvorderingen,470
+2000,,liability_payable,true,Crediteuren,480
+2010,,liability_current,false,Schulden aan groepsmaatschappijen,490
+2020,,liability_current,false,Overlopende passiva,500
+2030,,liability_current,false,Ontvangen vooruitbetalingen van klanten,510
+2040,,liability_current,false,Te betalen lonen en salarissen,520
+2050,,liability_current,false,Te betalen pensioen- en sociale premies,530
+2060,,liability_current,false,Te betalen inkomstenbelasting,540
+2070,,liability_current,false,Te betalen loonbelasting en inhoudingen,550
+2071,,liability_current,false,Te betalen invoerrechten,560
+2072,,liability_current,false,Te betalen overige belastingen,570
+2073,,liability_current,false,Te betalen overige overheidsheffingen,580
+2080,,liability_current,false,Leaseverplichtingen — kortlopend deel,590
+2090,,liability_current,false,Wachtrekening,600
+2100,,liability_current,true,BTW af te dragen — afrekening van de aangifte,610
+2101,,liability_current,false,BTW verschuldigd — algemeen tarief (10 %),620
+2102,,liability_current,false,BTW verschuldigd — overige tarieven (5 % en 25 %),630
+2103,,liability_current,false,BTW verschuldigd — verlegd (diensten uit het buitenland),640
+2200,,liability_credit_card,false,Creditcard van de onderneming,650
+2300,,liability_non_current,false,Bankleningen — langlopend,660
+2310,,liability_non_current,false,Leaseverplichtingen — langlopend,670
+2320,,liability_non_current,false,Schulden aan aandeelhouders — langlopend,680
+2390,,liability_non_current,false,Latente belastingverplichtingen,690
+3000,,equity,false,Geplaatst en gestort kapitaal,700
+3100,,equity,false,Agio,710
+3110,,equity,false,Overige reserves,720
+3200,,equity_retained,false,Overgedragen winst,730
+4000,,income,false,Verkoop van goederen,740
+4010,,income,false,Verrichte diensten,750
+4700,,income_other,false,Gerealiseerde koerswinsten,760
+4710,,income_other,false,Niet-gerealiseerde koerswinsten,770
+4720,,income_other,false,Rentebaten,780
+4730,,income_other,false,Overige opbrengsten,790
+4750,,income_other,false,Winst bij afstoting van vaste activa,800
+5000,,expense_direct_cost,false,Kostprijs van de omzet,810
+5010,,expense_direct_cost,false,Inkopen,820
+5020,,expense_direct_cost,false,Vrachtkosten inkopen,830
+5025,,expense_direct_cost,false,Invoerrechten,840
+5030,,expense_direct_cost,false,Directe arbeid,850
+6000,,expense,false,Bezoldiging van bestuurders,860
+6010,,expense,false,Lonen en salarissen,870
+6020,,expense,false,Pensioenpremies,880
+6025,,expense,false,Sociale lasten werkgever,890
+6030,,expense,false,Overige personeelskosten,900
+6100,,expense,false,Huisvestingskosten,910
+6110,,expense,false,Beheer- en gebouwkosten,920
+6120,,expense,false,"Water, elektriciteit en gas",930
+6130,,expense,false,Overige belastingen en heffingen,940
+6200,,expense,false,"Vergunningen, rechten en registratiekosten",950
+6210,,expense,false,Accountantskosten — controle,960
+6220,,expense,false,Kosten boekhouding en administratie,970
+6230,,expense,false,Juridische en overige advieskosten,980
+6300,,expense,false,Onderhoud en reparaties,990
+6310,,expense,false,Verzekeringen,1000
+6320,,expense,false,Autokosten,1010
+6330,,expense,false,Reis- en verblijfkosten,1020
+6340,,expense,false,Representatiekosten,1030
+6350,,expense,false,Reclame en promotie,1040
+6360,,expense,false,"Drukwerk, kantoorbehoeften en porti",1050
+6370,,expense,false,Telecommunicatie,1060
+6380,,expense,false,Bankkosten,1070
+6390,,expense,false,Overige kantoorkosten,1080
+6400,,expense,false,Dotatie voorziening kredietverliezen,1090
+6410,,expense,false,Rentelasten bankleningen,1100
+6420,,expense,false,Rentelasten leaseverplichtingen,1110
+6450,,expense,false,Gerealiseerde koersverliezen,1120
+6455,,expense,false,Niet-gerealiseerde koersverliezen,1130
+6460,,expense,false,Verlies bij afstoting van vaste activa,1140
+6470,,expense,false,Last inkomstenbelasting,1150
+6480,,expense,false,Last latente belasting,1160
+6490,,expense,false,Afrondingsverschillen,1170
+6800,,expense_depreciation,false,Afschrijvingen,1180

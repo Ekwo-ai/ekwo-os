@@ -2681,3 +2681,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('SR', 'iso_3166_1', 'Suriname', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Suriname levies a value added tax of its own under the Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121), administered by the Belastingdienst: article 2 imposes it on the supply of goods and services in Suriname and on imports, and article 4 sets a standard rate of 10 per cent, a reduced rate of 5 per cent and a higher rate of 25 per cent, with a zero rate for the supplies of Annex 1 and exemption, under article 5, for those of Annex 2.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

@@ -1,0 +1,425 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "SR-IFRS-SME-SFP",
+      "kind": "balance_sheet",
+      "framework": "IFRS-SME",
+      "name": "Balans",
+      "legal_reference": "In Suriname is geen stelsel van verslaggevingsstandaarden wettelijk voorgeschreven (IFRS Foundation, jurisdiction profile, 2016), en de Wet BTW (artikel 30) vraagt alleen dat de administratie in de Nederlandse taal duidelijk en overzichtelijk wordt gevoerd. Deze opstelling volgt de presentatie van IFRS for SMEs (IASB), sectie 4 en 5: dat is een keuze van dit pakket en geen tekst die het land oplegt. De nummering van de regels en de bereiken die elke regel leest zijn eigen aan dit pakket. Het kasstroomoverzicht en het mutatieoverzicht van het eigen vermogen zijn aparte overzichten die dit pakket niet modelleert.",
+      "result_in_progress": "alone",
+      "lines": [
+        {
+          "code": "A-NC-FIX",
+          "parent": "A-NC",
+          "name": "Materiële vaste activa",
+          "sequence": 10,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1799"
+            }
+          ]
+        },
+        {
+          "code": "A-NC-INT",
+          "parent": "A-NC",
+          "name": "Goodwill en overige immateriële vaste activa",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1800",
+              "code_to": "1899"
+            }
+          ]
+        },
+        {
+          "code": "A-NC-OTH",
+          "parent": "A-NC",
+          "name": "Overige vaste activa",
+          "sequence": 30,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1900",
+              "code_to": "1999"
+            }
+          ]
+        },
+        {
+          "code": "A-NC",
+          "name": "Vaste activa",
+          "sequence": 40,
+          "plus": [
+            "A-NC-FIX",
+            "A-NC-INT",
+            "A-NC-OTH"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "A-C-REC",
+          "parent": "A-C",
+          "name": "Handels- en overige vorderingen",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1199"
+            }
+          ]
+        },
+        {
+          "code": "A-C-INV",
+          "parent": "A-C",
+          "name": "Voorraden",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1299"
+            }
+          ]
+        },
+        {
+          "code": "A-C-OTH",
+          "parent": "A-C",
+          "name": "Overige vlottende activa",
+          "sequence": 70,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1399"
+            }
+          ]
+        },
+        {
+          "code": "A-C-PRE",
+          "parent": "A-C",
+          "name": "Vooruitbetaalde kosten en betaalde waarborgsommen",
+          "sequence": 80,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1499"
+            }
+          ]
+        },
+        {
+          "code": "A-C-CASH",
+          "parent": "A-C",
+          "name": "Liquide middelen",
+          "sequence": 90,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1099"
+            }
+          ]
+        },
+        {
+          "code": "A-C",
+          "name": "Vlottende activa",
+          "sequence": 100,
+          "plus": [
+            "A-C-REC",
+            "A-C-INV",
+            "A-C-OTH",
+            "A-C-PRE",
+            "A-C-CASH"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "A-TOT",
+          "name": "Totaal activa",
+          "sequence": 110,
+          "plus": [
+            "A-NC",
+            "A-C"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "E-CAP",
+          "parent": "E-TOT",
+          "name": "Aandelenkapitaal en reserves",
+          "sequence": 120,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3199"
+            }
+          ],
+          "sign": -1
+        },
+        {
+          "code": "E-RET",
+          "parent": "E-TOT",
+          "name": "Overgedragen winst",
+          "sequence": 130,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3299"
+            }
+          ],
+          "sign": -1
+        },
+        {
+          "code": "E-RESULT",
+          "parent": "E-TOT",
+          "name": "Winst of verlies van het boekjaar, nog niet verwerkt",
+          "sequence": 140,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4699",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "4700",
+              "code_to": "4799",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5099",
+              "sequence": 30
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6899",
+              "sequence": 40
+            }
+          ],
+          "sign": -1
+        },
+        {
+          "code": "E-TOT",
+          "name": "Totaal eigen vermogen",
+          "sequence": 150,
+          "plus": [
+            "E-CAP",
+            "E-RET",
+            "E-RESULT"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "L-NC",
+          "parent": "L-TOT",
+          "name": "Langlopende schulden",
+          "sequence": 160,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2300",
+              "code_to": "2399"
+            }
+          ],
+          "sign": -1
+        },
+        {
+          "code": "L-C-PAY",
+          "parent": "L-C",
+          "name": "Handels- en overige schulden",
+          "sequence": 170,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2059"
+            }
+          ],
+          "sign": -1
+        },
+        {
+          "code": "L-C-TAX",
+          "parent": "L-C",
+          "name": "Kortlopende belastingschulden, inclusief verschuldigde BTW",
+          "sequence": 180,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2060",
+              "code_to": "2069",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2100",
+              "code_to": "2199",
+              "sequence": 20
+            }
+          ],
+          "sign": -1
+        },
+        {
+          "code": "L-C-OTH",
+          "parent": "L-C",
+          "name": "Overige kortlopende schulden",
+          "sequence": 190,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2070",
+              "code_to": "2099",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2299",
+              "sequence": 20
+            }
+          ],
+          "sign": -1
+        },
+        {
+          "code": "L-C",
+          "name": "Kortlopende schulden",
+          "sequence": 200,
+          "plus": [
+            "L-C-PAY",
+            "L-C-TAX",
+            "L-C-OTH"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "L-TOT",
+          "name": "Totaal schulden",
+          "sequence": 210,
+          "plus": [
+            "L-NC",
+            "L-C"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "EL-TOT",
+          "name": "Totaal eigen vermogen en schulden",
+          "sequence": 220,
+          "plus": [
+            "E-TOT",
+            "L-TOT"
+          ],
+          "is_total": true
+        }
+      ],
+      "source": "sr-ifrs-profile"
+    },
+    {
+      "code": "SR-IFRS-SME-IS",
+      "kind": "income_statement",
+      "framework": "IFRS-SME",
+      "name": "Winst-en-verliesrekening",
+      "legal_reference": "In Suriname is geen stelsel van verslaggevingsstandaarden wettelijk voorgeschreven (IFRS Foundation, jurisdiction profile, 2016), en de Wet BTW (artikel 30) vraagt alleen dat de administratie in de Nederlandse taal duidelijk en overzichtelijk wordt gevoerd. Deze opstelling volgt de presentatie van IFRS for SMEs (IASB), sectie 4 en 5: dat is een keuze van dit pakket en geen tekst die het land oplegt. De nummering van de regels en de bereiken die elke regel leest zijn eigen aan dit pakket. Het kasstroomoverzicht en het mutatieoverzicht van het eigen vermogen zijn aparte overzichten die dit pakket niet modelleert. De last inkomstenbelasting (6470) valt in de bedrijfskosten; de inkomstenbelasting is niet gemodelleerd",
+      "lines": [
+        {
+          "code": "REV",
+          "name": "Netto-omzet",
+          "sequence": 10,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4699"
+            }
+          ],
+          "sign": -1
+        },
+        {
+          "code": "COST",
+          "name": "Kostprijs van de omzet",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5099"
+            }
+          ]
+        },
+        {
+          "code": "GROSS",
+          "name": "Brutowinst",
+          "sequence": 30,
+          "plus": [
+            "REV"
+          ],
+          "minus": [
+            "COST"
+          ],
+          "is_total": true
+        },
+        {
+          "code": "OTH-INC",
+          "name": "Overige opbrengsten",
+          "sequence": 40,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4700",
+              "code_to": "4799"
+            }
+          ],
+          "sign": -1
+        },
+        {
+          "code": "OPEX",
+          "name": "Bedrijfskosten",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6799"
+            }
+          ]
+        },
+        {
+          "code": "DEPR",
+          "name": "Afschrijvingen",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6800",
+              "code_to": "6899"
+            }
+          ]
+        },
+        {
+          "code": "PROFIT",
+          "name": "Winst (verlies) van het boekjaar",
+          "sequence": 70,
+          "plus": [
+            "GROSS",
+            "OTH-INC"
+          ],
+          "minus": [
+            "OPEX",
+            "DEPR"
+          ],
+          "is_total": true
+        }
+      ],
+      "source": "iasb-ifrs-sme"
+    }
+  ]
+}

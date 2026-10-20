@@ -1,0 +1,644 @@
+[
+  {
+    "code": "SR-S-10",
+    "name": "Verkoop 10 % — algemeen tarief",
+    "description": "Een belaste levering of dienst in Suriname door een BTW-ondernemer, tegen het algemene tarief",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 4, lid 1 — «Het tarief van de belasting bedraagt 10 (tien) procent», in werking per 1 januari 2023 (artikel II, lid 2, van S.B. 2022 no. 148). Omzet in rubriek 1a van de aangifte, de belasting in rubriek 1a",
+    "source": "sr-wet-btw",
+    "sequence": 10,
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1a"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "1a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "1a",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-S-10-INC",
+    "name": "Kleinhandelsverkoop 10 % — prijs inclusief BTW",
+    "description": "Een levering tegen het algemene tarief waarvan de prijs de BTW al bevat",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 4, lid 1 (10 procent) en artikel 10 — aan anderen dan ondernemers mogen goederen en diensten niet worden aangeboden tegen prijzen waarin de belasting niet is begrepen (de overtreding is strafbaar gesteld in artikel 58). De BTW wordt uit de prijs gehaald: 110,00 bevat 100,00 en 10,00. Zelfde rubrieken als SR-S-10",
+    "source": "sr-wet-btw",
+    "sequence": 20,
+    "vat_category": "S",
+    "price_include": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1a"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "1a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "1a",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-S-05",
+    "name": "Verkoop 5 % — verlaagd tarief",
+    "description": "Motorbrandstoffen en dieselolie, verzekering voor internationale ziektekosten",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 4, lid 3, en bijlage 4 (S.B. 2022 no. 148, artikel I onder C en O) — 5 procent op de levering en invoer van motorgasoline en daarmee gelijkgestelde motorbrandstoffen, dieselolie, en op de verzekering voor internationale ziektekosten. Omzet en belasting in rubriek 1c",
+    "source": "sr-sb-2022-148",
+    "sequence": 30,
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1c"
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "1c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1c",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "1c",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-S-25",
+    "name": "Verkoop 25 % — verhoogd tarief",
+    "description": "Personenauto's boven 2.500 cm³ of met een cif-waarde van US$ 40.000 of meer, motorfietsen boven 125 cm³",
+    "kind": "vat",
+    "rate": 25,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 4, lid 4, en bijlage 3 (S.B. 2022 no. 148, artikel I onder D en N) — 25 procent op de levering en invoer van automobielen en andere motorvoertuigen voor personenvervoer met een cilinderinhoud van meer dan 2.500 cm³ of een cif-waarde van US$ 40.000 of meer, en van motorfietsen boven 125 cm³. Omzet en belasting in rubriek 1d. Het pakket beslist niet welke goederen onder bijlage 3 vallen",
+    "source": "sr-sb-2022-148",
+    "sequence": 40,
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1d"
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "1d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2102",
+          "box": "1d",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-S-00",
+    "name": "Verkoop 0 % — bijlage 1",
+    "description": "Een binnenlandse levering of dienst van bijlage 1 (water, elektriciteit, vervoer, geneesmiddelen, onderwijs, basisvoedsel en meer), belast tegen 0 procent",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 4, lid 2, onderdeel a, en bijlage 1 (S.B. 2022 no. 148, artikel I onder A en L) — het nultarief. Een goed of dienst tegen 0 procent is belast: de voorbelasting van wat haar voortbrengt blijft aftrekbaar. Omzet in rubriek 1b, waarbij de aangifte een specificatie vraagt die bij de aangifte wordt ingediend",
+    "source": "sr-sb-2022-148",
+    "sequence": 50,
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1b",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-S-EXP-G",
+    "name": "Uitvoer van goederen 0 %",
+    "description": "Levering van goederen die worden uitgevoerd",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 4, lid 2, onderdeel b (S.B. 2022 no. 148, artikel I onder B) — nultarief voor de levering van goederen die worden uitgevoerd; alleen de ondernemer die uitvoert past het toe, de leveringen eerder in de keten zijn gewoon belast (memorie van toelichting). Omzet in rubriek 2a. De factuur is ook bij uitvoer verplicht (brochure Belastingdienst)",
+    "source": "sr-sb-2022-148",
+    "sequence": 60,
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2a",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-S-EXP-D",
+    "name": "Diensten aan afnemers buiten Suriname 0 %",
+    "description": "Internationaal goederenvervoer, diensten ter zake van uitgaande goederen, outsourcing voor een niet in Suriname gevestigde afnemer",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 4, lid 2, onderdelen c, d en e — nultarief voor internationaal goederenvervoer per luchtvaartuig of zeeschip, voor diensten in Suriname ter zake van uitgaande goederen en voor outsourcingswerkzaamheden ten behoeve van een niet in Suriname woonachtige of gevestigde afnemer. Omzet in rubriek 2b ('diensten aan buitenlandse afnemers'). Een dienst waarvan de plaats volgens artikel 9 buiten Suriname ligt, valt niet onder dit pakket te bewijzen: de gebruiker kiest met zijn accountant",
+    "source": "sr-wet-btw",
+    "sequence": 70,
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2b",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-S-EX",
+    "name": "Vrijgestelde verkoop — bijlage 2",
+    "description": "Een levering of dienst van bijlage 2: onroerende goederen, medische beroepen, toegang tot vermakelijkheden, kansspelen, non-profitorganisaties",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 5, lid 1, en bijlage 2 (S.B. 2022 no. 148, artikel I onder M) — vrijgesteld van belasting. Een vrijgestelde handeling geeft geen recht op aftrek van de voorbelasting en komt in geen rubriek van de aangifte; op de factuur wordt de vrijstelling vermeld (brochure Belastingdienst)",
+    "source": "sr-sb-2022-148",
+    "sequence": 80,
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-P-10",
+    "name": "Inkoop 10 % — aftrekbaar",
+    "description": "Een binnenlandse inkoop tegen het algemene tarief, voor belaste handelingen",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 3 en artikel 14 — de aan de ondernemer in rekening gebrachte belasting wordt afgetrokken voor zover de goederen en diensten dienen voor belaste handelingen, op vertoon van een correcte factuur. De belasting in rubriek 4b; de aangifte kent geen rubriek voor de inkoop zelf",
+    "source": "sr-wet-btw",
+    "sequence": 90,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "4b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "4b",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-P-05",
+    "name": "Inkoop 5 % — aftrekbaar",
+    "description": "Een binnenlandse inkoop tegen het verlaagde tarief (brandstof), voor belaste handelingen",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 3, artikel 14 en artikel 4, lid 3 — aftrek van de belasting tegen 5 procent in rubriek 4b",
+    "source": "sr-wet-btw",
+    "sequence": 100,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "4b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "4b",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-P-25",
+    "name": "Inkoop 25 % — aftrekbaar",
+    "description": "Een binnenlandse inkoop tegen het verhoogde tarief, voor belaste handelingen",
+    "kind": "vat",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 3, artikel 14 en artikel 4, lid 4 — aftrek van de belasting tegen 25 procent in rubriek 4b, behalve voor motorvoertuigen voor personenvervoer, die artikel 14 van aftrek uitsluit (gebruik SR-P-25-ND)",
+    "source": "sr-wet-btw",
+    "sequence": 110,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "4b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "4b",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-P-10-ND",
+    "name": "Inkoop 10 % — niet aftrekbaar",
+    "description": "Spijzen, dranken en tabak, relatiegeschenken, loon in natura, personenauto's: de belasting is kosten",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 14 — geen aftrek van de belasting die in rekening is gebracht ter zake van het verstrekken van spijzen, dranken en tabaksproducten, van relatiegeschenken en andere giften, van loon in natura en gelegenheid tot ontspanning, en van motorvoertuigen bestemd voor personenvervoer (met de uitzonderingen van de tekst). De belasting valt op de kosten van de regel; geen rubriek",
+    "source": "sr-wet-btw",
+    "sequence": 120,
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-P-25-ND",
+    "name": "Inkoop 25 % — niet aftrekbaar",
+    "description": "Een personenauto of andere niet aftrekbare inkoop tegen het verhoogde tarief: de belasting is kosten",
+    "kind": "vat",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 14 — geen aftrek voor motorvoertuigen bestemd voor personenvervoer en de goederen en diensten die daarmee verband houden (uitgezonderd autodealers, autoleasebedrijven en voertuigen boven 3.500 kg). De belasting valt op de kosten van de regel; geen rubriek",
+    "source": "sr-wet-btw",
+    "sequence": 130,
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base",
+          "factor": 100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-P-IMP-10",
+    "name": "Invoer van goederen 10 %",
+    "description": "BTW betaald bij de Douane op ingevoerde goederen, 10 procent",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 2, onderdeel c (heffing bij invoer), artikel 3 en artikel 14 — de bij invoer betaalde belasting is aftrekbaar voor zover de goederen dienen voor belaste handelingen; rubriek 4d van de aangifte. Een invoerder met een vergunning voor verlegging bij invoer (artikel 11, lid 3, rubrieken 3a tot en met 3c) gebruikt dit pakket niet voor die belasting",
+    "source": "sr-wet-btw",
+    "sequence": 140,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "4d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "4d",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-P-IMP-05",
+    "name": "Invoer van goederen 5 %",
+    "description": "BTW betaald bij de Douane op ingevoerde goederen, 5 procent",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 2, onderdeel c (heffing bij invoer), artikel 3 en artikel 14 — de bij invoer betaalde belasting is aftrekbaar voor zover de goederen dienen voor belaste handelingen; rubriek 4d van de aangifte. Een invoerder met een vergunning voor verlegging bij invoer (artikel 11, lid 3, rubrieken 3a tot en met 3c) gebruikt dit pakket niet voor die belasting",
+    "source": "sr-wet-btw",
+    "sequence": 150,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "4d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "4d",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-P-IMP-25",
+    "name": "Invoer van goederen 25 %",
+    "description": "BTW betaald bij de Douane op ingevoerde goederen, 25 procent",
+    "kind": "vat",
+    "rate": 25,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 2, onderdeel c (heffing bij invoer), artikel 3 en artikel 14 — de bij invoer betaalde belasting is aftrekbaar voor zover de goederen dienen voor belaste handelingen; rubriek 4d van de aangifte. Een invoerder met een vergunning voor verlegging bij invoer (artikel 11, lid 3, rubrieken 3a tot en met 3c) gebruikt dit pakket niet voor die belasting",
+    "source": "sr-wet-btw",
+    "sequence": 160,
+    "recoverable": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "4d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "4d",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-P-RC-10",
+    "name": "Diensten van een ondernemer buiten Suriname 10 % — verlegd",
+    "description": "De afnemer geeft de belasting aan en trekt haar af, zodat de boeking nul is",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 11, lid 2 — is de ondernemer niet in Suriname gevestigd en is de afnemer een ondernemer in Suriname, dan wordt de belasting geheven van de afnemer, die haar volgens het regime van verlegging in zijn aangifte voldoet (rubriek 3d, 10 procent) en in aftrek brengt voor zover hij belaste handelingen verricht (rubriek 4c, artikel 14)",
+    "source": "sr-wet-btw",
+    "sequence": 170,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3d"
+        },
+        {
+          "type": "tax",
+          "account": "1173",
+          "box": "4c"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2103",
+          "box": "3d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1173",
+          "box": "4c",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2103",
+          "box": "3d",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "SR-P-EX",
+    "name": "Inkoop zonder BTW",
+    "description": "Een inkoop van een vrijgestelde levering of dienst, of van een leverancier die geen BTW in rekening brengt: geen voorbelasting",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 5 — op een vrijgestelde handeling of een handeling van een ondernemer onder de drempel van artikel 21 wordt geen belasting in rekening gebracht, dus is er niets af te trekken. Geen rubriek",
+    "source": "sr-wet-btw",
+    "sequence": 180,
+    "recoverable": false,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    }
+  }
+]

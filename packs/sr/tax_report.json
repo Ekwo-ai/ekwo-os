@@ -1,0 +1,282 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "SR-BTW-AANGIFTE",
+  "name": "BTW-aangifte (maandelijkse aangifte)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2023-01-01",
+  "legal_reference": "Wet Belasting over de Toegevoegde Waarde 2022 (S.B. 2022 no. 121, verbeterblad S.B. 2022 no. 143, gewijzigd bij S.B. 2022 no. 148), artikel 1 en artikel 13 — het tijdvak van aangifte is de kalendermaand, tenzij de Minister bij beschikking een ander tijdvak vaststelt (de brochure van de Belastingdienst: BTW-plichtige ondernemers doen maandelijks aangifte, ook als er niets aan te geven is). Het model is dat van S.B. 2023 no. 31: rubrieken 1a tot en met 4j. De drempel van SRD 1.000.000 aan belaste omzet per kalenderjaar (artikel 21) bepaalt of de ondernemer zich moet registreren; het pakket controleert hem niet",
+  "source": "sr-wet-btw",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Artikel 13, leden 2 en 4, van de wet — de aangifte wordt gedaan en de belasting wordt betaald vóór de zestiende dag van de maand volgend op het tijdvak; de Belastingdienst noemt tijdig 'voor de 16de dag van de maand daaropvolgend'. De regel geeft dus de 15de als laatste dag. Een 15de op een zaterdag, zondag of feestdag verschuift volgens geen gelezen tekst en wordt niet verschoven. Op de 15de eindigt ook het corrigeren via het online portaal",
+    "source": "sr-btw-aangifte"
+  },
+  "rounding": {
+    "unit": 1,
+    "legal_reference": "Het online aangifteformulier accepteert alleen hele bedragen, zonder komma of punt: centen worden niet ingevoerd en de bedragen worden naar beneden afgerond (Belastingdienst, BTW-aangifte). Het pakket rondt op de eenheid; de richting naar beneden kan het niet uitdrukken, zie README.md",
+    "source": "sr-btw-aangifte"
+  },
+  "boxes": [
+    {
+      "box": "1a",
+      "kind": "base",
+      "name": "Leveringen en diensten belast met 10 % — omzet",
+      "sequence": 10,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 1a — het algemene tarief van 10 procent; de omzet per tarief wordt gespecificeerd, niet opgeteld",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "1a",
+      "kind": "tax",
+      "name": "Leveringen en diensten belast met 10 % — belasting",
+      "sequence": 20,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 1a",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "1b",
+      "kind": "base",
+      "name": "Leveringen en diensten belast met 0 % — omzet",
+      "sequence": 30,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 1b — het nultarief van bijlage 1; bij deze rubriek hoort een specificatie die bij de aangifte wordt ingediend",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "1c",
+      "kind": "base",
+      "name": "Leveringen en diensten belast met 5 % — omzet",
+      "sequence": 40,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 1c — het verlaagde tarief van 5 procent",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "1c",
+      "kind": "tax",
+      "name": "Leveringen en diensten belast met 5 % — belasting",
+      "sequence": 50,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 1c",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "1d",
+      "kind": "base",
+      "name": "Leveringen van goederen belast met 25 % — omzet",
+      "sequence": 60,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 1d — het verhoogde tarief van 25 procent",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "1d",
+      "kind": "tax",
+      "name": "Leveringen van goederen belast met 25 % — belasting",
+      "sequence": 70,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 1d",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "1e",
+      "kind": "base",
+      "name": "Privégebruik en onttrekkingen — omzet",
+      "sequence": 80,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 1e — goederen uit de onderneming gehaald of voor andere doeleinden gebruikt; geen btw-code van dit pakket boekt hierop",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "1e",
+      "kind": "tax",
+      "name": "Privégebruik en onttrekkingen — belasting",
+      "sequence": 90,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 1e",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "2a",
+      "kind": "base",
+      "name": "Uitvoer van goederen (0 %) — omzet",
+      "sequence": 100,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 2a — goederen uitgevoerd naar andere landen, ook onder het stelsel van douane-entrepot; het nultarief, dus geen bedrag belasting",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "2b",
+      "kind": "base",
+      "name": "Diensten aan buitenlandse afnemers — omzet",
+      "sequence": 110,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 2b",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "3a",
+      "kind": "base",
+      "name": "Invoer met verlegging, 10 % — omzet",
+      "sequence": 120,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 3a — alleen met een vergunning als bedoeld in artikel 11, lid 3; geen btw-code van dit pakket boekt hierop",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "3a",
+      "kind": "tax",
+      "name": "Invoer met verlegging, 10 % — belasting",
+      "sequence": 130,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 3a",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "3b",
+      "kind": "base",
+      "name": "Invoer met verlegging, 5 % — omzet",
+      "sequence": 140,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 3b — zelfde vergunning, het verlaagde tarief; geen btw-code van dit pakket boekt hierop",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "3b",
+      "kind": "tax",
+      "name": "Invoer met verlegging, 5 % — belasting",
+      "sequence": 150,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 3b",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "3c",
+      "kind": "base",
+      "name": "Invoer met verlegging, 25 % — omzet",
+      "sequence": 160,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 3c — zelfde vergunning, het verhoogde tarief; geen btw-code van dit pakket boekt hierop",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "3c",
+      "kind": "tax",
+      "name": "Invoer met verlegging, 25 % — belasting",
+      "sequence": 170,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 3c",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "3d",
+      "kind": "base",
+      "name": "Diensten afgenomen van een ondernemer buiten Suriname — omzet",
+      "sequence": 180,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 3d — de ondernemer uit het buitenland heeft de BTW naar de afnemer verlegd (of had dat moeten doen); 10 procent",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "3d",
+      "kind": "tax",
+      "name": "Diensten afgenomen van een ondernemer buiten Suriname — belasting",
+      "sequence": 190,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 3d",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "4a",
+      "kind": "total",
+      "name": "Totaal verschuldigde belasting",
+      "sequence": 200,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 4a — de belasting van de rubrieken 1a tot en met 3d bij elkaar opgeteld",
+      "source": "sr-model-aangifte",
+      "plus": [
+        "1a:tax",
+        "1c:tax",
+        "1d:tax",
+        "1e:tax",
+        "3a:tax",
+        "3b:tax",
+        "3c:tax",
+        "3d:tax"
+      ]
+    },
+    {
+      "box": "4b",
+      "kind": "tax",
+      "name": "Voorbelasting binnenlandse inkopen",
+      "sequence": 210,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 4b — de Surinaamse BTW die andere ondernemers in rekening hebben gebracht, aftrekbaar voor zover de goederen en diensten dienen voor belaste handelingen (artikel 14)",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "4c",
+      "kind": "tax",
+      "name": "Voorbelasting verlegd (rubrieken 3a tot en met 3d)",
+      "sequence": 220,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 4c — de verschuldigde belasting door verlegging bij invoer en door de diensten van buitenlandse ondernemers, aftrekbaar onder dezelfde voorwaarde",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "4d",
+      "kind": "tax",
+      "name": "Voorbelasting betaald bij invoer",
+      "sequence": 230,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 4d — de BTW betaald bij de Douane wegens de invoer van goederen; niet te vermelden bij 4d wat verlegd is (rubrieken 3a tot en met 3c, dat staat in 4c)",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "4e",
+      "kind": "tax",
+      "name": "Omzetbelasting op voorraad per 31 december 2022",
+      "sequence": 240,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 4e — alleen met toekenning van het verzoek op grond van artikel 68 en voor goederen die in 2023 met BTW zijn doorverkocht; geen btw-code van dit pakket boekt hierop",
+      "source": "sr-model-aangifte"
+    },
+    {
+      "box": "4f",
+      "kind": "total",
+      "name": "Totaal in aftrek te brengen belasting",
+      "sequence": 250,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 4f — de belasting van de rubrieken 4b tot en met 4e bij elkaar opgeteld",
+      "source": "sr-model-aangifte",
+      "plus": [
+        "4b:tax",
+        "4c:tax",
+        "4d:tax",
+        "4e:tax"
+      ]
+    },
+    {
+      "box": "4g",
+      "kind": "total",
+      "name": "Subtotaal",
+      "sequence": 260,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 4g — de belasting van rubriek 4f afgetrokken van die van rubriek 4a; een negatief bedrag is een teruggaaf",
+      "source": "sr-model-aangifte",
+      "plus": [
+        "4a"
+      ],
+      "minus": [
+        "4f"
+      ]
+    },
+    {
+      "box": "4j",
+      "kind": "total",
+      "name": "Te betalen belasting",
+      "sequence": 270,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 4j — het vakje 'te betalen belasting' wanneer 4g positief is. De rubrieken 4h (correctie van de in een vorige periode te veel of te weinig afgetrokken belasting) en 4i (correctie van de te veel of te weinig betaalde belasting) zijn niet gemodelleerd",
+      "source": "sr-model-aangifte",
+      "plus": [
+        "4g"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "4jTerug",
+      "kind": "total",
+      "name": "Terug te ontvangen belasting",
+      "sequence": 280,
+      "legal_reference": "Beschikking model aangifte BTW (S.B. 2023 no. 31), bijlage, rubriek 4j — het vakje 'terug te ontvangen belasting' wanneer 4g negatief is; de terugbetaling volgt binnen een maand na het ontstaan van het recht (artikel 17), een termijn die tot twee maanden kan worden opgeschort",
+      "source": "sr-model-aangifte",
+      "plus": [
+        "4f"
+      ],
+      "minus": [
+        "4a"
+      ],
+      "floor_zero": true
+    }
+  ]
+}
