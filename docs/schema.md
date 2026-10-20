@@ -194,6 +194,7 @@ bank charge that pays no item.
 | [`company_members`](#company_members) | Who may read or write a company. A role is a preset resolved through `role_capabilities`: `owner` administers, `accountant` books, `viewer` reads, `client` reads and hands pieces over. |
 | [`company_modules`](#company_modules) | Modules enabled on a company, and the settings that company keeps for each. Written by enable_module() and disable_module() and by nothing else: there is no write policy. |
 | [`company_packs`](#company_packs) | Which version of which country pack a company copied. A company may hold two: a foreign VAT registration is one. |
+| [`company_tax_regimes`](#company_tax_regimes) | The regime of turnover_tax_regimes a company is under, from the first day of a financial year to the last day of one, or open-ended. No row: the company is under the ordinary regime of its taxes (decision 0080). |
 | [`contact_merges`](#contact_merges) | Every merge of two contacts, by merge_contacts() (decision 0074): the contact absorbed, the one kept, who merged them and when, what moved and what was filled. Written by merge_contacts() and by nothing else — no role may insert — so the guards of a posted line and of an issued document read a row here, written in the same transaction, as the exemption that lets contact_id move from the absorbed contact to the kept one. |
 | [`contact_patterns`](#contact_patterns) | How a counterparty shows up on this company's statements: one row per learned or declared motif, of four closed kinds. Read by suggest_contacts(), written by confirm_contact(). The core still chooses no contact for anybody — it answers with candidates and says why. |
 | [`contacts`](#contacts) | Third parties. `contact_type` is explicit rather than two hidden counters. |
@@ -239,6 +240,9 @@ bank charge that pays no item.
 | [`tax_templates`](#tax_templates) | Reference taxes per country, with their period of validity. |
 | [`taxes`](#taxes) | VAT and similar taxes, with temporal validity and a legal reference. |
 | [`territories`](#territories) | The territories of the common system of value added tax: the Member States with the day each became bound, the United Kingdom with the day it stopped being, Northern Ireland, and the territories articles 6 and 7 of Directive 2006/112/EC take out of the system or put into it. Framework data filled by the release, like currencies — no company owns a row and no country pack writes one. A territory this table does not carry is outside the common system, which is the answer for every third country. |
+| [`turnover_tax_assessments`](#turnover_tax_assessments) | The tax on turnover of a period as post_turnover_tax() computed and posted it: the figures of turnover_tax_return() as they were, the entry that booked the tax (null for a period that owed nothing) and the filing it prepared. Written by that function and by nothing else. |
+| [`turnover_tax_brackets`](#turnover_tax_brackets) | The brackets of a regime of turnover_tax_regimes, dated: the highest base each takes (inclusive; null for the last), its nominal rate in percent and the deduction subtracted from base x rate. The tax of a period is its turnover x (base x nominal_rate / 100 - deduction) / base, the base being the window's turnover. A flat rate is one bracket with no threshold and no deduction. |
+| [`turnover_tax_regimes`](#turnover_tax_regimes) | A regime of a country where one tax on turnover replaces the kinds of tax it names, compiled from the pack's turnover_tax.json: the form it is declared on, the window its bracket is read over, the account its tax is an expense on and the article that sets it (decision 0080). |
 | [`user_preferences`](#user_preferences) | What one person prefers, across every company they are a member of. Every column is nullable and none has a default: null means "take the company's answer, then the pack's". |
 
 ### `account_templates`
@@ -868,6 +872,26 @@ Constraints:
 - `CHECK ((country ~ '^[A-Z]{2}$'::text))`
 - `CHECK ((version ~ '^[0-9]+\.[0-9]+\.[0-9]+$'::text))`
 - `PRIMARY KEY (company_id, country)`
+
+### `company_tax_regimes`
+
+The regime of turnover_tax_regimes a company is under, from the first day of a financial year to the last day of one, or open-ended. No row: the company is under the ordinary regime of its taxes (decision 0080).
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `regime_code` | `text` | not null |
+| `valid_from` | `date` | not null |
+| `valid_to` | `date` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, valid_from)`
 
 ### `contact_merges`
 
@@ -2227,6 +2251,88 @@ Constraints:
 - `CHECK (((eu_vat_to IS NULL) OR ((eu_vat_from IS NOT NULL) AND (eu_vat_from <= eu_vat_to))))`
 - `PRIMARY KEY (code)`
 
+### `turnover_tax_assessments`
+
+The tax on turnover of a period as post_turnover_tax() computed and posted it: the figures of turnover_tax_return() as they were, the entry that booked the tax (null for a period that owed nothing) and the filing it prepared. Written by that function and by nothing else.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `regime_code` | `text` | not null |
+| `period_start` | `date` | not null |
+| `period_end` | `date` | not null |
+| `turnover` | `numeric(18,2)` | not null |
+| `window_turnover` | `numeric(18,2)` | not null |
+| `window_months_counted` | `integer` | not null |
+| `base` | `numeric` | not null |
+| `bracket_sequence` | `integer` | not null |
+| `nominal_rate` | `numeric(9,4)` | not null |
+| `deduction` | `numeric(18,2)` | not null |
+| `effective_rate` | `numeric` | not null |
+| `tax` | `numeric(18,2)` | not null |
+| `entry_id` | `uuid` |  |
+| `filing_id` | `uuid` |  |
+| `created_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, regime_code, period_start, period_end)`
+
+### `turnover_tax_brackets`
+
+The brackets of a regime of turnover_tax_regimes, dated: the highest base each takes (inclusive; null for the last), its nominal rate in percent and the deduction subtracted from base x rate. The tax of a period is its turnover x (base x nominal_rate / 100 - deduction) / base, the base being the window's turnover. A flat rate is one bracket with no threshold and no deduction.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `regime_code` | `text` | not null |
+| `valid_from` | `date` | not null |
+| `valid_to` | `date` |  |
+| `sequence` | `integer` | not null |
+| `up_to` | `numeric(18,2)` |  |
+| `nominal_rate` | `numeric(9,4)` | not null |
+| `deduction` | `numeric(18,2)` | not null |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+
+Constraints:
+
+- `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
+- `CHECK ((deduction >= (0)::numeric))`
+- `CHECK (((nominal_rate >= (0)::numeric) AND (nominal_rate < (100)::numeric)))`
+- `CHECK (((up_to IS NULL) OR (up_to > (0)::numeric)))`
+- `PRIMARY KEY (country, regime_code, valid_from, sequence)`
+
+### `turnover_tax_regimes`
+
+A regime of a country where one tax on turnover replaces the kinds of tax it names, compiled from the pack's turnover_tax.json: the form it is declared on, the window its bracket is read over, the account its tax is an expense on and the article that sets it (decision 0080).
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `code` | `text` | not null |
+| `name` | `text` | not null |
+| `replaces` | `tax_kind[]` | not null — The kinds of tax a company under the regime neither charges nor recovers. A document line carrying a tax of one of them is refused at posting. |
+| `report_code` | `text` | not null |
+| `window_months` | `smallint` | The months of turnover the bracket is read over — twelve for a regime graded on the trailing year. Null: the bracket is read on the turnover of the period itself. |
+| `window_includes_period` | `boolean` | not null — The window ends with the period declared, rather than with the month before it. |
+| `short_window` | `text` | not null — What the window of a company active for fewer months than it counts becomes: annualise (the turnover of the months it has, times window_months over their number; the period's own when it has none) or as_is (the turnover it has). |
+| `expense_account_code` | `text` | not null |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+| `sequence` | `integer` | not null |
+
+Constraints:
+
+- `CHECK ((country ~ '^[A-Z]{2}$'::text))`
+- `CHECK ((cardinality(replaces) > 0))`
+- `CHECK ((short_window = ANY (ARRAY['annualise'::text, 'as_is'::text])))`
+- `CHECK (((window_months IS NULL) OR ((window_months >= 1) AND (window_months <= 60))))`
+- `CHECK (((window_months IS NOT NULL) OR (NOT window_includes_period)))`
+- `PRIMARY KEY (country, code)`
+
 ### `user_preferences`
 
 What one person prefers, across every company they are a member of. Every column is nullable and none has a default: null means "take the company's answer, then the pack's".
@@ -2322,6 +2428,7 @@ Constraints:
 | `company_references_by_id(p_schema text)` | Every foreign key of a schema by one uuid column from a table that holds a company's rows (company_column()) to another table that does: what scope_references_to_company() makes composite. For migrations (decision 0065). |
 | `company_role(p_company_id uuid)` | Role of the current user on a company, or NULL when they are not a member. |
 | `company_scoped_tables()` | Every table that belongs to a company, read from the catalogue: it carries `company_id`, or a foreign key leads from it to `companies`, directly or through another such table. |
+| `company_tax_regimes_check()` | Refuses a regime the pack of the company's fiscal country does not carry (unknown_turnover_regime), one that does not start on the first day of a financial year or end on the last day of one (regime_change_mid_year), and one that overlaps another (regime_overlap); records the cadence of the regime's form in company_filing_periods. |
 | `confirm_contact(p_transaction_id uuid, p_contact_id uuid)` | Attributes a statement line to a contact and learns from it, through learn_contact_patterns(): the account and the name as this bank writes them become motifs, and every motif that had named somebody else is charged a use without a success. Knowing who the money came from is not knowing what it pays — this function never touches a document and never reconciles anything. |
 | `contact_candidates(p_company_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[])` | The one scoring of a counterparty, for whatever line carries the facts: the account it moved on, the motifs of contact_patterns, the number of a document of the types named (none named, none looked for), and the words of a contact's name — capped at 0.600 when the words reach several contacts, unless the label is a contact's whole name. Each candidate with its score, the evidence in a sentence and how many contacts that same evidence reached. Read by suggest_contacts() for a statement line and by suggest_line_contacts() for a ledger line; it writes nothing and decides nothing. |
 | `contacts_guard_merged()` | Keeps a merged contact retired (decision 0074): merged_into is written by merge_contacts() alone, in the transaction that recorded the merge in contact_merges (contact_merged_by_merge_contacts otherwise, and on an insert that arrives merged); once written it changes only to follow the contact it names when that one is merged in its turn, the contact is not made active again and is not deleted while its company stands (contact_merged). |
@@ -2359,6 +2466,7 @@ Constraints:
 | `documents_match_credit_note_on_posting()` | As a credit note that names its invoice (reversed_document_id) is posted, matches its third-party lines with the invoice's through match_reversal() — for what both still have open, so a credit note for part of an invoice settles that part — when the invoice is posted, of the matching kind, in the same currency at the same rate, and the caller may match (may_match_on_posting()). Decision 0073. |
 | `documents_refresh_amount_paid(p_document_id uuid)` | Recomputes what a document has been settled by, from the matched amounts on its third-party lines. |
 | `documents_refresh_payment_state()` | Derives payment_state from amount_paid against amount_total: not_paid, partially_paid, paid, overpaid — and reversed for a document cancelled after it was posted and settled in full by its credit note. Never keyed. |
+| `documents_refuse_replaced_tax()` | Refuses to post a document a line of which carries a tax of a kind the company's regime of turnover_tax_regimes replaces on the document's date (tax_replaced_by_regime). |
 | `ec_sales_list(p_company_id uuid, p_from date, p_to date, p_report_code text)` | The recapitulative statement of intra-Community supplies for a period: one line per customer VAT identification number and per nature — goods, services, and whatever the treatment vocabulary gains next — summed from the posted ledger in the company's currency, credit notes deducted. The country of a line is the prefix the customer's numbers carry, read from `territories`, so a Greek customer is listed under EL. A supply that cannot be declared comes back with the reason in `issue` rather than being left out. Name the form in p_report_code to have the period checked against the cadence this company files **that statement** on, which is not the cadence of its periodic return in any country read so far; name none and nothing is refused. A supply is a base line of the tax: a line a `tax_on_base` posting wrote is a cost and is left out. No country rule lives in this function. |
 | `ekwo_pre_request()` | Called by PostgREST at the start of every request (pgrst.db_pre_request). Presents the key in X-Ekwo-Api-Key when there is one, then moves the request off `anon` so that row level security decides instead of the grants, and gives it the statement_timeout configured for `authenticated`, when one is. A call that carries a whole company (is_archive_request) by a key or a signed-in session is given archive_statement_timeout(), only ever upwards. No header and no archive, no effect. |
 | `ekwo_schema_version()` | Schema version of the installed release. Bumped by a migration, never by hand. |
@@ -2469,6 +2577,7 @@ Constraints:
 | `post_entry(p_entry_id uuid)` | Validates, numbers and posts an entry. Raises rather than warning: a swallowed error is a missing entry. Where the country forbids a hole in the sequence it refuses a number chosen by hand, unless the caller holds entries.import — and then the counter catches up to it. |
 | `post_module_entry(p_company_id uuid, p_module_code text, p_ref text, p_date date, p_description text, p_lines jsonb, p_journal_id uuid)` | The only way a module reaches the ledger: it hands over lines as data and this builds the draft and calls post_entry(). The tag (module_code, ref) is unique per company, so posting the same thing twice is refused by the database. |
 | `post_payment(p_payment_id uuid)` | Books a payment: the bank side from the payment's bank account or its journal, the third-party side by role, both in the company currency at the payment's rate. Matches nothing. |
+| `post_turnover_tax(p_company_id uuid, p_from date, p_to date, p_date date)` | Posts the tax on turnover of one period as turnover_tax_return() computes it — the expense on the account the regime names, the debt on the account the pack names for what a declaration owes, one entry in the miscellaneous journal through post_entry() — prepares the filing of the period on the regime's form and keeps the computation in turnover_tax_assessments. Once per period: turnover_tax_already_posted. A period that owes nothing posts no entry and still prepares its nil return. |
 | `posted_edit_policy(p_company_id uuid)` | What the country of a company says about a posted document: reversal_only or unpost_if_untouched. A country that says nothing gets reversal_only, the stricter of the two, which every law accepts. The only function that reads the column. |
 | `preferred_languages(p_company_id uuid)` | The languages to try, in order: the signed-in user's own, then the company's, then the one the country pack declares. The particular case of preferred_languages(language, company) where the starting point comes from the session. |
 | `preferred_languages(p_language text, p_company_id uuid)` | The languages to try, in order, from a starting point the caller names: that one, then the company's, then the one the country pack declares. Feed it to label_for(). On a shared installation the company's are left out for a caller who may not know of it (decision 0065). |
@@ -2537,6 +2646,9 @@ Constraints:
 | `territory_within_for_tax(p_code text, p_of text)` | territory_within(), cut at every territory whose outside_parent_tax is true: the walk up territories.parent_code stops there. So ES-CN is within ES-CN and not within ES, and US-CA is within US as before. What post_document() reads to judge a tax's territory conditions. False for a code this table does not carry. |
 | `touch_api_key(p_api_key_id uuid)` | Records that a key was used just now. A key that has never been used, and one that has not been used for a year, are both things an operator should be able to see. |
 | `trial_balance(p_company_id uuid, p_from date, p_to date)` | Opening balance, movements of the period and closing balance per account, posted entries only. |
+| `turnover_of(p_company_id uuid, p_from date, p_to date)` | What the posted sale invoices and credit notes booked between two days put on the income accounts, credit less debit, in the company's currency: the turnover a tax on turnover is computed on. |
+| `turnover_tax_regime_at(p_company_id uuid, p_date date)` | The regime of turnover_tax_regimes the company is under on that day, or null when it is under the ordinary regime of its taxes. |
+| `turnover_tax_return(p_company_id uuid, p_from date, p_to date)` | The tax on turnover of one period of a company under a regime of turnover_tax_regimes, with its arithmetic: the turnover of the period, the window the bracket is read over and its turnover, the months of it the company was active and the base they give, the bracket, its nominal rate and deduction, the effective rate (base x nominal_rate / 100 - deduction) / base, and the tax, the turnover times that rate rounded once at the unit of the form. Reads and writes nothing else. |
 | `undo_leave_line_unnamed(p_line_id uuid)` | Takes back leave_line_unnamed(): the line is proposed a contact again. Returns the record it removed. Needs reconcile.write. Refuses unknown_line, not_allowed and line_not_left_unnamed by name. |
 | `unmapped_accounts(p_company_id uuid, p_statement_code text, p_from date, p_to date)` | Accounts this statement is answerable for that carry a balance and that no rule of it catches. Empty is what makes the statement tie out; a row is an account somebody opened outside the pack. |
 | `unpost_document(p_document_id uuid)` | Puts a posted invoice or credit note back to draft, where its country's posted_edit_policy is unpost_if_untouched and nothing about it has left — every condition is unpost_refusal(), raised by name otherwise, and each refusal says to cancel_document() instead or what to undo first. Records the act in document_unpostings, takes the entry away, gives the number back to the counter where it was the last drawn, and returns the draft — without the number where it was its entry's, and without the booking day and tax point where posting had derived them. Definer, because document_unpostings is written by nobody else; asks documents.post itself. |
@@ -2545,7 +2657,7 @@ Constraints:
 | `unreconcile_batch(p_batch_id uuid)` | Undoes a gesture of reconcile_batch(): every matching of the batch still standing goes through unreconcile(), the last written first, and the batch records when and by whom. Refuses unknown_batch (a batch of another company is one that does not exist), not_allowed (reconcile.write) and batch_already_undone. All or nothing, as the batch was. |
 | `unregister_instance()` | Undoes register_instance(). Opting in is reversible, or it is not a choice. |
 | `unshare_instance()` | Turns the shared setting off: the installation is one customer's again, and creating a company an instance-level act. The installer or an instance administrator. |
-| `upcoming_filings(p_company_id uuid, p_from date, p_to date)` | What this company has to file between two dates: the periods its cadences produce — any whole number of months, anchored on 1 January — the day each is due where the pack says, and the declaration already prepared or sent against it. Read-only; sending the reminder is somebody else's job, because a reminder needs a channel and somebody to operate it. |
+| `upcoming_filings(p_company_id uuid, p_from date, p_to date)` | What this company has to file between two dates: the periods its cadences produce — any whole number of months, anchored on 1 January — the day each is due where the pack says, and the declaration already prepared or sent against it. The periodic return is left out of the periods a regime of turnover_tax_regimes that replaces VAT covers entirely, and the form of that regime is listed instead. Read-only; sending the reminder is somebody else's job, because a reminder needs a channel and somebody to operate it. |
 | `upgrade_filing_proof(p_proof_id uuid, p_proof_base64 text, p_anchor_chain text, p_anchor_height bigint, p_anchor_time timestamp with time zone, p_anchor_reference text)` | Replaces the bytes of a pending proof with the longer proof a calendar returned. With an anchor — the ledger, and a block height or a reference — the proof becomes complete and is frozen. Needs filings.prove. |
 | `use_api_key(p_secret text)` | Presents a machine key for the current transaction: has_capability() answers for it until the transaction ends. Refuses a key that is unknown, withdrawn or expired. Records the use when the transaction may write — a read request runs in a read-only transaction, where the stamp is worth less than the request. |
 | `user_preferences_company_is_known()` | Refuses a preferred company that does not exist or that the person may not know of, with one answer for both (decision 0065). |

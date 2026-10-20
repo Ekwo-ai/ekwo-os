@@ -23,6 +23,7 @@ import {
   normaliseCorporateTax,
   type PackCorporateTax,
 } from './corporate-tax.js';
+import { normaliseTurnoverTax, turnoverTaxReferences, turnoverTaxSources, type PackTurnoverTax } from './turnover-tax.js';
 import { taxCodes, TREATMENT_CODES, type TaxCodes, type VatRegime } from './vat-codes.js';
 import {
   euVatScopeOf,
@@ -1026,6 +1027,8 @@ export interface Pack {
   fixedAssets: PackFixedAssets | null;
   /** `corporate_tax.json`, or null where this country says nothing about the tax on a company's profit. */
   corporateTax: PackCorporateTax | null;
+  /** `turnover_tax.json`, or null where this country has no regime where a tax on turnover replaces VAT. */
+  turnoverTax: PackTurnoverTax | null;
   /** `golden/scenario.json`, or null where the manifest says why there is none. */
   golden: PackGolden | null;
   /** The reason the manifest gives for carrying no golden. Null where it carries one. */
@@ -1364,6 +1367,15 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     }
   }
 
+  // The regimes where a tax on turnover replaces VAT (decision 0080).
+  let turnoverTax: PackTurnoverTax | null = null;
+  if (existsSync(join(root, 'turnover_tax.json'))) {
+    const raw = await readJson(join(root, 'turnover_tax.json'));
+    issues.push(...validate(raw, defs['turnover_tax'] ?? {}, schema, 'turnover_tax.json'));
+    turnoverTax = normaliseTurnoverTax(raw as Record<string, unknown>);
+    issues.push(...turnoverTaxReferences(turnoverTax, charts, reportCode));
+  }
+
   // The golden scenario. Read after the taxes, the charts and the form,
   // because every reference it makes is checked against them.
   const goldenExemption =
@@ -1569,7 +1581,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   const classifications = classificationSchemes(manifest);
   issues.push(...classifications.issues);
 
-  const register = sourceRegister(manifest, charts, taxes, report, statements, analysis, documents, fixedAssets, corporateTax);
+  const register = sourceRegister(manifest, charts, taxes, report, statements, analysis, documents, fixedAssets, corporateTax, turnoverTax);
   issues.push(...register.issues);
   warnings.push(...register.warnings);
   issues.push(...certificationEvidence(manifest, charts));
@@ -1614,6 +1626,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     reportCode,
     fixedAssets,
     corporateTax,
+    turnoverTax,
     golden,
     goldenExemption,
     checksum: await checksum(root),
@@ -1663,6 +1676,7 @@ function sourceRegister(
   documents: PackDocumentRules,
   fixedAssets: PackFixedAssets | null,
   corporateTax: PackCorporateTax | null,
+  turnoverTax: PackTurnoverTax | null,
 ): { sources: PackSource[]; issues: Issue[]; warnings: string[] } {
   const issues: Issue[] = [];
   const warnings: string[] = [];
@@ -1794,6 +1808,7 @@ function sourceRegister(
       kind: 'other' as const,
     })),
     ...corporateTaxSources(corporateTax).map((reference) => ({ ...reference, kind: 'other' as const })),
+    ...turnoverTaxSources(turnoverTax).map((reference) => ({ ...reference, kind: 'other' as const })),
   ];
 
   for (const reference of references) {

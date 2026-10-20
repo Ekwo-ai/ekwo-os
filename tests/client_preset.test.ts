@@ -973,6 +973,12 @@ describe('a client writes nothing else — by the function', () => {
         params: [mine.filedFilingId],
       },
       'public.settle_filing': { sql: `select settle_filing($1)`, params: [mine.filedFilingId] },
+      // Posting the tax on turnover of a period writes an entry and prepares a
+      // filing: filings.write, and posting.
+      'public.post_turnover_tax': {
+        sql: `select post_turnover_tax($1, $2::date, $3::date)`,
+        params: [mine.companyId, FROM, TO],
+      },
       'public.supersede_filing': { sql: `select supersede_filing($1)`, params: [mine.filedFilingId] },
       'public.reopen_filing': { sql: `select reopen_filing($1)`, params: [mine.rejectedFilingId] },
       'public.lock_filed_period': { sql: `select lock_filed_period($1)`, params: [mine.filedFilingId] },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.16.0",
-  "migration": "20261020080000",
+  "migration": "20261020090000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1262,6 +1262,39 @@
           {
             "name": "version",
             "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "company_tax_regimes",
+        "columns": [
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "regime_code",
+            "type": "text"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "valid_from",
+            "type": "date"
+          },
+          {
+            "name": "valid_to",
+            "type": "date"
           }
         ]
       },
@@ -4175,6 +4208,177 @@
         ]
       },
       {
+        "name": "turnover_tax_assessments",
+        "columns": [
+          {
+            "name": "base",
+            "type": "numeric"
+          },
+          {
+            "name": "bracket_sequence",
+            "type": "integer"
+          },
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "deduction",
+            "type": "numeric(18,2)"
+          },
+          {
+            "name": "effective_rate",
+            "type": "numeric"
+          },
+          {
+            "name": "entry_id",
+            "type": "uuid"
+          },
+          {
+            "name": "filing_id",
+            "type": "uuid"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "nominal_rate",
+            "type": "numeric(9,4)"
+          },
+          {
+            "name": "period_end",
+            "type": "date"
+          },
+          {
+            "name": "period_start",
+            "type": "date"
+          },
+          {
+            "name": "regime_code",
+            "type": "text"
+          },
+          {
+            "name": "tax",
+            "type": "numeric(18,2)"
+          },
+          {
+            "name": "turnover",
+            "type": "numeric(18,2)"
+          },
+          {
+            "name": "window_months_counted",
+            "type": "integer"
+          },
+          {
+            "name": "window_turnover",
+            "type": "numeric(18,2)"
+          }
+        ]
+      },
+      {
+        "name": "turnover_tax_brackets",
+        "columns": [
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "deduction",
+            "type": "numeric(18,2)"
+          },
+          {
+            "name": "legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "nominal_rate",
+            "type": "numeric(9,4)"
+          },
+          {
+            "name": "regime_code",
+            "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "integer"
+          },
+          {
+            "name": "source_key",
+            "type": "text"
+          },
+          {
+            "name": "up_to",
+            "type": "numeric(18,2)"
+          },
+          {
+            "name": "valid_from",
+            "type": "date"
+          },
+          {
+            "name": "valid_to",
+            "type": "date"
+          }
+        ]
+      },
+      {
+        "name": "turnover_tax_regimes",
+        "columns": [
+          {
+            "name": "code",
+            "type": "text"
+          },
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "expense_account_code",
+            "type": "text"
+          },
+          {
+            "name": "legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "name",
+            "type": "text"
+          },
+          {
+            "name": "replaces",
+            "type": "tax_kind[]"
+          },
+          {
+            "name": "report_code",
+            "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "integer"
+          },
+          {
+            "name": "short_window",
+            "type": "text"
+          },
+          {
+            "name": "source_key",
+            "type": "text"
+          },
+          {
+            "name": "window_includes_period",
+            "type": "boolean"
+          },
+          {
+            "name": "window_months",
+            "type": "smallint"
+          }
+        ]
+      },
+      {
         "name": "user_preferences",
         "columns": [
           {
@@ -4538,6 +4742,10 @@
         "arguments": ""
       },
       {
+        "name": "company_tax_regimes_check",
+        "arguments": ""
+      },
+      {
         "name": "confirm_contact",
         "arguments": "p_transaction_id uuid, p_contact_id uuid"
       },
@@ -4700,6 +4908,10 @@
       {
         "name": "documents_refresh_totals",
         "arguments": "p_document_id uuid"
+      },
+      {
+        "name": "documents_refuse_replaced_tax",
+        "arguments": ""
       },
       {
         "name": "ec_sales_list",
@@ -5162,6 +5374,10 @@
         "arguments": "p_payment_id uuid"
       },
       {
+        "name": "post_turnover_tax",
+        "arguments": "p_company_id uuid, p_from date, p_to date, p_date date"
+      },
+      {
         "name": "posted_edit_policy",
         "arguments": "p_company_id uuid"
       },
@@ -5443,6 +5659,18 @@
       },
       {
         "name": "trial_balance",
+        "arguments": "p_company_id uuid, p_from date, p_to date"
+      },
+      {
+        "name": "turnover_of",
+        "arguments": "p_company_id uuid, p_from date, p_to date"
+      },
+      {
+        "name": "turnover_tax_regime_at",
+        "arguments": "p_company_id uuid, p_date date"
+      },
+      {
+        "name": "turnover_tax_return",
         "arguments": "p_company_id uuid, p_from date, p_to date"
       },
       {
@@ -5729,6 +5957,16 @@
       {
         "table": "company_packs",
         "name": "company_packs_write",
+        "command": "all"
+      },
+      {
+        "table": "company_tax_regimes",
+        "name": "company_tax_regimes_select",
+        "command": "select"
+      },
+      {
+        "table": "company_tax_regimes",
+        "name": "company_tax_regimes_write",
         "command": "all"
       },
       {
@@ -6092,6 +6330,26 @@
         "command": "select"
       },
       {
+        "table": "turnover_tax_assessments",
+        "name": "turnover_tax_assessments_insert",
+        "command": "insert"
+      },
+      {
+        "table": "turnover_tax_assessments",
+        "name": "turnover_tax_assessments_select",
+        "command": "select"
+      },
+      {
+        "table": "turnover_tax_brackets",
+        "name": "turnover_tax_brackets_select",
+        "command": "select"
+      },
+      {
+        "table": "turnover_tax_regimes",
+        "name": "turnover_tax_regimes_select",
+        "command": "select"
+      },
+      {
         "table": "user_preferences",
         "name": "user_preferences_own",
         "command": "all"
@@ -6255,6 +6513,18 @@
         "name": "company_packs_audit"
       },
       {
+        "table": "company_tax_regimes",
+        "name": "company_tax_regimes_audit"
+      },
+      {
+        "table": "company_tax_regimes",
+        "name": "company_tax_regimes_check"
+      },
+      {
+        "table": "company_tax_regimes",
+        "name": "company_tax_regimes_set_updated_at"
+      },
+      {
         "table": "contact_merges",
         "name": "contact_merges_absorbed_id_not_merged"
       },
@@ -6397,6 +6667,10 @@
       {
         "table": "documents",
         "name": "documents_refresh_payment_state"
+      },
+      {
+        "table": "documents",
+        "name": "documents_refuse_replaced_tax"
       },
       {
         "table": "documents",
@@ -7447,6 +7721,22 @@
           ]
         },
         {
+          "name": "company_tax_regimes",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
           "name": "contact_merges",
           "anon": [],
           "authenticated": [
@@ -8022,6 +8312,38 @@
         },
         {
           "name": "territories",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "turnover_tax_assessments",
+          "anon": [],
+          "authenticated": [
+            "insert",
+            "select"
+          ],
+          "service_role": [
+            "insert",
+            "select"
+          ]
+        },
+        {
+          "name": "turnover_tax_brackets",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "turnover_tax_regimes",
           "anon": [],
           "authenticated": [
             "select"
@@ -8895,6 +9217,14 @@
           ]
         },
         {
+          "name": "company_tax_regimes_check",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "confirm_contact",
           "arguments": "p_transaction_id uuid, p_contact_id uuid",
           "anon": [],
@@ -9284,6 +9614,14 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "documents_refuse_replaced_tax",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "ec_sales_list",
@@ -10513,6 +10851,17 @@
           ]
         },
         {
+          "name": "post_turnover_tax",
+          "arguments": "p_company_id uuid, p_from date, p_to date, p_date date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "posted_edit_policy",
           "arguments": "p_company_id uuid",
           "anon": [],
@@ -11240,6 +11589,39 @@
         },
         {
           "name": "trial_balance",
+          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "turnover_of",
+          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "turnover_tax_regime_at",
+          "arguments": "p_company_id uuid, p_date date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "turnover_tax_return",
           "arguments": "p_company_id uuid, p_from date, p_to date",
           "anon": [],
           "authenticated": [

@@ -4235,6 +4235,232 @@
         "type": "string",
         "pattern": "^[A-Za-z][A-Za-z0-9_]{0,59}$"
       }
+    },
+    "turnover_tax": {
+      "type": "object",
+      "description": "packs/<cc>/turnover_tax.json — the regimes of this country where one tax on turnover replaces VAT: the kinds of tax each replaces, the window its bracket is read over, the account its tax is an expense on, the form it is declared on and its table of brackets. The tax of a period is its turnover x (base x rate / 100 - deduction) / base, the base being the turnover of the window. Data only: thresholds, rates and deductions, dated and cited, and no expression. Decision 0080.",
+      "required": [
+        "regimes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "regimes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "name",
+              "replaces",
+              "expense_account",
+              "legal_reference",
+              "report",
+              "brackets"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "$ref": "#/$defs/code",
+                "description": "Immutable once published: a company declares its regime by it."
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "replaces": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "vat",
+                    "gst",
+                    "sales_tax",
+                    "withholding",
+                    "other"
+                  ]
+                },
+                "description": "The kinds of tax a company under the regime neither charges nor recovers: a document line carrying one is refused at posting."
+              },
+              "window": {
+                "type": "object",
+                "required": [
+                  "months"
+                ],
+                "additionalProperties": false,
+                "description": "The trailing window the bracket is read over. Left out: the bracket is read on the turnover of the period itself.",
+                "properties": {
+                  "months": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 60
+                  },
+                  "includes_period": {
+                    "type": "boolean",
+                    "description": "The window ends with the period declared. Default false: it ends with the month before."
+                  },
+                  "short": {
+                    "enum": [
+                      "annualise",
+                      "as_is"
+                    ],
+                    "description": "What the window of a company active for fewer months becomes: annualise (default) or as_is."
+                  }
+                }
+              },
+              "expense_account": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The account the tax is an expense on, by its code in every chart of the pack."
+              },
+              "legal_reference": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The article this comes from, cited as the country cites it."
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              },
+              "report": {
+                "type": "object",
+                "required": [
+                  "code",
+                  "name",
+                  "periods",
+                  "valid_from",
+                  "legal_reference"
+                ],
+                "additionalProperties": false,
+                "description": "The form the tax is declared on, apart from the periodic return of tax_report.json.",
+                "properties": {
+                  "code": {
+                    "$ref": "#/$defs/code"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "periods": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "enum": [
+                        "month",
+                        "bimonth",
+                        "quarter",
+                        "four_month",
+                        "half_year",
+                        "year"
+                      ]
+                    }
+                  },
+                  "period_default": {
+                    "enum": [
+                      "month",
+                      "bimonth",
+                      "quarter",
+                      "four_month",
+                      "half_year",
+                      "year"
+                    ]
+                  },
+                  "valid_from": {
+                    "type": "string",
+                    "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                  },
+                  "legal_reference": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The article this comes from, cited as the country cites it."
+                  },
+                  "deadline": {
+                    "type": "object",
+                    "required": [
+                      "rule",
+                      "legal_reference"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "rule": {
+                        "enum": [
+                          "day_of_month_after_period",
+                          "last_day_of_month_after_period"
+                        ]
+                      },
+                      "day": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 31
+                      },
+                      "legal_reference": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "The article this comes from, cited as the country cites it."
+                      },
+                      "source": {
+                        "$ref": "#/$defs/source_ref"
+                      }
+                    }
+                  }
+                }
+              },
+              "brackets": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "valid_from",
+                    "rate",
+                    "legal_reference"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "valid_from": {
+                      "type": "string",
+                      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                    },
+                    "valid_to": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                    },
+                    "up_to": {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,4})?$",
+                      "description": "The highest base the bracket takes, inclusive, as a decimal string. Left out on the last bracket."
+                    },
+                    "rate": {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,4})?$",
+                      "description": "The nominal rate, in percent, as a decimal string."
+                    },
+                    "deduction": {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,4})?$",
+                      "description": "Subtracted from base x rate / 100, as a decimal string. Default 0."
+                    },
+                    "legal_reference": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "The article this comes from, cited as the country cites it."
+                    },
+                    "source": {
+                      "$ref": "#/$defs/source_ref"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

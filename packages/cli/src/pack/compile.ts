@@ -24,6 +24,7 @@
 import { describeCertification } from './certification.js';
 import { finalCloseOf, sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackSource, type PackStatement, type PackTax } from './read.js';
 import { compileCorporateTaxSection } from './corporate-tax.js';
+import { compileTurnoverTaxSection } from './turnover-tax.js';
 import { compileAnalysis, compileFrameworkAnalysis } from './analysis.js';
 
 /**
@@ -90,6 +91,7 @@ export function compilePack(pack: Pack): string {
   out.push(...postings(pack, country));
   out.push(...classifications(pack, country));
   out.push(...taxReport(pack, country));
+  if (pack.turnoverTax !== null) out.push(...compileTurnoverTaxSection(pack.turnoverTax, country));
   out.push(...statements(pack.statements, pack.labels, country));
   out.push(...compileAnalysis(pack.analysis, country));
   out.push(...defaults(pack, country));

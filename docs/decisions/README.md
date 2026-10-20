@@ -58,6 +58,7 @@ consequence.
 - [0021](0021-cash-basis-vat-and-realised-exchange-differences.md) — Cash-basis VAT waits; exchange differences are realised
 - [0022](0022-a-price-that-holds-its-tax.md) — A price that holds its tax is converted per group
 - [0077](0077-a-tax-computed-inside-its-own-base.md) — A tax computed inside its own base is one key of the tax
+- [0080](0080-a-tax-on-turnover-replaces-vat.md) — A regime where one tax on turnover replaces VAT
 - [0079](0079-tax-on-a-presumed-base.md) — A tax collected for the next links of the chain, on a presumed base (proposed)
 - [0023](0023-declaration-boxes-are-data.md) — Declaration boxes are data, with no expression language
 - [0024](0024-a-tax-follows-the-territory-of-the-parties.md) — A tax follows the territory of the parties

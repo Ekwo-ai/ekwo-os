@@ -333,6 +333,10 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
         [
           // A disposal posts to the ledger under rules a pack may not carry.
           'fixed_assets.disposals',
+          // A regime of a tax on turnover is pack data no pack carries yet
+          // (decision 0080); tests/turnover_tax_regime.test.ts exercises it.
+          'public.company_tax_regimes',
+          'public.turnover_tax_assessments',
           ...(empty.includes('public.company_filing_periods') ? ['public.company_filing_periods'] : []),
         ].sort(),
       );

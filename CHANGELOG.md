@@ -39,7 +39,7 @@ somewhere has already run it.
   the period, zero where nothing went through. Both read what `general_ledger()`
   reads, under the same row level security, and add nothing up on the client:
   the MCP tool `journal_book` returns the lines and the totals as the database
-  gives them (migration `20261020080000`).
+  gives them (migration `20261020090000`).
 - **A tax computed inside its own base** (socle migration `20261020072000`,
   decision 0077). A tax declares `base_includes_tax: true` in `taxes.json`
   and keeps the rate of its law: on a net amount N the tax is
@@ -57,6 +57,22 @@ somewhere has already run it.
   `document_lines.attributes`, pre-filled from `products.attributes`, and the
   database refuses one off its pattern, `classification_code_invalid`. No pack
   declares one yet: every seed is unchanged.
+
+- **A regime where one tax on turnover replaces VAT** (socle migration
+  `20261020090000`, decision 0080). A pack declares its regimes in
+  `turnover_tax.json` — the kinds of tax each replaces, its form, the account
+  its tax is an expense on, a trailing window and a table of brackets
+  (threshold, nominal rate, deduction; dated and cited, no expression). A
+  company declares one in `company_tax_regimes` by whole financial years; a
+  change in the middle of a year is refused, `regime_change_mid_year`. Under
+  it a line carrying a replaced tax is refused at posting,
+  `tax_replaced_by_regime`. `turnover_tax_return()` computes the tax of a
+  period from the ledger's turnover, credit notes included, with the window
+  annualised for a company active for fewer months; `post_turnover_tax()`
+  posts it, prepares the filing and keeps the computation in
+  `turnover_tax_assessments`; `upcoming_filings()` lists the regime's form in
+  the place of the periodic VAT return. No pack carries the file yet: every
+  seed and every golden year is unchanged.
 
 ## [0.16.0] — 2026-10-20
 

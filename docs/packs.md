@@ -22,6 +22,7 @@ packs/be/
 ├── analysis.json      which accounts make the revenue, the equity, the assets… of an analysis
 ├── fixed_assets.json  the section of the fixed assets module, where the country has one
 ├── corporate_tax.json the section of the corporate income tax module, where the country has one
+├── turnover_tax.json  the regimes where a tax on turnover replaces VAT, where the country has one
 ├── golden/
 │   ├── scenario.json  one year of books: documents, payments, the periods filed
 │   ├── vat_return.json    what the declaration comes to, period by period
@@ -1816,6 +1817,64 @@ read. It is also
 worth knowing what the balance sheet of an open year looks like — the result
 is not on it until `close_fiscal_year()` puts it there, so assets exceed
 liabilities by exactly the result of the income statement, in every country.
+
+## A tax on turnover in the place of VAT: `turnover_tax.json`
+
+A country that puts small companies under a regime where one tax on what they
+sold replaces VAT declares each regime in `turnover_tax.json`
+([decision 0080](decisions/0080-a-tax-on-turnover-replaces-vat.md)):
+
+```json
+{
+  "regimes": [
+    {
+      "code": "XX-TURNOVER",
+      "name": "The name of the regime",
+      "replaces": ["vat"],
+      "window": { "months": 12, "includes_period": false, "short": "annualise" },
+      "expense_account": "the code of an expense account of every chart",
+      "legal_reference": "The article that sets the regime",
+      "source": "a-key-of-the-register",
+      "report": {
+        "code": "XX-TURNOVER-RETURN",
+        "name": "The name of its return",
+        "periods": ["month"],
+        "period_default": "month",
+        "valid_from": "the first day of the form",
+        "legal_reference": "The article that sets the return",
+        "deadline": { "rule": "day_of_month_after_period", "day": 20, "legal_reference": "…" }
+      },
+      "brackets": [
+        { "valid_from": "…", "up_to": "180000.00", "rate": "4", "legal_reference": "…" },
+        { "valid_from": "…", "rate": "7.3", "deduction": "5940.00", "legal_reference": "…" }
+      ]
+    }
+  ]
+}
+```
+
+The tax of a period is its turnover × (base × `rate` / 100 − `deduction`) /
+base. The base is the turnover of the window — the `months` before the period,
+or ending with it under `includes_period` — and without a `window`, the
+period's own turnover. A bracket takes the bases up to its `up_to`, inclusive;
+the last one has none. A flat rate is one bracket with no `up_to` and no
+`deduction`. Amounts and rates are decimal strings, and there is no
+expression: `ekwo pack check` refuses a table whose thresholds do not rise or
+that does not end with exactly one open bracket, an `expense_account` a chart
+lacks, and a `report` that is the periodic return of `tax_report.json`.
+
+`short` says what the window of a company active for fewer months than it
+counts becomes: `annualise` (the turnover of the months it has, times the
+window's months over their number; in its first period, the period's own
+turnover annualised) or `as_is`.
+
+A company declares its regime in `company_tax_regimes`, by whole financial
+years; under it, a document line carrying a tax of a kind in `replaces` is
+refused at posting. `turnover_tax_return()` computes a period,
+`post_turnover_tax()` posts it against `defaults.roles.tax_payable` and
+prepares the filing of the regime's form, and `upcoming_filings()` lists that
+form in the place of the periodic return. A pack without the file says
+nothing in its seed.
 
 ## The corporate tax section
 
