@@ -12,6 +12,7 @@ module.
 | `einvoicing` | [`einvoicing`](einvoicing/) | `einvoicing` | no: it issues the electronic file of a posted sale and records every sending | the profile the pack declares |
 | `crm` | [`crm`](crm/) | `crm` | no: it keeps the relationship on the socle's contacts, and a won deal makes its party a customer | none |
 | `contracts` | [`contracts`](contracts/) | `contracts` | no: its schedules issue draft documents of the socle, booked by `post_document()` only where a schedule says `auto_post` | none |
+| `consolidation` | [`consolidation`](consolidation/) | `consolidation` | no: it reads the members' books under their own row level security and writes nothing in them | none |
 
 `schema/module.1.json` is the published shape of a `module.json`, and
 `ekwo module list` refuses one that does not match it.

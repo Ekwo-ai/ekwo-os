@@ -8,8 +8,9 @@ posted sale and every time it was sent; `crm` keeps the record of a
 relationship — cards, segments, pipelines, deals and activities — on the
 socle's own contacts; `contracts` keeps what a company agreed with a party of
 its books, and issues the invoices its schedules say are due as draft
-documents of the socle. The socle lives in its own schema, `ekwo`, and knows nothing about
-any of them.
+documents of the socle; `consolidation` keeps groups of companies and who is
+in each, for which period and at which percentage of interest. The socle lives
+in its own schema, `ekwo`, and knows nothing about any of them.
 
 The decision behind this, with what it rules out, is in
 [decision 0051](decisions/0051-a-module-has-its-own-schema.md). This document is how to write one.
@@ -65,6 +66,7 @@ one of them.
 | `einvoicing` | `einvoicing` | none of its own: the `einvoicing` section every pack already carries, read where the socle compiled it | no | `security definer` functions, and no role; the file itself is written in TypeScript, by a brick |
 | `crm` | `crm` | none | no — winning a deal changes the socle's contact, never the ledger | clients, under its policies, directly or through its `security invoker` functions |
 | `contracts` | `contracts` | none | no — it writes draft documents of the socle, under the socle's policies, and asks `post_document()` to book one only where a schedule says `auto_post` | clients, under its policies, directly or through its `security invoker` functions |
+| `consolidation` | `consolidation` | none | no — it reads the members' books, never writes in them | clients, under its policies, directly or through its `security invoker` functions; a trigger holds who may put a company in a group |
 
 `fixed-assets` has country data and posts. `budgets` has neither.
 `corporate-tax` — code `tax` — has the most country data and posts one
@@ -85,6 +87,11 @@ rows with every other reference when two contacts turn out to be one party.
 document of the socle — a draft sales or purchase invoice written in
 `ekwo.documents` as a person writes one, idempotent because the socle's
 unique `client_ref` refuses a second document for one period.
+
+`consolidation` is the first whose rows span companies: a group belongs to its
+parent, and the books of every member are read with what the caller holds in
+that member — the module grants nothing on them
+([decision 0092](decisions/0092-a-group-is-owned-by-its-parent.md)).
 
 The folder under `modules/` is named after what the module is, lower case with
 hyphens — `fixed-assets` — and need not be the code. `ekwo module` takes
