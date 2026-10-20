@@ -136,7 +136,7 @@ export async function readInvoiceTheme(backend: Backend, companyId: string): Pro
   return {
     ...(typeof accent === 'string' ? { accent } : {}),
     ...(side === 'left' || side === 'right' ? { logoPosition: side } : {}),
-    ...(typeface === 'classic' || typeface === 'gustave' ? { typeface } : {}),
+    ...(typeface === 'classic' || typeface === 'elegant' ? { typeface } : {}),
   };
 }
 

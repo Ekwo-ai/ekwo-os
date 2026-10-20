@@ -285,11 +285,11 @@ export interface InvoiceTheme {
   headingFont?: ExtraFont;
   /**
    * A pair of typefaces the package embeds, chosen by name. `classic` (the
-   * default): Noto Sans everywhere. `gustave`: Inter for the text and the
+   * default): Noto Sans everywhere. `elegant`: Inter for the text and the
    * figures, Fraunces for the title, the names and the headings. `font` and
    * `headingFont`, where given, take the place of the pair's.
    */
-  typeface?: 'classic' | 'gustave';
+  typeface?: 'classic' | 'elegant';
   /** `left`: the logo above the seller's address (default). `right`: above the title, the seller's name on the left. */
   logoPosition?: 'left' | 'right';
 }

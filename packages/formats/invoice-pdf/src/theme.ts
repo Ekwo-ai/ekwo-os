@@ -21,7 +21,7 @@ export const DEFAULT_THEME = {
 } as const satisfies Required<Omit<InvoiceTheme, 'headingFont'>>;
 
 /** The typefaces a theme may name, each a text font and a heading font, or null for Noto Sans. */
-export const TYPEFACES = ['classic', 'gustave'] as const;
+export const TYPEFACES = ['classic', 'elegant'] as const;
 
 function typefaceFonts(name: (typeof TYPEFACES)[number]): { font: ExtraFont | null; heading: ExtraFont | null } {
   if (name === 'classic') return { font: null, heading: null };

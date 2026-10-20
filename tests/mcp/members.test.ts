@@ -229,9 +229,9 @@ describe('the company profile through the server', () => {
     expect(input.safeParse({ company_id: fx.companyId, invoice_logo_position: 'center' }).success).toBe(false);
     expect(input.safeParse({ company_id: fx.companyId, invoice_typeface: 'serif' }).success).toBe(false);
     const typeface = record(
-      await writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId, invoice_typeface: 'gustave' }),
+      await writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId, invoice_typeface: 'elegant' }),
     );
-    expect(record(typeface['company'])).toMatchObject({ invoice_typeface: 'gustave' });
+    expect(record(typeface['company'])).toMatchObject({ invoice_typeface: 'elegant' });
     await writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId, invoice_typeface: null });
 
     const reset = record(

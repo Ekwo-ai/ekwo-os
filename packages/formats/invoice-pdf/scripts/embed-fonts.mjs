@@ -9,7 +9,7 @@
 // Hinted, and not unhinted: pdf-lib cuts a subset out of the hinted build that
 // every viewer draws, and out of the unhinted one a subset whose glyphs are
 // empty in some of them. Beside them, the compact sRGB profile of https://github.com/saucecontrol/Compact-ICC-Profiles
-// (profiles/sRGB-v2-micro.icc, CC0). The typeface `gustave` adds Inter 4.1
+// (profiles/sRGB-v2-micro.icc, CC0). The typeface `elegant` adds Inter 4.1
 // (https://github.com/rsms/inter/releases/tag/v4.1, extras/ttf/) and the
 // static SemiBold of Fraunces the Google Fonts API serves (v38, opsz 9..144).
 // Inter is taken from its own release, and not from the Google Fonts API: the

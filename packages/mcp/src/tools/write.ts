@@ -871,10 +871,10 @@ export const UpdateCompanyProfileInput = z.object({
       "The pattern of its document numbers: {CODE} (each journal's prefix, required), {YYYY} or {YY}, {MM}, and {N...} padded to as many N as are written, e.g. {CODE}-{YYYY}-{NNNNNN}. A pattern with the year restarts each year. Changing it on the way continues the series where it stood. Null puts back the country pack's.",
     ),
   invoice_typeface: z
-    .enum(['classic', 'gustave'])
+    .enum(['classic', 'elegant'])
     .nullable()
     .optional()
-    .describe('The typefaces of its invoice PDF: classic (Noto Sans) or gustave (Inter, with Fraunces for the title, the names and the headings). Null puts back the default, classic.'),
+    .describe('The typefaces of its invoice PDF: classic (Noto Sans) or elegant (Inter, with Fraunces for the title, the names and the headings). Null puts back the default, classic.'),
 });
 
 export async function updateCompanyProfile(

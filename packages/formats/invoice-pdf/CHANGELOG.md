@@ -7,7 +7,7 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Added
-- **A second pair of typefaces, `gustave`.** `theme.typeface: 'gustave'`
+- **A second pair of typefaces, `elegant`.** `theme.typeface: 'elegant'`
   draws the text and every figure in Inter 4.1 and the title, the names, the
   headings of the sections and the labels of the totals in Fraunces
   SemiBold, both embedded under the SIL Open Font License; `classic` (the

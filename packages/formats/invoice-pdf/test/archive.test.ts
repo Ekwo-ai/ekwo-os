@@ -159,8 +159,8 @@ describe('the theme', () => {
     for (const name of names) expect(name).toMatch(/^\/NotoSans-Bold-/);
   });
 
-  it('draws the gustave typeface in Inter, its title, names and headings in Fraunces', async () => {
-    const rendered = await renderInvoicePdf(englishInvoice({ logo: pngLogo() }), { date, theme: { typeface: 'gustave' } });
+  it('draws the elegant typeface in Inter, its title, names and headings in Fraunces', async () => {
+    const rendered = await renderInvoicePdf(englishInvoice({ logo: pngLogo() }), { date, theme: { typeface: 'elegant' } });
     const names = await fontNames(rendered.file);
     expect(names.some((name) => /^\/[A-Z]{6}\+Inter-Regular|^\/Inter-Regular-/.test(name) || name.includes('Inter-Regular'))).toBe(true);
     expect(names.some((name) => name.includes('Inter-Bold'))).toBe(true);
@@ -168,20 +168,20 @@ describe('the theme', () => {
     expect(names.some((name) => name.includes('NotoSans'))).toBe(false);
   });
 
-  it('prints the same words in the gustave typeface as in the classic one', async () => {
+  it('prints the same words in the elegant typeface as in the classic one', async () => {
     const classic = await pdfText((await renderInvoicePdf(englishInvoice(), { date })).file);
-    const gustave = await pdfText((await renderInvoicePdf(englishInvoice(), { date, theme: { typeface: 'gustave' } })).file);
-    expect(gustave).toEqual(classic);
+    const elegant = await pdfText((await renderInvoicePdf(englishInvoice(), { date, theme: { typeface: 'elegant' } })).file);
+    expect(elegant).toEqual(classic);
   });
 
   it('draws in Inter what Fraunces lacks, a Greek name among them', async () => {
-    const rendered = await renderInvoicePdf(greekInvoice(), { labels: GREEK_LABELS, date, theme: { typeface: 'gustave' } });
+    const rendered = await renderInvoicePdf(greekInvoice(), { labels: GREEK_LABELS, date, theme: { typeface: 'elegant' } });
     expect(rendered.pageCount).toBe(1);
   });
 
   it('lets a caller’s font take the place of the pair’s', async () => {
     const font = { regular: decodeBase64(NOTO_SANS_BOLD) };
-    const names = await fontNames((await renderInvoicePdf(englishInvoice(), { date, theme: { typeface: 'gustave', font } })).file);
+    const names = await fontNames((await renderInvoicePdf(englishInvoice(), { date, theme: { typeface: 'elegant', font } })).file);
     expect(names.some((name) => name.includes('Inter'))).toBe(false);
     expect(names.some((name) => name.includes('Fraunces'))).toBe(true);
   });

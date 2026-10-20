@@ -11,11 +11,11 @@ somewhere has already run it.
 
 ### Added
 
-- **An invoice wears the typeface of its company** (migration
-  `20261020161000`). `companies.invoice_typeface`, `classic` or `gustave`,
+- **An invoice wears the typeface of its company** (migrations
+  `20261020161000` and `20261020180000`). `companies.invoice_typeface`, `classic` or `elegant`,
   null being `classic`, is read by `readInvoiceTheme()` for `ekwo doc pdf`
   and `render_invoice_pdf`, and written through `update_company_profile`.
-  `@ekwo-ai/invoice-pdf` embeds the `gustave` pair: Inter for the text and
+  `@ekwo-ai/invoice-pdf` embeds the `elegant` pair: Inter for the text and
   the figures, Fraunces for the title, the names and the headings.
 - **A company numbers its documents its own way** (migration
   `20261020160000`, decision 0082). `companies.number_format` is the
