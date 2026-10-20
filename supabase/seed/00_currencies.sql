@@ -115,3 +115,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('BRL', 'Brazilian real', 'R$', 2)
 on conflict (code) do nothing;
+
+-- Turkmen manat, ISO 4217 list one, two decimals (packs/tm/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('TMT', 'Turkmen manat', 'm', 2)
+on conflict (code) do nothing;

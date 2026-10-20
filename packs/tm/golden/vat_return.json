@@ -1,0 +1,69 @@
+{
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31",
+      "boxes": {
+        "TAXABLE:base": "50000.00",
+        "TAXABLE:tax": "7500.00",
+        "ZERO:base": "20000.00",
+        "TURNOVER:total": "70000.00",
+        "INPUT:base": "30000.00",
+        "INPUT:tax": "4500.00",
+        "CREDIT:total": "4500.00",
+        "PAYABLE:total": "3000.00"
+      }
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28",
+      "boxes": {
+        "TAXABLE:base": "22500.00",
+        "TAXABLE:tax": "3375.00",
+        "EXEMPT:base": "3000.00",
+        "TURNOVER:total": "25500.00",
+        "INPUT:base": "10000.00",
+        "INPUT:tax": "1500.00",
+        "CREDIT:total": "1500.00",
+        "PAYABLE:total": "1875.00"
+      }
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31",
+      "boxes": {
+        "INPUT:base": "40000.00",
+        "INPUT:tax": "6000.00",
+        "CREDIT:total": "6000.00",
+        "EXCESS:total": "6000.00"
+      }
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30",
+      "boxes": {
+        "TAXABLE:base": "20000.00",
+        "TAXABLE:tax": "3000.00",
+        "ZERO:base": "15000.00",
+        "TURNOVER:total": "35000.00",
+        "INPUT:base": "8000.00",
+        "INPUT:tax": "1200.00",
+        "CREDIT:total": "1200.00",
+        "PAYABLE:total": "1800.00"
+      }
+    },
+    {
+      "code": "2026-05",
+      "from": "2026-05-01",
+      "to": "2026-05-31",
+      "boxes": {
+        "EXEMPT:base": "12000.00",
+        "TURNOVER:total": "12000.00"
+      }
+    }
+  ]
+}
