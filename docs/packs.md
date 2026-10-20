@@ -442,6 +442,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`th`](../packs/th/) | ประเทศไทย | `56_pack_th.sql` | th, en | `community` |
 | [`tn`](../packs/tn/) | Tunisie | `85_pack_tn.sql` | fr | `community` |
 | [`tr`](../packs/tr/) | Türkiye | `82_pack_tr.sql` | tr | `community` |
+| [`tt`](../packs/tt/) | Trinidad and Tobago | `405_pack_tt.sql` | en | `community` |
 | [`tw`](../packs/tw/) | 臺灣 | `53_pack_tw.sql` | zh, en | `community` |
 | [`tz`](../packs/tz/) | Tanzania | `120_pack_tz.sql` | en | `community` |
 | [`ua`](../packs/ua/) | Україна | `57_pack_ua.sql` | uk, en | `community` |

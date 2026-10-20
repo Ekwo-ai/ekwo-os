@@ -1,0 +1,279 @@
+[
+  {
+    "code": "TT-S-125",
+    "name": "Sale, VAT 12.5 %",
+    "description": "A commercial supply made in Trinidad and Tobago by a registered person, standard-rated",
+    "kind": "vat",
+    "rate": 12.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Value Added Tax Act, s. 6 and s. 7(1) — value added tax is charged on the commercial supply within Trinidad and Tobago of goods or prescribed services by a registered person, at twelve and one-half per cent or such other rate as the Minister by Order specifies (the Inland Revenue Division's page gives 12.5 %); s. 33 — output tax is the value of the supply multiplied by the rate; s. 32 — the tax payable for a period is the output tax less the allowable input tax. The base posts to box 1 net of the tax, the tax to box 5 (box numbers are this pack's, see tax_report.json). valid_from is 1 January 1990, the appointed day of s. 6 (L.N. 153/1989 as noted in the Act); the rate of 12.5 % was not traced through the amendments to the Act, and a company with books dated before the current rate was set should check with its accountant. Only 'prescribed services' are taxed: whether a service is prescribed is the user's to check.",
+    "source": "tt-vat-act",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "TT-S-125-INC",
+    "name": "Retail sale, VAT 12.5 %, the price includes the tax",
+    "description": "A standard-rated sale whose price already holds the VAT",
+    "kind": "vat",
+    "rate": 12.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Value Added Tax Act, s. 7(1) at 12.5 % and s. 18 (value of a supply) — what price_include does: 112.50 holds 100.00 and 12.50. Same boxes as TT-S-125. How the Act values a supply whose consideration includes the tax was not traced to a provision; the arithmetic is the tax fraction of the rate.",
+    "source": "tt-vat-act",
+    "vat_category": "S",
+    "sequence": 20,
+    "price_include": true,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1"
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2101",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "TT-S-0",
+    "name": "Zero-rated supply (export)",
+    "description": "Goods supplied to a destination outside the territory of Trinidad and Tobago, or a service paid for in foreign currency to a recipient outside the country, zero-rated",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Value Added Tax Act, s. 8 and Schedule 2, item 15 (any good supplied to a destination outside the territory of Trinidad and Tobago) and item 17 (any service supplied for a consideration payable in a currency other than that of Trinidad and Tobago to a recipient who is not within the country when the service is performed); s. 8(3) — the rate at which tax is regarded as being charged is nil. A zero-rated supply is a commercial supply: the input tax of what produces it stays deductible (s. 34). Base to box 2. The documentary proof the Board asks for was not found in the text read.",
+    "source": "tt-vat-act",
+    "vat_category": "G",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "TT-S-Z",
+    "name": "Zero-rated supply in Trinidad and Tobago",
+    "description": "A domestic supply of Schedule 2 at zero per cent (basic foods, prescription medicines, agricultural inputs, water, short-stay accommodation, international freight, domestic travel between the islands)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Value Added Tax Act, s. 8 and Schedule 2 — among the goods and services zero-rated: unprocessed food, rice, wheat flour, milk, margarine, bread, baby formula and other listed groceries (item 1); live animals for food, animal feed, seeds and agricultural preparations and equipment (items 2 to 6); water and sewerage services supplied by a public authority (item 7); medicines and drugs available only by prescription and listed over-the-counter medicines (items 9 to 12); international freight and ancillary services (item 23); domestic travel between Trinidad and Tobago (item 25); accommodation primarily providing sleeping accommodation for reward to guests (item 30). The pack does not reproduce the Schedule, which the Minister may amend by Order (s. 8(4)) and which has been amended many times since: the user checks the item against the current text. Base to box 2.",
+    "source": "tt-vat-act",
+    "vat_category": "Z",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "TT-S-EX",
+    "name": "Exempt supply",
+    "description": "A service of Schedule 1 (medical and dental services, bus and taxi services, schools, real estate brokerage, residential rent, long-stay accommodation, postal services, betting and gambling, financial services), outside the tax",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "1990-01-01",
+    "legal_reference": "Value Added Tax Act, Schedule 1 (exempt services) — medical, dental, hospital, optical and paramedical services other than veterinary (item 1); bus and taxi services (item 2); training and education in approved schools and through the University of the West Indies (item 4); real estate brokerage (item 5); rental of residential property (item 6); accommodation in hotels, inns and guest houses for a period in excess of thirty days (item 7); public postal services (item 8); betting, gambling and lotteries (item 9); financial services (item 10). The Act taxes only commercial supplies, which are supplies of goods and prescribed services (s. 14): a service not prescribed is outside the tax, which this code also serves. The input tax of what is acquired to make exempt supplies is not deductible (s. 34(3)(b)). Base to box 3.",
+    "source": "tt-vat-act",
+    "vat_category": "E",
+    "sequence": 50,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "TT-P-125",
+    "name": "Purchase, VAT 12.5 %",
+    "description": "A purchase from a registered person, standard-rated, with a tax invoice",
+    "kind": "vat",
+    "rate": 12.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "1990-01-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, s. 34 — the input tax of a period is the output tax claimed from the person under s. 23 on supplies made to him for which a tax invoice was given under s. 36(2), and the tax paid on the entry of imported goods; the allowable input tax is the whole of it where all his supplies are commercial supplies and an apportioned part where some are not (s. 34(3)); input tax on what is required other than for carrying on a business in Trinidad and Tobago is excluded. The apportionment is the user's. Base to box 7, tax to box 9.",
+    "source": "tt-vat-act",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "TT-P-125-IMP",
+    "name": "Import of goods, VAT 12.5 %",
+    "description": "Goods imported: the VAT paid to the Comptroller of Customs and Excise",
+    "kind": "vat",
+    "rate": 12.5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "1990-01-01",
+    "recoverable": true,
+    "legal_reference": "Value Added Tax Act, s. 6(a), s. 9 to 12 — tax is charged on the entry of imported goods, collected by the Comptroller of Customs and Excise and due when the goods are entered (s. 11), on the value defined in s. 12; the tax paid on entry is input tax of the importer (s. 34(1)(b)). The value for tax is the customs entry's; the pack applies the rate to the invoice value it is given. Base to box 6, tax to box 8.",
+    "source": "tt-vat-act",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6"
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "8",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "TT-P-EX",
+    "name": "Purchase without VAT",
+    "description": "A purchase of a zero-rated or exempt supply, or from a person who charges no VAT: no input tax to claim",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1990-01-01",
+    "recoverable": false,
+    "legal_reference": "Value Added Tax Act, s. 8(3) and Schedule 1 — a zero-rated supply carries tax at nil and an exempt service none, so the purchaser has no input tax to deduct; the value is still reported among the purchases (box 7).",
+    "source": "tt-vat-act",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]

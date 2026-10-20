@@ -1,0 +1,139 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "TT-VAT-RETURN",
+  "name": "VAT return (box layout of this pack)",
+  "period": [
+    "bimonth",
+    "month"
+  ],
+  "valid_from": "1990-01-01",
+  "legal_reference": "Value Added Tax Act, s. 30 — each registered person is in category A, B or C as the Board determines: the tax periods of category B are two months from the appointed day (January–February, March–April and so on), those of category A are one month and then two-month periods, those of category C are fixed by the Board for that person; s. 31(1) — every registered person furnishes a return, in a form approved by the Board, for each tax period; s. 31(3) and (4) — it states the tax payable or the refund due, calculated under s. 32; s. 35(1) — the tax is paid within the time allowed for the return. The Board's own return form was not read as a text. `period_default` is left out because the cadence depends on the category the Board gave the taxpayer; category A (one month, then two-month periods starting in February) is not a cadence the format can express and is filed here as `month` or `bimonth` at the user's choice.",
+  "source": "tt-vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "Value Added Tax Act, s. 31(2)(a) — the return is furnished within twenty-five days after the end of the tax period, or within such further time as the Board may in writing allow, and is not furnished until it is received at the address on the form; s. 35(1) — the tax is paid within that time. For a tax period ending on the last day of a month, twenty-five days later is the 25th of the next month, whatever the month. Penalty and interest on what is paid late: 8 % and 2 % a month or part of a month (s. 54(1)), run from the date of s. 31(2). Weekend roll-forward is not expressible",
+    "source": "tt-vat-act"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Standard-rated supplies (12.5 %), net of VAT",
+      "sequence": 10,
+      "legal_reference": "Commercial supplies at 12.5 % (s. 7(1)). Box number and label are this pack's own: the layout of the Board's VAT return form was not read as a text, so the boxes follow what the Act makes the tax payable carry — the output tax of the period less the allowable input tax (s. 32(1)).",
+      "source": "tt-vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Zero-rated supplies, including exports",
+      "sequence": 20,
+      "legal_reference": "Supplies zero-rated under s. 8 and Schedule 2; they stay on the return, as a registered person furnishes a return for each tax period during which it was registered (s. 31(1)), whether or not tax is payable.",
+      "source": "tt-vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 30,
+      "legal_reference": "Services of Schedule 1, reported for information; the input tax of what is acquired to make them is not deductible (s. 34(3)).",
+      "source": "tt-vat-act"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Total supplies",
+      "sequence": 40,
+      "legal_reference": "Sum of boxes 1 to 3 — the sum is this pack's reading, the form is the Board's (s. 31(1) and (3)).",
+      "source": "tt-vat-act",
+      "plus": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "box": "5",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 50,
+      "legal_reference": "Tax at 12.5 % on box 1 (s. 7(1), s. 33); a credit note posts a negative amount to its own boxes (s. 37).",
+      "source": "tt-vat-act"
+    },
+    {
+      "box": "6",
+      "kind": "base",
+      "name": "Value of imports",
+      "sequence": 60,
+      "legal_reference": "Goods imported on which tax was paid on entry to the Comptroller of Customs and Excise (s. 6(a), s. 9 to 12).",
+      "source": "tt-vat-act"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Value of local purchases",
+      "sequence": 70,
+      "legal_reference": "Purchases made in Trinidad and Tobago for the business, taxable, zero-rated and exempt.",
+      "source": "tt-vat-act"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "VAT paid on imports",
+      "sequence": 80,
+      "legal_reference": "Tax paid on the entry of imported goods, input tax of the period (s. 34(1)(b)).",
+      "source": "tt-vat-act"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "VAT paid on local purchases",
+      "sequence": 90,
+      "legal_reference": "Tax charged on purchases for which a tax invoice was given (s. 34(1)(a), s. 36).",
+      "source": "tt-vat-act"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Total allowable input tax for the period",
+      "sequence": 100,
+      "legal_reference": "Sum of boxes 8 and 9: the input tax of the period (s. 34(1)); the apportionment of s. 34(3) is the user's.",
+      "source": "tt-vat-act",
+      "plus": [
+        "8",
+        "9"
+      ]
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "VAT payable",
+      "sequence": 110,
+      "legal_reference": "Output tax less allowable input tax when positive (s. 32(1)), paid within the time allowed for the return (s. 35(1)). The penalty of 8 % and the interest of 2 % a month (s. 54) are not modelled.",
+      "source": "tt-vat-act",
+      "plus": [
+        "5"
+      ],
+      "minus": [
+        "10"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "VAT refundable",
+      "sequence": 120,
+      "legal_reference": "The excess of allowable input tax over output tax (s. 32(2)): a refund is due even where output tax is nil. The Board satisfies it by paying it or by setting it against other tax owed (s. 35(2)); interest of 1 % a month runs on a refund outstanding for more than six months (s. 35(3)). The pack only reports box 12.",
+      "source": "tt-vat-act",
+      "plus": [
+        "10"
+      ],
+      "minus": [
+        "5"
+      ],
+      "floor_zero": true
+    }
+  ]
+}
