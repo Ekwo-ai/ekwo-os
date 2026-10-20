@@ -120,3 +120,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('MNT', 'Mongolian tugrik', E'₮', 2)
 on conflict (code) do nothing;
+
+-- Tajikistani somoni, ISO 4217 list one, two decimals (packs/tj/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('TJS', 'Tajikistani somoni', E'сомонӣ', 2)
+on conflict (code) do nothing;
