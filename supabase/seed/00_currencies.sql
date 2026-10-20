@@ -110,3 +110,8 @@ insert into currencies (code, name, symbol, decimal_places) values
   ('GMD', 'Gambian dalasi', 'D', 2),
   ('SLE', 'Sierra Leonean leone', 'Le', 2)
 on conflict (code) do nothing;
+
+-- Brazilian real, ISO 4217 list one, two decimals (packs/br/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('BRL', 'Brazilian real', 'R$', 2)
+on conflict (code) do nothing;

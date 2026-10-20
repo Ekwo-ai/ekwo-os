@@ -2835,3 +2835,96 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- The rows — Brazil and its twenty-seven federative units
+--
+-- A third country to the common system of VAT of Directive 2006/112/EC,
+-- article 5(2). `vat_prefix` is null: a Brazilian company is identified by
+-- its CNPJ, which carries no ISO country prefix. The twenty-six states and the
+-- Federal District are rows of their own, with the codes of ISO 3166-2:BR,
+-- because each levies its own tax on the circulation of goods, the ICMS
+-- (Constituição Federal, art. 155, II), at its own internal rates: packs/br/
+-- covers companies under Simples Nacional, whose ICMS is inside one monthly
+-- payment, and names no state yet; the rows are there for the work on the
+-- general regimes, where an interstate supply is taxed by the state of origin
+-- and of destination.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('BR', 'iso_3166_1', 'Brazil', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Brazil is a third country to it. Brazil levies no single value added tax: the Union levies the IPI and the PIS/Pasep and Cofins contributions, each state and the Federal District the ICMS, and each municipality the ISS (Constituição Federal, arts. 153, 155 and 156). Lei Complementar nº 214, de 16 de janeiro de 2025, institutes the IBS and the CBS that replace them over a transition.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('BR-AC', 'iso_3166_2', 'Acre', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-AL', 'iso_3166_2', 'Alagoas', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-AP', 'iso_3166_2', 'Amapá', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-AM', 'iso_3166_2', 'Amazonas', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-BA', 'iso_3166_2', 'Bahia', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-CE', 'iso_3166_2', 'Ceará', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-DF', 'iso_3166_2', 'Distrito Federal', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. The Federal District of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II), and the municipal taxes of art. 156, the ISS included, as the Federal District cumulates them (art. 147). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-ES', 'iso_3166_2', 'Espírito Santo', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-GO', 'iso_3166_2', 'Goiás', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-MA', 'iso_3166_2', 'Maranhão', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-MT', 'iso_3166_2', 'Mato Grosso', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-MS', 'iso_3166_2', 'Mato Grosso do Sul', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-MG', 'iso_3166_2', 'Minas Gerais', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-PA', 'iso_3166_2', 'Pará', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-PB', 'iso_3166_2', 'Paraíba', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-PR', 'iso_3166_2', 'Paraná', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-PE', 'iso_3166_2', 'Pernambuco', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-PI', 'iso_3166_2', 'Piauí', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-RJ', 'iso_3166_2', 'Rio de Janeiro', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-RN', 'iso_3166_2', 'Rio Grande do Norte', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-RS', 'iso_3166_2', 'Rio Grande do Sul', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-RO', 'iso_3166_2', 'Rondônia', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-RR', 'iso_3166_2', 'Roraima', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-SC', 'iso_3166_2', 'Santa Catarina', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-SP', 'iso_3166_2', 'São Paulo', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-SE', 'iso_3166_2', 'Sergipe', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).'),
+  ('BR-TO', 'iso_3166_2', 'Tocantins', 'BR', 'none', null, null, null,
+   'ISO 3166-2:BR for the code. A state of the Federative Republic of Brazil (Constituição Federal, arts. 1 and 18), which levies its own tax on the circulation of goods and on interstate and intermunicipal transport and communication services, the ICMS (art. 155, II). Outside the common system of VAT with its parent, under Directive 2006/112/EC, article 5(2).')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

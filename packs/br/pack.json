@@ -1,0 +1,187 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BR",
+  "name": "Brasil",
+  "version": "0.1.0",
+  "schema_min": "20261020090000",
+  "seed_sequence": 148,
+  "released_at": "2026-10-20",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "lc-123",
+        "title": "Lei Complementar nº 123, de 14 de dezembro de 2006 — Estatuto Nacional da Microempresa e da Empresa de Pequeno Porte, texto compilado, com a redação dada pela Lei Complementar nº 155, de 2016 (arts. 3º, 18, 18-A, 21 e 27; Anexos I a V, vigência 1º de janeiro de 2018)",
+        "publisher": "Presidência da República — Casa Civil, Subchefia para Assuntos Jurídicos",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp123.htm",
+        "consulted_on": "2026-10-20",
+        "kind": "law"
+      },
+      {
+        "key": "cgsn-perguntas",
+        "title": "Perguntas e Respostas — Simples Nacional, atualizado parcialmente em 9 de outubro de 2026 (perguntas 5.3, 5.4.1, 6.4 e 6.8, com a base normativa dos arts. 22 e 40 da Resolução CGSN nº 140, de 2018)",
+        "publisher": "Secretaria-Executiva do Comitê Gestor do Simples Nacional — Receita Federal do Brasil",
+        "url": "https://www8.receita.fazenda.gov.br/SimplesNacional/Arquivos/manual/PerguntaoSN.pdf",
+        "consulted_on": "2026-10-20",
+        "kind": "guidance"
+      },
+      {
+        "key": "portal-simples",
+        "title": "Portal do Simples Nacional — PGDAS-D 2018 (cálculo e declaração mensal) e geração do Documento de Arrecadação do Simples Nacional (DAS)",
+        "publisher": "Comitê Gestor do Simples Nacional — Receita Federal do Brasil",
+        "url": "https://www8.receita.fazenda.gov.br/SimplesNacional/",
+        "consulted_on": "2026-10-20",
+        "kind": "portal"
+      },
+      {
+        "key": "codigo-civil",
+        "title": "Lei nº 10.406, de 10 de janeiro de 2002 — Código Civil, texto compilado (arts. 1.179 a 1.189, da escrituração)",
+        "publisher": "Presidência da República — Casa Civil, Subchefia para Assuntos Jurídicos",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/2002/l10406compilada.htm",
+        "consulted_on": "2026-10-20",
+        "kind": "law"
+      },
+      {
+        "key": "lei-6404",
+        "title": "Lei nº 6.404, de 15 de dezembro de 1976 — Lei das Sociedades por Ações, texto compilado (arts. 178, 179 e 187: grupos do balanço patrimonial e discriminação da demonstração do resultado do exercício)",
+        "publisher": "Presidência da República — Casa Civil, Subchefia para Assuntos Jurídicos",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l6404consol.htm",
+        "consulted_on": "2026-10-20",
+        "kind": "law"
+      },
+      {
+        "key": "lc-214",
+        "title": "Lei Complementar nº 214, de 16 de janeiro de 2025 — institui o IBS, a CBS e o Imposto Seletivo (art. 62: documentos fiscais eletrônicos recebidos, validados e autorizados; Nota Fiscal de Serviços Eletrônica de padrão nacional a partir de 1º de janeiro de 2026)",
+        "publisher": "Presidência da República — Casa Civil, Subchefia para Assuntos Jurídicos",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp214.htm",
+        "consulted_on": "2026-10-20",
+        "kind": "law"
+      },
+      {
+        "key": "sefaz-go-ncm",
+        "title": "NF-e exige código completo do Mercosul-NCM a partir de 01/08/14 — Ajuste SINIEF 22/13: oito dígitos do código NCM, «00» admitido para itens de serviço ou sem produto",
+        "publisher": "Governo de Goiás — Secretaria de Estado da Economia",
+        "url": "https://goias.gov.br/economia/nf-e-exige-codigo-completo-do-mercosul-ncm-a-partir-de-01-08-14/",
+        "consulted_on": "2026-10-20",
+        "kind": "guidance"
+      },
+      {
+        "key": "nfse-nacional",
+        "title": "Nota Fiscal de Serviço Eletrônica — padrão nacional: Emissor Nacional, Ambiente de Dados Nacional e legislação aplicável ao MEI",
+        "publisher": "Receita Federal do Brasil — Sistema Nacional NFS-e",
+        "url": "https://www.gov.br/nfse/pt-br",
+        "consulted_on": "2026-10-20",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BRL",
+    "language": "pt",
+    "rounding_method": "half_up",
+    "opening_entry_label": "Lançamento de abertura",
+    "closing_style": "result_accounts",
+    "roles": {
+      "receivable": "1.1.2.01",
+      "payable": "2.1.1.01",
+      "suspense": "1.1.9.01",
+      "rounding": "6.7.2",
+      "retained_earnings": "3.4.1",
+      "retained_earnings_loss": "3.4.2",
+      "current_year_result_profit": "3.5.1",
+      "current_year_result_loss": "3.5.2",
+      "sales": "4.1.1",
+      "purchase": "5.1.1",
+      "bank": "1.1.1.02",
+      "cash": "1.1.1.01",
+      "fx_gain": "4.3.4",
+      "fx_loss": "6.6.6",
+      "tax_payable": "2.1.4.01",
+      "tax_receivable": "1.1.3.03",
+      "asset_disposal_gain": "4.4.1",
+      "asset_disposal_loss": "6.7.1"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIA",
+      "opening": "ABE"
+    },
+    "fiscal_year_default": "calendar"
+  },
+  "languages": ["en"],
+  "classifications": [
+    {
+      "attribute": "ncm",
+      "name": "Nomenclatura Comum do Mercosul (NCM)",
+      "pattern": "^([0-9]{8}|00)$",
+      "legal_reference": "Ajuste SINIEF 22/13, celebrado no âmbito do Conselho Nacional de Política Fazendária e aplicável em todas as unidades federadas: desde 1º de agosto de 2014 a Nota Fiscal Eletrônica (modelo 55) informa, em cada item, o código completo da Nomenclatura Comum do Mercosul, com oito dígitos — os seis do Sistema Harmonizado e dois do Mercosul —, e um código de dois dígitos (o capítulo) é rejeitado; o código «00» continua admitido para itens de serviço ou sem produto. O padrão confere a forma do código, nunca a sua existência na tabela vigente: a classificação é do emitente",
+      "source": "sefaz-go-ncm"
+    }
+  ],
+  "journals": [
+    { "code": "VEN", "type": "sales", "name": "Vendas", "sequence": 10 },
+    { "code": "COM", "type": "purchase", "name": "Compras", "sequence": 20 },
+    { "code": "BCO", "type": "bank", "name": "Bancos", "sequence": 30 },
+    { "code": "CX", "type": "cash", "name": "Caixa", "sequence": 40 },
+    { "code": "DIA", "type": "general", "name": "Diário geral", "sequence": 50 },
+    { "code": "ABE", "type": "opening", "name": "Lançamento de abertura", "sequence": 60 }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plano de contas de referência para microempresas e empresas de pequeno porte",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": ["BR-BP", "BR-DRE"],
+      "legal_reference": "O Brasil não impõe um plano de contas numerado às microempresas e empresas de pequeno porte: o Código Civil, art. 1.179, obriga o empresário e a sociedade empresária a seguir um sistema de contabilidade com escrituração uniforme e a levantar anualmente o balanço patrimonial e o de resultado econômico, deixando o número e a espécie de livros a critério dos interessados (§ 1º); o art. 1.183, parágrafo único, admite um código de números próprio. A Lei Complementar nº 123, de 2006, art. 27, permite à empresa optante pelo Simples Nacional adotar contabilidade simplificada, e as Normas Brasileiras de Contabilidade do Conselho Federal de Contabilidade para microentidades e pequenas empresas fixam o conteúdo das demonstrações, não uma numeração. Este plano é original: quatro níveis separados por pontos, e cada grupo corresponde a uma linha do balanço patrimonial ou da demonstração do resultado na ordem dos arts. 178 e 187 da Lei nº 6.404, de 1976 — veja o README",
+      "source": "codigo-civil"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "O número que a lei controla é o do documento fiscal eletrônico — a NF-e de mercadorias, a NFS-e de serviços —, gerado pelo sistema emissor e válido somente depois de recebido, validado e autorizado pela administração tributária (Lei Complementar nº 214, de 2025, art. 62, II). Ekwo não emite esse documento: o número que este pacote declara é o da peça contábil, uma referência interna ao lançamento que remete ao documento fiscal autorizado, e por isso livre — veja «O documento fiscal eletrônico» no README",
+        "source": "lc-214"
+      },
+      "tax_point": {
+        "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, § 3º — sobre a receita bruta auferida no mês incide a alíquota efetiva; a receita entra no período de apuração do mês da operação, que é o da data do documento. A opção irretratável, para todo o ano-calendário, de tributar a receita recebida no mês (regime de caixa) não é modelada — veja o README",
+        "source": "lc-123"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Código Civil, art. 1.183 — a escrituração é feita por ordem cronológica, sem intervalos em branco, nem entrelinhas, borrões, rasuras, emendas ou transportes para as margens. Um documento contabilizado é anulado por um documento de devolução ou cancelamento que o nomeia, nunca devolvido a rascunho",
+        "source": "codigo-civil"
+      }
+    },
+    "mentions": [
+      {
+        "code": "dfe_not_issued",
+        "applies_when": "always",
+        "text": "Este documento não é um documento fiscal eletrônico (NF-e ou NFS-e): não foi autorizado pela administração tributária. Somente o documento fiscal autorizado ampara a operação para fins fiscais.",
+        "sequence": 10,
+        "legal_reference": "Lei Complementar nº 214, de 2025, art. 62, II — os documentos fiscais eletrônicos existem após a recepção, a validação e a autorização pelo sistema autorizador; Ekwo não gera, não assina e não transmite NF-e nem NFS-e",
+        "source": "lc-214"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Toda venda de mercadorias é acobertada por uma Nota Fiscal Eletrônica (NF-e, modelo 55) e toda prestação de serviços sujeita ao ISS por uma Nota Fiscal de Serviços Eletrônica (NFS-e), que os Municípios e o Distrito Federal devem, a partir de 1º de janeiro de 2026, autorizar no padrão nacional (Lei Complementar nº 214, de 2025, art. 62, § 1º). O documento só existe depois de recebido, validado e autorizado pelo sistema autorizador da administração tributária (art. 62, II): um regime de validação prévia (clearance), e não uma troca direta entre as partes. A empresa optante pelo Simples Nacional está sujeita aos mesmos documentos. Ekwo não gera, não assina e não transmite o XML de uma NF-e ou de uma NFS-e: nenhuma peça de packages/formats fala com uma Secretaria da Fazenda nem com o Ambiente de Dados Nacional, e o bloco `fiscalisation.clearance` exige um `format` que uma peça escreva, o que não existe para o Brasil. Por isso profile, mandatory_from e fiscalisation ficam vazios, embora a obrigação exista nos fatos — veja o README. O CNPJ identifica emitente e destinatário e não tem um código ISO 6523 próprio: party_scheme e vat_scheme ficam vazios, como nos pacotes do México e da Guatemala",
+    "source": "lc-214"
+  },
+  "bank": {
+    "account_scheme": "account-number",
+    "statement_formats": [],
+    "payment_formats": []
+  }
+}

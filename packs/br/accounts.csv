@@ -1,0 +1,190 @@
+code,parent,type,reconcilable,name,sequence
+1,,asset_current,false,Ativo,10
+1.1,1,asset_current,false,Ativo circulante,20
+1.1.1,1.1,asset_cash,false,Disponível,30
+1.1.1.01,1.1.1,asset_cash,false,Caixa,40
+1.1.1.02,1.1.1,asset_cash,false,Bancos conta movimento,50
+1.1.1.03,1.1.1,asset_cash,false,Aplicações financeiras de liquidez imediata,60
+1.1.1.04,1.1.1,asset_cash,false,Conta de pagamento em instituição de pagamento,70
+1.1.2,1.1,asset_current,false,Clientes,80
+1.1.2.01,1.1.2,asset_receivable,true,Clientes no país,90
+1.1.2.02,1.1.2,asset_receivable,true,Clientes no exterior,100
+1.1.2.03,1.1.2,asset_receivable,true,Duplicatas a receber,110
+1.1.2.04,1.1.2,asset_current,false,Recebíveis de cartões de crédito e débito,120
+1.1.2.09,1.1.2,asset_current,false,(-) Perdas estimadas com créditos de liquidação duvidosa,130
+1.1.3,1.1,asset_current,false,Outros créditos,140
+1.1.3.01,1.1.3,asset_current,false,Adiantamentos a fornecedores,150
+1.1.3.02,1.1.3,asset_current,false,Adiantamentos a empregados,160
+1.1.3.03,1.1.3,asset_current,true,Tributos a recuperar ou compensar,170
+1.1.3.04,1.1.3,asset_current,false,Créditos com sócios,180
+1.1.3.05,1.1.3,asset_current,false,Outros créditos a receber,190
+1.1.4,1.1,asset_current,false,Estoques,200
+1.1.4.01,1.1.4,asset_current,false,Mercadorias para revenda,210
+1.1.4.02,1.1.4,asset_current,false,Matérias-primas,220
+1.1.4.03,1.1.4,asset_current,false,Produtos em elaboração,230
+1.1.4.04,1.1.4,asset_current,false,Produtos acabados,240
+1.1.4.05,1.1.4,asset_current,false,Materiais de consumo,250
+1.1.5,1.1,asset_prepayments,false,Despesas do exercício seguinte,260
+1.1.5.01,1.1.5,asset_prepayments,false,Seguros a apropriar,270
+1.1.5.02,1.1.5,asset_prepayments,false,Assinaturas e anuidades a apropriar,280
+1.1.5.03,1.1.5,asset_prepayments,false,Outras despesas antecipadas,290
+1.1.9,1.1,asset_current,false,Contas transitórias,300
+1.1.9.01,1.1.9,asset_current,false,Conta de espera,310
+1.1.9.02,1.1.9,asset_current,false,Numerário em trânsito,320
+1.2,1,asset_non_current,false,Ativo não circulante,330
+1.2.1,1.2,asset_non_current,false,Realizável a longo prazo,340
+1.2.1.01,1.2.1,asset_non_current,false,Créditos com sócios a longo prazo,350
+1.2.1.02,1.2.1,asset_non_current,false,Depósitos judiciais,360
+1.2.1.03,1.2.1,asset_non_current,false,Depósitos e cauções,370
+1.2.1.04,1.2.1,asset_non_current,false,Outros créditos a longo prazo,380
+1.2.2,1.2,asset_non_current,false,Investimentos,390
+1.2.2.01,1.2.2,asset_non_current,false,Participações em outras sociedades,400
+1.2.2.02,1.2.2,asset_non_current,false,Quotas de cooperativas de crédito,410
+1.2.2.03,1.2.2,asset_non_current,false,Outros investimentos,420
+1.2.3,1.2,asset_fixed,false,Imobilizado,430
+1.2.3.01,1.2.3,asset_fixed,false,Terrenos,440
+1.2.3.02,1.2.3,asset_fixed,false,Edificações,450
+1.2.3.03,1.2.3,asset_fixed,false,Máquinas e equipamentos,460
+1.2.3.04,1.2.3,asset_fixed,false,Móveis e utensílios,470
+1.2.3.05,1.2.3,asset_fixed,false,Veículos,480
+1.2.3.06,1.2.3,asset_fixed,false,Computadores e periféricos,490
+1.2.3.07,1.2.3,asset_fixed,false,Benfeitorias em imóveis de terceiros,500
+1.2.3.08,1.2.3,asset_fixed,false,Imobilizado em andamento,510
+1.2.3.09,1.2.3,asset_fixed,false,(-) Depreciação acumulada,520
+1.2.4,1.2,asset_non_current,false,Intangível,530
+1.2.4.01,1.2.4,asset_non_current,false,Softwares,540
+1.2.4.02,1.2.4,asset_non_current,false,Marcas e patentes,550
+1.2.4.03,1.2.4,asset_non_current,false,Fundo de comércio adquirido,560
+1.2.4.09,1.2.4,asset_non_current,false,(-) Amortização acumulada,570
+2,,liability_current,false,Passivo,580
+2.1,2,liability_current,false,Passivo circulante,590
+2.1.1,2.1,liability_current,false,Fornecedores,600
+2.1.1.01,2.1.1,liability_payable,true,Fornecedores no país,610
+2.1.1.02,2.1.1,liability_payable,true,Fornecedores no exterior,620
+2.1.2,2.1,liability_current,false,Obrigações trabalhistas,630
+2.1.2.01,2.1.2,liability_current,false,Salários a pagar,640
+2.1.2.02,2.1.2,liability_current,false,Pró-labore a pagar,650
+2.1.2.03,2.1.2,liability_current,false,Férias a pagar,660
+2.1.2.04,2.1.2,liability_current,false,Décimo terceiro salário a pagar,670
+2.1.2.05,2.1.2,liability_current,false,Rescisões a pagar,680
+2.1.3,2.1,liability_current,false,Obrigações sociais,690
+2.1.3.01,2.1.3,liability_current,false,INSS a recolher,700
+2.1.3.02,2.1.3,liability_current,false,FGTS a recolher,710
+2.1.4,2.1,liability_current,false,Obrigações tributárias,720
+2.1.4.01,2.1.4,liability_current,true,Simples Nacional a recolher,730
+2.1.4.02,2.1.4,liability_current,false,ISS retido a recolher,740
+2.1.4.03,2.1.4,liability_current,false,IRRF a recolher,750
+2.1.4.04,2.1.4,liability_current,false,Parcelamentos tributários,760
+2.1.4.05,2.1.4,liability_current,false,Outros tributos a recolher,770
+2.1.5,2.1,liability_current,false,Empréstimos e financiamentos,780
+2.1.5.01,2.1.5,liability_current,false,Empréstimos bancários,790
+2.1.5.02,2.1.5,liability_current,false,Financiamentos,800
+2.1.5.03,2.1.5,liability_credit_card,false,Cartão de crédito empresarial,810
+2.1.6,2.1,liability_current,false,Outras obrigações,820
+2.1.6.01,2.1.6,liability_current,false,Adiantamentos de clientes,830
+2.1.6.02,2.1.6,liability_current,false,Lucros a distribuir,840
+2.1.6.03,2.1.6,liability_current,false,Aluguéis a pagar,850
+2.1.6.04,2.1.6,liability_current,false,Contas a pagar,860
+2.2,2,liability_non_current,false,Passivo não circulante,870
+2.2.1,2.2,liability_non_current,false,Empréstimos e financiamentos a longo prazo,880
+2.2.1.01,2.2.1,liability_non_current,false,Empréstimos bancários a longo prazo,890
+2.2.1.02,2.2.1,liability_non_current,false,Financiamentos a longo prazo,900
+2.2.2,2.2,liability_non_current,false,Mútuos de sócios,910
+2.2.2.01,2.2.2,liability_non_current,false,Mútuos de sócios a pagar,920
+2.2.3,2.2,liability_non_current,false,Parcelamentos tributários a longo prazo,930
+2.2.3.01,2.2.3,liability_non_current,false,Parcelamento do Simples Nacional,940
+2.2.9,2.2,liability_non_current,false,Outras obrigações a longo prazo,950
+2.2.9.01,2.2.9,liability_non_current,false,Outras contas a pagar a longo prazo,960
+3,,equity,false,Patrimônio líquido,970
+3.1,3,equity,false,Capital social,980
+3.1.1,3.1,equity,false,Capital subscrito,990
+3.1.2,3.1,equity,false,(-) Capital a integralizar,1000
+3.2,3,equity,false,Reservas de capital,1010
+3.2.1,3.2,equity,false,Reservas de capital,1020
+3.3,3,equity,false,Reservas de lucros,1030
+3.3.1,3.3,equity,false,Reserva legal,1040
+3.3.2,3.3,equity,false,Outras reservas de lucros,1050
+3.4,3,equity_retained,false,Lucros ou prejuízos acumulados,1060
+3.4.1,3.4,equity_retained,false,Lucros acumulados,1070
+3.4.2,3.4,equity_retained,false,(-) Prejuízos acumulados,1080
+3.5,3,equity,false,Resultado do exercício,1090
+3.5.1,3.5,equity,false,Lucro do exercício,1100
+3.5.2,3.5,equity,false,(-) Prejuízo do exercício,1110
+4,,income,false,Receitas,1120
+4.1,4,income,false,Receita bruta,1130
+4.1.1,4.1,income,false,Venda de mercadorias,1140
+4.1.2,4.1,income,false,Venda de produtos industrializados,1150
+4.1.3,4.1,income,false,Prestação de serviços,1160
+4.1.4,4.1,income,false,Locação de bens móveis,1170
+4.1.5,4.1,income,false,Exportação de mercadorias,1180
+4.1.6,4.1,income,false,Exportação de serviços,1190
+4.2,4,income,false,Deduções da receita bruta,1200
+4.2.1,4.2,income,false,(-) Devoluções de vendas,1210
+4.2.2,4.2,income,false,(-) Cancelamentos de serviços,1220
+4.2.3,4.2,income,false,(-) Descontos incondicionais concedidos,1230
+4.3,4,income_other,false,Receitas financeiras,1240
+4.3.1,4.3,income_other,false,Rendimentos de aplicações financeiras,1250
+4.3.2,4.3,income_other,false,Juros ativos,1260
+4.3.3,4.3,income_other,false,Descontos obtidos,1270
+4.3.4,4.3,income_other,false,Variação cambial ativa,1280
+4.4,4,income_other,false,Outras receitas,1290
+4.4.1,4.4,income_other,false,Ganho na alienação de bens do ativo não circulante,1300
+4.4.2,4.4,income_other,false,Recuperação de despesas,1310
+4.4.9,4.4,income_other,false,Outras receitas diversas,1320
+5,,expense_direct_cost,false,Custos,1330
+5.1,5,expense_direct_cost,false,Custo das vendas e dos serviços,1340
+5.1.1,5.1,expense_direct_cost,false,Custo das mercadorias vendidas,1350
+5.1.2,5.1,expense_direct_cost,false,Custo dos produtos vendidos,1360
+5.1.3,5.1,expense_direct_cost,false,Custo dos serviços prestados,1370
+5.1.4,5.1,expense_direct_cost,false,Serviços de terceiros aplicados,1380
+5.1.5,5.1,expense_direct_cost,false,Fretes e seguros sobre compras,1390
+6,,expense,false,Despesas,1400
+6.1,6,expense,false,Tributos sobre a receita,1410
+6.1.1,6.1,expense,false,Simples Nacional (DAS),1420
+6.2,6,expense,false,Despesas com pessoal,1430
+6.2.1,6.2,expense,false,Salários,1440
+6.2.2,6.2,expense,false,Pró-labore,1450
+6.2.3,6.2,expense,false,Férias,1460
+6.2.4,6.2,expense,false,Décimo terceiro salário,1470
+6.2.5,6.2,expense,false,INSS patronal,1480
+6.2.6,6.2,expense,false,FGTS,1490
+6.2.7,6.2,expense,false,Vale-transporte,1500
+6.2.8,6.2,expense,false,Vale-refeição e alimentação,1510
+6.2.9,6.2,expense,false,Assistência médica e outros benefícios,1520
+6.3,6,expense,false,Despesas administrativas,1530
+6.3.1,6.3,expense,false,Aluguéis,1540
+6.3.2,6.3,expense,false,Condomínio,1550
+6.3.3,6.3,expense,false,Energia elétrica,1560
+6.3.4,6.3,expense,false,Água e esgoto,1570
+6.3.5,6.3,expense,false,Telefone e internet,1580
+6.3.6,6.3,expense,false,Material de escritório,1590
+6.3.7,6.3,expense,false,Serviços contábeis,1600
+6.3.8,6.3,expense,false,Serviços advocatícios e de consultoria,1610
+6.3.9,6.3,expense,false,Softwares e assinaturas,1620
+6.4,6,expense,false,Outras despesas administrativas,1630
+6.4.1,6.4,expense,false,Seguros,1640
+6.4.2,6.4,expense,false,Manutenção e reparos,1650
+6.4.3,6.4,expense,false,Viagens e estadias,1660
+6.4.4,6.4,expense,false,"Taxas, licenças e alvarás",1670
+6.4.5,6.4,expense,false,IPTU e IPVA,1680
+6.4.6,6.4,expense,false,Outros tributos e contribuições fora do Simples Nacional,1690
+6.4.7,6.4,expense_depreciation,false,Depreciação,1700
+6.4.8,6.4,expense_depreciation,false,Amortização,1710
+6.4.9,6.4,expense,false,Despesas diversas,1720
+6.5,6,expense,false,Despesas comerciais,1730
+6.5.1,6.5,expense,false,Propaganda e publicidade,1740
+6.5.2,6.5,expense,false,Comissões sobre vendas,1750
+6.5.3,6.5,expense,false,Fretes sobre vendas,1760
+6.5.4,6.5,expense,false,Tarifas de cartões e de plataformas de venda,1770
+6.5.5,6.5,expense,false,Perdas com créditos incobráveis,1780
+6.6,6,expense,false,Despesas financeiras,1790
+6.6.1,6.6,expense,false,Juros passivos,1800
+6.6.2,6.6,expense,false,Tarifas bancárias,1810
+6.6.3,6.6,expense,false,Multas e juros sobre tributos,1820
+6.6.4,6.6,expense,false,IOF,1830
+6.6.5,6.6,expense,false,Descontos concedidos,1840
+6.6.6,6.6,expense,false,Variação cambial passiva,1850
+6.7,6,expense,false,Outras despesas,1860
+6.7.1,6.7,expense,false,Perda na alienação de bens do ativo não circulante,1870
+6.7.2,6.7,expense,false,Diferenças de arredondamento,1880
+6.7.9,6.7,expense,false,Outras despesas diversas,1890

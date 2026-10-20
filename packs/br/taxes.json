@@ -1,0 +1,54 @@
+[
+  {
+    "code": "BR-SN-VENDA",
+    "name": "Venda de optante pelo Simples Nacional — tributos no DAS",
+    "description": "Toda venda de mercadorias ou prestação de serviços de uma optante pelo Simples Nacional, no país ou para o exterior: nenhum tributo na linha, o DAS do mês o substitui",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Lei Complementar nº 123, de 2006, art. 13 — a optante pelo Simples Nacional recolhe mensalmente, num único documento de arrecadação (o DAS), o IRPJ, o IPI, a CSLL, a Cofins, o PIS/Pasep, a CPP, o ICMS e o ISS, calculados sobre a receita bruta do mês pela alíquota efetiva do art. 18 — veja turnover_tax.json. Nenhum desses tributos é destacado, calculado ou recuperado linha a linha: este código existe para que cada linha de venda carregue um código que o motor contabiliza sem imposto, e diz que o imposto da operação está no DAS do mês, não na nota. Não é uma isenção nem uma não incidência dos tributos substituídos. Os casos em que um tributo fica fora do DAS (ICMS por substituição tributária, diferencial de alíquotas, ISS fixo, tributos acima do sublimite) não têm código neste pacote — veja o README",
+    "source": "lc-123",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "BR-SN-COMPRA",
+    "name": "Compra de optante pelo Simples Nacional — sem crédito de tributos",
+    "description": "Toda compra de uma optante pelo Simples Nacional, no país ou do exterior: nenhum tributo a recuperar na linha",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2018-01-01",
+    "legal_reference": "O lado das compras de BR-SN-VENDA: uma optante pelo Simples Nacional não se apropria de crédito dos tributos que o fornecedor recolheu, porque os seus próprios tributos incidem sobre a receita bruta e não sobre o valor agregado (Lei Complementar nº 123, de 2006, art. 23, caput: as optantes não farão jus à apropriação nem transferirão créditos relativos a impostos ou contribuições abrangidos pelo Simples Nacional). O valor pago ao fornecedor, tributos incluídos, é custo ou despesa. Os tributos sobre a importação de serviços, que ficam fora do DAS, não têm código neste pacote — veja o README",
+    "source": "lc-123",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 20
+  }
+]

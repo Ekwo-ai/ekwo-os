@@ -1,0 +1,120 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "O primeiro trimestre de uma prestadora de serviços de tecnologia optante pelo Simples Nacional (Anexo III), em início de atividade",
+  "chart": "default",
+  "fiscal_year": { "name": "Exercício 2026", "start": "2026-01-01", "end": "2026-12-31" },
+  "periods": [
+    { "code": "2026-01", "from": "2026-01-01", "to": "2026-01-31" },
+    { "code": "2026-02", "from": "2026-02-01", "to": "2026-02-28" },
+    { "code": "2026-03", "from": "2026-03-01", "to": "2026-03-31" }
+  ],
+  "statements": ["BR-BP", "BR-DRE"],
+  "contacts": [
+    { "ref": "cliente-sp", "name": "Comercial Paulista de Ferragens Ltda.", "type": "customer", "country": "BR" },
+    { "ref": "cliente-rj", "name": "Clínica Exemplo do Rio Ltda.", "type": "customer", "country": "BR" },
+    { "ref": "cliente-us", "name": "Northwind Analytics Inc.", "type": "customer", "country": "US" },
+    { "ref": "locador", "name": "Imobiliária Fictícia Ltda.", "type": "supplier", "country": "BR" },
+    { "ref": "fornecedor-sw", "name": "Software Exemplo Ltda.", "type": "supplier", "country": "BR" },
+    { "ref": "contador", "name": "Escritório Contábil Exemplo Ltda.", "type": "supplier", "country": "BR" },
+    { "ref": "fornecedor-us", "name": "Cloud Hosting Example LLC", "type": "supplier", "country": "US" }
+  ],
+  "documents": [
+    {
+      "ref": "S1", "type": "sale_invoice", "contact": "cliente-sp", "date": "2026-01-12",
+      "why": "Um serviço prestado no país: receita bruta do Anexo III, com o código BR-SN-VENDA, sem imposto na linha, porque o DAS do mês o substitui.",
+      "lines": [{ "name": "Consultoria em tecnologia da informação", "quantity": 40, "unit_price": 150, "tax": "BR-SN-VENDA", "account": "4.1.3" }]
+    },
+    {
+      "ref": "S2", "type": "sale_invoice", "contact": "cliente-rj", "date": "2026-01-26",
+      "why": "A segunda receita de janeiro: o mês soma 15 000,00, e a RBT12 do primeiro mês de atividade é essa receita vezes doze, 180 000,00 — exatamente o limite da 1ª faixa, que ainda a leva.",
+      "lines": [{ "name": "Desenvolvimento de sistema sob encomenda", "quantity": 1, "unit_price": 9000, "tax": "BR-SN-VENDA", "account": "4.1.3" }]
+    },
+    {
+      "ref": "P1", "type": "purchase_invoice", "contact": "locador", "date": "2026-01-05",
+      "why": "O aluguel do escritório: uma despesa administrativa, sem crédito de imposto para uma optante.",
+      "lines": [{ "name": "Aluguel do escritório — janeiro", "quantity": 1, "unit_price": 2500, "tax": "BR-SN-COMPRA", "account": "6.3.1" }]
+    },
+    {
+      "ref": "P2", "type": "purchase_invoice", "contact": "fornecedor-sw", "date": "2026-01-20",
+      "why": "Licenças de software compradas no país.",
+      "lines": [{ "name": "Licenças anuais de ferramentas de desenvolvimento", "quantity": 4, "unit_price": 200, "tax": "BR-SN-COMPRA", "account": "6.3.9" }]
+    },
+    {
+      "ref": "S3", "type": "sale_invoice", "contact": "cliente-us", "date": "2026-02-10",
+      "why": "Uma exportação de serviços: entra na receita bruta e na RBT12, e o Simples Nacional reduz o DAS da parcela de Cofins, PIS/Pasep e ISS (LC 123, art. 18, § 14) — uma redução que Ekwo não calcula, veja o README.",
+      "lines": [{ "name": "Desenvolvimento de software para cliente no exterior", "quantity": 1, "unit_price": 12000, "tax": "BR-SN-VENDA", "account": "4.1.6" }]
+    },
+    {
+      "ref": "S4", "type": "sale_invoice", "contact": "cliente-sp", "date": "2026-02-18",
+      "why": "Uma segunda prestação ao mesmo cliente, em fevereiro.",
+      "lines": [{ "name": "Consultoria em tecnologia da informação", "quantity": 50, "unit_price": 150, "tax": "BR-SN-VENDA", "account": "4.1.3" }]
+    },
+    {
+      "ref": "C1", "type": "sale_credit_note", "contact": "cliente-rj", "date": "2026-02-25",
+      "why": "O cancelamento parcial de S2: reduz a receita bruta do seu próprio mês, fevereiro, que fica em 18 500,00, e não a de janeiro.",
+      "lines": [{ "name": "Cancelamento parcial do desenvolvimento de sistema", "quantity": 1, "unit_price": 1000, "tax": "BR-SN-VENDA", "account": "4.2.2" }]
+    },
+    {
+      "ref": "P3", "type": "purchase_invoice", "contact": "locador", "date": "2026-02-05",
+      "why": "O aluguel de fevereiro.",
+      "lines": [{ "name": "Aluguel do escritório — fevereiro", "quantity": 1, "unit_price": 2500, "tax": "BR-SN-COMPRA", "account": "6.3.1" }]
+    },
+    {
+      "ref": "P4", "type": "purchase_invoice", "contact": "fornecedor-us", "date": "2026-02-15",
+      "why": "Um serviço contratado no exterior, hospedagem em nuvem: os tributos sobre a importação de serviços ficam fora do Simples Nacional e não são calculados por este pacote, veja o README.",
+      "lines": [{ "name": "Hospedagem em nuvem — fevereiro", "quantity": 1, "unit_price": 600, "tax": "BR-SN-COMPRA", "account": "6.3.9" }]
+    },
+    {
+      "ref": "S5", "type": "sale_invoice", "contact": "cliente-rj", "date": "2026-03-10",
+      "why": "Março: a RBT12 proporcionalizada é a média de janeiro e fevereiro vezes doze, (15 000,00 + 18 500,00) / 2 × 12 = 201 000,00, e passa à 2ª faixa.",
+      "lines": [{ "name": "Desenvolvimento de módulo adicional", "quantity": 1, "unit_price": 11000, "tax": "BR-SN-VENDA", "account": "4.1.3" }]
+    },
+    {
+      "ref": "S6", "type": "sale_invoice", "contact": "cliente-sp", "date": "2026-03-24",
+      "why": "Um treinamento: o mês soma 14 000,00 de receita bruta.",
+      "lines": [{ "name": "Treinamento da equipe do cliente", "quantity": 2, "unit_price": 1500, "tax": "BR-SN-VENDA", "account": "4.1.3" }]
+    },
+    {
+      "ref": "P5", "type": "purchase_invoice", "contact": "locador", "date": "2026-03-05",
+      "why": "O aluguel de março.",
+      "lines": [{ "name": "Aluguel do escritório — março", "quantity": 1, "unit_price": 2500, "tax": "BR-SN-COMPRA", "account": "6.3.1" }]
+    },
+    {
+      "ref": "P6", "type": "purchase_invoice", "contact": "contador", "date": "2026-03-20",
+      "why": "Os honorários do contador do trimestre.",
+      "lines": [{ "name": "Honorários contábeis — 1º trimestre", "quantity": 1, "unit_price": 1200, "tax": "BR-SN-COMPRA", "account": "6.3.7" }]
+    },
+    {
+      "ref": "PC1", "type": "purchase_credit_note", "contact": "fornecedor-sw", "date": "2026-03-12",
+      "why": "Uma devolução do fornecedor: uma licença não utilizada, que reduz a despesa de P2.",
+      "lines": [{ "name": "Devolução de uma licença não utilizada", "quantity": 1, "unit_price": 200, "tax": "BR-SN-COMPRA", "account": "6.3.9" }]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "R1", "direction": "inbound", "date": "2026-02-02", "amount": 6000.00,
+      "contact": "cliente-sp", "journal": "BCO", "match": "S1",
+      "why": "Um recebimento que quita exatamente S1."
+    },
+    {
+      "ref": "R2", "direction": "inbound", "date": "2026-03-16", "amount": 7500.00,
+      "contact": "cliente-sp", "journal": "BCO", "match": "S4",
+      "why": "Um recebimento que quita exatamente S4."
+    },
+    {
+      "ref": "R3", "direction": "outbound", "date": "2026-01-10", "amount": 2500.00,
+      "contact": "locador", "journal": "BCO", "match": "P1",
+      "why": "Um pagamento que quita exatamente o aluguel de janeiro."
+    },
+    {
+      "ref": "R4", "direction": "outbound", "date": "2026-02-10", "amount": 2500.00,
+      "contact": "locador", "journal": "BCO", "match": "P3",
+      "why": "Um pagamento que quita exatamente o aluguel de fevereiro."
+    },
+    {
+      "ref": "R5", "direction": "inbound", "date": "2026-03-30", "amount": 3000.00,
+      "contact": "cliente-rj", "journal": "BCO", "match": null,
+      "why": "Um recebimento por conta, sem nota a quitar: fica como partida em aberto."
+    }
+  ]
+}

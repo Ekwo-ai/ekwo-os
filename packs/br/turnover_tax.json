@@ -1,0 +1,405 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/turnover_tax",
+  "regimes": [
+    {
+      "code": "BR-SN-I",
+      "name": "Simples Nacional — Anexo I (Comércio)",
+      "replaces": [
+        "vat",
+        "sales_tax"
+      ],
+      "window": {
+        "months": 12,
+        "includes_period": false,
+        "short": "annualise"
+      },
+      "expense_account": "6.1.1",
+      "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, caput e §§ 1º e 1º-A, redação da Lei Complementar nº 155, de 2016 — o valor devido mensalmente é a receita bruta do mês vezes a alíquota efetiva (RBT12 × Aliq − PD) / RBT12, sendo RBT12 a receita bruta acumulada nos doze meses anteriores ao período de apuração, Aliq a alíquota nominal e PD a parcela a deduzir do Anexo I, que se aplica à revenda de mercadorias (art. 18, § 4º, I). O DAS reúne num único recolhimento IRPJ, CSLL, Cofins, PIS/Pasep, CPP, IPI, ICMS e ISS (art. 13), e por isso nenhuma linha de documento de uma optante carrega um imposto sobre o consumo. No ano de início de atividade, a RBT12 é proporcionalizada: no primeiro mês, a receita do próprio mês vezes doze; nos onze meses seguintes, a média aritmética dos meses anteriores vezes doze (pergunta 5.4.1 do Perguntas e Respostas do Simples Nacional, «regra até 2026») — o que `short: annualise` faz",
+      "source": "lc-123",
+      "report": {
+        "code": "BR-PGDAS-D",
+        "name": "PGDAS-D — Programa Gerador do Documento de Arrecadação do Simples Nacional, Declaratório",
+        "periods": [
+          "month"
+        ],
+        "period_default": "month",
+        "valid_from": "2018-01-01",
+        "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, § 15-A, II; Perguntas e Respostas do Simples Nacional, pergunta 6.4 — a apuração é feita e transmitida mensalmente no PGDAS-D 2018 (períodos de apuração a partir de janeiro de 2018), ainda que sem receita no mês, e o DAS só é gerado depois de transmitida a apuração (pergunta 6.7)",
+        "deadline": {
+          "rule": "day_of_month_after_period",
+          "day": 20,
+          "legal_reference": "Resolução CGSN nº 140, de 2018, art. 40, segundo a pergunta 6.8 do Perguntas e Respostas do Simples Nacional — o prazo para recolher os tributos apurados termina no dia 20 do mês subsequente àquele em que a receita bruta foi auferida; quando não há expediente bancário no dia 20, o prazo é prorrogado para o primeiro dia útil seguinte. A pergunta 6.4 fixa no mesmo dia a transmissão do PGDAS-D",
+          "source": "cgsn-perguntas"
+        }
+      },
+      "brackets": [
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "180000.00",
+          "rate": "4",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo I, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 1ª faixa: receita bruta em 12 meses até 180.000,00, alíquota nominal 4 %, valor a deduzir nenhum",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "360000.00",
+          "rate": "7.3",
+          "deduction": "5940.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo I, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 2ª faixa: receita bruta em 12 meses de 180.000,01 a 360.000,00, alíquota nominal 7,3 %, valor a deduzir 5.940,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "720000.00",
+          "rate": "9.5",
+          "deduction": "13860.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo I, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 3ª faixa: receita bruta em 12 meses de 360.000,01 a 720.000,00, alíquota nominal 9,5 %, valor a deduzir 13.860,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "1800000.00",
+          "rate": "10.7",
+          "deduction": "22500.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo I, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 4ª faixa: receita bruta em 12 meses de 720.000,01 a 1.800.000,00, alíquota nominal 10,7 %, valor a deduzir 22.500,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "3600000.00",
+          "rate": "14.3",
+          "deduction": "87300.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo I, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 5ª faixa: receita bruta em 12 meses de 1.800.000,01 a 3.600.000,00, alíquota nominal 14,3 %, valor a deduzir 87.300,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "rate": "19",
+          "deduction": "378000.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo I, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 6ª faixa: receita bruta em 12 meses de 3.600.000,01 a 4.800.000,00, alíquota nominal 19 %, valor a deduzir 378.000,00. A tabela termina em 4.800.000,00, o limite da empresa de pequeno porte (art. 3º, II); a faixa fica aberta porque o formato de Ekwo exige uma última faixa sem limite, e a exclusão do regime acima desse limite não é modelada — veja o README",
+          "source": "lc-123"
+        }
+      ]
+    },
+    {
+      "code": "BR-SN-II",
+      "name": "Simples Nacional — Anexo II (Indústria)",
+      "replaces": [
+        "vat",
+        "sales_tax"
+      ],
+      "window": {
+        "months": 12,
+        "includes_period": false,
+        "short": "annualise"
+      },
+      "expense_account": "6.1.1",
+      "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, caput e §§ 1º e 1º-A, redação da Lei Complementar nº 155, de 2016 — o valor devido mensalmente é a receita bruta do mês vezes a alíquota efetiva (RBT12 × Aliq − PD) / RBT12, sendo RBT12 a receita bruta acumulada nos doze meses anteriores ao período de apuração, Aliq a alíquota nominal e PD a parcela a deduzir do Anexo II, que se aplica à venda de mercadorias industrializadas pelo contribuinte (art. 18, § 4º, II). O DAS reúne num único recolhimento IRPJ, CSLL, Cofins, PIS/Pasep, CPP, IPI, ICMS e ISS (art. 13), e por isso nenhuma linha de documento de uma optante carrega um imposto sobre o consumo. No ano de início de atividade, a RBT12 é proporcionalizada: no primeiro mês, a receita do próprio mês vezes doze; nos onze meses seguintes, a média aritmética dos meses anteriores vezes doze (pergunta 5.4.1 do Perguntas e Respostas do Simples Nacional, «regra até 2026») — o que `short: annualise` faz",
+      "source": "lc-123",
+      "report": {
+        "code": "BR-PGDAS-D",
+        "name": "PGDAS-D — Programa Gerador do Documento de Arrecadação do Simples Nacional, Declaratório",
+        "periods": [
+          "month"
+        ],
+        "period_default": "month",
+        "valid_from": "2018-01-01",
+        "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, § 15-A, II; Perguntas e Respostas do Simples Nacional, pergunta 6.4 — a apuração é feita e transmitida mensalmente no PGDAS-D 2018 (períodos de apuração a partir de janeiro de 2018), ainda que sem receita no mês, e o DAS só é gerado depois de transmitida a apuração (pergunta 6.7)",
+        "deadline": {
+          "rule": "day_of_month_after_period",
+          "day": 20,
+          "legal_reference": "Resolução CGSN nº 140, de 2018, art. 40, segundo a pergunta 6.8 do Perguntas e Respostas do Simples Nacional — o prazo para recolher os tributos apurados termina no dia 20 do mês subsequente àquele em que a receita bruta foi auferida; quando não há expediente bancário no dia 20, o prazo é prorrogado para o primeiro dia útil seguinte. A pergunta 6.4 fixa no mesmo dia a transmissão do PGDAS-D",
+          "source": "cgsn-perguntas"
+        }
+      },
+      "brackets": [
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "180000.00",
+          "rate": "4.5",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo II, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 1ª faixa: receita bruta em 12 meses até 180.000,00, alíquota nominal 4,5 %, valor a deduzir nenhum",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "360000.00",
+          "rate": "7.8",
+          "deduction": "5940.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo II, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 2ª faixa: receita bruta em 12 meses de 180.000,01 a 360.000,00, alíquota nominal 7,8 %, valor a deduzir 5.940,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "720000.00",
+          "rate": "10",
+          "deduction": "13860.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo II, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 3ª faixa: receita bruta em 12 meses de 360.000,01 a 720.000,00, alíquota nominal 10 %, valor a deduzir 13.860,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "1800000.00",
+          "rate": "11.2",
+          "deduction": "22500.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo II, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 4ª faixa: receita bruta em 12 meses de 720.000,01 a 1.800.000,00, alíquota nominal 11,2 %, valor a deduzir 22.500,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "3600000.00",
+          "rate": "14.7",
+          "deduction": "85500.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo II, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 5ª faixa: receita bruta em 12 meses de 1.800.000,01 a 3.600.000,00, alíquota nominal 14,7 %, valor a deduzir 85.500,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "rate": "30",
+          "deduction": "720000.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo II, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 6ª faixa: receita bruta em 12 meses de 3.600.000,01 a 4.800.000,00, alíquota nominal 30 %, valor a deduzir 720.000,00. A tabela termina em 4.800.000,00, o limite da empresa de pequeno porte (art. 3º, II); a faixa fica aberta porque o formato de Ekwo exige uma última faixa sem limite, e a exclusão do regime acima desse limite não é modelada — veja o README",
+          "source": "lc-123"
+        }
+      ]
+    },
+    {
+      "code": "BR-SN-III",
+      "name": "Simples Nacional — Anexo III (Serviços e locação de bens móveis)",
+      "replaces": [
+        "vat",
+        "sales_tax"
+      ],
+      "window": {
+        "months": 12,
+        "includes_period": false,
+        "short": "annualise"
+      },
+      "expense_account": "6.1.1",
+      "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, caput e §§ 1º e 1º-A, redação da Lei Complementar nº 155, de 2016 — o valor devido mensalmente é a receita bruta do mês vezes a alíquota efetiva (RBT12 × Aliq − PD) / RBT12, sendo RBT12 a receita bruta acumulada nos doze meses anteriores ao período de apuração, Aliq a alíquota nominal e PD a parcela a deduzir do Anexo III, que se aplica à locação de bens móveis e prestação dos serviços não relacionados no § 5º-C do art. 18, e as atividades do § 5º-I quando o fator «r» é igual ou superior a 28 % (art. 18, § 5º-J). O DAS reúne num único recolhimento IRPJ, CSLL, Cofins, PIS/Pasep, CPP, IPI, ICMS e ISS (art. 13), e por isso nenhuma linha de documento de uma optante carrega um imposto sobre o consumo. No ano de início de atividade, a RBT12 é proporcionalizada: no primeiro mês, a receita do próprio mês vezes doze; nos onze meses seguintes, a média aritmética dos meses anteriores vezes doze (pergunta 5.4.1 do Perguntas e Respostas do Simples Nacional, «regra até 2026») — o que `short: annualise` faz",
+      "source": "lc-123",
+      "report": {
+        "code": "BR-PGDAS-D",
+        "name": "PGDAS-D — Programa Gerador do Documento de Arrecadação do Simples Nacional, Declaratório",
+        "periods": [
+          "month"
+        ],
+        "period_default": "month",
+        "valid_from": "2018-01-01",
+        "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, § 15-A, II; Perguntas e Respostas do Simples Nacional, pergunta 6.4 — a apuração é feita e transmitida mensalmente no PGDAS-D 2018 (períodos de apuração a partir de janeiro de 2018), ainda que sem receita no mês, e o DAS só é gerado depois de transmitida a apuração (pergunta 6.7)",
+        "deadline": {
+          "rule": "day_of_month_after_period",
+          "day": 20,
+          "legal_reference": "Resolução CGSN nº 140, de 2018, art. 40, segundo a pergunta 6.8 do Perguntas e Respostas do Simples Nacional — o prazo para recolher os tributos apurados termina no dia 20 do mês subsequente àquele em que a receita bruta foi auferida; quando não há expediente bancário no dia 20, o prazo é prorrogado para o primeiro dia útil seguinte. A pergunta 6.4 fixa no mesmo dia a transmissão do PGDAS-D",
+          "source": "cgsn-perguntas"
+        }
+      },
+      "brackets": [
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "180000.00",
+          "rate": "6",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo III, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 1ª faixa: receita bruta em 12 meses até 180.000,00, alíquota nominal 6 %, valor a deduzir nenhum",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "360000.00",
+          "rate": "11.2",
+          "deduction": "9360.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo III, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 2ª faixa: receita bruta em 12 meses de 180.000,01 a 360.000,00, alíquota nominal 11,2 %, valor a deduzir 9.360,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "720000.00",
+          "rate": "13.5",
+          "deduction": "17640.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo III, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 3ª faixa: receita bruta em 12 meses de 360.000,01 a 720.000,00, alíquota nominal 13,5 %, valor a deduzir 17.640,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "1800000.00",
+          "rate": "16",
+          "deduction": "35640.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo III, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 4ª faixa: receita bruta em 12 meses de 720.000,01 a 1.800.000,00, alíquota nominal 16 %, valor a deduzir 35.640,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "3600000.00",
+          "rate": "21",
+          "deduction": "125640.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo III, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 5ª faixa: receita bruta em 12 meses de 1.800.000,01 a 3.600.000,00, alíquota nominal 21 %, valor a deduzir 125.640,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "rate": "33",
+          "deduction": "648000.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo III, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 6ª faixa: receita bruta em 12 meses de 3.600.000,01 a 4.800.000,00, alíquota nominal 33 %, valor a deduzir 648.000,00. A tabela termina em 4.800.000,00, o limite da empresa de pequeno porte (art. 3º, II); a faixa fica aberta porque o formato de Ekwo exige uma última faixa sem limite, e a exclusão do regime acima desse limite não é modelada — veja o README",
+          "source": "lc-123"
+        }
+      ]
+    },
+    {
+      "code": "BR-SN-IV",
+      "name": "Simples Nacional — Anexo IV (Serviços do § 5º-C)",
+      "replaces": [
+        "vat",
+        "sales_tax"
+      ],
+      "window": {
+        "months": 12,
+        "includes_period": false,
+        "short": "annualise"
+      },
+      "expense_account": "6.1.1",
+      "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, caput e §§ 1º e 1º-A, redação da Lei Complementar nº 155, de 2016 — o valor devido mensalmente é a receita bruta do mês vezes a alíquota efetiva (RBT12 × Aliq − PD) / RBT12, sendo RBT12 a receita bruta acumulada nos doze meses anteriores ao período de apuração, Aliq a alíquota nominal e PD a parcela a deduzir do Anexo IV, que se aplica à prestação dos serviços relacionados no § 5º-C do art. 18 — a contribuição patronal previdenciária é recolhida fora do DAS. O DAS reúne num único recolhimento IRPJ, CSLL, Cofins, PIS/Pasep, CPP, IPI, ICMS e ISS (art. 13), e por isso nenhuma linha de documento de uma optante carrega um imposto sobre o consumo. No ano de início de atividade, a RBT12 é proporcionalizada: no primeiro mês, a receita do próprio mês vezes doze; nos onze meses seguintes, a média aritmética dos meses anteriores vezes doze (pergunta 5.4.1 do Perguntas e Respostas do Simples Nacional, «regra até 2026») — o que `short: annualise` faz",
+      "source": "lc-123",
+      "report": {
+        "code": "BR-PGDAS-D",
+        "name": "PGDAS-D — Programa Gerador do Documento de Arrecadação do Simples Nacional, Declaratório",
+        "periods": [
+          "month"
+        ],
+        "period_default": "month",
+        "valid_from": "2018-01-01",
+        "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, § 15-A, II; Perguntas e Respostas do Simples Nacional, pergunta 6.4 — a apuração é feita e transmitida mensalmente no PGDAS-D 2018 (períodos de apuração a partir de janeiro de 2018), ainda que sem receita no mês, e o DAS só é gerado depois de transmitida a apuração (pergunta 6.7)",
+        "deadline": {
+          "rule": "day_of_month_after_period",
+          "day": 20,
+          "legal_reference": "Resolução CGSN nº 140, de 2018, art. 40, segundo a pergunta 6.8 do Perguntas e Respostas do Simples Nacional — o prazo para recolher os tributos apurados termina no dia 20 do mês subsequente àquele em que a receita bruta foi auferida; quando não há expediente bancário no dia 20, o prazo é prorrogado para o primeiro dia útil seguinte. A pergunta 6.4 fixa no mesmo dia a transmissão do PGDAS-D",
+          "source": "cgsn-perguntas"
+        }
+      },
+      "brackets": [
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "180000.00",
+          "rate": "4.5",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo IV, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 1ª faixa: receita bruta em 12 meses até 180.000,00, alíquota nominal 4,5 %, valor a deduzir nenhum",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "360000.00",
+          "rate": "9",
+          "deduction": "8100.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo IV, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 2ª faixa: receita bruta em 12 meses de 180.000,01 a 360.000,00, alíquota nominal 9 %, valor a deduzir 8.100,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "720000.00",
+          "rate": "10.2",
+          "deduction": "12420.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo IV, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 3ª faixa: receita bruta em 12 meses de 360.000,01 a 720.000,00, alíquota nominal 10,2 %, valor a deduzir 12.420,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "1800000.00",
+          "rate": "14",
+          "deduction": "39780.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo IV, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 4ª faixa: receita bruta em 12 meses de 720.000,01 a 1.800.000,00, alíquota nominal 14 %, valor a deduzir 39.780,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "3600000.00",
+          "rate": "22",
+          "deduction": "183780.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo IV, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 5ª faixa: receita bruta em 12 meses de 1.800.000,01 a 3.600.000,00, alíquota nominal 22 %, valor a deduzir 183.780,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "rate": "33",
+          "deduction": "828000.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo IV, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 6ª faixa: receita bruta em 12 meses de 3.600.000,01 a 4.800.000,00, alíquota nominal 33 %, valor a deduzir 828.000,00. A tabela termina em 4.800.000,00, o limite da empresa de pequeno porte (art. 3º, II); a faixa fica aberta porque o formato de Ekwo exige uma última faixa sem limite, e a exclusão do regime acima desse limite não é modelada — veja o README",
+          "source": "lc-123"
+        }
+      ]
+    },
+    {
+      "code": "BR-SN-V",
+      "name": "Simples Nacional — Anexo V (Serviços do § 5º-I)",
+      "replaces": [
+        "vat",
+        "sales_tax"
+      ],
+      "window": {
+        "months": 12,
+        "includes_period": false,
+        "short": "annualise"
+      },
+      "expense_account": "6.1.1",
+      "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, caput e §§ 1º e 1º-A, redação da Lei Complementar nº 155, de 2016 — o valor devido mensalmente é a receita bruta do mês vezes a alíquota efetiva (RBT12 × Aliq − PD) / RBT12, sendo RBT12 a receita bruta acumulada nos doze meses anteriores ao período de apuração, Aliq a alíquota nominal e PD a parcela a deduzir do Anexo V, que se aplica à prestação dos serviços relacionados no § 5º-I do art. 18 quando o fator «r» é inferior a 28 % (art. 18, § 5º-M). O DAS reúne num único recolhimento IRPJ, CSLL, Cofins, PIS/Pasep, CPP, IPI, ICMS e ISS (art. 13), e por isso nenhuma linha de documento de uma optante carrega um imposto sobre o consumo. No ano de início de atividade, a RBT12 é proporcionalizada: no primeiro mês, a receita do próprio mês vezes doze; nos onze meses seguintes, a média aritmética dos meses anteriores vezes doze (pergunta 5.4.1 do Perguntas e Respostas do Simples Nacional, «regra até 2026») — o que `short: annualise` faz",
+      "source": "lc-123",
+      "report": {
+        "code": "BR-PGDAS-D",
+        "name": "PGDAS-D — Programa Gerador do Documento de Arrecadação do Simples Nacional, Declaratório",
+        "periods": [
+          "month"
+        ],
+        "period_default": "month",
+        "valid_from": "2018-01-01",
+        "legal_reference": "Lei Complementar nº 123, de 2006, art. 18, § 15-A, II; Perguntas e Respostas do Simples Nacional, pergunta 6.4 — a apuração é feita e transmitida mensalmente no PGDAS-D 2018 (períodos de apuração a partir de janeiro de 2018), ainda que sem receita no mês, e o DAS só é gerado depois de transmitida a apuração (pergunta 6.7)",
+        "deadline": {
+          "rule": "day_of_month_after_period",
+          "day": 20,
+          "legal_reference": "Resolução CGSN nº 140, de 2018, art. 40, segundo a pergunta 6.8 do Perguntas e Respostas do Simples Nacional — o prazo para recolher os tributos apurados termina no dia 20 do mês subsequente àquele em que a receita bruta foi auferida; quando não há expediente bancário no dia 20, o prazo é prorrogado para o primeiro dia útil seguinte. A pergunta 6.4 fixa no mesmo dia a transmissão do PGDAS-D",
+          "source": "cgsn-perguntas"
+        }
+      },
+      "brackets": [
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "180000.00",
+          "rate": "15.5",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo V, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 1ª faixa: receita bruta em 12 meses até 180.000,00, alíquota nominal 15,5 %, valor a deduzir nenhum",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "360000.00",
+          "rate": "18",
+          "deduction": "4500.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo V, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 2ª faixa: receita bruta em 12 meses de 180.000,01 a 360.000,00, alíquota nominal 18 %, valor a deduzir 4.500,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "720000.00",
+          "rate": "19.5",
+          "deduction": "9900.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo V, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 3ª faixa: receita bruta em 12 meses de 360.000,01 a 720.000,00, alíquota nominal 19,5 %, valor a deduzir 9.900,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "1800000.00",
+          "rate": "20.5",
+          "deduction": "17100.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo V, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 4ª faixa: receita bruta em 12 meses de 720.000,01 a 1.800.000,00, alíquota nominal 20,5 %, valor a deduzir 17.100,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "up_to": "3600000.00",
+          "rate": "23",
+          "deduction": "62100.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo V, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 5ª faixa: receita bruta em 12 meses de 1.800.000,01 a 3.600.000,00, alíquota nominal 23 %, valor a deduzir 62.100,00",
+          "source": "lc-123"
+        },
+        {
+          "valid_from": "2018-01-01",
+          "rate": "30.5",
+          "deduction": "540000.00",
+          "legal_reference": "Lei Complementar nº 123, de 2006, Anexo V, redação da Lei Complementar nº 155, de 2016 (vigência 1º de janeiro de 2018), 6ª faixa: receita bruta em 12 meses de 3.600.000,01 a 4.800.000,00, alíquota nominal 30,5 %, valor a deduzir 540.000,00. A tabela termina em 4.800.000,00, o limite da empresa de pequeno porte (art. 3º, II); a faixa fica aberta porque o formato de Ekwo exige uma última faixa sem limite, e a exclusão do regime acima desse limite não é modelada — veja o README",
+          "source": "lc-123"
+        }
+      ]
+    }
+  ]
+}

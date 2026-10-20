@@ -1,0 +1,780 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "BR-BP",
+      "kind": "balance_sheet",
+      "framework": "BR-ME-EPP",
+      "name": "Balanço Patrimonial",
+      "legal_reference": "Código Civil, art. 1.179 — o empresário e a sociedade empresária levantam anualmente o balanço patrimonial, que exprime com fidelidade e clareza a situação real da empresa e indica distintamente o ativo e o passivo (art. 1.188). Os grupos seguem a Lei nº 6.404, de 1976, art. 178: ativo circulante e não circulante (realizável a longo prazo, investimentos, imobilizado e intangível), passivo circulante e não circulante, e patrimônio líquido. Uma optante pelo Simples Nacional pode adotar contabilidade simplificada (Lei Complementar nº 123, de 2006, art. 27), e as normas do Conselho Federal de Contabilidade para microentidades e pequenas empresas preveem esses mesmos grupos",
+      "source": "codigo-civil",
+      "result_in_progress": "alone",
+      "lines": [
+        {
+          "code": "ATIVO",
+          "parent": null,
+          "name": "Ativo",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "AC",
+            "ANC"
+          ]
+        },
+        {
+          "code": "AC",
+          "parent": "ATIVO",
+          "name": "Ativo circulante",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "1.1.1",
+            "1.1.2",
+            "1.1.3",
+            "1.1.4",
+            "1.1.5",
+            "1.1.9"
+          ]
+        },
+        {
+          "code": "1.1.1",
+          "parent": "AC",
+          "name": "Disponível",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1.1.1",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "1.1.2",
+          "parent": "AC",
+          "name": "Clientes",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1.1.2",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "1.1.3",
+          "parent": "AC",
+          "name": "Outros créditos",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1.1.3",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "1.1.4",
+          "parent": "AC",
+          "name": "Estoques",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1.1.4",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "1.1.5",
+          "parent": "AC",
+          "name": "Despesas do exercício seguinte",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1.1.5",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "1.1.9",
+          "parent": "AC",
+          "name": "Contas transitórias",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1.1.9",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "ANC",
+          "parent": "ATIVO",
+          "name": "Ativo não circulante",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "1.2.1",
+            "1.2.2",
+            "1.2.3",
+            "1.2.4"
+          ]
+        },
+        {
+          "code": "1.2.1",
+          "parent": "ANC",
+          "name": "Realizável a longo prazo",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1.2.1",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "1.2.2",
+          "parent": "ANC",
+          "name": "Investimentos",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1.2.2",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "1.2.3",
+          "parent": "ANC",
+          "name": "Imobilizado",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1.2.3",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "1.2.4",
+          "parent": "ANC",
+          "name": "Intangível",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "1.2.4",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "PASPL",
+          "parent": null,
+          "name": "Passivo e patrimônio líquido",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "PASSIVO",
+            "PL"
+          ]
+        },
+        {
+          "code": "PASSIVO",
+          "parent": "PASPL",
+          "name": "Passivo",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "PC",
+            "PNC"
+          ]
+        },
+        {
+          "code": "PC",
+          "parent": "PASSIVO",
+          "name": "Passivo circulante",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "2.1.1",
+            "2.1.2",
+            "2.1.3",
+            "2.1.4",
+            "2.1.5",
+            "2.1.6"
+          ]
+        },
+        {
+          "code": "2.1.1",
+          "parent": "PC",
+          "name": "Fornecedores",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2.1.1",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "2.1.2",
+          "parent": "PC",
+          "name": "Obrigações trabalhistas",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2.1.2",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "2.1.3",
+          "parent": "PC",
+          "name": "Obrigações sociais",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2.1.3",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "2.1.4",
+          "parent": "PC",
+          "name": "Obrigações tributárias",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2.1.4",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "2.1.5",
+          "parent": "PC",
+          "name": "Empréstimos e financiamentos",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2.1.5",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "2.1.6",
+          "parent": "PC",
+          "name": "Outras obrigações",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2.1.6",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "PNC",
+          "parent": "PASSIVO",
+          "name": "Passivo não circulante",
+          "sequence": 230,
+          "is_total": true,
+          "plus": [
+            "2.2.1",
+            "2.2.2",
+            "2.2.3",
+            "2.2.9"
+          ]
+        },
+        {
+          "code": "2.2.1",
+          "parent": "PNC",
+          "name": "Empréstimos e financiamentos a longo prazo",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2.2.1",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "2.2.2",
+          "parent": "PNC",
+          "name": "Mútuos de sócios",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2.2.2",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "2.2.3",
+          "parent": "PNC",
+          "name": "Parcelamentos tributários a longo prazo",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2.2.3",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "2.2.9",
+          "parent": "PNC",
+          "name": "Outras obrigações a longo prazo",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "2.2.9",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "PL",
+          "parent": "PASPL",
+          "name": "Patrimônio líquido",
+          "sequence": 280,
+          "is_total": true,
+          "plus": [
+            "3.1",
+            "3.2",
+            "3.3",
+            "3.4",
+            "3.5"
+          ]
+        },
+        {
+          "code": "3.1",
+          "parent": "PL",
+          "name": "Capital social",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "3.1",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "3.2",
+          "parent": "PL",
+          "name": "Reservas de capital",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "3.2",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "3.3",
+          "parent": "PL",
+          "name": "Reservas de lucros",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "3.3",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "3.4",
+          "parent": "PL",
+          "name": "Lucros ou prejuízos acumulados",
+          "sequence": 320,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "3.4",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        },
+        {
+          "code": "3.5",
+          "parent": "PL",
+          "name": "Resultado do exercício",
+          "sequence": 330,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "3.5",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, agrupadas na ordem dos arts. 178 e 179 da Lei nº 6.404, de 1976; o Código Civil não prescreve um plano de contas — veja o README",
+          "source": "lei-6404"
+        }
+      ]
+    },
+    {
+      "code": "BR-DRE",
+      "kind": "income_statement",
+      "framework": "BR-ME-EPP",
+      "name": "Demonstração do Resultado do Exercício",
+      "legal_reference": "Código Civil, art. 1.189 — o balanço de resultado econômico acompanha o balanço patrimonial, na forma da lei especial. As linhas seguem a discriminação da Lei nº 6.404, de 1976, art. 187: receita bruta, deduções e impostos, receita líquida, custo das mercadorias e serviços vendidos, lucro bruto, despesas com vendas, financeiras, gerais e administrativas e outras despesas operacionais, outras receitas e despesas, e o resultado do exercício. Para uma optante pelo Simples Nacional, o IRPJ e a CSLL estão no DAS (Lei Complementar nº 123, de 2006, art. 13) e não há linha de provisão para o imposto de renda",
+      "source": "codigo-civil",
+      "lines": [
+        {
+          "code": "4.1",
+          "parent": null,
+          "name": "Receita bruta de vendas e serviços",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "4.1",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "4.2",
+          "parent": null,
+          "name": "(-) Devoluções, cancelamentos e descontos incondicionais",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "4.2",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "6.1",
+          "parent": null,
+          "name": "(-) Tributos sobre a receita (Simples Nacional)",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "6.1",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Lei nº 6.404, de 1976, art. 187, I — os impostos são deduzidos da receita bruta; o DAS do Simples Nacional, calculado sobre a receita bruta do mês, é lançado na conta 6.1.1",
+          "source": "lei-6404"
+        },
+        {
+          "code": "RL",
+          "parent": null,
+          "name": "Receita líquida",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "4.1",
+            "4.2"
+          ],
+          "minus": [
+            "6.1"
+          ]
+        },
+        {
+          "code": "5.1",
+          "parent": null,
+          "name": "(-) Custo das mercadorias e dos serviços vendidos",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "5.1",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "LB",
+          "parent": null,
+          "name": "Lucro bruto",
+          "sequence": 60,
+          "is_total": true,
+          "plus": [
+            "RL"
+          ],
+          "minus": [
+            "5.1"
+          ]
+        },
+        {
+          "code": "6.5",
+          "parent": null,
+          "name": "(-) Despesas com vendas",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "6.5",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "6.2",
+          "parent": null,
+          "name": "(-) Despesas com pessoal",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "6.2",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "6.3",
+          "parent": null,
+          "name": "(-) Despesas gerais e administrativas",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "6.3",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "6.4",
+          "parent": null,
+          "name": "(-) Outras despesas operacionais",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "6.4",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "4.3",
+          "parent": null,
+          "name": "Receitas financeiras",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "4.3",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "6.6",
+          "parent": null,
+          "name": "(-) Despesas financeiras",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "6.6",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "LO",
+          "parent": null,
+          "name": "Lucro ou prejuízo operacional",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "LB",
+            "4.3"
+          ],
+          "minus": [
+            "6.5",
+            "6.2",
+            "6.3",
+            "6.4",
+            "6.6"
+          ]
+        },
+        {
+          "code": "4.4",
+          "parent": null,
+          "name": "Outras receitas",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "4.4",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "6.7",
+          "parent": null,
+          "name": "(-) Outras despesas",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "6.7",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Contas do plano de referência deste pacote, na discriminação do art. 187 da Lei nº 6.404, de 1976",
+          "source": "lei-6404"
+        },
+        {
+          "code": "LL",
+          "parent": null,
+          "name": "Lucro ou prejuízo líquido do exercício",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "LO",
+            "4.4"
+          ],
+          "minus": [
+            "6.7"
+          ]
+        }
+      ]
+    }
+  ]
+}
