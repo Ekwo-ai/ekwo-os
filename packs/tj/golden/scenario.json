@@ -1,0 +1,356 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Год книг таджикского плательщика НДС с месячной отчетностью",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Финансовый год 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    },
+    {
+      "code": "2026-05",
+      "from": "2026-05-01",
+      "to": "2026-05-31"
+    },
+    {
+      "code": "2026-06",
+      "from": "2026-06-01",
+      "to": "2026-06-30"
+    }
+  ],
+  "statements": [
+    "TJ-BS",
+    "TJ-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-tj",
+      "name": "Клиент-образец Душанбе (вымышленный)",
+      "type": "customer",
+      "country": "TJ"
+    },
+    {
+      "ref": "client-foreign",
+      "name": "Muster Handels GmbH (fictitious)",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "supplier-tj",
+      "name": "Поставщик-образец Худжанд (вымышленный)",
+      "type": "supplier",
+      "country": "TJ"
+    },
+    {
+      "ref": "supplier-foreign",
+      "name": "Muster Consulting Ltd (fictitious)",
+      "type": "supplier",
+      "country": "GB"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-tj",
+      "date": "2026-01-15",
+      "why": "Продажа товара по стандартной ставке 14 % — база и налог ячейки TAXABLE (статья 264, часть 1, пункт 1).",
+      "lines": [
+        {
+          "name": "Строительные материалы",
+          "quantity": 10,
+          "unit_price": 5000,
+          "tax": "TJ-S-14",
+          "account": "44110"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-01-20",
+      "why": "Экспорт товара — поставка по нулевой ставке, ячейка ZERO (статьи 254 и 264, часть 2).",
+      "lines": [
+        {
+          "name": "Партия товара на экспорт",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "TJ-S-ZERO-EXPORT",
+          "account": "44110"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-tj",
+      "date": "2026-01-12",
+      "why": "Покупка товара для перепродажи с зачетом налога 14 % — ячейка INPUT (статья 266, часть 1).",
+      "lines": [
+        {
+          "name": "Товары для перепродажи",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "TJ-P-14",
+          "account": "10710"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-tj",
+      "date": "2026-02-10",
+      "why": "Аренда жилых помещений — освобожденная операция, ячейка EXEMPT (статья 251, часть 2, пункт 1).",
+      "lines": [
+        {
+          "name": "Аренда жилого помещения",
+          "quantity": 10,
+          "unit_price": 300,
+          "tax": "TJ-S-EXEMPT-REALESTATE",
+          "account": "44210"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-tj",
+      "date": "2026-02-18",
+      "why": "Продажа по стандартной ставке 14 %.",
+      "lines": [
+        {
+          "name": "Офисная мебель",
+          "quantity": 4,
+          "unit_price": 7500,
+          "tax": "TJ-S-14",
+          "account": "44110"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-tj",
+      "date": "2026-02-25",
+      "why": "Возврат одной единицы из V4 — уменьшает базу и налог ячейки TAXABLE в периоде возврата (статьи 249 и 270).",
+      "lines": [
+        {
+          "name": "Возврат офисной мебели",
+          "quantity": 1,
+          "unit_price": 7500,
+          "tax": "TJ-S-14",
+          "account": "44110"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-tj",
+      "date": "2026-02-14",
+      "why": "Покупка услуг с зачетом налога 14 %.",
+      "lines": [
+        {
+          "name": "Консультационные услуги",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "TJ-P-14",
+          "account": "55250"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-tj",
+      "date": "2026-03-10",
+      "why": "Месяц без продаж: зачитываемый налог 5 600 превышает налог к уплате — ячейка EXCESS (статья 274).",
+      "lines": [
+        {
+          "name": "Товары для перепродажи",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "TJ-P-14",
+          "account": "10710"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-tj",
+      "date": "2026-04-08",
+      "why": "Продажа по стандартной ставке 14 %.",
+      "lines": [
+        {
+          "name": "Строительные материалы",
+          "quantity": 8,
+          "unit_price": 2500,
+          "tax": "TJ-S-14",
+          "account": "44110"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-04-20",
+      "why": "Международная перевозка груза — освобождена от НДС (статья 252, часть 1), ячейка EXEMPT, не нулевая ставка.",
+      "lines": [
+        {
+          "name": "Международная перевозка груза",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "TJ-S-EXEMPT-INTL-TRANSPORT",
+          "account": "44120"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-tj",
+      "date": "2026-04-12",
+      "why": "Покупка товара с зачетом налога 14 %.",
+      "lines": [
+        {
+          "name": "Товары для перепродажи",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "TJ-P-14",
+          "account": "10710"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "supplier-foreign",
+      "date": "2026-04-25",
+      "why": "Консультационные услуги иностранного поставщика без постоянного места деятельности в Таджикистане: налоговый агент уплачивает 14 % без права зачета (статья 260), ячейка REVERSE.",
+      "lines": [
+        {
+          "name": "Консультационные услуги нерезидента",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "TJ-P-14-NR",
+          "account": "55250"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-tj",
+      "date": "2026-05-06",
+      "why": "Финансовая услуга за вознаграждение — освобождена от НДС (статья 251, часть 2, пункт 2).",
+      "lines": [
+        {
+          "name": "Процентное вознаграждение за финансовую услугу",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "TJ-S-EXEMPT-FINANCIAL",
+          "account": "44120"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "client-tj",
+      "date": "2026-05-20",
+      "why": "Строительные работы по сниженной ставке 7 % — ячейка REDUCED7 (статья 264, часть 1, пункт 2).",
+      "lines": [
+        {
+          "name": "Строительные работы",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "TJ-S-7",
+          "account": "44120"
+        }
+      ]
+    },
+    {
+      "ref": "V9",
+      "type": "sale_invoice",
+      "contact": "client-tj",
+      "date": "2026-06-10",
+      "why": "Продажа сельскохозяйственной продукции внутреннего производства по сниженной ставке 5 % — ячейка REDUCED5.",
+      "lines": [
+        {
+          "name": "Сельскохозяйственная продукция",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "TJ-S-5",
+          "account": "44110"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-01",
+      "amount": 57000,
+      "contact": "client-tj",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Поступление, точно закрывающее V1 (50 000 + 7 000 НДС)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 20000,
+      "contact": "client-foreign",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Поступление, точно закрывающее экспортный счет V2 (без НДС)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-01",
+      "amount": 5000,
+      "contact": "client-tj",
+      "journal": "BNK",
+      "match": null,
+      "why": "Поступление без привязки к документу — остается открытой суммой на счете клиента."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 34200,
+      "contact": "supplier-tj",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Платеж, точно закрывающий P1 (30 000 + 4 200 НДС)."
+    }
+  ]
+}

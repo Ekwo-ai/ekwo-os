@@ -1,0 +1,623 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "TJ-BS",
+      "kind": "balance_sheet",
+      "framework": "МСФО",
+      "name": "Бухгалтерский баланс",
+      "valid_from": "2024-01-01",
+      "legal_reference": "Распоряжение Минфина № 41 от 27.05.2011 (разделы плана счетов) и МСФО (IAS 1) — структура баланса. Строки собраны десте из разделов плана счетов; это сборка самой десте, а не утвержденная форма, текст которой в открытых источниках не прочитан. Диапазоны счетов 33400–33999 (доля меньшинства и далее) взяты по разделу «Собственный капитал»; текст плана за счетом 33300 не прочитан. См. README.md.",
+      "source": "coa-order-41",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Результат текущего финансового года",
+      "lines": [
+        {
+          "code": "AS-CASH",
+          "name": "Денежные средства и их эквиваленты",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "10100",
+              "code_to": "10299"
+            }
+          ]
+        },
+        {
+          "code": "AS-STINV",
+          "name": "Краткосрочные инвестиции",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "10300",
+              "code_to": "10399"
+            }
+          ]
+        },
+        {
+          "code": "AS-REC",
+          "name": "Торговая дебиторская задолженность",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "10400",
+              "code_to": "10499"
+            }
+          ]
+        },
+        {
+          "code": "AS-OREC",
+          "name": "Прочая дебиторская задолженность, авансы и налоги к возмещению",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "10500",
+              "code_to": "10699"
+            }
+          ]
+        },
+        {
+          "code": "AS-INV",
+          "name": "Товарно-материальные запасы",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "10700",
+              "code_to": "10799"
+            }
+          ]
+        },
+        {
+          "code": "AS-OCA",
+          "name": "Расходы, оплаченные авансом, и внеоборотные активы для продажи",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "10800",
+              "code_to": "10999"
+            }
+          ]
+        },
+        {
+          "code": "AS-CA-TOTAL",
+          "name": "Итого оборотные активы",
+          "sequence": 70,
+          "is_total": true,
+          "plus": [
+            "AS-CASH",
+            "AS-STINV",
+            "AS-REC",
+            "AS-OREC",
+            "AS-INV",
+            "AS-OCA"
+          ]
+        },
+        {
+          "code": "AS-PPE",
+          "name": "Основные средства (за вычетом накопленного износа)",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "11000",
+              "code_to": "11199"
+            }
+          ]
+        },
+        {
+          "code": "AS-NATRES",
+          "name": "Природные ресурсы (за вычетом истощения)",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "11200",
+              "code_to": "11299"
+            }
+          ]
+        },
+        {
+          "code": "AS-INTANG",
+          "name": "Нематериальные активы (за вычетом амортизации)",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "11300",
+              "code_to": "11399"
+            }
+          ]
+        },
+        {
+          "code": "AS-BIO",
+          "name": "Биологические активы",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "11400",
+              "code_to": "11499"
+            }
+          ]
+        },
+        {
+          "code": "AS-INVPROP",
+          "name": "Инвестиции в недвижимость",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "11500",
+              "code_to": "11599"
+            }
+          ]
+        },
+        {
+          "code": "AS-LTINV",
+          "name": "Долгосрочные инвестиции",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "11600",
+              "code_to": "11699"
+            }
+          ]
+        },
+        {
+          "code": "AS-ONCA",
+          "name": "Отсроченные налоговые требования и долгосрочная дебиторская задолженность",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "11700",
+              "code_to": "11999"
+            }
+          ]
+        },
+        {
+          "code": "AS-NCA-TOTAL",
+          "name": "Итого внеоборотные активы",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "AS-PPE",
+            "AS-NATRES",
+            "AS-INTANG",
+            "AS-BIO",
+            "AS-INVPROP",
+            "AS-LTINV",
+            "AS-ONCA"
+          ]
+        },
+        {
+          "code": "AS-TOTAL",
+          "name": "Итого активы",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "AS-CA-TOTAL",
+            "AS-NCA-TOTAL"
+          ]
+        },
+        {
+          "code": "EQ-SHARE",
+          "name": "Объявленный (уставный) капитал",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "33000",
+              "code_to": "33099"
+            }
+          ]
+        },
+        {
+          "code": "EQ-APIC",
+          "name": "Добавочный капитал",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "33100",
+              "code_to": "33199"
+            }
+          ]
+        },
+        {
+          "code": "EQ-RETAINED",
+          "name": "Нераспределенная прибыль",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "33200",
+              "code_to": "33299"
+            }
+          ]
+        },
+        {
+          "code": "EQ-RESERVE",
+          "name": "Резервный капитал",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "33300",
+              "code_to": "33399"
+            }
+          ]
+        },
+        {
+          "code": "EQ-OTHER",
+          "name": "Прочие статьи собственного капитала",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "33400",
+              "code_to": "33999"
+            }
+          ]
+        },
+        {
+          "code": "EQ-TOTAL",
+          "name": "Итого собственный капитал",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "EQ-SHARE",
+            "EQ-APIC",
+            "EQ-RETAINED",
+            "EQ-RESERVE",
+            "EQ-OTHER"
+          ]
+        },
+        {
+          "code": "LI-PAY",
+          "name": "Торговая кредиторская задолженность",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22000",
+              "code_to": "22099"
+            }
+          ]
+        },
+        {
+          "code": "LI-DEBT",
+          "name": "Краткосрочные долговые обязательства",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22100",
+              "code_to": "22199"
+            }
+          ]
+        },
+        {
+          "code": "LI-ACCR",
+          "name": "Краткосрочные начисленные обязательства",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22200",
+              "code_to": "22299"
+            }
+          ]
+        },
+        {
+          "code": "LI-TAX",
+          "name": "Налоги к оплате",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22300",
+              "code_to": "22399"
+            }
+          ]
+        },
+        {
+          "code": "LI-PROV",
+          "name": "Резервы предстоящих расходов и платежей",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22400",
+              "code_to": "22499"
+            }
+          ]
+        },
+        {
+          "code": "LI-OTHER",
+          "name": "Прочие краткосрочные обязательства",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22500",
+              "code_to": "22599"
+            }
+          ]
+        },
+        {
+          "code": "LI-CL-TOTAL",
+          "name": "Итого краткосрочные обязательства",
+          "sequence": 290,
+          "is_total": true,
+          "plus": [
+            "LI-PAY",
+            "LI-DEBT",
+            "LI-ACCR",
+            "LI-TAX",
+            "LI-PROV",
+            "LI-OTHER"
+          ]
+        },
+        {
+          "code": "LI-LT",
+          "name": "Долгосрочные обязательства",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22600",
+              "code_to": "22699"
+            }
+          ]
+        },
+        {
+          "code": "LI-DEFERRED",
+          "name": "Отсроченные доходы",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22700",
+              "code_to": "22799"
+            }
+          ]
+        },
+        {
+          "code": "LI-NCL-TOTAL",
+          "name": "Итого долгосрочные обязательства",
+          "sequence": 320,
+          "is_total": true,
+          "plus": [
+            "LI-LT",
+            "LI-DEFERRED"
+          ]
+        },
+        {
+          "code": "EQLI-TOTAL",
+          "name": "Итого собственный капитал и обязательства",
+          "sequence": 330,
+          "is_total": true,
+          "plus": [
+            "EQ-TOTAL",
+            "LI-CL-TOTAL",
+            "LI-NCL-TOTAL"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "TJ-IS",
+      "kind": "income_statement",
+      "framework": "МСФО",
+      "name": "Отчет о прибылях и убытках",
+      "valid_from": "2024-01-01",
+      "legal_reference": "Распоряжение Минфина № 41 от 27.05.2011 (разделы плана счетов) и МСФО (IAS 1) — структура отчета о прибылях и убытках. Строки собраны десте из разделов плана счетов; это сборка самой десте, а не утвержденная форма, текст которой в открытых источниках не прочитан. Счета доходов и расходов (44000, 55000, 66000) — собственные счета десте: текст разделов IV–VI плана не прочитан. См. README.md.",
+      "source": "coa-order-41",
+      "lines": [
+        {
+          "code": "IS-REV",
+          "name": "Выручка от продаж",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "44100",
+              "code_to": "44199"
+            }
+          ]
+        },
+        {
+          "code": "IS-COGS",
+          "name": "Себестоимость продаж",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "55000",
+              "code_to": "55099"
+            }
+          ]
+        },
+        {
+          "code": "IS-GROSS",
+          "name": "Валовая прибыль",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "IS-REV"
+          ],
+          "minus": [
+            "IS-COGS"
+          ]
+        },
+        {
+          "code": "IS-SELL",
+          "name": "Расходы по продаже",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "55100",
+              "code_to": "55199"
+            }
+          ]
+        },
+        {
+          "code": "IS-ADMIN",
+          "name": "Административные расходы",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "55200",
+              "code_to": "55299"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPINC",
+          "name": "Прочие операционные доходы",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "44200",
+              "code_to": "44999"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPEXP",
+          "name": "Прочие операционные расходы",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "55300",
+              "code_to": "55999"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPRESULT",
+          "name": "Результат операционной деятельности",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "IS-GROSS",
+            "IS-OPINC"
+          ],
+          "minus": [
+            "IS-SELL",
+            "IS-ADMIN",
+            "IS-OPEXP"
+          ]
+        },
+        {
+          "code": "IS-NONINC",
+          "name": "Доходы от неоперационной деятельности",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "66100",
+              "code_to": "66499"
+            }
+          ]
+        },
+        {
+          "code": "IS-NONEXP",
+          "name": "Расходы от неоперационной деятельности",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "66500",
+              "code_to": "66899"
+            }
+          ]
+        },
+        {
+          "code": "IS-PRETAX",
+          "name": "Результат до налога на доходы",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "IS-OPRESULT",
+            "IS-NONINC"
+          ],
+          "minus": [
+            "IS-NONEXP"
+          ]
+        },
+        {
+          "code": "IS-TAX",
+          "name": "Налог на доходы юридических лиц",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "66900",
+              "code_to": "66999"
+            }
+          ]
+        },
+        {
+          "code": "IS-NET",
+          "name": "Чистый результат периода",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "IS-PRETAX"
+          ],
+          "minus": [
+            "IS-TAX"
+          ]
+        }
+      ]
+    }
+  ]
+}
