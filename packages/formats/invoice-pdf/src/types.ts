@@ -276,6 +276,20 @@ export interface InvoiceTheme {
    * the others, with Noto Sans drawing any character it does not have.
    */
   font?: 'Noto Sans' | ExtraFont;
+  /**
+   * A second typeface for what the page displays rather than reads: the
+   * title, the seller's and the buyer's names, the headings of the sections
+   * and the labels of the totals. Figures stay in {@link InvoiceTheme.font}.
+   * Its regular face draws them, or its bold one where there is one.
+   */
+  headingFont?: ExtraFont;
+  /**
+   * A pair of typefaces the package embeds, chosen by name. `classic` (the
+   * default): Noto Sans everywhere. `gustave`: Inter for the text and the
+   * figures, Fraunces for the title, the names and the headings. `font` and
+   * `headingFont`, where given, take the place of the pair's.
+   */
+  typeface?: 'classic' | 'gustave';
   /** `left`: the logo above the seller's address (default). `right`: above the title, the seller's name on the left. */
   logoPosition?: 'left' | 'right';
 }

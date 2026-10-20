@@ -99,10 +99,10 @@ export interface Run {
 
 export interface Typesetter {
   /** The pieces of `text`, each with the font that draws it. Refuses what no font has and what reads right to left. */
-  runs(text: string, bold: boolean): Promise<Run[]>;
-  width(text: string, size: number, bold: boolean): Promise<number>;
+  runs(text: string, bold: boolean, heading?: boolean): Promise<Run[]>;
+  width(text: string, size: number, bold: boolean, heading?: boolean): Promise<number>;
   /** `text` broken into lines no wider than `width`; a paragraph break (`\n`) is kept. */
-  wrap(text: string, size: number, width: number, bold: boolean): Promise<string[]>;
+  wrap(text: string, size: number, width: number, bold: boolean, heading?: boolean): Promise<string[]>;
 }
 
 /** Removes what is drawn as nothing and turns tabs into spaces. */
@@ -124,11 +124,25 @@ export function refuseRightToLeft(text: string, where: string): void {
 
 /**
  * `first`, the typeface of the theme, is tried before the embedded fonts;
- * `extra`, the fonts of `options.fonts`, after them.
+ * `extra`, the fonts of `options.fonts`, after them. `heading`, the heading
+ * typeface of the theme, is tried first for a run asked as a heading, and
+ * the families above draw what it does not have.
  */
-export function typesetter(doc: PDFDocument, extra: readonly ExtraFont[], locale: string, first: ExtraFont | null = null): Typesetter {
+export function typesetter(
+  doc: PDFDocument,
+  extra: readonly ExtraFont[],
+  locale: string,
+  first: ExtraFont | null = null,
+  heading: ExtraFont | null = null,
+): Typesetter {
   doc.registerFontkit(fontkit);
   const families: Family[] = [];
+  let headingFamily: Family | undefined;
+  if (heading !== null) {
+    const regular = face(bytesOf(heading.regular), 'theme.headingFont.regular');
+    const bold = heading.bold === undefined ? regular : face(bytesOf(heading.bold), 'theme.headingFont.bold');
+    headingFamily = { name: 'theme.headingFont', regular, bold };
+  }
   if (first !== null) {
     const regular = face(bytesOf(first.regular), 'theme.font.regular');
     const bold = first.bold === undefined ? regular : face(bytesOf(first.bold), 'theme.font.bold');
@@ -164,16 +178,18 @@ export function typesetter(doc: PDFDocument, extra: readonly ExtraFont[], locale
     return f.embedded;
   };
 
-  const familyFor = (codePoint: number): Family | undefined => families.find((family) => family.regular.covers(codePoint));
+  const familyFor = (codePoint: number, heading: boolean): Family | undefined =>
+    (heading && headingFamily?.regular.covers(codePoint) ? headingFamily : undefined) ??
+    families.find((family) => family.regular.covers(codePoint));
 
-  async function runs(text: string, bold: boolean): Promise<Run[]> {
+  async function runs(text: string, bold: boolean, heading = false): Promise<Run[]> {
     const out: { text: string; family: Family }[] = [];
     for (const char of clean(text)) {
       const codePoint = char.codePointAt(0) ?? 0;
-      let family = familyFor(codePoint);
+      let family = familyFor(codePoint, heading);
       let drawn = char;
       if (family === undefined && SPACES.has(codePoint)) {
-        family = familyFor(0x20);
+        family = familyFor(0x20, heading);
         drawn = ' ';
       }
       // A combining mark stays with the letter it sits on, in its font, when that font has it.
@@ -192,9 +208,9 @@ export function typesetter(doc: PDFDocument, extra: readonly ExtraFont[], locale
     return Promise.all(out.map(async (run) => ({ text: run.text, font: await embed(bold ? run.family.bold : run.family.regular) })));
   }
 
-  async function width(text: string, size: number, bold: boolean): Promise<number> {
+  async function width(text: string, size: number, bold: boolean, heading = false): Promise<number> {
     let total = 0;
-    for (const run of await runs(text, bold)) total += run.font.widthOfTextAtSize(run.text, size);
+    for (const run of await runs(text, bold, heading)) total += run.font.widthOfTextAtSize(run.text, size);
     return total;
   }
 
@@ -208,23 +224,23 @@ export function typesetter(doc: PDFDocument, extra: readonly ExtraFont[], locale
   const characters = (piece: string): string[] =>
     graphemes === undefined ? Array.from(piece) : Array.from(graphemes.segment(piece), (s) => s.segment);
 
-  async function wrap(text: string, size: number, maxWidth: number, bold: boolean): Promise<string[]> {
+  async function wrap(text: string, size: number, maxWidth: number, bold: boolean, heading = false): Promise<string[]> {
     const lines: string[] = [];
     for (const paragraph of clean(text).split('\n')) {
       let current = '';
       for (const piece of pieces(paragraph)) {
         const candidate = current + piece;
-        if (current === '' || (await width(candidate.trimEnd(), size, bold)) <= maxWidth) {
+        if (current === '' || (await width(candidate.trimEnd(), size, bold, heading)) <= maxWidth) {
           current = candidate;
         } else {
           lines.push(current.trimEnd());
           current = piece.trimStart();
         }
         // A word longer than the line is broken between its characters.
-        while ((await width(current.trimEnd(), size, bold)) > maxWidth) {
+        while ((await width(current.trimEnd(), size, bold, heading)) > maxWidth) {
           let head = '';
           for (const char of characters(current)) {
-            if (head !== '' && (await width(head + char, size, bold)) > maxWidth) break;
+            if (head !== '' && (await width(head + char, size, bold, heading)) > maxWidth) break;
             head += char;
           }
           lines.push(head);

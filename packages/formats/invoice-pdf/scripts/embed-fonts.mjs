@@ -9,11 +9,17 @@
 // Hinted, and not unhinted: pdf-lib cuts a subset out of the hinted build that
 // every viewer draws, and out of the unhinted one a subset whose glyphs are
 // empty in some of them. Beside them, the compact sRGB profile of https://github.com/saucecontrol/Compact-ICC-Profiles
-// (profiles/sRGB-v2-micro.icc, CC0). Their SHA-256 is checked against the one
-// the README gives, so that a font is never replaced by accident.
+// (profiles/sRGB-v2-micro.icc, CC0). The typeface `gustave` adds Inter 4.1
+// (https://github.com/rsms/inter/releases/tag/v4.1, extras/ttf/) and the
+// static SemiBold of Fraunces the Google Fonts API serves (v38, opsz 9..144).
+// Inter is taken from its own release, and not from the Google Fonts API: the
+// build that API serves loses glyphs when pdf-lib cuts its subset. Their
+// SHA-256 is checked against the one the README gives, so that a font is never
+// replaced by accident. A file absent from the directory leaves its module as
+// it is, so that one typeface can be refreshed without the others.
 
 import { createHash } from 'node:crypto';
-import { readFile, writeFile } from 'node:fs/promises';
+import { access, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const FILES = [
@@ -21,6 +27,9 @@ const FILES = [
   ['NotoSans-Bold.ttf', 'noto-sans-bold.ts', '1df075a380fc7cb898acf64c1f7b3b4dd780de3caa860178bf929de35817a913'],
   ['NotoSansThai-Regular.ttf', 'noto-sans-thai-regular.ts', '61cf814eec46b294d6ea4401ac295d0cecd5207bd2331dcc5a15e7301d30ee44'],
   ['NotoSansThai-Bold.ttf', 'noto-sans-thai-bold.ts', '2ac6c6e8a478e23b15f76e4894af1fa2210f8f350e4e6e54aad530bec03efbfb'],
+  ['Inter-Regular.ttf', 'inter-regular.ts', '40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82'],
+  ['Inter-Bold.ttf', 'inter-bold.ts', '288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f'],
+  ['Fraunces-SemiBold.ttf', 'fraunces-semibold.ts', 'ff7cf63717c27756df857ca12045a83522569f7b561bedaff813a25274eb263f'],
   ['sRGB-v2-micro.icc', 'srgb-icc.ts', '0a8a33aea66a6f154a5642ebe168ef287e73265d9f7b51c42a45e6eedbacda7a'],
 ];
 
@@ -68,6 +77,7 @@ if (source === undefined) {
 }
 const out = new URL('../src/fonts/', import.meta.url);
 for (const [file, module, sha256] of FILES) {
+  if (!(await access(join(source, file)).then(() => true, () => false))) continue;
   const bytes = await readFile(join(source, file));
   const actual = createHash('sha256').update(bytes).digest('hex');
   if (actual !== sha256) {

@@ -121,20 +121,22 @@ export async function readDocumentForPdf(
 }
 
 /**
- * The accent colour and the side of the logo the company chose, as the
- * brick's theme; a column left null keeps the brick's default.
+ * The accent colour, the side of the logo and the typeface the company chose,
+ * as the brick's theme; a column left null keeps the brick's default.
  */
 export async function readInvoiceTheme(backend: Backend, companyId: string): Promise<InvoiceTheme> {
   const [company] = await backend.select<Row>({
     table: 'companies',
-    columns: ['invoice_accent_color', 'invoice_logo_position'],
+    columns: ['invoice_accent_color', 'invoice_logo_position', 'invoice_typeface'],
     where: [{ column: 'id', op: 'eq', value: companyId }],
   });
   const accent = company?.['invoice_accent_color'];
   const side = company?.['invoice_logo_position'];
+  const typeface = company?.['invoice_typeface'];
   return {
     ...(typeof accent === 'string' ? { accent } : {}),
     ...(side === 'left' || side === 'right' ? { logoPosition: side } : {}),
+    ...(typeface === 'classic' || typeface === 'gustave' ? { typeface } : {}),
   };
 }
 

@@ -56,6 +56,8 @@ const text = (value: unknown): string | null => {
 interface Style {
   size?: number;
   bold?: boolean;
+  /** Drawn in the heading typeface of the theme, where it has one. */
+  heading?: boolean;
   color?: RGB;
 }
 
@@ -108,7 +110,7 @@ class Canvas {
   async text(value: string, x: number, baseline: number, style: Style = {}, align: 'left' | 'right' = 'left'): Promise<number> {
     const size = style.size ?? BODY;
     const bold = style.bold ?? false;
-    const runs = await this.ts.runs(value, bold);
+    const runs = await this.ts.runs(value, bold, style.heading ?? false);
     let width = 0;
     for (const run of runs) width += run.font.widthOfTextAtSize(run.text, size);
     let cursor = align === 'right' ? x - width : x;
@@ -294,7 +296,7 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
     `${fullTitle}|${documentDate}|${text(header.document_id) ?? ''}`,
   );
 
-  const ts = typesetter(doc, options.fonts ?? [], f.locale, theme.font);
+  const ts = typesetter(doc, options.fonts ?? [], f.locale, theme.font, theme.heading);
   const [width, height] = SIZES[options.pageSize ?? 'A4'];
   const canvas = new Canvas(doc, ts, width, height);
   const contentWidth = canvas.right - canvas.left;
@@ -339,7 +341,7 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   // Beside a logo the name is a line of the address; alone, it stands for the logo.
   const nameSize = logo !== null && theme.logoPosition === 'left' ? 11 : 16;
   if (sellerName !== null) {
-    leftY -= await paragraph(canvas, await ts.wrap(sellerName, nameSize, leftWidth, true), canvas.left, leftY, { size: nameSize, bold: true });
+    leftY -= await paragraph(canvas, await ts.wrap(sellerName, nameSize, leftWidth, true, true), canvas.left, leftY, { size: nameSize, bold: true, heading: true });
   }
   const sellerLines: string[] = [];
   const legal = [text(header.seller_legal_name), text(header.seller_legal_form)].filter((v): v is string => v !== null).join(' ');
@@ -365,9 +367,9 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   leftY -= 2 + (await paragraph(canvas, wrappedSeller, canvas.left, leftY - 2, { size: 8.5, color: MUTED }));
 
   const rightX = canvas.right - rightWidth;
-  for (const line of await ts.wrap(title, 18, rightWidth, true)) {
+  for (const line of await ts.wrap(title, 18, rightWidth, true, true)) {
     rightY -= lineHeight(18);
-    await canvas.text(line, canvas.right, rightY + 5, { size: 18, bold: true, color: theme.accent }, 'right');
+    await canvas.text(line, canvas.right, rightY + 5, { size: 18, bold: true, heading: true, color: theme.accent }, 'right');
   }
   if (header.state === 'cancelled') {
     rightY -= lineHeight(10);
@@ -430,7 +432,7 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   const party = async (heading: string, name: string | null, lines: readonly string[]): Promise<[string[], string[], string[]]> => {
     const wrapped: string[] = [];
     for (const line of lines) wrapped.push(...(await ts.wrap(line, BODY, partyText, false)));
-    return [[heading], name === null ? [] : await ts.wrap(name, 10.5, partyText, true), wrapped];
+    return [[heading], name === null ? [] : await ts.wrap(name, 10.5, partyText, true, true), wrapped];
   };
   const panels = [await party(labels.billTo, text(header.buyer_name), buyerLines)];
   if (delivery.length > 0) panels.push(await party(labels.deliverTo, null, delivery));
@@ -441,7 +443,7 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
     canvas.shade(x, canvas.y - panelHeight, partyWidth, panelHeight);
     let y = canvas.y - panelPad;
     y -= await paragraph(canvas, heading, x + panelPad, y, { size: SMALL, bold: true, color: MUTED });
-    y -= await paragraph(canvas, name, x + panelPad, y, { size: 10.5, bold: true });
+    y -= await paragraph(canvas, name, x + panelPad, y, { size: 10.5, bold: true, heading: true });
     await paragraph(canvas, lines, x + panelPad, y);
   }
   canvas.y -= panelHeight + 16;
@@ -578,7 +580,7 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
     const nameWidth = contentWidth - 3 * numberWidth;
     await canvas.ensure(lineHeight(BODY) + headerHeight + 30);
     canvas.y -= lineHeight(BODY);
-    await canvas.text(labels.taxSummary, canvas.left, canvas.y + 2.5, { bold: true });
+    await canvas.text(labels.taxSummary, canvas.left, canvas.y + 2.5, { bold: true, heading: true });
     canvas.y -= 4;
     canvas.shade(canvas.left, canvas.y - headerHeight, contentWidth, headerHeight, theme.accent);
     let x = canvas.left + nameWidth;
@@ -648,20 +650,20 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   if (framed) {
     canvas.frame(canvas.left, top - panel, paymentWidth, panel);
     let y = top - panelPad;
-    y -= 2 + (await paragraph(canvas, [labels.payment], canvas.left + panelPad, y, { bold: true }));
+    y -= 2 + (await paragraph(canvas, [labels.payment], canvas.left + panelPad, y, { bold: true, heading: true }));
     await paragraph(canvas, payment, canvas.left + panelPad, y);
   }
   for (const [label, value, strong] of totals) {
     canvas.y -= lineHeight(10);
     if (strong) canvas.rule(canvas.y + lineHeight(10) - 1, totalsX, canvas.right, INK, 0.6);
-    await canvas.text(label, totalsX + pad, canvas.y + 3, { size: strong ? 10 : BODY, bold: strong, color: strong ? INK : MUTED });
+    await canvas.text(label, totalsX + pad, canvas.y + 3, { size: strong ? 10 : BODY, bold: strong, heading: strong, color: strong ? INK : MUTED });
     await canvas.text(value, canvas.right - pad, canvas.y + 3, { size: strong ? 10 : BODY, bold: strong }, 'right');
   }
   if (residual !== null) {
     canvas.y -= 30;
     canvas.shade(totalsX, canvas.y, totalsWidth, 22, theme.accent);
     const due: Style = { size: 10.5, bold: true, color: theme.onAccent };
-    await canvas.text(credit ? labels.amountCredited : labels.amountDue, totalsX + pad, canvas.y + 7.5, due);
+    await canvas.text(credit ? labels.amountCredited : labels.amountDue, totalsX + pad, canvas.y + 7.5, { ...due, heading: true });
     await canvas.text(f.amount(residual), canvas.right - pad, canvas.y + 7.5, due, 'right');
   }
   canvas.y = Math.min(canvas.y, framed ? top - panel : canvas.y) - 18;
@@ -677,7 +679,7 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   };
   const heading = async (label: string): Promise<void> => {
     await canvas.ensure(lineHeight(BODY) * 3);
-    await flow([label], { bold: true });
+    await flow([label], { bold: true, heading: true });
     canvas.y -= 2;
   };
 

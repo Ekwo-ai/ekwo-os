@@ -11,6 +11,12 @@ somewhere has already run it.
 
 ### Added
 
+- **An invoice wears the typeface of its company** (migration
+  `20261020161000`). `companies.invoice_typeface`, `classic` or `gustave`,
+  null being `classic`, is read by `readInvoiceTheme()` for `ekwo doc pdf`
+  and `render_invoice_pdf`, and written through `update_company_profile`.
+  `@ekwo-ai/invoice-pdf` embeds the `gustave` pair: Inter for the text and
+  the figures, Fraunces for the title, the names and the headings.
 - **A company numbers its documents its own way** (migration
   `20261020160000`, decision 0082). `companies.number_format` is the
   company's pattern, in the grammar of the pack's and carrying `{CODE}`;
@@ -23,7 +29,6 @@ somewhere has already run it.
   pattern reads. A prefix another journal prints is refused
   (`number_prefix_taken`). MCP: `number_format` in `update_company_profile`,
   and `set_number_prefix`.
-
 - **A ledger line names its contact.** `general_ledger()` carries `contact_id`
   beside `contact_name`, so a line of a receivable or payable account leads to
   the party it is about; same rows, same order (migration `20261020100000`,

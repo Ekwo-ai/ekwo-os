@@ -10,7 +10,8 @@ import { describe, expect, it } from 'vitest';
 import { DEFAULT_THEME, InvoicePdfError, renderInvoicePdf } from '../src/index.js';
 import NOTO_SANS_BOLD from '../src/fonts/noto-sans-bold.js';
 import { decodeBase64 } from '../src/text.js';
-import { englishHeader, englishInvoice, pngLogo, pngLogoWithAlpha } from './fixtures.js';
+import { englishHeader, englishInvoice, GREEK_LABELS, greekInvoice, pngLogo, pngLogoWithAlpha } from './fixtures.js';
+import { pdfText } from './pdf-text.js';
 
 const date = new Date('2026-03-31T12:00:00Z');
 
@@ -130,7 +131,7 @@ describe('the logo', () => {
 
 describe('the theme', () => {
   it('is sober by default', () => {
-    expect(DEFAULT_THEME).toEqual({ accent: '#1F3A5F', font: 'Noto Sans', logoPosition: 'left' });
+    expect(DEFAULT_THEME).toEqual({ accent: '#1F3A5F', font: 'Noto Sans', logoPosition: 'left', typeface: 'classic' });
   });
 
   it('draws the bands in the accent colour, with white text on a dark one and ink on a light one', async () => {
@@ -158,9 +159,38 @@ describe('the theme', () => {
     for (const name of names) expect(name).toMatch(/^\/NotoSans-Bold-/);
   });
 
+  it('draws the gustave typeface in Inter, its title, names and headings in Fraunces', async () => {
+    const rendered = await renderInvoicePdf(englishInvoice({ logo: pngLogo() }), { date, theme: { typeface: 'gustave' } });
+    const names = await fontNames(rendered.file);
+    expect(names.some((name) => /^\/[A-Z]{6}\+Inter-Regular|^\/Inter-Regular-/.test(name) || name.includes('Inter-Regular'))).toBe(true);
+    expect(names.some((name) => name.includes('Inter-Bold'))).toBe(true);
+    expect(names.some((name) => name.includes('Fraunces'))).toBe(true);
+    expect(names.some((name) => name.includes('NotoSans'))).toBe(false);
+  });
+
+  it('prints the same words in the gustave typeface as in the classic one', async () => {
+    const classic = await pdfText((await renderInvoicePdf(englishInvoice(), { date })).file);
+    const gustave = await pdfText((await renderInvoicePdf(englishInvoice(), { date, theme: { typeface: 'gustave' } })).file);
+    expect(gustave).toEqual(classic);
+  });
+
+  it('draws in Inter what Fraunces lacks, a Greek name among them', async () => {
+    const rendered = await renderInvoicePdf(greekInvoice(), { labels: GREEK_LABELS, date, theme: { typeface: 'gustave' } });
+    expect(rendered.pageCount).toBe(1);
+  });
+
+  it('lets a caller’s font take the place of the pair’s', async () => {
+    const font = { regular: decodeBase64(NOTO_SANS_BOLD) };
+    const names = await fontNames((await renderInvoicePdf(englishInvoice(), { date, theme: { typeface: 'gustave', font } })).file);
+    expect(names.some((name) => name.includes('Inter'))).toBe(false);
+    expect(names.some((name) => name.includes('Fraunces'))).toBe(true);
+  });
+
   it('refuses a colour it cannot read, and a side that is not one', async () => {
     expect((await refusal(() => renderInvoicePdf(englishInvoice(), { theme: { accent: 'navy' } }))).code).toBe('invalid_value');
     const side = { logoPosition: 'top' } as unknown as { logoPosition: 'left' };
     expect((await refusal(() => renderInvoicePdf(englishInvoice(), { theme: side }))).code).toBe('invalid_value');
+    const typeface = { typeface: 'serif' } as unknown as { typeface: 'classic' };
+    expect((await refusal(() => renderInvoicePdf(englishInvoice(), { theme: typeface }))).code).toBe('invalid_value');
   });
 });

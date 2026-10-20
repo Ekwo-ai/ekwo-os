@@ -7,6 +7,12 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- **A second pair of typefaces, `gustave`.** `theme.typeface: 'gustave'`
+  draws the text and every figure in Inter 4.1 and the title, the names, the
+  headings of the sections and the labels of the totals in Fraunces
+  SemiBold, both embedded under the SIL Open Font License; `classic` (the
+  default) stays Noto Sans. `theme.headingFont` takes the caller's own
+  heading typeface. `TYPEFACES` lists the names.
 - **The visual PDF of a sale invoice or credit note.** `renderInvoicePdf()`
   takes the rows of `document_header`, `document_line_items`,
   `document_tax_summary` and `document_legal_mentions`, and the bytes of a

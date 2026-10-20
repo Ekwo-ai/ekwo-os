@@ -6,6 +6,10 @@
 
 import { rgb, type RGB } from 'pdf-lib';
 import { InvoicePdfError } from './errors.js';
+import FRAUNCES_SEMIBOLD from './fonts/fraunces-semibold.js';
+import INTER_BOLD from './fonts/inter-bold.js';
+import INTER_REGULAR from './fonts/inter-regular.js';
+import { decodeBase64 } from './text.js';
 import type { ExtraFont, InvoiceTheme } from './types.js';
 
 /** A dark slate blue, the Noto Sans the package embeds, the logo on the left. */
@@ -13,14 +17,28 @@ export const DEFAULT_THEME = {
   accent: '#1F3A5F',
   font: 'Noto Sans',
   logoPosition: 'left',
-} as const satisfies Required<InvoiceTheme>;
+  typeface: 'classic',
+} as const satisfies Required<Omit<InvoiceTheme, 'headingFont'>>;
+
+/** The typefaces a theme may name, each a text font and a heading font, or null for Noto Sans. */
+export const TYPEFACES = ['classic', 'gustave'] as const;
+
+function typefaceFonts(name: (typeof TYPEFACES)[number]): { font: ExtraFont | null; heading: ExtraFont | null } {
+  if (name === 'classic') return { font: null, heading: null };
+  return {
+    font: { regular: decodeBase64(INTER_REGULAR), bold: decodeBase64(INTER_BOLD) },
+    heading: { regular: decodeBase64(FRAUNCES_SEMIBOLD) },
+  };
+}
 
 export interface ResolvedTheme {
   accent: RGB;
   /** White on a dark accent, ink on a light one. */
   onAccent: RGB;
-  /** A font of the caller's, tried before the embedded ones; null for Noto Sans. */
+  /** A font of the caller's or of the typeface, tried before the embedded ones; null for Noto Sans. */
   font: ExtraFont | null;
+  /** The font of the title, the names and the headings; null draws them in `font`. */
+  heading: ExtraFont | null;
   logoPosition: 'left' | 'right';
 }
 
@@ -46,11 +64,17 @@ export function resolveTheme(theme: InvoiceTheme | undefined): ResolvedTheme {
   if (position !== 'left' && position !== 'right') {
     throw new InvoicePdfError('invalid_value', `theme.logoPosition "${String(position)}" is neither left nor right`);
   }
-  const font = theme?.font ?? DEFAULT_THEME.font;
+  const typeface = theme?.typeface ?? DEFAULT_THEME.typeface;
+  if (!(TYPEFACES as readonly string[]).includes(typeface)) {
+    throw new InvoicePdfError('invalid_value', `theme.typeface "${String(typeface)}" is not one of ${TYPEFACES.join(', ')}`);
+  }
+  const pair = typefaceFonts(typeface);
+  const font = theme?.font;
   return {
     accent: colour,
     onAccent: onWhite >= onInk ? WHITE : INK,
-    font: font === 'Noto Sans' ? null : font,
+    font: font === undefined ? pair.font : font === 'Noto Sans' ? null : font,
+    heading: theme?.headingFont ?? pair.heading,
     logoPosition: position,
   };
 }

@@ -156,6 +156,21 @@ describe('render_invoice_pdf', () => {
     expect(plain).not.toMatch(onTheRight);
   });
 
+  it('prints in the typeface the company chose, and in the default once it is cleared', async () => {
+    const documentId = await sale(db, s);
+    const fonts = (file: Uint8Array): string => new TextDecoder('latin1').decode(file);
+
+    await db.query(`update companies set invoice_typeface = 'gustave' where id = $1`, [s.companyId]);
+    const gustave = fonts(pdfOf((await render({ document_id: documentId })).content));
+    expect(gustave).toContain('Fraunces');
+    expect(gustave).toContain('Inter');
+
+    await db.query(`update companies set invoice_typeface = null where id = $1`, [s.companyId]);
+    const classic = fonts(pdfOf((await render({ document_id: documentId })).content));
+    expect(classic).not.toContain('Fraunces');
+    expect(classic).toContain('NotoSans');
+  });
+
   it('never fetches a logo from a local or private address, and renders without it', async () => {
     await db.query(`update companies set logo_url = 'http://127.0.0.1:8080/logo.png' where id = $1`, [s.companyId]);
     const before = asked.length;
