@@ -892,6 +892,14 @@ describe('a client writes nothing else — by the function', () => {
         params: [mine.receivableLineId],
       },
       'public.post_payment': { sql: `select post_payment($1)`, params: [mine.draftPaymentId] },
+      // The lifecycle of a company is its owner's: a client neither closes the
+      // books nor deletes them, even with the name typed right (decision 0081).
+      'public.archive_company': { sql: `select archive_company($1)`, params: [mine.companyId] },
+      'public.unarchive_company': { sql: `select unarchive_company($1)`, params: [mine.companyId] },
+      'public.delete_company': {
+        sql: `select delete_company($1, (select name from companies where id = $1))`,
+        params: [mine.companyId],
+      },
       'public.post_module_entry': {
         sql: `select post_module_entry($1, 'assets', 'client:1', $2::date, 'by the client', $3::jsonb, null)`,
         params: [mine.companyId, FROM, lines],

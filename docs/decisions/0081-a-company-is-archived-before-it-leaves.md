@@ -58,3 +58,9 @@ is `company_deleted`, with the name and the country.
   granted, for the reason decision 0043 gives the right to leave.
 - A client offers the export before the deletion; the core does not demand
   one, because an archive taken elsewhere cannot be proven to it.
+
+## See also
+
+- [0043](0043-a-company-leaves-with-its-books.md) — a company leaves with its books
+- `supabase/migrations/20261020121427_a_company_is_archived_before_it_leaves.sql`
+- `tests/company_lifecycle.test.ts`
