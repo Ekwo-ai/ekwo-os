@@ -394,9 +394,12 @@ describe('the file in a pack', () => {
     return dir;
   }
 
-  it('is carried by no pack of this checkout, so every seed is what it was', () => {
-    expect(allPacks.filter((p) => p.turnoverTax !== null).map((p) => p.slug)).toEqual([]);
-    expect(compilePack(somePack)).not.toMatch(/turnover_tax/);
+  it('is compiled for the packs that carry it, and for no other', () => {
+    for (const pack of allPacks) {
+      if (pack.turnoverTax === null) expect(compilePack(pack), pack.slug).not.toMatch(/turnover_tax/);
+      else expect(compilePack(pack), pack.slug).toMatch(/turnover_tax_regimes/);
+    }
+    expect(somePack.turnoverTax, 'the pack the fixtures copy carries no regime of its own').toBeNull();
   });
 
   it('is read and compiled into the regime, its form and its brackets', async () => {

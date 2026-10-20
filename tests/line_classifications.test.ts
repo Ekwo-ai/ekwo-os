@@ -169,9 +169,12 @@ describe('the key in a pack', () => {
     return dir;
   }
 
-  it('is declared by no pack of this checkout, so every seed is what it was', () => {
-    expect(allPacks.filter((p) => p.classifications.length > 0).map((p) => p.slug)).toEqual([]);
-    expect(compilePack(somePack)).not.toMatch(/classification_schemes/);
+  it('is compiled for the packs that declare it, and for no other', () => {
+    for (const pack of allPacks) {
+      if (pack.classifications.length === 0) expect(compilePack(pack), pack.slug).not.toMatch(/classification_schemes/);
+      else expect(compilePack(pack), pack.slug).toMatch(/classification_schemes/);
+    }
+    expect(somePack.classifications, 'the pack the fixtures copy declares none of its own').toEqual([]);
   });
 
   it('is read and compiled, and a classification the pack stops declaring is removed', async () => {
