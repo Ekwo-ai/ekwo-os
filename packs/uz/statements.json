@@ -1,0 +1,636 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "UZ-BS",
+      "kind": "balance_sheet",
+      "framework": "БҲМС",
+      "name": "Бухгалтерия баланси",
+      "valid_from": "2025-01-01",
+      "legal_reference": "1-сонли БҲМС (иқтисодиёт ва молия вазирининг 2024 йил 14 июндаги 130-сон буйруғи, 3544-сон давлат рўйхати) молиявий ҳисоботнинг таркибини белгилайди; 21-сонли БҲМС ҳисобварақлар режасининг боблари ва гуруҳлари (0100–0999 узоқ муддатли активлар, 1000–5999 жорий активлар, 6000–7999 мажбуриятлар, 8000–8999 хусусий капитал) бўйича сатрлар йиғилган. Бу пакетнинг ўз йиғмаси, расмий баланс шакли эмас: шаклнинг матни (1-БҲМС иловаси) ўқилмади. README.md га қаранг. 1-БҲМС 2027 йил 1 январдан миллий молиявий ҳисобот стандарти (НСФО № 1) билан алмашади.",
+      "source": "nsbu-1",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Жорий молиявий йил натижаси",
+      "lines": [
+        {
+          "code": "AS-PPE",
+          "name": "Асосий воситалар (эскиришини ҳисобга олган ҳолда)",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0100",
+              "code_to": "0399"
+            }
+          ]
+        },
+        {
+          "code": "AS-INTANG",
+          "name": "Номоддий активлар (амортизацияни ҳисобга олган ҳолда)",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0400",
+              "code_to": "0599"
+            }
+          ]
+        },
+        {
+          "code": "AS-LTINV",
+          "name": "Узоқ муддатли инвестициялар",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0600",
+              "code_to": "0699"
+            }
+          ]
+        },
+        {
+          "code": "AS-CAPEX",
+          "name": "Ўрнатиладиган асбоб-ускуналар ва капитал қўйилмалар",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0700",
+              "code_to": "0899"
+            }
+          ]
+        },
+        {
+          "code": "AS-LTREC",
+          "name": "Узоқ муддатли дебиторлик қарзлари ва кечиктирилган харажатлар",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "0900",
+              "code_to": "0999"
+            }
+          ]
+        },
+        {
+          "code": "AS-NCA-TOTAL",
+          "name": "Жами узоқ муддатли активлар",
+          "sequence": 60,
+          "is_total": true,
+          "plus": [
+            "AS-PPE",
+            "AS-INTANG",
+            "AS-LTINV",
+            "AS-CAPEX",
+            "AS-LTREC"
+          ]
+        },
+        {
+          "code": "AS-INV",
+          "name": "Товар-моддий захиралар",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "2999"
+            }
+          ]
+        },
+        {
+          "code": "AS-PREP",
+          "name": "Келгуси давр ва кечиктирилган харажатлар",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3999"
+            }
+          ]
+        },
+        {
+          "code": "AS-REC",
+          "name": "Дебиторлик қарзлари ва берилган бўнаклар",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4999"
+            }
+          ]
+        },
+        {
+          "code": "AS-CASH",
+          "name": "Пул маблағлари",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5799"
+            }
+          ]
+        },
+        {
+          "code": "AS-OCA",
+          "name": "Қисқа муддатли инвестициялар ва бошқа жорий активлар",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5800",
+              "code_to": "5999"
+            }
+          ]
+        },
+        {
+          "code": "AS-CA-TOTAL",
+          "name": "Жами жорий активлар",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "AS-INV",
+            "AS-PREP",
+            "AS-REC",
+            "AS-CASH",
+            "AS-OCA"
+          ]
+        },
+        {
+          "code": "AS-TOTAL",
+          "name": "АКТИВЛАР ЖАМИ",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "AS-NCA-TOTAL",
+            "AS-CA-TOTAL"
+          ]
+        },
+        {
+          "code": "EQ-CAPITAL",
+          "name": "Устав капитали",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8300",
+              "code_to": "8399"
+            }
+          ]
+        },
+        {
+          "code": "EQ-ADDL",
+          "name": "Қўшилган капитал",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8400",
+              "code_to": "8499"
+            }
+          ]
+        },
+        {
+          "code": "EQ-RESERVE",
+          "name": "Резерв капитали",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8500",
+              "code_to": "8699"
+            }
+          ]
+        },
+        {
+          "code": "EQ-RETAINED",
+          "name": "Тақсимланмаган фойда (қопланмаган зарар)",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8700",
+              "code_to": "8799"
+            }
+          ]
+        },
+        {
+          "code": "EQ-OTHER",
+          "name": "Мақсадли тушумлар ва келгуси харажатлар резервлари",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8800",
+              "code_to": "8999"
+            }
+          ]
+        },
+        {
+          "code": "EQ-TOTAL",
+          "name": "Хусусий капитал жами",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "EQ-CAPITAL",
+            "EQ-ADDL",
+            "EQ-RESERVE",
+            "EQ-RETAINED",
+            "EQ-OTHER"
+          ]
+        },
+        {
+          "code": "LI-PAY",
+          "name": "Етказиб берувчилар ва пудратчилар олдидаги қарзлар",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6199"
+            }
+          ]
+        },
+        {
+          "code": "LI-DEF",
+          "name": "Кечиктирилган жорий мажбуриятлар",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6200",
+              "code_to": "6299"
+            }
+          ]
+        },
+        {
+          "code": "LI-ADV",
+          "name": "Олинган бўнаклар",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6300",
+              "code_to": "6399"
+            }
+          ]
+        },
+        {
+          "code": "LI-TAX",
+          "name": "Бюджет, суғурта ва мақсадли жамғармалар олдидаги қарзлар",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6400",
+              "code_to": "6599"
+            }
+          ]
+        },
+        {
+          "code": "LI-STAFF",
+          "name": "Таъсисчилар ва ходимлар олдидаги қарзлар",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6600",
+              "code_to": "6799"
+            }
+          ]
+        },
+        {
+          "code": "LI-DEBT",
+          "name": "Қисқа муддатли кредитлар ва қарзлар",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6800",
+              "code_to": "6899"
+            }
+          ]
+        },
+        {
+          "code": "LI-OTHER",
+          "name": "Бошқа жорий кредиторлик қарзлар",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6900",
+              "code_to": "6999"
+            }
+          ]
+        },
+        {
+          "code": "LI-CL-TOTAL",
+          "name": "Жами жорий мажбуриятлар",
+          "sequence": 270,
+          "is_total": true,
+          "plus": [
+            "LI-PAY",
+            "LI-DEF",
+            "LI-ADV",
+            "LI-TAX",
+            "LI-STAFF",
+            "LI-DEBT",
+            "LI-OTHER"
+          ]
+        },
+        {
+          "code": "LI-LT",
+          "name": "Узоқ муддатли мажбуриятлар",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7000",
+              "code_to": "7999"
+            }
+          ]
+        },
+        {
+          "code": "LI-NCL-TOTAL",
+          "name": "Жами узоқ муддатли мажбуриятлар",
+          "sequence": 290,
+          "is_total": true,
+          "plus": [
+            "LI-LT"
+          ]
+        },
+        {
+          "code": "EQLI-TOTAL",
+          "name": "ХУСУСИЙ КАПИТАЛ ВА МАЖБУРИЯТЛАР ЖАМИ",
+          "sequence": 300,
+          "is_total": true,
+          "plus": [
+            "EQ-TOTAL",
+            "LI-CL-TOTAL",
+            "LI-NCL-TOTAL"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "UZ-IS",
+      "kind": "income_statement",
+      "framework": "БҲМС",
+      "name": "Молиявий натижалар тўғрисидаги ҳисобот",
+      "valid_from": "2025-01-01",
+      "legal_reference": "1-сонли БҲМС молиявий натижалар ҳисоботини молиявий ҳисобот таркибига киритади; сатрлар 21-сонли БҲМС ҳисобварақлар режасининг 9000–9899 гуруҳлари бўйича йиғилган (9900 «Якуний молиявий натижа» ёпувчи ҳисобварақ сифатида киритилмаган). Расмий шакл ўқилмади; README.md га қаранг.",
+      "source": "nsbu-1",
+      "lines": [
+        {
+          "code": "IS-REV",
+          "name": "Асосий фаолиятдан соф тушум (қайтишлар ва чегирмаларни ҳисобга олган ҳолда)",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9000",
+              "code_to": "9099"
+            }
+          ]
+        },
+        {
+          "code": "IS-COGS",
+          "name": "Сотилган маҳсулот (товар, иш, хизмат)ларнинг таннархи",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9100",
+              "code_to": "9199"
+            }
+          ]
+        },
+        {
+          "code": "IS-GROSS",
+          "name": "Ялпи фойда (зарар)",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "IS-REV"
+          ],
+          "minus": [
+            "IS-COGS"
+          ]
+        },
+        {
+          "code": "IS-DISP",
+          "name": "Активларнинг чиқиб кетиши",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9200",
+              "code_to": "9299"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPINC",
+          "name": "Асосий фаолиятнинг бошқа даромадлари",
+          "sequence": 50,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9300",
+              "code_to": "9399"
+            }
+          ]
+        },
+        {
+          "code": "IS-SELL",
+          "name": "Сотиш харажатлари",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9400",
+              "code_to": "9419"
+            }
+          ]
+        },
+        {
+          "code": "IS-ADMIN",
+          "name": "Маъмурий харажатлар",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9420",
+              "code_to": "9429"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPEXP",
+          "name": "Бошқа операцион харажатлар",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9430",
+              "code_to": "9499"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPRESULT",
+          "name": "Асосий фаолият фойдаси (зарари)",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "IS-GROSS",
+            "IS-OPINC"
+          ],
+          "minus": [
+            "IS-DISP",
+            "IS-SELL",
+            "IS-ADMIN",
+            "IS-OPEXP"
+          ]
+        },
+        {
+          "code": "IS-FININC",
+          "name": "Молиявий фаолият бўйича даромадлар",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9500",
+              "code_to": "9599"
+            }
+          ]
+        },
+        {
+          "code": "IS-FINEXP",
+          "name": "Молиявий фаолият бўйича харажатлар",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9600",
+              "code_to": "9699"
+            }
+          ]
+        },
+        {
+          "code": "IS-EXTINC",
+          "name": "Фавқулодда вазиятлардан олинган фойда",
+          "sequence": 120,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9700",
+              "code_to": "9719"
+            }
+          ]
+        },
+        {
+          "code": "IS-EXTEXP",
+          "name": "Фавқулодда вазиятлардан кўрилган зарар",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9720",
+              "code_to": "9799"
+            }
+          ]
+        },
+        {
+          "code": "IS-PRETAX",
+          "name": "Солиқлар тўлангунга қадар фойда (зарар)",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "IS-OPRESULT",
+            "IS-FININC",
+            "IS-EXTINC"
+          ],
+          "minus": [
+            "IS-FINEXP",
+            "IS-EXTEXP"
+          ]
+        },
+        {
+          "code": "IS-TAX",
+          "name": "Фойда солиғи ва фойдадан ҳисобланган бошқа солиқлар",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9800",
+              "code_to": "9899"
+            }
+          ]
+        },
+        {
+          "code": "IS-NET",
+          "name": "Ҳисобот даврининг соф фойдаси (зарари)",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "IS-PRETAX"
+          ],
+          "minus": [
+            "IS-TAX"
+          ]
+        },
+        {
+          "code": "IS-CLOSE",
+          "name": "Якуний молиявий натижа ҳисобварағи (ёпувчи, фақат йил якунида)",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9900",
+              "code_to": "9999"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

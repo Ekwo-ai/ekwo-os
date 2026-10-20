@@ -461,6 +461,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`ug`](../packs/ug/) | Uganda | `121_pack_ug.sql` | en | `community` |
 | [`us`](../packs/us/) | United States | `15_pack_us.sql` | en | `community` |
 | [`uy`](../packs/uy/) | Uruguay | `100_pack_uy.sql` | es | `community` |
+| [`uz`](../packs/uz/) | Ўзбекистон Республикаси | `211_pack_uz.sql` | uz, en | `community` |
 | [`vc`](../packs/vc/) | Saint Vincent and the Grenadines | `404_pack_vc.sql` | en | `community` |
 | [`vg`](../packs/vg/) | British Virgin Islands | `140_pack_vg.sql` | en | `community` |
 | [`vn`](../packs/vn/) | Việt Nam | `55_pack_vn.sql` | vi | `community` |
