@@ -303,3 +303,27 @@ and the pack says so.
 **A return form with no published numbering.** The boxes follow s. 20(1) of the
 Act (output tax less input tax) and are numbered by the pack, since the form
 the Commissioner prescribes was not found in a readable text.
+
+## From Uzbekistan
+
+**A chart replaced on 1 January 2025.** The chart of accounts published for years
+as standard No. 21 (order of 2002) lost its force on 1 January 2025 and a new text
+took its place (Ministry of Economy and Finance, order No. 191 of 2024). The pack
+copies the new one, all 321 accounts of its chapters 1 to 4, and leaves out the
+off-balance chapter.
+
+**Tax kept "by type" in a single account.** The instruction books input VAT in
+`4410` and the debt to the budget in `6410`, each with an analytic ledger by tax.
+The pack gives that ledger its own sub-accounts, because the pack format needs the
+posting accounts and the settlement account of a tax to differ.
+
+**A tax point that takes the earlier of two dates.** Article 242 of the Tax Code
+dates a supply of goods at the earlier of the invoice and the shipment; the format
+holds a single trigger, so the pack uses the delivery date and says so.
+
+**Exempt supplies with a proration of the credit.** A payer with taxable and exempt
+supplies credits only part of its input tax (articles 267 and 268); the pack has no
+proration, so a payer in that position adjusts by hand.
+
+**A return form with no readable text.** The boxes follow articles 258 to 274 and
+are named by the pack, since the form approved by the tax authority was not read.
