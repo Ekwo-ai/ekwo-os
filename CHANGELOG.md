@@ -9,8 +9,21 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.17.0] — 2026-10-20
+
 ### Added
 
+- **A company is archived before it leaves, and deleted by its owner by
+  name** (decision 0081). `archive_company()` and `unarchive_company()`
+  close and reopen the books, which an archived company keeps readable and
+  exportable; `delete_company()` takes the company's exact name and refuses
+  a company another member or a live machine key still reaches.
+- **Twelve country packs more, in Africa, the Caribbean, South America and
+  Central Asia.** Botswana, Eswatini, Lesotho, Namibia, Sierra Leone and The
+  Gambia; Barbados, Saint Vincent and the Grenadines, Trinidad and Tobago;
+  Brazil (Simples Nacional, its five annexes as turnover regimes) and
+  Suriname; the Kyrgyz Republic. Each with its chart, its taxes, its VAT
+  return and a golden scenario.
 - **An invoice wears the typeface of its company** (migrations
   `20261020161000` and `20261020180000`). `companies.invoice_typeface`, `classic` or `elegant`,
   null being `classic`, is read by `readInvoiceTheme()` for `ekwo doc pdf`
@@ -95,6 +108,16 @@ somewhere has already run it.
   `turnover_tax_assessments`; `upcoming_filings()` lists the regime's form in
   the place of the periodic VAT return. No pack carries the file yet: every
   seed and every golden year is unchanged.
+
+### Changed
+
+- **The schema is 0.17.0 (`20261020180100`), and so is the floor of the
+  packages.** `@ekwo-ai/core` reads `companies.number_format` and
+  `companies.invoice_typeface` with every company it lists, and
+  `@ekwo-ai/mcp` writes `journals.number_prefix`, none of which a 0.16.0
+  database has. An installation runs `ekwo migrate` before upgrading the
+  packages. The end-to-end run against a real Supabase project was not run
+  for this release.
 
 ## [0.16.0] — 2026-10-20
 

@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/verifactu",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "description": "Spain's VERI*FACTU invoicing records (registro de facturación de alta and de anulación) in TypeScript: the XML of the AEAT schema, the chained SHA-256 fingerprint and the URL of the QR code, with every rule the record breaks named by the AEAT's own error code. Zero dependencies.",
   "keywords": [
     "verifactu",
