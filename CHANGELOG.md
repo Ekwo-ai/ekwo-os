@@ -11,6 +11,10 @@ somewhere has already run it.
 
 ### Added
 
+- **A ledger line names its contact.** `general_ledger()` carries `contact_id`
+  beside `contact_name`, so a line of a receivable or payable account leads to
+  the party it is about; same rows, same order (migration `20261020100000`,
+  the function dropped and created again under its signature).
 - **The reads of the `crm` module an agent and a terminal share** (module
   migration `20261019220549`): `crm.segment_tree()`, `crm.board()` (a
   pipeline, or all of them, stage by stage, with totals by currency) and
