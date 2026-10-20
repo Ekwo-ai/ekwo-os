@@ -303,3 +303,28 @@ and the pack says so.
 **A return form with no published numbering.** The boxes follow s. 20(1) of the
 Act (output tax less input tax) and are numbered by the pack, since the form
 the Commissioner prescribes was not found in a readable text.
+
+## From Tajikistan
+
+**A rate that changes on a date written in the transitional provisions.** Article
+264 of the Tax Code states the standard VAT rate as 15 %, and article 397(4)
+replaces it by 14 % from 2024 to 2026 and 13 % from 2027. The pack carries the
+rate in force in each period as two dated codes (`TJ-S-14` ending on
+2026-12-31, `TJ-S-13` starting on 2027-01-01) rather than the number of the
+article that the transitional rule overrides.
+
+**A chart read only in part.** The Ministry of Finance's order No. 41 of 2011 was
+readable as far as account 33300; the accounts of its income and expense
+sections are the pack's own, numbered by guess, and the README says so.
+
+**Reduced rates without credit.** The 7 % and 5 % rates carry no right to credit
+input VAT (article 266 speaks of the standard rate only); the pack adds their tax to
+the standard tax before the credit, and a payer mixing rates is not modelled.
+
+**Reverse charge without credit.** The tax a buyer withholds from a foreign
+supplier (article 260) is paid with the return and never credited; the pack posts
+it to a non-recoverable VAT expense against the collected-VAT account.
+
+**A return form with no readable text.** The boxes follow articles 264 to 266
+and are named by the pack, since the form approved by the finance authority was not
+found in a readable text.
