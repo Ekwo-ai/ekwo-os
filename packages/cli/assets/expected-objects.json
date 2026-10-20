@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.16.0",
-  "migration": "20261020100000",
+  "migration": "20261020121427",
   "socle": {
     "schema": "public",
     "tables": [
@@ -888,6 +888,10 @@
           {
             "name": "address_line2",
             "type": "text"
+          },
+          {
+            "name": "archived_at",
+            "type": "timestamp with time zone"
           },
           {
             "name": "city",
@@ -4490,6 +4494,10 @@
         "arguments": "p_company_id uuid"
       },
       {
+        "name": "archive_company",
+        "arguments": "p_company_id uuid"
+      },
+      {
         "name": "archive_statement_timeout",
         "arguments": ""
       },
@@ -4508,6 +4516,10 @@
       {
         "name": "assert_classifications",
         "arguments": "p_company_id uuid, p_attributes jsonb, p_what text"
+      },
+      {
+        "name": "assert_company_live",
+        "arguments": "p_company_id uuid"
       },
       {
         "name": "assert_document_analytic_axes",
@@ -4666,6 +4678,10 @@
         "arguments": ""
       },
       {
+        "name": "companies_guard_archived",
+        "arguments": ""
+      },
+      {
         "name": "companies_vat_period_is_a_filing_period",
         "arguments": ""
       },
@@ -4812,6 +4828,10 @@
       {
         "name": "default_statement_code",
         "arguments": "p_company_id uuid, p_kind text, p_at date"
+      },
+      {
+        "name": "delete_company",
+        "arguments": "p_company_id uuid, p_confirm_name text"
       },
       {
         "name": "disable_module",
@@ -5674,6 +5694,10 @@
         "arguments": "p_company_id uuid, p_from date, p_to date"
       },
       {
+        "name": "unarchive_company",
+        "arguments": "p_company_id uuid"
+      },
+      {
         "name": "undo_leave_line_unnamed",
         "arguments": "p_line_id uuid"
       },
@@ -5883,11 +5907,6 @@
         "table": "classification_schemes",
         "name": "classification_schemes_select",
         "command": "select"
-      },
-      {
-        "table": "companies",
-        "name": "companies_delete",
-        "command": "delete"
       },
       {
         "table": "companies",
@@ -6459,6 +6478,10 @@
       {
         "table": "companies",
         "name": "companies_default_capital_currency"
+      },
+      {
+        "table": "companies",
+        "name": "companies_guard_archived"
       },
       {
         "table": "companies",
@@ -7630,13 +7653,11 @@
           "name": "companies",
           "anon": [],
           "authenticated": [
-            "delete",
             "insert",
             "select",
             "update"
           ],
           "service_role": [
-            "delete",
             "insert",
             "select",
             "update"
@@ -8605,6 +8626,17 @@
           ]
         },
         {
+          "name": "archive_company",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "archive_statement_timeout",
           "arguments": "",
           "anon": [],
@@ -8651,6 +8683,17 @@
         {
           "name": "assert_classifications",
           "arguments": "p_company_id uuid, p_attributes jsonb, p_what text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "assert_company_live",
+          "arguments": "p_company_id uuid",
           "anon": [],
           "authenticated": [
             "execute"
@@ -9027,6 +9070,14 @@
           "service_role": []
         },
         {
+          "name": "companies_guard_archived",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "companies_vat_period_is_a_filing_period",
           "arguments": "",
           "trigger": true,
@@ -9391,6 +9442,17 @@
         {
           "name": "default_statement_code",
           "arguments": "p_company_id uuid, p_kind text, p_at date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "delete_company",
+          "arguments": "p_company_id uuid, p_confirm_name text",
           "anon": [],
           "authenticated": [
             "execute"
@@ -11623,6 +11685,17 @@
         {
           "name": "turnover_tax_return",
           "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "unarchive_company",
+          "arguments": "p_company_id uuid",
           "anon": [],
           "authenticated": [
             "execute"

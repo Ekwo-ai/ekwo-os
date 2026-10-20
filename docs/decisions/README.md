@@ -104,6 +104,7 @@ consequence.
 - [0073](0073-sure-pairs-are-matched-in-one-gesture.md) — The sure pairs are matched in one gesture, and what undoes an entry is matched as it is posted
 - [0074](0074-two-contacts-of-one-company-are-merged.md) — Two contacts of one company are merged, and the absorbed one is retired
 - [0075](0075-the-contacts-that-are-probably-one-party-are-proposed.md) — The contacts that are probably one party are proposed
+- [0081](0081-a-company-is-archived-before-it-leaves.md) — A company is archived before it leaves, and deleted by its owner by name
 
 ## Formats and modules
 
