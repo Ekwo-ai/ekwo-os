@@ -43,6 +43,9 @@ const LATER = [
   // Replaces post_document() as 20261019130000 left it, which asks the
   // analytic axes that migration defines.
   '20261020072000_a_tax_computed_inside_its_own_base.sql',
+  // Republishes entries_guard_posted() as this migration left it, which asks
+  // assert_writes_into_known_company().
+  '20261020160000_a_company_numbers_its_documents_its_own_way.sql',
 ];
 
 let db: PGlite;

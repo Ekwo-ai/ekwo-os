@@ -225,6 +225,9 @@ begin
     from journals j
    where j.company_id = new.company_id
      and j.id <> new.id
+     -- The journal of the same code is this one, or the row an upsert is
+     -- about to update: the unique key on the code judges that, not this.
+     and j.code <> new.code
      and coalesce(j.number_prefix, j.code) = v_mine
    limit 1;
   if v_other is not null then
