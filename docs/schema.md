@@ -739,6 +739,7 @@ Legal entities kept in this instance. One instance may hold several.
 | `identifiers` | `jsonb` | not null — Every identifier of the company that has no column of its own, by the code of its scheme: {"<scheme>": "<identifier>"}. The scheme is the code the register or the e-invoicing format of the country names it by — a tax identification number, a registration for a tax that is not a VAT — and the country pack says which ones its format reads. vat_number and registration_number keep their own columns and are not repeated here. Empty, not null, where there is none. |
 | `activity_description` | `text` | The company's own words for its activity, beside activity_code and activity_scheme. A format that carries the code of the activity carries its description too, and the description of a register's code is not always the words the company uses. |
 | `archived_at` | `timestamp with time zone` | When the owner archived the company; null while its books are kept. An archived company is read-only for the ledger: posting an entry, booking a document or a payment and closing a year are refused with company_archived, while reading, exporting, the members and the profile stay available. Set by archive_company() and cleared by unarchive_company(), never written by hand. |
+| `number_format` | `text` | This company's pattern of a document number, in the grammar of country_defaults.number_format: {CODE}, {YYYY} or {YY}, {MM}, {N...}. Carries {CODE}. Null keeps the pattern of the country pack. |
 
 Constraints:
 
@@ -749,6 +750,7 @@ Constraints:
 - `CHECK (((jsonb_typeof(identifiers) = 'object'::text) AND (NOT (identifiers ? ''::text)) AND (NOT jsonb_path_exists(identifiers, '$.*?(@.type() != "string" || @ like_regex "^\\s*$")'::jsonpath))))`
 - `CHECK ((invoice_accent_color ~ '^#[0-9A-Fa-f]{6}$'::text))`
 - `CHECK ((invoice_logo_position = ANY (ARRAY['left'::text, 'right'::text])))`
+- `CHECK ((btrim(number_format) <> ''::text))`
 - `CHECK (((share_capital IS NULL) OR (share_capital_currency IS NOT NULL)))`
 - `CHECK (((share_capital IS NULL) OR (share_capital >= (0)::numeric)))`
 - `PRIMARY KEY (id)`
@@ -1587,10 +1589,12 @@ Books of entry. The code is the first segment of every entry number.
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
 | `name_i18n` | `jsonb` | not null — Label by language, copied from the template at install. `name` holds the language the company chose, and a company may rename a journal without losing the other languages. |
+| `number_prefix` | `text` | What {CODE} prints in the numbers this journal draws. Null prints the journal's code. The code itself is unchanged. |
 
 Constraints:
 
 - `CHECK ((code ~ '^[A-Z0-9]{2,8}$'::text))`
+- `CHECK (((number_prefix = btrim(number_prefix)) AND (number_prefix <> ''::text) AND (length(number_prefix) <= 20) AND (number_prefix !~ '[{}]'::text)))`
 - `PRIMARY KEY (id)`
 - `UNIQUE (company_id, code)`
 
@@ -2414,6 +2418,8 @@ Constraints:
 | `companies_creator_is_fixed()` | Writes companies.created_by from acting_user() when a company is created, and refuses to change it afterwards. The installer writes what it brings in as it is. |
 | `companies_default_capital_currency()` | A capital stated with no currency is stated in the company's own. The alternative was a literal in the schema, which is one country's answer given to every country. |
 | `companies_guard_archived()` | Refuses a hand-written change to archived_at. The setting archive_company() and unarchive_company() raise is honoured only for the installer or the owner of the company, because any session may set it. A column any client may flip is not a state. |
+| `companies_number_format_carries()` | When a company's number pattern starts or stops carrying the year, carries each journal's last number into the counter the new pattern reads, so the series goes on without a hole or a repeat. |
+| `companies_number_format_is_valid()` | Refuses a company number pattern that does not carry {CODE}, carries no counter or names a token outside the grammar. |
 | `companies_vat_period_is_a_filing_period()` | Records a write to the deprecated companies.vat_period as what it is: how often this company files its country's periodic return. Everything written before this migration named that column and nothing else, and this is what keeps such a writer correct without it learning a table. |
 | `companies_with_capability(p_capability text)` | The companies in which the current caller may do one named thing — the question has_capability() answers, asked once for all of them. It is what a row level security policy compares company_id against, inside a sub-select, so that the answer is worked out once per statement instead of once per row. |
 | `company_archive_predicate(p_schema text, p_table text, p_alias text)` | The SQL condition that keeps the rows of one company in one table, with the company as `$1`. One place, read by the export, by the count and by the checks of an import. |
@@ -2537,6 +2543,7 @@ Constraints:
 | `is_known_caller()` | Whether this installation knows who is asking: a signed-in user, or the holder of a live machine key that still reaches something. What the policies of the reference tables ask. |
 | `journal_book(p_company_id uuid, p_from date, p_to date, p_journal_ids uuid[])` | The book of one journal, of several, or of all of them (p_journal_ids null): every line of every posted entry of the period, in the order a book is read — day, journal, entry number, line. Each line names its entry, the document behind it and that document's type, its account and its contact. No running balance: that is general_ledger(), per account. |
 | `journal_totals(p_company_id uuid, p_from date, p_to date)` | The head of each journal's book: one row per journal of the company, with how many posted entries and lines went through it in the period and their debit and credit — zero where nothing did. A screen draws these figures rather than adding the lines of journal_book() up again. |
+| `journals_number_prefix_is_its_own()` | Refuses a journal whose number prefix (or code, where it has none) is what another journal of the company already prints. |
 | `key_holds(p_key api_keys, p_company_id uuid, p_capability text)` | Whether one machine key holds one capability on one company now: the key is live and on that company, the capability is on its list, and the person who issued it holds it there today (member_holds). A key the installation issued, created_by null, is bounded by its list alone. Worked out at the call, never stored. |
 | `label_for(p_name text, p_i18n jsonb, p_languages text[])` | The label in the first language of the list that has one, and the row's own name when none of them does. The only place a translated label is chosen. |
 | `learn_contact_patterns(p_company_id uuid, p_contact_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[])` | What a decision teaches contact_patterns, from the same facts contact_candidates() scored: every motif that had named somebody else is charged a use without a success, and the account and the name as the line wrote them become learned motifs of the contact chosen. Called by confirm_contact() and set_line_contact(), the only two places a motif is learned. |
@@ -2567,7 +2574,7 @@ Constraints:
 | `next_matching_number(p_company_id uuid)` | Next reconciliation letter for a company, as A0001. Definer, for the same reason as next_entry_number. |
 | `note_company_export(p_company_id uuid)` | Writes `company_exported` on the audit trail. Called by `export_company()` and by `ekwo company export` before they read. A record of the act, not a control: a member can always read, table by table, what they may read. Definer because nobody writes the trail; guarded by company.export. |
 | `number_counter(p_format text, p_number text)` | The counter inside a number, read back through the pattern it was written with, or null when the number does not follow that pattern. What lets an import advance the sequence it interrupted. |
-| `numbering_rules(p_company_id uuid, OUT number_format text, OUT numbering_gapless boolean)` | What the country of a company says about its document numbers: the pattern, and whether the law forbids a hole. The only function that reads either column. |
+| `numbering_rules(p_company_id uuid, OUT number_format text, OUT numbering_gapless boolean, OUT pack_number_format text)` | The pattern of a company's document numbers — its own, or its country's — whether the law forbids a hole, and the country's pattern alone. The only function that reads the pack's numbering. |
 | `open_items(p_company_id uuid, p_contact_id uuid, p_as_of date, p_third_party_only boolean)` | Lines with something still open on a reconcilable account, with the document behind each and the references it carries. Where there is no document — the debt of a declaration, an entry keyed by hand — the entry's own reference answers. p_third_party_only keeps the receivable and payable lines alone, by account_type; left out, every reconcilable account answers, the bank's included. Read by the matching, and by anybody asking what is still owed. |
 | `opening_balance(p_company_id uuid, p_fiscal_year_id uuid, p_lines jsonb, p_allow_result_accounts boolean, p_opening_date date, p_items jsonb)` | Posts a trial balance from a previous system as the opening entry of a fiscal year, on p_opening_date — the day the books were taken over, the first day of the year by default. Balance-sheet accounts only, unless the caller allows the others. p_items are the invoices and credit notes still open on that day, each posted as a document by post_document() against the suspense account, carrying the balance of the receivable or payable account they fall on, which they must add up to. |
 | `opening_journal_id(p_company_id uuid)` | The journal the opening and year-end entries go on, named by the pack of this company's country. Null when the pack names none, and the callers refuse rather than guessing at a code. |

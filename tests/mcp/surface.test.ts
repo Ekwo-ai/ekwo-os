@@ -82,6 +82,7 @@ const WRITE_TOOLS = [
   'import_bank_statement',
   'create_company',
   'update_company_profile',
+  'set_number_prefix',
   'set_preferences',
   'invite_member',
   'create_api_key',

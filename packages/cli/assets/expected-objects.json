@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.16.0",
-  "migration": "20261020121427",
+  "migration": "20261020160000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -979,6 +979,10 @@
           },
           {
             "name": "name",
+            "type": "text"
+          },
+          {
+            "name": "number_format",
             "type": "text"
           },
           {
@@ -2903,6 +2907,10 @@
             "type": "jsonb"
           },
           {
+            "name": "number_prefix",
+            "type": "text"
+          },
+          {
             "name": "suspense_account_id",
             "type": "uuid"
           },
@@ -4682,6 +4690,14 @@
         "arguments": ""
       },
       {
+        "name": "companies_number_format_carries",
+        "arguments": ""
+      },
+      {
+        "name": "companies_number_format_is_valid",
+        "arguments": ""
+      },
+      {
         "name": "companies_vat_period_is_a_filing_period",
         "arguments": ""
       },
@@ -5214,6 +5230,10 @@
         "arguments": "p_company_id uuid, p_from date, p_to date"
       },
       {
+        "name": "journals_number_prefix_is_its_own",
+        "arguments": ""
+      },
+      {
         "name": "key_holds",
         "arguments": "p_key api_keys, p_company_id uuid, p_capability text"
       },
@@ -5335,7 +5355,7 @@
       },
       {
         "name": "numbering_rules",
-        "arguments": "p_company_id uuid, OUT number_format text, OUT numbering_gapless boolean"
+        "arguments": "p_company_id uuid, OUT number_format text, OUT numbering_gapless boolean, OUT pack_number_format text"
       },
       {
         "name": "open_items",
@@ -6489,6 +6509,14 @@
       },
       {
         "table": "companies",
+        "name": "companies_number_format_carries"
+      },
+      {
+        "table": "companies",
+        "name": "companies_number_format_is_valid"
+      },
+      {
+        "table": "companies",
         "name": "companies_set_updated_at"
       },
       {
@@ -6834,6 +6862,10 @@
       {
         "table": "journals",
         "name": "journals_audit"
+      },
+      {
+        "table": "journals",
+        "name": "journals_number_prefix_is_its_own"
       },
       {
         "table": "journals",
@@ -9078,6 +9110,22 @@
           "service_role": []
         },
         {
+          "name": "companies_number_format_carries",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "companies_number_format_is_valid",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "companies_vat_period_is_a_filing_period",
           "arguments": "",
           "trigger": true,
@@ -10419,6 +10467,14 @@
           ]
         },
         {
+          "name": "journals_number_prefix_is_its_own",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "key_holds",
           "arguments": "p_key api_keys, p_company_id uuid, p_capability text",
           "anon": [],
@@ -10749,7 +10805,7 @@
         },
         {
           "name": "numbering_rules",
-          "arguments": "p_company_id uuid, OUT number_format text, OUT numbering_gapless boolean",
+          "arguments": "p_company_id uuid, OUT number_format text, OUT numbering_gapless boolean, OUT pack_number_format text",
           "anon": [],
           "authenticated": [
             "execute"

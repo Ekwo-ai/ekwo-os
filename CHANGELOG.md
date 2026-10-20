@@ -11,6 +11,19 @@ somewhere has already run it.
 
 ### Added
 
+- **A company numbers its documents its own way** (migration
+  `20261020160000`, decision 0082). `companies.number_format` is the
+  company's pattern, in the grammar of the pack's and carrying `{CODE}`;
+  `journals.number_prefix` is what `{CODE}` prints for one journal, its code
+  unchanged. Both null keep the country pack. `numbering_rules()` answers the
+  company's pattern first and gains `pack_number_format`, the pack's alone
+  (the function dropped and created again under its new signature). A change
+  on the way continues the series: when the pattern starts or stops carrying
+  the year, each journal's last number is carried into the counter the new
+  pattern reads. A prefix another journal prints is refused
+  (`number_prefix_taken`). MCP: `number_format` in `update_company_profile`,
+  and `set_number_prefix`.
+
 - **A ledger line names its contact.** `general_ledger()` carries `contact_id`
   beside `contact_name`, so a line of a receivable or payable account leads to
   the party it is about; same rows, same order (migration `20261020100000`,

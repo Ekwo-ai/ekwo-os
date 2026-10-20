@@ -37,6 +37,7 @@ export const COMPANY = [
   'document_template',
   'invoice_accent_color',
   'invoice_logo_position',
+  'number_format',
   'default_bank_account_id',
   'language',
   'currency_code',

@@ -872,11 +872,23 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Change the company itself',
       description:
-        'Changes what a company says about itself on its documents: the names it goes by, its address and identifiers, its logo and the colour and logo side of its invoice PDF, its stated capital, its activity code and the bank account customers are asked to pay into. Only the fields you name change. It touches nothing in the ledger, and it needs company.write — the owner preset, not the accountant one.',
+        'Changes what a company says about itself on its documents: the names it goes by, its address and identifiers, its logo and the colour and logo side of its invoice PDF, the pattern of its document numbers, its stated capital, its activity code and the bank account customers are asked to pay into. Only the fields you name change. It touches nothing in the ledger, and it needs company.write — the owner preset, not the accountant one.',
       inputSchema: write.UpdateCompanyProfileInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
     async (args) => guard(() => write.updateCompanyProfile(backend, args)),
+  );
+
+  server.registerTool(
+    'set_number_prefix',
+    {
+      title: 'Change what a journal prints in its numbers',
+      description:
+        "Sets the prefix one journal prints in place of {CODE} in the numbers it draws — FAC instead of SAL, for instance — or puts its code back with null. The journal keeps its code and its counter: the series goes on at the next number. A prefix another journal of the company already prints is refused. The pattern around it (year, width) is the company's number_format in update_company_profile. Needs settings.write.",
+      inputSchema: write.SetNumberPrefixInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.setNumberPrefix(backend, args)),
   );
 
   server.registerTool(

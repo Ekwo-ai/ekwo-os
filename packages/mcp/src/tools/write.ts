@@ -862,6 +862,14 @@ export const UpdateCompanyProfileInput = z.object({
     .nullable()
     .optional()
     .describe('The side of its invoice PDF the logo is printed on. Null puts back the default, left.'),
+  number_format: z
+    .string()
+    .min(1)
+    .nullable()
+    .optional()
+    .describe(
+      "The pattern of its document numbers: {CODE} (each journal's prefix, required), {YYYY} or {YY}, {MM}, and {N...} padded to as many N as are written, e.g. {CODE}-{YYYY}-{NNNNNN}. A pattern with the year restarts each year. Changing it on the way continues the series where it stood. Null puts back the country pack's.",
+    ),
 });
 
 export async function updateCompanyProfile(
@@ -887,6 +895,47 @@ export async function updateCompanyProfile(
     'the company could not be changed. Changing the company itself needs company.write, which the owner preset holds',
   );
   return { company: updated };
+}
+
+export const SetNumberPrefixInput = z.object({
+  company_id: companyId,
+  journal_id: uuid.optional(),
+  journal_code: z.string().min(1).optional().describe('The journal by its code, e.g. SAL. get_company lists the journals.'),
+  number_prefix: z
+    .string()
+    .min(1)
+    .max(20)
+    .nullable()
+    .describe("What {CODE} prints in the numbers this journal draws, e.g. FAC. Null prints the journal's code again. The code itself never changes."),
+});
+
+/** The prefix one journal prints in its numbers, in place of its code. */
+export async function setNumberPrefix(
+  backend: Backend,
+  args: z.infer<typeof SetNumberPrefixInput>,
+): Promise<unknown> {
+  let journalId = args.journal_id;
+  if (journalId === undefined) {
+    if (args.journal_code === undefined) {
+      throw new EkwoMcpError('missing_journal: name the journal, by journal_id or journal_code.');
+    }
+    journalId = (await idsByCode(backend, 'journals', args.company_id, [args.journal_code])).get(
+      args.journal_code,
+    ) as string;
+  }
+  const updated = only(
+    await backend.update<Row>(
+      'journals',
+      { number_prefix: args.number_prefix },
+      [
+        { column: 'id', op: 'eq', value: journalId },
+        { column: 'company_id', op: 'eq', value: args.company_id },
+      ],
+      [...columns.JOURNAL, 'number_prefix'],
+    ),
+    'the journal could not be changed. Changing a journal needs settings.write',
+  );
+  return { journal: updated };
 }
 
 // ---------------------------------------------------------------------------

@@ -238,6 +238,28 @@ describe('the company profile through the server', () => {
     expect(record(reset['company'])).toMatchObject({ invoice_accent_color: null, invoice_logo_position: null });
   });
 
+  it('stores the pattern of the numbers and a journal prefix, and puts the pack back with null', async () => {
+    const updated = record(
+      await writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId, number_format: '{CODE}-{YYYY}-{NNNNNN}' }),
+    );
+    expect(record(updated['company'])).toMatchObject({ number_format: '{CODE}-{YYYY}-{NNNNNN}' });
+    await expect(
+      writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId, number_format: 'F-{NNNN}' }),
+    ).rejects.toThrow(/number_format_without_code/);
+
+    const prefixed = record(
+      await writeTools.setNumberPrefix(asOwner, { company_id: fx.companyId, journal_code: 'SAL', number_prefix: 'FAC' }),
+    );
+    expect(record(prefixed['journal'])).toMatchObject({ code: 'SAL', number_prefix: 'FAC' });
+    await expect(
+      writeTools.setNumberPrefix(asOwner, { company_id: fx.companyId, journal_code: 'PUR', number_prefix: 'FAC' }),
+    ).rejects.toThrow(/number_prefix_taken/);
+
+    await writeTools.setNumberPrefix(asOwner, { company_id: fx.companyId, journal_code: 'SAL', number_prefix: null });
+    const reset = record(await writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId, number_format: null }));
+    expect(record(reset['company'])).toMatchObject({ number_format: null });
+  });
+
   it('refuses a call that names nothing to change', async () => {
     await expect(
       writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId }),
