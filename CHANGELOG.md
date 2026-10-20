@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.18.0] — 2026-10-20
+
 ### Added
 
 - **A discreet Ekwo.ai link under the foot of every invoice.**
@@ -26,6 +28,8 @@ somewhere has already run it.
   title, the names and the headings, in `ekwo doc pdf`, `render_invoice_pdf`
   and every client of the package; `classic` keeps Noto Sans. The comment of
   the column says so (migration `20261020190000`).
+- **The schema stays 0.17.0, and so does the floor of the packages.**
+  Migration `20261020190000` changes a comment and nothing a package reads.
 
 ## [0.17.0] — 2026-10-20
 
