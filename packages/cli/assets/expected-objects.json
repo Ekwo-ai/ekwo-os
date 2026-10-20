@@ -834,6 +834,39 @@
         ]
       },
       {
+        "name": "classification_schemes",
+        "columns": [
+          {
+            "name": "attribute",
+            "type": "text"
+          },
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "name",
+            "type": "text"
+          },
+          {
+            "name": "pattern",
+            "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "integer"
+          },
+          {
+            "name": "source_key",
+            "type": "text"
+          }
+        ]
+      },
+      {
         "name": "companies",
         "columns": [
           {
@@ -4269,6 +4302,10 @@
         "arguments": "p_value_id uuid, p_company_id uuid, p_what text"
       },
       {
+        "name": "assert_classifications",
+        "arguments": "p_company_id uuid, p_attributes jsonb, p_what text"
+      },
+      {
         "name": "assert_document_analytic_axes",
         "arguments": "p_document_id uuid"
       },
@@ -4602,6 +4639,10 @@
       },
       {
         "name": "document_lines_attributes_from_product",
+        "arguments": ""
+      },
+      {
+        "name": "document_lines_check_classifications",
         "arguments": ""
       },
       {
@@ -5145,6 +5186,10 @@
         "arguments": "p_company_id uuid, p_from date, p_to date"
       },
       {
+        "name": "products_check_classifications",
+        "arguments": ""
+      },
+      {
         "name": "purge_audit_log",
         "arguments": "p_before date"
       },
@@ -5604,6 +5649,11 @@
       {
         "table": "chart_templates",
         "name": "chart_templates_select",
+        "command": "select"
+      },
+      {
+        "table": "classification_schemes",
+        "name": "classification_schemes_select",
         "command": "select"
       },
       {
@@ -6286,6 +6336,10 @@
       },
       {
         "table": "document_lines",
+        "name": "document_lines_check_classifications"
+      },
+      {
+        "table": "document_lines",
         "name": "document_lines_refresh_totals"
       },
       {
@@ -6523,6 +6577,10 @@
       {
         "table": "products",
         "name": "products_audit"
+      },
+      {
+        "table": "products",
+        "name": "products_check_classifications"
       },
       {
         "table": "products",
@@ -7276,6 +7334,16 @@
         },
         {
           "name": "chart_templates",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "classification_schemes",
           "anon": [],
           "authenticated": [
             "select"
@@ -8259,6 +8327,17 @@
           ]
         },
         {
+          "name": "assert_classifications",
+          "arguments": "p_company_id uuid, p_attributes jsonb, p_what text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "assert_document_analytic_axes",
           "arguments": "p_document_id uuid",
           "anon": [],
@@ -9065,6 +9144,14 @@
         },
         {
           "name": "document_lines_attributes_from_product",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "document_lines_check_classifications",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -10492,6 +10579,14 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "products_check_classifications",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "purge_audit_log",

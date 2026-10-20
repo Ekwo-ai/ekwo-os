@@ -1468,6 +1468,42 @@ and each contact, kept in `companies.identifiers` and
 which schemes its format reads, and the brick reports by name the one a
 party lacks.
 
+### What was sold, by the classification of the country: `classifications`
+
+A country whose documents name the goods by a nomenclature — a customs code
+of the Harmonized System, a national extension of it at eight or ten digits,
+the list of an authority's own e-invoicing format — declares in `pack.json`
+the attribute that holds the code, with the pattern of its codes and the text
+that prescribes it
+([decision 0078](decisions/0078-a-line-names-what-was-sold.md)):
+
+```json
+"classifications": [
+  {
+    "attribute": "hs_code",
+    "name": "Harmonized System heading",
+    "pattern": "^[0-9]{6}$",
+    "legal_reference": "The article that asks for the code on an invoice",
+    "source": "a-key-of-the-register"
+  }
+]
+```
+
+`attribute` is the name the brick of the format reads in a line's
+`attributes`, in snake case. `pattern` is anchored (`^…$`) and kept to the
+classes, ranges and quantifiers Postgres and JavaScript read alike;
+`ekwo pack check` refuses an unanchored or broken one and an attribute
+declared twice.
+
+The codes are facts of each sale, not pack data: a product carries them in
+`products.attributes` and a document line in `document_lines.attributes`,
+`{"hs_code": "<code>"}`, with every other attribute its format asks. A line
+that names a product takes the attributes it does not carry. The database
+refuses a code off the pattern of its classification
+(`classification_code_invalid`); a posted line keeps its codes. A pack that
+declares no classification says nothing in the seed, and the attributes of
+its lines are checked by their shape alone.
+
 ### The mentions, and when each applies
 
 `applies_when` is a closed vocabulary and never an expression: an accountant

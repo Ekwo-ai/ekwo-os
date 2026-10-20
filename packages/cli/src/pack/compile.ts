@@ -88,6 +88,7 @@ export function compilePack(pack: Pack): string {
   out.push(...journals(pack, country));
   out.push(...taxes(pack, country));
   out.push(...postings(pack, country));
+  out.push(...classifications(pack, country));
   out.push(...taxReport(pack, country));
   out.push(...statements(pack.statements, pack.labels, country));
   out.push(...compileAnalysis(pack.analysis, country));
@@ -594,6 +595,41 @@ function insideBase(rows: PackTax[], country: string): string[] {
     'update tax_templates',
     `   set base_includes_tax = code = any (${array(inside)})`,
     ` where country = ${text(country)};`,
+    '',
+  ];
+}
+
+/**
+ * The classifications whose codes a line holds in its attributes, with their
+ * patterns (decision 0078). Written only for a pack that declares the key, so
+ * the seed of every other pack is what it was; a pack that declares it says
+ * the whole list, and a classification it no longer declares is removed.
+ */
+function classifications(pack: Pack, country: string): string[] {
+  if (pack.manifest.classifications === undefined) return [];
+  const rows = pack.classifications;
+  const out = [
+    `delete from classification_schemes where country = ${text(country)}` +
+      (rows.length === 0 ? ';' : ` and attribute <> all (${array(rows.map((r) => r.attribute))});`),
+    '',
+  ];
+  if (rows.length === 0) return out;
+  return [
+    ...out,
+    'insert into classification_schemes (country, attribute, name, pattern, legal_reference, source_key, sequence) values',
+    rows
+      .map(
+        (r) =>
+          `  (${text(country)}, ${text(r.attribute)}, ${text(r.name)}, ${text(r.pattern)}, ` +
+          `${text(r.legal_reference)}, ${text(r.source)}, ${r.sequence})`,
+      )
+      .join(',\n'),
+    'on conflict (country, attribute) do update set',
+    '  name            = excluded.name,',
+    '  pattern         = excluded.pattern,',
+    '  legal_reference = excluded.legal_reference,',
+    '  source_key      = excluded.source_key,',
+    '  sequence        = excluded.sequence;',
     '',
   ];
 }

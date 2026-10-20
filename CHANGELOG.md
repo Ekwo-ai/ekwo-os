@@ -49,6 +49,14 @@ somewhere has already run it.
   price and the line; the box of the base reports the base plus the tax, and
   `document_tax_summary` appends `base_includes_tax` and `taxable_amount`. No
   pack declares the key yet: every seed and every golden year is unchanged.
+- **A classification code is checked against the pattern its country
+  declares** (socle migration `20261020072100`, decision 0078). A pack
+  declares `classifications` in `pack.json` — the attribute of a line that
+  holds the code, the anchored pattern of its codes, the text that prescribes
+  it — compiled into `classification_schemes`. The code stays in
+  `document_lines.attributes`, pre-filled from `products.attributes`, and the
+  database refuses one off its pattern, `classification_code_invalid`. No pack
+  declares one yet: every seed is unchanged.
 
 ## [0.16.0] — 2026-10-20
 
