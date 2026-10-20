@@ -11,6 +11,7 @@ module.
 | `tax` | [`corporate-tax`](corporate-tax/) | `tax` | the provision of a computation, through `post_module_entry()` | `packs/<cc>/corporate_tax.json` |
 | `einvoicing` | [`einvoicing`](einvoicing/) | `einvoicing` | no: it issues the electronic file of a posted sale and records every sending | the profile the pack declares |
 | `crm` | [`crm`](crm/) | `crm` | no: it keeps the relationship on the socle's contacts, and a won deal makes its party a customer | none |
+| `consolidation` | [`consolidation`](consolidation/) | `consolidation` | no: it reads the members' books under their own row level security and writes nothing in them | none |
 
 `schema/module.1.json` is the published shape of a `module.json`, and
 `ekwo module list` refuses one that does not match it.
