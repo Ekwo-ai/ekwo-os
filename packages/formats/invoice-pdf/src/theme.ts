@@ -10,7 +10,7 @@ import FRAUNCES_SEMIBOLD from './fonts/fraunces-semibold.js';
 import INTER_BOLD from './fonts/inter-bold.js';
 import INTER_REGULAR from './fonts/inter-regular.js';
 import { decodeBase64 } from './text.js';
-import type { ExtraFont, InvoiceTheme } from './types.js';
+import type { ExtraFont, InvoiceCredit, InvoiceTheme } from './types.js';
 
 /** A dark slate blue, the elegant pair the package embeds, the logo on the left. */
 export const DEFAULT_THEME = {
@@ -18,6 +18,13 @@ export const DEFAULT_THEME = {
   logoPosition: 'left',
   typeface: 'elegant',
 } as const satisfies Required<Omit<InvoiceTheme, 'font' | 'headingFont'>>;
+
+/**
+ * The credit the Ekwo surfaces print under the foot — the command line, the
+ * MCP server, Ekwo Cloud — kept here so they print the same one. A caller of
+ * the package passes it, or its own, or none.
+ */
+export const EKWO_CREDIT = { text: 'Ekwo.ai', url: 'https://ekwo.ai' } as const satisfies InvoiceCredit;
 
 /** The typefaces a theme may name, each a text font and a heading font, or null for Noto Sans. */
 export const TYPEFACES = ['classic', 'elegant'] as const;

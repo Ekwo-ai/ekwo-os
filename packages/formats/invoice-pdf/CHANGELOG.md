@@ -9,7 +9,8 @@ All notable changes to this project are documented here. The format follows
 ### Added
 - **A credit under the foot.** `options.credit: { text, url }` prints a small
   link right-aligned under the foot of every page; the address is `https`
-  or refused, and nothing is printed without the option.
+  or refused, and nothing is printed without the option. `EKWO_CREDIT` is the one the
+  Ekwo surfaces print.
 
 ### Changed
 - **`elegant` is the default typeface.** A theme that names none prints in

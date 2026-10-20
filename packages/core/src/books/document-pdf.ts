@@ -25,6 +25,7 @@
 
 import { embedFacturX } from '@ekwo-ai/factur-x/pdf';
 import {
+  EKWO_CREDIT,
   ENGLISH_LABELS,
   InvoicePdfError,
   renderFacturXPdf,
@@ -45,9 +46,6 @@ import { EINVOICE_FORMATS, type EinvoiceViolation } from '../einvoicing/formats.
 import { readEinvoiceSource } from '../einvoicing/issue.js';
 import { BooksError, type Backend, type Row } from './backend.js';
 import { onlyVisible } from './shared.js';
-
-/** The small link under the foot of every invoice the books print: where they were kept. */
-export const EKWO_CREDIT = { text: 'Ekwo.ai', url: 'https://ekwo.ai' } as const;
 
 /** Every column of `document_header`, dates and figures as the text the database holds. */
 const HEADER = [
