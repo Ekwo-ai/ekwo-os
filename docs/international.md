@@ -303,3 +303,20 @@ and the pack says so.
 **A return form with no published numbering.** The boxes follow s. 20(1) of the
 Act (output tax less input tax) and are numbered by the pack, since the form
 the Commissioner prescribes was not found in a readable text.
+
+## From Mongolia
+
+**A ten per cent VAT with a return on the 10th.** The Law on Value Added Tax of
+2015 fixes 10 % (article 11), a zero rate and an exemption list (articles 12 and
+13), and the return and payment by the 10th of the following month (article 16.1).
+Amendments announced for 1 January 2027 would move the deadlines by about ten
+days; the pack carries the 10th until the final text is read.
+
+**Chart and return form not readable.** The annex of the Ministry of Finance order
+that lists the accounts, and the approved return form, could not be read from an
+open source: the chart's classes and the boxes' names are the pack's own, and the
+README says so.
+
+**State receipt system.** Every sale gives a receipt sent to the state's integrated
+system (ebarimt, article 17); the core has no clearance step, so `einvoicing` is
+left empty.

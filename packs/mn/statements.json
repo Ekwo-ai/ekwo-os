@@ -1,0 +1,567 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "MN-BS",
+      "kind": "balance_sheet",
+      "framework": "СТОУС",
+      "name": "Санхүү байдлын тайлан (баланс)",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Нягтлан бодох бүртгэлийн тухай хууль (2015) ба СТОУС (IAS 1) — балансийн бүтэц. Мөрүүдийг дансны жагсаалтын ангиллаас (1000–9000) энэ багц өөрөө угсарсан; Сангийн яамны батлсан маяг биш. README.md-г үз.",
+      "source": "accounting-law",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Тайлант санхүүгийн жилийн үр дүн",
+      "lines": [
+        {
+          "code": "AS-CASH",
+          "name": "Мөнгөн хөрөнгө",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1299"
+            }
+          ]
+        },
+        {
+          "code": "AS-STINV",
+          "name": "Богино хугацаат хөрөнгө оруулалт",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1399"
+            }
+          ]
+        },
+        {
+          "code": "AS-REC",
+          "name": "Авлага ба авах төлбөрийн бичиг",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1499"
+            }
+          ]
+        },
+        {
+          "code": "AS-OREC",
+          "name": "Бусад авлага, урьдчилгаа ба буцаан авах НӨАТ",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1500",
+              "code_to": "1599"
+            }
+          ]
+        },
+        {
+          "code": "AS-INV",
+          "name": "Бараа материал",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1699"
+            }
+          ]
+        },
+        {
+          "code": "AS-OCA",
+          "name": "Дараа үеийн зардал ба бусад эргэлтийн хөрөнгө",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1700",
+              "code_to": "1799"
+            }
+          ]
+        },
+        {
+          "code": "AS-CA-TOTAL",
+          "name": "Эргэлтийн хөрөнгийн дүн",
+          "sequence": 70,
+          "is_total": true,
+          "plus": [
+            "AS-CASH",
+            "AS-STINV",
+            "AS-REC",
+            "AS-OREC",
+            "AS-INV",
+            "AS-OCA"
+          ]
+        },
+        {
+          "code": "AS-PPE",
+          "name": "Үндсэн хөрөнгө (хуримтлагдсан элэгдлийн дараах)",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2100",
+              "code_to": "2199"
+            }
+          ]
+        },
+        {
+          "code": "AS-ONCA",
+          "name": "Эргэлтийн бус бусад хөрөнгө",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2899"
+            }
+          ]
+        },
+        {
+          "code": "AS-INTANG",
+          "name": "Биет бус хөрөнгө (хорогдлын дараах)",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2900",
+              "code_to": "2999"
+            }
+          ]
+        },
+        {
+          "code": "AS-NCA-TOTAL",
+          "name": "Эргэлтийн бус хөрөнгийн дүн",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "AS-PPE",
+            "AS-ONCA",
+            "AS-INTANG"
+          ]
+        },
+        {
+          "code": "AS-TOTAL",
+          "name": "Нийт хөрөнгө (баланс)",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "AS-CA-TOTAL",
+            "AS-NCA-TOTAL"
+          ]
+        },
+        {
+          "code": "EQ-SHARE",
+          "name": "Хувь нийлүүлсэн хөрөнгө",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5100",
+              "code_to": "5199"
+            }
+          ]
+        },
+        {
+          "code": "EQ-APIC",
+          "name": "Нэмж төлөгдсөн капитал",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5200",
+              "code_to": "5299"
+            }
+          ]
+        },
+        {
+          "code": "EQ-RETAINED",
+          "name": "Хуримтлагдсан ашиг",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5300",
+              "code_to": "5399"
+            }
+          ]
+        },
+        {
+          "code": "EQ-RESERVE",
+          "name": "Нөөцийн капитал",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5400",
+              "code_to": "5499"
+            }
+          ]
+        },
+        {
+          "code": "EQ-SUMMARY",
+          "name": "Орлого, зарлагын жагсаалт (хаалтын данс)",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5900",
+              "code_to": "5999"
+            }
+          ]
+        },
+        {
+          "code": "EQ-TOTAL",
+          "name": "Өмчийн дүн",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "EQ-SHARE",
+            "EQ-APIC",
+            "EQ-RETAINED",
+            "EQ-RESERVE",
+            "EQ-SUMMARY"
+          ]
+        },
+        {
+          "code": "LI-PAY",
+          "name": "Өглөг ба төлөх төлбөрийн бичиг",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3199"
+            }
+          ]
+        },
+        {
+          "code": "LI-ADV",
+          "name": "Урьдчилж орсон орлого",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3299"
+            }
+          ]
+        },
+        {
+          "code": "LI-DEBT",
+          "name": "Богино хугацаат зээл",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3300",
+              "code_to": "3399"
+            }
+          ]
+        },
+        {
+          "code": "LI-TAX",
+          "name": "Төлөх татвар",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3400",
+              "code_to": "3499"
+            }
+          ]
+        },
+        {
+          "code": "LI-ACCR",
+          "name": "Тооцсон өр төлбөр",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3500",
+              "code_to": "3599"
+            }
+          ]
+        },
+        {
+          "code": "LI-OTHER",
+          "name": "Бусад богино хугацаат өр төлбөр",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3600",
+              "code_to": "3699"
+            }
+          ]
+        },
+        {
+          "code": "LI-PROV",
+          "name": "Нөөц",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3700",
+              "code_to": "3799"
+            }
+          ]
+        },
+        {
+          "code": "LI-CL-TOTAL",
+          "name": "Богино хугацаат өр төлбөрийн дүн",
+          "sequence": 260,
+          "is_total": true,
+          "plus": [
+            "LI-PAY",
+            "LI-ADV",
+            "LI-DEBT",
+            "LI-TAX",
+            "LI-ACCR",
+            "LI-OTHER",
+            "LI-PROV"
+          ]
+        },
+        {
+          "code": "LI-LT",
+          "name": "Урт хугацаат өр төлбөр",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4999"
+            }
+          ]
+        },
+        {
+          "code": "LI-NCL-TOTAL",
+          "name": "Урт хугацаат өр төлбөрийн дүн",
+          "sequence": 280,
+          "is_total": true,
+          "plus": [
+            "LI-LT"
+          ]
+        },
+        {
+          "code": "EQLI-TOTAL",
+          "name": "Өмч ба өр төлбөрийн дүн (баланс)",
+          "sequence": 290,
+          "is_total": true,
+          "plus": [
+            "EQ-TOTAL",
+            "LI-CL-TOTAL",
+            "LI-NCL-TOTAL"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "MN-IS",
+      "kind": "income_statement",
+      "framework": "СТОУС",
+      "name": "Орлогын дэлгэрэнгүй тайлан",
+      "valid_from": "2016-01-01",
+      "legal_reference": "Нягтлан бодох бүртгэлийн тухай хууль (2015) ба СТОУС (IAS 1) — орлого, зарлагын тайланийн бүтэц. Мөрүүдийг дансны жагсаалтын ангиллаас (1000–9000) энэ багц өөрөө угсарсан; Сангийн яамны батлсан маяг биш. README.md-г үз.",
+      "source": "accounting-law",
+      "lines": [
+        {
+          "code": "IS-REV",
+          "name": "Борлуулалтын орлого (буцаалт, хөнгөлөлтийн дараах)",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6100",
+              "code_to": "6199"
+            }
+          ]
+        },
+        {
+          "code": "IS-COGS",
+          "name": "Борлуулсан бүтээгдэхүүний өртөг",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7100",
+              "code_to": "7299"
+            }
+          ]
+        },
+        {
+          "code": "IS-GROSS",
+          "name": "Нийт ашиг",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "IS-REV"
+          ],
+          "minus": [
+            "IS-COGS"
+          ]
+        },
+        {
+          "code": "IS-SELL",
+          "name": "Борлуулалттай холбоотой зардал",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7500",
+              "code_to": "7599"
+            }
+          ]
+        },
+        {
+          "code": "IS-ADMIN",
+          "name": "Удирдлагын ерөнхий зардал",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8999"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPINC",
+          "name": "Үйл ажиллагааны бусад орлого",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6200",
+              "code_to": "6299"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPEXP",
+          "name": "Үйл ажиллагааны бусад зардал",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7600",
+              "code_to": "7699"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPRESULT",
+          "name": "Үйл ажиллагааны үр дүн",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "IS-GROSS",
+            "IS-OPINC"
+          ],
+          "minus": [
+            "IS-SELL",
+            "IS-ADMIN",
+            "IS-OPEXP"
+          ]
+        },
+        {
+          "code": "IS-NONINC",
+          "name": "Үйл ажиллагааны бус орлого",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9100",
+              "code_to": "9199"
+            }
+          ]
+        },
+        {
+          "code": "IS-NONEXP",
+          "name": "Үйл ажиллагааны бус зардал",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9500",
+              "code_to": "9599"
+            }
+          ]
+        },
+        {
+          "code": "IS-PRETAX",
+          "name": "Татварын өмнөх ашиг",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "IS-OPRESULT",
+            "IS-NONINC"
+          ],
+          "minus": [
+            "IS-NONEXP"
+          ]
+        },
+        {
+          "code": "IS-TAX",
+          "name": "Орлогын албан татварын зардал",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9600",
+              "code_to": "9699"
+            }
+          ]
+        },
+        {
+          "code": "IS-NET",
+          "name": "Цэвэр ашиг",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "IS-PRETAX"
+          ],
+          "minus": [
+            "IS-TAX"
+          ]
+        }
+      ]
+    }
+  ]
+}

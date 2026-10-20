@@ -115,3 +115,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('BRL', 'Brazilian real', 'R$', 2)
 on conflict (code) do nothing;
+
+-- Mongolian tugrik, ISO 4217 list one, two decimals (packs/mn/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('MNT', 'Mongolian tugrik', E'₮', 2)
+on conflict (code) do nothing;

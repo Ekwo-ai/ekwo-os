@@ -1,0 +1,122 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "MN-VAT",
+  "name": "Нэмэгдсэн өртгийн албан татварын тайлан",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2016-01-01",
+  "legal_reference": "НӨАТ-ын тухай хууль, 16 дугаар зүйл — НӨАТ суутган төлөгч татварыг улсын төсөвт төлж, тайланг баталсан маягтаар дараа сарын 10-ны дотор гаргана; тайлант хугацаа нь сар. Тайлангийн албан ёсны маягтын мөрийн дугаарыг нээлттэй эх сурвалжаас уншиж чадаагүй тул нүднүүдийг хуулийн зүйлээр (TAXABLE, ZERO, EXEMPT, TURNOVER, INPUT, CREDIT, PAYABLE, EXCESS) нэрлэсэн. README.md-г үз.",
+  "source": "vat-law",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 10,
+    "legal_reference": "НӨАТ-ын тухай хууль, 16 дугаар зүйлийн 16.1 — НӨАТ суутган төлөгч татварыг улсын төсөвт төлж, тайланг баталсан маягтаар дараа сарын 10-ны дотор гаргана. 2027 оны 1 дүгээр сарын 1-нээс хүчин төгөлдөр болохоор мэдээлэгдсэн НӨАТ-ын хуулийн нэмэлт, өөрчлөлт хугацааг ойролцоогоор 10 хоногоор уртасгана гэх мэдээлэл байгаа — эцсийн эх нийтлэгдсэний дараа энэ хугацааг шинэчилнэ (README.md).",
+    "source": "vat-law"
+  },
+  "boxes": [
+    {
+      "box": "TAXABLE",
+      "kind": "base",
+      "name": "Албан татвар ногдох борлуулалт 10 % — татвар ногдох дүн",
+      "sequence": 10,
+      "legal_reference": "НӨАТ-ын тухай хууль, 11.1 дугаар зүйл.",
+      "source": "vat-law"
+    },
+    {
+      "box": "TAXABLE",
+      "kind": "tax",
+      "name": "Албан татвар ногдох борлуулалт 10 % — тооцсон НӨАТ",
+      "sequence": 20,
+      "legal_reference": "НӨАТ-ын тухай хууль, 11.1 дугаар зүйл.",
+      "source": "vat-law"
+    },
+    {
+      "box": "ZERO",
+      "kind": "base",
+      "name": "0 хувийн татвартай борлуулалт (экспорт, олон улсын тээвэр)",
+      "sequence": 30,
+      "legal_reference": "НӨАТ-ын тухай хууль, 12.1 дугаар зүйл.",
+      "source": "vat-law"
+    },
+    {
+      "box": "EXEMPT",
+      "kind": "base",
+      "name": "НӨАТ-аас чөлөөлөгдсөн борлуулалт",
+      "sequence": 40,
+      "legal_reference": "НӨАТ-ын тухай хууль, 13 дугаар зүйл.",
+      "source": "vat-law"
+    },
+    {
+      "box": "TURNOVER",
+      "kind": "total",
+      "name": "Тайлант хугацааны нийт борлуулалт",
+      "sequence": 50,
+      "legal_reference": "НӨАТ-ын тухай хууль, 16 дугаар зүйл.",
+      "source": "vat-law",
+      "plus": [
+        "TAXABLE:base",
+        "ZERO",
+        "EXEMPT"
+      ]
+    },
+    {
+      "box": "INPUT",
+      "kind": "base",
+      "name": "Худалдан авсан бараа, ажил, үйлчилгээ — НӨАТ-гүй дүн",
+      "sequence": 60,
+      "legal_reference": "НӨАТ-ын тухай хууль, 14 дугаар зүйл.",
+      "source": "vat-law"
+    },
+    {
+      "box": "INPUT",
+      "kind": "tax",
+      "name": "Худалдан авсан бараа, ажил, үйлчилгээ — суутгах НӨАТ",
+      "sequence": 70,
+      "legal_reference": "НӨАТ-ын тухай хууль, 14 дугаар зүйл.",
+      "source": "vat-law"
+    },
+    {
+      "box": "CREDIT",
+      "kind": "total",
+      "name": "Тайлант хугацаанд суутгах НӨАТ",
+      "sequence": 80,
+      "legal_reference": "НӨАТ-ын тухай хууль, 14 дугаар зүйл.",
+      "source": "vat-law",
+      "plus": [
+        "INPUT:tax"
+      ]
+    },
+    {
+      "box": "PAYABLE",
+      "kind": "total",
+      "name": "Төсөвт төлөх НӨАТ",
+      "sequence": 90,
+      "legal_reference": "НӨАТ-ын тухай хууль, 16.1 дугаар зүйл.",
+      "source": "vat-law",
+      "plus": [
+        "TAXABLE:tax"
+      ],
+      "minus": [
+        "CREDIT"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "EXCESS",
+      "kind": "total",
+      "name": "Суутгах НӨАТ-ын илүүдэл (буцаан авах)",
+      "sequence": 100,
+      "legal_reference": "НӨАТ-ын тухай хууль, 15 дугаар зүйл.",
+      "source": "vat-law",
+      "plus": [
+        "CREDIT"
+      ],
+      "minus": [
+        "TAXABLE:tax"
+      ],
+      "floor_zero": true
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MN",
+  "name": "Монгол Улс",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 209,
+  "released_at": "2026-10-20",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law",
+        "title": "Law of Mongolia on Value Added Tax, 9 July 2015 (revised edition) — articles 11 (rates), 12 (zero rate), 13 (exemptions), 14 (input tax), 16 (return and payment), 17 (receipts and invoices); unofficial English translation",
+        "publisher": "Legalinfo.mn — Unified legal portal of Mongolia",
+        "url": "https://legalinfo.mn/en/edtl/16758728323701",
+        "consulted_on": "2026-10-20",
+        "kind": "law"
+      },
+      {
+        "key": "accounting-law",
+        "title": "Law of Mongolia on Accounting, 2015 — books, general ledger, financial statements",
+        "publisher": "Legalinfo.mn — Unified legal portal of Mongolia",
+        "url": "https://legalinfo.mn/en/edtl/16230949065051",
+        "consulted_on": "2026-10-20",
+        "kind": "law"
+      },
+      {
+        "key": "mof-order-347",
+        "title": "Сангийн сайдын 2017 оны 12 дугаар сарын 5-ны өдрийн 347 дугаар тушаал «Маяг, заавар батлах тухай» — өмчийн бүх хэлбэрийн аж ахуйн нэгж, байгууллагад нийтлэг хэрэглэгдэх нягтлан бодох бүртгэлийн маягт, заавар",
+        "publisher": "Монгол Улсын Сангийн яам (legalinfo.mn)",
+        "url": "https://legalinfo.mn/mn/detail/13053",
+        "consulted_on": "2026-10-20",
+        "kind": "regulation"
+      },
+      {
+        "key": "ifrs",
+        "title": "IFRS Accounting Standards",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/list-of-standards/",
+        "consulted_on": "2026-10-20",
+        "kind": "standard"
+      },
+      {
+        "key": "mta-portal",
+        "title": "Татварын ерөнхий газар — цахим татварын тайлан, НӨАТ-ын тайлан (e-tax)",
+        "publisher": "Татварын ерөнхий газар (Mongolian Tax Authority)",
+        "url": "https://mta.gov.mn/",
+        "consulted_on": "2026-10-20",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "MNT",
+    "language": "mn",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1410",
+      "payable": "3110",
+      "suspense": "3699",
+      "rounding": "7690",
+      "retained_earnings": "5300",
+      "sales": "6110",
+      "purchase": "7210",
+      "bank": "1210",
+      "cash": "1110",
+      "fx_gain": "6290",
+      "fx_loss": "7610",
+      "tax_payable": "3432",
+      "tax_receivable": "1542"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Борлуулалтын журнал",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Худалдан авалтын журнал",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Банкны журнал",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Кассын журнал",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "Ерөнхий журнал",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Эхний үлдэгдлийн журнал",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Нягтлан бодох бүртгэлийн дансны жагсаалт — аж ахуйн нэгж (Нягтлан бодох бүртгэлийн тухай хууль, Сангийн сайдын 347 дугаар тушаал)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "MN-BS",
+        "MN-IS"
+      ],
+      "legal_reference": "Нягтлан бодох бүртгэлийн тухай хууль (2015) нь ерөнхий дэвтэр, дансны жагсаалтыг аж ахуйн нэгжид тогтоодог; Сангийн сайдын 2017 оны 347 дугаар тушаал нь маяг, зааврыг батална. Дансны жагсаалтын хавсралтын бүрэн эх нээлттэй эх сурвалжаас уншигдсангүй: ангилал (1 — эргэлтийн хөрөнгө … 7 — зардал) нь энэ багцын бүтэц бөгөөд хавсралтаас шууд хуулсан болохыг батлахгүй. README.md-г үз.",
+      "source": "mof-order-347"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "НӨАТ-ын тухай хууль, 17 дугаар зүйл — НӨАТ суутган төлөгч борлуулалт бүрт баримт (ebarimt) олгож, мэдээллийг нэгдсэн системд илгээнэ; баримтын дугаарыг тус систем олгодог. Худалдааны баримтын дугаарлалтын тусгай хэлбэрийг хууль шаарддаггүй — дараалсан дугаарлалт нь жишээ.",
+        "source": "vat-law"
+      },
+      "tax_point": {
+        "legal_reference": "НӨАТ-ын тухай хууль, 16 дугаар зүйл — татвар ногдуулах үе нь сар; борлуулалтыг борлуулсан сарын тайланд оруулна. Урьдчилгааны онцгой журмыг энэ формат илэрхийлэхгүй — README.md-г үз.",
+        "source": "vat-law"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "НӨАТ-ын тухай хууль, 17 дугаар зүйл — баримтыг буцаах, засварлахыг залруулах баримтаар хийнэ; бүртгэсэн бичилтийг устгахгүй, залруулга бичилтээр засна.",
+        "source": "vat-law"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "НӨАТ-ын тухай хууль, 17 дугаар зүйл — НӨАТ суутган төлөгч борлуулалт бүрт баримт олгож, мэдээллийг төрийн нэгдсэн системд (ebarimt) 3 хоногийн дотор, НӨАТ-ын падааныг нэг долоо хоногийн дотор илгээнэ. Энэ нь EN 16931 загвараар солилцох систем бус, төрийн систем: профайл, оролцогчийн схем, НӨАТ-ын схем тодорхойлогдоогүй бөгөөд ebarimt руу дамжуулах нь цөмөөс гадуур (README.md).",
+    "source": "vat-law"
+  },
+  "bank": {
+    "account_scheme": "iban",
+    "statement_formats": []
+  }
+}

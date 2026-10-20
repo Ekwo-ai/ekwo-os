@@ -1,0 +1,297 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Сар бүр НӨАТ-ын тайлан гаргадаг Монгол НӨАТ суутган төлөгчийн нэг жилийн бүртгэл",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "2026 оны санхүүгийн жил",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    },
+    {
+      "code": "2026-05",
+      "from": "2026-05-01",
+      "to": "2026-05-31"
+    }
+  ],
+  "statements": [
+    "MN-BS",
+    "MN-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-mn",
+      "name": "Алтан Говь Трейд ХХК",
+      "type": "customer",
+      "country": "MN"
+    },
+    {
+      "ref": "client-foreign",
+      "name": "Muster Handels GmbH",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "supplier-mn",
+      "name": "Хөх Нуур Нийлүүлэлт ХХК",
+      "type": "supplier",
+      "country": "MN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-mn",
+      "date": "2026-01-15",
+      "why": "Барааг 10 % ердийн хувиар борлуулсан — TAXABLE нүдний суурь ба татвар (11.1).",
+      "lines": [
+        {
+          "name": "Барилгын материал",
+          "quantity": 10,
+          "unit_price": 5000,
+          "tax": "MN-S-10",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-01-20",
+      "why": "Барааг ТЭЗХ-ээс гадагш экспортолсон — 0 хувийн борлуулалт, ZERO нүд (12.1.1).",
+      "lines": [
+        {
+          "name": "Экспортын бүтээгдэхүүний багц",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "MN-S-ZERO-EXPORT",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-mn",
+      "date": "2026-01-12",
+      "why": "Дахин борлуулах бараа 10 % НӨАТ-тай худалдан авсан — суутгах НӨАТ, INPUT нүд (14.1).",
+      "lines": [
+        {
+          "name": "Дахин борлуулах бараа",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "MN-P-10",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-mn",
+      "date": "2026-02-10",
+      "why": "Банкны үйлчилгээний шимтгэл — НӨАТ-аас чөлөөлөгдсөн борлуулалт, EXEMPT нүд (13.5.2).",
+      "lines": [
+        {
+          "name": "Банкны үйлчилгээний шимтгэл",
+          "quantity": 10,
+          "unit_price": 300,
+          "tax": "MN-S-EXEMPT-BANKING",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-mn",
+      "date": "2026-02-18",
+      "why": "Хоёрдугаар сард барааг 10 % хувиар борлуулсан.",
+      "lines": [
+        {
+          "name": "Оффисын тавилга",
+          "quantity": 4,
+          "unit_price": 7500,
+          "tax": "MN-S-10",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-mn",
+      "date": "2026-02-25",
+      "why": "V4-ийн нэг ширхгийг буцаасан — буцаасан сарын TAXABLE нүдний суурь ба татварыг бууруулна.",
+      "lines": [
+        {
+          "name": "Буцаасан оффисын тавилга",
+          "quantity": 1,
+          "unit_price": 7500,
+          "tax": "MN-S-10",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-mn",
+      "date": "2026-02-14",
+      "why": "Гуравдагч этгээдийн үйлчилгээ 10 % НӨАТ-тай — INPUT нүд.",
+      "lines": [
+        {
+          "name": "Гуравдагч этгээдийн үйлчилгээ",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "MN-P-10",
+          "account": "8150"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-mn",
+      "date": "2026-03-10",
+      "why": "Бараа худалдан авалт 10 % НӨАТ-тай; суутгах НӨАТ борлуулалтын НӨАТ-аас их — EXCESS нүд.",
+      "lines": [
+        {
+          "name": "Дахин борлуулах бараа",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "MN-P-10",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-mn",
+      "date": "2026-04-08",
+      "why": "Дөрөвдүгээр сарын борлуулалт 10 % хувиар.",
+      "lines": [
+        {
+          "name": "Хэрэглээний бараа",
+          "quantity": 8,
+          "unit_price": 2500,
+          "tax": "MN-S-10",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-04-20",
+      "why": "Олон улсын тээврийн үйлчилгээ — 0 хувийн борлуулалт, ZERO нүд (12.1.2).",
+      "lines": [
+        {
+          "name": "Олон улсын ачаа тээвэр",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "MN-S-ZERO-TRANSPORT",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-mn",
+      "date": "2026-04-12",
+      "why": "Дөрөвдүгээр сарын худалдан авалт 10 % НӨАТ-тай.",
+      "lines": [
+        {
+          "name": "Дахин борлуулах бараа",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "MN-P-10",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-mn",
+      "date": "2026-05-06",
+      "why": "Орон сууцны байрны борлуулалт — НӨАТ-аас чөлөөлөгдсөн, EXEMPT нүд (13.1.7).",
+      "lines": [
+        {
+          "name": "Орон сууцны байр",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "MN-S-EXEMPT-RESIDENTIAL",
+          "account": "6110"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-01",
+      "amount": 55000,
+      "contact": "client-mn",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "V1-ийг яг хаасан орлого (50 000 + 5 000 НӨАТ)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 20000,
+      "contact": "client-foreign",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Экспортын падаан V2-ыг яг хаасан орлого (НӨАТ-гүй)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-01",
+      "amount": 5000,
+      "contact": "client-mn",
+      "journal": "BNK",
+      "match": null,
+      "why": "Баримтад холбоогүй орлого — үйлчлүүлэгчийн дансанд нээлттэй үлдэнэ."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 33000,
+      "contact": "supplier-mn",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "P1-ийг яг хаасан төлбөр (30 000 + 3 000 НӨАТ)."
+    }
+  ]
+}

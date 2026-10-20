@@ -1,0 +1,215 @@
+[
+  {
+    "code": "MN-S-10",
+    "name": "НӨАТ 10 % — ерөнхий хувь (борлуулалт)",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "НӨАТ-ын тухай хууль, 11 дүгээр зүйлийн 11.1 — бараа, ажил, үйлчилгээний борлуулалтын үнэлгээнд 10 хувиар НӨАТ ногдуулна.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "TAXABLE"
+        },
+        {
+          "type": "tax",
+          "account": "3431",
+          "box": "TAXABLE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "TAXABLE",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "3431",
+          "box": "TAXABLE",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MN-S-ZERO-EXPORT",
+    "name": "НӨАТ 0 % — барааны экспорт (борлуулалт)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2016-01-01",
+    "legal_reference": "НӨАТ-ын тухай хууль, 12 дугаар зүйлийн 12.1.1 — гаалийн байгууллагад мэдүүлсэн экспортын бараа нь 0 хувийн татвартай.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZERO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZERO",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MN-S-ZERO-TRANSPORT",
+    "name": "НӨАТ 0 % — олон улсын тээвэр (борлуулалт)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2016-01-01",
+    "legal_reference": "НӨАТ-ын тухай хууль, 12 дугаар зүйлийн 12.1.2 — зорчигч, ачааны олон улсын тээвэр нь 0 хувийн татвартай.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZERO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZERO",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MN-S-EXEMPT-RESIDENTIAL",
+    "name": "НӨАТ-аас чөлөөлөгдсөн — орон сууцны байрны борлуулалт (борлуулалт)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2016-01-01",
+    "legal_reference": "НӨАТ-ын тухай хууль, 13 дугаар зүйлийн 13.1.7 — орон сууцны байрны борлуулалтыг НӨАТ-аас чөлөөлнө (13.4: дахин борлуулах зорилгоор борлуулах шинээр баригдсан орон сууцыг эс оруулна).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MN-S-EXEMPT-BANKING",
+    "name": "НӨАТ-аас чөлөөлөгдсөн — банкны үйлчилгээ (борлуулалт)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2016-01-01",
+    "legal_reference": "НӨАТ-ын тухай хууль, 13 дугаар зүйлийн 13.5.2 — банкны үйлчилгээг НӨАТ-аас чөлөөлнө.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MN-P-10-NR",
+    "name": "НӨАТ 10 % — оршин суугч бус этгээдийн үйлчилгээ (худалдан авалт)",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2016-01-01",
+    "legal_reference": "НӨАТ-ын тухай хууль, 7 дугаар зүйлийн 7.2.5 — оршин суугч бус этгээдээс оршин суугчид борлуулсан бараа, ажил, үйлчилгээ татвар ногдуулах бүтээгдэхүүн; 16.1.2 — гаалийн мэдүүлэггүй худалдан авсан бараа, үйлчилгээний НӨАТ-ыг суутган төсөвт төлнө. Орчуулгад хэн суутгахыг тодорхойгүй тул (оршин суугч бус этгээд эсвэл хүлээн авагч) энэ кодыг хүлээн авагч суутгадаг гэж үзсэн; мэргэжилтэн баталгаажуулна (README.md). Тооцсон татвар 3433, суутгал 1543 дээр хүлээнэ.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1543"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3433"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1543"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3433"
+        }
+      ]
+    },
+    "description": "Оршин суугч бус этгээдийн үйлчилгээний НӨАТ-ыг хүлээн авагч тооцож төсөвт төлж, төлсний дараа суутгана"
+  },
+  {
+    "code": "MN-P-10",
+    "name": "НӨАТ 10 % — ерөнхий хувь (худалдан авалт)",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2016-01-01",
+    "legal_reference": "НӨАТ-ын тухай хууль, 14 дүгээр зүйлийн 14.1.1–14.1.2 — үйлдвэрлэл, үйлчилгээнд ашиглах бараа, ажил, үйлчилгээний НӨАТ-ыг суутгана; 14.5 — падаан дээр НӨАТ тусгагдсан байх ёстой; 14.6 — суутгахгүй зүйлс (суудлын автомашин, хувийн хэрэглээ, чөлөөлөгдсөн үйл ажиллагаа).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "INPUT"
+        },
+        {
+          "type": "tax",
+          "account": "1541",
+          "box": "INPUT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "INPUT",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1541",
+          "box": "INPUT",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]

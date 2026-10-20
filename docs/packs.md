@@ -411,6 +411,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`me`](../packs/me/) | Crna Gora | `116_pack_me.sql` | sr, en | `community` |
 | [`mk`](../packs/mk/) | Северна Македонија | `115_pack_mk.sql` | mk, en | `community` |
 | [`ml`](../packs/ml/) | Mali | `32_pack_ml.sql` | fr | `community` |
+| [`mn`](../packs/mn/) | Монгол Улс | `209_pack_mn.sql` | mn, en | `community` |
 | [`mo`](../packs/mo/) | 澳門 | `145_pack_mo.sql` | zh, pt, en | `community` |
 | [`mt`](../packs/mt/) | Malta | `80_pack_mt.sql` | en | `community` |
 | [`mu`](../packs/mu/) | Mauritius | `134_pack_mu.sql` | en, fr | `community` |
