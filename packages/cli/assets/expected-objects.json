@@ -12645,6 +12645,10 @@
           "arguments": ""
         },
         {
+          "name": "board",
+          "arguments": "p_company_id uuid, p_pipeline_id uuid, p_include_closed boolean"
+        },
+        {
           "name": "card_of",
           "arguments": "p_company_id uuid, p_contact_id uuid"
         },
@@ -12687,6 +12691,14 @@
         {
           "name": "search_cards",
           "arguments": "p_company_id uuid, p_query text, p_status crm.relationship_status, p_segment_id uuid, p_stage_id uuid, p_country character, p_language character, p_owner text, p_no_outbound boolean, p_active_since timestamp with time zone, p_inactive_since timestamp with time zone, p_limit integer"
+        },
+        {
+          "name": "segment_tree",
+          "arguments": "p_company_id uuid"
+        },
+        {
+          "name": "timeline",
+          "arguments": "p_company_id uuid, p_contact_id uuid, p_deal_id uuid, p_since timestamp with time zone, p_kinds text[], p_limit integer"
         },
         {
           "name": "touch_card",
@@ -13032,6 +13044,17 @@
             ]
           },
           {
+            "name": "board",
+            "arguments": "p_company_id uuid, p_pipeline_id uuid, p_include_closed boolean",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "card_of",
             "arguments": "p_company_id uuid, p_contact_id uuid",
             "anon": [],
@@ -13135,6 +13158,28 @@
           {
             "name": "search_cards",
             "arguments": "p_company_id uuid, p_query text, p_status crm.relationship_status, p_segment_id uuid, p_stage_id uuid, p_country character, p_language character, p_owner text, p_no_outbound boolean, p_active_since timestamp with time zone, p_inactive_since timestamp with time zone, p_limit integer",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "segment_tree",
+            "arguments": "p_company_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "timeline",
+            "arguments": "p_company_id uuid, p_contact_id uuid, p_deal_id uuid, p_since timestamp with time zone, p_kinds text[], p_limit integer",
             "anon": [],
             "authenticated": [
               "execute"
