@@ -1,0 +1,377 @@
+[
+  {
+    "code": "MG-S-20",
+    "name": "Vente, taux normal 20 %",
+    "description": "Livraison de biens ou prestation de services faite à Madagascar",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code des impôts selon la loi de finances 2024, art. 06.01.02 — les affaires réalisées à Madagascar par les personnes qui achètent pour revendre ou accomplissent des actes d'une activité commerciale, industrielle, agricole, artisanale, minière, hôtelière, de prestation de services ou de profession libérale sont soumises à la taxe ; art. 06.01.12 — le taux normal est de 20 p. 100.",
+    "source": "code-impots",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "S20"
+        },
+        {
+          "type": "tax",
+          "account": "4457",
+          "box": "S20"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "S20",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4457",
+          "box": "S20",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "MG-S-5",
+    "name": "Vente de gaz butane, taux réduit 5 %",
+    "description": "Vente de gaz butane (tarif douanier 2711.13 00) et de son contenant (7311.00 00)",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code des impôts selon la loi de finances 2024, art. 06.01.12 — les importations et les ventes de gaz butane et de leur contenant, relevant des tarifs douaniers 2711.13 00 et 7311.00 00, sont taxées au taux réduit de 5 %.",
+    "source": "code-impots",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "S5"
+        },
+        {
+          "type": "tax",
+          "account": "4457",
+          "box": "S5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "S5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4457",
+          "box": "S5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "MG-S-EXP",
+    "name": "Vente à l'exportation, taux zéro",
+    "description": "Exportation de biens ou de services, taxée au taux de 0 %",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code des impôts selon la loi de finances 2024, art. 06.01.12 — les exportations de biens et de services sont taxées au taux de 0 p. 100 ; l'opération reste imposable, et le crédit de taxe qui en résulte ouvre droit au remboursement de l'art. 06.01.24 (qui exige les formalités d'exportation et le rapatriement des devises).",
+    "source": "code-impots",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "MG-S-EX",
+    "name": "Vente exonérée",
+    "description": "Opération que l'art. 06.01.06 ne soumet pas à la taxe : écolages, intérêts bancaires, assurances vie…",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code des impôts selon la loi de finances 2024, art. 06.01.06 — ne donnent pas lieu à l'application de la taxe les écolages payés en rémunération des cours d'enseignement, les intérêts versés par le Trésor, les opérations sur titres, les intérêts bancaires, les contrats d'assurance vie, etc. (liste de l'article, reprise en partie) ; art. 06.01.05 — qui exerce des opérations exonérées et taxables n'est assujetti que sur les taxables, et la déduction suit l'art. 06.01.17. L'article contient d'autres exonérations que le pack ne liste pas.",
+    "source": "code-impots",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "MG-P-20",
+    "name": "Achat, taux normal 20 %, TVA déductible",
+    "description": "Achat local de biens ou de services dont la taxe est déduite",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code des impôts selon la loi de finances 2024, art. 06.01.17 A 1° — la taxe qui figure distinctement sur les factures d'achats de produits non exonérés ou de services nécessaires à l'exploitation normale, payés par voie bancaire ou par monnaie mobile, est déductible, la facture étant conforme à l'art. IV-21 du Code des procédures fiscales ; art. 06.01.21 — la taxe n'est déductible que lorsque l'exigibilité intervient chez le fournisseur. Déduction entière : le pack ne calcule ni le prorata de l'art. 06.01.17 A 2° ni le paiement par voie bancaire.",
+    "source": "code-impots",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "P20"
+        },
+        {
+          "type": "tax",
+          "account": "4456",
+          "box": "P20"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "P20",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4456",
+          "box": "P20",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "MG-P-5",
+    "name": "Achat de gaz butane, taux réduit 5 %",
+    "description": "Achat local de gaz butane et de son contenant, taxe déduite",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code des impôts selon la loi de finances 2024, art. 06.01.12 — taux réduit de 5 % sur les ventes de gaz butane et de leur contenant ; art. 06.01.17 A 1° — déduction de la taxe qui figure sur la facture d'achat.",
+    "source": "code-impots",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "P5"
+        },
+        {
+          "type": "tax",
+          "account": "4456",
+          "box": "P5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "P5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4456",
+          "box": "P5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "MG-P-20-ND",
+    "name": "Achat, taux 20 %, TVA non déductible",
+    "description": "Achat dont la taxe est exclue de la déduction par l'art. 06.01.18",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code des impôts selon la loi de finances 2024, art. 06.01.18 — n'est pas déductible la taxe sur les immeubles autres qu'industriels, artisanaux, commerciaux, hôteliers, de restauration, agricoles ou miniers, sur les voitures particulières, les meubles meublants (sauf hôtellerie et restauration), l'énergie non liée à l'exploitation, les denrées alimentaires consommées dans l'entreprise, l'essence tourisme, le super carburant, le gasoil et le fuel-oil (sauf les usages de l'art. 06.01.17 B). La taxe suit la charge au compte 6318 et n'atteint aucune case.",
+    "source": "code-impots",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6318"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6318"
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "MG-P-EX",
+    "name": "Achat exonéré",
+    "description": "Achat d'un bien ou d'un service exonéré, sans taxe",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code des impôts selon la loi de finances 2024, art. 06.01.06 — opérations qui ne donnent pas lieu à l'application de la taxe ; aucune taxe n'est déductible sur ce qu'elles ne portent pas.",
+    "source": "code-impots",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "MG-P-IMP",
+    "name": "Importation de biens, TVA payée à la Douane",
+    "description": "Taxe due sur une importation, liquidée par les Douanes et déduite",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code des impôts selon la loi de finances 2024, art. 06.01.03 1° — sont soumises à la taxe les importations, quelle que soit la qualité de l'importateur ; art. 06.01.14 — la taxe due au titre des importations est liquidée et perçue par le service des Douanes ; art. 06.01.17 A 2° — la taxe acquittée à l'importation est déductible. Comptabilisée au compte 4458 contre la déduction, jusqu'au règlement de la Douane. Le taux réduit de 5 % du gaz butane à l'importation n'a pas de code.",
+    "source": "code-impots",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "IMP"
+        },
+        {
+          "type": "tax",
+          "account": "4456",
+          "box": "IMP"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4458"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "IMP",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4456",
+          "box": "IMP",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4458"
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "MG-P-RC",
+    "name": "Service d'un prestataire non établi, TVA due par le bénéficiaire",
+    "description": "Prestation taxable faite à Madagascar par une personne sans établissement, dont le bénéficiaire verse la taxe",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Code des impôts selon la loi de finances 2024, art. 06.01.09 bis — la personne sans établissement à Madagascar qui y effectue des prestations taxables doit y faire accréditer un représentant ; à défaut, la taxe est liquidée et reversée par le bénéficiaire auprès du Receveur des impôts au plus tard le 15 du mois suivant, sur un imprimé distinct de la déclaration de TVA ; la déduction par le bénéficiaire assujetti suit la règle générale et n'est possible que lorsque l'exigibilité intervient chez le prestataire étranger. Le pack porte les deux montants dans les cases RC et RCD de la déclaration ; l'imprimé distinct du texte n'a pas été lu.",
+    "source": "code-impots",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "RC"
+        },
+        {
+          "type": "tax",
+          "account": "4456",
+          "box": "RCD"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4457",
+          "box": "RC"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "RC",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4456",
+          "box": "RCD",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4457",
+          "box": "RC",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100
+  }
+]

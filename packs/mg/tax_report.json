@@ -1,0 +1,181 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "MG-TVA-MENSUELLE",
+  "name": "Déclaration mensuelle de la taxe sur la valeur ajoutée",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2024-01-01",
+  "legal_reference": "Code des impôts, art. 06.01.16 — la taxe est calculée par le redevable à la fin de chaque période mensuelle à raison des opérations de cette période, compte tenu des déductions des articles 06.01.17 et suivants ; elle est versée au plus tard le 15 du mois suivant à l'aide de la déclaration établie sur un imprimé fourni par l'Administration, et la déclaration doit être faite dans le même délai même si le redevable n'a pas de versement à effectuer ; art. 06.01.23 — le crédit de taxe est reporté sur les échéances mensuelles suivantes. L'imprimé n'a pas pu être lu : les lignes sont celles du pack, groupées sous les montants que le texte nomme, et l'écart est écrit dans le README.",
+  "source": "code-impots",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Code des impôts, art. 06.01.16 — versée au plus tard le 15 du mois suivant la période, et déclaration dans le même délai même sans versement. Les règles de report d'un jour non ouvré du Code des procédures fiscales n'ont pas été lues.",
+    "source": "code-impots"
+  },
+  "boxes": [
+    {
+      "box": "EXP",
+      "kind": "base",
+      "name": "Exportations de biens et de services (taux 0 %)",
+      "sequence": 10,
+      "legal_reference": "Code des impôts, art. 06.01.12 — exportations taxées à 0 p. 100. Ligne propre au pack : l'imprimé fourni par l'Administration (art. 06.01.16) n'a pas pu être lu.",
+      "source": "code-impots"
+    },
+    {
+      "box": "EXO",
+      "kind": "base",
+      "name": "Opérations exonérées",
+      "sequence": 20,
+      "legal_reference": "Code des impôts, art. 06.01.06. Ligne propre au pack : l'imprimé fourni par l'Administration (art. 06.01.16) n'a pas pu être lu.",
+      "source": "code-impots"
+    },
+    {
+      "box": "S20",
+      "kind": "base",
+      "name": "Ventes et prestations au taux de 20 % — base",
+      "sequence": 30,
+      "legal_reference": "Code des impôts, art. 06.01.12 — taux normal. Ligne propre au pack : l'imprimé fourni par l'Administration (art. 06.01.16) n'a pas pu être lu.",
+      "source": "code-impots"
+    },
+    {
+      "box": "S20",
+      "kind": "tax",
+      "name": "TVA collectée au taux de 20 %",
+      "sequence": 35,
+      "legal_reference": "Code des impôts, art. 06.01.12 et 06.01.16 — la taxe est calculée par le redevable à la fin de chaque période mensuelle, nette des avoirs émis.",
+      "source": "code-impots"
+    },
+    {
+      "box": "S5",
+      "kind": "base",
+      "name": "Ventes de gaz butane au taux de 5 % — base",
+      "sequence": 40,
+      "legal_reference": "Code des impôts, art. 06.01.12 — taux réduit. Ligne propre au pack : l'imprimé fourni par l'Administration (art. 06.01.16) n'a pas pu être lu.",
+      "source": "code-impots"
+    },
+    {
+      "box": "S5",
+      "kind": "tax",
+      "name": "TVA collectée au taux de 5 %",
+      "sequence": 45,
+      "legal_reference": "Code des impôts, art. 06.01.12 et 06.01.16.",
+      "source": "code-impots"
+    },
+    {
+      "box": "RC",
+      "kind": "base",
+      "name": "Prestations de non-établis, taxe due par le bénéficiaire — base",
+      "sequence": 50,
+      "legal_reference": "Code des impôts, art. 06.01.09 bis. Ligne propre au pack : l'imprimé fourni par l'Administration (art. 06.01.16) n'a pas pu être lu.",
+      "source": "code-impots"
+    },
+    {
+      "box": "RC",
+      "kind": "tax",
+      "name": "TVA due sur les prestations de non-établis",
+      "sequence": 55,
+      "legal_reference": "Code des impôts, art. 06.01.09 bis — taxe liquidée et reversée par le bénéficiaire.",
+      "source": "code-impots"
+    },
+    {
+      "box": "T1",
+      "kind": "total",
+      "name": "Total de la TVA collectée ou due",
+      "sequence": 60,
+      "legal_reference": "Code des impôts, art. 06.01.16 — somme de la taxe collectée aux deux taux et de la taxe due sur les prestations de non-établis.",
+      "source": "code-impots",
+      "plus": [
+        "S20:tax",
+        "S5:tax",
+        "RC:tax"
+      ]
+    },
+    {
+      "box": "P20",
+      "kind": "base",
+      "name": "Achats locaux au taux de 20 % — base",
+      "sequence": 70,
+      "legal_reference": "Code des impôts, art. 06.01.17 A 1°. Ligne propre au pack : l'imprimé fourni par l'Administration (art. 06.01.16) n'a pas pu être lu.",
+      "source": "code-impots"
+    },
+    {
+      "box": "P20",
+      "kind": "tax",
+      "name": "TVA déductible sur achats locaux au taux de 20 %",
+      "sequence": 75,
+      "legal_reference": "Code des impôts, art. 06.01.17 A 1° — nette des avoirs reçus.",
+      "source": "code-impots"
+    },
+    {
+      "box": "P5",
+      "kind": "base",
+      "name": "Achats de gaz butane au taux de 5 % — base",
+      "sequence": 80,
+      "legal_reference": "Code des impôts, art. 06.01.12 et 06.01.17 A 1°. Ligne propre au pack : l'imprimé fourni par l'Administration (art. 06.01.16) n'a pas pu être lu.",
+      "source": "code-impots"
+    },
+    {
+      "box": "P5",
+      "kind": "tax",
+      "name": "TVA déductible sur achats de gaz butane",
+      "sequence": 85,
+      "legal_reference": "Code des impôts, art. 06.01.17 A 1°.",
+      "source": "code-impots"
+    },
+    {
+      "box": "IMP",
+      "kind": "base",
+      "name": "Importations — base",
+      "sequence": 90,
+      "legal_reference": "Code des impôts, art. 06.01.17 A 2°. Ligne propre au pack : l'imprimé fourni par l'Administration (art. 06.01.16) n'a pas pu être lu.",
+      "source": "code-impots"
+    },
+    {
+      "box": "IMP",
+      "kind": "tax",
+      "name": "TVA déductible acquittée à l'importation",
+      "sequence": 95,
+      "legal_reference": "Code des impôts, art. 06.01.17 A 2° — la taxe acquittée à l'importation au cours de la même période.",
+      "source": "code-impots"
+    },
+    {
+      "box": "RCD",
+      "kind": "tax",
+      "name": "TVA déductible sur prestations de non-établis",
+      "sequence": 100,
+      "legal_reference": "Code des impôts, art. 06.01.09 bis — la déduction du bénéficiaire suit la règle générale.",
+      "source": "code-impots"
+    },
+    {
+      "box": "T2",
+      "kind": "total",
+      "name": "Total de la TVA déductible",
+      "sequence": 110,
+      "legal_reference": "Code des impôts, art. 06.01.17 — somme des déductions.",
+      "source": "code-impots",
+      "plus": [
+        "P20:tax",
+        "P5:tax",
+        "IMP:tax",
+        "RCD:tax"
+      ]
+    },
+    {
+      "box": "T3",
+      "kind": "total",
+      "name": "TVA à décaisser (positif) ou crédit de taxe (négatif)",
+      "sequence": 120,
+      "legal_reference": "Code des impôts, art. 06.01.16 et 06.01.23 — la différence entre la taxe due et les déductions ; si les déductions l'emportent, la différence est un crédit reportable sur les échéances mensuelles suivantes.",
+      "source": "code-impots",
+      "plus": [
+        "T1"
+      ],
+      "minus": [
+        "T2"
+      ]
+    }
+  ]
+}

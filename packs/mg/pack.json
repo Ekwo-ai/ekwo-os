@@ -1,0 +1,149 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MG",
+  "name": "Madagascar",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 409,
+  "released_at": "2026-10-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "code-impots",
+        "title": "Code des impôts de Madagascar suivant la loi de finances 2024, Livre I, Partie II, Titre VI (taxe sur la valeur ajoutée) — art. 06.01.01 à 06.01.04 (institution, champ, seuil de 400 000 000 Ar), 06.01.06 (opérations exonérées), 06.01.09 et 06.01.09 bis (lieu de l'opération, prestations d'un non-établi), 06.01.12 (taux de 20 %, 5 % pour le gaz butane, 0 % à l'exportation), 06.01.14 et 06.01.16 (régime du réel, déclaration mensuelle au plus tard le 15 du mois suivant), 06.01.17 et 06.01.18 (déductions et exclusions), 06.01.23 et 06.01.24 (crédit de taxe, remboursement). Les lois de finances 2025 et 2026 n'ont pas pu être lues",
+        "publisher": "Direction générale des impôts de Madagascar (texte consolidé, copie hébergée par le programme pS-Eau ; le site de la Direction ne sert pas le texte à un lecteur automatique)",
+        "url": "https://bdd.pseau.org/outils/ouvrages/repoblikan_i_madagasikara_code_general_des_impots_2024_2024.pdf",
+        "consulted_on": "2026-10-22",
+        "kind": "law"
+      },
+      {
+        "key": "pcg-2005",
+        "title": "Plan comptable général 2005 de Madagascar, décret n° 2004-272 du 18 février 2004 — annexe 1, modèles d'états financiers : bilan (actif et capitaux propres et passifs) et compte de résultat par nature. Le plan de comptes détaillé (numéros) n'a pas pu être lu",
+        "publisher": "Conseil supérieur de la comptabilité de Madagascar (copie lue sur SlideShare ; l'adresse officielle csc.mg ne répondait pas)",
+        "url": "https://www.slideshare.net/slideshow/pcg2005-48670418/48670418",
+        "consulted_on": "2026-10-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "dgi-portal",
+        "title": "Direction générale des impôts de Madagascar — le portail des contribuables, où se déposent les déclarations en ligne et où sont publiés les textes",
+        "publisher": "Direction générale des impôts de Madagascar",
+        "url": "https://www.impots.mg",
+        "consulted_on": "2026-10-22",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "MGA",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "4110",
+      "payable": "4010",
+      "suspense": "4710",
+      "rounding": "6588",
+      "retained_earnings": "1100",
+      "sales": "7010",
+      "purchase": "6010",
+      "bank": "5120",
+      "cash": "5310",
+      "fx_gain": "7660",
+      "fx_loss": "6660",
+      "asset_disposal_gain": "7750",
+      "asset_disposal_loss": "6750",
+      "tax_payable": "4455",
+      "tax_receivable": "4459"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "À-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de comptes de référence de Madagascar",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "MG-PCG-BILAN",
+        "MG-PCG-RESULTAT"
+      ],
+      "legal_reference": "Le plan comptable général 2005 (décret n° 2004-272 du 18 février 2004) est obligatoire à Madagascar (le Code des impôts l'exige pour la comptabilité régulière du régime du réel, art. 06.01.26). Son plan de comptes détaillé n'a pas pu être lu : ce plan est celui du pack, à quatre chiffres, qui suit les sept classes du plan comptable général (1 capitaux, 2 immobilisations, 3 stocks, 4 tiers, 5 trésorerie, 6 charges, 7 produits) et les rubriques des états financiers de son annexe 1. Il tient la TVA collectée, la TVA déductible, la TVA sur importations due à la Douane, le solde à décaisser et le crédit à reporter dans des comptes séparés.",
+      "source": "pcg-2005"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code des impôts, art. 06.01.17 — la TVA n'est déductible que sur une facture conforme à l'article IV-21 du Code des procédures fiscales, qui n'a pas pu être lu : le pack déclare une numérotation séquentielle et non sans rupture, et le dit dans son README.",
+        "source": "code-impots"
+      },
+      "tax_point": {
+        "legal_reference": "Code des impôts, art. 06.01.10 — le fait générateur est, pour les ventes, la livraison de la marchandise, pour les importations la déclaration en douane ; l'exigibilité des prestations de services n'a pas été lue en entier. `invoice_if_issued` est la valeur la plus proche du vocabulaire fermé ; l'écart est écrit dans le README.",
+        "source": "code-impots"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Aucune obligation de facture électronique structurée n'a été trouvée dans le Code des impôts lu ; les déclarations se déposent en ligne sur le portail de la Direction générale des impôts. Si la Direction publie un profil, c'est ici qu'il se déclare.",
+    "source": "code-impots"
+  }
+}
