@@ -115,3 +115,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('BRL', 'Brazilian real', 'R$', 2)
 on conflict (code) do nothing;
+
+-- Bhutanese ngultrum, ISO 4217 list one, two decimals (packs/bt/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('BTN', 'Bhutanese ngultrum', 'Nu.', 2)
+on conflict (code) do nothing;

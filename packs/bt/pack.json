@@ -1,0 +1,165 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BT",
+  "name": "Bhutan",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 212,
+  "released_at": "2026-10-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "gst-act",
+        "title": "Goods and Services Tax Act of Bhutan 2020, consolidated with the amendments of 2021, 2022 and 2025 (the consolidation is not the authoritative text): ss. 2, 12, 14, 16-18, 25-29, 32-38, 42-47, 56-57, 81 and the definitions of 'tax period' and 'tax invoice'; Schedules I, II, IV and V",
+        "publisher": "Department of Revenue and Customs, Ministry of Finance",
+        "url": "https://www.drc.gov.bt/wp-content/uploads/2025/12/Consolidated-GST-Act-of-Bhutan-2020-and-amendment-thereof.pdf",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "kpmg-gst",
+        "title": "Bhutan — new GST regime to replace the existing sales tax framework: GST Amendment Law 2025 confirms a standard rate of 5 % from 1 January 2026",
+        "publisher": "KPMG",
+        "url": "https://kpmg.com/us/en/taxnewsflash/news/2025/10/tnf-bhutan-new-gst-regime-to-replace-existing-sales-tax-framework.html",
+        "consulted_on": "2026-10-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "drc-income-year-2025",
+        "title": "Notification DRC/TAX/M&E/NOT/2025/1046 of 29 December 2025, Tax Filing for Income Year 2025: income tax returns for the income year 2025 are filed from 1 January 2026, BIT and CIT by 31 March 2026, online on RAMIS",
+        "publisher": "Department of Revenue and Customs, Ministry of Finance",
+        "url": "https://www.drc.gov.bt/wp-content/uploads/2025/12/Tax-Filing-Notification_IY-2025_final.pdf",
+        "consulted_on": "2026-10-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "ramis",
+        "title": "RAMIS — the Department's taxpayer portal, where tax returns are filed online",
+        "publisher": "Department of Revenue and Customs, Ministry of Finance",
+        "url": "https://www.drc.gov.bt/",
+        "consulted_on": "2026-10-21",
+        "kind": "portal"
+      },
+      {
+        "key": "ifrs-profile",
+        "title": "Bhutan — use of IFRS Standards by jurisdiction: the Companies Act of Bhutan 2016 requires Bhutanese Accounting Standards (BAS); IFRS for SMEs adopted in its entirety as BAS for SMEs, required for unlisted companies",
+        "publisher": "IFRS Foundation",
+        "url": "https://ifrs.org/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction/bhutan",
+        "consulted_on": "2026-10-21",
+        "kind": "guidance"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BTN",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Bhutan reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "BT-IFRS-SFP",
+        "BT-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Bhutan. The Companies Act of Bhutan 2016 requires every body corporate to prepare financial statements in compliance with the Bhutanese Accounting Standards the Accounting and Auditing Standards Board prescribes, and the IFRS for SMEs Standard is adopted in its entirety as the Bhutan Accounting Standard for SMEs, required for unlisted companies. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-based statements below, with the accounts a Bhutanese company actually keeps — GST input and output tax, the GST settlement account owed to or by the Department of Revenue and Customs, import GST owed at customs clearance, personal income tax and tax withheld at source payable, pension and provident fund contributions.",
+      "source": "ifrs-profile"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "GST Act of Bhutan 2020, s. 209 and the definition of 'tax invoice' — a tax invoice carries the particulars the rules and regulations prescribe; the Act does not forbid a gap in the numbering, which is why `numbering` is `sequential` and not `gapless_per_year`. The particulars could not be read from the consolidated Act alone and are recorded in this pack's README as a gap.",
+        "source": "gst-act"
+      },
+      "tax_point": {
+        "legal_reference": "GST Act of Bhutan 2020, s. 81 — GST on a taxable supply becomes payable at the earlier of the time an invoice for the supply is issued and the time any part of the consideration is paid. Ekwo's closed vocabulary has no value for 'invoice or payment, whichever comes first'; `invoice_date` is the nearest, and the gap — a payment received before the invoice, which s. 81(2) makes the tax point — is recorded in this pack's README.",
+        "source": "gst-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No Bhutanese statute obliges a business to exchange a structured electronic invoice with another business in the sense Ekwo's vocabulary gives the word: there is no Peppol authority, no published profile and no scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. Returns are filed online on RAMIS, which is a tax-administration portal and not an invoice exchange. If the Department publishes an e-invoicing rule, this field is where it goes.",
+    "source": "ramis"
+  }
+}

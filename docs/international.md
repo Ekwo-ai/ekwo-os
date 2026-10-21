@@ -303,3 +303,19 @@ and the pack says so.
 **A return form with no published numbering.** The boxes follow s. 20(1) of the
 Act (output tax less input tax) and are numbered by the pack, since the form
 the Commissioner prescribes was not found in a readable text.
+
+## From Bhutan
+
+**A five per cent GST in force from 1 January 2026.** The Goods and Services
+Tax Act of Bhutan 2020 sets 5 % (Schedule I, as amended in 2025), a zero rate
+for what is consumed outside Bhutan (Schedule V) and exemptions (Schedule IV).
+The pack starts every code on that date; the sales tax before it is not carried.
+
+**A deadline counted in days.** Section 38 gives thirty days after the end of
+the period; the pack format has a day of the month, so it carries day 30, which
+is exact except after January. A rule counted in days from the end of the
+period would be a change of the format, not of this pack.
+
+**A reverse charge that is also a credit.** Section 33 lets the purchaser of an
+imported business-to-business service deduct the tax it accounts for; the pack
+posts the output tax and the input tax in two boxes of the return.
