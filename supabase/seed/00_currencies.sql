@@ -165,3 +165,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('CVE', 'Cape Verdean escudo', 'Esc', 2)
 on conflict (code) do nothing;
+
+-- Djibouti franc, no minor unit in use (ISO 4217 lists zero decimals), packs/dj/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('DJF', 'Djibouti franc', 'Fdj', 0)
+on conflict (code) do nothing;
