@@ -539,3 +539,22 @@ is its own grouping and says so.
 
 **Zero decimals.** The Djibouti franc has no minor unit in use: amounts in the golden are
 whole francs.
+
+## From Madagascar
+
+**A Code that is readable and a Plan that is not.** The Code des impôts, in its
+finance-law-2024 edition, gives the whole VAT chapter: a 20 % normal rate, a 5 %
+rate for butane gas, a zero rate for exports (article 06.01.12) and a return
+filed by the 15th of the following month (06.01.16). The Plan comptable général
+2005 is compulsory, but only the models of its financial statements could be
+read, not its list of accounts; the pack's chart is its own and says so.
+
+**A tax paid by the beneficiary.** Article 06.01.09 bis makes the beneficiary
+of a service from a person without an establishment liquidate the tax on a
+separate form. The pack posts the tax and its deduction in two boxes of the
+monthly return; the separate form is a gap in the pack.
+
+**A threshold the pack cannot enforce.** VAT is compulsory from an annual
+turnover of 400 000 000 ariary (article 06.01.04). The format has no turnover
+threshold, so the pack carries the codes and the README tells a smaller
+business not to use them.
