@@ -1,0 +1,151 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_current,false,Actif circulant,10
+1100,1000,asset_cash,false,Caisse,20
+1110,1100,asset_cash,false,Caisse en francs burundais,30
+1120,1100,asset_cash,false,Caisse en devises,40
+1200,1000,asset_cash,false,Banques,50
+1210,1200,asset_cash,false,Comptes courants en francs burundais,60
+1220,1200,asset_cash,false,Comptes en devises,70
+1230,1200,asset_cash,false,Fonds à utilisation restreinte,80
+1300,1000,asset_current,false,Placements à court terme,90
+1310,1300,asset_current,false,Titres de placement à court terme,100
+1320,1300,asset_current,false,Dépôts à court terme,110
+1400,1000,asset_current,false,Clients et effets à recevoir,120
+1410,1400,asset_receivable,true,Clients,130
+1420,1400,asset_current,false,Créances sur les parties liées,140
+1491,1400,asset_current,false,Provisions pour créances douteuses,150
+1500,1000,asset_current,false,Autres créances à court terme,160
+1510,1500,asset_current,false,Effets à recevoir,170
+1520,1500,asset_prepayments,false,Avances et acomptes versés,180
+1530,1500,asset_current,false,Sommes détenues par des agents comptables,190
+1540,1500,asset_current,false,TVA à récupérer,200
+1541,1540,asset_current,false,"TVA déductible sur biens, travaux et services achetés",210
+1542,1540,asset_current,true,"TVA, compte de règlement avec l'OBR (crédit à reporter ou à rembourser)",220
+1543,1540,asset_current,false,TVA déductible sur services de non-résidents (après paiement),230
+1550,1500,asset_current,false,Intérêts à recevoir,240
+1560,1500,asset_current,false,Dividendes à recevoir,250
+1570,1500,asset_current,false,Autres impôts versés en trop,260
+1590,1500,asset_current,false,"Autres créances à court terme, divers",270
+1600,1000,asset_current,false,Stocks,280
+1610,1600,asset_current,false,Marchandises,290
+1620,1600,asset_current,false,Matières premières,300
+1625,1600,asset_current,false,Matières et fournitures consommables,310
+1630,1600,asset_current,false,Produits en cours,320
+1635,1600,asset_current,false,Frais généraux de production,330
+1640,1600,asset_current,false,Produits finis,340
+1700,1000,asset_current,false,Charges constatées d'avance et autres actifs circulants,350
+1710,1700,asset_current,false,Charges constatées d'avance,360
+1750,1700,asset_current,false,Articles de faible valeur ou de courte durée,370
+1790,1700,asset_current,false,Autres actifs circulants,380
+2000,,asset_non_current,false,Actif immobilisé,390
+2100,2000,asset_fixed,false,Immobilisations corporelles,400
+2110,2100,asset_fixed,false,Terrains,410
+2120,2100,asset_fixed,false,Bâtiments et constructions,420
+2130,2100,asset_fixed,false,"Installations, matériel et outillage",430
+2140,2100,asset_fixed,false,Matériel de transport,440
+2150,2100,asset_fixed,false,Mobilier et matériel de bureau,450
+2160,2100,asset_fixed,false,Autres immobilisations corporelles,460
+2193,2100,asset_fixed,false,"Amortissements cumulés, production",470
+2199,2100,asset_fixed,false,"Amortissements cumulés, autres",480
+2700,2000,asset_non_current,false,Créances à long terme,490
+2800,2000,asset_non_current,false,Placements à long terme,500
+2900,2000,asset_non_current,false,Immobilisations incorporelles,510
+2910,2900,asset_non_current,false,"Immobilisations incorporelles, valeur brute",520
+2991,2900,asset_non_current,false,Amortissements cumulés des immobilisations incorporelles,530
+3000,,liability_current,false,Dettes à court terme,540
+3100,3000,liability_current,false,Fournisseurs et effets à payer,550
+3110,3100,liability_payable,true,Fournisseurs,560
+3120,3100,liability_current,false,Effets à payer,570
+3200,3000,liability_current,false,Avances reçues,580
+3210,3200,liability_current,false,Avances et acomptes reçus des clients,590
+3300,3000,liability_current,false,Emprunts et concours à court terme,600
+3310,3300,liability_current,false,Emprunts bancaires à court terme,610
+3320,3300,liability_current,false,Autres emprunts à court terme,620
+3330,3300,liability_current,false,Part à moins d'un an des dettes à long terme,630
+3400,3000,liability_current,false,Dettes fiscales,640
+3410,3400,liability_current,false,Impôt sur les revenus à payer,650
+3420,3400,liability_current,false,Impôt sur les rémunérations à payer,660
+3430,3400,liability_current,false,TVA à payer,670
+3431,3430,liability_current,false,TVA facturée sur les ventes taxables,680
+3432,3430,liability_current,true,"TVA, compte de règlement avec l'OBR (à payer)",690
+3433,3430,liability_current,false,TVA due par le preneur d'un service d'un non-résident,700
+3440,3400,liability_current,false,Droits d'accises à payer,710
+3450,3400,liability_current,false,Autres taxes à payer (sur les ventes),720
+3460,3400,liability_current,false,Autres impôts et taxes à payer,730
+3500,3000,liability_current,false,Charges à payer,740
+3510,3500,liability_current,false,"Charges à payer, divers",750
+3520,3500,liability_current,false,Rémunérations dues,760
+3530,3500,liability_current,false,Cotisations de sécurité sociale à payer,770
+3540,3500,liability_current,false,Dividendes à payer,780
+3550,3500,liability_current,false,Intérêts courus à payer,790
+3590,3500,liability_current,false,Autres charges à payer,800
+3600,3000,liability_current,false,Autres dettes à court terme,810
+3690,3600,liability_current,false,"Autres dettes à court terme, divers",820
+3699,3600,liability_current,false,Compte d'attente,830
+3700,3000,liability_current,false,Provisions,840
+3710,3700,liability_current,false,Provision pour congés non pris,850
+3790,3700,liability_current,false,Autres provisions,860
+4000,,liability_non_current,false,Dettes à long terme,870
+4100,4000,liability_non_current,false,Emprunts et dettes assimilées,880
+4110,4100,liability_non_current,false,Emprunts obligataires,890
+4120,4100,liability_non_current,false,Emprunts bancaires,900
+4130,4100,liability_non_current,false,Autres emprunts,910
+4140,4100,liability_non_current,false,Effets à payer à long terme,920
+4150,4100,liability_non_current,false,Dettes de crédit-bail,930
+4160,4100,liability_non_current,false,Autres dettes à long terme,940
+4191,4100,liability_non_current,false,Primes de remboursement des obligations,950
+5000,,equity,false,Capitaux propres,960
+5100,5000,equity,false,Capital,970
+5110,5100,equity,false,Actions ordinaires,980
+5120,5100,equity,false,Actions de préférence,990
+5130,5100,equity,false,Autres parts de capital (parts des associés),1000
+5191,5100,equity,false,Actions propres,1010
+5200,5000,equity,false,Primes liées au capital,1020
+5210,5200,equity,false,Primes d'émission,1030
+5300,5000,equity_retained,false,Report à nouveau,1040
+5400,5000,equity,false,Réserves,1050
+5999,5000,equity,false,Compte de résultat de clôture,1060
+6000,,income,false,Produits,1070
+6100,6000,income,false,Chiffre d'affaires,1080
+6110,6100,income,false,"Ventes de marchandises, travaux et services",1090
+6120,6100,income,false,"Rabais, remises et ristournes accordés",1100
+6200,6000,income_other,false,Autres produits d'exploitation,1110
+6210,6200,income_other,false,Produits de location,1120
+6290,6200,income_other,false,Gains de change,1130
+7000,,expense,false,Charges d'exploitation,1140
+7100,7000,expense_direct_cost,false,Coût des produits et services vendus,1150
+7110,7100,expense_direct_cost,false,Matières directes,1160
+7130,7100,expense_direct_cost,false,Main-d'œuvre directe,1170
+7150,7100,expense_direct_cost,false,"Amortissements, production",1180
+7200,7000,expense_direct_cost,false,Coût des marchandises vendues,1190
+7210,7200,expense_direct_cost,false,Achats de marchandises,1200
+7290,7200,expense_direct_cost,false,Variation des stocks,1210
+7500,7000,expense,false,Charges commerciales,1220
+7510,7500,expense,false,Publicité et promotion,1230
+7520,7500,expense,false,Transport et livraison aux clients,1240
+7530,7500,expense,false,Personnel commercial,1250
+7550,7500,expense,false,Créances irrécouvrables,1260
+7560,7500,expense,false,Frais de garantie,1270
+7580,7500,expense,false,"Amortissements, ventes",1280
+7590,7500,expense,false,Primes sur ventes,1290
+7600,7000,expense,false,Autres charges d'exploitation,1300
+7610,7600,expense,false,Pertes de change,1310
+7690,7600,expense,false,Écarts d'arrondi,1320
+8000,,expense,false,Charges générales et administratives,1330
+8110,8000,expense,false,Personnel administratif,1340
+8120,8000,expense,false,Loyers,1350
+8130,8000,expense,false,"Eau, électricité et énergie",1360
+8140,8000,expense,false,Télécommunications,1370
+8150,8000,expense,false,Services extérieurs,1380
+8210,8000,expense,false,Déplacements et missions,1390
+8310,8000,expense,false,Impôts et taxes autres que l'impôt sur les revenus,1400
+8315,8000,expense,false,TVA non déductible,1410
+8470,8000,expense,false,Amortissements des immobilisations corporelles,1420
+8480,8000,expense,false,Amortissements des immobilisations incorporelles,1430
+8490,8000,expense,false,Autres charges administratives,1440
+9100,,income_other,false,Produits hors exploitation,1450
+9190,9100,income_other,false,Autres produits hors exploitation,1460
+9500,,expense,false,Charges hors exploitation,1470
+9590,9500,expense,false,Autres charges hors exploitation,1480
+9600,,expense,false,Impôt sur les revenus,1490
+9610,9600,expense,false,Impôt sur les revenus de l'exercice,1500

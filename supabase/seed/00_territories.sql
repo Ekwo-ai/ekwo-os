@@ -3032,3 +3032,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('BI', 'iso_3166_1', 'Burundi', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Burundi levies a value added tax of its own under Loi n°1/12 du 29 juillet 2013 portant révision de la loi n°1/02 du 17 février 2009, as amended by Loi n°1/10 du 16 novembre 2020: article 19 sets it at 18 per cent with an intermediate rate of 10 per cent and a zero rate for exports, article 10 exempts the operations it lists, and article 52 has the taxpayer file the return by the 15th of the month following.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

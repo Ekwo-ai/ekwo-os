@@ -155,3 +155,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('NPR', 'Nepalese rupee', 'Rs', 2)
 on conflict (code) do nothing;
+
+-- Burundi franc, no minor unit in use (ISO 4217 lists zero decimals), packs/bi/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('BIF', 'Burundi franc', 'FBu', 0)
+on conflict (code) do nothing;

@@ -1,0 +1,431 @@
+[
+  {
+    "code": "BI-S-18",
+    "name": "TVA 18 % — taux ordinaire (vente)",
+    "rate": 18,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 19, alinéa 1 : « Le taux ordinaire de la TVA est fixé à dix-huit pour cent (18%) de la base taxable ». Les articles 3 et 9 en fixent le champ : livraisons de biens et prestations de services faites à titre onéreux au Burundi, et importations. Base taxable : articles 15 à 17 (les escomptes, remises, rabais et ristournes consentis aux clients en sont exclus).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "TAX18"
+        },
+        {
+          "type": "tax",
+          "account": "3431",
+          "box": "TAX18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "TAX18",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "3431",
+          "box": "TAX18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "BI-S-10",
+    "name": "TVA 10 % — taux intermédiaire (vente)",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 19, alinéa 2 : taux intermédiaire de 10 % pour les intrants agricoles, les produits agricoles transformés au Burundi, les importations et achats locaux des denrées alimentaires dont la liste est fixée par une ordonnance du Ministre (non lue), et les produits et services délivrés par des établissements hôteliers.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "TAX10"
+        },
+        {
+          "type": "tax",
+          "account": "3431",
+          "box": "TAX10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "TAX10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "3431",
+          "box": "TAX10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "BI-S-ZERO-EXPORT",
+    "name": "TVA 0 % — exportations et opérations assimilées (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 19, alinéa 3 : taux de zéro pour cent pour les exportations et opérations assimilées, et pour les opérations et transactions intermédiaires sur les produits destinés à l'exportation. La liste des opérations assimilées aux exportations est établie par une ordonnance du Ministre, non lue : le code sert à l'exportation de biens, la liste est un manque.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZERO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZERO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "BI-S-ZERO-TRANSPORT",
+    "name": "TVA 0 % — transports internationaux (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 19, alinéa 3, b : taux de zéro pour cent pour les prestations de services de transports internationaux autres que les services accessoires au transport ; la liste des services visés est établie par une ordonnance du Ministre, non lue.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZERO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZERO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "BI-S-EXEMPT-AGRI",
+    "name": "TVA exonérée — produits agricoles non transformés vendus par leurs producteurs (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 10, k : les livraisons de produits agricoles non transformés lorsqu'elles sont faites par leurs producteurs ; « produits agricoles » : tous les produits de l'agriculture, de l'élevage et de la pisciculture.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "BI-S-EXEMPT-HEALTH",
+    "name": "TVA exonérée — soins médicaux et assurances vie, maladie et santé (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 10, a et g : opérations d'assurances-vie, -maladie et -santé et intermédiation dans ces opérations ; soins médicaux, paramédicaux et dentaires, médicaments et produits pharmaceutiques dans les conditions et limites déterminées par une ordonnance du Ministre (non lue).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "BI-S-EXEMPT-EDUCATION",
+    "name": "TVA exonérée — éducation scolaire ou universitaire (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 10, h : l'éducation scolaire ou universitaire, dans les conditions et limites déterminées par une ordonnance du Ministre (non lue).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "BI-S-EXEMPT-HOUSING",
+    "name": "TVA exonérée — logement d'habitation et location d'immeubles (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 10, d, e et f : livraisons de bâtiments à usage d'habitation et du sol attenant, d'immeubles non bâtis autres que des terrains viabilisés ; affermage, location et cession de bail de biens immeubles, à l'exception des emplacements pour véhicules ou pour l'entreposage de biens, des logements meublés pour trois mois ou moins, et de la location d'immeubles à usage autre que d'habitation (taxables).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "BI-S-EXEMPT-FINANCE",
+    "name": "TVA exonérée — opérations financières (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 10, b : octroi de crédits et frais de garantie, opérations de change, cession de valeurs mobilières, produits de placements bancaires, intermédiation dans les opérations financières ; la liste des opérations bancaires taxables est déterminée par une ordonnance du Ministre (non lue).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "BI-S-EXEMPT-TRANSPORT",
+    "name": "TVA exonérée — transport de personnes par route (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 10, n : le transport des personnes par route.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "BI-P-18",
+    "name": "TVA 18 % — taux ordinaire (achat)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 19, alinéa 1 (18 %). Droit à déduction : articles 20 à 22 — la taxe qui a grevé les biens et services utilisés pour des opérations taxables au Burundi se déduit sur présentation d'une facture conforme au modèle de l'administration fiscale (article 22 a) ; la taxe payée à un non-assujetti n'est pas déductible (article 21 c), ni celle des dépenses de logement, d'hébergement, de réception, de restauration et de déplacement (article 21 b).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "INPUT"
+        },
+        {
+          "type": "tax",
+          "account": "1541",
+          "box": "INPUT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "INPUT",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1541",
+          "box": "INPUT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "BI-P-10",
+    "name": "TVA 10 % — taux intermédiaire (achat)",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 19, alinéa 2 (10 %). Droit à déduction : articles 20 à 22 — la taxe qui a grevé les biens et services utilisés pour des opérations taxables au Burundi se déduit sur présentation d'une facture conforme au modèle de l'administration fiscale (article 22 a) ; la taxe payée à un non-assujetti n'est pas déductible (article 21 c), ni celle des dépenses de logement, d'hébergement, de réception, de restauration et de déplacement (article 21 b).",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "INPUT"
+        },
+        {
+          "type": "tax",
+          "account": "1541",
+          "box": "INPUT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "INPUT",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1541",
+          "box": "INPUT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "BI-P-18-NODEDUCT",
+    "name": "TVA 18 % — achat dont la taxe n'est pas déductible",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 21, b et c : ne sont pas déductibles la TVA des dépenses de logement ou d'hébergement, de réception, de restauration et de déplacement, ni celle payée à un non-assujetti ; l'article 21 a exclut aussi la TVA des biens et services concourant à des opérations non taxables. La taxe suit la charge au compte 8315 et n'atteint aucune case.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "8315"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "8315"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "BI-P-18-NR",
+    "name": "TVA 18 % — services d'un prestataire non résident, retenue par le preneur (achat)",
+    "rate": 18,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2020-11-16",
+    "legal_reference": "Loi TVA, article 54, alinéa 2 : lorsqu'une personne non résidente qui n'a pas de représentant au Burundi preste des services réputés faits au Burundi (article 9, c), le bénéficiaire, qu'il soit assujetti ou non, doit retenir la TVA et la reverser à l'administration fiscale, quel que soit le montant de la prestation. Article 22, c : le droit à déduction suppose d'avoir acquitté la taxe. Le pack inscrit la taxe à un compte d'attente (1543 contre 3433) : la déduction se fait une fois la taxe payée.",
+    "source": "vat-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1543"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3433"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1543"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3433"
+        }
+      ]
+    },
+    "sequence": 140,
+    "description": "La TVA sur les services d'une personne non résidente est retenue par le preneur et versée à l'OBR ; le droit à déduction naît du paiement"
+  }
+]

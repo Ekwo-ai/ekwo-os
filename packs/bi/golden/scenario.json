@@ -1,0 +1,351 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Une année de livres d'un assujetti à la TVA au Burundi qui dépose une déclaration mensuelle",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    },
+    {
+      "code": "2026-05",
+      "from": "2026-05-01",
+      "to": "2026-05-31"
+    }
+  ],
+  "statements": [
+    "BI-BS",
+    "BI-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-bi",
+      "name": "Client fictif de Bujumbura",
+      "type": "customer",
+      "country": "BI"
+    },
+    {
+      "ref": "client-etranger",
+      "name": "Muster Handels GmbH",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "fournisseur-bi",
+      "name": "Fournisseur fictif de Bujumbura",
+      "type": "supplier",
+      "country": "BI"
+    },
+    {
+      "ref": "fournisseur-etranger",
+      "name": "Beispiel Software GmbH",
+      "type": "supplier",
+      "country": "DE"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-bi",
+      "date": "2026-01-15",
+      "why": "Vente de marchandises au taux ordinaire de 18 % (article 19) : base et taxe dans les cases TAX18.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 10,
+          "unit_price": 1000000,
+          "tax": "BI-S-18",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-etranger",
+      "date": "2026-01-20",
+      "why": "Exportation de biens : taux de zéro, case ZERO (article 19, alinéa 3).",
+      "lines": [
+        {
+          "name": "Envoi de marchandises exportées",
+          "quantity": 1,
+          "unit_price": 6000000,
+          "tax": "BI-S-ZERO-EXPORT",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "fournisseur-bi",
+      "date": "2026-01-12",
+      "why": "Marchandises pour la revente avec TVA à 18 % : taxe déductible dans la case INPUT (articles 20 à 22).",
+      "lines": [
+        {
+          "name": "Marchandises pour la revente",
+          "quantity": 1,
+          "unit_price": 5000000,
+          "tax": "BI-P-18",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-bi",
+      "date": "2026-02-10",
+      "why": "Frais de scolarité : l'éducation est exonérée, case EXEMPT (article 10, h).",
+      "lines": [
+        {
+          "name": "Frais de scolarité",
+          "quantity": 10,
+          "unit_price": 150000,
+          "tax": "BI-S-EXEMPT-EDUCATION",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-bi",
+      "date": "2026-02-18",
+      "why": "Prestation d'un établissement hôtelier au taux intermédiaire de 10 % (article 19, alinéa 2) : cases TAX10.",
+      "lines": [
+        {
+          "name": "Nuitées d'hôtel",
+          "quantity": 4,
+          "unit_price": 250000,
+          "tax": "BI-S-10",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-bi",
+      "date": "2026-02-25",
+      "why": "Retour d'une nuitée de V4 : la note de crédit diminue la base et la taxe de TAX10 du mois de la note (article 50).",
+      "lines": [
+        {
+          "name": "Nuitée annulée",
+          "quantity": 1,
+          "unit_price": 250000,
+          "tax": "BI-S-10",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "fournisseur-bi",
+      "date": "2026-02-14",
+      "why": "Services extérieurs avec TVA à 18 % : case INPUT.",
+      "lines": [
+        {
+          "name": "Services d'un prestataire",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "BI-P-18",
+          "account": "8150"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "fournisseur-bi",
+      "date": "2026-03-10",
+      "why": "Achat avec TVA à 18 ; la taxe déductible dépasse la taxe exigible du mois : case EXCESS, reportée sur la déclaration suivante (article 24).",
+      "lines": [
+        {
+          "name": "Marchandises pour la revente",
+          "quantity": 1,
+          "unit_price": 12000000,
+          "tax": "BI-P-18",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "P5",
+      "type": "purchase_invoice",
+      "contact": "fournisseur-bi",
+      "date": "2026-03-20",
+      "why": "Frais de réception : la TVA n'est pas déductible (article 21, b) et suit la charge au compte 8315, sans case.",
+      "lines": [
+        {
+          "name": "Frais de réception",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "BI-P-18-NODEDUCT",
+          "account": "8210"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-bi",
+      "date": "2026-04-08",
+      "why": "Vente d'avril au taux ordinaire.",
+      "lines": [
+        {
+          "name": "Fournitures courantes",
+          "quantity": 8,
+          "unit_price": 750000,
+          "tax": "BI-S-18",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-etranger",
+      "date": "2026-04-20",
+      "why": "Deuxième exportation de biens : taux de zéro, case ZERO.",
+      "lines": [
+        {
+          "name": "Envoi de marchandises exportées",
+          "quantity": 1,
+          "unit_price": 4000000,
+          "tax": "BI-S-ZERO-EXPORT",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "fournisseur-bi",
+      "date": "2026-04-12",
+      "why": "Achat d'avril avec TVA à 18 %.",
+      "lines": [
+        {
+          "name": "Marchandises pour la revente",
+          "quantity": 1,
+          "unit_price": 3000000,
+          "tax": "BI-P-18",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-bi",
+      "date": "2026-05-06",
+      "why": "Vente de bétail par son producteur : produit agricole non transformé, exonéré, case EXEMPT (article 10, k).",
+      "lines": [
+        {
+          "name": "Bétail",
+          "quantity": 1,
+          "unit_price": 2400000,
+          "tax": "BI-S-EXEMPT-AGRI",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "client-bi",
+      "date": "2026-05-20",
+      "why": "Vente de mai au taux ordinaire.",
+      "lines": [
+        {
+          "name": "Matériel de bureau",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "BI-S-18",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P6",
+      "type": "purchase_invoice",
+      "contact": "fournisseur-etranger",
+      "date": "2026-05-15",
+      "why": "Service d'un prestataire non résident : la TVA est retenue par le preneur (article 54), inscrite à un compte d'attente, sans case.",
+      "lines": [
+        {
+          "name": "Licence de logiciel",
+          "quantity": 1,
+          "unit_price": 1000000,
+          "tax": "BI-P-18-NR",
+          "account": "8150"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-01",
+      "amount": 11800000,
+      "contact": "client-bi",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Encaissement qui solde V1 exactement (10 000 000 plus 1 800 000 de TVA)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 6000000,
+      "contact": "client-etranger",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Encaissement qui solde la facture d'exportation V2 (sans TVA)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-01",
+      "amount": 1000000,
+      "contact": "client-bi",
+      "journal": "BNK",
+      "match": null,
+      "why": "Encaissement non rattaché à un document : reste ouvert sur le compte du client."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 5900000,
+      "contact": "fournisseur-bi",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Paiement qui solde P1 exactement (5 000 000 plus 900 000 de TVA)."
+    }
+  ]
+}

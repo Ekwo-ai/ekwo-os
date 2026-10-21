@@ -1,0 +1,141 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "BI-VAT",
+  "name": "Déclaration de TVA (mensuelle)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2020-11-16",
+  "legal_reference": "Loi TVA, article 52 : la taxe est déclarée par période imposable fixée à un mois ; tout assujetti dépose pour chaque période une déclaration, conforme au modèle fourni par l'administration fiscale, qui indique le montant des opérations taxables et exonérées effectuées et de celles qui lui ont été fournies, le montant de la taxe exigible, des déductions et des régularisations, et les données que l'administration juge nécessaires. Le formulaire officiel n'a pas été trouvé en source ouverte : les cases portent le nom des opérations de la loi (TAX18, TAX10, ZERO, EXEMPT, TURNOVER, INPUT, CREDIT, PAYABLE, EXCESS), non celui des lignes du formulaire. Article 54 : la taxe nette se paie lors du dépôt de la déclaration. Voir README.md.",
+  "source": "vat-law",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Loi TVA, article 52, dernier alinéa : la déclaration périodique est déposée auprès du service compétent de l'administration fiscale au plus tard le quinzième jour qui suit la période imposable.",
+    "source": "vat-law"
+  },
+  "boxes": [
+    {
+      "box": "TAX18",
+      "kind": "base",
+      "name": "Ventes taxables à 18 % — base imposable",
+      "sequence": 10,
+      "legal_reference": "Loi TVA, article 19, alinéa 1 ; article 52 b.",
+      "source": "vat-law"
+    },
+    {
+      "box": "TAX18",
+      "kind": "tax",
+      "name": "Ventes taxables à 18 % — TVA exigible",
+      "sequence": 20,
+      "legal_reference": "Loi TVA, article 19, alinéa 1 ; article 52 b.",
+      "source": "vat-law"
+    },
+    {
+      "box": "TAX10",
+      "kind": "base",
+      "name": "Ventes taxables à 10 % — base imposable",
+      "sequence": 30,
+      "legal_reference": "Loi TVA, article 19, alinéa 2 ; article 52 b.",
+      "source": "vat-law"
+    },
+    {
+      "box": "TAX10",
+      "kind": "tax",
+      "name": "Ventes taxables à 10 % — TVA exigible",
+      "sequence": 40,
+      "legal_reference": "Loi TVA, article 19, alinéa 2 ; article 52 b.",
+      "source": "vat-law"
+    },
+    {
+      "box": "ZERO",
+      "kind": "base",
+      "name": "Opérations au taux de zéro (exportations et transports internationaux)",
+      "sequence": 50,
+      "legal_reference": "Loi TVA, article 19, alinéa 3 ; article 52 a.",
+      "source": "vat-law"
+    },
+    {
+      "box": "EXEMPT",
+      "kind": "base",
+      "name": "Opérations exonérées",
+      "sequence": 60,
+      "legal_reference": "Loi TVA, article 10 ; article 52 a (« le montant des opérations taxables et exonérées »).",
+      "source": "vat-law"
+    },
+    {
+      "box": "TURNOVER",
+      "kind": "total",
+      "name": "Total des opérations de la période",
+      "sequence": 70,
+      "legal_reference": "Total des opérations de la période (article 52 a) ; la loi ne nomme pas cette ligne.",
+      "source": "vat-law",
+      "plus": [
+        "TAX18:base",
+        "TAX10:base",
+        "ZERO",
+        "EXEMPT"
+      ]
+    },
+    {
+      "box": "INPUT",
+      "kind": "base",
+      "name": "Achats de biens et de services — montant hors TVA",
+      "sequence": 80,
+      "legal_reference": "Loi TVA, articles 20 à 22 ; article 52 a (opérations fournies à l'assujetti).",
+      "source": "vat-law"
+    },
+    {
+      "box": "INPUT",
+      "kind": "tax",
+      "name": "Achats de biens et de services — TVA déductible",
+      "sequence": 90,
+      "legal_reference": "Loi TVA, articles 20 à 22 (déduction opérée globalement sur la taxe due pour la période, article 22).",
+      "source": "vat-law"
+    },
+    {
+      "box": "CREDIT",
+      "kind": "total",
+      "name": "TVA déductible de la période",
+      "sequence": 100,
+      "legal_reference": "Loi TVA, article 22, dernier alinéa : le montant de la TVA pour laquelle le droit à déduction a pris naissance au cours de la même période s'impute sur la taxe due.",
+      "source": "vat-law",
+      "plus": [
+        "INPUT:tax"
+      ]
+    },
+    {
+      "box": "PAYABLE",
+      "kind": "total",
+      "name": "TVA nette à payer",
+      "sequence": 110,
+      "legal_reference": "Loi TVA, articles 22 et 54 : la taxe exigible, déduction faite de la taxe déductible, se paie lors du dépôt de la déclaration.",
+      "source": "vat-law",
+      "plus": [
+        "TAX18:tax",
+        "TAX10:tax"
+      ],
+      "minus": [
+        "CREDIT"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "EXCESS",
+      "kind": "total",
+      "name": "Crédit de TVA à reporter",
+      "sequence": 120,
+      "legal_reference": "Loi TVA, article 24 : lorsque la taxe à déduire dépasse la taxe exigible, l'excédent est imputé sur la déclaration ultérieure ; lorsque trois déclarations consécutives font apparaître un crédit, une demande de remboursement peut être déposée au cours du mois suivant la troisième période, pour un montant fixé par une ordonnance du Ministre (non lue) ; remboursement dans les 90 jours (article 28).",
+      "source": "vat-law",
+      "plus": [
+        "CREDIT"
+      ],
+      "minus": [
+        "TAX18:tax",
+        "TAX10:tax"
+      ],
+      "floor_zero": true
+    }
+  ]
+}

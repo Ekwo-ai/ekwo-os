@@ -1,0 +1,171 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "BI",
+  "name": "Burundi",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 215,
+  "released_at": "2026-10-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law",
+        "title": "Loi n°1/10 du 16 novembre 2020 portant modification de la loi n°1/12 du 29 juillet 2013 portant révision de la loi n°1/02 du 17 février 2009 portant institution de la taxe sur la valeur ajoutée (TVA) — texte consolidé de 52 articles lu en entier (articles 1 à 54)",
+        "publisher": "Office Burundais des Recettes (OBR), Lois et règlements",
+        "url": "https://www.obr.bi/images/LOI_N1_10_DU_16_NOVEMBRE_2020_PORTANT_MODIFICATION_DE_LA_LOI_N1_12_DU_29_JUILLET_2013_PORTANT_REVISION_DE_LA_LOI_N1_02_DU_17_FEVRIER_2009_PORTANT_INSTITUTION_DE_LA_TAXE_SUR_LA_VALEUR_AJOUTEE_TVA_.pdf",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "tax-procedures-guide",
+        "title": "Guide du contribuable — les procédures fiscales, douanières et d'exonération (rappelle la loi n°1/18 du 6 septembre 2013 relative aux procédures fiscales)",
+        "publisher": "Office Burundais des Recettes (OBR)",
+        "url": "https://obr.bi/images/DAO/Livret_sur_lexoneration_final.pdf",
+        "consulted_on": "2026-10-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "ebms",
+        "title": "Système de facturation électronique EBMS — machines de facturation électronique (MFE) et interfaçage des systèmes des contribuables ; loi de finances 2025-2026, article 244",
+        "publisher": "Office Burundais des Recettes (OBR)",
+        "url": "https://www.obr.bi/index.php/systeme-de-facturation-electronique-ebms",
+        "consulted_on": "2026-10-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "obr-portal",
+        "title": "Office Burundais des Recettes — administration fiscale du Burundi ; télédéclaration et télépaiement par le portail Umutangakori",
+        "publisher": "Office Burundais des Recettes (OBR)",
+        "url": "https://www.obr.bi/index.php/teledeclaration-telepaiement",
+        "consulted_on": "2026-10-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "BIF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1410",
+      "payable": "3110",
+      "suspense": "3699",
+      "rounding": "7690",
+      "retained_earnings": "5300",
+      "sales": "6110",
+      "purchase": "7210",
+      "bank": "1210",
+      "cash": "1110",
+      "fx_gain": "6290",
+      "fx_loss": "7610",
+      "tax_payable": "3432",
+      "tax_receivable": "1542"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "Journal des opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Journal d'à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de référence des entreprises commerciales (regroupement propre au pack, par les lignes du bilan et du compte de résultat)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "BI-BS",
+        "BI-IS"
+      ],
+      "legal_reference": "L'article 51 de la loi sur la TVA impose aux assujettis une comptabilité « telle que prévue par le Plan comptable national burundais et le Code de commerce », assez détaillée pour permettre l'identification à la TVA et son contrôle. Le Plan comptable national (PCN, créé par le décret n°100/319 de 1974, révisé en 2012) n'a pas pu être lu : aucune source ouverte consultée n'en donne les comptes. Les classes (1 actif circulant, 2 actif immobilisé, 3 dettes à court terme, 4 dettes à long terme, 5 capitaux propres, 6 produits, 7 à 9 charges) et tous les codes sont le regroupement de ce pack d'après les postes d'un bilan et d'un compte de résultat, et non une copie du plan officiel. Un comptable burundais doit le comparer au PCN avant qu'une société y tienne ses livres. Voir README.md.",
+      "source": "vat-law"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Loi TVA, article 50 : une note de crédit ou de débit porte sa date d'émission et son numéro « dans une série continue » avec la mention « note de crédit » ou « note de débit », et renvoie à la facture d'origine. La numérotation séquentielle de ce pack suit cette série continue ; le modèle de facture est celui que fixe l'administration fiscale (article 22), non lu.",
+        "source": "vat-law"
+      },
+      "tax_point": {
+        "legal_reference": "Loi TVA, articles 11 et 12 : le fait générateur est la livraison des biens ou l'exécution des services ; la taxe est exigible à la livraison pour les biens, à l'encaissement du prix pour les prestations de services (option pour la facturation avec l'accord de l'administration, article 12 e). Le pack retient la date de livraison ; l'exigibilité à l'encaissement des services est un manque, voir README.md.",
+        "source": "vat-law"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Loi TVA, article 50 : une facture se modifie par une note de crédit ou de débit portant sa propre date et son numéro ; une écriture validée n'est pas effacée mais corrigée par une note de crédit et une contre-écriture.",
+        "source": "vat-law"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exonérée de la TVA",
+        "sequence": 10,
+        "legal_reference": "Loi TVA, article 49 : une facture qui ne mentionne ni le montant de la taxe ni la mention « exonérée de la TVA » est réputée hors TVA, et la taxe non facturée reste à la charge du fournisseur. Le libellé du pack reprend la mention de l'article.",
+        "source": "vat-law"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Loi TVA, article 47 : tout assujetti à la TVA est tenu d'utiliser une machine de facturation électronique agréée par l'administration fiscale, qui imprime des factures mentionnant la TVA. L'OBR exploite le système EBMS : les contribuables dotés de leur propre logiciel l'interfacent avec EBMS, les autres emploient une machine de facturation électronique (MFE). C'est une obligation de facturer par un dispositif agréé relié à l'administration, non un échange de factures structurées entre entreprises : aucun profil EN 16931 ni autorité Peppol n'a été trouvé, donc `profile`, `party_scheme` et `vat_scheme` restent vides et `obligation` vaut `none`. La transmission à l'OBR n'est pas modélisée par Ekwo. Voir README.md.",
+    "source": "ebms"
+  },
+  "bank": {
+    "account_scheme": "account-number",
+    "statement_formats": []
+  }
+}
