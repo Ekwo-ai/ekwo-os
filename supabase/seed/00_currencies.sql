@@ -155,3 +155,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('NPR', 'Nepalese rupee', 'Rs', 2)
 on conflict (code) do nothing;
+
+-- Malagasy ariary, ISO 4217 list one, two decimals (packs/mg/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('MGA', 'Malagasy ariary', 'Ar', 2)
+on conflict (code) do nothing;

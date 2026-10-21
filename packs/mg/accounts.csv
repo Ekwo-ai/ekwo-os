@@ -1,0 +1,120 @@
+code,parent,type,reconcilable,name,sequence
+1010,,equity,false,Capital social,10
+1040,,equity,false,Primes d'émission et d'apport,20
+1060,,equity,false,Réserves,30
+1100,,equity_retained,false,Report à nouveau,40
+1190,,equity_retained,false,Report à nouveau — pertes antérieures,50
+1500,,liability_non_current,false,Provisions pour pensions et obligations similaires,60
+1510,,liability_non_current,false,Provisions pour risques et charges non courantes,70
+1610,,liability_non_current,false,Emprunts auprès des établissements de crédit,80
+1650,,liability_non_current,false,Dépôts et cautionnements reçus,90
+1680,,liability_non_current,false,Emprunts et dettes auprès des associés à long terme,100
+1780,,liability_non_current,false,Autres dettes non courantes,110
+2050,,asset_non_current,false,Logiciels et licences,120
+2059,,asset_non_current,false,Amortissements des immobilisations incorporelles,130
+2110,,asset_fixed,false,Terrains,140
+2130,,asset_fixed,false,Constructions,150
+2139,,asset_fixed,false,Amortissements des constructions,160
+2150,,asset_fixed,false,"Installations techniques, matériel et outillage",170
+2159,,asset_fixed,false,"Amortissements des installations techniques, matériel et outillage",180
+2181,,asset_fixed,false,Matériel de transport,190
+2182,,asset_fixed,false,Matériel informatique,200
+2183,,asset_fixed,false,Mobilier et matériel de bureau,210
+2184,,asset_fixed,false,Agencements et installations,220
+2186,,asset_fixed,false,Amortissements du matériel de transport,230
+2187,,asset_fixed,false,Amortissements du matériel informatique,240
+2188,,asset_fixed,false,Amortissements du mobilier et du matériel de bureau,250
+2189,,asset_fixed,false,Amortissements des agencements et installations,260
+2310,,asset_fixed,false,Immobilisations corporelles en cours,270
+2610,,asset_non_current,false,Titres de participation,280
+2750,,asset_non_current,false,Dépôts et cautionnements versés,290
+2760,,asset_non_current,false,Prêts et autres immobilisations financières,300
+3100,,asset_current,false,Matières premières et fournitures,310
+3300,,asset_current,false,En-cours de production,320
+3500,,asset_current,false,Produits finis,330
+3700,,asset_current,false,Marchandises,340
+3900,,asset_current,false,Dépréciation des stocks,350
+4010,,liability_payable,true,Fournisseurs,360
+4040,,liability_current,false,Fournisseurs d'immobilisations,370
+4081,,liability_current,false,Fournisseurs — factures non parvenues,380
+4090,,asset_current,false,Fournisseurs — avances et acomptes versés,390
+4110,,asset_receivable,true,Clients,400
+4160,,asset_current,false,Clients douteux ou litigieux,410
+4170,,asset_current,false,Clients — retenues de garantie,420
+4181,,asset_current,false,Clients — factures à établir,430
+4190,,liability_current,false,Clients — avances et acomptes reçus,440
+4210,,liability_current,false,Personnel — rémunérations dues,450
+4250,,asset_current,false,Personnel — avances et acomptes,460
+4310,,liability_current,false,Caisse nationale de prévoyance sociale et organismes sociaux,470
+4421,,liability_current,false,Impôt sur les revenus salariaux et assimilés (IRSA) retenu,480
+4422,,liability_current,false,Impôt sur les revenus (IR) à payer,490
+4425,,asset_current,false,Impôt sur les revenus — acomptes versés,500
+4430,,liability_current,false,"Autres impôts, taxes et retenues à la source à payer",510
+4455,,liability_current,true,TVA à décaisser — solde de la déclaration,520
+4456,,asset_current,false,TVA déductible,530
+4457,,liability_current,false,TVA collectée,540
+4458,,liability_current,false,TVA sur importations à payer à la Douane,550
+4459,,asset_current,true,Crédit de TVA à reporter ou à rembourser,560
+4550,,liability_current,false,Associés — comptes courants,570
+4670,,liability_current,false,Autres créditeurs divers,580
+4671,,asset_current,false,Autres débiteurs divers,590
+4680,,liability_current,false,Charges à payer,600
+4710,,liability_current,false,Compte d'attente,610
+4810,,asset_current,false,Créances sur cessions d’immobilisations,620
+4860,,asset_prepayments,false,Charges constatées d'avance,630
+4870,,liability_current,false,Produits constatés d'avance,640
+4910,,asset_current,false,Dépréciation des créances clients,650
+5120,,asset_cash,false,Banques — compte courant en ariary,660
+5130,,asset_cash,false,Banques — comptes en devises,670
+5140,,asset_cash,false,Placements à terme de trois mois ou moins,680
+5180,,asset_cash,false,Monnaie mobile (mobile banking),690
+5190,,liability_current,false,Concours bancaires courants,700
+5310,,asset_cash,false,Caisse,710
+6010,,expense_direct_cost,false,Achats de marchandises,720
+6020,,expense_direct_cost,false,Achats de matières premières et fournitures,730
+6030,,expense_direct_cost,false,Variations des stocks,740
+6040,,expense_direct_cost,false,Achats d'études et de prestations de services,750
+6050,,expense,false,Achats d’emballages,760
+6060,,expense,false,"Achats non stockés — eau, énergie, carburants et petit matériel",770
+6110,,expense,false,Locations,780
+6120,,expense,false,Redevances de crédit-bail,790
+6150,,expense,false,Entretien et réparations,800
+6160,,expense,false,Primes d'assurance,810
+6180,,expense,false,Documentation et formation,820
+6210,,expense,false,Personnel extérieur à l’entité,830
+6220,,expense,false,Honoraires et rémunérations d'intermédiaires,840
+6230,,expense,false,Publicité et relations publiques,850
+6240,,expense,false,Transports de biens et transports collectifs du personnel,860
+6250,,expense,false,"Déplacements, missions et réceptions",870
+6260,,expense,false,Frais postaux et télécommunications,880
+6270,,expense,false,Services bancaires et assimilés,890
+6280,,expense,false,Services extérieurs divers,900
+6310,,expense,false,Impôts et taxes autres que sur les résultats,910
+6318,,expense,false,TVA non déductible,920
+6320,,expense,false,Impôts fonciers et taxes locales,930
+6410,,expense,false,Rémunérations du personnel,940
+6420,,expense,false,Primes et gratifications,950
+6450,,expense,false,Charges sociales,960
+6460,,expense,false,Formation du personnel,970
+6470,,expense,false,Autres charges de personnel,980
+6580,,expense,false,Charges diverses de gestion courante,990
+6588,,expense,false,Écarts d'arrondi,1000
+6610,,expense,false,Charges d'intérêts,1010
+6620,,expense,false,Charges financières diverses,1020
+6660,,expense,false,Pertes de change,1030
+6710,,expense,false,Charges extraordinaires,1040
+6750,,expense,false,Valeur comptable des immobilisations cédées,1050
+6810,,expense_depreciation,false,Dotations aux amortissements,1060
+6860,,expense_depreciation,false,Dotations aux provisions et pertes de valeur,1070
+6950,,expense,false,Impôt sur les revenus de la période,1080
+7010,,income,false,Ventes de marchandises,1090
+7020,,income,false,Ventes de produits finis,1100
+7060,,income,false,Prestations de services,1110
+7080,,income,false,Produits des activités annexes,1120
+7090,,income,false,"Rabais, remises et ristournes accordés",1130
+7580,,income_other,false,Produits divers de gestion courante,1140
+7610,,income_other,false,Produits financiers — intérêts,1150
+7660,,income_other,false,Gains de change,1160
+7710,,income_other,false,Produits extraordinaires,1170
+7750,,income_other,false,Produits des cessions d’immobilisations,1180
+7810,,income_other,false,Reprises sur provisions et pertes de valeur,1190

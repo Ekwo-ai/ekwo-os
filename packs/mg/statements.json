@@ -1,0 +1,692 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "MG-PCG-BILAN",
+      "kind": "balance_sheet",
+      "framework": "PCG",
+      "name": "Bilan",
+      "valid_from": "2005-01-01",
+      "legal_reference": "Plan comptable général 2005 (décret n° 2004-272), annexe 1, modèle de bilan : actifs non courants, actifs courants, capitaux propres, passifs non courants, passifs courants. Les rubriques sont celles du modèle, regroupées par les comptes du plan du pack ; la colonne des amortissements et le brut ne sont pas présentés, les comptes d'amortissement venant en déduction du net.",
+      "source": "pcg-2005",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Résultat de l'exercice en cours",
+      "lines": [
+        {
+          "code": "ANC",
+          "name": "Actifs non courants",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "ANC.1",
+            "ANC.2",
+            "ANC.3",
+            "ANC.4"
+          ]
+        },
+        {
+          "code": "ANC.1",
+          "name": "Immobilisations incorporelles",
+          "sequence": 11,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2050",
+              "code_to": "2059"
+            }
+          ]
+        },
+        {
+          "code": "ANC.2",
+          "name": "Immobilisations corporelles",
+          "sequence": 12,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2110",
+              "code_to": "2189"
+            }
+          ]
+        },
+        {
+          "code": "ANC.3",
+          "name": "Immobilisations en cours",
+          "sequence": 13,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "2310"
+            }
+          ]
+        },
+        {
+          "code": "ANC.4",
+          "name": "Immobilisations financières",
+          "sequence": 14,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2610",
+              "code_to": "2760"
+            }
+          ]
+        },
+        {
+          "code": "AC",
+          "name": "Actifs courants",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "AC.1",
+            "AC.2",
+            "AC.3",
+            "AC.4",
+            "AC.5"
+          ]
+        },
+        {
+          "code": "AC.1",
+          "name": "Stocks et en-cours",
+          "sequence": 21,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3900"
+            }
+          ]
+        },
+        {
+          "code": "AC.2",
+          "name": "Clients et autres débiteurs",
+          "sequence": 22,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4090"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "4110",
+              "code_to": "4181"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4250"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4671"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4810"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4910"
+            }
+          ]
+        },
+        {
+          "code": "AC.3",
+          "name": "Impôts",
+          "sequence": 23,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4425"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4456"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4459"
+            }
+          ]
+        },
+        {
+          "code": "AC.4",
+          "name": "Charges constatées d'avance",
+          "sequence": 24,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4860"
+            }
+          ]
+        },
+        {
+          "code": "AC.5",
+          "name": "Trésorerie et équivalents de trésorerie",
+          "sequence": 25,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5120",
+              "code_to": "5180"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "5310"
+            }
+          ]
+        },
+        {
+          "code": "TA",
+          "name": "Total des actifs",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "ANC",
+            "AC"
+          ]
+        },
+        {
+          "code": "PNC",
+          "name": "Passifs non courants",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "PNC.1",
+            "PNC.2",
+            "PNC.3"
+          ]
+        },
+        {
+          "code": "PNC.1",
+          "name": "Emprunts et dettes financières",
+          "sequence": 41,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1610",
+              "code_to": "1680"
+            }
+          ]
+        },
+        {
+          "code": "PNC.2",
+          "name": "Provisions",
+          "sequence": 42,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1500",
+              "code_to": "1510"
+            }
+          ]
+        },
+        {
+          "code": "PNC.3",
+          "name": "Autres dettes non courantes",
+          "sequence": 43,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1780"
+            }
+          ]
+        },
+        {
+          "code": "PC",
+          "name": "Passifs courants",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "PC.1",
+            "PC.2",
+            "PC.3"
+          ]
+        },
+        {
+          "code": "PC.1",
+          "name": "Fournisseurs et comptes rattachés",
+          "sequence": 51,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4010"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4040"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4081"
+            }
+          ]
+        },
+        {
+          "code": "PC.2",
+          "name": "Autres dettes",
+          "sequence": 52,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "4190"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4210"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4310"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4421"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4422"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4430"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4455"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4457"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4458"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4550"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4670"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4680"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4710",
+              "side": "credit"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "4870"
+            }
+          ]
+        },
+        {
+          "code": "PC.3",
+          "name": "Comptes de trésorerie (découverts bancaires)",
+          "sequence": 53,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "5190"
+            }
+          ]
+        },
+        {
+          "code": "TP",
+          "name": "Total des passifs",
+          "sequence": 60,
+          "is_total": true,
+          "plus": [
+            "PNC",
+            "PC"
+          ]
+        },
+        {
+          "code": "NA",
+          "name": "Actifs nets",
+          "sequence": 70,
+          "is_total": true,
+          "plus": [
+            "TA"
+          ],
+          "minus": [
+            "TP"
+          ]
+        },
+        {
+          "code": "CP",
+          "name": "Capitaux propres",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "CP.1",
+            "CP.2",
+            "CP.3"
+          ]
+        },
+        {
+          "code": "CP.1",
+          "name": "Capital émis",
+          "sequence": 81,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1010",
+              "code_to": "1040"
+            }
+          ]
+        },
+        {
+          "code": "CP.2",
+          "name": "Réserves",
+          "sequence": 82,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "1060"
+            }
+          ]
+        },
+        {
+          "code": "CP.3",
+          "name": "Report à nouveau",
+          "sequence": 83,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1190"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "MG-PCG-RESULTAT",
+      "kind": "income_statement",
+      "framework": "PCG",
+      "name": "Compte de résultat (par nature)",
+      "valid_from": "2005-01-01",
+      "legal_reference": "Plan comptable général 2005 (décret n° 2004-272), annexe 1, modèle de compte de résultat par nature : production, consommation, valeur ajoutée, excédent brut d'exploitation, résultat opérationnel, résultat financier, résultat avant impôts, résultat extraordinaire, résultat net. Les soldes intermédiaires de gestion sont regroupés en moins de lignes que le modèle.",
+      "source": "pcg-2005",
+      "lines": [
+        {
+          "code": "1",
+          "name": "Chiffre d'affaires",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7010",
+              "code_to": "7090"
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "name": "Autres produits opérationnels",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "7580"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "7750"
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "name": "Reprises sur provisions et pertes de valeur",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "7810"
+            }
+          ]
+        },
+        {
+          "code": "4",
+          "name": "Achats consommés",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6010",
+              "code_to": "6050"
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "name": "Services extérieurs et autres consommations",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6060",
+              "code_to": "6280"
+            }
+          ]
+        },
+        {
+          "code": "6",
+          "name": "Impôts, taxes et versements assimilés",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6310",
+              "code_to": "6320"
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "name": "Charges de personnel",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6410",
+              "code_to": "6470"
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "name": "Autres charges opérationnelles",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6580",
+              "code_to": "6588"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "6750"
+            }
+          ]
+        },
+        {
+          "code": "9",
+          "name": "Dotations aux amortissements, aux provisions et pertes de valeur",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6810",
+              "code_to": "6860"
+            }
+          ]
+        },
+        {
+          "code": "V",
+          "name": "Résultat opérationnel",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2",
+            "3"
+          ],
+          "minus": [
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        },
+        {
+          "code": "10",
+          "name": "Produits financiers",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "7610"
+            },
+            {
+              "kind": "account_code",
+              "code_from": "7660"
+            }
+          ]
+        },
+        {
+          "code": "11",
+          "name": "Charges financières",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6610",
+              "code_to": "6660"
+            }
+          ]
+        },
+        {
+          "code": "VI",
+          "name": "Résultat financier",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "10"
+          ],
+          "minus": [
+            "11"
+          ]
+        },
+        {
+          "code": "VII",
+          "name": "Résultat avant impôts",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "V",
+            "VI"
+          ]
+        },
+        {
+          "code": "12",
+          "name": "Impôts exigibles sur résultats",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "6950"
+            }
+          ]
+        },
+        {
+          "code": "VIII",
+          "name": "Résultat net des activités ordinaires",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "VII"
+          ],
+          "minus": [
+            "12"
+          ]
+        },
+        {
+          "code": "13",
+          "name": "Éléments extraordinaires (produits)",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "7710"
+            }
+          ]
+        },
+        {
+          "code": "14",
+          "name": "Éléments extraordinaires (charges)",
+          "sequence": 180,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "account_code",
+              "code_from": "6710"
+            }
+          ]
+        },
+        {
+          "code": "X",
+          "name": "Résultat net de l'exercice",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "VIII",
+            "13"
+          ],
+          "minus": [
+            "14"
+          ]
+        }
+      ]
+    }
+  ]
+}

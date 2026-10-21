@@ -1,0 +1,326 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Deux mois de comptabilité d'une société de négoce d'Antananarivo, assujettie à la TVA et déclarant chaque mois (fictive)",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-09",
+      "from": "2026-09-01",
+      "to": "2026-09-30"
+    },
+    {
+      "code": "2026-10",
+      "from": "2026-10-01",
+      "to": "2026-10-31"
+    }
+  ],
+  "statements": [
+    "MG-PCG-BILAN",
+    "MG-PCG-RESULTAT"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-tana",
+      "name": "Exemple Tana Distribution SA",
+      "type": "customer",
+      "country": "MG"
+    },
+    {
+      "ref": "cust-export",
+      "name": "Exemple Importateur Réunion SARL",
+      "type": "customer",
+      "country": "RE"
+    },
+    {
+      "ref": "supp-toamasina",
+      "name": "Exemple Grossiste Toamasina SARL",
+      "type": "supplier",
+      "country": "MG"
+    },
+    {
+      "ref": "supp-china",
+      "name": "Exemple Guangzhou Trading Co.",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supp-fr",
+      "name": "Exemple Conseil Paris SAS",
+      "type": "supplier",
+      "country": "FR"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-tana",
+      "date": "2026-09-05",
+      "why": "Une vente locale au taux normal de 20 % (art. 06.01.12) : la base dans la case S20, la taxe collectée de 100 000.",
+      "lines": [
+        {
+          "name": "Fournitures de bureau, vente au détail",
+          "quantity": 5,
+          "unit_price": 100000,
+          "tax": "MG-S-20",
+          "account": "7010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-tana",
+      "date": "2026-09-07",
+      "why": "Des écolages, exonérés par l'art. 06.01.06 1° : la ligne des opérations exonérées, aucune taxe, un règlement lettré plus tard.",
+      "lines": [
+        {
+          "name": "Écolage — cours de formation professionnelle",
+          "quantity": 1,
+          "unit_price": 1500000,
+          "tax": "MG-S-EX",
+          "account": "7060"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-09-10",
+      "why": "Une exportation de biens, taxée à 0 % (art. 06.01.12) : la ligne des exportations, aucune taxe, un règlement lettré plus tard.",
+      "lines": [
+        {
+          "name": "Vanille, envoi à l'exportation",
+          "quantity": 500,
+          "unit_price": 6000,
+          "tax": "MG-S-EXP",
+          "account": "7010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-tana",
+      "date": "2026-09-12",
+      "why": "Une vente de gaz butane au taux réduit de 5 % (art. 06.01.12) : la case S5, taxe collectée de 250 000.",
+      "lines": [
+        {
+          "name": "Bouteilles de gaz butane",
+          "quantity": 100,
+          "unit_price": 50000,
+          "tax": "MG-S-5",
+          "account": "7010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-tana",
+      "date": "2026-09-13",
+      "why": "Une prestation de services au taux normal : la base dans la case S20 avec la vente INV-001.",
+      "lines": [
+        {
+          "name": "Prestation de maintenance",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "MG-S-20",
+          "account": "7060"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-tana",
+      "date": "2026-09-14",
+      "why": "Un avoir pour une unité retournée de INV-001 : la base et la taxe de S20 redescendent de 100 000 et de 20 000.",
+      "lines": [
+        {
+          "name": "Fournitures de bureau — une unité retournée",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "MG-S-20",
+          "account": "7010"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-toamasina",
+      "date": "2026-09-06",
+      "why": "Un achat local au taux de 20 %, déductible (art. 06.01.17 A 1°) : la case P20, un règlement lettré plus tard.",
+      "lines": [
+        {
+          "name": "Marchandises achetées pour la revente",
+          "quantity": 1,
+          "unit_price": 2000000,
+          "tax": "MG-P-20",
+          "account": "6010"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-toamasina",
+      "date": "2026-09-08",
+      "why": "Un achat exonéré (formation) : aucune taxe, aucune case.",
+      "lines": [
+        {
+          "name": "Formation du personnel, droits d'écolage",
+          "quantity": 1,
+          "unit_price": 500000,
+          "tax": "MG-P-EX",
+          "account": "6460"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-09-15",
+      "why": "Une importation de biens : la taxe de 800 000 liquidée par la Douane (art. 06.01.14), déduite dans la case IMP et gardée au compte 4458 jusqu'au règlement.",
+      "lines": [
+        {
+          "name": "Matériel importé pour la revente",
+          "quantity": 1,
+          "unit_price": 4000000,
+          "tax": "MG-P-IMP",
+          "account": "6010"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-fr",
+      "date": "2026-09-18",
+      "why": "Un conseil rendu par un prestataire non établi (art. 06.01.09 bis) : la taxe de 200 000 due par le bénéficiaire dans la case RC, la déduction dans la case RCD, neutre pour un assujetti à déduction entière.",
+      "lines": [
+        {
+          "name": "Conseil rendu depuis l'étranger",
+          "quantity": 1,
+          "unit_price": 1000000,
+          "tax": "MG-P-RC",
+          "account": "6220"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-toamasina",
+      "date": "2026-09-19",
+      "why": "Du gasoil, dont la taxe est exclue de la déduction par l'art. 06.01.18 : la taxe de 60 000 suit la charge au compte 6318 et n'atteint aucune case.",
+      "lines": [
+        {
+          "name": "Gasoil pour le véhicule de direction",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "MG-P-20-ND",
+          "account": "6060"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-toamasina",
+      "date": "2026-09-20",
+      "why": "Un avoir d'achat pour une livraison incomplète de PINV-001 : la base et la taxe de P20 redescendent.",
+      "lines": [
+        {
+          "name": "Marchandises — livraison incomplète",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "MG-P-20",
+          "account": "6010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-tana",
+      "date": "2026-10-06",
+      "why": "Une vente d'octobre au taux normal : la taxe collectée de 200 000 de la période 2026-10.",
+      "lines": [
+        {
+          "name": "Fournitures de bureau, vente au détail",
+          "quantity": 10,
+          "unit_price": 100000,
+          "tax": "MG-S-20",
+          "account": "7010"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-toamasina",
+      "date": "2026-10-08",
+      "why": "Un achat d'octobre plus grand que la vente : la déduction de 600 000 l'emporte, la déclaration d'octobre montre un crédit de taxe de 400 000 (art. 06.01.23).",
+      "lines": [
+        {
+          "name": "Marchandises achetées pour la revente",
+          "quantity": 1,
+          "unit_price": 3000000,
+          "tax": "MG-P-20",
+          "account": "6010"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-10-05",
+      "amount": 1500000,
+      "contact": "cust-tana",
+      "journal": "BQ",
+      "match": "INV-002",
+      "why": "Les écolages de INV-002 encaissés en entier : un règlement entrant lettré sur une vente exonérée."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-10-06",
+      "amount": 3000000,
+      "contact": "cust-export",
+      "journal": "BQ",
+      "match": "INV-003",
+      "why": "L'exportation de INV-003 encaissée en entier : un règlement lettré dans une relation avec l'étranger."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-10-07",
+      "amount": 2400000,
+      "contact": "supp-toamasina",
+      "journal": "BQ",
+      "match": "PINV-001",
+      "why": "PINV-001 réglée en entier, taxe comprise : un règlement sortant lettré."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-10-10",
+      "amount": 500000,
+      "contact": "cust-export",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte de l'importateur avant son prochain envoi, lettré à rien : reconcile() doit survivre à un poste ouvert."
+    }
+  ]
+}
