@@ -1,0 +1,297 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A year of books of a VAT-registered taxpayer in Lao PDR filing a monthly return",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    },
+    {
+      "code": "2026-05",
+      "from": "2026-05-01",
+      "to": "2026-05-31"
+    }
+  ],
+  "statements": [
+    "LA-BS",
+    "LA-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-la",
+      "name": "Fictitious Vientiane Customer",
+      "type": "customer",
+      "country": "LA"
+    },
+    {
+      "ref": "client-foreign",
+      "name": "Muster Handels GmbH",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "supplier-la",
+      "name": "Fictitious Vientiane Supplier",
+      "type": "supplier",
+      "country": "LA"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-la",
+      "date": "2026-01-15",
+      "why": "Sale of goods at the standard 10% rate (article 17): base and tax in the box TAXABLE.",
+      "lines": [
+        {
+          "name": "Building materials",
+          "quantity": 10,
+          "unit_price": 5000000,
+          "tax": "LA-S-10",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-01-20",
+      "why": "Export of goods: zero rate, box ZERO (article 17).",
+      "lines": [
+        {
+          "name": "Consignment of exported goods",
+          "quantity": 1,
+          "unit_price": 20000000,
+          "tax": "LA-S-ZERO-EXPORT",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-la",
+      "date": "2026-01-12",
+      "why": "Goods for resale with 10% VAT: input tax in the box INPUT (articles 22 to 24).",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 30000000,
+          "tax": "LA-P-10",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-la",
+      "date": "2026-02-10",
+      "why": "Tuition fees: education is exempt, box EXEMPT (article 12).",
+      "lines": [
+        {
+          "name": "Tuition fees",
+          "quantity": 10,
+          "unit_price": 300000,
+          "tax": "LA-S-EXEMPT-EDUCATION",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-la",
+      "date": "2026-02-18",
+      "why": "Sale of goods at 10% in the second month.",
+      "lines": [
+        {
+          "name": "Office furniture",
+          "quantity": 4,
+          "unit_price": 7500000,
+          "tax": "LA-S-10",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-la",
+      "date": "2026-02-25",
+      "why": "Return of one item of V4: lowers the base and tax of TAXABLE in the month of the return.",
+      "lines": [
+        {
+          "name": "Returned office furniture",
+          "quantity": 1,
+          "unit_price": 7500000,
+          "tax": "LA-S-10",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-la",
+      "date": "2026-02-14",
+      "why": "Outside contractor services with 10% VAT: box INPUT.",
+      "lines": [
+        {
+          "name": "Outside contractor services",
+          "quantity": 1,
+          "unit_price": 10000000,
+          "tax": "LA-P-10",
+          "account": "8150"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-la",
+      "date": "2026-03-10",
+      "why": "Purchase with 10% VAT; creditable tax exceeds tax charged: box EXCESS (article 28).",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 40000000,
+          "tax": "LA-P-10",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-la",
+      "date": "2026-04-08",
+      "why": "April sale at 10%.",
+      "lines": [
+        {
+          "name": "Everyday goods",
+          "quantity": 8,
+          "unit_price": 2500000,
+          "tax": "LA-S-10",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-04-20",
+      "why": "Second export of goods: zero rate, box ZERO.",
+      "lines": [
+        {
+          "name": "Consignment of exported goods",
+          "quantity": 1,
+          "unit_price": 15000000,
+          "tax": "LA-S-ZERO-EXPORT",
+          "account": "6110"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-la",
+      "date": "2026-04-12",
+      "why": "April purchase with 10% VAT.",
+      "lines": [
+        {
+          "name": "Goods for resale",
+          "quantity": 1,
+          "unit_price": 8000000,
+          "tax": "LA-P-10",
+          "account": "1610"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-la",
+      "date": "2026-05-06",
+      "why": "Sale of seeds: agricultural inputs are exempt, box EXEMPT (article 12).",
+      "lines": [
+        {
+          "name": "Seeds",
+          "quantity": 1,
+          "unit_price": 12000000,
+          "tax": "LA-S-EXEMPT-AGRI",
+          "account": "6110"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-01",
+      "amount": 55000000,
+      "contact": "client-la",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Receipt that settles V1 exactly (50,000,000 plus 5,000,000 VAT)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 20000000,
+      "contact": "client-foreign",
+      "journal": "BNK",
+      "match": "V2",
+      "why": "Receipt that settles the export invoice V2 exactly (no VAT)."
+    },
+    {
+      "ref": "E3",
+      "direction": "inbound",
+      "date": "2026-03-01",
+      "amount": 5000000,
+      "contact": "client-la",
+      "journal": "BNK",
+      "match": null,
+      "why": "Receipt not tied to a document: stays open on the customer account."
+    },
+    {
+      "ref": "S1",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 33000000,
+      "contact": "supplier-la",
+      "journal": "BNK",
+      "match": "P1",
+      "why": "Payment that settles P1 exactly (30,000,000 plus 3,000,000 VAT)."
+    }
+  ]
+}
