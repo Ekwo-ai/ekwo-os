@@ -150,3 +150,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('LAK', 'Lao kip', E'₭', 0)
 on conflict (code) do nothing;
+
+-- Nepalese rupee, ISO 4217 list one, two decimals (packs/np/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('NPR', 'Nepalese rupee', 'Rs', 2)
+on conflict (code) do nothing;

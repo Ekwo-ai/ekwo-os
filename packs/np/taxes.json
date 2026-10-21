@@ -1,0 +1,298 @@
+[
+  {
+    "code": "NP-S-13",
+    "name": "Sale, standard rate 13 %",
+    "description": "The flat rate on a taxable supply of goods or services made in Nepal",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2021-09-29",
+    "legal_reference": "Value-Added Tax Act, 2052, s. 5(1)(a) — value-added tax is levied on goods or services supplied within Nepal, on the value of each taxable transaction (s. 5(2)); s. 7(1) — the rate of tax is the flat rate of thirteen percent (a flat rate set by the Financial Act, 2018 in the text read); s. 6(2) — the time of supply. Every transaction that Schedule 1 does not exempt and Schedule 2 does not zero-rate is taxed at this rate.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1S"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1S",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "NP-S-Z-EXP",
+    "name": "Sale, zero-rated (Schedule 2, exports)",
+    "description": "Goods and services taxed at the zero rate of Schedule 2, chiefly exports",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2021-09-29",
+    "legal_reference": "Value-Added Tax Act, 2052, s. 7(2) — the tax on the goods or services set out in Schedule 2 is levied at the rate of zero percent; a zero-rated transaction stays a taxable one, so the registered person keeps the deduction of s. 17 on what it bought to make it. Schedule 2 could not be read: exports of goods and services are its principal content according to the commentary on the Act (see the README), and the item list is a gap.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "NP-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply that Schedule 1 exempts: the essentials of the secondary guides — basic agricultural products, health, education",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2021-09-29",
+    "legal_reference": "Value-Added Tax Act, 2052, s. 5(3) — tax is not levied on the transaction of the goods or services referred to in Schedule 1, and the tax paid on what was bought for it cannot be deducted under s. 17 nor refunded under s. 24; s. 10(3) — a person who carries on only such exempt transactions need not register. Schedule 1 could not be read: basic agricultural products, health, education and similar essentials are what the secondary guides list, and the item list is a gap.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EX",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "NP-P-13",
+    "name": "Purchase, standard rate 13 %",
+    "description": "A taxable purchase at the standard rate whose input tax is deducted",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-09-29",
+    "legal_reference": "Value-Added Tax Act, 2052, s. 17(1) — a registered person may deduct the tax paid or to be paid on importing or receiving goods or services related to its own taxable transaction from the tax it collected; s. 17(6) — the deduction is granted only on the documents prescribed; s. 7(1) — thirteen percent. Deducted in full when the purchase serves taxable or zero-rated transactions only; s. 17(3) apportions the deduction when it also serves exempt ones, which this code does not do.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "NP-P-13-ND",
+    "name": "Purchase, standard rate 13 %, input tax not deductible",
+    "description": "A purchase whose input tax the Rules block or only partly allow — the goods of s. 17(2)",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2021-09-29",
+    "legal_reference": "Value-Added Tax Act, 2052, s. 17(2) — the Rules may allow no deduction, or a partial one, for prescribed goods that can be used for commercial or personal purposes. The Rules that list those goods could not be read; the code is here for the purchase whose input tax the user's accountant has found blocked or only partly deductible, and the tax charged follows the expense to account 6530 and reaches no box.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "NP-P-EX",
+    "name": "Purchase, exempt",
+    "description": "An exempt supply bought for the business",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2021-09-29",
+    "legal_reference": "Value-Added Tax Act, 2052, s. 5(3) — an exempt transaction bears no tax, so a purchase of Schedule 1 goods or services carries no input tax; the return has no row for it.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "NP-P-IMP",
+    "name": "Import of goods, VAT paid at customs clearance",
+    "description": "VAT charged on a taxable import, paid at customs clearance and claimed as input tax",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2021-09-29",
+    "legal_reference": "Value-Added Tax Act, 2052, s. 5(1)(b) — value-added tax is levied on goods imported into Nepal; s. 17(1) — the importer deducts the tax paid on importing. Posted to 2125 (import VAT payable at customs clearance) against the deduction in the return, so that the account holds what customs collects until the invoice of the clearing agent or the customs receipt settles it.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "NP-P-RC-SVC",
+    "name": "Service from outside Nepal, reverse-charged and deductible",
+    "description": "A service supplied from outside Nepal, taxed to the recipient who may deduct the tax",
+    "kind": "vat",
+    "rate": 13,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2021-09-29",
+    "legal_reference": "Value-Added Tax Act, 2052, s. 8(2) — a person, registered or not, who acquires a service from a person outside Nepal assesses and realizes the tax on the taxable value; s. 17(5b) — the taxpayer may deduct the tax paid under s. 8(2). The output tax is declared in box 1R and the credit in box 2R, so the net effect for a fully taxable buyer is nil.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1R"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2R"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  }
+]

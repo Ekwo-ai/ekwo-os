@@ -1,0 +1,147 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "NP-VAT-RETURN",
+  "name": "Monthly value-added tax return",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2021-09-29",
+  "legal_reference": "Value-Added Tax Act, 2052, s. 18(1) — every taxpayer assesses the tax payable each month and submits the return, in the form prescribed, in person, by registered post or electronically, within twenty-five days of the completion of that month, whether or not a taxable transaction took place; s. 18(2) — prescribed taxpayers may file for a longer or shorter period; s. 19(1) — the tax of a period is paid within twenty-five days of its completion; s. 17 — the deduction; s. 8(2) — the service acquired from outside Nepal. The form is filed electronically and was not readable from the machine this pack was written on: the rows below are this pack's own, grouped under the figures the Act names, and the gap is recorded in this pack's README.",
+  "source": "vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "Value-Added Tax Act, 2052, ss. 18(1) and 19(1) — within twenty-five days of the completion of the month. Nepal counts the month in the Bikram Sambat calendar (Baisakh to Chaitra) while this pack's periods are Gregorian months, so day 25 of the following Gregorian month is an approximation recorded in the README. A late payment bears an additional fee of ten percent a year (s. 19(2)); it is not modelled.",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "ZE",
+      "kind": "base",
+      "name": "Zero-rated supplies (Schedule 2)",
+      "sequence": 10,
+      "legal_reference": "Value-Added Tax Act, 2052, s. 7(2) and Schedule 2 — the value of the transactions taxed at the zero rate. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "EX",
+      "kind": "base",
+      "name": "Exempt supplies (Schedule 1)",
+      "sequence": 30,
+      "legal_reference": "Value-Added Tax Act, 2052, s. 5(3) and Schedule 1 — the value of exempt transactions. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1S",
+      "kind": "base",
+      "name": "Standard-rated supplies — value",
+      "sequence": 40,
+      "legal_reference": "Value-Added Tax Act, 2052, ss. 5(1)(a), 5(2) and 7(1) — the sales on which output tax is charged. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1S",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 45,
+      "legal_reference": "Value-Added Tax Act, 2052, ss. 7(1) and 18(1) — output tax on standard-rated supplies, net of credit notes given.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1R",
+      "kind": "base",
+      "name": "Services from outside Nepal — value",
+      "sequence": 50,
+      "legal_reference": "Value-Added Tax Act, 2052, s. 8(2) — the value of a service acquired from outside Nepal, on which the buyer assesses the tax. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1R",
+      "kind": "tax",
+      "name": "Output tax on imported B2B services",
+      "sequence": 55,
+      "legal_reference": "Value-Added Tax Act, 2052, s. 8(2) — the tax the buyer assesses and realizes; its deduction is in box 2R.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Total output tax",
+      "sequence": 60,
+      "plus": [
+        "1S:tax",
+        "1R:tax"
+      ],
+      "legal_reference": "Value-Added Tax Act, 2052, s. 18(1) — total output tax: standard-rated supplies plus the tax assessed on services from outside Nepal.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Standard-rated local purchases — value",
+      "sequence": 80,
+      "legal_reference": "Value-Added Tax Act, 2052, s. 17(1) — the purchases on which input tax is incurred. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Input tax on local purchases",
+      "sequence": 85,
+      "legal_reference": "Value-Added Tax Act, 2052, s. 17(1) — the tax paid on goods and services received for taxable transactions, net of credits received.",
+      "source": "vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Imports of goods — value",
+      "sequence": 90,
+      "legal_reference": "Value-Added Tax Act, 2052, s. 5(1)(b) — the value of taxable imports. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Input tax on imports",
+      "sequence": 95,
+      "legal_reference": "Value-Added Tax Act, 2052, s. 17(1) — the tax paid on importing, deducted.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2R",
+      "kind": "tax",
+      "name": "Input tax on imported B2B services",
+      "sequence": 97,
+      "legal_reference": "Value-Added Tax Act, 2052, s. 17(5b) — the deduction of the tax paid under s. 8(2).",
+      "source": "vat-act"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Total input tax",
+      "sequence": 100,
+      "plus": [
+        "2:tax",
+        "3:tax",
+        "2R:tax"
+      ],
+      "legal_reference": "Value-Added Tax Act, 2052, s. 17 — total tax deducted: local purchases, imports and services from outside Nepal.",
+      "source": "vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Net VAT payable or repayable",
+      "sequence": 110,
+      "plus": [
+        "1"
+      ],
+      "minus": [
+        "4"
+      ],
+      "legal_reference": "Value-Added Tax Act, 2052, ss. 17 and 18 — output tax less the deduction. A negative figure is a credit carried forward or refunded as ss. 17 and 24 provide.",
+      "source": "vat-act"
+    }
+  ]
+}

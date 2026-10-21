@@ -1,0 +1,305 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Kathmandu trading company, VAT-registered and filing monthly (fictitious)",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Fiscal year 2026/27",
+    "start": "2026-07-01",
+    "end": "2027-06-30"
+  },
+  "periods": [
+    {
+      "code": "2026-09",
+      "from": "2026-09-01",
+      "to": "2026-09-30"
+    }
+  ],
+  "statements": [
+    "NP-NFRS-SFP",
+    "NP-NFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-ktm",
+      "name": "Example Kathmandu Traders Pvt. Ltd",
+      "type": "customer",
+      "country": "NP"
+    },
+    {
+      "ref": "cust-export",
+      "name": "Example Export Buyer Pvt Ltd",
+      "type": "customer",
+      "country": "IN"
+    },
+    {
+      "ref": "supp-pokhara",
+      "name": "Example Pokhara Wholesalers Pvt. Ltd",
+      "type": "supplier",
+      "country": "NP"
+    },
+    {
+      "ref": "supp-china",
+      "name": "Example Guangzhou Trading Co.",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supp-us",
+      "name": "Example Advisory Inc.",
+      "type": "supplier",
+      "country": "US"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-ktm",
+      "date": "2026-09-05",
+      "why": "A domestic sale at the standard rate of 13 % (s. 7(1)): the value in box 1S and the output tax of box 1.",
+      "lines": [
+        {
+          "name": "Office stationery, retail sale",
+          "quantity": 5,
+          "unit_price": 2000,
+          "tax": "NP-S-13",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-ktm",
+      "date": "2026-09-07",
+      "why": "A sale the pack treats as exempt, tuition fees (education is listed as exempt by the secondary guides; Schedule 1 itself was not readable): the exempt row, no output tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Short course tuition fees",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "NP-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-09-10",
+      "why": "An export of goods, zero-rated under Schedule 2: the zero-rate row, no output tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Handmade paper, export consignment",
+          "quantity": 500,
+          "unit_price": 60,
+          "tax": "NP-S-Z-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-ktm",
+      "date": "2026-09-12",
+      "why": "A domestic sale of fresh vegetables, exempt as a basic agricultural product (as the secondary guides list Schedule 1): it lands in the exempt row, not in the zero-rated one, and input tax on its costs is not deductible.",
+      "lines": [
+        {
+          "name": "Fresh vegetables, wholesale",
+          "quantity": 200,
+          "unit_price": 50,
+          "tax": "NP-S-EX",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-ktm",
+      "date": "2026-09-13",
+      "why": "A health service, exempt (health is listed as exempt by the secondary guides): the exempt row again, no output tax.",
+      "lines": [
+        {
+          "name": "Medical consultation fees",
+          "quantity": 400,
+          "unit_price": 5,
+          "tax": "NP-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-ktm",
+      "date": "2026-09-14",
+      "why": "A credit note for one unit returned from INV-001, so the standard-rated value and the output VAT fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office stationery, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "NP-S-13",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-pokhara",
+      "date": "2026-09-06",
+      "why": "A domestic purchase at the standard rate, deductible in full under s. 17(1): box 2 and its value row, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "NP-P-13",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-pokhara",
+      "date": "2026-09-08",
+      "why": "A purchase of an exempt good (vegetables) from a supplier: no input tax, and the return has no row for an exempt purchase.",
+      "lines": [
+        {
+          "name": "Vegetables purchased for resale",
+          "quantity": 300,
+          "unit_price": 40,
+          "tax": "NP-P-EX",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-pokhara",
+      "date": "2026-09-11",
+      "why": "Staff training course fees, an education service the pack treats as exempt: no input tax, and the return has no row for an exempt purchase.",
+      "lines": [
+        {
+          "name": "Staff training course fees",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "NP-P-EX",
+          "account": "6080"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-china",
+      "date": "2026-09-15",
+      "why": "An import of goods: VAT charged at customs clearance under s. 5(1)(b), deducted under s. 17(1) through box 3, and held on the import VAT account until settled.",
+      "lines": [
+        {
+          "name": "Imported hardware for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "NP-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-09-18",
+      "why": "A consultancy service acquired from a supplier outside Nepal (s. 8(2)): the buyer assesses the tax and declares it in box 1R, and s. 17(5b) allows the deduction in box 2R, so the 1 300 is neutral for a fully taxable buyer.",
+      "lines": [
+        {
+          "name": "Consulting services from abroad",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "NP-P-RC-SVC",
+          "account": "6350"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-pokhara",
+      "date": "2026-09-19",
+      "why": "Business entertainment, which the pack treats as a purchase whose input tax is blocked (the Rules of s. 17(2) were not readable and the user's accountant confirms): the 13 % is charged by the supplier but follows the expense to account 6530 and reaches no box.",
+      "lines": [
+        {
+          "name": "Client entertainment",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "NP-P-13-ND",
+          "account": "6390"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-pokhara",
+      "date": "2026-09-20",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 2 and its value row fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "NP-P-13",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-10-05",
+      "amount": 15000,
+      "contact": "cust-ktm",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The tuition fees of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-10-06",
+      "amount": 30000,
+      "contact": "cust-export",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-10-07",
+      "amount": 22600,
+      "contact": "supp-pokhara",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-10-10",
+      "amount": 5000,
+      "contact": "cust-export",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Example Export Buyer Pvt Ltd before its next shipment, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}
