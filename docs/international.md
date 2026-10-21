@@ -473,3 +473,29 @@ of Shrawan, about 16 July; the format offers `july`, a year that begins on
 acquires a service from outside Nepal assess the tax and section 17(5b) lets it
 be deducted; the pack posts the output tax and the input tax in two boxes of the
 return.
+
+## From Cabo Verde
+
+The pack carries the Código de Contas of the national accounting system (SNCRF) as a
+chart of 224 accounts, VAT at 15 % with the export exemption and six exemptions coded, the
+tax a buyer assesses on a service from abroad, a monthly return in the field numbers of
+the Modelo 106, and two statements, in Portuguese.
+
+**A text read in the Boletim Oficial, up to 2015.** The Código do IVA is read in the
+Boletim Oficial that republishes it (Lei n.º 51/VIII/2013) and in its amendment of 2015;
+the budget laws since were not searched, and the current consolidated text was not found
+on the site of the tax administration. A reader in Cabo Verde must confirm the rate, the
+exemptions and the version of the form.
+
+**An official chart.** Unlike several pages of this file, the chart is not the pack's own
+grouping: Portaria n.º 49/2008 publishes the Código de Contas and the pack takes its
+codes and names, classes 1 to 7, down to the levels a trading company posts to, with the
+code's own sub-accounts of 244 for the VAT.
+
+**A form that cannot be fully filled.** The return carries the fields of the Modelo 106
+that a plain trading company needs; the cash regime of public works, the pro rata, the
+imports paid by the taxpayer, the carried credit and the refund request are not modelled.
+
+**A clearance platform.** The e-Fatura authorises tax documents in real time and asks
+accredited taxpayers to use it; Ekwo does not connect to it, and no obligation is
+declared.

@@ -1,0 +1,577 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "CV-BS",
+      "kind": "balance_sheet",
+      "framework": "SNCRF (NRF)",
+      "name": "Balanço",
+      "valid_from": "2009-01-01",
+      "legal_reference": "Decreto-Lei n.º 5/2008 (SNCRF) and Portaria n.º 49/2008 (Código de Contas). The lines group the accounts of the code by their class and sub-class; the official forms of the Normas de Relato Financeiro (balanço, demonstração dos resultados) were not read, so the layout is the pack's own reading and a Cabo Verdean accountant must align it. See README.md.",
+      "source": "portaria-49-2008",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Resultado do exercício em curso",
+      "lines": [
+        {
+          "code": "AS-FIN",
+          "name": "Investimentos financeiros e propriedades de investimento",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "41",
+              "code_to": "42"
+            }
+          ]
+        },
+        {
+          "code": "AS-PPE",
+          "name": "Activos fixos tangíveis (líquidos)",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "43",
+              "code_to": "43"
+            }
+          ]
+        },
+        {
+          "code": "AS-INT",
+          "name": "Activos intangíveis (líquidos)",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "44",
+              "code_to": "44"
+            }
+          ]
+        },
+        {
+          "code": "AS-WIP",
+          "name": "Investimentos em curso",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "45",
+              "code_to": "45"
+            }
+          ]
+        },
+        {
+          "code": "AS-NCA",
+          "name": "Total do activo não corrente",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "AS-FIN",
+            "AS-PPE",
+            "AS-INT",
+            "AS-WIP"
+          ]
+        },
+        {
+          "code": "AS-INV",
+          "name": "Inventários",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "322",
+              "code_to": "322"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "33",
+              "code_to": "35"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "362",
+              "code_to": "362"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "37",
+              "code_to": "37"
+            }
+          ]
+        },
+        {
+          "code": "AS-REC",
+          "name": "Clientes (saldos devedores)",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "21",
+              "code_to": "21",
+              "side": "debit"
+            }
+          ]
+        },
+        {
+          "code": "AS-STATE",
+          "name": "Estado e outros entes públicos (saldos devedores)",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "24",
+              "code_to": "24",
+              "side": "debit"
+            }
+          ]
+        },
+        {
+          "code": "AS-OREC",
+          "name": "Outras contas a receber, adiantamentos e diferimentos",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22",
+              "code_to": "22",
+              "side": "debit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "26",
+              "code_to": "27",
+              "side": "debit"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "281",
+              "code_to": "281",
+              "side": "debit"
+            }
+          ]
+        },
+        {
+          "code": "AS-CASH",
+          "name": "Caixa e depósitos bancários",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "11",
+              "code_to": "14"
+            }
+          ]
+        },
+        {
+          "code": "AS-CA",
+          "name": "Total do activo corrente",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "AS-INV",
+            "AS-REC",
+            "AS-STATE",
+            "AS-OREC",
+            "AS-CASH"
+          ]
+        },
+        {
+          "code": "AS-TOTAL",
+          "name": "Total do activo",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "AS-NCA",
+            "AS-CA"
+          ]
+        },
+        {
+          "code": "EQ-CAP",
+          "name": "Capital, prémios e acções (quotas) próprias",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "51",
+              "code_to": "54"
+            }
+          ]
+        },
+        {
+          "code": "EQ-RES",
+          "name": "Reservas",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "58",
+              "code_to": "58"
+            }
+          ]
+        },
+        {
+          "code": "EQ-RET",
+          "name": "Resultados transitados e resultado do período",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "591",
+              "code_to": "593"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "599",
+              "code_to": "599"
+            }
+          ]
+        },
+        {
+          "code": "EQ-TOTAL",
+          "name": "Total do capital próprio",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "EQ-CAP",
+            "EQ-RES",
+            "EQ-RET"
+          ]
+        },
+        {
+          "code": "LI-PAY",
+          "name": "Fornecedores (saldos credores)",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22",
+              "code_to": "22",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "LI-ADV",
+          "name": "Adiantamentos de clientes e saldos credores de clientes",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "21",
+              "code_to": "21",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "LI-DEBT",
+          "name": "Financiamentos obtidos",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "23",
+              "code_to": "23"
+            }
+          ]
+        },
+        {
+          "code": "LI-STATE",
+          "name": "Estado e outros entes públicos (saldos credores)",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "24",
+              "code_to": "24",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "LI-OTHER",
+          "name": "Outras contas a pagar e diferimentos",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "26",
+              "code_to": "28",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "LI-CL",
+          "name": "Total do passivo corrente",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "LI-PAY",
+            "LI-ADV",
+            "LI-DEBT",
+            "LI-STATE",
+            "LI-OTHER"
+          ]
+        },
+        {
+          "code": "LI-PROV",
+          "name": "Provisões e subsídios para investimentos",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "29",
+              "code_to": "29"
+            }
+          ]
+        },
+        {
+          "code": "LI-NCL",
+          "name": "Total do passivo não corrente",
+          "sequence": 240,
+          "is_total": true,
+          "plus": [
+            "LI-PROV"
+          ]
+        },
+        {
+          "code": "EQLI-TOTAL",
+          "name": "Total do capital próprio e do passivo",
+          "sequence": 250,
+          "is_total": true,
+          "plus": [
+            "EQ-TOTAL",
+            "LI-CL",
+            "LI-NCL"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "CV-IS",
+      "kind": "income_statement",
+      "framework": "SNCRF (NRF)",
+      "name": "Demonstração dos resultados por naturezas",
+      "valid_from": "2009-01-01",
+      "legal_reference": "Decreto-Lei n.º 5/2008 (SNCRF) and Portaria n.º 49/2008 (Código de Contas). The lines group the accounts of the code by their class and sub-class; the official forms of the Normas de Relato Financeiro (balanço, demonstração dos resultados) were not read, so the layout is the pack's own reading and a Cabo Verdean accountant must align it. See README.md.",
+      "source": "portaria-49-2008",
+      "lines": [
+        {
+          "code": "IS-SALES",
+          "name": "Vendas e prestações de serviços",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "71",
+              "code_to": "72"
+            }
+          ]
+        },
+        {
+          "code": "IS-OTHINC",
+          "name": "Outros rendimentos",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "73",
+              "code_to": "78"
+            }
+          ]
+        },
+        {
+          "code": "IS-COGS",
+          "name": "Gastos com inventários vendidos e consumidos",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "61",
+              "code_to": "61"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "321",
+              "code_to": "321"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "361",
+              "code_to": "361"
+            }
+          ]
+        },
+        {
+          "code": "IS-FSE",
+          "name": "Fornecimentos e serviços externos",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "62",
+              "code_to": "62"
+            }
+          ]
+        },
+        {
+          "code": "IS-STAFF",
+          "name": "Gastos com o pessoal",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "63",
+              "code_to": "63"
+            }
+          ]
+        },
+        {
+          "code": "IS-DEP",
+          "name": "Gastos de depreciação e de amortização",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "64",
+              "code_to": "64"
+            }
+          ]
+        },
+        {
+          "code": "IS-IMP",
+          "name": "Perdas por imparidade e provisões",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "65",
+              "code_to": "67"
+            }
+          ]
+        },
+        {
+          "code": "IS-OTHEXP",
+          "name": "Outros gastos",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "68",
+              "code_to": "68"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPRES",
+          "name": "Resultado antes de gastos e ganhos de financiamento",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "IS-SALES",
+            "IS-OTHINC"
+          ],
+          "minus": [
+            "IS-COGS",
+            "IS-FSE",
+            "IS-STAFF",
+            "IS-DEP",
+            "IS-IMP",
+            "IS-OTHEXP"
+          ]
+        },
+        {
+          "code": "IS-FININC",
+          "name": "Ganhos de financiamento",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "79",
+              "code_to": "79"
+            }
+          ]
+        },
+        {
+          "code": "IS-FINEXP",
+          "name": "Perdas de financiamento",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "69",
+              "code_to": "69"
+            }
+          ]
+        },
+        {
+          "code": "IS-PRETAX",
+          "name": "Resultado antes de impostos",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "IS-OPRES",
+            "IS-FININC"
+          ],
+          "minus": [
+            "IS-FINEXP"
+          ]
+        },
+        {
+          "code": "IS-TAX",
+          "name": "Imposto sobre o rendimento do período",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5932",
+              "code_to": "5932"
+            }
+          ]
+        },
+        {
+          "code": "IS-NET",
+          "name": "Resultado líquido do período",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "IS-PRETAX"
+          ],
+          "minus": [
+            "IS-TAX"
+          ]
+        }
+      ]
+    }
+  ]
+}

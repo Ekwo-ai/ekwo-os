@@ -1,0 +1,236 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "CV-IVA-M106",
+  "name": "Declaração periódica do IVA — Modelo 106 (mensal)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2014-01-01",
+  "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013), article 25(1)(c): taxable persons file a return every month for the operations of the preceding month, with the tax due or the credit, even when no taxable operation took place (article 25(2)); article 37: by the last working day of the following month, or by the end of that month when the return is sent electronically. The form is the Modelo 106 (version 3.4) of the DNRE; the boxes here carry its field numbers. Fields 03 to 07, 10, 14 to 16, 25 to 31 and 37 to 50 (the Decreto-Lei 16/2004 cash regime, non-taxed operations, import VAT paid by the taxpayer, the pro rata, the regularisations, the carried credit, the refund and the breakdown tables) and the annexes of customers and suppliers are not modelled (README).",
+  "source": "civa-lei-51-2013",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Código do IVA article 37(1): (a) by the last working day of the month following the one the operations belong to; (b) by the end of the following month when the return is sent electronically. Ekwo's rule is the last calendar day, the electronic deadline; the paper deadline, one working day earlier at most, is not seen.",
+    "source": "civa-lei-51-2013"
+  },
+  "boxes": [
+    {
+      "box": "01",
+      "kind": "base",
+      "name": "01 — Taxa normal: base tributável",
+      "sequence": 10,
+      "legal_reference": "Modelo 106 (version 3.4), table IX line 1, field 01; Código do IVA article 17.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "02",
+      "kind": "tax",
+      "name": "02 — Taxa normal: imposto a favor do Estado",
+      "sequence": 20,
+      "legal_reference": "Modelo 106 (version 3.4), table IX line 1, field 02.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "08",
+      "kind": "base",
+      "name": "08 — Isentas com direito a dedução (exportações)",
+      "sequence": 30,
+      "legal_reference": "Modelo 106 (version 3.4), table IX line 4, field 08; Código do IVA article 13.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "09",
+      "kind": "base",
+      "name": "09 — Isentas sem direito a dedução (artigo 9.º)",
+      "sequence": 40,
+      "legal_reference": "Modelo 106 (version 3.4), table IX line 5, field 09; Código do IVA article 9.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "11 — Aquisição de serviços a prestador sem sede em Cabo Verde: base",
+      "sequence": 50,
+      "legal_reference": "Modelo 106 (version 3.4), table IX line 6, field 11; Código do IVA article 6(5) and (6).",
+      "source": "modelo-106"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "12 — Aquisição de serviços a prestador sem sede: imposto a favor do sujeito passivo",
+      "sequence": 60,
+      "legal_reference": "Modelo 106 (version 3.4), table IX line 6, field 12.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "13 — Aquisição de serviços a prestador sem sede: imposto a favor do Estado",
+      "sequence": 70,
+      "legal_reference": "Modelo 106 (version 3.4), table IX line 6, field 13.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "17",
+      "kind": "base",
+      "name": "17 — Investimentos: base",
+      "sequence": 80,
+      "legal_reference": "Modelo 106 (version 3.4), table IX, field 17.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "18",
+      "kind": "tax",
+      "name": "18 — Investimentos: imposto a favor do sujeito passivo",
+      "sequence": 90,
+      "legal_reference": "Modelo 106 (version 3.4), table IX, field 18.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "19",
+      "kind": "base",
+      "name": "19 — Inventários: base",
+      "sequence": 100,
+      "legal_reference": "Modelo 106 (version 3.4), table IX, field 19.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "20",
+      "kind": "tax",
+      "name": "20 — Inventários: imposto a favor do sujeito passivo",
+      "sequence": 110,
+      "legal_reference": "Modelo 106 (version 3.4), table IX, field 20.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "21",
+      "kind": "base",
+      "name": "21 — Outros bens de consumo: base",
+      "sequence": 120,
+      "legal_reference": "Modelo 106 (version 3.4), table IX, field 21.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "22",
+      "kind": "tax",
+      "name": "22 — Outros bens de consumo: imposto a favor do sujeito passivo",
+      "sequence": 130,
+      "legal_reference": "Modelo 106 (version 3.4), table IX, field 22.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "23",
+      "kind": "base",
+      "name": "23 — Serviços: base",
+      "sequence": 140,
+      "legal_reference": "Modelo 106 (version 3.4), table IX, field 23.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "24",
+      "kind": "tax",
+      "name": "24 — Serviços: imposto a favor do sujeito passivo",
+      "sequence": 150,
+      "legal_reference": "Modelo 106 (version 3.4), table IX, field 24.",
+      "source": "modelo-106"
+    },
+    {
+      "box": "32",
+      "kind": "total",
+      "name": "32 — Soma das bases tributáveis",
+      "sequence": 160,
+      "legal_reference": "Modelo 106 (version 3.4), field 32 = 01+03+05+07+08+09+10+11+14+17+19+21+23+25; the pack carries 01, 08, 09, 11, 17, 19, 21 and 23.",
+      "source": "modelo-106",
+      "plus": [
+        "01",
+        "08",
+        "09",
+        "11",
+        "17",
+        "19",
+        "21",
+        "23"
+      ]
+    },
+    {
+      "box": "33",
+      "kind": "total",
+      "name": "33 — Soma do imposto a favor do sujeito passivo",
+      "sequence": 170,
+      "legal_reference": "Modelo 106 (version 3.4), field 33 = 12+15+18+20+22+24+26+27+29; the pack carries 12, 18, 20, 22 and 24.",
+      "source": "modelo-106",
+      "plus": [
+        "12",
+        "18",
+        "20",
+        "22",
+        "24"
+      ]
+    },
+    {
+      "box": "34",
+      "kind": "total",
+      "name": "34 — Soma do imposto a favor do Estado",
+      "sequence": 180,
+      "legal_reference": "Modelo 106 (version 3.4), field 34 = 02+04+06+13+16+28+30; the pack carries 02 and 13.",
+      "source": "modelo-106",
+      "plus": [
+        "02",
+        "13"
+      ]
+    },
+    {
+      "box": "35",
+      "kind": "total",
+      "name": "35 — Imposto a favor do Estado no período",
+      "sequence": 190,
+      "legal_reference": "Modelo 106 (version 3.4), field 35 = 34 - 33 when 34 is greater than 33 (the pro rata of field 31 is not modelled).",
+      "source": "modelo-106",
+      "plus": [
+        "34"
+      ],
+      "minus": [
+        "33"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "36",
+      "kind": "total",
+      "name": "36 — Crédito de imposto no período",
+      "sequence": 200,
+      "legal_reference": "Modelo 106 (version 3.4), field 36 = 33 - 34 when 33 is greater than 34.",
+      "source": "modelo-106",
+      "plus": [
+        "33"
+      ],
+      "minus": [
+        "34"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "38",
+      "kind": "total",
+      "name": "38 — IVA a pagar ao Estado",
+      "sequence": 210,
+      "legal_reference": "Modelo 106 (version 3.4), table X, field 38 = 35 - 37; field 37 (credit carried from earlier periods) is not modelled, so 38 equals 35.",
+      "source": "modelo-106",
+      "plus": [
+        "35"
+      ]
+    },
+    {
+      "box": "40",
+      "kind": "total",
+      "name": "40 — Crédito a reportar para o período seguinte",
+      "sequence": 220,
+      "legal_reference": "Modelo 106 (version 3.4), table XI, field 40 (carry forward); field 41 (refund request, Código do IVA article 21(5) and (6)) is not modelled, so 40 equals 36.",
+      "source": "modelo-106",
+      "plus": [
+        "36"
+      ]
+    }
+  ]
+}

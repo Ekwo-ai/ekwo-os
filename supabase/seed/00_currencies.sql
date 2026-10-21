@@ -155,3 +155,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('NPR', 'Nepalese rupee', 'Rs', 2)
 on conflict (code) do nothing;
+
+-- Cape Verdean escudo, packs/cv/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('CVE', 'Cape Verdean escudo', 'Esc', 2)
+on conflict (code) do nothing;
