@@ -429,3 +429,23 @@ rate on the line; the pack assumes full deductibility and says so.
 
 **A currency with no minor unit, used alongside the dollar.** The riel has no
 decimals; businesses also bank in US dollars. The pack keeps the books in riel.
+
+## From Lao PDR
+
+The pack carries VAT at 10 % (restored from 7 % by the Ordinance of 19 March 2024),
+the zero rate on exports of goods, four exemptions, a monthly return and two
+statements, in English.
+
+**A law read through summaries.** The Law on Value Added Tax No. 48/NA of 2018 is
+published in Lao only. The articles are cited as summarised by law firms and a tax
+summary; a Lao reader must confirm them. The return is dated the 15th of the following
+month on one such reading, and one source suggests that monthly deadlines may have
+moved to the 20th.
+
+**A currency with no minor unit in use.** The kip is carried with no decimals, as the
+dong and the won are.
+
+**No readable chart, form or portal.** The enterprise chart of accounts, the VAT return
+form and the Tax Department site could not be read from the machine that wrote the
+pack; the chart is the pack's grouping, the boxes are named after the operations of the
+Law, and the portal source is the Ministry of Finance.
