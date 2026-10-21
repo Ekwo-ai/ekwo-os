@@ -1,0 +1,287 @@
+[
+  {
+    "code": "DJ-S-10",
+    "name": "TVA 10 % — taux normal (vente)",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Code général des impôts 2016, article 187, alinéa 1 : « Le taux normal de 10 % est applicable à toutes les opérations taxables » (le taux de 7 % de la loi n°43/AN/08 a été porté à 10 % par la loi de finances 2015, non lue : le CGI 2016 en porte la mention). Champ : articles 171 à 173 ; base d'imposition : articles 184 à 186 (escomptes, remises et rabais en sont exclus).",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "TAX10"
+        },
+        {
+          "type": "tax",
+          "account": "3431",
+          "box": "TAX10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "TAX10",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "3431",
+          "box": "TAX10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "DJ-S-ZERO-EXPORT",
+    "name": "TVA 0 % — exportations et services liés (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Code général des impôts 2016, article 187, alinéa 2, a et b : taux de 0 % pour les livraisons de biens expédiés hors de Djibouti sous déclaration visée par la douane et pour les services directement liés aux exportations ou au transit (transport, commissionnaires en douane, manutention, gardiennage, magasinage, emballage). Le taux zéro conserve le droit à déduction (article 188).",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZERO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZERO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "DJ-S-ZERO-TRANSPORT",
+    "name": "TVA 0 % — transports internationaux et avitaillement (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Code général des impôts 2016, article 187, alinéa 2, c, renvoyant à l'article 180 a : transports internationaux de voyageurs en provenance ou à destination d'un État tiers, agences de voyage qui les concernent, avitaillement des navires et des aéronefs à destination de l'étranger.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZERO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZERO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "DJ-S-EXEMPT-AGRI",
+    "name": "TVA exonérée — produits agricoles non transformés vendus par leurs producteurs (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Code général des impôts 2016, article 176, 1 : ventes effectuées directement aux consommateurs par les agriculteurs, éleveurs ou pêcheurs de produits non transformés de leur culture, élevage ou pêche. Le chiffre d'affaires exonéré est déclaré à la ligne 8 de la déclaration et n'ouvre aucun droit à déduction (article 188).",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "DJ-S-EXEMPT-BANK",
+    "name": "TVA exonérée — opérations bancaires et d'assurance (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Code général des impôts 2016, article 176, 2 : opérations bancaires et opérations d'assurance et de réassurance, avec les prestations des courtiers et intermédiaires d'assurances. Le chiffre d'affaires exonéré est déclaré à la ligne 8 de la déclaration et n'ouvre aucun droit à déduction (article 188).",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "DJ-S-EXEMPT-HOUSING",
+    "name": "TVA exonérée — locations de locaux d'habitation et de terrains ou locaux nus (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Code général des impôts 2016, article 176, 6 et 7 : locations de terrains non aménagés et de locaux nus (option possible, article 177) et locations de locaux destinés à l'habitation du locataire. Le chiffre d'affaires exonéré est déclaré à la ligne 8 de la déclaration et n'ouvre aucun droit à déduction (article 188).",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "DJ-S-EXEMPT-NONPROFIT",
+    "name": "TVA exonérée — organismes sans but lucratif à gestion désintéressée (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Code général des impôts 2016, article 176, 4 : services sociaux, sanitaires, éducatifs, sportifs, culturels, philanthropiques ou religieux rendus par des organismes sans but lucratif à gestion bénévole et désintéressée ; taxables lorsqu'ils agissent dans un secteur concurrentiel. Le chiffre d'affaires exonéré est déclaré à la ligne 8 de la déclaration et n'ouvre aucun droit à déduction (article 188).",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "DJ-S-EXEMPT-PRESS",
+    "name": "TVA exonérée — journaux et périodiques imprimés (vente)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Code général des impôts 2016, article 176, 3 : importation et vente de journaux et périodiques, publicité exclue. Le chiffre d'affaires exonéré est déclaré à la ligne 8 de la déclaration et n'ouvre aucun droit à déduction (article 188).",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "DJ-P-10",
+    "name": "TVA 10 % — achat déductible",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Code général des impôts 2016, articles 188 et 189 : la TVA qui a grevé les éléments du prix d'une opération imposable est déductible le même mois, sur facture d'un fournisseur autorisé à la mentionner ou sur document douanier portant le NIF de l'entreprise ; elle doit être nécessaire à l'exploitation. Les lignes 13 et 14 du formulaire (importations, achats locaux) et 11 et 12 (investissements) ne sont pas distinguées : une seule case INPUT.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "INPUT"
+        },
+        {
+          "type": "tax",
+          "account": "1541",
+          "box": "INPUT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "INPUT"
+        },
+        {
+          "type": "tax",
+          "account": "1541",
+          "box": "INPUT"
+        }
+      ]
+    },
+    "sequence": 200
+  },
+  {
+    "code": "DJ-P-10-NODEDUCT",
+    "name": "TVA 10 % — achat dont la taxe n'est pas déductible",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Code général des impôts 2016, article 190 a et article 191 : ne sont pas déductibles la TVA des dépenses de logement, hébergement, restauration, réception, spectacles, location de véhicules et transports de personnes, ni celle des véhicules conçus pour le transport de personnes. La taxe suit la charge au compte 8315 et n'atteint aucune case.",
+    "source": "cgi",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "8315"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "8315"
+        }
+      ]
+    },
+    "sequence": 210
+  }
+]

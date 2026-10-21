@@ -1,0 +1,122 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "DJ-VAT",
+  "name": "Déclaration de TVA (mensuelle)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2015-01-01",
+  "legal_reference": "Code général des impôts 2016, article 206 : la TVA est un impôt déclaratif liquidé chaque mois sur une déclaration, selon le modèle fourni par l'administration, indiquant pour le mois précédent le montant des opérations réalisées, des opérations taxables et la TVA déductible ; la déclaration est accompagnée du paiement (« néant » si aucune opération). Le modèle du guide de la TVA (2008, lignes 1 à 22) compte 22 lignes ; le pack reprend les lignes 5, 6, 7, 8, 10, 16, 19 et 20 sous des noms de cases (TAX10, ZERO, EXEMPT, TURNOVER, INPUT, CREDIT, PAYABLE, EXCESS) et ne distingue pas les lignes 2 à 4, 11 à 14 ni 17, 18, 21. Voir README.md.",
+  "source": "cgi",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "Code général des impôts 2016, article 207 : la déclaration est déposée au plus tard le 20 de chaque mois, ou le jour ouvrable suivant si le 20 est férié ; les montants sont arrondis au franc le plus proche.",
+    "source": "cgi"
+  },
+  "boxes": [
+    {
+      "box": "TAX10",
+      "kind": "base",
+      "name": "Ventes taxables à 10 % — base imposable (ligne 5)",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts 2016, article 187, alinéa 1 ; ligne 5 du modèle (chiffre d'affaires imposable).",
+      "source": "cgi"
+    },
+    {
+      "box": "TAX10",
+      "kind": "tax",
+      "name": "Ventes taxables à 10 % — TVA collectée (ligne 6)",
+      "sequence": 40,
+      "legal_reference": "Code général des impôts 2016, article 187, alinéa 1 ; ligne 6 du modèle (TVA collectée, ligne 5 × taux).",
+      "source": "cgi"
+    },
+    {
+      "box": "ZERO",
+      "kind": "base",
+      "name": "Opérations au taux de zéro (ligne 7, chiffre d'affaires à l'exportation)",
+      "sequence": 50,
+      "legal_reference": "Code général des impôts 2016, article 187, alinéa 2 ; ligne 7 du modèle.",
+      "source": "cgi"
+    },
+    {
+      "box": "EXEMPT",
+      "kind": "base",
+      "name": "Opérations exonérées (ligne 8)",
+      "sequence": 60,
+      "legal_reference": "Code général des impôts 2016, article 176 ; ligne 8 du modèle (chiffre d'affaires exonéré).",
+      "source": "cgi"
+    },
+    {
+      "box": "TURNOVER",
+      "kind": "total",
+      "name": "Chiffre d'affaires total (ligne 10)",
+      "sequence": 70,
+      "legal_reference": "Ligne 10 du modèle : lignes 5 et 7 à 9. Les ventes en franchise (ligne 9) ne sont pas modélisées.",
+      "source": "cgi",
+      "plus": [
+        "TAX10:base",
+        "ZERO",
+        "EXEMPT"
+      ]
+    },
+    {
+      "box": "INPUT",
+      "kind": "base",
+      "name": "Achats et charges — montant hors TVA",
+      "sequence": 80,
+      "legal_reference": "Code général des impôts 2016, articles 188 et 189 (lignes 11 à 14 du modèle, non distinguées).",
+      "source": "cgi"
+    },
+    {
+      "box": "INPUT",
+      "kind": "tax",
+      "name": "Achats et charges — TVA déductible (lignes 11 à 14)",
+      "sequence": 90,
+      "legal_reference": "Code général des impôts 2016, articles 188 et 189 : déduction le même mois que la réalisation des opérations imposables.",
+      "source": "cgi"
+    },
+    {
+      "box": "CREDIT",
+      "kind": "total",
+      "name": "TVA déductible de la période (ligne 16, sans report de crédit)",
+      "sequence": 100,
+      "legal_reference": "Ligne 16 du modèle ; le report de crédit de la ligne 15 n'est pas repris, voir README.md.",
+      "source": "cgi",
+      "plus": [
+        "INPUT:tax"
+      ]
+    },
+    {
+      "box": "PAYABLE",
+      "kind": "total",
+      "name": "TVA nette due (ligne 19)",
+      "sequence": 110,
+      "legal_reference": "Code général des impôts 2016, article 206 : la déclaration est accompagnée du paiement ; ligne 19 du modèle (6 + 18 − 16 − 17).",
+      "source": "cgi",
+      "plus": [
+        "TAX10:tax"
+      ],
+      "minus": [
+        "CREDIT"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "EXCESS",
+      "kind": "total",
+      "name": "Crédit de TVA (ligne 20)",
+      "sequence": 120,
+      "legal_reference": "Ligne 20 du modèle (16 + 17 − 6 − 18) ; remboursement sur demande, articles 196 à 203 (non modélisé) ; le crédit non remboursé est reporté à la ligne 15 de la déclaration suivante.",
+      "source": "cgi",
+      "plus": [
+        "CREDIT"
+      ],
+      "minus": [
+        "TAX10:tax"
+      ],
+      "floor_zero": true
+    }
+  ]
+}

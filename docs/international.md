@@ -473,3 +473,22 @@ of Shrawan, about 16 July; the format offers `july`, a year that begins on
 acquires a service from outside Nepal assess the tax and section 17(5b) lets it
 be deducted; the pack posts the output tax and the input tax in two boxes of the
 return.
+
+## From Djibouti
+
+**A rate that moved and a guide that did not.** The VAT law of 2008 set a standard rate of
+7 % (article 19) and the Ministry's guide, with its form, still shows 7 %. The Code général
+des impôts 2016 (article 187) says 10 %, which the pack carries; the finance law of 2015 that
+raised it was not read. One rate, one zero rate, five exemptions coded.
+
+**A form of 22 lines.** The monthly return has lines for goods, services and self-supply,
+for investments and purchases, imported and local. The pack keeps eight boxes (taxable
+sales, tax collected, exports, exempt sales, total, deductible tax, net due, credit); the
+split between imported and local purchases, the carry-forward of a credit and the refund
+request are not modelled.
+
+**A chart nobody publishes.** No national chart of accounts could be read; the pack's chart
+is its own grouping and says so.
+
+**Zero decimals.** The Djibouti franc has no minor unit in use: amounts in the golden are
+whole francs.

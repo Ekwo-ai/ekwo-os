@@ -1,0 +1,162 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "DJ",
+  "name": "Djibouti",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 216,
+  "released_at": "2026-10-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "cgi",
+        "title": "République de Djibouti — Code général des impôts 2016 (TVA : articles 171 à 211 ; taux : article 187 ; déclaration : articles 206 et 207), lu en entier pour le chapitre de la TVA",
+        "publisher": "Direction Générale des Impôts, Ministère du Budget",
+        "url": "https://budget.gouv.dj/wp-content/uploads/2022/07/CGI2016final.pdf",
+        "consulted_on": "2026-10-22",
+        "kind": "law"
+      },
+      {
+        "key": "vat-law",
+        "title": "Loi n°43/AN/08/6ème L portant création de la taxe sur la valeur ajoutée et définissant les dispositifs d'application (taux de 7 % à l'origine, articles 19 et 39)",
+        "publisher": "Journal officiel de la République de Djibouti",
+        "url": "https://www.journalofficiel.dj/texte-juridique/loi-n43-an-08-6eme-l-portant-creation-de-la-taxe-sur-la-valeur-ajoutee-et-definissant-les-dispositifs-dapplication/",
+        "consulted_on": "2026-10-22",
+        "kind": "law"
+      },
+      {
+        "key": "vat-guide",
+        "title": "Guide de la TVA, avec le modèle de déclaration mensuelle et ses lignes 1 à 22 (édition de 2008, taux de 7 %)",
+        "publisher": "Direction des impôts, Ministère des Finances",
+        "url": "https://www.ministere-finances.dj/TVA/GUIDE%20TVA.pdf",
+        "consulted_on": "2026-10-22",
+        "kind": "regulation"
+      },
+      {
+        "key": "mof-portal",
+        "title": "Ministère de l'Économie et des Finances de Djibouti — administration fiscale ; aucune téléprocédure de déclaration n'a été trouvée",
+        "publisher": "Ministère de l'Économie et des Finances",
+        "url": "https://www.ministere-finances.dj",
+        "consulted_on": "2026-10-22",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "DJF",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1410",
+      "payable": "3110",
+      "suspense": "3699",
+      "rounding": "7690",
+      "retained_earnings": "5300",
+      "sales": "6110",
+      "purchase": "7210",
+      "bank": "1210",
+      "cash": "1110",
+      "fx_gain": "6290",
+      "fx_loss": "7610",
+      "tax_payable": "3432",
+      "tax_receivable": "1542"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "Journal des opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Journal d'à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de référence des entreprises commerciales (regroupement propre au pack, par les lignes du bilan et du compte de résultat)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "DJ-BS",
+        "DJ-IS"
+      ],
+      "legal_reference": "Le Code général des impôts 2016 (articles 210 et 211) exige des documents comptables et des pièces originales présentables à l'administration, sans décrire un plan de comptes. Aucun plan comptable national n'a pu être lu en source ouverte. Les classes (1 actif circulant, 2 actif immobilisé, 3 dettes à court terme, 4 dettes à long terme, 5 capitaux propres, 6 produits, 7 à 9 charges) et tous les codes sont le regroupement de ce pack d'après les postes d'un bilan et d'un compte de résultat. Un comptable djiboutien doit le comparer à la pratique locale avant qu'une société y tienne ses livres. Voir README.md.",
+      "source": "cgi"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts 2016, article 208 : la facture porte le NIF du fournisseur et du client, sa date et son numéro de série, les noms et adresses, la désignation et la quantité, le montant hors taxes, le taux et le montant de la TVA, le montant toutes taxes comprises. La numérotation séquentielle du pack suit le numéro de série.",
+        "source": "cgi"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts 2016, articles 182 et 183 : le fait générateur est la livraison pour les ventes et l'exécution pour les services ; la taxe est exigible à la livraison pour les biens et à l'encaissement du prix ou des acomptes pour les prestations de services (paiement d'après les débits sur autorisation). Le pack retient la date de livraison ; l'exigibilité à l'encaissement des services est un manque, voir README.md.",
+        "source": "cgi"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Code général des impôts 2016, article 194 : la TVA perçue sur des ventes ou services ensuite résiliés se régularise ; une écriture validée n'est pas effacée mais corrigée par une note de crédit et une contre-écriture.",
+        "source": "cgi"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Aucune obligation de facturation électronique ni d'échange de factures structurées n'a été trouvée dans le Code général des impôts 2016 (article 208 : mentions de la facture papier). `profile`, `party_scheme` et `vat_scheme` restent vides et `obligation` vaut `none`. Voir README.md.",
+    "source": "cgi"
+  },
+  "bank": {
+    "account_scheme": "account-number",
+    "statement_formats": []
+  }
+}

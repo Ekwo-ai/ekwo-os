@@ -1,0 +1,567 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "DJ-BS",
+      "kind": "balance_sheet",
+      "framework": "Plan de référence des entreprises commerciales (présentation du pack)",
+      "name": "Bilan (état de la situation financière)",
+      "valid_from": "2015-01-01",
+      "legal_reference": "Code général des impôts 2016, articles 210 et 211 : les documents comptables sont présentés à toute requête de l'administration fiscale et les pièces justificatives sont des originaux. Aucun plan comptable national ni modèle officiel de bilan ou de compte de résultat n'a pu être lu en source ouverte : les lignes sont les postes usuels d'un bilan et d'un compte de résultat, regroupés sur le plan de ce pack. Voir README.md.",
+      "source": "cgi",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Résultat de l'exercice en cours",
+      "lines": [
+        {
+          "code": "AS-CASH",
+          "name": "Trésorerie",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1299"
+            }
+          ]
+        },
+        {
+          "code": "AS-STINV",
+          "name": "Placements à court terme",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1399"
+            }
+          ]
+        },
+        {
+          "code": "AS-REC",
+          "name": "Clients et effets à recevoir",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1499"
+            }
+          ]
+        },
+        {
+          "code": "AS-OREC",
+          "name": "Autres créances, avances et TVA à récupérer",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1500",
+              "code_to": "1599"
+            }
+          ]
+        },
+        {
+          "code": "AS-INV",
+          "name": "Stocks",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1699"
+            }
+          ]
+        },
+        {
+          "code": "AS-OCA",
+          "name": "Charges constatées d'avance et autres actifs circulants",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1700",
+              "code_to": "1799"
+            }
+          ]
+        },
+        {
+          "code": "AS-CA-TOTAL",
+          "name": "Total de l'actif circulant",
+          "sequence": 70,
+          "is_total": true,
+          "plus": [
+            "AS-CASH",
+            "AS-STINV",
+            "AS-REC",
+            "AS-OREC",
+            "AS-INV",
+            "AS-OCA"
+          ]
+        },
+        {
+          "code": "AS-PPE",
+          "name": "Immobilisations corporelles, nettes",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2100",
+              "code_to": "2199"
+            }
+          ]
+        },
+        {
+          "code": "AS-ONCA",
+          "name": "Autres actifs immobilisés",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2899"
+            }
+          ]
+        },
+        {
+          "code": "AS-INTANG",
+          "name": "Immobilisations incorporelles, nettes",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2900",
+              "code_to": "2999"
+            }
+          ]
+        },
+        {
+          "code": "AS-NCA-TOTAL",
+          "name": "Total de l'actif immobilisé",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "AS-PPE",
+            "AS-ONCA",
+            "AS-INTANG"
+          ]
+        },
+        {
+          "code": "AS-TOTAL",
+          "name": "Total de l'actif",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "AS-CA-TOTAL",
+            "AS-NCA-TOTAL"
+          ]
+        },
+        {
+          "code": "EQ-SHARE",
+          "name": "Capital",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5100",
+              "code_to": "5199"
+            }
+          ]
+        },
+        {
+          "code": "EQ-APIC",
+          "name": "Primes liées au capital",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5200",
+              "code_to": "5299"
+            }
+          ]
+        },
+        {
+          "code": "EQ-RETAINED",
+          "name": "Report à nouveau",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5300",
+              "code_to": "5399"
+            }
+          ]
+        },
+        {
+          "code": "EQ-RESERVE",
+          "name": "Réserves",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5400",
+              "code_to": "5499"
+            }
+          ]
+        },
+        {
+          "code": "EQ-SUMMARY",
+          "name": "Compte de résultat de clôture",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5900",
+              "code_to": "5999"
+            }
+          ]
+        },
+        {
+          "code": "EQ-TOTAL",
+          "name": "Total des capitaux propres",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "EQ-SHARE",
+            "EQ-APIC",
+            "EQ-RETAINED",
+            "EQ-RESERVE",
+            "EQ-SUMMARY"
+          ]
+        },
+        {
+          "code": "LI-PAY",
+          "name": "Fournisseurs et effets à payer",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3100",
+              "code_to": "3199"
+            }
+          ]
+        },
+        {
+          "code": "LI-ADV",
+          "name": "Avances reçues",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3299"
+            }
+          ]
+        },
+        {
+          "code": "LI-DEBT",
+          "name": "Emprunts et concours à court terme",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3300",
+              "code_to": "3399"
+            }
+          ]
+        },
+        {
+          "code": "LI-TAX",
+          "name": "Dettes fiscales",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3400",
+              "code_to": "3499"
+            }
+          ]
+        },
+        {
+          "code": "LI-ACCR",
+          "name": "Charges à payer",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3500",
+              "code_to": "3599"
+            }
+          ]
+        },
+        {
+          "code": "LI-OTHER",
+          "name": "Autres dettes à court terme",
+          "sequence": 240,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3600",
+              "code_to": "3699"
+            }
+          ]
+        },
+        {
+          "code": "LI-PROV",
+          "name": "Provisions",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3700",
+              "code_to": "3799"
+            }
+          ]
+        },
+        {
+          "code": "LI-CL-TOTAL",
+          "name": "Total des dettes à court terme",
+          "sequence": 260,
+          "is_total": true,
+          "plus": [
+            "LI-PAY",
+            "LI-ADV",
+            "LI-DEBT",
+            "LI-TAX",
+            "LI-ACCR",
+            "LI-OTHER",
+            "LI-PROV"
+          ]
+        },
+        {
+          "code": "LI-LT",
+          "name": "Dettes à long terme",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4999"
+            }
+          ]
+        },
+        {
+          "code": "LI-NCL-TOTAL",
+          "name": "Total des dettes à long terme",
+          "sequence": 280,
+          "is_total": true,
+          "plus": [
+            "LI-LT"
+          ]
+        },
+        {
+          "code": "EQLI-TOTAL",
+          "name": "Total des capitaux propres et des dettes",
+          "sequence": 290,
+          "is_total": true,
+          "plus": [
+            "EQ-TOTAL",
+            "LI-CL-TOTAL",
+            "LI-NCL-TOTAL"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "DJ-IS",
+      "kind": "income_statement",
+      "framework": "Plan de référence des entreprises commerciales (présentation du pack)",
+      "name": "Compte de résultat",
+      "valid_from": "2015-01-01",
+      "legal_reference": "Code général des impôts 2016, articles 210 et 211 : les documents comptables sont présentés à toute requête de l'administration fiscale et les pièces justificatives sont des originaux. Aucun plan comptable national ni modèle officiel de bilan ou de compte de résultat n'a pu être lu en source ouverte : les lignes sont les postes usuels d'un bilan et d'un compte de résultat, regroupés sur le plan de ce pack. Voir README.md.",
+      "source": "cgi",
+      "lines": [
+        {
+          "code": "IS-REV",
+          "name": "Chiffre d'affaires, net des rabais, remises et ristournes",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6100",
+              "code_to": "6199"
+            }
+          ]
+        },
+        {
+          "code": "IS-COGS",
+          "name": "Coût des ventes",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7100",
+              "code_to": "7299"
+            }
+          ]
+        },
+        {
+          "code": "IS-GROSS",
+          "name": "Marge brute",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "IS-REV"
+          ],
+          "minus": [
+            "IS-COGS"
+          ]
+        },
+        {
+          "code": "IS-SELL",
+          "name": "Charges commerciales",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7500",
+              "code_to": "7599"
+            }
+          ]
+        },
+        {
+          "code": "IS-ADMIN",
+          "name": "Charges générales et administratives",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8999"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPINC",
+          "name": "Autres produits d'exploitation",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6200",
+              "code_to": "6299"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPEXP",
+          "name": "Autres charges d'exploitation",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7600",
+              "code_to": "7699"
+            }
+          ]
+        },
+        {
+          "code": "IS-OPRESULT",
+          "name": "Résultat d'exploitation",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "IS-GROSS",
+            "IS-OPINC"
+          ],
+          "minus": [
+            "IS-SELL",
+            "IS-ADMIN",
+            "IS-OPEXP"
+          ]
+        },
+        {
+          "code": "IS-NONINC",
+          "name": "Produits hors exploitation",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9100",
+              "code_to": "9199"
+            }
+          ]
+        },
+        {
+          "code": "IS-NONEXP",
+          "name": "Charges hors exploitation",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9500",
+              "code_to": "9599"
+            }
+          ]
+        },
+        {
+          "code": "IS-PRETAX",
+          "name": "Résultat avant impôt",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "IS-OPRESULT",
+            "IS-NONINC"
+          ],
+          "minus": [
+            "IS-NONEXP"
+          ]
+        },
+        {
+          "code": "IS-TAX",
+          "name": "Impôt sur les revenus",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "9600",
+              "code_to": "9699"
+            }
+          ]
+        },
+        {
+          "code": "IS-NET",
+          "name": "Résultat net",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "IS-PRETAX"
+          ],
+          "minus": [
+            "IS-TAX"
+          ]
+        }
+      ]
+    }
+  ]
+}
