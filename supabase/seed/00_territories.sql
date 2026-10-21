@@ -2928,3 +2928,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('KH', 'iso_3166_1', 'Cambodia', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Cambodia levies a value added tax of its own, under the Law on Taxation of 16 May 2023 and Sub-Decree No. 49 ANKr.BK of 11 March 2024 on the Value Added Tax: article 30(2) of the sub-decree reads the rate as 10 per cent, article 29(1) keeps sales at 0 per cent and exempt supplies apart in the records, and the General Department of Taxation sets the due dates of the monthly return.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

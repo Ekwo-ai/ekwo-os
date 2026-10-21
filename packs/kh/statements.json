@@ -1,0 +1,394 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "KH-BS",
+      "kind": "balance_sheet",
+      "framework": "KH-ORIGINAL",
+      "name": "តារាងតុល្យការ",
+      "legal_reference": "Cambodia's Law on Accounting and Auditing (NS/RKM/4016/006, 11 April 2016, listed on the General Department of Taxation's site; its text was not readable from here) requires an enterprise to keep accounts and prepare financial statements, and no line item of a Cambodian statement could be read. This statement is original: it groups this chart's own accounts by the code ranges accounts.csv gives them, current and non-current, revenue and cost of sales, operating expenses and depreciation, without transcribing a standard's own line items or their numbering.",
+      "source": null,
+      "result_in_progress": "alone",
+      "lines": [
+        {
+          "code": "A-C-CASH",
+          "parent": "A-C",
+          "name": "សាច់ប្រាក់ និងសាច់ប្រាក់សមមូល",
+          "sequence": 10,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1099"
+            }
+          ]
+        },
+        {
+          "code": "A-C-REC",
+          "parent": "A-C",
+          "name": "គណនីត្រូវទទួលពីអតិថិជន",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1100",
+              "code_to": "1119"
+            }
+          ]
+        },
+        {
+          "code": "A-C-OTH",
+          "parent": "A-C",
+          "name": "អាករលើធាតុចូល គណនីត្រូវទទួលផ្សេងៗ និងសន្និធិ",
+          "sequence": 30,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1120",
+              "code_to": "1299"
+            }
+          ]
+        },
+        {
+          "code": "A-C-PREP",
+          "parent": "A-C",
+          "name": "ចំណាយបង់ជាមុន និងប្រាក់កក់បានបង់",
+          "sequence": 40,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1300",
+              "code_to": "1399"
+            }
+          ]
+        },
+        {
+          "code": "A-C",
+          "name": "ទ្រព្យសកម្មចរន្ត",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "A-C-CASH",
+            "A-C-REC",
+            "A-C-OTH",
+            "A-C-PREP"
+          ]
+        },
+        {
+          "code": "A-NC-FIX",
+          "parent": "A-NC",
+          "name": "ដីធ្លី អគារ និងបរិក្ខារ (ដករំលស់បង្គរ)",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1699"
+            }
+          ]
+        },
+        {
+          "code": "A-NC-OTH",
+          "parent": "A-NC",
+          "name": "ទ្រព្យសកម្មអរូបី និងទ្រព្យសកម្មមិនចរន្តផ្សេងៗ",
+          "sequence": 70,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1700",
+              "code_to": "1799"
+            }
+          ]
+        },
+        {
+          "code": "A-NC",
+          "name": "ទ្រព្យសកម្មមិនចរន្ត",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "A-NC-FIX",
+            "A-NC-OTH"
+          ]
+        },
+        {
+          "code": "A-TOT",
+          "name": "ទ្រព្យសកម្មសរុប",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "A-C",
+            "A-NC"
+          ]
+        },
+        {
+          "code": "L-C-PAY",
+          "parent": "L-C",
+          "name": "គណនីត្រូវសងអ្នកផ្គត់ផ្គង់",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2000",
+              "code_to": "2009"
+            }
+          ]
+        },
+        {
+          "code": "L-C-OTH",
+          "parent": "L-C",
+          "name": "អាករលើធាតុចេញ ពន្ធត្រូវបង់ គណនីត្រូវសងផ្សេងៗ និងបំណុលចរន្តផ្សេងៗ",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2010",
+              "code_to": "2499",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "2900",
+              "code_to": "2999",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "L-C",
+          "name": "បំណុលចរន្ត",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "L-C-PAY",
+            "L-C-OTH"
+          ]
+        },
+        {
+          "code": "L-NC",
+          "parent": "L-TOT",
+          "name": "បំណុលមិនចរន្ត",
+          "sequence": 130,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2500",
+              "code_to": "2599"
+            }
+          ]
+        },
+        {
+          "code": "L-TOT",
+          "name": "បំណុលសរុប",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "L-C",
+            "L-NC"
+          ]
+        },
+        {
+          "code": "E-CAP",
+          "parent": "E-TOT",
+          "name": "ដើមទុនបានចុះបញ្ជី និងបានបង់ និងបុព្វលាភភាគហ៊ុន",
+          "sequence": 150,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3199"
+            }
+          ]
+        },
+        {
+          "code": "E-RET",
+          "parent": "E-TOT",
+          "name": "លទ្ធផលរក្សាទុក",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3200",
+              "code_to": "3299"
+            }
+          ]
+        },
+        {
+          "code": "E-RESULT",
+          "parent": "E-TOT",
+          "name": "លទ្ធផលនៃគ្រា មិនទាន់បែងចែក",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "5999",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "8999",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "E-TOT",
+          "name": "មូលធនសរុប",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "E-CAP",
+            "E-RET",
+            "E-RESULT"
+          ]
+        },
+        {
+          "code": "EL-TOT",
+          "name": "បំណុល និងមូលធនសរុប",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "L-TOT",
+            "E-TOT"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "KH-IS",
+      "kind": "income_statement",
+      "framework": "KH-ORIGINAL",
+      "name": "របាយការណ៍លទ្ធផល",
+      "legal_reference": "Cambodia's Law on Accounting and Auditing (NS/RKM/4016/006, 11 April 2016, listed on the General Department of Taxation's site; its text was not readable from here) requires an enterprise to keep accounts and prepare financial statements, and no line item of a Cambodian statement could be read. This statement is original: it groups this chart's own accounts by the code ranges accounts.csv gives them, current and non-current, revenue and cost of sales, operating expenses and depreciation, without transcribing a standard's own line items or their numbering.",
+      "source": null,
+      "lines": [
+        {
+          "code": "REV",
+          "name": "ចំណូល",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4599"
+            }
+          ]
+        },
+        {
+          "code": "COST",
+          "name": "ថ្លៃដើមលក់",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5000",
+              "code_to": "5099"
+            }
+          ]
+        },
+        {
+          "code": "GROSS",
+          "name": "ប្រាក់ចំណេញដុល",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "REV"
+          ],
+          "minus": [
+            "COST"
+          ]
+        },
+        {
+          "code": "OTH-INC",
+          "name": "ចំណូលផ្សេងៗ",
+          "sequence": 40,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4700",
+              "code_to": "4999"
+            }
+          ]
+        },
+        {
+          "code": "OPEX",
+          "name": "ចំណាយលក់ រដ្ឋបាល និងហិរញ្ញវត្ថុ",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6969",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6980",
+              "code_to": "7099",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "DEPR",
+          "name": "រំលស់",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6970",
+              "code_to": "6979"
+            }
+          ]
+        },
+        {
+          "code": "PRETAX",
+          "name": "ប្រាក់ចំណេញមុនពន្ធលើប្រាក់ចំណូល",
+          "sequence": 70,
+          "is_total": true,
+          "plus": [
+            "GROSS",
+            "OTH-INC"
+          ],
+          "minus": [
+            "OPEX",
+            "DEPR"
+          ]
+        },
+        {
+          "code": "TAX",
+          "name": "ពន្ធលើប្រាក់ចំណូល",
+          "sequence": 80,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "8000",
+              "code_to": "8099"
+            }
+          ]
+        },
+        {
+          "code": "PROFIT",
+          "name": "ប្រាក់ចំណេញ (ខាតបង់) នៃគ្រា",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "PRETAX"
+          ],
+          "minus": [
+            "TAX"
+          ]
+        }
+      ]
+    }
+  ]
+}

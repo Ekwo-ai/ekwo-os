@@ -115,3 +115,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('BRL', 'Brazilian real', 'R$', 2)
 on conflict (code) do nothing;
+
+-- Cambodian riel, ISO 4217 list one, no minor unit (packs/kh/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('KHR', 'Cambodian riel', E'៛', 0)
+on conflict (code) do nothing;

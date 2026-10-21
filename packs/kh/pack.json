@@ -1,0 +1,160 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "KH",
+  "name": "កម្ពុជា",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 407,
+  "released_at": "2026-10-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "gdt-vat-subdecree",
+        "title": "Sub-Decree No. 49 ANKr.BK of 11 March 2024 on the Value Added Tax (Khmer, scanned): articles 3 (definitions), 4 to 10 (registration), 11 to 20 (input tax credit, apportionment, excess credit), 21 (tax invoice), 22 (diplomatic missions), 23 to 25 (place and time of supply), 28 (adjustment), 29 (records), 30 (tax-inclusive prices) and 32 (import)",
+        "publisher": "General Department of Taxation, Ministry of Economy and Finance, Kingdom of Cambodia",
+        "url": "https://www.tax.gov.kh/u6rhf7ogbi6/gdtstream/1adcafd1-44a6-4875-b3e7-349a693b7c9c",
+        "consulted_on": "2026-10-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "law-taxation-2023",
+        "title": "Law on Taxation, NS/RKM/0523/004 of 16 May 2023 — the law the sub-decree implements (rate, zero rate, exemptions, taxable persons). Listed on the Department's site as a scanned Khmer document of about 11 MB that could not be read here",
+        "publisher": "General Department of Taxation, Ministry of Economy and Finance, Kingdom of Cambodia",
+        "url": "https://www.tax.gov.kh/u6rhf7ogbi6/gdtstream/816f7e7b-e4be-4d8f-a789-e587b92dbe2e",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "law-accounting-2016",
+        "title": "Law on Accounting and Auditing, NS/RKM/4016/006 of 11 April 2016 — the duty to keep accounts and prepare financial statements (title and date read on the Department's list; the text itself was not read)",
+        "publisher": "General Department of Taxation, Ministry of Economy and Finance, Kingdom of Cambodia",
+        "url": "https://www.tax.gov.kh/u6rhf7ogbi6/gdtstream/1cce400f-e948-4724-9712-65c3bab4fc06",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "gdt-portal",
+        "title": "General Department of Taxation — home page and e-Tax portal: the due dates of the monthly return (manual and online), the e-filing and e-payment services, and the library of laws, sub-decrees, prakas and instructions",
+        "publisher": "General Department of Taxation, Ministry of Economy and Finance, Kingdom of Cambodia",
+        "url": "https://www.tax.gov.kh/en",
+        "consulted_on": "2026-10-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "KHR",
+    "language": "km",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "សៀវភៅកំណត់ត្រាការលក់",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "សៀវភៅកំណត់ត្រាការទិញ",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "សៀវភៅកំណត់ត្រាធនាគារ",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "សៀវភៅកំណត់ត្រាសាច់ប្រាក់តូចតាច",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "សៀវភៅកំណត់ត្រាទូទៅ",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "កំណត់ត្រាសមតុល្យដើមគ្រា",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "ផ្លែនគណនីយោងរបស់កម្ពុជា",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "KH-BS",
+        "KH-IS"
+      ],
+      "legal_reference": "Cambodia's Law on Accounting and Auditing of 2016 (listed on the General Department of Taxation's site; its text was not readable from here) obliges an enterprise to keep accounts and prepare financial statements. No chart of accounts, and no statement layout, of Cambodia could be read from an open source: the texts the Department hosts are scanned images, many in Khmer only. This chart is therefore original, four digits by class — 1 assets, 2 liabilities, 3 equity, 4 revenue, 5 cost of sales, 6 operating expenses, 7 finance items, 8 income tax — with the accounts a VAT-registered Cambodian company's books hold: output and input value added tax, the VAT payable or refundable account a monthly return settles to, withholding tax payable, the National Social Security Fund, and the taxes the Department lists (tax on income, tax on immovable property, signboard tax, tax on means of transportation). The Khmer wording is the pack's own. Its statements, `KH-BS` and `KH-IS`, are original too.",
+      "source": null
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Sub-Decree 49 (2024), article 21, read directly: a taxable person supplying goods or services issues a tax invoice to a buyer who is a registered taxable person and an ordinary invoice to one who is not; the buyer may require the invoice; the supplier keeps the original or a copy; and the form of the invoice is set by a prakas of the Minister of Economy and Finance, which was not read. The pattern is the one a business may choose, and `sequential` is the closest value; no rule of gapless numbering was read.",
+        "source": "gdt-vat-subdecree"
+      },
+      "tax_point": {
+        "legal_reference": "Sub-Decree 49 (2024), article 25(1)(a), read directly: a supply of goods or services takes place when the supplier is required to issue the invoice, or issues it if earlier; the invoice is due at the latest seven days after delivery of the goods or performance of the service, or after payment if payment comes first. `earliest_of_delivery_or_payment` is the closest of the format's five values; the seven days of grace and the invoice itself as a trigger are a gap of the vocabulary, carried in docs/international.md.",
+        "source": "gdt-vat-subdecree"
+      },
+      "payment_terms": {
+        "legal_reference": "No statute setting a payment term between businesses in the absence of an agreement was found; legal_payment_days and late_payment_reference are left null rather than guessed."
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Sub-Decree 49 (2024) recites the Law on Electronic Commerce of 2 November 2019 (NS/RKM/1119/017) and refers to electronic transactions and to e-commerce VAT (article 3), and the General Department of Taxation runs e-filing and an e-Tax portal. This session could not read a text that obliges a taxpayer to issue an electronic invoice, nor a national profile. `obligation` is `none`, which states only that no statute obliging it was found, not that none exists — the first thing for a reviewer to check on the portal.",
+    "source": null
+  }
+}
