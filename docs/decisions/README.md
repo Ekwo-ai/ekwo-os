@@ -110,6 +110,7 @@ consequence.
 - [0081](0081-a-company-is-archived-before-it-leaves.md) — A company is archived before it leaves, and deleted by its owner by name
 - [0082](0082-a-company-numbers-its-documents-its-own-way.md) — A company numbers its documents its own way, and a change continues the series
 - [0091](0091-a-document-sent-from-a-phone-is-a-draft-purchase.md) — A document sent from a phone is a draft purchase, and waits for its contact
+- [0092](0092-a-late-payment-mention-is-the-companys-choice.md) — A late payment mention is the company's choice, on an invoice to a business
 
 ## Formats and modules
 

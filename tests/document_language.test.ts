@@ -50,6 +50,9 @@ const READS_THE_COLUMN = [
   // Replaces document_legal_mentions, which reads the column, to print the
   // mention of a VAT exemption.
   '20261022110100_the_return_reads_the_vat_scheme.sql',
+  // Replaces document_legal_mentions again, which reads the column for the
+  // language of each mention.
+  '20261029010100_a_late_payment_mention_is_the_companys_choice.sql',
 ];
 
 let db: PGlite;

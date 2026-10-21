@@ -1545,7 +1545,7 @@ condition would be a pack that executes.
 | `intra_eu_services` | the same, for services |
 | `export` | a line carries a supply outside the European Union |
 | `exempt` | a line carries an exemption that is none of the above |
-| `late_payment` | the document is one the seller issues |
+| `late_payment` | the document is a sale invoice to a business (`contacts.is_company`), never a credit note, and its company has not turned the mention off (`companies.invoice_late_payment_mention`) |
 | `cash_basis` | a line carries a tax that falls due on collection |
 | `small_business` | never selected — see below |
 

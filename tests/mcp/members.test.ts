@@ -233,6 +233,12 @@ describe('the company profile through the server', () => {
     );
     expect(record(typeface['company'])).toMatchObject({ invoice_typeface: 'elegant' });
     await writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId, invoice_typeface: null });
+    expect(input.safeParse({ company_id: fx.companyId, invoice_late_payment_mention: null }).success).toBe(false);
+    const mention = record(
+      await writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId, invoice_late_payment_mention: false }),
+    );
+    expect(record(mention['company'])).toMatchObject({ invoice_late_payment_mention: false });
+    await writeTools.updateCompanyProfile(asOwner, { company_id: fx.companyId, invoice_late_payment_mention: true });
 
     const reset = record(
       await writeTools.updateCompanyProfile(asOwner, {

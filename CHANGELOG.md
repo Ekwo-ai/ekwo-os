@@ -34,6 +34,25 @@ somewhere has already run it.
   The packages read the column as the feature `invoice_labels_by_pack` of
   `SCHEMA_FEATURES`, since 0.25.0: on an older schema the PDF prints the
   words of the layout.
+- **A late payment mention is the company's choice** (decision 0092,
+  `20261029010100_a_late_payment_mention_is_the_companys_choice`).
+  `companies.invoice_late_payment_mention`, true by default, says whether the
+  company's sale invoices print the `late_payment` mention of its country
+  pack; the MCP tool `update_company_profile` sets it. It is the switch on
+  the pack's sentence, in the one view every renderer reads;
+  `country_defaults.late_payment_reference` stays the pack's reference and is
+  not printed.
+
+### Changed
+
+- The schema is 0.25.0 (`20261029020000`); the floor of the packages stays at
+  0.19.0: its migrations only add, and the packages read what they add only
+  from 0.25.0 on (`SCHEMA_FEATURES`: `invoice_labels_by_pack`,
+  `late_payment_mention`).
+- The view `document_legal_mentions` selects the `late_payment` mention on a
+  sale invoice to a business (`contacts.is_company`) only: no longer on a
+  sale credit note, nor on an invoice to a consumer or one that names no
+  contact yet.
 
 ## [0.24.0] — 2026-10-28
 

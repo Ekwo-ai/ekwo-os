@@ -52,6 +52,9 @@ const SNAPSHOT = [
   // Replaces document_legal_mentions, which reads legal_mention_treatments()
   // that the second of these publishes.
   '20261022110100_the_return_reads_the_vat_scheme.sql',
+  // Replaces document_legal_mentions again, for the company's late payment
+  // switch, with the same legal_mention_treatments().
+  '20261029010100_a_late_payment_mention_is_the_companys_choice.sql',
 ];
 
 /** The treatments each condition of a legal mention covers — the vocabulary of `applies_when`, as the schema documents it. */
