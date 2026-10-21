@@ -1,0 +1,298 @@
+[
+  {
+    "code": "BT-S-5",
+    "name": "Sale, standard rate 5 %",
+    "description": "The general rate on a taxable supply of goods or services made in Bhutan",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "Goods and Services Tax Act of Bhutan 2020 (consolidated with the amendments of 2021, 2022 and 2025), s. 12 — GST applies to taxable supplies and taxable imports; s. 14(1) — the supplier is liable on a taxable supply made within Bhutan; s. 16 and s. 25 — the tax is the rate of Schedule I applied to the value of the supply; Schedule I, paragraph 1 — \"Other than the zero rate prescribed in Schedule V, the applicable GST rate on taxable supplies and taxable imports of goods and services shall be 5%\" (amended by the GST (Amendment) Act of Bhutan 2025); s. 2 — the Act is in force from 1 January 2026 and does not apply retroactively. Every supply that is neither exempt (Schedule IV) nor zero-rated (Schedule V) is standard-rated.",
+    "source": "gst-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1S"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1S",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "BT-S-Z-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "Goods declared for export and exported, services supplied to a customer outside Bhutan, international transport (Schedule V)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2026-01-01",
+    "legal_reference": "GST Act of Bhutan 2020, s. 28 — GST applies at zero per cent to a zero-rated supply; Schedule V, paragraph 2 — a sale of goods declared for export under the Customs Act of Bhutan 2017 and exported (or sold by a licensed duty-free vendor to a tourist on proof of exit); paragraph 9 — services supplied to a customer outside Bhutan who uses or enjoys them outside Bhutan; paragraph 12 — international transport and related services. A zero-rated supply is a taxable supply: s. 29 keeps the input tax credit for the purpose of making it.",
+    "source": "gst-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "BT-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply Schedule IV exempts: residential lease, financial services, education, health, rice, edible oil, salt",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "legal_reference": "GST Act of Bhutan 2020, s. 26 — GST does not apply to an exempt supply listed in Schedule IV; s. 27 — the supplier has no input tax credit to the extent an acquisition is for making an exempt supply. Schedule IV, A: paragraph 2 (right to occupy and reside in residential premises), paragraph 3 (sale of residential premises, except the first sale of a newly built one), paragraph 5 (financial services, except a specific fee), paragraph 10 (education services), paragraph 11 (health services); Schedule IV, C: rice, edible oils of the listed headings, salt, carriages for disabled persons, sanitary towels and nappies, by Bhutan Trade Classification code.",
+    "source": "gst-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EX",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "BT-P-5",
+    "name": "Purchase, standard rate 5 %",
+    "description": "A taxable purchase at the standard rate whose input tax is deducted",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "GST Act of Bhutan 2020, s. 32 and following — a taxable person is allowed a credit for the input tax incurred on an acquisition made for the purpose of its taxable supplies; s. 44 — the net amount of the return is the output tax less the allowable input tax credits; Schedule I, paragraph 1 — 5 %. Deducted in full when the purchase serves taxable or zero-rated supplies only; s. 36 and s. 37 apportion the credit when it also serves exempt supplies, which this code does not do.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "BT-P-5-ND",
+    "name": "Purchase, standard rate 5 %, input tax not deductible",
+    "description": "A purchase whose input tax the Act blocks — entertainment, club memberships, passenger vehicles and what is used with them",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2026-01-01",
+    "legal_reference": "GST Act of Bhutan 2020, s. 34 — no input tax credit for an acquisition used to provide entertainment (unless entertainment is the person's economic activity), for a membership of a sporting, social or recreational club, for a lottery supply, for the acquisition or import of a passenger vehicle, or for goods or services used directly in connection with one. The tax charged by the supplier follows the expense to account 6530 and reaches no box.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "BT-P-EX",
+    "name": "Purchase, exempt",
+    "description": "An exempt supply bought for the business",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2026-01-01",
+    "legal_reference": "GST Act of Bhutan 2020, s. 26 and Schedule IV — an exempt supply bought for the business (financial services, residential lease, education, health and the listed goods): no GST is charged and no input tax arises; the return has no row for an exempt purchase.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "BT-P-IMP",
+    "name": "Import of goods, GST paid at customs clearance",
+    "description": "GST charged on a taxable import, paid at customs clearance and claimed as input tax",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2026-01-01",
+    "legal_reference": "GST Act of Bhutan 2020, s. 12 and s. 14(2) — GST applies to a taxable import and the importer is liable; s. 47 — the GST on a taxable import is paid at customs clearance under the Customs Act of Bhutan 2017; s. 32 — the importer deducts it as input tax in its return. Posted to 2125 (import GST payable at the border) until the customs payment is matched.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "BT-P-RC-SVC",
+    "name": "Imported B2B service, reverse-charged and deductible",
+    "description": "A service supplied by a person outside Bhutan to a business customer in Bhutan, taxed to the recipient who may deduct the tax",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2026-01-01",
+    "legal_reference": "GST Act of Bhutan 2020, s. 14(3) — the purchaser is liable for GST on a taxable supply of imported business-to-business services; s. 33 — the customer is treated as incurring both output tax and input tax and is allowed the input tax credit provided it has accounted for the output tax; s. 18 — the value of the imported B2B service. The output tax is declared in box 1R and the credit in box 2R, so the net effect for a fully taxable customer is nil.",
+    "source": "gst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1R"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2R"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  }
+]

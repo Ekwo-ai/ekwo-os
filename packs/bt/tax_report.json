@@ -1,0 +1,147 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "BT-GST-RETURN",
+  "name": "Monthly Goods and Services Tax return",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2026-01-01",
+  "legal_reference": "Goods and Services Tax Act of Bhutan 2020, s. 105 of the definitions — the tax period is a calendar month, or another period the rules prescribe; s. 38 — a taxable person files a GST return no later than thirty days after the end of each tax period; s. 42 — the person self-assesses the GST and files; s. 44 — the net amount is the output tax, less the input tax credits, plus or minus adjustments; s. 46 — a positive net amount is paid when the return is filed. The return form is filed on RAMIS and was not readable from the machine this pack was written on: the rows below are this pack's own, grouped under those figures, and the gap is recorded in this pack's README.",
+  "source": "gst-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 30,
+    "legal_reference": "GST Act of Bhutan 2020, s. 38 — no later than thirty days after the end of the tax period. Thirty days after a month's end falls on the 30th of the next month for every month but January (2 March, or 1 March in a leap year); the pack carries day 30 and the difference is recorded in its README. The late-filing penalty is not modelled.",
+    "source": "gst-act"
+  },
+  "boxes": [
+    {
+      "box": "ZE",
+      "kind": "base",
+      "name": "Zero-rated supplies — exports and international transport",
+      "sequence": 10,
+      "legal_reference": "GST Act of Bhutan 2020, Schedule V, paragraphs 2, 9 and 12 — the value of goods exported, of services supplied to customers outside Bhutan and of international transport. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "EX",
+      "kind": "base",
+      "name": "Exempt supplies (Schedule IV)",
+      "sequence": 30,
+      "legal_reference": "GST Act of Bhutan 2020, Schedule IV — the value of exempt supplies. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "1S",
+      "kind": "base",
+      "name": "Standard-rated supplies — value",
+      "sequence": 40,
+      "legal_reference": "GST Act of Bhutan 2020, ss. 16, 17 and 25 and Schedule I — the sales on which output tax is charged. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "1S",
+      "kind": "tax",
+      "name": "Output tax on standard-rated supplies",
+      "sequence": 45,
+      "legal_reference": "GST Act of Bhutan 2020, ss. 14(1), 44(1) — output tax on standard-rated supplies, net of credit notes given.",
+      "source": "gst-act"
+    },
+    {
+      "box": "1R",
+      "kind": "base",
+      "name": "Imported B2B services — value",
+      "sequence": 50,
+      "legal_reference": "GST Act of Bhutan 2020, ss. 14(3) and 18 — the value of an imported business-to-business service on which the purchaser is liable. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "1R",
+      "kind": "tax",
+      "name": "Output tax on imported B2B services",
+      "sequence": 55,
+      "legal_reference": "GST Act of Bhutan 2020, ss. 14(3) and 33 — the tax the purchaser declares as output tax; its credit is in box 2R.",
+      "source": "gst-act"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Total output tax",
+      "sequence": 60,
+      "plus": [
+        "1S:tax",
+        "1R:tax"
+      ],
+      "legal_reference": "GST Act of Bhutan 2020, s. 44(1) — total output tax: standard-rated supplies plus the reverse-charged imported services.",
+      "source": "gst-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Standard-rated local purchases — value",
+      "sequence": 80,
+      "legal_reference": "GST Act of Bhutan 2020, s. 32 — the purchases on which input tax is incurred. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Input tax on local purchases",
+      "sequence": 85,
+      "legal_reference": "GST Act of Bhutan 2020, ss. 32 and 44(2) — input tax credit on local purchases, net of credits received.",
+      "source": "gst-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Imports of goods — value",
+      "sequence": 90,
+      "legal_reference": "GST Act of Bhutan 2020, ss. 12 and 14(2) — the value of taxable imports on which GST is paid at customs clearance. A reporting row of this pack.",
+      "source": "gst-act"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Input tax on imports",
+      "sequence": 95,
+      "legal_reference": "GST Act of Bhutan 2020, ss. 32 and 47 — input tax credit on GST paid at customs clearance.",
+      "source": "gst-act"
+    },
+    {
+      "box": "2R",
+      "kind": "tax",
+      "name": "Input tax on imported B2B services",
+      "sequence": 97,
+      "legal_reference": "GST Act of Bhutan 2020, s. 33 — the customer is allowed an input tax credit for the imported B2B service provided it has accounted for the output tax.",
+      "source": "gst-act"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Total input tax",
+      "sequence": 100,
+      "plus": [
+        "2:tax",
+        "3:tax",
+        "2R:tax"
+      ],
+      "legal_reference": "GST Act of Bhutan 2020, s. 44(2) — total input tax credit: local purchases, imports and imported B2B services.",
+      "source": "gst-act"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Net GST payable or repayable",
+      "sequence": 110,
+      "plus": [
+        "1"
+      ],
+      "minus": [
+        "4"
+      ],
+      "legal_reference": "GST Act of Bhutan 2020, s. 44 — output tax less input tax credit. A negative figure is a credit carried or refunded as the Act provides.",
+      "source": "gst-act"
+    }
+  ]
+}

@@ -340,6 +340,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`bo`](../packs/bo/) | Bolivia | `102_pack_bo.sql` | es, en | `community` |
 | [`br`](../packs/br/) | Brasil | `148_pack_br.sql` | pt, en | `community` |
 | [`bs`](../packs/bs/) | The Bahamas | `401_pack_bs.sql` | en | `community` |
+| [`bt`](../packs/bt/) | Bhutan | `212_pack_bt.sql` | en | `community` |
 | [`bw`](../packs/bw/) | Botswana | `303_pack_bw.sql` | en | `community` |
 | [`ca`](../packs/ca/) | Canada | `58_pack_ca.sql` | en, fr | `community` |
 | [`cd`](../packs/cd/) | République démocratique du Congo | `34_pack_cd.sql` | fr | `community` |
