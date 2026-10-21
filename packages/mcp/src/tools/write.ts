@@ -875,6 +875,10 @@ export const UpdateCompanyProfileInput = z.object({
     .nullable()
     .optional()
     .describe('The typefaces of its invoice PDF: elegant (Inter, with Fraunces for the title, the names and the headings) or classic (Noto Sans). Null puts back the default, elegant.'),
+  invoice_late_payment_mention: z
+    .boolean()
+    .optional()
+    .describe("Whether its sale invoices to a business print the late payment mention of its country pack, true by default. Never on a credit note, nor on an invoice to a consumer, whatever this says."),
 });
 
 export async function updateCompanyProfile(

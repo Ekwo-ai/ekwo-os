@@ -747,6 +747,7 @@ Legal entities kept in this instance. One instance may hold several.
 | `archived_at` | `timestamp with time zone` | When the owner archived the company; null while its books are kept. An archived company is read-only for the ledger: posting an entry, booking a document or a payment and closing a year are refused with company_archived, while reading, exporting, the members and the profile stay available. Set by archive_company() and cleared by unarchive_company(), never written by hand. |
 | `number_format` | `text` | This company's pattern of a document number, in the grammar of country_defaults.number_format: {CODE}, {YYYY} or {YY}, {MM}, {N...}. Carries {CODE}. Null keeps the pattern of the country pack. |
 | `invoice_typeface` | `text` | The pair of typefaces of this company's invoice PDF, by the name @ekwo-ai/invoice-pdf embeds it under: elegant (Inter, with Fraunces for the title, the names and the headings) or classic (Noto Sans). Null is the default, elegant. |
+| `invoice_late_payment_mention` | `boolean` | not null — Whether this company's sale invoices to a business print the late payment mention of its country pack (legal_mention_templates.applies_when = late_payment). True by default; never on a credit note, nor on an invoice to a consumer (contacts.is_company false), whatever it says. |
 
 Constraints:
 
