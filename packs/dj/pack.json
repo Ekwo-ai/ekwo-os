@@ -158,5 +158,12 @@
   "bank": {
     "account_scheme": "account-number",
     "statement_formats": []
-  }
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Not modelled, and not a finding that the service is untaxed. The Code général des impôts 2016, articles 171 and 178, tax the operations made in Djibouti and the imports; no provision was found in the pages read that says how a service received from a supplier abroad is declared by the buyer. The pack carries no code for it rather than guess a mechanism: such a purchase is entered without tax and the user, with their accountant, accounts for any VAT owed outside the pack. See README.md",
+      "source": "cgi"
+    }
+  ]
 }
