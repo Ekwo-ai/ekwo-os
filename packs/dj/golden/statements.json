@@ -1,43 +1,43 @@
 {
   "statements": [
     {
-      "code": "BI-BS",
+      "code": "DJ-BS",
       "from": "2026-01-01",
       "to": "2026-12-31",
       "lines": {
-        "AS-CASH": "12900000",
+        "AS-CASH": "12500000",
         "AS-STINV": "0",
-        "AS-REC": "17165000",
-        "AS-OREC": "4140000",
+        "AS-REC": "16525000",
+        "AS-OREC": "2200000",
         "AS-INV": "20000000",
         "AS-OCA": "0",
-        "AS-CA-TOTAL": "54205000",
+        "AS-CA-TOTAL": "51225000",
         "AS-PPE": "0",
         "AS-ONCA": "0",
         "AS-INTANG": "0",
         "AS-NCA-TOTAL": "0",
-        "AS-TOTAL": "54205000",
+        "AS-TOTAL": "51225000",
         "EQ-SHARE": "0",
         "EQ-APIC": "0",
-        "EQ-RETAINED": "29060000",
+        "EQ-RETAINED": "30100000",
         "EQ-RESERVE": "0",
         "EQ-SUMMARY": "0",
-        "EQ-TOTAL": "29060000",
-        "LI-PAY": "21650000",
+        "EQ-TOTAL": "30100000",
+        "LI-PAY": "19250000",
         "LI-ADV": "0",
         "LI-DEBT": "0",
-        "LI-TAX": "3495000",
+        "LI-TAX": "1875000",
         "LI-ACCR": "0",
         "LI-OTHER": "0",
         "LI-PROV": "0",
-        "LI-CL-TOTAL": "25145000",
+        "LI-CL-TOTAL": "21125000",
         "LI-LT": "0",
         "LI-NCL-TOTAL": "0",
-        "EQLI-TOTAL": "54205000"
+        "EQLI-TOTAL": "51225000"
       }
     },
     {
-      "code": "BI-IS",
+      "code": "DJ-IS",
       "from": "2026-01-01",
       "to": "2026-12-31",
       "lines": {
@@ -45,15 +45,15 @@
         "IS-COGS": "0",
         "IS-GROSS": "32650000",
         "IS-SELL": "0",
-        "IS-ADMIN": "3590000",
+        "IS-ADMIN": "2550000",
         "IS-OPINC": "0",
         "IS-OPEXP": "0",
-        "IS-OPRESULT": "29060000",
+        "IS-OPRESULT": "30100000",
         "IS-NONINC": "0",
         "IS-NONEXP": "0",
-        "IS-PRETAX": "29060000",
+        "IS-PRETAX": "30100000",
         "IS-TAX": "0",
-        "IS-NET": "29060000"
+        "IS-NET": "30100000"
       }
     }
   ]
