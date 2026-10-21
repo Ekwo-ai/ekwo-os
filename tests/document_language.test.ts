@@ -57,6 +57,9 @@ const READS_THE_COLUMN = [
   // Replaces document_tax_summary, which reads the column for the legal
   // mention of a group in the language of its document.
   '20261020072000_a_tax_computed_inside_its_own_base.sql',
+  // Replaces document_legal_mentions again, which reads the column for the
+  // language of each mention.
+  '20261021080000_a_late_payment_mention_is_the_companys_choice.sql',
 ];
 
 let db: PGlite;

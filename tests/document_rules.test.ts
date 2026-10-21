@@ -358,6 +358,51 @@ describe('the mentions that apply to one document', () => {
     expect(await mentionsOf(documentId)).toEqual([]);
   });
 
+  it('prints nothing about late payment on a credit note, which gives money back', async () => {
+    const { companyId } = await newCompany(db, { name: 'Avoir SRL' });
+    const contactId = await newContact(db, companyId);
+    const documentId = await newDocument(db, companyId, {
+      docType: 'sale_credit_note',
+      contactId,
+      lines: [{ unitPrice: 100, taxCode: 'BE-S-21', accountCode: '700000' }],
+    });
+    expect(await mentionsOf(documentId)).toEqual([]);
+  });
+
+  it('prints nothing about late payment on an invoice to a consumer', async () => {
+    // The rules on late payment the mention recalls are between businesses
+    // (decision 0084): a consumer's are other rules, another mention.
+    const { companyId } = await newCompany(db, { name: 'Particuliers SRL' });
+    const contactId = await newContact(db, companyId, { name: 'A Private Person', vat: null });
+    await db.query('update contacts set is_company = false where id = $1', [contactId]);
+    const documentId = await newDocument(db, companyId, {
+      docType: 'sale_invoice',
+      contactId,
+      lines: [{ unitPrice: 100, taxCode: 'BE-S-21', accountCode: '700000' }],
+    });
+    expect(await mentionsOf(documentId)).toEqual([]);
+  });
+
+  it('leaves the late payment mention out once the company turns it off, and back on', async () => {
+    const { companyId } = await newCompany(db, { name: 'Sobre SRL' });
+    const contactId = await newContact(db, companyId);
+    const documentId = await newDocument(db, companyId, {
+      docType: 'sale_invoice',
+      contactId,
+      lines: [{ unitPrice: 100, taxCode: 'BE-S-21', accountCode: '700000' }],
+    });
+    const setting = await one<{ invoice_late_payment_mention: boolean }>(
+      db,
+      'select invoice_late_payment_mention from companies where id = $1',
+      [companyId],
+    );
+    expect(setting.invoice_late_payment_mention).toBe(true);
+    await db.query('update companies set invoice_late_payment_mention = false where id = $1', [companyId]);
+    expect(await mentionsOf(documentId)).toEqual([]);
+    await db.query('update companies set invoice_late_payment_mention = true where id = $1', [companyId]);
+    expect(await mentionsOf(documentId)).toEqual(['late_payment']);
+  });
+
   it('never prints the franchise mention, because no column records the regime', async () => {
     // The sentence is in the table — a renderer that knows the seller is under
     // the franchise fetches it by code — and the view does not claim to know.

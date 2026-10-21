@@ -11,6 +11,15 @@ somewhere has already run it.
 
 ### Added
 
+- **A late payment mention is the company's choice** (socle migration
+  `20261021080000`, decision 0084). `companies.invoice_late_payment_mention`,
+  true by default, says whether the company's sale invoices print the
+  `late_payment` mention of its country pack; the MCP tool
+  `update_company_profile` sets it. The view `document_legal_mentions` now
+  selects that mention on a sale invoice to a business (`contacts.is_company`)
+  only: no longer on a sale credit note, nor on an invoice to a consumer or
+  one that names no contact yet.
+
 - **A tax lands by its code, not on a line** (socle migration
   `20261020210000`, decision 0083). A document line carries its base and
   names its tax; the posting writes the tax on the account the tax points to.
