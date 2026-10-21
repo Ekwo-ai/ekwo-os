@@ -1,0 +1,82 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "KH-VAT",
+  "name": "ការប្រកាសអាករលើតម្លៃបន្ថែមប្រចាំខែ",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2024-03-11",
+  "legal_reference": "Sub-Decree 49 (2024) on the Value Added Tax, article 29(1)(a) (a monthly VAT account), and the General Department of Taxation's home page, read on 2026-10-21, which lists for the period September 2026 a due date of 20 October for a manual return and 25 October for an online one ('Upcoming due date of monthly-annual tax return'). The boxes below are this pack's own short codes for the mechanics the sub-decree confirms — a base and an output tax on taxable sales, a base for zero-rated sales, a base and an input tax on purchases, and the net — and do not claim to reproduce the numbering or the Khmer wording of the form of the e-filing portal, which could not be read.",
+  "source": "gdt-vat-subdecree",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 20,
+    "legal_reference": "General Department of Taxation, home page, read on 2026-10-21: for the period September 2026 it displays the due date '20 October' for a manual return and '25 October' for an online one. This pack declares the 20th, the earlier of the two; a taxpayer filing online has until the 25th by the same page. The provision of the law behind the dates was not read.",
+    "source": "gdt-portal"
+  },
+  "boxes": [
+    {
+      "box": "SB",
+      "kind": "base",
+      "name": "តម្លៃលក់ដែលត្រូវបង់អាករលើតម្លៃបន្ថែមអត្រា ១០% (មិនរួមអាករលើតម្លៃបន្ថែម)",
+      "sequence": 10,
+      "legal_reference": "The value, without value added tax, of a sale taxed at the rate of 10 %: Sub-Decree 49 (2024), article 30(2), reads the rate for a sale to a consumer as 10 %, the tax being 1/11 of the tax-inclusive price — see KH-S-STD.",
+      "source": "gdt-vat-subdecree"
+    },
+    {
+      "box": "SZ",
+      "kind": "base",
+      "name": "តម្លៃលក់ក្នុងអត្រា ០% (នាំចេញ)",
+      "sequence": 20,
+      "legal_reference": "The value of a sale taxed at 0 %. Sub-Decree 49 (2024), article 29(1)(e), has the taxpayer keep records of sales exported at 0 % with the export declaration and the invoice issued to the foreign buyer — see KH-S-ZR-EXP.",
+      "source": "gdt-vat-subdecree"
+    },
+    {
+      "box": "OT",
+      "kind": "tax",
+      "name": "អាករលើតម្លៃបន្ថែមលើធាតុចេញ",
+      "sequence": 30,
+      "legal_reference": "The value added tax charged on box SB, and the tax the recipient of a service from a non-resident supplier accounts for under article 23(3) — see KH-S-STD and KH-P-RC.",
+      "source": "gdt-vat-subdecree"
+    },
+    {
+      "box": "PB",
+      "kind": "base",
+      "name": "តម្លៃទិញដែលមានសិទ្ធិកាត់កងឥណទានអាករលើធាតុចូល (មិនរួមអាករលើតម្លៃបន្ថែម)",
+      "sequence": 40,
+      "legal_reference": "The value, without value added tax, of a purchase whose input tax credit this pack takes as fully deductible: article 11 grants the credit on tax paid on goods and services bought to carry out taxable supplies, article 19 asks for the original tax invoice — see KH-P-STD.",
+      "source": "gdt-vat-subdecree"
+    },
+    {
+      "box": "RC",
+      "kind": "base",
+      "name": "តម្លៃសេវាទិញពីអ្នកមិនមែនជាអ្នកស្នាក់នៅ ដែលអាករត្រូវគណនាដោយអ្នកទទួលសេវា",
+      "sequence": 50,
+      "legal_reference": "The value of a service bought from a non-resident supplier, reported apart from box PB because the tax reaches the return through the recipient's own accounting under article 23(3) and not through a tax invoice of the supplier — see KH-P-RC.",
+      "source": "gdt-vat-subdecree"
+    },
+    {
+      "box": "IT",
+      "kind": "tax",
+      "name": "ឥណទានអាករលើធាតុចូល",
+      "sequence": 60,
+      "legal_reference": "The input tax of box PB and the tax self-assessed on box RC. This pack claims the self-assessed credit in the period it is assessed, a simplification named in the README.",
+      "source": "gdt-vat-subdecree"
+    },
+    {
+      "box": "NET",
+      "kind": "total",
+      "name": "អាករលើតម្លៃបន្ថែមត្រូវបង់ ឬឥណទានលើស (យកទៅបន្ត ឬសំណង)",
+      "sequence": 70,
+      "plus": [
+        "OT"
+      ],
+      "minus": [
+        "IT"
+      ],
+      "legal_reference": "Output tax less input tax for the period. Article 29(1)(a) has the taxpayer keep a monthly VAT account showing total output tax, total input tax, and the tax payable or the excess credit carried forward or refunded; article 20 lets an excess credit be refunded under conditions the Minister sets. A negative figure is kept as it is: what it becomes (carry forward, refund) is not modelled beyond the figure.",
+      "source": "gdt-vat-subdecree"
+    }
+  ]
+}

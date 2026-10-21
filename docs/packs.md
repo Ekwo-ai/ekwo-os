@@ -395,6 +395,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`jp`](../packs/jp/) | 日本 | `51_pack_jp.sql` | ja, en | `community` |
 | [`ke`](../packs/ke/) | Kenya | `89_pack_ke.sql` | en | `community` |
 | [`kg`](../packs/kg/) | Кыргызская Республика | `206_pack_kg.sql` | ru, en | `community` |
+| [`kh`](../packs/kh/) | កម្ពុជា | `407_pack_kh.sql` | km, en | `community` |
 | [`km`](../packs/km/) | Comores | `26_pack_km.sql` | fr | `community` |
 | [`kn`](../packs/kn/) | Saint Kitts and Nevis | `403_pack_kn.sql` | en | `community` |
 | [`kr`](../packs/kr/) | 대한민국 | `54_pack_kr.sql` | ko, en | `community` |

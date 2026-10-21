@@ -1,0 +1,223 @@
+[
+  {
+    "code": "KH-S-STD",
+    "name": "លក់ អាករលើតម្លៃបន្ថែមអត្រា ១០%",
+    "description": "ការផ្គត់ផ្គង់ទំនិញ ឬសេវាក្នុងព្រះរាជាណាចក្រកម្ពុជា",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-03-11",
+    "legal_reference": "Sub-Decree 49 (2024) on the Value Added Tax, article 30(2), read directly: the rate for a sale to a consumer is 10 %, and the tax on a tax-inclusive price is 1/11 of it. Article 30(1)(b) takes the same rate for a sale made without an invoice. The sub-decree implements the Law on Taxation of 16 May 2023, which fixes the rate itself; that text is a scanned document in Khmer and was not read, so the rate here rests on the sub-decree alone.",
+    "source": "gdt-vat-subdecree",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "SB"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "OT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "SB",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "OT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "KH-S-ZR-EXP",
+    "name": "លក់នាំចេញ អត្រា ០%",
+    "description": "ការនាំចេញទំនិញ ឬសេវាដែលត្រូវបង់អាករក្នុងអត្រា ០%",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2024-03-11",
+    "conditions": [
+      "transport_evidence",
+      "buyer_status"
+    ],
+    "legal_reference": "Sub-Decree 49 (2024), article 29(1)(e), read directly, names sales exported at 0 % and the records that support them: the export declaration, the invoice issued to the foreign buyer, the transport documents, the sales order or contract with the foreign buyer, and proof of payment through a bank registered in Cambodia. Which supplies qualify (goods exported, and which services) is set by the Law on Taxation, which was not read; this code is for a supply the user knows to be zero-rated, and carries `conditions` for the facts the ledger does not hold.",
+    "source": "gdt-vat-subdecree",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "SZ"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "SZ",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "KH-S-EX",
+    "name": "លក់ ត្រូវបានលើកលែងអាករលើតម្លៃបន្ថែម",
+    "description": "ការផ្គត់ផ្គង់ដែលច្បាប់លើកលែងអាករលើតម្លៃបន្ថែម",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-03-11",
+    "conditions": [
+      "supply_nature"
+    ],
+    "legal_reference": "Sub-Decree 49 (2024), article 29(1), read directly, has the taxpayer keep records of exempt supplies apart from those taxed at 10 % and 0 %, which confirms that an exempt category exists. The list of exempt supplies is in the Law on Taxation, which was not read, so this code names none: the user chooses it only for a supply they know to be exempt. It carries no box: nothing read shows the return asking for the value of an exempt supply.",
+    "source": "gdt-vat-subdecree",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "KH-P-STD",
+    "name": "ទិញ អាករលើតម្លៃបន្ថែមអត្រា ១០% កាត់កងបាន",
+    "description": "ការទិញទំនិញ ឬសេវាដែលបង់អាករក្នុងស្រុក ហើយអាចកាត់កងឥណទានអាករលើធាតុចូលបាន",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-03-11",
+    "legal_reference": "Sub-Decree 49 (2024), articles 11 and 19, read directly: a registered taxpayer may deduct the input tax paid on goods and services bought to carry out taxable supplies, on presentation of the original tax invoice. This code assumes the purchase is deductible in full. Article 13 excludes accommodation, meals and entertainment, passenger vehicles of up to ten seats (unless the taxpayer sells or hires them) and petroleum products (unless the taxpayer sells them); a purchase falling there is not carried by a code of this pack (see README). Article 15 prorates the credit of a taxpayer who makes both taxable and non-taxable supplies; the pack does not.",
+    "source": "gdt-vat-subdecree",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "PB"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "IT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "PB",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "IT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "KH-P-EX",
+    "name": "ទិញ គ្មានអាករលើតម្លៃបន្ថែម (លើកលែង ឬអ្នកផ្គត់ផ្គង់មិនបានចុះបញ្ជី)",
+    "description": "ការទិញដែលមិនមានអាករលើតម្លៃបន្ថែមអាចកាត់កងបាន",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2024-03-11",
+    "legal_reference": "A purchase carrying no value added tax: an exempt supply, or a supplier who is not registered (article 4 requires registration only of a person who has become a taxable person under article 77 of the Law on Taxation). Nothing is deducted, so no box and no account but the expense.",
+    "source": "gdt-vat-subdecree",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "KH-P-RC",
+    "name": "សេវាទិញពីអ្នកមិនមែនអ្នកស្នាក់នៅ អាករគណនាដោយអ្នកទទួលសេវា",
+    "description": "សេវាដែលផ្គត់ផ្គង់ដោយអ្នកមិនស្នាក់នៅ ហើយអ្នកទទួលដែលជាអ្នកជាប់អាករត្រូវគិតអាករជំនួស",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-03-11",
+    "legal_reference": "Sub-Decree 49 (2024), article 23(3), read directly: for a service supplied in Cambodia by a non-resident, the taxable person who receives it is to account for the tax in place of the supplier and pay it to the tax administration (a non-resident supplier with no establishment in Cambodia). Article 3(12) defines this 'reverse charge'. This code posts the tax on both the output and the input accounts in the same period (net nil) and does not model the period or the conditions of the credit, which were not read.",
+    "source": "gdt-vat-subdecree",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "RC"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "OT"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "IT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "RC",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "OT",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "IT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60,
+    "conditions": [
+      "buyer_status"
+    ]
+  }
+]

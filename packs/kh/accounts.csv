@@ -1,0 +1,174 @@
+code,parent,type,reconcilable,name,sequence
+1000,,asset_cash,false,សាច់ប្រាក់ក្នុងដៃ,10
+1010,,asset_cash,false,គណនីធនាគារ - ចរន្ត,20
+1020,,asset_cash,false,គណនីធនាគារ - សន្សំ,30
+1030,,asset_cash,false,គណនីធនាគារ - រូបិយប័ណ្ណបរទេស (ដុល្លារអាមេរិក),40
+1040,,asset_cash,false,គណនីធនាគារ - រូបិយប័ណ្ណបរទេស (ផ្សេងទៀត),50
+1090,,asset_cash,false,សាច់ប្រាក់កំពុងដឹកជញ្ជូន,60
+1100,,asset_receivable,true,គណនីត្រូវទទួលពីអតិថិជន,70
+1105,,asset_receivable,true,សែកត្រូវទទួល,80
+1110,,asset_receivable,true,គណនីត្រូវទទួលពីភាគីពាក់ព័ន្ធ,90
+1120,,asset_current,false,ចំណូលមិនទាន់ចេញវិក្កយបត្រ,100
+1121,,asset_current,false,ប្រាក់កក់បង់មុនសម្រាប់ទំនិញ,110
+1125,,asset_current,false,ការប្រាក់ត្រូវទទួល,120
+1140,,asset_current,false,សំវិធានធនលើគណនីត្រូវទទួលមិនប្រាកដ,130
+1150,,asset_current,false,អាករលើតម្លៃបន្ថែមលើធាតុចូល,140
+1155,,asset_current,true,អាករលើតម្លៃបន្ថែមត្រូវសំណង,150
+1160,,asset_current,false,ប្រាក់បុរេប្រទានបុគ្គលិក,160
+1170,,asset_current,false,គណនីត្រូវទទួលផ្សេងៗ,170
+1180,,asset_current,false,ប្រាក់កម្ចីរយៈពេលខ្លីជូនបុគ្គលិក,180
+1200,,asset_current,false,សន្និធិទំនិញសម្រេច,190
+1210,,asset_current,false,សន្និធិវត្ថុធាតុដើម និងសម្ភារៈ,200
+1220,,asset_current,false,ផលិតផលកំពុងផលិត,210
+1230,,asset_current,false,សម្ភារៈវេចខ្ចប់ និងសម្ភារៈប្រើប្រាស់,220
+1240,,asset_current,false,ទំនិញកំពុងដឹកជញ្ជូន,230
+1300,,asset_prepayments,false,ចំណាយបង់ជាមុន,240
+1310,,asset_prepayments,false,ប្រាក់កក់បានបង់,250
+1320,,asset_prepayments,false,ធានារ៉ាប់រងបង់ជាមុន,260
+1330,,asset_prepayments,false,ថ្លៃជួលបង់ជាមុន,270
+1350,,asset_prepayments,false,ប្រាក់បុរេប្រទានបុគ្គលិកសម្រាប់ដំណើរការងារ,280
+1600,,asset_fixed,false,ដីធ្លី,290
+1610,,asset_fixed,false,អគារ និងសំណង់,300
+1611,1610,asset_fixed,false,រំលស់បង្គរ - អគារ និងសំណង់,310
+1620,,asset_fixed,false,គ្រឿងសង្ហារឹម និងឧបករណ៍ការិយាល័យ,320
+1621,1620,asset_fixed,false,រំលស់បង្គរ - គ្រឿងសង្ហារឹម និងឧបករណ៍ការិយាល័យ,330
+1630,,asset_fixed,false,យានយន្ត,340
+1631,1630,asset_fixed,false,រំលស់បង្គរ - យានយន្ត,350
+1640,,asset_fixed,false,ឧបករណ៍កុំព្យូទ័រ,360
+1641,1640,asset_fixed,false,រំលស់បង្គរ - ឧបករណ៍កុំព្យូទ័រ,370
+1650,,asset_fixed,false,ការកែលម្អអចលនទ្រព្យជួល,380
+1651,1650,asset_fixed,false,រំលស់បង្គរ - ការកែលម្អអចលនទ្រព្យជួល,390
+1660,,asset_fixed,false,ម៉ាស៊ីន និងឧបករណ៍ផលិតកម្ម,400
+1661,1660,asset_fixed,false,រំលស់បង្គរ - ម៉ាស៊ីន និងឧបករណ៍ផលិតកម្ម,410
+1670,,asset_fixed,false,ឧបករណ៍ និងសម្ភារៈ,420
+1671,1670,asset_fixed,false,រំលស់បង្គរ - ឧបករណ៍ និងសម្ភារៈ,430
+1700,,asset_non_current,false,ទ្រព្យសកម្មអរូបី,440
+1710,,asset_non_current,false,ប្រាក់កក់រយៈពេលវែង,450
+1720,,asset_non_current,false,កម្មវិធីកុំព្យូទ័រ និងអាជ្ញាប័ណ្ណ,460
+1730,,asset_non_current,false,កេរ្តិ៍ឈ្មោះ,470
+1740,,asset_non_current,false,ការវិនិយោគរយៈពេលវែង,480
+1750,,asset_non_current,false,ទ្រព្យសកម្មពន្ធពន្យារ,490
+1760,,asset_non_current,false,ពន្ធកាត់ទុកដែលបានបង់ជាមុន រង់ចាំកាត់កង,500
+2000,,liability_payable,true,គណនីត្រូវសងអ្នកផ្គត់ផ្គង់,510
+2005,,liability_payable,true,សែកត្រូវសង,520
+2020,,liability_current,false,ប្រាក់បៀវត្សរ៍ត្រូវបង់,530
+2030,,liability_current,false,ប្រាក់រង្វាន់ត្រូវបង់,540
+2040,,liability_current,false,ប្រាក់កក់ពីអតិថិជន,550
+2050,,liability_current,false,គណនីត្រូវសងផ្សេងៗ,560
+2060,,liability_current,false,ចំណូលពន្យារ,570
+2070,,liability_current,false,ផ្នែកដល់កាលកំណត់នៃប្រាក់កម្ចីរយៈពេលវែង,580
+2080,,liability_current,false,សំវិធានធនធានាផលិតផល,590
+2090,,liability_current,true,អាករបង់ជាមុនលើការចែកភាគលាភត្រូវបង់,600
+2100,,liability_current,false,អាករលើតម្លៃបន្ថែមលើធាតុចេញ,610
+2110,,liability_current,true,អាករលើតម្លៃបន្ថែមត្រូវបង់,620
+2130,,liability_current,false,ពន្ធគយត្រូវបង់,630
+2140,,liability_current,true,ពន្ធកាត់ទុកត្រូវបង់,640
+2150,,liability_current,false,ពន្ធលើប្រាក់ចំណូលត្រូវបង់,650
+2160,,liability_current,false,ចំណែកមូលនិធិជាតិសន្តិសុខសង្គមត្រូវបង់,660
+2170,,liability_current,false,មូលនិធិបុគ្គលិកផ្សេងៗត្រូវបង់,670
+2180,,liability_current,false,បំណុលពន្ធពន្យារ,680
+2195,,liability_current,false,ថ្លៃសវនកម្មត្រូវបង់,690
+2200,,liability_current,false,ប្រាក់កម្ចីរយៈពេលខ្លី,700
+2210,,liability_current,false,ចំណាយត្រូវបង់ផ្សេងៗ,710
+2220,,liability_current,false,ចំណូលសេវាពន្យារ,720
+2230,,liability_current,false,ភាគលាភត្រូវបង់,730
+2240,,liability_current,false,មូលនិធិសុខុមាលភាពបុគ្គលិកត្រូវបង់,740
+2250,,liability_current,false,សំវិធានធនថ្ងៃឈប់សម្រាកបង្គរ,750
+2900,,liability_current,false,ត្រូវសងនាយក,760
+2910,,liability_current,false,ត្រូវសងក្រុមហ៊ុនសម្ព័ន្ធ,770
+2920,,liability_current,false,ត្រូវសងម្ចាស់ភាគហ៊ុន,780
+2990,,liability_current,false,គណនីព្យួរ,790
+2500,,liability_non_current,false,ប្រាក់កម្ចីរយៈពេលវែង,800
+2510,,liability_non_current,false,សញ្ញាបណ្ណត្រូវសង,810
+2520,,liability_non_current,false,បំណុលជួលហិរញ្ញវត្ថុ រយៈពេលវែង,820
+2530,,liability_non_current,false,សំវិធានធនអត្ថប្រយោជន៍ឈប់ធ្វើការរបស់បុគ្គលិក,830
+2540,,liability_non_current,false,ចំណូលពន្យារ រយៈពេលវែង,840
+3000,,equity,false,ដើមទុនបានចុះបញ្ជី និងបានបង់,850
+3050,3000,equity,false,ដើមទុនបានចុះបញ្ជីមិនទាន់បង់,860
+3100,,equity,false,បុព្វលាភភាគហ៊ុន,870
+3110,,equity,false,ទុនបម្រុងតាមច្បាប់,880
+3200,,equity_retained,false,លទ្ធផលរក្សាទុក,890
+3210,,equity_retained,false,ភាគលាភបានបង់,900
+4000,,income,false,ចំណូលលក់ទំនិញក្នុងស្រុក,910
+4010,,income,false,ចំណូលសេវាក្នុងស្រុក,920
+4020,,income,false,ចំណូលលក់ទំនិញនាំចេញ,930
+4030,,income,false,ចំណូលសេវាជូនអតិថិជនបរទេស,940
+4040,,income,false,ចំណូលសេវាផ្សេងៗ,950
+4050,,income,false,ចំណូលតម្លើង និងថែទាំ,960
+4060,,income,false,ចំណូលលក់ទៅភាគីពាក់ព័ន្ធ,970
+4090,,income,false,ការបញ្ចុះតម្លៃលក់,980
+4500,,income,false,ចំណូលជួល,990
+4510,,income,false,ចំណូលជួលឧបករណ៍,1000
+4700,,income_other,false,ចំណេញពីអត្រាប្តូរប្រាក់,1010
+4710,,income_other,false,ចំណូលការប្រាក់,1020
+4720,,income_other,false,ចំណូលភាគលាភ,1030
+4750,,income_other,false,ចំណេញពីការលក់ទ្រព្យសកម្មអចិន្ត្រៃយ៍,1040
+4760,,income_other,false,ចំណេញពីការបំប្លែងរបាយការណ៍ហិរញ្ញវត្ថុ,1050
+4770,,income_other,false,ចំណូលពីសំណងធានារ៉ាប់រង,1060
+4800,,income_other,false,ការត្រឡប់សំវិធានធនគណនីត្រូវទទួលមិនប្រាកដ,1070
+4900,,income_other,false,ចំណូលផ្សេងៗ,1080
+5000,,expense_direct_cost,false,ថ្លៃដើមទំនិញលក់,1090
+5010,,expense_direct_cost,false,ថ្លៃដឹកជញ្ជូនចូល,1100
+5020,,expense_direct_cost,false,ពលកម្មផ្ទាល់,1110
+5030,,expense_direct_cost,false,ចំណាយទូទៅផលិតកម្ម,1120
+5040,,expense_direct_cost,false,ពន្ធគយលើទំនិញទិញ,1130
+5050,,expense_direct_cost,false,ការខាតពីការបន្ថយតម្លៃសន្និធិ,1140
+6000,,expense,false,ប្រាក់ខែ និងប្រាក់ឈ្នួល,1150
+6001,,expense,false,ប្រាក់ធ្វើការថែមម៉ោង,1160
+6005,,expense,false,ប្រាក់រង្វាន់បុគ្គលិក,1170
+6010,,expense,false,ចំណែកមូលនិធិជាតិសន្តិសុខសង្គម (និយោជក),1180
+6015,,expense,false,ការបណ្តុះបណ្តាលបុគ្គលិក,1190
+6020,,expense,false,ចំណែកមូលនិធិបុគ្គលិកផ្សេងៗ (និយោជក),1200
+6025,,expense,false,ឯកសណ្ឋានបុគ្គលិក,1210
+6030,,expense,false,ចំណាយជ្រើសរើសបុគ្គលិក,1220
+6040,,expense,false,ធានារ៉ាប់រងសុខភាពបុគ្គលិក,1230
+6050,,expense,false,សុខុមាលភាពបុគ្គលិក,1240
+6060,,expense,false,ធានារ៉ាប់រងអាយុជីវិត និងគ្រោះថ្នាក់បុគ្គលិក,1250
+6100,,expense,false,ថ្លៃជួលការិយាល័យ,1260
+6110,,expense,false,ថ្លៃទឹក ភ្លើង,1270
+6120,,expense,false,ថ្លៃទូរសព្ទ និងអ៊ីនធឺណិត,1280
+6130,,expense,false,ចំណាយដឹកជញ្ជូន និងធ្វើដំណើរ,1290
+6140,,expense,false,ចំណាយប្រេងឥន្ធនៈ និងយានយន្ត,1300
+6150,,expense,false,ថ្លៃចំណត និងថ្លៃផ្លូវ,1310
+6160,,expense,false,ថ្លៃប្រៃសណីយ៍ និងសេវាដឹកជញ្ជូនឯកសារ,1320
+6170,,expense,false,ក្រដាស និងទម្រង់បោះពុម្ព,1330
+6180,,expense,false,ថ្លៃសមាជិកភាព និងសមាគម,1340
+6190,,expense,false,ថ្លៃជាវកម្មវិធីក្នុងស្រុក,1350
+6200,,expense,false,ថ្លៃសេវាធនាគារ,1360
+6210,,expense,false,ថ្លៃពិគ្រោះយោបល់ និងសេវាវិជ្ជាជីវៈក្នុងស្រុក,1370
+6220,,expense,false,ការផ្សព្វផ្សាយ និងលើកកម្ពស់ការលក់,1380
+6230,,expense,false,ការជួសជុល និងថែទាំ,1390
+6240,,expense,false,ចំណាយទទួលភ្ញៀវ,1400
+6250,,expense,false,សម្ភារៈការិយាល័យ,1410
+6260,,expense,false,ថ្លៃសេវាច្បាប់ក្នុងស្រុក,1420
+6270,,expense,false,ថ្លៃសវនកម្ម,1430
+6280,,expense,false,ថ្លៃបកប្រែ និងបញ្ជាក់ឯកសារ,1440
+6290,,expense,false,ថ្លៃឯកសារនាំចូល និងនាំចេញ,1450
+6300,,expense,false,ធានារ៉ាប់រង,1460
+6310,,expense,false,អាករលើអចលនវត្ថុ,1470
+6320,,expense,false,អាករលើបណ្ណសញ្ញា,1480
+6330,,expense,false,អាករលើមធ្យោបាយដឹកជញ្ជូន,1490
+6340,,expense,false,ការបរិច្ចាគ,1500
+6350,,expense,false,កម្មវិធី និងសេវាឌីជីថលពីបរទេស,1510
+6360,,expense,false,ថ្លៃសេវាអ្នកផ្គត់ផ្គង់តូចមិនបានចុះបញ្ជីអាករលើតម្លៃបន្ថែម,1520
+6370,,expense,false,ថ្លៃផ្ទេរប្រាក់អន្តរជាតិ,1530
+6380,,expense,false,ភាពខុសគ្នានៃប្រតិបត្តិការប្តូរប្រាក់,1540
+6390,,expense,false,ថ្លៃសេវាកាតឥណទានរបស់អ្នកលក់,1550
+6400,,expense,false,ថ្លៃប្រជុំនាយក,1560
+6410,,expense,false,បំណុលអាក្រក់លុបចោលដោយផ្ទាល់,1570
+6420,,expense,false,ការខាតពីការលក់សន្និធិ,1580
+6430,,expense,false,ការខាតបង់ពីគ្រោះមហន្តរាយធម្មជាតិ,1590
+6440,,expense,false,ទណ្ឌកម្ម និងប្រាក់ពិន័យពន្ធ,1600
+6450,,expense,false,ចំណាយផ្សេងៗ,1610
+6900,,expense,false,ចំណាយបំណុលអាក្រក់,1620
+6950,,expense,false,ការខាតពីអត្រាប្តូរប្រាក់,1630
+6960,,expense,false,ការខាតពីការលក់ទ្រព្យសកម្មអចិន្ត្រៃយ៍,1640
+6970,,expense_depreciation,false,រំលស់,1650
+6975,,expense_depreciation,false,ការធ្លាក់ថ្លៃទ្រព្យសកម្មអរូបី,1660
+6990,,expense,false,ភាពខុសគ្នាពីការបង្គត់,1670
+7000,,expense,false,ចំណាយការប្រាក់,1680
+7010,,expense,false,ចំណាយការប្រាក់លើការជួលហិរញ្ញវត្ថុ,1690
+7020,,expense,false,ថ្លៃរៀបចំប្រាក់កម្ចី,1700
+7030,,expense,false,ការខាតពីការសងប្រាក់កម្ចីមុនកាលកំណត់,1710
+8000,,expense,false,ពន្ធលើប្រាក់ចំណូល,1720
+8010,,expense,false,ចំណាយពន្ធពន្យារ,1730
