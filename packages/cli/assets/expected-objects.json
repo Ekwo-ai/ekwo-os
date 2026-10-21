@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "0.24.0",
-  "migration": "20261028160000",
+  "schemaVersion": "0.25.0",
+  "migration": "20261029020100",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -956,6 +956,10 @@
           {
             "name": "invoice_accent_color",
             "type": "text"
+          },
+          {
+            "name": "invoice_late_payment_mention",
+            "type": "boolean"
           },
           {
             "name": "invoice_logo_position",

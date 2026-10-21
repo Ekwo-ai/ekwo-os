@@ -280,7 +280,7 @@ Every write names its company explicitly.
 | `close_fiscal_year` / `reopen_fiscal_year` | Closes a year the way the country pack says — with `final_close`, whether the country also requires a final close and by when — or reopens it to correct it, whatever later years hold; a later closed year is reopened first |
 | `close_fiscal_year_finally` | The final close of a closed year: nobody reopens it afterwards, the operator included. Only on the user's explicit request |
 | `create_company` | A company on a country pack, with its chart and its first financial year. An instance-level act |
-| `update_company_profile` | What a company says about itself on its documents, and the pattern of its document numbers |
+| `update_company_profile` | What a company says about itself on its documents — the late payment mention of its country included, on or off — and the pattern of its document numbers |
 | `set_number_prefix` | What one journal prints in place of `{CODE}` in its numbers |
 | `set_preferences` | Your own language, timezone, formats and default company |
 | `invite_member` / `revoke_invitation` | Invites an address into a company, or withdraws the invitation. The token is shown once |

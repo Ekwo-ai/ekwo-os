@@ -40,6 +40,7 @@ export const COMPANY = [
   'number_format',
   'invoice_typeface',
   'agent_posting',
+  'invoice_late_payment_mention',
   'default_bank_account_id',
   'language',
   'currency_code',

@@ -27,23 +27,22 @@ import {
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
 
 /** The schema this release defines. */
-const RELEASE = '0.24.0';
+const RELEASE = '0.25.0';
 
 /** What `ekwo_schema_version()` returned before the migration of this release. */
-const PREVIOUS = '0.23.0';
+const PREVIOUS = '0.24.0';
 
 /** The migration that carries the number, and nothing else. */
-const BUMP = 'schema_version_0_24_0';
+const BUMP = 'schema_version_0_25_0';
 
 /**
  * The floor the packages of this release declare. It is not the release: it
  * rises only when a migration is breaking for what the packages read (see
  * `docs/releasing.md`, step 3), and `tests/schema_floor.test.ts` proves it
- * against the tag of that version. 0.24.0 only added — a function that
- * turns a document sent from a phone into a draft purchase, a draft that may
- * name no contact yet, and the bucket of attachments where Storage is
- * present — none of which the packages read, so the floor stays at 0.19.0,
- * the oldest schema the reads of this release were run against.
+ * against the tag of that version. 0.25.0 only added — a company's switch
+ * for the late payment mention, which the packages read only from that
+ * version on (`SCHEMA_FEATURES.late_payment_mention`) — so the floor stays at
+ * 0.19.0, the oldest schema the reads of this release were run against.
  */
 const FLOOR = '0.19.0';
 

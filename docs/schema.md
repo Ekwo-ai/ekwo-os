@@ -756,6 +756,7 @@ Legal entities kept in this instance. One instance may hold several.
 | `number_format` | `text` | This company's pattern of a document number, in the grammar of country_defaults.number_format: {CODE}, {YYYY} or {YY}, {MM}, {N...}. Carries {CODE}. Null keeps the pattern of the country pack. |
 | `invoice_typeface` | `text` | The pair of typefaces of this company's invoice PDF, by the name @ekwo-ai/invoice-pdf embeds it under: elegant (Inter, with Fraunces for the title, the names and the headings) or classic (Noto Sans). Null is the default, elegant. |
 | `agent_posting` | `text` | not null — How an agent — a machine key, or the MCP server — books a document of this company: review (the default), once a person has approved the draft as it stands (approve_document()), unless the session opted into autopilot; autopilot, directly, within the capabilities it holds; review_only, as review, and no session may opt into autopilot. A person signed in posts as before in all three. Written with company.write; an agent may only make it stricter. |
+| `invoice_late_payment_mention` | `boolean` | not null — Whether this company's sale invoices to a business print the late payment mention of its country pack (legal_mention_templates.applies_when = late_payment). True by default; never on a credit note, nor on an invoice to a consumer (contacts.is_company false), whatever it says. |
 
 Constraints:
 

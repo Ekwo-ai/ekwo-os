@@ -119,6 +119,18 @@ export const SCHEMA_FEATURES = {
     columns: ['companies.agent_posting', 'api_keys.posting_mode'],
     functions: ['approve_document', 'agent_posting_mode', 'document_version'],
   },
+  /**
+   * Whether a company's sale invoices to a business print the late payment
+   * mention of its country pack
+   * (`20261029020000_a_late_payment_mention_is_the_companys_choice`). Below
+   * it, there is no switch to read or to set, and the mention is printed as
+   * the view of that schema decides.
+   */
+  late_payment_mention: {
+    since: '0.25.0',
+    columns: ['companies.invoice_late_payment_mention'],
+    functions: [],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

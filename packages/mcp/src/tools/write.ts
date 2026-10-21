@@ -884,6 +884,10 @@ export const UpdateCompanyProfileInput = z.object({
     .describe(
       "How agents post its documents: review (the default) once a person approved the draft, unless a session opted into autopilot; autopilot, directly; review_only, review with autopilot forbidden to every session. The person's choice: you may make it stricter when they ask, never looser (agent_posting_by_a_person).",
     ),
+  invoice_late_payment_mention: z
+    .boolean()
+    .optional()
+    .describe("Whether its sale invoices to a business print the late payment mention of its country pack, true by default. Never on a credit note, nor on an invoice to a consumer, whatever this says."),
 });
 
 export async function updateCompanyProfile(
