@@ -1,0 +1,187 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "LA",
+  "name": "Lao PDR",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 213,
+  "released_at": "2026-10-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-law",
+        "title": "Law on Value Added Tax (Amended) No. 48/NA, 20 June 2018 — summary page; the full text is published in Lao only",
+        "publisher": "Department of Foreign Trade, Ministry of Industry and Commerce, Lao PDR (Lao Trade Portal)",
+        "url": "https://www.laotradeportal.gov.la/en-gb/site/display/1846",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "vat-law-articles",
+        "title": "Lao PDR Tax Alert: New Amended Law on VAT — rate (article 17), exemptions (article 12), return and payment (article 30), input tax (articles 22 to 24), refunds (article 28)",
+        "publisher": "DFDL (law firm), reading the Law on Value Added Tax No. 48/NA of 2018",
+        "url": "https://www.dfdl.com/insights/legal-and-tax-updates/lao-pdr-tax-alert-new-amended-law-on-vat",
+        "consulted_on": "2026-10-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "vat-rate-2024",
+        "title": "Laos reinstates 10% VAT rate — Ordinance of the President No. 003/PDT of 19 March 2024",
+        "publisher": "Tilleke & Gibbins (law firm), reporting the Ordinance",
+        "url": "https://www.tilleke.com/insights/laos-reinstates-10-vat-rate/2/",
+        "consulted_on": "2026-10-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "tax-summary",
+        "title": "Lao PDR — Corporate — Other taxes (value added tax: rate, exports, exemptions, three-month rule, withholding on services from abroad)",
+        "publisher": "PwC, Worldwide Tax Summaries",
+        "url": "https://taxsummaries.pwc.com/lao-pdr/corporate/other-taxes",
+        "consulted_on": "2026-10-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "ifrs-sme",
+        "title": "IFRS for SMEs Accounting Standard — the basis of the Lao financial reporting standards for entities that are not public interest entities",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/ifrs-for-smes/",
+        "consulted_on": "2026-10-21",
+        "kind": "standard"
+      },
+      {
+        "key": "mof-portal",
+        "title": "Ministry of Finance of the Lao PDR — the Tax Department and the Accounting Department sit under it",
+        "publisher": "Ministry of Finance, Lao PDR",
+        "url": "https://www.mof.gov.la",
+        "consulted_on": "2026-10-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "LAK",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1410",
+      "payable": "3110",
+      "suspense": "3699",
+      "rounding": "7690",
+      "retained_earnings": "5300",
+      "sales": "6110",
+      "purchase": "7210",
+      "bank": "1210",
+      "cash": "1110",
+      "fx_gain": "6290",
+      "fx_loss": "7610",
+      "tax_payable": "3432",
+      "tax_receivable": "1542"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchase journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank journal",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Cash journal",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances journal",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Reference chart of accounts for commercial enterprises (the pack's own grouping by the classes of the IFRS for SMEs statements)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "LA-BS",
+        "LA-IS"
+      ],
+      "legal_reference": "The Law on Accounting (amended 2013, in force July 2014) has the Ministry of Finance set the accounting standards: public interest entities apply IFRS and the other enterprises the Lao financial reporting standards for non-public interest entities, which follow the IFRS for SMEs. The enterprise chart of accounts that the Ministry of Finance prescribes (the 1992 Lao general accounting plan, modelled on the French plan) could not be read from an open source, nor the decision that currently approves it. The classes (1 current assets, 2 non-current assets, 3 current liabilities, 4 non-current liabilities, 5 equity, 6 income, 7 to 9 expenses) and every code are this pack's grouping by the items an IFRS for SMEs balance sheet and income statement present, not a copy of the official plan. A Lao accountant must check it against the official plan before a company keeps its books on it. See README.md.",
+      "source": "ifrs-sme"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{NNNNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 27, as summarised by DFDL: invoices are issued in accordance with the regulations on invoices. The regulation on the form and numbering of the VAT invoice was not read; the sequential numbering here is an example, not the official series.",
+        "source": "vat-law-articles"
+      },
+      "tax_point": {
+        "legal_reference": "The time of supply under the Law on Value Added Tax was not read from the Lao text; no open English source states it. Delivery date is the pack's working assumption and is listed among the gaps in README.md.",
+        "source": "vat-law-articles"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "A posted entry is not erased: a return or a correction is made with a credit note and a counter entry. The Law on VAT (article 28 as summarised by DFDL) ties refunds to invoices and bookkeeping under the Law on Accounting.",
+        "source": "vat-law-articles"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exempt from value added tax",
+        "sequence": 10,
+        "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 12 (as summarised by DFDL): the listed operations are exempt. The wording to print on an exempt invoice was not found; this text is the pack's.",
+        "source": "vat-law-articles"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "The Law on VAT, article 27 (as summarised by DFDL), refers to invoices under the invoice regulations. No Lao electronic invoicing exchange modelled on EN 16931 was found in open sources (PwC mentions an eInvoice duty only for overseas digital suppliers), so profile, party scheme and VAT scheme stay empty. See README.md.",
+    "source": "vat-law-articles"
+  },
+  "bank": {
+    "account_scheme": "iban",
+    "statement_formats": []
+  }
+}

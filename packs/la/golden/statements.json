@@ -1,0 +1,60 @@
+{
+  "statements": [
+    {
+      "code": "LA-BS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "AS-CASH": "47000000",
+        "AS-STINV": "0",
+        "AS-REC": "71750000",
+        "AS-OREC": "8800000",
+        "AS-INV": "78000000",
+        "AS-OCA": "0",
+        "AS-CA-TOTAL": "205550000",
+        "AS-PPE": "0",
+        "AS-ONCA": "0",
+        "AS-INTANG": "0",
+        "AS-NCA-TOTAL": "0",
+        "AS-TOTAL": "205550000",
+        "EQ-SHARE": "0",
+        "EQ-APIC": "0",
+        "EQ-RETAINED": "132500000",
+        "EQ-RESERVE": "0",
+        "EQ-SUMMARY": "0",
+        "EQ-TOTAL": "132500000",
+        "LI-PAY": "63800000",
+        "LI-ADV": "0",
+        "LI-DEBT": "0",
+        "LI-TAX": "9250000",
+        "LI-ACCR": "0",
+        "LI-OTHER": "0",
+        "LI-PROV": "0",
+        "LI-CL-TOTAL": "73050000",
+        "LI-LT": "0",
+        "LI-NCL-TOTAL": "0",
+        "EQLI-TOTAL": "205550000"
+      }
+    },
+    {
+      "code": "LA-IS",
+      "from": "2026-01-01",
+      "to": "2026-12-31",
+      "lines": {
+        "IS-REV": "142500000",
+        "IS-COGS": "0",
+        "IS-GROSS": "142500000",
+        "IS-SELL": "0",
+        "IS-ADMIN": "10000000",
+        "IS-OPINC": "0",
+        "IS-OPEXP": "0",
+        "IS-OPRESULT": "132500000",
+        "IS-NONINC": "0",
+        "IS-NONEXP": "0",
+        "IS-PRETAX": "132500000",
+        "IS-TAX": "0",
+        "IS-NET": "132500000"
+      }
+    }
+  ]
+}

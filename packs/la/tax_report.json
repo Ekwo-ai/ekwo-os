@@ -1,0 +1,122 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "LA-VAT",
+  "name": "Value added tax return (monthly)",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2024-03-19",
+  "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 30(1) (as summarised by DFDL): individuals and businesses carrying on business in Lao PDR file the return by the 15th day of the following month; import VAT is paid at importation (article 30(2)). The official return form and the filing channel were not found in open sources, so the boxes are named after the operations of the Law (TAXABLE, ZERO, EXEMPT, TURNOVER, INPUT, CREDIT, PAYABLE, EXCESS), not after the lines of the form. One source (PwC) records that the monthly excise deadline moved from the 15th to the 20th; whether the VAT deadline moved too was not confirmed. See README.md.",
+  "source": "vat-law-articles",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 30(1) (as summarised by DFDL): the return is filed by the 15th day of the month following the period. Not confirmed against the Lao text or a current Tax Department notice.",
+    "source": "vat-law-articles"
+  },
+  "boxes": [
+    {
+      "box": "TAXABLE",
+      "kind": "base",
+      "name": "Taxable sales at 10% — taxable value",
+      "sequence": 10,
+      "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 17 (10%).",
+      "source": "vat-law-articles"
+    },
+    {
+      "box": "TAXABLE",
+      "kind": "tax",
+      "name": "Taxable sales at 10% — VAT charged",
+      "sequence": 20,
+      "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 17 (10%).",
+      "source": "vat-law-articles"
+    },
+    {
+      "box": "ZERO",
+      "kind": "base",
+      "name": "Zero-rated sales (export of goods)",
+      "sequence": 30,
+      "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 17 (0% on exports of goods).",
+      "source": "vat-law-articles"
+    },
+    {
+      "box": "EXEMPT",
+      "kind": "base",
+      "name": "Operations not subject to VAT (article 106)",
+      "sequence": 40,
+      "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 12 (exempt operations).",
+      "source": "vat-law-articles"
+    },
+    {
+      "box": "TURNOVER",
+      "kind": "total",
+      "name": "Total sales of the period",
+      "sequence": 50,
+      "legal_reference": "Total of the operations of the period; the Law does not name this line.",
+      "source": "vat-law-articles",
+      "plus": [
+        "TAXABLE:base",
+        "ZERO",
+        "EXEMPT"
+      ]
+    },
+    {
+      "box": "INPUT",
+      "kind": "base",
+      "name": "Purchased goods, work and services — value excluding VAT",
+      "sequence": 60,
+      "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, articles 22 to 24 (input tax).",
+      "source": "vat-law-articles"
+    },
+    {
+      "box": "INPUT",
+      "kind": "tax",
+      "name": "Purchased goods, work and services — input VAT",
+      "sequence": 70,
+      "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, articles 22 to 24 (input tax).",
+      "source": "vat-law-articles"
+    },
+    {
+      "box": "CREDIT",
+      "kind": "total",
+      "name": "Creditable tax for the period",
+      "sequence": 80,
+      "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, articles 22 to 24 (input tax creditable in the period).",
+      "source": "vat-law-articles",
+      "plus": [
+        "INPUT:tax"
+      ]
+    },
+    {
+      "box": "PAYABLE",
+      "kind": "total",
+      "name": "VAT payable to the state budget",
+      "sequence": 90,
+      "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 30: output tax less creditable input tax is paid with the return.",
+      "source": "vat-law-articles",
+      "plus": [
+        "TAXABLE:tax"
+      ],
+      "minus": [
+        "CREDIT"
+      ],
+      "floor_zero": true
+    },
+    {
+      "box": "EXCESS",
+      "kind": "total",
+      "name": "Excess of deductible VAT (refundable)",
+      "sequence": 100,
+      "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 28 (as summarised by DFDL): a refund is requested monthly and within three months of the tax incurred; how it works in practice is unclear.",
+      "source": "vat-law-articles",
+      "plus": [
+        "CREDIT"
+      ],
+      "minus": [
+        "TAXABLE:tax"
+      ],
+      "floor_zero": true
+    }
+  ]
+}

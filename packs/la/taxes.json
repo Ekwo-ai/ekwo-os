@@ -1,0 +1,248 @@
+[
+  {
+    "code": "LA-S-10",
+    "name": "VAT 10% — standard rate (sale)",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-03-19",
+    "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 17 (as summarised by DFDL): 10% on supplies of goods and services within Lao PDR and on imports. The rate was 7% from January 2022 and was restored to 10% by Ordinance of the President No. 003/PDT of 19 March 2024 (Tilleke & Gibbins); PwC (reviewed February 2026) gives 10%. The Tilleke report adds that the authorities said the restored rate would be enforced later, on publication in the Official Gazette: that publication was not checked. Exports of natural resources that are not finished goods are taxed at 10%, not zero (PwC).",
+    "source": "vat-law-articles",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "TAXABLE"
+        },
+        {
+          "type": "tax",
+          "account": "3431",
+          "box": "TAXABLE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "TAXABLE",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "3431",
+          "box": "TAXABLE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "LA-S-ZERO-EXPORT",
+    "name": "VAT 0% — export of goods (sale)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2024-03-19",
+    "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 17 (as summarised by DFDL and the Lao Trade Portal): 0% on the export of goods. PwC: exports of natural resources that are not finished goods stay at 10%; the Law has no concept of exported services, which are taxed at 10%. The customs proof the Law asks for was not read.",
+    "source": "vat-law-articles",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZERO"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZERO",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "LA-S-EXEMPT-AGRI",
+    "name": "VAT exempt — unprocessed agricultural products, seeds, fertilisers and agricultural equipment (sale)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-03-19",
+    "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 12 (as summarised by DFDL): agricultural equipment and machinery are exempt; PwC adds unprocessed agricultural products, seeds and fertilisers. The full list was not read from the Lao text; add the item a case needs with its article.",
+    "source": "vat-law-articles",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "LA-S-EXEMPT-EDUCATION",
+    "name": "VAT exempt — education goods and services (sale)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-03-19",
+    "legal_reference": "PwC, value added tax: educational goods and services are exempt; article 12 as summarised by DFDL lists textbooks. The exact scope (which services) was not read from the Lao text.",
+    "source": "vat-law-articles",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "LA-S-EXEMPT-HEALTH",
+    "name": "VAT exempt — medical goods and services, health insurance (sale)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-03-19",
+    "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 12 (as summarised by DFDL): health and life insurance, animal medicines and medical tools and equipment for hospitals and health centres are exempt; PwC: certain medical goods and services. The exact scope was not read from the Lao text.",
+    "source": "vat-law-articles",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "LA-S-EXEMPT-BANKING",
+    "name": "VAT exempt — interest on deposits and loans, financial transactions of commercial banks (sale)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2024-03-19",
+    "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, article 12 (as summarised by DFDL): deposit and lending interest and the financial transactions of commercial banks are exempt (PwC: certain bank and financial institution services).",
+    "source": "vat-law-articles",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EXEMPT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EXEMPT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "LA-P-10-NR",
+    "name": "VAT 10% — services from a supplier abroad, withheld by the payer (purchase)",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-03-19",
+    "legal_reference": "PwC, value added tax: a domestic user of services must withhold 10% VAT on the fees paid to an overseas service provider; DFDL (article 30): a VAT-registered person files by the 15th of the following month, one who is not in the VAT system within 15 days of payment. The credit after payment is the payer's to claim; the pack posts the tax to a waiting account.",
+    "source": "vat-law-articles",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1543"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3433"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "1543"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "3433"
+        }
+      ]
+    },
+    "description": "VAT on services of a person abroad is withheld by the payer and paid to the treasury; the right to deduct arises once it is paid",
+    "sequence": 70
+  },
+  {
+    "code": "LA-P-10",
+    "name": "VAT 10% — standard rate (purchase)",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-03-19",
+    "legal_reference": "Law on Value Added Tax No. 48/NA of 2018, articles 22 to 24 (as summarised by DFDL): input tax related to goods and services used in production, business operations or taxable supplies is deductible on a proper invoice; it must be claimed within three months of the date incurred (article 23(3); PwC). Not deductible: non-business and personal expenses, utilities not used in the main business, expenses without a proper invoice, personal computers, tablets and mobile phones (article 24).",
+    "source": "vat-law-articles",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "INPUT"
+        },
+        {
+          "type": "tax",
+          "account": "1541",
+          "box": "INPUT"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "INPUT",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1541",
+          "box": "INPUT",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  }
+]

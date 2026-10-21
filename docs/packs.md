@@ -400,6 +400,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`kw`](../packs/kw/) | Kuwait | `143_pack_kw.sql` | ar, en | `community` |
 | [`ky`](../packs/ky/) | Cayman Islands | `139_pack_ky.sql` | en | `community` |
 | [`kz`](../packs/kz/) | Қазақстан | `124_pack_kz.sql` | kk, ru, en | `community` |
+| [`la`](../packs/la/) | Lao PDR | `213_pack_la.sql` | en | `community` |
 | [`lc`](../packs/lc/) | Saint Lucia | `204_pack_lc.sql` | en | `community` |
 | [`lk`](../packs/lk/) | Sri Lanka | `127_pack_lk.sql` | en | `community` |
 | [`ls`](../packs/ls/) | Lesotho | `208_pack_ls.sql` | en | `community` |

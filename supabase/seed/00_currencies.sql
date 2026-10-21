@@ -115,3 +115,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('BRL', 'Brazilian real', 'R$', 2)
 on conflict (code) do nothing;
+
+-- Lao kip, no minor unit in use (as the dong and the won), packs/la/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('LAK', 'Lao kip', E'₭', 0)
+on conflict (code) do nothing;
