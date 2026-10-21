@@ -449,3 +449,27 @@ dong and the won are.
 form and the Tax Department site could not be read from the machine that wrote the
 pack; the chart is the pack's grouping, the boxes are named after the operations of the
 Law, and the portal source is the Ministry of Finance.
+
+## From Nepal
+
+**A flat thirteen percent.** The Value-Added Tax Act, 2052 sets one rate
+(section 7(1)), a zero rate for the transactions of Schedule 2 (section 7(2))
+and an exemption for those of Schedule 1 (section 5(3)). The pack carries one
+code for each; the Schedules themselves were not readable, so it lists no
+items.
+
+**A month that is not a Gregorian month.** Section 18 has the return filed
+within twenty-five days of the completion of the month, and Nepal counts its
+months in the Bikram Sambat calendar. The pack format has Gregorian periods and
+a day of the month, so it carries day 25 of the following month as an
+approximation. A period defined in another calendar would be a change of the
+format, not of this pack.
+
+**A year that begins in the middle of July.** The income year opens on the first
+of Shrawan, about 16 July; the format offers `july`, a year that begins on
+1 July.
+
+**A reverse charge that is also a deduction.** Section 8(2) makes the person who
+acquires a service from outside Nepal assess the tax and section 17(5b) lets it
+be deducted; the pack posts the output tax and the input tax in two boxes of the
+return.
