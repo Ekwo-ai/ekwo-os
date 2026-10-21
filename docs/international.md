@@ -473,3 +473,24 @@ of Shrawan, about 16 July; the format offers `july`, a year that begins on
 acquires a service from outside Nepal assess the tax and section 17(5b) lets it
 be deducted; the pack posts the output tax and the input tax in two boxes of the
 return.
+
+## From Burundi
+
+**Three rates in one law.** The amended law of 2013 sets an ordinary rate of 18 %
+(article 19), an intermediate rate of 10 % for a closed list of products and the
+supplies of hotel establishments, and a zero rate for exports and international
+transport. The pack carries one tax for each, and the 10 % has its own box in the return.
+The items that depend on a ministerial ordinance (listed foodstuffs, operations assimilated
+to exports) are not listed, because no ordinance was readable.
+
+**A chart the law cites and no open source gives.** Article 51 requires books kept as
+the national accounting plan provides, and the plan itself (PCN) could not be read; the
+pack's chart is its own grouping and says so.
+
+**An electronic billing machine that is not an exchange format.** Article 47 obliges
+every taxpayer to invoice through an approved machine linked to the administration's
+EBMS system. The format has no way to model such a link, so `einvoicing.obligation` is
+`none` and the machine is described in the README.
+
+**Zero decimals.** The Burundi franc has no minor unit in use, as the Lao kip: amounts in
+the golden are whole francs.
