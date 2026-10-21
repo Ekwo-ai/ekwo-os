@@ -423,6 +423,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`ni`](../packs/ni/) | Nicaragua | `132_pack_ni.sql` | es | `community` |
 | [`nl`](../packs/nl/) | Nederland | `17_pack_nl.sql` | nl, en | `community` |
 | [`no`](../packs/no/) | Norge | `66_pack_no.sql` | nb | `community` |
+| [`np`](../packs/np/) | Nepal | `214_pack_np.sql` | en | `community` |
 | [`nz`](../packs/nz/) | New Zealand | `41_pack_nz.sql` | en | `community` |
 | [`om`](../packs/om/) | Oman | `118_pack_om.sql` | ar, en | `community` |
 | [`pa`](../packs/pa/) | Panamá | `107_pack_pa.sql` | es | `community` |

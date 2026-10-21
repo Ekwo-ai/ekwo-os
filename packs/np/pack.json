@@ -1,0 +1,165 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "NP",
+  "name": "Nepal",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 214,
+  "released_at": "2026-10-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value-Added Tax Act, 2052 (1996), English text as amended up to the Financial Act, 2021 (2078) — s. 5 (the charge, and the exemption of Schedule 1 with the loss of the deduction), s. 6 (the time of supply), s. 7 (the rate of thirteen percent, zero rate for Schedule 2), s. 8(2) (a service acquired from outside Nepal), s. 10 (registration), s. 14 and 14A (invoice and electronic invoice), s. 17 (tax deduction), s. 18 (monthly return within twenty-five days), s. 19 (payment within twenty-five days). The Schedules are not part of the file that could be read",
+        "publisher": "Inland Revenue Department of Nepal (copy kept by the Internet Archive; the Department's own link no longer answers)",
+        "url": "https://web.archive.org/web/2023id_/https://www.ird.gov.np/public/pdf/1140227555.pdf",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "vat-act-current",
+        "title": "Value Added Tax Act, 2052, as amended up to the Economic Act, 2082 — the Department's page for the current consolidated text, in Nepali; its PDF could not be downloaded from the machine this pack was written on, so the amendments since the Financial Act, 2021 are a gap recorded in the README",
+        "publisher": "Inland Revenue Department of Nepal",
+        "url": "https://ird.gov.np/content/13407/value-added-tax-act--2052--as-amended/",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "ifrs-profile",
+        "title": "Nepal — use of IFRS Standards by jurisdiction: the Nepal Financial Reporting Standards 2024 for public-interest entities, the NFRS for SMEs mandatory for SMEs without public accountability from 16 July 2024, the NAS for Micro Entities, issued by the Accounting Standards Board Nepal; the Companies Act requires financial statements to follow the accounting standards in force",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/use-around-the-world/use-of-ifrs-standards-by-jurisdiction/view-jurisdiction/nepal/",
+        "consulted_on": "2026-10-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "income-tax-act",
+        "title": "Income Tax Act, 2058 (2002), unofficial translation — the income year, from the first day of Shrawan (tentatively 15 July) to the last day of Ashad (tentatively 14 July) of the next year; read through a search extract, the file itself did not download whole",
+        "publisher": "Inland Revenue Department of Nepal",
+        "url": "https://www.ird.gov.np/public/pdf/379988550.pdf",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "ird-portal",
+        "title": "Inland Revenue Department of Nepal — the Department's site, where the Acts, notices and the taxpayer services are published; returns are filed electronically through its taxpayer portal",
+        "publisher": "Inland Revenue Department of Nepal",
+        "url": "https://ird.gov.np/",
+        "consulted_on": "2026-10-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "NPR",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "july",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Nepal reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "NP-NFRS-SFP",
+        "NP-NFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in Nepal. The Companies Act requires financial statements prepared in accordance with the accounting standards in force; the Accounting Standards Board Nepal issues them — the Nepal Financial Reporting Standards 2024 for public-interest entities and the NFRS for SMEs, mandatory from 16 July 2024 for entities without public accountability (IFRS Foundation jurisdiction profile). Nepal has no statutory layout of the statements. This chart is original: four digits, blocked so that each range reaches one line of the statements below, with the accounts a Nepalese company actually keeps — VAT output and input kept apart, import VAT owed at customs clearance, the net VAT due to or from the Inland Revenue Department after a return, tax deducted at source, remuneration tax and provident fund contributions payable.",
+      "source": "ifrs-profile"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value-Added Tax Act, 2052, s. 14(1) — every registered person is required to issue an invoice for a taxable transaction in the form the Rules prescribe. The Rules (Value Added Tax Rules, 2053) fix the particulars and the serial number of the invoice; they could not be read, so the pack declares a sequential number and not a gapless one, and records the gap in its README. Section 14A lets a taxpayer issue an electronic invoice with the Department's approval and lets the Department order named taxpayers to link their billing software to its central invoice monitoring system.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value-Added Tax Act, 2052, s. 6(2) — the time of supply is the earliest of the issue of the invoice, the receipt of the goods by the recipient (goods) or the rendering of the service (services), and the receipt of consideration by the supplier; s. 6(3) — continuous telecommunication services at the invoice, instalment contracts at each payment. Ekwo's closed vocabulary has a two-way earliest-of; `earliest_of_delivery_or_payment` is the nearest value, and the gap — an invoice issued ahead of both delivery and payment, which fixes the time of supply in Nepal — is recorded in the README.",
+        "source": "vat-act"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Value-Added Tax Act, 2052, s. 14A — a taxpayer may issue an electronic invoice with the Department's prior approval, and the Department may by notice order named taxpayers to issue it compulsorily and link it to its central invoice and billing monitoring system (CBMS). That is an approval and a link to a tax authority's system, not an exchange of a structured invoice between businesses: Nepal has no Peppol authority and no published profile, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. If the Department publishes a profile, this field is where it goes.",
+    "source": "vat-act"
+  }
+}
