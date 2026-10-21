@@ -1,0 +1,212 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "CV",
+  "name": "Cabo Verde",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 408,
+  "released_at": "2026-10-21",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "civa-lei-51-2013",
+        "title": "Lei n.º 51/VIII/2013, de 27 de Dezembro — altera a Lei n.º 21/VI/2003 e republica em anexo o Código do Imposto sobre o Valor Acrescentado (CIVA), em vigor desde 1 de Janeiro de 2014: artigo 7.º (facto gerador e exigibilidade), artigo 6.º, n.os 5 e 6 (serviços de prestadores sem sede em Cabo Verde), artigo 9.º (isenções sem direito a dedução), artigo 13.º (exportações e operações assimiladas), artigo 17.º (taxa de 15 %), artigos 21.º e 23.º (dedução e pagamento), artigo 25.º (obrigações), artigo 37.º (declaração periódica mensal)",
+        "publisher": "Assembleia Nacional (Boletim Oficial, I Série, n.º 71, 27 de Dezembro de 2013)",
+        "url": "https://boe.incv.cv/Bulletins/Download/1781",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "civa-lei-81-2014",
+        "title": "Lei n.º 81/VIII/2014, de 8 de Janeiro de 2015 — altera os artigos 14.º, 32.º e 80.º do Código do IVA e o Código do Imposto de Selo; o artigo 17.º (taxa) mantém o texto da republicação de 2013",
+        "publisher": "Assembleia Nacional (Boletim Oficial, I Série, n.º 3, 8 de Janeiro de 2015)",
+        "url": "https://boe.incv.cv/Bulletins/Download/1957",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "modelo-106",
+        "title": "Modelo 106 — Imposto sobre o Valor Acrescentado, Declaração Periódica do Regime Normal (versão 3.4): campos 01 a 50, quadros IX a XII, fórmulas dos campos 32 a 36 e 38 a 40",
+        "publisher": "Direção Nacional de Receitas do Estado (DNRE), Ministério das Finanças",
+        "url": "https://www.mf.gov.cv/documents/54571/273413/MOD106%20-%20Modelo.pdf",
+        "consulted_on": "2026-10-21",
+        "kind": "form"
+      },
+      {
+        "key": "dnre-formularios",
+        "title": "Direção Geral das Contribuições e Impostos — página dos formulários do IVA (Modelo 106, anexos de clientes e de fornecedores, instruções de preenchimento, Modelo 110 de início, alteração e cessação)",
+        "publisher": "Direção Nacional de Receitas do Estado (DNRE)",
+        "url": "https://www.mf.gov.cv/web/dnre/dire%C3%A7%C3%A3o-geral-das-contribui%C3%A7%C3%B5es-e-impostos",
+        "consulted_on": "2026-10-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "dl-5-2008",
+        "title": "Decreto-Lei n.º 5/2008, de 4 de Fevereiro — aprova o Sistema de Normalização Contabilística e de Relato Financeiro (SNCRF): Normas de Relato Financeiro (NRF), norma para as pequenas entidades (NRF-PE), Código de Contas; em vigor no primeiro exercício que se inicie em ou após 1 de Janeiro de 2009",
+        "publisher": "Conselho de Ministros (Boletim Oficial, I Série, n.º 5, 4 de Fevereiro de 2008)",
+        "url": "https://boe.incv.cv/Bulletins/Download/257",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "portaria-49-2008",
+        "title": "Portaria n.º 49/2008, de 29 de Dezembro — aprova o Código de Contas do SNCRF (classes 1 a 7: código de contas, notas explicativas e quadro síntese)",
+        "publisher": "Ministério das Finanças (Boletim Oficial, I Série, n.º 48, 3.º Suplemento, 29 de Dezembro de 2008)",
+        "url": "https://boe.incv.cv/Bulletins/Download/319",
+        "consulted_on": "2026-10-21",
+        "kind": "regulation"
+      },
+      {
+        "key": "dl-17-2010",
+        "title": "Decreto-Lei n.º 17/2010, de 24 de Maio — define pequenas entidades para efeitos de aplicação do artigo 5.º do Decreto-Lei n.º 5/2008",
+        "publisher": "Conselho de Ministros (Boletim Oficial, I Série, n.º 20, 24 de Maio de 2010)",
+        "url": "https://boe.incv.cv/Bulletins/Download/177",
+        "consulted_on": "2026-10-21",
+        "kind": "law"
+      },
+      {
+        "key": "efatura",
+        "title": "e-Fatura — plataforma da fatura eletrónica e dos documentos fiscalmente relevantes eletrónicos: documentos XML com assinatura digital e autorização de uso da Administração Tributária em tempo real; obrigatória para os sujeitos passivos previamente credenciados",
+        "publisher": "Direção Nacional de Receitas do Estado (DNRE)",
+        "url": "https://efatura.cv",
+        "consulted_on": "2026-10-21",
+        "kind": "guidance"
+      },
+      {
+        "key": "dnre-portal",
+        "title": "Direção Nacional de Receitas do Estado — portal da administração tributária e aduaneira (legislação, formulários, calendário fiscal, serviços tributários)",
+        "publisher": "Direção Nacional de Receitas do Estado (DNRE), Ministério das Finanças",
+        "url": "https://www.dnre.gov.cv",
+        "consulted_on": "2026-10-21",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "CVE",
+    "language": "pt",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "21111",
+      "payable": "22111",
+      "suspense": "268",
+      "rounding": "68881",
+      "retained_earnings": "591",
+      "sales": "711",
+      "purchase": "6298",
+      "bank": "12",
+      "cash": "11",
+      "fx_gain": "7863",
+      "fx_loss": "6928",
+      "tax_payable": "24461",
+      "tax_receivable": "2447"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "DIV",
+      "opening": "ABE"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VEN",
+      "type": "sales",
+      "name": "Diário de vendas",
+      "sequence": 10
+    },
+    {
+      "code": "COM",
+      "type": "purchase",
+      "name": "Diário de compras",
+      "sequence": 20
+    },
+    {
+      "code": "BAN",
+      "type": "bank",
+      "name": "Diário de bancos",
+      "sequence": 30
+    },
+    {
+      "code": "CAI",
+      "type": "cash",
+      "name": "Diário de caixa",
+      "sequence": 40
+    },
+    {
+      "code": "DIV",
+      "type": "general",
+      "name": "Diário de operações diversas",
+      "sequence": 50
+    },
+    {
+      "code": "ABE",
+      "type": "opening",
+      "name": "Diário de abertura",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Código de Contas do SNCRF (Portaria n.º 49/2008) — selecção para sociedades comerciais",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "CV-BS",
+        "CV-IS"
+      ],
+      "legal_reference": "Decreto-Lei n.º 5/2008 approves the Sistema de Normalização Contabilística e de Relato Financeiro and Portaria n.º 49/2008 publishes its Código de Contas, classes 1 to 7 (class 5 holds equity and the result, classes 6 and 7 the expenses and the income; there is no class 8). The chart carries the official codes and names, with the levels of detail a trading company posts to; it is a selection, not the whole code, and the official code leaves free levels where it prints «…». Where this pack adds a level the code leaves free, it says so: 68881 Arredondamentos (rounding) under 6888. The codes 24421 to 24423 (deductible VAT), 24431 to 24433 (VAT charged) and 24461 (VAT payable, amounts assessed) are the code's own sub-accounts of 244.",
+      "source": "portaria-49-2008"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Código do IVA, article 25(1)(b): an invoice is issued for every supply of goods or services, even when the buyer does not ask for it. The numbering rules of the invoice (articles 32 and following, and the Portaria on invoicing) were not read; the sequential number per year is the pack's example, not the official series, and the e-Fatura platform assigns its own authorised numbers (README).",
+        "source": "civa-lei-51-2013"
+      },
+      "tax_point": {
+        "legal_reference": "Código do IVA, article 7(1): the tax is due and chargeable when the goods are placed at the buyer's disposal and, for services, when they are performed; for continuous supplies with successive payments, at the end of the period each payment covers (article 7(3)). Article 8 adds the invoice rule (the tax is chargeable when the invoice is issued if it is issued before) that the pack does not model. `delivery_date` is the closest value of Ekwo's vocabulary.",
+        "source": "civa-lei-51-2013"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Código do IVA, article 25(6): an invoice is issued again when the taxable amount or the tax changes for any reason, including inaccuracy. A posted entry is therefore corrected with a credit note and a new invoice, not erased.",
+        "source": "civa-lei-51-2013"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Isento de IVA",
+        "sequence": 10,
+        "legal_reference": "Código do IVA, article 9 (exempt operations) and article 13 (exports): the invoice states the reason the tax is not applied (article 32(5)(e), as printed in the 2015 republication). The exact wording to print is the pack's, not the law's.",
+        "source": "civa-lei-51-2013"
+      }
+    ]
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Cabo Verde has no Peppol authority, no EN 16931 profile and no ISO 6523 scheme a party is addressed by, so `profile`, `party_scheme` and `vat_scheme` are null and `obligation` is `none`. What the country has is a clearance-style platform run by the tax administration: the e-Fatura issues electronic invoices and other tax-relevant documents (DFE) as XML with a digital signature and an authorisation of use granted by the tax administration in real time, and says taxpayers previously accredited by it must issue them. The accreditation schedule by taxpayer was not found on the pages read. Ekwo does not connect to the platform; the gap is in the README and in docs/international.md.",
+    "source": "efatura"
+  },
+  "bank": {
+    "account_scheme": "iban",
+    "statement_formats": []
+  }
+}

@@ -1,0 +1,394 @@
+[
+  {
+    "code": "CV-S-15",
+    "name": "IVA 15 % — taxa normal (venda)",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), article 17(1): the rate of the tax is 15 %, the rate in force when the tax becomes chargeable (article 17(2)). One rate only: the Code has no reduced rate; goods and services that the legislator spares are exempt, not taxed at a lower rate. The 2015 amendment (Lei n.º 81/VIII/2014) leaves article 17 as republished in 2013. Later budget laws were not searched.",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "01"
+        },
+        {
+          "type": "tax",
+          "account": "24431",
+          "box": "02"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "01",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "24431",
+          "box": "02",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "CV-S-EXPORT",
+    "name": "IVA isento com direito a dedução — exportações e operações assimiladas (venda)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), article 13(1)(a) and (b): goods dispatched or transported abroad by the seller, or by a buyer with no residence or establishment in Cabo Verde, are exempt; the exemption keeps the right to deduct the tax borne on purchases (Modelo 106 field 08). The customs or other documents that prove it (article 25(7)) are the user's to keep; the Code makes the seller charge the tax without them (article 25(8)). The other cases of article 13 (ships, aircraft, diplomatic supplies) are not given a code of their own.",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "08"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "08",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "CV-S-EXEMPT-EDU",
+    "name": "IVA isento — ensino e formação profissional (venda)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), article 9(8) to (10): teaching services and related supplies by establishments of the national education system or recognised as equivalent, vocational training by recognised bodies, and lessons given personally from pre-school to higher education are exempt without the right to deduct (Modelo 106 field 09). The limits of «recognised» bodies are the Ministry's, not read.",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "09"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "09",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "CV-S-EXEMPT-HEALTH",
+    "name": "IVA isento — serviços médicos e sanitários (venda)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), article 9(1): medical and sanitary services by doctors, dentists, nurses and other paramedics in the exercise of their profession, and by hospitals, clinics and dispensaries, are exempt without the right to deduct (field 09). Medicines and medical equipment (article 9(29)) are a separate exemption of goods by the Code's annexed list, not modelled.",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "09"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "09",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "CV-S-EXEMPT-FIN",
+    "name": "IVA isento — operações bancárias e financeiras, seguros (venda)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), article 9(22) and (23): banking and financial operations, and insurance and reinsurance operations with the related services of brokers and intermediaries, are exempt without the right to deduct (field 09).",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "09"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "09",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "CV-S-EXEMPT-RENT",
+    "name": "IVA isento — locação de imóveis (venda)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), article 9(24): the letting of immovable property is exempt without the right to deduct (field 09), except hotel accommodation, parking areas, fixed installed machinery and the transfer of a business, and exhibition or advertising space, which stay taxable at 15 % (CV-S-15).",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "09"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "09",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "CV-S-EXEMPT-AGRI",
+    "name": "IVA isento — produção agrícola, silvícola, pecuária e de pesca (venda)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), article 9(30): supplies made within an agricultural, forestry, livestock or fishing activity, including the processing a producer does with the means normally used on a farm, are exempt without the right to deduct (field 09). The list of essential goods (article 9(28)) and of equipment and inputs (article 9(33)) is the Code's annexed list, which was not read; add the item a case needs with its number on the list.",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "09"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "09",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 70
+  },
+  {
+    "code": "CV-P-15-INV",
+    "name": "IVA 15 % dedutível — inventários (compra)",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), articles 18 to 21: the tax borne on purchases for the business is deducted from the tax due in the period in which the invoice is received (article 21(3)); the Modelo 106 splits the deductible tax by kind of purchase. Field 19 and 20 of the Modelo 106 (inventories); account 24421 of the Código de Contas.",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "19"
+        },
+        {
+          "type": "tax",
+          "account": "24421",
+          "box": "20"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "19",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "24421",
+          "box": "20",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 80
+  },
+  {
+    "code": "CV-P-15-CAPEX",
+    "name": "IVA 15 % dedutível — investimentos (compra)",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), articles 18 to 21: the tax borne on purchases for the business is deducted from the tax due in the period in which the invoice is received (article 21(3)); the Modelo 106 splits the deductible tax by kind of purchase. Field 17 and 18 (investments); account 24422. The pack does not model the exclusions of article 20 (for example passenger cars, representation) nor the partial deduction of article 22: a purchase that falls there is for the user's accountant.",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "17"
+        },
+        {
+          "type": "tax",
+          "account": "24422",
+          "box": "18"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "17",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "24422",
+          "box": "18",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 90
+  },
+  {
+    "code": "CV-P-15-GOODS",
+    "name": "IVA 15 % dedutível — outros bens de consumo (compra)",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), articles 18 to 21: the tax borne on purchases for the business is deducted from the tax due in the period in which the invoice is received (article 21(3)); the Modelo 106 splits the deductible tax by kind of purchase. Field 21 and 22 (other consumer goods); account 24423.",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "21"
+        },
+        {
+          "type": "tax",
+          "account": "24423",
+          "box": "22"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "21",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "24423",
+          "box": "22",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "CV-P-15-SERV",
+    "name": "IVA 15 % dedutível — serviços (compra)",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), articles 18 to 21: the tax borne on purchases for the business is deducted from the tax due in the period in which the invoice is received (article 21(3)); the Modelo 106 splits the deductible tax by kind of purchase. Field 23 and 24 (services); account 24423.",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "23"
+        },
+        {
+          "type": "tax",
+          "account": "24423",
+          "box": "24"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "23",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "24423",
+          "box": "24",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "CV-P-15-NR",
+    "name": "IVA 15 % — serviços de prestador sem sede em Cabo Verde, liquidado pelo adquirente (compra)",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Código do IVA (Lei n.º 51/VIII/2013, republicação em anexo), article 6(6): licences, copyright and similar rights and the other services it lists, supplied by a provider with no seat, establishment or domicile in Cabo Verde to a taxable person established there, are taxable in Cabo Verde; article 23(2): the acquirer pays the tax with the periodic return. The Modelo 106 reports the base in field 11, the tax in favour of the taxpayer in field 12 and the tax in favour of the State in field 13. The pack posts the tax charged to 24433 (operações especiais) and the tax deductible to 24423, and reports both in the same period. Which services article 6(6) lists was read only to its first item (rights); check the others before using this code.",
+    "source": "civa-lei-51-2013",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        },
+        {
+          "type": "tax",
+          "account": "24423",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "24433",
+          "box": "13"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "24423",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "24433",
+          "box": "13",
+          "box_factor": -100
+        }
+      ]
+    },
+    "description": "VAT on a service bought from abroad is assessed by the buyer and deducted in the same return",
+    "sequence": 120
+  }
+]

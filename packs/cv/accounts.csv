@@ -1,0 +1,225 @@
+code,parent,type,reconcilable,name,sequence
+11,,asset_cash,false,Caixa,10
+12,,asset_cash,false,Depósitos à ordem,20
+13,,asset_cash,false,Depósitos a prazo,30
+14,,asset_cash,false,Outros depósitos bancários,40
+21,,asset_current,false,Clientes,50
+211,21,asset_current,false,Clientes c/c,60
+2111,211,asset_current,false,Clientes c/c em moeda nacional,70
+21111,2111,asset_receivable,true,Clientes gerais,80
+2112,211,asset_current,false,Clientes c/c em moeda estrangeira,90
+21121,2112,asset_receivable,true,Clientes gerais (moeda estrangeira),100
+212,21,asset_current,false,Clientes - títulos a receber,110
+216,21,asset_current,false,Clientes por acréscimos de rendimento,120
+218,21,liability_current,false,Adiantamentos de clientes,130
+219,21,asset_current,false,Perdas por imparidade acumuladas (clientes),140
+22,,liability_current,false,Fornecedores,150
+221,22,liability_current,false,Fornecedores c/c,160
+2211,221,liability_current,false,Fornecedores c/c em moeda nacional,170
+22111,2211,liability_payable,true,Fornecedores gerais,180
+2212,221,liability_current,false,Fornecedores c/c em moeda estrangeira,190
+22121,2212,liability_payable,true,Fornecedores gerais (moeda estrangeira),200
+222,22,liability_current,false,Fornecedores - títulos a pagar,210
+225,22,liability_current,false,Fornecedores - Facturas em recepção e conferência,220
+226,22,liability_current,false,Fornecedores por acréscimos de gastos,230
+228,22,asset_current,false,Adiantamentos a fornecedores,240
+229,22,asset_current,false,Perdas por imparidade acumuladas (fornecedores),250
+23,,liability_current,false,Financiamentos obtidos,260
+231,23,liability_current,false,Instituições de crédito e sociedades financeiras,270
+2311,231,liability_current,false,Empréstimos bancários,280
+2312,231,liability_current,false,Descobertos bancários,290
+2313,231,liability_current,false,Locações financeiras,300
+24,,liability_current,false,Estado e outros entes públicos,310
+241,24,liability_current,false,Imposto sobre o rendimento ano N,320
+2411,241,asset_current,false,Pagamentos por conta,330
+2412,241,asset_current,false,Retenção na fonte (Terceiros),340
+2413,241,liability_current,false,Imposto estimado,350
+2418,241,liability_current,false,Imposto a pagar,360
+2419,241,asset_current,false,Imposto a recuperar,370
+243,24,liability_current,false,Retenção de impostos sobre rendimentos,380
+2431,243,liability_current,false,Trabalho dependente,390
+2432,243,liability_current,false,Trabalho independente,400
+244,24,liability_current,false,Imposto sobre o valor acrescentado (IVA),410
+2441,244,asset_current,false,IVA - Suportado,420
+2442,244,asset_current,false,IVA - Dedutível,430
+24421,2442,asset_current,false,IVA dedutível - Inventários,440
+24422,2442,asset_current,false,IVA dedutível - Investimentos,450
+24423,2442,asset_current,false,IVA dedutível - Outros bens e serviços,460
+2443,244,liability_current,false,IVA - Liquidado,470
+24431,2443,liability_current,false,IVA liquidado - Operações gerais,480
+24432,2443,liability_current,false,IVA liquidado - Auto consumos e operações gratuitas,490
+24433,2443,liability_current,false,IVA liquidado - Operações especiais,500
+2444,244,liability_current,false,IVA - Regularizações,510
+24441,2444,asset_current,false,IVA regularizações periódicas a favor da empresa,520
+24442,2444,liability_current,false,IVA regularizações periódicas a favor do Estado,530
+2445,244,liability_current,false,IVA - Apuramento,540
+2446,244,liability_current,false,IVA - A pagar,550
+24461,2446,liability_current,true,IVA a pagar - Valores apurados,560
+2447,244,asset_current,true,IVA - A recuperar,570
+2448,244,asset_current,false,IVA - Reembolsos pedidos,580
+246,24,liability_current,false,Outros impostos,590
+248,24,liability_current,false,Contribuições para a Segurança Social,600
+26,,liability_current,false,Outras contas a receber e a pagar,610
+261,26,liability_current,false,Fornecedores de investimentos,620
+2621,26,asset_current,false,Devedores por acréscimos de rendimentos,630
+2622,26,liability_current,false,Credores por acréscimos de gastos,640
+266,26,liability_current,false,Adiantamentos por conta de vendas,650
+268,26,liability_current,false,Outros devedores e credores,660
+27,,liability_current,false,Pessoal,670
+2711,27,liability_current,false,Remunerações a pagar aos órgãos sociais,680
+2712,27,liability_current,false,Remunerações a pagar ao pessoal,690
+2722,27,asset_current,false,Adiantamentos ao pessoal,700
+2761,27,liability_current,false,Acréscimos por férias e subsídio de férias e encargos,710
+28,,liability_current,false,Diferimentos,720
+281,28,asset_prepayments,false,Gastos a reconhecer,730
+282,28,liability_current,false,Rendimentos a reconhecer,740
+283,28,liability_non_current,false,Subsídios para investimentos,750
+29,,liability_non_current,false,Provisões,760
+292,29,liability_non_current,false,Garantias a clientes,770
+293,29,liability_non_current,false,Processos judiciais em curso,780
+298,29,liability_non_current,false,Outras provisões,790
+32,,asset_current,false,Mercadorias,800
+321,32,expense_direct_cost,false,Compra de mercadorias,810
+3211,321,expense_direct_cost,false,Mercado interno,820
+3212,321,expense_direct_cost,false,Mercado externo,830
+322,32,asset_current,false,Inventário de mercadorias,840
+3221,322,asset_current,false,Em armazém,850
+3222,322,asset_current,false,Em poder de terceiros,860
+3223,322,asset_current,false,Em trânsito,870
+33,,asset_current,false,Produtos acabados e intermédios,880
+331,33,asset_current,false,Produtos acabados,890
+332,33,asset_current,false,Produtos intermédios,900
+35,,asset_current,false,Produtos e trabalhos em curso,910
+36,,asset_current,false,"Matérias-primas, subsidiárias e de consumo",920
+361,36,expense_direct_cost,false,Compra de matérias-primas,930
+3611,361,expense_direct_cost,false,Mercado interno,940
+3612,361,expense_direct_cost,false,Mercado externo,950
+362,36,asset_current,false,Inventário de matérias-primas,960
+3621,362,asset_current,false,Em armazém,970
+37,,asset_current,false,Outros produtos de consumo,980
+41,,asset_non_current,false,Investimentos financeiros,990
+414,41,asset_non_current,false,Investimentos noutras empresas,1000
+415,41,asset_non_current,false,Outros investimentos financeiros,1010
+42,,asset_non_current,false,Propriedades de investimento,1020
+421,42,asset_non_current,false,Terrenos e recursos naturais (propriedades de investimento),1030
+422,42,asset_non_current,false,Edifícios e outras construções (propriedades de investimento),1040
+428,42,asset_non_current,false,Depreciações acumuladas (propriedades de investimento),1050
+43,,asset_fixed,false,Activos fixos tangíveis,1060
+431,43,asset_fixed,false,Terrenos e recursos naturais,1070
+432,43,asset_fixed,false,Edifícios e outras construções,1080
+433,43,asset_fixed,false,Equipamento básico,1090
+434,43,asset_fixed,false,Equipamento de transporte,1100
+435,43,asset_fixed,false,Equipamento administrativo,1110
+436,43,asset_fixed,false,Equipamentos biológicos,1120
+437,43,asset_fixed,false,Outros activos fixos tangíveis,1130
+438,43,asset_fixed,false,Depreciações acumuladas,1140
+439,43,asset_fixed,false,Perdas por imparidade acumuladas,1150
+44,,asset_non_current,false,Activos intangíveis,1160
+441,44,asset_non_current,false,Trespasse (goodwill),1170
+442,44,asset_non_current,false,Propriedade industrial,1180
+443,44,asset_non_current,false,Programas de computador,1190
+446,44,asset_non_current,false,Outros activos intangíveis,1200
+448,44,asset_non_current,false,Amortizações acumuladas,1210
+449,44,asset_non_current,false,Perdas por imparidade acumuladas (intangíveis),1220
+45,,asset_non_current,false,Investimentos em curso,1230
+452,45,asset_non_current,false,Activos fixos tangíveis em curso,1240
+453,45,asset_non_current,false,Activos intangíveis em curso,1250
+454,45,asset_non_current,false,Adiantamentos por conta de investimentos,1260
+51,,equity,false,Capital,1270
+52,,equity,false,Acções (quotas) próprias,1280
+54,,equity,false,Prémios de emissão,1290
+58,,equity,false,Reservas,1300
+581,58,equity,false,Reservas legais,1310
+588,58,equity,false,Outras reservas,1320
+59,,equity,false,Resultados,1330
+591,59,equity_retained,false,Resultados transitados,1340
+592,59,equity,false,Resultado do período anterior a aguardar distribuição,1350
+593,59,equity,false,Resultado líquido do período,1360
+5932,593,expense,false,Imposto sobre o rendimento do período,1370
+599,59,equity,false,Dividendos antecipados,1380
+61,,expense_direct_cost,false,Gastos com inventários vendidos e consumidos e variação de produção,1390
+611,61,expense_direct_cost,false,Gasto com mercadorias vendidas e matérias consumidas,1400
+6111,611,expense_direct_cost,false,Mercadorias,1410
+6112,611,expense_direct_cost,false,"Matérias-primas, subsidiárias e de consumo",1420
+613,61,expense_direct_cost,false,Subcontratos relacionados com a produção,1430
+62,,expense,false,Fornecimentos e Serviços Externos,1440
+6211,62,expense,false,Água,1450
+6212,62,expense,false,Electricidade,1460
+6213,62,expense,false,Combustíveis e outros fluidos,1470
+6214,62,expense,false,Conservação e reparação,1480
+6216,62,expense,false,Material de escritório,1490
+6217,62,expense,false,Publicidade e propaganda,1500
+6221,62,expense,false,Rendas e alugueres,1510
+6222,62,expense,false,Despesas de representação,1520
+6224,62,expense,false,Comunicação,1530
+6225,62,expense,false,Seguros,1540
+6229,62,expense,false,Estudos e pareceres,1550
+6230,62,expense,false,Serviços de informática,1560
+6231,62,expense,false,Transporte de inventários,1570
+6233,62,expense,false,Deslocações e estadas,1580
+6234,62,expense,false,Comissões,1590
+6235,62,expense,false,Honorários,1600
+6236,62,expense,false,Contencioso e notariado,1610
+6237,62,expense,false,Serviços bancários,1620
+6298,62,expense,false,Outros fornecimentos e serviços,1630
+63,,expense,false,Gastos com o pessoal,1640
+631,63,expense,false,Remunerações dos órgãos sociais,1650
+632,63,expense,false,Remunerações do pessoal,1660
+634,63,expense,false,Indemnizações,1670
+635,63,expense,false,Encargos sobre remunerações,1680
+636,63,expense,false,Seguros de acidentes no trabalho e doenças profissionais,1690
+637,63,expense,false,Gastos de acção social,1700
+638,63,expense,false,Outros gastos com o pessoal,1710
+64,,expense,false,Gastos de depreciação e de amortização,1720
+642,64,expense,false,Depreciações de activos fixos tangíveis,1730
+643,64,expense,false,Amortizações de activos intangíveis,1740
+65,,expense,false,Perdas por imparidade,1750
+6511,65,expense,false,Perdas por imparidade em clientes,1760
+6512,65,expense,false,Perdas por imparidade em outros devedores,1770
+652,65,expense,false,Ajustamentos em inventários,1780
+67,,expense,false,Provisões do período,1790
+678,67,expense,false,Outras provisões do período,1800
+68,,expense,false,Outros gastos,1810
+6811,68,expense,false,Impostos directos,1820
+6812,68,expense,false,Impostos indirectos,1830
+6813,68,expense,false,Taxas,1840
+682,68,expense,false,Descontos de pronto pagamento concedidos,1850
+683,68,expense,false,Dívidas incobráveis,1860
+684,68,expense,false,Perdas em inventários,1870
+6871,68,expense,false,Gastos em alienações de investimentos não financeiros,1880
+6882,68,expense,false,Donativos,1890
+6883,68,expense,false,Quotizações,1900
+6888,68,expense,false,Outros não especificados,1910
+68881,6888,expense,false,Arredondamentos,1920
+69,,expense,false,Perdas de financiamento,1930
+6911,69,expense,false,Juros de financiamentos obtidos,1940
+6918,69,expense,false,Outros juros suportados,1950
+6928,69,expense,false,Diferenças de câmbio desfavoráveis,1960
+71,,income,false,Vendas,1970
+711,71,income,false,Mercadorias,1980
+712,71,income,false,Produtos acabados e intermédios,1990
+717,71,income,false,Devoluções de vendas,2000
+718,71,income,false,Descontos e abatimentos em vendas,2010
+719,71,income,false,Rappel sobre vendas,2020
+72,,income,false,Prestações de serviços,2030
+721,72,income,false,Serviço A (a renomear por serviço),2040
+722,72,income,false,Serviço B (a renomear por serviço),2050
+725,72,income,false,Serviços secundários,2060
+728,72,income,false,Descontos e abatimentos em serviços,2070
+74,,income_other,false,Subsídios à exploração,2080
+741,74,income_other,false,Subsídios do Estado e outros entes públicos,2090
+78,,income_other,false,Outros rendimentos,2100
+781,78,income_other,false,Rendimentos suplementares,2110
+782,78,income_other,false,Descontos de pronto pagamento obtidos,2120
+783,78,income_other,false,Recuperação de dívidas a receber,2130
+784,78,income_other,false,Ganhos em inventários,2140
+7861,78,income_other,false,Dividendos,2150
+7862,78,income_other,false,Juros,2160
+7863,78,income_other,false,Diferenças de câmbio favoráveis,2170
+7871,78,income_other,false,Ganhos em alienações de investimentos não financeiros,2180
+7885,78,income_other,false,Restituição de impostos,2190
+7888,78,income_other,false,Outros não especificados,2200
+79,,income_other,false,Ganhos de financiamento,2210
+7911,79,income_other,false,Juros obtidos de aplicações de financiamentos obtidos,2220
+7918,79,income_other,false,Outros juros obtidos,2230
+7928,79,income_other,false,Diferenças de câmbio favoráveis (financiamento),2240

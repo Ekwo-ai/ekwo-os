@@ -1,0 +1,266 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Um ano de contabilidade de um sujeito passivo de IVA em Cabo Verde, com declaração mensal (Modelo 106)",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercício 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    },
+    {
+      "code": "2026-03",
+      "from": "2026-03-01",
+      "to": "2026-03-31"
+    },
+    {
+      "code": "2026-04",
+      "from": "2026-04-01",
+      "to": "2026-04-30"
+    }
+  ],
+  "statements": [
+    "CV-BS",
+    "CV-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-cv",
+      "name": "Cliente Fictício da Praia",
+      "type": "customer",
+      "country": "CV"
+    },
+    {
+      "ref": "client-foreign",
+      "name": "Muster Handels GmbH",
+      "type": "customer",
+      "country": "DE"
+    },
+    {
+      "ref": "supplier-cv",
+      "name": "Fornecedor Fictício de Mindelo",
+      "type": "supplier",
+      "country": "CV"
+    },
+    {
+      "ref": "supplier-foreign",
+      "name": "Exemplar Software Ltd",
+      "type": "supplier",
+      "country": "GB"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-cv",
+      "date": "2026-01-15",
+      "why": "Venda de mercadorias à taxa normal de 15 % (artigo 17.º): base no campo 01, imposto no campo 02.",
+      "lines": [
+        {
+          "name": "Materiais de construção",
+          "quantity": 10,
+          "unit_price": 50000,
+          "tax": "CV-S-15",
+          "account": "711"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-foreign",
+      "date": "2026-01-20",
+      "why": "Exportação de mercadorias: isenta com direito a dedução, campo 08 (artigo 13.º).",
+      "lines": [
+        {
+          "name": "Expedição de mercadorias exportadas",
+          "quantity": 1,
+          "unit_price": 800000,
+          "tax": "CV-S-EXPORT",
+          "account": "711"
+        }
+      ]
+    },
+    {
+      "ref": "P1",
+      "type": "purchase_invoice",
+      "contact": "supplier-cv",
+      "date": "2026-01-12",
+      "why": "Mercadorias para revenda com IVA a 15 %: IVA dedutível de inventários, campos 19 e 20.",
+      "lines": [
+        {
+          "name": "Mercadorias para revenda",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "CV-P-15-INV",
+          "account": "3221"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-cv",
+      "date": "2026-02-10",
+      "why": "Propinas: ensino isento sem direito a dedução, campo 09 (artigo 9.º, n.º 8).",
+      "lines": [
+        {
+          "name": "Propinas",
+          "quantity": 10,
+          "unit_price": 20000,
+          "tax": "CV-S-EXEMPT-EDU",
+          "account": "721"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-cv",
+      "date": "2026-02-18",
+      "why": "Venda de mercadorias a 15 % no segundo mês.",
+      "lines": [
+        {
+          "name": "Mobiliário de escritório",
+          "quantity": 4,
+          "unit_price": 150000,
+          "tax": "CV-S-15",
+          "account": "711"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-cv",
+      "date": "2026-02-25",
+      "why": "Devolução de um artigo de V4: diminui a base e o imposto dos campos 01 e 02 no mês da devolução.",
+      "lines": [
+        {
+          "name": "Mobiliário de escritório devolvido",
+          "quantity": 1,
+          "unit_price": 150000,
+          "tax": "CV-S-15",
+          "account": "711"
+        }
+      ]
+    },
+    {
+      "ref": "P2",
+      "type": "purchase_invoice",
+      "contact": "supplier-cv",
+      "date": "2026-02-14",
+      "why": "Honorários de um prestador com IVA a 15 %: campos 23 e 24.",
+      "lines": [
+        {
+          "name": "Honorários de consultoria",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "CV-P-15-SERV",
+          "account": "6235"
+        }
+      ]
+    },
+    {
+      "ref": "P3",
+      "type": "purchase_invoice",
+      "contact": "supplier-cv",
+      "date": "2026-03-10",
+      "why": "Equipamento administrativo (investimento) com IVA a 15 %: campos 17 e 18; o imposto dedutível excede o devido e dá um crédito no campo 36.",
+      "lines": [
+        {
+          "name": "Equipamento informático",
+          "quantity": 1,
+          "unit_price": 1200000,
+          "tax": "CV-P-15-CAPEX",
+          "account": "435"
+        }
+      ]
+    },
+    {
+      "ref": "P4",
+      "type": "purchase_invoice",
+      "contact": "supplier-foreign",
+      "date": "2026-04-08",
+      "why": "Licença de programa de um prestador sem sede em Cabo Verde: o adquirente liquida e deduz o IVA, campos 11, 12 e 13 (artigo 6.º, n.º 6).",
+      "lines": [
+        {
+          "name": "Licença de programa de computador",
+          "quantity": 1,
+          "unit_price": 200000,
+          "tax": "CV-P-15-NR",
+          "account": "6230"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-cv",
+      "date": "2026-04-20",
+      "why": "Venda de serviços a 15 % no quarto mês, ao lado da operação do adquirente (P4).",
+      "lines": [
+        {
+          "name": "Prestação de serviços",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "CV-S-15",
+          "account": "721"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-01",
+      "amount": 575000,
+      "contact": "client-cv",
+      "journal": "BAN",
+      "match": "V1",
+      "why": "Recebimento que liquida V1 exactamente (500 000 mais 75 000 de IVA)."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 800000,
+      "contact": "client-foreign",
+      "journal": "BAN",
+      "match": "V2",
+      "why": "Recebimento que liquida a factura de exportação V2 (sem IVA)."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 345000,
+      "contact": "supplier-cv",
+      "journal": "BAN",
+      "match": "P1",
+      "why": "Pagamento que liquida P1 exactamente (300 000 mais 45 000 de IVA)."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-03-05",
+      "amount": 50000,
+      "contact": "client-cv",
+      "journal": "BAN",
+      "match": null,
+      "why": "Recebimento por conta de um cliente, sem factura associada: fica em aberto no saldo do cliente."
+    }
+  ]
+}
