@@ -402,3 +402,30 @@ period would be a change of the format, not of this pack.
 **A reverse charge that is also a credit.** Section 33 lets the purchaser of an
 imported business-to-business service deduct the tax it accounts for; the pack
 posts the output tax and the input tax in two boxes of the return.
+
+## From Cambodia
+
+**A ten per cent VAT, a monthly return, and texts that are scans.** Sub-Decree 49
+(2024) gives the tax on a tax-inclusive price as 1/11 (article 30(2)), a zero rate
+for exports (article 29(1)(e)) and the credit on tax paid for taxable supplies
+(articles 11 and 19). The General Department of Taxation publishes its texts as
+scanned Khmer images; the sub-decree was read as images, the Law on Taxation of 2023
+and the Law on Accounting and Auditing were not, and the lists of zero-rated and
+exempt supplies are therefore not in the pack.
+
+**Two due dates for one return.** The GDT home page shows the 20th of the following
+month for a manual return and the 25th for an online one; the format has one
+`deadline`, and the pack declares the 20th.
+
+**Time of supply with seven days of grace.** The supply takes place when the invoice
+is required or issued if earlier, due seven days after delivery or performance
+(article 25(1)(a)); the vocabulary of `tax_point` has no value for the invoice itself.
+
+**Credit excluded or prorated.** Article 13 excludes the tax on accommodation, meals,
+entertainment, passenger vehicles and petroleum products for most taxpayers, and
+article 15 prorates the credit of a taxpayer with taxable and non-taxable supplies.
+A purchase code that posts a part of the tax to the expense is not expressible as a
+rate on the line; the pack assumes full deductibility and says so.
+
+**A currency with no minor unit, used alongside the dollar.** The riel has no
+decimals; businesses also bank in US dollars. The pack keeps the books in riel.
