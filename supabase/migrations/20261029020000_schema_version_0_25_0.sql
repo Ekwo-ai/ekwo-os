@@ -16,7 +16,9 @@
 --   (`invoice_labels_by_pack`);
 -- - `20261029010100_a_late_payment_mention_is_the_companys_choice`, decision
 --   0092: one column on the company and the view of the legal mentions
---   replaced (`late_payment_mention`).
+--   replaced (`late_payment_mention`);
+-- - `20261029010200_a_company_is_counted_never_read`, decision 0093:
+--   `usage_figures()`, which no package calls, so it is no feature.
 --
 -- The floor of `ekwo-os`, `@ekwo-ai/core` and `@ekwo-ai/mcp` stays at 0.19.0:
 -- below this version a read leaves out what it adds.

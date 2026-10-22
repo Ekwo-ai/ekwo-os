@@ -42,6 +42,15 @@ somewhere has already run it.
   the pack's sentence, in the one view every renderer reads;
   `country_defaults.late_payment_reference` stays the pack's reference and is
   not printed.
+- **A company is counted, never read** (socle migration `20261029010200`,
+  decision 0093). `ekwo.usage_figures()` returns, for every company the
+  caller is on, one row per figure — a name, a number of rows, and when the
+  most recent was created: members, invitations, contacts, products,
+  documents by type and state, entries by state, bank statements, payments,
+  and each enabled module with its tables. What the country pack lays down is
+  left out, and no name, amount or label leaves the function. A member or the
+  holder of a key of the company may call it, whatever the key's
+  capabilities. The list is `docs/usage-figures.md`.
 
 ### Changed
 
