@@ -54,7 +54,7 @@ code,parent,type,reconcilable,name,sequence
 2110,,liability_current,true,VAT payable to the SRC — net of a filed return,530
 2125,,liability_current,false,Import VAT payable to the SRC at the border,540
 2126,,liability_current,false,VAT on imported capital goods — held until paid,550
-2140,,liability_current,false,Income and Non-Monetary Benefits Tax (INMBT) withheld, payable to the SRC,560
+2140,,liability_current,false,Income and Non-Monetary Benefits Tax (INMBT) withheld and payable to the SRC,560
 2150,,liability_current,false,Social security contributions payable,570
 2155,,liability_current,false,Excise tax payable,580
 2160,,liability_current,false,Tourism Marketing Tax (TMT) payable,590
