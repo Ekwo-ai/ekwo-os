@@ -155,3 +155,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('NPR', 'Nepalese rupee', 'Rs', 2)
 on conflict (code) do nothing;
+
+-- Malawian kwacha, two decimals, packs/mw/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('MWK', 'Malawian kwacha', 'MK', 2)
+on conflict (code) do nothing;

@@ -3032,3 +3032,16 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('MW', 'iso_3166_1', 'Malawi', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Malawi levies a value added tax of its own under the Value Added Tax Act (Chapter 42:02): section 7 imposes it on supplies made in Malawi, on imports and on imported services, section 9 sets the rate (raised from 16.5 to 17.5 per cent from 30 December 2025 by the Value Added Tax (Amendment) Act, 2025), section 21 and the Second Schedule zero-rate exports, and section 34 has the taxable person file the return by the 25th of the month following.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

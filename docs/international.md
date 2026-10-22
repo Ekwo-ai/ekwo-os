@@ -473,3 +473,24 @@ of Shrawan, about 16 July; the format offers `july`, a year that begins on
 acquires a service from outside Nepal assess the tax and section 17(5b) lets it
 be deducted; the pack posts the output tax and the input tax in two boxes of the
 return.
+
+## From Malawi
+
+The pack carries VAT at 17.5 % (16.5 % up to 29 December 2025, two dated codes),
+the zero rate on exports and on the items of the Second Schedule, the exemptions
+of the First Schedule, the VAT charged on imports and on imported services, a
+monthly return due on the 25th and two statements, in English.
+
+**A law read in its 2014 consolidation.** The Value Added Tax Act could be read
+only as consolidated to 31 December 2014; the rate of 17.5 % comes from the
+Authority's public notice, the amending Act is behind a login, and the
+Schedules, the registration threshold and the e-invoicing rules since then
+could not be checked.
+
+**No readable VAT return form.** The Authority's site is a script-driven
+application and its forms library needs a login, so the rows of the return are
+the pack's own, named after the operations of s. 34 and s. 30.
+
+**Real-time clearance.** The Electronic Invoicing System of the Authority
+replaces fiscal devices; the socle has no way to call it, so
+`einvoicing.obligation` is `none`.
