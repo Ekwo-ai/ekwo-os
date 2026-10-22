@@ -56,6 +56,23 @@ import {
   crmSegments,
   crmTimeline,
   crmUpsertCard,
+  CONTRACT_AMENDMENT_KINDS,
+  CONTRACT_DEADLINE_KINDS,
+  CONTRACT_DIRECTIONS,
+  CONTRACT_FIELDS,
+  CONTRACT_FREQUENCIES,
+  CONTRACT_KINDS,
+  CONTRACT_RENEWALS,
+  CONTRACT_SCHEDULE_FIELDS,
+  CONTRACT_STATES,
+  contractsAmend,
+  contractsCard,
+  contractsDeadlines,
+  contractsFromTemplate,
+  contractsIssueDue,
+  contractsList,
+  contractsSchedule,
+  contractsUpsert,
 } from '@ekwo-ai/core';
 import { companyId, isoDate, uuid } from './read.js';
 
@@ -1421,8 +1438,244 @@ const CRM: ModuleToolset = {
   ],
 };
 
+// ---------------------------------------------------------------------------
+// contracts — module code `contracts`, schema `contracts`
+//
+// Every tool is one function of the schema, called through the core — the
+// same function `ekwo contracts …` calls. The kinds, states and rhythms a
+// model may name are the schema's enums, as the core lists them, and the
+// refusals of the module (`contracts_<code>: …`) travel up word for word.
+// ---------------------------------------------------------------------------
+
+const contractId = uuid.describe('The contract. contracts_list finds it.');
+const contractDirection = z.enum(CONTRACT_DIRECTIONS);
+const contractKind = z.enum(CONTRACT_KINDS);
+
+const CONTRACTS: ModuleToolset = {
+  code: 'contracts',
+  prefix: 'contracts',
+  schema: 'contracts',
+  tools: [
+    {
+      verb: 'list',
+      title: 'The contracts',
+      readOnly: true,
+      description:
+        'The contracts of the company, each with its party, its kind, its side (sale: the company invoices; purchase: it is invoiced), its state, its dates, its currency and value, and its nearest deadline. Filtered by state (one of ' +
+        words(CONTRACT_STATES) +
+        '), side, party, or a text found in the number, the name or the party\'s name; every filter optional. templates: true also lists the active templates a contract can be made from, for contracts_from_template.',
+      input: z.object({
+        company_id: companyId,
+        state: z.enum(CONTRACT_STATES).optional(),
+        direction: contractDirection.optional().describe('sale or purchase.'),
+        contact_id: uuid.optional().describe('The party. search_contacts finds it.'),
+        query: z.string().optional().describe('A text found in the number, the name or the party\'s name.'),
+        limit: z.number().int().min(1).max(200).optional().describe('At most this many. 50 by default.'),
+        templates: z.boolean().optional().describe('Also list the templates of the company.'),
+      }),
+      async run(backend, args) {
+        return inSchema('contracts', () =>
+          contractsList(backend, {
+            company_id: args['company_id'] as unknown as string,
+            state: args['state'] as unknown as (typeof CONTRACT_STATES)[number] | undefined,
+            direction: args['direction'] as unknown as (typeof CONTRACT_DIRECTIONS)[number] | undefined,
+            contact_id: args['contact_id'],
+            query: args['query'],
+            limit: args['limit'],
+            templates: args['templates'],
+          }),
+        );
+      },
+    },
+    {
+      verb: 'card',
+      title: 'One contract, whole',
+      readOnly: true,
+      description:
+        'Everything on one contract in one object: the contract, its party, its signed file with its checksum, its schedules, its history — versions, amendments, tacit renewals — the latest documents it issued with their number, state and total, and its deadlines. Read this before changing a contract or issuing from it.',
+      input: z.object({ company_id: companyId, contract_id: contractId }),
+      async run(backend, args) {
+        return inSchema('contracts', () =>
+          contractsCard(backend, {
+            company_id: args['company_id'] as unknown as string,
+            contract_id: args['contract_id'] as unknown as string,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'upsert',
+      title: 'Write a contract',
+      readOnly: false,
+      description:
+        'Creates the contract of that number, or changes it: each key the patch names takes its value, every other field keeps its own. The keys are ' +
+        words(CONTRACT_FIELDS) +
+        '. A new contract needs contact_id, name, kind (one of ' +
+        words(CONTRACT_KINDS) +
+        ') and direction (sale or purchase); its currency is the company\'s unless currency_code (ISO 4217) is named. renewal is one of ' +
+        words(CONTRACT_RENEWALS) +
+        '; a tacit one needs starts_on and ends_on. A state only moves forward (' +
+        words(CONTRACT_STATES) +
+        ') and the last three are final. Dates are YYYY-MM-DD, amounts decimal strings. Any other key is refused, contracts_unknown_field. Ask the user before writing a contract they did not describe, and before moving its state.',
+      input: z.object({
+        company_id: companyId,
+        number: z.string().min(1).describe('The company\'s own reference for the contract, unique in the company.'),
+        patch: z.record(z.string(), z.unknown()).describe(`The fields to set: ${words(CONTRACT_FIELDS)}.`),
+      }),
+      async run(backend, args) {
+        return inSchema('contracts', () =>
+          contractsUpsert(backend, {
+            company_id: args['company_id'] as unknown as string,
+            number: args['number'] as unknown as string,
+            patch: args['patch'] as unknown as Record<string, unknown>,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'schedule',
+      title: 'Write a schedule',
+      readOnly: false,
+      description:
+        'Adds a line a contract invoices at its own rhythm, or changes one (schedule_id). The keys are ' +
+        words(CONTRACT_SCHEDULE_FIELDS) +
+        '. frequency is one of ' +
+        words(CONTRACT_FREQUENCIES) +
+        '; next_on is the first day of the next period to issue; until the last day a period may start. The tax is named by its code in the company\'s list (list_accounts and describe_pack give them), never by a rate. A schedule from a product (product_code) takes the product\'s name, unit, price and tax where the patch gives none. indexation is a JSON object kept as data: index, formula, base, base_on, next_on. auto_post: true books every document it issues, which needs the right to post. Ask the user before setting auto_post.',
+      input: z.object({
+        company_id: companyId,
+        contract_id: contractId,
+        schedule_id: uuid.optional().describe('The schedule to change. Left out, a new one is added.'),
+        patch: z.record(z.string(), z.unknown()).describe(`The fields to set: ${words(CONTRACT_SCHEDULE_FIELDS)}.`),
+      }),
+      async run(backend, args) {
+        return inSchema('contracts', () =>
+          contractsSchedule(backend, {
+            company_id: args['company_id'] as unknown as string,
+            contract_id: args['contract_id'] as unknown as string,
+            schedule_id: args['schedule_id'],
+            patch: args['patch'] as unknown as Record<string, unknown>,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'issue_due',
+      title: 'Issue what is due',
+      readOnly: false,
+      description:
+        'Issues every period that has come on that day: for each schedule of a signed or active contract whose next_on is on or before it, one draft document per period — a sales invoice on a sale, a purchase invoice on a purchase — to the contract\'s party, contract_reference set to its number, and next_on moved on. Renewals and expiries come first. Twice for the same day issues once: the socle refuses a second document for one period. Drafts stay drafts unless the schedule says auto_post. Show the user what is due first (contracts_deadlines, kinds next_issue) and issue only once they agree; then show the drafts before anything is posted.',
+      input: z.object({
+        company_id: companyId,
+        on_date: isoDate.describe('The day: every period starting on or before it is issued.'),
+      }),
+      async run(backend, args) {
+        return inSchema('contracts', () =>
+          contractsIssueDue(backend, {
+            company_id: args['company_id'] as unknown as string,
+            on_date: args['on_date'] as unknown as string,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'deadlines',
+      title: 'What the contracts ask, and when',
+      readOnly: true,
+      description:
+        'Every date a running contract asks somebody to act on, soonest first: notice (the last day notice can be given before the next term, or before the end), renewal, end, next_issue (the next period a schedule issues) and indexation (when a price is due to be indexed). Filtered by a window of days, a contract, or kinds, each one of ' +
+        words(CONTRACT_DEADLINE_KINDS) +
+        '. A notice date is a reading of what was recorded: say so, and let the user and their counsel decide.',
+      input: z.object({
+        company_id: companyId,
+        from: isoDate.optional().describe('On or after this day.'),
+        to: isoDate.optional().describe('On or before this day.'),
+        contract_id: contractId.optional(),
+        kinds: z.array(z.enum(CONTRACT_DEADLINE_KINDS)).min(1).optional(),
+      }),
+      async run(backend, args) {
+        return inSchema('contracts', () =>
+          contractsDeadlines(backend, {
+            company_id: args['company_id'] as unknown as string,
+            from: args['from'],
+            to: args['to'],
+            contract_id: args['contract_id'],
+            kinds: args['kinds'] as unknown as (typeof CONTRACT_DEADLINE_KINDS)[number][] | undefined,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'amend',
+      title: 'Record an amendment',
+      readOnly: false,
+      description:
+        'Records what changes in a contract and from when, numbered next in its history, with the signed file (attachment_id) and the day it was signed. kind amendment applies its changes now: the fields of the contract by name, and under "schedules" the fields of each schedule, by id — a new unit_price after an indexation, for instance. kind version records another text of the contract with its file and changes nothing. A renewal is written by the module itself on its day. Kinds: ' +
+        words(CONTRACT_AMENDMENT_KINDS.filter((kind) => kind !== 'renewal')) +
+        '. Confirm the changes with the user before recording them.',
+      input: z.object({
+        company_id: companyId,
+        contract_id: contractId,
+        summary: z.string().min(1).describe('What changes, in words.'),
+        effective_on: isoDate.describe('From when it holds.'),
+        changes: z.record(z.string(), z.unknown()).optional().describe('The fields that change, and "schedules": {"<id>": {…}}.'),
+        kind: z.enum(['version', 'amendment']).optional().describe('amendment by default.'),
+        signed_on: isoDate.optional(),
+        attachment_id: uuid.optional().describe('The signed file, an attachment of the company.'),
+      }),
+      async run(backend, args) {
+        return inSchema('contracts', () =>
+          contractsAmend(backend, {
+            company_id: args['company_id'] as unknown as string,
+            contract_id: args['contract_id'] as unknown as string,
+            summary: args['summary'] as unknown as string,
+            effective_on: args['effective_on'] as unknown as string,
+            changes: args['changes'] as unknown as Record<string, unknown> | undefined,
+            kind: args['kind'] as unknown as 'version' | 'amendment' | undefined,
+            signed_on: args['signed_on'],
+            attachment_id: args['attachment_id'],
+          }),
+        );
+      },
+    },
+    {
+      verb: 'from_template',
+      title: 'A contract from a template',
+      readOnly: false,
+      description:
+        'Makes a draft contract of one of the company\'s templates (contracts_list with templates: true lists them): the number, party, side and kind given, starting on starts_on, the values of the template\'s variables kept on the contract — a required one left empty is refused, contracts_missing_variable — and the template\'s schedule copied, starting on starts_on. Answers the contract, its schedules, and the clauses: the html with the values in place, or the docx file to fill. Nothing is sent or signed. Ask the user for every value rather than inventing one.',
+      input: z.object({
+        company_id: companyId,
+        template_id: uuid.describe('The template. contracts_list with templates: true lists them.'),
+        contact_id: uuid.describe('The other party.'),
+        number: z.string().min(1),
+        direction: contractDirection,
+        kind: contractKind,
+        starts_on: isoDate,
+        values: z.record(z.string(), z.string()).optional().describe('The value of each variable, by its key.'),
+        name: z.string().optional().describe('The name of the contract. The template\'s when left out.'),
+      }),
+      async run(backend, args) {
+        return inSchema('contracts', () =>
+          contractsFromTemplate(backend, {
+            company_id: args['company_id'] as unknown as string,
+            template_id: args['template_id'] as unknown as string,
+            contact_id: args['contact_id'] as unknown as string,
+            number: args['number'] as unknown as string,
+            direction: args['direction'] as unknown as (typeof CONTRACT_DIRECTIONS)[number],
+            kind: args['kind'] as unknown as (typeof CONTRACT_KINDS)[number],
+            starts_on: args['starts_on'] as unknown as string,
+            values: args['values'] as unknown as Record<string, string> | undefined,
+            name: args['name'],
+          }),
+        );
+      },
+    },
+  ],
+};
+
 /** Every module this release knows how to expose, by module code. */
-export const MODULE_TOOLSETS: readonly ModuleToolset[] = [FIXED_ASSETS, BUDGETS, EINVOICING, TAX, CRM];
+export const MODULE_TOOLSETS: readonly ModuleToolset[] = [FIXED_ASSETS, BUDGETS, EINVOICING, TAX, CRM, CONTRACTS];
 
 /** The toolsets for a set of installed module codes, in a fixed order. */
 export function toolsetsFor(installed: readonly string[]): ModuleToolset[] {

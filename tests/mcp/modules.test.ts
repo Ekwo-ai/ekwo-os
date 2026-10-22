@@ -79,7 +79,7 @@ describe('the loader', () => {
     const client = await connect([]);
     const names = (await client.listTools()).tools.map((tool) => tool.name);
     expect(
-      names.filter((name) => /^(fixed_assets|assets|budgets|einvoicing|tax|crm)_/.test(name)),
+      names.filter((name) => /^(fixed_assets|assets|budgets|einvoicing|tax|crm|contracts)_/.test(name)),
     ).toEqual([]);
     await client.close();
   });
@@ -91,7 +91,7 @@ describe('the loader', () => {
         module.manifest,
       ]),
     );
-    const client = await connect(['assets', 'budgets', 'einvoicing', 'tax', 'crm']);
+    const client = await connect(['assets', 'budgets', 'einvoicing', 'tax', 'crm', 'contracts']);
     const names = (await client.listTools()).tools.map((tool) => tool.name);
 
     for (const toolset of MODULE_TOOLSETS) {
@@ -147,6 +147,16 @@ describe('the loader', () => {
       'crm_segments',
       'crm_timeline',
       'crm_upsert_card',
+    ]);
+    expect(names.filter((name) => name.startsWith('contracts_')).sort()).toEqual([
+      'contracts_amend',
+      'contracts_card',
+      'contracts_deadlines',
+      'contracts_from_template',
+      'contracts_issue_due',
+      'contracts_list',
+      'contracts_schedule',
+      'contracts_upsert',
     ]);
     // A module's prompts come with its tools, under the same prefix.
     const prompts = (await client.listPrompts()).prompts.map((prompt) => prompt.name);

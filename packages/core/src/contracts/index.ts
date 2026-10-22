@@ -190,7 +190,7 @@ export async function contractsDeadlines(
   const deadlines = await backend.select<Row>({
     schema: CONTRACTS_SCHEMA,
     table: 'deadlines',
-    columns: ['contract_id', 'contract_number', 'contract_name', 'direction', 'contact_id', 'schedule_id', 'kind', 'due_on'],
+    columns: ['contract_id', 'contract_number', 'contract_name', 'direction', 'contact_id', 'schedule_id', 'kind', 'due_on::text'],
     where: [
       { column: 'company_id', op: 'eq', value: args.company_id },
       ...(args.from === undefined ? [] : [{ column: 'due_on', op: 'gte' as const, value: args.from }]),
