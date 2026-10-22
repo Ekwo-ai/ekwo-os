@@ -305,6 +305,8 @@
                 "chartCode": { "type": ["string", "null"] },
                 "vatPeriod": { "type": ["string", "null"] },
                 "filingPeriods": { "type": "array", "items": { "type": "object" } },
+                "vatScheme": { "type": ["object", "null"] },
+                "instalments": { "type": "array", "items": { "type": "object" } },
                 "liveShares": { "type": "integer" }
               }
             }

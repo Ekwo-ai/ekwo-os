@@ -131,6 +131,11 @@ export async function statusCommand(args: ParsedArgs, deps: CommandDeps = {}): P
                     .map((f) => `${f.reportName ?? f.reportCode} every ${f.period}`)
                     .join(', ')
             } · ` +
+            `VAT scheme ${c.vatScheme === null ? 'not recorded' : `${c.vatScheme.name} since ${c.vatScheme.since}`}` +
+            c.instalments
+              .map((i) => ` · instalment ${i.sequence} on account of ${i.reportCode} due ${i.dueDate ?? `in ${i.month}`}`)
+              .join('') +
+            ' · ' +
             `${c.accounts} accounts · ${c.entries} entries · ` +
             `${c.fiscalYears} financial year(s), ${c.fiscalYears - c.closedFiscalYears} open` +
             (c.liveShares === 0 ? '' : ` · ${c.liveShares} document(s) published behind a link`),

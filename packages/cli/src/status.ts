@@ -44,6 +44,18 @@ export interface CompanySummary {
    */
   filingPeriods: { reportCode: string; reportName: string | null; period: string }[];
   /**
+   * The VAT scheme the company has recorded for today, or null when it has
+   * recorded none — which is not an error, and is printed as "not recorded"
+   * rather than guessed. The scheme is what decides which forms it files.
+   */
+  vatScheme: { code: string; name: string; since: string } | null;
+  /**
+   * The payments on account its scheme asks for in the next three months,
+   * by the form they are paid on account of. Empty without a scheme, or
+   * without instalments.
+   */
+  instalments: { reportCode: string; month: string; dueDate: string | null; sequence: number }[];
+  /**
    * Links onto this company's documents that still answer: not withdrawn, and
    * not past their expiry. It is here because it is the one thing about an
    * installation that is reachable without signing in, and an operator looking
@@ -114,6 +126,7 @@ export async function status(db: SqlClient, migrations: Migration[]): Promise<St
   const admins = Number((await scalar<string>(db, 'select count(*)::text from instance_admins')) ?? '0');
 
   const companies = await db.query<{
+    id: string;
     name: string;
     country: string;
     accounts: string;
@@ -126,7 +139,8 @@ export async function status(db: SqlClient, migrations: Migration[]): Promise<St
     filing_periods: { report_code: string; report_name: string | null; period: string }[] | null;
     live_shares: string;
   }>(
-    `select c.name,
+    `select c.id::text as id,
+            c.name,
             c.country,
             c.vat_period,
             (select coalesce(jsonb_agg(jsonb_build_object(
@@ -152,6 +166,33 @@ export async function status(db: SqlClient, migrations: Migration[]): Promise<St
        from companies c
       order by c.name`,
   );
+
+  // The scheme and the instalments, on an installation whose schema has them:
+  // `ekwo status` also reads an installation that has not been upgraded yet.
+  const schemes = new Map<string, { code: string; name: string; since: string }>();
+  const instalments = new Map<string, { reportCode: string; month: string; dueDate: string | null; sequence: number }[]>();
+  if ((await scalar<boolean>(db, `select to_regclass('public.company_vat_schemes') is not null`)) === true) {
+    const recorded = await db.query<{ company_id: string; code: string; name: string; since: string }>(
+      `select g.company_id::text, s.code, s.name, g.valid_from::text as since
+         from company_vat_schemes g
+         join vat_schemes s on s.country = g.country and s.code = g.scheme_code
+        where g.valid_from = (select max(o.valid_from) from company_vat_schemes o
+                               where o.company_id = g.company_id and o.valid_from <= current_date)`,
+    );
+    for (const row of recorded) schemes.set(row.company_id, { code: row.code, name: row.name, since: row.since });
+    for (const companyId of schemes.keys()) {
+      const due = await db.query<{ report_code: string; period_start: string; due_date: string | null; instalment: number }>(
+        `select report_code, period_start::text, due_date::text, instalment
+           from upcoming_filings($1, current_date, (current_date + interval '3 months')::date)
+          where instalment is not null`,
+        [companyId],
+      );
+      instalments.set(
+        companyId,
+        due.map((row) => ({ reportCode: row.report_code, month: row.period_start.slice(0, 7), dueDate: row.due_date, sequence: row.instalment })),
+      );
+    }
+  }
 
   const packs = await db.query<{
     country: string;
@@ -200,6 +241,8 @@ export async function status(db: SqlClient, migrations: Migration[]): Promise<St
         reportName: row.report_name,
         period: row.period,
       })),
+      vatScheme: schemes.get(c.id) ?? null,
+      instalments: instalments.get(c.id) ?? [],
       liveShares: Number(c.live_shares),
     })),
     packs: packs.map((p) => ({

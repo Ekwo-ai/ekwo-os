@@ -3,7 +3,8 @@ import { cp, mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { compilePack, packsDir, readPack } from '../packages/cli/src/index.js';
+import { compilePack, listMigrations, packsDir, readPack, status } from '../packages/cli/src/index.js';
+import { adapt, migrationsPath } from './cli/helpers.js';
 import type { Pack, PackReport, PackVatScheme } from '../packages/cli/src/pack/read.js';
 import { freshDatabase, one, rows } from './helpers/db.js';
 import { newCompany, newContact, newDocument } from './helpers/factory.js';
@@ -260,6 +261,13 @@ describe('a company on a scheme with instalments', () => {
     expect(next.get(`${balance.box}|total`) ?? 0).toBe(cents(Math.max((next.get(`${owed.box}|total`) ?? 0) - due, 0)));
   });
 
+  it('is printed by ekwo status, with the scheme recorded for today', async () => {
+    const report = await status(adapt(db, db), await listMigrations(migrationsPath));
+    const printed = report.companies.find((c) => c.name === 'Annual filer')!;
+    expect(printed.vatScheme?.code).toBe(withInstalments.code);
+    expect(report.companies.find((c) => c.name === 'No scheme')!.vatScheme).toBeNull();
+  });
+
   it('lists the instalments beside the annual return, and no periodic return', async () => {
     const listed = await rows<{ report_code: string; period_start: string; instalment: number | null }>(
       db,
@@ -374,12 +382,12 @@ describe('a scheme is recorded by the year and checked', () => {
       normal.code,
     ]);
     const form = normal.forms.find((f) => f.report === periodic.code)!;
-    const refused = periodic.periods.find((p) => !form.periods.includes(p));
-    if (refused !== undefined) {
+    const outside = periodic.periods.find((p) => !form.periods.includes(p));
+    if (outside !== undefined) {
       await refused(
         db.query(`update company_filing_periods set period = $2::declaration_period where company_id = $1 and report_code = $3`, [
           id,
-          refused,
+          outside,
           periodic.code,
         ]),
         'wrong_declaration_period',
