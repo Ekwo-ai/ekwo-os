@@ -151,8 +151,8 @@ export function makesAmount(quantity: string, price: string, amount: string, dig
     rounded = magnitude / divisor + ((magnitude % divisor) * 2n >= divisor ? 1n : 0n);
   }
   const signed = negative ? -rounded : rounded;
-  const target = a.scale <= digits ? a.units * 10n ** BigInt(digits - a.scale) : null;
-  return target !== null && signed === target;
+  // The amount may be written with more decimals than the currency has, as long as they are zeros.
+  return a.scale <= digits ? signed === a.units * 10n ** BigInt(digits - a.scale) : signed * 10n ** BigInt(a.scale - digits) === a.units;
 }
 
 function periodAttributes(period: Period | null): Record<string, string> {
