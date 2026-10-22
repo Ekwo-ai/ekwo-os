@@ -1,0 +1,154 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "MW-VAT-RETURN",
+  "name": "Monthly Value Added Tax return",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2005-01-01",
+  "legal_reference": "Value Added Tax Act, s. 34(1) and (2) — a taxable person accounts for VAT each calendar month on a return in the prescribed form, which states the VAT payable for the period, the input tax credit or refund claimed and such other matters as are prescribed. The prescribed form and its boxes could not be opened from the machine this pack was written on (the Authority's site is a script-driven application and its forms library asks for a login): the rows below are this pack's own, named after the operations of the Act, and the gap is recorded in this pack's README. Box numbers do not claim to be the numbers of the Authority's form.",
+  "source": "vat-act",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 25,
+    "legal_reference": "Value Added Tax Act, s. 34(4) and (6) — the return is submitted, and the VAT due paid, not later than the twenty-fifth day of the month immediately following the month to which the return relates; the Authority's Understanding VAT brochure says the same. s. 34(5): the Commissioner General may extend the period on application. Penalty for a late return in the 2014 text: K20,000 and K1,000 a day (not modelled).",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "ZE",
+      "kind": "base",
+      "name": "Zero-rated supplies — exports",
+      "sequence": 10,
+      "legal_reference": "Value Added Tax Act, s. 21 and Second Schedule, item 1 — the value of exports of goods and services taxed at nil. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "ZL",
+      "kind": "base",
+      "name": "Zero-rated supplies — local",
+      "sequence": 20,
+      "legal_reference": "Value Added Tax Act, s. 21 and the Second Schedule — the value of local supplies taxed at nil (fertilizers, pharmaceutical products and the other items). A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "EX",
+      "kind": "base",
+      "name": "Exempt supplies",
+      "sequence": 30,
+      "legal_reference": "Value Added Tax Act, s. 20 and the First Schedule — the value of exempt supplies. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1S",
+      "kind": "base",
+      "name": "Standard-rated supplies — value",
+      "sequence": 40,
+      "legal_reference": "Value Added Tax Act, ss. 7 and 9 — the value of the standard-rated supplies on which output VAT is charged, net of credit notes; and the output VAT itself. Rows of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1S",
+      "kind": "tax",
+      "name": "Output VAT on standard-rated supplies",
+      "sequence": 45,
+      "legal_reference": "Value Added Tax Act, ss. 7 and 9 — the value of the standard-rated supplies on which output VAT is charged, net of credit notes; and the output VAT itself. Rows of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1R",
+      "kind": "base",
+      "name": "Imported services — value",
+      "sequence": 50,
+      "legal_reference": "Value Added Tax Act, ss. 7(1)(c) and 8(c) — the value of services received from outside Malawi and the VAT the receiver pays on them, included in output VAT. Rows of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1R",
+      "kind": "tax",
+      "name": "Output VAT on imported services",
+      "sequence": 55,
+      "legal_reference": "Value Added Tax Act, ss. 7(1)(c) and 8(c) — the value of services received from outside Malawi and the VAT the receiver pays on them, included in output VAT. Rows of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Output VAT (total)",
+      "sequence": 60,
+      "plus": [
+        "1S:tax",
+        "1R:tax"
+      ],
+      "legal_reference": "Value Added Tax Act, s. 34(2)(a) — the VAT payable for the period before the input tax credit: output VAT on standard-rated supplies plus the VAT the receiver pays on imported services. A total of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "ZP",
+      "kind": "base",
+      "name": "Zero-rated purchases — value",
+      "sequence": 70,
+      "legal_reference": "Value Added Tax Act, s. 21 — the value of local purchases taxed at nil. A reporting row of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Standard-rated local purchases — value",
+      "sequence": 80,
+      "legal_reference": "Value Added Tax Act, s. 30(1) — the purchases on which input tax is incurred and the input tax deducted on local purchases and on imported services, net of credits received. Rows of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Input VAT on local purchases and imported services",
+      "sequence": 85,
+      "legal_reference": "Value Added Tax Act, s. 30(1) — the purchases on which input tax is incurred and the input tax deducted on local purchases and on imported services, net of credits received. Rows of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Imports of goods — value",
+      "sequence": 90,
+      "legal_reference": "Value Added Tax Act, ss. 7(1)(b) and 30(1)(c) — the value of imported goods and the VAT paid on the customs entry, deducted by the importer. Rows of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Input VAT on imports",
+      "sequence": 95,
+      "legal_reference": "Value Added Tax Act, ss. 7(1)(b) and 30(1)(c) — the value of imported goods and the VAT paid on the customs entry, deducted by the importer. Rows of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Total input VAT",
+      "sequence": 100,
+      "plus": [
+        "2:tax",
+        "3:tax"
+      ],
+      "legal_reference": "Value Added Tax Act, s. 30 — the total input tax credit claimed: local purchases and imported services (row 2) plus imports (row 3). A total of this pack.",
+      "source": "vat-act"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "VAT payable or repayable",
+      "sequence": 110,
+      "plus": [
+        "1"
+      ],
+      "minus": [
+        "4"
+      ],
+      "legal_reference": "Value Added Tax Act, ss. 31 and 34(2) — output VAT minus the input tax credit. A positive figure is payable by the 25th of the following month; a negative figure is excess input tax carried forward or refunded under s. 31. A total of this pack.",
+      "source": "vat-act"
+    }
+  ]
+}

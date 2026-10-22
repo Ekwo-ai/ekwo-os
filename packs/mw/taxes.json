@@ -1,0 +1,436 @@
+[
+  {
+    "code": "MW-S-17.5",
+    "name": "Sale, standard rate 17.5 %",
+    "description": "The general rate on a taxable supply made in Malawi, from 30 December 2025",
+    "kind": "vat",
+    "rate": 17.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2025-12-30",
+    "legal_reference": "Value Added Tax Act, s. 7(1)(a) and (2) — Value Added Tax is charged on every supply of goods and services made in Malawi by a taxable person in the course of his business; s. 9 — the rate is applied to the value of the taxable supply (the printed rate in the 2014 consolidation is 16.5 %). The Malawi Revenue Authority's public notice on the mid-year budget review of 2025/26 increased the rate from 16.5 % to 17.5 % with effect from 30 December 2025. Everything that is neither exempt (First Schedule) nor zero-rated (Second Schedule) is standard-rated (Understanding VAT).",
+    "source": "rate-notice-2025",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1S"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1S",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "MW-S-16.5",
+    "name": "Sale, standard rate 16.5 % (until 29 December 2025)",
+    "description": "The general rate before the increase of 30 December 2025, for a supply dated up to 29 December 2025",
+    "kind": "vat",
+    "rate": 16.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2005-01-01",
+    "valid_to": "2025-12-29",
+    "legal_reference": "Value Added Tax Act, s. 9 — the rate of Value Added Tax is 16.5 per cent of the value of the taxable supply (amended by Act No. 10 of 2008 in the consolidation); closed on 29 December 2025, the day before the Malawi Revenue Authority's notice puts the 17.5 % rate into effect. The date the 16.5 % rate began is not evidenced by the text this pack could open; the valid_from is a floor.",
+    "source": "vat-act",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1S"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1S",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "1S",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 12
+  },
+  {
+    "code": "MW-S-Z-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "A supply of goods or services exported from Malawi",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2005-01-01",
+    "legal_reference": "Value Added Tax Act, s. 21 and the Second Schedule, item 1 — output tax is nil on the export of goods and services; item 2 — goods shipped as stores on aircraft and vessels leaving Malawi. A zero-rated supply is a taxable supply, so the input tax of its maker stays deductible (s. 30(1)). The evidence an exporter must hold is in the Authority's guidance, which this pack could not open; the Authority's 2026/27 notice on sugar exports mentions refund on proof of export and of repatriation of the proceeds.",
+    "source": "vat-act",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "MW-S-Z-DOM",
+    "name": "Sale, zero-rated (domestic)",
+    "description": "A local supply the Second Schedule taxes at nil: fertilizers, pharmaceutical products, exercise books, salt, laundry soap, mosquito nets and others",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2005-01-01",
+    "legal_reference": "Value Added Tax Act, s. 21 and the Second Schedule as printed in the 2014 consolidation: fertilizers (tariff headings 3101 to 3105), condoms, exercise books, laundry soap, salt, pharmaceutical products (3001 to 3006), mosquito and sandfly nets and the other items listed, a number of which were deleted by Act No. 23 of 2011. Amendments after 2014 could not be read: the list in force has to be checked against the current Schedule before a supply is coded here.",
+    "source": "vat-act",
+    "vat_category": "Z",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZL"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZL",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "MW-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply the First Schedule lists: unprocessed foodstuffs, water, books and newspapers, petroleum, education, banking and life insurance, medical services, residential rentals",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2005-01-01",
+    "legal_reference": "Value Added Tax Act, s. 20 and the First Schedule — items 1 to 3 live animals, animal products and vegetable products in the raw state; item 4 non-mineral water; item 5 printed books and newspapers; item 6 petroleum oils; item 14 educational services; item 15 banking and life insurance services; item 16 postal services; item 17 funeral services; item 18 medical services; item 19 transport of exports; item 20 rentals and sale of properties used for residential purposes; item 23 betting and gaming. No input tax is deductible on purchases made for exempt supplies (s. 30(3)); a mixed supplier apportions under s. 32. Amendments after 2014 could not be read.",
+    "source": "vat-act",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EX",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "MW-P-17.5",
+    "name": "Purchase, standard rate 17.5 %, deductible",
+    "description": "A local purchase at the general rate, used wholly and necessarily in the business of a taxable person",
+    "kind": "vat",
+    "rate": 17.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-12-30",
+    "legal_reference": "Value Added Tax Act, s. 30(1) — at the end of the tax period a taxable person deducts from output tax the VAT on goods and services bought in Malawi and used wholly, exclusively and necessarily in the course of the business, provided the supply is taxable and the person holds a tax invoice issued under s. 25; s. 30(4) — no deduction twice, and none after twelve months from the date it accrued. Rate: public notice of the Authority, effective 30 December 2025.",
+    "source": "rate-notice-2025",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "MW-P-16.5",
+    "name": "Purchase, standard rate 16.5 %, deductible (until 29 December 2025)",
+    "description": "A local purchase at the former general rate, dated up to 29 December 2025",
+    "kind": "vat",
+    "rate": 16.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2005-01-01",
+    "valid_to": "2025-12-29",
+    "legal_reference": "Value Added Tax Act, s. 30(1) as above, at the rate of s. 9 before the increase of 30 December 2025. Closed on 29 December 2025.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 112
+  },
+  {
+    "code": "MW-P-17.5-ND",
+    "name": "Purchase, standard rate 17.5 %, input tax not deductible",
+    "description": "A purchase whose input tax the Act blocks — entertainment, motor vehicles and their spare parts for a business that does not deal in them",
+    "kind": "vat",
+    "rate": 17.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2025-12-30",
+    "legal_reference": "Value Added Tax Act, s. 30(5) — no deduction on motor vehicles or their spare parts unless the taxable person deals in or hires them or sells spare parts; s. 30(6) — none on entertainment, including restaurant, meals and hotel expenses, unless the business provides entertainment; s. 30(7) — a supply partly for personal use is deductible only for the business part; s. 30(10) — the Minister may add classes by Order. The tax follows the expense to account 6530. Which purchase falls in these classes is for the preparer to decide.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "6530"
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "MW-P-Z",
+    "name": "Purchase, zero-rated",
+    "description": "A local purchase of a zero-rated good from a taxable supplier",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2005-01-01",
+    "legal_reference": "Value Added Tax Act, s. 21 and the Second Schedule — a purchase of a zero-rated supply carries no input tax; it is reported in the zero-rated purchases row.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZP"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZP",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "MW-P-EX",
+    "name": "Purchase, exempt",
+    "description": "A purchase of an exempt supply: no input tax",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2005-01-01",
+    "legal_reference": "Value Added Tax Act, s. 20 and the First Schedule — an exempt supply bears no VAT; the buyer has no input tax to deduct.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "MW-P-IMP",
+    "name": "Import of goods, VAT paid at the border",
+    "description": "Goods imported: VAT charged on the customs entry at the standard rate",
+    "kind": "vat",
+    "rate": 17.5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2025-12-30",
+    "legal_reference": "Value Added Tax Act, s. 7(1)(b) and (3) — VAT is charged on every importation of goods, collected under the law on customs duties; s. 8(b) — paid by the importer; s. 28 — the taxable value of imported goods; s. 30(1)(c) — the importer deducts it when holding the customs entry that shows the VAT paid. The VAT is held on the customs control account 2125 until settled.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "MW-P-RC-SVC",
+    "name": "Imported service, VAT accounted for by the receiver",
+    "description": "A service received from a supplier outside Malawi: the receiver pays the VAT and deducts it under the ordinary rules",
+    "kind": "vat",
+    "rate": 17.5,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2025-12-30",
+    "legal_reference": "Value Added Tax Act, s. 7(1)(c) — VAT is charged on the supply of any imported service, other than exempt goods and services; s. 8(c) — paid by the receiver of the services; s. 30(1) — input tax is deductible on goods and services imported by the taxable person and used in the business. The pack therefore books the output tax in box 1R and the matching input tax in box 2. Understanding VAT: the person importing the service accounts for the VAT and remits it to the Authority by the 25th of the following month.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1R"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "1R",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 160
+  }
+]

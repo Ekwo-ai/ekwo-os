@@ -180,3 +180,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('MRU', 'Mauritanian ouguiya', 'UM', 2)
 on conflict (code) do nothing;
+
+-- Malawian kwacha, two decimals, packs/mw/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('MWK', 'Malawian kwacha', 'MK', 2)
+on conflict (code) do nothing;
