@@ -40,47 +40,6 @@
     "sequence": 10
   },
   {
-    "code": "MW-S-16.5",
-    "name": "Sale, standard rate 16.5 % (until 29 December 2025)",
-    "description": "The general rate before the increase of 30 December 2025, for a supply dated up to 29 December 2025",
-    "kind": "vat",
-    "rate": 16.5,
-    "scope": "sale",
-    "treatment": "domestic",
-    "valid_from": "2005-01-01",
-    "valid_to": "2025-12-29",
-    "legal_reference": "Value Added Tax Act, s. 9 — the rate of Value Added Tax is 16.5 per cent of the value of the taxable supply (amended by Act No. 10 of 2008 in the consolidation); closed on 29 December 2025, the day before the Malawi Revenue Authority's notice puts the 17.5 % rate into effect. The date the 16.5 % rate began is not evidenced by the text this pack could open; the valid_from is a floor.",
-    "source": "vat-act",
-    "vat_category": "S",
-    "postings": {
-      "invoice": [
-        {
-          "type": "base",
-          "box": "1S"
-        },
-        {
-          "type": "tax",
-          "account": "2100",
-          "box": "1S"
-        }
-      ],
-      "credit_note": [
-        {
-          "type": "base",
-          "box": "1S",
-          "box_factor": -100
-        },
-        {
-          "type": "tax",
-          "account": "2100",
-          "box": "1S",
-          "box_factor": -100
-        }
-      ]
-    },
-    "sequence": 12
-  },
-  {
     "code": "MW-S-Z-EXP",
     "name": "Sale, zero-rated (export)",
     "description": "A supply of goods or services exported from Malawi",
@@ -205,46 +164,6 @@
       ]
     },
     "sequence": 110
-  },
-  {
-    "code": "MW-P-16.5",
-    "name": "Purchase, standard rate 16.5 %, deductible (until 29 December 2025)",
-    "description": "A local purchase at the former general rate, dated up to 29 December 2025",
-    "kind": "vat",
-    "rate": 16.5,
-    "scope": "purchase",
-    "treatment": "domestic",
-    "valid_from": "2005-01-01",
-    "valid_to": "2025-12-29",
-    "legal_reference": "Value Added Tax Act, s. 30(1) as above, at the rate of s. 9 before the increase of 30 December 2025. Closed on 29 December 2025.",
-    "source": "vat-act",
-    "postings": {
-      "invoice": [
-        {
-          "type": "base",
-          "box": "2"
-        },
-        {
-          "type": "tax",
-          "account": "1150",
-          "box": "2"
-        }
-      ],
-      "credit_note": [
-        {
-          "type": "base",
-          "box": "2",
-          "box_factor": -100
-        },
-        {
-          "type": "tax",
-          "account": "1150",
-          "box": "2",
-          "box_factor": -100
-        }
-      ]
-    },
-    "sequence": 112
   },
   {
     "code": "MW-P-17.5-ND",

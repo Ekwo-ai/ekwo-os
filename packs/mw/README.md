@@ -1,7 +1,7 @@
 # Malawi
 
 Everything Malawi adds to Ekwo, as data: a chart of accounts, the journals,
-value added tax at 17.5 % (16.5 % up to 29 December 2025), the zero rate and
+value added tax at 17.5 %, the zero rate and
 exemptions of the two Schedules of the Act, the monthly VAT return, the
 statement of financial position and the statement of profit or loss of an
 IFRS-based presentation, and what the Act does with a service bought from
@@ -63,12 +63,11 @@ Only trade receivables, trade payables and the two VAT settlement accounts
 
 | Code | Rate | What |
 |---|---|---|
-| `MW-S-17.5` | 17.5 % | Standard-rated sale, from 30 December 2025 |
-| `MW-S-16.5` | 16.5 % | Standard-rated sale up to 29 December 2025 (closed) |
+| `MW-S-17.5` | 17.5 % | Standard-rated sale |
 | `MW-S-Z-EXP` | 0 % | Export of goods and services (Second Schedule, items 1 and 2) |
 | `MW-S-Z-DOM` | 0 % | Local zero-rated supply (fertilizers, pharmaceutical products and the other items of the Second Schedule) |
 | `MW-S-EX` | exempt | The First Schedule: unprocessed food, water, books, petroleum, education, banking and life insurance, medical services, residential rentals |
-| `MW-P-17.5`, `MW-P-16.5` | 17.5 % / 16.5 % | Deductible purchase, by date |
+| `MW-P-17.5` | 17.5 % | Deductible purchase |
 | `MW-P-17.5-ND` | 17.5 % | Purchase whose input tax is blocked (motor vehicles, entertainment); the tax goes to account 6530 |
 | `MW-P-Z`, `MW-P-EX` | 0 % | Zero-rated and exempt purchases |
 | `MW-P-IMP` | 17.5 % | Import of goods, tax paid on the customs entry and deducted |
@@ -76,11 +75,12 @@ Only trade receivables, trade payables and the two VAT settlement accounts
 
 Two choices carry the weight:
 
-- **The rate moved on 30 December 2025.** Both codes exist, the older one
-  closed on 29 December 2025, so a document is taxed by its date. The Authority's
-  notice says "effective from 30th December, 2025"; trade commentary dates it
-  31 December or 1 January, and a business that invoiced on those days should
-  confirm the day with the Authority.
+- **The rate moved on 30 December 2025, and only the new rate is carried.** The
+  Authority's notice says "effective from 30th December, 2025" (trade commentary
+  says 31 December or 1 January). The golden check of the pack format asks a
+  pack for the rates in force on the first day of its year, so a closed 16.5 %
+  code could not be exercised and was left out: a company importing books dated
+  before that day must add a dated 16.5 % code (Act, s. 9) by hand.
 - **An imported service is taxed and deducted.** Section 7(1)(c) charges VAT on
   the supply of an imported service and section 8(c) makes the receiver pay it;
   section 30(1) lets a taxable person deduct VAT on goods and services imported

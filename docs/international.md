@@ -476,7 +476,7 @@ return.
 
 ## From Malawi
 
-The pack carries VAT at 17.5 % (16.5 % up to 29 December 2025, two dated codes),
+The pack carries VAT at 17.5 % (raised from 16.5 % on 30 December 2025; only the new rate is carried),
 the zero rate on exports and on the items of the Second Schedule, the exemptions
 of the First Schedule, the VAT charged on imports and on imported services, a
 monthly return due on the 25th and two statements, in English.
