@@ -174,5 +174,12 @@
     "vat_scheme": null,
     "legal_reference": "No structured e-invoice standard, Peppol profile or clearance system of the Seychelles Revenue Commission was found in the texts read; the Tax Portal takes the returns and payments, not invoices. `obligation` is `none` for want of a text, not on a finding that none exists.",
     "source": "src-portal"
-  }
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "The texts read — the Schedules of 2014, the VAT return, the Commission's brochures — contain no rule making the buyer in Seychelles assess the tax on a service bought from a supplier abroad: the return has no line for it, and the brochure says VAT is collected at Customs on imports and at the point of sale. The pack therefore carries no purchase tax for it. This is a finding about the texts read, not about the Act, which was not found; if the Act has a reverse charge, it is a gap recorded in the README.",
+      "source": "vat-guideline"
+    }
+  ]
 }
