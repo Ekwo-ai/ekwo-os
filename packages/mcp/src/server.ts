@@ -434,6 +434,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   server.registerTool(
+    'instalment_plan',
+    {
+      title: 'VAT instalments of a period',
+      description:
+        'The payments on account of a declaration that the VAT scheme a company recorded asks for during its period — a simplified scheme pays part of the year\'s tax before filing the annual return — with what was due, what was paid and what is outstanding. The schedule, the percentages and the box of the previous year they are read on are country pack data; no country rule lives in this tool. It reads; it pays nothing.',
+      inputSchema: read.InstalmentPlanInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.instalmentPlan(backend, args)),
+  );
+
+  server.registerTool(
     'ec_sales_list',
     {
       title: 'Recapitulative statement of European Union supplies',

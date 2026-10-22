@@ -43,6 +43,7 @@ const READ_TOOLS = [
   'matching_difference_options',
   'aged_balance',
   'vat_return',
+  'instalment_plan',
   'ec_sales_list',
   'portfolio_upcoming_filings',
   'portfolio_filings_touched_since',

@@ -711,7 +711,7 @@ export const VatReturnInput = z.object({
     .string()
     .optional()
     .describe(
-      'Which declaration form, when the country files more than one (BE-VAT-PERIODIC, FR-CA3). Leave it out and the periodic return of the company country is used.',
+      'Which declaration form, when the country files more than one (BE-VAT-PERIODIC, FR-CA3). Leave it out and the form the company files is used: the one its VAT scheme files where it has recorded a scheme, the periodic return of its country otherwise.',
     ),
 });
 
@@ -732,6 +732,31 @@ export async function vatReturn(
     boxes: moneyFields(rows, ['amount']),
     note:
       'A box flagged computed is a total the form derives from the others, following the plus and minus lists of the country pack, or the rate of one other box where the form states a line as a multiplication; hidden means the form does not print it. Everything else is summed from what the tax postings wrote on the ledger lines. Order by print_sequence to print the form the way its administration does, which is not always the order the boxes are worked out in.',
+  };
+}
+
+export const InstalmentPlanInput = z.object({
+  company_id: companyId,
+  from: isoDate.describe('First day of the period of the declaration the instalments are paid on account of — usually 1 January.'),
+  to: isoDate.describe('Last day of that period.'),
+});
+
+export async function instalmentPlan(
+  backend: Backend,
+  args: z.infer<typeof InstalmentPlanInput>,
+): Promise<unknown> {
+  const rows = await backend.rpc<Record<string, unknown>>('instalment_plan', {
+    p_company_id: args.company_id,
+    p_from: args.from,
+    p_to: args.to,
+  });
+  return {
+    period: { from: args.from, to: args.to },
+    instalments: moneyFields(rows, ['base', 'amount_due', 'paid', 'outstanding']),
+    note:
+      rows.length === 0
+        ? 'No instalment: the company has recorded no VAT scheme for this period, or its scheme asks for no payment on account.'
+        : 'One row per payment on account the VAT scheme of the company asks for during the period: the month it falls due in (due_date only where the law gives one day to everybody), the base read on the previous period\'s return — as it was frozen, or as the books compute it where nothing was frozen — the percentage, what was due, what was recorded as paid and what is outstanding. reason no_base means there is no previous period to read, below_minimum that the base is under the minimum of the scheme and nothing is due. It reads; it pays nothing.',
   };
 }
 
@@ -788,7 +813,7 @@ export async function portfolioUpcomingFilings(
     note:
       rows.length === 0
         ? 'You hold filings.read on no company of this installation, so there is no portfolio to read. It is not the same as nothing being due: a company you could read would be listed even with nothing to say.'
-        : 'One row per period falling due in the window, across every company you hold filings.read on, and at least one row per company. state and filing_id are the declaration already prepared or sent for that period; both empty means nothing has been started. A row without a due_date says why in reason: no_deadline_rule — the country pack names no day for this form, usually because the schedule depends on who is filing, so the period is listed and the date has to come from the administration; nothing_due — the company files, and nothing of it falls in this window; no_form — the installation carries no return for the fiscal country of the company. Never read a missing date as "not due". It reads a calendar; it prepares and files nothing.',
+        : 'One row per period falling due in the window, across every company you hold filings.read on, and at least one row per company. state and filing_id are the declaration already prepared or sent for that period; both empty means nothing has been started. A row without a due_date says why in reason: no_deadline_rule — the country pack names no day for this form, usually because the schedule depends on who is filing, so the period is listed and the date has to come from the administration; nothing_due — the company files, and nothing of it falls in this window; no_form — the installation carries no return for the fiscal country of the company. A row with instalment set is not a return but a payment on account of report_code, which the VAT scheme of the company asks for: its period is the month it falls due in. Never read a missing date as "not due". It reads a calendar; it prepares and files nothing.',
   };
 }
 

@@ -234,6 +234,7 @@ Every write names its company explicitly.
 | `matching_difference_options` | The reasons a difference may be booked for, with the account the pack gives for each, and the company's tolerance |
 | `aged_balance` | What is still owed, bucketed by age, read from the ledger |
 | `vat_return` | The boxes for a period, summed from the ledger |
+| `instalment_plan` | The payments on account the VAT scheme of a company asks for in a period: due, paid, outstanding |
 | `ec_sales_list` | The recapitulative statement of European Union supplies: one line per customer VAT number and per nature |
 | `portfolio_upcoming_filings` | *Portfolio* = the companies you may read: for an accounting firm, its clients ([`docs/firms.md`](../../docs/firms.md)). What falls due between two dates in every company you hold `filings.read` on. One row per company at least: a pack that names no deadline is listed without a date, and says so |
 | `portfolio_filings_touched_since` | Declarations that have gone and whose period received entries afterwards, across the same companies, with the company named |
