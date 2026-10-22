@@ -80,22 +80,22 @@ code,parent,type,reconcilable,name,sequence
 390,39,asset_current,false,Provisions pour dépréciation des stocks de marchandises,790
 391,39,asset_current,false,Provisions pour dépréciation des matières premières et approvisionnements,800
 395,39,asset_current,false,Provisions pour dépréciation des produits finis,810
-40,,liability_payable,false,Fournisseurs et comptes rattachés,820
-400,40,liability_payable,false,Fournisseurs,830
+40,,liability_payable,true,Fournisseurs et comptes rattachés,820
+400,40,liability_payable,true,Fournisseurs,830
 4000,400,liability_payable,true,Fournisseurs ordinaires,840
 4004,400,liability_payable,true,Fournisseurs de biens d'équipement,850
-405,40,liability_payable,false,Effets à payer,860
-408,40,liability_payable,false,"Fournisseurs, factures à recevoir",870
+405,40,liability_payable,true,Effets à payer,860
+408,40,liability_payable,true,"Fournisseurs, factures à recevoir",870
 409,40,asset_current,false,Fournisseurs débiteurs,880
 4090,409,asset_current,false,"Fournisseurs, avances et acomptes versés sur commandes d'exploitation",890
 4097,409,asset_current,false,"Fournisseurs, rabais, remises et ristournes à obtenir",900
-41,,asset_receivable,false,Clients et comptes rattachés,910
-410,41,asset_receivable,false,Clients,920
+41,,asset_receivable,true,Clients et comptes rattachés,910
+410,41,asset_receivable,true,Clients,920
 4100,410,asset_receivable,true,Clients ordinaires,930
 4103,410,asset_receivable,true,"Clients, État et collectivités publiques",940
 412,41,asset_receivable,true,Clients douteux ou litigieux,950
-415,41,asset_receivable,false,Effets à recevoir,960
-418,41,asset_receivable,false,"Clients, factures à établir",970
+415,41,asset_receivable,true,Effets à recevoir,960
+418,41,asset_receivable,true,"Clients, factures à établir",970
 419,41,liability_current,false,Clients créditeurs,980
 4190,419,liability_current,false,"Clients, avances et acomptes reçus sur commandes en cours",990
 4197,419,liability_current,false,"Clients, rabais, remises et ristournes à accorder",1000
