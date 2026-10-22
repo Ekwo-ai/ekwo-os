@@ -87,3 +87,9 @@ own, to be made when an invoice issued from the books needs to carry one.
 - `ReceivedInvoice` with `syntax: 'model'` may carry `''` where the type
   says a text is required. A consumer that sorts or totals received invoices
   reads `missing` first.
+
+## See also
+
+- [`packages/document-reading/README.md`](../../packages/document-reading/README.md) — how a product chains the reader
+- [0048](0048-format-libraries-are-mit-one-package-per-format.md) — Format libraries are MIT, one package per format
+- [0050](0050-an-invoice-is-written-from-the-books.md) — An invoice file is written from the books
