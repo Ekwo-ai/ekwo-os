@@ -11,6 +11,28 @@ somewhere has already run it.
 
 ### Added
 
+- **The `contracts` module** (module migration `20261022094334`, decision
+  0084). What a company agreed with a party of its books, in its own schema:
+  `contracts.contracts` — kind, side (sale or purchase), a state that only
+  moves forward, dates, tacit renewal and notice, value in the company's
+  currency unless another is named, the signed file as an attachment — its
+  `schedules`, `amendments` and `templates`, and the view
+  `contracts.deadlines` (notice, renewal, end, next issue, indexation).
+  `contracts.issue_due(company, day)` turns every period that has come into
+  one draft sales or purchase invoice of the socle, `contract_reference` set
+  to the contract's number, traced in `contracts.issues`, idempotent because
+  the socle's `client_ref` refuses a second document for one period; a
+  schedule with `auto_post` has its documents booked by `post_document()`.
+  `contracts.roll_forward()` starts, expires and tacitly renews contracts.
+  Capabilities `contracts.read`, `contracts.write` and `contracts.issue`.
+  Eight MCP tools, `contracts_list`, `contracts_card`, `contracts_upsert`,
+  `contracts_schedule`, `contracts_issue_due`, `contracts_deadlines`,
+  `contracts_amend` and `contracts_from_template`, and `ekwo contracts list |
+  card | set | schedule | issue | deadlines | amend | from-template`. Not in
+  this version: signature, several parties to one contract, proration of a
+  period; `modules/contracts/README.md` says how a signature request will
+  attach.
+
 - **A tax lands by its code, not on a line** (socle migration
   `20261020210000`, decision 0083). A document line carries its base and
   names its tax; the posting writes the tax on the account the tax points to.

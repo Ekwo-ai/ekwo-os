@@ -201,6 +201,7 @@ reach and whether you may write; without that box ticked, you read.
 | The PDF of an invoice or a credit note, with the company's logo | `ekwo doc pdf <doc> [--factur-x] [--out file]` | `render_invoice_pdf` |
 | The electronic invoice of a posted sale (module `einvoicing`) | `ekwo einvoice validate <doc>`, then `ekwo einvoice issue <doc>` | `einvoicing_validate`, then `einvoicing_issue` |
 | The record of a relationship: cards, segments, deals (module `crm`) | `ekwo crm search`, `ekwo crm card <contact>`, `ekwo crm board`, then `ekwo crm log …` / `ekwo crm deal move <deal> <stage>` | `crm_search`, `crm_card`, `crm_board`, then `crm_log_activity` / `crm_move_deal` |
+| The contracts of the company, and the invoices they say are due (module `contracts`) | `ekwo contracts list`, `ekwo contracts deadlines`, then `ekwo contracts issue --on <date>` | `contracts_list`, `contracts_deadlines`, then `contracts_issue_due` |
 | A received Peppol file, or whether a recipient is on Peppol (no installation needed) | `ekwo peppol validate <file>`, `ekwo peppol lookup <participant>` | — |
 | The VAT return of a period | — | `vat_return` |
 | Trial balance, ledger | — | `trial_balance`, `general_ledger` |

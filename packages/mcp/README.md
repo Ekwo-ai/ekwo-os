@@ -313,7 +313,9 @@ startup to know which: `fixed_assets_list`, `fixed_assets_create`,
 `tax_losses`, `tax_record_computation`, `tax_computations`, `crm_search`,
 `crm_card`, `crm_segments`, `crm_board`, `crm_timeline`, `crm_upsert_card`,
 `crm_log_activity`, `crm_join_segment`, `crm_leave_segment`, `crm_open_deal`,
-`crm_move_deal`. A module may offer prompts too, under the same prefix:
+`crm_move_deal`, `contracts_list`, `contracts_card`, `contracts_upsert`,
+`contracts_schedule`, `contracts_issue_due`, `contracts_deadlines`,
+`contracts_amend`, `contracts_from_template`. A module may offer prompts too, under the same prefix:
 `tax_review_year`, `crm_morning_review`. A module that is
 not installed is not offered. When the project does not expose a module's schema yet, the tool says
 which setting to change.
