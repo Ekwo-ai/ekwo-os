@@ -32,7 +32,12 @@ import { allPacks } from './helpers/packs.js';
 const MIGRATION = '20261011160431_a_line_keeps_the_boxes_it_was_posted_in.sql';
 
 /** Published after it and reading the columns it adds: left out, applied after it. */
-const LATER = ['20261019161437_a_return_settles_what_it_carries.sql'];
+const LATER = [
+  '20261019161437_a_return_settles_what_it_carries.sql',
+  // Replaces vat_return() with the body of MIGRATION, under the guard of a
+  // company's VAT scheme.
+  '20261022110100_the_return_reads_the_vat_scheme.sql',
+];
 
 const withGolden = allPacks.filter((pack) => pack.golden !== null);
 

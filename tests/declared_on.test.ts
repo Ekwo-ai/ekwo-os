@@ -43,7 +43,11 @@ const MIGRATIONS = [
  * Published after the three, and reading `declared_lines()`: left out with
  * them, and applied after them as part of the same upgrade.
  */
-const LATER = ['20261011160431_a_line_keeps_the_boxes_it_was_posted_in.sql'];
+const LATER = [
+  '20261011160431_a_line_keeps_the_boxes_it_was_posted_in.sql',
+  // Replaces vat_return() with that body, under the guard of a VAT scheme.
+  '20261022110100_the_return_reads_the_vat_scheme.sql',
+];
 
 /**
  * Published after them too, and changing on purpose which tax lines a filing
