@@ -46,6 +46,9 @@ const LATER = [
   // Republishes entries_guard_posted() as this migration left it, which asks
   // assert_writes_into_known_company().
   '20261020160000_a_company_numbers_its_documents_its_own_way.sql',
+  // Makes the reference of a payment on account to its entry composite with
+  // scope_references_to_company(), which MIGRATION defines.
+  '20261022110100_the_return_reads_the_vat_scheme.sql',
 ];
 
 let db: PGlite;

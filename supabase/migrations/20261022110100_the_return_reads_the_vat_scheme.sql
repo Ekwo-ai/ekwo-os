@@ -627,3 +627,18 @@ create or replace view document_legal_mentions
                                   and coalesce(not (vat_scheme_at(dt.company_id, dt.document_date)).charges_vat, false)
            else coalesce(dt.treatments && legal_mention_treatments(m.applies_when), false)
          end;
+
+-- ---------------------------------------------------------------------------
+-- 4. A payment on account names an entry of its own company
+-- ---------------------------------------------------------------------------
+--
+-- declaration_instalments.entry_id is made composite on the company like
+-- every other reference of the schema (decision 0065). Here rather than with
+-- the table, so an upgrade test that leaves out the migration defining
+-- scope_references_to_company() can still load the seeds.
+
+do $$
+begin
+  perform scope_references_to_company('public');
+end;
+$$;
