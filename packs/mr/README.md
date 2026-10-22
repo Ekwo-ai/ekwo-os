@@ -110,8 +110,10 @@ month ends with a credit of 8 160 for that reason: an import of 40 000.
 
 ## Fiscal year
 
-The calendar year. The Code does not set another one for companies in the pages
-read; a company with a different year sets its first day by hand.
+The calendar year. Article 50-3 has taxpayers close their accounts each year on
+31 December, except on a sale or cessation of the business, and article 50-4 lets a
+new business close its first balance sheet at the end of the following year; the
+golden uses 1 January to 31 December 2026.
 
 ## Electronic invoicing
 
