@@ -1,0 +1,121 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "MR-TVA",
+  "name": "Déclaration mensuelle de la taxe sur la valeur ajoutée",
+  "period": [
+    "month"
+  ],
+  "period_default": "month",
+  "valid_from": "2022-01-01",
+  "legal_reference": "Code général des impôts, art. 249-1 — tout redevable dépose chaque mois, à l'appui de son versement entre les mains du receveur des impôts, une déclaration conforme au modèle prescrit ; art. 249-2 — elle indique le montant total des opérations, le détail des opérations taxables, la taxe déductible et le décompte de la taxe exigible ; art. 249-3 — elle est accompagnée d'un état des déductions ; art. 250-1 — une déclaration « Néant » est déposée pour un mois sans opération ; art. 244 — l'excédent de déduction est un crédit imputable sur les déclarations suivantes. Le modèle prescrit n'a pas pu être lu : les cases ci-dessous sont celles du pack, regroupées sous les chiffres que le Code nomme, et le manque est écrit dans le README.",
+  "source": "cgi2023",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Code général des impôts, art. 250-1 — la déclaration d'un mois donné est déposée au plus tard le 15 du mois suivant ; art. 254 — le paiement accompagne la déclaration. Le Code ne dit pas ce qu'il advient d'un 15 férié.",
+    "source": "cgi2023"
+  },
+  "boxes": [
+    {
+      "box": "ZE",
+      "kind": "base",
+      "name": "Opérations à l'exportation (taux zéro)",
+      "sequence": 10,
+      "legal_reference": "Code général des impôts, art. 230-2 et 249-2 — montant des exportations. Ligne d'information du pack.",
+      "source": "cgi2023"
+    },
+    {
+      "box": "EX",
+      "kind": "base",
+      "name": "Opérations exonérées",
+      "sequence": 20,
+      "legal_reference": "Code général des impôts, art. 215 et 249-2 — montant des opérations exonérées, déclaré même par l'entreprise dont l'exonération n'est pas visée à l'article 215 (art. 250-2). Ligne d'information du pack.",
+      "source": "cgi2023"
+    },
+    {
+      "box": "1S",
+      "kind": "base",
+      "name": "Opérations taxables au taux de 16 % — base",
+      "sequence": 30,
+      "legal_reference": "Code général des impôts, art. 230-1 et 249-2 — détail des opérations taxables. Ligne d'information du pack.",
+      "source": "cgi2023"
+    },
+    {
+      "box": "1S",
+      "kind": "tax",
+      "name": "Taxe collectée sur les opérations taxables",
+      "sequence": 35,
+      "legal_reference": "Code général des impôts, art. 230-1 et 249-2 — taxe exigible sur les opérations taxables, nette des avoirs.",
+      "source": "cgi2023"
+    },
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Total de la taxe exigible",
+      "sequence": 40,
+      "plus": [
+        "1S:tax"
+      ],
+      "legal_reference": "Code général des impôts, art. 249-2 — décompte de la taxe exigible.",
+      "source": "cgi2023"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Achats et services locaux ouvrant droit à déduction — base",
+      "sequence": 50,
+      "legal_reference": "Code général des impôts, art. 232 et 249-3-a — achats sur place et prestations de services, justifiés par l'état des déductions. Ligne d'information du pack.",
+      "source": "cgi2023"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Taxe déductible sur achats et services locaux",
+      "sequence": 55,
+      "legal_reference": "Code général des impôts, art. 231, 232 et 249-3-a — taxe déductible acquittée par le client, nette des avoirs reçus.",
+      "source": "cgi2023"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Importations — base",
+      "sequence": 60,
+      "legal_reference": "Code général des impôts, art. 222-1° et 249-3-b — valeur en douane des importations. Ligne d'information du pack.",
+      "source": "cgi2023"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Taxe déductible sur importations",
+      "sequence": 65,
+      "legal_reference": "Code général des impôts, art. 232 et 249-3-b — taxe payée à l'importation, justifiée par la quittance du comptable du Trésor.",
+      "source": "cgi2023"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Total de la taxe déductible",
+      "sequence": 70,
+      "plus": [
+        "2:tax",
+        "3:tax"
+      ],
+      "legal_reference": "Code général des impôts, art. 249-2 — taxe ouvrant droit à déduction : achats locaux et importations.",
+      "source": "cgi2023"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Taxe à payer ou crédit de taxe",
+      "sequence": 80,
+      "plus": [
+        "1"
+      ],
+      "minus": [
+        "4"
+      ],
+      "legal_reference": "Code général des impôts, art. 249-2 et 244 — taxe exigible moins taxe déductible. Un chiffre négatif est un crédit imputable sur les déclarations suivantes (art. 244) et remboursable dans les seuls cas des art. 245 à 247.",
+      "source": "cgi2023"
+    }
+  ]
+}

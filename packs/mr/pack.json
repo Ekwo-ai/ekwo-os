@@ -1,0 +1,165 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MR",
+  "name": "Mauritanie",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 410,
+  "released_at": "2026-10-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "cgi2023",
+        "title": "Code général des impôts — édition de janvier 2023, issue de la loi n° 2019-018 du 29 avril 2019 portant Code général des impôts et mise à jour jusqu'à la loi n° 2022-01 du 13 janvier 2022 portant loi de finances pour 2022 : art. 209 à 215 (champ d'application, assujettis, seuil de 3 000 000 MRU, exonérations), art. 221 (représentant), art. 222 à 226 (base d'imposition), art. 227 à 229 (fait générateur, exigibilité), art. 230 (taux de 16 % et taux zéro), art. 231 à 236 (déductions), art. 244 à 248 (crédit de taxe), art. 249 à 254 (déclaration mensuelle au plus tard le 15 du mois suivant), art. L.15 à L.19 (comptabilité) et L.21 (facture)",
+        "publisher": "Direction générale des Impôts — Ministère des Finances de la République islamique de Mauritanie",
+        "url": "https://finances.gov.mr/sites/default/files/2023-03/CGI-Fr-2023.pdf",
+        "consulted_on": "2026-10-22",
+        "kind": "law"
+      },
+      {
+        "key": "pcn",
+        "title": "Ordonnance n° 82-180 du 24 décembre 1982 portant institution d'un Plan comptable national, avec le Plan comptable général annexé (liste des comptes des classes 1 à 8, modèles de bilan et de tableau des résultats), Journal officiel de la République islamique de Mauritanie, numéro spécial 586 du 2 mars 1983",
+        "publisher": "Journal officiel de la République islamique de Mauritanie — Ministère des Finances",
+        "url": "https://www.finances.gov.mr/Recueil_des_textes_relatifs_a_la_mission_du_Ministere/Textes/TRESOR/Ordonnance%2082-180%20plan%20cpble%20nat.pdf",
+        "consulted_on": "2026-10-22",
+        "kind": "standard"
+      },
+      {
+        "key": "dgi-portal",
+        "title": "Direction générale des Impôts de Mauritanie — site de l'administration fiscale (actualités, textes, services aux contribuables)",
+        "publisher": "Direction générale des Impôts",
+        "url": "https://impots.gov.mr/",
+        "consulted_on": "2026-10-22",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "MRU",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "4100",
+      "payable": "4000",
+      "suspense": "488",
+      "rounding": "6489",
+      "retained_earnings": "120",
+      "sales": "700",
+      "purchase": "600",
+      "bank": "5500",
+      "cash": "560",
+      "fx_gain": "778",
+      "fx_loss": "678",
+      "asset_disposal_gain": "840",
+      "asset_disposal_loss": "849",
+      "tax_payable": "4355",
+      "tax_receivable": "4356"
+    },
+    "journal_roles": {
+      "sales": "VT",
+      "purchase": "AC",
+      "miscellaneous": "OD",
+      "opening": "AN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VT",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "AC",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BQ",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CA",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "OD",
+      "type": "general",
+      "name": "Journal des opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "AN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan comptable national — plan comptable général (classes 1 à 8)",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "MR-PCN-BILAN",
+        "MR-PCN-RESULTATS"
+      ],
+      "legal_reference": "Ordonnance n° 82-180 du 24 décembre 1982 portant institution d'un Plan comptable national, art. 1er — le Plan comptable général annexé est le plan de comptes ; les comptes principaux à deux chiffres des classes 1 à 8 sont obligatoires, les comptes divisionnaires (trois chiffres et plus) sont donnés à titre indicatif ; le Code général des impôts, art. L.16, exige une comptabilité conforme au référentiel comptable mauritanien. Le pack reprend les comptes à deux chiffres et une sélection de comptes divisionnaires, aux numéros du plan, suffisante pour tenir des livres de sociétés commerciales ; la loi n° 99-009 du 20 janvier 1999 portant révision du plan comptable n'a pas pu être lue (voir le README). Ajouts propres au pack, absents de la liste du plan : 4356 (crédit de TVA à reporter ou à rembourser, pour que le compte de règlement 4355 reste distinct des comptes où la taxe se poste), 4361 (TVA due à la douane), 5501 et 5502 (banque en devises, à l'étranger), 4000 et 4100 en comptes de tiers lettrables, 6489 (arrondis).",
+      "source": "pcn"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless",
+    "number_format": "{CODE}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "delivery_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Code général des impôts, art. L.21-2 — la facture porte obligatoirement le numéro de facture d'une série ininterrompue ; la forme du numéro n'est pas prescrite, le format `{CODE}-{NNNN}` est celui du pack.",
+        "source": "cgi2023"
+      },
+      "tax_point": {
+        "legal_reference": "Code général des impôts, art. 227 et 228 — le fait générateur des ventes est la livraison et celui des prestations de services l'accomplissement du service, mais la taxe sur les prestations de services est exigible à l'encaissement du prix ou des acomptes (art. 228-5), et sur les marchés publics à chaque paiement du Trésor (art. 228-7). Le pack déclare `delivery_date`, qui est le principe pour les biens ; l'exigibilité des services à l'encaissement n'est pas modélisée (le code `MR-S-16` ne porte pas `cash_basis`) et le manque est écrit dans le README.",
+        "source": "cgi2023"
+      }
+    },
+    "mentions": [
+      {
+        "code": "exempt",
+        "applies_when": "exempt",
+        "text": "Exonéré",
+        "sequence": 10,
+        "legal_reference": "Code général des impôts, art. L.21-2-5° — la facture d'un assujetti à la taxe sur la valeur ajoutée porte, le cas échéant, la mention « Exonéré ».",
+        "source": "cgi2023"
+      }
+    ]
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Code général des impôts, art. 214-1° — n'entrent pas dans le champ d'application de la taxe les prestations de services rendues par les non-résidents lorsqu'elles sont soumises à la retenue à la source de l'article 132 ; art. 221 — le redevable établi hors de Mauritanie fait accréditer un représentant en Mauritanie qui acquitte la taxe à sa place, et à défaut la taxe est payée par le client sur déclaration séparée (art. 221-4). Le pack ne porte pas de code d'autoliquidation : la retenue de l'article 132 et la déclaration séparée du client sont à la charge de l'utilisateur et de son comptable, et le manque est écrit dans le README.",
+      "source": "cgi2023"
+    }
+  ],
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Le Code général des impôts (art. L.21) fixe les mentions de la facture sans prévoir de facture électronique structurée ni de réseau d'échange ; l'art. L.16-2 n'exige que des logiciels de comptabilité agréés par l'administration fiscale. Aucun profil de facturation électronique n'a été lu ; `obligation` reste `none` et le reste du bloc vide.",
+    "source": "cgi2023"
+  }
+}
