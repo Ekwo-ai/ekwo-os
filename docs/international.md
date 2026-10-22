@@ -558,3 +558,27 @@ monthly return; the separate form is a gap in the pack.
 turnover of 400 000 000 ariary (article 06.01.04). The format has no turnover
 threshold, so the pack carries the codes and the README tells a smaller
 business not to use them.
+
+## From Mauritania
+
+**A plan older than the Code.** The chart is the Plan comptable général annexed
+to Ordinance no. 82-180 (1982), whose two-digit accounts are compulsory and
+whose subdivisions are indicative. The pack keeps its numbers and adds a few
+accounts of its own, listed in the chart's `legal_reference`. A revision of 1999
+is cited by the Ministry and could not be read.
+
+**One rate and a long list of exemptions.** Article 230 sets 16 % and a zero
+rate for exports; article 215 exempts about thirty operations, among them
+medical acts, teaching, bread, vegetables, meat and fish, and a quota of water
+and electricity. The pack carries one exempt code and leaves the item to the
+accountant.
+
+**Services taxed when paid.** Article 228 makes the tax on goods chargeable on
+delivery and on services on collection of the price. Ekwo's `cash_basis`
+requires a transition account and a code per treatment, and the golden has no
+service on credit to prove it; the pack declares `delivery_date` and writes the
+gap in its README.
+
+**Tax paid at customs.** Importers pay the VAT before the goods leave the
+customs office (article 254); the pack posts it to account 4361 and deducts it
+in the box for imports.
