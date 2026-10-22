@@ -1,9 +1,13 @@
 import type { PGlite } from '@electric-sql/pglite';
+import { cp, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { compilePack, packsDir, readPack } from '../packages/cli/src/index.js';
 import type { Pack, PackReport, PackVatScheme } from '../packages/cli/src/pack/read.js';
 import { freshDatabase, one, rows } from './helpers/db.js';
 import { newCompany, newContact, newDocument } from './helpers/factory.js';
-import { packWhere, roleOf } from './helpers/packs.js';
+import { allPacks, packWhere, roleOf } from './helpers/packs.js';
 
 /**
  * VAT schemes in the core: the scheme a company is on decides which forms it
@@ -28,7 +32,10 @@ import { packWhere, roleOf } from './helpers/packs.js';
  *   5. under a scheme that charges no VAT: no return, a sale with VAT refused,
  *      the exemption mention printed;
  *   6. a scheme starts on the first day of a financial year, and a cadence the
- *      scheme does not allow is refused.
+ *      scheme does not allow is refused;
+ *   7. the pack files: a form alone and the same form in a list of one compile
+ *      to the same SQL, and a scheme naming an unknown form, a ceiling without
+ *      a source, an unknown role and two periodic forms are refused.
  */
 
 const pack: Pack = packWhere(
@@ -384,5 +391,80 @@ describe('a scheme is recorded by the year and checked', () => {
       [id, periodic.code],
     );
     expect(form.periods).toContain(allowed.period);
+  });
+});
+
+describe('the pack files', () => {
+  /** A copy of the pack, with some of its files replaced. */
+  async function copyWith(files: Record<string, unknown>): Promise<string> {
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-vat-schemes-'));
+    await cp(join(packsDir(), 'schema'), join(dir, 'schema'), { recursive: true });
+    await cp(join(packsDir(), pack.slug), join(dir, pack.slug), { recursive: true });
+    for (const [name, content] of Object.entries(files)) {
+      await writeFile(join(dir, pack.slug, name), JSON.stringify(content, null, 2), 'utf8');
+    }
+    return dir;
+  }
+  const forms = async (): Promise<Record<string, unknown>[]> =>
+    JSON.parse(await readFile(join(packsDir(), pack.slug, 'tax_report.json'), 'utf8')) as Record<string, unknown>[];
+  const schemes = async (): Promise<Record<string, unknown>[]> =>
+    JSON.parse(await readFile(join(packsDir(), pack.slug, 'vat_schemes.json'), 'utf8')) as Record<string, unknown>[];
+  /** The SQL without its comments, which describe the files rather than what they compile to. */
+  const statements = (sql: string): string => sql.replace(/^--.*$/gm, '');
+
+  it('compiles schemes for the packs that carry them, and for no other', () => {
+    for (const p of allPacks) {
+      if (p.vatSchemes === null) expect(compilePack(p), p.slug).not.toMatch(/into vat_schemes|from vat_schemes/);
+      else expect(compilePack(p), p.slug).toMatch(/insert into vat_schemes/);
+    }
+  });
+
+  it('compiles a form alone and the same form in a list of one to the same SQL', async () => {
+    const [first] = await forms();
+    const alone = await readPack(pack.slug, await copyWith({ 'tax_report.json': first, 'vat_schemes.json': [] }));
+    const listed = await readPack(pack.slug, await copyWith({ 'tax_report.json': [first], 'vat_schemes.json': [] }));
+    expect(alone.reports.map((r) => r.role)).toEqual(['periodic']);
+    // The checksum of the files differs, since the files do; nothing else may.
+    expect(statements(compilePack({ ...listed, checksum: alone.checksum }))).toBe(statements(compilePack(alone)));
+    expect(compilePack(alone)).not.toMatch(/reads_postings_of|from_boxes/);
+  });
+
+  it('refuses a scheme that names a form the pack does not carry', async () => {
+    const changed = (await schemes()).map((s) => ({ ...s, forms: [{ report: 'ZZ-NO-FORM', periods: ['month'] }] }));
+    delete (changed[1] as Record<string, unknown>)['instalments'];
+    await expect(readPack(pack.slug, await copyWith({ 'vat_schemes.json': changed }))).rejects.toThrow(
+      /ZZ-NO-FORM is not a form of tax_report.json/,
+    );
+  });
+
+  it('refuses a ceiling without its source', async () => {
+    const changed = (await schemes()).map((s) => ({
+      ...s,
+      ceilings: ((s['ceilings'] ?? []) as Record<string, unknown>[]).map(({ source: _, ...ceiling }) => ceiling),
+    }));
+    await expect(readPack(pack.slug, await copyWith({ 'vat_schemes.json': changed }))).rejects.toThrow(/pack_invalid[\s\S]*source/);
+  });
+
+  it('refuses a role outside its vocabulary, and two periodic forms', async () => {
+    const all = await forms();
+    const unknown = all.map((f, i) => (i === 1 ? { ...f, role: 'quarterly_summary' } : f));
+    await expect(readPack(pack.slug, await copyWith({ 'tax_report.json': unknown }))).rejects.toThrow(/pack_invalid/);
+    const twice = all.map((f) => ({ ...f, role: 'periodic', reads_postings_of: undefined }));
+    await expect(readPack(pack.slug, await copyWith({ 'tax_report.json': twice }))).rejects.toThrow(/are each declared periodic/);
+  });
+
+  it('refuses a box that restates a box the other form does not have', async () => {
+    const all = await forms();
+    const broken = all.map((f, i) =>
+      i === 1
+        ? {
+            ...f,
+            boxes: (f['boxes'] as Record<string, unknown>[]).map((b) =>
+              Array.isArray(b['from']) ? { ...b, from: ['ZZ:base'] } : b,
+            ),
+          }
+        : f,
+    );
+    await expect(readPack(pack.slug, await copyWith({ 'tax_report.json': broken }))).rejects.toThrow(/ZZ:base is not a base box/);
   });
 });
