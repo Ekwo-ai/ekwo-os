@@ -401,7 +401,7 @@ describe('pack, seed, database, pack again', () => {
         'select box, source_key from tax_report_box_templates where country = $1 order by box',
         [pack.manifest.country],
       );
-      expect(boxKeys.length, pack.slug).toBe((pack.report?.boxes ?? []).length);
+      expect(boxKeys.length, pack.slug).toBe(pack.reports.reduce((sum, report) => sum + report.boxes.length, 0));
       for (const row of boxKeys) {
         expect(row.source_key, `${pack.slug} box ${row.box}`).not.toBeNull();
         expect(keys.has(row.source_key!), `${pack.slug} box ${row.box}`).toBe(true);

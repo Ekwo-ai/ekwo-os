@@ -67,19 +67,21 @@ describe('the forms the packs carry', () => {
                 where b.country = t.country and b.report_code = t.code) as boxes
          from tax_report_templates t
         where not exists (select 1 from turnover_tax_regimes r where r.country = t.country and r.report_code = t.code)
-        order by t.country`,
+        order by t.country, t.code`,
     );
     // The forms are the ones the packs carry: a country whose pack declares a
-    // periodic return has it seeded whole, and one more pack needs no line here.
+    // form has it seeded whole — every form, where tax_report.json holds
+    // several — and one more pack needs no line here.
     const expected = allPacks
-      .filter((pack) => pack.report !== null)
-      .map((pack) => ({
-        country: pack.manifest.country,
-        code: pack.report!.code,
-        periods: pack.report!.periods,
-        boxes: pack.report!.boxes.length,
-      }))
-      .sort((a, b) => (a.country < b.country ? -1 : 1));
+      .flatMap((pack) =>
+        pack.reports.map((report) => ({
+          country: pack.manifest.country,
+          code: report.code,
+          periods: report.periods,
+          boxes: report.boxes.length,
+        })),
+      )
+      .sort((a, b) => (a.country === b.country ? (a.code < b.code ? -1 : 1) : a.country < b.country ? -1 : 1));
     expect(forms).toEqual(expected);
     expect(expected.length, 'no pack carries a periodic return').toBeGreaterThan(0);
     // The form of a regime on turnover is seeded from turnover_tax.json, once per form.

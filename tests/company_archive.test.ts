@@ -337,6 +337,11 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
           // (decision 0080); tests/turnover_tax_regime.test.ts exercises it.
           'public.company_tax_regimes',
           'public.turnover_tax_assessments',
+          // A VAT scheme is a statement no company makes by default, and an
+          // instalment a payment on account of a scheme that plans some;
+          // tests/vat_schemes.test.ts exercises both.
+          'public.company_vat_schemes',
+          'public.declaration_instalments',
           ...(empty.includes('public.company_filing_periods') ? ['public.company_filing_periods'] : []),
         ].sort(),
       );

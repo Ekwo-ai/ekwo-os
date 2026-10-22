@@ -225,6 +225,8 @@ comment on table company_vat_schemes is
 comment on column company_vat_schemes.country is
   'The country of the scheme: the company''s fiscal country, written by the trigger, so the scheme is a foreign key and a pack upgrade cannot remove one a company is on.';
 
+create index if not exists company_vat_schemes_scheme_idx on company_vat_schemes (country, scheme_code);
+
 create trigger company_vat_schemes_set_updated_at
   before update on company_vat_schemes
   for each row execute function set_updated_at();
