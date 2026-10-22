@@ -1,13 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { generateCiiXml, readCii } from '@ekwo-ai/factur-x';
+import { readCii } from '@ekwo-ai/factur-x';
 import { embedFacturX } from '@ekwo-ai/factur-x/pdf';
 import { readUbl } from '@ekwo-ai/peppol-ubl';
 import { PDFDocument } from 'pdf-lib';
 import { describe, expect, it } from 'vitest';
 import { fileKind, purchaseDraftOf, readStructured } from '../src/index.js';
-import { exampleInvoice } from '../../formats/factur-x/test/fixtures/example-invoice.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const formats = join(here, '..', '..', 'formats');
@@ -17,7 +16,8 @@ const ubl = (name: string): Uint8Array => readFileSync(join(formats, 'peppol-ubl
 async function facturXPdf(): Promise<Uint8Array> {
   const doc = await PDFDocument.create();
   doc.addPage([595, 842]);
-  return embedFacturX(await doc.save(), generateCiiXml(exampleInvoice), { date: new Date('2026-03-31T10:00:00Z') });
+  const xml = new TextDecoder().decode(cii('invoice-with-pdf.xml'));
+  return embedFacturX(await doc.save(), xml, { date: new Date('2026-03-31T10:00:00Z') });
 }
 
 describe('readStructured', () => {
@@ -43,9 +43,7 @@ describe('readStructured', () => {
     const pdf = await facturXPdf();
     expect(fileKind(pdf)).toBe('pdf');
     const read = await readStructured(pdf);
-    expect(read?.invoice.syntax).toBe('cii');
-    expect(read?.invoice.number).toBe(exampleInvoice.number);
-    expect(read?.invoice.lines).toHaveLength(exampleInvoice.lines.length);
+    expect(read?.invoice).toEqual(readCii(cii('invoice-with-pdf.xml')).invoice);
   });
 
   it('takes an ArrayBuffer as well as bytes', async () => {

@@ -82,7 +82,7 @@ const complete = answer({
     tax_registration_id: '',
     address: { lines: ['1 Rue Inventée'], city: 'Nulle-Part', postal_code: '9999', country: 'xx' },
   },
-  payment: { iban: 'BE53 9990 0000 0099', bic: 'GEBABEBB', reference: '+++000/0000/00097+++', terms: '30 days' },
+  payment: { iban: 'BE53 9990 0000 0099', bic: 'TESTXXBB', reference: '+++000/0000/00097+++', terms: '30 days' },
   lines: [
     line({ name: 'Paper', quantity: '10', unit: 'pcs', unit_code: 'H87', net_price: '4.50', net_amount: '45.00', vat_category: 'S', vat_rate: '21' }),
     line({ name: 'Delivery', quantity: '1', unit_code: 'C62', net_price: '5', net_amount: '5.00', vat_category: 'S', vat_rate: '21' }),
