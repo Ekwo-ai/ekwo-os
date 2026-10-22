@@ -9,6 +9,18 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A company is counted, never read** (socle migration `20261029040000`,
+  decision 0092). `ekwo.usage_figures()` returns, for every company the
+  caller is on, one row per figure — a name, a number of rows, and when the
+  most recent was created: members, invitations, contacts, products,
+  documents by type and state, entries by state, bank statements, payments,
+  and each enabled module with its tables. What the country pack lays down is
+  left out, and no name, amount or label leaves the function. A member or the
+  holder of a key of the company may call it, whatever the key's
+  capabilities. The list is `docs/usage-figures.md`.
+
 ## [0.24.0] — 2026-10-28
 
 ### Added

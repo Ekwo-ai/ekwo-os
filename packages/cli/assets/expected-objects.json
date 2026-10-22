@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.24.0",
-  "migration": "20261028160000",
+  "migration": "20261029040000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -6126,6 +6126,10 @@
       {
         "name": "upgrade_filing_proof",
         "arguments": "p_proof_id uuid, p_proof_base64 text, p_anchor_chain text, p_anchor_height bigint, p_anchor_time timestamp with time zone, p_anchor_reference text"
+      },
+      {
+        "name": "usage_figures",
+        "arguments": ""
       },
       {
         "name": "use_api_key",
@@ -12612,6 +12616,17 @@
         {
           "name": "upgrade_filing_proof",
           "arguments": "p_proof_id uuid, p_proof_base64 text, p_anchor_chain text, p_anchor_height bigint, p_anchor_time timestamp with time zone, p_anchor_reference text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "usage_figures",
+          "arguments": "",
           "anon": [],
           "authenticated": [
             "execute"
