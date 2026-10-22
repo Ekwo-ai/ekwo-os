@@ -68,16 +68,21 @@ export default defineConfig({
       '@ekwo-ai/invoice-pdf': fileURLToPath(
         new URL('./packages/formats/invoice-pdf/src/index.ts', import.meta.url),
       ),
+      '@ekwo-ai/document-reading': fileURLToPath(
+        new URL('./packages/document-reading/src/index.ts', import.meta.url),
+      ),
     },
   },
   test: {
-    // The core's tests, the tests each format brick brought with it, and the
-    // tests of each module. A brick and a module are published on their own,
+    // The core's tests, the tests each format brick brought with it, the
+    // reader that composes them (`document-reading`), and the tests of each
+    // module. A brick and a module are published on their own,
     // so their suites stay where they live; one `npm test` has to run all
     // three, or one of them breaks where nobody looks.
     include: [
       'tests/**/*.test.ts',
       'packages/formats/*/test/**/*.test.ts',
+      'packages/document-reading/test/**/*.test.ts',
       'modules/*/tests/**/*.test.ts',
     ],
     testTimeout: 60_000,

@@ -1,0 +1,63 @@
+{
+  "name": "@ekwo-ai/document-reading",
+  "version": "0.18.0",
+  "description": "One reader for received invoices: CII, Factur-X and UBL read exactly, and a photograph or a plain PDF read by a vision model through a published schema and prompt — both into the EN 16931 ReceivedInvoice.",
+  "keywords": [
+    "invoice",
+    "receipt",
+    "ocr",
+    "vision",
+    "en16931",
+    "factur-x",
+    "zugferd",
+    "ubl",
+    "cii",
+    "peppol",
+    "json-schema"
+  ],
+  "license": "MIT",
+  "author": "Ekwo AI",
+  "homepage": "https://github.com/Ekwo-ai/ekwo-os/tree/main/packages/document-reading#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ekwo-ai/ekwo-os.git",
+    "directory": "packages/document-reading"
+  },
+  "bugs": {
+    "url": "https://github.com/Ekwo-ai/ekwo-os/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "@ekwo-ai/factur-x": "^0.18.0",
+    "@ekwo-ai/peppol-ubl": "^0.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^5.0.3"
+  }
+}

@@ -222,8 +222,15 @@ export interface ReceivedAttachment {
 }
 
 export interface ReceivedInvoice {
-  /** Which syntax the file was written in. */
-  syntax: 'ubl' | 'cii';
+  /**
+   * Which syntax the file was written in. `model` where it was written in
+   * none: a vision model read a printed page or a photograph, and
+   * `readingOf()` of `@ekwo-ai/document-reading` held its answer to this
+   * shape. A text such an invoice must carry and the page did not print —
+   * `number`, `issueDate`, `currency`, a total — is then `''`, never a guess,
+   * and the reading names it among what is missing.
+   */
+  syntax: 'ubl' | 'cii' | 'model';
   /** BT-24: what the file claims to conform to. */
   customizationId: string | null;
   /** BT-23: the business process. */

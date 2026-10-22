@@ -37,13 +37,15 @@
       "@ekwo-ai/journal-items": ["./packages/formats/journal-items/src/index.ts"],
       "@ekwo-ai/journal-report": ["./packages/formats/journal-report/src/index.ts"],
       "@ekwo-ai/transaction-journal": ["./packages/formats/transaction-journal/src/index.ts"],
-      "@ekwo-ai/xaf": ["./packages/formats/xaf/src/index.ts"]
+      "@ekwo-ai/xaf": ["./packages/formats/xaf/src/index.ts"],
+      "@ekwo-ai/document-reading": ["./packages/document-reading/src/index.ts"]
     }
   },
   "include": [
     "packages/*/src",
     "packages/formats/*/src",
     "packages/formats/*/test",
+    "packages/document-reading/test",
     "modules/*/tests",
     "tests",
     "scripts"
