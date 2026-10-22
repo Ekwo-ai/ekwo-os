@@ -1,0 +1,178 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "SC",
+  "name": "Seychelles",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 218,
+  "released_at": "2026-10-22",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-schedules",
+        "title": "Value Added Tax (Amendment of Schedules) Regulations, 2014 (S.I. 4 of 2014, made under section 52(1) of the Value Added Tax Act, Act 35 of 2010) — repeals and replaces the Schedules: First Schedule Part II (exempt supplies, items 1 to 5), Second Schedule (zero-rated supplies), Third Schedule (rate of VAT, 15 %), Fourth Schedule (registration threshold, SCR 3,000,000 in this text)",
+        "publisher": "Minister of Finance, Trade and Investment (Supplement to the Official Gazette, 20 January 2014; copy hosted by the World Trade Organization)",
+        "url": "https://www.wto.org/english/thewto_e/acc_e/syc_e/wtaccsyc48_leg_2.pdf",
+        "kind": "regulation",
+        "consulted_on": "2026-10-22"
+      },
+      {
+        "key": "vat-return",
+        "title": "Seychelles Revenue Commission — Value Added Tax Return: lines 1 to 11, columns A (value) and B (VAT), with the instructions for completing it; the return is lodged with the Business Activity Statement by the 21st of the month following the taxable period",
+        "publisher": "Seychelles Revenue Commission (SRC)",
+        "url": "https://www.src.gov.sc/wp-content/uploads/2023/01/VATReturn-manual.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-22"
+      },
+      {
+        "key": "revenue-law-2023",
+        "title": "Revenue Law (Amendment) Act 2023 (Act 27 of 2023, Supplement to the Official Gazette, 22 December 2023) — new section 3(1) and (2) of the Revenue Administration Act: a monthly return is furnished by the 21st day of the month when furnished in person and by the 23rd when furnished through the SRC Tax Portal, and a large business furnishes through the Portal; new section 20: the monthly tax is paid by the 21st in person and by the 23rd through the Portal or by bank transfer, and a payment of SCR 50,000 or more goes through the Portal",
+        "publisher": "National Assembly of Seychelles",
+        "url": "https://src.gov.sc/wp-content/uploads/2024/12/Act-27-2023-Revenue-Law-Amendment-Act-2023.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-22"
+      },
+      {
+        "key": "vat-guideline",
+        "title": "What is Value Added Tax (VAT)? — information brochure: standard rate 15 %, zero-rated supplies (mainly exports) as taxable supplies at 0 % with input tax deductible, exempt supplies with no right to deduct",
+        "publisher": "Seychelles Revenue Commission (SRC)",
+        "url": "https://www.src.gov.sc/wp-content/uploads/2022/12/VAT-Guideline.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-22"
+      },
+      {
+        "key": "vat-threshold",
+        "title": "SRC guidance on the amendments made to the Fourth Schedule of the VAT Act 2010 (S.I. 97 of 2024): compulsory registration at SCR 2,000,000 of taxable supplies, voluntary registration from SCR 100,000, application within 14 days",
+        "publisher": "Seychelles Revenue Commission (SRC)",
+        "url": "https://src.gov.sc/src-provides-guidance-on-amendments-made-to-the-fourth-schedule-of-vat-act-2010/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-22"
+      },
+      {
+        "key": "bas-form",
+        "title": "Business Activity Statement — the form on which the VAT due (box 10A of the return) is paid, with the other monthly taxes; due by the 21st day of the month following",
+        "publisher": "Seychelles Revenue Commission (SRC)",
+        "url": "https://src.gov.sc/wp-content/uploads/2023/09/Business-Activity-Statement-Form.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-22"
+      },
+      {
+        "key": "ias-1",
+        "title": "IAS 1 Presentation of Financial Statements — the statement of financial position and the statement of profit or loss, expenses analysed by nature; no Seychelles text prescribing a layout or a chart of accounts was found",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/list-of-standards/ias-1-presentation-of-financial-statements/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-22"
+      },
+      {
+        "key": "src-portal",
+        "title": "Seychelles Revenue Commission — tax administration portal (forms, guidance, Tax Portal for returns and payments)",
+        "publisher": "Seychelles Revenue Commission (SRC)",
+        "url": "https://www.src.gov.sc",
+        "kind": "portal",
+        "consulted_on": "2026-10-22"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "SCR",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Seychelles reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "SC-IFRS-SFP",
+        "SC-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the texts read for Seychelles, and no text prescribing a financial reporting framework was found (see the README). This chart is original: four digits, blocked so that each range reaches one line of the IFRS-style statements below (IAS 1, expenses by nature), with the accounts a Seychelles trading company keeps — VAT output and input tax, import VAT owed to the Seychelles Revenue Commission at the border, Income and Non-Monetary Benefits Tax withheld, social security contributions, and the Tourism Marketing Tax.",
+      "source": "ias-1"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date"
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No structured e-invoice standard, Peppol profile or clearance system of the Seychelles Revenue Commission was found in the texts read; the Tax Portal takes the returns and payments, not invoices. `obligation` is `none` for want of a text, not on a finding that none exists.",
+    "source": "src-portal"
+  }
+}

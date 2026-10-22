@@ -155,3 +155,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('NPR', 'Nepalese rupee', 'Rs', 2)
 on conflict (code) do nothing;
+
+-- Seychelles rupee, ISO 4217 list one, two decimals (packs/sc/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('SCR', 'Seychelles rupee', 'SR', 2)
+on conflict (code) do nothing;
