@@ -492,7 +492,8 @@ function describeToTerminal(description: PackDescription): void {
   for (const declaration of description.declarations) {
     rows.push([
       'declaration',
-      `${declaration.code} (${declaration.boxes} boxes) · ${declaration.periods.join(' or ')} · ` +
+      `${declaration.code} (${declaration.boxes} boxes${declaration.role === 'periodic' ? '' : `, ${declaration.role}`}) · ` +
+        `${declaration.periods.join(' or ')} · ` +
         (declaration.deadline === null
           ? 'deadline: not declared'
           : declaration.deadline.rule === 'depends_on_taxpayer'
@@ -509,6 +510,20 @@ function describeToTerminal(description: PackDescription): void {
     ]);
   }
   if (description.declarations.length === 0) rows.push(['declaration', 'none declared']);
+  for (const scheme of description.vatSchemes) {
+    rows.push([
+      'VAT scheme',
+      `${scheme.code} — ${scheme.name} · ` +
+        (scheme.forms.length === 0
+          ? 'files no VAT return'
+          : `files ${scheme.forms.map((form) => `${form.report} (${form.periods.join(' or ')})`).join(', ')}`) +
+        (scheme.chargesVat ? '' : ' · charges no VAT') +
+        (scheme.ceilings.length === 0 ? '' : ` · ${scheme.ceilings.length} ceiling(s)`) +
+        (scheme.instalments === null
+          ? ''
+          : ` · instalments ${scheme.instalments.schedule.map((row) => `${row.percent} % in month ${row.month}`).join(', ')}`),
+    ]);
+  }
   if (description.zones.length > 0) rows.splice(1, 0, ['zones', description.zones.join(', ')]);
   rows.push([
     'e-invoicing',

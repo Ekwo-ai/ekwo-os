@@ -70,9 +70,11 @@ describe('describePack', () => {
 
   it('describes the periodic return the pack declares, and none where it declares none', () => {
     for (const { pack, description } of described) {
-      expect(description.declarations.length).toBe(pack.report === null ? 0 : 1);
+      expect(description.declarations.length).toBe(pack.reports.length);
+      if (pack.report !== null) expect(description.declarations[0]?.code).toBe(pack.report.code);
       for (const declaration of description.declarations) {
-        const report = pack.report!;
+        const report = pack.reports.find((r) => r.code === declaration.code)!;
+        expect(declaration.role).toBe(report.role);
         expect(declaration.code).toBe(report.code);
         expect(declaration.boxes).toBe(report.boxes.length);
         expect(declaration.periods).toEqual(report.periods);
@@ -81,10 +83,19 @@ describe('describePack', () => {
     }
   });
 
+  it('describes the VAT schemes the pack declares, and none where it declares none', () => {
+    for (const { pack, description } of described) {
+      expect(description.vatSchemes.map((s) => s.code)).toEqual((pack.vatSchemes?.schemes ?? []).map((s) => s.code));
+      for (const scheme of description.vatSchemes) {
+        for (const form of scheme.forms) expect(description.declarations.map((d) => d.code)).toContain(form.report);
+      }
+    }
+  });
+
   it('carries a deadline only where the pack states the rule, and null where it does not', () => {
     for (const { pack, description } of described) {
       for (const declaration of description.declarations) {
-        const rule = pack.report?.deadline ?? null;
+        const rule = pack.reports.find((r) => r.code === declaration.code)?.deadline ?? null;
         if (rule === null) {
           // A pack that cannot state its rule in the shape the format carries
           // says nothing, and this is the value a reader shows as "not

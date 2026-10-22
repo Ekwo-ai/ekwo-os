@@ -87,10 +87,12 @@ export interface DescribedFile {
   byHand: boolean;
 }
 
-/** One periodic declaration of a country. */
+/** One declaration form of a country. */
 export interface DescribedDeclaration {
   code: string;
   name: string;
+  /** `periodic` for the return the postings are for, `annual` for a form filed once a year under a scheme. */
+  role: string;
   /** The cadences the form is filed on, from the shortest to the longest. */
   periods: string[];
   /** The cadence proposed unless the company asks for another. Null where the law gives none. */
@@ -103,6 +105,23 @@ export interface DescribedDeclaration {
   deadline: DescribedDeadline | null;
   file: DescribedFile;
   legalReference: string | null;
+}
+
+/** One VAT scheme of a country, flattened to what a reader prints. */
+export interface DescribedVatScheme {
+  code: string;
+  name: string;
+  chargesVat: boolean;
+  forms: { report: string; periods: string[]; periodDefault: string | null }[];
+  ceilings: { measure: string; activity: string; amount: string; currency: string; validFrom: string; legalReference: string }[];
+  /** The months and percentages of the instalments, on account of which form and of which base. Null without any. */
+  instalments: {
+    report: string;
+    base: string;
+    minimumBase: string | null;
+    schedule: { month: number; percent: string }[];
+  } | null;
+  legalReference: string;
 }
 
 /**
@@ -275,8 +294,15 @@ export interface PackDescription {
   charts: DescribedChart[];
   taxes: DescribedTaxes;
   invoicing: DescribedInvoicing;
-  /** Zero or one today; a list because a country that files two is not a new shape. */
+  /** Every form of `tax_report.json`, the periodic return first. */
   declarations: DescribedDeclaration[];
+  /**
+   * The VAT schemes of the country, from `vat_schemes.json`: which forms a
+   * company on each files, whether it charges VAT, the ceilings with their
+   * text, and the instalments. Empty where the pack declares none, and every
+   * company then files the periodic return as before.
+   */
+  vatSchemes: DescribedVatScheme[];
   einvoicing: DescribedEinvoicing | null;
   vatBalance: DescribedVatBalance;
   /** How a bank of this country identifies an account. Null where the pack says nothing: a free-text account number, never an IBAN. */
@@ -310,11 +336,11 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
   const receivable = pack.manifest.defaults.roles['tax_receivable'];
 
   const declarations: DescribedDeclaration[] = [];
-  if (pack.report !== null) {
-    const report = pack.report;
+  for (const report of pack.reports) {
     declarations.push({
       code: report.code,
       name: report.name,
+      role: report.role,
       periods: report.periods,
       periodDefault: report.period_default,
       boxes: report.boxes.length,
@@ -389,6 +415,30 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
     },
     invoicing: invoicingOf(pack),
     declarations,
+    vatSchemes: (pack.vatSchemes?.schemes ?? []).map((scheme) => ({
+      code: scheme.code,
+      name: scheme.name,
+      chargesVat: scheme.charges_vat,
+      forms: scheme.forms.map((form) => ({ report: form.report, periods: form.periods, periodDefault: form.period_default })),
+      ceilings: scheme.ceilings.map((ceiling) => ({
+        measure: ceiling.measure,
+        activity: ceiling.activity,
+        amount: ceiling.amount,
+        currency: ceiling.currency,
+        validFrom: ceiling.valid_from,
+        legalReference: ceiling.legal_reference,
+      })),
+      instalments:
+        scheme.instalments === null
+          ? null
+          : {
+              report: scheme.instalments.report,
+              base: `${scheme.instalments.base_report} ${scheme.instalments.base_box}:${scheme.instalments.base_kind}`,
+              minimumBase: scheme.instalments.minimum_base,
+              schedule: scheme.instalments.schedule.map((row) => ({ month: row.month, percent: row.percent })),
+            },
+      legalReference: scheme.legal_reference,
+    })),
     einvoicing,
     vatBalance: {
       payable: filing.taxPayable,
