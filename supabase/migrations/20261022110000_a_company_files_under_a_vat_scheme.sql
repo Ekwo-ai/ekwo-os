@@ -242,8 +242,8 @@ alter table company_vat_schemes enable row level security;
 create policy company_vat_schemes_select on company_vat_schemes
   for select using (is_company_member(company_id));
 create policy company_vat_schemes_write on company_vat_schemes
-  for all using (has_capability(company_id, 'company.write'))
-  with check (has_capability(company_id, 'company.write'));
+  for all using (company_id = any ((select companies_with_capability('company.write'))::uuid[]))
+  with check (company_id = any ((select companies_with_capability('company.write'))::uuid[]));
 
 comment on policy company_vat_schemes_select on company_vat_schemes is
   'A member of the company reads the scheme it is on, as they read how often it files.';
@@ -467,10 +467,10 @@ create trigger declaration_instalments_set_updated_at
 
 alter table declaration_instalments enable row level security;
 create policy declaration_instalments_select on declaration_instalments
-  for select using (has_capability(company_id, 'filings.read'));
+  for select using (company_id = any ((select companies_with_capability('filings.read'))::uuid[]));
 create policy declaration_instalments_write on declaration_instalments
-  for all using (has_capability(company_id, 'filings.write'))
-  with check (has_capability(company_id, 'filings.write'));
+  for all using (company_id = any ((select companies_with_capability('filings.write'))::uuid[]))
+  with check (company_id = any ((select companies_with_capability('filings.write'))::uuid[]));
 
 comment on policy declaration_instalments_select on declaration_instalments is
   'filings.read, as the declarations they are paid on account of.';

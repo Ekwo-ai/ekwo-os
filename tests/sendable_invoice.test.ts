@@ -60,6 +60,9 @@ const SNAPSHOT = [
   // Replaces document_tax_summary again, reading the snapshot and the legal
   // mentions the two above publish.
   '20261020072000_a_tax_computed_inside_its_own_base.sql',
+  // Replaces document_legal_mentions, which reads legal_mention_treatments()
+  // that the second of these publishes.
+  '20261022110100_the_return_reads_the_vat_scheme.sql',
 ];
 
 /** The treatments each condition of a legal mention covers — the vocabulary of `applies_when`, as the schema documents it. */
