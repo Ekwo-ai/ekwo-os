@@ -2977,7 +2977,7 @@ Every text a contract had and every change made to it, numbered from 1 in the co
 | `effective_on` | `date` | not null — From when the change holds: the first day of the new term for a renewal. |
 | `signed_on` | `date` |  |
 | `attachment_id` | `uuid` | The file of this version or of the signed amendment: an attachment of the socle, with its checksum. |
-| `created_by` | `uuid` | auth.users.id of whoever recorded it; null for a renewal written by the module. |
+| `created_by` | `uuid` | Who recorded it: acting_user(), the signed-in person or the issuer of the key presented; null for a renewal written by the module. |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
 
@@ -3114,7 +3114,7 @@ What a contract starts from: its clauses — an html text or a docx file — wit
 | `variables` | `jsonb` | not null — The variables the clauses name, as a JSON array of objects: {"key": …, "label": …, "type": …, "required": true\|false, "default_value": …}. contracts.from_template() refuses a required one left empty. |
 | `schedule` | `jsonb` | not null — The schedule a contract made from this template starts with, as a JSON array of the fields contracts.upsert_schedule() takes: {"name", "product_code", "quantity", "unit_code", "unit_price", "tax_code", "frequency", "auto_post"}. |
 | `active` | `boolean` | not null |
-| `created_by` | `uuid` | auth.users.id of whoever wrote the template. No foreign key, as company_members has none. |
+| `created_by` | `uuid` | Who wrote the template: acting_user(), the signed-in person or the issuer of the key presented. No foreign key, as company_members has none. |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
 

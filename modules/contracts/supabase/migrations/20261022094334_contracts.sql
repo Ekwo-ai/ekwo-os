@@ -100,7 +100,7 @@ create table contracts.templates (
   variables     jsonb not null default '[]'::jsonb,
   schedule      jsonb not null default '[]'::jsonb,
   active        boolean not null default true,
-  created_by    uuid default auth.uid(),
+  created_by    uuid default public.acting_user(),
   created_at    timestamptz not null default now(),
   updated_at    timestamptz not null default now(),
   constraint contracts_templates_id_company_key unique (id, company_id),
@@ -124,7 +124,7 @@ comment on column contracts.templates.variables is
 comment on column contracts.templates.schedule is
   'The schedule a contract made from this template starts with, as a JSON array of the fields contracts.upsert_schedule() takes: {"name", "product_code", "quantity", "unit_code", "unit_price", "tax_code", "frequency", "auto_post"}.';
 comment on column contracts.templates.created_by is
-  'auth.users.id of whoever wrote the template. No foreign key, as company_members has none.';
+  'Who wrote the template: acting_user(), the signed-in person or the issuer of the key presented. No foreign key, as company_members has none.';
 
 create index contracts_templates_company_idx on contracts.templates (company_id);
 create index contracts_templates_attachment_idx on contracts.templates (attachment_id);
@@ -320,7 +320,7 @@ create table contracts.amendments (
   effective_on  date not null,
   signed_on     date,
   attachment_id uuid references public.attachments(id) on delete restrict,
-  created_by    uuid default auth.uid(),
+  created_by    uuid default public.acting_user(),
   created_at    timestamptz not null default now(),
   updated_at    timestamptz not null default now(),
   unique (company_id, contract_id, number),
@@ -343,7 +343,7 @@ comment on column contracts.amendments.effective_on is
 comment on column contracts.amendments.attachment_id is
   'The file of this version or of the signed amendment: an attachment of the socle, with its checksum.';
 comment on column contracts.amendments.created_by is
-  'auth.users.id of whoever recorded it; null for a renewal written by the module.';
+  'Who recorded it: acting_user(), the signed-in person or the issuer of the key presented; null for a renewal written by the module.';
 
 create index contracts_amendments_contract_company_idx on contracts.amendments (contract_id, company_id);
 create index contracts_amendments_attachment_idx on contracts.amendments (attachment_id);
