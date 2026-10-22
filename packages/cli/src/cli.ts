@@ -10,6 +10,7 @@ import { analyticCommand } from './commands/analytic.js';
 import { companyCommand } from './commands/company.js';
 import { contactCommand } from './commands/contact.js';
 import { crmCommand } from './commands/crm.js';
+import { contractsCommand } from './commands/contracts.js';
 import { demoCommand } from './commands/demo.js';
 import { cancelCommand, docCommand, postCommand } from './commands/document.js';
 import { reverseCommand } from './commands/entry.js';
@@ -30,7 +31,16 @@ import { statusCommand } from './commands/status.js';
 import { useCommand, whoamiCommand } from './commands/whoami.js';
 import type { BooksDeps } from './books.js';
 import { askedForJson, commandLabel, execute, reportFailure, setResult } from './output.js';
-import { CLOUD_OFFER_ENV, CRM_ACTIVITY_KINDS, CRM_PRIORITIES, CRM_RELATIONSHIP_STATUSES, REGISTER_INVITE_ENV } from '@ekwo-ai/core';
+import {
+  CLOUD_OFFER_ENV,
+  CONTRACT_FREQUENCIES,
+  CONTRACT_KINDS,
+  CONTRACT_STATES,
+  CRM_ACTIVITY_KINDS,
+  CRM_PRIORITIES,
+  CRM_RELATIONSHIP_STATUSES,
+  REGISTER_INVITE_ENV,
+} from '@ekwo-ai/core';
 import { bold, cyan, dim, line } from './ui.js';
 
 export function version(): string {
@@ -72,6 +82,7 @@ export const COMMANDS = [
   'einvoice',
   'peppol',
   'crm',
+  'contracts',
   // Aliases, last: `invoice` is what `doc` used to be called, and `document` is its whole word.
   'invoice',
   'document',
@@ -230,6 +241,23 @@ ${bold('Connecting')} ${dim('(every command)')}
               --status ${CRM_RELATIONSHIP_STATUSES.join('|')};
               --priority ${CRM_PRIORITIES.join('|')};
               --kind ${CRM_ACTIVITY_KINDS.join('|')}.
+  ${cyan('contracts')}   The contracts module: what the company agreed with a party of
+              its books, and the invoices that says are due. list [--state
+              --direction sale|purchase --contact --query --templates]; card
+              <contract> — one contract, whole; set <number> [--contact --name
+              --kind --direction --state --signed --starts --ends --renewal
+              none|tacit --notice-days --currency --value --notes]; schedule
+              <contract> [--schedule <id>] [--name --product --quantity --unit
+              --price --tax <code> --frequency --next --until --auto-post
+              yes|no]; issue [--on <date>] — every period that has come, one
+              draft each; deadlines [--from --to --kind <kind>…]; amend
+              <contract> --summary --from <date> [--changes <json> --version
+              --signed --file]; from-template <template> <contact> --number
+              --direction --kind --starts [--value key=value…]. The same
+              functions as the contracts_* tools.
+              --kind ${CONTRACT_KINDS.join('|')};
+              --state ${CONTRACT_STATES.join('|')};
+              --frequency ${CONTRACT_FREQUENCIES.join('|')}.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
   --profile <name>          Which profile: a demo instance, production, one client
@@ -570,6 +598,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await peppolCommand(args, deps);
       case 'crm':
         return await crmCommand(args, deps);
+      case 'contracts':
+        return await contractsCommand(args, deps);
       default:
         throw new UsageError(`unknown command: ${args.command}\nRun \`ekwo --help\` for the list.`);
     }

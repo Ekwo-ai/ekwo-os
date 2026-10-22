@@ -479,6 +479,8 @@ describe('every command answers --json with one document of the published shape'
     expect((await asPerson(['einvoice', 'list'])).data).toMatchObject({ count: 0 });
     // The cards of the relationships: none either, on a company without the crm module.
     expect((await asPerson(['crm', 'search'])).data).toMatchObject({ count: 0 });
+    // The deadlines of the contracts: none, on a company without the contracts module.
+    expect((await asPerson(['contracts', 'deadlines'])).data).toMatchObject({ count: 0 });
     // A received Peppol file, read with no installation at all.
     const received = join(repoRoot, 'packages', 'formats', 'peppol-ubl', 'test', 'fixtures', 'invoice-standard.xml');
     expect((await asProver(['peppol', 'validate', received])).data).toMatchObject({ valid: true });

@@ -978,6 +978,69 @@
         "required": ["deal"],
         "properties": { "deal": { "$ref": "#/$defs/row" } }
       },
+      "contracts list": {
+        "$comment": "The contracts of the company in use, filtered, as contracts.list_contracts() returns them: each with its party's name and its nearest deadline, in the order of their numbers. templates is there under --templates: the active templates, as contracts.list_templates() returns them.",
+        "type": "object",
+        "required": ["contracts", "count"],
+        "properties": { "contracts": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" }, "templates": { "type": "array", "items": { "$ref": "#/$defs/row" } } }
+      },
+      "contracts card": {
+        "$comment": "One contract as contracts.card_of() builds it: the contract, its party, its signed file, its schedules, its amendments, the latest documents it issued and its deadlines.",
+        "type": "object",
+        "required": ["contract", "schedules", "amendments", "issues", "deadlines"],
+        "properties": {
+          "contract": { "$ref": "#/$defs/row" },
+          "contact": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "file": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "schedules": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "amendments": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "issues": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "deadlines": { "type": "array", "items": { "$ref": "#/$defs/row" } }
+        }
+      },
+      "contracts set": {
+        "$comment": "The contract as contracts.upsert_contract() left it: created when the number was new, the fields the flags named changed otherwise.",
+        "type": "object",
+        "required": ["contract"],
+        "properties": { "contract": { "$ref": "#/$defs/row" } }
+      },
+      "contracts schedule": {
+        "$comment": "The schedule as contracts.upsert_schedule() left it, its price a decimal string.",
+        "type": "object",
+        "required": ["schedule"],
+        "properties": { "schedule": { "$ref": "#/$defs/row" } }
+      },
+      "contracts issue": {
+        "$comment": "What contracts.issue_due() issued on on_date: one row per document — the contract, the schedule, the document, the period it covers and whether it was booked. Empty when nothing was due, which is also the answer to the same day twice.",
+        "type": "object",
+        "required": ["issued", "count", "on_date"],
+        "properties": { "issued": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" }, "on_date": { "type": "string" } }
+      },
+      "contracts deadlines": {
+        "$comment": "The rows of contracts.deadlines for the company in use, soonest first: notice, renewal, end, next_issue and indexation, each with its contract.",
+        "type": "object",
+        "required": ["deadlines", "count"],
+        "properties": { "deadlines": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
+      },
+      "contracts amend": {
+        "$comment": "The amendment contracts.amend() recorded, numbered in the contract's history, its changes already applied.",
+        "type": "object",
+        "required": ["amendment"],
+        "properties": { "amendment": { "$ref": "#/$defs/row" } }
+      },
+      "contracts from-template": {
+        "$comment": "What contracts.from_template() made: the draft contract, its schedules, the format of the clauses, the html with the values in place (null for a docx template), the docx attachment, and the values used.",
+        "type": "object",
+        "required": ["contract", "schedules", "format", "variables"],
+        "properties": {
+          "contract": { "$ref": "#/$defs/row" },
+          "schedules": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "format": { "type": "string" },
+          "html": { "type": ["string", "null"] },
+          "attachment_id": { "type": ["string", "null"] },
+          "variables": { "type": "object" }
+        }
+      },
       "import": {
         "oneOf": [
           {
