@@ -117,6 +117,7 @@ consequence.
 - [0063](0063-a-module-code-outlives-its-names.md) — A module code outlives its names
 - [0084](0084-a-contract-issues-drafts-of-the-socle.md) — A contract issues drafts of the socle
 - [0085](0085-one-reader-for-a-received-invoice.md) — One reader for a received invoice, and the model's part is data
+- [0086](0086-a-company-files-under-a-vat-scheme.md) — A company files under a VAT scheme, and its scheme decides its forms
 
 ## Installer, command line and MCP server
 

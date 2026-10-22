@@ -159,6 +159,78 @@ accounts to clear.
 
 ---
 
+## Schemes and instalments
+
+Which declarations a company files at all is decided by its **VAT scheme**,
+and most countries have more than one. A normal scheme files a periodic
+return every month or quarter. A simplified scheme files one return a year
+and pays part of the tax on account during it. A small business exemption
+charges no VAT and files no periodic return. The scheme is a fact about the
+company, and the core never chooses it.
+
+**What a pack says.** `packs/<cc>/vat_schemes.json` lists the schemes of the
+country ([`packs.md`](packs.md#vat-schemes-vat_schemesjson)): for each, the
+forms filed and on which cadences, whether VAT is charged, the ceilings up to
+which a company may be on it — an amount, a currency and the article that
+sets it, never a figure without its text — and the instalments it asks for. A
+pack without the file has no scheme, and its companies file as they always
+did.
+
+**What a company says.** A row of `company_vat_schemes`: this scheme, from the
+first day of this financial year. There is no default. A company that has
+recorded nothing keeps exactly the behaviour it had before schemes existed:
+its periodic return, its cadences, no instalments.
+
+**What the scheme governs.** Recording a scheme writes the cadences it implies
+into `company_filing_periods` — the scheme's default for each form, or the
+only cadence it allows — and removes the cadences of the forms it does not
+file. The table remains the one place a cadence is written; the scheme checks
+it, and a cadence it does not allow is refused (`wrong_declaration_period`).
+`vat_return()` and `prepare_filing()` refuse, by name, a form the scheme does
+not file (`form_not_in_vat_scheme`), and with no form named they take the one
+the scheme files — or say that it files none (`vat_scheme_files_no_return`).
+
+| | Normal scheme | Simplified scheme | Exemption |
+|---|---|---|---|
+| Forms | the periodic return | the annual return | none |
+| VAT on sales | charged | charged | refused at posting (`vat_charged_under_exemption`) |
+| Invoice mention | — | — | the pack's `small_business` mention |
+| During the year | — | instalments | — |
+
+**An annual return restates the periodic one.** The taxes of a pack post for
+its periodic return. An annual form does not get a second set of postings: it
+names the form whose postings it reads (`reads_postings_of`), and each of its
+boxes lists the boxes of that form it adds up. Line 5A of the French CA12 is
+what line 08 of the CA3 would have received over the year, and the two forms
+can never disagree about a posting.
+
+**Instalments.** A scheme that asks for payments on account declares them as a
+schedule: in which months, which percentage, of which box of the previous
+period's return, and the base under which nothing is due.
+
+1. `instalment_plan(company, from, to)` says what is due on account of the
+   declaration of a period: the month (and the day, where the law gives one
+   day to everybody), the base read on the previous period's return as
+   `prepare_filing()` froze it — or as the books compute it where nothing was
+   frozen — the amount due, what was paid and what is outstanding.
+2. `declaration_instalments` records what was paid: the instalment, the day,
+   the amount, and the entry that carried it where there is one.
+3. The annual return deducts them in the box that reads them —
+   `instalments_paid`, or `instalments_due` for a form that deducts what was
+   due whether paid or not — and its totals carry the balance.
+4. `upcoming_filings()` lists every instalment beside the returns, one row each,
+   with `instalment` set to its number and the month it falls due in as its
+   period. `portfolio_upcoming_filings()` does the same across companies,
+   `ekwo status` prints the scheme and the next instalments, and the MCP tool
+   `instalment_plan` reads the plan.
+
+**A ceiling is an alert.** `vat_scheme_ceilings_crossed(company, from, to)`
+compares the turnover of the books with the ceilings of the scheme the company
+is on. Nothing changes a scheme by itself: leaving one is a decision the
+company records, from the first day of a financial year.
+
+---
+
 ## Several companies at once
 
 Everything above takes a company. Whoever keeps several — a firm and its
@@ -212,3 +284,9 @@ account.
 - **Rounding the debt to the whole unit**, which some administrations do.
 - **A working-day shift on a deadline**, which needs a calendar of public
   holidays.
+- **A deadline counted in months after the period**, which an annual return
+  often has; such a form is listed without a date until the closed vocabulary
+  of deadline rules carries it.
+- **Recording an instalment from a payment.** A payment on account is recorded
+  in `declaration_instalments`, by the caller; nothing matches a bank line to
+  an instalment yet.

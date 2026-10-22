@@ -106,6 +106,22 @@ filed on the fourteenth is on time under either reading. The text cited is the
 AED's coordinated version of 1 January 2026, which is not opposable; Legilux
 serves the official one.
 
+## VAT schemes: what `vat_schemes.json` does not declare yet
+
+The pack declares no VAT scheme, so a Luxembourg company files exactly as it
+did before schemes existed. What a scheme file would need:
+
+- **Annual filing under the turnover threshold.** Up to the threshold above an
+  undertaking files only the annual return. That return (`TVA_DECA`, or the
+  simplified `TVA_DECAS`) is a different form and is not in this pack: a
+  scheme cannot name a form the pack does not carry. It would go into
+  `tax_report.json` as a second form, `role` `annual`.
+- **The franchise (art. 57).** The legal mention is in `pack.json`
+  (`small_business`); the scheme itself and its ceiling, which has to be read
+  on Legilux in the version in force, are not. guichet.public.lu served no
+  readable text on the day this was written, and no figure is carried
+  without its source.
+
 ## The financial statements
 
 `statements.json` carries the two abridged schemes a small undertaking deposits:

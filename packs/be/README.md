@@ -101,3 +101,21 @@ law of 6 February 2024 and article 5 of arrêté royal n° 1, which lists what a
 invoice carries, require none, and the announced reporting transmits data the
 invoice already carries. The digital signature of a till receipt belongs to
 the cash register regime above, and stays there.
+
+## VAT schemes: what `vat_schemes.json` does not declare yet
+
+The pack declares no VAT scheme, so a Belgian company files exactly as it did
+before schemes existed. Two schemes of the Code are not declared yet:
+
+- **The franchise of small enterprises (art. 56bis).** The legal mention is
+  already in `pack.json` (`small_business`); what is missing is the scheme
+  itself — no periodic return, no VAT charged — and its turnover ceiling,
+  which has to be read on the article in force, on the SPF Finances site or in
+  the Moniteur belge. The SPF Finances page did not answer without a human
+  check on the day this was written, and no figure is carried without its text.
+- **The annual customer listing (art. 53quinquies)** a franchise company still
+  files is not a form of this pack.
+
+A pack that declares the franchise also declares the normal scheme filing
+`BE-VAT-PERIODIC`, so that the periodic return is filed under a scheme that
+names it and refused under the franchise.

@@ -17,12 +17,13 @@ packs/be/
 ├── accounts.csv       the default chart: code, parent, type, reconcilable, name, sequence
 ├── accounts.asbl.csv  a second chart, named by charts[] in the manifest
 ├── taxes.json         taxes and their postings, per kind of document
-├── tax_report.json    the boxes of the periodic return and their totals
+├── tax_report.json    the declaration forms — one, or a list — their boxes and totals
 ├── statements.json    the balance sheet, the income statement and their rules
 ├── analysis.json      which accounts make the revenue, the equity, the assets… of an analysis
 ├── fixed_assets.json  the section of the fixed assets module, where the country has one
 ├── corporate_tax.json the section of the corporate income tax module, where the country has one
 ├── turnover_tax.json  the regimes where a tax on turnover replaces VAT, where the country has one
+├── vat_schemes.json  the VAT schemes: which forms each files, ceilings, instalments
 ├── golden/
 │   ├── scenario.json  one year of books: documents, payments, the periods filed
 │   ├── vat_return.json    what the declaration comes to, period by period
@@ -1891,6 +1892,64 @@ refused at posting. `turnover_tax_return()` computes a period,
 prepares the filing of the regime's form, and `upcoming_filings()` lists that
 form in the place of the periodic return. A pack without the file says
 nothing in its seed.
+
+## VAT schemes: `vat_schemes.json`
+
+A country where a company files different declarations depending on its VAT
+scheme declares the schemes in `vat_schemes.json`
+([decision 0086](decisions/0086-a-company-files-under-a-vat-scheme.md)), and
+its forms as a list in `tax_report.json`:
+
+```json
+[
+  { "code": "XX-MONTHLY", "name": "…", "period": ["month", "quarter"], "boxes": [ … ] },
+  {
+    "code": "XX-ANNUAL", "name": "…", "role": "annual", "reads_postings_of": "XX-MONTHLY",
+    "period": ["year"], "period_default": "year",
+    "boxes": [
+      { "box": "A1", "kind": "base", "name": "…", "from": ["01:base"], "legal_reference": "…", "source": "…" },
+      { "box": "A9", "kind": "tax", "name": "Instalments", "reads": "instalments_due", "legal_reference": "…", "source": "…" }
+    ]
+  }
+]
+```
+
+A list carries at most one form whose `role` is `periodic` — the one the
+postings are for, and the one a single-form pack has without saying so — and
+every other form says it is `annual`. A form that restates another names it in
+`reads_postings_of`, and each of its base or tax boxes names the boxes of that
+form it adds up in `from`; a tax box may instead `reads` the payments on
+account of the declaration, `instalments_paid` or `instalments_due`. A pack
+whose `tax_report.json` holds one object compiles to exactly what it did.
+
+```json
+[
+  {
+    "code": "simplified", "name": "…", "legal_reference": "…", "source": "…",
+    "forms": [ { "report": "XX-ANNUAL", "periods": ["year"], "period_default": "year" } ],
+    "ceilings": [
+      { "measure": "turnover_previous_year", "activity": "goods", "amount": "500000",
+        "currency": "XXX", "valid_from": "…", "legal_reference": "…", "source": "…" }
+    ],
+    "instalments": {
+      "report": "XX-ANNUAL", "base": { "report": "XX-ANNUAL", "box": "B1:total" },
+      "minimum_base": "1000", "legal_reference": "…", "source": "…",
+      "schedule": [ { "month": 7, "percent": "55" }, { "month": 12, "percent": "40" } ]
+    }
+  },
+  { "code": "exemption", "name": "…", "charges_vat": false, "forms": [], "legal_reference": "…", "source": "…" }
+]
+```
+
+`measure` is `turnover_previous_year`, `turnover_current_year` or
+`tax_previous_year`; `activity` is `all`, `goods` or `services`. A ceiling
+without its `legal_reference` and `source` is refused by the schema, and one in
+another currency than the pack's by `ekwo pack check`, which also refuses a
+scheme naming a form `tax_report.json` does not carry or a cadence that form is
+not filed on, instalments on account of a form the scheme does not file, a
+base box the form does not have, and a schedule adding up to more than 100 %.
+A form of the pack that no scheme names is outside every scheme and filed as
+before. A pack without the file has no scheme.
 
 ## The corporate tax section
 

@@ -135,6 +135,53 @@ form's and the declarant can fill them: **15** and **5B** (inside 16), **21**,
 Line **14** of earlier versions of the form is not on the form in
 force: the rates it used to gather from an annex are lines T1 to T7 now.
 
+## VAT schemes and form 3517-S (CA12)
+
+`vat_schemes.json` declares three schemes, and a company records the one it
+is on from the first day of a financial year; nothing chooses it.
+
+| Scheme | Forms | Text |
+|---|---|---|
+| `normal` — régime réel normal | `FR-CA3`, monthly by default, quarterly where the annual tax is under 4 000 € | CGI, art. 287, 1 and 2 |
+| `simplified` — régime réel simplifié | `FR-CA12`, yearly, and two instalments | CGI, art. 302 septies A and 287, 3 |
+| `franchise` — franchise en base | none; sales carry no VAT and the `small_business` mention | CGI, art. 293 B and 293 E |
+
+The option of a simplified filer for the normal scheme, and of a franchise
+for paying VAT (art. 293 F), are recorded as what they lead to: the company
+states the scheme it is on. The ceilings are those in force on 1 January
+2026, read on the DILA fiches F23566 and F21746 (`sp-regime-simplifie`,
+`sp-franchise-en-base`); the CGI on Légifrance, BOFiP and impots.gouv.fr did
+not answer on the day the scheme was written, and the form was read in its
+2026 edition (`ca12`, cerfa n° 11417*27). A reviewer should check each
+ceiling against the article itself.
+
+**The CA12 restates the CA3.** The taxes of the pack post for the CA3; the
+CA12 reads those postings (`reads_postings_of`) and adds them up over the
+year, line by line: 02 ← 04, 03 ← 05, 04 ← 06, 5A ← 08, 06 ← 09, 6C ← 9B,
+07 ← 10, 08 ← 11, 09 ← 13, 20 ← 20 and 23 ← 19. Line 30 holds the
+instalments due for the year, paid or not, as the form asks (« acomptes payés
+et/ou restant dus »); 33, 34 and 35 the balance; 57 the base of the next
+year's instalments, line 16 less lines 11, 12 and 22.
+
+**Instalments.** 55 % in July and 40 % in December of line 57 of the previous
+year's CA12, none where that base is under 1 000 € (CGI, art. 287, 3). The day
+of the month depends on the taxpayer, so an instalment is listed with its
+month and no date. A company in its first year on the scheme, with no CA12 of
+the year before, gets a plan whose base is unknown (`no_base`).
+
+**Not carried yet:**
+
+| What | Why |
+|---|---|
+| Lines AA, AB, AC (purchases where the buyer owes the tax) | the pack's reverse-charge postings print their tax in the rate lines of the CA3, which the CA12 restates in 5A to 09; telling them apart needs postings of their own |
+| Lines 01, 3A, 3B, 4B, 4D, 5B, 9A, 2E | franchise purchases, distance sales, petroleum products, energy: nothing in the pack posts there |
+| Section IV, the assimilated taxes, and the energy excise frame (X5, Y5, Z5, 54 to 56) | taxes of their own, not VAT |
+| Lines 50 to 52 and the refund frame | a decision of the filer on a credit, entered by hand |
+| The deadline, the second working day after 1 May | the closed vocabulary of deadline rules counts days in the month after the period, and a working-day shift needs a calendar; `upcoming_filings()` lists the CA12 without a date |
+| CA12E, for a financial year that is not the calendar year | a `year` cadence is anchored on 1 January |
+| The franchise ceilings of lawyers, authors and performers (50 000 € and 35 000 €) | a ceiling per profession is not in the vocabulary of `activity` |
+| The goods and services split of a ceiling | the ledger does not split turnover by activity, so `vat_scheme_ceilings_crossed()` compares each ceiling with the whole turnover and can only over-warn |
+
 ## Accounts added in 1.17.2 for books taken over from elsewhere
 
 A FEC of a French company read in October 2026 used three accounts the chart

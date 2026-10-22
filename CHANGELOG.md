@@ -11,6 +11,27 @@ somewhere has already run it.
 
 ### Added
 
+- **A company files under a VAT scheme** (socle migrations `20261022110000`
+  and `20261022110100`, decision 0086). `tax_report.json` may hold a list of
+  forms, each with a `role` (`periodic`, `annual`); an annual form reads the
+  postings of the periodic one (`reads_postings_of`, `from`) and may deduct
+  the payments on account (`reads`). The new `vat_schemes.json` declares the
+  schemes of a country — forms and cadences, `charges_vat`, ceilings with
+  their article, instalments — compiled into `vat_schemes`,
+  `vat_scheme_forms`, `vat_scheme_ceilings` and `vat_scheme_instalments`. A
+  company states its scheme in `company_vat_schemes`, from the first day of a
+  financial year, with no default; its filing periods follow it,
+  `vat_return()` refuses a form it does not file, a sale with VAT is refused
+  under an exemption and its mention printed. `instalment_plan()` and
+  `declaration_instalments` plan and record the instalments,
+  `upcoming_filings()` and `portfolio_upcoming_filings()` list them in a new
+  column `instalment`, `vat_scheme_ceilings_crossed()` warns of a ceiling,
+  `ekwo status` prints the scheme and the MCP server gains `instalment_plan`.
+  A pack whose `tax_report.json` holds one object compiles to the same seed.
+- **France: the simplified scheme and the franchise** (`packs/fr`). The CA12
+  (3517-S-SD) restates the CA3 over the year and deducts the instalments of
+  55 % in July and 40 % in December; the schemes `normal`, `simplified` and
+  `franchise` carry the ceilings in force in 2026.
 - **The `contracts` module** (module migration `20261022094334`, decision
   0084). What a company agreed with a party of its books, in its own schema:
   `contracts.contracts` — kind, side (sale or purchase), a state that only
