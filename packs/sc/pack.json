@@ -164,7 +164,27 @@
     "number_format": "{CODE}-{YYYY}-{NNNN}",
     "legal_payment_days": null,
     "late_payment_reference": null,
-    "tax_point": "invoice_date"
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "The invoice requirements of the Act (section on the VAT invoice) were not found; no text read states how invoices are numbered. `sequential` and the number format are conventions of this pack and not rules of the law.",
+        "source": "vat-guideline"
+      },
+      "tax_point": {
+        "legal_reference": "The time-of-supply provisions of the Act were not found: the Schedules, the return and the Commission's brochures were read for the rates, the lists and the lines. `invoice_date` is a convention of this pack and not a rule of the law; a payment received before the invoice may change the date of the supply.",
+        "source": "vat-guideline"
+      }
+    },
+    "mentions": [
+      {
+        "code": "vat_invoice",
+        "applies_when": "always",
+        "text": "VAT INVOICE",
+        "sequence": 10,
+        "legal_reference": "Value Added Tax Act, s. 20(2)(a) — a registered person issuing a VAT invoice specifies the words \"VAT INVOICE\" in a prominent place; s. 20(1) — every registered person who makes a taxable supply to any person issues one.",
+        "source": "vat-act"
+      }
+    ]
   },
   "einvoicing": {
     "profile": null,
