@@ -791,6 +791,33 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
   // the fiscal events.
   'einvoicing.record_clearance_submission': { reads: [], writesOnly: ['clearance_id', 'document_id'] },
   'einvoicing.record_clearance_answer': { reads: [], writesOnly: ['clearance_id', 'document_id'] },
+  // A contract names its party, its signed file and its template in its
+  // patch; a schedule names its product. Each is asked of Bob's own company.
+  'contracts.upsert_contract': {
+    reads: ['attachment_id', 'contact_id', 'template_id'],
+    calls: (id) =>
+      (['contact_id', 'attachment_id', 'template_id'] as const).map((key) => ({
+        sql: `select number from contracts.upsert_contract($1, 'PROBE-1', jsonb_build_object(
+                'contact_id', (select c.id from contacts c where c.company_id = $1 order by c.id limit 1),
+                'name', 'Probe', 'kind', 'other', 'direction', 'sale') || jsonb_build_object($3::text, $2::text))`,
+        params: [bobBooks, id, key],
+      })),
+  },
+  'contracts.upsert_schedule': {
+    reads: ['product_id'],
+    calls: (id) => [
+      {
+        sql: `select name from contracts.upsert_schedule($1,
+                (select c.id from contracts.contracts c where c.company_id = $1 order by c.number limit 1), null,
+                jsonb_build_object('product_id', $2::text, 'name', 'Probe', 'unit_price', 1,
+                                   'frequency', 'monthly', 'next_on', $3::text))`,
+        params: [bobBooks, id, openDay],
+      },
+    ],
+  },
+  // The keys it names are those of the contract it writes, from its own
+  // arguments; the values of the variables are text.
+  'contracts.from_template': { reads: [], writesOnly: ['attachment_id', 'contact_id', 'template_id'] },
 };
 
 describe('the other person, signed in', () => {

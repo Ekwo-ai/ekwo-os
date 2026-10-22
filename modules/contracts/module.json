@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ekwo.ai/schemas/module/1.json",
+  "code": "contracts",
+  "name": "Contracts",
+  "description": "What a company agreed with another party, kept beside the books on the same contacts: dates, renewal, notice, value, the signed file, amendments and templates, and schedules that issue draft sales or purchase invoices when their periods come. Knows no country, and never writes the ledger itself.",
+  "schema": "contracts",
+  "version": "0.1.0",
+  "status": "available",
+  "requires_socle_min": "20261019150000",
+  "posts": false,
+  "mcp": { "prefix": "contracts" }
+}

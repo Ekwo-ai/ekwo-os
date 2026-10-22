@@ -33,6 +33,7 @@ describe('reading the modules of a checkout', () => {
     // `fixed-assets` carries the module whose code is `assets`.
     expect(modules.map((m) => [basename(m.dir), m.manifest.code, m.manifest.schema])).toEqual([
       ['budgets', 'budgets', 'budgets'],
+      ['contracts', 'contracts', 'contracts'],
       ['corporate-tax', 'tax', 'tax'],
       ['crm', 'crm', 'crm'],
       ['einvoicing', 'einvoicing', 'einvoicing'],

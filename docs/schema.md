@@ -2945,6 +2945,211 @@ Constraints:
 | `archive_tables()` | What an archive of one company does with each table of this module. Read by `public.company_archive_tables()`. |
 | `variance(p_company_id uuid, p_budget_id uuid, p_from date, p_to date)` | Budget against ledger, per account, over a period, at the decimals of the company's currency. Both figures are in the sign a business states them in — an income account's credit balance is flipped — and the variance is the actual less the plan. Reads posted entries of kind `normal` only: a closing or appropriation entry is not what a period earned. |
 
+## `contracts` — Contracts
+
+What a company agreed with another party, kept beside the books on the same contacts: dates, renewal, notice, value, the signed file, amendments and templates, and schedules that issue draft sales or purchase invoices when their periods come. Knows no country, and never writes the ledger itself.
+
+### Tables
+
+| Table | Purpose |
+|---|---|
+| [`amendments`](#contracts-amendments) | Every text a contract had and every change made to it, numbered from 1 in the contract: a version of the text with its file, an amendment — what changes, from when, signed when, with the signed file — or a tacit renewal. |
+| [`contracts`](#contracts-contracts) | One agreement with one party of the books: what it is about, which side the company is on, where it stands, its dates, how it renews and with how much notice, its value in its currency, the signed file. Its number is the company's own, unique in the company, and is written on every document it issues (contract_reference, EN 16931 BT-12). |
+| [`issues`](#contracts-issues) | Which document of the socle a schedule issued for which period: one row per schedule and first day of a period, written by contracts.issue_due(). A draft that is deleted takes its row with it. |
+| [`schedules`](#contracts-schedules) | A line a contract invoices, at its own rhythm: what (a product, or a name), how many, in which unit, at what price, under which tax, every week, month, quarter or year from next_on until until. Each period that has come is issued as one draft document by contracts.issue_due(). |
+| [`templates`](#contracts-templates) | What a contract starts from: its clauses — an html text or a docx file — with the variables they name, a category, and a template schedule. contracts.from_template() makes a draft contract of one. |
+
+<a id="contracts-amendments"></a>
+
+#### `amendments`
+
+Every text a contract had and every change made to it, numbered from 1 in the contract: a version of the text with its file, an amendment — what changes, from when, signed when, with the signed file — or a tacit renewal.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `contract_id` | `uuid` | not null |
+| `number` | `integer` | not null — The place of the row in the contract's history, 1 first. A version keeps the number its file had. |
+| `kind` | `contracts.amendment_kind` | not null |
+| `summary` | `text` | not null — What changes, in words. |
+| `changes` | `jsonb` | not null — What changes, as data: the fields of the contract that took a new value, and under "schedules" the fields of each schedule, by id. Empty for a version. |
+| `effective_on` | `date` | not null — From when the change holds: the first day of the new term for a renewal. |
+| `signed_on` | `date` |  |
+| `attachment_id` | `uuid` | The file of this version or of the signed amendment: an attachment of the socle, with its checksum. |
+| `created_by` | `uuid` | auth.users.id of whoever recorded it; null for a renewal written by the module. |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((jsonb_typeof(changes) = 'object'::text))`
+- `CHECK ((number > 0))`
+- `CHECK ((length(btrim(summary)) > 0))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, contract_id, number)`
+
+<a id="contracts-contracts"></a>
+
+#### `contracts`
+
+One agreement with one party of the books: what it is about, which side the company is on, where it stands, its dates, how it renews and with how much notice, its value in its currency, the signed file. Its number is the company's own, unique in the company, and is written on every document it issues (contract_reference, EN 16931 BT-12).
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `contact_id` | `uuid` | not null — The other party: a customer on a sale, a supplier on a purchase. A row of public.contacts of the same company. |
+| `number` | `text` | not null — The company's reference for the contract, unique in the company. Copied onto every document the contract issues, as contract_reference. |
+| `name` | `text` | not null |
+| `kind` | `contracts.contract_kind` | not null |
+| `direction` | `contracts.direction` | not null |
+| `state` | `contracts.contract_state` | not null |
+| `signed_on` | `date` | The day it was signed. Written with the day a contract reaches signed when nobody gave one. |
+| `starts_on` | `date` |  |
+| `ends_on` | `date` | The last day of the current term. Null: open-ended, it runs until it is terminated. |
+| `renews_on` | `date` | The first day of the next term, when the contract renews. Set to the day after ends_on for a tacit renewal when nobody gave one, and moved with it. |
+| `renewal` | `contracts.renewal` | not null |
+| `notice_days` | `integer` | How many days before the next term — or before the end, where it does not renew — notice has to be given. The notice deadline of contracts.deadlines is that day. |
+| `currency_code` | `character(3)` | not null — The currency of its value and of the documents it issues. The company's own when the contract was created without one. |
+| `total_value` | `numeric(18,2)` | What the contract is worth over its term, excluding tax, as the parties said it. A figure of the agreement, never added to the books. |
+| `attachment_id` | `uuid` | The signed file: an attachment of the socle, with its checksum, of the same company. The file itself is filed on the other party (entity_type contact). |
+| `template_id` | `uuid` | The template it was made from, if any. |
+| `notes` | `text` | What somebody — a member, an agent — wrote about the contract: its risks, what to watch. |
+| `analysis` | `jsonb` | not null — A structured reading of the contract, as a JSON object: its key clauses, its obligations, a level of risk. Written by whoever read it; the module only keeps it. |
+| `attributes` | `jsonb` | not null — The fields a company keeps that the module does not name, as a JSON object. contracts.from_template() writes the template variables here, under "variables". |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((jsonb_typeof(analysis) = 'object'::text))`
+- `CHECK ((jsonb_typeof(attributes) = 'object'::text))`
+- `CHECK (((ends_on IS NULL) OR (starts_on IS NULL) OR (ends_on >= starts_on)))`
+- `CHECK ((length(btrim(name)) > 0))`
+- `CHECK (((notice_days IS NULL) OR (notice_days >= 0)))`
+- `CHECK ((length(btrim(number)) > 0))`
+- `CHECK (((renewal <> 'tacit'::contracts.renewal) OR ((starts_on IS NOT NULL) AND (ends_on IS NOT NULL))))`
+- `CHECK (((total_value IS NULL) OR (total_value >= (0)::numeric)))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, number)`
+- `UNIQUE (id, company_id)`
+
+<a id="contracts-issues"></a>
+
+#### `issues`
+
+Which document of the socle a schedule issued for which period: one row per schedule and first day of a period, written by contracts.issue_due(). A draft that is deleted takes its row with it.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `contract_id` | `uuid` | not null |
+| `schedule_id` | `uuid` | not null |
+| `document_id` | `uuid` | not null |
+| `period_start` | `date` | not null |
+| `period_end` | `date` | not null |
+| `created_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((period_end >= period_start))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, schedule_id, period_start)`
+
+<a id="contracts-schedules"></a>
+
+#### `schedules`
+
+A line a contract invoices, at its own rhythm: what (a product, or a name), how many, in which unit, at what price, under which tax, every week, month, quarter or year from next_on until until. Each period that has come is issued as one draft document by contracts.issue_due().
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `contract_id` | `uuid` | not null |
+| `sequence` | `integer` | not null |
+| `product_id` | `uuid` | The catalogue row the line was filled in from, when there is one. Its name, unit, price and tax pre-fill the schedule when it is created; the account of the line is the product's, resolved by the socle. |
+| `name` | `text` | not null |
+| `description` | `text` |  |
+| `quantity` | `numeric(16,4)` | not null |
+| `unit_code` | `text` | not null |
+| `unit_price` | `numeric(16,6)` | not null — The price of one unit, excluding tax, in the contract's currency. The product's price for the side of the contract when it is created from a product without one. |
+| `tax_code` | `text` | The tax of the line, by its code in the company's list of taxes (public.taxes.code). Null: no tax on the line. Read at each issue, so a tax that changed its rate under the same code is applied as it stands. |
+| `frequency` | `contracts.frequency` | not null |
+| `next_on` | `date` | not null — The first day of the next period to issue. contracts.issue_due() issues every period whose first day is on or before the day it is given, and moves this to the period after. |
+| `until` | `date` | The last day a period may start on. Null: as long as the contract runs. |
+| `indexation` | `jsonb` | How the price is indexed, as data, never as code: a JSON object {"index": the name of the index, "formula": the clause as the contract writes it, "base": the value of the index the price was set on, "base_on": its date, "next_on": the day the next indexation is due}. Nothing is computed from it: the deadline is shown in contracts.deadlines, and the new price is an amendment. |
+| `auto_post` | `boolean` | not null — True: the documents this schedule issues are booked as soon as they are written, by the socle's post_document(), which needs documents.post. False: they stay drafts for somebody to read. |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK (contracts.valid_indexation(indexation))`
+- `CHECK ((length(btrim(name)) > 0))`
+- `CHECK ((unit_price >= (0)::numeric))`
+- `CHECK ((quantity > (0)::numeric))`
+- `CHECK ((unit_code ~ '^[A-Z0-9]{1,3}$'::text))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (id, company_id)`
+
+<a id="contracts-templates"></a>
+
+#### `templates`
+
+What a contract starts from: its clauses — an html text or a docx file — with the variables they name, a category, and a template schedule. contracts.from_template() makes a draft contract of one.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `name` | `text` | not null |
+| `description` | `text` |  |
+| `category` | `text` | How the company files its templates — services, licences, employment, confidentiality — in its own words. |
+| `format` | `contracts.template_format` | not null |
+| `html` | `text` | The clauses as html, with {{key}} where a variable goes. Required when format is html. |
+| `attachment_id` | `uuid` | The docx file of the clauses, an attachment of the socle with its checksum. Required when format is docx. |
+| `variables` | `jsonb` | not null — The variables the clauses name, as a JSON array of objects: {"key": …, "label": …, "type": …, "required": true\|false, "default_value": …}. contracts.from_template() refuses a required one left empty. |
+| `schedule` | `jsonb` | not null — The schedule a contract made from this template starts with, as a JSON array of the fields contracts.upsert_schedule() takes: {"name", "product_code", "quantity", "unit_code", "unit_price", "tax_code", "frequency", "auto_post"}. |
+| `active` | `boolean` | not null |
+| `created_by` | `uuid` | auth.users.id of whoever wrote the template. No foreign key, as company_members has none. |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK (((format <> 'docx'::contracts.template_format) OR (attachment_id IS NOT NULL)))`
+- `CHECK (((format <> 'html'::contracts.template_format) OR (html IS NOT NULL)))`
+- `CHECK ((length(btrim(name)) > 0))`
+- `CHECK ((jsonb_typeof(schedule) = 'array'::text))`
+- `CHECK ((jsonb_typeof(variables) = 'array'::text))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (id, company_id)`
+
+### Functions
+
+| Function | Purpose |
+|---|---|
+| `amend(p_company_id uuid, p_contract_id uuid, p_summary text, p_effective_on date, p_changes jsonb, p_kind contracts.amendment_kind, p_signed_on date, p_attachment_id uuid)` | Records what changes in a contract and from when, numbered next in its history, with the signed file. An amendment applies its changes as it is recorded: the fields of the contract through contracts.upsert_contract(), and under "schedules", by id, the fields of each schedule through contracts.upsert_schedule() — with their refusals. A version records another text with its file and changes no field. A renewal is refused: contracts.roll_forward() writes it. Needs contracts.write. |
+| `archive_tables()` | What an archive of one company does with each table of this module: all five travel — what a company agreed is part of its books. Read by `public.company_archive_tables()`. |
+| `card_of(p_company_id uuid, p_contract_id uuid)` | Everything on one contract, as one JSON object: the contract, its party, its signed file with its checksum, its schedules, its history of versions, amendments and renewals, the 24 latest documents it issued with their number, state and total, and its deadlines. Needs contracts.read. |
+| `complete_contract()` | Before a contract is written: takes the company's currency when none is named, sets renews_on to the day after ends_on for a tacit renewal that has none, writes signed_on on a contract that reaches signed without one, and refuses a state that goes back (contracts_state_backwards), a move out of a final state (contracts_closed), a running contract cancelled or an unsigned one terminated (contracts_bad_state). |
+| `from_template(p_company_id uuid, p_template_id uuid, p_contact_id uuid, p_number text, p_direction contracts.direction, p_kind contracts.contract_kind, p_starts_on date, p_values jsonb, p_name text)` | Makes a draft contract of a template: the number, party, side and kind given, starting on p_starts_on, named after the template unless p_name is given, the values of the variables kept in attributes.variables — a default of the template filling an empty one, a required one still empty refused by name, contracts_missing_variable — and the template schedule copied, each line starting on p_starts_on. Answers the contract, its schedules, and the clauses: the html with the values in place, or the docx attachment to fill. Needs contracts.write. |
+| `guard_attachment()` | Refuses a file that is not an attachment of the row's own company (contracts_unknown_attachment): public.attachments has no composite key to name, so the company is checked here. |
+| `issue_due(p_company_id uuid, p_on_date date)` | Issues every period that has come: for each schedule of a signed or active contract whose next_on is on or before the day — and before its until and the contract's end — one draft document of the socle per period, a sales invoice on a sale and a purchase invoice on a purchase, dated the first day of the period, to the contract's party, in its currency, contract_reference set to its number, with one line of the schedule; recorded in contracts.issues with the period it covers, and next_on moved to the period after. Renewals and expiries of contracts.roll_forward() come first. Idempotent per schedule and period: the document carries client_ref contracts:<schedule>:<first day>, which the socle refuses twice. A schedule with auto_post has its documents booked by post_document(). Needs contracts.issue, contracts.write and documents.write — documents.post for auto_post — each refused by name. Returns one row per document. |
+| `list_contracts(p_company_id uuid, p_state contracts.contract_state, p_direction contracts.direction, p_contact_id uuid, p_query text, p_limit integer)` | The contracts of a company, filtered by state, side, party, or a text found in the number, the name or the party's name — every filter optional — each with its party's name and its nearest deadline. In the order of their numbers, at most p_limit rows (50). Needs contracts.read. |
+| `list_templates(p_company_id uuid, p_include_inactive boolean)` | The templates of a company, by category and name — the active ones unless p_include_inactive. Needs contracts.read. |
+| `render(p_text text, p_values jsonb)` | The text with each {{key}} replaced by its value in p_values. A key with no value is left as it is written, so what is missing stays visible. |
+| `require(p_company_id uuid, p_capability text, p_what text)` | Raises contracts_module_not_enabled when the module is off for the company or the caller is not a member of it, and contracts_not_allowed when the caller does not hold the capability. The first lines of every function of this module; the policies still decide every row. |
+| `roll_forward(p_company_id uuid, p_on_date date)` | Brings the contracts of a company to a day: a signed contract whose start has come is active; an active one whose last day is past expires when it does not renew, and renews tacitly otherwise — one term of the length of the term that ends, recorded as a renewal amendment, as many times as the day asks. A contract given notice is terminated by its user beforehand and is not touched. Returns one row per change. Needs contracts.write. |
+| `state_rank(p_state contracts.contract_state)` | The order a contract moves in: draft, sent, negotiation, signed, active, then the three final states. |
+| `step(p_from date, p_frequency contracts.frequency, p_steps integer)` | The day p_steps periods after p_from. Counted from the same first day every time, so the 31st of a month gives the last day of a shorter one and the 31st again after it. |
+| `upsert_contract(p_company_id uuid, p_number text, p_patch jsonb)` | Creates the contract of that number in the company, or changes it: each field the patch names takes its value, every other one keeps its own. A new contract needs contact_id, name, kind and direction; its currency is the company's unless currency_code is named. Once it has issued a document, its contact_id, direction and currency_code do not change (contracts_already_issued). An unknown key is refused by name, contracts_unknown_field. Needs contracts.write. Returns the contract. |
+| `upsert_schedule(p_company_id uuid, p_contract_id uuid, p_schedule_id uuid, p_patch jsonb)` | Adds a schedule to a contract (p_schedule_id null) or changes one: each field the patch names takes its value. The fields are sequence, product_id or product_code, name, description, quantity, unit_code, unit_price, tax_code, frequency, next_on, until, indexation and auto_post. A new schedule from a product takes the product's name, unit, price and tax for the side of the contract where the patch gives none; it needs a name, a unit_price, a frequency and a next_on. A product or a tax code the company does not have is refused by name. Needs contracts.write. |
+| `valid_indexation(p_indexation jsonb)` | Whether an indexation is a JSON object whose next_on and base_on, where given, are dates. |
+
 ## `crm` — Customer relationship
 
 The record of a relationship, kept beside the books on the same contacts: cards, segments, pipelines, deals and activities, exposed as functions an agent or a screen calls. A deal won makes its party a customer. Knows no country, and writes nothing to the ledger.

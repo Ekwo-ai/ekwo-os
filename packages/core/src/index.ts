@@ -45,3 +45,4 @@ export * from './books/index.js';
 export * from './proofs/index.js';
 export * from './einvoicing/index.js';
 export * from './crm/index.js';
+export * from './contracts/index.js';

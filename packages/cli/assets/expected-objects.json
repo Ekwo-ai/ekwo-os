@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.17.0",
-  "migration": "20261020210000",
+  "migration": "20261022094334",
   "socle": {
     "schema": "public",
     "tables": [
@@ -12956,6 +12956,869 @@
           {
             "name": "variance",
             "arguments": "p_company_id uuid, p_budget_id uuid, p_from date, p_to date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          }
+        ],
+        "defaultPrivileges": []
+      }
+    },
+    {
+      "code": "contracts",
+      "version": "0.1.0",
+      "schema": "contracts",
+      "tables": [
+        {
+          "name": "amendments",
+          "columns": [
+            {
+              "name": "attachment_id",
+              "type": "uuid"
+            },
+            {
+              "name": "changes",
+              "type": "jsonb"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "contract_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "created_by",
+              "type": "uuid"
+            },
+            {
+              "name": "effective_on",
+              "type": "date"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "kind",
+              "type": "contracts.amendment_kind"
+            },
+            {
+              "name": "number",
+              "type": "integer"
+            },
+            {
+              "name": "signed_on",
+              "type": "date"
+            },
+            {
+              "name": "summary",
+              "type": "text"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        },
+        {
+          "name": "contracts",
+          "columns": [
+            {
+              "name": "analysis",
+              "type": "jsonb"
+            },
+            {
+              "name": "attachment_id",
+              "type": "uuid"
+            },
+            {
+              "name": "attributes",
+              "type": "jsonb"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "contact_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "currency_code",
+              "type": "character(3)"
+            },
+            {
+              "name": "direction",
+              "type": "contracts.direction"
+            },
+            {
+              "name": "ends_on",
+              "type": "date"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "kind",
+              "type": "contracts.contract_kind"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "notes",
+              "type": "text"
+            },
+            {
+              "name": "notice_days",
+              "type": "integer"
+            },
+            {
+              "name": "number",
+              "type": "text"
+            },
+            {
+              "name": "renewal",
+              "type": "contracts.renewal"
+            },
+            {
+              "name": "renews_on",
+              "type": "date"
+            },
+            {
+              "name": "signed_on",
+              "type": "date"
+            },
+            {
+              "name": "starts_on",
+              "type": "date"
+            },
+            {
+              "name": "state",
+              "type": "contracts.contract_state"
+            },
+            {
+              "name": "template_id",
+              "type": "uuid"
+            },
+            {
+              "name": "total_value",
+              "type": "numeric(18,2)"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        },
+        {
+          "name": "issues",
+          "columns": [
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "contract_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "document_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "period_end",
+              "type": "date"
+            },
+            {
+              "name": "period_start",
+              "type": "date"
+            },
+            {
+              "name": "schedule_id",
+              "type": "uuid"
+            }
+          ]
+        },
+        {
+          "name": "schedules",
+          "columns": [
+            {
+              "name": "auto_post",
+              "type": "boolean"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "contract_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "description",
+              "type": "text"
+            },
+            {
+              "name": "frequency",
+              "type": "contracts.frequency"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "indexation",
+              "type": "jsonb"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "next_on",
+              "type": "date"
+            },
+            {
+              "name": "product_id",
+              "type": "uuid"
+            },
+            {
+              "name": "quantity",
+              "type": "numeric(16,4)"
+            },
+            {
+              "name": "sequence",
+              "type": "integer"
+            },
+            {
+              "name": "tax_code",
+              "type": "text"
+            },
+            {
+              "name": "unit_code",
+              "type": "text"
+            },
+            {
+              "name": "unit_price",
+              "type": "numeric(16,6)"
+            },
+            {
+              "name": "until",
+              "type": "date"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        },
+        {
+          "name": "templates",
+          "columns": [
+            {
+              "name": "active",
+              "type": "boolean"
+            },
+            {
+              "name": "attachment_id",
+              "type": "uuid"
+            },
+            {
+              "name": "category",
+              "type": "text"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "created_by",
+              "type": "uuid"
+            },
+            {
+              "name": "description",
+              "type": "text"
+            },
+            {
+              "name": "format",
+              "type": "contracts.template_format"
+            },
+            {
+              "name": "html",
+              "type": "text"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "schedule",
+              "type": "jsonb"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "variables",
+              "type": "jsonb"
+            }
+          ]
+        }
+      ],
+      "views": [
+        "deadlines"
+      ],
+      "functions": [
+        {
+          "name": "amend",
+          "arguments": "p_company_id uuid, p_contract_id uuid, p_summary text, p_effective_on date, p_changes jsonb, p_kind contracts.amendment_kind, p_signed_on date, p_attachment_id uuid"
+        },
+        {
+          "name": "archive_tables",
+          "arguments": ""
+        },
+        {
+          "name": "card_of",
+          "arguments": "p_company_id uuid, p_contract_id uuid"
+        },
+        {
+          "name": "complete_contract",
+          "arguments": ""
+        },
+        {
+          "name": "from_template",
+          "arguments": "p_company_id uuid, p_template_id uuid, p_contact_id uuid, p_number text, p_direction contracts.direction, p_kind contracts.contract_kind, p_starts_on date, p_values jsonb, p_name text"
+        },
+        {
+          "name": "guard_attachment",
+          "arguments": ""
+        },
+        {
+          "name": "issue_due",
+          "arguments": "p_company_id uuid, p_on_date date"
+        },
+        {
+          "name": "list_contracts",
+          "arguments": "p_company_id uuid, p_state contracts.contract_state, p_direction contracts.direction, p_contact_id uuid, p_query text, p_limit integer"
+        },
+        {
+          "name": "list_templates",
+          "arguments": "p_company_id uuid, p_include_inactive boolean"
+        },
+        {
+          "name": "render",
+          "arguments": "p_text text, p_values jsonb"
+        },
+        {
+          "name": "require",
+          "arguments": "p_company_id uuid, p_capability text, p_what text"
+        },
+        {
+          "name": "roll_forward",
+          "arguments": "p_company_id uuid, p_on_date date"
+        },
+        {
+          "name": "state_rank",
+          "arguments": "p_state contracts.contract_state"
+        },
+        {
+          "name": "step",
+          "arguments": "p_from date, p_frequency contracts.frequency, p_steps integer"
+        },
+        {
+          "name": "upsert_contract",
+          "arguments": "p_company_id uuid, p_number text, p_patch jsonb"
+        },
+        {
+          "name": "upsert_schedule",
+          "arguments": "p_company_id uuid, p_contract_id uuid, p_schedule_id uuid, p_patch jsonb"
+        },
+        {
+          "name": "valid_indexation",
+          "arguments": "p_indexation jsonb"
+        }
+      ],
+      "policies": [
+        {
+          "table": "amendments",
+          "name": "contracts_amendments_select",
+          "command": "select"
+        },
+        {
+          "table": "amendments",
+          "name": "contracts_amendments_write",
+          "command": "all"
+        },
+        {
+          "table": "contracts",
+          "name": "contracts_contracts_select",
+          "command": "select"
+        },
+        {
+          "table": "contracts",
+          "name": "contracts_contracts_write",
+          "command": "all"
+        },
+        {
+          "table": "issues",
+          "name": "contracts_issues_select",
+          "command": "select"
+        },
+        {
+          "table": "issues",
+          "name": "contracts_issues_write",
+          "command": "all"
+        },
+        {
+          "table": "schedules",
+          "name": "contracts_schedules_select",
+          "command": "select"
+        },
+        {
+          "table": "schedules",
+          "name": "contracts_schedules_write",
+          "command": "all"
+        },
+        {
+          "table": "templates",
+          "name": "contracts_templates_select",
+          "command": "select"
+        },
+        {
+          "table": "templates",
+          "name": "contracts_templates_write",
+          "command": "all"
+        }
+      ],
+      "triggers": [
+        {
+          "table": "amendments",
+          "name": "contracts_amendments_guard_attachment"
+        },
+        {
+          "table": "amendments",
+          "name": "contracts_amendments_set_updated_at"
+        },
+        {
+          "table": "contracts",
+          "name": "contracts_contact_id_not_merged"
+        },
+        {
+          "table": "contracts",
+          "name": "contracts_contracts_complete"
+        },
+        {
+          "table": "contracts",
+          "name": "contracts_contracts_guard_attachment"
+        },
+        {
+          "table": "contracts",
+          "name": "contracts_contracts_set_updated_at"
+        },
+        {
+          "table": "schedules",
+          "name": "contracts_schedules_set_updated_at"
+        },
+        {
+          "table": "templates",
+          "name": "contracts_templates_guard_attachment"
+        },
+        {
+          "table": "templates",
+          "name": "contracts_templates_set_updated_at"
+        }
+      ],
+      "types": [
+        {
+          "name": "amendment_kind",
+          "kind": "enum",
+          "labels": [
+            "version",
+            "amendment",
+            "renewal"
+          ]
+        },
+        {
+          "name": "contract_kind",
+          "kind": "enum",
+          "labels": [
+            "service",
+            "licence",
+            "subscription",
+            "usage",
+            "one_time",
+            "other"
+          ]
+        },
+        {
+          "name": "contract_state",
+          "kind": "enum",
+          "labels": [
+            "draft",
+            "sent",
+            "negotiation",
+            "signed",
+            "active",
+            "expired",
+            "terminated",
+            "cancelled"
+          ]
+        },
+        {
+          "name": "direction",
+          "kind": "enum",
+          "labels": [
+            "sale",
+            "purchase"
+          ]
+        },
+        {
+          "name": "frequency",
+          "kind": "enum",
+          "labels": [
+            "weekly",
+            "monthly",
+            "quarterly",
+            "yearly"
+          ]
+        },
+        {
+          "name": "renewal",
+          "kind": "enum",
+          "labels": [
+            "none",
+            "tacit"
+          ]
+        },
+        {
+          "name": "template_format",
+          "kind": "enum",
+          "labels": [
+            "html",
+            "docx"
+          ]
+        }
+      ],
+      "grants": {
+        "schema": "contracts",
+        "usage": {
+          "anon": [
+            "usage"
+          ],
+          "authenticated": [
+            "usage"
+          ],
+          "service_role": [
+            "usage"
+          ]
+        },
+        "tables": [
+          {
+            "name": "amendments",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
+            "name": "contracts",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
+            "name": "issues",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
+            "name": "schedules",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
+            "name": "templates",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          }
+        ],
+        "views": [
+          {
+            "name": "deadlines",
+            "anon": [],
+            "authenticated": [
+              "select"
+            ],
+            "service_role": [
+              "select"
+            ]
+          }
+        ],
+        "sequences": [],
+        "functions": [
+          {
+            "name": "amend",
+            "arguments": "p_company_id uuid, p_contract_id uuid, p_summary text, p_effective_on date, p_changes jsonb, p_kind contracts.amendment_kind, p_signed_on date, p_attachment_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "archive_tables",
+            "arguments": "",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "card_of",
+            "arguments": "p_company_id uuid, p_contract_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "complete_contract",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
+          },
+          {
+            "name": "from_template",
+            "arguments": "p_company_id uuid, p_template_id uuid, p_contact_id uuid, p_number text, p_direction contracts.direction, p_kind contracts.contract_kind, p_starts_on date, p_values jsonb, p_name text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "guard_attachment",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
+          },
+          {
+            "name": "issue_due",
+            "arguments": "p_company_id uuid, p_on_date date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "list_contracts",
+            "arguments": "p_company_id uuid, p_state contracts.contract_state, p_direction contracts.direction, p_contact_id uuid, p_query text, p_limit integer",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "list_templates",
+            "arguments": "p_company_id uuid, p_include_inactive boolean",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "render",
+            "arguments": "p_text text, p_values jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "require",
+            "arguments": "p_company_id uuid, p_capability text, p_what text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "roll_forward",
+            "arguments": "p_company_id uuid, p_on_date date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "state_rank",
+            "arguments": "p_state contracts.contract_state",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "step",
+            "arguments": "p_from date, p_frequency contracts.frequency, p_steps integer",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "upsert_contract",
+            "arguments": "p_company_id uuid, p_number text, p_patch jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "upsert_schedule",
+            "arguments": "p_company_id uuid, p_contract_id uuid, p_schedule_id uuid, p_patch jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "valid_indexation",
+            "arguments": "p_indexation jsonb",
             "anon": [],
             "authenticated": [
               "execute"

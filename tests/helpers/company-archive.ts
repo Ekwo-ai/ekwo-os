@@ -425,6 +425,45 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     [companyId, party.id, deal.id, `note-${tag}`],
   );
 
+  // A sixth module: what the company agreed with the same party — a template,
+  // a contract made from it, a schedule, an amendment, and the document one
+  // period issued. Written by hand: what issue_due() writes is
+  // `contracts.test.ts`, that every row of it travels is this.
+  await asUser(db, ownerId, async () => {
+    await db.query(`select enable_module($1, 'contracts')`, [companyId]);
+  });
+  const template = await one<{ id: string }>(
+    db,
+    `insert into contracts.templates (company_id, name, category, format, html, variables)
+     values ($1, $2, 'services', 'html', '<p>{{buyer}}</p>', '[{"key": "buyer", "label": "Buyer", "required": true}]')
+     returning id`,
+    [companyId, `Template ${tag}`],
+  );
+  const contract = await one<{ id: string }>(
+    db,
+    `insert into contracts.contracts (company_id, contact_id, number, name, kind, direction, state, starts_on,
+                                      template_id, currency_code)
+     select $1, $2, $3, 'Support', 'service', 'sale', 'active', $4::date, $5, c.currency_code
+       from companies c where c.id = $1 returning id`,
+    [companyId, party.id, `CTR-${tag}`, golden.fiscalYear.start, template.id],
+  );
+  const schedule = await one<{ id: string }>(
+    db,
+    `insert into contracts.schedules (company_id, contract_id, name, unit_price, frequency, next_on)
+     values ($1, $2, 'Support', 100, 'monthly', $3::date) returning id`,
+    [companyId, contract.id, golden.fiscalYear.start],
+  );
+  await db.query(
+    `insert into contracts.amendments (company_id, contract_id, number, kind, summary, effective_on)
+     values ($1, $2, 1, 'version', 'As signed', $3::date)`,
+    [companyId, contract.id, golden.fiscalYear.start],
+  );
+  await db.query(
+    `insert into contracts.issues (company_id, contract_id, schedule_id, document_id, period_start, period_end)
+     values ($1, $2, $3, $4, $5::date, $5::date)`,
+    [companyId, contract.id, schedule.id, [...replayed.documents.values()][0], golden.fiscalYear.start],
+  );
+
   // A piece on a document.
   const someDocument = [...replayed.documents.values()][0] as string;
   await db.query(
