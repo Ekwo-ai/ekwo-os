@@ -1,0 +1,251 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un mois de comptabilité d'une société de négoce de Nouakchott assujettie à la TVA, déclaration mensuelle (fictive)",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-09",
+      "from": "2026-09-01",
+      "to": "2026-09-30"
+    }
+  ],
+  "statements": [
+    "MR-PCN-BILAN",
+    "MR-PCN-RESULTATS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-nkc",
+      "name": "Exemple Nouakchott Commerce SARL",
+      "type": "customer",
+      "country": "MR"
+    },
+    {
+      "ref": "cust-export",
+      "name": "Exemple Export Acheteur SA",
+      "type": "customer",
+      "country": "SN"
+    },
+    {
+      "ref": "supp-local",
+      "name": "Exemple Grossiste Nouadhibou SARL",
+      "type": "supplier",
+      "country": "MR"
+    },
+    {
+      "ref": "supp-import",
+      "name": "Exemple Shenzhen Trading Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-nkc",
+      "date": "2026-09-05",
+      "why": "Une vente intérieure au taux normal de 16 % (art. 230-1) : la base dans la case 1S, la taxe collectée au compte 4357.",
+      "lines": [
+        {
+          "name": "Fournitures de bureau, vente au détail",
+          "quantity": 5,
+          "unit_price": 2000,
+          "tax": "MR-S-16",
+          "account": "700"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-nkc",
+      "date": "2026-09-07",
+      "why": "Des frais de scolarité, exonérés (art. 215-14, enseignement agréé) : la ligne exonérée, aucune taxe, un règlement lettré plus tard.",
+      "lines": [
+        {
+          "name": "Frais de formation, session courte",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "MR-S-EX",
+          "account": "7017"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-export",
+      "date": "2026-09-10",
+      "why": "Une exportation de biens au taux zéro (art. 230-2) : la ligne exportation, aucune taxe, un règlement lettré plus tard.",
+      "lines": [
+        {
+          "name": "Poisson séché, lot export",
+          "quantity": 500,
+          "unit_price": 60,
+          "tax": "MR-S-Z-EXP",
+          "account": "700"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-nkc",
+      "date": "2026-09-12",
+      "why": "Une vente de légumes frais, exonérée (art. 215-17) : elle va dans la ligne exonérée, pas dans celle de l'exportation.",
+      "lines": [
+        {
+          "name": "Légumes frais, gros",
+          "quantity": 200,
+          "unit_price": 50,
+          "tax": "MR-S-EX",
+          "account": "700"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-nkc",
+      "date": "2026-09-14",
+      "why": "Un avoir pour un article retourné de INV-001 : la base et la taxe collectée reculent.",
+      "lines": [
+        {
+          "name": "Fournitures de bureau — un article retourné",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "MR-S-16",
+          "account": "700"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-local",
+      "date": "2026-09-06",
+      "why": "Un achat local au taux normal, déductible (art. 231 et 232) : case 2, taxe au compte 4350, un règlement lettré plus tard.",
+      "lines": [
+        {
+          "name": "Marchandises achetées pour la revente",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "MR-P-16",
+          "account": "600"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-local",
+      "date": "2026-09-08",
+      "why": "Un achat de légumes exonérés : aucune taxe, et la déclaration n'a pas de ligne pour un achat exonéré.",
+      "lines": [
+        {
+          "name": "Légumes achetés pour la revente",
+          "quantity": 300,
+          "unit_price": 40,
+          "tax": "MR-P-EX",
+          "account": "600"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-import",
+      "date": "2026-09-15",
+      "why": "Une importation : la taxe est due à la douane avant l'enlèvement (art. 254), déduite en case 3 (art. 232) et tenue au compte 4361 jusqu'au règlement.",
+      "lines": [
+        {
+          "name": "Quincaillerie importée pour la revente",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "MR-P-IMP",
+          "account": "600"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-local",
+      "date": "2026-09-19",
+      "why": "Des frais de réception, dont la taxe n'est pas déductible (art. 233-1°) : les 16 % facturés suivent la charge au compte 661 et n'atteignent aucune case.",
+      "lines": [
+        {
+          "name": "Réception de clients",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "MR-P-16-ND",
+          "account": "631"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-local",
+      "date": "2026-09-20",
+      "why": "Un avoir fournisseur pour une livraison incomplète de PINV-001 : la case 2 recule.",
+      "lines": [
+        {
+          "name": "Marchandises achetées pour la revente — livraison incomplète",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "MR-P-16",
+          "account": "600"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-10-05",
+      "amount": 15000,
+      "contact": "cust-nkc",
+      "journal": "BQ",
+      "match": "INV-002",
+      "why": "Les frais de INV-002 encaissés en totalité : un règlement entrant lettré sur une vente exonérée."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-10-06",
+      "amount": 30000,
+      "contact": "cust-export",
+      "journal": "BQ",
+      "match": "INV-003",
+      "why": "L'exportation de INV-003 encaissée en totalité."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-10-07",
+      "amount": 23200,
+      "contact": "supp-local",
+      "journal": "BQ",
+      "match": "PINV-001",
+      "why": "PINV-001 réglée en totalité, taxe comprise : 20 000 plus 3 200."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-10-10",
+      "amount": 5000,
+      "contact": "cust-export",
+      "journal": "BQ",
+      "match": null,
+      "why": "Un acompte de l'acheteur étranger avant sa prochaine expédition, lettré à rien : reconcile() doit survivre à une ligne ouverte."
+    }
+  ]
+}

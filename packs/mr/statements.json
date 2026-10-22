@@ -1,0 +1,948 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "MR-PCN-BILAN",
+      "kind": "balance_sheet",
+      "framework": "PCN",
+      "name": "Bilan",
+      "valid_from": "1983-03-02",
+      "legal_reference": "Ordonnance n° 82-180 du 24 décembre 1982 portant institution d'un Plan comptable national et Plan comptable général annexé : le bilan, état des éléments actifs et passifs, classés par liquidité et exigibilité croissantes. Le pack ne reproduit pas les colonnes brut, amortissements et provisions, ni les engagements hors bilan.",
+      "source": "pcn",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Résultat de l'exercice en cours",
+      "lines": [
+        {
+          "code": "A1",
+          "name": "Frais et valeurs incorporelles immobilisés (nets)",
+          "sequence": 10,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "20"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "280"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "2905"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, frais et valeurs incorporelles immobilisés, nets des amortissements et provisions.",
+          "source": "pcn"
+        },
+        {
+          "code": "A2",
+          "name": "Immobilisations corporelles (nettes)",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "21"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "281"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "2910"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, immobilisations corporelles, nettes des amortissements et provisions.",
+          "source": "pcn"
+        },
+        {
+          "code": "A3",
+          "name": "Immobilisations en cours",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "23"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, immobilisations en cours.",
+          "source": "pcn"
+        },
+        {
+          "code": "A4",
+          "name": "Immobilisations financières (nettes)",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "26"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "27"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "296"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "297"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, prêts et autres créances à long et moyen terme, participations et titres immobilisés.",
+          "source": "pcn"
+        },
+        {
+          "code": "AI",
+          "name": "Actif immobilisé",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "A1",
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, total de l'actif immobilisé.",
+          "source": "pcn"
+        },
+        {
+          "code": "A5",
+          "name": "Valeurs d'exploitation (stocks nets)",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "3"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, valeurs d'exploitation : marchandises, matières, emballages, en-cours, produits, nets de provisions.",
+          "source": "pcn"
+        },
+        {
+          "code": "A6",
+          "name": "Fournisseurs débiteurs",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "40",
+              "side": "debit"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, valeurs réalisables à court terme et disponibles, fournisseurs débiteurs.",
+          "source": "pcn"
+        },
+        {
+          "code": "A7",
+          "name": "Clients et comptes rattachés (nets)",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "41",
+              "side": "debit"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "491"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, clients et comptes rattachés, nets de provisions pour dépréciation.",
+          "source": "pcn"
+        },
+        {
+          "code": "A8",
+          "name": "Personnel, État et organismes sociaux (autres créances)",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "42",
+              "side": "debit"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "43",
+              "side": "debit"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "44",
+              "side": "debit"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, personnel et comptes rattachés, autres créances (État, organismes sociaux).",
+          "source": "pcn"
+        },
+        {
+          "code": "A9",
+          "name": "Associés, comptes courants et débiteurs divers",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "45",
+              "side": "debit"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "46",
+              "side": "debit"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "496"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, associés, comptes courants, groupe, et débiteurs divers.",
+          "source": "pcn"
+        },
+        {
+          "code": "A10",
+          "name": "Valeurs mobilières de placement",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "52"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, valeurs mobilières de placement.",
+          "source": "pcn"
+        },
+        {
+          "code": "A11",
+          "name": "Disponibilités",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "54"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "55",
+              "side": "debit"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "56"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "58"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, disponibilités : chèques et effets à l'encaissement, banques, caisse, virements internes.",
+          "source": "pcn"
+        },
+        {
+          "code": "A12",
+          "name": "Comptes de régularisation et d'attente (actif)",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "480"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "484"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "488",
+              "side": "debit"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, comptes de régularisation et d'attente : charges constatées d'avance, différences de conversion, comptes d'attente.",
+          "source": "pcn"
+        },
+        {
+          "code": "AC",
+          "name": "Actif circulant et régularisation",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "A5",
+            "A6",
+            "A7",
+            "A8",
+            "A9",
+            "A10",
+            "A11",
+            "A12"
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, total des valeurs d'exploitation, valeurs réalisables et disponibles, et comptes de régularisation.",
+          "source": "pcn"
+        },
+        {
+          "code": "TA",
+          "name": "TOTAL GÉNÉRAL DE L'ACTIF",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "AI",
+            "AC"
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — actif, total général.",
+          "source": "pcn"
+        },
+        {
+          "code": "P1",
+          "name": "Capital",
+          "sequence": 160,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "10"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, capitaux à long et moyen terme, capital (individuel ou social, primes, fonds de dotation).",
+          "source": "pcn"
+        },
+        {
+          "code": "P2",
+          "name": "Réserves",
+          "sequence": 170,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "11"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, capitaux à long et moyen terme, réserves.",
+          "source": "pcn"
+        },
+        {
+          "code": "P3",
+          "name": "Report à nouveau et résultat net",
+          "sequence": 180,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "12"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "13"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, report à nouveau et résultats nets en attente d'affectation ; le résultat de l'exercice en cours s'y ajoute tant qu'il n'est pas affecté.",
+          "source": "pcn"
+        },
+        {
+          "code": "SN",
+          "name": "Situation nette",
+          "sequence": 190,
+          "is_total": true,
+          "plus": [
+            "P1",
+            "P2",
+            "P3"
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, total de la situation nette, somme algébrique du capital, des réserves, du report à nouveau et du résultat.",
+          "source": "pcn"
+        },
+        {
+          "code": "P4",
+          "name": "Subventions d'équipement",
+          "sequence": 200,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "14"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, subventions d'équipement, isolées après la situation nette.",
+          "source": "pcn"
+        },
+        {
+          "code": "P5",
+          "name": "Plus-values et provisions réglementées",
+          "sequence": 210,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "15"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, plus-values et provisions fiscalement réglementées.",
+          "source": "pcn"
+        },
+        {
+          "code": "P6",
+          "name": "Dettes à long et moyen terme",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "16"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "17"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "18"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, emprunts obligataires et autres emprunts, dettes rattachées à des participations, comptes de liaison.",
+          "source": "pcn"
+        },
+        {
+          "code": "P7",
+          "name": "Provisions pour risques et charges",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "19"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, provisions pour risques et charges.",
+          "source": "pcn"
+        },
+        {
+          "code": "CP",
+          "name": "Capitaux à long et moyen terme",
+          "sequence": 240,
+          "is_total": true,
+          "plus": [
+            "SN",
+            "P4",
+            "P5",
+            "P6",
+            "P7"
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, total des capitaux à long et moyen terme.",
+          "source": "pcn"
+        },
+        {
+          "code": "P8",
+          "name": "Clients créditeurs",
+          "sequence": 250,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "41",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, dettes à court terme, clients créditeurs.",
+          "source": "pcn"
+        },
+        {
+          "code": "P9",
+          "name": "Fournisseurs et comptes rattachés",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "40",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, dettes à court terme, fournisseurs et comptes rattachés.",
+          "source": "pcn"
+        },
+        {
+          "code": "P10",
+          "name": "Personnel et comptes rattachés",
+          "sequence": 270,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "42",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, dettes à court terme, personnel et comptes rattachés.",
+          "source": "pcn"
+        },
+        {
+          "code": "P11",
+          "name": "État et autres collectivités publiques",
+          "sequence": 280,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "43",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, dettes à court terme, État et autres collectivités publiques (taxe sur la valeur ajoutée, impôts retenus, douanes).",
+          "source": "pcn"
+        },
+        {
+          "code": "P12",
+          "name": "Sécurité sociale et autres organismes sociaux",
+          "sequence": 290,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "44",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, dettes à court terme, sécurité sociale et autres organismes sociaux.",
+          "source": "pcn"
+        },
+        {
+          "code": "P13",
+          "name": "Associés, comptes courants et créditeurs divers",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "45",
+              "side": "credit"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "46",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, dettes à court terme, associés, comptes courants, groupe et créditeurs divers.",
+          "source": "pcn"
+        },
+        {
+          "code": "P14",
+          "name": "Concours bancaires courants",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "559",
+              "side": "credit"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "50"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, dettes de financement pur : emprunts à court terme et concours bancaires courants.",
+          "source": "pcn"
+        },
+        {
+          "code": "P15",
+          "name": "Comptes de régularisation et d'attente (passif)",
+          "sequence": 320,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "481"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "485"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "488",
+              "side": "credit"
+            }
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, comptes de régularisation et d'attente : produits constatés d'avance, différences de conversion, comptes d'attente.",
+          "source": "pcn"
+        },
+        {
+          "code": "DC",
+          "name": "Dettes à court terme et régularisation",
+          "sequence": 330,
+          "is_total": true,
+          "plus": [
+            "P8",
+            "P9",
+            "P10",
+            "P11",
+            "P12",
+            "P13",
+            "P14",
+            "P15"
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, total des dettes à court terme et des comptes de régularisation.",
+          "source": "pcn"
+        },
+        {
+          "code": "TP",
+          "name": "TOTAL GÉNÉRAL DU PASSIF",
+          "sequence": 340,
+          "is_total": true,
+          "plus": [
+            "CP",
+            "DC"
+          ],
+          "legal_reference": "Plan comptable national, modèle de bilan (Journal officiel du 2 mars 1983, p. 210 à 211) — passif, total général.",
+          "source": "pcn"
+        }
+      ]
+    },
+    {
+      "code": "MR-PCN-RESULTATS",
+      "kind": "income_statement",
+      "framework": "PCN",
+      "name": "Tableau des résultats de l'exercice",
+      "valid_from": "1983-03-02",
+      "legal_reference": "Ordonnance n° 82-180 du 24 décembre 1982 portant institution d'un Plan comptable national et Plan comptable général annexé : le tableau des résultats, qui détermine le résultat d'exploitation, le résultat sur cession et le résultat net. Le pack présente les produits et les charges par nature (classes 6 et 7) en une colonne ; la distinction exploitation et hors exploitation n'est pas reprise.",
+      "source": "pcn",
+      "lines": [
+        {
+          "code": "1",
+          "name": "Ventes de marchandises",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "700"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — classe 70, ventes de marchandises.",
+          "source": "pcn"
+        },
+        {
+          "code": "2",
+          "name": "Production vendue et activités annexes",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "701"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "706"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — classe 70, production vendue (travaux, prestations de services) et produits des activités annexes.",
+          "source": "pcn"
+        },
+        {
+          "code": "3",
+          "name": "Production stockée et production immobilisée",
+          "sequence": 30,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "71"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "72"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — comptes 71 et 72.",
+          "source": "pcn"
+        },
+        {
+          "code": "4",
+          "name": "Sous-total productions",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2",
+            "3"
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — sous-total productions.",
+          "source": "pcn"
+        },
+        {
+          "code": "5",
+          "name": "Produits et profits divers",
+          "sequence": 50,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "74"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 74.",
+          "source": "pcn"
+        },
+        {
+          "code": "6",
+          "name": "Subventions d'exploitation",
+          "sequence": 60,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "76"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 76.",
+          "source": "pcn"
+        },
+        {
+          "code": "7",
+          "name": "Produits financiers",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "77"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 77.",
+          "source": "pcn"
+        },
+        {
+          "code": "8",
+          "name": "Reprises sur amortissements et provisions",
+          "sequence": 80,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "78"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 78.",
+          "source": "pcn"
+        },
+        {
+          "code": "9",
+          "name": "Total des produits",
+          "sequence": 90,
+          "is_total": true,
+          "plus": [
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — total des produits.",
+          "source": "pcn"
+        },
+        {
+          "code": "10",
+          "name": "Achats et variations de stocks",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "60"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 60.",
+          "source": "pcn"
+        },
+        {
+          "code": "11",
+          "name": "Achats de sous-traitance",
+          "sequence": 110,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "61"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 61.",
+          "source": "pcn"
+        },
+        {
+          "code": "12",
+          "name": "Charges externes",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "62"
+            },
+            {
+              "kind": "code_prefix",
+              "code_from": "63"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — comptes 62 et 63.",
+          "source": "pcn"
+        },
+        {
+          "code": "13",
+          "name": "Charges et pertes diverses",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "64"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 64.",
+          "source": "pcn"
+        },
+        {
+          "code": "14",
+          "name": "Frais de personnel",
+          "sequence": 140,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "65"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 65.",
+          "source": "pcn"
+        },
+        {
+          "code": "15",
+          "name": "Impôts, taxes et versements assimilés",
+          "sequence": 150,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "66"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 66.",
+          "source": "pcn"
+        },
+        {
+          "code": "16",
+          "name": "Charges financières",
+          "sequence": 160,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "67"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 67.",
+          "source": "pcn"
+        },
+        {
+          "code": "17",
+          "name": "Dotations aux amortissements et provisions",
+          "sequence": 170,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "68"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 68.",
+          "source": "pcn"
+        },
+        {
+          "code": "18",
+          "name": "Total des charges",
+          "sequence": 180,
+          "is_total": true,
+          "plus": [
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — total des charges.",
+          "source": "pcn"
+        },
+        {
+          "code": "19",
+          "name": "Résultat de cession d'éléments de l'actif",
+          "sequence": 190,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "84"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 84, plus-values moins moins-values de cession.",
+          "source": "pcn"
+        },
+        {
+          "code": "20",
+          "name": "Résultat net avant impôt",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "9",
+            "19"
+          ],
+          "minus": [
+            "18"
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — détermination du résultat net avant impôt (compte 85).",
+          "source": "pcn"
+        },
+        {
+          "code": "21",
+          "name": "Impôt sur le résultat",
+          "sequence": 210,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_prefix",
+              "code_from": "86"
+            }
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — compte 86, impôt sur le résultat.",
+          "source": "pcn"
+        },
+        {
+          "code": "22",
+          "name": "Résultat net de la période",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "20"
+          ],
+          "minus": [
+            "21"
+          ],
+          "legal_reference": "Plan comptable national, tableau des résultats de l'exercice (Journal officiel du 2 mars 1983, p. 209) — détermination du résultat net de la période (compte 87).",
+          "source": "pcn"
+        }
+      ]
+    }
+  ]
+}

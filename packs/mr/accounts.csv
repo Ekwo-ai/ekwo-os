@@ -1,0 +1,230 @@
+code,parent,type,reconcilable,name,sequence
+10,,equity,false,Capital,10
+100,10,equity,false,Capital social ou capital individuel,20
+104,10,equity,false,Primes liées au capital social,30
+108,10,equity,false,Compte de l'exploitant,40
+109,10,equity,false,"Actionnaires, capital souscrit non appelé",50
+11,,equity_retained,false,Réserves,60
+110,11,equity_retained,false,Réserve légale,70
+113,11,equity_retained,false,Réserves statutaires ou contractuelles,80
+115,11,equity_retained,false,Réserves libres,90
+12,,equity_retained,false,Report à nouveau,100
+120,12,equity_retained,false,Report à nouveau (solde créditeur),110
+129,12,equity_retained,false,Report à nouveau (solde débiteur),120
+13,,equity,false,Résultat net en attente d'affectation,130
+130,13,equity,false,Résultat net (solde créditeur),140
+139,13,equity,false,Résultat net (solde débiteur),150
+14,,equity,false,Subventions d'équipement,160
+140,14,equity,false,Subventions d'équipement reçues,170
+15,,equity,false,Plus-values et provisions réglementées,180
+150,15,equity,false,Plus-values à réinvestir,190
+152,15,equity,false,Provisions réglementées,200
+16,,liability_non_current,false,Emprunts et dettes assimilées à long et moyen terme,210
+160,16,liability_non_current,false,Emprunts obligataires,220
+162,16,liability_non_current,false,Emprunts auprès des établissements de crédit,230
+165,16,liability_non_current,false,Dépôts et cautionnements reçus,240
+168,16,liability_non_current,false,Autres emprunts et dettes assimilées,250
+18,,liability_non_current,false,Comptes de liaison des établissements et sociétés en participation,260
+19,,liability_non_current,false,Provisions pour risques et charges,270
+190,19,liability_non_current,false,Provisions pour risques,280
+194,19,liability_non_current,false,Provisions pour pensions et obligations similaires,290
+195,19,liability_non_current,false,Provisions pour impôts,300
+20,,asset_non_current,false,Frais et valeurs incorporelles immobilisés,310
+200,20,asset_non_current,false,Frais immobilisés (frais d'établissement),320
+203,20,asset_non_current,false,Frais de recherche et de développement,330
+205,20,asset_non_current,false,"Valeurs incorporelles immobilisées (brevets, licences, fonds commercial)",340
+21,,asset_fixed,false,Immobilisations corporelles,350
+210,21,asset_fixed,false,Terrains,360
+212,21,asset_fixed,false,Constructions,370
+213,21,asset_fixed,false,Installations complexes spécialisées,380
+214,21,asset_fixed,false,Matériel d'exploitation,390
+215,21,asset_fixed,false,Matériel de transport,400
+216,21,asset_fixed,false,Matériel de bureau et informatique,410
+218,21,asset_fixed,false,Autres immobilisations corporelles,420
+23,,asset_fixed,false,Immobilisations en cours,430
+230,23,asset_fixed,false,Immobilisations corporelles en cours,440
+238,23,asset_fixed,false,Avances et acomptes versés sur commandes d'immobilisations corporelles,450
+26,,asset_non_current,false,Prêts et autres créances à long et moyen terme,460
+260,26,asset_non_current,false,Prêts et avances consentis à long et moyen terme,470
+265,26,asset_non_current,false,Dépôts et cautionnements versés,480
+27,,asset_non_current,false,Participations et titres immobilisés,490
+270,27,asset_non_current,false,Titres de participation,500
+272,27,asset_non_current,false,Titres immobilisés,510
+28,,asset_fixed,false,Amortissements des immobilisations,520
+2800,28,asset_fixed,false,Amortissements des frais d'établissement,530
+2805,28,asset_fixed,false,Amortissements des valeurs incorporelles immobilisées,540
+2812,28,asset_fixed,false,Amortissements des constructions,550
+2814,28,asset_fixed,false,Amortissements du matériel d'exploitation,560
+2815,28,asset_fixed,false,Amortissements du matériel de transport,570
+2816,28,asset_fixed,false,Amortissements du matériel de bureau et informatique,580
+2818,28,asset_fixed,false,Amortissements des autres immobilisations corporelles,590
+29,,asset_fixed,false,Provisions pour dépréciation des immobilisations,600
+2905,29,asset_fixed,false,Provisions pour dépréciation des valeurs incorporelles immobilisées,610
+2910,29,asset_fixed,false,Provisions pour dépréciation des terrains,620
+296,29,asset_fixed,false,Provisions pour dépréciation des prêts et autres créances à long et moyen terme,630
+297,29,asset_fixed,false,Provisions pour dépréciation des participations et titres immobilisés,640
+30,,asset_current,false,Marchandises,650
+300,30,asset_current,false,Marchandises,660
+31,,asset_current,false,Matières premières et autres approvisionnements,670
+310,31,asset_current,false,Matières premières,680
+312,31,asset_current,false,Matières et fournitures consommables,690
+32,,asset_current,false,Emballages,700
+320,32,asset_current,false,Emballages perdus,710
+33,,asset_current,false,« En cours » de production de biens ou de services,720
+330,33,asset_current,false,Produits en cours,730
+332,33,asset_current,false,Travaux en cours,740
+35,,asset_current,false,Produits finis,750
+350,35,asset_current,false,Produits finis,760
+38,,asset_current,false,"Stocks en cours de route, en dépôt ou en consignation",770
+39,,asset_current,false,Provisions pour dépréciation des stocks et des « en cours »,780
+390,39,asset_current,false,Provisions pour dépréciation des stocks de marchandises,790
+391,39,asset_current,false,Provisions pour dépréciation des matières premières et approvisionnements,800
+395,39,asset_current,false,Provisions pour dépréciation des produits finis,810
+40,,liability_payable,false,Fournisseurs et comptes rattachés,820
+400,40,liability_payable,false,Fournisseurs,830
+4000,400,liability_payable,true,Fournisseurs ordinaires,840
+4004,400,liability_payable,true,Fournisseurs de biens d'équipement,850
+405,40,liability_payable,false,Effets à payer,860
+408,40,liability_payable,false,"Fournisseurs, factures à recevoir",870
+409,40,asset_current,false,Fournisseurs débiteurs,880
+4090,409,asset_current,false,"Fournisseurs, avances et acomptes versés sur commandes d'exploitation",890
+4097,409,asset_current,false,"Fournisseurs, rabais, remises et ristournes à obtenir",900
+41,,asset_receivable,false,Clients et comptes rattachés,910
+410,41,asset_receivable,false,Clients,920
+4100,410,asset_receivable,true,Clients ordinaires,930
+4103,410,asset_receivable,true,"Clients, État et collectivités publiques",940
+412,41,asset_receivable,true,Clients douteux ou litigieux,950
+415,41,asset_receivable,false,Effets à recevoir,960
+418,41,asset_receivable,false,"Clients, factures à établir",970
+419,41,liability_current,false,Clients créditeurs,980
+4190,419,liability_current,false,"Clients, avances et acomptes reçus sur commandes en cours",990
+4197,419,liability_current,false,"Clients, rabais, remises et ristournes à accorder",1000
+42,,liability_current,false,Personnel et comptes rattachés,1010
+420,42,liability_current,false,Rémunérations dues au personnel,1020
+425,42,asset_current,false,Avances et acomptes au personnel,1030
+428,42,liability_current,false,Dettes provisionnées pour congés à payer,1040
+43,,liability_current,false,État et autres collectivités publiques,1050
+432,43,liability_current,false,Impôts sur les bénéfices (et impôt minimum forfaitaire),1060
+434,43,liability_current,false,Impôts sur traitements et salaires (retenus à la source),1070
+435,43,liability_current,false,Taxes sur le chiffre d'affaires,1080
+4350,435,asset_current,false,"État, taxe sur la valeur ajoutée récupérable",1090
+4355,435,liability_current,true,"État, taxe sur la valeur ajoutée à décaisser",1100
+4356,435,asset_current,true,"État, crédit de taxe sur la valeur ajoutée à reporter ou à rembourser",1110
+4357,435,liability_current,false,"État, taxe sur la valeur ajoutée collectée",1120
+436,43,liability_current,false,Douanes et autres impôts et taxes,1130
+4361,436,liability_current,false,"Douanes, taxe sur la valeur ajoutée à l'importation à payer",1140
+4368,436,liability_current,false,Autres impôts et taxes à payer,1150
+44,,liability_current,false,Sécurité sociale et autres organismes sociaux,1160
+440,44,liability_current,false,Sécurité sociale,1170
+442,44,liability_current,false,Autres organismes sociaux,1180
+45,,liability_current,false,"Associés, comptes courants, groupe",1190
+455,45,liability_current,false,"Associés, dividendes à payer",1200
+456,45,liability_current,false,Comptes courants des associés et administrateurs,1210
+46,,liability_current,false,Débiteurs et créditeurs divers,1220
+462,46,asset_current,false,Débiteurs sur cession d'immobilisations,1230
+464,46,liability_current,false,Autres comptes débiteurs ou créditeurs,1240
+468,46,liability_current,false,Charges à payer et produits à recevoir,1250
+48,,liability_current,false,Comptes de régularisation et d'attente,1260
+480,48,asset_prepayments,false,Charges constatées d'avance,1270
+481,48,liability_current,false,Produits constatés d'avance,1280
+484,48,asset_prepayments,false,"Différences de conversion sur opérations en devises, actif",1290
+485,48,liability_current,false,"Différences de conversion sur opérations en devises, passif",1300
+488,48,liability_current,false,Comptes d'attente et à régulariser,1310
+49,,asset_current,false,Provisions pour dépréciation des comptes de tiers,1320
+491,49,asset_current,false,Provisions pour dépréciation des comptes clients,1330
+496,49,asset_current,false,Provisions pour dépréciation des comptes de débiteurs divers,1340
+52,,asset_current,false,Valeurs mobilières de placement,1350
+520,52,asset_current,false,Actions,1360
+527,52,asset_current,false,Bons du Trésor et bons de caisse à court terme,1370
+54,,asset_current,false,"Chèques, effets et coupons à l'encaissement",1380
+540,54,asset_current,false,Chèques à encaisser,1390
+541,54,asset_current,false,Effets à l'encaissement,1400
+55,,asset_cash,false,"Banques, institutions financières et assimilées",1410
+550,55,asset_cash,false,Banques,1420
+5500,550,asset_cash,false,"Banques en Mauritanie, compte courant en ouguiya",1430
+5501,550,asset_cash,false,"Banques en Mauritanie, compte en devises",1440
+5502,550,asset_cash,false,Banques à l'étranger,1450
+554,55,asset_cash,false,Chèques postaux,1460
+555,55,asset_cash,false,Caisse du Trésor,1470
+558,55,asset_cash,false,Autres organismes financiers,1480
+559,55,liability_credit_card,false,Concours bancaires courants,1490
+56,,asset_cash,false,Caisse,1500
+560,56,asset_cash,false,Caisse siège,1510
+562,56,asset_cash,false,Caisses succursales,1520
+58,,asset_cash,false,Virements internes,1530
+580,58,asset_cash,false,Virements de fonds,1540
+60,,expense_direct_cost,false,Achats et variations de stocks,1550
+600,60,expense_direct_cost,false,Achats de marchandises,1560
+601,60,expense_direct_cost,false,Achats de matières premières et autres approvisionnements,1570
+602,60,expense_direct_cost,false,Achats d'emballages,1580
+603,60,expense_direct_cost,false,Variation de stocks,1590
+606,60,expense,false,"Achats d'approvisionnements non stockés (eau, énergie, fournitures)",1600
+61,,expense,false,Achats de sous-traitance,1610
+610,61,expense,false,Achats de sous-traitance,1620
+62,,expense,false,Charges externes liées à l'investissement,1630
+620,62,expense,false,Locations et charges locatives,1640
+621,62,expense,false,Travaux d'entretien et de réparation,1650
+623,62,expense,false,Primes d'assurance,1660
+625,62,expense,false,Documentation générale et technique,1670
+63,,expense,false,Charges externes liées à l'activité,1680
+630,63,expense,false,Transports,1690
+631,63,expense,false,"Déplacements, missions, réceptions",1700
+632,63,expense,false,Frais postaux et de télécommunications,1710
+633,63,expense,false,Rémunérations d'intermédiaires et honoraires,1720
+634,63,expense,false,"Publicité, publications, promotion des ventes",1730
+635,63,expense,false,Services bancaires,1740
+638,63,expense,false,Charges diverses,1750
+64,,expense,false,Charges et pertes diverses,1760
+641,64,expense,false,"Redevances pour concessions, brevets, licences",1770
+645,64,expense,false,"Dons, pourboires et subventions accordées",1780
+646,64,expense,false,Créances irrécouvrables,1790
+648,64,expense,false,Autres charges et pertes exceptionnelles,1800
+6489,648,expense,false,Différences d'arrondi,1810
+65,,expense,false,Frais de personnel,1820
+650,65,expense,false,Rémunérations du personnel,1830
+652,65,expense,false,Charges sociales et de prévoyance,1840
+656,65,expense,false,Frais de recyclage et de formation professionnelle,1850
+66,,expense,false,"Impôts, taxes et versements assimilés",1860
+660,66,expense,false,Impôts directs et taxes assimilées,1870
+661,66,expense,false,"Taxes et impôts indirects (taxe sur la valeur ajoutée non récupérable, taxes de consommation)",1880
+662,66,expense,false,Enregistrement et timbre,1890
+663,66,expense,false,Droits de douane,1900
+667,66,expense,false,Pénalités et amendes fiscales,1910
+67,,expense,false,Charges financières,1920
+670,67,expense,false,Intérêts des emprunts,1930
+672,67,expense,false,Intérêts des comptes courants et des dépôts,1940
+673,67,expense,false,Intérêts bancaires et sur opérations de financement,1950
+676,67,expense,false,Escomptes accordés,1960
+678,67,expense,false,Différences de change (pertes),1970
+68,,expense_depreciation,false,Dotations aux comptes d'amortissements et de provisions,1980
+680,68,expense_depreciation,false,Dotations aux amortissements,1990
+685,68,expense_depreciation,false,Dotations aux provisions pour dépréciation des éléments de l'actif,2000
+687,68,expense_depreciation,false,Dotations aux provisions pour risques et charges,2010
+70,,income,false,Ventes de marchandises et production vendue,2020
+700,70,income,false,Ventes de marchandises,2030
+701,70,income,false,"Production vendue (travaux, prestations de services)",2040
+7017,701,income,false,Prestations de services,2050
+706,70,income,false,Produits des activités annexes,2060
+71,,income,false,Production stockée ou déstockage,2070
+715,71,income,false,Variation des produits finis,2080
+72,,income,false,Production de l'entreprise pour elle-même,2090
+722,72,income,false,Production immobilisée,2100
+74,,income_other,false,Produits et profits divers,2110
+742,74,income_other,false,"Rabais, remises et ristournes obtenus",2120
+745,74,income_other,false,Cotisations et dons reçus,2130
+748,74,income_other,false,Autres produits et profits exceptionnels,2140
+76,,income_other,false,Subventions d'exploitation et d'équilibre,2150
+760,76,income_other,false,Subventions d'exploitation,2160
+77,,income_other,false,Produits financiers,2170
+770,77,income_other,false,Revenus des prêts et autres créances immobilisées,2180
+771,77,income_other,false,Revenus des titres immobilisés et des valeurs mobilières de placement,2190
+772,77,income_other,false,Revenus des comptes courants et des dépôts,2200
+776,77,income_other,false,Escomptes obtenus,2210
+778,77,income_other,false,Différences de change (gains),2220
+78,,income_other,false,Reprises sur amortissements et provisions,2230
+785,78,income_other,false,Reprises sur provisions pour dépréciation,2240
+787,78,income_other,false,Reprises sur provisions pour risques et charges,2250
+84,,income_other,false,Résultats de cession d'éléments de l'actif immobilisé,2260
+840,84,income_other,false,Plus-values de cession,2270
+849,84,expense,false,Moins-values de cession,2280
+86,,expense,false,Impôt sur le résultat,2290

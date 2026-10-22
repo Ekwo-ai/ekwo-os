@@ -175,3 +175,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('MGA', 'Malagasy ariary', 'Ar', 2)
 on conflict (code) do nothing;
+
+-- Mauritanian ouguiya (MRU, since 2018, one tenth of the former MRO), ISO 4217 list one, two decimals (packs/mr/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('MRU', 'Mauritanian ouguiya', 'UM', 2)
+on conflict (code) do nothing;

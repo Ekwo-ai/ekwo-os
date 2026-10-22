@@ -1,0 +1,246 @@
+[
+  {
+    "code": "MR-S-16",
+    "name": "Ventes taux normal 16 %",
+    "description": "Livraisons de biens et prestations de services imposables au taux normal",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 230-1 (LFI 2022) — taux normal de 16 % ; art. 210 et 211 — opérations imposables, assujettis dont le chiffre d'affaires annuel hors taxes atteint 3 000 000 MRU ; art. 222 à 226 — base d'imposition, arrondie à la dizaine d'ouguiya inférieure (art. 226), arrondi que le pack ne modélise pas ; art. 253 — la taxe est à la charge du consommateur. La taxe collectée est portée au compte 4357 (État, taxes collectées) du plan comptable.",
+    "source": "cgi2023",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "1S"
+        },
+        {
+          "type": "tax",
+          "account": "4357",
+          "box": "1S"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "1S",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4357",
+          "box": "1S",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "MR-S-Z-EXP",
+    "name": "Ventes à l'exportation (taux zéro)",
+    "description": "Exportations de biens et de services réalisées par un assujetti",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 230-2 — taux zéro (0 %) pour les exportations de biens et services réalisées par un assujetti ; art. 231-2 — les exportations de produits taxables à l'intérieur ouvrent droit à déduction ; art. 245-1-a — le crédit de taxe des exportateurs est remboursable (art. 246 : demande écrite, crédit d'au moins 100 000 MRU, trois dernières déclarations créditrices).",
+    "source": "cgi2023",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "ZE"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "ZE",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "MR-S-EX",
+    "name": "Ventes exonérées",
+    "description": "Opérations que l'article 215 exonère : actes médicaux, enseignement, produits alimentaires de base, transport public, etc.",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 215 — liste des opérations exonérées de la taxe sur la valeur ajoutée (actes médicaux, enseignement agréé, eau et électricité jusqu'à 8 m³ et 150 kWh par mois, lait, riz, farine, pain, légumes, viandes et poissons frais, etc.) ; art. 233-8 — la taxe qui grève les achats d'une exportation de produits non taxables à l'intérieur n'est pas déductible ; la facture porte la mention « Exonéré » (art. L.21). Les exonérations sont à faire valider par un comptable local : le pack ne code pas la liste article par article.",
+    "source": "cgi2023",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "EX"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "EX",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "MR-P-16",
+    "name": "Achats taux normal 16 % — déductible",
+    "description": "Achat de biens ou de services dont la taxe est déductible",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 231 et 232 — la taxe qui a grevé les éléments du prix d'une opération imposable est déductible : matières premières, biens destinés à la revente, services entrant dans le prix de revient, immobilisations et frais généraux ; art. 249-3 — la déduction est justifiée par un état signé et cacheté, donnant le NIF du fournisseur, la référence et le montant de la facture ; sans cet état, les déductions sont réintégrées. La taxe déductible est portée au compte 4350 (État, taxes récupérables).",
+    "source": "cgi2023",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        },
+        {
+          "type": "tax",
+          "account": "4350",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4350",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "MR-P-16-ND",
+    "name": "Achats taux normal 16 % — taxe non déductible",
+    "description": "Achat dont la taxe n'est pas déductible : réceptions, véhicules de tourisme, paiement en espèces supérieur à 200 000 MRU, facture sans NIF",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 233 — n'est pas déductible la taxe qui a grevé les frais de réception et de restaurant (1°), les biens cédés gratuitement (2°), les acquisitions entre professionnels réglées en espèces pour plus de 200 000 MRU (3°), les acquisitions dont la facture ne porte pas le NIF du fournisseur (4°), les véhicules de tourisme (5°), les immeubles autres que les locaux professionnels (6°), les meubles (7°). La taxe suit la charge au compte 661, sans case de déclaration.",
+    "source": "cgi2023",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "661"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax",
+          "account": "661"
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "MR-P-EX",
+    "name": "Achats exonérés",
+    "description": "Achat d'une opération exonérée ou hors champ : aucune taxe",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 215 et 214 — une opération exonérée ou hors du champ d'application ne porte pas de taxe, l'achat n'ouvre aucune déduction ; la déclaration n'a pas de ligne pour un achat exonéré.",
+    "source": "cgi2023",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "MR-P-IMP",
+    "name": "Importation de biens — taxe payée à la douane",
+    "description": "Taxe sur la valeur ajoutée payée à l'importation, avant l'enlèvement de la marchandise",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2022-01-01",
+    "legal_reference": "Code général des impôts, art. 222-1° — la base des importations est la valeur en douane, taxes de toute nature perçues au cordon douanier comprises ; art. 227-1 et 228-1 — fait générateur au franchissement du cordon douanier, exigibilité à la mise à la consommation ; art. 254 — les importateurs déclarent et versent la taxe avant l'enlèvement ; art. 232 — la taxe payée à l'importation est déductible. La taxe est déduite au compte 4350 et due à la douane au compte 4361 jusqu'à son règlement.",
+    "source": "cgi2023",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "account": "4350",
+          "box": "3"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4361"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4350",
+          "box": "3",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4361"
+        }
+      ]
+    },
+    "sequence": 70
+  }
+]
