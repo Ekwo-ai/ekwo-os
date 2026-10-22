@@ -92,6 +92,30 @@
         "kind": "form"
       },
       {
+        "key": "ca12",
+        "title": "Formulaire 3517-S-SD (CA12 / CA12E), cerfa n° 11417*27, millésime 2026 — TVA et taxes assimilées, régime simplifié",
+        "publisher": "DGFiP",
+        "url": "https://www.impots.gouv.fr/formulaire/3517-s-sd/tva-et-taxes-assimilees-et-regime-simplifie",
+        "consulted_on": "2026-10-22",
+        "kind": "form"
+      },
+      {
+        "key": "sp-regime-simplifie",
+        "title": "Régime réel simplifié d'imposition (RSI) en matière de TVA — fiche F23566, vérifiée le 21 février 2026",
+        "publisher": "Direction de l'information légale et administrative — entreprendre.service-public.gouv.fr",
+        "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F23566",
+        "consulted_on": "2026-10-22",
+        "kind": "guidance"
+      },
+      {
+        "key": "sp-franchise-en-base",
+        "title": "Franchise en base de TVA — fiche F21746, vérifiée le 1er janvier 2026",
+        "publisher": "Direction de l'information légale et administrative — entreprendre.service-public.gouv.fr",
+        "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F21746",
+        "consulted_on": "2026-10-22",
+        "kind": "guidance"
+      },
+      {
         "key": "liasse-2050",
         "title": "Liasse fiscale du régime réel normal en matière de BIC et d'IS, dont les tableaux 2050-SD à 2053-SD",
         "publisher": "DGFiP",

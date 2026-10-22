@@ -1,0 +1,88 @@
+[
+  {
+    "code": "normal",
+    "name": "Régime réel normal",
+    "legal_reference": "Code général des impôts, art. 287, 1 et 2 — déclaration mensuelle sur le formulaire 3310-CA3, ou trimestrielle lorsque la taxe exigible annuellement est inférieure à 4 000 euros. Un redevable placé de droit sous le régime simplifié peut opter pour le régime réel normal : il le déclare ici à partir du premier jour de l'exercice où l'option prend effet",
+    "source": "cgi",
+    "forms": [
+      { "report": "FR-CA3", "periods": ["month", "quarter"], "period_default": "month" }
+    ]
+  },
+  {
+    "code": "simplified",
+    "name": "Régime réel simplifié d'imposition",
+    "legal_reference": "Code général des impôts, art. 302 septies A (champ et seuils) et art. 287, 3 (une déclaration annuelle, formulaire 3517-S-SD CA12, déposée au plus tard le deuxième jour ouvré suivant le 1er mai, et deux acomptes en juillet et en décembre)",
+    "source": "sp-regime-simplifie",
+    "forms": [
+      { "report": "FR-CA12", "periods": ["year"], "period_default": "year" }
+    ],
+    "ceilings": [
+      {
+        "measure": "turnover_previous_year", "activity": "goods", "amount": "945000", "currency": "EUR", "valid_from": "2026-01-01",
+        "legal_reference": "Code général des impôts, art. 302 septies A — chiffre d'affaires hors taxes de l'année civile précédente au plus égal à 945 000 € pour le commerce, la restauration et la fourniture de logement (hors location meublée), seuil applicable en 2026",
+        "source": "sp-regime-simplifie"
+      },
+      {
+        "measure": "turnover_previous_year", "activity": "services", "amount": "286000", "currency": "EUR", "valid_from": "2026-01-01",
+        "legal_reference": "Code général des impôts, art. 302 septies A — chiffre d'affaires hors taxes de l'année civile précédente au plus égal à 286 000 € pour les autres prestations de services, location meublée comprise, seuil applicable en 2026",
+        "source": "sp-regime-simplifie"
+      },
+      {
+        "measure": "turnover_current_year", "activity": "goods", "amount": "1040000", "currency": "EUR", "valid_from": "2026-01-01",
+        "legal_reference": "Code général des impôts, art. 302 septies A — seuil majoré de 1 040 000 € de chiffre d'affaires hors taxes de l'année en cours pour le commerce, la restauration et la fourniture de logement ; au-delà, le régime réel normal s'applique dès l'année du dépassement",
+        "source": "sp-regime-simplifie"
+      },
+      {
+        "measure": "turnover_current_year", "activity": "services", "amount": "323000", "currency": "EUR", "valid_from": "2026-01-01",
+        "legal_reference": "Code général des impôts, art. 302 septies A — seuil majoré de 323 000 € de chiffre d'affaires hors taxes de l'année en cours pour les autres prestations de services ; au-delà, le régime réel normal s'applique dès l'année du dépassement",
+        "source": "sp-regime-simplifie"
+      },
+      {
+        "measure": "tax_previous_year", "amount": "15000", "currency": "EUR", "valid_from": "2026-01-01",
+        "legal_reference": "Code général des impôts, art. 302 septies A — la TVA due au titre de l'année précédente est inférieure à 15 000 €",
+        "source": "sp-regime-simplifie"
+      }
+    ],
+    "instalments": {
+      "report": "FR-CA12",
+      "base": { "report": "FR-CA12", "box": "57:total" },
+      "minimum_base": "1000",
+      "legal_reference": "Code général des impôts, art. 287, 3 — deux acomptes, en juillet égal à 55 % et en décembre égal à 40 % de la taxe due au titre de l'année précédente avant déduction de la TVA sur immobilisations (formulaire 3517-S-SD, ligne 57) ; le redevable dont cette taxe est inférieure à 1 000 € est dispensé d'acomptes. Le jour du mois dépend du redevable et n'est pas porté",
+      "source": "sp-regime-simplifie",
+      "schedule": [
+        { "month": 7, "percent": "55" },
+        { "month": 12, "percent": "40" }
+      ]
+    }
+  },
+  {
+    "code": "franchise",
+    "name": "Franchise en base de TVA",
+    "charges_vat": false,
+    "legal_reference": "Code général des impôts, art. 293 B — les assujettis dont le chiffre d'affaires n'excède pas les seuils sont dispensés du paiement de la TVA et ne déposent pas de déclaration périodique ; art. 293 E — mention « TVA non applicable, art. 293 B du CGI » sur la facture ; art. 293 F — option pour le paiement de la taxe, qui se déclare ici comme le régime choisi",
+    "source": "sp-franchise-en-base",
+    "forms": [],
+    "ceilings": [
+      {
+        "measure": "turnover_previous_year", "activity": "goods", "amount": "85000", "currency": "EUR", "valid_from": "2026-01-01",
+        "legal_reference": "Code général des impôts, art. 293 B — seuil de 85 000 € de chiffre d'affaires de l'année civile précédente pour les livraisons de biens, les ventes à consommer sur place et l'hébergement, applicable au 1er janvier 2026",
+        "source": "sp-franchise-en-base"
+      },
+      {
+        "measure": "turnover_current_year", "activity": "goods", "amount": "93500", "currency": "EUR", "valid_from": "2026-01-01",
+        "legal_reference": "Code général des impôts, art. 293 B — seuil majoré de 93 500 € de l'année en cours pour les mêmes activités : la franchise cesse dès le jour où il est dépassé",
+        "source": "sp-franchise-en-base"
+      },
+      {
+        "measure": "turnover_previous_year", "activity": "services", "amount": "37500", "currency": "EUR", "valid_from": "2026-01-01",
+        "legal_reference": "Code général des impôts, art. 293 B — seuil de 37 500 € de chiffre d'affaires de l'année civile précédente pour les prestations de services et les professions libérales, applicable au 1er janvier 2026",
+        "source": "sp-franchise-en-base"
+      },
+      {
+        "measure": "turnover_current_year", "activity": "services", "amount": "41250", "currency": "EUR", "valid_from": "2026-01-01",
+        "legal_reference": "Code général des impôts, art. 293 B — seuil majoré de 41 250 € de l'année en cours pour les prestations de services : la franchise cesse dès le jour où il est dépassé",
+        "source": "sp-franchise-en-base"
+      }
+    ]
+  }
+]
