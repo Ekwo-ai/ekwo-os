@@ -201,6 +201,7 @@ bank charge that pays no item.
 | [`company_modules`](#company_modules) | Modules enabled on a company, and the settings that company keeps for each. Written by enable_module() and disable_module() and by nothing else: there is no write policy. |
 | [`company_packs`](#company_packs) | Which version of which country pack a company copied. A company may hold two: a foreign VAT registration is one. |
 | [`company_tax_regimes`](#company_tax_regimes) | The regime of turnover_tax_regimes a company is under, from the first day of a financial year to the last day of one, or open-ended. No row: the company is under the ordinary regime of its taxes (decision 0080). |
+| [`company_vat_schemes`](#company_vat_schemes) | The VAT scheme a company is on, from the first day of a financial year until the next row. No row: the company has not said, and files exactly as it did before schemes existed — no default and no guess. The forms and cadences it implies are written into company_filing_periods, which stays the one place a cadence is recorded. |
 | [`contact_merges`](#contact_merges) | Every merge of two contacts, by merge_contacts() (decision 0074): the contact absorbed, the one kept, who merged them and when, what moved and what was filled. Written by merge_contacts() and by nothing else — no role may insert — so the guards of a posted line and of an issued document read a row here, written in the same transaction, as the exemption that lets contact_id move from the absorbed contact to the kept one. |
 | [`contact_patterns`](#contact_patterns) | How a counterparty shows up on this company's statements: one row per learned or declared motif, of four closed kinds. Read by suggest_contacts(), written by confirm_contact(). The core still chooses no contact for anybody — it answers with candidates and says why. |
 | [`contacts`](#contacts) | Third parties. `contact_type` is explicit rather than two hidden counters. |
@@ -208,6 +209,7 @@ bank charge that pays no item.
 | [`country_packs`](#country_packs) | Country packs loaded in this installation, with their version and certification. |
 | [`currencies`](#currencies) | ISO 4217 currencies known to this instance. |
 | [`currency_rates`](#currency_rates) | Dated exchange rates. A document stores the rate it used; this table is the history. |
+| [`declaration_instalments`](#declaration_instalments) | What a company paid on account of a declaration during its period: which instalment of the scheme's schedule, the day, the amount and the entry that carried it, where there is one. Several rows for one instalment are a payment made in parts. The annual return deducts them in the box whose reads is instalments_paid or instalments_due. |
 | [`document_line_analytics`](#document_line_analytics) | Analytic split of a document line, one row per value, share in percent. Copied onto the ledger line by post_document(); after posting the ledger split is the one read. |
 | [`document_lines`](#document_lines) | Lines of a document. A product line carries its base, its account and its tax (tax_id); the tax itself is written by the posting on the account the tax points to, and a line on such an account is refused (trigger document_lines_guard_tax_account). |
 | [`document_shares`](#document_shares) | Public links onto a document. The token is handed over once and kept only as a sha256; the link is withdrawn by revoking it, never by editing it. |
@@ -250,6 +252,10 @@ bank charge that pays no item.
 | [`turnover_tax_brackets`](#turnover_tax_brackets) | The brackets of a regime of turnover_tax_regimes, dated: the highest base each takes (inclusive; null for the last), its nominal rate in percent and the deduction subtracted from base x rate. The tax of a period is its turnover x (base x nominal_rate / 100 - deduction) / base, the base being the window's turnover. A flat rate is one bracket with no threshold and no deduction. |
 | [`turnover_tax_regimes`](#turnover_tax_regimes) | A regime of a country where one tax on turnover replaces the kinds of tax it names, compiled from the pack's turnover_tax.json: the form it is declared on, the window its bracket is read over, the account its tax is an expense on and the article that sets it (decision 0080). |
 | [`user_preferences`](#user_preferences) | What one person prefers, across every company they are a member of. Every column is nullable and none has a default: null means "take the company's answer, then the pack's". |
+| [`vat_scheme_ceilings`](#vat_scheme_ceilings) | Up to which amount a company may be on a scheme: a measure from a closed vocabulary, the part of the activity it is counted on, an amount in a currency, the dates it applies between and the article that sets it. Read by vat_scheme_ceilings_crossed(), an alert; nothing moves a company from one scheme to another by itself. |
+| [`vat_scheme_forms`](#vat_scheme_forms) | The declaration forms a company on a scheme files, each on the cadences the scheme allows. A form of the country that no scheme names is outside every scheme and is filed as before; a form some scheme names is filed only under the schemes that name it. |
+| [`vat_scheme_instalments`](#vat_scheme_instalments) | The payments on account a scheme asks for during the year a return covers: in which month (and on which day, where the law gives one to everybody), which percentage of which box of the previous period's return, and the base below which nothing is due. instalment_plan() reads it. |
+| [`vat_schemes`](#vat_schemes) | The VAT schemes of a country, compiled from packs/<cc>/vat_schemes.json: the fact that decides which declaration forms a company files at all. A country with no row has no scheme, and its companies file as they always did. |
 
 ### `account_templates`
 
@@ -904,6 +910,23 @@ Constraints:
 - `PRIMARY KEY (id)`
 - `UNIQUE (company_id, valid_from)`
 
+### `company_vat_schemes`
+
+The VAT scheme a company is on, from the first day of a financial year until the next row. No row: the company has not said, and files exactly as it did before schemes existed — no default and no guess. The forms and cadences it implies are written into company_filing_periods, which stays the one place a cadence is recorded.
+
+| Column | Type | Notes |
+|---|---|---|
+| `company_id` | `uuid` | not null |
+| `valid_from` | `date` | not null |
+| `country` | `character(2)` | not null — The country of the scheme: the company's fiscal country, written by the trigger, so the scheme is a foreign key and a pack upgrade cannot remove one a company is on. |
+| `scheme_code` | `text` | not null |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `PRIMARY KEY (company_id, valid_from)`
+
 ### `contact_merges`
 
 Every merge of two contacts, by merge_contacts() (decision 0074): the contact absorbed, the one kept, who merged them and when, what moved and what was filled. Written by merge_contacts() and by nothing else — no role may insert — so the guards of a posted line and of an issued document read a row here, written in the same transaction, as the exemption that lets contact_id move from the absorbed contact to the kept one.
@@ -1170,6 +1193,31 @@ Constraints:
 - `CHECK ((rate > (0)::numeric))`
 - `PRIMARY KEY (id)`
 - `UNIQUE (currency_code, rate_date)`
+
+### `declaration_instalments`
+
+What a company paid on account of a declaration during its period: which instalment of the scheme's schedule, the day, the amount and the entry that carried it, where there is one. Several rows for one instalment are a payment made in parts. The annual return deducts them in the box whose reads is instalments_paid or instalments_due.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `report_code` | `text` | not null |
+| `period_start` | `date` | not null |
+| `period_end` | `date` | not null |
+| `sequence` | `smallint` | not null |
+| `paid_on` | `date` | not null |
+| `amount` | `numeric(18,2)` | not null |
+| `entry_id` | `uuid` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((amount > (0)::numeric))`
+- `CHECK ((period_end >= period_start))`
+- `CHECK ((sequence >= 1))`
+- `PRIMARY KEY (id)`
 
 ### `document_line_analytics`
 
@@ -2090,15 +2138,20 @@ The boxes of a declaration form, and the plus/minus lists a total is computed fr
 | `rate` | `numeric` | Percentage this box applies to the box named by rate_of_box. The one arithmetic a declaration form writes out; not an expression, and never a second way to say plus. |
 | `rate_of_box` | `text` | The box the rate is applied to, bare or qualified with its kind (`12:total`), resolved the way a plus reference is. |
 | `print_sequence` | `integer` | Where the administration prints this box, when that is not where the pack declares it. Null means the same as sequence: a form prints a subtotal above what it adds up, and the evaluation order is the dependencies and never this. |
+| `from_boxes` | `text[]` | not null — On a form that reads the postings of another (tax_report_templates.reads_postings_of): the boxes of that form this base or tax box adds up, as the pack writes them — "08:base", or bare for every kind of the box. Empty on every box of a form that reads its own postings. |
+| `reads` | `text` | A tax box whose figure is the payments on account of this declaration rather than the ledger: instalments_paid, what declaration_instalments records as paid for the period; instalments_due, what instalment_plan() says was due, or what was paid where that is more. Null on every box summed from the ledger or computed. |
 
 Constraints:
 
 - `CHECK (((kind = 'total'::text) OR ((plus_boxes = '{}'::text[]) AND (minus_boxes = '{}'::text[]))))`
+- `CHECK (((cardinality(from_boxes) = 0) OR (reads IS NULL)))`
 - `CHECK ((kind = ANY (ARRAY['base'::text, 'tax'::text, 'total'::text])))`
+- `CHECK (((kind <> 'total'::text) OR ((cardinality(from_boxes) = 0) AND (reads IS NULL))))`
 - `CHECK (((rate IS NULL) OR (kind = 'total'::text)))`
 - `CHECK (((rate_of_box IS NULL) OR (split_part(rate_of_box, ':'::text, 1) <> box)))`
 - `CHECK (((rate IS NULL) = (rate_of_box IS NULL)))`
 - `CHECK (((rate IS NULL) OR ((plus_boxes = '{}'::text[]) AND (minus_boxes = '{}'::text[]))))`
+- `CHECK ((reads = ANY (ARRAY['instalments_paid'::text, 'instalments_due'::text])))`
 - `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
 - `PRIMARY KEY (country, report_code, box, kind)`
 
@@ -2127,6 +2180,8 @@ Declaration forms per country, from packs/<cc>/tax_report.json. Reference data: 
 | `rounding_unit` | `numeric` | The unit the figures of this form are filed in, where it is coarser than the currency: 1 for a form filed in whole dollars over a ledger kept in cents. A power of ten. Null is the currency's own decimals, which is every form that says nothing. Read by filing_rounding() when a declaration is frozen; never by vat_return(), which answers the exact figures. |
 | `rounding_reference` | `text` | The text that sets the unit — the instruction printed on the form, or the rule behind it. Filled exactly when rounding_unit is. |
 | `rounding_source_key` | `text` | Key of the register entry that reference is in. |
+| `role` | `text` | What the form is to the companies that file it, from packs/<cc>/tax_report.json: periodic, the return the tax postings are for, or annual, a return filed once a year beside it or instead of it under a scheme that says so. Null where the pack carries one form and says nothing, which is_periodic_return already answers; when set it agrees with is_periodic_return. |
+| `reads_postings_of` | `text` | The form of the same country whose postings this one adds up, for a form that restates on lines of its own what another form's boxes received — an annual return over the boxes of the monthly one. Null: the form reads the postings made for it. Each box then names the boxes it adds up in from_boxes. |
 
 Constraints:
 
@@ -2140,6 +2195,9 @@ CASE deadline_rule
 END)`
 - `CHECK (((period_default IS NULL) OR (period_default = ANY (periods))))`
 - `CHECK ((cardinality(periods) >= 1))`
+- `CHECK (((reads_postings_of IS NULL) OR (reads_postings_of <> code)))`
+- `CHECK ((role = ANY (ARRAY['periodic'::text, 'annual'::text])))`
+- `CHECK (((role IS NULL) OR ((role = 'periodic'::text) = is_periodic_return)))`
 - `CHECK ((((rounding_unit IS NULL) = (rounding_reference IS NULL)) AND ((rounding_source_key IS NULL) OR (rounding_reference IS NOT NULL))))`
 - `CHECK (((rounding_unit IS NULL) OR ((rounding_unit > (0)::numeric) AND (rounding_unit = power((10)::numeric, round(log(rounding_unit)))))))`
 - `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
@@ -2367,6 +2425,98 @@ Constraints:
 - `CHECK (((language IS NULL) OR (language ~ '^[a-z]{2}(-[A-Za-z0-9]{2,8})?$'::text)))`
 - `PRIMARY KEY (user_id)`
 
+### `vat_scheme_ceilings`
+
+Up to which amount a company may be on a scheme: a measure from a closed vocabulary, the part of the activity it is counted on, an amount in a currency, the dates it applies between and the article that sets it. Read by vat_scheme_ceilings_crossed(), an alert; nothing moves a company from one scheme to another by itself.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `scheme_code` | `text` | not null |
+| `sequence` | `integer` | not null |
+| `measure` | `text` | not null |
+| `activity` | `text` | not null |
+| `amount` | `numeric(18,2)` | not null |
+| `currency_code` | `character(3)` | not null |
+| `valid_from` | `date` | not null |
+| `valid_to` | `date` |  |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+
+Constraints:
+
+- `CHECK ((activity = ANY (ARRAY['all'::text, 'goods'::text, 'services'::text])))`
+- `CHECK ((amount > (0)::numeric))`
+- `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
+- `CHECK ((measure = ANY (ARRAY['turnover_previous_year'::text, 'turnover_current_year'::text, 'tax_previous_year'::text])))`
+- `PRIMARY KEY (country, scheme_code, sequence)`
+
+### `vat_scheme_forms`
+
+The declaration forms a company on a scheme files, each on the cadences the scheme allows. A form of the country that no scheme names is outside every scheme and is filed as before; a form some scheme names is filed only under the schemes that name it.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `scheme_code` | `text` | not null |
+| `report_code` | `text` | not null — A form of tax_report_templates of the same country. Not a foreign key, for the reason company_filing_periods gives: the pack writes its forms and its schemes in one seed, in that order. |
+| `periods` | `declaration_period[]` | not null |
+| `period_default` | `declaration_period` |  |
+
+Constraints:
+
+- `CHECK (((period_default IS NULL) OR (period_default = ANY (periods))))`
+- `CHECK ((cardinality(periods) >= 1))`
+- `PRIMARY KEY (country, scheme_code, report_code)`
+
+### `vat_scheme_instalments`
+
+The payments on account a scheme asks for during the year a return covers: in which month (and on which day, where the law gives one to everybody), which percentage of which box of the previous period's return, and the base below which nothing is due. instalment_plan() reads it.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `scheme_code` | `text` | not null |
+| `sequence` | `smallint` | not null |
+| `report_code` | `text` | not null |
+| `due_month` | `smallint` | not null |
+| `due_day` | `smallint` | Null where the day of the month depends on the taxpayer; the instalment is then listed with its month and no date. |
+| `percent` | `numeric(9,4)` | not null |
+| `base_report_code` | `text` | not null |
+| `base_box` | `text` | not null |
+| `base_kind` | `text` | not null |
+| `minimum_base` | `numeric(18,2)` |  |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+
+Constraints:
+
+- `CHECK ((base_kind = ANY (ARRAY['base'::text, 'tax'::text, 'total'::text])))`
+- `CHECK (((due_day IS NULL) OR ((due_day >= 1) AND (due_day <= 31))))`
+- `CHECK (((minimum_base IS NULL) OR (minimum_base >= (0)::numeric)))`
+- `CHECK (((due_month >= 1) AND (due_month <= 12)))`
+- `CHECK (((percent > (0)::numeric) AND (percent <= (100)::numeric)))`
+- `PRIMARY KEY (country, scheme_code, sequence)`
+
+### `vat_schemes`
+
+The VAT schemes of a country, compiled from packs/<cc>/vat_schemes.json: the fact that decides which declaration forms a company files at all. A country with no row has no scheme, and its companies file as they always did.
+
+| Column | Type | Notes |
+|---|---|---|
+| `country` | `character(2)` | not null |
+| `code` | `text` | not null |
+| `name` | `text` | not null |
+| `charges_vat` | `boolean` | not null — False under a small business exemption: a company on the scheme charges no VAT on its sales, which are refused at posting if they carry any, recovers none, and its invoices carry the mention of legal_mention_templates whose applies_when is small_business. |
+| `legal_reference` | `text` | not null |
+| `source_key` | `text` |  |
+| `sequence` | `integer` | not null |
+
+Constraints:
+
+- `CHECK ((country ~ '^[A-Z]{2}$'::text))`
+- `PRIMARY KEY (country, code)`
+
 ## Functions
 
 | Function | Purpose |
@@ -2440,6 +2590,7 @@ Constraints:
 | `company_column(p_table regclass)` | The column a table names its company by: company_id, or id for companies itself, whose own id is its company. Null for a table that holds no company's rows. For migrations (decision 0065). |
 | `company_filing_periods_mirror()` | Writes companies.vat_period from the row that records how often this company files its country's periodic return. The column is a mirror and never a second decision: it is written here, from the table, and only when the two differ. |
 | `company_filing_periods_names_a_form()` | Refuses a filing cadence recorded against a form this installation does not carry. Raise, do not warn: a row nothing can resolve is a cadence nobody files on, and the guards that read it would simply never fire. |
+| `company_filing_periods_within_scheme()` | Refuses a cadence recorded for a form the company's last recorded scheme does not file (form_not_in_vat_scheme), or on a cadence the scheme does not allow (wrong_declaration_period). A company with no scheme, and a form no scheme names, are not concerned. |
 | `company_has_no_member(p_company_id uuid)` | Whether a company has no member yet, which lets its first member claim it. On a shared installation only the installer and an instance administrator are told, and claim (decision 0065). |
 | `company_members_join_of_their_own_accord()` | On a shared installation, refuses a membership written for anybody but the signed-in person writing it — accept_invitation() and create_company() write the caller's own — and any change of who or which company a membership is for; the installer and an instance administrator excepted. One answer whether the person named has an account or not. Unchanged on an installation that is not shared (decision 0065). |
 | `company_members_list(p_company_id uuid)` | The members of a company with the address each signed up with, their preset, their stored adjustments and when they joined. Needs members.manage. An address is null for a member whose account is gone. |
@@ -2447,6 +2598,8 @@ Constraints:
 | `company_role(p_company_id uuid)` | Role of the current user on a company, or NULL when they are not a member. |
 | `company_scoped_tables()` | Every table that belongs to a company, read from the catalogue: it carries `company_id`, or a foreign key leads from it to `companies`, directly or through another such table. |
 | `company_tax_regimes_check()` | Refuses a regime the pack of the company's fiscal country does not carry (unknown_turnover_regime), one that does not start on the first day of a financial year or end on the last day of one (regime_change_mid_year), and one that overlaps another (regime_overlap); records the cadence of the regime's form in company_filing_periods. |
+| `company_vat_schemes_check()` | Refuses a scheme the pack of the company's fiscal country does not carry (unknown_vat_scheme) and one that does not start on the first day of a financial year (scheme_change_mid_year); writes the country of the scheme. |
+| `company_vat_schemes_follow()` | Writes company_filing_periods from the last scheme the company recorded: removes the cadences of forms the scheme does not file or of cadences it does not allow, and records for each form it files the scheme's default or the one cadence it allows, never a guess among several. |
 | `confirm_contact(p_transaction_id uuid, p_contact_id uuid)` | Attributes a statement line to a contact and learns from it, through learn_contact_patterns(): the account and the name as this bank writes them become motifs, and every motif that had named somebody else is charged a use without a success. Knowing who the money came from is not knowing what it pays — this function never touches a document and never reconciles anything. |
 | `contact_candidates(p_company_id uuid, p_where text, p_name text, p_description text, p_words text, p_account text, p_amount numeric, p_currency character, p_document_types doc_type[])` | The one scoring of a counterparty, for whatever line carries the facts: the account it moved on, the motifs of contact_patterns, the number of a document of the types named (none named, none looked for), and the words of a contact's name — capped at 0.600 when the words reach several contacts, unless the label is a contact's whole name. Each candidate with its score, the evidence in a sentence and how many contacts that same evidence reached. Read by suggest_contacts() for a statement line and by suggest_line_contacts() for a ledger line; it writes nothing and decides nothing. |
 | `contacts_guard_merged()` | Keeps a merged contact retired (decision 0074): merged_into is written by merge_contacts() alone, in the transaction that recorded the merge in contact_merges (contact_merged_by_merge_contacts otherwise, and on an insert that arrives merged); once written it changes only to follow the contact it names when that one is merged in its turn, the contact is not made active again and is not deleted while its company stands (contact_merged). |
@@ -2487,6 +2640,7 @@ Constraints:
 | `documents_refresh_amount_paid(p_document_id uuid)` | Recomputes what a document has been settled by, from the matched amounts on its third-party lines. |
 | `documents_refresh_payment_state()` | Derives payment_state from amount_paid against amount_total: not_paid, partially_paid, paid, overpaid — and reversed for a document cancelled after it was posted and settled in full by its credit note. Never keyed. |
 | `documents_refuse_replaced_tax()` | Refuses to post a document a line of which carries a tax of a kind the company's regime of turnover_tax_regimes replaces on the document's date (tax_replaced_by_regime). |
+| `documents_refuse_vat_under_exemption()` | Refuses to post a sale invoice or credit note a line of which charges VAT — a tax of kind vat at a rate other than zero — on a day the company is on a scheme of vat_schemes that charges none (vat_charged_under_exemption). |
 | `ec_sales_list(p_company_id uuid, p_from date, p_to date, p_report_code text)` | The recapitulative statement of intra-Community supplies for a period: one line per customer VAT identification number and per nature — goods, services, and whatever the treatment vocabulary gains next — summed from the posted ledger in the company's currency, credit notes deducted. The country of a line is the prefix the customer's numbers carry, read from `territories`, so a Greek customer is listed under EL. A supply that cannot be declared comes back with the reason in `issue` rather than being left out. Name the form in p_report_code to have the period checked against the cadence this company files **that statement** on, which is not the cadence of its periodic return in any country read so far; name none and nothing is refused. A supply is a base line of the tax: a line a `tax_on_base` posting wrote is a cost and is left out. No country rule lives in this function. |
 | `ekwo_pre_request()` | Called by PostgREST at the start of every request (pgrst.db_pre_request). Presents the key in X-Ekwo-Api-Key when there is one, then moves the request off `anon` so that row level security decides instead of the grants, and gives it the statement_timeout configured for `authenticated`, when one is. A call that carries a whole company (is_archive_request) by a key or a signed-in session is given archive_statement_timeout(), only ever upwards. No header and no archive, no effect. |
 | `ekwo_schema_version()` | Schema version of the installed release. Bumped by a migration, never by hand. |
@@ -2537,6 +2691,7 @@ Constraints:
 | `init_instance(p_organization_name text, p_country character, p_edition instance_edition)` | Records the installation. Called once, by the installer. Leaves the registration fields empty. |
 | `install_country_template(p_company_id uuid, p_country character, p_language character, p_chart_code text)` | Copies one chart of a country pack into a company in one language, with the country's journals and taxes, wires the default roles, pins the accounts it wired, and records the pack version and the chart in company_packs. A tax posting is copied with every declaration box it prints in. |
 | `installed_schema_version()` | The schema version this installation runs, and its edition, for a caller it knows: a signed-in account that is on no company yet, or the holder of a machine key that still reaches something. No rows for anybody else, so an anonymous call learns nothing. Nothing else of the instance row comes with it. |
+| `instalment_plan(p_company_id uuid, p_from date, p_to date)` | The payments on account of the declaration of a period the company's scheme asks for: for each instalment of vat_scheme_instalments, the month (and the day, where the law gives one), the base — the box the pack names on the previous period's return as frozen by prepare_filing(), or as vat_return() computes it where nothing was frozen — the percentage, what was due, what declaration_instalments records as paid and what is outstanding. reason says no_base where there is no previous period to read, below_minimum where the base is under the scheme's minimum and nothing is due. No row for a company with no scheme or a scheme without instalments. |
 | `instance_admins_keep_one()` | Refuses to remove the last administrator of a shared installation, whoever asks (decision 0065). |
 | `instance_has_no_admin()` | Whether the first signed-in user may claim this installation: it has no administrator, and it is not shared (decision 0065). |
 | `instance_is_shared()` | Whether this installation is shared by several unrelated people (decision 0065). False on an installation with no instance row yet. |
@@ -2593,7 +2748,7 @@ Constraints:
 | `periodic_return_code(p_company_id uuid)` | The code of the periodic return the company's fiscal country files, when the installation carries exactly one. Null when it carries none — no pack for that country — and null when it carries several, because then no single form is what a column named after "the" return could mean. It is what holds companies.vat_period and company_filing_periods in step, and it names the form by asking the pack rather than by knowing a country. |
 | `pin_referenced_accounts(p_company_id uuid)` | Pins every account this company points at by a role, a journal, a tax posting or a cash-basis transition, and returns how many accounts are pinned afterwards. Called by install_country_template(); callable again after an upgrade added a tax. |
 | `portfolio_filings_touched_since(p_from date, p_to date)` | Declarations that have gone and whose period the ledger moved afterwards, in every company the caller holds filings.read on, and in no other — filings_touched_since() with the company named, the latest disturbance first. Every company of the portfolio is in the answer at least once: one that was not disturbed is a row with no filing, and `filed` says how many of its declarations were looked at. Invoker: it reads what the caller could have read company by company. |
-| `portfolio_upcoming_filings(p_from date, p_to date)` | What falls due between two dates in every company the caller holds filings.read on, and in no other: the periods upcoming_filings() produces, kept when the day they are due is in the window. Every company of the portfolio is in the answer at least once, and a row without a date says why in `reason` — no_deadline_rule where the pack names no day for the form, nothing_due where nothing of the company falls in the window, no_form where the installation carries no return for it. Invoker: it reads what the caller could have read company by company. |
+| `portfolio_upcoming_filings(p_from date, p_to date)` | What falls due between two dates in every company the caller holds filings.read on, and in no other: the periods and the instalments upcoming_filings() produces, kept when the day they are due is in the window. Every company of the portfolio is in the answer at least once, and a row without a date says why in `reason` — no_deadline_rule where the pack names no day for the form, nothing_due where nothing of the company falls in the window, no_form where the installation carries no return for it. instalment is set on a payment on account and null on a return. Invoker: it reads what the caller could have read company by company. |
 | `post_document(p_document_id uuid)` | Books a document: one entry, the bases on the accounts of the lines, the tax of each group rounded once and shared over the postings of the tax, each ledger line naming the posting type that wrote it. Refuses a tax whose applies_*_territory the document contradicts — read with territory_within_for_tax(), so a territory outside its parent's tax does not satisfy a condition naming the parent — or whose applies_supply_vs_seller it contradicts, by name, before anything reaches the ledger; chooses no tax for anybody. Writes the three territories it resolved on the document (seller_territory_code, buyer_territory_code, supply_territory_resolved). Groups the lines by account, tax and analytic split, and copies the split of each group onto the ledger line it writes; refuses analytic_axis_required, before anything is written, when a line leaves part of a required axis off (decision 0076). For a tax computed inside its own base the box of the base reports the base plus its cumulated share of the group's tax, and a group whose lines disagree on it is refused, mixed_base_includes_tax (decision 0077). |
 | `post_entry(p_entry_id uuid)` | Validates, numbers and posts an entry. Raises rather than warning: a swallowed error is a missing entry. Where the country forbids a hole in the sequence it refuses a number chosen by hand, unless the caller holds entries.import — and then the counter catches up to it. |
 | `post_module_entry(p_company_id uuid, p_module_code text, p_ref text, p_date date, p_description text, p_lines jsonb, p_journal_id uuid)` | The only way a module reaches the ledger: it hands over lines as data and this builds the draft and calls post_entry(). The tag (module_code, ref) is unique per company, so posting the same thing twice is refused by the database. |
@@ -2679,12 +2834,15 @@ Constraints:
 | `unreconcile_batch(p_batch_id uuid)` | Undoes a gesture of reconcile_batch(): every matching of the batch still standing goes through unreconcile(), the last written first, and the batch records when and by whom. Refuses unknown_batch (a batch of another company is one that does not exist), not_allowed (reconcile.write) and batch_already_undone. All or nothing, as the batch was. |
 | `unregister_instance()` | Undoes register_instance(). Opting in is reversible, or it is not a choice. |
 | `unshare_instance()` | Turns the shared setting off: the installation is one customer's again, and creating a company an instance-level act. The installer or an instance administrator. |
-| `upcoming_filings(p_company_id uuid, p_from date, p_to date)` | What this company has to file between two dates: the periods its cadences produce — any whole number of months, anchored on 1 January — the day each is due where the pack says, and the declaration already prepared or sent against it. The periodic return is left out of the periods a regime of turnover_tax_regimes that replaces VAT covers entirely, and the form of that regime is listed instead. Read-only; sending the reminder is somebody else's job, because a reminder needs a channel and somebody to operate it. |
+| `upcoming_filings(p_company_id uuid, p_from date, p_to date)` | What this company has to file and pay on account between two dates: the periods its cadences produce — any whole number of months, anchored on 1 January — the day each is due where the pack says, and the declaration already prepared or sent against it; and the instalments its scheme asks for, one row each with instalment set to its sequence and the month it falls due in as its period. The periodic return is left out of the periods a regime of turnover_tax_regimes that replaces VAT covers entirely, and a form is left out of the periods the company's VAT scheme does not file it in. Read-only; sending the reminder is somebody else's job, because a reminder needs a channel and somebody to operate it. |
 | `upgrade_filing_proof(p_proof_id uuid, p_proof_base64 text, p_anchor_chain text, p_anchor_height bigint, p_anchor_time timestamp with time zone, p_anchor_reference text)` | Replaces the bytes of a pending proof with the longer proof a calendar returned. With an anchor — the ledger, and a block height or a reference — the proof becomes complete and is frozen. Needs filings.prove. |
 | `use_api_key(p_secret text)` | Presents a machine key for the current transaction: has_capability() answers for it until the transaction ends. Refuses a key that is unknown, withdrawn or expired. Records the use when the transaction may write — a read request runs in a read-only transaction, where the stamp is worth less than the request. |
 | `user_preferences_company_is_known()` | Refuses a preferred company that does not exist or that the person may not know of, with one answer for both (decision 0065). |
 | `vat_prefix_of(p_code text)` | The two letters a territory's VAT identification numbers carry: EL for Greece, FR for Monaco, GB for the Isle of Man, and the code itself everywhere else — including for a territory this table does not carry, whose own two letters come back unchanged. Null when what it resolves to is not two letters, which is a territory that identifies under nobody. |
-| `vat_return(p_company_id uuid, p_from date, p_to date, p_report_code text)` | Declaration boxes for a period: summed from the ledger by the day each figure's tax fell due — `entry_lines.declared_on`, read through declared_lines() — into the boxes and on the form each line was frozen with when it was written (entry_lines.declaration_boxes and report_code), so a posting changed afterwards moves no return; then the totals of the country's form worked out by evaluate_totals(), the same evaluator financial_statement() uses. Refuses a period the company does not file **this form** on, when it has recorded one for it. No country rule lives in this function. |
+| `vat_return(p_company_id uuid, p_from date, p_to date, p_report_code text)` | Declaration boxes for a period: summed from the ledger by the day each figure's tax fell due — `entry_lines.declared_on`, read through declared_lines() — into the boxes and on the form each line was frozen with when it was written (entry_lines.declaration_boxes and report_code), so a posting changed afterwards moves no return; then the totals of the country's form worked out by evaluate_totals(), the same evaluator financial_statement() uses. A form that restates another (reads_postings_of) adds up the boxes of that form each of its boxes names, and a box that reads the payments on account of the declaration takes them from declaration_instalments or instalment_plan(). Refuses a period the company does not file **this form** on, when it has recorded one for it; under the scheme the company is on (company_vat_schemes) refuses a form the scheme does not file and a cadence it does not file it on, and takes the scheme's form when none is named. No country rule lives in this function. |
+| `vat_scheme_at(p_company_id uuid, p_date date)` | The VAT scheme the company is on that day: the row of company_vat_schemes that starts last on or before it. Null when the company has recorded none, which is not an error. Asked for 'infinity', the last scheme the company recorded, which is the one its filing periods follow. |
+| `vat_scheme_ceilings_crossed(p_company_id uuid, p_from date, p_to date)` | The ceilings of the scheme the company is on at the end of the period, against its books: the turnover of the period or of the one before it, as turnover_of() reads it, and whether it is above the ceiling. A ceiling counted on goods or on services alone is compared with the whole turnover, which the ledger does not split by activity, so it can only over-warn. measured and crossed are null for a measure the books do not give (tax_previous_year). An alert: it changes no scheme. |
+| `vat_scheme_files(p_company_id uuid, p_report_code text, p_date date)` | Whether the company files that form on that day as far as its scheme is concerned: true when it has recorded no scheme, true for a form no scheme of its country names, and otherwise whether its scheme names the form. |
 | `version_at_least(p_version text, p_floor text)` | Whether a three-part version is at or above another, number by number: 0.10.0 is above 0.9.0, which a comparison of text gets wrong. |
 | `year_result_account(p_company_id uuid, p_balance numeric)` | The balance-sheet account the result of a year nobody has closed stands on, for a balance of the income and expense accounts (debit minus credit, so a profit is negative): the current-year result account of a result_accounts pack, retained earnings — the company's own first, for a profit — otherwise. Null when the pack names none. Read by statement_account_matches() and fec_lines(), so a balance sheet and an opening balance put it in one place. |
 

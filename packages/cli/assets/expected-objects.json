@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.17.0",
-  "migration": "20261022094334",
+  "migration": "20261022110000",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1311,6 +1311,35 @@
         ]
       },
       {
+        "name": "company_vat_schemes",
+        "columns": [
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "scheme_code",
+            "type": "text"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "valid_from",
+            "type": "date"
+          }
+        ]
+      },
+      {
         "name": "contact_merges",
         "columns": [
           {
@@ -1942,6 +1971,55 @@
           {
             "name": "source",
             "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "declaration_instalments",
+        "columns": [
+          {
+            "name": "amount",
+            "type": "numeric(18,2)"
+          },
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "entry_id",
+            "type": "uuid"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "paid_on",
+            "type": "date"
+          },
+          {
+            "name": "period_end",
+            "type": "date"
+          },
+          {
+            "name": "period_start",
+            "type": "date"
+          },
+          {
+            "name": "report_code",
+            "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "smallint"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone"
           }
         ]
       },
@@ -3782,6 +3860,10 @@
             "type": "boolean"
           },
           {
+            "name": "from_boxes",
+            "type": "text[]"
+          },
+          {
             "name": "hidden",
             "type": "boolean"
           },
@@ -3819,6 +3901,10 @@
           },
           {
             "name": "rate_of_box",
+            "type": "text"
+          },
+          {
+            "name": "reads",
             "type": "text"
           },
           {
@@ -3905,6 +3991,14 @@
           {
             "name": "periods",
             "type": "declaration_period[]"
+          },
+          {
+            "name": "reads_postings_of",
+            "type": "text"
+          },
+          {
+            "name": "role",
+            "type": "text"
           },
           {
             "name": "rounding_reference",
@@ -4434,6 +4528,170 @@
             "type": "uuid"
           }
         ]
+      },
+      {
+        "name": "vat_scheme_ceilings",
+        "columns": [
+          {
+            "name": "activity",
+            "type": "text"
+          },
+          {
+            "name": "amount",
+            "type": "numeric(18,2)"
+          },
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "currency_code",
+            "type": "character(3)"
+          },
+          {
+            "name": "legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "measure",
+            "type": "text"
+          },
+          {
+            "name": "scheme_code",
+            "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "integer"
+          },
+          {
+            "name": "source_key",
+            "type": "text"
+          },
+          {
+            "name": "valid_from",
+            "type": "date"
+          },
+          {
+            "name": "valid_to",
+            "type": "date"
+          }
+        ]
+      },
+      {
+        "name": "vat_scheme_forms",
+        "columns": [
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "period_default",
+            "type": "declaration_period"
+          },
+          {
+            "name": "periods",
+            "type": "declaration_period[]"
+          },
+          {
+            "name": "report_code",
+            "type": "text"
+          },
+          {
+            "name": "scheme_code",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "vat_scheme_instalments",
+        "columns": [
+          {
+            "name": "base_box",
+            "type": "text"
+          },
+          {
+            "name": "base_kind",
+            "type": "text"
+          },
+          {
+            "name": "base_report_code",
+            "type": "text"
+          },
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "due_day",
+            "type": "smallint"
+          },
+          {
+            "name": "due_month",
+            "type": "smallint"
+          },
+          {
+            "name": "legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "minimum_base",
+            "type": "numeric(18,2)"
+          },
+          {
+            "name": "percent",
+            "type": "numeric(9,4)"
+          },
+          {
+            "name": "report_code",
+            "type": "text"
+          },
+          {
+            "name": "scheme_code",
+            "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "smallint"
+          },
+          {
+            "name": "source_key",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "vat_schemes",
+        "columns": [
+          {
+            "name": "charges_vat",
+            "type": "boolean"
+          },
+          {
+            "name": "code",
+            "type": "text"
+          },
+          {
+            "name": "country",
+            "type": "character(2)"
+          },
+          {
+            "name": "legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "name",
+            "type": "text"
+          },
+          {
+            "name": "sequence",
+            "type": "integer"
+          },
+          {
+            "name": "source_key",
+            "type": "text"
+          }
+        ]
       }
     ],
     "views": [
@@ -4750,6 +5008,10 @@
         "arguments": ""
       },
       {
+        "name": "company_filing_periods_within_scheme",
+        "arguments": ""
+      },
+      {
         "name": "company_has_no_member",
         "arguments": "p_company_id uuid"
       },
@@ -4779,6 +5041,14 @@
       },
       {
         "name": "company_tax_regimes_check",
+        "arguments": ""
+      },
+      {
+        "name": "company_vat_schemes_check",
+        "arguments": ""
+      },
+      {
+        "name": "company_vat_schemes_follow",
         "arguments": ""
       },
       {
@@ -4955,6 +5225,10 @@
       },
       {
         "name": "documents_refuse_replaced_tax",
+        "arguments": ""
+      },
+      {
+        "name": "documents_refuse_vat_under_exemption",
         "arguments": ""
       },
       {
@@ -5176,6 +5450,10 @@
       {
         "name": "installed_schema_version",
         "arguments": ""
+      },
+      {
+        "name": "instalment_plan",
+        "arguments": "p_company_id uuid, p_from date, p_to date"
       },
       {
         "name": "instance_admins_keep_one",
@@ -5782,6 +6060,18 @@
         "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text"
       },
       {
+        "name": "vat_scheme_at",
+        "arguments": "p_company_id uuid, p_date date"
+      },
+      {
+        "name": "vat_scheme_ceilings_crossed",
+        "arguments": "p_company_id uuid, p_from date, p_to date"
+      },
+      {
+        "name": "vat_scheme_files",
+        "arguments": "p_company_id uuid, p_report_code text, p_date date"
+      },
+      {
         "name": "version_at_least",
         "arguments": "p_version text, p_floor text"
       },
@@ -6017,6 +6307,16 @@
         "command": "all"
       },
       {
+        "table": "company_vat_schemes",
+        "name": "company_vat_schemes_select",
+        "command": "select"
+      },
+      {
+        "table": "company_vat_schemes",
+        "name": "company_vat_schemes_write",
+        "command": "all"
+      },
+      {
         "table": "contact_merges",
         "name": "contact_merges_select",
         "command": "select"
@@ -6060,6 +6360,16 @@
         "table": "currency_rates",
         "name": "currency_rates_select",
         "command": "select"
+      },
+      {
+        "table": "declaration_instalments",
+        "name": "declaration_instalments_select",
+        "command": "select"
+      },
+      {
+        "table": "declaration_instalments",
+        "name": "declaration_instalments_write",
+        "command": "all"
       },
       {
         "table": "document_line_analytics",
@@ -6400,6 +6710,26 @@
         "table": "user_preferences",
         "name": "user_preferences_own",
         "command": "all"
+      },
+      {
+        "table": "vat_scheme_ceilings",
+        "name": "vat_scheme_ceilings_select",
+        "command": "select"
+      },
+      {
+        "table": "vat_scheme_forms",
+        "name": "vat_scheme_forms_select",
+        "command": "select"
+      },
+      {
+        "table": "vat_scheme_instalments",
+        "name": "vat_scheme_instalments_select",
+        "command": "select"
+      },
+      {
+        "table": "vat_schemes",
+        "name": "vat_schemes_select",
+        "command": "select"
       }
     ],
     "triggers": [
@@ -6548,6 +6878,10 @@
         "name": "company_filing_periods_set_updated_at"
       },
       {
+        "table": "company_filing_periods",
+        "name": "company_filing_periods_within_scheme"
+      },
+      {
         "table": "company_invitations",
         "name": "company_invitations_audit"
       },
@@ -6582,6 +6916,22 @@
       {
         "table": "company_tax_regimes",
         "name": "company_tax_regimes_set_updated_at"
+      },
+      {
+        "table": "company_vat_schemes",
+        "name": "company_vat_schemes_audit"
+      },
+      {
+        "table": "company_vat_schemes",
+        "name": "company_vat_schemes_check"
+      },
+      {
+        "table": "company_vat_schemes",
+        "name": "company_vat_schemes_follow"
+      },
+      {
+        "table": "company_vat_schemes",
+        "name": "company_vat_schemes_set_updated_at"
       },
       {
         "table": "contact_merges",
@@ -6634,6 +6984,14 @@
       {
         "table": "country_packs",
         "name": "country_packs_audit"
+      },
+      {
+        "table": "declaration_instalments",
+        "name": "declaration_instalments_audit"
+      },
+      {
+        "table": "declaration_instalments",
+        "name": "declaration_instalments_set_updated_at"
       },
       {
         "table": "document_line_analytics",
@@ -6734,6 +7092,10 @@
       {
         "table": "documents",
         "name": "documents_refuse_replaced_tax"
+      },
+      {
+        "table": "documents",
+        "name": "documents_refuse_vat_under_exemption"
       },
       {
         "table": "documents",
@@ -7802,6 +8164,22 @@
           ]
         },
         {
+          "name": "company_vat_schemes",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
           "name": "contact_merges",
           "anon": [],
           "authenticated": [
@@ -7881,6 +8259,22 @@
           ],
           "service_role": [
             "select"
+          ]
+        },
+        {
+          "name": "declaration_instalments",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
           ]
         },
         {
@@ -8431,6 +8825,46 @@
             "insert",
             "select",
             "update"
+          ]
+        },
+        {
+          "name": "vat_scheme_ceilings",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "vat_scheme_forms",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "vat_scheme_instalments",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "vat_schemes",
+          "anon": [],
+          "authenticated": [
+            "select"
+          ],
+          "service_role": [
+            "select"
           ]
         }
       ],
@@ -9257,6 +9691,14 @@
           "service_role": []
         },
         {
+          "name": "company_filing_periods_within_scheme",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "company_has_no_member",
           "arguments": "p_company_id uuid",
           "anon": [
@@ -9329,6 +9771,22 @@
         },
         {
           "name": "company_tax_regimes_check",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "company_vat_schemes_check",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "company_vat_schemes_follow",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -9747,6 +10205,14 @@
         },
         {
           "name": "documents_refuse_replaced_tax",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "documents_refuse_vat_under_exemption",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -10305,6 +10771,17 @@
           "anon": [
             "execute"
           ],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "instalment_plan",
+          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
           "authenticated": [
             "execute"
           ],
@@ -11923,6 +12400,39 @@
         {
           "name": "vat_return",
           "arguments": "p_company_id uuid, p_from date, p_to date, p_report_code text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "vat_scheme_at",
+          "arguments": "p_company_id uuid, p_date date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "vat_scheme_ceilings_crossed",
+          "arguments": "p_company_id uuid, p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "vat_scheme_files",
+          "arguments": "p_company_id uuid, p_report_code text, p_date date",
           "anon": [],
           "authenticated": [
             "execute"
