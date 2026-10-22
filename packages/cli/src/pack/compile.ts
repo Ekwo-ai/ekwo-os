@@ -22,9 +22,10 @@
  */
 
 import { describeCertification } from './certification.js';
-import { finalCloseOf, sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackSource, type PackStatement, type PackTax } from './read.js';
+import { finalCloseOf, sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackReport, type PackSource, type PackStatement, type PackTax } from './read.js';
 import { compileCorporateTaxSection } from './corporate-tax.js';
 import { compileTurnoverTaxSection } from './turnover-tax.js';
+import { compileVatSchemesSection } from './vat-schemes.js';
 import { compileAnalysis, compileFrameworkAnalysis } from './analysis.js';
 
 /**
@@ -90,8 +91,9 @@ export function compilePack(pack: Pack): string {
   out.push(...taxes(pack, country));
   out.push(...postings(pack, country));
   out.push(...classifications(pack, country));
-  out.push(...taxReport(pack, country));
+  for (const report of pack.reports) out.push(...taxReport(pack, report, country));
   if (pack.turnoverTax !== null) out.push(...compileTurnoverTaxSection(pack.turnoverTax, country));
+  if (pack.vatSchemes !== null) out.push(...compileVatSchemesSection(pack.vatSchemes, country));
   out.push(...statements(pack.statements, pack.labels, country));
   out.push(...compileAnalysis(pack.analysis, country));
   out.push(...defaults(pack, country));
@@ -689,9 +691,20 @@ function postings(pack: Pack, country: string): string[] {
  * `print_sequence` carries the order the administration prints, and the order
  * the totals are worked out in is their dependencies and neither of the two.
  */
-function taxReport(pack: Pack, country: string): string[] {
-  const report = pack.report;
-  if (report === null) return [];
+function taxReport(pack: Pack, report: PackReport, country: string): string[] {
+  // The periodic form is written exactly as the single form of a pack always
+  // was. Another form adds the two columns that say what it is — its role and
+  // the form whose postings it reads — and its boxes the two that say where
+  // their figure comes from; the translations of `i18n/` are keyed by box and
+  // kind and belong to the periodic form, whose numbers another form reuses
+  // for other lines.
+  const primary = report === pack.report;
+  const formColumns = primary ? '' : ', role, reads_postings_of';
+  const formValues = primary ? '' : `, ${text(report.role)}, ${text(report.reads_postings_of)}`;
+  const formUpdate = primary
+    ? []
+    : ['  role                = excluded.role,', '  reads_postings_of   = excluded.reads_postings_of,'];
+  const sourced = report.boxes.some((b) => b.from.length > 0 || b.reads !== null);
 
   // The unit of the form is written only when the pack names one. It arrived
   // with `20260921145412`, and a form filed at the decimals of its currency
@@ -716,15 +729,16 @@ function taxReport(pack: Pack, country: string): string[] {
     'insert into tax_report_templates',
     '  (country, code, name, periods, period_default, valid_from, valid_to, legal_reference,',
     '   is_periodic_return, deadline_rule, deadline_day, deadline_plus_days,',
-    `   deadline_reference, deadline_source_key, file_format${roundingColumns})`,
+    `   deadline_reference, deadline_source_key, file_format${roundingColumns}${formColumns})`,
     'values',
     `  (${text(country)}, ${text(report.code)}, ${text(report.name)}, ${periods(report.periods)}, ` +
       `${enumeration(report.period_default, 'declaration_period')}, ` +
-      `${date(report.valid_from)}, ${date(report.valid_to)}, ${text(report.legal_reference)}, true,` +
+      `${date(report.valid_from)}, ${date(report.valid_to)}, ${text(report.legal_reference)}, ` +
+      `${report.role === 'periodic' ? 'true' : 'false'},` +
       `${enumeration(report.deadline?.rule ?? null, 'filing_deadline_rule')}, ` +
       `${number(report.deadline?.day ?? null)}, ${number(report.deadline?.plus_days ?? null)}, ` +
       `${text(report.deadline?.legal_reference ?? null)}, ${text(report.deadline?.source ?? null)}, ` +
-      `${text(report.file_format)}${roundingValues})`,
+      `${text(report.file_format)}${roundingValues}${formValues})`,
     'on conflict (country, code) do update set',
     '  name                = excluded.name,',
     '  periods             = excluded.periods,',
@@ -739,6 +753,7 @@ function taxReport(pack: Pack, country: string): string[] {
     '  deadline_reference  = excluded.deadline_reference,',
     '  deadline_source_key = excluded.deadline_source_key,',
     ...roundingUpdate,
+    ...formUpdate,
     '  file_format         = excluded.file_format;',
     '',
   ];
@@ -747,23 +762,24 @@ function taxReport(pack: Pack, country: string): string[] {
   const values = boxes.map(
     (b) =>
       `  (${text(country)}, ${text(report.code)}, ${text(b.box)}, ${text(b.kind)}, ${text(b.name)}, ` +
-      `${json(pack.labels.tax_report_boxes[`${b.box}|${b.kind}`])}, ${b.sequence}, ` +
+      `${json(primary ? pack.labels.tax_report_boxes[`${b.box}|${b.kind}`] : undefined)}, ${b.sequence}, ` +
       `${b.print_sequence === null ? 'null' : number(b.print_sequence)}, ` +
       `${array(b.plus)}, ${array(b.minus)}, ` +
       `${b.rate === null ? 'null' : number(b.rate)}, ${text(b.rate_of)}, ` +
       `${b.floor_zero ? 'true' : 'false'}, ` +
       `${b.hidden ? 'true' : 'false'}, ${text(b.xml_element)}, ${text(b.legal_reference)}, ` +
-      `${text(b.source)})`,
+      `${text(b.source)}${sourced ? `, ${array(b.from)}, ${text(b.reads)}` : ''})`,
   );
 
   out.push(
     'insert into tax_report_box_templates',
     '  (country, report_code, box, kind, name, name_i18n, sequence, print_sequence,',
     '   plus_boxes, minus_boxes, rate, rate_of_box, floor_zero, hidden, xml_element,',
-    '   legal_reference, source_key)',
+    `   legal_reference, source_key${sourced ? ', from_boxes, reads' : ''})`,
     'values',
     values.join(',\n'),
     'on conflict (country, report_code, box, kind) do update set',
+    ...(sourced ? ['  from_boxes      = excluded.from_boxes,', '  reads           = excluded.reads,'] : []),
     '  name            = excluded.name,',
     '  name_i18n       = excluded.name_i18n,',
     '  sequence        = excluded.sequence,',

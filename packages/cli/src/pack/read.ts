@@ -24,6 +24,7 @@ import {
   type PackCorporateTax,
 } from './corporate-tax.js';
 import { normaliseTurnoverTax, turnoverTaxReferences, turnoverTaxSources, type PackTurnoverTax } from './turnover-tax.js';
+import { normaliseVatSchemes, vatSchemeReferences, vatSchemeSources, type PackVatSchemes } from './vat-schemes.js';
 import { taxCodes, TREATMENT_CODES, type TaxCodes, type VatRegime } from './vat-codes.js';
 import {
   euVatScopeOf,
@@ -512,6 +513,20 @@ export interface PackReportBox {
   legal_reference: string | null;
   /** Key of the register entry where that reference can be read. */
   source: string | null;
+  /**
+   * The boxes of the form named by `reads_postings_of` this box adds up, on a
+   * form that reads the postings of another one: line 5A of an annual return
+   * is what the monthly return printed in its line 08 over the year. Empty on
+   * every box of a form that reads its own postings, which is nearly all.
+   */
+  from: string[];
+  /**
+   * What the box holds when it is read from somewhere other than the ledger,
+   * from a closed vocabulary: `instalments_paid`, what the company paid on
+   * account of this declaration; `instalments_due`, what it owed on account,
+   * paid or not. Null on every box summed from the ledger or computed.
+   */
+  reads: 'instalments_paid' | 'instalments_due' | null;
 }
 
 /** One sentence a country requires on an invoice, and when it applies. */
@@ -822,10 +837,29 @@ export interface PackRounding {
   source: string | null;
 }
 
-/** `tax_report.json`: one declaration form and its boxes. */
+/**
+ * What a declaration form is to the companies that file it, from a closed
+ * vocabulary. `periodic` is the return filed every month, quarter or year that
+ * the ledger's tax lines are posted for, and the one `companies.vat_period`
+ * mirrors; a pack carries at most one. `annual` is a return filed once a year
+ * beside it or instead of it, under a scheme that says so.
+ */
+export const REPORT_ROLES = ['periodic', 'annual'] as const;
+export type PackReportRole = (typeof REPORT_ROLES)[number];
+
+/** One declaration form of `tax_report.json` and its boxes. */
 export interface PackReport {
   code: string;
   name: string;
+  /** `periodic` unless the pack says otherwise, which a single-form pack never has to. */
+  role: PackReportRole;
+  /**
+   * The form whose postings this one reads, or null where it reads its own.
+   * The taxes of a pack post for one form; an annual return that restates
+   * the year does not get a second set of postings, it names the form whose
+   * boxes it adds up and, box by box, which ones (`from`).
+   */
+  reads_postings_of: string | null;
   /**
    * The cadences this form is filed on, from the shortest to the longest:
    * month, bimonth, quarter, four_month, half_year, year.
@@ -989,6 +1023,7 @@ export interface PackFixedAssets {
 }
 
 export type { PackCorporateTax } from './corporate-tax.js';
+export type { PackVatSchemes, PackVatScheme } from './vat-schemes.js';
 export type { PackAnalysis, PackAnalysisAggregate } from './analysis.js';
 
 export interface Pack {
@@ -1021,6 +1056,12 @@ export interface Pack {
   documents: PackDocumentRules;
   /** The periodic return of this pack, from `tax_report.json`. */
   report: PackReport | null;
+  /**
+   * Every form of `tax_report.json`, the periodic one first. One element for
+   * a pack whose file holds one object, which is what every pack held before
+   * a file could hold a list.
+   */
+  reports: PackReport[];
   /** Code of the periodic return. The default of every box. */
   reportCode: string | null;
   /** `fixed_assets.json`, or null where this country says nothing about fixed assets. */
@@ -1029,6 +1070,8 @@ export interface Pack {
   corporateTax: PackCorporateTax | null;
   /** `turnover_tax.json`, or null where this country has no regime where a tax on turnover replaces VAT. */
   turnoverTax: PackTurnoverTax | null;
+  /** `vat_schemes.json`, or null where the pack declares no scheme and every company files as before. */
+  vatSchemes: PackVatSchemes | null;
   /** `golden/scenario.json`, or null where the manifest says why there is none. */
   golden: PackGolden | null;
   /** The reason the manifest gives for carrying no golden. Null where it carries one. */
@@ -1293,11 +1336,29 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   issues.push(...validate(rawTaxes, defs['taxes'] ?? {}, schema, 'taxes.json'));
   const taxes = rawTaxes.map((raw, index) => normaliseTax(raw as Record<string, unknown>, index));
 
-  let report: PackReport | null = null;
+  // One form is an object, several are a list of the same objects. The list is
+  // the only new thing: each element is validated and read exactly as the
+  // single object always was, so a pack with one form reads as it did.
+  let reports: PackReport[] = [];
   if (existsSync(join(root, 'tax_report.json'))) {
     const raw = await readJson(join(root, 'tax_report.json'));
-    issues.push(...validate(raw, defs['tax_report'] ?? {}, schema, 'tax_report.json'));
-    report = normaliseReport(raw as Record<string, unknown>);
+    const forms = Array.isArray(raw) ? (raw as unknown[]) : [raw];
+    if (Array.isArray(raw) && raw.length === 0) {
+      issues.push({ path: 'tax_report.json', message: 'the list of forms is empty; leave the file out instead' });
+    }
+    forms.forEach((form, index) => {
+      issues.push(
+        ...validate(form, defs['tax_report'] ?? {}, schema, Array.isArray(raw) ? `tax_report.json[${index}]` : 'tax_report.json'),
+      );
+    });
+    reports = forms.map((form) => normaliseReport(form as Record<string, unknown>));
+    issues.push(...reportForms(reports));
+    // The periodic form first: it is the one every posting is for unless it
+    // names another, and the one the rest of the reader calls `report`.
+    reports.sort((a, b) => (a.role === b.role ? 0 : a.role === 'periodic' ? -1 : b.role === 'periodic' ? 1 : 0));
+  }
+  const report: PackReport | null = reports[0] ?? null;
+  if (report !== null) {
     // A pack written before the proposal moved onto the form still carries it
     // in `defaults.vat_period`. It is read from there and never written back:
     // one fact, one place, and the older spelling keeps working.
@@ -1374,6 +1435,18 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     issues.push(...validate(raw, defs['turnover_tax'] ?? {}, schema, 'turnover_tax.json'));
     turnoverTax = normaliseTurnoverTax(raw as Record<string, unknown>);
     issues.push(...turnoverTaxReferences(turnoverTax, charts, reportCode));
+  }
+
+  // The VAT schemes of the country: which forms a company files under each,
+  // on which cadences, whether it charges VAT at all, up to which ceilings,
+  // and what it pays on account. Optional: a pack without the file has no
+  // scheme, and a company of that country files exactly as before.
+  let vatSchemes: PackVatSchemes | null = null;
+  if (existsSync(join(root, 'vat_schemes.json'))) {
+    const raw = await readJson(join(root, 'vat_schemes.json'));
+    issues.push(...validate(raw, defs['vat_schemes'] ?? {}, schema, 'vat_schemes.json'));
+    vatSchemes = normaliseVatSchemes(raw as unknown[]);
+    issues.push(...vatSchemeReferences(vatSchemes, reports, manifest.defaults.currency));
   }
 
   // The golden scenario. Read after the taxes, the charts and the form,
@@ -1568,7 +1641,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   }
   issues.push(...taxCodes(taxes, (tax: TaxCodes) => regimes.get(tax.code) ?? packRegime));
   issues.push(...foreignServices(manifest, taxes, packRegime));
-  issues.push(...reportReferences(report, taxes));
+  for (const form of reports) issues.push(...reportReferences(form, taxes));
   issues.push(...proposedPeriod(manifest, report));
   issues.push(...statementReferences(statements, charts));
   issues.push(...resultInProgress(statements, charts, manifest));
@@ -1581,7 +1654,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   const classifications = classificationSchemes(manifest);
   issues.push(...classifications.issues);
 
-  const register = sourceRegister(manifest, charts, taxes, report, statements, analysis, documents, fixedAssets, corporateTax, turnoverTax);
+  const register = sourceRegister(manifest, charts, taxes, reports, statements, analysis, documents, fixedAssets, corporateTax, turnoverTax, vatSchemes);
   issues.push(...register.issues);
   warnings.push(...register.warnings);
   issues.push(...certificationEvidence(manifest, charts));
@@ -1623,10 +1696,12 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     labels,
     documents,
     report,
+    reports,
     reportCode,
     fixedAssets,
     corporateTax,
     turnoverTax,
+    vatSchemes,
     golden,
     goldenExemption,
     checksum: await checksum(root),
@@ -1670,13 +1745,14 @@ function sourceRegister(
   manifest: Manifest,
   charts: PackChart[],
   taxes: PackTax[],
-  report: PackReport | null,
+  reports: PackReport[],
   statements: PackStatement[],
   analysis: PackAnalysis | null,
   documents: PackDocumentRules,
   fixedAssets: PackFixedAssets | null,
   corporateTax: PackCorporateTax | null,
   turnoverTax: PackTurnoverTax | null,
+  vatSchemes: PackVatSchemes | null,
 ): { sources: PackSource[]; issues: Issue[]; warnings: string[] } {
   const issues: Issue[] = [];
   const warnings: string[] = [];
@@ -1780,13 +1856,17 @@ function sourceRegister(
       kind: 'rule' as const,
     })),
     ...taxes.map((tax) => ({ path: `taxes.json ${tax.code}`, source: tax.source, kind: 'tax' as const })),
-    ...(report === null ? [] : [{ path: `tax_report.json ${report.code}`, source: report.source, kind: 'other' as const }]),
-    ...(report?.rounding ? [{ path: `tax_report.json ${report.code} rounding`, source: report.rounding.source, kind: 'other' as const }] : []),
-    ...(report?.boxes ?? []).map((box) => ({
-      path: `tax_report.json ${box.box}:${box.kind}`,
-      source: box.source,
-      kind: 'box' as const,
-    })),
+    ...reports.flatMap((report, index) => [
+      { path: `tax_report.json ${report.code}`, source: report.source, kind: 'other' as const },
+      ...(report.rounding ? [{ path: `tax_report.json ${report.code} rounding`, source: report.rounding.source, kind: 'other' as const }] : []),
+      ...report.boxes.map((box) => ({
+        // The periodic form keeps the path it always had; another form says
+        // which one the box is on, because box numbers repeat across forms.
+        path: `tax_report.json ${index === 0 ? '' : `${report.code} `}${box.box}:${box.kind}`,
+        source: box.source,
+        kind: 'box' as const,
+      })),
+    ]),
     ...statements.flatMap((statement) => [
       { path: `statements.json ${statement.code}`, source: statement.source, kind: 'other' as const },
       ...statement.lines.map((line) => ({
@@ -1809,6 +1889,7 @@ function sourceRegister(
     })),
     ...corporateTaxSources(corporateTax).map((reference) => ({ ...reference, kind: 'other' as const })),
     ...turnoverTaxSources(turnoverTax).map((reference) => ({ ...reference, kind: 'other' as const })),
+    ...vatSchemeSources(vatSchemes).map((reference) => ({ ...reference, kind: 'other' as const })),
   ];
 
   for (const reference of references) {
@@ -2483,11 +2564,15 @@ function normaliseReport(raw: Record<string, unknown>): PackReport {
     xml_element: (box['xml_element'] as string | undefined) ?? null,
     legal_reference: (box['legal_reference'] as string | undefined) ?? null,
     source: (box['source'] as string | undefined) ?? null,
+    from: (box['from'] as string[] | undefined) ?? [],
+    reads: (box['reads'] as PackReportBox['reads'] | undefined) ?? null,
   })) satisfies PackReportBox[];
 
   return {
     code: String(raw['code']),
     name: String(raw['name'] ?? raw['code']),
+    role: (raw['role'] as PackReportRole | undefined) ?? 'periodic',
+    reads_postings_of: (raw['reads_postings_of'] as string | undefined) ?? null,
     periods: normalisePeriods(raw['period']),
     period_default: (raw['period_default'] as string | undefined) ?? null,
     valid_from: String(raw['valid_from'] ?? '1970-01-01'),
@@ -3872,10 +3957,65 @@ function proposedPeriod(manifest: Manifest, report: PackReport | null): Issue[] 
   return [];
 }
 
+/**
+ * What holds between the forms of a pack that files more than one: each code
+ * once, at most one periodic return — the one the postings are for and
+ * `companies.vat_period` mirrors, which `periodic_return_code()` can only name
+ * when there is exactly one — and a form that reads the postings of another
+ * names a form of the pack that reads its own, through boxes that form has.
+ */
+function reportForms(reports: PackReport[]): Issue[] {
+  const issues: Issue[] = [];
+  const codes = new Set<string>();
+  for (const report of reports) {
+    if (codes.has(report.code)) issues.push({ path: `tax_report.json ${report.code}`, message: 'the form is declared twice' });
+    codes.add(report.code);
+  }
+  const periodic = reports.filter((report) => report.role === 'periodic');
+  if (periodic.length > 1) {
+    issues.push({
+      path: 'tax_report.json',
+      message:
+        `${periodic.map((report) => report.code).join(', ')} are each declared periodic; a pack carries one periodic ` +
+        'return, and every other form says what it is with role',
+    });
+  }
+  for (const report of reports) {
+    if (report.reads_postings_of === null) continue;
+    const where = `tax_report.json ${report.code} reads_postings_of`;
+    const source = reports.find((other) => other.code === report.reads_postings_of);
+    if (source === undefined || source === report) {
+      issues.push({ path: where, message: `${report.reads_postings_of} is not another form of this pack` });
+      continue;
+    }
+    if (source.reads_postings_of !== null) {
+      issues.push({
+        path: where,
+        message: `${source.code} reads the postings of ${source.reads_postings_of} itself; name the form the postings are for`,
+      });
+      continue;
+    }
+    for (const box of report.boxes) {
+      for (const ref of box.from) {
+        const target = resolveBoxRef(ref, source.boxes);
+        if (typeof target === 'string') {
+          issues.push({ path: `tax_report.json ${report.code} ${box.box}.from`, message: `${source.code}: ${target}` });
+        } else if (target.kind === 'total') {
+          issues.push({
+            path: `tax_report.json ${report.code} ${box.box}.from`,
+            message: `${ref} is a total of ${source.code}; a box adds up what the ledger wrote, a base or a tax`,
+          });
+        }
+      }
+    }
+  }
+  return issues;
+}
+
 function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] {
   if (report === null) return [];
   const issues: Issue[] = [];
-  const where = 'tax_report.json';
+  const where = report.role === 'periodic' ? 'tax_report.json' : `tax_report.json ${report.code}`;
 
   // The shape of a deadline, which the database also refuses — said here
   // first, by field, because a seed that fails its constraint names neither.
@@ -3956,6 +4096,24 @@ function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] 
       issues.push({ path: `${where} ${box.box}`, message: `duplicate ${box.kind} box` });
     }
     seen.add(key);
+    if (box.from.length > 0 && report.reads_postings_of === null) {
+      issues.push({
+        path: `${where} ${box.box}`,
+        message: `from names boxes of another form, and ${report.code} reads its own postings; say whose with reads_postings_of`,
+      });
+    }
+    if ((box.from.length > 0 || box.reads !== null) && box.kind === 'total') {
+      issues.push({
+        path: `${where} ${box.box}`,
+        message: 'a total is computed from the boxes of its own form; from and reads belong on a base or a tax box',
+      });
+    }
+    if (box.from.length > 0 && box.reads !== null) {
+      issues.push({
+        path: `${where} ${box.box}`,
+        message: `a box holds one figure: the boxes it adds up (from) or ${box.reads}, not both`,
+      });
+    }
     if (box.kind !== 'total' && (box.plus.length > 0 || box.minus.length > 0)) {
       issues.push({
         path: `${where} ${box.box}`,

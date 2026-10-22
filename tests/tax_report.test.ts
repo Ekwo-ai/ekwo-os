@@ -866,6 +866,8 @@ describe('resolveBoxRef', () => {
     xml_element: null,
     legal_reference: null,
     source: null,
+    from: [],
+    reads: null,
   };
   const boxes = [
     { box: '08', kind: 'base' as const, name: 'Base', sequence: 10, ...shape },

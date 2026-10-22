@@ -1370,6 +1370,17 @@
         "name": {
           "type": "string"
         },
+        "role": {
+          "enum": [
+            "periodic",
+            "annual"
+          ],
+          "description": "What the form is to the companies that file it, from a closed vocabulary. `periodic` (the default) is the return the tax postings are for and `companies.vat_period` mirrors; a pack carries at most one. `annual` is a return filed once a year beside it or instead of it, under the schemes of vat_schemes.json that name it. Only a pack whose tax_report.json is a list of forms needs to say it."
+        },
+        "reads_postings_of": {
+          "$ref": "#/$defs/code",
+          "description": "The form of this pack whose postings this one adds up, for a form that restates on other lines what another form's boxes received — an annual return over the boxes of the monthly one. Each base or tax box then says which boxes of that form it adds up, in `from`. Left out, the form reads the postings made for it, which is every form but such an annual return."
+        },
         "period": {
           "description": "Cadences this form is filed on. A list, because one set of boxes may be filed monthly, quarterly or annually depending on turnover. Each cadence is a whole number of months anchored on 1 January: a bimonth is January–February, March–April…, a four_month period starts in January, May or September, a half_year in January or July. The single string is what this field was before the list and is still read: `month_or_quarter` means the two cadences it names.",
           "oneOf": [
@@ -1537,6 +1548,21 @@
             "tax",
             "total"
           ]
+        },
+        "from": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/box_ref"
+          },
+          "description": "On a form that declares reads_postings_of: the boxes of that form this base or tax box adds up, qualified with their kind (\"08:base\"). Line 5A of an annual return is what the monthly return received in its line 08 over the year, and the two forms number their lines differently."
+        },
+        "reads": {
+          "enum": [
+            "instalments_paid",
+            "instalments_due"
+          ],
+          "description": "A tax box whose figure is not in the ledger but in the payments on account of this declaration: `instalments_paid`, what the company paid on account of the period; `instalments_due`, what it owed on account, paid or not, which is what a form deducts when it says \"paid and/or still due\". A closed vocabulary, never an expression."
         },
         "name": {
           "type": "string",
@@ -4453,6 +4479,237 @@
                     },
                     "source": {
                       "$ref": "#/$defs/source_ref"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "tax_reports": {
+      "type": "array",
+      "title": "tax_report.json (several forms)",
+      "description": "tax_report.json holds one form as an object, or several as a list of the same objects. A list carries at most one form whose role is periodic; every other form says what it is.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/tax_report"
+      }
+    },
+    "vat_schemes": {
+      "type": "array",
+      "title": "vat_schemes.json",
+      "description": "The VAT schemes of the country: which declaration forms a company files under each and on which cadences, whether it charges VAT at all, the ceilings up to which it may be on the scheme, and the payments on account the scheme asks for. Optional: a pack without the file has no scheme, and a company of that country files exactly as before. A company records the scheme it is on in company_vat_schemes; nothing chooses one for it.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "name",
+          "legal_reference",
+          "source",
+          "forms"
+        ],
+        "properties": {
+          "code": {
+            "$ref": "#/$defs/code",
+            "description": "Immutable once published: a company records it."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "In the pack's own language."
+          },
+          "charges_vat": {
+            "type": "boolean",
+            "description": "False under a small business exemption: the company charges no VAT on its sales, recovers none on its purchases, and its invoices carry the legal mention the pack declares with applies_when small_business. Default true."
+          },
+          "legal_reference": {
+            "type": "string",
+            "minLength": 10,
+            "description": "The text that institutes the scheme."
+          },
+          "source": {
+            "$ref": "#/$defs/source_ref"
+          },
+          "forms": {
+            "type": "array",
+            "description": "The declaration forms of tax_report.json a company on this scheme files, each on the cadences the scheme allows. Empty under a scheme that files no VAT return. A form of the pack no scheme names is outside every scheme and filed as before.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "report",
+                "periods"
+              ],
+              "properties": {
+                "report": {
+                  "$ref": "#/$defs/code"
+                },
+                "periods": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [
+                      "month",
+                      "bimonth",
+                      "quarter",
+                      "four_month",
+                      "half_year",
+                      "year"
+                    ]
+                  }
+                },
+                "period_default": {
+                  "enum": [
+                    "month",
+                    "bimonth",
+                    "quarter",
+                    "four_month",
+                    "half_year",
+                    "year"
+                  ],
+                  "description": "The cadence a company on this scheme files the form on unless it has asked for another. One of periods."
+                }
+              }
+            }
+          },
+          "ceilings": {
+            "type": "array",
+            "description": "Up to which amount a company may be on the scheme. An alert reads them; nothing moves a company from one scheme to another by itself.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "measure",
+                "amount",
+                "currency",
+                "valid_from",
+                "legal_reference",
+                "source"
+              ],
+              "properties": {
+                "measure": {
+                  "enum": [
+                    "turnover_previous_year",
+                    "turnover_current_year",
+                    "tax_previous_year"
+                  ],
+                  "description": "What is compared with the amount: the turnover of the previous calendar year or financial year, the turnover of the current one, or the tax due for the previous one."
+                },
+                "activity": {
+                  "enum": [
+                    "all",
+                    "goods",
+                    "services"
+                  ],
+                  "description": "The part of the activity the measure is counted on, where the law sets one ceiling for sales of goods and another for services. Default all."
+                },
+                "amount": {
+                  "type": "string",
+                  "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,4})?$",
+                  "description": "The ceiling, as a decimal string, inclusive."
+                },
+                "currency": {
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$"
+                },
+                "valid_from": {
+                  "$ref": "#/$defs/date"
+                },
+                "valid_to": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                },
+                "legal_reference": {
+                  "type": "string",
+                  "minLength": 10,
+                  "description": "The article that sets this amount, in the version in force from valid_from."
+                },
+                "source": {
+                  "$ref": "#/$defs/source_ref"
+                }
+              }
+            }
+          },
+          "instalments": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "report",
+              "base",
+              "legal_reference",
+              "source",
+              "schedule"
+            ],
+            "description": "The payments on account of the year's return a company on this scheme makes during the year, as percentages of a box of the previous year's return.",
+            "properties": {
+              "report": {
+                "$ref": "#/$defs/code",
+                "description": "The form the instalments are paid on account of, and deducted on. One of the forms of the scheme."
+              },
+              "base": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "report",
+                  "box"
+                ],
+                "properties": {
+                  "report": {
+                    "$ref": "#/$defs/code",
+                    "description": "The form of the previous year the base is read on."
+                  },
+                  "box": {
+                    "$ref": "#/$defs/box_ref",
+                    "description": "The box of that form, qualified with its kind (\"57:total\"). Bare, it is a total."
+                  }
+                }
+              },
+              "minimum_base": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,4})?$",
+                "description": "Below this base, no instalment is due for the year."
+              },
+              "legal_reference": {
+                "type": "string",
+                "minLength": 10
+              },
+              "source": {
+                "$ref": "#/$defs/source_ref"
+              },
+              "schedule": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "month",
+                    "percent"
+                  ],
+                  "properties": {
+                    "month": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 12,
+                      "description": "The month of the year the return is for in which the instalment falls due."
+                    },
+                    "day": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 31,
+                      "description": "The day of that month. Left out where the day depends on the taxpayer."
+                    },
+                    "percent": {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]{1,4})?$",
+                      "description": "Percent of the base, as a decimal string."
                     }
                   }
                 }
