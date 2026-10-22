@@ -47,8 +47,9 @@
 --     ceilings of the company's scheme. An alert: nothing changes a scheme by
 --     itself.
 --
--- The readers that change with the scheme — vat_return(), upcoming_filings()
--- and portfolio_upcoming_filings() — are replaced in the next file,
+-- The readers that change with the scheme — vat_return(), upcoming_filings(),
+-- portfolio_upcoming_filings() and the view document_legal_mentions — are
+-- replaced in the next file,
 -- `20261022110100`, so an upgrade test can leave them out and apply them
 -- after the migrations they are written against, while the seeds, which
 -- write the columns and tables of this file, still load.
@@ -640,54 +641,6 @@ create trigger documents_refuse_vat_under_exemption
   for each row
   when (new.state = 'posted' and old.state is distinct from 'posted')
   execute function documents_refuse_vat_under_exemption();
-
--- The mention of an exemption is printed on the sales of a company on such a
--- scheme. `20260918141605` to the letter, with the one condition it could not
--- resolve: small_business, which was a regime the core did not record.
-create or replace view document_legal_mentions
-  with (security_invoker = true) as
-  with document_taxes as (
-    select d.id             as document_id,
-           d.company_id,
-           c.fiscal_country as country,
-           d.document_date,
-           d.doc_type,
-           d.language,
-           coalesce(
-             array_agg(distinct t.treatment::text) filter (where t.treatment is not null),
-             array[]::text[]
-           )                                 as treatments,
-           coalesce(bool_or(t.cash_basis), false) as on_cash_basis
-      from documents d
-      join companies c           on c.id = d.company_id
-      left join document_lines l on l.document_id = d.id
-      left join taxes t          on t.id = l.tax_id
-     group by d.id, d.company_id, c.fiscal_country, d.document_date, d.doc_type, d.language
-  )
-  select dt.document_id,
-         dt.company_id,
-         m.country,
-         m.code,
-         m.applies_when,
-         dt.language,
-         label_for(m.text, m.text_i18n,
-                   preferred_languages(dt.language, dt.company_id)) as text,
-         m.text_i18n,
-         m.sequence,
-         m.legal_reference
-    from document_taxes dt
-    join legal_mention_templates m
-      on m.country = dt.country
-     and m.valid_from <= dt.document_date
-     and (m.valid_to is null or m.valid_to >= dt.document_date)
-   where case m.applies_when
-           when 'always'       then true
-           when 'cash_basis'   then dt.on_cash_basis
-           when 'late_payment' then dt.doc_type in ('sale_invoice', 'sale_credit_note')
-           when 'small_business' then dt.doc_type in ('sale_invoice', 'sale_credit_note')
-                                  and coalesce(not (vat_scheme_at(dt.company_id, dt.document_date)).charges_vat, false)
-           else coalesce(dt.treatments && legal_mention_treatments(m.applies_when), false)
-         end;
 
 -- ---------------------------------------------------------------------------
 -- 6. A ceiling crossed: an alert, never a switch

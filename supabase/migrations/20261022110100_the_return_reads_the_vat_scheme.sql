@@ -6,8 +6,9 @@
 -- company's scheme does not file and takes the scheme's form when none is
 -- named, restates the boxes of another form and deducts the instalments;
 -- upcoming_filings() and portfolio_upcoming_filings() list the instalments
--- beside the returns. For a company that recorded no scheme, every answer is
--- what it was.
+-- beside the returns; document_legal_mentions prints the mention of an
+-- exemption. For a company that recorded no scheme, every answer is what it
+-- was.
 
 -- ---------------------------------------------------------------------------
 -- 1. The return reads the scheme, restates another form, deducts instalments
@@ -574,3 +575,55 @@ comment on function portfolio_upcoming_filings(date, date) is
 
 revoke execute on function portfolio_upcoming_filings(date, date) from public, anon;
 grant execute on function portfolio_upcoming_filings(date, date) to authenticated, service_role;
+
+-- ---------------------------------------------------------------------------
+-- 3. The mention of an exemption
+-- ---------------------------------------------------------------------------
+
+-- The mention of an exemption is printed on the sales of a company on such a
+-- scheme. `20260918141605` to the letter, with the one condition it could not
+-- resolve: small_business, which was a regime the core did not record.
+create or replace view document_legal_mentions
+  with (security_invoker = true) as
+  with document_taxes as (
+    select d.id             as document_id,
+           d.company_id,
+           c.fiscal_country as country,
+           d.document_date,
+           d.doc_type,
+           d.language,
+           coalesce(
+             array_agg(distinct t.treatment::text) filter (where t.treatment is not null),
+             array[]::text[]
+           )                                 as treatments,
+           coalesce(bool_or(t.cash_basis), false) as on_cash_basis
+      from documents d
+      join companies c           on c.id = d.company_id
+      left join document_lines l on l.document_id = d.id
+      left join taxes t          on t.id = l.tax_id
+     group by d.id, d.company_id, c.fiscal_country, d.document_date, d.doc_type, d.language
+  )
+  select dt.document_id,
+         dt.company_id,
+         m.country,
+         m.code,
+         m.applies_when,
+         dt.language,
+         label_for(m.text, m.text_i18n,
+                   preferred_languages(dt.language, dt.company_id)) as text,
+         m.text_i18n,
+         m.sequence,
+         m.legal_reference
+    from document_taxes dt
+    join legal_mention_templates m
+      on m.country = dt.country
+     and m.valid_from <= dt.document_date
+     and (m.valid_to is null or m.valid_to >= dt.document_date)
+   where case m.applies_when
+           when 'always'       then true
+           when 'cash_basis'   then dt.on_cash_basis
+           when 'late_payment' then dt.doc_type in ('sale_invoice', 'sale_credit_note')
+           when 'small_business' then dt.doc_type in ('sale_invoice', 'sale_credit_note')
+                                  and coalesce(not (vat_scheme_at(dt.company_id, dt.document_date)).charges_vat, false)
+           else coalesce(dt.treatments && legal_mention_treatments(m.applies_when), false)
+         end;

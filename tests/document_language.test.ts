@@ -57,6 +57,9 @@ const READS_THE_COLUMN = [
   // Replaces document_tax_summary, which reads the column for the legal
   // mention of a group in the language of its document.
   '20261020072000_a_tax_computed_inside_its_own_base.sql',
+  // Replaces document_legal_mentions, which reads the column, to print the
+  // mention of a VAT exemption.
+  '20261022110100_the_return_reads_the_vat_scheme.sql',
 ];
 
 let db: PGlite;
