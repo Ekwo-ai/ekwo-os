@@ -450,6 +450,10 @@ core produces rows, and a library turns rows into a file, or a file into rows.
   [`peppol-ubl`](packages/formats/peppol-ubl/) (Peppol BIS Billing 3.0) and
   [`factur-x`](packages/formats/factur-x/) (Factur-X and ZUGFeRD). Both also
   read a received invoice into the same shape, ready to become a purchase draft.
+- **Any received invoice, read:** [`document-reading`](packages/document-reading/)
+  reads a CII, UBL or Factur-X file exactly, and publishes the schema and the
+  prompt a vision model reads a photograph or a plain PDF with, so both arrive
+  as the same `ReceivedInvoice` and the same purchase draft.
 - **Bank statements, read:** [`camt053`](packages/formats/camt053/),
   [`coda`](packages/formats/coda/), [`cfonb120`](packages/formats/cfonb120/).
 - **Books kept elsewhere, read:** [`trial-balance`](packages/formats/trial-balance/),

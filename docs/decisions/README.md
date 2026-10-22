@@ -116,6 +116,7 @@ consequence.
 - [0051](0051-a-module-has-its-own-schema.md) — A module has its own schema and posts through a function
 - [0063](0063-a-module-code-outlives-its-names.md) — A module code outlives its names
 - [0084](0084-a-contract-issues-drafts-of-the-socle.md) — A contract issues drafts of the socle
+- [0085](0085-one-reader-for-a-received-invoice.md) — One reader for a received invoice, and the model's part is data
 
 ## Installer, command line and MCP server
 

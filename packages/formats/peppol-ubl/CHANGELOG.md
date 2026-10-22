@@ -7,6 +7,11 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- **`ReceivedInvoice.syntax` may be `'model'`.** A received invoice read off a
+  photograph or a plain PDF by a vision model, through
+  `@ekwo-ai/document-reading`, has the same shape as one read from a file;
+  a text EN 16931 requires that the page did not print is then `''`. The
+  readers of this package still return `'ubl'` or `'cii'`.
 - **Reading a received invoice.** `readUbl()` reads a UBL 2.1 `Invoice` or
   `CreditNote`, bare or in the envelope of an access point, into a
   `ReceivedInvoice`: parties with their schemes, dates, references, lines, VAT

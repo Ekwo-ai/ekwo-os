@@ -33,6 +33,19 @@ somewhere has already run it.
   period; `modules/contracts/README.md` says how a signature request will
   attach.
 
+- **One reader for a received invoice** (`@ekwo-ai/document-reading`,
+  decision 0085). A CII, UBL or Factur-X file is read exactly; a photograph
+  or a plain PDF is read by a vision model the product calls, with the JSON
+  schema and the prompt the package publishes, and `readingOf()` checks the
+  answer into the same `ReceivedInvoice` — lines with quantity, unit code,
+  net price, VAT category and rate, line and invoicing periods, the totals,
+  the supplier's identifiers, the currency as printed, a confidence per
+  field — copied, never computed, and empty where the page prints nothing.
+  A caller adds its own fields to the schema and gets them back untouched.
+  `purchaseDraftOf()` makes the draft of a purchase document from either,
+  the unit code kept and the periods in the line's `attributes`.
+  `ReceivedInvoice.syntax` gains `'model'`.
+
 - **A tax lands by its code, not on a line** (socle migration
   `20261020210000`, decision 0083). A document line carries its base and
   names its tax; the posting writes the tax on the account the tax points to.
