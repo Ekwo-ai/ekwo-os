@@ -169,7 +169,9 @@ describe('the correspondence, printed for a person', () => {
   it('shows the lines to read first, each with its reason, and posts nothing while one waits', async () => {
     const bank = somePack.accounts.find((account) => account.code === roleOf(somePack, 'bank'))!;
     const path = join(root, 'doubtful.csv');
-    await writeFile(path, `account,name,debit,credit\n${bank.code},${bank.name},75.00,\nZZ9,Somewhere else,,75.00\n`);
+    // The name is quoted: a chart may name its bank account with a comma in it.
+    const name = `"${bank.name.replaceAll('"', '""')}"`;
+    await writeFile(path, `account,name,debit,credit\n${bank.code},${name},75.00,\nZZ9,Somewhere else,,75.00\n`);
     const printed = await capture(() =>
       run(['import', 'trial-balance', path, '--opening-date', '2026-01-01', '--dry-run'], { fetchImpl: instance.fetchImpl, env: { EKWO_CONFIG_DIR: join(root, 'owner') } }),
     );
