@@ -83,34 +83,34 @@
       "tax_receivable": "4700"
     },
     "journal_roles": {
-      "sales": "VEN",
-      "purchase": "COM",
+      "sales": "SAL",
+      "purchase": "PUR",
       "miscellaneous": "GEN",
-      "opening": "OBR"
+      "opening": "OPN"
     }
   },
   "languages": [],
   "journals": [
     {
-      "code": "VEN",
+      "code": "SAL",
       "type": "sales",
       "name": "Diari de vendes",
       "sequence": 10
     },
     {
-      "code": "COM",
+      "code": "PUR",
       "type": "purchase",
       "name": "Diari de compres",
       "sequence": 20
     },
     {
-      "code": "BAN",
+      "code": "BNK",
       "type": "bank",
       "name": "Banc",
       "sequence": 30
     },
     {
-      "code": "CAI",
+      "code": "CSH",
       "type": "cash",
       "name": "Caixa",
       "sequence": 40
@@ -122,7 +122,7 @@
       "sequence": 50
     },
     {
-      "code": "OBR",
+      "code": "OPN",
       "type": "opening",
       "name": "Obertura d’exercici",
       "sequence": 60

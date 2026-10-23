@@ -530,5 +530,266 @@
     },
     "sequence": 170,
     "exemption_code": null
+  },
+  {
+    "code": "AD-P-25-NC",
+    "name": "Compra, tipus especial 2,5 %, IGI no deduïble",
+    "description": "Adquisició amb IGI al 2,5 % que no dona dret a deducció",
+    "kind": "vat",
+    "rate": 2.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2014-07-01",
+    "legal_reference": "Llei 10/2014, article 60 bis, with article 63 of Llei 11/2012 — input tax not used exclusively for a taxable activity is not deductible and is a cost of the purchase. Base on return line 11.",
+    "source": "igi-law-2014",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 151,
+    "exemption_code": null
+  },
+  {
+    "code": "AD-P-1-NC",
+    "name": "Compra, tipus reduït 1 %, IGI no deduïble",
+    "description": "Adquisició amb IGI a l’1 % que no dona dret a deducció",
+    "kind": "vat",
+    "rate": 1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Llei 11/2012, articles 58 and 63 — input tax at 1 % not used exclusively for a taxable activity is not deductible and is a cost of the purchase. Base on return line 11.",
+    "source": "igi-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 152,
+    "exemption_code": null
+  },
+  {
+    "code": "AD-P-95-NC",
+    "name": "Compra, tipus incrementat 9,5 %, IGI no deduïble",
+    "description": "Adquisició amb IGI al 9,5 % que no dona dret a deducció",
+    "kind": "vat",
+    "rate": 9.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2013-01-01",
+    "legal_reference": "Llei 11/2012, articles 60 and 63 — input tax at 9.5 % not used exclusively for a taxable activity is not deductible and is a cost of the purchase. Base on return line 11.",
+    "source": "igi-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 153,
+    "exemption_code": null
+  },
+  {
+    "code": "AD-P-IMP-25",
+    "name": "Importació de béns, IGI al 2,5 % pagat a la Duana",
+    "description": "Béns importats al tipus especial, IGI liquidat a la Duana",
+    "kind": "vat",
+    "rate": 2.5,
+    "scope": "purchase",
+    "treatment": "import",
+    "vat_category": null,
+    "valid_from": "2014-07-01",
+    "legal_reference": "Llei 10/2014, article 60 bis, applied to imports with article 55(6) of Llei 11/2012 — the shifting of the tax on an import is done by the customs document. Return line 9.",
+    "source": "igi-law-2014",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "account": "4720",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4780"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4720",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4780"
+        }
+      ]
+    },
+    "sequence": 171,
+    "exemption_code": null
+  },
+  {
+    "code": "AD-P-IMP-1",
+    "name": "Importació de béns, IGI a l’1 % pagat a la Duana",
+    "description": "Béns importats al tipus reduït, IGI liquidat a la Duana",
+    "kind": "vat",
+    "rate": 1,
+    "scope": "purchase",
+    "treatment": "import",
+    "vat_category": null,
+    "valid_from": "2013-01-01",
+    "legal_reference": "Llei 11/2012, article 58 applied to imports with article 55(6) — the shifting of the tax on an import is done by the customs document. Return line 9.",
+    "source": "igi-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "account": "4720",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4780"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4720",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4780"
+        }
+      ]
+    },
+    "sequence": 172,
+    "exemption_code": null
+  },
+  {
+    "code": "AD-P-IMP-95",
+    "name": "Importació de béns, IGI al 9,5 % pagat a la Duana",
+    "description": "Importació amb IGI al tipus incrementat liquidat a la Duana",
+    "kind": "vat",
+    "rate": 9.5,
+    "scope": "purchase",
+    "treatment": "import",
+    "vat_category": null,
+    "valid_from": "2013-01-01",
+    "legal_reference": "Llei 11/2012, article 60 applied to imports with article 55(6) — the shifting of the tax on an import is done by the customs document. Return line 9.",
+    "source": "igi-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "account": "4720",
+          "box": "9"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4780"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "4720",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "4780"
+        }
+      ]
+    },
+    "sequence": 173,
+    "exemption_code": null
   }
 ]

@@ -88,8 +88,8 @@ to a normal and an abridged one.
 - The simplified special regime, the refund regime for businesses not
   established in Andorra (article 73), the pharmacy refund option and the other
   special regimes of the law.
-- Imports at the 1 %, 2.5 % and 9.5 % rates: only the general rate has a code
-  for imports.
+- Customs exemptions on import (articles 36 to 41): one is not coded; an
+  exempt import is a purchase at `AD-P-0`.
 - The IGI invoicing rules: no e-invoicing obligation was found, and
   `einvoicing.obligation` is `none` for want of a text.
 - Corporate income tax, the tax on income from economic activities and the
