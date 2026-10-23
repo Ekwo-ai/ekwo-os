@@ -1,6 +1,6 @@
 -- Ekwo OS — Singapore: how this country depreciates and derecognises a fixed asset.
 --
--- Generated from packs/sg/fixed_assets.json at version 0.3.0, do not edit.
+-- Generated from packs/sg/fixed_assets.json at version 0.4.0, do not edit.
 -- Change the pack and run `ekwo pack build sg`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --

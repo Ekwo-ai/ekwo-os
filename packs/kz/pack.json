@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "KZ",
   "name": "Қазақстан",
-  "version": "0.3.0",
-  "schema_min": "20261011120000",
+  "version": "0.4.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 124,
-  "released_at": "2026-09-26",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -95,6 +95,10 @@
       "fx_loss": "7430",
       "tax_payable": "3132",
       "tax_receivable": "1422"
+    },
+    "tax_payee": {
+      "name": "Қазақстан Республикасы Қаржы министрлігінің Мемлекеттік кірістер комитеті",
+      "source": "salyk-cabinet"
     },
     "journal_roles": {
       "sales": "SAL",

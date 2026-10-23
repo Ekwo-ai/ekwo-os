@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "ID",
   "name": "Indonesia",
-  "version": "0.1.0",
-  "schema_min": "20261011120000",
+  "version": "0.2.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 38,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -121,6 +121,10 @@
       "asset_disposal_loss": "7530",
       "tax_payable": "2110",
       "tax_receivable": "1150"
+    },
+    "tax_payee": {
+      "name": "Direktorat Jenderal Pajak",
+      "source": "coretax-portal"
     },
     "journal_roles": {
       "sales": "SAL",

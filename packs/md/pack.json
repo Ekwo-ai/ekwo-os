@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MD",
   "name": "Moldova",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 111,
-  "released_at": "2026-09-26",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -116,6 +116,10 @@
       "asset_disposal_loss": "7212",
       "tax_payable": "5344",
       "tax_receivable": "2252"
+    },
+    "tax_payee": {
+      "name": "Serviciul Fiscal de Stat",
+      "source": "sfs-raportare-portal"
     },
     "journal_roles": {
       "sales": "VNZ",

@@ -1,6 +1,6 @@
 -- Ekwo OS — Guinée: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/gn at version 0.2.0, do not edit.
+-- Generated from packs/gn at version 0.3.0, do not edit.
 -- Change the pack and run `ekwo pack build gn`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -24,7 +24,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('GN', 'Guinée', '0.2.0', date '2026-09-21', '20261011120000', 'community', null, null, 'ebfa9bf1cd7cabc92f82f7ddffc247ad056abf15b2cc883fa63cb708bd23552e', '[{"key":"audcif","title":"Acte uniforme relatif au droit comptable et à l''information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017","publisher":"OHADA — Bibliothèque numérique de l''OHADA","url":"https://biblio.ohada.org/doc_num.php?explnum_id=2061","consulted_on":"2026-09-21","kind":"law"},{"key":"syscohada","title":"Journal officiel de l''OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l''information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée","publisher":"OHADA — Bibliothèque numérique de l''OHADA","url":"https://biblio.ohada.org/doc_num.php?explnum_id=2063","consulted_on":"2026-09-21","kind":"law"},{"key":"cgi","title":"Code général des impôts, issu de la loi ordinaire L/2021/032/AN du 4 juillet 2021, promulguée par décret D/2021/236/PRG/SGG du 21 juillet 2021, applicable à compter du 1er janvier 2022","publisher":"Ministère du Budget — Direction générale des Impôts (copie hébergée par ITIE Guinée)","url":"https://www.itie-guinee.org/wp-content/uploads/2022/01/NOUVEAU-CODE-GENERAL-DES-IMPOTS.pdf","consulted_on":"2026-09-21","kind":"law"},{"key":"lf-2025","title":"Loi ordinaire L/2024/023/CNT portant loi de finances pour l''année 2025","publisher":"Ministère du Budget — Direction générale des Impôts","url":"https://dgi.gov.gn/wp-content/uploads/2025/01/LOI-DE-FINANCES-INITIALE-2025_compressed.pdf","consulted_on":"2026-09-21","kind":"law"},{"key":"etax","title":"eTax Guinée — Télédéclarez et payez vos impôts en ligne","publisher":"Direction générale des Impôts","url":"https://etax.gov.gn/login-etax","consulted_on":"2026-09-21","kind":"portal"}]'::jsonb)
+  ('GN', 'Guinée', '0.3.0', date '2026-10-23', '20261023124650', 'community', null, null, 'c4a26b00c40cd89e15da56e109b9a0f187691de9982223c60c4e357336506981', '[{"key":"audcif","title":"Acte uniforme relatif au droit comptable et à l''information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017","publisher":"OHADA — Bibliothèque numérique de l''OHADA","url":"https://biblio.ohada.org/doc_num.php?explnum_id=2061","consulted_on":"2026-09-21","kind":"law"},{"key":"syscohada","title":"Journal officiel de l''OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l''information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée","publisher":"OHADA — Bibliothèque numérique de l''OHADA","url":"https://biblio.ohada.org/doc_num.php?explnum_id=2063","consulted_on":"2026-09-21","kind":"law"},{"key":"cgi","title":"Code général des impôts, issu de la loi ordinaire L/2021/032/AN du 4 juillet 2021, promulguée par décret D/2021/236/PRG/SGG du 21 juillet 2021, applicable à compter du 1er janvier 2022","publisher":"Ministère du Budget — Direction générale des Impôts (copie hébergée par ITIE Guinée)","url":"https://www.itie-guinee.org/wp-content/uploads/2022/01/NOUVEAU-CODE-GENERAL-DES-IMPOTS.pdf","consulted_on":"2026-09-21","kind":"law"},{"key":"lf-2025","title":"Loi ordinaire L/2024/023/CNT portant loi de finances pour l''année 2025","publisher":"Ministère du Budget — Direction générale des Impôts","url":"https://dgi.gov.gn/wp-content/uploads/2025/01/LOI-DE-FINANCES-INITIALE-2025_compressed.pdf","consulted_on":"2026-09-21","kind":"law"},{"key":"etax","title":"eTax Guinée — Télédéclarez et payez vos impôts en ligne","publisher":"Direction générale des Impôts","url":"https://etax.gov.gn/login-etax","consulted_on":"2026-09-21","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -2124,3 +2124,8 @@ on conflict (country, code) do update set
   valid_from      = excluded.valid_from,
   valid_to        = excluded.valid_to,
   legal_reference = excluded.legal_reference;
+
+update country_defaults set
+  tax_payee_name       = 'Direction générale des Impôts',
+  tax_payee_source_key = 'etax'
+ where country = 'GN';

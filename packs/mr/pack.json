@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MR",
   "name": "Mauritanie",
-  "version": "0.1.0",
-  "schema_min": "20261011120000",
+  "version": "0.2.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 410,
-  "released_at": "2026-10-22",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -63,6 +63,10 @@
       "purchase": "AC",
       "miscellaneous": "OD",
       "opening": "AN"
+    },
+    "tax_payee": {
+      "name": "Direction générale des Impôts de Mauritanie",
+      "source": "dgi-portal"
     }
   },
   "languages": [],

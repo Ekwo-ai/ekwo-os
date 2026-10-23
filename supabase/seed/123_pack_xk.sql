@@ -1,6 +1,6 @@
 -- Ekwo OS — Kosova: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/xk at version 0.2.0, do not edit.
+-- Generated from packs/xk at version 0.3.0, do not edit.
 -- Change the pack and run `ekwo pack build xk`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -26,7 +26,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('XK', 'Kosova', '0.2.0', date '2026-09-26', '20261011120000', 'community', null, null, '0c3b857037b036a7790145f3e14eb90ffcba4e649f11d2fc8bb74b2789ba54b9', '[{"key":"ligji-tvsh","title":"Ligji Nr. 05/L-037 për Tatimin mbi Vlerën e Shtuar (Gazeta Zyrtare e Republikës së Kosovës, Nr. 23, 17 gusht 2015)","publisher":"Kuvendi i Republikës së Kosovës — Administrata Tatimore e Kosovës","url":"https://www.atk-ks.org/wp-content/uploads/2017/07/LIGJI_NR._05_L-037__PER_TATIMIN_MBI_VLEREN_E_SHTUAR_SHTOJCA.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"udhezimi-tvsh","title":"Udhëzimi Administrativ MF-Nr. 03/2015 për zbatimin e Ligjit Nr. 05/L-037 për Tatimin mbi Vlerën e Shtuar","publisher":"Ministria e Financave e Republikës së Kosovës","url":"https://gzk.rks-gov.net/ActDocumentDetail.aspx?ActID=11079","consulted_on":"2026-09-26","kind":"regulation"},{"key":"tv-form","title":"Formulari i deklarimit dhe pagesës së TVSH-së (TV-E-3), me shënimet e ATK-së për plotësimin e tij","publisher":"Administrata Tatimore e Kosovës","url":"https://www.atk-ks.org/wp-content/uploads/2017/10/TV1.pdf","consulted_on":"2026-09-26","kind":"form"},{"key":"edi-portal","title":"EDI — Sistemi Elektronik i Deklarimit i Administratës Tatimore të Kosovës","publisher":"Administrata Tatimore e Kosovës","url":"https://edi.atk-ks.org/","consulted_on":"2026-09-26","kind":"portal"},{"key":"ligji-kontabiliteti","title":"Ligji Nr. 06/L-032 për Kontabilitet, Raportim Financiar dhe Auditim (Gazeta Zyrtare e Republikës së Kosovës, Nr. 3, 19 prill 2018)","publisher":"Kuvendi i Republikës së Kosovës — Këshilli Kosovar për Raportim Financiar (KKRF)","url":"https://cps.rks-gov.net/wp-content/uploads/2020/09/LAW_NO._06_L-032___ON_ACCOUNTING_FINANCIAL_REPORTING_AND_AUDITING-2.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"ifrs-sme","title":"IFRS for SMEs Accounting Standard","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes-accounting-standard/","consulted_on":"2026-09-26","kind":"standard"}]'::jsonb)
+  ('XK', 'Kosova', '0.3.0', date '2026-10-23', '20261023124650', 'community', null, null, '7cf76a9651495fddb5356d9bba41f0a16abdc4b76b1bdc77c0771141a85de15a', '[{"key":"ligji-tvsh","title":"Ligji Nr. 05/L-037 për Tatimin mbi Vlerën e Shtuar (Gazeta Zyrtare e Republikës së Kosovës, Nr. 23, 17 gusht 2015)","publisher":"Kuvendi i Republikës së Kosovës — Administrata Tatimore e Kosovës","url":"https://www.atk-ks.org/wp-content/uploads/2017/07/LIGJI_NR._05_L-037__PER_TATIMIN_MBI_VLEREN_E_SHTUAR_SHTOJCA.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"udhezimi-tvsh","title":"Udhëzimi Administrativ MF-Nr. 03/2015 për zbatimin e Ligjit Nr. 05/L-037 për Tatimin mbi Vlerën e Shtuar","publisher":"Ministria e Financave e Republikës së Kosovës","url":"https://gzk.rks-gov.net/ActDocumentDetail.aspx?ActID=11079","consulted_on":"2026-09-26","kind":"regulation"},{"key":"tv-form","title":"Formulari i deklarimit dhe pagesës së TVSH-së (TV-E-3), me shënimet e ATK-së për plotësimin e tij","publisher":"Administrata Tatimore e Kosovës","url":"https://www.atk-ks.org/wp-content/uploads/2017/10/TV1.pdf","consulted_on":"2026-09-26","kind":"form"},{"key":"edi-portal","title":"EDI — Sistemi Elektronik i Deklarimit i Administratës Tatimore të Kosovës","publisher":"Administrata Tatimore e Kosovës","url":"https://edi.atk-ks.org/","consulted_on":"2026-09-26","kind":"portal"},{"key":"ligji-kontabiliteti","title":"Ligji Nr. 06/L-032 për Kontabilitet, Raportim Financiar dhe Auditim (Gazeta Zyrtare e Republikës së Kosovës, Nr. 3, 19 prill 2018)","publisher":"Kuvendi i Republikës së Kosovës — Këshilli Kosovar për Raportim Financiar (KKRF)","url":"https://cps.rks-gov.net/wp-content/uploads/2020/09/LAW_NO._06_L-032___ON_ACCOUNTING_FINANCIAL_REPORTING_AND_AUDITING-2.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"ifrs-sme","title":"IFRS for SMEs Accounting Standard","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes-accounting-standard/","consulted_on":"2026-09-26","kind":"standard"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -600,3 +600,8 @@ on conflict (country, code) do update set
   valid_from      = excluded.valid_from,
   valid_to        = excluded.valid_to,
   legal_reference = excluded.legal_reference;
+
+update country_defaults set
+  tax_payee_name       = 'Administrata Tatimore e Kosovës',
+  tax_payee_source_key = 'edi-portal'
+ where country = 'XK';

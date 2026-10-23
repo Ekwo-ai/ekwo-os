@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.21.0",
-  "schema_min": "20261018130000",
+  "version": "1.22.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 11,
-  "released_at": "2026-10-18",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -350,6 +350,10 @@
       "asset_disposal_value": "675000",
       "tax_payable": "445510",
       "tax_receivable": "445670"
+    },
+    "tax_payee": {
+      "name": "Direction générale des finances publiques (DGFiP)",
+      "source": "espace-professionnel"
     },
     "journal_roles": {
       "sales": "SAL",

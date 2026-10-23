@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "LV",
   "name": "Latvija",
-  "version": "0.3.0",
-  "schema_min": "20261011120000",
+  "version": "0.4.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 78,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -129,6 +129,10 @@
       "fx_loss": "8140",
       "tax_payable": "5090",
       "tax_receivable": "2160"
+    },
+    "tax_payee": {
+      "name": "Valsts ieņēmumu dienests",
+      "source": "eds-portal"
     },
     "journal_roles": {
       "sales": "PIL",

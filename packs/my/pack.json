@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MY",
   "name": "Malaysia",
-  "version": "0.4.0",
-  "schema_min": "20261019161437",
+  "version": "0.5.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 39,
-  "released_at": "2026-10-19",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -153,6 +153,10 @@
       "asset_disposal_loss": "6960",
       "tax_payable": "2110",
       "tax_receivable": "1155"
+    },
+    "tax_payee": {
+      "name": "Jabatan Kastam Diraja Malaysia",
+      "source": "mysst-portal"
     },
     "journal_roles": {
       "sales": "SAL",

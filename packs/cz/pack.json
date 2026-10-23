@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CZ",
   "name": "Czechia",
-  "version": "0.3.0",
-  "schema_min": "20261011120000",
+  "version": "0.4.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 68,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -211,6 +211,10 @@
       "fx_loss": "563",
       "tax_payable": "3438",
       "tax_receivable": "3439"
+    },
+    "tax_payee": {
+      "name": "Finanční správa ČR",
+      "source": "moje-dane-portal"
     },
     "journal_roles": {
       "sales": "FV",

@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BG",
   "name": "България",
-  "version": "0.2.1",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 73,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -121,6 +121,10 @@
       "fx_loss": "8720",
       "tax_payable": "6832",
       "tax_receivable": "2242"
+    },
+    "tax_payee": {
+      "name": "Национална агенция за приходите (НАП)",
+      "source": "nra-spravka-deklaracia"
     },
     "journal_roles": {
       "sales": "SALES",

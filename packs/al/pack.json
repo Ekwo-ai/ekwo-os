@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "AL",
   "name": "Albania",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 114,
-  "released_at": "2026-09-26",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -98,6 +98,10 @@
       "fx_loss": "665",
       "tax_payable": "4423",
       "tax_receivable": "4424"
+    },
+    "tax_payee": {
+      "name": "Drejtoria e Përgjithshme e Tatimeve",
+      "source": "efiling-portal"
     },
     "journal_roles": {
       "sales": "SHT",

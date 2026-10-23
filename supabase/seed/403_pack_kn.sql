@@ -1,6 +1,6 @@
 -- Ekwo OS — Saint Kitts and Nevis: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/kn at version 0.1.0, do not edit.
+-- Generated from packs/kn at version 0.2.0, do not edit.
 -- Change the pack and run `ekwo pack build kn`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -24,7 +24,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('KN', 'Saint Kitts and Nevis', '0.1.0', date '2026-10-19', '20261011120000', 'community', null, null, 'c63abd83067e163c62796700d243c3e5ca0516e046d86afce974a725933a9665', '[{"key":"kn-vat-act","title":"Value Added Tax Act, 2010 (No. 3 of 2010), with its First, Second and Third Schedules, as published by the National Information Agency; later amendments, if any, are not applied","publisher":"Government of Saint Christopher and Nevis (National Information Agency)","url":"https://nia.gov.kn/wp-content/uploads/2026/07/Value-Added-Tax-Act-2010.pdf","consulted_on":"2026-10-19","kind":"law"},{"key":"kn-vat-regs-2011","title":"Value Added Tax Regulations, 2011 (S.R.O. No. 38 of 2011, passed 14 July 2011) — reduced rates for accommodation, tour operators and restaurants (regulations 9 to 11), zero-rated foods; amended in 2015 (S.R.O. No. 12 of 2015)","publisher":"Inland Revenue Department, Government of Saint Christopher and Nevis","url":"https://www.sknird.com/wp-content/uploads/2018/04/NO.-38-OF-2011-PASSED-ON-14TH-DAY-OF-JULY-2011.pdf","consulted_on":"2026-10-19","kind":"regulation"},{"key":"kn-ird-vat-intro","title":"Introduction to VAT — the three rates (17 %, 10 %, 0 %), examples of zero-rated and exempt supplies","publisher":"Inland Revenue Department, Government of Saint Christopher and Nevis","url":"https://www.sknird.com/wp-content/uploads/2020/09/IRD-VAT-VAT-Introduction.pdf","consulted_on":"2026-10-19","kind":"guidance"},{"key":"iasb-ifrs-sme","title":"IFRS for SMEs Accounting Standard","publisher":"IFRS Foundation / International Accounting Standards Board","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes/","consulted_on":"2026-10-19","kind":"standard"},{"key":"kn-ird-portal","title":"Website of the Inland Revenue Department, the Comptroller of Inland Revenue''s administration (forms, notices and the electronic services)","publisher":"Inland Revenue Department, Government of Saint Christopher and Nevis","url":"https://www.sknird.com","consulted_on":"2026-10-19","kind":"portal"}]'::jsonb)
+  ('KN', 'Saint Kitts and Nevis', '0.2.0', date '2026-10-23', '20261023124650', 'community', null, null, '0f7748b8a5d7e54f5b0a6d9fde57c2d08b5a5ca1995eb8f3dab1ffeeba7c41e8', '[{"key":"kn-vat-act","title":"Value Added Tax Act, 2010 (No. 3 of 2010), with its First, Second and Third Schedules, as published by the National Information Agency; later amendments, if any, are not applied","publisher":"Government of Saint Christopher and Nevis (National Information Agency)","url":"https://nia.gov.kn/wp-content/uploads/2026/07/Value-Added-Tax-Act-2010.pdf","consulted_on":"2026-10-19","kind":"law"},{"key":"kn-vat-regs-2011","title":"Value Added Tax Regulations, 2011 (S.R.O. No. 38 of 2011, passed 14 July 2011) — reduced rates for accommodation, tour operators and restaurants (regulations 9 to 11), zero-rated foods; amended in 2015 (S.R.O. No. 12 of 2015)","publisher":"Inland Revenue Department, Government of Saint Christopher and Nevis","url":"https://www.sknird.com/wp-content/uploads/2018/04/NO.-38-OF-2011-PASSED-ON-14TH-DAY-OF-JULY-2011.pdf","consulted_on":"2026-10-19","kind":"regulation"},{"key":"kn-ird-vat-intro","title":"Introduction to VAT — the three rates (17 %, 10 %, 0 %), examples of zero-rated and exempt supplies","publisher":"Inland Revenue Department, Government of Saint Christopher and Nevis","url":"https://www.sknird.com/wp-content/uploads/2020/09/IRD-VAT-VAT-Introduction.pdf","consulted_on":"2026-10-19","kind":"guidance"},{"key":"iasb-ifrs-sme","title":"IFRS for SMEs Accounting Standard","publisher":"IFRS Foundation / International Accounting Standards Board","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes/","consulted_on":"2026-10-19","kind":"standard"},{"key":"kn-ird-portal","title":"Website of the Inland Revenue Department, the Comptroller of Inland Revenue''s administration (forms, notices and the electronic services)","publisher":"Inland Revenue Department, Government of Saint Christopher and Nevis","url":"https://www.sknird.com","consulted_on":"2026-10-19","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -569,4 +569,9 @@ update country_defaults set
   bank_statement_formats        = null,
   payment_formats               = null,
   fiscal_year_default           = 'calendar'
+ where country = 'KN';
+
+update country_defaults set
+  tax_payee_name       = 'Inland Revenue Department',
+  tax_payee_source_key = 'kn-ird-portal'
  where country = 'KN';

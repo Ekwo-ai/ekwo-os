@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "HR",
   "name": "Croatia",
-  "version": "0.2.1",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 74,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -161,6 +161,10 @@
       "fx_gain": "8410",
       "fx_loss": "7420",
       "tax_payable": "6400"
+    },
+    "tax_payee": {
+      "name": "Porezna uprava Republike Hrvatske",
+      "source": "eporezna-portal"
     },
     "journal_roles": {
       "sales": "IRA",

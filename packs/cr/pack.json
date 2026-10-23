@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CR",
   "name": "Costa Rica",
-  "version": "0.3.0",
-  "schema_min": "20261011120000",
+  "version": "0.4.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 105,
-  "released_at": "2026-09-26",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -98,6 +98,10 @@
       "fx_loss": "562",
       "tax_payable": "2135",
       "tax_receivable": "1155"
+    },
+    "tax_payee": {
+      "name": "Dirección General de Tributación",
+      "source": "res0027-2024"
     },
     "journal_roles": {
       "sales": "VEN",

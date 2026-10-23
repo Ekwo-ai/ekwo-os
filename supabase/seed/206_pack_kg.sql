@@ -1,6 +1,6 @@
 -- Ekwo OS — Кыргызская Республика: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/kg at version 0.1.0, do not edit.
+-- Generated from packs/kg at version 0.2.0, do not edit.
 -- Change the pack and run `ekwo pack build kg`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -22,7 +22,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('KG', 'Кыргызская Республика', '0.1.0', date '2026-10-20', '20261011120000', 'community', null, null, '1a9184461df0ba364691db2ec64bb244bc7d05f861dba4519a4a87425bf53a09', '[{"key":"tax-code","title":"Налоговый кодекс Кыргызской Республики от 18 января 2022 года № 3 (редакция 2026 года; главы о НДС — статьи 252–330)","publisher":"Министерство юстиции Кыргызской Республики — Центральная база данных нормативных правовых актов (cbd.minjust.gov.kg)","url":"https://cbd.minjust.gov.kg/112338/edition/1119180/ru","consulted_on":"2026-10-20","kind":"law"},{"key":"coa-resolution-231","title":"Постановление Правительства Кыргызской Республики от 7 октября 2010 года № 231 «О вопросах ведения бухгалтерского учета и финансовой отчетности в Кыргызской Республике субъектами предпринимательства, некоммерческими организациями (за исключением бюджетных учреждений)» и утвержденная им Инструкция по применению плана счетов","publisher":"Правительство Кыргызской Республики (текст по правовой базе prg.kz)","url":"https://prg.kz/m/amp/document/30831160","consulted_on":"2026-10-20","kind":"regulation"},{"key":"ifrs","title":"IFRS Accounting Standards","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/list-of-standards/","consulted_on":"2026-10-20","kind":"standard"},{"key":"sti-portal","title":"Государственная налоговая служба при Министерстве экономики и коммерции Кыргызской Республики — портал налоговой отчетности и электронных счетов-фактур","publisher":"Государственная налоговая служба Кыргызской Республики","url":"https://sti.gov.kg/","consulted_on":"2026-10-20","kind":"portal"}]'::jsonb)
+  ('KG', 'Кыргызская Республика', '0.2.0', date '2026-10-23', '20261023124650', 'community', null, null, '2c50200a9fcea0bb675e8dace18ecebda7931130c7ec7edb8414f8c004f88003', '[{"key":"tax-code","title":"Налоговый кодекс Кыргызской Республики от 18 января 2022 года № 3 (редакция 2026 года; главы о НДС — статьи 252–330)","publisher":"Министерство юстиции Кыргызской Республики — Центральная база данных нормативных правовых актов (cbd.minjust.gov.kg)","url":"https://cbd.minjust.gov.kg/112338/edition/1119180/ru","consulted_on":"2026-10-20","kind":"law"},{"key":"coa-resolution-231","title":"Постановление Правительства Кыргызской Республики от 7 октября 2010 года № 231 «О вопросах ведения бухгалтерского учета и финансовой отчетности в Кыргызской Республике субъектами предпринимательства, некоммерческими организациями (за исключением бюджетных учреждений)» и утвержденная им Инструкция по применению плана счетов","publisher":"Правительство Кыргызской Республики (текст по правовой базе prg.kz)","url":"https://prg.kz/m/amp/document/30831160","consulted_on":"2026-10-20","kind":"regulation"},{"key":"ifrs","title":"IFRS Accounting Standards","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/list-of-standards/","consulted_on":"2026-10-20","kind":"standard"},{"key":"sti-portal","title":"Государственная налоговая служба при Министерстве экономики и коммерции Кыргызской Республики — портал налоговой отчетности и электронных счетов-фактур","publisher":"Государственная налоговая служба Кыргызской Республики","url":"https://sti.gov.kg/","consulted_on":"2026-10-20","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -598,4 +598,9 @@ update country_defaults set
   bank_statement_formats        = null,
   payment_formats               = null,
   fiscal_year_default           = 'calendar'
+ where country = 'KG';
+
+update country_defaults set
+  tax_payee_name       = 'Государственная налоговая служба Кыргызской Республики',
+  tax_payee_source_key = 'sti-portal'
  where country = 'KG';

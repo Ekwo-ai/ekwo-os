@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BE",
   "name": "Belgium",
-  "version": "1.21.0",
-  "schema_min": "20261018023930",
+  "version": "1.22.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 10,
-  "released_at": "2026-10-18",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -271,7 +271,11 @@
       "miscellaneous": "MISC",
       "opening": "OPN"
     },
-    "fiscal_year_default": "calendar"
+    "fiscal_year_default": "calendar",
+    "tax_payee": {
+      "name": "SPF Finances",
+      "source": "intervat"
+    }
   },
   "languages": [
     "nl",

@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "TR",
   "name": "Türkiye",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 82,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -92,6 +92,10 @@
       "asset_disposal_loss": "689",
       "tax_payable": "3600",
       "tax_receivable": "192"
+    },
+    "tax_payee": {
+      "name": "Gelir İdaresi Başkanlığı",
+      "source": "gib-beyan-uzatma"
     },
     "journal_roles": {
       "sales": "SAL",

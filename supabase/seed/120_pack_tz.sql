@@ -1,6 +1,6 @@
 -- Ekwo OS — Tanzania: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/tz at version 0.1.0, do not edit.
+-- Generated from packs/tz at version 0.2.0, do not edit.
 -- Change the pack and run `ekwo pack build tz`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -26,7 +26,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('TZ', 'Tanzania', '0.1.0', date '2026-09-26', '20261011120000', 'community', null, null, '83962ddc06a25deeb55f8402ddac7bd9718d88ab4702bdcf50a0065aa4007ad4', '[{"key":"vat-act","title":"The Value Added Tax Act, Chapter 148, Revised Edition 2019","publisher":"Attorney General''s Chambers, United Republic of Tanzania","url":"https://www.mof.go.tz/uploads/documents/en-1676548670-THE%20VALUE%20ADDED%20TAX%20ACT,%20CAP%20148%20R.E.%202019.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"companies-act-2002","title":"The Companies Act, 2002, Chapter 212 — ss. 151, 153, 154 (accounts and audit)","publisher":"Tanzania Legal Information Institute (TanzLII) / Laws.Africa","url":"https://media.tanzlii.org/media/legislation/323287/source_file/9e4d2bac245b2936/2002-12.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"tra-vat","title":"Value Added Tax (VAT) — rate, registration threshold, filing","publisher":"Tanzania Revenue Authority","url":"https://www.tra.go.tz/page/value-added-tax-vat","consulted_on":"2026-09-26","kind":"guidance"},{"key":"efd-guidance","title":"Know about Electronic Fiscal Devices (EFD)","publisher":"Tanzania Revenue Authority","url":"https://www.tra.go.tz/page/know-about-e-fiscal-devices-efd","consulted_on":"2026-09-26","kind":"guidance"},{"key":"idras","title":"IDRAS — the Integrated Domestic Revenue Administration System, where a value added tax return is filed","publisher":"Tanzania Revenue Authority","url":"https://gateway.tra.go.tz/Efiling/login.aspx","consulted_on":"2026-09-26","kind":"portal"},{"key":"ifac-tanzania","title":"Tanzania, United Republic of — Member Country (National Board of Accountants and Auditors: adoption of the IFRS Accounting Standards and the IFRS for SMEs Accounting Standard)","publisher":"International Federation of Accountants","url":"https://www.ifac.org/about-ifac/membership/profile/tanzania-united-republic","consulted_on":"2026-09-26","kind":"guidance"}]'::jsonb)
+  ('TZ', 'Tanzania', '0.2.0', date '2026-10-23', '20261023124650', 'community', null, null, 'dfdceaf8f8a29896dc57bc93a9cdc543f33a0db720863930ad63e4b3b81aaf2e', '[{"key":"vat-act","title":"The Value Added Tax Act, Chapter 148, Revised Edition 2019","publisher":"Attorney General''s Chambers, United Republic of Tanzania","url":"https://www.mof.go.tz/uploads/documents/en-1676548670-THE%20VALUE%20ADDED%20TAX%20ACT,%20CAP%20148%20R.E.%202019.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"companies-act-2002","title":"The Companies Act, 2002, Chapter 212 — ss. 151, 153, 154 (accounts and audit)","publisher":"Tanzania Legal Information Institute (TanzLII) / Laws.Africa","url":"https://media.tanzlii.org/media/legislation/323287/source_file/9e4d2bac245b2936/2002-12.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"tra-vat","title":"Value Added Tax (VAT) — rate, registration threshold, filing","publisher":"Tanzania Revenue Authority","url":"https://www.tra.go.tz/page/value-added-tax-vat","consulted_on":"2026-09-26","kind":"guidance"},{"key":"efd-guidance","title":"Know about Electronic Fiscal Devices (EFD)","publisher":"Tanzania Revenue Authority","url":"https://www.tra.go.tz/page/know-about-e-fiscal-devices-efd","consulted_on":"2026-09-26","kind":"guidance"},{"key":"idras","title":"IDRAS — the Integrated Domestic Revenue Administration System, where a value added tax return is filed","publisher":"Tanzania Revenue Authority","url":"https://gateway.tra.go.tz/Efiling/login.aspx","consulted_on":"2026-09-26","kind":"portal"},{"key":"ifac-tanzania","title":"Tanzania, United Republic of — Member Country (National Board of Accountants and Auditors: adoption of the IFRS Accounting Standards and the IFRS for SMEs Accounting Standard)","publisher":"International Federation of Accountants","url":"https://www.ifac.org/about-ifac/membership/profile/tanzania-united-republic","consulted_on":"2026-09-26","kind":"guidance"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -621,4 +621,9 @@ update country_defaults set
   bank_statement_formats        = null,
   payment_formats               = null,
   fiscal_year_default           = 'calendar'
+ where country = 'TZ';
+
+update country_defaults set
+  tax_payee_name       = 'Tanzania Revenue Authority',
+  tax_payee_source_key = 'idras'
  where country = 'TZ';

@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "KM",
   "name": "Comores",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 26,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -90,7 +90,11 @@
       "miscellaneous": "OD",
       "opening": "AN"
     },
-    "fiscal_year_default": "calendar"
+    "fiscal_year_default": "calendar",
+    "tax_payee": {
+      "name": "Administration Générale des Impôts et des Domaines (AGID)",
+      "source": "agid"
+    }
   },
   "languages": [],
   "journals": [

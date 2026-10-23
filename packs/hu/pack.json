@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "HU",
   "name": "Magyarország",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 70,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -146,6 +146,10 @@
       "fx_loss": "9210",
       "tax_payable": "6330",
       "tax_receivable": "2230"
+    },
+    "tax_payee": {
+      "name": "Nemzeti Adó- és Vámhivatal (NAV)",
+      "source": "nyomtatvany-2665"
     },
     "journal_roles": {
       "sales": "KI",

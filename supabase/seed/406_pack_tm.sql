@@ -1,6 +1,6 @@
 -- Ekwo OS — Туркменистан: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/tm at version 0.1.0, do not edit.
+-- Generated from packs/tm at version 0.2.0, do not edit.
 -- Change the pack and run `ekwo pack build tm`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -22,7 +22,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('TM', 'Туркменистан', '0.1.0', date '2026-10-21', '20261011120000', 'community', null, null, '45d5fd3da52fa094ce923be5a8e1c70877fd047d9202d4eb8ca9c511305678e9', '[{"key":"tax-code","title":"Налоговый кодекс Туркменистана (новая редакция, с изменениями по состоянию на закон от 30 ноября 2024 г. и закон от 30 сентября 2025 г.) — статьи 95–113 (налог на добавленную стоимость), статья 30 (налоговая декларация)","publisher":"Меджлис Туркменистана","url":"https://mejlis.gov.tm/single-code/10?lang=ru","consulted_on":"2026-10-21","kind":"law"},{"key":"nsfo-sme","title":"Национальный стандарт финансовой отчётности для предприятий малого и среднего предпринимательства — утверждён приказом Министра финансов Туркменистана № 57-Ö от 1 апреля 2013 г. (зарегистрирован Министерством адалат № 686 от 16 апреля 2013 г.), с изменениями приказа № 117-Ö от 16 сентября 2015 г.; неофициальный перевод","publisher":"Министерство финансов и экономики Туркменистана","url":"https://fineconomic.gov.tm/storage/app/uploads/public/5f4/f66/886/5f4f668867a33773552472.pdf","consulted_on":"2026-10-21","kind":"standard"},{"key":"ifrs-sme","title":"IFRS for SMEs Accounting Standard","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes/","consulted_on":"2026-10-21","kind":"standard"},{"key":"stss-portal","title":"Государственная налоговая служба при Министерстве финансов и экономики Туркменистана — электронный налог, личный кабинет юридических лиц и предпринимателей","publisher":"Министерство финансов и экономики Туркменистана — Налоговое управление","url":"https://tax.gov.tm/","consulted_on":"2026-10-21","kind":"portal"}]'::jsonb)
+  ('TM', 'Туркменистан', '0.2.0', date '2026-10-23', '20261023124650', 'community', null, null, '6ca8ae75222887e4e1927192c68da6ad05fc8c7a8b0693a4976f6d01a5e654e7', '[{"key":"tax-code","title":"Налоговый кодекс Туркменистана (новая редакция, с изменениями по состоянию на закон от 30 ноября 2024 г. и закон от 30 сентября 2025 г.) — статьи 95–113 (налог на добавленную стоимость), статья 30 (налоговая декларация)","publisher":"Меджлис Туркменистана","url":"https://mejlis.gov.tm/single-code/10?lang=ru","consulted_on":"2026-10-21","kind":"law"},{"key":"nsfo-sme","title":"Национальный стандарт финансовой отчётности для предприятий малого и среднего предпринимательства — утверждён приказом Министра финансов Туркменистана № 57-Ö от 1 апреля 2013 г. (зарегистрирован Министерством адалат № 686 от 16 апреля 2013 г.), с изменениями приказа № 117-Ö от 16 сентября 2015 г.; неофициальный перевод","publisher":"Министерство финансов и экономики Туркменистана","url":"https://fineconomic.gov.tm/storage/app/uploads/public/5f4/f66/886/5f4f668867a33773552472.pdf","consulted_on":"2026-10-21","kind":"standard"},{"key":"ifrs-sme","title":"IFRS for SMEs Accounting Standard","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes/","consulted_on":"2026-10-21","kind":"standard"},{"key":"stss-portal","title":"Государственная налоговая служба при Министерстве финансов и экономики Туркменистана — электронный налог, личный кабинет юридических лиц и предпринимателей","publisher":"Министерство финансов и экономики Туркменистана — Налоговое управление","url":"https://tax.gov.tm/","consulted_on":"2026-10-21","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -615,3 +615,8 @@ on conflict (country, code) do update set
   valid_from      = excluded.valid_from,
   valid_to        = excluded.valid_to,
   legal_reference = excluded.legal_reference;
+
+update country_defaults set
+  tax_payee_name       = 'Государственная налоговая служба при Министерстве финансов и экономики Туркменистана',
+  tax_payee_source_key = 'stss-portal'
+ where country = 'TM';

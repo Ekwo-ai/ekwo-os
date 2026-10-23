@@ -1,6 +1,6 @@
 -- Ekwo OS — Trinidad and Tobago: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/tt at version 0.1.0, do not edit.
+-- Generated from packs/tt at version 0.2.0, do not edit.
 -- Change the pack and run `ekwo pack build tt`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -22,7 +22,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('TT', 'Trinidad and Tobago', '0.1.0', date '2026-10-20', '20261011120000', 'community', null, null, 'e41448b6e418c9c312dca8b19e131907ee01218e07559fc6ce0f896dd2c1b6e0', '[{"key":"tt-vat-act","title":"Value Added Tax Act, Chap. 75:06 (Act No. 37 of 1989), with its Schedules 1 to 3A and the Value Added Tax (Books and Records) Regulations; the unofficial version of the Laws of Trinidad and Tobago updated to 31 December 2016 — later amendments, Orders and changes to the Schedules are not applied","publisher":"Ministry of the Attorney General and Legal Affairs, Republic of Trinidad and Tobago","url":"https://rgd.legalaffairs.gov.tt/laws2/Alphabetical_List/lawspdfs/75.06.pdf","consulted_on":"2026-10-20","kind":"law"},{"key":"tt-ird-vat","title":"Value Added Tax (VAT) — the rate of 12.5 %, who must register (gross commercial supplies above TT$600,000 in twelve months, as of 1 January 2023), registration requirements","publisher":"Inland Revenue Division, Ministry of Finance, Republic of Trinidad and Tobago","url":"https://www.ird.gov.tt/vat","consulted_on":"2026-10-20","kind":"guidance"},{"key":"iasb-ifrs-sme","title":"IFRS for SMEs Accounting Standard","publisher":"IFRS Foundation / International Accounting Standards Board","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes/","consulted_on":"2026-10-20","kind":"standard"},{"key":"tt-ird-portal","title":"Website of the Inland Revenue Division (the Board of Inland Revenue''s administration: forms, notices and the e-Tax services)","publisher":"Inland Revenue Division, Ministry of Finance, Republic of Trinidad and Tobago","url":"https://www.ird.gov.tt","consulted_on":"2026-10-20","kind":"portal"}]'::jsonb)
+  ('TT', 'Trinidad and Tobago', '0.2.0', date '2026-10-23', '20261023124650', 'community', null, null, '87649c7db33a76649b8be06ec42788a4e55ba03eba3d10202c951d482003f4d1', '[{"key":"tt-vat-act","title":"Value Added Tax Act, Chap. 75:06 (Act No. 37 of 1989), with its Schedules 1 to 3A and the Value Added Tax (Books and Records) Regulations; the unofficial version of the Laws of Trinidad and Tobago updated to 31 December 2016 — later amendments, Orders and changes to the Schedules are not applied","publisher":"Ministry of the Attorney General and Legal Affairs, Republic of Trinidad and Tobago","url":"https://rgd.legalaffairs.gov.tt/laws2/Alphabetical_List/lawspdfs/75.06.pdf","consulted_on":"2026-10-20","kind":"law"},{"key":"tt-ird-vat","title":"Value Added Tax (VAT) — the rate of 12.5 %, who must register (gross commercial supplies above TT$600,000 in twelve months, as of 1 January 2023), registration requirements","publisher":"Inland Revenue Division, Ministry of Finance, Republic of Trinidad and Tobago","url":"https://www.ird.gov.tt/vat","consulted_on":"2026-10-20","kind":"guidance"},{"key":"iasb-ifrs-sme","title":"IFRS for SMEs Accounting Standard","publisher":"IFRS Foundation / International Accounting Standards Board","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes/","consulted_on":"2026-10-20","kind":"standard"},{"key":"tt-ird-portal","title":"Website of the Inland Revenue Division (the Board of Inland Revenue''s administration: forms, notices and the e-Tax services)","publisher":"Inland Revenue Division, Ministry of Finance, Republic of Trinidad and Tobago","url":"https://www.ird.gov.tt","consulted_on":"2026-10-20","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -545,4 +545,9 @@ update country_defaults set
   bank_statement_formats        = null,
   payment_formats               = null,
   fiscal_year_default           = 'calendar'
+ where country = 'TT';
+
+update country_defaults set
+  tax_payee_name       = 'Inland Revenue Division',
+  tax_payee_source_key = 'tt-ird-portal'
  where country = 'TT';

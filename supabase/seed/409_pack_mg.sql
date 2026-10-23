@@ -1,6 +1,6 @@
 -- Ekwo OS — Madagascar: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/mg at version 0.1.0, do not edit.
+-- Generated from packs/mg at version 0.2.0, do not edit.
 -- Change the pack and run `ekwo pack build mg`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -20,7 +20,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('MG', 'Madagascar', '0.1.0', date '2026-10-22', '20261011120000', 'community', null, null, 'c7dff84b662983bd7cbe34196d3bbf3eeea3a2555101a97040239cf52c0ca92a', '[{"key":"code-impots","title":"Code des impôts de Madagascar suivant la loi de finances 2024, Livre I, Partie II, Titre VI (taxe sur la valeur ajoutée) — art. 06.01.01 à 06.01.04 (institution, champ, seuil de 400 000 000 Ar), 06.01.06 (opérations exonérées), 06.01.09 et 06.01.09 bis (lieu de l''opération, prestations d''un non-établi), 06.01.12 (taux de 20 %, 5 % pour le gaz butane, 0 % à l''exportation), 06.01.14 et 06.01.16 (régime du réel, déclaration mensuelle au plus tard le 15 du mois suivant), 06.01.17 et 06.01.18 (déductions et exclusions), 06.01.23 et 06.01.24 (crédit de taxe, remboursement). Les lois de finances 2025 et 2026 n''ont pas pu être lues","publisher":"Direction générale des impôts de Madagascar (texte consolidé, copie hébergée par le programme pS-Eau ; le site de la Direction ne sert pas le texte à un lecteur automatique)","url":"https://bdd.pseau.org/outils/ouvrages/repoblikan_i_madagasikara_code_general_des_impots_2024_2024.pdf","consulted_on":"2026-10-22","kind":"law"},{"key":"pcg-2005","title":"Plan comptable général 2005 de Madagascar, décret n° 2004-272 du 18 février 2004 — annexe 1, modèles d''états financiers : bilan (actif et capitaux propres et passifs) et compte de résultat par nature. Le plan de comptes détaillé (numéros) n''a pas pu être lu","publisher":"Conseil supérieur de la comptabilité de Madagascar (copie lue sur SlideShare ; l''adresse officielle csc.mg ne répondait pas)","url":"https://www.slideshare.net/slideshow/pcg2005-48670418/48670418","consulted_on":"2026-10-22","kind":"regulation"},{"key":"dgi-portal","title":"Direction générale des impôts de Madagascar — le portail des contribuables, où se déposent les déclarations en ligne et où sont publiés les textes","publisher":"Direction générale des impôts de Madagascar","url":"https://www.impots.mg","consulted_on":"2026-10-22","kind":"portal"}]'::jsonb)
+  ('MG', 'Madagascar', '0.2.0', date '2026-10-23', '20261023124650', 'community', null, null, '72e49ad32b069279e4c7f5598fb58a271a65999c28e29fb9bc5d86b030b873d3', '[{"key":"code-impots","title":"Code des impôts de Madagascar suivant la loi de finances 2024, Livre I, Partie II, Titre VI (taxe sur la valeur ajoutée) — art. 06.01.01 à 06.01.04 (institution, champ, seuil de 400 000 000 Ar), 06.01.06 (opérations exonérées), 06.01.09 et 06.01.09 bis (lieu de l''opération, prestations d''un non-établi), 06.01.12 (taux de 20 %, 5 % pour le gaz butane, 0 % à l''exportation), 06.01.14 et 06.01.16 (régime du réel, déclaration mensuelle au plus tard le 15 du mois suivant), 06.01.17 et 06.01.18 (déductions et exclusions), 06.01.23 et 06.01.24 (crédit de taxe, remboursement). Les lois de finances 2025 et 2026 n''ont pas pu être lues","publisher":"Direction générale des impôts de Madagascar (texte consolidé, copie hébergée par le programme pS-Eau ; le site de la Direction ne sert pas le texte à un lecteur automatique)","url":"https://bdd.pseau.org/outils/ouvrages/repoblikan_i_madagasikara_code_general_des_impots_2024_2024.pdf","consulted_on":"2026-10-22","kind":"law"},{"key":"pcg-2005","title":"Plan comptable général 2005 de Madagascar, décret n° 2004-272 du 18 février 2004 — annexe 1, modèles d''états financiers : bilan (actif et capitaux propres et passifs) et compte de résultat par nature. Le plan de comptes détaillé (numéros) n''a pas pu être lu","publisher":"Conseil supérieur de la comptabilité de Madagascar (copie lue sur SlideShare ; l''adresse officielle csc.mg ne répondait pas)","url":"https://www.slideshare.net/slideshow/pcg2005-48670418/48670418","consulted_on":"2026-10-22","kind":"regulation"},{"key":"dgi-portal","title":"Direction générale des impôts de Madagascar — le portail des contribuables, où se déposent les déclarations en ligne et où sont publiés les textes","publisher":"Direction générale des impôts de Madagascar","url":"https://www.impots.mg","consulted_on":"2026-10-22","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -650,4 +650,9 @@ update country_defaults set
   bank_statement_formats        = null,
   payment_formats               = null,
   fiscal_year_default           = 'calendar'
+ where country = 'MG';
+
+update country_defaults set
+  tax_payee_name       = 'Direction générale des impôts de Madagascar',
+  tax_payee_source_key = 'dgi-portal'
  where country = 'MG';

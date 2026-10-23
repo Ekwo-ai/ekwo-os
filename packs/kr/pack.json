@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "KR",
   "name": "대한민국",
-  "version": "0.3.0",
-  "schema_min": "20261011120000",
+  "version": "0.4.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 54,
-  "released_at": "2026-09-22",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -137,6 +137,10 @@
       "asset_disposal_loss": "7130",
       "tax_payable": "2155",
       "tax_receivable": "1255"
+    },
+    "tax_payee": {
+      "name": "국세청",
+      "source": "hometax"
     },
     "journal_roles": {
       "sales": "SAL",

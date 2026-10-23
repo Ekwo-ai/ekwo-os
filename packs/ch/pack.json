@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CH",
   "name": "Schweiz",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 62,
-  "released_at": "2026-09-22",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -120,6 +120,10 @@
       "tax_receivable": "1176",
       "fx_gain": "6960",
       "fx_loss": "6920"
+    },
+    "tax_payee": {
+      "name": "Eidgenössische Steuerverwaltung (ESTV)",
+      "source": "estv-decompte-online"
     },
     "journal_roles": {
       "sales": "SAL",

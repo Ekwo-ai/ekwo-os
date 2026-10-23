@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "DZ",
   "name": "Algérie",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 86,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -82,6 +82,10 @@
       "fx_loss": "666",
       "tax_payable": "44551",
       "tax_receivable": "44567"
+    },
+    "tax_payee": {
+      "name": "Direction générale des impôts (DGI)",
+      "source": "jibayatic"
     },
     "journal_roles": {
       "sales": "VT",

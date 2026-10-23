@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "HN",
   "name": "Honduras",
-  "version": "0.1.1",
-  "schema_min": "20261011120000",
+  "version": "0.2.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 130,
-  "released_at": "2026-10-09",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -112,7 +112,11 @@
       "miscellaneous": "DIA",
       "opening": "APE"
     },
-    "fiscal_year_default": "calendar"
+    "fiscal_year_default": "calendar",
+    "tax_payee": {
+      "name": "Servicio de Administración de Rentas (SAR)",
+      "source": "oficina-virtual-sar"
+    }
   },
   "languages": [],
   "not_taxed": [

@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "LK",
   "name": "Sri Lanka",
-  "version": "0.1.1",
-  "schema_min": "20261011120000",
+  "version": "0.2.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 127,
-  "released_at": "2026-10-09",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -167,6 +167,10 @@
       "purchase": "PUR",
       "miscellaneous": "GEN",
       "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Inland Revenue Department",
+      "source": "ramis"
     }
   },
   "languages": [],

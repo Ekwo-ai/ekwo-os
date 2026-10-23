@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "AU",
   "name": "Australia",
-  "version": "0.4.0",
-  "schema_min": "20261011120000",
+  "version": "0.5.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 40,
-  "released_at": "2026-10-01",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -367,6 +367,10 @@
       "purchase": "PUR",
       "miscellaneous": "GEN",
       "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Australian Taxation Office",
+      "source": "ato-online-services"
     }
   },
   "languages": [],

@@ -1,6 +1,6 @@
 -- Ekwo OS — Монгол Улс: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/mn at version 0.1.0, do not edit.
+-- Generated from packs/mn at version 0.2.0, do not edit.
 -- Change the pack and run `ekwo pack build mn`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -24,7 +24,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('MN', 'Монгол Улс', '0.1.0', date '2026-10-20', '20261011120000', 'community', null, null, '5ed17d717a8a31f31ff45e0577676e4064ac1c6f6865c3d42e68a045f6a7900a', '[{"key":"vat-law","title":"Law of Mongolia on Value Added Tax, 9 July 2015 (revised edition) — articles 11 (rates), 12 (zero rate), 13 (exemptions), 14 (input tax), 16 (return and payment), 17 (receipts and invoices); unofficial English translation","publisher":"Legalinfo.mn — Unified legal portal of Mongolia","url":"https://legalinfo.mn/en/edtl/16758728323701","consulted_on":"2026-10-20","kind":"law"},{"key":"accounting-law","title":"Law of Mongolia on Accounting, 2015 — books, general ledger, financial statements","publisher":"Legalinfo.mn — Unified legal portal of Mongolia","url":"https://legalinfo.mn/en/edtl/16230949065051","consulted_on":"2026-10-20","kind":"law"},{"key":"mof-order-347","title":"Сангийн сайдын 2017 оны 12 дугаар сарын 5-ны өдрийн 347 дугаар тушаал «Маяг, заавар батлах тухай» — өмчийн бүх хэлбэрийн аж ахуйн нэгж, байгууллагад нийтлэг хэрэглэгдэх нягтлан бодох бүртгэлийн маягт, заавар","publisher":"Монгол Улсын Сангийн яам (legalinfo.mn)","url":"https://legalinfo.mn/mn/detail/13053","consulted_on":"2026-10-20","kind":"regulation"},{"key":"ifrs","title":"IFRS Accounting Standards","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/list-of-standards/","consulted_on":"2026-10-20","kind":"standard"},{"key":"mta-portal","title":"Татварын ерөнхий газар — цахим татварын тайлан, НӨАТ-ын тайлан (e-tax)","publisher":"Татварын ерөнхий газар (Mongolian Tax Authority)","url":"https://mta.gov.mn/","consulted_on":"2026-10-20","kind":"portal"}]'::jsonb)
+  ('MN', 'Монгол Улс', '0.2.0', date '2026-10-23', '20261023124650', 'community', null, null, '80cfdfcf9deb86fc7cade346bbdd7d6c4c0b3d1d9575187037b794beb9a8f5b6', '[{"key":"vat-law","title":"Law of Mongolia on Value Added Tax, 9 July 2015 (revised edition) — articles 11 (rates), 12 (zero rate), 13 (exemptions), 14 (input tax), 16 (return and payment), 17 (receipts and invoices); unofficial English translation","publisher":"Legalinfo.mn — Unified legal portal of Mongolia","url":"https://legalinfo.mn/en/edtl/16758728323701","consulted_on":"2026-10-20","kind":"law"},{"key":"accounting-law","title":"Law of Mongolia on Accounting, 2015 — books, general ledger, financial statements","publisher":"Legalinfo.mn — Unified legal portal of Mongolia","url":"https://legalinfo.mn/en/edtl/16230949065051","consulted_on":"2026-10-20","kind":"law"},{"key":"mof-order-347","title":"Сангийн сайдын 2017 оны 12 дугаар сарын 5-ны өдрийн 347 дугаар тушаал «Маяг, заавар батлах тухай» — өмчийн бүх хэлбэрийн аж ахуйн нэгж, байгууллагад нийтлэг хэрэглэгдэх нягтлан бодох бүртгэлийн маягт, заавар","publisher":"Монгол Улсын Сангийн яам (legalinfo.mn)","url":"https://legalinfo.mn/mn/detail/13053","consulted_on":"2026-10-20","kind":"regulation"},{"key":"ifrs","title":"IFRS Accounting Standards","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/list-of-standards/","consulted_on":"2026-10-20","kind":"standard"},{"key":"mta-portal","title":"Татварын ерөнхий газар — цахим татварын тайлан, НӨАТ-ын тайлан (e-tax)","publisher":"Татварын ерөнхий газар (Mongolian Tax Authority)","url":"https://mta.gov.mn/","consulted_on":"2026-10-20","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -600,4 +600,9 @@ update country_defaults set
   bank_statement_formats        = null,
   payment_formats               = null,
   fiscal_year_default           = 'calendar'
+ where country = 'MN';
+
+update country_defaults set
+  tax_payee_name       = 'Татварын ерөнхий газар',
+  tax_payee_source_key = 'mta-portal'
  where country = 'MN';

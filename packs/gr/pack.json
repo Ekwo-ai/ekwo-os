@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GR",
   "name": "Ελλάδα",
-  "version": "0.3.0",
-  "schema_min": "20261011120000",
+  "version": "0.4.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 76,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -185,6 +185,10 @@
       "fx_loss": "6500",
       "tax_payable": "5402",
       "tax_receivable": "3301"
+    },
+    "tax_payee": {
+      "name": "Ανεξάρτητη Αρχή Δημοσίων Εσόδων (ΑΑΔΕ)",
+      "source": "aade-portal"
     },
     "journal_roles": {
       "sales": "SAL",

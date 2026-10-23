@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "PE",
   "name": "Perú",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 48,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -135,6 +135,10 @@
       "fx_loss": "676",
       "tax_payable": "401113",
       "tax_receivable": "401114"
+    },
+    "tax_payee": {
+      "name": "SUNAT",
+      "source": "portal-sol"
     },
     "journal_roles": {
       "sales": "VEN",

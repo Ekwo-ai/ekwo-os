@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "PA",
   "name": "Panamá",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 107,
-  "released_at": "2026-09-26",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -146,6 +146,10 @@
       "fx_loss": "631501",
       "tax_payable": "241501",
       "tax_receivable": "139502"
+    },
+    "tax_payee": {
+      "name": "Dirección General de Ingresos",
+      "source": "etax"
     },
     "journal_roles": {
       "sales": "VEN",

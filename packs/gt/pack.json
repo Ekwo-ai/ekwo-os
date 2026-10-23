@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "GT",
   "name": "Guatemala",
-  "version": "0.2.1",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 106,
-  "released_at": "2026-09-26",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -113,6 +113,10 @@
       "fx_loss": "542",
       "tax_payable": "2132",
       "tax_receivable": "1142"
+    },
+    "tax_payee": {
+      "name": "Superintendencia de Administración Tributaria",
+      "source": "declaraguate"
     },
     "journal_roles": {
       "sales": "VEN",

@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "ZA",
   "name": "South Africa",
-  "version": "0.3.0",
-  "schema_min": "20261011120000",
+  "version": "0.4.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 88,
-  "released_at": "2026-10-01",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -200,6 +200,10 @@
       "asset_disposal_loss": "6960",
       "tax_payable": "2110",
       "tax_receivable": "1155"
+    },
+    "tax_payee": {
+      "name": "South African Revenue Service",
+      "source": "efiling"
     },
     "journal_roles": {
       "sales": "SAL",

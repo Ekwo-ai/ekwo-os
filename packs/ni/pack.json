@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "NI",
   "name": "Nicaragua",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 132,
-  "released_at": "2026-10-09",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -104,7 +104,11 @@
       "miscellaneous": "DIA",
       "opening": "APE"
     },
-    "fiscal_year_default": "calendar"
+    "fiscal_year_default": "calendar",
+    "tax_payee": {
+      "name": "Dirección General de Ingresos (DGI)",
+      "source": "dgi-vet"
+    }
   },
   "languages": [],
   "journals": [

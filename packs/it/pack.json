@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "IT",
   "name": "Italia",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 37,
-  "released_at": "2026-09-22",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -154,6 +154,10 @@
       "fx_loss": "8010",
       "tax_payable": "2201",
       "tax_receivable": "1111"
+    },
+    "tax_payee": {
+      "name": "Agenzia delle Entrate",
+      "source": "sede-dichiarazioni"
     },
     "journal_roles": {
       "sales": "VEN",

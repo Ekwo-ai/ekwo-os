@@ -1,6 +1,6 @@
 -- Ekwo OS — Mauritanie: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/mr at version 0.1.0, do not edit.
+-- Generated from packs/mr at version 0.2.0, do not edit.
 -- Change the pack and run `ekwo pack build mr`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -20,7 +20,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('MR', 'Mauritanie', '0.1.0', date '2026-10-22', '20261011120000', 'community', null, null, 'a93b246ad462407abbe163f66b84d5bb2a038de3fdd0605615cf021f0b0f1955', '[{"key":"cgi2023","title":"Code général des impôts — édition de janvier 2023, issue de la loi n° 2019-018 du 29 avril 2019 portant Code général des impôts et mise à jour jusqu''à la loi n° 2022-01 du 13 janvier 2022 portant loi de finances pour 2022 : art. 209 à 215 (champ d''application, assujettis, seuil de 3 000 000 MRU, exonérations), art. 221 (représentant), art. 222 à 226 (base d''imposition), art. 227 à 229 (fait générateur, exigibilité), art. 230 (taux de 16 % et taux zéro), art. 231 à 236 (déductions), art. 244 à 248 (crédit de taxe), art. 249 à 254 (déclaration mensuelle au plus tard le 15 du mois suivant), art. L.15 à L.19 (comptabilité) et L.21 (facture)","publisher":"Direction générale des Impôts — Ministère des Finances de la République islamique de Mauritanie","url":"https://finances.gov.mr/sites/default/files/2023-03/CGI-Fr-2023.pdf","consulted_on":"2026-10-22","kind":"law"},{"key":"pcn","title":"Ordonnance n° 82-180 du 24 décembre 1982 portant institution d''un Plan comptable national, avec le Plan comptable général annexé (liste des comptes des classes 1 à 8, modèles de bilan et de tableau des résultats), Journal officiel de la République islamique de Mauritanie, numéro spécial 586 du 2 mars 1983","publisher":"Journal officiel de la République islamique de Mauritanie — Ministère des Finances","url":"https://www.finances.gov.mr/Recueil_des_textes_relatifs_a_la_mission_du_Ministere/Textes/TRESOR/Ordonnance%2082-180%20plan%20cpble%20nat.pdf","consulted_on":"2026-10-22","kind":"standard"},{"key":"dgi-portal","title":"Direction générale des Impôts de Mauritanie — site de l''administration fiscale (actualités, textes, services aux contribuables)","publisher":"Direction générale des Impôts","url":"https://impots.gov.mr/","consulted_on":"2026-10-22","kind":"portal"}]'::jsonb)
+  ('MR', 'Mauritanie', '0.2.0', date '2026-10-23', '20261023124650', 'community', null, null, 'd10c78d9d15e7827eb7d9d3fa0d61d0034591ad9f6facd28ce3aab6a91964a71', '[{"key":"cgi2023","title":"Code général des impôts — édition de janvier 2023, issue de la loi n° 2019-018 du 29 avril 2019 portant Code général des impôts et mise à jour jusqu''à la loi n° 2022-01 du 13 janvier 2022 portant loi de finances pour 2022 : art. 209 à 215 (champ d''application, assujettis, seuil de 3 000 000 MRU, exonérations), art. 221 (représentant), art. 222 à 226 (base d''imposition), art. 227 à 229 (fait générateur, exigibilité), art. 230 (taux de 16 % et taux zéro), art. 231 à 236 (déductions), art. 244 à 248 (crédit de taxe), art. 249 à 254 (déclaration mensuelle au plus tard le 15 du mois suivant), art. L.15 à L.19 (comptabilité) et L.21 (facture)","publisher":"Direction générale des Impôts — Ministère des Finances de la République islamique de Mauritanie","url":"https://finances.gov.mr/sites/default/files/2023-03/CGI-Fr-2023.pdf","consulted_on":"2026-10-22","kind":"law"},{"key":"pcn","title":"Ordonnance n° 82-180 du 24 décembre 1982 portant institution d''un Plan comptable national, avec le Plan comptable général annexé (liste des comptes des classes 1 à 8, modèles de bilan et de tableau des résultats), Journal officiel de la République islamique de Mauritanie, numéro spécial 586 du 2 mars 1983","publisher":"Journal officiel de la République islamique de Mauritanie — Ministère des Finances","url":"https://www.finances.gov.mr/Recueil_des_textes_relatifs_a_la_mission_du_Ministere/Textes/TRESOR/Ordonnance%2082-180%20plan%20cpble%20nat.pdf","consulted_on":"2026-10-22","kind":"standard"},{"key":"dgi-portal","title":"Direction générale des Impôts de Mauritanie — site de l''administration fiscale (actualités, textes, services aux contribuables)","publisher":"Direction générale des Impôts","url":"https://impots.gov.mr/","consulted_on":"2026-10-22","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -787,3 +787,8 @@ on conflict (country, code) do update set
   valid_from      = excluded.valid_from,
   valid_to        = excluded.valid_to,
   legal_reference = excluded.legal_reference;
+
+update country_defaults set
+  tax_payee_name       = 'Direction générale des Impôts de Mauritanie',
+  tax_payee_source_key = 'dgi-portal'
+ where country = 'MR';

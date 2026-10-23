@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "LU",
   "name": "Luxembourg",
-  "version": "1.10.0",
-  "schema_min": "20261011120000",
+  "version": "1.11.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 12,
-  "released_at": "2026-09-21",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -162,6 +162,10 @@
       "fx_loss": "6562",
       "tax_payable": "461412",
       "tax_receivable": "421612"
+    },
+    "tax_payee": {
+      "name": "Administration de l'enregistrement, des domaines et de la TVA",
+      "source": "pfi-declarations-tva"
     },
     "journal_roles": {
       "sales": "SAL",

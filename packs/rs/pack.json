@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "RS",
   "name": "Srbija",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 112,
-  "released_at": "2026-09-26",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -114,6 +114,10 @@
       "fx_loss": "563",
       "tax_payable": "479",
       "tax_receivable": "279"
+    },
+    "tax_payee": {
+      "name": "Poreska uprava Republike Srbije",
+      "source": "eporezi"
     },
     "journal_roles": {
       "sales": "SAL",

@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BA",
   "name": "Bosna i Hercegovina",
-  "version": "0.3.0",
-  "schema_min": "20261011120000",
+  "version": "0.4.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 113,
-  "released_at": "2026-09-26",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -108,6 +108,10 @@
       "purchase": "PUR",
       "miscellaneous": "GEN",
       "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Uprava za indirektno oporezivanje Bosne i Hercegovine (UIO)",
+      "source": "vat-portal"
     }
   },
   "languages": [

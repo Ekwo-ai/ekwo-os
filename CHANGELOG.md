@@ -11,6 +11,23 @@ somewhere has already run it.
 
 ### Added
 
+- **A declaration names its files, is paid to somebody, and says so** (socle
+  migration `20261023124650`, decision 0087). `record_filing_files(filing,
+  sent, acknowledgement)` names the two files of the last send under
+  `filings.write`, and refuses a declaration not sent (`filing_not_sent`), one
+  a corrective replaced (`filing_superseded`), a file kept on something else
+  (`attachment_not_of_filing`) or in another company (`unknown_attachment`).
+  A pack names the administration a declaration is paid to in
+  `defaults.tax_payee` — its name and the register entry it publishes —
+  compiled into `country_defaults.tax_payee_name`; `tax_payee(company)` finds
+  the company's contact for it, the one booking to `tax_payable`, or creates
+  it under that name, and `settle_filing()` names it when its caller names
+  nobody, so the payment can be matched to the debt. The debt matched in full
+  records the declaration `paid`, by any path; unmatching takes it back to
+  `accepted`. 145 packs name their administration and move a minor version,
+  with `schema_min` `20261023124650`; `at`, `cf`, `de`, `in`, `la`, `lc`, `ng`,
+  `pl` and `tw` name none, their registers holding no entry published by the
+  administration that collects the tax.
 - **A company files under a VAT scheme** (socle migrations `20261022110000`
   and `20261022110100`, decision 0086). `tax_report.json` may hold a list of
   forms, each with a `role` (`periodic`, `annual`); an annual form reads the

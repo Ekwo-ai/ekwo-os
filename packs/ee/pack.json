@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EE",
   "name": "Estonia",
-  "version": "1.13.0",
-  "schema_min": "20261014152111",
+  "version": "1.14.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 13,
-  "released_at": "2026-10-16",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -164,7 +164,11 @@
       "miscellaneous": "MIS",
       "opening": "ALG"
     },
-    "fiscal_year_default": "calendar"
+    "fiscal_year_default": "calendar",
+    "tax_payee": {
+      "name": "Maksu- ja Tolliamet",
+      "source": "e-mta"
+    }
   },
   "languages": [
     "en"

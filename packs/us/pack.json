@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "US",
   "name": "United States",
-  "version": "0.10.1",
-  "schema_min": "20261011120000",
+  "version": "0.11.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 15,
-  "released_at": "2026-10-01",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -279,6 +279,10 @@
       "purchase": "PUR",
       "miscellaneous": "GEN",
       "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "California Department of Tax and Fee Administration",
+      "source": "cdtfa-401-a"
     }
   },
   "journals": [

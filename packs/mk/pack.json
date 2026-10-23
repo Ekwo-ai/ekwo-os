@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MK",
   "name": "Северна Македонија",
-  "version": "0.3.0",
-  "schema_min": "20261011120000",
+  "version": "0.4.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 115,
-  "released_at": "2026-09-26",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -81,6 +81,10 @@
       "fx_loss": "475",
       "tax_payable": "2301",
       "tax_receivable": "1301"
+    },
+    "tax_payee": {
+      "name": "Управа за јавни приходи (УЈП)",
+      "source": "etax-portal"
     },
     "journal_roles": {
       "sales": "SAL",

@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EC",
   "name": "Ecuador",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 101,
-  "released_at": "2026-09-26",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -105,6 +105,10 @@
       "fx_loss": "5.4.02",
       "tax_payable": "2.1.04.03",
       "tax_receivable": "1.1.07.01"
+    },
+    "tax_payee": {
+      "name": "Servicio de Rentas Internas (SRI)",
+      "source": "sri-en-linea"
     },
     "journal_roles": {
       "sales": "VEN",

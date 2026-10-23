@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "UA",
   "name": "Україна",
-  "version": "0.3.0",
-  "schema_min": "20261011120000",
+  "version": "0.4.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 57,
-  "released_at": "2026-09-25",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -87,6 +87,10 @@
       "fx_loss": "945",
       "tax_payable": "6413",
       "tax_receivable": "6414"
+    },
+    "tax_payee": {
+      "name": "Державна податкова служба України",
+      "source": "kabinet"
     },
     "journal_roles": {
       "sales": "SAL",

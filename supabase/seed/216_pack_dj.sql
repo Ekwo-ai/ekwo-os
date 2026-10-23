@@ -1,6 +1,6 @@
 -- Ekwo OS — Djibouti: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/dj at version 0.1.0, do not edit.
+-- Generated from packs/dj at version 0.2.0, do not edit.
 -- Change the pack and run `ekwo pack build dj`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -22,7 +22,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('DJ', 'Djibouti', '0.1.0', date '2026-10-22', '20261011120000', 'community', null, null, '19f3d4280359e00fd87c4cf403bf86aa84e49719a8b896be1f7c07ef970fffad', '[{"key":"cgi","title":"République de Djibouti — Code général des impôts 2016 (TVA : articles 171 à 211 ; taux : article 187 ; déclaration : articles 206 et 207), lu en entier pour le chapitre de la TVA","publisher":"Direction Générale des Impôts, Ministère du Budget","url":"https://budget.gouv.dj/wp-content/uploads/2022/07/CGI2016final.pdf","consulted_on":"2026-10-22","kind":"law"},{"key":"vat-law","title":"Loi n°43/AN/08/6ème L portant création de la taxe sur la valeur ajoutée et définissant les dispositifs d''application (taux de 7 % à l''origine, articles 19 et 39)","publisher":"Journal officiel de la République de Djibouti","url":"https://www.journalofficiel.dj/texte-juridique/loi-n43-an-08-6eme-l-portant-creation-de-la-taxe-sur-la-valeur-ajoutee-et-definissant-les-dispositifs-dapplication/","consulted_on":"2026-10-22","kind":"law"},{"key":"vat-guide","title":"Guide de la TVA, avec le modèle de déclaration mensuelle et ses lignes 1 à 22 (édition de 2008, taux de 7 %)","publisher":"Direction des impôts, Ministère des Finances","url":"https://www.ministere-finances.dj/TVA/GUIDE%20TVA.pdf","consulted_on":"2026-10-22","kind":"regulation"},{"key":"mof-portal","title":"Ministère de l''Économie et des Finances de Djibouti — administration fiscale ; aucune téléprocédure de déclaration n''a été trouvée","publisher":"Ministère de l''Économie et des Finances","url":"https://www.ministere-finances.dj","consulted_on":"2026-10-22","kind":"portal"}]'::jsonb)
+  ('DJ', 'Djibouti', '0.2.0', date '2026-10-23', '20261023124650', 'community', null, null, '5eaf02a8d8882b808ecf45e789bb7f3c13cf8d3e2de5a673cef2c50d4d934a11', '[{"key":"cgi","title":"République de Djibouti — Code général des impôts 2016 (TVA : articles 171 à 211 ; taux : article 187 ; déclaration : articles 206 et 207), lu en entier pour le chapitre de la TVA","publisher":"Direction Générale des Impôts, Ministère du Budget","url":"https://budget.gouv.dj/wp-content/uploads/2022/07/CGI2016final.pdf","consulted_on":"2026-10-22","kind":"law"},{"key":"vat-law","title":"Loi n°43/AN/08/6ème L portant création de la taxe sur la valeur ajoutée et définissant les dispositifs d''application (taux de 7 % à l''origine, articles 19 et 39)","publisher":"Journal officiel de la République de Djibouti","url":"https://www.journalofficiel.dj/texte-juridique/loi-n43-an-08-6eme-l-portant-creation-de-la-taxe-sur-la-valeur-ajoutee-et-definissant-les-dispositifs-dapplication/","consulted_on":"2026-10-22","kind":"law"},{"key":"vat-guide","title":"Guide de la TVA, avec le modèle de déclaration mensuelle et ses lignes 1 à 22 (édition de 2008, taux de 7 %)","publisher":"Direction des impôts, Ministère des Finances","url":"https://www.ministere-finances.dj/TVA/GUIDE%20TVA.pdf","consulted_on":"2026-10-22","kind":"regulation"},{"key":"mof-portal","title":"Ministère de l''Économie et des Finances de Djibouti — administration fiscale ; aucune téléprocédure de déclaration n''a été trouvée","publisher":"Ministère de l''Économie et des Finances","url":"https://www.ministere-finances.dj","consulted_on":"2026-10-22","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -606,4 +606,9 @@ update country_defaults set
   bank_statement_formats        = null,
   payment_formats               = null,
   fiscal_year_default           = 'calendar'
+ where country = 'DJ';
+
+update country_defaults set
+  tax_payee_name       = 'Direction des impôts',
+  tax_payee_source_key = 'vat-guide'
  where country = 'DJ';

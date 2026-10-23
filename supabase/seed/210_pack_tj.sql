@@ -1,6 +1,6 @@
 -- Ekwo OS — Ҷумҳурии Тоҷикистон (Республика Таджикистан): chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/tj at version 0.1.0, do not edit.
+-- Generated from packs/tj at version 0.2.0, do not edit.
 -- Change the pack and run `ekwo pack build tj`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -24,7 +24,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('TJ', 'Ҷумҳурии Тоҷикистон (Республика Таджикистан)', '0.1.0', date '2026-10-21', '20261011120000', 'community', null, null, 'a4c36703214a35988749454ea74f6f6dddbb8043b037a87942290465147d8d9d', '[{"key":"tax-code","title":"Налоговый кодекс Республики Таджикистан от 23 декабря 2021 года № 1844 (в редакции Закона от 17 декабря 2025 года № 2210); раздел о налоге на добавленную стоимость — статьи 244–279, переходные положения — статья 397)","publisher":"Налоговый комитет при Правительстве Республики Таджикистан (andoz.tj)","url":"https://andoz.tj/docs/kodex/Tax-Code__17_12_2025-RT_ru.pdf","consulted_on":"2026-10-21","kind":"law"},{"key":"coa-order-41","title":"Распоряжение Министерства финансов Республики Таджикистан от 27 мая 2011 года № 41 «Об утверждении Плана счетов бухгалтерского учета финансово-хозяйственной деятельности хозяйствующих субъектов и Методических указаний по применению плана счетов» (зарегистрировано Министерством юстиции 31 мая 2012 года № 694)","publisher":"Министерство финансов Республики Таджикистан (текст по правовой базе «Законодательство стран СНГ»)","url":"https://base.spinform.ru/show_doc.fwx?rgn=60864","consulted_on":"2026-10-21","kind":"regulation"},{"key":"accounting-law","title":"Закон Республики Таджикистан «О бухгалтерском учете и финансовой отчетности» от 25 марта 2011 года № 702","publisher":"Налоговый комитет при Правительстве Республики Таджикистан (andoz.tj)","url":"https://www.andoz.tj/docs/zakoni/l_%E2%84%9611_accounting-RT_ru.pdf","consulted_on":"2026-10-21","kind":"law"},{"key":"ifrs","title":"IFRS Accounting Standards","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/list-of-standards/","consulted_on":"2026-10-21","kind":"standard"},{"key":"tax-portal","title":"Налоговый комитет при Правительстве Республики Таджикистан — портал налоговой службы","publisher":"Налоговый комитет при Правительстве Республики Таджикистан","url":"https://andoz.tj/","consulted_on":"2026-10-21","kind":"portal"}]'::jsonb)
+  ('TJ', 'Ҷумҳурии Тоҷикистон (Республика Таджикистан)', '0.2.0', date '2026-10-23', '20261023124650', 'community', null, null, '2c01eae0a8c5560f5209a39e3ec2daf5a31c6ba2e1f5dfdcd4c1154631909b8b', '[{"key":"tax-code","title":"Налоговый кодекс Республики Таджикистан от 23 декабря 2021 года № 1844 (в редакции Закона от 17 декабря 2025 года № 2210); раздел о налоге на добавленную стоимость — статьи 244–279, переходные положения — статья 397)","publisher":"Налоговый комитет при Правительстве Республики Таджикистан (andoz.tj)","url":"https://andoz.tj/docs/kodex/Tax-Code__17_12_2025-RT_ru.pdf","consulted_on":"2026-10-21","kind":"law"},{"key":"coa-order-41","title":"Распоряжение Министерства финансов Республики Таджикистан от 27 мая 2011 года № 41 «Об утверждении Плана счетов бухгалтерского учета финансово-хозяйственной деятельности хозяйствующих субъектов и Методических указаний по применению плана счетов» (зарегистрировано Министерством юстиции 31 мая 2012 года № 694)","publisher":"Министерство финансов Республики Таджикистан (текст по правовой базе «Законодательство стран СНГ»)","url":"https://base.spinform.ru/show_doc.fwx?rgn=60864","consulted_on":"2026-10-21","kind":"regulation"},{"key":"accounting-law","title":"Закон Республики Таджикистан «О бухгалтерском учете и финансовой отчетности» от 25 марта 2011 года № 702","publisher":"Налоговый комитет при Правительстве Республики Таджикистан (andoz.tj)","url":"https://www.andoz.tj/docs/zakoni/l_%E2%84%9611_accounting-RT_ru.pdf","consulted_on":"2026-10-21","kind":"law"},{"key":"ifrs","title":"IFRS Accounting Standards","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/list-of-standards/","consulted_on":"2026-10-21","kind":"standard"},{"key":"tax-portal","title":"Налоговый комитет при Правительстве Республики Таджикистан — портал налоговой службы","publisher":"Налоговый комитет при Правительстве Республики Таджикистан","url":"https://andoz.tj/","consulted_on":"2026-10-21","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -716,4 +716,9 @@ update country_defaults set
   bank_statement_formats        = null,
   payment_formats               = null,
   fiscal_year_default           = 'calendar'
+ where country = 'TJ';
+
+update country_defaults set
+  tax_payee_name       = 'Налоговый комитет при Правительстве Республики Таджикистан',
+  tax_payee_source_key = 'tax-portal'
  where country = 'TJ';

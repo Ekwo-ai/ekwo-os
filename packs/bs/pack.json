@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BS",
   "name": "The Bahamas",
-  "version": "0.1.0",
-  "schema_min": "20261011120000",
+  "version": "0.2.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 401,
-  "released_at": "2026-10-17",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -119,6 +119,10 @@
       "purchase": "PUR",
       "miscellaneous": "GEN",
       "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Department of Inland Revenue, Commonwealth of The Bahamas",
+      "source": "dir-vat-portal"
     }
   },
   "languages": [],
