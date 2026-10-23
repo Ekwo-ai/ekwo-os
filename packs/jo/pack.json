@@ -1,0 +1,198 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "JO",
+  "name": "Jordan",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 219,
+  "released_at": "2026-10-23",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "gst-law",
+        "title": "General Sales Tax Law No. (6) of 1994, as amended (updated English text, headed by Provisional Law No. (29) of 2009): Article 6 the general tax at 16 per cent, Article 7 zero rating and exemption, Article 9 time of supply and imported services, Article 10 supplies not subject to tax, Article 16 the two-month return, Article 19 input tax, Article 22 bodies and the Council of Ministers' power to exempt, Article 26 payment, Schedules 1 to 4. The consolidation lists amending laws only up to 2004 and the 2009 provisional law; later amendments (to the rate schedules in particular) are read through the Department's statements below",
+        "publisher": "Income and Sales Tax Department (ISTD), Ministry of Finance of the Hashemite Kingdom of Jordan",
+        "url": "https://istd.gov.jo/ebv4.0/root_storage/en/eb_list_page/gst_law.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-23"
+      },
+      {
+        "key": "gst-schedules",
+        "title": "The Department's published tables of the General Sales Tax Law (Arabic): the statements of goods taxed at 10 %, 5 %, 4 % and 2 % (Council of Ministers decisions, files dated November 2023), Schedule 2 (zero rate), Schedule 3 Part 1 (exempt goods) and Part 2 (exempt services), Schedule 4 (tax not deductible), the statement of exemptions. The page is the entry to every file",
+        "publisher": "Income and Sales Tax Department (ISTD), Ministry of Finance of the Hashemite Kingdom of Jordan",
+        "url": "https://istd.gov.jo/AR/List/جداول_الضريبة_العامة_على__المبيعات",
+        "kind": "regulation",
+        "consulted_on": "2026-10-23"
+      },
+      {
+        "key": "gst-return",
+        "title": "General Sales Tax Return, form CED:PR15.F12, updated 7 November 2022 (Arabic): lines 1 to 19 and their formula, the invoice-number and purchase-invoice annexes",
+        "publisher": "Income and Sales Tax Department (ISTD), Ministry of Finance of the Hashemite Kingdom of Jordan",
+        "url": "https://istd.gov.jo/ebv4.0/root_storage/ar/eb_list_page/اقرار_بالضريبة_العامة_على_المبيعات-5.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-23"
+      },
+      {
+        "key": "gst-returns-page",
+        "title": "Tax returns — the Department's list of forms (general tax, special tax, and the two Aqaba Special Economic Zone returns)",
+        "publisher": "Income and Sales Tax Department (ISTD), Ministry of Finance of the Hashemite Kingdom of Jordan",
+        "url": "https://istd.gov.jo/Ar/List/الاقرارات_الضريبية",
+        "kind": "guidance",
+        "consulted_on": "2026-10-23"
+      },
+      {
+        "key": "ifrs-jordan-profile",
+        "title": "IFRS Standards — Application Around the World, Jurisdictional Profile: Jordan — IFRS required for the companies whose securities trade in a public market; no text prescribing a chart of accounts or a statement layout for other companies was read",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/content/dam/ifrs/publications/jurisdictions/pdf-profiles/jordan-ifrs-profile.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-23"
+      },
+      {
+        "key": "ias-1",
+        "title": "IAS 1 Presentation of Financial Statements — the statement of financial position and the statement of profit or loss, expenses analysed by nature, which the statements of this pack follow",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/list-of-standards/ias-1-presentation-of-financial-statements/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-23"
+      },
+      {
+        "key": "istd-portal",
+        "title": "Income and Sales Tax Department — website (laws, tables, forms, guidance)",
+        "publisher": "Income and Sales Tax Department (ISTD), Ministry of Finance of the Hashemite Kingdom of Jordan",
+        "url": "https://istd.gov.jo",
+        "kind": "portal",
+        "consulted_on": "2026-10-23"
+      },
+      {
+        "key": "istd-eservices",
+        "title": "Income and Sales Tax Department — electronic services, where a return is filed",
+        "publisher": "Income and Sales Tax Department (ISTD), Ministry of Finance of the Hashemite Kingdom of Jordan",
+        "url": "https://etax.istd.gov.jo/Login.aspx",
+        "kind": "portal",
+        "consulted_on": "2026-10-23"
+      },
+      {
+        "key": "jofotara",
+        "title": "JoFotara — the national e-invoicing system, registration and linking portal",
+        "publisher": "Income and Sales Tax Department (ISTD), Ministry of Finance of the Hashemite Kingdom of Jordan",
+        "url": "https://portal.jofotara.gov.jo/ar/login",
+        "kind": "portal",
+        "consulted_on": "2026-10-23"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "JOD",
+    "language": "ar",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [
+    "en"
+  ],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Jordan reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "JO-IFRS-SFP",
+        "JO-IFRS-IS"
+      ],
+      "legal_reference": "No legal chart of accounts for Jordanian companies in general was found in the texts read. What the IFRS Foundation profile records is the reporting framework: IFRS Standards are required for the companies whose securities trade in a public market, and the profile was not read for the rest. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-style statements below (IAS 1, expenses by nature), with the accounts a Jordanian trading company keeps — general tax output and input, the tax on imports owed to Customs at the border, the tax on imported services owed to the Department, income tax withheld, social security contributions and the special tax.",
+      "source": "ifrs-jordan-profile"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "earliest_of_delivery_or_payment",
+    "references": {
+      "numbering": {
+        "legal_reference": "Article 18(a) of the General Sales Tax Law — the registered person issues tax invoices as specified by the executive instructions (Instructions No. (6) of 2003 pertaining to invoices and records, listed in the consolidated text and not found in English). No text read states how invoices are numbered. `sequential` and the number format are conventions of this pack and not rules of the law.",
+        "source": "gst-law"
+      },
+      "tax_point": {
+        "legal_reference": "Article 9(a) of the General Sales Tax Law — the tax on goods becomes due at whichever comes first of the delivery of the goods, the issue of the tax invoice or the receipt of payment, wholly or partly; Article 9(b) — on a service, of the issue of the tax invoice or the receipt of payment; Article 9(c) — payable on the value covered by the invoice or the payment, whichever is higher. That is a three-way earliest test for goods and a two-way one for services, and the closed vocabulary of this field has no value for either; `earliest_of_delivery_or_payment` is the nearest and is what the rule reduces to in the ordinary case. A supply invoiced ahead of delivery or payment is the case this approximation misses.",
+        "source": "gst-law"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "Jordan runs a national e-invoicing system, JoFotara, whose registration portal is open to the public; the text that says who must issue through it, from when, and in what format was not read (the portal opens on a login page, and the Department's pages read did not reproduce the instructions). `obligation` is `none` for want of a text, not on a finding that none exists, and no brick of the formats package writes the JoFotara message, so the four fields above would describe a capability this pack does not have. A taxpayer in the scope of JoFotara issues through the portal and keeps the books here; see the README.",
+    "source": "jofotara"
+  }
+}

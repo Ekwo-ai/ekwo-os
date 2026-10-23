@@ -1,0 +1,360 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "JO-GST",
+  "name": "General sales tax return",
+  "period": [
+    "bimonth"
+  ],
+  "valid_from": "2009-12-27",
+  "legal_reference": "Article 16 of the General Sales Tax Law No. 6 of 1994 as amended — a registered person subject to the general tax files a two-month return, the two months being one tax period, and the Director sets where the periods begin and end (the pack anchors them on January, March, May and so on, which the format requires and the text does not say); the Director may extend a period to six months at most; a person subject to the special tax files a month return, which the pack does not model. The return is the ISTD form CED:PR15.F12. The pack carries the lines a document writes into (2, 3, 5 to 10) and the totals of lines 14 and 15; the carry-forward, the adjustments and the refund claims (lines 1, 11, 12, 13, 16 to 19) are the preparer's.",
+  "source": "gst-return",
+  "boxes": [
+    {
+      "box": "6a",
+      "kind": "base",
+      "name": "Line 6 — Domestic sales taxed at 16 % — value",
+      "sequence": 10,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, domestic sales taxed at 16 %: the value of the supplies, tax excluded.",
+      "source": "gst-return"
+    },
+    {
+      "box": "6a",
+      "kind": "tax",
+      "name": "Line 6 — Domestic sales taxed at 16 % — general tax",
+      "sequence": 20,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, the general sales tax charged on those sales (the \"general tax\" column).",
+      "source": "gst-return"
+    },
+    {
+      "box": "6b",
+      "kind": "base",
+      "name": "Line 6 — Domestic sales taxed at 10 % — value",
+      "sequence": 30,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, domestic sales taxed at 10 %: the value of the supplies, tax excluded.",
+      "source": "gst-return"
+    },
+    {
+      "box": "6b",
+      "kind": "tax",
+      "name": "Line 6 — Domestic sales taxed at 10 % — general tax",
+      "sequence": 40,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, the general sales tax charged on those sales (the \"general tax\" column).",
+      "source": "gst-return"
+    },
+    {
+      "box": "6c",
+      "kind": "base",
+      "name": "Line 6 — Domestic sales taxed at 4 % — value",
+      "sequence": 50,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, domestic sales taxed at 4 %: the value of the supplies, tax excluded.",
+      "source": "gst-return"
+    },
+    {
+      "box": "6c",
+      "kind": "tax",
+      "name": "Line 6 — Domestic sales taxed at 4 % — general tax",
+      "sequence": 60,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, the general sales tax charged on those sales (the \"general tax\" column).",
+      "source": "gst-return"
+    },
+    {
+      "box": "6d",
+      "kind": "base",
+      "name": "Line 6 — Domestic sales taxed at other rates (5 %, 2 %) — value",
+      "sequence": 70,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, domestic sales taxed at \"other\" (أخرى): the value of the supplies, tax excluded.",
+      "source": "gst-return"
+    },
+    {
+      "box": "6d",
+      "kind": "tax",
+      "name": "Line 6 — Domestic sales taxed at other rates (5 %, 2 %) — general tax",
+      "sequence": 80,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, the general sales tax charged on those sales (the \"general tax\" column).",
+      "source": "gst-return"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Line 7 — Domestic sales of goods and services at the zero rate",
+      "sequence": 90,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 7 — domestic sales of goods and services subject to the zero rate (Schedule 2, the supplies to the bodies of Article 21 and the purchases of the bodies of Article 22(a)). Only a value is entered.",
+      "source": "gst-return"
+    },
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Line 8 — Exported sales",
+      "sequence": 100,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 8 — exports; zero-rated under Article 7(a)(2) of the Law.",
+      "source": "gst-return"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Line 9 — Sales not subject to the tax",
+      "sequence": 110,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 9 — sales not subject to the tax, the supplies Article 10 of the Law leaves outside it.",
+      "source": "gst-return"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Line 10 — Exempt domestic sales",
+      "sequence": 120,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 10 — domestic sales exempt under Schedule 3.",
+      "source": "gst-return"
+    },
+    {
+      "box": "11",
+      "kind": "tax",
+      "name": "Line 11 — Non-deductible tax attributable to exempt sales",
+      "sequence": 130,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 11 — tax that cannot be deducted because it relates to exempt sales; it is added to the tax due in line 14. Declared and empty: how much of the input tax relates to exempt sales is the preparer's apportionment, no tax code posts to it.",
+      "source": "gst-return"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Line 13 — Adjustment in favour of the Department",
+      "sequence": 140,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 13 — an adjustment movement in favour of the Department; added to the tax due. Declared and empty: an adjustment is a decision of the preparer.",
+      "source": "gst-return"
+    },
+    {
+      "box": "OUT",
+      "kind": "total",
+      "name": "Output side — lines 6, 11 and 13",
+      "sequence": 150,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), lines 14 and 15 — the tax of lines 6 + 11 + 13, set against the tax of lines 1 + 2 + 3 + 12.",
+      "source": "gst-return",
+      "plus": [
+        "6a:tax",
+        "6b:tax",
+        "6c:tax",
+        "6d:tax",
+        "11",
+        "13"
+      ]
+    },
+    {
+      "box": "1",
+      "kind": "tax",
+      "name": "Line 1 — Balance carried forward from the previous period",
+      "sequence": 160,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 1 — the balance carried forward from the previous period. Declared and empty: a period-to-period carry is not a posting of the format; see the README.",
+      "source": "gst-return"
+    },
+    {
+      "box": "2a",
+      "kind": "base",
+      "name": "Line 2 — Domestic purchases taxed at 16 % — value",
+      "sequence": 170,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, domestic purchases taxed at 16 %: the value, tax excluded. The form prints this block twice — purchases, then purchases of assets and expenses; the pack posts both to one box, since a tax code cannot tell the two apart.",
+      "source": "gst-return"
+    },
+    {
+      "box": "2a",
+      "kind": "tax",
+      "name": "Line 2 — Domestic purchases taxed at 16 % — general tax",
+      "sequence": 180,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, the general tax paid on those purchases and deducted.",
+      "source": "gst-return"
+    },
+    {
+      "box": "2b",
+      "kind": "base",
+      "name": "Line 2 — Domestic purchases taxed at 10 % — value",
+      "sequence": 190,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, domestic purchases taxed at 10 %: the value, tax excluded. The form prints this block twice — purchases, then purchases of assets and expenses; the pack posts both to one box, since a tax code cannot tell the two apart.",
+      "source": "gst-return"
+    },
+    {
+      "box": "2b",
+      "kind": "tax",
+      "name": "Line 2 — Domestic purchases taxed at 10 % — general tax",
+      "sequence": 200,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, the general tax paid on those purchases and deducted.",
+      "source": "gst-return"
+    },
+    {
+      "box": "2c",
+      "kind": "base",
+      "name": "Line 2 — Domestic purchases taxed at 4 % — value",
+      "sequence": 210,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, domestic purchases taxed at 4 %: the value, tax excluded. The form prints this block twice — purchases, then purchases of assets and expenses; the pack posts both to one box, since a tax code cannot tell the two apart.",
+      "source": "gst-return"
+    },
+    {
+      "box": "2c",
+      "kind": "tax",
+      "name": "Line 2 — Domestic purchases taxed at 4 % — general tax",
+      "sequence": 220,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, the general tax paid on those purchases and deducted.",
+      "source": "gst-return"
+    },
+    {
+      "box": "2d",
+      "kind": "base",
+      "name": "Line 2 — Domestic purchases taxed at other rates (5 %, 2 %) — value",
+      "sequence": 230,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, domestic purchases taxed at \"other\" (أخرى): the value, tax excluded. The form prints this block twice — purchases, then purchases of assets and expenses; the pack posts both to one box, since a tax code cannot tell the two apart.",
+      "source": "gst-return"
+    },
+    {
+      "box": "2d",
+      "kind": "tax",
+      "name": "Line 2 — Domestic purchases taxed at other rates (5 %, 2 %) — general tax",
+      "sequence": 240,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, the general tax paid on those purchases and deducted.",
+      "source": "gst-return"
+    },
+    {
+      "box": "2e",
+      "kind": "base",
+      "name": "Line 2 — Domestic purchases at the zero rate",
+      "sequence": 250,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, purchases taxed at the zero rate (صفر). Only a value is entered.",
+      "source": "gst-return"
+    },
+    {
+      "box": "3a",
+      "kind": "base",
+      "name": "Line 3 — Imports taxed at 16 % — value",
+      "sequence": 260,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at 16 %: the customs value plus duties and taxes, general tax excluded.",
+      "source": "gst-return"
+    },
+    {
+      "box": "3a",
+      "kind": "tax",
+      "name": "Line 3 — Imports taxed at 16 % — general tax",
+      "sequence": 270,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, the general tax paid at the border on those imports and deducted.",
+      "source": "gst-return"
+    },
+    {
+      "box": "3b",
+      "kind": "base",
+      "name": "Line 3 — Imports taxed at 10 % — value",
+      "sequence": 280,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at 10 %: the customs value plus duties and taxes, general tax excluded.",
+      "source": "gst-return"
+    },
+    {
+      "box": "3b",
+      "kind": "tax",
+      "name": "Line 3 — Imports taxed at 10 % — general tax",
+      "sequence": 290,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, the general tax paid at the border on those imports and deducted.",
+      "source": "gst-return"
+    },
+    {
+      "box": "3c",
+      "kind": "base",
+      "name": "Line 3 — Imports taxed at 4 % — value",
+      "sequence": 300,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at 4 %: the customs value plus duties and taxes, general tax excluded.",
+      "source": "gst-return"
+    },
+    {
+      "box": "3c",
+      "kind": "tax",
+      "name": "Line 3 — Imports taxed at 4 % — general tax",
+      "sequence": 310,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, the general tax paid at the border on those imports and deducted.",
+      "source": "gst-return"
+    },
+    {
+      "box": "3d",
+      "kind": "base",
+      "name": "Line 3 — Imports taxed at other rates (5 %, 2 %) — value",
+      "sequence": 320,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at \"other\" (أخرى): the customs value plus duties and taxes, general tax excluded.",
+      "source": "gst-return"
+    },
+    {
+      "box": "3d",
+      "kind": "tax",
+      "name": "Line 3 — Imports taxed at other rates (5 %, 2 %) — general tax",
+      "sequence": 330,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, the general tax paid at the border on those imports and deducted.",
+      "source": "gst-return"
+    },
+    {
+      "box": "3e",
+      "kind": "base",
+      "name": "Line 3 — Imports at the zero rate",
+      "sequence": 340,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at the zero rate. Only a value is entered.",
+      "source": "gst-return"
+    },
+    {
+      "box": "3s",
+      "kind": "base",
+      "name": "Line 3 — Imported services subject to the tax — value",
+      "sequence": 350,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, \"imported services subject to the tax\" (الخدمات المستوردة الخاضعة للضريبة): the value of the service received from abroad (Article 9(e) of the Law).",
+      "source": "gst-return"
+    },
+    {
+      "box": "3s",
+      "kind": "tax",
+      "name": "Line 3 — Imported services subject to the tax — general tax",
+      "sequence": 360,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, the general tax the recipient owes on the imported service (Article 4(b)(2), 9(e) and 26(c)), deducted on the same line. The payment to the Department is made apart from the return, within the time of Article 26(c).",
+      "source": "gst-return"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Line 5 — Exempt purchases and imports",
+      "sequence": 370,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 5 — purchases and imports that are exempt. Only a value is entered.",
+      "source": "gst-return"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "Line 12 — Adjustment in favour of the registered person",
+      "sequence": 380,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 12 — an adjustment movement in favour of the registered person; deducted from the tax due. Declared and empty, for the reason given at line 13.",
+      "source": "gst-return"
+    },
+    {
+      "box": "IN",
+      "kind": "total",
+      "name": "Input side — lines 1, 2, 3 and 12",
+      "sequence": 390,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), lines 14 and 15 — the tax of lines 1 + 2 + 3 + 12.",
+      "source": "gst-return",
+      "plus": [
+        "1",
+        "2a:tax",
+        "2b:tax",
+        "2c:tax",
+        "2d:tax",
+        "3a:tax",
+        "3b:tax",
+        "3c:tax",
+        "3d:tax",
+        "3s:tax",
+        "12"
+      ]
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "name": "Lines 14 and 15 — Tax payable (positive) or credit (negative)",
+      "sequence": 400,
+      "legal_reference": "GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 14 — where the tax of lines 6 + 11 + 13 exceeds the tax of lines 1 + 2 + 3 + 12, the difference is payable; line 15 — where it is negative, the credit, which is refunded (lines 16 and 17) or carried forward (line 18). The two lines are one signed figure here: positive is payable, negative is the credit.",
+      "source": "gst-return",
+      "plus": [
+        "OUT"
+      ],
+      "minus": [
+        "IN"
+      ]
+    }
+  ]
+}

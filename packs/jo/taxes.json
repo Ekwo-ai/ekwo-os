@@ -1,0 +1,930 @@
+[
+  {
+    "code": "JO-S-16",
+    "name": "Sale, standard rate 16 %",
+    "description": "A taxable supply of goods or services made in Jordan by a registered person, neither zero-rated, exempt nor on a reduced-rate statement",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 6(a) — the general tax is charged at 16 per cent of the value of the supply or importation of goods or services. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, domestic sales taxed at 16 %. A sale of a capital asset used in the business is a supply like any other and takes this code.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "JO-S-10",
+    "name": "Sale, reduced rate 10 %",
+    "description": "A supply of goods on the Department's 10 % statement (reduced rate)",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "Article 3(c) of the Law lets the Council of Ministers move items between the schedules, and the Income and Sales Tax Department publishes the goods taxed at 10 % in its \"Statement of goods subject to tax at 10 %\", a table of the Council of Ministers' decisions that reduce the tax, each headed \"Article 22/c\" in the Department's table (Article 22(c) of the consolidated text lets the Council of Ministers exempt goods and services, wholly or partly). The goods of the statement are the preparer's choice of this code; the pack does not list them. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, domestic sales taxed at 10 %.",
+    "source": "gst-schedules",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6b"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6b",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6b",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 15
+  },
+  {
+    "code": "JO-S-4",
+    "name": "Sale, reduced rate 4 %",
+    "description": "A supply of goods on the Department's 4 % statement (reduced rate)",
+    "kind": "vat",
+    "rate": 4,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "Article 3(c) of the Law lets the Council of Ministers move items between the schedules, and the Income and Sales Tax Department publishes the goods taxed at 4 % in its \"Statement of goods subject to tax at 4 %\", a table of the Council of Ministers' decisions that reduce the tax, each headed \"Article 22/c\" in the Department's table (Article 22(c) of the consolidated text lets the Council of Ministers exempt goods and services, wholly or partly). The goods of the statement are the preparer's choice of this code; the pack does not list them. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, domestic sales taxed at 4 %.",
+    "source": "gst-schedules",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6c"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6c",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6c",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "JO-S-5",
+    "name": "Sale, reduced rate 5 %",
+    "description": "A supply of goods on the Department's 5 % statement (reduced rate)",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "Article 3(c) of the Law lets the Council of Ministers move items between the schedules, and the Income and Sales Tax Department publishes the goods taxed at 5 % in its \"Statement of goods subject to tax at 5 %\", a table of the Council of Ministers' decisions that reduce the tax, each headed \"Article 22/c\" in the Department's table (Article 22(c) of the consolidated text lets the Council of Ministers exempt goods and services, wholly or partly). The goods of the statement are the preparer's choice of this code; the pack does not list them. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, the \"other\" rate line (أخرى), where the 5 % and 2 % sales are entered.",
+    "source": "gst-schedules",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6d"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6d",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 25
+  },
+  {
+    "code": "JO-S-2",
+    "name": "Sale, reduced rate 2 %",
+    "description": "A supply of goods on the Department's 2 % statement (reduced rate)",
+    "kind": "vat",
+    "rate": 2,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "Article 3(c) of the Law lets the Council of Ministers move items between the schedules, and the Income and Sales Tax Department publishes the goods taxed at 2 % in its \"Statement of goods subject to tax at 2 %\", a table of the Council of Ministers' decisions that reduce the tax, each headed \"Article 22/c\" in the Department's table (Article 22(c) of the consolidated text lets the Council of Ministers exempt goods and services, wholly or partly). The goods of the statement are the preparer's choice of this code; the pack does not list them. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 6, the \"other\" rate line (أخرى), where the 5 % and 2 % sales are entered.",
+    "source": "gst-schedules",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6d"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6d",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "JO-S-ZR-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "Goods or services exported from the Kingdom, taxable at 0 %",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "vat_category": "G",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 7(a)(2) — goods and services supplied to the free zones, cities and duty-free shops, or exported to places outside the Kingdom, are charged at the zero rate; the input tax stays deductible and Article 20(a) refunds the tax paid on exported goods. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 8 — exported sales.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "8",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "JO-S-ZR",
+    "name": "Sale, zero-rated (other than export)",
+    "description": "A domestic supply at the zero rate: the goods and services of Schedule 2 and the supplies to the bodies of Article 21",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 7(a) — goods and services of Schedule 2 (issued by the Council of Ministers under Article 3(b)(1)), supplies to the bodies relieved by Article 21 (the Crown, diplomatic missions, international organisations) and, under Article 22(a), goods and services bought by the armed forces, mosques, churches, orphanages and the projects of the Investment Promotion Law, are charged at the zero rate. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 7 — domestic sales of goods and services subject to the zero rate. One code carries the whole list; which item applies is the preparer's judgement.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 45
+  },
+  {
+    "code": "JO-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply Schedule 3 exempts — among its services, education, health and social work, insurance, public transport, the lease of residential property",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 7(b) — the goods and services listed in Schedule 3 are tax-exempt (Schedule 3 Part 1 goods, Part 2 services, issued by the Council of Ministers under Article 3(b)(2)). An exempt supply carries no tax and gives no deduction of the input tax relating to it (Article 19 gives credit for the tax paid on imports and purchases, line 11 of the return carries the part that relates to exempt sales). GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 10 — exempt domestic sales. The Part 2 list was read by text extraction of the Department's Arabic PDF, which comes out garbled; its items are not repeated here.",
+    "source": "gst-schedules",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "JO-S-NT",
+    "name": "Sale, not subject to the tax",
+    "description": "A supply Article 10 of the Law leaves outside the tax — the supply of immovable property, of shares and securities, the remuneration of employees",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "vat_category": "O",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 10 — the following are not subject to the tax: (b) the supply of immovable property, (c) the supply of shares and securities of all kinds, (d) the remuneration paid to officials, employees and workers, and the other cases of the article. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 9 — sales not subject to the tax.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 55
+  },
+  {
+    "code": "JO-P-16",
+    "name": "Purchase, 16 %, deductible",
+    "description": "A local purchase of goods or services taxed at 16 %, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 19(c) — the registered person credits the general tax already paid on imports or purchases of goods and services while registered, excluding those of Schedule 4. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, domestic purchases taxed at 16 %.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2a"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2a",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "JO-P-10",
+    "name": "Purchase, 10 %, deductible",
+    "description": "A local purchase of goods or services taxed at 10 %, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 19(c) — the registered person credits the general tax already paid on imports or purchases of goods and services while registered, excluding those of Schedule 4. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, domestic purchases taxed at 10 %.",
+    "source": "gst-schedules",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2b"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2b"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2b",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2b",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 115
+  },
+  {
+    "code": "JO-P-4",
+    "name": "Purchase, 4 %, deductible",
+    "description": "A local purchase of goods or services taxed at 4 %, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 4,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 19(c) — the registered person credits the general tax already paid on imports or purchases of goods and services while registered, excluding those of Schedule 4. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, domestic purchases taxed at 4 %.",
+    "source": "gst-schedules",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2c"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2c"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2c",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2c",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 120
+  },
+  {
+    "code": "JO-P-5",
+    "name": "Purchase, 5 %, deductible",
+    "description": "A local purchase of goods or services taxed at 5 %, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 19(c) — the registered person credits the general tax already paid on imports or purchases of goods and services while registered, excluding those of Schedule 4. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, domestic purchases taxed at 5 %, entered on the \"other\" rate line (أخرى).",
+    "source": "gst-schedules",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2d"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2d",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 125
+  },
+  {
+    "code": "JO-P-2",
+    "name": "Purchase, 2 %, deductible",
+    "description": "A local purchase of goods or services taxed at 2 %, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 2,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 19(c) — the registered person credits the general tax already paid on imports or purchases of goods and services while registered, excluding those of Schedule 4. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, domestic purchases taxed at 2 %, entered on the \"other\" rate line (أخرى).",
+    "source": "gst-schedules",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2d"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2d"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "2d",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "JO-P-16-NC",
+    "name": "Purchase, 16 %, input tax not deductible",
+    "description": "A purchase of goods or services of Schedule 4, whose tax is paid but cannot be deducted — the tax joins the cost",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 3(b)(3) and Article 19(c) — Schedule 4 lists the tax-paid goods and services that are ineligible for input tax deduction or refund, and the Department publishes it (\"Schedule 4\"). The form has no line for the value of such a purchase, so the code posts to no box and the tax joins the cost. Which purchases Schedule 4 lists is the preparer's judgement; the pack does not list them.",
+    "source": "gst-schedules",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "JO-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A purchase at the zero rate: no input tax",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 7(a) — the supplier charges the tax at the zero rate. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 2, purchases taxed at the zero rate (صفر): a value only.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2e"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2e",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "JO-P-EX",
+    "name": "Purchase, exempt",
+    "description": "A purchase of an exempt supply: no input tax",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 7(b) — a supplier of an exempt supply charges no tax, so the buyer has no input tax. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 5 — exempt purchases and imports: a value only.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "JO-P-IMP-16",
+    "name": "Purchase of imported goods, 16 % general tax paid at the border",
+    "description": "Imported goods taxed at 16 %: the general tax is collected at the border",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 4(b)(2) — the general tax is charged on the importation of goods from outside the Kingdom or from the free zones; Article 9(c) — it becomes due at the clearance stage at the rate in force when the customs declaration is registered, and is paid before release; Article 15(c) — the value is the customs value plus duties and the other taxes and fees imposed before clearance. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at 16 %. The tax owed to Customs at the border sits on the import control account until paid.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3a"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 170
+  },
+  {
+    "code": "JO-P-IMP-10",
+    "name": "Purchase of imported goods, 10 % general tax paid at the border",
+    "description": "Imported goods taxed at 10 %: the general tax is collected at the border",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 4(b)(2) — the general tax is charged on the importation of goods from outside the Kingdom or from the free zones; Article 9(c) — it becomes due at the clearance stage at the rate in force when the customs declaration is registered, and is paid before release; Article 15(c) — the value is the customs value plus duties and the other taxes and fees imposed before clearance. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at 10 %. The tax owed to Customs at the border sits on the import control account until paid.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3b"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3b"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3b",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3b",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 175
+  },
+  {
+    "code": "JO-P-IMP-4",
+    "name": "Purchase of imported goods, 4 % general tax paid at the border",
+    "description": "Imported goods taxed at 4 %: the general tax is collected at the border",
+    "kind": "vat",
+    "rate": 4,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 4(b)(2) — the general tax is charged on the importation of goods from outside the Kingdom or from the free zones; Article 9(c) — it becomes due at the clearance stage at the rate in force when the customs declaration is registered, and is paid before release; Article 15(c) — the value is the customs value plus duties and the other taxes and fees imposed before clearance. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at 4 %. The tax owed to Customs at the border sits on the import control account until paid.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3c"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3c"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3c",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3c",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 180
+  },
+  {
+    "code": "JO-P-IMP-5",
+    "name": "Purchase of imported goods, 5 % general tax paid at the border",
+    "description": "Imported goods taxed at 5 %: the general tax is collected at the border",
+    "kind": "vat",
+    "rate": 5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 4(b)(2) — the general tax is charged on the importation of goods from outside the Kingdom or from the free zones; Article 9(c) — it becomes due at the clearance stage at the rate in force when the customs declaration is registered, and is paid before release; Article 15(c) — the value is the customs value plus duties and the other taxes and fees imposed before clearance. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at 5 %, entered on the \"other\" rate line (أخرى). The tax owed to Customs at the border sits on the import control account until paid.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3d"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3d"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 185
+  },
+  {
+    "code": "JO-P-IMP-2",
+    "name": "Purchase of imported goods, 2 % general tax paid at the border",
+    "description": "Imported goods taxed at 2 %: the general tax is collected at the border",
+    "kind": "vat",
+    "rate": 2,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 4(b)(2) — the general tax is charged on the importation of goods from outside the Kingdom or from the free zones; Article 9(c) — it becomes due at the clearance stage at the rate in force when the customs declaration is registered, and is paid before release; Article 15(c) — the value is the customs value plus duties and the other taxes and fees imposed before clearance. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at 2 %, entered on the \"other\" rate line (أخرى). The tax owed to Customs at the border sits on the import control account until paid.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3d"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3d"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3d",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 190
+  },
+  {
+    "code": "JO-P-IMP-0",
+    "name": "Purchase of imported goods at the zero rate",
+    "description": "Imported goods taxed at the zero rate",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 4(b)(2) and Article 7(a). GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, imports taxed at the zero rate: a value only.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3e"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3e",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 200
+  },
+  {
+    "code": "JO-P-RC-SVC",
+    "name": "Purchase of an imported service, general tax self-assessed",
+    "description": "A service received from a supplier outside the Kingdom, or performed in it by a non-resident without a branch there: the recipient owes the tax",
+    "kind": "vat",
+    "rate": 16,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2009-12-27",
+    "legal_reference": "General Sales Tax Law No. 6 of 1994 as amended (ISTD consolidated English text), Article 4(b)(2) — the general tax is charged on the importation of services; Article 9(e) — it becomes due when the payment for the service is made, wholly or partly, and the recipient pays it to the Department, \"imported goods\" including services performed in the Kingdom by non-resident persons or foreign firms with no branch there; Article 26(c) — the importer of a service pays within one month of the payment. GST return (form CED:PR15.F12, \"إقرار بالضريبة العامة على المبيعات\", updated 7 November 2022), line 3, \"imported services subject to the tax\": the recipient's tax is deducted on the same line, so the return nets it; the payment to the Department is made apart from the return and is held on its own account. The rate is the general rate; a service on a reduced-rate statement is the preparer's case.",
+    "source": "gst-law",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3s"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3s"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2126"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3s",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "3s",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2126"
+        }
+      ]
+    },
+    "sequence": 210
+  }
+]

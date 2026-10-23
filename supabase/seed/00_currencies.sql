@@ -190,3 +190,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('SCR', 'Seychelles rupee', 'SR', 2)
 on conflict (code) do nothing;
+
+-- Jordanian dinar, three decimals (the fils), packs/jo/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('JOD', 'Jordanian dinar', 'JD', 3)
+on conflict (code) do nothing;

@@ -1,0 +1,459 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Two months of books of an Amman trading company, registered for the general sales tax and filing every two months",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "JO-IFRS-SFP",
+    "JO-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-jo",
+      "name": "Amman Retail Co.",
+      "type": "customer",
+      "country": "JO"
+    },
+    {
+      "ref": "cust-sa",
+      "name": "Riyadh Foods Trading",
+      "type": "customer",
+      "country": "SA"
+    },
+    {
+      "ref": "supp-jo",
+      "name": "Zarqa Wholesalers Co.",
+      "type": "supplier",
+      "country": "JO"
+    },
+    {
+      "ref": "supp-cn",
+      "name": "Shenzhen Components Co.",
+      "type": "supplier",
+      "country": "CN"
+    },
+    {
+      "ref": "supp-gb",
+      "name": "Harlow Consulting Ltd",
+      "type": "supplier",
+      "country": "GB"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-jo",
+      "date": "2026-01-08",
+      "why": "A domestic sale at the standard rate of 16 %: line 6, the 16 % row, value and general tax.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale",
+          "quantity": 10,
+          "unit_price": 1200,
+          "tax": "JO-S-16",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-jo",
+      "date": "2026-01-14",
+      "why": "A sale of goods on the 10 % statement: line 6, the 10 % row.",
+      "lines": [
+        {
+          "name": "Goods listed in the 10 % statement",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "JO-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-jo",
+      "date": "2026-01-19",
+      "why": "A sale of fresh fish, on the 4 % statement: line 6, the 4 % row.",
+      "lines": [
+        {
+          "name": "Fresh fish, wholesale",
+          "quantity": 200,
+          "unit_price": 12.5,
+          "tax": "JO-S-4",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-jo",
+      "date": "2026-01-22",
+      "why": "A sale of prepared animal feed, on the 5 % statement: line 6, the \"other\" row.",
+      "lines": [
+        {
+          "name": "Prepared animal feed, 50 kg bags",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "JO-S-5",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-jo",
+      "date": "2026-01-26",
+      "why": "A sale of bulgur wheat, on the 2 % statement: line 6, the \"other\" row, beside the 5 % sale.",
+      "lines": [
+        {
+          "name": "Bulgur wheat, wholesale",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "JO-S-2",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-sa",
+      "date": "2026-02-03",
+      "why": "An export of goods to a customer abroad, zero-rated under Article 7(a)(2): line 8, a value only, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Olive oil, export consignment",
+          "quantity": 100,
+          "unit_price": 40,
+          "tax": "JO-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-007",
+      "type": "sale_invoice",
+      "contact": "cust-jo",
+      "date": "2026-02-05",
+      "why": "A domestic sale at the zero rate, to a body relieved by Article 21: line 7, a value only.",
+      "lines": [
+        {
+          "name": "Equipment supplied to a diplomatic mission",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "JO-S-ZR",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-008",
+      "type": "sale_invoice",
+      "contact": "cust-jo",
+      "date": "2026-02-09",
+      "why": "An exempt service under Schedule 3: line 10, no general tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Training course, exempt education service",
+          "quantity": 1,
+          "unit_price": 800,
+          "tax": "JO-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-009",
+      "type": "sale_invoice",
+      "contact": "cust-jo",
+      "date": "2026-02-12",
+      "why": "The sale of immovable property, which Article 10(b) leaves outside the tax: line 9, a value only.",
+      "lines": [
+        {
+          "name": "Sale of an office floor, outside the tax",
+          "quantity": 1,
+          "unit_price": 25000,
+          "tax": "JO-S-NT",
+          "account": "4790"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-jo",
+      "date": "2026-02-16",
+      "why": "A credit note for one unit returned from INV-001, so line 6 falls back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "JO-S-16",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-jo",
+      "date": "2026-01-10",
+      "why": "A local purchase at 16 %, tax deducted in full: line 2, the 16 % row.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "JO-P-16",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-jo",
+      "date": "2026-01-12",
+      "why": "Goods of a capital nature bought locally; the form prints no separate line for them, so they share the 16 % row of line 2 (see the README).",
+      "lines": [
+        {
+          "name": "Packaging machine",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "JO-P-16",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-jo",
+      "date": "2026-01-15",
+      "why": "A purchase on the 10 % statement: line 2, the 10 % row.",
+      "lines": [
+        {
+          "name": "Goods listed in the 10 % statement",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "JO-P-10",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-jo",
+      "date": "2026-01-17",
+      "why": "A purchase on the 4 % statement: line 2, the 4 % row.",
+      "lines": [
+        {
+          "name": "Fresh fish for resale",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "JO-P-4",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-jo",
+      "date": "2026-01-20",
+      "why": "A purchase on the 5 % statement: line 2, the \"other\" row.",
+      "lines": [
+        {
+          "name": "Prepared animal feed for resale",
+          "quantity": 1,
+          "unit_price": 400,
+          "tax": "JO-P-5",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-jo",
+      "date": "2026-01-24",
+      "why": "A purchase on which the preparer claims no input tax (Schedule 4): the tax joins the cost and the return has no line for it.",
+      "lines": [
+        {
+          "name": "Client entertainment",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "JO-P-16-NC",
+          "account": "6390"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-007",
+      "type": "purchase_invoice",
+      "contact": "supp-jo",
+      "date": "2026-01-28",
+      "why": "A purchase at the zero rate: line 2, the zero row, a value only.",
+      "lines": [
+        {
+          "name": "Goods supplied at the zero rate",
+          "quantity": 1,
+          "unit_price": 700,
+          "tax": "JO-P-ZR",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-008",
+      "type": "purchase_invoice",
+      "contact": "supp-jo",
+      "date": "2026-02-02",
+      "why": "An exempt service received: no tax, line 5, a value only.",
+      "lines": [
+        {
+          "name": "Business insurance premium",
+          "quantity": 1,
+          "unit_price": 900,
+          "tax": "JO-P-EX",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-009",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-02-06",
+      "why": "An import of goods: the general tax is paid at the border and deducted on line 3, the 16 % row.",
+      "lines": [
+        {
+          "name": "Imported electronic components for resale",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "JO-P-IMP-16",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-010",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-02-10",
+      "why": "An import at the zero rate: line 3, the zero row, a value only.",
+      "lines": [
+        {
+          "name": "Imported goods at the zero rate",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "JO-P-IMP-0",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-011",
+      "type": "purchase_invoice",
+      "contact": "supp-gb",
+      "date": "2026-02-14",
+      "why": "A service received from a supplier abroad: the recipient owes the tax (Article 9(e)) and deducts it on the same line 3, so the return nets it.",
+      "lines": [
+        {
+          "name": "Consulting service from abroad",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "JO-P-RC-SVC",
+          "account": "6420"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-jo",
+      "date": "2026-02-20",
+      "why": "A purchase credit note for a short delivery on PINV-001, so line 2 falls back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "JO-P-16",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-03-05",
+      "amount": 4000,
+      "contact": "cust-sa",
+      "journal": "BNK",
+      "match": "INV-006",
+      "why": "The export of INV-006 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-03-06",
+      "amount": 800,
+      "contact": "cust-jo",
+      "journal": "BNK",
+      "match": "INV-008",
+      "why": "The exempt service of INV-008 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "inbound",
+      "date": "2026-03-07",
+      "amount": 5500,
+      "contact": "cust-jo",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "INV-002 collected in full with its general tax at 10 %."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "outbound",
+      "date": "2026-03-08",
+      "amount": 1100,
+      "contact": "supp-jo",
+      "journal": "BNK",
+      "match": "PINV-003",
+      "why": "PINV-003 paid in full with its general tax at 10 %: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-005",
+      "direction": "outbound",
+      "date": "2026-03-09",
+      "amount": 900,
+      "contact": "supp-jo",
+      "journal": "BNK",
+      "match": "PINV-008",
+      "why": "The exempt service of PINV-008 paid in full."
+    }
+  ]
+}
