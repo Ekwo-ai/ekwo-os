@@ -545,7 +545,8 @@ describe('what `ekwo pack check` refuses', () => {
   });
 
   it('refuses a number format nobody can read, and a duplicate mention', async () => {
-    const slug = (await listPacks(packs))[0] as string;
+    // A pack that prints at least one mention: the duplicate is made of it.
+    const { slug } = packWhere('that prints a mention on what it issues', (p) => p.documents.mentions.length > 0);
     const manifest = JSON.parse(await readFile(join(packs, slug, 'pack.json'), 'utf8')) as Record<string, unknown>;
     const documents = manifest['documents'] as Record<string, unknown>;
 
