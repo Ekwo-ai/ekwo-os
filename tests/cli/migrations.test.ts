@@ -212,7 +212,9 @@ describe('splitting a file into statements', () => {
       const original = sql.replace(/\s+/g, ' ').trim().replace(/;?$/, ';');
       expect(rejoined.replace(/;?$/, ';'), file).toBe(original);
     }
-    // And the splitter does split: almost every migration holds several.
-    expect(multiStatement).toBeGreaterThan(files.length - 3);
+    // And the splitter does split: almost every migration holds several. A
+    // migration that only corrects data — `20261023160000` records paid in one
+    // `do` block — is one statement, so the bar is a share and not a count.
+    expect(multiStatement).toBeGreaterThan(files.length * 0.95);
   });
 });
