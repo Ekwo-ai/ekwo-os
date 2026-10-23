@@ -22,7 +22,7 @@ the only one this cycle needs.
 | 3 | Produce the file | a brick of `packages/formats/` | ✅ | |
 | 4 | Send | — | ✅ by hand on the portal | the credentials and the deadline |
 | 5 | Record what came back | `file_filing()`, `record_filing_outcome()` | ✅ | |
-| 6 | Archive, and prove | `attachments`, `tax_filing_deposits`, `ekwo proof stamp` | ✅ | |
+| 6 | Archive, and prove | `attachments`, `record_filing_files()`, `ekwo proof stamp` | ✅ | |
 | 7 | Settle and pay | `settle_filing()`, `auto_settle()` | ✅ | the bank connection |
 | 8 | Correct | `reopen_filing()`, `supersede_filing()` | ✅ | |
 
@@ -96,7 +96,11 @@ declaration back to draft so they can be worked out again.
 ### 6. Archive
 
 The file that was sent and the receipt are `attachments` of the declaration, and
-the deposit names which is which (`sent_file_id`, `acknowledgement_id`). They
+the deposit names which is which (`sent_file_id`, `acknowledgement_id`).
+`record_filing_files(filing, sent, acknowledgement)` names them on the last
+send, under the right that records the send, and refuses by name a declaration
+that was not sent, one a corrective replaced, and a file kept on anything but
+this declaration. They
 belong to the company: stopping a subscription takes away the sending, never the
 proof of having sent.
 
@@ -133,10 +137,17 @@ A credit is not settled until the company says what happens to it: carried to
 the next declaration, or claimed back. Both are ordinary, and the choice is not
 the schema's.
 
-The debt is then an open item like any other. Name the administration as the
-contact of the settlement, give the entry the reference the payment will quote,
-and `auto_settle()` matches the payment against it — by reference, like any
-other payment.
+The debt is then an open item like any other, and it names the administration.
+The pack says who that is (`defaults.tax_payee`); `tax_payee(company)` finds
+the company's contact for it — the one contact that books to the account the
+pack names — or creates it under the pack's name, and `settle_filing()` names
+it when its caller names nobody. Give the entry the reference the payment will
+quote, and `auto_settle()` matches the payment against it — by reference, like
+any other payment.
+
+When that debt is matched in full, by whatever path, the declaration is
+**paid**: `record_filing_outcome(…, 'paid')` is called for it, on the send it
+answers. Undoing the matching takes it back to accepted.
 
 ### 8. Correct
 

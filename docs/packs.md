@@ -2831,6 +2831,26 @@ day for one year. Leave it out where the law asks for nothing: the final close
 is still offered by `close_fiscal_year_finally()`, and never asked for. The
 pack needs `schema_min` of `20261018130000` or later.
 
+**Who a declaration is paid to.** `defaults.tax_payee` names the administration
+that collects the tax the periodic return declares — the payee of the debt
+`settle_filing()` carries to `roles.tax_payable`:
+
+```json
+"tax_payee": {
+  "name": "the administration's official name, in the pack's language",
+  "source": "a key of certification.sources"
+}
+```
+
+Both are required. The source is an entry of the register **published by that
+administration** — its portal, a form, its guidance — where the name can be
+read; a ministry, a law firm or a summary elsewhere is not one. A pack whose
+register holds no such entry leaves `tax_payee` out rather than writing a name
+from memory. It compiles into `country_defaults.tax_payee_name`, and
+`tax_payee()` creates the company's contact for the administration under it,
+on the accounts settling uses. The pack needs `schema_min` of
+`20261023124650` or later.
+
 ### 4. The taxes, and where each one posts
 
 `taxes.json`. One entry per code, and a code is a rate at a date: a new rate is

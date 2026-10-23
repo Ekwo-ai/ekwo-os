@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.17.0",
-  "migration": "20261022110100",
+  "migration": "20261023124650",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1839,6 +1839,14 @@
           },
           {
             "name": "tax_payable_code",
+            "type": "text"
+          },
+          {
+            "name": "tax_payee_name",
+            "type": "text"
+          },
+          {
+            "name": "tax_payee_source_key",
             "type": "text"
           },
           {
@@ -5768,6 +5776,10 @@
         "arguments": ""
       },
       {
+        "name": "record_filing_files",
+        "arguments": "p_filing_id uuid, p_sent_file_id uuid, p_acknowledgement_id uuid"
+      },
+      {
         "name": "record_filing_outcome",
         "arguments": "p_filing_id uuid, p_state tax_filing_state, p_reference text, p_message text"
       },
@@ -5948,8 +5960,16 @@
         "arguments": "p_filing_id uuid"
       },
       {
+        "name": "tax_filings_paid_by_matching",
+        "arguments": ""
+      },
+      {
         "name": "tax_filings_report_exists",
         "arguments": ""
+      },
+      {
+        "name": "tax_payee",
+        "arguments": "p_company_id uuid"
       },
       {
         "name": "tax_point_of",
@@ -7184,6 +7204,10 @@
       {
         "table": "entry_lines",
         "name": "entry_lines_set_updated_at"
+      },
+      {
+        "table": "entry_lines",
+        "name": "tax_filings_paid_by_matching"
       },
       {
         "table": "fiscal_years",
@@ -11638,6 +11662,17 @@
           "service_role": []
         },
         {
+          "name": "record_filing_files",
+          "arguments": "p_filing_id uuid, p_sent_file_id uuid, p_acknowledgement_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "record_filing_outcome",
           "arguments": "p_filing_id uuid, p_state tax_filing_state, p_reference text, p_message text",
           "anon": [],
@@ -12115,12 +12150,31 @@
           ]
         },
         {
+          "name": "tax_filings_paid_by_matching",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "tax_filings_report_exists",
           "arguments": "",
           "trigger": true,
           "anon": [],
           "authenticated": [],
           "service_role": []
+        },
+        {
+          "name": "tax_payee",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
         },
         {
           "name": "tax_point_of",

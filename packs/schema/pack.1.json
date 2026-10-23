@@ -489,6 +489,27 @@
             }
           }
         },
+        "tax_payee": {
+          "type": "object",
+          "description": "The administration a declaration of this country is paid to: the payee of the debt settle_filing() carries to roles.tax_payable. tax_payee() creates the company's contact for it under this name, booking to that account, so a settlement always names somebody and its payment can be matched to it. Left out where the pack has not read who collects the tax; a settlement then names nobody unless a contact already books to the account. Compiled into country_defaults.tax_payee_name.",
+          "required": [
+            "name",
+            "source"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The administration's official name, in the pack's own language (defaults.language), as the source spells it."
+            },
+            "source": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]{0,39}$",
+              "description": "Key of the entry of certification.sources published by that administration, where its name is read. Required: a payee nobody can trace is a name somebody guessed."
+            }
+          }
+        },
         "fiscal_year_default": {
           "enum": [
             "calendar",

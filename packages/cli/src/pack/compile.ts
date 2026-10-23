@@ -22,7 +22,7 @@
  */
 
 import { describeCertification } from './certification.js';
-import { finalCloseOf, sourcesOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackReport, type PackSource, type PackStatement, type PackTax } from './read.js';
+import { finalCloseOf, sourcesOf, taxPayeeOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackReport, type PackSource, type PackStatement, type PackTax } from './read.js';
 import { compileCorporateTaxSection } from './corporate-tax.js';
 import { compileTurnoverTaxSection } from './turnover-tax.js';
 import { compileVatSchemesSection } from './vat-schemes.js';
@@ -99,6 +99,7 @@ export function compilePack(pack: Pack): string {
   out.push(...defaults(pack, country));
   out.push(...documentRules(pack, country));
   out.push(...finalClose(pack, country));
+  out.push(...taxPayee(pack, country));
 
   return `${out.join('\n')}\n`;
 }
@@ -974,6 +975,25 @@ function finalClose(pack: Pack, country: string): string[] {
     `  final_close_due             = ${text(rule.due)},`,
     `  final_close_legal_reference = ${text(rule.legal_reference)},`,
     `  final_close_source_key      = ${text(rule.source ?? null)}`,
+    ` where country = ${text(country)};`,
+  ];
+}
+
+/**
+ * The administration a declaration is paid to — `defaults.tax_payee`, into the
+ * two `country_defaults` columns that `20261023124650` added.
+ *
+ * Written only when the pack says it, like `final_close`: a pack that names no
+ * administration keeps a seed that runs on a schema from before the columns.
+ */
+function taxPayee(pack: Pack, country: string): string[] {
+  const payee = taxPayeeOf(pack.manifest);
+  if (payee === null) return [];
+  return [
+    '',
+    'update country_defaults set',
+    `  tax_payee_name       = ${text(payee.name)},`,
+    `  tax_payee_source_key = ${text(payee.source)}`,
     ` where country = ${text(country)};`,
   ];
 }

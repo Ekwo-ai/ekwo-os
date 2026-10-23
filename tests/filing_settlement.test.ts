@@ -381,6 +381,9 @@ describe('the payment that follows', () => {
     ]);
     expect(left).toHaveLength(0);
     expect(entryId).toBeTruthy();
+    // The debt matched in full, the declaration is paid.
+    const paid = await one<Filing>(db, `select * from tax_filings where id = $1`, [filing.id]);
+    expect(paid.state).toBe('paid');
   });
 });
 
@@ -453,14 +456,38 @@ describe('what it refuses', () => {
     ]);
     expect(message).toContain('contact_account_mismatch');
     expect(message).toContain(PAYABLE);
-
-    // Left out, it settles: the debt is simply one nobody is named on.
-    const entryId = await settle(filing.id);
-    expect(entryId).toBeTruthy();
+    // Refused, it posted nothing: the period is still there to settle.
+    const after = await one<Filing>(db, `select * from tax_filings where id = $1`, [filing.id]);
+    expect(after.settlement_entry_id).toBeNull();
   });
 
   it('a payment it cannot book, without taking the rest of the pass down with it', async () => {
     const [from, to] = periods[3]!;
+    // A debt that names nobody: the pack names no administration and no
+    // contact books to the account, so the settlement has nobody to name.
+    const filing = await one<Filing>(
+      db,
+      `select * from tax_filings where company_id = $1 and period_start = $2::date`,
+      [fx.companyId, from],
+    );
+    const named = await one<{ tax_payee_name: string | null }>(
+      db,
+      `select tax_payee_name from country_defaults where country = $1`,
+      [pack.manifest.country],
+    );
+    await db.query(`update contacts set active = false where id = $1`, [administrationId]);
+    await db.query(`update country_defaults set tax_payee_name = null where country = $1`, [
+      pack.manifest.country,
+    ]);
+    try {
+      await settle(filing.id);
+    } finally {
+      await db.query(`update contacts set active = true where id = $1`, [administrationId]);
+      await db.query(`update country_defaults set tax_payee_name = $2 where country = $1`, [
+        pack.manifest.country,
+        named.tax_payee_name,
+      ]);
+    }
     const debt = await one<{ amount_open: string; line_id: string }>(
       db,
       `select o.amount_open::text, o.line_id from open_items($1) o

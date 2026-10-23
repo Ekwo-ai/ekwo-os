@@ -1844,6 +1844,7 @@ function sourceRegister(
       })),
     ...fiscalisationSources(documents.einvoice_fiscalisation).map((reference) => ({ ...reference, kind: 'rule' as const })),
     ...finalCloseSources(manifest),
+    ...taxPayeeSources(manifest),
     ...charts.map((chart) => ({ path: `pack.json charts.${chart.code}`, source: chart.source, kind: 'other' as const })),
     ...(manifest.not_taxed ?? []).map((entry) => ({
       path: `pack.json not_taxed.${entry.treatment}`,
@@ -2043,6 +2044,23 @@ function finalCloseSources(manifest: Manifest): { path: string; source: string |
   const finalClose = finalCloseOf(manifest);
   if (finalClose === null) return [];
   return [{ path: 'pack.json defaults.final_close', source: finalClose.source ?? null, kind: 'rule' }];
+}
+
+/**
+ * The register key of `defaults.tax_payee`, where a pack names the
+ * administration: its name is a fact read somewhere, like a rate.
+ */
+function taxPayeeSources(manifest: Manifest): { path: string; source: string | null; kind: 'rule' }[] {
+  const payee = taxPayeeOf(manifest);
+  if (payee === null) return [];
+  return [{ path: 'pack.json defaults.tax_payee', source: payee.source, kind: 'rule' }];
+}
+
+/** `defaults.tax_payee` of a manifest, or null where the pack names no administration. */
+export function taxPayeeOf(manifest: Manifest): { name: string; source: string } | null {
+  const raw = manifest.defaults['tax_payee'];
+  if (raw === null || raw === undefined || typeof raw !== 'object') return null;
+  return raw as { name: string; source: string };
 }
 
 /** `defaults.final_close` of a manifest, or null where the country says nothing. */

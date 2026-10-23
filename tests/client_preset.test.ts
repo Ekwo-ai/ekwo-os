@@ -981,6 +981,13 @@ describe('a client writes nothing else — by the function', () => {
         params: [mine.filedFilingId],
       },
       'public.settle_filing': { sql: `select settle_filing($1)`, params: [mine.filedFilingId] },
+      // Naming the files of a send, and finding the administration a
+      // settlement names: filings.write, as the acts they belong to.
+      'public.record_filing_files': {
+        sql: `select record_filing_files($1, gen_random_uuid())`,
+        params: [mine.filedFilingId],
+      },
+      'public.tax_payee': { sql: `select tax_payee($1)`, params: [mine.companyId] },
       // Posting the tax on turnover of a period writes an entry and prepares a
       // filing: filings.write, and posting.
       'public.post_turnover_tax': {
