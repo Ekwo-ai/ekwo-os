@@ -33,9 +33,12 @@ const dated = packWhere(
   'names the day its periodic return is due',
   (p) => p.report !== null && producesDay(p) && p.golden !== null,
 );
+// It also names the period a company files for by default: without one, a
+// company of the pack has no period at all, and its row says nothing is due
+// rather than that no day is named.
 const undated = packWhere(
-  'files a periodic return and names no day for it',
-  (p) => p.report !== null && !producesDay(p),
+  'files a periodic return on a default period and names no day for it',
+  (p) => p.report !== null && p.report.period_default != null && !producesDay(p),
 );
 const third = packWhere(
   'files a periodic return, and is neither of the two above',
