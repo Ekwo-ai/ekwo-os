@@ -1,0 +1,421 @@
+[
+  {
+    "code": "LI-S-81",
+    "name": "Verkauf, Normalsatz 8,1 %",
+    "rate": 8.1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Art. 25 Abs. 1 MWSTG — die Steuer beträgt 8,1 % (Normalsatz); die Abs. 2 und 4 bleiben vorbehalten. Der Wortlaut in der Fassung vom 1. Januar 2026 geht auf LGBl. 2023 Nr. 221 zurück; der Beginn am 1. Januar 2024 (zuvor 7,7 %) stammt aus Sekundärquellen und dem Gleichlauf mit dem schweizerischen Recht, nicht aus dem Landesgesetzblatt selbst.",
+    "source": "mwstg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "303"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "303"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "303"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "303",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 10
+  },
+  {
+    "code": "LI-S-26",
+    "name": "Verkauf, reduzierter Satz 2,6 %",
+    "rate": 2.6,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Art. 25 Abs. 2 MWSTG — der reduzierte Steuersatz von 2,6 % gilt für eine abschliessende Liste von Leistungen: Wasser in Leitungen, Lebensmittel nach dem schweizerischen Lebensmittelgesetz ohne alkoholische Getränke, Vieh, Geflügel, Fische, Getreide, Sämereien und Pflanzen, Futtermittel, Dünger, Medikamente, Zeitungen, Zeitschriften und Bücher ohne Reklamecharakter, Produkte für die Monatshygiene, u.a. Gastgewerbliche Leistungen unterliegen nach Abs. 3 dem Normalsatz. Fassung LGBl. 2023 Nr. 221.",
+    "source": "mwstg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "313"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "313"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "313"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "313",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 20
+  },
+  {
+    "code": "LI-S-38-HEB",
+    "name": "Beherbergungsleistung, Sondersatz 3,8 %",
+    "rate": 3.8,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Art. 25 Abs. 4 MWSTG — die Steuer auf Beherbergungsleistungen (Unterkunft einschliesslich Frühstück, auch wenn dieses separat berechnet wird) beträgt 3,8 % (Sondersatz). Der gelesene liechtensteinische Gesetzestext nennt keine Befristung dieses Satzes; die schweizerische Befristung bis 31. Dezember 2027 steht nicht in ihm. Fassung LGBl. 2023 Nr. 221.",
+    "source": "mwstg",
+    "vat_category": "S",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "343"
+          ]
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "343"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "343"
+          ],
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "343",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 30
+  },
+  {
+    "code": "LI-S-EXPORT",
+    "name": "Ausfuhrlieferung (von der Steuer befreit)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Art. 23 Abs. 1 und Abs. 2 Ziff. 1 MWSTG — die Lieferung von Gegenständen, die direkt ins Ausland befördert oder versendet werden, ist von der Steuer befreit; auf ihr ist keine Inlandsteuer geschuldet, und der Vorsteuerabzug bleibt erhalten (echte Befreiung, im Gegensatz zu Art. 21). «Inland» ist nach Art. 3 Bst. a MWSTG das Gebiet Liechtensteins sowie ausländische Gebiete gemäss staatsvertraglicher Vereinbarung; ob und welche Lieferungen in die Schweiz davon erfasst sind, ist in README.md vermerkt und von diesem Code nicht entschieden.",
+    "source": "mwstg",
+    "vat_category": "G",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "220"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "220"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 40
+  },
+  {
+    "code": "LI-S-FOREIGN",
+    "name": "Dienstleistung mit Erbringungsort im Ausland",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Art. 8 Abs. 1 MWSTG — als Ort der Dienstleistung gilt der Ort, an dem der Empfänger den Sitz seiner wirtschaftlichen Tätigkeit oder eine Betriebsstätte hat (Empfängerortsprinzip); Art. 18 Abs. 1 MWSTG unterstellt der Inlandsteuer nur die im Inland erbrachten Leistungen. Eine Dienstleistung mit Ort im Ausland ist nicht steuerbar.",
+    "source": "mwstg",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "221"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "221"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 50
+  },
+  {
+    "code": "LI-S-EXCLU",
+    "name": "Von der Steuer ausgenommene Leistung (ohne Option)",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Art. 21 Abs. 1 und 2 MWSTG — eine von der Steuer ausgenommene Leistung ist nicht steuerbar, sofern nicht nach Art. 22 für ihre Versteuerung optiert wird; es besteht dafür kein Anspruch auf Vorsteuerabzug (Art. 29 Abs. 1). Beispiel in Art. 21 Abs. 2 Ziff. 21: die Überlassung von Grundstücken und Grundstücksteilen zum Gebrauch oder zur Nutzung. Kein exemption_code: Liechtenstein liegt ausserhalb des gemeinsamen Mehrwertsteuersystems der EU, dessen Liste VATEX Art. 21 MWSTG nicht kennt.",
+    "source": "mwstg",
+    "vat_category": "E",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "230"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": [
+            "200",
+            "230"
+          ],
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 60
+  },
+  {
+    "code": "LI-P-81",
+    "name": "Einkauf Material-/Dienstleistungsaufwand, Normalsatz 8,1 %",
+    "rate": 8.1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Art. 28 Abs. 1 Bst. a MWSTG — Anspruch auf Abzug der in Rechnung gestellten Inlandsteuer im Rahmen der unternehmerischen Tätigkeit. Ziffer 400 der Abrechnung (Vorsteuer auf Material- und Dienstleistungsaufwand), getrennt von den Investitionen (Ziffer 405, siehe LI-P-81-INV). Eine Bemessungsgrundlage verlangt die Abrechnung für den Bezug nicht, weshalb dieser Code keine base-Buchung trägt.",
+    "source": "mwstg",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "400"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "400",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 70
+  },
+  {
+    "code": "LI-P-81-INV",
+    "name": "Einkauf Investitionen und übriger Betriebsaufwand, Normalsatz 8,1 %",
+    "rate": 8.1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Art. 28 Abs. 1 Bst. a MWSTG, ausgewiesen unter Ziffer 405 der Abrechnung (Vorsteuer auf Investitionen und übrigem Betriebsaufwand) — dieselbe Grundlage wie LI-P-81, aber die andere Zeile, weil die Abrechnung zwischen laufendem Aufwand und Investitionen unterscheidet.",
+    "source": "mwstg",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "405"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "405",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 80
+  },
+  {
+    "code": "LI-P-26",
+    "name": "Einkauf Material-/Dienstleistungsaufwand, reduzierter Satz 2,6 %",
+    "rate": 2.6,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Art. 28 Abs. 1 Bst. a MWSTG, Ziffer 400 der Abrechnung, zum reduzierten Satz von Art. 25 Abs. 2 MWSTG.",
+    "source": "mwstg",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "400"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "400",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 90
+  },
+  {
+    "code": "LI-P-81-NA",
+    "name": "Einkauf für eine von der Steuer ausgenommene Tätigkeit, Normalsatz 8,1 % (nicht abziehbar)",
+    "rate": 8.1,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Art. 29 Abs. 1 MWSTG — kein Anspruch auf Vorsteuerabzug bei Leistungen, die für die Erbringung von der Steuer ausgenommener Leistungen verwendet werden, für deren Versteuerung nicht optiert wurde. Die vom Lieferanten in Rechnung gestellte Steuer ist Teil der Anschaffungskosten und wird auf dem Konto der belasteten Zeile gebucht; die Abrechnung hat dafür keine eigene Ziffer.",
+    "source": "mwstg",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 100
+  },
+  {
+    "code": "LI-P-BEZUGSTEUER-81",
+    "name": "Bezug einer Dienstleistung aus dem Ausland, Bezugsteuer 8,1 %",
+    "rate": 8.1,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Art. 45 Abs. 1 Bst. a und Abs. 2 MWSTG — der Bezugsteuer unterliegen Dienstleistungen mit Ort im Inland (Art. 8 Abs. 1), die von Unternehmen mit Sitz im Ausland erbracht werden, die nicht im Register der steuerpflichtigen Personen eingetragen sind; steuerpflichtig ist der Empfänger, wenn er nach Art. 10 steuerpflichtig ist oder im Kalenderjahr solche Leistungen für mehr als 10 000 Franken bezieht. Art. 46 verweist für Bemessung und Satz auf Art. 24 und 25; Art. 28 Abs. 1 Bst. b erlaubt den gleichzeitigen Abzug der deklarierten Bezugsteuer als Vorsteuer. Ziffer 383 weist die Bezugsteuer im Total der geschuldeten Steuer (Ziffer 399) aus, Ziffer 400 den Abzug. Ein inländisches Reverse-Charge-Verfahren kennt das Gesetz nicht.",
+    "source": "mwstg",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "400"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2110",
+          "box": "383"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "1170",
+          "box": "400",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2110",
+          "box": "383",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 110
+  },
+  {
+    "code": "LI-P-IMPORT-81",
+    "name": "Einfuhr von Gegenständen, Einfuhrsteuer 8,1 %",
+    "rate": 8.1,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Art. 50 MWSTG — für die Steuer auf der Einfuhr von Gegenständen gelten die aufgrund des Vertrages vom 28. Oktober 1994 mit der Schweizerischen Eidgenossenschaft betreffend die Mehrwertsteuer im Fürstentum Liechtenstein massgeblichen schweizerischen Rechtsvorschriften; sie wird beim Bundesamt für Zoll und Grenzsicherheit (BAZG) entrichtet, ausser im Verlagerungsverfahren (Art. 51). Art. 28 Abs. 1 Bst. c MWSTG lässt die entrichtete Einfuhrsteuer als Vorsteuer abziehen (Ziffer 405). Dieser Code bildet nur den Vorsteuerabzug ab, keine Schuld gegenüber der Steuerverwaltung.",
+    "source": "mwstg",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "405"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "1171",
+          "box": "405",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 120
+  }
+]
