@@ -1,0 +1,179 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "AD",
+  "name": "Andorra",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 220,
+  "released_at": "2026-10-23",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "igi-law",
+        "title": "Llei 11/2012, del 21 de juny, de l’impost general indirecte (BOPA núm. 33, any 24, 18.7.2012)",
+        "publisher": "Consell General del Principat d’Andorra",
+        "url": "https://www.consellgeneral.ad/fitxers/documents/lleis-2012/llei-11-2012.pdf",
+        "consulted_on": "2026-10-23",
+        "kind": "law"
+      },
+      {
+        "key": "igi-law-2014",
+        "title": "Llei 10/2014, del 3 de juny, de modificació de la Llei 11/2012 de l’impost general indirecte (BOPA núm. 38, any 26, 26.6.2014)",
+        "publisher": "Consell General del Principat d’Andorra",
+        "url": "https://www.consellgeneral.ad/fitxers/documents/lleis-2014/llei-10-2014",
+        "consulted_on": "2026-10-23",
+        "kind": "law"
+      },
+      {
+        "key": "tax-calendar",
+        "title": "Calendari fiscal 2023 — impost general indirecte, liquidació mensual, trimestral o semestral",
+        "publisher": "Govern d’Andorra — Seu electrònica (e-tràmits)",
+        "url": "https://www.e-tramits.ad/tramits/_ui/responsive/common/docs/Calendari%202023.pdf",
+        "consulted_on": "2026-10-23",
+        "kind": "guidance"
+      },
+      {
+        "key": "accounting-law",
+        "title": "Text refós de la Llei 30/2007, del 20 de desembre, de la comptabilitat dels empresaris, modificada per la Llei 8/2010 i la Llei 26/2011",
+        "publisher": "Consell General del Principat d’Andorra",
+        "url": "https://www.consellgeneral.ad/ca/arxiu/arxiu-de-lleis-i-textos-aprovats-en-legislatures-anteriors/vi-legislatura-2011-2015/copy_of_lleis-aprovades/decret-del-15-02-2012-pel-qual-s2019ordena-la-publicacio-del-text-refos-de-la-llei-30-2007-del-20-de-desembre-de-la-comptabilitat-dels-empresaris-modificada-per-la-llei-8-2010-del-22-d2019abril-i-per-la-llei-26-2011-del-29-de-desembre/at_download/PDF",
+        "consulted_on": "2026-10-23",
+        "kind": "law"
+      },
+      {
+        "key": "pgc",
+        "title": "Decret 479/2025, del 23-12-2025, pel qual s’aprova el nou Pla general de comptabilitat (copy published by the Cambra de Comerç, Indústria i Serveis d’Andorra)",
+        "publisher": "Govern d’Andorra — Butlletí Oficial del Principat d’Andorra",
+        "url": "https://www.ccis.ad/wp-content/uploads/2026/01/PGC.pdf",
+        "consulted_on": "2026-10-23",
+        "kind": "regulation"
+      },
+      {
+        "key": "e-tramits",
+        "title": "E-tràmits — Seu electrònica del Govern d’Andorra, on the IGI declaration is filed",
+        "publisher": "Govern d’Andorra",
+        "url": "https://www.e-tramits.ad/",
+        "consulted_on": "2026-10-23",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "EUR",
+    "language": "ca",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "4300",
+      "payable": "4000",
+      "suspense": "5550",
+      "rounding": "6990",
+      "retained_earnings": "1200",
+      "sales": "7000",
+      "purchase": "6000",
+      "bank": "5720",
+      "cash": "5700",
+      "fx_gain": "7680",
+      "fx_loss": "6680",
+      "asset_disposal_gain": "7710",
+      "asset_disposal_loss": "6700",
+      "tax_payable": "4750",
+      "tax_receivable": "4700"
+    },
+    "journal_roles": {
+      "sales": "VEN",
+      "purchase": "COM",
+      "miscellaneous": "GEN",
+      "opening": "OBR"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "VEN",
+      "type": "sales",
+      "name": "Diari de vendes",
+      "sequence": 10
+    },
+    {
+      "code": "COM",
+      "type": "purchase",
+      "name": "Diari de compres",
+      "sequence": 20
+    },
+    {
+      "code": "BAN",
+      "type": "bank",
+      "name": "Banc",
+      "sequence": 30
+    },
+    {
+      "code": "CAI",
+      "type": "cash",
+      "name": "Caixa",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "Diari general",
+      "sequence": 50
+    },
+    {
+      "code": "OBR",
+      "type": "opening",
+      "name": "Obertura d’exercici",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Pla de comptes de referència d’Andorra",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "AD-PGC-BAL",
+        "AD-PGC-PYG"
+      ],
+      "legal_reference": "Llei 30/2007 and the Pla general de comptabilitat approved by Decret 479/2025 prescribe the annual accounts (a balance sheet and an income statement, in a normal and an abridged model) and the recognition and valuation rules, but the text read prints no numbered chart of accounts: the account plan of this pack is original. Four digits, grouped like the plan the Andorran profession has long used (1 equity and long-term funds, 2 non-current assets, 3 stocks, 4 third parties and the IGI accounts, 5 financial accounts, 6 expenses, 7 income), with the names of the Pla general de comptabilitat’s headings.",
+      "source": "pgc"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "The texts read do not say how an Andorran invoice is numbered: the invoicing regulation that Llei 11/2012 refers to for the content of the invoice was not found. `sequential` and the number format are conventions of this pack and not rules of the law.",
+        "source": "igi-law"
+      },
+      "tax_point": {
+        "legal_reference": "Llei 11/2012 has its own chapter on the accrual (meritació) of the tax; it was not read article by article, and `invoice_date` is a convention of this pack. A payment received before the invoice may bring the accrual forward.",
+        "source": "igi-law"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No structured e-invoice standard or clearance system of the Andorran administration was found in the texts read; e-tràmits takes the declarations, not invoices. `obligation` is `none` for want of a text, not on a finding that none exists.",
+    "source": "e-tramits"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "The text of Llei 11/2012 and of Llei 10/2014 read contains no article making the buyer in Andorra assess the IGI on a service bought from a supplier established abroad: the chapters on the taxable person and on the place of supply were searched for a reverse charge and none was found. This is a finding about the texts read, not about the whole of the Andorran legislation; if a rule exists elsewhere it is a gap recorded in the README.",
+      "source": "igi-law"
+    }
+  ]
+}

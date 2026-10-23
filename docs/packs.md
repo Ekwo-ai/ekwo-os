@@ -319,6 +319,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 <!-- generated:packs -->
 | Pack | Country | Seed | Languages | Certification |
 |---|---|---|---|---|
+| [`ad`](../packs/ad/) | Andorra | `220_pack_ad.sql` | ca | `community` |
 | [`ae`](../packs/ae/) | United Arab Emirates | `60_pack_ae.sql` | en | `community` |
 | [`ag`](../packs/ag/) | Antigua and Barbuda | `400_pack_ag.sql` | en | `community` |
 | [`al`](../packs/al/) | Albania | `114_pack_al.sql` | sq, en | `community` |

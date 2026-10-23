@@ -1,0 +1,135 @@
+code,parent,type,reconcilable,name,sequence
+1000,,equity,false,Capital,10
+1050,,equity,false,Capital pendent de desemborsar,20
+1100,,equity,false,Prima d’emissió,30
+1120,,equity,false,Reserva legal,40
+1130,,equity,false,Reserves voluntàries,50
+1140,,equity,false,Reserva de revaloració,60
+1150,,equity,false,Accions o participacions pròpies,70
+1200,,equity_retained,false,Resultats d’exercicis anteriors,80
+1210,,equity_retained,false,Dividends repartits,90
+1300,,equity,false,"Subvencions, donacions i llegats de capital",100
+1400,,liability_non_current,false,Provisions a llarg termini per retribucions al personal,110
+1430,,liability_non_current,false,Altres provisions a llarg termini,120
+1600,,liability_non_current,false,Deutes a llarg termini amb entitats de crèdit,130
+1610,,liability_non_current,false,Deutes a llarg termini per arrendaments,140
+1620,,liability_non_current,false,Préstecs de socis a llarg termini,150
+1650,,liability_non_current,false,Fiances i dipòsits rebuts a llarg termini,160
+1800,,liability_non_current,false,Passius per impost diferit,170
+2100,,asset_fixed,false,"Immobilitzat intangible, cost",180
+2110,,asset_fixed,false,Fons de comerç,190
+2190,,asset_fixed,false,"Immobilitzat intangible, amortització acumulada",200
+2200,,asset_fixed,false,Terrenys,210
+2210,,asset_fixed,false,"Construccions, cost",220
+2211,,asset_fixed,false,"Construccions, amortització acumulada",230
+2220,,asset_fixed,false,"Instal·lacions tècniques i maquinària, cost",240
+2221,,asset_fixed,false,"Instal·lacions tècniques i maquinària, amortització acumulada",250
+2230,,asset_fixed,false,"Mobiliari, cost",260
+2231,,asset_fixed,false,"Mobiliari, amortització acumulada",270
+2240,,asset_fixed,false,"Equips per a processos d’informació, cost",280
+2241,,asset_fixed,false,"Equips per a processos d’informació, amortització acumulada",290
+2250,,asset_fixed,false,"Elements de transport, cost",300
+2251,,asset_fixed,false,"Elements de transport, amortització acumulada",310
+2260,,asset_fixed,false,"Altre immobilitzat material, cost",320
+2261,,asset_fixed,false,"Altre immobilitzat material, amortització acumulada",330
+2270,,asset_fixed,false,"Drets d’ús de béns arrendats, cost",340
+2271,,asset_fixed,false,"Drets d’ús de béns arrendats, amortització acumulada",350
+2400,,asset_non_current,false,"Inversions immobiliàries, cost",360
+2410,,asset_non_current,false,"Inversions immobiliàries, amortització acumulada",370
+2500,,asset_non_current,false,Participacions en empreses del grup i associades,380
+2520,,asset_non_current,false,Altres inversions financeres a llarg termini,390
+2530,,asset_non_current,false,Fiances i dipòsits constituïts a llarg termini,400
+2700,,asset_non_current,false,Actius per impost diferit,410
+3000,,asset_current,false,Mercaderies,420
+3100,,asset_current,false,Matèries primeres,430
+3200,,asset_current,false,Altres aprovisionaments,440
+3300,,asset_current,false,Productes en curs,450
+3500,,asset_current,false,Productes acabats,460
+3900,,asset_current,false,Deteriorament de valor de les existències,470
+4000,,liability_payable,true,Proveïdors,480
+4100,,liability_current,false,Creditors diversos,490
+4110,,liability_current,false,"Empreses del grup i vinculades, creditores",500
+4120,,liability_current,false,Bestretes de clients,510
+4300,,asset_receivable,true,Clients,520
+4310,,asset_current,false,Clients de cobrament dubtós,530
+4390,,asset_current,false,Deteriorament de valor de crèdits per operacions comercials,540
+4400,,asset_current,false,Deutors diversos,550
+4410,,asset_current,false,"Empreses del grup i vinculades, deutores",560
+4600,,asset_current,false,Bestretes de remuneracions,570
+4700,,asset_current,true,"Hisenda pública, deutora per IGI — saldo d’una declaració presentada",580
+4720,,asset_current,false,IGI suportat,590
+4730,,asset_current,false,"Hisenda pública, deutora per impost sobre societats",600
+4750,,liability_current,true,"Hisenda pública, creditora per IGI — saldo d’una declaració presentada",610
+4751,,liability_current,false,"Hisenda pública, creditora per retencions practicades",620
+4752,,liability_current,false,"Hisenda pública, creditora per impost sobre societats",630
+4760,,liability_current,false,"Caixa Andorrana de Seguretat Social, creditora",640
+4770,,liability_current,false,IGI repercutit,650
+4780,,liability_current,false,"IGI de les importacions, pendent de pagament a la Duana",660
+4790,,liability_current,false,Remuneracions pendents de pagament,670
+4900,,asset_prepayments,false,Despeses anticipades,680
+4910,,asset_prepayments,false,Ingressos meritats i no cobrats,690
+4950,,liability_current,false,Ingressos anticipats,700
+5200,,liability_current,false,Deutes a curt termini amb entitats de crèdit,710
+5210,,liability_current,false,Deutes a curt termini per arrendaments,720
+5230,,liability_current,false,Préstecs de socis a curt termini,730
+5250,,liability_credit_card,false,Targeta de crèdit de l’empresa,740
+5300,,liability_current,false,Fiances i dipòsits rebuts a curt termini,750
+5400,,asset_current,false,Inversions financeres a curt termini,760
+5500,,liability_current,false,Compte corrent amb socis i administradors,770
+5550,,liability_current,false,Partides pendents d’aplicació,780
+5700,,asset_cash,false,Caixa,790
+5720,,asset_cash,false,"Bancs i institucions de crèdit, compte corrent en euros",800
+5721,,asset_cash,false,"Bancs, compte en divisa",810
+5730,,asset_cash,false,Dipòsits a termini de tres mesos o menys,820
+5740,,asset_cash,false,Cobraments pendents de targeta i pagament mòbil,830
+5900,,liability_current,false,Provisions a curt termini,840
+6000,,expense_direct_cost,false,Compres de mercaderies,850
+6010,,expense_direct_cost,false,Compres de matèries primeres,860
+6020,,expense_direct_cost,false,Compres d’altres aprovisionaments,870
+6030,,expense_direct_cost,false,Treballs realitzats per altres empreses,880
+6100,,expense_direct_cost,false,Variació d’existències,890
+6200,,expense,false,Arrendaments i cànons,900
+6210,,expense,false,Reparacions i conservació,910
+6220,,expense,false,Serveis de professionals independents,920
+6230,,expense,false,Transports,930
+6250,,expense,false,Primes d’assegurances,940
+6260,,expense,false,Serveis bancaris i similars,950
+6270,,expense,false,"Publicitat, propaganda i relacions públiques",960
+6280,,expense,false,Subministraments,970
+6290,,expense,false,Altres serveis exteriors,980
+6291,,expense,false,Telecomunicacions i internet,990
+6292,,expense,false,Viatges i desplaçaments,1000
+6300,,expense,false,Impost sobre societats,1010
+6301,,expense,false,Impost sobre societats diferit,1020
+6310,,expense,false,Tributs i taxes locals,1030
+6400,,expense,false,Sous i salaris,1040
+6410,,expense,false,Remuneracions d’administradors,1050
+6420,,expense,false,Quotes socials a càrrec de l’empresari,1060
+6490,,expense,false,Altres despeses socials,1070
+6500,,expense,false,Pèrdues de crèdits comercials incobrables,1080
+6590,,expense,false,Altres despeses de gestió corrent,1090
+6600,,expense,false,Despeses financeres per deutes amb entitats de crèdit,1100
+6620,,expense,false,Despeses financeres per arrendaments,1110
+6630,,expense,false,Despeses financeres per deutes amb socis i vinculades,1120
+6680,,expense,false,Diferències negatives de canvi,1130
+6700,,expense,false,Pèrdues procedents de l’immobilitzat,1140
+6790,,expense,false,Altres despeses no recurrents,1150
+6800,,expense_depreciation,false,Amortització de l’immobilitzat intangible,1160
+6810,,expense_depreciation,false,Amortització de l’immobilitzat material,1170
+6820,,expense_depreciation,false,Amortització de les inversions immobiliàries,1180
+6900,,expense,false,Deteriorament de valor d’existències i crèdits,1190
+6990,,expense,false,Diferències d’arrodoniment,1200
+7000,,income,false,Vendes de mercaderies,1210
+7010,,income,false,Vendes de productes acabats,1220
+7050,,income,false,Prestacions de serveis,1230
+7060,,income,false,Exportacions de béns,1240
+7070,,income,false,Prestacions de serveis a l’estranger,1250
+7080,,income,false,Devolucions de vendes i operacions similars,1260
+7400,,income_other,false,Subvencions a l’explotació,1270
+7520,,income_other,false,Ingressos per arrendaments,1280
+7590,,income_other,false,Ingressos per serveis diversos,1290
+7600,,income_other,false,Ingressos financers per interessos,1300
+7610,,income_other,false,Ingressos de participacions en instruments de patrimoni,1310
+7680,,income_other,false,Diferències positives de canvi,1320
+7710,,income_other,false,Beneficis procedents de l’immobilitzat,1330
+7790,,income_other,false,Altres ingressos no recurrents,1340
