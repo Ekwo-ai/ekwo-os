@@ -1,0 +1,363 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Un trimestre d’una societat comercial d’Andorra la Vella, assujettida a l’IGI i que liquida cada trimestre",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercici 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-T1",
+      "from": "2026-01-01",
+      "to": "2026-03-31"
+    }
+  ],
+  "statements": [
+    "AD-PGC-BAL",
+    "AD-PGC-PYG"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-ad",
+      "name": "Comercial Pirineu SL",
+      "type": "customer",
+      "country": "AD"
+    },
+    {
+      "ref": "cust-fr",
+      "name": "Boutique Garonne SARL",
+      "type": "customer",
+      "country": "FR"
+    },
+    {
+      "ref": "supp-ad",
+      "name": "Distribucions Valira SA",
+      "type": "supplier",
+      "country": "AD"
+    },
+    {
+      "ref": "supp-fr",
+      "name": "Atelier Rhône SAS",
+      "type": "supplier",
+      "country": "FR"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "cust-ad",
+      "date": "2026-01-12",
+      "why": "A domestic sale at the general rate of 4.5 %: line 1, base and tax.",
+      "lines": [
+        {
+          "name": "Material d’oficina, venda al detall",
+          "quantity": 20,
+          "unit_price": 1000,
+          "tax": "AD-S-45",
+          "account": "7000"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "cust-ad",
+      "date": "2026-01-20",
+      "why": "A passenger-transport service at the special rate of 2.5 % (article 60 bis): line 2.",
+      "lines": [
+        {
+          "name": "Transport de passatgers, bitllets",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "AD-S-25",
+          "account": "7050"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "cust-ad",
+      "date": "2026-01-27",
+      "why": "Food for human consumption at the reduced rate of 1 % (article 58): line 3.",
+      "lines": [
+        {
+          "name": "Productes alimentaris",
+          "quantity": 100,
+          "unit_price": 50,
+          "tax": "AD-S-1",
+          "account": "7000"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "cust-ad",
+      "date": "2026-02-03",
+      "why": "Private lessons on school subjects: the sale is declared at the super-reduced rate of 0 % on line 4, with no tax.",
+      "lines": [
+        {
+          "name": "Classes particulars de matemàtiques",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "AD-S-0",
+          "account": "7050"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "cust-ad",
+      "date": "2026-02-10",
+      "why": "A banking service at the increased rate of 9.5 % (article 60): line 5.",
+      "lines": [
+        {
+          "name": "Comissions de gestió financera",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "AD-S-95",
+          "account": "7050"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "cust-fr",
+      "date": "2026-02-17",
+      "why": "An export of goods shipped out of Andorra, exempt under article 14: line 6, no tax, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Mercaderies expedides a França",
+          "quantity": 40,
+          "unit_price": 250,
+          "tax": "AD-S-EXP",
+          "account": "7060"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "cust-ad",
+      "date": "2026-02-24",
+      "why": "An operation exempt without the right to deduct (chapter three): line 7, no tax.",
+      "lines": [
+        {
+          "name": "Lloguer d’un local",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "AD-S-EX",
+          "account": "7520"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "cust-ad",
+      "date": "2026-03-05",
+      "why": "A credit note on the general rate: line 1 is reduced by the base and the tax of the note.",
+      "lines": [
+        {
+          "name": "Devolució de material d’oficina",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "AD-S-45",
+          "account": "7000"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "supp-ad",
+      "date": "2026-01-09",
+      "why": "A domestic purchase at 4.5 % with deductible input tax: line 10.",
+      "lines": [
+        {
+          "name": "Mercaderies per a la revenda",
+          "quantity": 10,
+          "unit_price": 800,
+          "tax": "AD-P-45",
+          "account": "6000"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "supp-ad",
+      "date": "2026-01-15",
+      "why": "A purchase at the special rate of 2.5 % with deductible input tax: line 10.",
+      "lines": [
+        {
+          "name": "Transport de mercaderies",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "AD-P-25",
+          "account": "6230"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "supp-ad",
+      "date": "2026-01-22",
+      "why": "A purchase at the reduced rate of 1 %: line 10.",
+      "lines": [
+        {
+          "name": "Productes alimentaris per a la revenda",
+          "quantity": 1,
+          "unit_price": 600,
+          "tax": "AD-P-1",
+          "account": "6000"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "supp-ad",
+      "date": "2026-02-02",
+      "why": "A banking service at 9.5 %, deductible: line 10.",
+      "lines": [
+        {
+          "name": "Serveis bancaris",
+          "quantity": 1,
+          "unit_price": 400,
+          "tax": "AD-P-95",
+          "account": "6260"
+        }
+      ]
+    },
+    {
+      "ref": "A5",
+      "type": "purchase_invoice",
+      "contact": "supp-ad",
+      "date": "2026-02-12",
+      "why": "A purchase whose input tax cannot be deducted (article 63): the base on line 11 and the tax on the expense.",
+      "lines": [
+        {
+          "name": "Despeses de representació",
+          "quantity": 1,
+          "unit_price": 900,
+          "tax": "AD-P-45-NC",
+          "account": "6290"
+        }
+      ]
+    },
+    {
+      "ref": "A6",
+      "type": "purchase_invoice",
+      "contact": "supp-ad",
+      "date": "2026-02-20",
+      "why": "A purchase with no tax charged: nothing reaches the return.",
+      "lines": [
+        {
+          "name": "Taxa municipal",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "AD-P-0",
+          "account": "6310"
+        }
+      ]
+    },
+    {
+      "ref": "A7",
+      "type": "purchase_invoice",
+      "contact": "supp-fr",
+      "date": "2026-03-02",
+      "why": "Goods imported, the tax paid at the border by the customs document: line 9 and a deductible tax.",
+      "lines": [
+        {
+          "name": "Mercaderies importades de França",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "AD-P-IMP-45",
+          "account": "6000"
+        }
+      ]
+    },
+    {
+      "ref": "A8",
+      "type": "purchase_invoice",
+      "contact": "supp-ad",
+      "date": "2026-03-12",
+      "why": "A computer bought for the business, deductible: line 10, booked as a fixed asset.",
+      "lines": [
+        {
+          "name": "Equip informàtic",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "AD-P-45",
+          "account": "2240"
+        }
+      ]
+    },
+    {
+      "ref": "AC1",
+      "type": "purchase_credit_note",
+      "contact": "supp-ad",
+      "date": "2026-03-10",
+      "why": "A credit note on a purchase at 4.5 %: line 10 is reduced by the tax of the note.",
+      "lines": [
+        {
+          "name": "Abonament de mercaderies",
+          "quantity": 1,
+          "unit_price": 800,
+          "tax": "AD-P-45",
+          "account": "6000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "C1",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 20900,
+      "contact": "cust-ad",
+      "journal": "BAN",
+      "match": "V1",
+      "why": "The sale V1 collected in full, tax included: a matched inbound payment."
+    },
+    {
+      "ref": "C2",
+      "direction": "inbound",
+      "date": "2026-03-18",
+      "amount": 10000,
+      "contact": "cust-fr",
+      "journal": "BAN",
+      "match": "V6",
+      "why": "The export V6 collected in full: a matched inbound payment from a foreign customer."
+    },
+    {
+      "ref": "D1",
+      "direction": "outbound",
+      "date": "2026-02-10",
+      "amount": 8360,
+      "contact": "supp-ad",
+      "journal": "BAN",
+      "match": "A1",
+      "why": "The purchase A1 paid in full, tax included: a matched outbound payment."
+    },
+    {
+      "ref": "C3",
+      "direction": "inbound",
+      "date": "2026-03-20",
+      "amount": 1500,
+      "contact": "cust-ad",
+      "journal": "BAN",
+      "match": null,
+      "why": "A deposit received with no invoice yet: an unmatched inbound payment left on the customer’s account."
+    }
+  ]
+}

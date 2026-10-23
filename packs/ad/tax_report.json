@@ -1,0 +1,183 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "AD-IGI",
+  "name": "Declaració-liquidació de l’impost general indirecte",
+  "period": [
+    "month",
+    "quarter",
+    "half_year"
+  ],
+  "valid_from": "2013-01-01",
+  "legal_reference": "Llei 11/2012, article 78 — the period of the declaration-settlement depends on the net turnover of the previous year: below EUR 250,000 the settlements are made in July and January (semi-annual), below EUR 3,600,000 in April, July, October and January (quarterly), and monthly otherwise; the tax calendar of the Govern shows the same three cadences. The official model that carries the declaration (the tax calendar and the profession’s guides name it form 900, form 910 for the semi-annual filer) was not available as a readable text: the lines of this pack are its own layout, built from the elements the law sets (output tax by rate, deductible input tax, imports, exports, result). They are not the boxes printed on the form. The day by which the declaration must be filed is set by regulation, which was not found: the pack states no deadline.",
+  "source": "igi-law",
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "base",
+      "name": "Línia 1 — Operacions al tipus general 4,5 %, base",
+      "sequence": 10,
+      "legal_reference": "Pack layout: the base of the supplies at the general rate (Llei 11/2012, article 57).",
+      "source": "igi-law"
+    },
+    {
+      "box": "1",
+      "kind": "tax",
+      "name": "Línia 1 — Operacions al tipus general 4,5 %, quota",
+      "sequence": 20,
+      "legal_reference": "Pack layout: the IGI charged at 4.5 %.",
+      "source": "igi-law"
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Línia 2 — Operacions al tipus especial 2,5 %, base",
+      "sequence": 30,
+      "legal_reference": "Pack layout: the base of the supplies at the special rate (Llei 10/2014, article 60 bis).",
+      "source": "igi-law"
+    },
+    {
+      "box": "2",
+      "kind": "tax",
+      "name": "Línia 2 — Operacions al tipus especial 2,5 %, quota",
+      "sequence": 40,
+      "legal_reference": "Pack layout: the IGI charged at 2.5 %.",
+      "source": "igi-law"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Línia 3 — Operacions al tipus reduït 1 %, base",
+      "sequence": 50,
+      "legal_reference": "Pack layout: the base of the supplies at the reduced rate (Llei 11/2012, article 58).",
+      "source": "igi-law"
+    },
+    {
+      "box": "3",
+      "kind": "tax",
+      "name": "Línia 3 — Operacions al tipus reduït 1 %, quota",
+      "sequence": 60,
+      "legal_reference": "Pack layout: the IGI charged at 1 %.",
+      "source": "igi-law"
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Línia 4 — Operacions al tipus super reduït 0 %, base",
+      "sequence": 70,
+      "legal_reference": "Pack layout: the base of the supplies at 0 % (Llei 11/2012, article 59).",
+      "source": "igi-law"
+    },
+    {
+      "box": "5",
+      "kind": "base",
+      "name": "Línia 5 — Serveis bancaris i financers al 9,5 %, base",
+      "sequence": 80,
+      "legal_reference": "Pack layout: the base of the supplies at the increased rate (Llei 11/2012, article 60).",
+      "source": "igi-law"
+    },
+    {
+      "box": "5",
+      "kind": "tax",
+      "name": "Línia 5 — Serveis bancaris i financers al 9,5 %, quota",
+      "sequence": 90,
+      "legal_reference": "Pack layout: the IGI charged at 9.5 %.",
+      "source": "igi-law"
+    },
+    {
+      "box": "6",
+      "kind": "base",
+      "name": "Línia 6 — Exportacions i lliuraments exempts amb dret a deducció, base",
+      "sequence": 100,
+      "legal_reference": "Pack layout: exports (Llei 11/2012, article 14).",
+      "source": "igi-law"
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Línia 7 — Altres operacions exemptes, base",
+      "sequence": 110,
+      "legal_reference": "Pack layout: exempt operations without the right to deduct (Llei 11/2012, chapter three).",
+      "source": "igi-law"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Línia 8 — Total IGI repercutit",
+      "sequence": 120,
+      "legal_reference": "Pack layout: lines 1 + 2 + 3 + 5, tax column.",
+      "plus": [
+        "1:tax",
+        "2:tax",
+        "3:tax",
+        "5:tax"
+      ],
+      "source": "igi-law"
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Línia 9 — Importacions de béns, base",
+      "sequence": 130,
+      "legal_reference": "Pack layout: the customs value of the imports on which the IGI was paid at the border.",
+      "source": "igi-law"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Línia 9 — Importacions de béns, IGI pagat a la Duana",
+      "sequence": 140,
+      "legal_reference": "Pack layout: the IGI paid at the border (Llei 11/2012, article 55(6)).",
+      "source": "igi-law"
+    },
+    {
+      "box": "10",
+      "kind": "base",
+      "name": "Línia 10 — Compres interiors amb IGI deduïble, base",
+      "sequence": 150,
+      "legal_reference": "Pack layout: the base of the domestic purchases carrying deductible IGI (articles 61 and 62).",
+      "source": "igi-law"
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "Línia 10 — Compres interiors amb IGI deduïble, quota",
+      "sequence": 160,
+      "legal_reference": "Pack layout: the deductible IGI on domestic purchases.",
+      "source": "igi-law"
+    },
+    {
+      "box": "11",
+      "kind": "base",
+      "name": "Línia 11 — Compres amb IGI no deduïble, base",
+      "sequence": 170,
+      "legal_reference": "Pack layout: purchases whose IGI cannot be deducted (article 63).",
+      "source": "igi-law"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Línia 12 — Total IGI deduïble",
+      "sequence": 180,
+      "legal_reference": "Pack layout: lines 9 + 10, tax column.",
+      "plus": [
+        "9:tax",
+        "10:tax"
+      ],
+      "source": "igi-law"
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Línia 13 — Resultat de la liquidació (positiu: a ingressar; negatiu: a favor)",
+      "sequence": 190,
+      "legal_reference": "Pack layout: output IGI of line 8 minus the deductible IGI of line 12 (Llei 11/2012, article 78(1): the tax debt of the period is the output tax reduced by the deductible input tax).",
+      "plus": [
+        "8"
+      ],
+      "minus": [
+        "12"
+      ],
+      "source": "igi-law"
+    }
+  ]
+}

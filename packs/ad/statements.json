@@ -1,0 +1,529 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "AD-PGC-BAL",
+      "kind": "balance_sheet",
+      "framework": "PGC",
+      "name": "Balanç",
+      "valid_from": "2013-01-01",
+      "legal_reference": "Llei 30/2007 (annual accounts: a balance sheet, an income statement, and in the normal model the statement of changes in equity and the cash-flow statement) and the Pla general de comptabilitat, Decret 479/2025, which sets the classification of assets and liabilities as current or non-current and the headings of equity. The printed models of the balance sheet are images in the text read, so the lines here follow the headings of the plan’s recognition rules (intangible assets, tangible assets, investment property, financial assets, stocks, cash, prepayments, equity, provisions, financial liabilities, tax) and are the pack’s own abridged layout.",
+      "source": "pgc",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Resultat de l’exercici en curs",
+      "lines": [
+        {
+          "code": "B",
+          "name": "Actiu corrent",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "B.1",
+            "B.2",
+            "B.3",
+            "B.4",
+            "B.5"
+          ]
+        },
+        {
+          "code": "B.1",
+          "name": "Existències",
+          "sequence": 11,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3000",
+              "code_to": "3999"
+            }
+          ]
+        },
+        {
+          "code": "B.2",
+          "name": "Deutors comercials i altres comptes a cobrar",
+          "sequence": 12,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4300",
+              "code_to": "4749"
+            }
+          ]
+        },
+        {
+          "code": "B.3",
+          "name": "Inversions financeres a curt termini",
+          "sequence": 13,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5400",
+              "code_to": "5499"
+            }
+          ]
+        },
+        {
+          "code": "B.4",
+          "name": "Periodificacions a curt termini",
+          "sequence": 14,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4900",
+              "code_to": "4919"
+            }
+          ]
+        },
+        {
+          "code": "B.5",
+          "name": "Efectiu i altres actius líquids equivalents",
+          "sequence": 15,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5700",
+              "code_to": "5799"
+            }
+          ]
+        },
+        {
+          "code": "A",
+          "name": "Actiu no corrent",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "A.1",
+            "A.2",
+            "A.3",
+            "A.4",
+            "A.5"
+          ]
+        },
+        {
+          "code": "A.1",
+          "name": "Immobilitzat intangible",
+          "sequence": 21,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2100",
+              "code_to": "2199"
+            }
+          ]
+        },
+        {
+          "code": "A.2",
+          "name": "Immobilitzat material",
+          "sequence": 22,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2200",
+              "code_to": "2399"
+            }
+          ]
+        },
+        {
+          "code": "A.3",
+          "name": "Inversions immobiliàries",
+          "sequence": 23,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2400",
+              "code_to": "2499"
+            }
+          ]
+        },
+        {
+          "code": "A.4",
+          "name": "Inversions financeres a llarg termini",
+          "sequence": 24,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2500",
+              "code_to": "2699"
+            }
+          ]
+        },
+        {
+          "code": "A.5",
+          "name": "Actius per impost diferit",
+          "sequence": 25,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "2700",
+              "code_to": "2799"
+            }
+          ]
+        },
+        {
+          "code": "TA",
+          "name": "Total actiu",
+          "sequence": 30,
+          "is_total": true,
+          "plus": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "code": "PC",
+          "name": "Passiu corrent",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "PC.1",
+            "PC.2",
+            "PC.3",
+            "PC.4"
+          ]
+        },
+        {
+          "code": "PC.1",
+          "name": "Creditors comercials i altres comptes a pagar",
+          "sequence": 41,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "4000",
+              "code_to": "4299"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "4750",
+              "code_to": "4799"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "4950",
+              "code_to": "4959"
+            }
+          ]
+        },
+        {
+          "code": "PC.2",
+          "name": "Deutes a curt termini",
+          "sequence": 42,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5200",
+              "code_to": "5399"
+            }
+          ]
+        },
+        {
+          "code": "PC.3",
+          "name": "Deutes amb socis i partides pendents d’aplicació",
+          "sequence": 43,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5500",
+              "code_to": "5599"
+            }
+          ]
+        },
+        {
+          "code": "PC.4",
+          "name": "Provisions a curt termini",
+          "sequence": 44,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "5900",
+              "code_to": "5999"
+            }
+          ]
+        },
+        {
+          "code": "PNC",
+          "name": "Passiu no corrent",
+          "sequence": 50,
+          "is_total": true,
+          "plus": [
+            "PNC.1",
+            "PNC.2",
+            "PNC.3"
+          ]
+        },
+        {
+          "code": "PNC.1",
+          "name": "Provisions a llarg termini",
+          "sequence": 51,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1400",
+              "code_to": "1499"
+            }
+          ]
+        },
+        {
+          "code": "PNC.2",
+          "name": "Deutes a llarg termini",
+          "sequence": 52,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1600",
+              "code_to": "1699"
+            }
+          ]
+        },
+        {
+          "code": "PNC.3",
+          "name": "Passius per impost diferit",
+          "sequence": 53,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1800",
+              "code_to": "1899"
+            }
+          ]
+        },
+        {
+          "code": "TP",
+          "name": "Total passiu",
+          "sequence": 60,
+          "is_total": true,
+          "plus": [
+            "PC",
+            "PNC"
+          ]
+        },
+        {
+          "code": "NA",
+          "name": "Actiu net",
+          "sequence": 70,
+          "is_total": true,
+          "plus": [
+            "TA"
+          ],
+          "minus": [
+            "TP"
+          ]
+        },
+        {
+          "code": "PN",
+          "name": "Patrimoni net",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "PN.1",
+            "PN.2",
+            "PN.3"
+          ]
+        },
+        {
+          "code": "PN.1",
+          "name": "Capital i primes",
+          "sequence": 81,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1000",
+              "code_to": "1119"
+            }
+          ]
+        },
+        {
+          "code": "PN.2",
+          "name": "Reserves",
+          "sequence": 82,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1120",
+              "code_to": "1199"
+            }
+          ]
+        },
+        {
+          "code": "PN.3",
+          "name": "Resultats d’exercicis anteriors, subvencions i dividends",
+          "sequence": 83,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "1200",
+              "code_to": "1399"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "code": "AD-PGC-PYG",
+      "kind": "income_statement",
+      "framework": "PGC",
+      "name": "Compte de pèrdues i guanys",
+      "valid_from": "2013-01-01",
+      "legal_reference": "Pla general de comptabilitat, Decret 479/2025, section 4 (Compte de pèrdues i guanys): operating income (net turnover, change in stocks, other income), operating expenses (consumption, staff, other operating expenses, depreciation, impairment), financial result, other non-recurrent income and expenses, and the corporate income tax. The printed model is an image in the text read: the lines here are the pack’s own abridged layout over the plan’s headings.",
+      "source": "pgc",
+      "lines": [
+        {
+          "code": "1",
+          "name": "Import net de la xifra de negocis",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7000",
+              "code_to": "7099"
+            }
+          ]
+        },
+        {
+          "code": "2",
+          "name": "Altres ingressos d’explotació i financers",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "7400",
+              "code_to": "7799"
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "name": "Consum de mercaderies, matèries primeres i altres aprovisionaments",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6000",
+              "code_to": "6199"
+            }
+          ]
+        },
+        {
+          "code": "4",
+          "name": "Altres despeses d’explotació",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6200",
+              "code_to": "6299"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "6310",
+              "code_to": "6399"
+            }
+          ]
+        },
+        {
+          "code": "5",
+          "name": "Despeses de personal",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6400",
+              "code_to": "6499"
+            }
+          ]
+        },
+        {
+          "code": "6",
+          "name": "Altres despeses de gestió, financeres i no recurrents",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6500",
+              "code_to": "6799"
+            }
+          ]
+        },
+        {
+          "code": "7",
+          "name": "Amortitzacions i deterioraments",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6800",
+              "code_to": "6999"
+            }
+          ]
+        },
+        {
+          "code": "8",
+          "name": "Resultat abans d’impostos",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "1",
+            "2"
+          ],
+          "minus": [
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
+          "code": "9",
+          "name": "Impost sobre societats",
+          "sequence": 90,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "6300",
+              "code_to": "6301"
+            }
+          ]
+        },
+        {
+          "code": "10",
+          "name": "Resultat de l’exercici",
+          "sequence": 100,
+          "is_total": true,
+          "plus": [
+            "8"
+          ],
+          "minus": [
+            "9"
+          ]
+        }
+      ]
+    }
+  ]
+}
