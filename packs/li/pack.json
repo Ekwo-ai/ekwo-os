@@ -1,0 +1,184 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "LI",
+  "name": "Liechtenstein",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 221,
+  "released_at": "2026-10-23",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "mwstg",
+        "title": "Gesetz vom 22. Oktober 2009 über die Mehrwertsteuer (Mehrwertsteuergesetz; MWSTG), LGBl. 2009 Nr. 330, LR 641.20, Fassung vom 1. Januar 2026",
+        "publisher": "Fürstentum Liechtenstein — Landesgesetzblatt (gesetze.li)",
+        "url": "https://www.gesetze.li/konso/2009330000",
+        "consulted_on": "2026-10-23",
+        "kind": "law"
+      },
+      {
+        "key": "mwstv",
+        "title": "Verordnung vom 15. Dezember 2009 zum Gesetz über die Mehrwertsteuer (Mehrwertsteuerverordnung; MWSTV), LGBl. 2009 Nr. 340, LR 641.201, Fassung vom 1. Januar 2025",
+        "publisher": "Fürstentum Liechtenstein — Landesgesetzblatt (gesetze.li)",
+        "url": "https://www.gesetze.li/konso/2009340000",
+        "consulted_on": "2026-10-23",
+        "kind": "regulation"
+      },
+      {
+        "key": "pgr",
+        "title": "Personen- und Gesellschaftsrecht (PGR) vom 20. Januar 1926, LGBl. 1926 Nr. 4, LR 216.0 — Art. 1045–1062 (Rechnungslegung), Fassung vom 1. September 2026",
+        "publisher": "Fürstentum Liechtenstein — Landesgesetzblatt (gesetze.li)",
+        "url": "https://www.gesetze.li/konso/1926004000",
+        "consulted_on": "2026-10-23",
+        "kind": "law"
+      },
+      {
+        "key": "abgb",
+        "title": "Allgemeines bürgerliches Gesetzbuch (ABGB), LR 210.0 — §§ 904, 1000 und 1333 (Fälligkeit, gesetzliche Zinsen, Verzugszinsen), Fassung vom 1. April 2026",
+        "publisher": "Fürstentum Liechtenstein — Landesgesetzblatt (gesetze.li)",
+        "url": "https://www.gesetze.li/konso/1003001000",
+        "consulted_on": "2026-10-23",
+        "kind": "law"
+      },
+      {
+        "key": "estv-4470",
+        "title": "Formular Nr. 4470 — Abrechnung Mehrwertsteuer, effektive Methode, gültig ab 1. Januar 2024 (Muster) — Referenz für die Nummerierung der Ziffern; das liechtensteinische Formular selbst war nicht lesbar (siehe README.md)",
+        "publisher": "Eidgenössische Steuerverwaltung (ESTV)",
+        "url": "https://www.estv2.admin.ch/mwst/formulare/mwst-form-abr-muster-2024-4470-eff-fr.pdf",
+        "consulted_on": "2026-10-23",
+        "kind": "form"
+      },
+      {
+        "key": "emwst-portal",
+        "title": "eMWST-Portal — das Portal, über das die Steuerverwaltung Liechtenstein die Mehrwertsteuer-Abrechnungen entgegennimmt",
+        "publisher": "Steuerverwaltung des Fürstentums Liechtenstein",
+        "url": "https://www.mwstportal.li/",
+        "consulted_on": "2026-10-23",
+        "kind": "portal"
+      }
+    ]
+  },
+  "languages": [],
+  "defaults": {
+    "currency": "CHF",
+    "language": "de",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2300",
+      "rounding": "8950",
+      "retained_earnings": "2900",
+      "sales": "3000",
+      "purchase": "4000",
+      "bank": "1020",
+      "cash": "1000",
+      "tax_payable": "2140",
+      "tax_receivable": "1176",
+      "fx_gain": "6960",
+      "fx_loss": "6920"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Verkaufsjournal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Einkaufsjournal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Kasse",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "Diverse Buchungen",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Eröffnungsbilanz",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Kontenrahmen nach Art. 1045 ff. PGR",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "LI-PGR-BS",
+        "LI-PGR-IS"
+      ],
+      "legal_reference": "Das liechtensteinische Recht schreibt keinen gesetzlichen Kontenplan vor. Art. 1045 PGR verpflichtet zur ordnungsmässigen Rechnungslegung, Art. 1046 Abs. 1 PGR verlangt Geschäftsbücher, die einem sachverständigen Dritten einen Überblick über die Geschäftsvorfälle geben, Art. 1048 Abs. 2 PGR nennt Bilanz, Erfolgsrechnung und gegebenenfalls Anhang als Jahresrechnung, und Art. 1051 PGR gibt nur die Grobgliederung der Bilanz vor (Umlauf- und Anlagevermögen, Fremd- und Eigenkapital, Rechnungsabgrenzungsposten). Dieser Kontenrahmen ist ein Vorschlag, der dieser Grobgliederung folgt und im Übrigen die in der Praxis verbreitete schweizerische Vierstellerlogik teilt, weil die liechtensteinische Praxis auf dem Schweizer Franken und dem Schweizer Kontenrahmen KMU aufbaut; er kopiert diesen nicht — siehe README.md.",
+      "source": "pgr"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": 0,
+    "late_payment_reference": "§ 904 ABGB: Ist die Zahlungsfrist nicht bestimmt, so tritt die Verbindlichkeit nach Mahnung ein. § 1333 Abs. 1 ABGB vergütet den durch die Verzögerung der Zahlung einer Geldforderung entstandenen Schaden durch die gesetzlichen Zinsen (§ 1000 Abs. 1 ABGB: fünf vom Hundert auf ein Jahr). Das ABGB kennt keine gesetzliche Zahlungsfrist von 30 Tagen und keine gesetzliche Pauschale für Beitreibungskosten (§ 1333 Abs. 3 ABGB lässt nur den Ersatz weiterer nachgewiesener Schäden zu). Für Steuerschulden gegenüber dem Land gilt dagegen Art. 77 MWSTG (Verzugszins ohne Mahnung); er ist nicht Gegenstand der Rechnung zwischen Unternehmen.",
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Art. 26 Abs. 2 MWSTG nennt «in der Regel» sechs Angaben der Rechnung (Bst. a–f: Name und Ort des Leistungserbringers samt Registernummer, Name und Ort des Leistungsempfängers, Datum oder Zeitraum der Leistung, soweit er vom Rechnungsdatum abweicht, Art, Gegenstand und Umfang der Leistung, Entgelt, Steuersatz und Steuerbetrag) und verlangt keine fortlaufende Rechnungsnummer. Art. 1046 Abs. 1 PGR verlangt Geschäftsbücher, in denen sich die Geschäftsvorfälle in ihrer Entstehung und Abwicklung verfolgen lassen, schreibt aber kein Nummerierungsschema vor. Dieser Pack schlägt daher ein Format vor, ohne eine gesetzliche Lückenlosigkeit zu behaupten, die keine Norm verlangt.",
+        "source": "mwstg"
+      },
+      "payment_terms": {
+        "legal_reference": "§ 904 ABGB — ist die Zahlungsfrist auf keine Art bestimmt, tritt die Verbindlichkeit nach Mahnung ein; § 1333 Abs. 1 ABGB regelt die Verzugszinsen. Der Pack setzt deshalb keine gesetzliche Zahlungsfrist (legal_payment_days 0).",
+        "source": "abgb"
+      },
+      "tax_point": {
+        "legal_reference": "Art. 39 Abs. 1 MWSTG — es wird nach vereinbarten Entgelten abgerechnet; Art. 40 Abs. 1 Bst. a MWSTG — die Umsatzsteuerschuld entsteht mit der Rechnungsstellung. Art. 39 Abs. 2 MWSTG lässt auf Antrag die Abrechnung nach vereinnahmten Entgelten zu; dieser unternehmensweite Methodenwechsel wird von diesem Pack nicht abgebildet — siehe README.md.",
+        "source": "mwstg"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "legal_reference": "Am 23. Oktober 2026 verlangt weder das MWSTG (Art. 26 regelt nur den Inhalt einer Rechnung, nicht ihre Form) noch das PGR (Art. 1046 ff. regeln die Buchführung) den Austausch strukturierter elektronischer Rechnungen zwischen Unternehmen. Eine solche Pflicht wurde in den gelesenen Texten nicht gefunden; eine Mitteilung der Steuerverwaltung oder der Regierung dazu war nicht lesbar (llv.li antwortet Skripten mit 403), siehe README.md.",
+    "source": "mwstg"
+  },
+  "bank": {
+    "account_scheme": "iban",
+    "statement_formats": [
+      "camt.053",
+      "mt940",
+      "csv"
+    ],
+    "payment_formats": [
+      "pain.001",
+      "csv"
+    ]
+  }
+}
