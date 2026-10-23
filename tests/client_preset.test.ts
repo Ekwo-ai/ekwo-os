@@ -871,6 +871,8 @@ describe('a client writes nothing else — by the function', () => {
     ]);
     refused = {
       'public.post_document': { sql: `select post_document($1)`, params: [mine.draftDocumentId] },
+      // Approving a draft for an agent to post is documents.post, asked here.
+      'public.approve_document': { sql: `select approve_document($1)`, params: [mine.draftDocumentId] },
       // Security invoker: the lines and the header are written under row level
       // security, which refuses a client the insert.
       'public.replace_document_lines': {

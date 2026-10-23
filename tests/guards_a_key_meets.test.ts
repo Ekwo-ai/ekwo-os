@@ -78,6 +78,9 @@ describe('every guard that asks whether anybody is signed in', () => {
     // Raise when nobody is signed in, so a key is refused. Right: an
     // invitation is accepted by a person, and preferences belong to one.
     accept_invitation: 'raises when there is no user',
+    // A draft is approved for an agent to post by a person, never by the
+    // agent or a key it holds (decision 0089).
+    approve_document: 'raises when there is no user, or a key is presented',
     set_preferences: 'raises when there is no user',
     // On a shared installation a company of one's own is created by a person
     // in their own session, and a key never chooses who owns one (0064, 0065).

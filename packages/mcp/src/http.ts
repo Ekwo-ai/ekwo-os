@@ -124,6 +124,7 @@ export async function openHttpBackend(
     accessToken: connection.apiKey === undefined ? connection.accessToken : undefined,
     apiKey: connection.apiKey,
     fetch: options.fetch,
+    agent: true,
   });
 }
 

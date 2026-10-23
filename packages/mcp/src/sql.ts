@@ -88,6 +88,12 @@ export interface SqlBackendOptions {
   userId: string;
   /** Extra JWT claims, if an installation reads more than `sub` and `role`. */
   claims?: Record<string, unknown>;
+  /**
+   * Marks every transaction as an agent's (`ekwo.agent`), which the database
+   * reads to hold a posting to the company's `posting_mode`. The MCP server
+   * sets it; a script acting for a person does not.
+   */
+  agent?: boolean | undefined;
 }
 
 /** `fn(p_a => $1, p_b => $2)` and the parameters in that order. */
@@ -160,6 +166,7 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
     try {
       return await db.transaction(async (tx) => {
         await tx.query('select set_config($1, $2, true)', ['request.jwt.claims', claims]);
+        if (options.agent === true) await tx.query("select set_config('ekwo.agent', 'on', true)");
         await tx.exec('set local role authenticated');
         return run(tx);
       });

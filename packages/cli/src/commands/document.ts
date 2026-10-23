@@ -1,6 +1,6 @@
 /**
- * The verbs on a document: `doc new`, `doc line add`, `post`, `cancel`,
- * `doc list` and `doc show`.
+ * The verbs on a document: `doc new`, `doc line add`, `doc approve`, `post`,
+ * `cancel`, `doc list` and `doc show`.
  *
  * All five work on the same object, so they are named after it. A document is
  * a sale invoice, a purchase invoice — a bill — a quote or a credit note,
@@ -20,6 +20,7 @@ import {
   DOCUMENT_STATES,
   DOC_TYPES,
   addDocumentLine,
+  approveDocument,
   undoDocument,
   createDocument,
   getDocument,
@@ -65,6 +66,7 @@ const LINE_ADD_FLAGS = [
   ...BOOKS_FLAGS, 'stdin', 'name', 'description', 'qty', 'unit', 'price', 'amount', 'discount', 'product', 'account', 'tax',
 ] as const;
 const POST_FLAGS = [...BOOKS_FLAGS, 'dry-run'] as const;
+const APPROVE_FLAGS = [...BOOKS_FLAGS] as const;
 const CANCEL_FLAGS = [...BOOKS_FLAGS, 'date', 'credit'] as const;
 const LIST_FLAGS = [...BOOKS_FLAGS, 'unpaid', 'since', 'until', 'type', 'state', 'contact', 'limit'] as const;
 
@@ -214,6 +216,27 @@ export async function postCommand(args: ParsedArgs, deps: BooksDeps = {}): Promi
   return 0;
 }
 
+/**
+ * `ekwo doc approve <document>`: a person approves a draft, as it stands, for
+ * an agent to post it where the company's posting mode is `review`. Signed in
+ * as yourself; the database refuses it to a machine key.
+ */
+async function docApprove(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, APPROVE_FLAGS);
+  const { backend, company } = await openBooks(args, deps);
+  const documentId = await resolveDocument(backend, company.id, required(args.positional[1], 'the document to approve', '<document>'));
+  const result = (await approveDocument(backend, { document_id: documentId })) as Row;
+  setResult(result);
+  heading(`Approved, in ${company.name}`);
+  pairs([
+    ['document', documentId],
+    ['version', text(result['version'])],
+  ]);
+  line();
+  note(dim(text(result['note'])));
+  return 0;
+}
+
 export async function cancelCommand(args: ParsedArgs, deps: BooksDeps = {}): Promise<number> {
   rejectUnknownFlags(args, CANCEL_FLAGS);
   const { backend, company } = await openBooks(args, deps);
@@ -269,11 +292,13 @@ export async function docCommand(args: ParsedArgs, deps: BooksDeps = {}): Promis
   if (action === 'list') return docList(args, deps);
   if (action === 'show') return docShow(args, deps);
   if (action === 'pdf') return docPdf(args, deps);
+  if (action === 'approve') return docApprove(args, deps);
   throw new UsageError(
     'usage: ekwo doc new --contact <name|id> --line "name=…,price=…,tax=…" [--type --date --ref]' +
       ' | ekwo doc line add <document> --price <amount> [--name --account --tax]' +
       ' | ekwo doc list [--unpaid --since <date> --until <date> --type --state --contact]' +
       ' | ekwo doc show <document>' +
+      ' | ekwo doc approve <document>' +
       ' | ekwo doc pdf <document> [--factur-x --out <file> --page-size A4|Letter --labels <file.json>]',
   );
 }

@@ -122,6 +122,9 @@ afterAll(async () => {
 describe('a write through a key', () => {
   it('is recorded against the person who issued the key, with the key beside them', async () => {
     const key = await issue(issuerId, 'Assistant', WRITER);
+    // A key posts directly only where its company chose autopilot
+    // (decision 0089); what is under test here is who the trail names.
+    await db.query(`update companies set posting_mode = 'autopilot' where id = $1`, [companyId]);
 
     const documentId = await withKey(key.secret, async () => {
       // A key is still not a session: the attribution is not a sign-in.

@@ -108,7 +108,12 @@ of the books and 2 for a call to change.
 ## What the agent asks the person first
 
 Every post, cancellation, reversal, payment and lock is confirmed by the
-person, for that specific action. A tax rule, a rate, an account or a deadline
+person, for that specific action. For posting a document, the database holds
+the agent to it: in a company whose posting mode is `review` — the default —
+`post_document` is refused with `approval_required` until a person approved
+that draft as it stands (`ekwo doc approve <document>`); in `autopilot` the
+agent posts directly and the audit trail records it. Only the person chooses
+the mode (`ekwo company posting-mode`). A tax rule, a rate, an account or a deadline
 always comes from the pack; where the pack does not cover the case, the agent
 says so and brings in the person's accountant, who works in the same books —
 or, for a person without one, the accountants who work with Ekwo at

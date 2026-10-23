@@ -20,7 +20,7 @@ export {
 export { ENV, isServiceRoleKey, openBackend, readConfig, type Config } from './config.js';
 export { amountIn, decimal, money, moneyFields, type Decimal } from '@ekwo-ai/core';
 export { connect, sqlBackend, type SqlBackendOptions, type SqlClient } from './sql.js';
-export { API_KEY_HEADER, postgrestBackend, type PostgrestBackendOptions } from './postgrest.js';
+export { AGENT_HEADER, API_KEY_HEADER, postgrestBackend, type PostgrestBackendOptions } from './postgrest.js';
 export {
   checkConnection,
   handleHttpRequest,

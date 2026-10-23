@@ -100,10 +100,19 @@ export interface PostgrestBackendOptions {
   apiKey?: string | undefined;
   /** The `fetch` every request goes through. A host or a test may hand its own. */
   fetch?: typeof globalThis.fetch | undefined;
+  /**
+   * Marks every request as an agent's, in `X-Ekwo-Agent`, which the database
+   * reads to hold a posting to the company's `posting_mode`. The MCP server
+   * sets it; a script acting for a person does not.
+   */
+  agent?: boolean | undefined;
 }
 
 /** The header the core's pre-request hook reads a key out of. */
 export const API_KEY_HEADER = 'X-Ekwo-Api-Key';
+
+/** The header that says a request is an agent's (`agent_call()`). */
+export const AGENT_HEADER = 'X-Ekwo-Agent';
 
 /**
  * A `fetch` that never sends `Authorization`.
@@ -136,6 +145,7 @@ export async function postgrestBackend(options: PostgrestBackendOptions): Promis
   } else if (options.accessToken !== undefined && options.accessToken.length > 0) {
     headers['Authorization'] = `Bearer ${options.accessToken}`;
   }
+  if (options.agent === true) headers[AGENT_HEADER] = 'mcp';
 
   const baseFetch = options.fetch ?? globalThis.fetch;
   const client: SupabaseClient = createClient(options.supabaseUrl, options.anonKey, {

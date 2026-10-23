@@ -9,6 +9,26 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Changed
+
+- **An agent posts in the mode its company chose** (socle migration
+  `20261023174709`, decision 0089). `companies.posting_mode` is `review` — the
+  default — or `autopilot`. An agent is a transaction presenting a machine
+  key, or marked by the MCP server (`ekwo.agent` on a direct connection,
+  `X-Ekwo-Agent` through PostgREST): `agent_call()`. In review, its posting of
+  a document is refused, `approval_required`, unless a person approved that
+  draft as it stands with `approve_document()` — a `document_approved` row of
+  the audit trail naming `document_version()`, a digest of the document and
+  its lines, voided by any change to the draft. In autopilot it posts
+  directly. Either way the trail records `document_posted_by_agent` with the
+  mode, and in review the approval. An agent may neither approve
+  (`approval_by_a_person`) nor change the mode (`posting_mode_by_a_person`).
+  A person signed in posts as before. `ekwo doc approve <document>` and
+  `ekwo company posting-mode [review|autopilot]`; `get_company` returns
+  `posting_mode`; the core exports `approveDocument()` and `setPostingMode()`.
+  **Every existing company is in review after this migration**: an agent that
+  posted directly is refused until a person approves, or chooses autopilot.
+
 ### Fixed
 
 - **A monthly depreciation schedule runs while the asset is in service**

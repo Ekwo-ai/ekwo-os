@@ -392,6 +392,29 @@ export async function updateDocumentLines(
   return getDocument(backend, { document_id: args.document_id });
 }
 
+export interface ApproveDocumentArgs {
+  document_id: string;
+}
+
+/**
+ * A person approves a draft, as it stands, for an agent to post it in a
+ * company whose `posting_mode` is `review`. The approval is a row of the audit
+ * trail naming the version of the draft, so a change to the draft afterwards
+ * needs another. The database refuses it to an agent or a machine key
+ * (`approval_by_a_person`) and to whoever may not post the document.
+ */
+export async function approveDocument(backend: Backend, args: ApproveDocumentArgs): Promise<unknown> {
+  const version = only(
+    await backend.rpc<string>('approve_document', { p_document_id: args.document_id }),
+    `document ${args.document_id}`,
+  );
+  return {
+    document_id: args.document_id,
+    version,
+    note: 'Approved as it stands. An agent may now post it; a change to the draft before then needs another approval.',
+  };
+}
+
 export async function postDocument(
   backend: Backend,
   args: PostDocumentArgs,

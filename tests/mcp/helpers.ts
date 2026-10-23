@@ -40,8 +40,8 @@ export function adapt(handle: Queryable, root: PGlite): SqlClient {
 }
 
 /** The server's backend, acting as one user of the installation. */
-export function backendFor(db: PGlite, userId: string): Backend {
-  return sqlBackend(adapt(db as unknown as Queryable, db), { userId });
+export function backendFor(db: PGlite, userId: string, options: { agent?: boolean } = {}): Backend {
+  return sqlBackend(adapt(db as unknown as Queryable, db), { userId, agent: options.agent });
 }
 
 /** A bank account and its journal, the way an operator sets one up once. */

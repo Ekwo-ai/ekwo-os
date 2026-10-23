@@ -125,7 +125,7 @@ export function readConfig(env: NodeJS.ProcessEnv = process.env): Config {
 export async function openBackend(config: Config): Promise<Backend> {
   if (config.mode === 'sql') {
     const db = await connect(config.dbUrl as string);
-    return sqlBackend(db, { userId: config.actAsUserId as string });
+    return sqlBackend(db, { userId: config.actAsUserId as string, agent: true });
   }
   return postgrestBackend({
     supabaseUrl: config.supabaseUrl as string,
@@ -133,5 +133,6 @@ export async function openBackend(config: Config): Promise<Backend> {
     accessToken: config.accessToken,
     email: config.email,
     password: config.password,
+    agent: true,
   });
 }

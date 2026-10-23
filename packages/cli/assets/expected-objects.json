@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.20.0",
-  "migration": "20261023160600",
+  "migration": "20261023174709",
   "socle": {
     "schema": "public",
     "tables": [
@@ -1007,6 +1007,10 @@
           },
           {
             "name": "postal_code",
+            "type": "text"
+          },
+          {
+            "name": "posting_mode",
             "type": "text"
           },
           {
@@ -4752,6 +4756,10 @@
         "arguments": "p_company_id uuid, p_at date, p_group text"
       },
       {
+        "name": "agent_call",
+        "arguments": ""
+      },
+      {
         "name": "amount_text_format",
         "arguments": "p_rounding money_rounding"
       },
@@ -4774,6 +4782,10 @@
       {
         "name": "api_key_on_company",
         "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "approve_document",
+        "arguments": "p_document_id uuid"
       },
       {
         "name": "archive_company",
@@ -4969,6 +4981,10 @@
       },
       {
         "name": "companies_number_format_is_valid",
+        "arguments": ""
+      },
+      {
+        "name": "companies_posting_mode_by_a_person",
         "arguments": ""
       },
       {
@@ -5208,6 +5224,10 @@
         "arguments": "p_document_id uuid, p_party text"
       },
       {
+        "name": "document_version",
+        "arguments": "p_document_id uuid"
+      },
+      {
         "name": "documents_allocate_included_tax",
         "arguments": "p_document_id uuid"
       },
@@ -5225,6 +5245,10 @@
       },
       {
         "name": "documents_match_credit_note_on_posting",
+        "arguments": ""
+      },
+      {
+        "name": "documents_posting_mode",
         "arguments": ""
       },
       {
@@ -6886,6 +6910,10 @@
       },
       {
         "table": "companies",
+        "name": "companies_posting_mode_by_a_person"
+      },
+      {
+        "table": "companies",
         "name": "companies_set_updated_at"
       },
       {
@@ -7115,6 +7143,10 @@
       {
         "table": "documents",
         "name": "documents_match_credit_note_on_posting"
+      },
+      {
+        "table": "documents",
+        "name": "documents_posting_mode"
       },
       {
         "table": "documents",
@@ -9065,6 +9097,17 @@
           ]
         },
         {
+          "name": "agent_call",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "amount_text_format",
           "arguments": "p_rounding money_rounding",
           "anon": [],
@@ -9125,6 +9168,17 @@
           "anon": [
             "execute"
           ],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "approve_document",
+          "arguments": "p_document_id uuid",
+          "anon": [],
           "authenticated": [
             "execute"
           ],
@@ -9594,6 +9648,14 @@
         },
         {
           "name": "companies_number_format_is_valid",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "companies_posting_mode_by_a_person",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -10171,6 +10233,17 @@
           ]
         },
         {
+          "name": "document_version",
+          "arguments": "p_document_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "documents_allocate_included_tax",
           "arguments": "p_document_id uuid",
           "anon": [],
@@ -10207,6 +10280,14 @@
         },
         {
           "name": "documents_match_credit_note_on_posting",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "documents_posting_mode",
           "arguments": "",
           "trigger": true,
           "anon": [],

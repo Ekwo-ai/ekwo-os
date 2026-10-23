@@ -109,3 +109,32 @@ export async function getCompany(backend: Backend, args: { company_id: string })
     journals,
   };
 }
+
+/** How an agent books a document of a company: `companies.posting_mode`. */
+export const POSTING_MODES = ['review', 'autopilot'] as const;
+export type PostingMode = (typeof POSTING_MODES)[number];
+
+export interface SetPostingModeArgs {
+  company_id: string;
+  posting_mode: PostingMode;
+}
+
+/**
+ * Chooses how an agent — a machine key, or the MCP server — books a document
+ * of this company: `review`, once a person has approved the draft as it
+ * stands, or `autopilot`, directly, within its rights. Needs company.write,
+ * and a person: the database refuses it to an agent
+ * (`posting_mode_by_a_person`), and the change is on the audit trail.
+ */
+export async function setPostingMode(backend: Backend, args: SetPostingModeArgs): Promise<unknown> {
+  const company = only(
+    await backend.update<Row>(
+      'companies',
+      { posting_mode: args.posting_mode },
+      [{ column: 'id', op: 'eq', value: args.company_id }],
+      ['id', 'name', 'posting_mode'],
+    ),
+    `company ${args.company_id}`,
+  );
+  return { company };
+}

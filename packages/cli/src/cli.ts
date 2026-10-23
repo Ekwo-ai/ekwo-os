@@ -115,7 +115,8 @@ ${bold('Commands')}
               onto the version an installation holds.
   ${cyan('company')}     new <name> --country <cc> — one more company, in its own country;
               list — the companies held here; show — the one in use, read as
-              yourself: financial years, lock dates, journals. export and import: one company
+              yourself: financial years, lock dates, journals; posting-mode
+              [review|autopilot] — how an agent books its documents. export and import: one company
               leaves an installation with its books, as an archive anybody can
               read, and arrives in another one alive.
   ${cyan('register')}    Opt in to security advisories and release notes. Optional:
@@ -166,7 +167,9 @@ ${bold('Connecting')} ${dim('(every command)')}
               <document> — what exists, and what is still owed. One object: a
               sale invoice, a bill, a quote or a credit note, with --type. A
               draft books nothing. pdf <document> — the PDF of a sale invoice
-              or credit note, from the books, in its company's colour. ${dim('ekwo invoice is the old name of doc, kept; ekwo document is its whole word.')}
+              or credit note, from the books, in its company's colour. approve
+              <document> — approve a draft, as it stands, for an agent to post
+              where the company's posting mode is review. ${dim('ekwo invoice is the old name of doc, kept; ekwo document is its whole word.')}
   ${cyan('post')}        <document> — book it, through post_document(). --dry-run shows
               the entry the database would write, and writes nothing.
   ${cyan('cancel')}      <document> — undo a posted invoice, and say how: back to draft
@@ -404,6 +407,13 @@ ${bold('ekwo company')}
                             financial years and whether each is closed, its lock
                             dates, journals and accounts by role. What the MCP
                             tool get_company answers.
+  posting-mode [review|autopilot]
+                            How an agent — a machine key, the MCP server — books
+                            a document of the company in use: review (the
+                            default), once a person approved the draft as it
+                            stands (ekwo doc approve); autopilot, directly,
+                            within its rights. As the person signed in, with
+                            company.write; refused to a machine key.
   export <company> --out <dir>
                             Write the archive of one company: manifest.json and
                             one data/<table>.jsonl per table. Read as a member
