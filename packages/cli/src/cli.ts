@@ -14,6 +14,7 @@ import { contractsCommand } from './commands/contracts.js';
 import { demoCommand } from './commands/demo.js';
 import { cancelCommand, docCommand, postCommand } from './commands/document.js';
 import { reverseCommand } from './commands/entry.js';
+import { keyCommand } from './commands/key.js';
 import { lineCommand } from './commands/line.js';
 import { mcpCommand, type McpDeps } from './commands/mcp.js';
 import { IMPORT_USAGE, importCommand } from './commands/import.js';
@@ -84,6 +85,7 @@ export const COMMANDS = [
   'peppol',
   'crm',
   'contracts',
+  'key',
   'mcp',
   // Aliases, last: `invoice` is what `doc` used to be called, and `document` is its whole word.
   'invoice',
@@ -263,6 +265,12 @@ ${bold('Connecting')} ${dim('(every command)')}
               --kind ${CONTRACT_KINDS.join('|')};
               --state ${CONTRACT_STATES.join('|')};
               --frequency ${CONTRACT_FREQUENCIES.join('|')}.
+  ${cyan('key')}         list [--all] — the machine keys of the company, with how each
+              posts; create <name> --capability <code>… [--expires
+              <timestamp>] [--autopilot] — issue one, the secret shown once.
+              A key posts as the company's agent_posting says; --autopilot,
+              with company.write and never where it is review_only, posts
+              without approvals. Fixed for good: issue another to change it.
   ${cyan('mcp')}         [--autopilot|--review] — the MCP server for an agent, over stdio:
               the same server as ekwo-mcp of @ekwo-ai/mcp, with its flags and
               its environment (ekwo mcp --help). The installed one, or the
@@ -623,6 +631,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await crmCommand(args, deps);
       case 'contracts':
         return await contractsCommand(args, deps);
+      case 'key':
+        return await keyCommand(args, deps);
       default:
         throw new UsageError(`unknown command: ${args.command}\nRun \`ekwo --help\` for the list.`);
     }

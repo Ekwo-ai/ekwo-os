@@ -347,6 +347,10 @@
             "type": "text"
           },
           {
+            "name": "posting_mode",
+            "type": "text"
+          },
+          {
             "name": "prefix",
             "type": "text"
           },
@@ -5105,7 +5109,7 @@
       },
       {
         "name": "create_api_key",
-        "arguments": "p_company_id uuid, p_name text, p_capabilities jsonb, p_expires_at timestamp with time zone"
+        "arguments": "p_company_id uuid, p_name text, p_capabilities jsonb, p_expires_at timestamp with time zone, p_posting_mode text"
       },
       {
         "name": "create_company",
@@ -9954,7 +9958,7 @@
         },
         {
           "name": "create_api_key",
-          "arguments": "p_company_id uuid, p_name text, p_capabilities jsonb, p_expires_at timestamp with time zone",
+          "arguments": "p_company_id uuid, p_name text, p_capabilities jsonb, p_expires_at timestamp with time zone, p_posting_mode text",
           "anon": [],
           "authenticated": [
             "execute"

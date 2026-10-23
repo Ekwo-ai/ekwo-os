@@ -43,11 +43,24 @@ setting `ekwo.agent` on a direct connection, the header `X-Ekwo-Agent` through
 PostgREST: `agent_call()`. The value of the mark is the session's choice:
 `autopilot`, `review`, or anything else for none. `ekwo-mcp --autopilot` or
 `--review`, or `EKWO_AGENT_POSTING`, sets it for a local server; a host of the
-HTTP transport passes it as `agent` of the connection; a program holding a key
-sends the header. `ekwo.agent_session` / `X-Ekwo-Agent-Session` names the
-session. `agent_posting_mode(company)` is what a posting meets: the session's
-choice where it made one, the setting otherwise — `review` in a `review_only`
-company, and `autopilot_forbidden` when the session asked for autopilot there.
+HTTP transport passes it as `agent` of the connection. `ekwo.agent_session` /
+`X-Ekwo-Agent-Session` names the session. `agent_posting_mode(company)` is what
+a posting meets: the session's choice where it made one, the setting otherwise
+— `review` in a `review_only` company, and `autopilot_forbidden` when the
+session asked for autopilot there.
+
+**A machine key's choice is fixed when it is issued** (owner, 23/10/2026), not
+made by the program at each call. `api_keys.posting_mode` is `review`, the
+default — a session without the flag: the company's setting decides — or
+`autopilot`, the flag given for good. A request made with a key ignores the
+mark. `create_api_key(…, p_posting_mode)` issues a key in autopilot only to a
+person who may change `agent_posting` (`company.write`), never in a
+`review_only` company (`autopilot_forbidden`, as for the use of such a key),
+and to an agent only from a session that already posts in autopilot there — a
+key is not a way for an agent to loosen what a person chose for it. Nothing
+writes the column afterwards: a key wanted in another mode is issued again.
+One column on the existing table, shown by `list_api_keys` and `ekwo key
+list`.
 
 A person signed in — in the web application, on the command line — posts as
 before: posting is their approval. The database cannot tell a person from a

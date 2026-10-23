@@ -354,12 +354,12 @@ holds every path to it.
 |---|---|
 | **The setting**, `agent_posting` of the company (`get_company`, `update_company_profile`, `ekwo company agent-posting`, the Settings page of Ekwo Cloud) | `review`, the default: `post_document` books a draft only once a person approved it as it stands — `ekwo doc approve <document>`, or the web application — refused with `approval_required` otherwise, and again if the draft changed. `autopilot`: directly, within the rights of the person. `review_only`: review, and autopilot refused to every session. |
 | **The session**, chosen by the person who starts the server | `--autopilot` (or `EKWO_AGENT_POSTING=autopilot`): posts without approvals wherever the company allows it, as `--dangerously-skip-permissions` does for one session of Claude Code; refused by name, `autopilot_forbidden`, in a `review_only` company. `--review`: approvals even where the company is in autopilot. Neither: each company's setting. |
+| **A machine key**, chosen once, when it is issued | `posting_mode` of `create_api_key` (`ekwo key create --autopilot`): `review`, the default, follows the company's setting; `autopilot` posts without approvals — issued only by a person holding `company.write`, never in a `review_only` company, where its use is refused too. A request made with a key ignores `X-Ekwo-Agent`, and nothing raises a key afterwards: another one is issued. `list_api_keys` shows the mode. |
 
 The server marks every transaction it opens as an agent's — `ekwo.agent` on
 a direct connection, `X-Ekwo-Agent` through PostgREST, carrying the session's
 choice, and `X-Ekwo-Agent-Session` naming it — and a machine key is an agent
-anyway; a program holding a key chooses autopilot with `X-Ekwo-Agent:
-autopilot`. A host of the HTTP transport passes the person's choice as
+anyway, in the mode it was issued in. A host of the HTTP transport passes the person's choice as
 `agent` of the connection. Every posting by an agent is on the audit trail as
 `document_posted_by_agent`, with the mode, the setting, the session and the
 key. The agent cannot approve, and may make the setting stricter, never

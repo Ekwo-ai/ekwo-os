@@ -20,12 +20,14 @@ import {
   AGENT_POSTING,
   DOC_TYPES,
   FALLBACK_BANK_ACCOUNT_SCHEME,
+  KEY_POSTING,
   STATEMENT_FORMATS,
   amountIn,
   bankAccountScheme,
   columns,
   companyBankAccountScheme,
   companyCurrency,
+  createApiKey as issueKey,
   idsByCode,
   importStatementFile,
   moneyFields,
@@ -1037,25 +1039,19 @@ export const CreateApiKeyInput = z.object({
     .nullable()
     .optional()
     .describe('When it stops working, as a timestamp. Left out, it does not expire on its own.'),
+  posting_mode: z
+    .enum(KEY_POSTING)
+    .optional()
+    .describe(
+      'How the key posts a document, fixed for good: review (the default) — as the company\u2019s agent_posting says, so a person approves each draft unless the company chose autopilot; autopilot — directly, on the audit trail. Autopilot needs company.write, is refused where the company is review_only, and is refused to a session that is not itself in autopilot there. Only on the user\u2019s explicit request: a key is never raised afterwards, another one is issued.',
+    ),
 });
 
 export async function createApiKey(
   backend: Backend,
   args: z.infer<typeof CreateApiKeyInput>,
 ): Promise<unknown> {
-  const created = only(
-    await backend.rpc<Row>('create_api_key', {
-      p_company_id: args.company_id,
-      p_name: args.name,
-      p_capabilities: args.capabilities,
-      p_expires_at: args.expires_at ?? null,
-    }),
-    'the key could not be issued',
-  );
-  return {
-    api_key: created,
-    note: 'The secret is in this answer and nowhere else — only its hash is stored. Show it to the user once, and tell them it cannot be read back.',
-  };
+  return issueKey(backend, args);
 }
 
 export const RevokeApiKeyInput = z.object({

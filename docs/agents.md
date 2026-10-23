@@ -133,12 +133,17 @@ questions, and a setting that forbids that flag.
   looser.
 - **The session** is the person's choice for one session of their agent:
   `ekwo-mcp --autopilot` or `ekwo mcp --autopilot` (or
-  `EKWO_AGENT_POSTING=autopilot`, or the header `X-Ekwo-Agent: autopilot`
-  beside a key) posts without approvals wherever the company allows it, the
-  way `--dangerously-skip-permissions` does for one session of Claude Code;
-  `--review` asks for approvals even where the company is in autopilot. In a
-  company that is `review_only`, a session in autopilot is refused by name,
-  `autopilot_forbidden`.
+  `EKWO_AGENT_POSTING=autopilot`) posts without approvals wherever the
+  company allows it, the way `--dangerously-skip-permissions` does for one
+  session of Claude Code; `--review` asks for approvals even where the company
+  is in autopilot. In a company that is `review_only`, a session in autopilot
+  is refused by name, `autopilot_forbidden`.
+- **A machine key** gets its mode once, when it is issued, and keeps it:
+  `ekwo key create --autopilot` (`posting_mode` of `create_api_key`) posts
+  without approvals; without it, the company's setting decides. Only a person
+  with `company.write` issues a key in autopilot, never in a `review_only`
+  company — where such a key is refused too — and a request made with a key
+  cannot choose another mode. A key wanted in another mode is issued again.
 
 Autopilot is the person's decision, for their session or their company, never
 the agent's. Every posting an agent makes is on the audit trail as

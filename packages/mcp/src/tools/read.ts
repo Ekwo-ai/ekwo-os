@@ -21,6 +21,7 @@ import {
   DOC_TYPES,
   REGISTRATION_INVITATION,
   columns,
+  listApiKeys as listKeys,
   money,
   moneyFields,
   namesOf,
@@ -384,29 +385,7 @@ export async function listApiKeys(
   backend: Backend,
   args: z.infer<typeof ListApiKeysInput>,
 ): Promise<unknown> {
-  const keys = await backend.select<Row>({
-    table: 'api_keys',
-    columns: columns.API_KEY,
-    where: [{ column: 'company_id', op: 'eq', value: args.company_id }],
-    order: [{ column: 'created_at', ascending: false }],
-  });
-
-  const now = Date.now();
-  const described = keys.map((key) => ({ ...key, state: apiKeyState(key, now) }));
-  return {
-    api_keys:
-      args.include_withdrawn === true
-        ? described
-        : described.filter((key) => key.state === 'live'),
-    note: 'The secret of a key exists only in the answer that created it. A key that is lost is withdrawn and issued again.',
-  };
-}
-
-function apiKeyState(key: Row, now: number): string {
-  if (key['revoked_at'] !== null && key['revoked_at'] !== undefined) return 'withdrawn';
-  const expires = key['expires_at'];
-  if (typeof expires === 'string' && Date.parse(expires) <= now) return 'expired';
-  return 'live';
+  return listKeys(backend, args);
 }
 
 export const GetPreferencesInput = z.object({

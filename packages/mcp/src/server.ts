@@ -311,7 +311,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Machine keys of a company',
       description:
-        'The keys a company has issued to machines, what each one may do, when it was last used and whether it is still live. Only somebody who manages members sees them, and no secret is in here: a key is shown once, when it is issued.',
+        'The keys a company has issued to machines, what each one may do, how it posts a document (posting_mode, review or autopilot, fixed when it was issued), when it was last used and whether it is still live. Only somebody who manages members sees them, and no secret is in here: a key is shown once, when it is issued.',
       inputSchema: read.ListApiKeysInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -951,7 +951,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Issue a key to a machine',
       description:
-        'Issues a key so a script — a nightly import, a till, a bank feed — can work in one company without a person signing in. It carries an explicit list of capabilities and nothing else, it can never reach another company, and it cannot hold a capability you do not hold yourself — at issuance and at every use: if you lose a capability or leave the company, the key loses it too. The secret comes back once and is stored only as a hash: show it to the user and say it cannot be read back. Prefer this to sharing anybody\u2019s password, and never suggest a service key.',
+        'Issues a key so a script — a nightly import, a till, a bank feed — can work in one company without a person signing in. It carries an explicit list of capabilities and nothing else, it can never reach another company, and it cannot hold a capability you do not hold yourself — at issuance and at every use: if you lose a capability or leave the company, the key loses it too. Its posting_mode is fixed now and never raised afterwards: review by default, autopilot only when the user asks for it in so many words. The secret comes back once and is stored only as a hash: show it to the user and say it cannot be read back. Prefer this to sharing anybody\u2019s password, and never suggest a service key.',
       inputSchema: write.CreateApiKeyInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     },

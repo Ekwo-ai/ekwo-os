@@ -29,7 +29,14 @@
 --
 -- **The session's choice** is the value of that mark: `autopilot` or
 -- `review`, or anything else for none, and then the company's setting
--- decides. `ekwo.agent_session` / `X-Ekwo-Agent-Session` names the session,
+-- decides. A machine key does not choose at each call: its mode is fixed
+-- when it is issued (`api_keys.posting_mode`), and a request made with it
+-- ignores the mark. A key in `autopilot` is the flag of a session, given for
+-- good; a key in `review`, the default, is a session without the flag, and
+-- the company's setting decides. Only a
+-- person who may change the setting (`company.write`) issues a key in
+-- autopilot, never in a company that is `review_only`, and a key is never
+-- raised to autopilot afterwards: another key is issued. `ekwo.agent_session` / `X-Ekwo-Agent-Session` names the session,
 -- for the trail. `agent_posting_mode(company)` is the mode a posting of this
 -- transaction meets: `review`, `autopilot`, or `autopilot_forbidden` when the
 -- session asks for autopilot in a company that is `review_only` — and a
@@ -77,6 +84,18 @@ alter table companies
 comment on column companies.agent_posting is
   'How an agent — a machine key, or the MCP server — books a document of this company: review (the default), once a person has approved the draft as it stands (approve_document()), unless the session opted into autopilot; autopilot, directly, within the capabilities it holds; review_only, as review, and no session may opt into autopilot. A person signed in posts as before in all three. Written with company.write; an agent may only make it stricter.';
 
+alter table api_keys
+  add column if not exists posting_mode text not null default 'review';
+
+alter table api_keys
+  drop constraint if exists api_keys_posting_mode_known;
+alter table api_keys
+  add constraint api_keys_posting_mode_known
+  check (posting_mode in ('review', 'autopilot'));
+
+comment on column api_keys.posting_mode is
+  'How this key posts a document, fixed when it is issued: review (the default), as the company''s agent_posting says — only a draft a person approved, unless the company chose autopilot; autopilot, directly — issued only by a person holding company.write, and refused (autopilot_forbidden) in a company whose agent_posting is review_only. Its requests ignore the mark X-Ekwo-Agent. Never changed afterwards: a key wanted in another mode is issued again.';
+
 -- ---------------------------------------------------------------------------
 -- 2. Who is an agent, and what its session asked for
 -- ---------------------------------------------------------------------------
@@ -94,7 +113,7 @@ as $$
 $$;
 
 comment on function agent_mark(text) is
-  'What the MCP server, or a program holding a key, says of this transaction: the setting ekwo.<name> on a direct connection, the header X-Ekwo-<Name> through PostgREST. agent is the mark of an agent and its session''s posting mode, agent_session the name of its session.';
+  'What the MCP server says of this transaction: the setting ekwo.<name> on a direct connection, the header X-Ekwo-<Name> through PostgREST. agent is the mark of an agent and its session''s posting mode, agent_session the name of its session. For a request made with a machine key, the posting mode is the key''s (api_keys.posting_mode) and this mark is ignored.';
 
 revoke execute on function agent_mark(text) from public, anon;
 grant execute on function agent_mark(text) to authenticated, service_role;
@@ -124,18 +143,25 @@ security definer
 set search_path = public, pg_temp
 as $$
   select case
-           when c.agent_posting = 'review_only' and agent_mark('agent') = 'autopilot' then 'autopilot_forbidden'
+           when c.agent_posting = 'review_only' and s.choice = 'autopilot' then 'autopilot_forbidden'
            when c.agent_posting = 'review_only' then 'review'
-           when agent_mark('agent') in ('review', 'autopilot') then agent_mark('agent')
+           when s.choice in ('review', 'autopilot') then s.choice
            else c.agent_posting
          end
-    from companies c
+    from companies c,
+         -- A key's choice was fixed when it was issued, and its requests'
+         -- mark is ignored; without a key, the mark is the session's.
+         lateral (select case
+                           when k.id is null then agent_mark('agent')
+                           when k.posting_mode = 'autopilot' then 'autopilot'
+                         end as choice
+                    from current_api_key() k) s
    where c.id = p_company_id
      and (is_installer() or has_capability(c.id, 'documents.read'));
 $$;
 
 comment on function agent_posting_mode(uuid) is
-  'The mode an agent''s posting in this transaction meets in a company: the session''s choice (the mark agent: review or autopilot) where it made one, the company''s agent_posting otherwise; review in a company that is review_only, and autopilot_forbidden when the session asked for autopilot there. Null for a company the caller cannot see.';
+  'The mode an agent''s posting in this transaction meets in a company: autopilot for a machine key issued in autopilot, and for a session that chose it (the mark agent); review for a session that chose review; the company''s agent_posting otherwise — for a key issued in review whatever its request''s mark says. Review in a company that is review_only, and autopilot_forbidden when the key or the session is in autopilot there. Null for a company the caller cannot see.';
 
 revoke execute on function agent_posting_mode(uuid) from public, anon;
 grant execute on function agent_posting_mode(uuid) to authenticated, service_role;
@@ -260,7 +286,7 @@ begin
   v_mode := agent_posting_mode(new.company_id);
 
   if v_mode = 'autopilot_forbidden' then
-    raise exception 'autopilot_forbidden: this company''s agent_posting is review_only, so no session posts in autopilot. Start the session in review (without --autopilot, or with the mark X-Ekwo-Agent: review), and a person approves each draft (approve_document(), ekwo doc approve).'
+    raise exception 'autopilot_forbidden: this company''s agent_posting is review_only, so no session and no key posts in autopilot. Start the session in review (without --autopilot, or with the mark X-Ekwo-Agent: review), or use a key issued in review, and a person approves each draft (approve_document(), ekwo doc approve).'
       using errcode = '42501';
   end if;
 
@@ -305,7 +331,7 @@ end;
 $$;
 
 comment on function documents_posting_mode() is
-  'Holds the posting of a document by an agent (agent_call()) to agent_posting_mode(): autopilot_forbidden when the session asked for autopilot in a company that is review_only; in review, approval_required unless a person approved the draft as it stood (approve_document()) since it last went back to draft. Every posting by an agent writes document_posted_by_agent on the audit trail: the mode, the company''s setting, the session, and in review the approval; the key is the row''s api_key_id. A rehearsal is not held to it.';
+  'Holds the posting of a document by an agent (agent_call()) to agent_posting_mode(): autopilot_forbidden when the key or the session is in autopilot in a company that is review_only; in review, approval_required unless a person approved the draft as it stood (approve_document()) since it last went back to draft. Every posting by an agent writes document_posted_by_agent on the audit trail: the mode, the company''s setting, the session, and in review the approval; the key is the row''s api_key_id. A rehearsal is not held to it.';
 
 revoke execute on function documents_posting_mode() from public, anon, authenticated, service_role;
 
@@ -374,3 +400,102 @@ begin
   return v_result;
 end;
 $$;
+
+-- ---------------------------------------------------------------------------
+-- 6. A key's mode is fixed when it is issued
+--
+-- `20261007041207` as it was, with a fifth argument, `p_posting_mode`, and
+-- the mode among what it returns. A key in autopilot is a standing choice of
+-- autopilot, so it is issued by whoever may make that choice for the company
+-- — `company.write`, the right that writes `agent_posting` — and never where
+-- the company is `review_only`. An agent issues one only from a session that
+-- already posts in autopilot there: a key is not a way for an agent to loosen
+-- what a person chose for it.
+-- ---------------------------------------------------------------------------
+
+drop function if exists create_api_key(uuid, text, jsonb, timestamptz);
+
+create or replace function create_api_key(
+  p_company_id   uuid,
+  p_name         text,
+  p_capabilities jsonb,
+  p_expires_at   timestamptz default null,
+  p_posting_mode text default 'review')
+returns table (api_key_id uuid, secret text, prefix text, expires_at timestamptz, posting_mode text)
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $function$
+declare
+  v_caps   text[] := coalesce(
+    (select array_agg(value) from jsonb_array_elements_text(coalesce(p_capabilities, '[]'::jsonb)) as value),
+    '{}');
+  v_mode   text := coalesce(p_posting_mode, 'review');
+  v_prefix text := left(replace(gen_random_uuid()::text, '-', ''), 12);
+  v_secret text;
+  v_cap    text;
+  v_row    api_keys%rowtype;
+  v_issuer uuid := acting_user();
+begin
+  if not is_installer() and not has_capability(p_company_id, 'members.manage') then
+    raise exception 'not_allowed: issuing a key for this company needs members.manage'
+      using errcode = '42501';
+  end if;
+
+  if v_mode not in ('review', 'autopilot') then
+    raise exception 'bad_posting_mode: a key posts in review or in autopilot, not %', v_mode
+      using errcode = '22023';
+  end if;
+
+  if v_mode = 'autopilot' then
+    if not is_installer() and not has_capability(p_company_id, 'company.write') then
+      raise exception 'not_allowed: issuing a key in autopilot needs company.write, the right that chooses how agents post in this company'
+        using errcode = '42501';
+    end if;
+    if (select c.agent_posting from companies c where c.id = p_company_id) = 'review_only' then
+      raise exception 'autopilot_forbidden: this company''s agent_posting is review_only, so no key posts in autopilot. Issue the key in review.'
+        using errcode = '42501';
+    end if;
+    if agent_call() and agent_posting_mode(p_company_id) is distinct from 'autopilot' then
+      raise exception 'agent_posting_by_a_person: a key in autopilot is issued by a person signed in, or by an agent whose own session already posts in autopilot here — never by an agent held to review.'
+        using errcode = '42501';
+    end if;
+  end if;
+
+  if cardinality(v_caps) = 0 then
+    raise exception 'api_key_without_capability: name what this key may do; a key that may do nothing is a secret to look after for no reason';
+  end if;
+
+  foreach v_cap in array v_caps loop
+    if v_cap not in (select code from capabilities) then
+      raise exception 'unknown_capability: % is not a capability of this installation', v_cap;
+    end if;
+    -- Nobody mints a key stronger than they are, and this is only the first
+    -- time it is checked. At every use `key_holds()` asks again whether the
+    -- issuer still holds the capability, so a capability withdrawn from a
+    -- person is withdrawn from the keys they issued.
+    if not is_installer() and not has_capability(p_company_id, v_cap) then
+      raise exception 'not_allowed: you do not hold % yourself, so you cannot put it on a key', v_cap
+        using errcode = '42501';
+    end if;
+  end loop;
+
+  v_secret := 'ekwo_' || v_prefix || '_' ||
+              replace(gen_random_uuid()::text, '-', '') ||
+              replace(gen_random_uuid()::text, '-', '');
+
+  insert into api_keys (company_id, name, prefix, key_hash, capabilities, created_by, expires_at, posting_mode)
+  values (p_company_id, p_name, v_prefix,
+          encode(sha256(convert_to(v_secret, 'UTF8')), 'hex'),
+          v_caps, v_issuer, p_expires_at, v_mode)
+  returning * into v_row;
+
+  return query select v_row.id, v_secret, v_row.prefix, v_row.expires_at, v_row.posting_mode;
+end;
+$function$;
+
+comment on function create_api_key(uuid, text, jsonb, timestamptz, text) is
+  'Issues a machine key on one company and returns the secret once. Only the hash is stored. No capability can be put on a key that the person issuing it does not hold, and at every use the key holds only what that person still holds (key_holds). A key issued while another key is presented records the person behind that key. p_posting_mode fixes how it posts a document, for good: review (the default) or autopilot, which needs company.write, is refused in a company that is review_only (autopilot_forbidden), and is refused to an agent not itself in autopilot there.';
+
+revoke execute on function create_api_key(uuid, text, jsonb, timestamptz, text) from public, anon;
+grant execute on function create_api_key(uuid, text, jsonb, timestamptz, text) to authenticated, service_role;

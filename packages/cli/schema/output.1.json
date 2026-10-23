@@ -503,6 +503,18 @@
         "required": ["contacts", "count"],
         "properties": { "contacts": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
       },
+      "key list": {
+        "$comment": "What listApiKeys() of @ekwo-ai/core answers — the MCP server's list_api_keys. Each key without its hash, with posting_mode (review or autopilot, fixed when it was issued) and state (live, expired, withdrawn); --all keeps the ones no longer live.",
+        "type": "object",
+        "required": ["api_keys", "note"],
+        "properties": { "api_keys": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "note": { "type": "string" } }
+      },
+      "key create": {
+        "$comment": "What createApiKey() of @ekwo-ai/core answers — the MCP server's create_api_key. api_key holds api_key_id, the secret — here and nowhere else — prefix, expires_at and posting_mode.",
+        "type": "object",
+        "required": ["api_key", "note"],
+        "properties": { "api_key": { "$ref": "#/$defs/row" }, "note": { "type": "string" } }
+      },
       "contact duplicates": {
         "$comment": "What suggestDuplicateContacts() of @ekwo-ai/core answers — the MCP server's suggest_duplicate_contacts. One pair per row of suggest_duplicate_contacts(), strongest first: keep_id and absorb_id with their names, score from 0 to 1, evidence the kinds strongest first (vat_number, registration_number, account, name), because the evidence in sentences. Nothing is written.",
         "type": "object",

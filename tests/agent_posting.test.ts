@@ -8,7 +8,8 @@
  * session may opt into autopilot. The rule is the database's, so the MCP
  * server — which marks its transactions as an agent's, with its session's
  * choice — and a machine key on the API meet the same answer, and a person
- * signed in posts as before.
+ * signed in posts as before. A key's choice is fixed when it is issued, and
+ * the mark its requests carry does not change it.
  */
 
 import type { PGlite } from '@electric-sql/pglite';
@@ -35,6 +36,8 @@ let reviewSession: Backend;
 let accountant: Backend;
 let keySecret: string;
 let keyId: string;
+let autopilotSecret: string;
+let autopilotKeyId: string;
 let customerId: string;
 
 const line = (name: string, price = '100.00') => ({
@@ -82,13 +85,18 @@ async function setting(value: AgentPosting): Promise<void> {
  * A statement as a machine key on the API: no person, the key presented, and
  * the mark X-Ekwo-Agent carries when the program holding it chose a mode.
  */
-async function withKey(sql: string, params: unknown[], mark?: 'autopilot' | 'review'): Promise<string | null> {
+async function withKey(
+  sql: string,
+  params: unknown[],
+  mark?: 'autopilot' | 'review',
+  secret = keySecret,
+): Promise<string | null> {
   try {
     await db.transaction(async (tx) => {
       await tx.query(`select set_config('ekwo.installing', '', true)`);
       if (mark !== undefined) await tx.query(`select set_config('ekwo.agent', $1, true)`, [mark]);
       await tx.exec('set local role authenticated');
-      await tx.query(`select * from use_api_key($1)`, [keySecret]);
+      await tx.query(`select * from use_api_key($1)`, [secret]);
       await tx.query(sql, params);
     });
     return null;
@@ -99,6 +107,22 @@ async function withKey(sql: string, params: unknown[], mark?: 'autopilot' | 'rev
 
 const postWithKey = (documentId: string, mark?: 'autopilot' | 'review') =>
   withKey(`select post_document($1)`, [documentId], mark);
+
+const postWithAutopilotKey = (documentId: string, mark?: 'autopilot' | 'review') =>
+  withKey(`select post_document($1)`, [documentId], mark, autopilotSecret);
+
+const KEY_CAPABILITIES = ['documents.read', 'documents.write', 'documents.post', 'entries.read', 'entries.write', 'entries.post', 'contacts.read', 'settings.read'];
+
+/** Issues a key as this person, in this posting mode. */
+function issueKey(userId: string, name: string, mode?: 'review' | 'autopilot', capabilities = KEY_CAPABILITIES) {
+  return asUser(db, userId, () =>
+    one<{ secret: string; api_key_id: string; posting_mode: string }>(
+      db,
+      `select * from create_api_key($1, $2, $3::jsonb, null, $4)`,
+      [fx.companyId, name, JSON.stringify(capabilities), mode ?? null],
+    ),
+  );
+}
 
 beforeAll(async () => {
   db = await freshDatabase();
@@ -123,6 +147,9 @@ beforeAll(async () => {
   );
   keySecret = key.secret;
   keyId = key.api_key_id;
+  const autopilotKey = await issueKey(fx.ownerId, 'Autopilot', 'autopilot');
+  autopilotSecret = autopilotKey.secret;
+  autopilotKeyId = autopilotKey.api_key_id;
 
   const created = record(
     await writeTools.createContact(person, {
@@ -255,10 +282,25 @@ describe('in review, the default', () => {
     expect(trail?.new_values['approved_by']).toBeUndefined();
   });
 
-  it('lets a key whose program chose autopilot post directly, with the key on the trail', async () => {
+  it('holds a key issued in review to an approval, whatever its request says', async () => {
+    const id = await draft('Key asks for autopilot');
+    expect(await postWithKey(id, 'autopilot')).toMatch(/approval_required/);
+    expect(await stateOf(id)).toBe('draft');
+  });
+
+  it('lets a key issued in autopilot post directly, with the key on the trail', async () => {
     const id = await draft('Key autopilot');
-    expect(await postWithKey(id, 'autopilot')).toBeNull();
-    expect(await postedByAgent(id)).toMatchObject({ new_values: { posting_mode: 'autopilot' }, api_key_id: keyId });
+    expect(await postWithAutopilotKey(id)).toBeNull();
+    expect(await postedByAgent(id)).toMatchObject({
+      new_values: { posting_mode: 'autopilot', agent_posting: 'review' },
+      api_key_id: autopilotKeyId,
+    });
+  });
+
+  it('keeps a key issued in autopilot there, whatever its request says', async () => {
+    const id = await draft('Key autopilot asks for review');
+    expect(await postWithAutopilotKey(id, 'review')).toBeNull();
+    expect(await postedByAgent(id)).toMatchObject({ new_values: { posting_mode: 'autopilot' }, api_key_id: autopilotKeyId });
   });
 });
 
@@ -296,8 +338,17 @@ describe('in review only', () => {
     await expect(writeTools.postDocument(autopilotSession, { document_id: id })).rejects.toThrow(/autopilot_forbidden/);
     await approveDocument(person, { document_id: id });
     await expect(writeTools.postDocument(autopilotSession, { document_id: id })).rejects.toThrow(/autopilot_forbidden/);
-    expect(await postWithKey(id, 'autopilot')).toMatch(/autopilot_forbidden/);
+    expect(await postWithAutopilotKey(id)).toMatch(/autopilot_forbidden/);
     expect(await stateOf(id)).toBe('draft');
+  });
+
+  it('refuses to issue a key in autopilot, and holds a key issued in review to approvals', async () => {
+    await expect(issueKey(fx.ownerId, 'Too late', 'autopilot')).rejects.toThrow(/autopilot_forbidden/);
+    const id = await draft('Key review only');
+    expect(await postWithKey(id, 'autopilot')).toMatch(/approval_required/);
+    await approveDocument(person, { document_id: id });
+    expect(await postWithKey(id, 'autopilot')).toBeNull();
+    expect(await postedByAgent(id)).toMatchObject({ new_values: { posting_mode: 'review' }, api_key_id: keyId });
   });
 
   it('posts what a person approved, for a session that did not ask for autopilot', async () => {
@@ -306,6 +357,48 @@ describe('in review only', () => {
     await approveDocument(person, { document_id: id });
     await writeTools.postDocument(agent, { document_id: id });
     expect((await postedByAgent(id))?.new_values).toMatchObject({ posting_mode: 'review', agent_posting: 'review_only' });
+  });
+});
+
+describe('a key in autopilot', () => {
+  beforeEach(async () => {
+    await setting('review');
+  });
+
+  it('is issued by a person who may change agent_posting, and by nobody else', async () => {
+    const manager = await newUser(db);
+    await db.query(
+      `insert into company_members (company_id, user_id, role, capabilities_granted)
+       values ($1, $2, 'accountant', '{members.manage}')`,
+      [fx.companyId, manager],
+    );
+    await expect(issueKey(manager, 'Mine', 'autopilot', ['documents.read'])).rejects.toThrow(/company\.write/);
+    const review = await issueKey(manager, 'Mine', undefined, ['documents.read']);
+    expect(review.posting_mode).toBe('review');
+  });
+
+  it('is issued by an agent only from a session that posts in autopilot itself', async () => {
+    const asked = { company_id: fx.companyId, name: 'From a session', capabilities: ['documents.read'], posting_mode: 'autopilot' as const };
+    await expect(writeTools.createApiKey(agent, asked)).rejects.toThrow(/agent_posting_by_a_person/);
+    await expect(writeTools.createApiKey(reviewSession, asked)).rejects.toThrow(/agent_posting_by_a_person/);
+    const issued = record(record(await writeTools.createApiKey(autopilotSession, asked))['api_key']);
+    expect(issued['posting_mode']).toBe('autopilot');
+  });
+
+  it('is shown with its mode, and never raised afterwards', async () => {
+    const listed = (record(await readTools.listApiKeys(person, { company_id: fx.companyId }))['api_keys'] as Record<string, unknown>[]);
+    expect(listed.find((key) => key['id'] === keyId)?.['posting_mode']).toBe('review');
+    expect(listed.find((key) => key['id'] === autopilotKeyId)?.['posting_mode']).toBe('autopilot');
+
+    await expect(
+      asUser(db, fx.ownerId, () => db.query(`update api_keys set posting_mode = 'autopilot' where id = $1`, [keyId])),
+    ).rejects.toThrow(/permission denied/);
+    const key = await one<{ posting_mode: string }>(db, `select posting_mode from api_keys where id = $1`, [keyId]);
+    expect(key.posting_mode).toBe('review');
+  });
+
+  it('refuses a mode that is not one', async () => {
+    await expect(issueKey(fx.ownerId, 'Yolo', 'yolo' as 'autopilot')).rejects.toThrow(/bad_posting_mode/);
   });
 });
 

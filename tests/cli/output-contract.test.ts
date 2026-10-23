@@ -287,6 +287,12 @@ describe('every command answers --json with one document of the published shape'
     expect(settings.context).toEqual(used.context);
     expect((settings.data as { fiscal_years: unknown[] }).fiscal_years.length).toBeGreaterThan(0);
     expect((settings.data as { journals: unknown[] }).journals.length).toBeGreaterThan(0);
+    // A machine key, issued in autopilot by the owner, and the list that shows its mode.
+    const issued = await asPerson(['key', 'create', 'Nightly import', '--capability', 'documents.read', '--autopilot']);
+    expect(issued.data).toMatchObject({ api_key: { posting_mode: 'autopilot' } });
+    expect((await asPerson(['key', 'list'])).data).toMatchObject({
+      api_keys: [{ name: 'Nightly import', posting_mode: 'autopilot', state: 'live' }],
+    });
     // The verbs that keep books, each once, on the company `init` made. What
     // they do is `books.test.ts`; here it is the shape of what they answer.
     const sales = roleOf(somePack, 'sales');

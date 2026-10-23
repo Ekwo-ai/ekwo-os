@@ -19,14 +19,23 @@ somewhere has already run it.
   by the MCP server (`ekwo.agent` on a direct connection, `X-Ekwo-Agent`
   through PostgREST): `agent_call()`. The mark carries the session's choice,
   the way a person passes `--dangerously-skip-permissions` to one session of a
-  coding agent: `ekwo-mcp --autopilot` or `--review`, `EKWO_AGENT_POSTING`, or
-  the header `X-Ekwo-Agent: autopilot` beside a key; `agent_posting_mode()` is
-  what a posting meets. In review, an agent's posting of a document is
-  refused, `approval_required`, unless a person approved that draft as it
+  coding agent: `ekwo-mcp --autopilot` or `--review`, or `EKWO_AGENT_POSTING`;
+  `agent_posting_mode()` is what a posting meets. A machine key does not
+  choose at each call: its mode is fixed when it is issued,
+  `api_keys.posting_mode` — `review`, the default, follows the company's
+  setting; `autopilot` posts directly — and a request made with it ignores
+  `X-Ekwo-Agent`. `create_api_key(…, p_posting_mode)` issues a key in
+  autopilot only to a person holding `company.write` (or an agent whose own
+  session already posts in autopilot there), never in a `review_only`
+  company (`autopilot_forbidden`, and so is its use); nothing raises a key
+  afterwards. `ekwo key create --autopilot`, `ekwo key list`, `posting_mode`
+  in `create_api_key` and `list_api_keys` of the MCP server. In review, an
+  agent's posting of a document is refused, `approval_required`, unless a person approved that draft as it
   stands with `approve_document()` — a `document_approved` row of the audit
   trail naming `document_version()`, a digest of the document and its lines,
   voided by any change to the draft. In autopilot it posts directly. In
-  `review_only` a session in autopilot is refused, `autopilot_forbidden`.
+  `review_only` a session or a key in autopilot is refused,
+  `autopilot_forbidden`.
   Every posting by an agent writes `document_posted_by_agent` with the mode,
   the setting, the session (`X-Ekwo-Agent-Session`), the key and, in review,
   the approval. An agent may not approve (`approval_by_a_person`) and may make

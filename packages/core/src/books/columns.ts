@@ -426,6 +426,7 @@ export const API_KEY = [
   'name',
   'prefix',
   'capabilities',
+  'posting_mode',
   'created_by',
   'created_at::text',
   'expires_at::text',
