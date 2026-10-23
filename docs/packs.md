@@ -408,6 +408,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`kz`](../packs/kz/) | Қазақстан | `124_pack_kz.sql` | kk, ru, en | `community` |
 | [`la`](../packs/la/) | Lao PDR | `213_pack_la.sql` | en | `community` |
 | [`lc`](../packs/lc/) | Saint Lucia | `204_pack_lc.sql` | en | `community` |
+| [`li`](../packs/li/) | Liechtenstein | `221_pack_li.sql` | de | `community` |
 | [`lk`](../packs/lk/) | Sri Lanka | `127_pack_lk.sql` | en | `community` |
 | [`ls`](../packs/ls/) | Lesotho | `208_pack_ls.sql` | en | `community` |
 | [`lt`](../packs/lt/) | Lietuva | `77_pack_lt.sql` | lt | `community` |
