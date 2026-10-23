@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "AT",
   "name": "Austria",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 63,
-  "released_at": "2026-09-22",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -112,6 +112,14 @@
         "url": "https://www.oenb.at/Service/Zins--und-Wechselkurse/Anknuepfungszinssaetze.html",
         "consulted_on": "2026-09-22",
         "kind": "guidance"
+      },
+      {
+        "key": "bmf-steuerzahlungen",
+        "title": "Steuerzahlungen — die Bankverbindungen des Finanzamts Österreich, auf die Abgaben entrichtet werden",
+        "publisher": "Bundesministerium für Finanzen (BMF)",
+        "url": "https://www.bmf.gv.at/themen/steuern/fristen-verfahren/steuerzahlungen.html",
+        "consulted_on": "2026-10-23",
+        "kind": "guidance"
       }
     ]
   },
@@ -135,6 +143,10 @@
       "fx_loss": "8808",
       "tax_payable": "6810",
       "tax_receivable": "2237"
+    },
+    "tax_payee": {
+      "name": "Finanzamt Österreich",
+      "source": "bmf-steuerzahlungen"
     },
     "journal_roles": {
       "sales": "VK",

@@ -20,6 +20,10 @@ somewhere has already run it.
   an existing contact under any of them. `be` (nl, de, en), `ch` (fr), `ca`
   (fr) and `kz` (ru, en) carry it, with `schema_min` `20261023160200`; `lu`
   does not, the administration publishing its name in French only.
+- **`de`, `at` and `ng` name their administration**: Finanzamt (read on a page
+  of the Senatsverwaltung für Finanzen Berlin), Finanzamt Österreich (bmf.gv.at)
+  and Nigeria Revenue Service (its taxpayer portal on nrs.gov.ng). Each moves a
+  minor version, with `schema_min` `20261023124650`.
 
 ### Changed
 

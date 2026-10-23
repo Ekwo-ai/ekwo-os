@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "NG",
   "name": "Nigeria",
-  "version": "0.4.0",
-  "schema_min": "20261011120000",
+  "version": "0.5.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 49,
-  "released_at": "2026-10-01",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -88,6 +88,14 @@
         "url": "https://www.ifrs.org/content/dam/ifrs/publications/jurisdictions/pdf-profiles/nigeria-ifrs-profile.pdf",
         "consulted_on": "2026-10-01",
         "kind": "guidance"
+      },
+      {
+        "key": "nrs-self-service-portal",
+        "title": "Taxpayer Self Service Portal — the official Nigeria Revenue Service portal for taxpayers to fulfil their tax obligations: self tax filing, third-party tax filing and payments",
+        "publisher": "Nigeria Revenue Service",
+        "url": "https://selfservice.nrs.gov.ng/",
+        "consulted_on": "2026-10-23",
+        "kind": "portal"
       }
     ]
   },
@@ -113,6 +121,10 @@
       "asset_disposal_loss": "7690",
       "tax_payable": "2210",
       "tax_receivable": "1155"
+    },
+    "tax_payee": {
+      "name": "Nigeria Revenue Service",
+      "source": "nrs-self-service-portal"
     },
     "journal_roles": {
       "sales": "SAL",

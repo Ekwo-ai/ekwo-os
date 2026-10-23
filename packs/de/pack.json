@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "DE",
   "name": "Germany",
-  "version": "0.4.0",
-  "schema_min": "20261011120000",
+  "version": "0.5.0",
+  "schema_min": "20261023124650",
   "seed_sequence": 18,
-  "released_at": "2026-10-01",
+  "released_at": "2026-10-23",
   "certification": {
     "status": "community",
     "sources": [
@@ -168,6 +168,14 @@
         "url": "https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Weitere_Steuerthemen/Betriebspruefung/AfA-Tabellen/Ergaenzende-AfA-Tabellen/AfA-Tabelle_AV.pdf?__blob=publicationFile&v=5",
         "consulted_on": "2026-10-01",
         "kind": "guidance"
+      },
+      {
+        "key": "senfin-berlin-start-up-steuern",
+        "title": "FAQ Start-up-Unternehmen – Was Sie zu Steuern wissen müssen? (Umsatzsteuer: „… die Umsatzsteuer gesondert ausweisen und an das Finanzamt abführen“; Voranmeldung und Vorauszahlung, § 18 Abs. 1 UStG)",
+        "publisher": "Senatsverwaltung für Finanzen Berlin",
+        "url": "https://www.berlin.de/sen/finanzen/steuern/informationen-fuer-steuerzahler-/faq-steuern/artikel.558266.php",
+        "consulted_on": "2026-10-23",
+        "kind": "guidance"
       }
     ]
   },
@@ -196,6 +204,10 @@
       "tax_payable": "6820",
       "asset_disposal_gain": "8410",
       "asset_disposal_loss": "8880"
+    },
+    "tax_payee": {
+      "name": "Finanzamt",
+      "source": "senfin-berlin-start-up-steuern"
     },
     "journal_roles": {
       "sales": "VK",
