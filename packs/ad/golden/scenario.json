@@ -325,7 +325,7 @@
       "date": "2026-02-05",
       "amount": 20900,
       "contact": "cust-ad",
-      "journal": "BAN",
+      "journal": "BNK",
       "match": "V1",
       "why": "The sale V1 collected in full, tax included: a matched inbound payment."
     },
@@ -335,7 +335,7 @@
       "date": "2026-03-18",
       "amount": 10000,
       "contact": "cust-fr",
-      "journal": "BAN",
+      "journal": "BNK",
       "match": "V6",
       "why": "The export V6 collected in full: a matched inbound payment from a foreign customer."
     },
@@ -345,7 +345,7 @@
       "date": "2026-02-10",
       "amount": 8360,
       "contact": "supp-ad",
-      "journal": "BAN",
+      "journal": "BNK",
       "match": "A1",
       "why": "The purchase A1 paid in full, tax included: a matched outbound payment."
     },
@@ -355,7 +355,7 @@
       "date": "2026-03-20",
       "amount": 1500,
       "contact": "cust-ad",
-      "journal": "BAN",
+      "journal": "BNK",
       "match": null,
       "why": "A deposit received with no invoice yet: an unmatched inbound payment left on the customer’s account."
     }

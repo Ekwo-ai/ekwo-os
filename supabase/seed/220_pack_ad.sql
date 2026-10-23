@@ -26,7 +26,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('AD', 'Andorra', '0.1.0', date '2026-10-23', '20261011120000', 'community', null, null, '86587f8201a4ded3e4003d7083057ad2aeadba0c8dc785b114ff4e93f67c6348', '[{"key":"igi-law","title":"Llei 11/2012, del 21 de juny, de l’impost general indirecte (BOPA núm. 33, any 24, 18.7.2012)","publisher":"Consell General del Principat d’Andorra","url":"https://www.consellgeneral.ad/fitxers/documents/lleis-2012/llei-11-2012.pdf","consulted_on":"2026-10-23","kind":"law"},{"key":"igi-law-2014","title":"Llei 10/2014, del 3 de juny, de modificació de la Llei 11/2012 de l’impost general indirecte (BOPA núm. 38, any 26, 26.6.2014)","publisher":"Consell General del Principat d’Andorra","url":"https://www.consellgeneral.ad/fitxers/documents/lleis-2014/llei-10-2014","consulted_on":"2026-10-23","kind":"law"},{"key":"tax-calendar","title":"Calendari fiscal 2023 — impost general indirecte, liquidació mensual, trimestral o semestral","publisher":"Govern d’Andorra — Seu electrònica (e-tràmits)","url":"https://www.e-tramits.ad/tramits/_ui/responsive/common/docs/Calendari%202023.pdf","consulted_on":"2026-10-23","kind":"guidance"},{"key":"accounting-law","title":"Text refós de la Llei 30/2007, del 20 de desembre, de la comptabilitat dels empresaris, modificada per la Llei 8/2010 i la Llei 26/2011","publisher":"Consell General del Principat d’Andorra","url":"https://www.consellgeneral.ad/ca/arxiu/arxiu-de-lleis-i-textos-aprovats-en-legislatures-anteriors/vi-legislatura-2011-2015/copy_of_lleis-aprovades/decret-del-15-02-2012-pel-qual-s2019ordena-la-publicacio-del-text-refos-de-la-llei-30-2007-del-20-de-desembre-de-la-comptabilitat-dels-empresaris-modificada-per-la-llei-8-2010-del-22-d2019abril-i-per-la-llei-26-2011-del-29-de-desembre/at_download/PDF","consulted_on":"2026-10-23","kind":"law"},{"key":"pgc","title":"Decret 479/2025, del 23-12-2025, pel qual s’aprova el nou Pla general de comptabilitat (copy published by the Cambra de Comerç, Indústria i Serveis d’Andorra)","publisher":"Govern d’Andorra — Butlletí Oficial del Principat d’Andorra","url":"https://www.ccis.ad/wp-content/uploads/2026/01/PGC.pdf","consulted_on":"2026-10-23","kind":"regulation"},{"key":"e-tramits","title":"E-tràmits — Seu electrònica del Govern d’Andorra, on the IGI declaration is filed","publisher":"Govern d’Andorra","url":"https://www.e-tramits.ad/","consulted_on":"2026-10-23","kind":"portal"}]'::jsonb)
+  ('AD', 'Andorra', '0.1.0', date '2026-10-23', '20261011120000', 'community', null, null, 'c90bfbdcbee88bb558cdebd9041cb4bfe35c44485cab637f0f86a7b35e6d3ac9', '[{"key":"igi-law","title":"Llei 11/2012, del 21 de juny, de l’impost general indirecte (BOPA núm. 33, any 24, 18.7.2012)","publisher":"Consell General del Principat d’Andorra","url":"https://www.consellgeneral.ad/fitxers/documents/lleis-2012/llei-11-2012.pdf","consulted_on":"2026-10-23","kind":"law"},{"key":"igi-law-2014","title":"Llei 10/2014, del 3 de juny, de modificació de la Llei 11/2012 de l’impost general indirecte (BOPA núm. 38, any 26, 26.6.2014)","publisher":"Consell General del Principat d’Andorra","url":"https://www.consellgeneral.ad/fitxers/documents/lleis-2014/llei-10-2014","consulted_on":"2026-10-23","kind":"law"},{"key":"tax-calendar","title":"Calendari fiscal 2023 — impost general indirecte, liquidació mensual, trimestral o semestral","publisher":"Govern d’Andorra — Seu electrònica (e-tràmits)","url":"https://www.e-tramits.ad/tramits/_ui/responsive/common/docs/Calendari%202023.pdf","consulted_on":"2026-10-23","kind":"guidance"},{"key":"accounting-law","title":"Text refós de la Llei 30/2007, del 20 de desembre, de la comptabilitat dels empresaris, modificada per la Llei 8/2010 i la Llei 26/2011","publisher":"Consell General del Principat d’Andorra","url":"https://www.consellgeneral.ad/ca/arxiu/arxiu-de-lleis-i-textos-aprovats-en-legislatures-anteriors/vi-legislatura-2011-2015/copy_of_lleis-aprovades/decret-del-15-02-2012-pel-qual-s2019ordena-la-publicacio-del-text-refos-de-la-llei-30-2007-del-20-de-desembre-de-la-comptabilitat-dels-empresaris-modificada-per-la-llei-8-2010-del-22-d2019abril-i-per-la-llei-26-2011-del-29-de-desembre/at_download/PDF","consulted_on":"2026-10-23","kind":"law"},{"key":"pgc","title":"Decret 479/2025, del 23-12-2025, pel qual s’aprova el nou Pla general de comptabilitat (copy published by the Cambra de Comerç, Indústria i Serveis d’Andorra)","publisher":"Govern d’Andorra — Butlletí Oficial del Principat d’Andorra","url":"https://www.ccis.ad/wp-content/uploads/2026/01/PGC.pdf","consulted_on":"2026-10-23","kind":"regulation"},{"key":"e-tramits","title":"E-tràmits — Seu electrònica del Govern d’Andorra, on the IGI declaration is filed","publisher":"Govern d’Andorra","url":"https://www.e-tramits.ad/","consulted_on":"2026-10-23","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -200,12 +200,12 @@ on conflict (country, chart_code, code) do update set
   sequence     = excluded.sequence;
 
 insert into journal_templates (country, code, name, name_i18n, journal_type, sequence) values
-  ('AD', 'BAN', 'Banc', '{}'::jsonb, 'bank', 30),
-  ('AD', 'CAI', 'Caixa', '{}'::jsonb, 'cash', 40),
-  ('AD', 'COM', 'Diari de compres', '{}'::jsonb, 'purchase', 20),
+  ('AD', 'BNK', 'Banc', '{}'::jsonb, 'bank', 30),
+  ('AD', 'CSH', 'Caixa', '{}'::jsonb, 'cash', 40),
   ('AD', 'GEN', 'Diari general', '{}'::jsonb, 'general', 50),
-  ('AD', 'OBR', 'Obertura d’exercici', '{}'::jsonb, 'opening', 60),
-  ('AD', 'VEN', 'Diari de vendes', '{}'::jsonb, 'sales', 10)
+  ('AD', 'OPN', 'Obertura d’exercici', '{}'::jsonb, 'opening', 60),
+  ('AD', 'PUR', 'Diari de compres', '{}'::jsonb, 'purchase', 20),
+  ('AD', 'SAL', 'Diari de vendes', '{}'::jsonb, 'sales', 10)
 on conflict (country, code) do update set
   name         = excluded.name,
   name_i18n    = excluded.name_i18n,
@@ -222,11 +222,17 @@ insert into tax_templates
 values
   ('AD', 'AD-P-0', 'Compra exempta o a 0 %, sense IGI', '{}'::jsonb, 'Adquisició sense IGI repercutit', 'percent', 0, 'purchase', 'exempt', date '2013-01-01', null, 'Llei 11/2012, articles 58 and 59 for the 0 % rate and chapter three for the exemptions — no IGI is charged, so no input tax is recorded.', 'E', null, 160, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
   ('AD', 'AD-P-1', 'Compra, tipus reduït 1 %, deduïble', '{}'::jsonb, 'Adquisició amb IGI a l’1 %, deduïble', 'percent', 1, 'purchase', 'domestic', date '2013-01-01', null, 'Llei 11/2012, articles 58, 61 and 62 — input tax at 1 % is deductible for a taxable person. Return line 10.', 'S', null, 130, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
+  ('AD', 'AD-P-1-NC', 'Compra, tipus reduït 1 %, IGI no deduïble', '{}'::jsonb, 'Adquisició amb IGI a l’1 % que no dona dret a deducció', 'percent', 1, 'purchase', 'domestic', date '2013-01-01', null, 'Llei 11/2012, articles 58 and 63 — input tax at 1 % not used exclusively for a taxable activity is not deductible and is a cost of the purchase. Base on return line 11.', 'S', null, 152, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
   ('AD', 'AD-P-25', 'Compra, tipus especial 2,5 %, deduïble', '{}'::jsonb, 'Adquisició amb IGI al 2,5 %, deduïble', 'percent', 2.5, 'purchase', 'domestic', date '2014-07-01', null, 'Llei 10/2014, article 60 bis, with articles 61 and 62 of Llei 11/2012 — input tax at 2.5 % is deductible for a taxable person. Return line 10.', 'S', null, 120, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law-2014', null, null, null, null),
+  ('AD', 'AD-P-25-NC', 'Compra, tipus especial 2,5 %, IGI no deduïble', '{}'::jsonb, 'Adquisició amb IGI al 2,5 % que no dona dret a deducció', 'percent', 2.5, 'purchase', 'domestic', date '2014-07-01', null, 'Llei 10/2014, article 60 bis, with article 63 of Llei 11/2012 — input tax not used exclusively for a taxable activity is not deductible and is a cost of the purchase. Base on return line 11.', 'S', null, 151, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law-2014', null, null, null, null),
   ('AD', 'AD-P-45', 'Compra, tipus general 4,5 %, deduïble', '{}'::jsonb, 'Adquisició de béns o serveis a Andorra amb IGI deduïble', 'percent', 4.5, 'purchase', 'domestic', date '2013-01-01', null, 'Llei 11/2012, articles 61 and 62 — a taxable person deducts the IGI borne on the goods and services received for the business. Return line 10 (deductible input tax on domestic purchases).', 'S', null, 110, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
   ('AD', 'AD-P-45-NC', 'Compra, tipus general 4,5 %, IGI no deduïble', '{}'::jsonb, 'Adquisició amb IGI al tipus general que no dona dret a deducció', 'percent', 4.5, 'purchase', 'domestic', date '2013-01-01', null, 'Llei 11/2012, article 63 — limits on the right to deduct: input tax on goods and services not used exclusively for a taxable activity is not deductible and is a cost of the purchase. The base is reported on return line 11; the tax is posted on the expense.', 'S', null, 150, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
   ('AD', 'AD-P-95', 'Compra, tipus incrementat 9,5 %, deduïble', '{}'::jsonb, 'Adquisició amb IGI al 9,5 %, deduïble', 'percent', 9.5, 'purchase', 'domestic', date '2013-01-01', null, 'Llei 11/2012, articles 60, 61 and 62 — input tax at 9.5 % is deductible for a taxable person. Return line 10.', 'S', null, 140, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
+  ('AD', 'AD-P-95-NC', 'Compra, tipus incrementat 9,5 %, IGI no deduïble', '{}'::jsonb, 'Adquisició amb IGI al 9,5 % que no dona dret a deducció', 'percent', 9.5, 'purchase', 'domestic', date '2013-01-01', null, 'Llei 11/2012, articles 60 and 63 — input tax at 9.5 % not used exclusively for a taxable activity is not deductible and is a cost of the purchase. Base on return line 11.', 'S', null, 153, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
+  ('AD', 'AD-P-IMP-1', 'Importació de béns, IGI a l’1 % pagat a la Duana', '{}'::jsonb, 'Béns importats al tipus reduït, IGI liquidat a la Duana', 'percent', 1, 'purchase', 'import', date '2013-01-01', null, 'Llei 11/2012, article 58 applied to imports with article 55(6) — the shifting of the tax on an import is done by the customs document. Return line 9.', null, null, 172, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
+  ('AD', 'AD-P-IMP-25', 'Importació de béns, IGI al 2,5 % pagat a la Duana', '{}'::jsonb, 'Béns importats al tipus especial, IGI liquidat a la Duana', 'percent', 2.5, 'purchase', 'import', date '2014-07-01', null, 'Llei 10/2014, article 60 bis, applied to imports with article 55(6) of Llei 11/2012 — the shifting of the tax on an import is done by the customs document. Return line 9.', null, null, 171, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law-2014', null, null, null, null),
   ('AD', 'AD-P-IMP-45', 'Importació de béns, IGI al 4,5 % pagat a la Duana', '{}'::jsonb, 'Béns importats, IGI liquidat a la Duana', 'percent', 4.5, 'purchase', 'import', date '2013-01-01', null, 'Llei 11/2012, article 55(6) — on imports the shifting of the tax is done by the document issued by the customs; articles 14 to 41 for the exemptions on import. Return line 9: the base and the IGI paid at the border, deductible by a taxable person.', null, null, 170, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
+  ('AD', 'AD-P-IMP-95', 'Importació de béns, IGI al 9,5 % pagat a la Duana', '{}'::jsonb, 'Importació amb IGI al tipus incrementat liquidat a la Duana', 'percent', 9.5, 'purchase', 'import', date '2013-01-01', null, 'Llei 11/2012, article 60 applied to imports with article 55(6) — the shifting of the tax on an import is done by the customs document. Return line 9.', null, null, 173, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
   ('AD', 'AD-S-0', 'Venda, tipus super reduït 0 %', '{}'::jsonb, 'Serveis sanitaris, socials, educatius, esportius i culturals d’entitats públiques o sense ànim de lucre', 'percent', 0, 'sale', 'domestic', date '2013-01-01', null, 'Llei 11/2012, article 59 — the super-reduced rate is 0 % and applies only to the listed operations: hospital and health services of public bodies, care by health professionals under an agreement with the Caixa Andorrana de Seguretat Social, social assistance, schooling and child care, sport and cultural services of public or non-profit bodies, and the other items of the article. A supply at 0 % is a taxable supply: the input tax stays deductible. Return line 4.', 'Z', null, 40, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
   ('AD', 'AD-S-1', 'Venda, tipus reduït 1 %', '{}'::jsonb, 'Aliments i begudes no alcohòliques, aigua, llibres, diaris i revistes, classes particulars sobre matèries d’estudis', 'percent', 1, 'sale', 'domestic', date '2013-01-01', null, 'Llei 11/2012, article 58 — the reduced rate is 1 % and applies only to the listed operations: private lessons on school and university subjects, food and non-alcoholic drinks for people and animals, live animals, seeds and plants, water, and books, newspapers and magazines that are not mainly advertising. Return line 3.', 'S', null, 30, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law', null, null, null, null),
   ('AD', 'AD-S-25', 'Venda, tipus especial 2,5 %', '{}'::jsonb, 'Transport de persones i per cable, entrades a parcs temàtics, serveis culturals i altres operacions de l’article 60 bis', 'percent', 2.5, 'sale', 'domestic', date '2014-07-01', null, 'Llei 10/2014, article adding article 60 bis to Llei 11/2012 — the special rate is 2.5 % and applies only to the listed operations: cable transport and its marketing, passenger transport, tickets to animal theme parks and thermal-leisure centres, cultural services not supplied by public or non-profit bodies, works of art and collectors’ items. In force from 1 July 2014 (Llei 10/2014, final provision four).', 'S', null, 20, 'vat', true, '{}'::tax_condition[], null, false, false, null, 'igi-law-2014', null, null, null, null),
@@ -281,10 +287,18 @@ select t.id,
     ('AD-P-1', 'invoice', 'tax', 100, '4720', '10', array['10']::text[], 100, 'AD-IGI', 20),
     ('AD-P-1', 'credit_note', 'base', 100, null, '10', array['10']::text[], -100, 'AD-IGI', 10),
     ('AD-P-1', 'credit_note', 'tax', 100, '4720', '10', array['10']::text[], -100, 'AD-IGI', 20),
+    ('AD-P-1-NC', 'invoice', 'base', 100, null, '11', array['11']::text[], 100, 'AD-IGI', 10),
+    ('AD-P-1-NC', 'invoice', 'tax_on_base', 100, null, null, null, 100, null, 20),
+    ('AD-P-1-NC', 'credit_note', 'base', 100, null, '11', array['11']::text[], -100, 'AD-IGI', 10),
+    ('AD-P-1-NC', 'credit_note', 'tax_on_base', 100, null, null, null, 100, null, 20),
     ('AD-P-25', 'invoice', 'base', 100, null, '10', array['10']::text[], 100, 'AD-IGI', 10),
     ('AD-P-25', 'invoice', 'tax', 100, '4720', '10', array['10']::text[], 100, 'AD-IGI', 20),
     ('AD-P-25', 'credit_note', 'base', 100, null, '10', array['10']::text[], -100, 'AD-IGI', 10),
     ('AD-P-25', 'credit_note', 'tax', 100, '4720', '10', array['10']::text[], -100, 'AD-IGI', 20),
+    ('AD-P-25-NC', 'invoice', 'base', 100, null, '11', array['11']::text[], 100, 'AD-IGI', 10),
+    ('AD-P-25-NC', 'invoice', 'tax_on_base', 100, null, null, null, 100, null, 20),
+    ('AD-P-25-NC', 'credit_note', 'base', 100, null, '11', array['11']::text[], -100, 'AD-IGI', 10),
+    ('AD-P-25-NC', 'credit_note', 'tax_on_base', 100, null, null, null, 100, null, 20),
     ('AD-P-45', 'invoice', 'base', 100, null, '10', array['10']::text[], 100, 'AD-IGI', 10),
     ('AD-P-45', 'invoice', 'tax', 100, '4720', '10', array['10']::text[], 100, 'AD-IGI', 20),
     ('AD-P-45', 'credit_note', 'base', 100, null, '10', array['10']::text[], -100, 'AD-IGI', 10),
@@ -297,12 +311,34 @@ select t.id,
     ('AD-P-95', 'invoice', 'tax', 100, '4720', '10', array['10']::text[], 100, 'AD-IGI', 20),
     ('AD-P-95', 'credit_note', 'base', 100, null, '10', array['10']::text[], -100, 'AD-IGI', 10),
     ('AD-P-95', 'credit_note', 'tax', 100, '4720', '10', array['10']::text[], -100, 'AD-IGI', 20),
+    ('AD-P-95-NC', 'invoice', 'base', 100, null, '11', array['11']::text[], 100, 'AD-IGI', 10),
+    ('AD-P-95-NC', 'invoice', 'tax_on_base', 100, null, null, null, 100, null, 20),
+    ('AD-P-95-NC', 'credit_note', 'base', 100, null, '11', array['11']::text[], -100, 'AD-IGI', 10),
+    ('AD-P-95-NC', 'credit_note', 'tax_on_base', 100, null, null, null, 100, null, 20),
+    ('AD-P-IMP-1', 'invoice', 'base', 100, null, '9', array['9']::text[], 100, 'AD-IGI', 10),
+    ('AD-P-IMP-1', 'invoice', 'tax', 100, '4720', '9', array['9']::text[], 100, 'AD-IGI', 20),
+    ('AD-P-IMP-1', 'invoice', 'tax', -100, '4780', null, null, 100, null, 30),
+    ('AD-P-IMP-1', 'credit_note', 'base', 100, null, '9', array['9']::text[], -100, 'AD-IGI', 10),
+    ('AD-P-IMP-1', 'credit_note', 'tax', 100, '4720', '9', array['9']::text[], -100, 'AD-IGI', 20),
+    ('AD-P-IMP-1', 'credit_note', 'tax', -100, '4780', null, null, 100, null, 30),
+    ('AD-P-IMP-25', 'invoice', 'base', 100, null, '9', array['9']::text[], 100, 'AD-IGI', 10),
+    ('AD-P-IMP-25', 'invoice', 'tax', 100, '4720', '9', array['9']::text[], 100, 'AD-IGI', 20),
+    ('AD-P-IMP-25', 'invoice', 'tax', -100, '4780', null, null, 100, null, 30),
+    ('AD-P-IMP-25', 'credit_note', 'base', 100, null, '9', array['9']::text[], -100, 'AD-IGI', 10),
+    ('AD-P-IMP-25', 'credit_note', 'tax', 100, '4720', '9', array['9']::text[], -100, 'AD-IGI', 20),
+    ('AD-P-IMP-25', 'credit_note', 'tax', -100, '4780', null, null, 100, null, 30),
     ('AD-P-IMP-45', 'invoice', 'base', 100, null, '9', array['9']::text[], 100, 'AD-IGI', 10),
     ('AD-P-IMP-45', 'invoice', 'tax', 100, '4720', '9', array['9']::text[], 100, 'AD-IGI', 20),
     ('AD-P-IMP-45', 'invoice', 'tax', -100, '4780', null, null, 100, null, 30),
     ('AD-P-IMP-45', 'credit_note', 'base', 100, null, '9', array['9']::text[], -100, 'AD-IGI', 10),
     ('AD-P-IMP-45', 'credit_note', 'tax', 100, '4720', '9', array['9']::text[], -100, 'AD-IGI', 20),
     ('AD-P-IMP-45', 'credit_note', 'tax', -100, '4780', null, null, 100, null, 30),
+    ('AD-P-IMP-95', 'invoice', 'base', 100, null, '9', array['9']::text[], 100, 'AD-IGI', 10),
+    ('AD-P-IMP-95', 'invoice', 'tax', 100, '4720', '9', array['9']::text[], 100, 'AD-IGI', 20),
+    ('AD-P-IMP-95', 'invoice', 'tax', -100, '4780', null, null, 100, null, 30),
+    ('AD-P-IMP-95', 'credit_note', 'base', 100, null, '9', array['9']::text[], -100, 'AD-IGI', 10),
+    ('AD-P-IMP-95', 'credit_note', 'tax', 100, '4720', '9', array['9']::text[], -100, 'AD-IGI', 20),
+    ('AD-P-IMP-95', 'credit_note', 'tax', -100, '4780', null, null, 100, null, 30),
     ('AD-S-0', 'invoice', 'base', 100, null, '4', array['4']::text[], 100, 'AD-IGI', 10),
     ('AD-S-0', 'credit_note', 'base', 100, null, '4', array['4']::text[], -100, 'AD-IGI', 10),
     ('AD-S-1', 'invoice', 'base', 100, null, '3', array['3']::text[], 100, 'AD-IGI', 10),
@@ -565,7 +601,7 @@ insert into country_defaults
    tax_payable_code, tax_receivable_code, opening_entry_label,
    vat_period_default)
 values
-  ('AD', 'Andorra', '{}'::jsonb, array['ca']::text[], 'EUR', '4300', '4000', '5550', '6990', '1200', '7000', '6000', '5720', '5700', 'VEN', 'COM', 'GEN', 'ca', 'retained_earnings', null, null, null, 'OBR', 'half_up', default, '7680', '6680', '7710', '6700', null, null, '4750', '4700', null, null)
+  ('AD', 'Andorra', '{}'::jsonb, array['ca']::text[], 'EUR', '4300', '4000', '5550', '6990', '1200', '7000', '6000', '5720', '5700', 'SAL', 'PUR', 'GEN', 'ca', 'retained_earnings', null, null, null, 'OPN', 'half_up', default, '7680', '6680', '7710', '6700', null, null, '4750', '4700', null, null)
 on conflict (country) do update set
   name                   = excluded.name,
   name_i18n              = excluded.name_i18n,
