@@ -579,6 +579,127 @@ describe('a monthly company', () => {
   });
 });
 
+describe('a monthly company, over the months the asset is in service (#143)', () => {
+  let companyId: string;
+
+  /** Creates a straight-line asset of 12 000 over twelve months and returns its schedule. */
+  async function asset(code: string, acquired: string): Promise<ScheduleLine[]> {
+    await db.query(
+      `select fixed_assets.create_fixed_asset($1, $2, 'Machine', $3::date, 12000,
+              '241000', '241900', '630200', null, 12)`,
+      [companyId, code, acquired],
+    );
+    const row = await one<{ id: string }>(
+      db,
+      `select id from fixed_assets.fixed_assets where company_id = $1 and code = $2`,
+      [companyId, code],
+    );
+    return schedule(row.id);
+  }
+
+  const total = (lines: ScheduleLine[]): string =>
+    lines.reduce((sum, l) => sum + Math.round(Number(l.amount) * 100), 0).toString();
+
+  beforeAll(async () => {
+    const fixture = await newCompany(db, { country: 'BE', name: 'Mensuel en cours SRL' });
+    companyId = fixture.companyId;
+    await asUser(db, fixture.ownerId, async () => {
+      await db.query(`select enable_module($1, 'assets', '{"period":"monthly"}'::jsonb)`, [companyId]);
+    });
+    await db.query(
+      `insert into fiscal_years (company_id, name, start_date, end_date)
+       values ($1, 'Exercice 2027', date '2027-01-01', date '2027-12-31')`,
+      [companyId],
+    );
+  });
+
+  it('starts in the month of acquisition and ends with the life of the asset', async () => {
+    const lines = await asset('JUNE', '2026-06-01');
+    expect(lines).toHaveLength(12);
+    expect(lines[0]?.period_start).toBe('2026-06-01');
+    expect(lines[0]?.period_end).toBe('2026-06-30');
+    expect(lines.every((l) => l.period_end >= '2026-06-30')).toBe(true);
+    expect(lines[11]?.period_start).toBe('2027-05-01');
+    expect(lines[11]?.period_end).toBe('2027-05-31');
+    expect(lines[11]?.accumulated).toBe('12000.00');
+    expect(lines[11]?.net_book_value).toBe('0.00');
+    expect(total(lines)).toBe('1200000');
+    // Each annuity keeps its amount and is spread over its own eligible
+    // months, the last of them taking the remainder.
+    const firstYear = lines.filter((l) => l.period_end <= '2026-12-31');
+    expect(firstYear).toHaveLength(7);
+    expect(new Set(amounts(firstYear.slice(0, 6))).size).toBe(1);
+  });
+
+  it('starts on the day of entry into service in the middle of a month', async () => {
+    const lines = await asset('MID', '2026-06-15');
+    expect(lines).toHaveLength(13);
+    expect(lines[0]?.period_start).toBe('2026-06-15');
+    expect(lines[0]?.period_end).toBe('2026-06-30');
+    expect(lines[12]?.period_end).toBe('2027-06-30');
+    expect(total(lines)).toBe('1200000');
+  });
+
+  it('supplements a month already booked when an asset is added late, without a collision', async () => {
+    const early = await newCompany(db, { country: 'BE', name: 'Ajout tardif SRL' });
+    await asUser(db, early.ownerId, async () => {
+      await db.query(`select enable_module($1, 'assets', '{"period":"monthly"}'::jsonb)`, [
+        early.companyId,
+      ]);
+    });
+    const create = (code: string, acquired: string) =>
+      db.query(
+        `select fixed_assets.create_fixed_asset($1, $2, 'Machine', $3::date, 12000,
+                '241000', '241900', '630200', null, 12)`,
+        [early.companyId, code, acquired],
+      );
+    await create('OPENING', '2026-01-01');
+    await db.query(`select fixed_assets.run_depreciation($1, date '2026-01-31')`, [early.companyId]);
+
+    // Bought in January too, entered after January was booked; and one bought
+    // in June, which must not touch January at all.
+    await create('LATE', '2026-01-01');
+    await create('JUNE', '2026-06-01');
+    await db.query(`select fixed_assets.run_depreciation($1, date '2026-06-30')`, [early.companyId]);
+
+    const january = await rows<{ module_ref: string; total: string }>(
+      db,
+      `select e.module_ref, sum(l.debit)::numeric(16, 2)::text as total
+         from entries e join entry_lines l on l.entry_id = e.id
+        where e.company_id = $1 and e.module_code = 'assets'
+          and e.module_ref like 'depreciation:2026-01-31%'
+        group by e.module_ref order by e.module_ref`,
+      [early.companyId],
+    );
+    expect(january).toEqual([
+      { module_ref: 'depreciation:2026-01-31', total: '1000.00' },
+      { module_ref: 'depreciation:2026-01-31:2', total: '1000.00' },
+    ]);
+    const june = await one<{ total: string }>(
+      db,
+      `select sum(l.debit)::numeric(16, 2)::text as total
+         from entries e join entry_lines l on l.entry_id = e.id
+        where e.company_id = $1 and e.module_ref = 'depreciation:2026-06-30'`,
+      [early.companyId],
+    );
+    const juneAsset = await one<{ amount: string }>(
+      db,
+      `select l.amount from fixed_assets.depreciation_lines l
+         join fixed_assets.fixed_assets a on a.id = l.asset_id
+        where a.company_id = $1 and a.code = 'JUNE' and l.sequence = 1`,
+      [early.companyId],
+    );
+    expect(june.total).toBe((2000 + Number(juneAsset.amount)).toFixed(2));
+
+    const again = await one<{ run: { entries: unknown[] } }>(
+      db,
+      `select fixed_assets.run_depreciation($1, date '2026-06-30') as run`,
+      [early.companyId],
+    );
+    expect(again.run.entries).toEqual([]);
+  });
+});
+
 describe('row level security', () => {
   it('shows a member of another company nothing at all', async () => {
     const stranger = await newCompany(db, { country: 'BE', name: 'Voisine SRL' });

@@ -3041,7 +3041,8 @@ Constraints:
 | `prorata_fraction(p_rule fixed_assets.prorata_rule, p_day_count fixed_assets.day_count, p_start date, p_period_start date, p_period_end date)` | The share of a period that runs from the day an asset entered service. A prorata in days counts the day of entry into service itself, which is the convention that makes a full year come to exactly one. |
 | `register(p_company_id uuid, p_at date)` | The table of fixed assets at a date: what each one cost, what has been written off it, and what is left. Reads what has been booked, so it ties to the ledger. |
 | `rules(p_company_id uuid)` | The depreciation rules of this company's country, or an empty row when its pack says nothing. The callers name what is missing rather than borrowing another country's answer. |
-| `run_depreciation(p_company_id uuid, p_period_end date)` | Books every planned period that ends on or before a date, one entry per period, through post_module_entry(). Idempotent: a period already booked is skipped, and the unique tag on the entry refuses a second one anyway. A closed financial year refuses the posting, because post_entry() asserts the period is open. |
+| `run_depreciation(p_company_id uuid, p_period_end date)` | Books every planned period that ends on or before a date, one entry per period, through post_module_entry(). Idempotent: a period already booked is skipped. An asset added after its period was booked supplements it with an entry tagged depreciation:<period end>:<n>. A closed financial year refuses the posting, because post_entry() asserts the period is open. |
+| `split_into_months(p_asset_id uuid)` | Splits each annuity of a schedule into months, over the months the asset is in service in: from the month it entered service and, for a straight line, to the month its life ends. The last eligible month of each annuity takes the rounding remainder. |
 
 ## `budgets` — Budgets
 

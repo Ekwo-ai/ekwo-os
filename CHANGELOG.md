@@ -9,6 +9,19 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A monthly depreciation schedule runs while the asset is in service**
+  (module `assets`, migration `20261023160500`, issue #143). Each annuity is
+  spread over the months from the month the asset entered service and, for a
+  straight line, to the month its life ends, instead of over every month of
+  the financial year: an asset bought on 1 June over twelve months is
+  depreciated from June to May, in twelve periods, not from January in
+  twenty-four. An asset added after its period was booked for the others
+  supplements that period with an entry tagged
+  `depreciation:<period end>:<n>`, where `run_depreciation()` used to fail on
+  `entries_module_ref_idx`.
+
 ## [0.20.0] — 2026-10-23
 
 ### Added
