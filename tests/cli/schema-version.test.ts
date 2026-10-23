@@ -27,22 +27,22 @@ import {
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
 
 /** The schema this release defines. */
-const RELEASE = '0.17.0';
+const RELEASE = '0.19.0';
 
 /** What `ekwo_schema_version()` returned before the migration of this release. */
-const PREVIOUS = '0.16.0';
+const PREVIOUS = '0.17.0';
 
 /** The migration that carries the number, and nothing else. */
-const BUMP = 'schema_version_0_17_0';
+const BUMP = 'schema_version_0_19_0';
 
 /**
  * The floor the packages of this release declare. It rises only when a
- * package reads something an older schema does not have; 0.17.0 does —
- * `@ekwo-ai/core` reads `companies.number_format` and
- * `companies.invoice_typeface` with every company it lists, and
- * `@ekwo-ai/mcp` writes `journals.number_prefix`, none of which 0.16.0 has.
+ * package reads something an older schema does not have; 0.19.0 does —
+ * `ekwo-os` compiles packs into `vat_schemes` and
+ * `country_defaults.tax_payee_name`, and `@ekwo-ai/mcp` calls
+ * `instalment_plan()`, none of which 0.17.0 has.
  */
-const FLOOR = '0.17.0';
+const FLOOR = '0.19.0';
 
 let db: SqlClient;
 let migrations: Migration[];

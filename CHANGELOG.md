@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.19.0] — 2026-10-23
+
 ### Added
 
 - **A declaration names its files, is paid to somebody, and says so** (socle
@@ -84,6 +86,15 @@ somewhere has already run it.
   the unit code kept and the periods in the line's `attributes`.
   `ReceivedInvoice.syntax` gains `'model'`.
 
+- **`ekwo pack describe` lists every form with its role, and the VAT
+  schemes.** The description carries every form of `tax_report.json` and a
+  `vatSchemes` list: the forms each scheme files, whether it charges VAT, its
+  ceilings with their text and its instalments.
+- **Seventeen country packs more, in Asia, Africa, the Middle East and
+  Europe.** Mongolia, Uzbekistan, Tajikistan, Turkmenistan, Bhutan, Nepal,
+  Cambodia and Lao PDR; Burundi, Cabo Verde, Djibouti, Madagascar,
+  Mauritania, Malawi and Seychelles; Jordan; Liechtenstein. Each with its
+  chart, its taxes, its VAT return and a golden scenario.
 - **A tax lands by its code, not on a line** (socle migration
   `20261020210000`, decision 0083). A document line carries its base and
   names its tax; the posting writes the tax on the account the tax points to.
@@ -94,6 +105,15 @@ somewhere has already run it.
   document that already carries such a line copies it: an older document is
   still undone by `cancel_document()`. `docs/import.md` says how an invoice
   taken over as a document carries its tax.
+
+### Changed
+
+- **The schema is 0.19.0 (`20261023124700`), and so is the floor of the
+  packages.** `ekwo-os` compiles packs into `vat_schemes` and
+  `country_defaults.tax_payee_name`, and `@ekwo-ai/mcp` calls
+  `instalment_plan()`, none of which a 0.17.0 database has. An installation
+  runs `ekwo migrate` before upgrading the packages. The end-to-end run
+  against a real Supabase project was not run for this release.
 
 ## [0.18.0] — 2026-10-20
 
