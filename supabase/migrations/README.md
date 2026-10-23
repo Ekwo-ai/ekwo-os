@@ -142,6 +142,7 @@ Always number after the newest file on `main`, and check `git log` first.
 | `20261023160000_a_declaration_already_paid_says_so` | decision 0088: records `paid`, through `record_filing_outcome()`, on every accepted declaration whose settlement line on the pack's account was matched in full before `tax_filings_paid_by_matching` existed; reads only accepted declarations, so a second run does nothing |
 | `20261023160100_a_deposit_is_written_by_the_core` | decision 0088: the policy `tax_filing_deposits_write` is dropped and `insert`, `update`, `delete` on `tax_filing_deposits` are taken back from `authenticated` and `service_role`; `file_filing()` and `record_filing_outcome()` become definer and ask `filings.write`; `write_filing_outcome()`, granted to nobody, holds the body of `record_filing_outcome()` and is what `tax_filings_paid_by_matching` calls |
 | `20261023160200_a_payee_is_named_in_the_company_language` | decision 0088: `country_defaults.tax_payee_name_i18n`, compiled from `tax_payee` in a pack's language files; `tax_payee()` creates the contact under the company's language, else the pack's own name, and recognises a contact under any of the pack's names |
+| `20261023160600_a_draft_changes_its_lines_in_one_statement` | `replace_document_lines()` and `create_document()`, security invoker: the lines of a draft are replaced, and a draft is created with its lines, in one statement, so a line the database refuses leaves the draft as it was and creates no empty draft |
 
 ## Rules for a new migration
 

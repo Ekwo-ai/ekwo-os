@@ -107,9 +107,9 @@ export async function createDocument(
   const resolved = await resolveLineInputs(backend, args.company_id, args.doc_type, args.lines);
 
   // Created before under this reference: the answer is that document. A
-  // creation is two inserts, the header and then the lines, so a connection
-  // that dropped between them left a draft with none — which is finished here
-  // rather than handed back empty.
+  // creation is one statement since `create_document()`; a draft an earlier
+  // version left without lines, when a connection dropped between its two
+  // inserts, is still finished here rather than handed back empty.
   const before = await createdBefore(backend, 'documents', args.company_id, args.client_ref, ['id', 'state']);
   if (before !== undefined) {
     const id = before['id'] as string;
@@ -119,38 +119,35 @@ export async function createDocument(
       where: [{ column: 'document_id', op: 'eq', value: id }],
       limit: 1,
     });
-    if (held.length === 0 && before['state'] === 'draft') await insertLines(backend, args.company_id, id, resolved);
+    if (held.length === 0 && before['state'] === 'draft') await replaceLines(backend, id, resolved);
     return { ...((await getDocument(backend, { document_id: id })) as Row), replayed: true };
   }
 
   const currency = args.currency_code ?? (await companyCurrency(backend, args.company_id));
 
-  const document = only(
-    await backend.insert<Row>(
-      'documents',
-      [
-        {
-          company_id: args.company_id,
-          doc_type: args.doc_type,
-          contact_id: args.contact_id,
-          document_date: args.document_date,
-          due_date: args.due_date ?? null,
-          accounting_date: args.accounting_date ?? null,
-          number: args.number ?? null,
-          supplier_reference: args.supplier_reference ?? null,
-          currency_code: currency,
-          journal_id: args.journal_id ?? null,
-          payment_reference: args.payment_reference ?? null,
-          client_ref: args.client_ref ?? null,
-        },
-      ],
-      ['id'],
-    ),
+  // The header and its lines in one statement: a line the database refuses
+  // creates nothing, rather than an empty draft.
+  const id = only(
+    await backend.rpc<string>('create_document', {
+      p_document: {
+        company_id: args.company_id,
+        doc_type: args.doc_type,
+        contact_id: args.contact_id,
+        document_date: args.document_date,
+        due_date: args.due_date ?? null,
+        accounting_date: args.accounting_date ?? null,
+        number: args.number ?? null,
+        supplier_reference: args.supplier_reference ?? null,
+        currency_code: currency,
+        journal_id: args.journal_id ?? null,
+        payment_reference: args.payment_reference ?? null,
+        client_ref: args.client_ref ?? null,
+      },
+      p_lines: resolved,
+    }),
     'the document could not be created',
   );
-
-  await insertLines(backend, args.company_id, document['id'] as string, resolved);
-  return getDocument(backend, { document_id: document['id'] as string });
+  return getDocument(backend, { document_id: id });
 }
 
 /** A line, with every code turned into an id and every gap the product fills. */
@@ -317,6 +314,15 @@ async function productsFor(
   return { byId, byCode };
 }
 
+/**
+ * Every line of a draft replaced by these, through `replace_document_lines()`:
+ * one statement, so a line the database refuses leaves the draft with the
+ * lines it had rather than with none.
+ */
+async function replaceLines(backend: Backend, documentId: string, lines: ResolvedLine[]): Promise<void> {
+  await backend.rpc('replace_document_lines', { p_document_id: documentId, p_lines: lines });
+}
+
 async function insertLines(
   backend: Backend,
   company: string,
@@ -382,8 +388,7 @@ export async function updateDocumentLines(
     args.lines,
   );
 
-  await backend.remove('document_lines', [{ column: 'document_id', op: 'eq', value: args.document_id }]);
-  await insertLines(backend, company, args.document_id, resolved);
+  await replaceLines(backend, args.document_id, resolved);
   return getDocument(backend, { document_id: args.document_id });
 }
 

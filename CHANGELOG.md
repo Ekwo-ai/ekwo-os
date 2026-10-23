@@ -21,6 +21,14 @@ somewhere has already run it.
   supplements that period with an entry tagged
   `depreciation:<period end>:<n>`, where `run_depreciation()` used to fail on
   `entries_module_ref_idx`.
+- **A draft changes its lines in one statement** (socle migration
+  `20261023160600`). `replace_document_lines(document, lines)` replaces every
+  line of a draft and `create_document(document, lines)` creates a draft with
+  its lines, each in one statement: a line the database refuses — a discount
+  of 100 %, an account of another company — leaves the draft with the lines it
+  had, and creates no empty draft. `update_document_lines` and
+  `create_document`, in the core, the MCP server and the command line, call
+  them instead of a delete and an insert.
 
 ## [0.20.0] — 2026-10-23
 

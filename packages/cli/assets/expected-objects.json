@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.20.0",
-  "migration": "20261023160500",
+  "migration": "20261023160600",
   "socle": {
     "schema": "public",
     "tables": [
@@ -5088,6 +5088,10 @@
         "arguments": "p_name text, p_country character, p_currency_code character, p_language character, p_chart_code text, p_fiscal_year integer, p_fiscal_year_start date, p_owner_user_id uuid"
       },
       {
+        "name": "create_document",
+        "arguments": "p_document jsonb, p_lines jsonb"
+      },
+      {
         "name": "currency_of_bank_account",
         "arguments": ""
       },
@@ -5818,6 +5822,10 @@
       {
         "name": "reopen_fiscal_year",
         "arguments": "p_fiscal_year_id uuid"
+      },
+      {
+        "name": "replace_document_lines",
+        "arguments": "p_document_id uuid, p_lines jsonb"
       },
       {
         "name": "resolve_counterpart_account",
@@ -9875,6 +9883,17 @@
           ]
         },
         {
+          "name": "create_document",
+          "arguments": "p_document jsonb, p_lines jsonb",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "currency_of_bank_account",
           "arguments": "",
           "trigger": true,
@@ -11753,6 +11772,17 @@
         {
           "name": "reopen_fiscal_year",
           "arguments": "p_fiscal_year_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "replace_document_lines",
+          "arguments": "p_document_id uuid, p_lines jsonb",
           "anon": [],
           "authenticated": [
             "execute"

@@ -681,6 +681,29 @@ async function aliceTargets(target: string): Promise<string[]> {
  * from its argument, is said so rather than probed.
  */
 const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[]; calls?: (id: string) => { sql: string; params: unknown[] }[] }> = {
+  // The lines of a draft of Bob's, replaced by one naming the id.
+  'public.replace_document_lines': {
+    reads: ['account_id', 'product_id', 'tax_id'],
+    calls: (id) =>
+      (['account_id', 'product_id', 'tax_id'] as const).map((key) => ({
+        sql: `select replace_document_lines((select d.id from documents d where d.company_id = $1 and d.state = 'draft' order by d.id limit 1), $2::jsonb)`,
+        params: [bobBooks, [{ name: 'probe', unit_price: '1', account_code: '__first__', [key]: id }]],
+      })),
+  },
+  // A draft of Bob's whose header names the id.
+  'public.create_document': {
+    reads: ['company_id', 'contact_id', 'journal_id'],
+    calls: (id) => [
+      {
+        sql: `select create_document(jsonb_build_object('company_id', $1::uuid, 'doc_type', 'sale_invoice', 'document_date', $2::date, 'currency_code', 'XXX', 'contact_id', (select c.id from contacts c where c.company_id = $3 order by c.id limit 1)), '[]'::jsonb)`,
+        params: [id, openDay, bobBooks],
+      },
+      ...(['contact_id', 'journal_id'] as const).map((key) => ({
+        sql: `select create_document(jsonb_build_object('company_id', $1::uuid, 'doc_type', 'sale_invoice', 'document_date', $2::date, 'contact_id', (select c.id from contacts c where c.company_id = $1 order by c.id limit 1), 'currency_code', (select currency_code from companies where id = $1)) || $3::jsonb, '[]'::jsonb)`,
+        params: [bobBooks, openDay, { [key]: id }],
+      })),
+    ],
+  },
   'public.set_preferences': {
     reads: ['preferred_company_id'],
     calls: (id) => [{ sql: `select preferred_company_id from set_preferences($1::jsonb)`, params: [{ preferred_company_id: id }] }],

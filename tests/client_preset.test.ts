@@ -871,6 +871,16 @@ describe('a client writes nothing else — by the function', () => {
     ]);
     refused = {
       'public.post_document': { sql: `select post_document($1)`, params: [mine.draftDocumentId] },
+      // Security invoker: the lines and the header are written under row level
+      // security, which refuses a client the insert.
+      'public.replace_document_lines': {
+        sql: `select replace_document_lines($1, '[{"name": "x", "unit_price": "1"}]'::jsonb)`,
+        params: [mine.draftDocumentId],
+      },
+      'public.create_document': {
+        sql: `select create_document(jsonb_build_object('company_id', $1::uuid, 'doc_type', 'sale_invoice', 'document_date', '2026-01-01'), '[]'::jsonb)`,
+        params: [mine.companyId],
+      },
       // Presenting a key is a door and not a privilege: a client who does not
       // hold one is told the secret is not a key of this installation, in the
       // same words anybody else is told.
