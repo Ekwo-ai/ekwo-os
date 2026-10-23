@@ -454,6 +454,15 @@
       "journal": "BNK",
       "match": "PINV-008",
       "why": "The exempt service of PINV-008 paid in full."
+    },
+    {
+      "ref": "PAY-006",
+      "direction": "inbound",
+      "date": "2026-03-12",
+      "amount": 2000,
+      "contact": "cust-jo",
+      "journal": "BNK",
+      "why": "A part payment received with no document named: it stays open on the customer account, so an unmatched payment is exercised."
     }
   ]
 }
