@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "CA",
   "name": "Canada",
-  "version": "0.3.0",
-  "schema_min": "20261023124650",
+  "version": "0.4.0",
+  "schema_min": "20261023160200",
   "seed_sequence": 58,
   "released_at": "2026-10-23",
   "certification": {
@@ -192,6 +192,14 @@
         "url": "https://www.frascanada.ca/en/aspe",
         "consulted_on": "2026-09-25",
         "kind": "standard"
+      },
+      {
+        "key": "arc-impotnet-tps-tvh",
+        "title": "En utilisant le formulaire en ligne IMPÔTNET TPS/TVH — the French page of the CRA's GST/HST NETFILE form",
+        "publisher": "Agence du revenu du Canada",
+        "url": "https://www.canada.ca/fr/agence-revenu/services/impot/entreprises/sujets/tps-tvh-entreprises/produire-declaration-tps-tvh/comment-produire-declaration/utilisant-formulaire-ligne.html",
+        "consulted_on": "2026-10-23",
+        "kind": "guidance"
       }
     ]
   },

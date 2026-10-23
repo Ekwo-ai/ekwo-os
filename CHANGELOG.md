@@ -9,6 +9,18 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **The administration is named in the company's language** (socle migration
+  `20261023160200`, decision 0088). A pack's language file may carry
+  `tax_payee` — the administration's name as it publishes it in that language,
+  and the register entry it is read in — compiled into
+  `country_defaults.tax_payee_name_i18n`. `tax_payee()` creates the contact
+  under the company's language, else under the pack's own name, and recognises
+  an existing contact under any of them. `be` (nl, de, en), `ch` (fr), `ca`
+  (fr) and `kz` (ru, en) carry it, with `schema_min` `20261023160200`; `lu`
+  does not, the administration publishing its name in French only.
+
 ### Changed
 
 - **A deposit is written by the core's functions only** (socle migration

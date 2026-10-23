@@ -3,6 +3,10 @@
   "language": "nl",
   "source": "Chart of accounts: the four-language minimum chart published by the Belgian Accounting Standards Commission. VAT boxes: the Intervat periodic return. Annual accounts: the abbreviated model of the National Bank of Belgium. See i18n/README.md.",
   "pack_name": "België",
+  "tax_payee": {
+    "name": "FOD Financiën",
+    "source": "intervat-nl"
+  },
   "charts": {
     "default": "MAR — minimum algemeen rekeningenstelsel",
     "asbl": "MAR — verenigingen en stichtingen"

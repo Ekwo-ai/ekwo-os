@@ -2393,6 +2393,27 @@
           "minLength": 1,
           "description": "The country itself, in this language. Reaches country_defaults.name_i18n."
         },
+        "tax_payee": {
+          "type": "object",
+          "description": "The administration of defaults.tax_payee, by the name it publishes in this language, and the register entry it is read in. Optional even in a declared language: where it is left out, tax_payee() creates the contact under the pack's own name. Compiled into country_defaults.tax_payee_name_i18n.",
+          "required": [
+            "name",
+            "source"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The administration's official name in this language, as the source spells it."
+            },
+            "source": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]{0,39}$",
+              "description": "Key of the entry of certification.sources, published by the administration in this language, where this name is read."
+            }
+          }
+        },
         "charts": {
           "type": "object",
           "additionalProperties": {

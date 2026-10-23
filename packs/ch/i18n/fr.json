@@ -1,6 +1,10 @@
 {
   "language": "fr",
   "pack_name": "Suisse",
+  "tax_payee": {
+    "name": "Administration fédérale des contributions (AFC)",
+    "source": "afc-decompte-tva-en-ligne"
+  },
   "charts": {
     "default": "Plan comptable établi selon les art. 959/959b CO"
   },

@@ -3,6 +3,10 @@
   "language": "en",
   "source": "Working translation by the pack's own contributor. No official English version of the Tax Code, of order No. 185 or of the accounting law exists; see i18n/README.md.",
   "pack_name": "Kazakhstan",
+  "tax_payee": {
+    "name": "State Revenue Committee of the Ministry of Finance of the Republic of Kazakhstan",
+    "source": "kgd-portal-en"
+  },
   "charts": {
     "default": "Standard chart of accounts (based on order No. 185)"
   },

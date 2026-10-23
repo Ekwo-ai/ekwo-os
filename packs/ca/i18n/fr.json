@@ -1,6 +1,10 @@
 {
   "language": "fr",
   "pack_name": "Canada",
+  "tax_payee": {
+    "name": "Agence du revenu du Canada",
+    "source": "arc-impotnet-tps-tvh"
+  },
   "charts": {
     "default": "Plan comptable de référence canadien"
   },

@@ -142,8 +142,9 @@ the schema's.
 The debt is then an open item like any other, and it names the administration.
 The pack says who that is (`defaults.tax_payee`); `tax_payee(company)` finds
 the company's contact for it — the one contact that books to the account the
-pack names — or creates it under the pack's name, and `settle_filing()` names
-it when its caller names nobody. Give the entry the reference the payment will
+pack names — or creates it under the pack's name, in the company's language
+where the pack gives one, and `settle_filing()` names it when its caller names
+nobody. Give the entry the reference the payment will
 quote, and `auto_settle()` matches the payment against it — by reference, like
 any other payment.
 

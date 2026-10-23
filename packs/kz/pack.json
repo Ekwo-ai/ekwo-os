@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "KZ",
   "name": "Қазақстан",
-  "version": "0.4.0",
-  "schema_min": "20261023124650",
+  "version": "0.5.0",
+  "schema_min": "20261023160200",
   "seed_sequence": 124,
   "released_at": "2026-10-23",
   "certification": {
@@ -71,6 +71,22 @@
         "publisher": "Қазақстан Республикасы Қаржы министрлігінің Мемлекеттік кірістер комитеті",
         "url": "https://esf.gov.kz/",
         "consulted_on": "2026-09-26",
+        "kind": "portal"
+      },
+      {
+        "key": "kgd-portal-ru",
+        "title": "Комитет государственных доходов Министерства финансов Республики Казахстан — портал (орыс тілінде)",
+        "publisher": "Комитет государственных доходов Министерства финансов Республики Казахстан",
+        "url": "https://portal.kgd.gov.kz/ru/",
+        "consulted_on": "2026-10-23",
+        "kind": "portal"
+      },
+      {
+        "key": "kgd-portal-en",
+        "title": "State Revenue Committee of the Ministry of Finance of the Republic of Kazakhstan — портал (ағылшын тілінде)",
+        "publisher": "State Revenue Committee of the Ministry of Finance of the Republic of Kazakhstan",
+        "url": "https://portal.kgd.gov.kz/en/",
+        "consulted_on": "2026-10-23",
         "kind": "portal"
       }
     ]

@@ -1176,6 +1176,12 @@ export interface FrameworkManifest {
 export interface PackLabels {
   /** The country itself, by language. The one section keyed by language alone. */
   pack_name: Record<string, string>;
+  /**
+   * The administration of `defaults.tax_payee`, by language, with the register
+   * key its name is read in. Keyed by language alone, like `pack_name`, and
+   * optional in every language: the pack's own name is the fallback.
+   */
+  tax_payee: Record<string, { name: string; source: string }>;
   /** By chart code. */
   charts: Record<string, Record<string, string>>;
   /** By account code, across every chart. */
@@ -1480,6 +1486,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   // it belongs to, and every section has to exist first.
   const labels: PackLabels = {
     pack_name: {},
+    tax_payee: {},
     charts: {},
     accounts: {},
     journals: {},
@@ -1504,6 +1511,20 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
 
       if (typeof translations['pack_name'] === 'string') {
         labels.pack_name[language] = translations['pack_name'];
+      }
+
+      // The administration in this language translates the one the manifest
+      // names; a pack that names none has nothing to translate.
+      const payee = translations['tax_payee'] as { name: string; source: string } | undefined;
+      if (payee !== undefined) {
+        if (taxPayeeOf(manifest) === null) {
+          issues.push({
+            path: `i18n/${file} tax_payee`,
+            message: 'translates defaults.tax_payee, and the manifest names no administration; name it there first',
+          });
+        } else {
+          labels.tax_payee[language] = { name: payee.name, source: payee.source };
+        }
       }
 
       // A key names something the pack carries, or it is a typo nobody would
@@ -1654,7 +1675,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   const classifications = classificationSchemes(manifest);
   issues.push(...classifications.issues);
 
-  const register = sourceRegister(manifest, charts, taxes, reports, statements, analysis, documents, fixedAssets, corporateTax, turnoverTax, vatSchemes);
+  const register = sourceRegister(manifest, charts, taxes, reports, statements, analysis, documents, fixedAssets, corporateTax, turnoverTax, vatSchemes, labels);
   issues.push(...register.issues);
   warnings.push(...register.warnings);
   issues.push(...certificationEvidence(manifest, charts));
@@ -1753,6 +1774,7 @@ function sourceRegister(
   corporateTax: PackCorporateTax | null,
   turnoverTax: PackTurnoverTax | null,
   vatSchemes: PackVatSchemes | null,
+  labels: PackLabels,
 ): { sources: PackSource[]; issues: Issue[]; warnings: string[] } {
   const issues: Issue[] = [];
   const warnings: string[] = [];
@@ -1845,6 +1867,11 @@ function sourceRegister(
     ...fiscalisationSources(documents.einvoice_fiscalisation).map((reference) => ({ ...reference, kind: 'rule' as const })),
     ...finalCloseSources(manifest),
     ...taxPayeeSources(manifest),
+    ...Object.entries(labels.tax_payee).map(([language, payee]) => ({
+      path: `i18n/${language}.json tax_payee`,
+      source: payee.source,
+      kind: 'rule' as const,
+    })),
     ...charts.map((chart) => ({ path: `pack.json charts.${chart.code}`, source: chart.source, kind: 'other' as const })),
     ...(manifest.not_taxed ?? []).map((entry) => ({
       path: `pack.json not_taxed.${entry.treatment}`,

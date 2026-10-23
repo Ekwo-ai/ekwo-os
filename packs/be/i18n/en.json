@@ -3,6 +3,10 @@
   "language": "en",
   "source": "Chart of accounts: the four-language minimum chart published by the Belgian Accounting Standards Commission. VAT boxes: the Intervat periodic return. Annual accounts: the abbreviated model of the National Bank of Belgium. See i18n/README.md.",
   "pack_name": "Belgium",
+  "tax_payee": {
+    "name": "FPS Finance",
+    "source": "intervat-en"
+  },
   "charts": {
     "default": "PCMN — Belgian minimum chart of accounts",
     "asbl": "PCMN — associations and foundations"

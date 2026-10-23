@@ -2851,6 +2851,33 @@ from memory. It compiles into `country_defaults.tax_payee_name`, and
 on the accounts settling uses. The pack needs `schema_min` of
 `20261023124650` or later.
 
+**The same administration in another language of the pack.** In a country of
+several languages the administration publishes its name in each — SPF Finances,
+FOD Financiën, FOD Finanzen, FPS Finance — and a company keeping its books in
+one of them pays the administration under that name. A language file carries
+it beside `pack_name`, in the shape of `defaults.tax_payee`:
+
+```json
+{
+  "language": "nl",
+  "pack_name": "België",
+  "tax_payee": { "name": "FOD Financiën", "source": "intervat-nl" }
+}
+```
+
+The source is an entry of the same register, **published by the
+administration in that language** — usually the page of its portal in that
+language; a page of another publisher that names the administration in that
+language is not one. `tax_payee` is optional in every language file, declared
+or not: a language that gives none falls back to `defaults.tax_payee`, and
+`ekwo pack check` does not ask for it. It refuses a source the register does
+not hold, and a translation in a pack whose manifest names no administration.
+The names compile into `country_defaults.tax_payee_name_i18n`, by language;
+`tax_payee()` creates the company's contact under the name of the company's
+language (`companies.language`), else under the pack's own, and recognises an
+existing contact under any of them. A pack that translates the name needs
+`schema_min` of `20261023160200` or later.
+
 ### 4. The taxes, and where each one posts
 
 `taxes.json`. One entry per code, and a code is a rate at a date: a new rate is

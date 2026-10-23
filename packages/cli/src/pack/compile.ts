@@ -989,9 +989,18 @@ function finalClose(pack: Pack, country: string): string[] {
 function taxPayee(pack: Pack, country: string): string[] {
   const payee = taxPayeeOf(pack.manifest);
   if (payee === null) return [];
+  // The name in each language that gives one, from `20261023160200`; written
+  // only where a language does, so a seed without it still runs before that.
+  const names = Object.fromEntries(
+    Object.entries(pack.labels.tax_payee)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([language, translated]) => [language, translated.name]),
+  );
+  const translated = Object.keys(names).length === 0 ? [] : [`  tax_payee_name_i18n  = ${json(names)},`];
   return [
     '',
     'update country_defaults set',
+    ...translated,
     `  tax_payee_name       = ${text(payee.name)},`,
     `  tax_payee_source_key = ${text(payee.source)}`,
     ` where country = ${text(country)};`,
