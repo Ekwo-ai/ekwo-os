@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.20.0] — 2026-10-23
+
 ### Added
 
 - **The administration is named in the company's language** (socle migration
@@ -35,6 +37,12 @@ somewhere has already run it.
   `filings.write`; a declaration is still recorded paid when the payment is
   matched by somebody who may not file. A company archive round-trips as
   before, through `import_company()`.
+- **The schema is 0.20.0 (`20261023160300`), and so is the floor of the
+  packages.** `ekwo-os` compiles packs into
+  `country_defaults.tax_payee_name_i18n`, which a 0.19.0 database does not
+  have. An installation runs `ekwo migrate` before upgrading the packages. The
+  end-to-end run against a real Supabase project was not run for this
+  release.
 
 ### Fixed
 
