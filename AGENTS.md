@@ -225,11 +225,13 @@ an operator they appoint — see [`docs/filing.md`](docs/filing.md).
 - **Never post, cancel, pay or lock without the user's explicit confirmation
   of that specific action.** Show the draft, or the `--dry-run` entry, and
   wait. A posted entry is corrected with a credit note, not deleted. For a
-  document the database enforces it: in a company in `review` — the default —
-  your `post_document` is refused (`approval_required`) until the user
-  approved that draft as it stands (`ekwo doc approve <doc>`); in `autopilot`
-  you post directly and the audit trail says so. Never change the mode for
-  them: it is theirs, and you are refused.
+  document the database enforces it: where the company's `agent_posting` is
+  `review` — the default — your `post_document` is refused
+  (`approval_required`) until the user approved that draft as it stands
+  (`ekwo doc approve <doc>`); in `autopilot`, or in a session the user
+  started with `--autopilot`, you post directly and the audit trail says so.
+  Autopilot is their choice, never yours: you may make the setting stricter
+  when they ask, and you are refused the rest.
 - **Never invent a tax rule, a rate, an account or a deadline.** Use the codes
   the pack carries. Where the pack does not cover the case, say so and bring
   in the user's accountant; do not pick the nearest code.

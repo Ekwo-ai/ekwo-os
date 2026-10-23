@@ -17,6 +17,7 @@
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Filter, type Row } from '../backend.js';
 import {
+  AGENT_POSTING,
   DOC_TYPES,
   FALLBACK_BANK_ACCOUNT_SCHEME,
   STATEMENT_FORMATS,
@@ -875,6 +876,12 @@ export const UpdateCompanyProfileInput = z.object({
     .nullable()
     .optional()
     .describe('The typefaces of its invoice PDF: elegant (Inter, with Fraunces for the title, the names and the headings) or classic (Noto Sans). Null puts back the default, elegant.'),
+  agent_posting: z
+    .enum(AGENT_POSTING)
+    .optional()
+    .describe(
+      "How agents post its documents: review (the default) once a person approved the draft, unless a session opted into autopilot; autopilot, directly; review_only, review with autopilot forbidden to every session. The person's choice: you may make it stricter when they ask, never looser (agent_posting_by_a_person).",
+    ),
 });
 
 export async function updateCompanyProfile(

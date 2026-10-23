@@ -5,7 +5,7 @@
  * manual — when to reach for the tool, what comes back, and what it will not
  * do. That last part is the one that earns its place: a model told that
  * `post_document` cannot be undone asks before calling it — and the database
- * holds it to the company's posting mode whatever it decides — and a model told
+ * holds it to the company's agent_posting whatever it decides — and a model told
  * that a missing tax is not zero per cent stops inventing one.
  */
 
@@ -116,7 +116,7 @@ export interface ServerOptions {
  */
 export const INSTRUCTIONS = [
   'Ekwo OS keeps double-entry books in the user\'s own Postgres. You act as that user: everything you can see and change is what row level security lets them see and change. Amounts are decimal strings ("1210.00"), dates are ISO (2026-06-15), identifiers are uuids.',
-  'A first session, in order. (1) list_companies: every other tool takes a company_id from it; an empty list means this user has not been invited to a company yet, and status says who you are acting as. (2) get_company: the financial years and whether each is closed, the lock dates, the journals and the role accounts — a date you book on falls in an open year, after the lock date. (3) list_accounts and the resource ekwo://companies/{companyId}/taxes: a document line names its account and its tax by code, never by rate, because several taxes share a rate; describe_pack says which country pack those codes come from and how far it has been reviewed. (4) search_contacts, then create_contact only if nobody matches, then create_document: a draft with the totals the database computed. Show it to the user. (5) post_document once the user has said yes to that document; record_payment when the money moves. How you may post is the posting mode of the company, in get_company, and the database holds you to it: in review (the default) a document is posted only after a person approved that draft as it stands, and post_document is refused with approval_required until then; in autopilot you post directly, and every posting is recorded on the audit trail as yours.',
+  'A first session, in order. (1) list_companies: every other tool takes a company_id from it; an empty list means this user has not been invited to a company yet, and status says who you are acting as. (2) get_company: the financial years and whether each is closed, the lock dates, the journals and the role accounts — a date you book on falls in an open year, after the lock date. (3) list_accounts and the resource ekwo://companies/{companyId}/taxes: a document line names its account and its tax by code, never by rate, because several taxes share a rate; describe_pack says which country pack those codes come from and how far it has been reviewed. (4) search_contacts, then create_contact only if nobody matches, then create_document: a draft with the totals the database computed. Show it to the user. (5) post_document once the user has said yes to that document; record_payment when the money moves. How you may post is the database\'s to hold you to, and status says it: the company\'s agent_posting (in get_company) and the choice the person made for this session. In review, the default, a document is posted only after a person approved that draft as it stands, and post_document is refused with approval_required until then; in autopilot — the company\'s setting, or a session the person started so — you post directly, and every posting is recorded on the audit trail with this session. A company that forbids autopilot refuses it (autopilot_forbidden).',
   'Reading a tax return: vat_return gives the boxes of a period with their names and amounts, summed from what was posted, and the boxes computed from other boxes; a draft is in no box. Name a report_code only where the country files several declarations. It prepares figures and files nothing — the prompt prepare_vat_return walks through checking them against the ledger. The reports beside it are trial_balance, general_ledger, journal_book (the book of one journal or of all of them, with the totals of each), aged_balance, financial_statement (list_statements first), financial_analysis, the figures a ratio is computed from, and analytic_report, the result of each project, cost centre or site of an analytic axis.',
   'Correcting: a posted entry is never deleted or edited. A posted invoice is undone by cancel_document — back to draft where its country allows it and nothing has left, by the credit note that names it otherwise, and it says which — and an entry keyed by hand by reverse_entry. A paid document is unmatched first with unreconcile, and only when the user says so. Ask the user before every post, cancel, reversal, payment or lock.',
   'When the database refuses, the message starts with a name — period_locked, entry_unbalanced, document_total_mismatch, reversal_date_needed — followed by a sentence saying what to do next. Report it to the user and follow that sentence rather than working around it.',
@@ -157,6 +157,22 @@ function withTitledTools(server: McpServer): McpServer {
   const register = server.registerTool.bind(server);
   server.registerTool = ((name, config, callback) => register(name, titled(config), callback)) as McpServer['registerTool'];
   return server;
+}
+
+/**
+ * The sentence the posting tools end with: how this session posts, as the
+ * person who started it chose — the tool list is read once, so it is said
+ * where the model reads it.
+ */
+export function sessionPosting(backend: Backend): string {
+  switch (backend.agent?.posting) {
+    case 'autopilot':
+      return ' This session runs in autopilot: you post without an approval wherever the company allows it.';
+    case 'review':
+      return ' This session runs in review: you post only what a person approved.';
+    default:
+      return " This session follows each company's agent_posting.";
+  }
 }
 
 export function buildServer(backend: Backend, options: ServerOptions = {}): McpServer {
@@ -571,7 +587,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Installation status',
       description:
-        'The schema version, the instance this is, how this server is connected and as whom, and the companies you can see. Use it first when something does not add up — an empty company list usually means the user was never invited rather than that the books are empty.',
+        'The schema version, the instance this is, how this server is connected and as whom, whether this session posts in review or in autopilot, and the companies you can see with the mode a posting meets in each. Use it first when something does not add up — an empty company list usually means the user was never invited rather than that the books are empty.',
       inputSchema: read.StatusInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -681,7 +697,9 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Post a document to the ledger',
       description:
-        'Books a draft document: base lines, VAT lines from the tax configuration, and the customer or supplier counterpart, numbered and posted. A posted entry is never edited; a mistake is undone by cancel_document, which puts the document back to draft only where its country allows it and nothing has left, and issues a credit note otherwise. The posting_mode of the company (get_company) decides, in the database, whether you may: in review, the default, only once a person has approved this draft as it stands (ekwo doc approve, or the web application) — refused with approval_required otherwise, and again if the draft changed after the approval; in autopilot, directly, within your rights. Either way the posting is recorded on the audit trail as an agent\'s, with the mode. dry_run: true is always allowed and is what to show the user before they approve. It refuses a locked period, a tax that is not in force, and a header total that disagrees with the lines. Next: get_document shows the entry it wrote, and record_payment books the money when it moves.',
+        'Books a draft document: base lines, VAT lines from the tax configuration, and the customer or supplier counterpart, numbered and posted. A posted entry is never edited; a mistake is undone by cancel_document, which puts the document back to draft only where its country allows it and nothing has left, and issues a credit note otherwise. The database decides whether you may, from the company\'s agent_posting (get_company) and this session\'s choice: in review, the default, only once a person has approved this draft as it stands (ekwo doc approve, or the web application) — refused with approval_required otherwise, and again if the draft changed after the approval; in autopilot, directly, within your rights; autopilot_forbidden where the session asked for autopilot and the company allows review only. Either way the posting is recorded on the audit trail as an agent\'s, with the mode and the session. dry_run: true is always allowed and is what to show the user before they approve.' +
+          sessionPosting(backend) +
+          ' It refuses a locked period, a tax that is not in force, and a header total that disagrees with the lines. Next: get_document shows the entry it wrote, and record_payment books the money when it moves.',
       inputSchema: write.PostDocumentInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },
@@ -693,7 +711,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Undo a posted invoice',
       description:
-        "Undoes a posted sale or purchase invoice in one call, the one way its country and its facts allow, and says which in undone_by. 'draft': the country's posted_edit_policy lets a posted document go back to draft and nothing about this one has left — never sent nor on Peppol, not paid, not declared, its period open and, where numbering is gapless, its number the last one drawn; its entry is taken away, its number given back, and it is a draft to correct and post again. 'credit_note' otherwise, with the reason in why: its credit note — the same lines, taxes, accounts, contact, currency and rate — is issued naming it, posted and matched against it, and the invoice is cancelled, payment state reversed; the invoice keeps its number and its entry. Tell the user which it was. A date, or credit_note: true, asks for the credit note outright. Dated on the invoice's booking day unless you give a date; refused by name when that period is locked or closed (reversal_date_needed), and then you ask the user for a date rather than choosing one. Refused for a draft, a credit note, an invoice already cancelled or credited, and one that is paid in part or in full — the payment is unmatched first with unreconcile, and only when the user says so. In a company whose posting_mode is review, the credit note is a posting nobody approved, so that way is refused (approval_required) and the user cancels it themselves. Ask the user before calling it.",
+        "Undoes a posted sale or purchase invoice in one call, the one way its country and its facts allow, and says which in undone_by. 'draft': the country's posted_edit_policy lets a posted document go back to draft and nothing about this one has left — never sent nor on Peppol, not paid, not declared, its period open and, where numbering is gapless, its number the last one drawn; its entry is taken away, its number given back, and it is a draft to correct and post again. 'credit_note' otherwise, with the reason in why: its credit note — the same lines, taxes, accounts, contact, currency and rate — is issued naming it, posted and matched against it, and the invoice is cancelled, payment state reversed; the invoice keeps its number and its entry. Tell the user which it was. A date, or credit_note: true, asks for the credit note outright. Dated on the invoice's booking day unless you give a date; refused by name when that period is locked or closed (reversal_date_needed), and then you ask the user for a date rather than choosing one. Refused for a draft, a credit note, an invoice already cancelled or credited, and one that is paid in part or in full — the payment is unmatched first with unreconcile, and only when the user says so. Where you post in review, the credit note is a posting nobody approved, so that way is refused (approval_required) and the user cancels it themselves. Ask the user before calling it." + sessionPosting(backend),
       inputSchema: write.CancelDocumentInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },
@@ -885,7 +903,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Change the company itself',
       description:
-        'Changes what a company says about itself on its documents: the names it goes by, its address and identifiers, its logo and the colour, logo side and typeface of its invoice PDF, the pattern of its document numbers, its stated capital, its activity code and the bank account customers are asked to pay into. Only the fields you name change. It touches nothing in the ledger, and it needs company.write — the owner preset, not the accountant one.',
+        'Changes what a company says about itself on its documents: the names it goes by, its address and identifiers, its logo and the colour, logo side and typeface of its invoice PDF, the pattern of its document numbers, its stated capital, its activity code and the bank account customers are asked to pay into — and agent_posting, how agents post its documents, which you only ever make stricter. Only the fields you name change. It touches nothing in the ledger, and it needs company.write — the owner preset, not the accountant one.',
       inputSchema: write.UpdateCompanyProfileInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },

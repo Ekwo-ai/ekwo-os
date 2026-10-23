@@ -398,7 +398,7 @@ export interface ApproveDocumentArgs {
 
 /**
  * A person approves a draft, as it stands, for an agent to post it in a
- * company whose `posting_mode` is `review`. The approval is a row of the audit
+ * company whose `agent_posting` is `review`. The approval is a row of the audit
  * trail naming the version of the draft, so a change to the draft afterwards
  * needs another. The database refuses it to an agent or a machine key
  * (`approval_by_a_person`) and to whoever may not post the document.

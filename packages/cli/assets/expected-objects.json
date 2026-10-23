@@ -890,6 +890,10 @@
             "type": "text"
           },
           {
+            "name": "agent_posting",
+            "type": "text"
+          },
+          {
             "name": "archived_at",
             "type": "timestamp with time zone"
           },
@@ -1007,10 +1011,6 @@
           },
           {
             "name": "postal_code",
-            "type": "text"
-          },
-          {
-            "name": "posting_mode",
             "type": "text"
           },
           {
@@ -4760,6 +4760,14 @@
         "arguments": ""
       },
       {
+        "name": "agent_mark",
+        "arguments": "p_name text"
+      },
+      {
+        "name": "agent_posting_mode",
+        "arguments": "p_company_id uuid"
+      },
+      {
         "name": "amount_text_format",
         "arguments": "p_rounding money_rounding"
       },
@@ -4960,6 +4968,10 @@
         "arguments": "p_contact_id uuid"
       },
       {
+        "name": "companies_agent_posting_by_a_person",
+        "arguments": ""
+      },
+      {
         "name": "companies_creator_is_fixed",
         "arguments": ""
       },
@@ -4981,10 +4993,6 @@
       },
       {
         "name": "companies_number_format_is_valid",
-        "arguments": ""
-      },
-      {
-        "name": "companies_posting_mode_by_a_person",
         "arguments": ""
       },
       {
@@ -6878,6 +6886,10 @@
       },
       {
         "table": "companies",
+        "name": "companies_agent_posting_by_a_person"
+      },
+      {
+        "table": "companies",
         "name": "companies_audit"
       },
       {
@@ -6907,10 +6919,6 @@
       {
         "table": "companies",
         "name": "companies_number_format_is_valid"
-      },
-      {
-        "table": "companies",
-        "name": "companies_posting_mode_by_a_person"
       },
       {
         "table": "companies",
@@ -9108,6 +9116,28 @@
           ]
         },
         {
+          "name": "agent_mark",
+          "arguments": "p_name text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "agent_posting_mode",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "amount_text_format",
           "arguments": "p_rounding money_rounding",
           "anon": [],
@@ -9607,6 +9637,14 @@
           ]
         },
         {
+          "name": "companies_agent_posting_by_a_person",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "companies_creator_is_fixed",
           "arguments": "",
           "trigger": true,
@@ -9648,14 +9686,6 @@
         },
         {
           "name": "companies_number_format_is_valid",
-          "arguments": "",
-          "trigger": true,
-          "anon": [],
-          "authenticated": [],
-          "service_role": []
-        },
-        {
-          "name": "companies_posting_mode_by_a_person",
           "arguments": "",
           "trigger": true,
           "anon": [],

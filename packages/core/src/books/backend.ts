@@ -54,11 +54,32 @@ export interface SelectQuery {
 
 export type Row = Record<string, unknown>;
 
+/**
+ * What a session of an agent chose for itself, the way a person passes
+ * `--autopilot` or `--review` to one session. Unset, each company's
+ * `agent_posting` decides; a company that is `review_only` refuses autopilot
+ * (`autopilot_forbidden`).
+ */
+export type SessionPosting = 'review' | 'autopilot';
+export const SESSION_POSTING: readonly SessionPosting[] = ['review', 'autopilot'];
+
+/**
+ * The mark an agent puts on every transaction it opens (`agent_call()`): its
+ * session's choice, if it made one, and a name for the session, which the
+ * audit trail records beside every posting it makes.
+ */
+export interface AgentSession {
+  posting?: SessionPosting | undefined;
+  id?: string | undefined;
+}
+
 export interface Backend {
   /** Which route this is, for `status` and for the error messages. */
   readonly mode: 'postgrest' | 'sql';
   /** Who we are acting as, when that is known. */
   readonly actingAs: string | undefined;
+  /** Set when every transaction is marked as an agent's, with its session. */
+  readonly agent?: AgentSession | undefined;
   /**
    * Calls a function of the schema. Always an array of rows, whatever the
    * function returns: PostgREST hands back an object for a function returning

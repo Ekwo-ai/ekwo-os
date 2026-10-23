@@ -13,6 +13,7 @@
  */
 
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { ENV, sessionPostingFlag } from './config.js';
 import { SERVER_VERSION } from './server.js';
 import { serverFromEnvironment } from './start.js';
 
@@ -26,6 +27,12 @@ async function main(): Promise<void> {
     process.stderr.write(`${SERVER_VERSION}\n`);
     return;
   }
+
+  // How this session posts, as a person chooses it for one session of a
+  // coding agent: --autopilot, or --review. The flag is the variable, so a
+  // client that can only pass variables chooses the same way.
+  const posting = sessionPostingFlag(process.argv.slice(2));
+  if (posting !== undefined) process.env[ENV.agentPosting] = posting;
 
   // With nothing configured it still starts, so a client can list the tools;
   // each call then says what to set. A key that is there and wrong — a
@@ -60,6 +67,18 @@ For a self-hosted database, without PostgREST in front of it:
   EKWO_DB_URL             postgresql://…
   EKWO_ACT_AS_USER_ID     the auth.users id this server acts for — required,
                           because a database connection is nobody
+
+How this session posts a document — review or autopilot:
+
+  --autopilot             post directly in every company whose agent_posting
+                          is review or autopilot; refused, autopilot_forbidden,
+                          where it is review_only. Every posting is on the
+                          audit trail, with this session.
+  --review                post only what a person approved, whatever the
+                          company's setting.
+  EKWO_AGENT_POSTING      autopilot or review: the same, as a variable.
+
+  Without either, each company's agent_posting decides (review by default).
 
 Optional:
 

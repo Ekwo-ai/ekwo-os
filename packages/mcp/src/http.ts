@@ -40,7 +40,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import { isServiceRoleKey, serviceRoleRefusal } from '@ekwo-ai/core';
-import { EkwoMcpError, type Backend } from './backend.js';
+import { EkwoMcpError, type AgentSession, type Backend } from './backend.js';
 import { postgrestBackend } from './postgrest.js';
 import { assertSchemaSupported } from './schema.js';
 import { buildServer } from './server.js';
@@ -56,6 +56,13 @@ export interface HttpConnection {
   accessToken?: string | undefined;
   /** A key of Ekwo OS, issued on one company of that project. */
   apiKey?: string | undefined;
+  /**
+   * What the person chose for this connection: `autopilot` or `review`, the
+   * way `--autopilot` chooses for a local session, and a name for the
+   * session on the audit trail. Left out, each company's `agent_posting`
+   * decides.
+   */
+  agent?: AgentSession | undefined;
 }
 
 export interface HttpHandlerOptions {
@@ -124,7 +131,7 @@ export async function openHttpBackend(
     accessToken: connection.apiKey === undefined ? connection.accessToken : undefined,
     apiKey: connection.apiKey,
     fetch: options.fetch,
-    agent: true,
+    agent: connection.agent ?? {},
   });
 }
 

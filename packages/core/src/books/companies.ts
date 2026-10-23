@@ -110,31 +110,35 @@ export async function getCompany(backend: Backend, args: { company_id: string })
   };
 }
 
-/** How an agent books a document of a company: `companies.posting_mode`. */
-export const POSTING_MODES = ['review', 'autopilot'] as const;
-export type PostingMode = (typeof POSTING_MODES)[number];
+/**
+ * How an agent books a document of a company: `companies.agent_posting`, a
+ * setting of the company beside its profile. `review`, the default: once a
+ * person approved the draft as it stands, unless the session opted into
+ * autopilot. `autopilot`: directly, within the rights of the person it acts
+ * for. `review_only`: as review, and no session may opt into autopilot.
+ */
+export const AGENT_POSTING = ['review', 'autopilot', 'review_only'] as const;
+export type AgentPosting = (typeof AGENT_POSTING)[number];
 
-export interface SetPostingModeArgs {
+export interface SetAgentPostingArgs {
   company_id: string;
-  posting_mode: PostingMode;
+  agent_posting: AgentPosting;
 }
 
 /**
- * Chooses how an agent — a machine key, or the MCP server — books a document
- * of this company: `review`, once a person has approved the draft as it
- * stands, or `autopilot`, directly, within its rights. Needs company.write,
- * and a person: the database refuses it to an agent
- * (`posting_mode_by_a_person`), and the change is on the audit trail.
+ * Sets `companies.agent_posting`. Needs company.write, and the change is on
+ * the audit trail with the rest of the company. An agent may only make it
+ * stricter — the database refuses the rest (`agent_posting_by_a_person`).
  */
-export async function setPostingMode(backend: Backend, args: SetPostingModeArgs): Promise<unknown> {
+export async function setAgentPosting(backend: Backend, args: SetAgentPostingArgs): Promise<unknown> {
   const company = only(
     await backend.update<Row>(
       'companies',
-      { posting_mode: args.posting_mode },
+      { agent_posting: args.agent_posting },
       [{ column: 'id', op: 'eq', value: args.company_id }],
-      ['id', 'name', 'posting_mode'],
+      ['id', 'name', 'agent_posting'],
     ),
-    `company ${args.company_id}`,
+    `company ${args.company_id}: changing how agents post needs company.write`,
   );
   return { company };
 }

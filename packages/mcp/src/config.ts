@@ -19,8 +19,9 @@
  * put there overrides a perfectly good anon key sitting next to it.
  */
 
-import { IDENTITY_ENV, isServiceRoleKey, serviceRoleRefusal } from '@ekwo-ai/core';
-import { EkwoMcpError, type Backend } from './backend.js';
+import { randomUUID } from 'node:crypto';
+import { IDENTITY_ENV, SESSION_POSTING, isServiceRoleKey, serviceRoleRefusal } from '@ekwo-ai/core';
+import { EkwoMcpError, type AgentSession, type Backend, type SessionPosting } from './backend.js';
 import { postgrestBackend } from './postgrest.js';
 import { connect, sqlBackend } from './sql.js';
 
@@ -33,6 +34,8 @@ export interface Config {
   accessToken?: string;
   dbUrl?: string;
   actAsUserId?: string;
+  /** The mark every transaction carries: this session's choice, and its name. */
+  agent: AgentSession;
 }
 
 export const ENV = {
@@ -40,6 +43,7 @@ export const ENV = {
   dbUrl: 'EKWO_DB_URL',
   actAsUserId: 'EKWO_ACT_AS_USER_ID',
   einvoiceDirectory: 'EKWO_EINVOICE_DIRECTORY',
+  agentPosting: 'EKWO_AGENT_POSTING',
 } as const;
 
 const SURFACE = 'this server';
@@ -59,8 +63,35 @@ function trimmed(env: NodeJS.ProcessEnv, name: string): string | undefined {
   return text.length === 0 ? undefined : text;
 }
 
+/**
+ * The session's choice of how it posts, from `EKWO_AGENT_POSTING` — which
+ * `--autopilot` and `--review` set. Unset, each company's `agent_posting`
+ * decides. A value that is neither is refused rather than read as one.
+ */
+export function sessionPostingFrom(env: NodeJS.ProcessEnv): SessionPosting | undefined {
+  const value = trimmed(env, ENV.agentPosting);
+  if (value === undefined) return undefined;
+  if (!(SESSION_POSTING as readonly string[]).includes(value)) {
+    throw new EkwoMcpError(
+      `bad_agent_posting: ${ENV.agentPosting} is ${SESSION_POSTING.join(' or ')}, got "${value}". Left unset, each company's agent_posting decides.`,
+    );
+  }
+  return value as SessionPosting;
+}
+
+/** `--autopilot` or `--review` among the arguments of the server, at most one of them. */
+export function sessionPostingFlag(argv: readonly string[]): SessionPosting | undefined {
+  if (argv.includes('--autopilot') && argv.includes('--review')) {
+    throw new EkwoMcpError('conflicting_arguments: --autopilot and --review, choose one.');
+  }
+  if (argv.includes('--autopilot')) return 'autopilot';
+  if (argv.includes('--review')) return 'review';
+  return undefined;
+}
+
 /** Reads the environment, and says what is missing rather than failing later. */
 export function readConfig(env: NodeJS.ProcessEnv = process.env): Config {
+  const agent: AgentSession = { posting: sessionPostingFrom(env), id: randomUUID() };
   const dbUrl = trimmed(env, ENV.dbUrl);
 
   if (dbUrl !== undefined) {
@@ -75,7 +106,7 @@ export function readConfig(env: NodeJS.ProcessEnv = process.env): Config {
         `bad_act_as_user: ${ENV.actAsUserId} must be the auth.users id of a real user, as a uuid.`,
       );
     }
-    return { mode: 'sql', dbUrl, actAsUserId };
+    return { mode: 'sql', dbUrl, actAsUserId, agent };
   }
 
   const supabaseUrl = trimmed(env, ENV.supabaseUrl);
@@ -115,6 +146,7 @@ export function readConfig(env: NodeJS.ProcessEnv = process.env): Config {
     mode: 'postgrest',
     supabaseUrl,
     anonKey,
+    agent,
     ...(accessToken !== undefined ? { accessToken } : {}),
     ...(email !== undefined ? { email } : {}),
     ...(password !== undefined ? { password } : {}),
@@ -125,7 +157,7 @@ export function readConfig(env: NodeJS.ProcessEnv = process.env): Config {
 export async function openBackend(config: Config): Promise<Backend> {
   if (config.mode === 'sql') {
     const db = await connect(config.dbUrl as string);
-    return sqlBackend(db, { userId: config.actAsUserId as string, agent: true });
+    return sqlBackend(db, { userId: config.actAsUserId as string, agent: config.agent });
   }
   return postgrestBackend({
     supabaseUrl: config.supabaseUrl as string,
@@ -133,6 +165,6 @@ export async function openBackend(config: Config): Promise<Backend> {
     accessToken: config.accessToken,
     email: config.email,
     password: config.password,
-    agent: true,
+    agent: config.agent,
   });
 }

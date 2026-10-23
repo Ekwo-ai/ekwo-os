@@ -21,6 +21,7 @@ import {
   EkwoMcpError,
   explain,
   identifier,
+  type AgentSession,
   type Backend,
   type Filter,
   type Row,
@@ -101,18 +102,23 @@ export interface PostgrestBackendOptions {
   /** The `fetch` every request goes through. A host or a test may hand its own. */
   fetch?: typeof globalThis.fetch | undefined;
   /**
-   * Marks every request as an agent's, in `X-Ekwo-Agent`, which the database
-   * reads to hold a posting to the company's `posting_mode`. The MCP server
-   * sets it; a script acting for a person does not.
+   * Marks every request as an agent's, in `X-Ekwo-Agent` — with the session's
+   * choice of `review` or `autopilot` if it made one — and names the session
+   * in `X-Ekwo-Agent-Session`. The database reads them to hold a posting to
+   * the company's `agent_posting`. The MCP server sets it; a script acting
+   * for a person does not.
    */
-  agent?: boolean | undefined;
+  agent?: AgentSession | undefined;
 }
 
 /** The header the core's pre-request hook reads a key out of. */
 export const API_KEY_HEADER = 'X-Ekwo-Api-Key';
 
-/** The header that says a request is an agent's (`agent_call()`). */
+/** The header that says a request is an agent's (`agent_call()`), and its session's choice. */
 export const AGENT_HEADER = 'X-Ekwo-Agent';
+
+/** The header that names the session of an agent, for the audit trail. */
+export const AGENT_SESSION_HEADER = 'X-Ekwo-Agent-Session';
 
 /**
  * A `fetch` that never sends `Authorization`.
@@ -145,7 +151,10 @@ export async function postgrestBackend(options: PostgrestBackendOptions): Promis
   } else if (options.accessToken !== undefined && options.accessToken.length > 0) {
     headers['Authorization'] = `Bearer ${options.accessToken}`;
   }
-  if (options.agent === true) headers[AGENT_HEADER] = 'mcp';
+  if (options.agent !== undefined) {
+    headers[AGENT_HEADER] = options.agent.posting ?? 'on';
+    if (options.agent.id !== undefined) headers[AGENT_SESSION_HEADER] = options.agent.id;
+  }
 
   const baseFetch = options.fetch ?? globalThis.fetch;
   const client: SupabaseClient = createClient(options.supabaseUrl, options.anonKey, {
@@ -197,6 +206,7 @@ export async function postgrestBackend(options: PostgrestBackendOptions): Promis
   return {
     mode: 'postgrest',
     actingAs,
+    agent: options.agent,
 
     async rpc<T>(fn: string, args: Record<string, unknown> = {}, schema?: string): Promise<T[]> {
       const answer = (await on(schema).rpc(identifier(fn), args)) as Answer<unknown>;

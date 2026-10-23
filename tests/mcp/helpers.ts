@@ -13,7 +13,7 @@
  */
 
 import type { PGlite } from '@electric-sql/pglite';
-import { sqlBackend, type Backend, type SqlClient } from '../../packages/mcp/src/index.js';
+import { sqlBackend, type AgentSession, type Backend, type SqlClient } from '../../packages/mcp/src/index.js';
 
 type Queryable = {
   query: <T>(sql: string, params?: unknown[]) => Promise<{ rows: T[] }>;
@@ -40,7 +40,7 @@ export function adapt(handle: Queryable, root: PGlite): SqlClient {
 }
 
 /** The server's backend, acting as one user of the installation. */
-export function backendFor(db: PGlite, userId: string, options: { agent?: boolean } = {}): Backend {
+export function backendFor(db: PGlite, userId: string, options: { agent?: AgentSession } = {}): Backend {
   return sqlBackend(adapt(db as unknown as Queryable, db), { userId, agent: options.agent });
 }
 

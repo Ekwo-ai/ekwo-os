@@ -63,6 +63,11 @@
           "name": "EKWO_EINVOICE_DIRECTORY",
           "description": "Optional: the folder electronic invoices are sent to. Unset, they are issued and kept, and not sent",
           "isRequired": false
+        },
+        {
+          "name": "EKWO_AGENT_POSTING",
+          "description": "Optional: autopilot or review, how this session posts documents. Unset, each company's agent_posting decides",
+          "isRequired": false
         }
       ]
     }

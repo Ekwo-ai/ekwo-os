@@ -8,11 +8,12 @@
 
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { FISCAL_SYSTEM_ENV, cloudOfferSilenced, directoryTransport, parseFiscalSystem, registrationInvitation, type EinvoiceTransport, type FiscalSystem } from '@ekwo-ai/core';
-import type { Backend } from './backend.js';
+import type { Backend, Row } from './backend.js';
 import { ENV, openBackend, readConfig } from './config.js';
 import { assertSchemaSupported } from './schema.js';
 import { buildServer } from './server.js';
 import { installedModules } from './tools/modules.js';
+import { postingOf } from './tools/read.js';
 import { isMissingConfiguration, unconfiguredBackend } from './unconfigured.js';
 
 export interface Started {
@@ -51,6 +52,7 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
   const inviteToRegister = await shouldInviteToRegister(backend, env);
   const einvoiceTransport = einvoiceTransportFrom(env);
   const fiscalSystem = fiscalSystemFrom(env);
+  const posting = await postingSummary(backend);
   return {
     server: buildServer(backend, {
       modules,
@@ -64,8 +66,35 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
       `ekwo-mcp: connected over ${config.mode === 'sql' ? 'a direct Postgres connection' : 'PostgREST as the signed-in user'}` +
       `, schema ${schemaVersion}` +
       `${modules.length > 0 ? `, modules: ${modules.join(', ')}` : ''}` +
-      `${einvoiceTransport === undefined ? '' : `, electronic invoices to the folder ${env[ENV.einvoiceDirectory]?.trim() ?? ''}`}`,
+      `${einvoiceTransport === undefined ? '' : `, electronic invoices to the folder ${env[ENV.einvoiceDirectory]?.trim() ?? ''}`}` +
+      `. ${posting}`,
   };
+}
+
+/**
+ * How this session posts, said once at start-up: review, autopilot, or each
+ * company's setting — and the companies where autopilot is refused. A read
+ * that fails says nothing more than the choice: it is information, and never
+ * stops a server from starting.
+ */
+export async function postingSummary(backend: Backend): Promise<string> {
+  const choice = backend.agent?.posting;
+  const said =
+    choice === 'autopilot'
+      ? 'Agents post in AUTOPILOT in this session: without an approval, each posting on the audit trail'
+      : choice === 'review'
+        ? 'Agents post in review in this session: only drafts a person approved'
+        : "Agents post as each company's agent_posting says (review unless it says autopilot)";
+  if (choice !== 'autopilot') return said;
+  try {
+    const companies = await backend.select<Row>({ table: 'companies', columns: ['id', 'name'], order: [{ column: 'name' }] });
+    const refused = (await postingOf(backend, companies)).companies
+      .filter((company) => company['posting_mode'] === 'autopilot_forbidden')
+      .map((company) => String(company['name']));
+    return refused.length === 0 ? said : `${said}; refused in ${refused.join(', ')}, which allow review only`;
+  } catch {
+    return said;
+  }
 }
 
 /**

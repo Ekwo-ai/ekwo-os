@@ -131,6 +131,7 @@ alongside the server; the recommended route needs no driver at all.
 | `EKWO_ACT_AS_USER_ID` | Required with `EKWO_DB_URL`: the `auth.users` id to act for |
 | `EKWO_NO_REGISTER_INVITE` | Optional. `1` leaves the invitation to register out of the instructions |
 | `EKWO_NO_CLOUD_OFFER` | Optional. `1` leaves the offer of a free Ekwo Cloud account out of the instructions; so does `CI` |
+| `EKWO_AGENT_POSTING` | Optional. `autopilot` or `review`: how this session posts, as `--autopilot` and `--review` choose it. Unset, each company's `agent_posting` decides. See [Review or autopilot](#review-or-autopilot) |
 | `EKWO_EINVOICE_DIRECTORY` | Optional. The folder electronic invoices are sent to by `einvoicing_issue` with `send`. Unset, files are issued and kept, and sending is refused as `no_transport` |
 | `EKWO_FISCAL_SYSTEM` | Optional. The invoicing system `einvoicing_fiscalise` chains fiscal records under, as JSON: `name`, `id`, `version`, `installation`, `producerName`, `producerTaxId`, and the booleans a regime may ask (`verifactuOnly`, `multipleTaxpayers`, `multipleTaxpayersNow`). Unset, fiscalising is refused as `no_fiscal_system`; malformed, the server does not start |
 
@@ -256,7 +257,7 @@ Every write names its company explicitly.
 | `pin_accounts` | Adds accounts to the working chart a company sees first, or takes one back out with `pinned: false` |
 | `create_document` | A draft invoice, credit note or quote, with its lines. With `client_ref`, calling twice creates once |
 | `update_document_lines` | Replaces the lines of a **draft** |
-| `post_document` | Books it, in the posting mode of the company: in `review`, the default, only once a person approved the draft as it stands, refused with `approval_required` otherwise; in `autopilot`, directly. `dry_run: true` returns the entry the database would write, and writes nothing, in both |
+| `post_document` | Books it, in review or autopilot ([below](#review-or-autopilot)): in `review`, only once a person approved the draft as it stands, refused with `approval_required` otherwise; in `autopilot`, directly. `dry_run: true` returns the entry the database would write, and writes nothing, in both |
 | `cancel_document` | Undoes a posted invoice, and says how in `undone_by`: back to `draft` where its country's `posted_edit_policy` allows it and nothing about it has left (`unpost_document()`), otherwise a `credit_note` that names it, posted and matched against it, and the invoice cancelled (`cancel_document()`), with `why` the draft was ruled out. A credit note is dated on the invoice's day while that period is open; otherwise the caller gives a date. A date, or `credit_note: true`, asks for the credit note |
 | `reverse_entry` | Undoes a posted entry keyed by hand: its mirror, posted under the next number and matched against it. Same rule for the date |
 | `record_payment` | Books money in or out and matches it against open invoices — or, with `document_id`, against that document alone, which then names the contact and the direction. With `client_ref`, recording twice records once |
@@ -295,19 +296,6 @@ whole chart, and every write tool still accepts any account of it.
 `close_fiscal_year`, `reopen_fiscal_year`, `close_fiscal_year_finally`, `revoke_invitation`, `remove_member`,
 `set_member_role`, `revoke_api_key` and `revoke_share` are annotated destructive in the protocol, so a client can ask
 before calling them.
-
-**Posting follows the company's posting mode, in the database.** The server
-marks every transaction it opens as an agent's (`ekwo.agent` on a direct
-connection, `X-Ekwo-Agent` through PostgREST), and a machine key is one
-anyway. In `review`, the default of every company, `post_document` books a
-draft only once a person approved it as it stands — `ekwo doc approve
-<document>` signed in as themselves, or the web application — and a draft
-changed after its approval is approved again. In `autopilot` it books
-directly. Either way the posting is on the audit trail as
-`document_posted_by_agent`, with the mode. The agent can neither approve nor
-change the mode; a person chooses it with `ekwo company posting-mode`.
-`get_company` returns `posting_mode`. See
-[decision 0089](../../docs/decisions/0089-an-agent-posts-in-the-mode-its-company-chose.md).
 
 **What a tool may do is the capability the user holds**, not the tool's own
 right: the server acts as the person it signed in as, so `post_document` works
@@ -351,6 +339,30 @@ declaration box each of its postings feeds.
 **Prompts.** `close_month` walks the month-end checklist — drafts, unmatched
 bank lines, the balance, the VAT, what is still open. `prepare_vat_return`
 pulls the boxes and ties them back to the ledger before anything is filed.
+
+## Review or autopilot
+
+Like the permissions of a coding agent: a default mode in the settings, a
+flag for one session, and a setting that forbids the flag. The database
+holds every path to it.
+
+| | |
+|---|---|
+| **The setting**, `agent_posting` of the company (`get_company`, `update_company_profile`, `ekwo company agent-posting`, the Settings page of Ekwo Cloud) | `review`, the default: `post_document` books a draft only once a person approved it as it stands — `ekwo doc approve <document>`, or the web application — refused with `approval_required` otherwise, and again if the draft changed. `autopilot`: directly, within the rights of the person. `review_only`: review, and autopilot refused to every session. |
+| **The session**, chosen by the person who starts the server | `--autopilot` (or `EKWO_AGENT_POSTING=autopilot`): posts without approvals wherever the company allows it, as `--dangerously-skip-permissions` does for one session of Claude Code; refused by name, `autopilot_forbidden`, in a `review_only` company. `--review`: approvals even where the company is in autopilot. Neither: each company's setting. |
+
+The server marks every transaction it opens as an agent's — `ekwo.agent` on
+a direct connection, `X-Ekwo-Agent` through PostgREST, carrying the session's
+choice, and `X-Ekwo-Agent-Session` naming it — and a machine key is an agent
+anyway; a program holding a key chooses autopilot with `X-Ekwo-Agent:
+autopilot`. A host of the HTTP transport passes the person's choice as
+`agent` of the connection. Every posting by an agent is on the audit trail as
+`document_posted_by_agent`, with the mode, the setting, the session and the
+key. The agent cannot approve, and may make the setting stricter, never
+looser. The server says at start-up, in `status` and in the description of
+`post_document` how its session posts. Autopilot is the person's choice for
+their session, never the agent's. See
+[decision 0089](../../docs/decisions/0089-an-agent-posts-in-the-mode-its-company-chose.md).
 
 ## What an agent reads first
 

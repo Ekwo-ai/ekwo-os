@@ -9,25 +9,36 @@ somewhere has already run it.
 
 ## [Unreleased]
 
-### Changed
+### Added
 
-- **An agent posts in the mode its company chose** (socle migration
-  `20261023174709`, decision 0089). `companies.posting_mode` is `review` — the
-  default — or `autopilot`. An agent is a transaction presenting a machine
-  key, or marked by the MCP server (`ekwo.agent` on a direct connection,
-  `X-Ekwo-Agent` through PostgREST): `agent_call()`. In review, its posting of
-  a document is refused, `approval_required`, unless a person approved that
-  draft as it stands with `approve_document()` — a `document_approved` row of
-  the audit trail naming `document_version()`, a digest of the document and
-  its lines, voided by any change to the draft. In autopilot it posts
-  directly. Either way the trail records `document_posted_by_agent` with the
-  mode, and in review the approval. An agent may neither approve
-  (`approval_by_a_person`) nor change the mode (`posting_mode_by_a_person`).
-  A person signed in posts as before. `ekwo doc approve <document>` and
-  `ekwo company posting-mode [review|autopilot]`; `get_company` returns
-  `posting_mode`; the core exports `approveDocument()` and `setPostingMode()`.
-  **Every existing company is in review after this migration**: an agent that
-  posted directly is refused until a person approves, or chooses autopilot.
+- **An agent posts in the mode its company chose, or its session chose**
+  (socle migration `20261023174709`, decision 0089). The company setting
+  `companies.agent_posting` — beside the profile, written with `company.write`
+  and on the audit trail — is `review` (the default), `autopilot` or
+  `review_only`. An agent is a transaction presenting a machine key, or marked
+  by the MCP server (`ekwo.agent` on a direct connection, `X-Ekwo-Agent`
+  through PostgREST): `agent_call()`. The mark carries the session's choice,
+  the way a person passes `--dangerously-skip-permissions` to one session of a
+  coding agent: `ekwo-mcp --autopilot` or `--review`, `EKWO_AGENT_POSTING`, or
+  the header `X-Ekwo-Agent: autopilot` beside a key; `agent_posting_mode()` is
+  what a posting meets. In review, an agent's posting of a document is
+  refused, `approval_required`, unless a person approved that draft as it
+  stands with `approve_document()` — a `document_approved` row of the audit
+  trail naming `document_version()`, a digest of the document and its lines,
+  voided by any change to the draft. In autopilot it posts directly. In
+  `review_only` a session in autopilot is refused, `autopilot_forbidden`.
+  Every posting by an agent writes `document_posted_by_agent` with the mode,
+  the setting, the session (`X-Ekwo-Agent-Session`), the key and, in review,
+  the approval. An agent may not approve (`approval_by_a_person`) and may make
+  the setting stricter, never looser (`agent_posting_by_a_person`). A person
+  signed in posts as before. `ekwo doc approve <document>`, `ekwo company
+  agent-posting [review|autopilot|review_only]`, `agent_posting` in
+  `get_company` and `update_company_profile`; the MCP server says at start-up
+  and in `status` how its session posts. The core exports `approveDocument()`
+  and `setAgentPosting()`. **Every existing company is in review after this
+  migration**: an agent that posted directly is refused until a person
+  approves, chooses autopilot for the company, or starts the session with
+  `--autopilot`.
 
 ### Fixed
 

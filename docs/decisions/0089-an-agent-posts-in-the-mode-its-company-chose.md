@@ -14,53 +14,78 @@ the description of the tool: a model may follow it, and nothing checked that it
 did. A posted entry is not edited; it is corrected by a credit note.
 
 A person keeps control of the books by setting the rules and the rights. What
-was missing is the choice, company by company, of how far an agent goes within
-them.
+was missing is the choice of how far an agent goes within them — for the
+company, and for one session of one agent.
+
+Coding agents settled the same question: a default mode in the settings, a
+flag the person passes to one session to skip the questions
+(`--dangerously-skip-permissions`), and a setting that forbids the flag
+(`disableBypassPermissionsMode`). The owner chose that model (23/10/2026).
 
 ## Decision
 
-**A company chooses a posting mode for its agents**, `companies.posting_mode`:
+**One setting of the company, `companies.agent_posting`**, a column beside
+its profile — read by `get_company`, written by `update_company_profile`,
+`ekwo company agent-posting` and, in Ekwo Cloud, its Settings page:
 
-- `review`, the default — every document an agent proposes is approved by a
-  person before the agent may post it;
-- `autopilot` — the agent posts directly, within the rules and the rights it
-  holds, and every posting is recorded on the audit trail as an agent's.
+- `review`, the default — a document an agent proposes is posted once a
+  person approved the draft as it stands; a session may opt into autopilot;
+- `autopilot` — agents post directly, within the rights of the person they act
+  for;
+- `review_only` — review, and no session may opt into autopilot.
+
+No table is added: the company row is where its settings are, and its writes
+are already guarded (`company.write`) and audited.
+
+**The session's choice travels with the mark of the agent.** An agent is a
+transaction presenting a machine key, or one the MCP server marked — the
+setting `ekwo.agent` on a direct connection, the header `X-Ekwo-Agent` through
+PostgREST: `agent_call()`. The value of the mark is the session's choice:
+`autopilot`, `review`, or anything else for none. `ekwo-mcp --autopilot` or
+`--review`, or `EKWO_AGENT_POSTING`, sets it for a local server; a host of the
+HTTP transport passes it as `agent` of the connection; a program holding a key
+sends the header. `ekwo.agent_session` / `X-Ekwo-Agent-Session` names the
+session. `agent_posting_mode(company)` is what a posting meets: the session's
+choice where it made one, the setting otherwise — `review` in a `review_only`
+company, and `autopilot_forbidden` when the session asked for autopilot there.
+
+A person signed in — in the web application, on the command line — posts as
+before: posting is their approval. The database cannot tell a person from a
+program using that person's own session without the mark, and does not pretend
+to: a program that wants the protection connects as an agent.
 
 **The database enforces it**, so the command line, the REST API and the MCP
 server answer the same way. A trigger on the posting itself
 (`documents_posting_mode`, beside `documents_assert_may_post`) holds every path
-that sets a document to posted.
-
-**An agent is a transaction that says so, or a key.** `agent_call()` is true
-when a machine key is presented, and when the MCP server marked the
-transaction — the setting `ekwo.agent` on a direct connection, the header
-`X-Ekwo-Agent` through PostgREST; the server marks every one it opens. A person
-signed in — in the web application, on the command line — posts as before:
-posting is their approval. The database cannot tell a person from a program
-using that person's own session without the mark, and does not pretend to: a
-program that wants the protection connects as an agent.
+that sets a document to posted: `autopilot_forbidden` by name, and in review
+`approval_required` unless the trail holds an approval of the version being
+posted, written since the document last went back to draft.
 
 **An approval is an act on the audit trail, bound to a version of the draft.**
 `approve_document(document)` writes `document_approved` on `audit_log`, with
 `document_version()` — a digest of the document and its lines as they stand,
-every column but `updated_at`. In review, an agent's posting is refused
-(`approval_required`) unless the trail holds an approval of the version being
-posted, written since the document last went back to draft. A change to the
-draft after its approval — a line, a price, a date — voids it. No table is
-added: the trail is append-only, written by functions only, and is where an
-auditor looks.
+every column but `updated_at`. A change to the draft after its approval — a
+line, a price, a date — voids it.
 
-**Only a person approves, and only a person chooses the mode.**
+**Only a person approves, and only a person loosens the setting.**
 `approve_document()` refuses an agent and a key (`approval_by_a_person`) and
-asks `documents.post`. `companies.posting_mode` is written by whoever may write
-the company, and a trigger refuses the change in an agent's transaction
-(`posting_mode_by_a_person`): a key holding `company.write` does not switch its
-own company to autopilot.
+asks `documents.post`. `agent_posting` is written with `company.write`; in an
+agent's transaction a trigger refuses a change that loosens it
+(`agent_posting_by_a_person`) — an agent may make it stricter when the person
+asks, and a key holding `company.write` does not switch its own company to
+autopilot. Autopilot for one session is the person's choice too: they start
+the session with it.
 
-**Every posting by an agent is on the trail**, in both modes:
-`document_posted_by_agent`, with the mode, and in review the version and the
+**Every posting by an agent is on the trail**, in every mode:
+`document_posted_by_agent`, with the mode it met, the company's setting, the
+session, the key (the row's `api_key_id`), and in review the version and the
 approval it rests on (`approved_by`, `approved_at`), beside the
 `document_posted` the state change already writes.
+
+**It is said where it is decided.** The MCP server says at start-up and in
+`status` whether its session runs in review or in autopilot, and in which
+companies autopilot is refused; the descriptions of `post_document` and
+`cancel_document` say it too.
 
 **A rehearsal is not held to it.** `rehearse_post_document()` posts and rolls
 back; showing a person the entry is how they decide to approve it.
@@ -68,8 +93,8 @@ back; showing a person the entry is how they decide to approve it.
 ## Consequences
 
 - An installation upgraded to this release is in review for every company: an
-  agent that posted directly is refused until a person approves, or switches
-  the company to autopilot (`ekwo company posting-mode autopilot`).
+  agent that posted directly is refused until a person approves, sets the
+  company to autopilot, or starts the session with `--autopilot`.
 - The approval lives where an application can show it: the rows of
   `audit_log` with `action = 'document_approved'` and the document's id.
 - The rule holds every posting of a document, including the ones a function
@@ -77,6 +102,8 @@ back; showing a person the entry is how they decide to approve it.
   issues a credit note, and a contract schedule with `auto_post` issued by an
   agent, are refused the same way: the credit note or the invoice was never
   approved. The person cancels, or issues, or approves the drafts.
+- A key's program chooses autopilot for itself with a header, the way a
+  session does; a company that wants none of it is `review_only`.
 - What is held today is the posting of a document. A manual entry, a payment
   and a matching are not covered by the mode yet; they remain bounded by the
   capabilities of the key or the person.
@@ -84,7 +111,7 @@ back; showing a person the entry is how they decide to approve it.
 ## See also
 
 - `supabase/migrations/20261023174709_an_agent_posts_in_the_mode_its_company_chose.sql`
-- `tests/posting_mode.test.ts`
+- `tests/agent_posting.test.ts`
 - [0017 An append-only audit trail](0017-an-append-only-audit-trail.md)
 - [0053 The MCP server acts as the user](0053-the-mcp-server-acts-as-the-user.md)
 - [0064 A key writes as the person who issued it](0064-a-key-writes-as-its-issuer.md)

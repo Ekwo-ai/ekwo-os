@@ -1,17 +1,23 @@
 -- Ekwo OS — an agent posts in the mode its company chose.
 --
 -- A person stays in control of the books by setting the rules and the rights,
--- and then by choosing, company by company, how an agent books a document:
+-- and then by choosing, company by company, how an agent books a document.
+-- The choice is a setting of the company, `companies.agent_posting`, read and
+-- written where the rest of its profile is:
 --
---   review     every document an agent proposes is approved by a person
---              before the agent may post it. The default.
---   autopilot  the agent posts directly, within the rules and the rights it
---              has; every posting stays on the audit trail, saying so.
+--   review       a document an agent proposes is posted once a person has
+--                approved the draft as it stands. The default. A session may
+--                still opt into autopilot (below).
+--   autopilot    agents post directly, within the rights of the person they
+--                act for; every posting stays on the audit trail, saying so.
+--   review_only  as review, and no session may opt into autopilot.
 --
--- Until now "ask the user first" was a sentence in the instructions of the
--- MCP server, which a model may or may not follow. It is now a rule of the
--- database, so the command line, the REST API and the MCP server answer the
--- same way.
+-- The model is the permissions of a coding agent: a default mode in the
+-- settings, a flag a person passes to one session to skip the questions, and
+-- a setting that forbids that flag. Until now "ask the user first" was a
+-- sentence in the instructions of the MCP server, which a model may or may
+-- not follow. It is now a rule of the database, so the command line, the
+-- REST API and the MCP server answer the same way.
 --
 -- **Who is an agent.** A caller presenting a machine key (`current_api_key()`)
 -- is one, always. So is the MCP server, which acts as a person
@@ -21,11 +27,19 @@
 -- application, in the command line — posts as before, approved by the act of
 -- posting.
 --
--- **The mode is a column of the company**, `companies.posting_mode`, written
--- by whoever may write the company (`companies_update`, `company.write`),
--- and audited with it. An agent never changes it: `agent_call()` is refused
--- on the column, so a key holding `company.write` cannot switch its own
--- company to autopilot.
+-- **The session's choice** is the value of that mark: `autopilot` or
+-- `review`, or anything else for none, and then the company's setting
+-- decides. `ekwo.agent_session` / `X-Ekwo-Agent-Session` names the session,
+-- for the trail. `agent_posting_mode(company)` is the mode a posting of this
+-- transaction meets: `review`, `autopilot`, or `autopilot_forbidden` when the
+-- session asks for autopilot in a company that is `review_only` — and a
+-- posting is then refused by that name.
+--
+-- **Who changes the setting** is who may write the company
+-- (`companies_update`, `company.write`), and the change is on the audit trail
+-- with the company's other columns. An agent may make it stricter — autopilot
+-- to review, review to review_only — and never looser: a key holding
+-- `company.write` does not switch its own company to autopilot.
 --
 -- **An approval is an act on the audit trail**, not a new table:
 -- `approve_document(document)` writes a `document_approved` row naming the
@@ -41,30 +55,49 @@
 -- `documents_assert_may_post`: whatever path sets a document to posted meets
 -- it. In review an agent's posting without a valid approval is refused,
 -- `approval_required`; in either mode an agent's posting writes a
--- `document_posted_by_agent` row naming the mode, and in review the approval
--- it rests on. A rehearsal (`rehearse_post_document()`) posts and rolls back,
--- so it is not held to the approval: showing a person the entry is how they
--- decide to approve it.
+-- `document_posted_by_agent` row naming the mode, the setting, the session
+-- and, in review, the approval it rests on — the key that did it is the
+-- trail's own `api_key_id`. A rehearsal (`rehearse_post_document()`) posts and
+-- rolls back, so it is not held to the mode: showing a person the entry is
+-- how they decide to approve it.
 
 -- ---------------------------------------------------------------------------
--- 1. The mode, on the company
+-- 1. The setting, on the company
 -- ---------------------------------------------------------------------------
 
 alter table companies
-  add column if not exists posting_mode text not null default 'review';
+  add column if not exists agent_posting text not null default 'review';
 
 alter table companies
-  drop constraint if exists companies_posting_mode_known;
+  drop constraint if exists companies_agent_posting_known;
 alter table companies
-  add constraint companies_posting_mode_known
-  check (posting_mode in ('review', 'autopilot'));
+  add constraint companies_agent_posting_known
+  check (agent_posting in ('review', 'autopilot', 'review_only'));
 
-comment on column companies.posting_mode is
-  'How an agent — a machine key, or the MCP server — books a document of this company: review (the default), only once a person has approved the draft as it stands (approve_document()); autopilot, directly, within the capabilities it holds. A person signed in posts as before in both. Written by a person only, never by an agent.';
+comment on column companies.agent_posting is
+  'How an agent — a machine key, or the MCP server — books a document of this company: review (the default), once a person has approved the draft as it stands (approve_document()), unless the session opted into autopilot; autopilot, directly, within the capabilities it holds; review_only, as review, and no session may opt into autopilot. A person signed in posts as before in all three. Written with company.write; an agent may only make it stricter.';
 
 -- ---------------------------------------------------------------------------
--- 2. Who is an agent
+-- 2. Who is an agent, and what its session asked for
 -- ---------------------------------------------------------------------------
+
+create or replace function agent_mark(p_name text)
+returns text
+language sql
+stable
+security invoker
+set search_path = public, pg_temp
+as $$
+  select coalesce(
+    nullif(current_setting('ekwo.' || p_name, true), ''),
+    nullif(nullif(current_setting('request.headers', true), '')::jsonb ->> ('x-ekwo-' || replace(p_name, '_', '-')), ''));
+$$;
+
+comment on function agent_mark(text) is
+  'What the MCP server, or a program holding a key, says of this transaction: the setting ekwo.<name> on a direct connection, the header X-Ekwo-<Name> through PostgREST. agent is the mark of an agent and its session''s posting mode, agent_session the name of its session.';
+
+revoke execute on function agent_mark(text) from public, anon;
+grant execute on function agent_mark(text) to authenticated, service_role;
 
 create or replace function agent_call()
 returns boolean
@@ -74,42 +107,67 @@ security definer
 set search_path = public, pg_temp
 as $$
   select (select k.id from current_api_key() k) is not null
-      or coalesce(current_setting('ekwo.agent', true), '') = 'on'
-      or coalesce(nullif(current_setting('request.headers', true), '')::jsonb ->> 'x-ekwo-agent', '') <> '';
+      or agent_mark('agent') is not null;
 $$;
 
 comment on function agent_call() is
-  'Whether this transaction is an agent''s: a machine key is presented (current_api_key()), or the MCP server marked it — the setting ekwo.agent on a direct connection, the header X-Ekwo-Agent through PostgREST. Decides how a document is posted under companies.posting_mode.';
+  'Whether this transaction is an agent''s: a machine key is presented (current_api_key()), or the MCP server marked it — the setting ekwo.agent on a direct connection, the header X-Ekwo-Agent through PostgREST. Decides how a document is posted under companies.agent_posting.';
 
 revoke execute on function agent_call() from public, anon;
 grant execute on function agent_call() to authenticated, service_role;
 
-create or replace function companies_posting_mode_by_a_person()
+create or replace function agent_posting_mode(p_company_id uuid)
+returns text
+language sql
+stable
+security definer
+set search_path = public, pg_temp
+as $$
+  select case
+           when c.agent_posting = 'review_only' and agent_mark('agent') = 'autopilot' then 'autopilot_forbidden'
+           when c.agent_posting = 'review_only' then 'review'
+           when agent_mark('agent') in ('review', 'autopilot') then agent_mark('agent')
+           else c.agent_posting
+         end
+    from companies c
+   where c.id = p_company_id
+     and (is_installer() or has_capability(c.id, 'documents.read'));
+$$;
+
+comment on function agent_posting_mode(uuid) is
+  'The mode an agent''s posting in this transaction meets in a company: the session''s choice (the mark agent: review or autopilot) where it made one, the company''s agent_posting otherwise; review in a company that is review_only, and autopilot_forbidden when the session asked for autopilot there. Null for a company the caller cannot see.';
+
+revoke execute on function agent_posting_mode(uuid) from public, anon;
+grant execute on function agent_posting_mode(uuid) to authenticated, service_role;
+
+create or replace function companies_agent_posting_by_a_person()
 returns trigger
 language plpgsql
 as $$
+declare
+  v_rank constant jsonb := '{"autopilot": 0, "review": 1, "review_only": 2}';
+  v_from text := case when tg_op = 'UPDATE' then old.agent_posting else 'review' end;
 begin
-  if tg_op = 'UPDATE' and new.posting_mode is not distinct from old.posting_mode then
+  if new.agent_posting is not distinct from v_from then
     return new;
   end if;
-  if agent_call() and (tg_op = 'UPDATE' or new.posting_mode <> 'review') then
-    raise exception 'posting_mode_by_a_person: how an agent posts in a company is chosen by a person signed in, never by an agent or a machine key.'
+  if agent_call() and (v_rank ->> new.agent_posting)::int < (v_rank ->> v_from)::int then
+    raise exception 'agent_posting_by_a_person: an agent may make the posting of agents stricter, never looser — from % to % is chosen by a person signed in, never by an agent or a machine key.', v_from, new.agent_posting
       using errcode = '42501';
   end if;
   return new;
 end;
 $$;
 
-comment on function companies_posting_mode_by_a_person() is
-  'Refuses a change of companies.posting_mode, and a company created in autopilot, in a transaction of an agent (agent_call()).';
+comment on function companies_agent_posting_by_a_person() is
+  'Refuses, in a transaction of an agent (agent_call()), a change of companies.agent_posting that loosens it — review_only to review, review to autopilot — and a company created looser than review. Stricter is allowed.';
 
-revoke execute on function companies_posting_mode_by_a_person() from public, anon, authenticated, service_role;
+revoke execute on function companies_agent_posting_by_a_person() from public, anon, authenticated, service_role;
 
-drop trigger if exists companies_posting_mode_by_a_person on companies;
-create trigger companies_posting_mode_by_a_person
-  before insert or update of posting_mode on companies
-  for each row execute function companies_posting_mode_by_a_person();
-
+drop trigger if exists companies_agent_posting_by_a_person on companies;
+create trigger companies_agent_posting_by_a_person
+  before insert or update of agent_posting on companies
+  for each row execute function companies_agent_posting_by_a_person();
 -- ---------------------------------------------------------------------------
 -- 3. The version of a draft, and its approval
 -- ---------------------------------------------------------------------------
@@ -175,7 +233,7 @@ end;
 $$;
 
 comment on function approve_document(uuid) is
-  'A person who may post a draft approves it, as it stands, for an agent to post under posting_mode review: writes a document_approved row on the audit trail naming document_version(). A change to the draft afterwards voids it. Refused to an agent or a machine key (approval_by_a_person), without documents.post (not_allowed), and on a document that is not a draft. Returns the version approved.';
+  'A person who may post a draft approves it, as it stands, for an agent to post in review: writes a document_approved row on the audit trail naming document_version(). A change to the draft afterwards voids it. Refused to an agent or a machine key (approval_by_a_person), without documents.post (not_allowed), and on a document that is not a draft. Returns the version approved.';
 
 revoke execute on function approve_document(uuid) from public, anon;
 grant execute on function approve_document(uuid) to authenticated, service_role;
@@ -199,9 +257,14 @@ begin
     return new;
   end if;
 
-  select posting_mode into v_mode from companies where id = new.company_id;
+  v_mode := agent_posting_mode(new.company_id);
 
-  if v_mode = 'review' then
+  if v_mode = 'autopilot_forbidden' then
+    raise exception 'autopilot_forbidden: this company''s agent_posting is review_only, so no session posts in autopilot. Start the session in review (without --autopilot, or with the mark X-Ekwo-Agent: review), and a person approves each draft (approve_document(), ekwo doc approve).'
+      using errcode = '42501';
+  end if;
+
+  if v_mode is distinct from 'autopilot' then
     -- A trigger before the update reads the row as it still stands, so this
     -- is the version of the draft that is being posted.
     v_version := document_version(old.id);
@@ -221,7 +284,7 @@ begin
      limit 1;
 
     if v_approval.id is null then
-      raise exception 'approval_required: % % has not been approved by a person as it stands, and this company''s posting_mode is review. A person who may post it approves it (approve_document(), ekwo doc approve), or posts it; a draft changed after its approval is approved again.',
+      raise exception 'approval_required: % % has not been approved by a person as it stands, and agents post in review here. A person who may post it approves it (approve_document(), ekwo doc approve), or posts it; a draft changed after its approval is approved again.',
         new.doc_type, coalesce(new.number, new.id::text)
         using errcode = '42501';
     end if;
@@ -232,6 +295,8 @@ begin
     'update', 'document_posted_by_agent', null,
     jsonb_strip_nulls(jsonb_build_object(
       'posting_mode', v_mode,
+      'agent_posting', (select c.agent_posting from companies c where c.id = new.company_id),
+      'session', agent_mark('agent_session'),
       'version', v_version,
       'approved_by', v_approval.actor_id,
       'approved_at', v_approval.occurred_at)));
@@ -240,7 +305,7 @@ end;
 $$;
 
 comment on function documents_posting_mode() is
-  'Holds the posting of a document by an agent (agent_call()) to companies.posting_mode: in review, refuses approval_required unless a person approved the draft as it stood (approve_document()) since it last went back to draft; in either mode, writes document_posted_by_agent on the audit trail with the mode, and in review the approval. A rehearsal is not held to it.';
+  'Holds the posting of a document by an agent (agent_call()) to agent_posting_mode(): autopilot_forbidden when the session asked for autopilot in a company that is review_only; in review, approval_required unless a person approved the draft as it stood (approve_document()) since it last went back to draft. Every posting by an agent writes document_posted_by_agent on the audit trail: the mode, the company''s setting, the session, and in review the approval; the key is the row''s api_key_id. A rehearsal is not held to it.';
 
 revoke execute on function documents_posting_mode() from public, anon, authenticated, service_role;
 

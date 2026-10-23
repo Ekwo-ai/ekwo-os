@@ -218,7 +218,7 @@ export async function postCommand(args: ParsedArgs, deps: BooksDeps = {}): Promi
 
 /**
  * `ekwo doc approve <document>`: a person approves a draft, as it stands, for
- * an agent to post it where the company's posting mode is `review`. Signed in
+ * an agent to post it where agents post in `review`. Signed in
  * as yourself; the database refuses it to a machine key.
  */
 async function docApprove(args: ParsedArgs, deps: BooksDeps): Promise<number> {

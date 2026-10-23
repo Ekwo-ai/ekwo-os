@@ -44,7 +44,7 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { boolFlag, numberFlag, rejectUnknownFlags, stringFlag, UsageError, type ParsedArgs } from '../args.js';
-import { POSTING_MODES, getCompany, setPostingMode, type PostingMode, type Row } from '@ekwo-ai/core';
+import { AGENT_POSTING, getCompany, setAgentPosting, type AgentPosting, type Row } from '@ekwo-ai/core';
 import { BOOKS_FLAGS, openBooks, type BooksDeps } from '../books.js';
 import { offerCloud } from '../cloud-offer.js';
 import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
@@ -97,7 +97,7 @@ export async function companyCommand(args: ParsedArgs, deps: CommandDeps & Books
   // The one verb of this command that acts as a person rather than as the
   // installer: it signs in, and takes no connection string.
   if (action === 'show') return showCommand(args, deps);
-  if (action === 'posting-mode') return postingModeCommand(args, deps);
+  if (action === 'agent-posting') return agentPostingCommand(args, deps);
   rejectUnknownFlags(args, COMPANY_FLAGS);
 
   if (action === undefined) throw new UsageError(`name a subcommand\n${usage()}`);
@@ -123,36 +123,38 @@ export async function companyCommand(args: ParsedArgs, deps: CommandDeps & Books
   }
 }
 
-// -------------------------------------------------------------- posting-mode
+// ------------------------------------------------------------- agent-posting
+
+const AGENT_POSTING_SAYS: Record<AgentPosting, string> = {
+  review: 'posts a document once a person approved it as it stands (ekwo doc approve), unless its session opted into autopilot',
+  autopilot: 'posts directly, within its rights; each posting is on the audit trail',
+  review_only: 'posts a document once a person approved it as it stands; no session may opt into autopilot',
+};
 
 /**
- * `ekwo company posting-mode [review|autopilot]`: how an agent books a
- * document of the company in use. Without a value, says which it is. Signed
- * in as yourself, with company.write: the database refuses the change to an
- * agent or a machine key.
+ * `ekwo company agent-posting [review|autopilot|review_only]`: how an agent
+ * books a document of the company in use, the setting `agent_posting`.
+ * Without a value, says which it is. Signed in as yourself, with
+ * company.write; an agent may only make it stricter.
  */
-async function postingModeCommand(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+async function agentPostingCommand(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   rejectUnknownFlags(args, BOOKS_FLAGS);
   const wanted = args.positional[1];
-  if (wanted !== undefined && !(POSTING_MODES as readonly string[]).includes(wanted)) {
-    throw new UsageError(`bad_value: the posting mode is one of ${POSTING_MODES.join(', ')}, got "${wanted}".`);
+  if (wanted !== undefined && !(AGENT_POSTING as readonly string[]).includes(wanted)) {
+    throw new UsageError(`bad_value: agent_posting is one of ${AGENT_POSTING.join(', ')}, got "${wanted}".`);
   }
   const { backend, company } = await openBooks(args, deps);
   const result =
     wanted === undefined
       ? ((await getCompany(backend, { company_id: company.id })) as Row)
-      : ((await setPostingMode(backend, { company_id: company.id, posting_mode: wanted as PostingMode })) as Row);
+      : ((await setAgentPosting(backend, { company_id: company.id, agent_posting: wanted as AgentPosting })) as Row);
   const row = (result['company'] ?? {}) as Row;
-  setResult({ company_id: company.id, posting_mode: row['posting_mode'] });
-  heading(`Posting mode, in ${company.name}`);
+  const value = row['agent_posting'] as AgentPosting;
+  setResult({ company_id: company.id, agent_posting: value });
+  heading(`How agents post, in ${company.name}`);
   pairs([
-    ['posting mode', String(row['posting_mode'])],
-    [
-      'an agent',
-      row['posting_mode'] === 'autopilot'
-        ? 'posts directly, within its rights; each posting is on the audit trail'
-        : 'posts a document once a person has approved it as it stands (ekwo doc approve)',
-    ],
+    ['agent posting', String(value)],
+    ['an agent', AGENT_POSTING_SAYS[value] ?? String(value)],
   ]);
   return 0;
 }
@@ -648,11 +650,13 @@ function usage(): string {
                                               ekwo login: its financial years, lock dates,
                                               journals and accounts by role. --company names
                                               another for this one command.
-  ekwo company posting-mode [review|autopilot]
+  ekwo company agent-posting [review|autopilot|review_only]
                                               How an agent — a machine key, the MCP server —
                                               books a document of the company in use: review,
-                                              once a person approved it (ekwo doc approve);
-                                              autopilot, directly. Signed in as yourself.
+                                              once a person approved it (ekwo doc approve),
+                                              unless its session chose autopilot; autopilot,
+                                              directly; review_only, never in autopilot.
+                                              Signed in as yourself, with company.write.
   ekwo company export <company> --out <dir>   Write the archive of one company: manifest.json
                                               and one data/<table>.jsonl per table.
   ekwo company import <dir>                   Take an archive into this installation, whole or

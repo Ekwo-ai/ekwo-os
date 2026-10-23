@@ -19,6 +19,7 @@ import {
   explain,
   identifier,
   qualified,
+  type AgentSession,
   type Backend,
   type Filter,
   type Row,
@@ -89,11 +90,13 @@ export interface SqlBackendOptions {
   /** Extra JWT claims, if an installation reads more than `sub` and `role`. */
   claims?: Record<string, unknown>;
   /**
-   * Marks every transaction as an agent's (`ekwo.agent`), which the database
-   * reads to hold a posting to the company's `posting_mode`. The MCP server
-   * sets it; a script acting for a person does not.
+   * Marks every transaction as an agent's (`ekwo.agent`, with the session's
+   * choice of `review` or `autopilot` if it made one, and `ekwo.agent_session`),
+   * which the database reads to hold a posting to the company's
+   * `agent_posting`. The MCP server sets it; a script acting for a person does
+   * not.
    */
-  agent?: boolean | undefined;
+  agent?: AgentSession | undefined;
 }
 
 /** `fn(p_a => $1, p_b => $2)` and the parameters in that order. */
@@ -150,6 +153,7 @@ function arrayLiteral(values: unknown[]): string {
 const ARRAY_TYPE = /^[a-z_][a-z0-9_ ]*\[\]$/;
 
 export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
+  const agent = options.agent;
   const claims = JSON.stringify({
     ...(options.claims ?? {}),
     sub: options.userId,
@@ -166,7 +170,12 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
     try {
       return await db.transaction(async (tx) => {
         await tx.query('select set_config($1, $2, true)', ['request.jwt.claims', claims]);
-        if (options.agent === true) await tx.query("select set_config('ekwo.agent', 'on', true)");
+        if (agent !== undefined) {
+          await tx.query(
+            "select set_config('ekwo.agent', $1, true), set_config('ekwo.agent_session', $2, true)",
+            [agent.posting ?? 'on', agent.id ?? ''],
+          );
+        }
         await tx.exec('set local role authenticated');
         return run(tx);
       });
@@ -214,6 +223,7 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
   return {
     mode: 'sql',
     actingAs: options.userId,
+    agent,
 
     async rpc<T>(fn: string, args: Record<string, unknown> = {}, schema?: string): Promise<T[]> {
       const { call, params } = await callFor(fn, args, schema);

@@ -108,16 +108,43 @@ of the books and 2 for a call to change.
 ## What the agent asks the person first
 
 Every post, cancellation, reversal, payment and lock is confirmed by the
-person, for that specific action. For posting a document, the database holds
-the agent to it: in a company whose posting mode is `review` — the default —
-`post_document` is refused with `approval_required` until a person approved
-that draft as it stands (`ekwo doc approve <document>`); in `autopilot` the
-agent posts directly and the audit trail records it. Only the person chooses
-the mode (`ekwo company posting-mode`). A tax rule, a rate, an account or a deadline
+person, for that specific action — and for posting a document, the database
+holds the agent to it (below). A tax rule, a rate, an account or a deadline
 always comes from the pack; where the pack does not cover the case, the agent
 says so and brings in the person's accountant, who works in the same books —
 or, for a person without one, the accountants who work with Ekwo at
 [ekwo.ai/partners/directory](https://ekwo.ai/partners/directory/).
+
+## Review or autopilot
+
+Ekwo treats an agent the way a coding agent treats its permissions: a default
+mode in the settings, a flag the person passes to one session to skip the
+questions, and a setting that forbids that flag.
+
+- **The setting** is the company's `agent_posting`, in its settings beside its
+  profile (`ekwo company agent-posting`, `update_company_profile`, the Settings
+  page of Ekwo Cloud). `review`, the default: an agent posts a document only
+  once a person approved that draft as it stands (`ekwo doc approve
+  <document>`), and a draft changed afterwards is approved again — otherwise
+  `post_document` is refused with `approval_required`. `autopilot`: agents
+  post directly, within the rights of the person they act for. `review_only`:
+  as review, and no session may switch to autopilot. Only a person with
+  `company.write` changes it; an agent may make it stricter when asked, never
+  looser.
+- **The session** is the person's choice for one session of their agent:
+  `ekwo-mcp --autopilot` (or `EKWO_AGENT_POSTING=autopilot`, or the header
+  `X-Ekwo-Agent: autopilot` beside a key) posts without approvals wherever
+  the company allows it, the way `--dangerously-skip-permissions` does for one
+  session of Claude Code; `--review` asks for approvals even where the company
+  is in autopilot. In a company that is `review_only`, a session in autopilot
+  is refused by name, `autopilot_forbidden`.
+
+Autopilot is the person's decision, for their session or their company, never
+the agent's. Every posting an agent makes is on the audit trail as
+`document_posted_by_agent`, with the mode, the session and the key, so what
+an agent booked in autopilot can always be told apart. The MCP server says at
+start-up and in `status` which mode its session runs in, and `post_document`
+says it in its description. A person signed in posts as before.
 
 ## Registering the installation
 

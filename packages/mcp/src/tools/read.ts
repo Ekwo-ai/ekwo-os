@@ -16,7 +16,7 @@ import {
   type FecQueryRow,
 } from '@ekwo-ai/fec';
 import { z } from 'zod';
-import { EkwoMcpError, type Backend, type Filter, type Row } from '../backend.js';
+import { EkwoMcpError, type Backend, type Filter, type Row, type SessionPosting } from '../backend.js';
 import {
   DOC_TYPES,
   REGISTRATION_INVITATION,
@@ -1098,23 +1098,58 @@ export async function status(
   const instance = await backend.select<Row>({ table: 'instance', columns: columns.INSTANCE });
   const companies = await backend.select<Row>({
     table: 'companies',
-    columns: ['id', 'name', 'country', 'currency_code'],
+    columns: ['id', 'name', 'country', 'currency_code', 'agent_posting'],
     order: [{ column: 'name' }],
   });
+  const posting = await postingOf(backend, companies);
 
   return {
     schema_version: version[0] ?? null,
     connection: { mode: backend.mode, acting_as: backend.actingAs ?? null },
+    posting: posting.session,
+    companies: posting.companies,
     instance: instance[0] ?? null,
     // Whether this installation is registered with Ekwo, which is optional,
     // and — only where the server was started to say so — the invitation
     // the agent may relay once to the person it works for.
     registration: registrationOf(instance[0], options.inviteToRegister === true),
-    companies,
     note:
       backend.mode === 'postgrest'
         ? 'Reading and writing as the signed-in user, over PostgREST. Row level security decides what is visible.'
         : 'Reading and writing over a direct Postgres connection, with the claims and the role of the user this server acts for.',
+  };
+}
+
+/** What a session chose, in words a model and a person read the same way. */
+export const SESSION_POSTING_NOTE: Record<SessionPosting | 'company', string> = {
+  autopilot:
+    'This session runs in autopilot, as the person who started it chose: you post a document without an approval in every company whose agent_posting allows it, and each posting is on the audit trail with this session. A company that forbids autopilot refuses it (autopilot_forbidden). Still tell the user what you post.',
+  review:
+    'This session runs in review, as the person who started it chose: you post a document only once a person approved that draft as it stands, whatever the company says.',
+  company:
+    "This session follows each company's agent_posting: posting_mode says, company by company, whether you post directly (autopilot) or once a person approved the draft (review).",
+};
+
+/**
+ * How this session posts, and how that comes out in each company: the
+ * session's choice, and `agent_posting_mode()` of every company — `review`,
+ * `autopilot`, or `autopilot_forbidden` where the session asked for autopilot
+ * in a company that forbids it.
+ */
+export async function postingOf(
+  backend: Backend,
+  companies: Row[],
+): Promise<{ session: { mode: SessionPosting | null; session_id: string | null; note: string }; companies: Row[] }> {
+  const choice = backend.agent?.posting ?? null;
+  const withMode = await Promise.all(
+    companies.map(async (company) => ({
+      ...company,
+      posting_mode: (await backend.rpc<string>('agent_posting_mode', { p_company_id: company['id'] }))[0] ?? null,
+    })),
+  );
+  return {
+    session: { mode: choice, session_id: backend.agent?.id ?? null, note: SESSION_POSTING_NOTE[choice ?? 'company'] },
+    companies: withMode,
   };
 }
 
