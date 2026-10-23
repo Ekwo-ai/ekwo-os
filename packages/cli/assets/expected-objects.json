@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.19.0",
-  "migration": "20261023124700",
+  "migration": "20261023160100",
   "socle": {
     "schema": "public",
     "tables": [
@@ -6096,6 +6096,10 @@
         "arguments": "p_version text, p_floor text"
       },
       {
+        "name": "write_filing_outcome",
+        "arguments": "p_filing_id uuid, p_state tax_filing_state, p_reference text, p_message text"
+      },
+      {
         "name": "year_result_account",
         "arguments": "p_company_id uuid, p_balance numeric"
       }
@@ -6645,11 +6649,6 @@
         "table": "tax_filing_deposits",
         "name": "tax_filing_deposits_select",
         "command": "select"
-      },
-      {
-        "table": "tax_filing_deposits",
-        "name": "tax_filing_deposits_write",
-        "command": "all"
       },
       {
         "table": "tax_filings",
@@ -8693,16 +8692,10 @@
           "name": "tax_filing_deposits",
           "anon": [],
           "authenticated": [
-            "delete",
-            "insert",
-            "select",
-            "update"
+            "select"
           ],
           "service_role": [
-            "delete",
-            "insert",
-            "select",
-            "update"
+            "select"
           ]
         },
         {
@@ -12505,6 +12498,13 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "write_filing_outcome",
+          "arguments": "p_filing_id uuid, p_state tax_filing_state, p_reference text, p_message text",
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "year_result_account",

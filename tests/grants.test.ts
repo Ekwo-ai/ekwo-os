@@ -75,6 +75,7 @@ const RESERVED = [
   'refuse_merged_contacts_in',
   'scope_references_to_company',
   'touch_api_key',
+  'write_filing_outcome',
 ];
 
 /** `describeGrants` wants rows; PGlite returns a result around them. */
@@ -339,7 +340,7 @@ describe('what the grants say, against what the policies say', () => {
     expect(callable).toEqual([]);
   });
 
-  it('reserves nine functions to the connections that are not a client', () => {
+  it('reserves ten functions to the connections that are not a client', () => {
     const socle = sections.find((s) => s.schema === 'public');
     const closed = (socle?.functions ?? [])
       .filter((f) => f.trigger !== true && f.authenticated.length === 0)
@@ -358,7 +359,10 @@ describe('what the grants say, against what the policies say', () => {
     // and is the migrations' too, the socle's and the modules'.
     // `assert_writes_into_known_company`
     // is what the definer guards ask before they read a row's company: they
-    // call it as its owner.
+    // call it as its owner. `write_filing_outcome` is the body of
+    // `record_filing_outcome()` without its check of who asks: that function
+    // calls it once the right is checked, and the trigger that records a
+    // declaration paid calls it as the ledger.
     expect(closed).toEqual(RESERVED);
   });
 

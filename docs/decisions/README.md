@@ -89,6 +89,7 @@ consequence.
 - [0040](0040-a-portfolio-is-what-the-caller-may-read.md) — A portfolio is what the caller may read
 - [0066](0066-a-filing-is-proved-by-its-hash.md) — A filing is proved by its hash, on a public ledger
 - [0087](0087-a-declaration-is-paid-to-a-contact-the-pack-names.md) — A declaration is paid to a contact the pack names, and is paid when its debt is matched
+- [0088](0088-a-deposit-is-written-by-the-core.md) — A deposit is written by the core's functions, and the administration is named in the company's language
 
 ## Companies, documents and the bank
 

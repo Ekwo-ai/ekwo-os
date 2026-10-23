@@ -957,10 +957,12 @@ describe('the other person, signed in', () => {
   it('is answered alike when a row of their own names a row of Alice’s or a row that does not exist, and is never let write it', async () => {
     const tables = await writableTables();
     expect(tables.length).toBeGreaterThan(30);
-    // The company itself, a table that reaches its company through a parent,
-    // and the members, whose person carries no key: found, not listed.
+    // The company itself, a table that reaches its company through a parent
+    // (the boxes of a declaration; its deposits are written by the core's
+    // functions only, and are not in the sweep), and the members, whose person
+    // carries no key: found, not listed.
     expect(tables.map((table) => table.table)).toEqual(
-      expect.arrayContaining(['public.companies', 'public.tax_filing_deposits', 'public.company_members']),
+      expect.arrayContaining(['public.companies', 'public.tax_filing_boxes', 'public.company_members']),
     );
     expect(tables.find((table) => table.table === 'public.company_members')?.references).toEqual(
       expect.arrayContaining([{ column: 'user_id', target: 'auth.users' }]),
@@ -986,7 +988,7 @@ describe('the other person, signed in', () => {
     }
     const own = new Map<string, Record<string, unknown>[]>();
     for (const table of tables) own.set(table.table, await rowsOf(table, bobBooks));
-    for (const name of ['public.companies', 'public.tax_filing_deposits', 'public.company_members']) {
+    for (const name of ['public.companies', 'public.tax_filing_boxes', 'public.company_members']) {
       expect(own.get(name)?.length, name).toBeGreaterThan(0);
     }
 
@@ -1505,11 +1507,13 @@ describe('a company’s own defaults, on a shared installation', () => {
 });
 
 describe('a deposit of a declaration, on a shared installation', () => {
-  it('names files of its own declaration’s company only, and is answered alike for a file of Alice’s and a file of nobody’s', async () => {
-    const own = await one<{ filing: string; file: string }>(
+  it('is written by the core only, and names files of its own declaration’s company, answered alike for a file of Alice’s and a file of nobody’s', async () => {
+    const own = await one<{ filing: string }>(
       db,
-      `select (select id from tax_filings where company_id = $1 order by id limit 1) as filing,
-              (select id from attachments where company_id = $1 order by id limit 1) as file`,
+      `select f.id as filing from tax_filings f
+        where f.company_id = $1 and f.state <> 'superseded'
+          and exists (select 1 from tax_filing_deposits d where d.filing_id = f.id)
+        order by f.id limit 1`,
       [bobBooks],
     );
     const hers = await one<{ filing: string; file: string }>(
@@ -1518,23 +1522,38 @@ describe('a deposit of a declaration, on a shared installation', () => {
               (select id from attachments where company_id = $1 order by id limit 1) as file`,
       [aliceBooks],
     );
-    const deposit = (filing: string, file: string) =>
+    const ownFile = (
+      await one<{ id: string }>(
+        db,
+        `insert into attachments (company_id, entity_type, entity_id, file_name, storage_path)
+         values ($1, 'tax_filing', $2, 'acknowledgement.pdf', $3) returning id`,
+        [bobBooks, own.filing, `filings/${own.filing}/acknowledgement.pdf`],
+      )
+    ).id;
+    // A row of the table, written directly: nobody's to write any more.
+    const direct = (filing: string, file: string) =>
       probeWrite(
         `insert into tax_filing_deposits (filing_id, sequence, sent_file_id) values ($1, 77, $2) returning true as written`,
         [filing, file],
         [filing, file, NOWHERE],
       );
+    const named = (filing: string, file: string) =>
+      probeWrite(
+        `select record_filing_files($1, null, $2) is not null as written`,
+        [filing, file],
+        [filing, file, NOWHERE],
+      );
     await asUser(db, bob, async () => {
-      expect(await deposit(own.filing, hers.file)).toMatch(/^error unknown_attachment/);
-      expect(await deposit(own.filing, hers.file)).toBe(await deposit(own.filing, NOWHERE));
-      expect(await deposit(hers.filing, hers.file)).toMatch(/^error not_allowed/);
-      expect(await deposit(hers.filing, hers.file)).toBe(await deposit(NOWHERE, NOWHERE));
-      expect(await deposit(own.filing, own.file)).toMatch(/^ok /);
+      expect(await direct(own.filing, ownFile)).toMatch(/^error permission denied/);
+      expect(await named(own.filing, hers.file)).toMatch(/^error unknown_attachment/);
+      expect(await named(own.filing, hers.file)).toBe(await named(own.filing, NOWHERE));
+      expect(await named(hers.filing, hers.file)).toMatch(/^error not_found/);
+      expect(await named(hers.filing, hers.file)).toBe(await named(NOWHERE, NOWHERE));
+      expect(await named(own.filing, ownFile)).toMatch(/^ok /);
     });
-    // The backend role meets the same check.
+    // The backend role gets what a person gets: no direct write either.
     await asBackend('service_role', async () => {
-      expect(await deposit(own.filing, hers.file)).toMatch(/^error unknown_attachment/);
-      expect(await deposit(own.filing, own.file)).toMatch(/^ok /);
+      expect(await direct(own.filing, ownFile)).toMatch(/^error permission denied/);
     });
   });
 });

@@ -9,6 +9,23 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Changed
+
+- **A deposit is written by the core's functions only** (socle migration
+  `20261023160100`, decision 0088). The policy `tax_filing_deposits_write` is
+  dropped, and `insert`, `update` and `delete` on `tax_filing_deposits` are
+  taken back from `authenticated` and `service_role`. `file_filing()` and
+  `record_filing_outcome()` write as definer and refuse `not_allowed` without
+  `filings.write`; a declaration is still recorded paid when the payment is
+  matched by somebody who may not file. A company archive round-trips as
+  before, through `import_company()`.
+
+### Fixed
+
+- **A declaration paid before the trigger existed says so** (socle migration
+  `20261023160000`). Accepted declarations whose debt was already matched in
+  full are recorded `paid` through `record_filing_outcome()`.
+
 ## [0.19.0] — 2026-10-23
 
 ### Added

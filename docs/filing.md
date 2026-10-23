@@ -100,7 +100,9 @@ the deposit names which is which (`sent_file_id`, `acknowledgement_id`).
 `record_filing_files(filing, sent, acknowledgement)` names them on the last
 send, under the right that records the send, and refuses by name a declaration
 that was not sent, one a corrective replaced, and a file kept on anything but
-this declaration. They
+this declaration. Nothing else writes a deposit: `file_filing()`,
+`record_filing_outcome()` and `record_filing_files()` are the only way in, each
+asking `filings.write`, and the table is read under `filings.read`. They
 belong to the company: stopping a subscription takes away the sending, never the
 proof of having sent.
 
@@ -146,8 +148,11 @@ quote, and `auto_settle()` matches the payment against it — by reference, like
 any other payment.
 
 When that debt is matched in full, by whatever path, the declaration is
-**paid**: `record_filing_outcome(…, 'paid')` is called for it, on the send it
-answers. Undoing the matching takes it back to accepted.
+**paid**: the outcome is written on it and on the send it answers, as
+`record_filing_outcome(…, 'paid')` writes it, whoever matched the payment —
+somebody who keeps the books without filing included. Undoing the matching
+takes it back to accepted. A declaration whose debt was matched before this
+existed was recorded paid by `20261023160000`.
 
 ### 8. Correct
 

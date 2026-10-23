@@ -687,7 +687,6 @@ describe('a client writes nothing else — by the table', () => {
       'public.bank_transactions',
       'public.tax_filings',
       'public.tax_filing_boxes',
-      'public.tax_filing_deposits',
       'public.accounts',
       'public.journals',
       'public.taxes',
@@ -1186,7 +1185,6 @@ describe('a client writes nothing else — by the function', () => {
     // nothing, and that is the whole of what it does here.
     'public.ekwo_pre_request',
     'public.pin_referenced_accounts',
-    'public.record_filing_outcome',
     'public.reopen_filing',
     'public.settle_cash_basis_tax',
     'public.unreconcile',
