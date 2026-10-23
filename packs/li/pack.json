@@ -172,13 +172,10 @@
   "bank": {
     "account_scheme": "iban",
     "statement_formats": [
-      "camt.053",
-      "mt940",
-      "csv"
+      "camt.053"
     ],
     "payment_formats": [
-      "pain.001",
-      "csv"
+      "pain.001"
     ]
   }
 }
