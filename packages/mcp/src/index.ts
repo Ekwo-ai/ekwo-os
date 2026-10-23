@@ -41,6 +41,7 @@ export {
 } from './server.js';
 export { SCHEMA_MIN, assertSchemaSupported, installedSchemaVersion } from './schema.js';
 export { einvoiceTransportFrom, postingSummary, serverFromEnvironment, shouldInviteToRegister, type Started } from './start.js';
+export { STDIO_HELP, runStdio, type StdioOptions } from './stdio.js';
 export { isMissingConfiguration, unconfiguredBackend } from './unconfigured.js';
 export * as readTools from './tools/read.js';
 export * as writeTools from './tools/write.js';

@@ -159,7 +159,9 @@ server refuses to start with one. The user gives their client this block
 }
 ```
 
-From a terminal instead: `ekwo login`, then `ekwo use "<company>"`.
+From a terminal instead: `ekwo login`, then `ekwo use "<company>"`. With the
+command line installed, `ekwo mcp` starts the same server: `"command": "ekwo",
+"args": ["mcp"]`, the same `env`.
 
 **The shorter way, for somebody with an account.** Everything above puts an
 address, a key and a password in a file. With an account there is one URL and

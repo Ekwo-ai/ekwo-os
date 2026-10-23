@@ -132,12 +132,13 @@ questions, and a setting that forbids that flag.
   `company.write` changes it; an agent may make it stricter when asked, never
   looser.
 - **The session** is the person's choice for one session of their agent:
-  `ekwo-mcp --autopilot` (or `EKWO_AGENT_POSTING=autopilot`, or the header
-  `X-Ekwo-Agent: autopilot` beside a key) posts without approvals wherever
-  the company allows it, the way `--dangerously-skip-permissions` does for one
-  session of Claude Code; `--review` asks for approvals even where the company
-  is in autopilot. In a company that is `review_only`, a session in autopilot
-  is refused by name, `autopilot_forbidden`.
+  `ekwo-mcp --autopilot` or `ekwo mcp --autopilot` (or
+  `EKWO_AGENT_POSTING=autopilot`, or the header `X-Ekwo-Agent: autopilot`
+  beside a key) posts without approvals wherever the company allows it, the
+  way `--dangerously-skip-permissions` does for one session of Claude Code;
+  `--review` asks for approvals even where the company is in autopilot. In a
+  company that is `review_only`, a session in autopilot is refused by name,
+  `autopilot_forbidden`.
 
 Autopilot is the person's decision, for their session or their company, never
 the agent's. Every posting an agent makes is on the audit trail as

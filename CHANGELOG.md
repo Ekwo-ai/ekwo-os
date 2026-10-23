@@ -39,6 +39,11 @@ somewhere has already run it.
   migration**: an agent that posted directly is refused until a person
   approves, chooses autopilot for the company, or starts the session with
   `--autopilot`.
+- **`ekwo mcp [--autopilot|--review]`** starts the MCP server from the command
+  line: the same server as `ekwo-mcp`, with the same flags and environment.
+  `@ekwo-ai/mcp` exports the entry point both run, `runStdio()`. The command
+  line keeps its one outside dependency: it runs the `@ekwo-ai/mcp` installed
+  beside it, and otherwise the one of its own release through `npx`.
 
 ### Fixed
 

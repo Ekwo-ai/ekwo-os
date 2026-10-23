@@ -8,8 +8,8 @@
 
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { FISCAL_SYSTEM_ENV, cloudOfferSilenced, directoryTransport, parseFiscalSystem, registrationInvitation, type EinvoiceTransport, type FiscalSystem } from '@ekwo-ai/core';
-import type { Backend, Row } from './backend.js';
-import { ENV, openBackend, readConfig } from './config.js';
+import type { Backend, Row, SessionPosting } from './backend.js';
+import { ENV, openBackend, readConfig, sessionPostingFrom } from './config.js';
 import { assertSchemaSupported } from './schema.js';
 import { buildServer } from './server.js';
 import { installedModules } from './tools/modules.js';
@@ -37,7 +37,7 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
     return {
       server: buildServer(backend),
       backend,
-      summary: `ekwo-mcp: started without a database — every tool will answer with what to configure. ${reason.message}`,
+      summary: `ekwo-mcp: started without a database — every tool will answer with what to configure. ${reason.message} ${sessionSaid(sessionPostingFrom(env))}.`,
     };
   }
 
@@ -79,12 +79,7 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
  */
 export async function postingSummary(backend: Backend): Promise<string> {
   const choice = backend.agent?.posting;
-  const said =
-    choice === 'autopilot'
-      ? 'Agents post in AUTOPILOT in this session: without an approval, each posting on the audit trail'
-      : choice === 'review'
-        ? 'Agents post in review in this session: only drafts a person approved'
-        : "Agents post as each company's agent_posting says (review unless it says autopilot)";
+  const said = sessionSaid(choice);
   if (choice !== 'autopilot') return said;
   try {
     const companies = await backend.select<Row>({ table: 'companies', columns: ['id', 'name'], order: [{ column: 'name' }] });
@@ -95,6 +90,14 @@ export async function postingSummary(backend: Backend): Promise<string> {
   } catch {
     return said;
   }
+}
+
+function sessionSaid(choice: SessionPosting | undefined): string {
+  return choice === 'autopilot'
+    ? 'Agents post in AUTOPILOT in this session: without an approval, each posting on the audit trail'
+    : choice === 'review'
+      ? 'Agents post in review in this session: only drafts a person approved'
+      : "Agents post as each company's agent_posting says (review unless it says autopilot)";
 }
 
 /**

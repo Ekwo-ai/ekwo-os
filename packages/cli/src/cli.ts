@@ -15,6 +15,7 @@ import { demoCommand } from './commands/demo.js';
 import { cancelCommand, docCommand, postCommand } from './commands/document.js';
 import { reverseCommand } from './commands/entry.js';
 import { lineCommand } from './commands/line.js';
+import { mcpCommand, type McpDeps } from './commands/mcp.js';
 import { IMPORT_USAGE, importCommand } from './commands/import.js';
 import { doctorCommand } from './commands/doctor.js';
 import { einvoiceCommand } from './commands/einvoice.js';
@@ -83,13 +84,14 @@ export const COMMANDS = [
   'peppol',
   'crm',
   'contracts',
+  'mcp',
   // Aliases, last: `invoice` is what `doc` used to be called, and `document` is its whole word.
   'invoice',
   'document',
 ] as const;
 
 /** What a test may hand a command instead of the network, the disk and the environment. */
-export type RunDeps = InitDeps & LoginDeps & BooksDeps & ProofDeps & PeppolDeps;
+export type RunDeps = InitDeps & LoginDeps & BooksDeps & ProofDeps & PeppolDeps & McpDeps;
 
 export function help(): string {
   return `${bold('ekwo')} — install and operate Ekwo OS on a Supabase project you own.
@@ -261,6 +263,10 @@ ${bold('Connecting')} ${dim('(every command)')}
               --kind ${CONTRACT_KINDS.join('|')};
               --state ${CONTRACT_STATES.join('|')};
               --frequency ${CONTRACT_FREQUENCIES.join('|')}.
+  ${cyan('mcp')}         [--autopilot|--review] — the MCP server for an agent, over stdio:
+              the same server as ekwo-mcp of @ekwo-ai/mcp, with its flags and
+              its environment (ekwo mcp --help). The installed one, or the
+              one of this release through npx.
 
 ${bold('Acting as a person')} ${dim('(login … whoami, and every verb that keeps books — never a service_role key)')}
   --profile <name>          Which profile: a demo instance, production, one client
@@ -510,6 +516,10 @@ ${bold('Docs')}  https://github.com/Ekwo-ai/ekwo-os
 }
 
 export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
+  // `ekwo mcp` is the MCP server, whose stdout belongs to the protocol: its
+  // arguments are the server's, and no output document is written.
+  if (argv[0] === 'mcp') return mcpCommand(argv.slice(1), version(), deps);
+
   let args: ParsedArgs;
   try {
     args = parseArgs(argv);

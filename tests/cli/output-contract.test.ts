@@ -34,6 +34,7 @@ import {
   type OutputDocument,
   type SqlClient,
 } from '../../packages/cli/src/index.js';
+import { runStdio } from '../../packages/mcp/src/index.js';
 import { ask, askSecret, confirm } from '../../packages/cli/src/prompt.js';
 import { table } from '../../packages/cli/src/ui.js';
 import { asUser, expectError, freshDatabase, repoRoot } from '../helpers/db.js';
@@ -502,6 +503,17 @@ describe('every command answers --json with one document of the published shape'
     expect(version.command).toBe('version');
     expectData(version);
     expect((version.data as { version: string }).version).toMatch(/^\d+\.\d+\.\d+/);
+  });
+
+  it('writes nothing of its own on the standard output for ekwo mcp, which belongs to the protocol', async () => {
+    let said = '';
+    const captured = await capture(() =>
+      run(['mcp', '--help'], { runMcp: (argv) => runStdio(argv, { log: (text) => void (said += text) }) }),
+    );
+    expect(captured.exitCode).toBe(0);
+    expect(captured.stdout).toBe('');
+    expect(said).toContain('--autopilot');
+    seen.add('mcp');
   });
 
   it('left no command out', () => {

@@ -48,6 +48,10 @@ Keep `@latest` in the command: from inside a clone of the repository, a bare
 `npx @ekwo-ai/mcp` finds the unbuilt workspace package and answers
 `ekwo-mcp: command not found`.
 
+With the command line installed, `ekwo mcp` starts the same server — the same
+entry point, `runStdio()`, the same flags (`--autopilot`, `--review`) and the
+same environment: `"command": "ekwo", "args": ["mcp"]`.
+
 ## What it is, and what it is not
 
 The server holds no privileges of its own. It signs in as the person using it,
