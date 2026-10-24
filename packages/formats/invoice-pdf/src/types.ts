@@ -186,8 +186,9 @@ export interface DocumentLegalMentionRow {
 
 /**
  * Every word the layout prints of its own. The English set is
- * {@link ENGLISH_LABELS}; a caller writing in another language passes its own,
- * whole or in part — what it leaves out is taken from the English set.
+ * {@link ENGLISH_LABELS}, and the package carries others in
+ * {@link INVOICE_LABELS}; a caller passes its own words, whole or in part,
+ * over the set of the document's language.
  */
 export interface InvoiceLabels {
   invoice: string;
@@ -344,9 +345,13 @@ export interface InvoicePdfInput {
 export interface InvoicePdfOptions {
   /** `A4` (default) or `Letter`. */
   pageSize?: PageSize;
-  /** The words of the layout, in the language of the document. What is left out is English. */
+  /**
+   * Words of the layout over the set this package carries for the language
+   * of the document (see {@link INVOICE_LABELS}); where it carries none, over
+   * the English set.
+   */
   labels?: Partial<InvoiceLabels>;
-  /** BCP 47 tag for amounts, dates and country names. Defaults to the document's `language`, then `en`. */
+  /** BCP 47 tag for amounts, dates, country names and the words of the layout. Defaults to the document's `language`, then `en`. */
   locale?: string;
   /** Fonts tried after the embedded ones, in order, for a character those do not have. */
   fonts?: readonly ExtraFont[];
@@ -377,6 +382,12 @@ export interface RenderedInvoicePdf {
   /** The title printed and written in the metadata: `Invoice INV-1`. */
   title: string;
   pageCount: number;
+  /**
+   * The language of the set of words the layout was printed in, where
+   * `options.labels` left a word out: the document's own, or `en` where this
+   * package has no set for it.
+   */
+  labelsLanguage: string;
   /** Every string drawn, page by page, in the order drawn — what a reader of the PDF would extract. */
   text: string[][];
 }

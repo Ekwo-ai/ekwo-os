@@ -22,7 +22,7 @@ import { PDFDocument, PDFString, rgb, type PDFPage, type RGB } from 'pdf-lib';
 import { prepareForArchive } from './archive.js';
 import { InvoicePdfError } from './errors.js';
 import { decimal, formatterFor, groupIban, isZero, type Formatter } from './format.js';
-import { labelsWith } from './labels.js';
+import { labelsFor, labelsWith } from './labels.js';
 import { embedLogo } from './logo.js';
 import { encodeQr } from './qr.js';
 import { clean, refuseRightToLeft, typesetter, type Typesetter } from './text.js';
@@ -261,12 +261,13 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
       `a ${String(header.doc_type)} is not a sale invoice or a sale credit note, which are what this package renders`,
     );
   }
-  const labels = labelsWith(options.labels);
+  const locale = options.locale ?? text(header.language) ?? 'en';
+  const words = labelsFor(locale);
+  const labels = labelsWith(options.labels, words.labels);
   refuseRightToLeftAnywhere(input, labels);
 
   const currency = required(header.currency_code, 'currency');
   const documentDate = required(header.document_date, 'date');
-  const locale = options.locale ?? text(header.language) ?? 'en';
   const f = formatterFor(locale, currency);
   const amount = (value: unknown, what: string): string | null => {
     const d = decimal(value as string | null, what);
@@ -819,6 +820,6 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
   }
 
   const file = await doc.save({ useObjectStreams: false });
-  return { file, filename: filenameOf(header), title: fullTitle, pageCount, text: canvas.drawn };
+  return { file, filename: filenameOf(header), title: fullTitle, pageCount, labelsLanguage: words.language, text: canvas.drawn };
 }
 
