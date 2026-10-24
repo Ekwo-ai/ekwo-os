@@ -13,6 +13,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import type { PGlite } from '@electric-sql/pglite';
 import { readFacturX } from '@ekwo-ai/factur-x/pdf';
+import { labelsFor } from '@ekwo-ai/invoice-pdf';
 import { PDFArray, PDFDocument, PDFName, PDFRawStream, decodePDFRawStream, type PDFStream } from 'pdf-lib';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { buildServer } from '../../packages/mcp/src/index.js';
@@ -78,7 +79,11 @@ afterAll(async () => {
 describe('render_invoice_pdf', () => {
   it('returns the PDF of a posted sale as a resource, with its logo, and a summary beside it', async () => {
     const documentId = await sale(db, s);
-    const { number } = await one<{ number: string }>(db, `select number from documents where id = $1`, [documentId]);
+    const { number, language } = await one<{ number: string; language: string }>(
+      db,
+      `select number, language from documents where id = $1`,
+      [documentId],
+    );
     const answer = await render({ document_id: documentId });
     expect(answer.isError).toBe(false);
     const summary = JSON.parse(answer.content[0]?.text ?? '{}') as Record<string, unknown>;
@@ -90,6 +95,8 @@ describe('render_invoice_pdf', () => {
       page_count: 1,
       logo: 'embedded',
       factur_x: null,
+      language,
+      labels_language: labelsFor(language).language,
     });
     expect(asked).toContain('https://logo.example.test/logo.png');
 
@@ -122,9 +129,13 @@ describe('render_invoice_pdf', () => {
 
   it('renders a draft as a draft, and refuses to make a Factur-X invoice of it', async () => {
     const draft = await sale(db, s, { post: false });
+    const { language } = await one<{ language: string }>(db, `select language from documents where id = $1`, [draft]);
     const plain = await render({ document_id: draft });
     expect(plain.isError).toBe(false);
-    expect(JSON.parse(plain.content[0]?.text ?? '{}')).toMatchObject({ title: 'Draft invoice', filename: 'draft-invoice.pdf' });
+    expect(JSON.parse(plain.content[0]?.text ?? '{}')).toMatchObject({
+      title: labelsFor(language).labels.draftInvoice,
+      filename: 'draft-invoice.pdf',
+    });
 
     const refused = await render({ document_id: draft, factur_x: true });
     expect(refused.isError).toBe(true);
