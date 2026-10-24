@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.21.0] — 2026-10-24
+
 ### Added
 
 - **An agent posts in the mode its company chose, or its session chose**
@@ -53,6 +55,12 @@ somewhere has already run it.
   `@ekwo-ai/mcp` exports the entry point both run, `runStdio()`. The command
   line keeps its one outside dependency: it runs the `@ekwo-ai/mcp` installed
   beside it, and otherwise the one of its own release through `npx`.
+- **The schema is 0.21.0 (`20261024030000`), and so is the floor of the
+  packages.** `@ekwo-ai/core` calls `replace_document_lines()`,
+  `create_document()` and `approve_document()`, which a 0.20.0 database does
+  not have. An installation runs `ekwo migrate` before upgrading the
+  packages. The end-to-end run against a real Supabase project was not run
+  for this release.
 
 ### Fixed
 
