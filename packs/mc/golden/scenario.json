@@ -1,0 +1,294 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "Deux mois d'une société monégasque assujettie, déclarant par mois",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Exercice 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    },
+    {
+      "code": "2026-02",
+      "from": "2026-02-01",
+      "to": "2026-02-28"
+    }
+  ],
+  "statements": [
+    "MC-BS",
+    "MC-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "client-mc",
+      "name": "Boulangerie du Rocher SAM",
+      "type": "customer",
+      "country": "MC"
+    },
+    {
+      "ref": "client-it",
+      "name": "Orologi Genova S.r.l.",
+      "type": "customer",
+      "country": "IT"
+    },
+    {
+      "ref": "client-ch",
+      "name": "Uhren Basel AG",
+      "type": "customer",
+      "country": "CH"
+    },
+    {
+      "ref": "fourn-mc",
+      "name": "Papeterie de la Condamine SARL",
+      "type": "supplier",
+      "country": "MC"
+    },
+    {
+      "ref": "fourn-de",
+      "name": "Werkzeug Nord GmbH",
+      "type": "supplier",
+      "country": "DE"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "V1",
+      "type": "sale_invoice",
+      "contact": "client-mc",
+      "date": "2026-01-12",
+      "why": "Une vente de biens au taux normal de 20 % (CTCA, art. 51) : la ligne 08 porte la base et la taxe.",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 10,
+          "unit_price": 1000,
+          "tax": "MC-S-20",
+          "account": "707000"
+        }
+      ]
+    },
+    {
+      "ref": "V2",
+      "type": "sale_invoice",
+      "contact": "client-mc",
+      "date": "2026-01-20",
+      "why": "Le taux réduit de 10 % (art. 52, bois de chauffage) : la ligne 9B, un identifiant de case qui n'est pas un nombre.",
+      "lines": [
+        {
+          "name": "Bois de chauffage",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "MC-S-10",
+          "account": "707000"
+        }
+      ]
+    },
+    {
+      "ref": "V3",
+      "type": "sale_invoice",
+      "contact": "client-mc",
+      "date": "2026-01-25",
+      "why": "Le taux réduit de 5,5 % (art. 52-0, denrées alimentaires) : un taux à décimale, ligne 09.",
+      "lines": [
+        {
+          "name": "Produits alimentaires",
+          "quantity": 4,
+          "unit_price": 1000,
+          "tax": "MC-S-055",
+          "account": "707000"
+        }
+      ]
+    },
+    {
+      "ref": "V4",
+      "type": "sale_invoice",
+      "contact": "client-mc",
+      "date": "2026-01-28",
+      "why": "Le taux de 2,10 % (art. 59, médicaments remboursables), ligne 13 : une taxe qui ne tombe pas juste sur un montant rond.",
+      "lines": [
+        {
+          "name": "Médicaments remboursables",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "MC-S-021",
+          "account": "707000"
+        }
+      ]
+    },
+    {
+      "ref": "V5",
+      "type": "sale_invoice",
+      "contact": "client-ch",
+      "date": "2026-02-03",
+      "why": "Une exportation hors de l'Union européenne (art. 29, 1°), exonérée avec droit à déduction : une base en ligne 04 et aucune taxe.",
+      "lines": [
+        {
+          "name": "Marchandises expédiées en Suisse",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "MC-S-EXP",
+          "account": "707000"
+        }
+      ]
+    },
+    {
+      "ref": "V6",
+      "type": "sale_invoice",
+      "contact": "client-it",
+      "date": "2026-02-05",
+      "why": "Une livraison intracommunautaire (art. 31, I, 1°), exonérée : une base en ligne 06 et aucune taxe.",
+      "lines": [
+        {
+          "name": "Marchandises livrées en Italie",
+          "quantity": 6,
+          "unit_price": 1000,
+          "tax": "MC-S-ICG",
+          "account": "707000"
+        }
+      ]
+    },
+    {
+      "ref": "V7",
+      "type": "sale_invoice",
+      "contact": "client-mc",
+      "date": "2026-01-30",
+      "why": "Une prestation de services à 20 % : la taxe est exigible à l'encaissement (art. 40, 2, c), donc elle attend sur le compte de transition et ne remplit la ligne 08 qu'au mois où le client paie, février.",
+      "lines": [
+        {
+          "name": "Prestation de conseil",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "MC-S-20-ENC",
+          "account": "706000"
+        }
+      ]
+    },
+    {
+      "ref": "CN1",
+      "type": "sale_credit_note",
+      "contact": "client-mc",
+      "date": "2026-02-10",
+      "why": "Un avoir sur une vente à 20 % : la déclaration n'a pas de ligne pour les avoirs, elle les porte en négatif sur la ligne de la vente.",
+      "lines": [
+        {
+          "name": "Retour de marchandises",
+          "quantity": 2,
+          "unit_price": 1000,
+          "tax": "MC-S-20",
+          "account": "707000"
+        }
+      ]
+    },
+    {
+      "ref": "A1",
+      "type": "purchase_invoice",
+      "contact": "fourn-mc",
+      "date": "2026-01-15",
+      "why": "Un achat de biens à 20 % : la déclaration ne porte aucune base à l'entrée, seulement la taxe déductible de la ligne 20 (art. 42, I).",
+      "lines": [
+        {
+          "name": "Marchandises",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "MC-P-20",
+          "account": "607000"
+        }
+      ]
+    },
+    {
+      "ref": "A2",
+      "type": "purchase_invoice",
+      "contact": "fourn-mc",
+      "date": "2026-01-22",
+      "why": "Une immobilisation : la ligne 19 et non la 20, et un actif au bilan.",
+      "lines": [
+        {
+          "name": "Matériel informatique",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "MC-P-20-I",
+          "account": "218300"
+        }
+      ]
+    },
+    {
+      "ref": "A3",
+      "type": "purchase_invoice",
+      "contact": "fourn-de",
+      "date": "2026-02-12",
+      "why": "Une acquisition intracommunautaire (art. 2, I) : autoliquidation, la taxe est due en ligne 08 et déduite en ligne 20, et la base est reportée en ligne 03.",
+      "lines": [
+        {
+          "name": "Outillage acquis en Allemagne",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "MC-P-ICG-20",
+          "account": "607000"
+        }
+      ]
+    },
+    {
+      "ref": "A4",
+      "type": "purchase_invoice",
+      "contact": "fourn-mc",
+      "date": "2026-02-18",
+      "why": "Un achat à 5,5 % : la taxe déductible va en ligne 20 comme celle de l'achat à 20 %.",
+      "lines": [
+        {
+          "name": "Denrées pour la revente",
+          "quantity": 1,
+          "unit_price": 1000,
+          "tax": "MC-P-055",
+          "account": "607000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "E1",
+      "direction": "inbound",
+      "date": "2026-02-14",
+      "amount": 12000,
+      "contact": "client-mc",
+      "journal": "BNK",
+      "match": "V1",
+      "why": "Un encaissement qui solde exactement V1 avant l'avoir CN1."
+    },
+    {
+      "ref": "E2",
+      "direction": "inbound",
+      "date": "2026-02-20",
+      "amount": 3600,
+      "contact": "client-mc",
+      "journal": "BNK",
+      "match": "V7",
+      "why": "Le paiement de la prestation de services : c'est lui, et non la facture, qui rend la taxe exigible et remplit la ligne 08 de février."
+    },
+    {
+      "ref": "E3",
+      "direction": "outbound",
+      "date": "2026-02-25",
+      "amount": 2400,
+      "contact": "fourn-mc",
+      "journal": "BNK",
+      "match": "A1",
+      "why": "Le côté fournisseur du lettrage, pour qu'il ne soit pas prouvé d'un seul côté du bilan."
+    },
+    {
+      "ref": "E4",
+      "direction": "inbound",
+      "date": "2026-02-27",
+      "amount": 500,
+      "contact": "client-mc",
+      "journal": "BNK",
+      "match": null,
+      "why": "Un versement sans facture en face : il reste au crédit du compte client, non lettré."
+    }
+  ]
+}

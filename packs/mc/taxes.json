@@ -1,0 +1,832 @@
+[
+  {
+    "code": "MC-S-20",
+    "name": "Vente 20 %",
+    "description": "Taux normal",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires (CTCA), art. 51 — le taux normal de la taxe sur la valeur ajoutée est fixé à 20 %.",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 10,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "08"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "08"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "08",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "08",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-S-20-ENC",
+    "name": "Prestation de services 20 % — TVA sur les encaissements",
+    "description": "Régime de droit commun des prestations de services : la TVA est exigible à l'encaissement du prix. Pour une entreprise ayant opté pour les débits, MC-S-20.",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires (CTCA), art. 51 — le taux normal de la taxe sur la valeur ajoutée est fixé à 20 %. CTCA, art. 40, 2, c) — pour les prestations de services, la taxe est exigible lors de l'encaissement des acomptes, du prix ou de la rémunération ou, sur autorisation du directeur des Services fiscaux, d'après les débits (art. A-64 de l'annexe au code). Le prestataire qui a opté pour les débits utilise le code sans « -ENC ».",
+    "source": "ctca",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445870",
+    "sequence": 11,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "08"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "08"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "08",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "08",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-S-10",
+    "name": "Vente 10 %",
+    "description": "Taux reduit",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 52 (produits), art. 56 (hébergement, restauration, transports…) et art. 56 bis (travaux dans les logements anciens) — taux réduit de 10 %.",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 20,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9B"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "9B"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9B",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "9B",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-S-10-ENC",
+    "name": "Prestation de services 10 % — TVA sur les encaissements",
+    "description": "Régime de droit commun des prestations de services : la TVA est exigible à l'encaissement du prix. Pour une entreprise ayant opté pour les débits, MC-S-10.",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 52 (produits), art. 56 (hébergement, restauration, transports…) et art. 56 bis (travaux dans les logements anciens) — taux réduit de 10 %. CTCA, art. 40, 2, c) — pour les prestations de services, la taxe est exigible lors de l'encaissement des acomptes, du prix ou de la rémunération ou, sur autorisation du directeur des Services fiscaux, d'après les débits (art. A-64 de l'annexe au code). Le prestataire qui a opté pour les débits utilise le code sans « -ENC ».",
+    "source": "ctca",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445870",
+    "sequence": 21,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9B"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "9B"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9B",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "9B",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-S-055",
+    "name": "Vente 5,5 %",
+    "description": "Taux reduit",
+    "kind": "vat",
+    "rate": 5.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 52-0 — taux réduit de 5,5 % (denrées alimentaires destinées à la consommation humaine, énergie, livres, équipements pour personnes handicapées…).",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 30,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "09"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "09"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "09",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "09",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-S-055-ENC",
+    "name": "Prestation de services 5,5 % — TVA sur les encaissements",
+    "description": "Régime de droit commun des prestations de services : la TVA est exigible à l'encaissement du prix. Pour une entreprise ayant opté pour les débits, MC-S-055.",
+    "kind": "vat",
+    "rate": 5.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 52-0 — taux réduit de 5,5 % (denrées alimentaires destinées à la consommation humaine, énergie, livres, équipements pour personnes handicapées…). CTCA, art. 40, 2, c) — pour les prestations de services, la taxe est exigible lors de l'encaissement des acomptes, du prix ou de la rémunération ou, sur autorisation du directeur des Services fiscaux, d'après les débits (art. A-64 de l'annexe au code). Le prestataire qui a opté pour les débits utilise le code sans « -ENC ».",
+    "source": "ctca",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445870",
+    "sequence": 31,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "09"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "09"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "09",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "09",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-S-021",
+    "name": "Vente 2,1 %",
+    "description": "Taux de 2,10 %",
+    "kind": "vat",
+    "rate": 2.1,
+    "scope": "sale",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 58 (premières représentations de certains spectacles), art. 59 (médicaments remboursables et préparations magistrales) et art. 95 (publications de presse) — taux de 2,10 %.",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 40,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "13"
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "13"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445710",
+          "box": "13",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-S-ICG",
+    "name": "Livraison intracommunautaire",
+    "description": "Biens, exoneree",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_goods",
+    "valid_from": "1993-01-01",
+    "legal_reference": "CTCA, art. 31, I, 1° — exonération des livraisons de biens expédiés ou transportés vers un autre État membre de l'Union européenne à destination d'un assujetti identifié à la TVA dans cet État ; l'état récapitulatif de l'art. 73 est la condition de l'exonération. Le droit à déduction est maintenu (art. 42, V, c).",
+    "source": "ctca",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "sequence": 60,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "06"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "06",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-S-ICS",
+    "name": "Service intracommunautaire",
+    "description": "Service à un assujetti établi dans l’Union européenne, hors du champ de la taxe monégasque",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "intracom_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "CTCA, art. 11, 1° — le lieu d'une prestation de services à un assujetti est celui où il a son siège ou un établissement stable ; une prestation à un assujetti établi dans un autre État membre est située hors de Monaco, hors du champ de la taxe de la Principauté.",
+    "source": "ctca",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "sequence": 70,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "05"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "05",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-S-EXP",
+    "name": "Exportation hors UE",
+    "description": "Exoneree",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "valid_from": "1993-01-01",
+    "legal_reference": "CTCA, art. 29, 1° et 2° — exonération des livraisons de biens expédiés ou transportés hors de l'Union européenne, avec maintien du droit à déduction (art. 42, V, c).",
+    "source": "ctca",
+    "vat_category": "G",
+    "exemption_code": "VATEX-EU-G",
+    "sequence": 80,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "04"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "04",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-20",
+    "name": "Achat 20 %",
+    "description": "Autres biens et services",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires (CTCA), art. 51 — le taux normal de la taxe sur la valeur ajoutée est fixé à 20 %. Déduction : CTCA, art. 42, I.",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 110,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-20-ENC",
+    "name": "Achat de services 20 % — TVA déductible au décaissement",
+    "description": "Le droit à déduction prend naissance quand la taxe devient exigible chez le prestataire, soit au paiement. Si le prestataire a opté pour les débits, MC-P-20.",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "Code des taxes sur le chiffre d'affaires (CTCA), art. 51 — le taux normal de la taxe sur la valeur ajoutée est fixé à 20 %. CTCA, art. 40, 2, c) — pour les prestations de services, la taxe est exigible lors de l'encaissement des acomptes, du prix ou de la rémunération ou, sur autorisation du directeur des Services fiscaux, d'après les débits (art. A-64 de l'annexe au code). Le prestataire qui a opté pour les débits utilise le code sans « -ENC ». Déduction : CTCA, art. 42, I.",
+    "source": "ctca",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445860",
+    "sequence": 111,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-20-I",
+    "name": "Achat immobilisation 20 %",
+    "description": "Immobilisations",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 42, I — la taxe qui a grevé les éléments du prix d'une opération imposable est déductible ; la déduction sur immobilisations se porte sur sa propre ligne du formulaire.",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 120,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445662",
+          "box": "19",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445662",
+          "box": "19",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-10",
+    "name": "Achat 10 %",
+    "description": "Autres biens et services",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 52 (produits), art. 56 (hébergement, restauration, transports…) et art. 56 bis (travaux dans les logements anciens) — taux réduit de 10 %. Déduction : CTCA, art. 42, I.",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 130,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-10-ENC",
+    "name": "Achat de services 10 % — TVA déductible au décaissement",
+    "description": "Le droit à déduction prend naissance quand la taxe devient exigible chez le prestataire, soit au paiement. Si le prestataire a opté pour les débits, MC-P-10.",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 52 (produits), art. 56 (hébergement, restauration, transports…) et art. 56 bis (travaux dans les logements anciens) — taux réduit de 10 %. CTCA, art. 40, 2, c) — pour les prestations de services, la taxe est exigible lors de l'encaissement des acomptes, du prix ou de la rémunération ou, sur autorisation du directeur des Services fiscaux, d'après les débits (art. A-64 de l'annexe au code). Le prestataire qui a opté pour les débits utilise le code sans « -ENC ». Déduction : CTCA, art. 42, I.",
+    "source": "ctca",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445860",
+    "sequence": 131,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-055",
+    "name": "Achat 5,5 %",
+    "description": "Autres biens et services",
+    "kind": "vat",
+    "rate": 5.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 52-0 — taux réduit de 5,5 % (denrées alimentaires destinées à la consommation humaine, énergie, livres, équipements pour personnes handicapées…). Déduction : CTCA, art. 42, I.",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 140,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-055-ENC",
+    "name": "Achat de services 5,5 % — TVA déductible au décaissement",
+    "description": "Le droit à déduction prend naissance quand la taxe devient exigible chez le prestataire, soit au paiement. Si le prestataire a opté pour les débits, MC-P-055.",
+    "kind": "vat",
+    "rate": 5.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 52-0 — taux réduit de 5,5 % (denrées alimentaires destinées à la consommation humaine, énergie, livres, équipements pour personnes handicapées…). CTCA, art. 40, 2, c) — pour les prestations de services, la taxe est exigible lors de l'encaissement des acomptes, du prix ou de la rémunération ou, sur autorisation du directeur des Services fiscaux, d'après les débits (art. A-64 de l'annexe au code). Le prestataire qui a opté pour les débits utilise le code sans « -ENC ». Déduction : CTCA, art. 42, I.",
+    "source": "ctca",
+    "vat_category": "S",
+    "cash_basis": true,
+    "cash_basis_transition_account": "445860",
+    "sequence": 141,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-021",
+    "name": "Achat 2,1 %",
+    "description": "Taux de 2,10 %",
+    "kind": "vat",
+    "rate": 2.1,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 58 (premières représentations de certains spectacles), art. 59 (médicaments remboursables et préparations magistrales) et art. 95 (publications de presse) — taux de 2,10 %. Déduction : CTCA, art. 42, I.",
+    "source": "ctca",
+    "vat_category": "S",
+    "sequence": 145,
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "sequence": 20
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100,
+          "sequence": 20
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-00",
+    "name": "Achat exonere",
+    "description": "Sans TVA",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "1993-01-01",
+    "legal_reference": "Achat sans taxe : fournisseur non assujetti, opération exonérée ou hors champ. Aucune écriture de taxe.",
+    "source": "ctca",
+    "vat_category": "E",
+    "exemption_code": "VATEX-EU-132",
+    "sequence": 150,
+    "postings": {}
+  },
+  {
+    "code": "MC-P-ICG-20",
+    "name": "Acquisition intracom. biens 20 %",
+    "description": "Autoliquidation, lignes 03/08/20",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_goods",
+    "valid_from": "1993-01-01",
+    "legal_reference": "CTCA, art. 2, I — l'acquisition intracommunautaire de biens est une opération imposable à Monaco ; la taxe est due par l'acquéreur au taux applicable à la livraison du même bien (art. 51 pour le taux normal) et déductible à l'art. 42, I.",
+    "source": "ctca",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "sequence": 160,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "03"
+        },
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "445200",
+          "box": [
+            "08",
+            "17"
+          ]
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "03",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "445200",
+          "box": [
+            "08",
+            "17"
+          ],
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-ICS-20",
+    "name": "Service intracom. recu 20 %",
+    "description": "Autoliquidation, lignes 2A/08/20",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "intracom_acquisition_services",
+    "valid_from": "2010-01-01",
+    "legal_reference": "CTCA, art. 62, 2 — lorsque le prestataire n'est pas établi à Monaco ou en France, la taxe est acquittée par le preneur, qui la déduit à l'art. 42, I.",
+    "source": "ctca",
+    "vat_category": "K",
+    "exemption_code": "VATEX-EU-IC",
+    "sequence": 170,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2A"
+        },
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "445200",
+          "box": "08"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2A",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "445200",
+          "box": "08",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
+    "code": "MC-P-AL-20",
+    "name": "Achat autoliquidation 20 %",
+    "description": "Assujetti non etabli, lignes 3C/08/20",
+    "kind": "vat",
+    "rate": 20,
+    "scope": "purchase",
+    "treatment": "domestic_reverse_charge",
+    "valid_from": "2014-01-01",
+    "legal_reference": "CTCA, art. 62, 2 — lorsque le prestataire n'est pas établi à Monaco ou en France, la taxe est acquittée par le preneur, qui la déduit à l'art. 42, I.",
+    "source": "ctca",
+    "vat_category": "AE",
+    "exemption_code": "VATEX-EU-AE",
+    "sequence": 180,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3C"
+        },
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "445200",
+          "box": "08"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3C",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "445660",
+          "box": "20",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "445200",
+          "box": "08",
+          "box_factor": -100
+        }
+      ]
+    }
+  }
+]
