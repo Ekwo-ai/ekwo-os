@@ -7,7 +7,7 @@
     "quarter",
     "year"
   ],
-  "valid_from": "2023-08-01",
+  "valid_from": "2025-08-01",
   "legal_reference": "FRCS Value Added Tax Return, form IRS217: thirteen boxes in three steps — output tax (1 to 6), input tax (7 to 12) and the amount to pay or refund (13). The return is filed monthly above FJ$300,000 of annual gross turnover, three-monthly or yearly below (VAT Guide, chapter 10). The form is VAT-inclusive on the sales side: box 1 and box 3 are totals here (exclusive base plus tax) and the exclusive figures sit in the boxes 2 and 3a. Boxes 5, 9 and 11 (adjustments, apportionment) are the preparer's: declared and empty.",
   "source": "vat-return",
   "deadline": {

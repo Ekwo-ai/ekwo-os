@@ -370,6 +370,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`es`](../packs/es/) | España | `19_pack_es.sql` | es, en | `community` |
 | [`et`](../packs/et/) | Ethiopia | `133_pack_et.sql` | en | `community` |
 | [`fi`](../packs/fi/) | Finland | `67_pack_fi.sql` | fi, en | `community` |
+| [`fj`](../packs/fj/) | Fiji | `222_pack_fj.sql` | en | `community` |
 | [`fr`](../packs/fr/) | France | `11_pack_fr.sql` | fr, en | `proven` |
 | [`ga`](../packs/ga/) | Gabon | `28_pack_ga.sql` | fr | `community` |
 | [`gb`](../packs/gb/) | United Kingdom | `14_pack_gb.sql` | en | `community` |

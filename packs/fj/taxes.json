@@ -40,47 +40,6 @@
     "sequence": 10
   },
   {
-    "code": "FJ-S-15",
-    "name": "Sale, standard rate 15 %",
-    "description": "A taxable supply of goods or services made in Fiji by a registered person, neither zero-rated nor exempt",
-    "kind": "vat",
-    "rate": 15,
-    "scope": "sale",
-    "treatment": "domestic",
-    "vat_category": "S",
-    "valid_from": "2023-08-01",
-    "valid_to": "2025-07-31",
-    "legal_reference": "FRCS VAT Guide, rates: 15 % (tax fraction 3/23) from 1 August 2023 to 31 July 2025; closed code kept so that books of that period stay readable. The 9 % rate of earlier years is not carried. Return IRS217, box 3 — supplies subject to VAT (box 1 less box 2, VAT included) and box 4 — the VAT charged, box 3 × the tax fraction.",
-    "source": "vat-rates",
-    "postings": {
-      "invoice": [
-        {
-          "type": "base",
-          "box": "3a"
-        },
-        {
-          "type": "tax",
-          "account": "2100",
-          "box": "4"
-        }
-      ],
-      "credit_note": [
-        {
-          "type": "base",
-          "box": "3a",
-          "box_factor": -100
-        },
-        {
-          "type": "tax",
-          "account": "2100",
-          "box": "4",
-          "box_factor": -100
-        }
-      ]
-    },
-    "sequence": 12
-  },
-  {
     "code": "FJ-S-ZR-EXP",
     "name": "Sale, zero-rated (export)",
     "description": "Goods exported or a service supplied to a person outside Fiji, taxable at 0 %",
@@ -89,7 +48,7 @@
     "scope": "sale",
     "treatment": "export",
     "vat_category": "G",
-    "valid_from": "2023-08-01",
+    "valid_from": "2025-08-01",
     "legal_reference": "VAT Guide, rates: 0 % applies to exports (subject to certain conditions) and to the other supplies of the Second Schedule of the VAT Act 1991. A zero-rated supply is declared in boxes 1 and 2 of the return and keeps the input tax credit (Tax Talk on the return lines). Which conditions apply to an export is the preparer's judgement.",
     "source": "vat-guide",
     "postings": {
@@ -118,7 +77,7 @@
     "scope": "sale",
     "treatment": "domestic",
     "vat_category": "Z",
-    "valid_from": "2023-08-01",
+    "valid_from": "2025-08-01",
     "legal_reference": "VAT Guide, rates: 0 % covers exports, supplies of ship stores, the sale of a going concern to another registered person, services in connection with goods situated outside Fiji and the others of the Second Schedule; the rate table of FRCS adds the 21 essential items (from 1 April 2022) and prescribed medicines (from 1 August 2023). One tax code carries the whole list; which item applies is the preparer's judgement. Return, boxes 1 and 2.",
     "source": "vat-guide",
     "postings": {
@@ -147,7 +106,7 @@
     "scope": "sale",
     "treatment": "exempt",
     "vat_category": "E",
-    "valid_from": "2023-08-01",
+    "valid_from": "2025-08-01",
     "legal_reference": "VAT Guide, exempt goods and services: financial services, residential accommodation (whatever the turnover), educational services of an educational institution and the goods and services incidental to them, and the others of the First Schedule of the VAT Act 1991. No VAT is charged and no input tax is deductible. An exempt supply is outside box 1 of the return (Tax Talk on the return lines), so the code posts to no box.",
     "source": "vat-guide",
     "postings": {
@@ -205,47 +164,6 @@
     "sequence": 110
   },
   {
-    "code": "FJ-P-15",
-    "name": "Purchase, standard rate 15 %, deductible",
-    "description": "A local purchase of goods, services or capital goods at the standard rate, used to make taxable supplies",
-    "kind": "vat",
-    "rate": 15,
-    "scope": "purchase",
-    "treatment": "domestic",
-    "vat_category": "S",
-    "valid_from": "2023-08-01",
-    "valid_to": "2025-07-31",
-    "legal_reference": "FRCS VAT Guide, rates: 15 % (tax fraction 3/23) from 1 August 2023 to 31 July 2025; closed code kept so that books of that period stay readable. The 9 % rate of earlier years is not carried. Return IRS217, box 7 — VAT on purchases and expenses for which the tax invoicing requirements have been met, excluding imported goods, taken from the input tax schedule. The form has no separate line for capital goods.",
-    "source": "vat-return-instructions",
-    "postings": {
-      "invoice": [
-        {
-          "type": "base",
-          "box": "7"
-        },
-        {
-          "type": "tax",
-          "account": "1150",
-          "box": "7"
-        }
-      ],
-      "credit_note": [
-        {
-          "type": "base",
-          "box": "7",
-          "box_factor": -100
-        },
-        {
-          "type": "tax",
-          "account": "1150",
-          "box": "7",
-          "box_factor": -100
-        }
-      ]
-    },
-    "sequence": 112
-  },
-  {
     "code": "FJ-P-12.5-NC",
     "name": "Purchase, standard rate 12.5 %, input tax not allowed",
     "description": "A purchase on which input tax is not claimed — the VAT joins the cost",
@@ -286,7 +204,7 @@
     "scope": "purchase",
     "treatment": "exempt",
     "vat_category": "E",
-    "valid_from": "2023-08-01",
+    "valid_from": "2025-08-01",
     "legal_reference": "VAT Guide, exempt goods and services: no VAT is charged on them, so there is no input tax to claim and no box on the return.",
     "source": "vat-guide",
     "postings": {
@@ -351,55 +269,5 @@
       ]
     },
     "sequence": 150
-  },
-  {
-    "code": "FJ-P-IMP-15",
-    "name": "Purchase of imported goods, 15 % VAT paid at the border",
-    "description": "Imported goods: the VAT is invoiced by Customs at the border and claimed as input tax in box 8",
-    "kind": "vat",
-    "rate": 15,
-    "scope": "purchase",
-    "treatment": "import",
-    "valid_from": "2023-08-01",
-    "valid_to": "2025-07-31",
-    "legal_reference": "FRCS VAT Guide, rates: 15 % (tax fraction 3/23) from 1 August 2023 to 31 July 2025; closed code kept so that books of that period stay readable. The 9 % rate of earlier years is not carried. Return IRS217, box 8 — total VAT paid to or invoiced by Customs for imports, under the business's name and used for the business (instructions, box 8). The VAT owed to FRCS Customs sits on the import control account until paid.",
-    "source": "vat-return-instructions",
-    "postings": {
-      "invoice": [
-        {
-          "type": "base",
-          "box": "8"
-        },
-        {
-          "type": "tax",
-          "account": "1150",
-          "box": "8"
-        },
-        {
-          "type": "tax",
-          "factor": -100,
-          "account": "2125"
-        }
-      ],
-      "credit_note": [
-        {
-          "type": "base",
-          "box": "8",
-          "box_factor": -100
-        },
-        {
-          "type": "tax",
-          "account": "1150",
-          "box": "8",
-          "box_factor": -100
-        },
-        {
-          "type": "tax",
-          "factor": -100,
-          "account": "2125"
-        }
-      ]
-    },
-    "sequence": 152
   }
 ]

@@ -1,8 +1,7 @@
 # Fiji
 
 Everything Fiji adds to Ekwo, as data: a chart of accounts, the journals, value
-added tax at 12.5 % (and the closed 15 % codes of 1 August 2023 to 31 July
-2025), the zero rate and the exemptions, the VAT return IRS217 with its thirteen
+added tax at 12.5 %, the zero rate and the exemptions, the VAT return IRS217 with its thirteen
 boxes, and the statement of financial position and the statement of profit or
 loss of an IFRS-based presentation. The format is
 [`docs/packs.md`](../../docs/packs.md); this file says where the content came
@@ -31,9 +30,8 @@ section numbers are those FRCS quotes.
 ## Decisions
 
 - **The rate moved twice.** The file of countries said 15 %; FRCS now lists
-  12.5 % (tax fraction 1/9) from 1 August 2025. `FJ-S-12.5` and `FJ-P-12.5`
-  open on that date; `FJ-S-15` and `FJ-P-15` stay as closed codes
-  (1 August 2023 to 31 July 2025) so older books stay readable.
+  12.5 % (tax fraction 1/9) from 1 August 2025. The codes open on that date;
+  the 15 % of 1 August 2023 to 31 July 2025 is not carried (see below).
 - **The form is VAT-inclusive.** Box 1 and box 3 of IRS217 include the VAT. The
   engine posts exclusive bases, so the pack posts the exclusive supplies to box
   3a (not a box of the form) and rebuilds box 3 (= 3a + box 4) and box 1
@@ -56,7 +54,9 @@ section numbers are those FRCS quotes.
   the 12.5 %. A tourism operator needs its accountant here.
 - **Reverse charge.** The instructions of box 7 mention it without defining it.
   No code is carried.
-- **The 9 % rate** of before 1 August 2023 is not carried.
+- **Earlier rates.** 15 % (1 August 2023 to 31 July 2025) and 9 % (before) are
+  not carried: books before 1 August 2025 have no code, and no return of this
+  pack is valid before that date.
 - **Payment basis.** FRCS allows it on approval; the pack accounts on the
   invoice basis.
 - **Boxes 5, 9 and 11** (adjustments, apportionment) are declared and empty.
