@@ -1,0 +1,188 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "MC",
+  "name": "Monaco",
+  "version": "0.1.0",
+  "schema_min": "20261023124650",
+  "seed_sequence": 411,
+  "released_at": "2026-10-24",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ctca",
+        "title": "Code des taxes sur le chiffre d'affaires (créé par l'ordonnance n° 11.887 du 19 février 1996), texte consolidé au 1er août 2026 — taxe sur la valeur ajoutée (arts 1 à 112 et annexe, art. A-1 à A-191)",
+        "publisher": "Principauté de Monaco — Legimonaco",
+        "url": "https://legimonaco.mc/code/code-taxes-chiffre-affaires@2026.08.01",
+        "consulted_on": "2026-10-24",
+        "kind": "law"
+      },
+      {
+        "key": "code-commerce",
+        "title": "Code de commerce monégasque — art. 10 à 13 (livre-journal, inventaire annuel, conservation pendant dix ans) et dispositions sur les comptes annuels des sociétés, texte consolidé au 17 octobre 2026",
+        "publisher": "Principauté de Monaco — Legimonaco",
+        "url": "https://legimonaco.mc/code/code-commerce@2026.10.17",
+        "consulted_on": "2026-10-24",
+        "kind": "law"
+      },
+      {
+        "key": "pcg",
+        "title": "Règlement ANC n° 2014-03 relatif au plan comptable général — structure de référence du plan de comptes ; aucun texte monégasque lu n'impose ce plan (voir README.md)",
+        "publisher": "Autorité des normes comptables (France)",
+        "url": "https://www.anc.gouv.fr/pcg-reglement-ndeg-2014-03-du-5-juin-2014-relatif-au-plan-comptable-general",
+        "consulted_on": "2026-10-24",
+        "kind": "regulation"
+      },
+      {
+        "key": "ca3-modele",
+        "title": "Formulaire n° 3310-CA3-SD (modèle français de déclaration de TVA, 2026) — référence de numérotation des lignes ; le modèle monégasque lui-même n'était pas lisible (voir README.md)",
+        "publisher": "Direction générale des finances publiques (France)",
+        "url": "https://www.impots.gouv.fr/sites/default/files/formulaires/3310-ca3-sd/2026/3310-ca3-sd_5377.pdf",
+        "consulted_on": "2026-10-24",
+        "kind": "form"
+      },
+      {
+        "key": "dsf",
+        "title": "Comment déclarer une entreprise à la Direction des Services Fiscaux — déclaration d'existence (art. 66 du CTCA) et formulaire « Régime TVA »",
+        "publisher": "Gouvernement Princier — MonEntreprise",
+        "url": "https://monentreprise.gouv.mc/en/themes/starting-and-managing-a-business/starting-a-business/registration-and-statement-of-existence/how-to-declare-a-business-to-the-department-of-tax-services",
+        "consulted_on": "2026-10-24",
+        "kind": "portal"
+      }
+    ]
+  },
+  "languages": [],
+  "defaults": {
+    "currency": "EUR",
+    "language": "fr",
+    "rounding_method": "half_up",
+    "opening_entry_label": "À-nouveaux",
+    "closing_style": "result_accounts",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "411000",
+      "payable": "401000",
+      "suspense": "471000",
+      "rounding": "658000",
+      "retained_earnings": "110000",
+      "retained_earnings_loss": "119000",
+      "current_year_result_profit": "120000",
+      "current_year_result_loss": "129000",
+      "sales": "706000",
+      "purchase": "606300",
+      "bank": "512000",
+      "cash": "530000",
+      "fx_gain": "766000",
+      "fx_loss": "666000",
+      "asset_disposal_proceeds": "775000",
+      "asset_disposal_value": "675000",
+      "tax_payable": "445510",
+      "tax_receivable": "445670"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "MISC",
+      "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Direction des Services Fiscaux de Monaco",
+      "source": "dsf"
+    }
+  },
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Journal des ventes",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Journal des achats",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Journal de banque",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Journal de caisse",
+      "sequence": 40
+    },
+    {
+      "code": "MISC",
+      "type": "general",
+      "name": "Opérations diverses",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Journal des à-nouveaux",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Plan de comptes sur la structure du plan comptable général",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "MC-BS",
+        "MC-IS"
+      ],
+      "legal_reference": "Le Code de commerce monégasque impose un livre-journal, un inventaire annuel et la conservation des livres pendant dix ans (art. 10 à 13) mais ne prescrit aucun plan de comptes ; aucun texte monégasque lu ne rend obligatoire le plan comptable général français. Ce plan en suit la structure (classes 1 à 7, comptes à deux, trois et six chiffres) parce que les règles de taxe qu'il porte sont celles de la France (convention franco-monégasque du 18 mai 1963, art. 15, rappelée à l'art. préliminaire du CTCA) et que la pratique des entreprises de la Principauté est de s'y tenir. Cette pratique n'est pas sourcée : c'est une hypothèse du pack, dite dans README.md.",
+      "source": "pcg"
+    }
+  ],
+  "documents": {
+    "numbering": "gapless_per_year",
+    "number_format": "{CODE}/{YYYY}/{NNNN}",
+    "legal_payment_days": 0,
+    "late_payment_reference": "Aucun délai légal de paiement entre entreprises ni indemnité forfaitaire de recouvrement n'a été lu dans le Code de commerce monégasque ; le pack ne fixe donc pas de délai (legal_payment_days 0). Les intérêts de retard de l'art. 110 du CTCA (0,20 % par mois) sont dus au Trésor sur la taxe, non entre entreprises.",
+    "tax_point": "delivery_date",
+    "posted_edit_policy": "reversal_only",
+    "references": {
+      "numbering": {
+        "legal_reference": "Annexe au CTCA, art. A-153 bis, I, 7° — la facture porte « un numéro unique basé sur une séquence chronologique et continue » ; la numérotation peut être établie par séries distinctes lorsque les conditions d'exercice de l'activité le justifient. Le texte impose la continuité et l'unicité, jamais une forme.",
+        "source": "ctca"
+      },
+      "payment_terms": {
+        "legal_reference": "Aucune règle de délai de paiement entre entreprises n'a été lue dans le Code de commerce monégasque ; le pack ne fixe pas de délai légal.",
+        "source": "code-commerce"
+      },
+      "tax_point": {
+        "legal_reference": "CTCA, art. 40, 2 — la taxe est exigible, pour les livraisons de biens, lors de la réalisation du fait générateur, et pour les prestations de services lors de l'encaissement des acomptes, du prix ou de la rémunération, ou sur autorisation d'après les débits (art. A-64). Ce pack porte l'exception en cash_basis sur les taxes de service « -ENC ».",
+        "source": "ctca"
+      },
+      "posted_edit_policy": {
+        "legal_reference": "Annexe au CTCA, art. A-153 bis, I, 7° — numérotation chronologique et continue des factures ; une facture comptabilisée est donc annulée par un avoir qui la cite, jamais remise en brouillon.",
+        "source": "ctca"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "legal_reference": "Le 24 octobre 2026, le CTCA (art. 71, VI) admet la facture électronique comme l'une des formes possibles (piste d'audit fiable, signature ou cachet électronique qualifié, message structuré) sans en faire une obligation d'échange entre entreprises ; une obligation d'émission ou de réception structurée n'a pas été trouvée dans les textes lus, et les pages du Gouvernement sur le sujet n'étaient pas lisibles. Voir README.md.",
+    "source": "ctca"
+  },
+  "bank": {
+    "account_scheme": "iban",
+    "statement_formats": [
+      "camt.053"
+    ],
+    "payment_formats": [
+      "pain.001"
+    ]
+  }
+}

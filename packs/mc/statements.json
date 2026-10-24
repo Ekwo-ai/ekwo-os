@@ -1,0 +1,436 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/statements",
+  "statements": [
+    {
+      "code": "MC-BS",
+      "kind": "balance_sheet",
+      "framework": "MC-PCG",
+      "name": "Bilan (présentation abrégée du plan comptable général)",
+      "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+      "source": "code-commerce",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Résultat de l’exercice en cours",
+      "lines": [
+        {
+          "code": "ACT",
+          "name": "Total de l’actif",
+          "sequence": 10,
+          "is_total": true,
+          "plus": [
+            "AI",
+            "STK",
+            "CRE",
+            "TRE"
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "AI",
+          "parent": "ACT",
+          "name": "Actif immobilisé (net des amortissements et dépréciations)",
+          "sequence": 20,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "20",
+              "code_to": "29",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "STK",
+          "parent": "ACT",
+          "name": "Stocks et en-cours (nets)",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "30",
+              "code_to": "39",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "CRE",
+          "parent": "ACT",
+          "name": "Créances d’exploitation et autres débiteurs",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "409",
+              "code_to": "419",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "490",
+              "code_to": "499",
+              "sequence": 20
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "TRE",
+          "parent": "ACT",
+          "name": "Disponibilités et valeurs mobilières de placement",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "50",
+              "code_to": "59",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "PAS",
+          "name": "Total du passif",
+          "sequence": 60,
+          "is_total": true,
+          "plus": [
+            "CP",
+            "DF",
+            "FOU",
+            "AUT"
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "CP",
+          "parent": "PAS",
+          "name": "Capitaux propres",
+          "sequence": 70,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "10",
+              "code_to": "14",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "DF",
+          "parent": "PAS",
+          "name": "Provisions et dettes financières",
+          "sequence": 80,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "15",
+              "code_to": "19",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "FOU",
+          "parent": "PAS",
+          "name": "Fournisseurs et comptes rattachés",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "400",
+              "code_to": "408",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "AUT",
+          "parent": "PAS",
+          "name": "Dettes fiscales, sociales et autres dettes",
+          "sequence": 100,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "42",
+              "code_to": "48",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        }
+      ]
+    },
+    {
+      "code": "MC-IS",
+      "kind": "income_statement",
+      "framework": "MC-PCG",
+      "name": "Compte de pertes et profits (présentation abrégée)",
+      "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+      "source": "code-commerce",
+      "lines": [
+        {
+          "code": "VE",
+          "name": "Ventes de marchandises et production vendue",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "70",
+              "code_to": "70",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "PEX",
+          "name": "Autres produits d’exploitation",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "71",
+              "code_to": "75",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "78",
+              "code_to": "79",
+              "sequence": 20
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "ACH",
+          "name": "Achats et variations de stocks",
+          "sequence": 30,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "60",
+              "code_to": "60",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "SEX",
+          "name": "Services extérieurs et autres achats et charges externes",
+          "sequence": 40,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "61",
+              "code_to": "62",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "IMP",
+          "name": "Impôts, taxes et versements assimilés",
+          "sequence": 50,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "63",
+              "code_to": "63",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "PER",
+          "name": "Charges de personnel",
+          "sequence": 60,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "64",
+              "code_to": "64",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "AUC",
+          "name": "Autres charges de gestion",
+          "sequence": 70,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "65",
+              "code_to": "65",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "DOT",
+          "name": "Dotations aux amortissements et provisions",
+          "sequence": 80,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "68",
+              "code_to": "68",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "PFI",
+          "name": "Produits financiers",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "76",
+              "code_to": "76",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "CFI",
+          "name": "Charges financières",
+          "sequence": 100,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "66",
+              "code_to": "66",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "PEO",
+          "name": "Produits exceptionnels",
+          "sequence": 110,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "77",
+              "code_to": "77",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "CEO",
+          "name": "Charges exceptionnelles",
+          "sequence": 120,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "67",
+              "code_to": "67",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "IBE",
+          "name": "Participation des salariés et impôt sur les bénéfices",
+          "sequence": 130,
+          "sign": 1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "69",
+              "code_to": "69",
+              "sequence": 10
+            }
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        },
+        {
+          "code": "RES",
+          "name": "Résultat de l’exercice",
+          "sequence": 140,
+          "is_total": true,
+          "plus": [
+            "VE",
+            "PEX",
+            "PFI",
+            "PEO"
+          ],
+          "minus": [
+            "ACH",
+            "SEX",
+            "IMP",
+            "PER",
+            "AUC",
+            "DOT",
+            "CFI",
+            "CEO",
+            "IBE"
+          ],
+          "legal_reference": "Code de commerce monégasque : le bilan, le compte de pertes et profits et l'annexe sont les comptes annuels (art. 51-6 et 51-7, pour le gérant qui les soumet à l'assemblée et les remet au Répertoire du Commerce et de l'Industrie) ; aucun texte lu ne fixe leur présentation ligne par ligne. La présentation ci-dessous est celle du plan comptable général français, abrégée, parce que c'est le plan que ce pack porte (README.md).",
+          "source": "code-commerce"
+        }
+      ]
+    }
+  ]
+}
