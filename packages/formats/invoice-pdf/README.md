@@ -14,7 +14,8 @@ set of books publishes.
 - **A small theme**: an accent colour, a typeface (Noto Sans or the caller's),
   the logo on the left or the right — see [Theme](#theme).
 - **Nothing country-specific in the layout.** The words it prints of its own
-  are labels, English by default and the caller's in any other language; the
+  are labels, in the document's language where the package has a set for it
+  and in English otherwise, with the caller's words over them; the
   sentences a country requires come in as rows; amounts, dates, rates and
   country names are written by `Intl` in the document's language, with the
   currency's own minor units.
@@ -56,7 +57,7 @@ const { file, filename, pageCount } = await renderInvoicePdf(
   },
   {
     pageSize: 'A4',       // or 'Letter'
-    labels: { invoice: 'Factura', amountDue: 'Importe pendiente' },  // the rest stays English
+    labels: { amountDue: 'Importe pendiente' },  // over the set of the document's language
     theme: { accent: '#7A1F2B', logoPosition: 'right' },              // or nothing: DEFAULT_THEME
   },
 );
@@ -89,16 +90,29 @@ a JavaScript number. Nothing is computed: every total printed is a column.
 `ENGLISH_LABELS` holds every word the layout prints of its own — "Invoice",
 "Credit note", "Due date", "Amount due", "Page {page} of {pages}"… — and
 `units` maps UN/ECE Recommendation 20 codes to what is printed after a
-quantity (`DAY` → `days`, `C62` → nothing). English is the only language this
-package carries. A document in another language gets its words from the
-caller, `options.labels`, whole or in part; what is left out is English. A
-country's own words — what its tax is called, what the law wants printed —
+quantity (`DAY` → `days`, `C62` → nothing).
+
+The words of the layout are the same from one country to another, so the
+package holds them once per language, in `src/labels/<language>.ts`:
+`INVOICE_LABELS` has German, English, Spanish, French and Dutch. Each set has
+every key of `InvoiceLabels` and every unit of the English one; the type
+refuses a set with a key missing or one too many, and a test checks the units
+and the `{page}` and `{pages}` of the page number. Adding a language is one
+file and one line in `INVOICE_LABELS`.
+
+The language of a document is `options.locale`, else its `language`, else
+`en`. `labelsFor(tag)` picks the set of the whole tag (`pt-br`), then of its
+language (`fr` for `fr-BE`), then English; `labelsLanguage`, in what
+`renderInvoicePdf()` returns, says which, so that a caller can tell a reader
+that a document was printed in English for want of a set in its language.
+`options.labels` puts the caller's words over that set, whole or in part.
+
+A country's own words — what its tax is called, what the law wants printed —
 are not labels: they are `tax_name` and the mentions, which the books give in
 the document's language.
 
-The language amounts, dates and country names are written in is
-`options.locale`, else the document's `language`, else `en`. A tag `Intl`
-does not accept is refused (`invalid_language`).
+Amounts, dates and country names are written by `Intl` in the same language.
+A tag `Intl` does not accept is refused (`invalid_language`).
 
 ## Fonts
 
@@ -335,7 +349,9 @@ What the views do not carry yet, and the page therefore cannot print:
 - **BT-85**: the holder of the payee's account — and its bank's name, for
   which EN 16931 has no term; and an account that is not an IBAN (BT-84 is
   read from `payee_iban` alone);
-- the words of the layout in the document's language, which no pack holds.
+- the words of the layout in a language the package has no set for yet; and
+  the words a country's law prescribes over them (the title, the name of an
+  identifier), which no pack holds yet.
 
 ## In Ekwo OS
 

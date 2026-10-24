@@ -1,13 +1,18 @@
+import { GERMAN_LABELS } from './labels/de.js';
+import { SPANISH_LABELS } from './labels/es.js';
+import { FRENCH_LABELS } from './labels/fr.js';
+import { DUTCH_LABELS } from './labels/nl.js';
 import type { InvoiceLabels } from './types.js';
 
 /**
- * The words of the layout in English, the one language this package carries.
+ * The words of the layout in English: the set every other language is
+ * checked against, and the one printed where a language has no set.
  *
- * Another language is the caller's to pass, through `options.labels`: the
- * books know the language of a document, and the words for "Invoice" in it
- * are not this package's to hold. A country's own wording — which tax is
- * called what, what the law wants printed — is not here either: it arrives in
- * the rows, as the name of a tax and as legal mentions.
+ * The words of the layout are the same from one country to another, so they
+ * are held here once per language, in `labels/<language>.ts`. A country's own
+ * wording — the title its law prescribes, which tax is called what, what the
+ * law wants printed — is not: it arrives in the rows, as the name of a tax and
+ * as legal mentions, or from the caller through `options.labels`.
  */
 export const ENGLISH_LABELS: InvoiceLabels = {
   invoice: 'Invoice',
@@ -84,8 +89,36 @@ export const ENGLISH_LABELS: InvoiceLabels = {
   },
 };
 
-/** The English set with the caller's words over it; `units` are merged too. */
-export function labelsWith(given: Partial<InvoiceLabels> | undefined): InvoiceLabels {
-  if (given === undefined) return ENGLISH_LABELS;
-  return { ...ENGLISH_LABELS, ...given, units: { ...ENGLISH_LABELS.units, ...(given.units ?? {}) } };
+/** Every set of words this package carries, by language subtag. */
+export const INVOICE_LABELS: Readonly<Record<string, InvoiceLabels>> = {
+  de: GERMAN_LABELS,
+  en: ENGLISH_LABELS,
+  es: SPANISH_LABELS,
+  fr: FRENCH_LABELS,
+  nl: DUTCH_LABELS,
+};
+
+/**
+ * The words of the layout for a BCP 47 tag: the set of the whole tag
+ * (`pt-br`), then of its language (`fr` for `fr-BE`), then English.
+ * `language` is the set the words come from, so that a caller can say when a
+ * document is printed in English for want of a set in its language.
+ */
+export function labelsFor(tag: string | null | undefined): { language: string; labels: InvoiceLabels } {
+  const whole = (tag ?? '').trim().toLowerCase().replace(/_/g, '-');
+  const primary = whole.split('-')[0] ?? '';
+  for (const language of [whole, primary]) {
+    const labels = INVOICE_LABELS[language];
+    if (labels !== undefined) return { language, labels };
+  }
+  return { language: 'en', labels: ENGLISH_LABELS };
+}
+
+/**
+ * The set of a language — English by default — with the caller's words over
+ * it; `units` are merged too.
+ */
+export function labelsWith(given: Partial<InvoiceLabels> | undefined, base: InvoiceLabels = ENGLISH_LABELS): InvoiceLabels {
+  if (given === undefined) return base;
+  return { ...base, ...given, units: { ...base.units, ...(given.units ?? {}) } };
 }

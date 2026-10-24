@@ -337,8 +337,9 @@ ${bold('Keeping books')} ${dim('(each verb is one function the MCP server calls 
                             a Factur-X (EN 16931) PDF/A-3; the rules it breaks
                             end on exit code 1.
   --page-size A4|Letter     doc pdf. A4 unless Letter is asked for.
-  --labels <file.json>      doc pdf. The words of the layout in the document's
-                            language; what the file leaves out is English.
+  --labels <file.json>      doc pdf. Words of the layout over the ones the PDF
+                            has in the document's language (English where it
+                            has none yet).
   <document>                Its id, its number, or the --ref it was created under.
   Amounts are decimal strings, in and out: 1500.00. Nothing is computed here.
 

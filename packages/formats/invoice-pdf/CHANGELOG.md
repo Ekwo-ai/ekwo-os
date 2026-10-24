@@ -7,6 +7,13 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- **The words of the layout in German, Spanish, French and Dutch.** One set
+  per language in `src/labels/<language>.ts`, gathered in `INVOICE_LABELS`;
+  `labelsFor(tag)` picks the set of the whole tag, then of its language, then
+  English. A document is printed in the words of its language
+  (`options.locale`, else its `language`) without the caller passing any;
+  `options.labels` goes over them. `labelsLanguage`, in what
+  `renderInvoicePdf()` returns, names the set the words came from.
 - **A credit under the foot.** `options.credit: { text, url }` prints a small
   link right-aligned under the foot of every page; the address is `https`
   or refused, and nothing is printed without the option. `EKWO_CREDIT` is the one the

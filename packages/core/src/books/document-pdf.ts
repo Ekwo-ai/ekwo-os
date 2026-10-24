@@ -312,7 +312,7 @@ export interface DocumentPdfArgs {
   /** Embed the CII of the document (Factur-X, EN 16931 profile): the PDF becomes a PDF/A-3 Factur-X invoice. */
   factur_x?: boolean | undefined;
   page_size?: PageSize | undefined;
-  /** The words of the layout in the document's language; what is left out is English. */
+  /** Words of the layout over the set `@ekwo-ai/invoice-pdf` carries for the document's language. */
   labels?: Partial<InvoiceLabels> | undefined;
 }
 
@@ -322,6 +322,8 @@ export interface DocumentPdf {
   number: string | null;
   state: string | null;
   language: string | null;
+  /** The language the words of the layout were printed in: the document's, or `en` where no set of words exists for it yet. */
+  labels_language: string;
   filename: string;
   title: string;
   media_type: 'application/pdf';
@@ -406,6 +408,7 @@ export async function renderDocumentPdf(
     number: (header.number as string | null | undefined) ?? null,
     state: (header.state as string | null | undefined) ?? null,
     language: (header.language as string | null | undefined) ?? null,
+    labels_language: rendered.labelsLanguage,
     filename: rendered.filename,
     title: rendered.title,
     media_type: 'application/pdf',

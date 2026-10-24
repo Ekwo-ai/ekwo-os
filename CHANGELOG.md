@@ -11,6 +11,16 @@ somewhere has already run it.
 
 ### Added
 
+- **The PDF of an invoice is in the words of its language.** A sale invoice
+  or credit note whose `language` is German, Spanish, French or Dutch prints
+  "Facture", "Échéance", "Montant dû"… in that language, without a `--labels`
+  file; any other language prints in English until a set of words exists for
+  it. `ekwo doc pdf` and `render_invoice_pdf` say which language the words
+  came from (`labels_language`), and `--labels` / `labels` still put other
+  words over them. The sets are held once per language by
+  `@ekwo-ai/invoice-pdf` (`INVOICE_LABELS`, `labelsFor()`), the same for every
+  country.
+
 - **An agent posts in the mode its company chose, or its session chose**
   (socle migration `20261023174709`, decision 0089). The company setting
   `companies.agent_posting` — beside the profile, written with `company.write`
