@@ -1,0 +1,178 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "FJ-VAT",
+  "name": "VAT return (IRS217)",
+  "period": [
+    "month",
+    "quarter",
+    "year"
+  ],
+  "valid_from": "2023-08-01",
+  "legal_reference": "FRCS Value Added Tax Return, form IRS217: thirteen boxes in three steps — output tax (1 to 6), input tax (7 to 12) and the amount to pay or refund (13). The return is filed monthly above FJ$300,000 of annual gross turnover, three-monthly or yearly below (VAT Guide, chapter 10). The form is VAT-inclusive on the sales side: box 1 and box 3 are totals here (exclusive base plus tax) and the exclusive figures sit in the boxes 2 and 3a. Boxes 5, 9 and 11 (adjustments, apportionment) are the preparer's: declared and empty.",
+  "source": "vat-return",
+  "deadline": {
+    "rule": "last_day_of_month_after_period",
+    "legal_reference": "Section 33 of the VAT Act as quoted by FRCS — the return is due on or before the last day of the month following the last day of every taxable period: January 2025 monthly return by 28 February 2025; January–March 2024 quarter by 30 April 2024; calendar year 2023 by 31 January 2024 (VAT Guide, chapter 10). Payment is due with the return.",
+    "source": "vat-rates"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Box 1 — Total taxable supplies for the period (VAT included, zero-rated supplies included)",
+      "sequence": 10,
+      "legal_reference": "Form IRS217, box 1 — the total taxable supplies of the period including VAT and the zero-rated supplies; exempt supplies are not in it. Here box 2 plus box 3.",
+      "source": "vat-return",
+      "plus": [
+        "2:base",
+        "3"
+      ]
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Box 2 — Zero-rated supplies included in box 1",
+      "sequence": 20,
+      "legal_reference": "Form IRS217, box 2 — the zero-rated supplies of the period, included in box 1 (exports and the other zero-rated supplies).",
+      "source": "vat-return"
+    },
+    {
+      "box": "3",
+      "kind": "total",
+      "name": "Box 3 — Supplies subject to VAT (box 1 less box 2, VAT included)",
+      "sequence": 30,
+      "legal_reference": "Form IRS217, box 3 — box 1 less box 2, the supplies charged with VAT, VAT included. Here the exclusive base of box 3a plus the VAT of box 4.",
+      "source": "vat-return",
+      "plus": [
+        "3a:base",
+        "4:tax"
+      ]
+    },
+    {
+      "box": "3a",
+      "kind": "base",
+      "name": "Box 3a — Supplies subject to VAT, VAT excluded",
+      "sequence": 35,
+      "legal_reference": "Not a box of the form: the exclusive value of the supplies of box 3, which the engine posts and from which box 3 is rebuilt.",
+      "source": "vat-return-instructions"
+    },
+    {
+      "box": "4",
+      "kind": "tax",
+      "name": "Box 4 — VAT charged by you (box 3 × tax fraction)",
+      "sequence": 40,
+      "legal_reference": "Form IRS217, box 4 — box 3 multiplied by the tax fraction: 1/9 at 12.5 % (FRCS rate table), 3/23 at 15 %.",
+      "source": "vat-rates"
+    },
+    {
+      "box": "5",
+      "kind": "tax",
+      "name": "Box 5 — VAT on output adjustments",
+      "sequence": 50,
+      "legal_reference": "Form IRS217, box 5 and panel 1 — goods and services taken for private use, bartered, given as fringe benefits, bad debts recovered, debit notes issued, credit notes received and the like. Declared and empty: an adjustment is a decision of the preparer, no tax code posts to it.",
+      "source": "vat-return-instructions"
+    },
+    {
+      "box": "6",
+      "kind": "total",
+      "name": "Box 6 — Total output tax (box 4 plus box 5)",
+      "sequence": 60,
+      "legal_reference": "Form IRS217, box 6 — the total VAT charged on taxable supplies.",
+      "source": "vat-return",
+      "plus": [
+        "4",
+        "5"
+      ]
+    },
+    {
+      "box": "7",
+      "kind": "base",
+      "name": "Box 7 — Purchases and expenses, VAT excluded (basis of box 7)",
+      "sequence": 70,
+      "legal_reference": "The purchases on which the VAT of box 7 is claimed; the form asks for the VAT only, the value is kept for the reader.",
+      "source": "vat-return-instructions"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Box 7 — Total VAT on purchases and expenses (tax invoicing requirements met, imports excluded)",
+      "sequence": 80,
+      "legal_reference": "Form IRS217, box 7 — the VAT of the input tax schedule, which must meet the invoicing requirements; it excludes imported goods.",
+      "source": "vat-return-instructions"
+    },
+    {
+      "box": "8",
+      "kind": "base",
+      "name": "Box 8 — Imports, customs value (basis of box 8)",
+      "sequence": 90,
+      "legal_reference": "The imported goods whose VAT is claimed in box 8; the form asks for the VAT only.",
+      "source": "vat-return-instructions"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Box 8 — Total VAT paid to or invoiced by Customs for imports",
+      "sequence": 100,
+      "legal_reference": "Form IRS217, box 8 — the VAT invoiced by Customs on goods imported under the business's name and used in the business.",
+      "source": "vat-return-instructions"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Box 9 — VAT on input adjustments",
+      "sequence": 110,
+      "legal_reference": "Form IRS217, box 9 and panel 2 — bad debts written off, credit notes issued, debit notes received and the VAT refundable on a change of accounting basis. Declared and empty, for the reason given at box 5.",
+      "source": "vat-return-instructions"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Box 10 — Total VAT on purchases, credit adjustments and expenses (boxes 7 + 8 + 9)",
+      "sequence": 120,
+      "legal_reference": "Form IRS217, box 10 — boxes 7, 8 and 9 added.",
+      "source": "vat-return",
+      "plus": [
+        "7:tax",
+        "8:tax",
+        "9"
+      ]
+    },
+    {
+      "box": "11",
+      "kind": "tax",
+      "name": "Box 11 — VAT on purchases not wholly used in making taxable supplies",
+      "sequence": 130,
+      "legal_reference": "Form IRS217, box 11 and panel 3 — the part of the input tax that matches the supplies not subject to VAT, unless those are 5 % of the supplies or FJ$4,000 at most, whichever is less. Declared and empty: the apportionment is a decision of the preparer.",
+      "source": "vat-return-instructions"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Box 12 — Total VAT incurred on taxable purchases (box 10 less box 11)",
+      "sequence": 140,
+      "legal_reference": "Form IRS217, box 12.",
+      "source": "vat-return",
+      "plus": [
+        "10"
+      ],
+      "minus": [
+        "11"
+      ]
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Box 13 — Amount to pay (positive) or refund due (negative) (box 6 less box 12)",
+      "sequence": 150,
+      "legal_reference": "Form IRS217, box 13 — box 6 less box 12: positive is VAT payable, negative is the refund due. An amount under FJ$5 is not remitted and not refunded (instructions), a rule the engine does not apply.",
+      "source": "vat-return",
+      "plus": [
+        "6"
+      ],
+      "minus": [
+        "12"
+      ]
+    }
+  ],
+  "period_default": "month"
+}

@@ -1,0 +1,321 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Suva trading company, VAT-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "FJ-IFRS-SFP",
+    "FJ-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-fj",
+      "name": "Suva Retail Ltd",
+      "type": "customer",
+      "country": "FJ"
+    },
+    {
+      "ref": "cust-za",
+      "name": "Durban Tea Traders (Pty) Ltd",
+      "type": "customer",
+      "country": "ZA"
+    },
+    {
+      "ref": "cust-gb",
+      "name": "Harlow Consulting Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-fj",
+      "name": "Lami Wholesalers Ltd",
+      "type": "supplier",
+      "country": "FJ"
+    },
+    {
+      "ref": "supp-cn",
+      "name": "Shenzhen Components Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-fj",
+      "date": "2026-01-08",
+      "why": "A domestic sale at the standard rate of 12.5 %: the exclusive base in box 3a, the VAT in box 4.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale",
+          "quantity": 10,
+          "unit_price": 12000,
+          "tax": "FJ-S-12.5",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-fj",
+      "date": "2026-01-12",
+      "why": "The letting of a flat as a residence, exempt (residential accommodation): no VAT, no box, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Residential letting, January",
+          "quantity": 1,
+          "unit_price": 45000,
+          "tax": "FJ-S-EX",
+          "account": "4520"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-za",
+      "date": "2026-01-15",
+      "why": "An export of goods, zero-rated: box 2, no output VAT, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Packaged tea, export consignment",
+          "quantity": 500,
+          "unit_price": 240,
+          "tax": "FJ-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2026-01-19",
+      "why": "A service supplied to a person outside Fiji, zero-rated: box 2.",
+      "lines": [
+        {
+          "name": "Market research report",
+          "quantity": 1,
+          "unit_price": 90000,
+          "tax": "FJ-S-ZR-EXP",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-fj",
+      "date": "2026-01-21",
+      "why": "A local sale of prescribed medicines, zero-rated under the Second Schedule although it never leaves Fiji: box 2.",
+      "lines": [
+        {
+          "name": "Prescribed medicines, retail sale",
+          "quantity": 200,
+          "unit_price": 450,
+          "tax": "FJ-S-ZR",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-fj",
+      "date": "2026-01-23",
+      "why": "The sale of a delivery van used in the business at the standard rate: the form has no line for capital assets, so it joins box 3 and the VAT joins box 4.",
+      "lines": [
+        {
+          "name": "Used delivery van",
+          "quantity": 1,
+          "unit_price": 80000,
+          "tax": "FJ-S-12.5",
+          "account": "4750"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-fj",
+      "date": "2026-01-26",
+      "why": "A credit note for one unit returned from INV-001, so box 3a and box 4 fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "FJ-S-12.5",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-fj",
+      "date": "2026-01-09",
+      "why": "A local purchase at the standard rate, credit allowed in full: box 7, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "FJ-P-12.5",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-fj",
+      "date": "2026-01-11",
+      "why": "Goods of a capital nature bought locally: the form has no separate line, so the VAT is claimed in box 7.",
+      "lines": [
+        {
+          "name": "Packaging machine",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "FJ-P-12.5",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-fj",
+      "date": "2026-01-13",
+      "why": "A purchase on which the preparer claims no input tax: the VAT joins the cost and nothing reaches the return.",
+      "lines": [
+        {
+          "name": "Client entertainment",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "FJ-P-12.5-NC",
+          "account": "6390"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-fj",
+      "date": "2026-01-16",
+      "why": "An insurance premium, an exempt supply received: no input tax and no box on the return.",
+      "lines": [
+        {
+          "name": "Business insurance premium",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "FJ-P-0",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-20",
+      "why": "An import of goods: the VAT invoiced by Customs at the border is claimed in box 8 and held on the import control account until settled.",
+      "lines": [
+        {
+          "name": "Imported electronic components for resale",
+          "quantity": 1,
+          "unit_price": 250000,
+          "tax": "FJ-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-27",
+      "why": "An import of capital goods: the VAT invoiced by Customs is claimed in box 8 as well, the form having no separate line.",
+      "lines": [
+        {
+          "name": "Imported labelling machine",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "FJ-P-IMP",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-fj",
+      "date": "2026-01-30",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 7 falls back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "FJ-P-12.5",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 45000,
+      "contact": "cust-fj",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The letting of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 120000,
+      "contact": "cust-za",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-07",
+      "amount": 45000,
+      "contact": "supp-fj",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 20000,
+      "contact": "cust-gb",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Harlow Consulting Ltd before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}
