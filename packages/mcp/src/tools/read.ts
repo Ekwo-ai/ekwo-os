@@ -220,7 +220,7 @@ export const RenderInvoicePdfInput = z.object({
   labels: z
     .record(z.string(), z.union([z.string(), z.record(z.string(), z.string())]))
     .optional()
-    .describe('The words the layout prints, in the language of the document — invoice, creditNote, dueDate, amountDue, page ("Page {page} of {pages}"), units (a map of UN/ECE unit codes)… Every word left out is printed in English.'),
+    .describe('Words the layout prints, over the ones it already has in the language of the document — invoice, creditNote, dueDate, amountDue, page ("Page {page} of {pages}"), units (a map of UN/ECE unit codes)… Every word left out is taken from the language of the document, or from English where labels_language in the answer says en.'),
 });
 
 /** Base64 without Buffer, which a server running outside Node does not have. */
