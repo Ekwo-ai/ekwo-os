@@ -1,0 +1,205 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "KI-VAT",
+  "name": "VAT return (RET 020)",
+  "period": [
+    "quarter"
+  ],
+  "valid_from": "2024-01-01",
+  "legal_reference": "Form RET 020, Value Added Tax Return, for a period of three months: sixteen boxes in two steps — VAT collected (1 to 7) and VAT paid (8 to 15) — and the difference in box 16. A registered business files quarterly (Guidelines & Obligations for VAT Registered Businesses, item 7). The form is VAT-inclusive on both sides: boxes 1, 4, 8 and 10 are totals here (exclusive base plus VAT), and the exclusive figures sit in the boxes 4a and 10a. Box 16 is signed: negative is the VAT credit.",
+  "source": "vat-return",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 15,
+    "legal_reference": "Guidelines & Obligations for VAT Registered Businesses, items 7 and 8, and the Tax Division's Taxpayer's Obligations pamphlet (January 2026): the return and the VAT payable are due within 15 days after the end of the quarter — the 15th of the month that follows a quarter ending on 31 March, 30 June, 30 September or 31 December. A due date on a weekend or a holiday is not shifted by this rule.",
+    "source": "guidelines"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Box 1 — Total sales and income including VAT (zero-rated and exempt sales included)",
+      "sequence": 10,
+      "legal_reference": "Form RET 020, box 1 — total sales and income including VAT; the instructions of box 1 include the zero-rated and the exempt sales. Here boxes 2, 3 and 4 added.",
+      "source": "vat-return",
+      "plus": [
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Box 2 — Zero-rated supplies",
+      "sequence": 20,
+      "legal_reference": "Form RET 020, box 2 — the zero-rated sales of the period, included in box 1 (exports and the other zero-rated supplies of the VAT Act).",
+      "source": "vat-return"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Box 3 — Exempt supplies",
+      "sequence": 30,
+      "legal_reference": "Form RET 020, box 3 — the exempt sales of the period, included in box 1.",
+      "source": "vat-return"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Box 4 — Sales subject to VAT, VAT included (box 1 less boxes 2 and 3)",
+      "sequence": 40,
+      "legal_reference": "Form RET 020, box 4 — box 1 less boxes 2 and 3. Here the exclusive base of box 4a plus the VAT of box 5.",
+      "source": "vat-return",
+      "plus": [
+        "4a:base",
+        "5:tax"
+      ]
+    },
+    {
+      "box": "4a",
+      "kind": "base",
+      "name": "Box 4a — Sales subject to VAT, VAT excluded",
+      "sequence": 45,
+      "legal_reference": "Not a box of the form: the exclusive value of the sales of box 4, which the engine posts and from which box 4 is rebuilt.",
+      "source": "return-instructions"
+    },
+    {
+      "box": "5",
+      "kind": "tax",
+      "name": "Box 5 — VAT collected (box 4 divided by 9)",
+      "sequence": 50,
+      "legal_reference": "Form RET 020, box 5 — box 4 divided by 9, the tax fraction of 12.5 % (instructions, box 5).",
+      "source": "return-instructions"
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "Box 6 — Adjustments to VAT collected",
+      "sequence": 60,
+      "legal_reference": "Form RET 020, box 6 — adjustments to the VAT collected, such as corrections of earlier returns (instructions, box 6; the Tax Division's approval or a written explanation is needed). Declared and empty: an adjustment is a decision of the preparer, no tax code posts to it.",
+      "source": "return-instructions"
+    },
+    {
+      "box": "7",
+      "kind": "total",
+      "name": "Box 7 — Total VAT collected (boxes 5 + 6)",
+      "sequence": 70,
+      "legal_reference": "Form RET 020, box 7 — boxes 5 and 6 added.",
+      "source": "vat-return",
+      "plus": [
+        "5",
+        "6"
+      ]
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Box 8 — Total purchases and expenses including VAT",
+      "sequence": 80,
+      "legal_reference": "Form RET 020, box 8 — the purchases and expenses of the period that carry VAT, imported goods and the VAT paid to Customs left out (they are claimed in box 12). Here boxes 9 and 10 added.",
+      "source": "vat-return",
+      "plus": [
+        "9",
+        "10"
+      ]
+    },
+    {
+      "box": "9",
+      "kind": "base",
+      "name": "Box 9 — Non-creditable acquisitions",
+      "sequence": 90,
+      "legal_reference": "Form RET 020, box 9 — purchases on which no VAT was charged, or whose VAT is not claimed, and salaries and wages (instructions, box 9). The engine posts the exclusive value; the form asks for the amount actually paid.",
+      "source": "return-instructions"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Box 10 — Purchases subject to claimable VAT, VAT included (box 8 less box 9)",
+      "sequence": 100,
+      "legal_reference": "Form RET 020, box 10 — box 8 less box 9. Here the exclusive base of box 10a plus the VAT of box 11.",
+      "source": "vat-return",
+      "plus": [
+        "10a:base",
+        "11:tax"
+      ]
+    },
+    {
+      "box": "10a",
+      "kind": "base",
+      "name": "Box 10a — Purchases subject to claimable VAT, VAT excluded",
+      "sequence": 105,
+      "legal_reference": "Not a box of the form: the exclusive value of the purchases of box 10, which the engine posts and from which box 10 is rebuilt.",
+      "source": "return-instructions"
+    },
+    {
+      "box": "11",
+      "kind": "tax",
+      "name": "Box 11 — VAT paid on purchases (box 10 divided by 9)",
+      "sequence": 110,
+      "legal_reference": "Form RET 020, box 11 — box 10 divided by 9, the tax fraction of 12.5 % (instructions, box 11).",
+      "source": "return-instructions"
+    },
+    {
+      "box": "12",
+      "kind": "base",
+      "name": "Box 12 — Imports, customs value (basis of box 12)",
+      "sequence": 120,
+      "legal_reference": "The imported goods whose VAT is claimed in box 12; the form asks for the VAT only.",
+      "source": "return-instructions"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "Box 12 — VAT on imports paid to Customs",
+      "sequence": 125,
+      "legal_reference": "Form RET 020, box 12 — the VAT paid to Customs on imported goods (instructions, boxes 8 and 12).",
+      "source": "return-instructions"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Box 13 — Government withheld VAT",
+      "sequence": 130,
+      "legal_reference": "Form RET 020, box 13 — the VAT the Government withheld on its payments for goods or services supplied to it in the period, which the supplier invoices but is not paid; it may be claimed here before the Government pays it (instructions, box 13). Declared and empty: the withholding is not modelled (see the README).",
+      "source": "return-instructions"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Box 14 — Adjustments to VAT paid (credits of earlier returns, one-off import duty credit)",
+      "sequence": 140,
+      "legal_reference": "Form RET 020, box 14 — credits seen in earlier returns, and the one-off credit on the duty paid on goods held at the start of the VAT; claims need the approval of the Tax Division or documentary evidence (instructions, box 14). Declared and empty: a decision of the preparer.",
+      "source": "return-instructions"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Box 15 — Total VAT paid (boxes 11 + 12 + 13 + 14)",
+      "sequence": 150,
+      "legal_reference": "Form RET 020, box 15 — boxes 11, 12, 13 and 14 added.",
+      "source": "vat-return",
+      "plus": [
+        "11",
+        "12:tax",
+        "13",
+        "14"
+      ]
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "Box 16 — VAT to pay (positive) or VAT credit (negative) (box 7 less box 15)",
+      "sequence": 160,
+      "legal_reference": "Form RET 020, box 16 — the difference between box 7 and box 15: box 7 larger is the VAT to pay, box 15 larger is a VAT credit, which may be refunded (instructions, box 16).",
+      "source": "vat-return",
+      "plus": [
+        "7"
+      ],
+      "minus": [
+        "15"
+      ]
+    }
+  ],
+  "period_default": "quarter"
+}

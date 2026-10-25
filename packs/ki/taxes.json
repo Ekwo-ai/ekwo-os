@@ -1,0 +1,282 @@
+[
+  {
+    "code": "KI-S-12.5",
+    "name": "Sale, standard rate 12.5 %",
+    "description": "A taxable supply of goods or services made in Kiribati by a registered person, neither zero-rated nor exempt",
+    "kind": "vat",
+    "rate": 12.5,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2024-01-01",
+    "legal_reference": "The Guidelines & Obligations for VAT Registered Businesses (item 6) charge VAT on taxable supplies at the rate of 12.5 %, none on exempt or zero-rated ones; the return divides the VAT-inclusive total by 9, which is the tax fraction of 12.5 %. Return RET 020, box 4 — sales subject to VAT, VAT included (box 1 less boxes 2 and 3) — and box 5 — box 4 divided by 9. The engine posts the exclusive base to box 4a and the VAT to box 5.",
+    "source": "guidelines",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "5"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "5",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "KI-S-ZR-EXP",
+    "name": "Sale, zero-rated (export or service used outside Kiribati)",
+    "description": "Goods exported, or a service supplied to be used outside Kiribati, taxable at 0 %",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "vat_category": "G",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Exempt and zero-rated supplies sheet (August 2024), zero-rated for VAT: exports; services to be used outside Kiribati; international transport services. A zero-rated supply is a taxable supply that keeps the input tax credit. Return RET 020, box 2 — zero-rated sales, included in box 1.",
+    "source": "exempt-zero-rated",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "KI-S-ZR",
+    "name": "Sale, zero-rated (other)",
+    "description": "A zero-rated supply made in Kiribati that is not an export — passenger transport by bus, truck or taxi, the transfer of a going concern between registered persons, consumable stores for vessels and aircraft going abroad and the like",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Exempt and zero-rated supplies sheet (August 2024), the nine zero-rated items: exports, consumable stores for a fishing vessel, aircraft or ship going outside Kiribati, repair of temporarily imported goods, services used outside Kiribati, telecommunication services to non-residents, international transport, the transfer of an enterprise as a going concern between registered persons, a fishing licence used principally for exports, and passenger transport in Kiribati by bus, truck or taxi other than by a tour operator. One tax code carries the whole list; which item applies is the preparer's judgement. Return RET 020, box 2.",
+    "source": "exempt-zero-rated",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "KI-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply the VAT Act exempts — uncooked rice and flour, kerosene, financial services, education, medical services, residential letting and the others of the sheet",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Exempt and zero-rated supplies sheet (August 2024): twenty-six exemptions, among them uncooked rice, uncooked wheat flour, kerosene, financial services, education, medical, dental and nursing services, and residential leases of two months or more. No VAT is charged and no credit is allowed on the inputs of an exempt sale. Return RET 020, box 3 — exempt sales, included in box 1 and taken out of box 4.",
+    "source": "exempt-zero-rated",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "KI-P-12.5",
+    "name": "Purchase, standard rate 12.5 %, deductible",
+    "description": "A local purchase of goods, services or capital goods at the standard rate, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 12.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2024-01-01",
+    "legal_reference": "The Guidelines & Obligations for VAT Registered Businesses (item 6) charge VAT on taxable supplies at the rate of 12.5 %, none on exempt or zero-rated ones; the return divides the VAT-inclusive total by 9, which is the tax fraction of 12.5 %. Return RET 020, box 10 — purchases and expenses with VAT less the non-creditable ones — and box 11 — box 10 divided by 9. The engine posts the exclusive base to box 10a and the VAT to box 11. The form has no separate line for capital goods.",
+    "source": "guidelines",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "10a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "11"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "10a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "11",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "KI-P-12.5-NC",
+    "name": "Purchase, standard rate 12.5 %, input tax not claimed",
+    "description": "A purchase on which input tax is not claimed — the VAT joins the cost",
+    "kind": "vat",
+    "rate": 12.5,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Return RET 020, box 9 — non-creditable acquisitions: purchases that carry no creditable VAT, such as those from businesses that charge none and salaries and wages (instructions, box 9). Which purchases are barred is the preparer's judgement. The VAT joins the cost; the base is posted to box 9, VAT excluded, which understates the VAT-inclusive figure the form asks for (see the README).",
+    "source": "return-instructions",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9",
+          "box_factor": -100
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "KI-P-0",
+    "name": "Purchase, exempt or without VAT",
+    "description": "A purchase of an exempt supply (for example a financial service), carrying no VAT",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Return RET 020, box 9 — non-creditable acquisitions: purchases on which no VAT was charged (instructions, box 9). They are in box 8 and out of box 10.",
+    "source": "return-instructions",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "KI-P-IMP",
+    "name": "Purchase of imported goods, 12.5 % VAT paid at Customs",
+    "description": "Imported goods: the VAT paid to Customs at the border is claimed as input tax in box 12",
+    "kind": "vat",
+    "rate": 12.5,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Return RET 020, box 12 — VAT on imports paid to Customs; the instructions of box 8 say the total of purchases must leave out imported goods and the VAT paid to Customs, claimed in box 12. The VAT owed to Customs sits on the import control account until paid.",
+    "source": "return-instructions",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "12"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "12",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 150
+  }
+]
