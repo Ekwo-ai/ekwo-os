@@ -1,0 +1,359 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Koror trading company, registered for PGST and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "PW-FS-SFP",
+    "PW-FS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-pw",
+      "name": "Koror Retail Inc.",
+      "type": "customer",
+      "country": "PW"
+    },
+    {
+      "ref": "cust-jp",
+      "name": "Osaka Marine Foods Co.",
+      "type": "customer",
+      "country": "JP"
+    },
+    {
+      "ref": "cust-ph",
+      "name": "Manila Consulting Corp.",
+      "type": "customer",
+      "country": "PH"
+    },
+    {
+      "ref": "supp-pw",
+      "name": "Malakal Wholesalers Inc.",
+      "type": "supplier",
+      "country": "PW"
+    },
+    {
+      "ref": "supp-us",
+      "name": "Guam Components LLC",
+      "type": "supplier",
+      "country": "US"
+    },
+    {
+      "ref": "supp-sg",
+      "name": "Singapore Advisory Pte Ltd",
+      "type": "supplier",
+      "country": "SG"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-pw",
+      "date": "2026-01-08",
+      "why": "A domestic sale at the standard rate of 10 %: the amount excluding PGST in line A, column 1, the PGST in line A, column 2.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale",
+          "quantity": 10,
+          "unit_price": 1200,
+          "tax": "PW-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-pw",
+      "date": "2026-01-12",
+      "why": "Interest on a loan granted to a customer: a financial service, exempt (Act § 1213), so line C and no PGST, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Interest on a customer loan, January",
+          "quantity": 1,
+          "unit_price": 2500,
+          "tax": "PW-S-EX",
+          "account": "4500"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-jp",
+      "date": "2026-01-15",
+      "why": "An export of goods, zero-rated: line B, no output PGST, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Frozen tuna, export consignment",
+          "quantity": 500,
+          "unit_price": 24,
+          "tax": "PW-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-ph",
+      "date": "2026-01-19",
+      "why": "A service exported, zero-rated: line B again, from the export-of-services account.",
+      "lines": [
+        {
+          "name": "Consulting services supplied abroad",
+          "quantity": 1,
+          "unit_price": 9000,
+          "tax": "PW-S-ZR-EXP",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-pw",
+      "date": "2026-01-21",
+      "why": "A zero-rated supply made in Palau, not an export (prescription medicine to a licensed pharmacy): line B.",
+      "lines": [
+        {
+          "name": "Prescription medicine, licensed pharmacy",
+          "quantity": 200,
+          "unit_price": 45,
+          "tax": "PW-S-ZR",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-pw",
+      "date": "2026-01-23",
+      "why": "The sale of a piece of equipment at the standard rate, sales of capital assets being in line A as the instructions say.",
+      "lines": [
+        {
+          "name": "Used refrigeration unit, sale",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "PW-S-10",
+          "account": "4750"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-pw",
+      "date": "2026-01-26",
+      "why": "A credit note for one unit returned from INV-001, so line A and its PGST fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 1200,
+          "tax": "PW-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-pw",
+      "date": "2026-01-09",
+      "why": "A local purchase at 10 % for resale: line E, the PGST paid claimed in line O.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 4000,
+          "tax": "PW-P-10",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-pw",
+      "date": "2026-01-11",
+      "why": "A local purchase of capital goods at 10 %: the form has no separate line, so line E.",
+      "lines": [
+        {
+          "name": "Delivery truck, cost",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "PW-P-10",
+          "account": "1660"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-pw",
+      "date": "2026-01-13",
+      "why": "A purchase on which the PGST is not claimed: it joins the cost and no line of the return moves.",
+      "lines": [
+        {
+          "name": "Staff entertainment",
+          "quantity": 1,
+          "unit_price": 2000,
+          "tax": "PW-P-10-NC",
+          "account": "6390"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-pw",
+      "date": "2026-01-16",
+      "why": "A purchase of an exempt service (insurance), without PGST: line H.",
+      "lines": [
+        {
+          "name": "Insurance premium",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "PW-P-0",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-01-20",
+      "why": "Goods imported, with 10 % PGST paid at import: line G, and the PGST owed on the import account.",
+      "lines": [
+        {
+          "name": "Trading stock imported for resale",
+          "quantity": 1,
+          "unit_price": 25000,
+          "tax": "PW-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-us",
+      "date": "2026-01-27",
+      "why": "Capital goods imported: line G again, from the fixed-asset account.",
+      "lines": [
+        {
+          "name": "Cold-room equipment, imported",
+          "quantity": 1,
+          "unit_price": 10000,
+          "tax": "PW-P-IMP",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-007",
+      "type": "purchase_invoice",
+      "contact": "supp-sg",
+      "date": "2026-01-22",
+      "why": "A service bought abroad from an unregistered supplier by a person who also makes exempt supplies: reverse charge, lines J and K, the PGST in line N and in line O.",
+      "lines": [
+        {
+          "name": "Advisory services from Singapore",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "PW-P-RC-SVC",
+          "account": "6420"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-008",
+      "type": "purchase_invoice",
+      "contact": "supp-pw",
+      "date": "2026-01-24",
+      "why": "A zero-rated purchase in Palau, line F, no PGST to claim.",
+      "lines": [
+        {
+          "name": "Prescription medicine purchased for resale",
+          "quantity": 1,
+          "unit_price": 6000,
+          "tax": "PW-P-ZR",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-pw",
+      "date": "2026-01-30",
+      "why": "A purchase credit note for a short delivery on PINV-001, so line E falls back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 500,
+          "tax": "PW-P-10",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 2500,
+      "contact": "cust-pw",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The interest of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 12000,
+      "contact": "cust-jp",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-07",
+      "amount": 4400,
+      "contact": "supp-pw",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, PGST included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 2000,
+      "contact": "cust-ph",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Manila Consulting Corp. before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}
