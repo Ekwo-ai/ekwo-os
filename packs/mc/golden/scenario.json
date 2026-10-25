@@ -153,6 +153,22 @@
       ]
     },
     {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "client-it",
+      "date": "2026-02-18",
+      "why": "Une prestation de services à un assujetti établi dans un autre État membre (CTCA, art. 11, 1°) : située hors de Monaco, elle remplit la ligne 05, et l'état récapitulatif la liste comme services.",
+      "lines": [
+        {
+          "name": "Prestation de conseil",
+          "quantity": 1,
+          "unit_price": 2500,
+          "tax": "MC-S-ICS",
+          "account": "706000"
+        }
+      ]
+    },
+    {
       "ref": "V7",
       "type": "sale_invoice",
       "contact": "client-mc",
