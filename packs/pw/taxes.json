@@ -1,0 +1,360 @@
+[
+  {
+    "code": "PW-S-10",
+    "name": "Sale, standard rate 10 %",
+    "description": "A taxable supply of goods or services made in Palau by a registered person, neither zero-rated nor exempt",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Act § 1211(b)(2): PGST at ten percent (10 %) on a taxable supply that is not zero-rated; in force from 1 January 2023. Return Tax 500, line A — supplies on which 10 % PGST is collected, the amount excluding PGST in column 1 and the PGST in column 2.",
+    "source": "pgst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "A"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "A"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "A",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "A",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "PW-S-ZR-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "Goods exported or a service supplied to a person outside Palau, taxable at 0 %",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "vat_category": "G",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Act § 1211(b)(1) and § 1212: a zero-rated supply bears PGST at 0 % and keeps the input tax credit; the supplies of goods for export and of exported services are on the list (PGST types of supplies). Return Tax 500, line B. Which conditions an export meets is the preparer's judgement.",
+    "source": "pgst-supplies",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "PW-S-ZR",
+    "name": "Sale, zero-rated (other than export)",
+    "description": "A zero-rated supply made in Palau that is not an export — international transport, prescription medicine supplied to a licensed pharmacy, clinic or hospital, the transfer of a business as a going concern and the others on the list",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Act § 1212 and the list of zero-rated supplies (PGST types of supplies): aircraft or ship stores, international transport and telecommunications, prescription medicine to a licensed pharmacy, clinic or hospital, the transfer of a business as a going concern, plastic pellets and empty containers for local bottling, and supplies by a non-resident contractor under an international agreement. One tax code carries the whole list; which item applies is the preparer's judgement. Return Tax 500, line B.",
+    "source": "pgst-supplies",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "B"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "B",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "PW-S-EX",
+    "name": "Sale, exempt (financial services)",
+    "description": "A supply of financial services — loans, deposits, interest-bearing investments, securities, insurance, retirement savings and the like",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Act § 1213: a supply of financial services, if not zero-rated, is an exempt supply. No PGST is charged and no input tax credit is allowed on the inputs that serve it (Regulations § 401, apportionment). Return Tax 500, line C — supplies not subject to PGST.",
+    "source": "pgst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "C"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "C",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "PW-P-10",
+    "name": "Purchase, standard rate 10 %, credit allowed",
+    "description": "A purchase in Palau of goods, services or capital goods on which 10 % PGST is paid to a registered supplier, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Act § 1241: an input tax credit is allowed for a creditable acquisition — a taxable supply by another registered person — in the PGST period in which the input tax is paid, on a PGST invoice. Return Tax 500, line E, columns 1 and 2; line O adds the credit. The form has no separate line for capital goods: they are in line E, and line M is the preparer's.",
+    "source": "pgst-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "E"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "E"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "E",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "E",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "PW-P-10-NC",
+    "name": "Purchase, standard rate 10 %, credit not claimed",
+    "description": "A purchase on which the PGST is not claimed as input tax — the PGST joins the cost",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Act § 1242 denies the input tax credit in the cases it lists, and Regulations § 401 apportions it for acquisitions made partly for exempt supplies. Which purchases are barred is the preparer's judgement; the pack lists none. The PGST joins the cost and the code posts to no box of the return.",
+    "source": "pgst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        },
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "PW-P-ZR",
+    "name": "Purchase, zero-rated",
+    "description": "A purchase of a zero-rated supply (for example an export-related service) carrying PGST at 0 %",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Act § 1212: a zero-rated supply bears PGST at 0 %. Return Tax 500, line F — zero-rated goods and services purchased, to the extent they were purchased to make taxable supplies; no PGST, so nothing in column 2.",
+    "source": "pgst-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "F"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "F",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 140
+  },
+  {
+    "code": "PW-P-0",
+    "name": "Purchase, without PGST",
+    "description": "A purchase of an exempt supply, or from a supplier who is not registered for PGST, or of a service bought abroad that is not subject to PGST, carrying no PGST",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Return Tax 500, line H, as the instructions word it: the value of all goods and services purchased that were not subject to PGST, including purchases from non-registered suppliers and services bought overseas that are not subject to PGST. There is no PGST to claim.",
+    "source": "pgst-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "H"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "H",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 150
+  },
+  {
+    "code": "PW-P-IMP",
+    "name": "Purchase of imported goods, 10 % PGST paid at import",
+    "description": "Imported goods: the PGST is collected on the import and claimed as input tax in line G",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Act § 1214: PGST at ten percent (10 %) on the value of a taxable import, payable at the time of import (§ 1282(b)), collected by the Director on the customs declaration (§ 1283). Return Tax 500, line G, columns 1 and 2, to the extent the goods are used to make taxable supplies; line O adds the credit. The PGST owed at the border sits on the import account until it is paid.",
+    "source": "pgst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "G"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "G",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 160
+  },
+  {
+    "code": "PW-P-RC-SVC",
+    "name": "Imported service, reverse-charged and credited",
+    "description": "A service supplied by an unregistered person outside Palau to a registered person in Palau, for a person who makes exempt supplies as well: the PGST is accounted for by the recipient, who credits it to the extent the service serves taxable supplies",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "foreign_services_received",
+    "valid_from": "2023-01-01",
+    "legal_reference": "Act § 1211(a)(2) and § 1261 (component B): the recipient is liable for PGST at 10 % on a supply of imported services; Regulations § 312: the liability falls outside the formula when the services are used wholly for taxable supplies. Return Tax 500, line J — imported services subject to the 10 % reverse charge — and line K — imported services eligible for input tax credit; line N adds line J and line O adds line K. The pack credits the whole service; the share used for exempt supplies is the preparer's adjustment.",
+    "source": "pgst-return",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "J"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "J"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "K"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "J",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2100",
+          "box": "J",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "K",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 170
+  }
+]

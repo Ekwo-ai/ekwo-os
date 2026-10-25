@@ -446,6 +446,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`pk`](../packs/pk/) | Pakistan | `125_pack_pk.sql` | en | `community` |
 | [`pl`](../packs/pl/) | Polska | `64_pack_pl.sql` | pl | `community` |
 | [`pt`](../packs/pt/) | Portugal | `43_pack_pt.sql` | pt, en | `community` |
+| [`pw`](../packs/pw/) | Palau | `224_pack_pw.sql` | en | `community` |
 | [`py`](../packs/py/) | Paraguay | `103_pack_py.sql` | es | `community` |
 | [`qa`](../packs/qa/) | Qatar | `142_pack_qa.sql` | ar, en | `community` |
 | [`ro`](../packs/ro/) | Romania | `72_pack_ro.sql` | ro | `community` |

@@ -1,0 +1,200 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "PW",
+  "name": "Palau",
+  "version": "0.1.0",
+  "schema_min": "20261023124650",
+  "seed_sequence": 224,
+  "released_at": "2026-10-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "pgst-act",
+        "title": "Republic of Palau Public Law (RPPL) No. 11-11, which repeals and replaces Chapter 12 of Title 40 of the Palau National Code: the Palau Goods and Services Tax (PGST) — § 1211 (10 % on a taxable supply and on a supply of imported services, 0 % on a zero-rated supply), § 1212 (zero-rated supplies), § 1213 (the supply of financial services is exempt), § 1214 (10 % on a taxable import, payable at the time of import), § 1241 (input tax credit), § 1261 (net PGST payable for a PGST period = (A + B) - C), § 1262 (an excess of credit is carried forward, and refunded on written application), § 1281 (a return for each PGST period within thirty days after its end), § 1282 (payment by the due date of the return) and the definition of a PGST period as a calendar month",
+        "publisher": "Bureau of Revenue and Taxation (BRT), Ministry of Finance, Republic of Palau",
+        "url": "https://www.palaugov.pw/wp-content/uploads/2022/04/RPPL-11-11.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "pgst-regulations",
+        "title": "Palau Goods and Services Tax Regulations (as of 2 July 2023): § 312 — the PGST payable on imported services is outside the formula of § 1261 when the registered person uses the services wholly to make taxable supplies, and no recipient-created invoice is prepared in that case; § 401 — apportionment of input tax credits for acquisitions made partly to make taxable supplies",
+        "publisher": "Bureau of Revenue and Taxation (BRT), Ministry of Finance, Republic of Palau",
+        "url": "https://www.palaugov.pw/wp-content/uploads/Regulations_Palau-Goods-and-Services-Tax.pdf",
+        "kind": "regulation",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "pgst-return",
+        "title": "Form Tax 500, Palau Goods & Services Monthly Tax Return (revised 30 July 2022) and its instructions: lines A to C (business outputs), E to H (business inputs), J and K (imported services subject to the reverse charge rules), L and M (business capital assets), N to P (net PGST payable or creditable = N - O), each with an amount excluding PGST in column 1 and the PGST in column 2; the return and the payment are due on or before the thirtieth day of the month following the PGST period; a negative line P is a credit carried forward to the following period",
+        "publisher": "Bureau of Revenue and Taxation (BRT), Ministry of Finance, Republic of Palau",
+        "url": "https://www.palaugov.pw/wp-content/uploads/Tax-500-Palau-Goods-Services-Tax-Return-Form.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "pgst-itc-returns",
+        "title": "PGST — Input Tax Credit, Tax Returns, Record-keeping: what a creditable acquisition is (a taxable supply by another registered person, a supply of imported services, a taxable import), the documents that support the credit (PGST invoice, customs documentation, recipient-created invoice for imported services, debit or credit note), the monthly self-assessed return lodged by the thirtieth day of the following month and the three-year retention of records",
+        "publisher": "Bureau of Revenue and Taxation (BRT), Ministry of Finance, Republic of Palau",
+        "url": "https://www.palaugov.pw/wp-content/uploads/2022/07/PGST-Input-tax-credit-tax-returns-recordkeeping.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "pgst-supplies",
+        "title": "PGST — Types of supplies: the taxable supplies (goods, services, utilities, telecommunications, leases and licences), the list of zero-rated supplies (exports, aircraft and ship stores, international transport and telecommunications, prescription medicine supplied to a licensed pharmacy, clinic or hospital, and the others) and the exempt supplies (financial services)",
+        "publisher": "Bureau of Revenue and Taxation (BRT), Ministry of Finance, Republic of Palau",
+        "url": "https://www.palaugov.pw/taxreform/pgst-types-of-supplies/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "pgst-threshold",
+        "title": "PGST — Calculating your supplies: registration is compulsory above USD 300,000 of average taxable supplies (the current projected year and the three previous years, divided by four), within seven days of exceeding the threshold; a holder of a Foreign Investment Approval Certificate registers whatever the turnover",
+        "publisher": "Bureau of Revenue and Taxation (BRT), Ministry of Finance, Republic of Palau",
+        "url": "https://www.palaugov.pw/executive-branch/ministries/finance/brt/pgst-calculating-your-supplies/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "taxpayer-calendar",
+        "title": "Taxpayer calendar for the year 2023: the PGST return of a month is due on the 30th of the month after the PGST period (the January 2023 return on 2 March, thirty days after the end of the period), and a due date that falls on a weekend or a public holiday moves to the next working day",
+        "publisher": "Bureau of Revenue and Taxation (BRT), Ministry of Finance, Republic of Palau",
+        "url": "https://www.palaugov.pw/wp-content/uploads/Taxpayer-Calendar_Year-2023-1.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "ias-1",
+        "title": "IAS 1 Presentation of Financial Statements — the statement of financial position and the statement of profit or loss, expenses analysed by nature; no Palau text prescribing a layout of the statements or a chart of accounts was found, and the IFRS Foundation page of the jurisdiction could not be read",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/list-of-standards/ias-1-presentation-of-financial-statements/",
+        "kind": "standard",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "brt-portal",
+        "title": "Bureau of Revenue and Taxation — tax administration page (filing forms, the Tax Filing App, registration forms, the PGST guidance)",
+        "publisher": "Bureau of Revenue and Taxation (BRT), Ministry of Finance, Republic of Palau",
+        "url": "https://www.palaugov.pw/executive-branch/ministries/finance/brt/",
+        "kind": "portal",
+        "consulted_on": "2026-10-25"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "USD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Bureau of Revenue and Taxation (BRT), Ministry of Finance",
+      "source": "brt-portal"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Palau reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "PW-FS-SFP",
+        "PW-FS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the texts read for Palau: no text found prescribes one, nor the layout of the financial statements. This chart is original: four digits, blocked so that each range reaches one line of the IAS 1-style statements below (expenses by nature), with the accounts a Palau trading company keeps — PGST output and input tax, import PGST owed at the time of import, wages and salary tax withheld, social security contributions and other taxes payable.",
+      "source": "ias-1"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "A PGST invoice must carry the particulars § 1271 of the Act lists; no text read says how invoices are numbered. `sequential` and the number format are conventions of this pack and not rules of the law.",
+        "source": "pgst-act"
+      },
+      "tax_point": {
+        "legal_reference": "Act § 1232 sets the time of supply and § 1211(c) the time the liability arises; the pack does not model the rules of § 1232 and takes the invoice date as the tax point. That is a simplification, recorded in the README.",
+        "source": "pgst-act"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No structured e-invoice standard, Peppol profile or clearance system of the BRT was found in the texts read; the returns are filed on the Tax 500 form with the Tax Filing App of the Bureau. `obligation` is `none` for want of a text, not on a finding that none exists.",
+    "source": "brt-portal"
+  }
+}

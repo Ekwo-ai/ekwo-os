@@ -1,0 +1,206 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "PW-PGST",
+  "name": "PGST return (Tax 500)",
+  "period": [
+    "month"
+  ],
+  "valid_from": "2023-01-01",
+  "legal_reference": "Form Tax 500, Palau Goods & Services Monthly Tax Return: lines A to P, with the amount excluding PGST in column 1 and the PGST in column 2. The PGST period is a calendar month (Act § 1202); the return is filed on the Tax 500 form and is due within thirty days after the end of the period (§ 1281). Lines L and M (capital assets) are the preparer's: declared and empty. The continuation sheet (summary by business licence) is not produced.",
+  "source": "pgst-return",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 30,
+    "legal_reference": "Act § 1281 — a return for each PGST period within thirty (30) days after the end of the period, and § 1282(a) — payment by the same date; the form's instructions say on or before the thirtieth day of the month following the period. The taxpayer calendar gives 30 March for February, 30 April for March and so on, and 2 March for January (thirty days after 31 January); a date that falls on a weekend or a public holiday moves to the next working day. The rule below is the thirtieth day: for a January return it is two days earlier than the Act, and the weekend rule is not applied.",
+    "source": "taxpayer-calendar"
+  },
+  "boxes": [
+    {
+      "box": "A",
+      "kind": "base",
+      "name": "Line A, column 1 — Supplies on which 10 % PGST is collected (amount excluding PGST)",
+      "sequence": 10,
+      "legal_reference": "Form Tax 500, line A, column 1: the taxable supplies, sales of capital assets included, that were subject to PGST at 10 %, excluding PGST.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "A",
+      "kind": "tax",
+      "name": "Line A, column 2 — PGST collected on the supplies of line A",
+      "sequence": 20,
+      "legal_reference": "Form Tax 500, line A, column 2: the PGST collected on the amount of column 1, deemed taxable supplies and adjustments included.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "B",
+      "kind": "base",
+      "name": "Line B — Supplies on which zero rate (0 %) PGST is collected",
+      "sequence": 30,
+      "legal_reference": "Form Tax 500, line B: the value of the zero-rated goods and services supplied during the PGST period (exports and the others on the list).",
+      "source": "pgst-return"
+    },
+    {
+      "box": "C",
+      "kind": "base",
+      "name": "Line C — Supplies not subject to PGST (exempt supplies)",
+      "sequence": 40,
+      "legal_reference": "Form Tax 500, line C: the goods and services supplied that were not subject to PGST — the exempt financial services (Act § 1213).",
+      "source": "pgst-return"
+    },
+    {
+      "box": "D",
+      "kind": "total",
+      "name": "Line D — Total business outputs (A + B + C, column 1)",
+      "sequence": 50,
+      "legal_reference": "Form Tax 500, line D: lines A, B and C of column 1 added.",
+      "source": "pgst-return",
+      "plus": [
+        "A:base",
+        "B:base",
+        "C:base"
+      ]
+    },
+    {
+      "box": "E",
+      "kind": "base",
+      "name": "Line E, column 1 — Domestic supplies on which 10 % PGST paid (amount excluding PGST)",
+      "sequence": 60,
+      "legal_reference": "Form Tax 500, line E, column 1: the business inputs (goods, capital assets, services) subject to PGST at 10%, excluding PGST.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "E",
+      "kind": "tax",
+      "name": "Line E, column 2 — PGST paid on the domestic purchases of line E",
+      "sequence": 70,
+      "legal_reference": "Form Tax 500, line E, column 2: the PGST paid on purchases during the period, adjustments included.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "F",
+      "kind": "base",
+      "name": "Line F — Domestic supplies on which zero rate (0 %) PGST paid",
+      "sequence": 80,
+      "legal_reference": "Form Tax 500, line F: zero-rated goods and services purchased, to the extent they were purchased to make taxable supplies.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "G",
+      "kind": "base",
+      "name": "Line G, column 1 — Imported goods on which 10 % PGST paid (amount excluding PGST)",
+      "sequence": 90,
+      "legal_reference": "Form Tax 500, line G, column 1: the value of the goods imported, excluding PGST, to the extent they were used to make taxable supplies.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "G",
+      "kind": "tax",
+      "name": "Line G, column 2 — PGST paid on the imported goods",
+      "sequence": 100,
+      "legal_reference": "Form Tax 500, line G, column 2: the PGST paid on the imported goods of column 1.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "H",
+      "kind": "base",
+      "name": "Line H — Supplies not subject to PGST (exempt supplies purchased)",
+      "sequence": 110,
+      "legal_reference": "Form Tax 500, line H: the value of all goods and services purchased that were not subject to PGST, including purchases from non-registered suppliers and services bought overseas that are not subject to PGST.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "I",
+      "kind": "total",
+      "name": "Line I — Total business inputs (E + F + G + H, column 1)",
+      "sequence": 120,
+      "legal_reference": "Form Tax 500, line I: lines E, F, G and H of column 1 added.",
+      "source": "pgst-return",
+      "plus": [
+        "E:base",
+        "F:base",
+        "G:base",
+        "H:base"
+      ]
+    },
+    {
+      "box": "J",
+      "kind": "base",
+      "name": "Line J, column 1 — Imported services subject to the 10 % reverse charge (value)",
+      "sequence": 130,
+      "legal_reference": "Form Tax 500, line J, column 1: the value of the imported services.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "J",
+      "kind": "tax",
+      "name": "Line J, column 2 — PGST reverse-charged on the imported services (10 %)",
+      "sequence": 140,
+      "legal_reference": "Form Tax 500, line J, column 2: an amount equal to 10 % of the value of line J, column 1 (Act § 1211(a)(2)).",
+      "source": "pgst-return"
+    },
+    {
+      "box": "K",
+      "kind": "tax",
+      "name": "Line K — Input tax credit on the imported services (10 % of the value used to make taxable supplies)",
+      "sequence": 160,
+      "legal_reference": "Form Tax 500, line K, column 2: an amount equal to 10 % of the value of line K, column 1. Only the PGST is a box of the pack: the code credits the whole service, so the value of column 1 is the value of line J.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "L",
+      "kind": "base",
+      "name": "Line L — Total sales of business capital assets included in line D",
+      "sequence": 170,
+      "legal_reference": "Form Tax 500, line L: the value of the business capital assets sold during the period, excluding PGST. Declared and empty: whether an item is a capital asset (a useful life over one year, inventory excluded) is the preparer's judgement, and no tax code posts to it.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "M",
+      "kind": "base",
+      "name": "Line M — Total purchases of business capital assets included in line I",
+      "sequence": 180,
+      "legal_reference": "Form Tax 500, line M: the value of the business capital assets purchased during the period. Declared and empty, for the reason given at line L.",
+      "source": "pgst-return"
+    },
+    {
+      "box": "N",
+      "kind": "total",
+      "name": "Line N — PGST collected plus PGST reverse-charged on imported services (A + J, column 2)",
+      "sequence": 190,
+      "legal_reference": "Form Tax 500, line N: the sum of column 2 of lines A and J — components A and B of the formula of Act § 1261.",
+      "source": "pgst-return",
+      "plus": [
+        "A:tax",
+        "J:tax"
+      ]
+    },
+    {
+      "box": "O",
+      "kind": "total",
+      "name": "Line O — PGST input tax credit claimable (E + G + K, column 2)",
+      "sequence": 200,
+      "legal_reference": "Form Tax 500, line O: the sum of column 2 of lines E, G and K — component C of the formula of Act § 1261.",
+      "source": "pgst-return",
+      "plus": [
+        "E:tax",
+        "G:tax",
+        "K:tax"
+      ]
+    },
+    {
+      "box": "P",
+      "kind": "total",
+      "name": "Line P — Net PGST payable (positive) or creditable (negative) (N - O)",
+      "sequence": 210,
+      "legal_reference": "Form Tax 500, line P: line N less line O, the formula (A + B) - C of Act § 1261. A negative line P is a credit carried forward to the following PGST period (§ 1262); a refund needs a written application.",
+      "source": "pgst-return",
+      "plus": [
+        "N"
+      ],
+      "minus": [
+        "O"
+      ]
+    }
+  ],
+  "period_default": "month"
+}
