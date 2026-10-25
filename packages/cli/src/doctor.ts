@@ -77,9 +77,9 @@ export async function doctor(
   const socle = await socleSchemaOf(db);
 
   checks.push(await checkMigrations(db, migrations));
+  checks.push(await checkCatalogue(db, expected));
   checks.push(checkSocleSchema(socle));
   checks.push(await checkSocleExposed(db, socle));
-  checks.push(await checkCatalogue(db, expected));
   checks.push(await checkRowLevelSecurity(db, socle));
   checks.push(await checkPolicies(db, socle));
   checks.push(await checkGrants(db, expected));

@@ -166,6 +166,8 @@ describe('doctor', () => {
     expect(report.checks.map((c) => c.name)).toEqual([
       'migrations',
       'catalogue',
+      'socle_schema',
+      'ekwo_exposed',
       'row level security',
       'policies',
       'grants',
@@ -197,6 +199,33 @@ describe('doctor', () => {
       await db.query(
         `alter role authenticator set pgrst.db_pre_request = 'public.ekwo_pre_request'`,
       );
+    }
+  });
+
+  it('says where the socle lives, and whether the Data API serves ekwo where it can tell', async () => {
+    // Until the socle moves (decision 0090) it is found in `public`, and the
+    // exposed schemas are a setting of the project this connection cannot
+    // read: nothing to report but the line to set, which is not a warning yet.
+    const before = await doctor(db, migrations);
+    expect(before.checks.find((c) => c.name === 'socle_schema')?.data).toEqual({ schema: 'public' });
+    const unknown = before.checks.find((c) => c.name === 'ekwo_exposed');
+    expect(unknown?.severity).toBe('ok');
+    expect(unknown?.details?.[0]).toContain('Exposed schemas');
+
+    // A stack that carries the setting on `authenticator` is read.
+    await db.query(`alter role authenticator set pgrst.db_schemas = 'public, graphql_public'`);
+    try {
+      const missing = (await doctor(db, migrations)).checks.find((c) => c.name === 'ekwo_exposed');
+      expect(missing?.severity).toBe('warning');
+      expect(missing?.data).toEqual({ exposed: false, schemas: ['public', 'graphql_public'] });
+      expect(missing?.details?.[0]).toContain('"ekwo"');
+
+      await db.query(`alter role authenticator set pgrst.db_schemas = 'public, ekwo'`);
+      const served = (await doctor(db, migrations)).checks.find((c) => c.name === 'ekwo_exposed');
+      expect(served?.severity).toBe('ok');
+      expect(served?.data).toEqual({ exposed: true, schemas: ['public', 'ekwo'] });
+    } finally {
+      await db.query(`alter role authenticator reset pgrst.db_schemas`);
     }
   });
 
