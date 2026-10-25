@@ -116,6 +116,7 @@ consequence.
 - [0049](0049-a-statement-reader-reports-and-never-corrects.md) — A statement reader reports and never corrects
 - [0050](0050-an-invoice-is-written-from-the-books.md) — An invoice file is written from the books
 - [0051](0051-a-module-has-its-own-schema.md) — A module has its own schema and posts through a function
+- [0090](0090-the-socle-has-its-own-schema.md) — The socle has its own schema, `ekwo` (proposed)
 - [0063](0063-a-module-code-outlives-its-names.md) — A module code outlives its names
 - [0084](0084-a-contract-issues-drafts-of-the-socle.md) — A contract issues drafts of the socle
 - [0085](0085-one-reader-for-a-received-invoice.md) — One reader for a received invoice, and the model's part is data

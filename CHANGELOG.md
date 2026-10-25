@@ -54,6 +54,38 @@ somewhere has already run it.
   line keeps its one outside dependency: it runs the `@ekwo-ai/mcp` installed
   beside it, and otherwise the one of its own release through `npx`.
 
+### Changed
+
+- **The socle moves to its own schema, `ekwo`, in 0.22.0; this release gets
+  every installation ready for it** (socle migration `20261025072151`, decision
+  0090, proposed). `public` is the schema every Postgres database and every
+  Supabase project starts with, shared with any extension or application on
+  the same database; the socle's tables get a namespace that says whose they
+  are. Nothing moves yet. This release creates the schema `ekwo`, empty, with
+  the usage grants and the closed default privileges `public` carries. The
+  clients find the socle by its marker, `ekwo_schema_version()` — in `ekwo` when
+  it is there, in `public` otherwise — once per connection, and name its schema
+  on every call (`Accept-Profile` / `Content-Profile` over PostgREST, a
+  qualified name over SQL): `@ekwo-ai/core` (`socleSchemaResolver()`,
+  `onSocle()`, `SocleBackend.socleSchema()`), the MCP server's two backends and
+  the command line. The command line's owner connection puts the socle's
+  schema first on its `search_path`, so the unqualified seeds land in the
+  socle in either layout. `ekwo doctor` gains `socle_schema` (where the socle
+  lives) and `ekwo_exposed` (whether the Data API serves `ekwo`, read from
+  `pgrst.db_schemas` where the database carries it, otherwise the line to set);
+  `ekwo migrate` prints that line. **What a self-hosted installation does,
+  in this order:**
+  1. **Expose `ekwo` first**, before 0.22.0: Project Settings → Data API →
+     Exposed schemas, add `ekwo` (on a local stack, `schemas` under `[api]` in
+     `supabase/config.toml`). It can be done today: the schema exists and is
+     empty. Installations Ekwo Cloud manages are exposed by Ekwo Cloud.
+  2. **Upgrade with `npx -y ekwo-os@latest migrate`**, and keep the command line
+     and the MCP server on `@latest`: a client older than 0.21.0 reads `public`
+     and would find nothing there after the move.
+  3. **SQL written by hand**: `public.<table>` becomes `ekwo.<table>` with
+     0.22.0. Unqualified SQL keeps resolving for at least one release.
+     Archives and backups already taken stay importable.
+
 ### Fixed
 
 - **A monthly depreciation schedule runs while the asset is in service**

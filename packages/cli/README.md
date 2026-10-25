@@ -390,6 +390,14 @@ extra tables are reported as information. It also checks row level security on
 every table, pending migrations, memberships of deleted users, companies
 without a bank account, and posted entries that do not balance.
 
+Two checks say where the socle lives, ahead of its move to the schema `ekwo`
+in 0.22.0 ([decision 0090](../../docs/decisions/0090-the-socle-has-its-own-schema.md)):
+`socle_schema` (`ekwo` or `public`, found by the marker `ekwo_schema_version()`)
+and `ekwo_exposed` (whether the Data API serves `ekwo`, read from
+`pgrst.db_schemas` where the database carries it; otherwise the line to set).
+`ekwo migrate` prints the same line: Project Settings → Data API → Exposed
+schemas, add `ekwo`.
+
 Exit code `0` when there is no problem, `1` otherwise — usable as a deployment
 gate.
 
