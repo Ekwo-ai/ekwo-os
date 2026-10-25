@@ -1,0 +1,199 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "KI",
+  "name": "Kiribati",
+  "version": "0.1.0",
+  "schema_min": "20261023124650",
+  "seed_sequence": 223,
+  "released_at": "2026-10-25",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "guidelines",
+        "title": "Guidelines & Obligations of VAT Registered Businesses (31 May 2024) — registration threshold of $100,000 of sales, tax invoices showing the TIN and VAT-inclusive prices, VAT at 12.5 % on taxable supplies and none on exempt or zero-rated ones, the return and the VAT payable due within 15 days after the end of the quarter, late filing fee of $30 a month, late payment penalty of 15 % and interest of 15 % a year",
+        "publisher": "Kiribati Tax Division, Ministry of Finance and Economic Development",
+        "url": "https://tax.gov.ki/wp-content/uploads/2025/05/Guidelines-Obligations-for-VAT-Registered-Businesses.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "exempt-zero-rated",
+        "title": "Exemptions and Zero-rated items (August 2024) — the 26 exempt supplies and imports and the 9 zero-rated supplies of the VAT Act 2013 schedules, and the apportionment of input tax when part of the sales is exempt (full credit above 80 % taxable sales, proportional down to 20 %, none below)",
+        "publisher": "Kiribati Tax Division, Ministry of Finance and Economic Development",
+        "url": "https://tax.gov.ki/wp-content/uploads/2025/05/Exempt-0-rated-supplies_AUG-2024-1.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "vat-return",
+        "title": "Value Added Tax Return, form RET 020, for a period of three months: boxes 1 to 7 (VAT collected), boxes 8 to 15 (VAT paid) and box 16 (VAT to pay or VAT credit); box 5 and box 11 are the VAT-inclusive totals divided by 9",
+        "publisher": "Kiribati Tax Division, Ministry of Finance and Economic Development",
+        "url": "https://tax.gov.ki/wp-content/uploads/2025/05/VAT-Return-Form.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "return-instructions",
+        "title": "Kiribati VAT return instruction (January 2025) — the sixteen boxes one by one, written in Gilbertese with English terms: box 1 includes the zero-rated and exempt sales, box 4 is box 1 less boxes 2 and 3, box 5 is box 4 divided by 9, box 8 leaves out imports, box 12 is the VAT paid to Customs, box 13 the VAT withheld by the Government",
+        "publisher": "Kiribati Tax Division, Ministry of Finance and Economic Development",
+        "url": "https://tax.gov.ki/wp-content/uploads/2025/05/Kiribati-VAT-return-instruction.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "obligations",
+        "title": "Taxpayer's Obligation pamphlet (January 2026) — the tax invoice for VAT-registered businesses (VAT Regulations 2014, s 9), the quarterly VAT return due within 15 days after the end of the quarter, records kept seven years, late filing penalty of $30 a month, the PAYE and withholding tax returns due within 21 days after the end of the month",
+        "publisher": "Kiribati Tax Division, Ministry of Finance and Economic Development",
+        "url": "https://tax.gov.ki/wp-content/uploads/2026/01/JAN-2026-Tax-Obligation-pamphlet.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "vat-page",
+        "title": "VAT — the forms and guidance of the Tax Division: blank VAT return, return instruction, exempt and zero-rated supplies, mixed supplies fact sheet, guidelines for registered businesses",
+        "publisher": "Kiribati Tax Division, Ministry of Finance and Economic Development",
+        "url": "https://tax.gov.ki/tax/vat/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "ias-1",
+        "title": "IAS 1 Presentation of Financial Statements — the statement of financial position and the statement of profit or loss, expenses analysed by nature; no Kiribati text prescribing a layout or a chart of accounts was found",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/list-of-standards/ias-1-presentation-of-financial-statements/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-25"
+      },
+      {
+        "key": "tax-portal",
+        "title": "Kiribati Tax Division — tax administration portal (forms, guides, contacts; returns are filed at the tax office)",
+        "publisher": "Kiribati Tax Division, Ministry of Finance and Economic Development",
+        "url": "https://tax.gov.ki/",
+        "kind": "portal",
+        "consulted_on": "2026-10-25"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "AUD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Kiribati Tax Division, Ministry of Finance and Economic Development",
+      "source": "tax-portal"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Kiribati reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "KI-IFRS-SFP",
+        "KI-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the texts read for Kiribati, and no text read names a standard setter or a framework for company accounts. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-style statements below (IAS 1, expenses by nature), with the accounts a Kiribati trading company keeps — VAT output and input tax, import VAT owed to Customs, PAYE withheld, provident fund contributions and withholding taxes payable.",
+      "source": "ias-1"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "The tax invoice must carry the words TAX INVOICE, a date and an individualised serial number, the name, address and TIN of supplier and recipient, a description of the goods or services, and the price and VAT charged (VAT Regulations 2014, s 9, as summarised in the Taxpayer's Obligation pamphlet). `sequential` and the number format are conventions of this pack and not rules of the law.",
+        "source": "obligations"
+      },
+      "tax_point": {
+        "legal_reference": "No text read states when the VAT becomes due on a supply (the VAT Act 2013 itself could not be opened). `invoice_date` is the pack's simplification and not a finding of the law; the point of the tax is a gap recorded in the README.",
+        "source": "guidelines"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No structured e-invoice standard, Peppol profile or clearance system of the Tax Division was found in the texts read; returns are filed at the tax office on the paper or spreadsheet form. `obligation` is `none` for want of a text, not on a finding that none exists.",
+    "source": "tax-portal"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "The forms of the Tax Division list a simplified return and a VAT representative for foreign suppliers, but the texts read do not say how VAT on services bought from abroad is accounted for by the recipient. The pack therefore carries no purchase tax for them. This is a finding about the texts read, not a finding that no reverse charge exists: it is a gap recorded in the README.",
+      "source": "guidelines"
+    }
+  ]
+}
