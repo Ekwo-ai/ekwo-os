@@ -24,6 +24,8 @@ import {
 } from './inventory.js';
 import type { Migration } from './migrations.js';
 import { migrationGap } from './migrations.js';
+import { FORMER_SOCLE_SCHEMA, SOCLE_SCHEMA } from '@ekwo-ai/core';
+import { EXPOSE_SOCLE_LINE, socleSchemaOf } from './socle.js';
 import type { SqlClient } from './sql.js';
 import { scalar } from './sql.js';
 
@@ -70,20 +72,26 @@ export async function doctor(
   // would be two answers to one question.
   const expected = options.expected ?? (await readExpectedObjects());
 
+  // Where the socle lives, asked once: every check below that names its
+  // schema names this one.
+  const socle = await socleSchemaOf(db);
+
   checks.push(await checkMigrations(db, migrations));
+  checks.push(checkSocleSchema(socle));
+  checks.push(await checkSocleExposed(db, socle));
   checks.push(await checkCatalogue(db, expected));
-  checks.push(await checkRowLevelSecurity(db));
-  checks.push(await checkPolicies(db));
+  checks.push(await checkRowLevelSecurity(db, socle));
+  checks.push(await checkPolicies(db, socle));
   checks.push(await checkGrants(db, expected));
-  checks.push(await checkPreRequest(db));
-  checks.push(await checkKeysBeyondIssuer(db));
+  checks.push(await checkPreRequest(db, socle));
+  checks.push(await checkKeysBeyondIssuer(db, socle));
 
   checks.push(await checkOrphanMembers(db));
   checks.push(await checkOrphanAdmins(db));
   checks.push(await checkBankAccounts(db));
   checks.push(await checkStatements(db));
   checks.push(await checkPostedEntriesBalance(db));
-  checks.push(await checkAuditTrail(db));
+  checks.push(await checkAuditTrail(db, socle));
 
   return {
     checks,
@@ -114,6 +122,77 @@ async function checkMigrations(db: SqlClient, migrations: Migration[]): Promise<
     name: 'migrations',
     severity: 'ok',
     summary: `${gap.applied.length} applied, none pending`,
+  };
+}
+
+/**
+ * Which schema the socle lives in.
+ *
+ * Found by its marker, `ekwo_schema_version()`: in `ekwo` once the socle has
+ * moved there (decision 0090), in `public` until then. Both are healthy; the
+ * line is there so that an operator reading the report, and a script reading
+ * `--json`, know which of the two layouts every other check was run against.
+ */
+export function checkSocleSchema(socle: string): Check {
+  return {
+    name: 'socle_schema',
+    severity: 'ok',
+    summary:
+      socle === SOCLE_SCHEMA
+        ? `the socle lives in its own schema, ${SOCLE_SCHEMA}`
+        : `the socle lives in ${FORMER_SOCLE_SCHEMA}, and moves to ${SOCLE_SCHEMA} with the next release`,
+    data: { schema: socle },
+  };
+}
+
+/**
+ * Whether the Data API serves the schema `ekwo`.
+ *
+ * The schemas PostgREST exposes are a setting of the project, not of the
+ * database, and no migration can change them. Where the setting is visible
+ * from here — `pgrst.db_schemas` on the `authenticator` role, which a
+ * self-hosted stack and some managed ones carry — it is read. Where it is not,
+ * nothing can be known from a database connection, and the check says so and
+ * prints the one line to set rather than guessing.
+ *
+ * A warning while the socle is still in `public`: nothing fails yet, and the
+ * schema has to be exposed before the release that fills it. A problem once
+ * the socle is in `ekwo` and the setting says it is not served: every request
+ * of every client then answers that the schema is not exposed.
+ */
+async function checkSocleExposed(db: SqlClient, socle: string): Promise<Check> {
+  const name = 'ekwo_exposed';
+  const found = await db.query<{ setting: string | null }>(
+    `select (select s from unnest(coalesce(r.rolconfig, '{}')) as s
+              where s like 'pgrst.db_schemas=%') as setting
+       from pg_roles r where r.rolname = 'authenticator'`,
+  );
+  if (found.length === 0) {
+    return { name, severity: 'ok', summary: 'no PostgREST in front of this database', data: { exposed: null } };
+  }
+  const setting = found[0]?.setting ?? null;
+  if (setting === null) {
+    return {
+      name,
+      severity: socle === SOCLE_SCHEMA ? 'warning' : 'ok',
+      summary: `the exposed schemas are a setting of the project, not visible from this connection — make sure ${SOCLE_SCHEMA} is among them`,
+      details: [EXPOSE_SOCLE_LINE],
+      data: { exposed: null },
+    };
+  }
+  const schemas = setting
+    .slice('pgrst.db_schemas='.length)
+    .split(',')
+    .map((part) => part.trim().replace(/^"|"$/g, ''));
+  if (schemas.includes(SOCLE_SCHEMA)) {
+    return { name, severity: 'ok', summary: `the Data API serves ${SOCLE_SCHEMA}`, data: { exposed: true, schemas } };
+  }
+  return {
+    name,
+    severity: socle === SOCLE_SCHEMA ? 'problem' : 'warning',
+    summary: `the Data API does not serve ${SOCLE_SCHEMA} (it serves ${schemas.join(', ')})`,
+    details: [EXPOSE_SOCLE_LINE],
+    data: { exposed: false, schemas },
   };
 }
 
@@ -291,13 +370,14 @@ async function checkGrants(db: SqlClient, expected: ExpectedObjects | undefined)
   };
 }
 
-async function checkRowLevelSecurity(db: SqlClient): Promise<Check> {
+async function checkRowLevelSecurity(db: SqlClient, socle: string): Promise<Check> {
   const rows = await db.query<{ tablename: string }>(
     `select c.relname as tablename
        from pg_class c
        join pg_namespace n on n.oid = c.relnamespace
-      where n.nspname = 'public' and c.relkind = 'r' and not c.relrowsecurity
+      where n.nspname = $1 and c.relkind = 'r' and not c.relrowsecurity
       order by c.relname`,
+    [socle],
   );
   if (rows.length === 0) {
     return { name: 'row level security', severity: 'ok', summary: 'enabled on every table' };
@@ -310,14 +390,15 @@ async function checkRowLevelSecurity(db: SqlClient): Promise<Check> {
   };
 }
 
-async function checkPolicies(db: SqlClient): Promise<Check> {
+async function checkPolicies(db: SqlClient, socle: string): Promise<Check> {
   const rows = await db.query<{ tablename: string }>(
     `select c.relname as tablename
        from pg_class c
        join pg_namespace n on n.oid = c.relnamespace
-      where n.nspname = 'public' and c.relkind = 'r' and c.relrowsecurity
+      where n.nspname = $1 and c.relkind = 'r' and c.relrowsecurity
         and not exists (select 1 from pg_policy p where p.polrelid = c.oid)
       order by c.relname`,
+    [socle],
   );
   if (rows.length === 0) {
     return { name: 'policies', severity: 'ok', summary: 'every protected table has a policy' };
@@ -448,7 +529,7 @@ async function checkBankAccounts(db: SqlClient): Promise<Check> {
  * the command line's own connection, a plain Postgres — and there is nothing
  * to report.
  */
-async function checkPreRequest(db: SqlClient): Promise<Check> {
+async function checkPreRequest(db: SqlClient, socle: string): Promise<Check> {
   const name = 'api keys over the API';
   const found = await db.query<{ setting: string | null }>(
     `select (select s from unnest(coalesce(r.rolconfig, '{}')) as s
@@ -470,7 +551,7 @@ async function checkPreRequest(db: SqlClient): Promise<Check> {
         ? 'PostgREST calls no pre-request, so a machine key in X-Ekwo-Api-Key is ignored'
         : `PostgREST calls another pre-request (${setting}), so a machine key in X-Ekwo-Api-Key is ignored`,
     details: [
-      "alter role authenticator set pgrst.db_pre_request = 'public.ekwo_pre_request';",
+      `alter role authenticator set pgrst.db_pre_request = '${socle}.ekwo_pre_request';`,
       "notify pgrst, 'reload config';",
       'Run both as a role that may write the settings of `authenticator`. Nothing else is affected: keys presented on a direct connection with use_api_key() work either way.',
     ],
@@ -499,10 +580,10 @@ async function checkPreRequest(db: SqlClient): Promise<Check> {
  * A warning: the keys are doing what the rule says, and the decision — revoke,
  * or issue again from somebody who holds the rights — is the operator's.
  */
-async function checkKeysBeyondIssuer(db: SqlClient): Promise<Check> {
+async function checkKeysBeyondIssuer(db: SqlClient, socle: string): Promise<Check> {
   const name = 'keys beyond their issuer';
   const hasView =
-    (await scalar<boolean>(db, `select to_regclass('public.api_key_reach') is not null`)) === true;
+    (await scalar<boolean>(db, `select to_regclass($1) is not null`, [`${socle}.api_key_reach`])) === true;
   const found = await db.query<KeyBeyondIssuer>(
     hasView ? KEYS_BEYOND_ISSUER : KEYS_BEYOND_ISSUER_BEFORE_MIGRATION,
   );
@@ -653,14 +734,15 @@ async function checkPostedEntriesBalance(db: SqlClient): Promise<Check> {
  * log too" would break the one property the table exists for, and nothing else
  * would notice.
  */
-async function checkAuditTrail(db: SqlClient): Promise<Check> {
+async function checkAuditTrail(db: SqlClient, socle: string): Promise<Check> {
   const installed =
     (await scalar<boolean>(
       db,
       `select exists (
          select 1 from information_schema.tables
-          where table_schema = 'public' and table_name = 'audit_log'
+          where table_schema = $1 and table_name = 'audit_log'
        )`,
+      [socle],
     )) === true;
   if (!installed) {
     return {
@@ -698,7 +780,8 @@ async function checkAuditTrail(db: SqlClient): Promise<Check> {
   const rls =
     (await scalar<boolean>(
       db,
-      `select relrowsecurity from pg_class where relname = 'audit_log' and relnamespace = 'public'::regnamespace`,
+      `select relrowsecurity from pg_class where relname = 'audit_log' and relnamespace = $1::regnamespace`,
+      [socle],
     )) === true;
   if (!rls) faults.push('row level security is off on audit_log: every signed-in user reads every company');
 

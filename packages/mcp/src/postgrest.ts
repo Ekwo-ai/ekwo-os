@@ -17,6 +17,7 @@
  */
 
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { onSocle, socleMarkerAnswer, socleSchemaResolver, SOCLE_MARKER, type SocleBackend } from '@ekwo-ai/core';
 import {
   EkwoMcpError,
   explain,
@@ -143,7 +144,7 @@ function withoutAuthorization(inner: typeof globalThis.fetch): typeof globalThis
  * refreshes it on its own; nothing is written to disk, so a long-running
  * server outlives the first hour without a credential cache existing.
  */
-export async function postgrestBackend(options: PostgrestBackendOptions): Promise<Backend> {
+export async function postgrestBackend(options: PostgrestBackendOptions): Promise<SocleBackend> {
   const apiKey = options.apiKey !== undefined && options.apiKey.length > 0 ? options.apiKey : undefined;
   const headers: Record<string, string> = {};
   if (apiKey !== undefined) {
@@ -199,11 +200,13 @@ export async function postgrestBackend(options: PostgrestBackendOptions): Promis
    * and `Content-Profile` headers, which `supabase-js` sets for you through
    * `.schema()`. It answers 406 for a schema the project does not expose, and
    * no migration can expose one — `ekwo module enable` prints the line to add.
+   * The socle's schema is always named too (`onSocle()`, below), so a call
+   * never rests on whichever schema the project happens to list first.
    */
   const on = (schema: string | undefined): typeof client =>
     schema === undefined ? client : (client.schema(identifier(schema)) as unknown as typeof client);
 
-  return {
+  const backend: Backend = {
     mode: 'postgrest',
     actingAs,
     agent: options.agent,
@@ -271,4 +274,13 @@ export async function postgrestBackend(options: PostgrestBackendOptions): Promis
       await client.auth.stopAutoRefresh();
     },
   };
+  return onSocle(backend, socleSchemaResolver((schema) => socleMarkerOver(on(schema))));
+}
+
+/** Whether the socle's marker answers in the schema this client is pointed at. */
+async function socleMarkerOver(client: SupabaseClient): Promise<boolean> {
+  const answer = (await client.rpc(SOCLE_MARKER)) as Answer<unknown> & { status?: number };
+  const found = socleMarkerAnswer({ ok: answer.error === null, status: answer.status, code: answer.error?.code });
+  if (found === undefined) throw explain(answer.error?.message ?? `${SOCLE_MARKER} failed`);
+  return found;
 }

@@ -110,6 +110,15 @@ export function fakeSupabase(pg: PGlite): FakeSupabase {
             )
           ).rows.map((row) => [row.name, row.type]),
         );
+        // PostgREST looks a function up in its schema cache before it calls
+        // anything, and answers 404 for one the schema does not hold.
+        const held = await pg.query(
+          'select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace where n.nspname = $1 and p.proname = $2',
+          [schema, name],
+        );
+        if (held.rows.length === 0) {
+          return json(404, { code: 'PGRST202', message: `Could not find the function ${schema}.${name} in the schema cache`, details: null, hint: null });
+        }
         const value = (key: string): unknown =>
           /^jsonb?$/.test(types.get(key) ?? '') && args[key] !== null ? JSON.stringify(args[key]) : args[key];
         const call = `select * from ${fn}(${names.map((key, i) => `${key} => $${i + 1}`).join(', ')})`;

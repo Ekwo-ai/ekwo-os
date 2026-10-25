@@ -23,6 +23,7 @@ import { applyModuleMigrations } from './module.js';
 import { allModuleMigrations, listModules } from '../module/read.js';
 import { isInteractive } from '../prompt.js';
 import { applySeeds } from '../seeds.js';
+import { EXPOSE_SOCLE_LINE, useSocleSchema } from '../socle.js';
 import { schemaIsInstalled } from '../bootstrap.js';
 import { syncSchemaVersion } from '../status.js';
 import { setResult } from '../output.js';
@@ -94,6 +95,10 @@ export async function migrateCommand(args: ParsedArgs, deps: CommandDeps = {}): 
       moduleMigrations = await applyModuleMigrations(db, modules, { heading: true });
     }
 
+    // Asked again after the migrations, which may be what moved the socle:
+    // what follows names its objects without a schema.
+    const socle = await useSocleSchema(db);
+
     if (!boolFlag(args, 'skip-seeds')) {
       heading('Reference data');
       await applySeeds(db, seedDir(), (seed) => {
@@ -112,12 +117,20 @@ export async function migrateCommand(args: ParsedArgs, deps: CommandDeps = {}): 
       }
     }
 
+    // No migration can expose a schema to the Data API, so the line is
+    // printed on every run until the release that fills `ekwo`.
+    heading('Data API');
+    note(dim(`The socle lives in ${socle}.`));
+    note(EXPOSE_SOCLE_LINE);
+
     setResult({
       alreadyApplied: gap.applied.length,
       applied,
       moduleMigrations,
       seeds,
       schemaVersion: schemaVersion ?? null,
+      socleSchema: socle,
+      expose: EXPOSE_SOCLE_LINE,
     });
     line();
     return 0;

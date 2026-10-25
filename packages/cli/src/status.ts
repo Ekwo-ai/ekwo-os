@@ -11,6 +11,7 @@
 import type { Migration } from './migrations.js';
 import { migrationGap } from './migrations.js';
 import { readInstance, type InstanceRow } from './registry.js';
+import { socleSchemaOf } from './socle.js';
 import type { SqlClient } from './sql.js';
 import { scalar } from './sql.js';
 
@@ -95,13 +96,15 @@ export interface Status {
 }
 
 export async function status(db: SqlClient, migrations: Migration[]): Promise<Status> {
+  const socle = await socleSchemaOf(db);
   const schemaInstalled =
     (await scalar<boolean>(
       db,
       `select exists (
          select 1 from information_schema.tables
-          where table_schema = 'public' and table_name = 'instance'
+          where table_schema = $1 and table_name = 'instance'
        )`,
+      [socle],
     )) === true;
 
   const gap = await migrationGap(db, migrations);
@@ -171,7 +174,7 @@ export async function status(db: SqlClient, migrations: Migration[]): Promise<St
   // `ekwo status` also reads an installation that has not been upgraded yet.
   const schemes = new Map<string, { code: string; name: string; since: string }>();
   const instalments = new Map<string, { reportCode: string; month: string; dueDate: string | null; sequence: number }[]>();
-  if ((await scalar<boolean>(db, `select to_regclass('public.company_vat_schemes') is not null`)) === true) {
+  if ((await scalar<boolean>(db, `select to_regclass($1) is not null`, [`${socle}.company_vat_schemes`])) === true) {
     const recorded = await db.query<{ company_id: string; code: string; name: string; since: string }>(
       `select g.company_id::text, s.code, s.name, g.valid_from::text as since
          from company_vat_schemes g

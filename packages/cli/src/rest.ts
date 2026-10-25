@@ -21,7 +21,18 @@
  * a session that cannot be renewed is `session_expired`, never a retry loop.
  */
 
-import type { Backend, Filter, Row, SelectQuery, Value } from '@ekwo-ai/core';
+import {
+  onSocle,
+  socleMarkerAnswer,
+  socleSchemaResolver,
+  SOCLE_MARKER,
+  type Backend,
+  type Filter,
+  type Row,
+  type SelectQuery,
+  type SocleBackend,
+  type Value,
+} from '@ekwo-ai/core';
 import { UsageError } from './args.js';
 import type { StoredSession } from './profiles.js';
 import { AuthError, baseUrl, refreshSession, type FetchLike, type Instance, type SessionUser } from './session.js';
@@ -70,10 +81,35 @@ export class UserClient {
   private refreshToken: string | undefined;
   private expiresAt: number | undefined;
 
+  /**
+   * Where the socle lives on this instance — `ekwo`, or `public` until it
+   * moves — asked once by its marker and kept for the life of this client.
+   * Every request below names it, so none rests on the schema the project
+   * happens to expose first.
+   */
+  readonly socleSchema: () => Promise<string>;
+
   constructor(private readonly options: UserClientOptions) {
     this.accessToken = options.accessToken;
     this.refreshToken = options.refreshToken;
     this.expiresAt = options.expiresAt;
+    this.socleSchema = socleSchemaResolver(async (schema) => {
+      const response = await this.request(`/rest/v1/rpc/${SOCLE_MARKER}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Content-Profile': schema },
+        body: '{}',
+      });
+      if (response.ok) return true;
+      let code: string | undefined;
+      try {
+        code = text(((await response.clone().json()) as Record<string, unknown>)['code']);
+      } catch {
+        code = undefined;
+      }
+      const found = socleMarkerAnswer({ ok: false, status: response.status, code });
+      if (found === undefined) await this.answer<unknown>(response, SOCLE_MARKER);
+      return found === true;
+    });
   }
 
   get instance(): Instance {
@@ -147,23 +183,24 @@ export class UserClient {
     });
   }
 
-  /** Calls a function of the schema. Rows, whatever the function returns. */
+  /** Calls a function of the socle. Rows, whatever the function returns. */
   async rpc<T>(fn: string, args: Record<string, unknown> = {}): Promise<T[]> {
     const response = await this.request(`/rest/v1/rpc/${encodeURIComponent(fn)}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Content-Profile': await this.socleSchema() },
       body: JSON.stringify(args),
     });
     const data = await this.answer<unknown>(response, fn);
     return (Array.isArray(data) ? data : [data]) as T[];
   }
 
-  /** Reads what the policies let this person see of a table. */
+  /** Reads what the policies let this person see of a table of the socle. */
   async select<T>(table: string, options: SelectOptions): Promise<T[]> {
     const query = new URLSearchParams({ select: options.columns.join(',') });
     if (options.order !== undefined) query.set('order', options.order);
     const response = await this.request(`/rest/v1/${encodeURIComponent(table)}?${query.toString()}`, {
       method: 'GET',
+      headers: { 'Accept-Profile': await this.socleSchema() },
     });
     return this.answer<T[]>(response, `select from ${table}`);
   }
@@ -186,7 +223,7 @@ export class UserClient {
    * written against — the interface the MCP server implements over
    * `@supabase/supabase-js`. Same five operations, same functions on top.
    */
-  backend(actingAs: string | undefined): Backend {
+  backend(actingAs: string | undefined): SocleBackend {
     const profile = (schema: string | undefined, write: boolean): Record<string, string> =>
       schema === undefined ? {} : { [write ? 'Content-Profile' : 'Accept-Profile']: schema };
 
@@ -199,7 +236,7 @@ export class UserClient {
       return this.answer<unknown>(response, fn);
     };
 
-    return {
+    const backend: Backend = {
       mode: 'postgrest',
       actingAs,
 
@@ -257,6 +294,7 @@ export class UserClient {
 
       close: async (): Promise<void> => {},
     };
+    return onSocle(backend, this.socleSchema);
   }
 }
 

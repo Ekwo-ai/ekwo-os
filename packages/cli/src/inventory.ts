@@ -23,7 +23,9 @@
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { socleMarkerInCatalogue } from '@ekwo-ai/core';
 import { describeGrants, type GrantsSection } from './grants.js';
+import { socleSchemaOf } from './socle.js';
 import type { SqlClient } from './sql.js';
 import { scalar } from './sql.js';
 
@@ -286,7 +288,10 @@ export async function installedSections(
   expected: ExpectedObjects,
 ): Promise<ExpectedSchema[]> {
   const carried = await installedModules(db);
-  return [expected.socle, ...expected.modules.filter((m) => carried.has(m.code))];
+  // The socle is read where it lives on this database, whichever schema the
+  // inventory was generated in: the objects and their grants are the same.
+  const socle = { ...expected.socle, schema: await socleSchemaOf(db) };
+  return [socle, ...expected.modules.filter((m) => carried.has(m.code))];
 }
 
 // ---------------------------------------------------------------- comparing
@@ -412,7 +417,7 @@ function notInstalled(code: string, schema: string): SectionComparison {
 
 /** The module codes this database carries, whatever this CLI ships. */
 async function installedModules(db: SqlClient): Promise<Set<string>> {
-  const present = await scalar<boolean>(db, `select to_regclass('public.modules') is not null`);
+  const present = await scalar<boolean>(db, `select to_regclass($1) is not null`, [`${await socleSchemaOf(db)}.modules`]);
   if (present !== true) return new Set();
   const rows = await db.query<{ code: string }>('select code from modules');
   return new Set(rows.map((r) => r.code));
@@ -432,14 +437,13 @@ export async function compareCatalogue(
   // Asked in two steps on purpose: naming the function in a `case` still
   // resolves it, so a database that does not have it would raise rather than
   // answer, and that database is one this is meant to report on.
-  const hasVersion = await scalar<boolean>(
-    db,
-    `select to_regprocedure('public.ekwo_schema_version()') is not null`,
-  );
-  const databaseVersion =
-    hasVersion === true ? ((await scalar<string>(db, 'select ekwo_schema_version()')) ?? null) : null;
+  const socle = await socleSchemaOf(db);
+  const hasVersion = await socleMarkerInCatalogue((sql, params) => db.query(sql, params), socle);
+  const databaseVersion = hasVersion
+    ? ((await scalar<string>(db, `select ${socle}.ekwo_schema_version()`)) ?? null)
+    : null;
 
-  const sections = [compareSchema('socle', expected.socle, await readSchema(db, 'public'))];
+  const sections = [compareSchema('socle', expected.socle, await readSchema(db, socle))];
 
   const carried = await installedModules(db);
   for (const module of expected.modules) {

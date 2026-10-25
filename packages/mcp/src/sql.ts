@@ -26,6 +26,7 @@ import {
   type SelectQuery,
   type Value,
 } from './backend.js';
+import { onSocle, socleMarkerInCatalogue, socleSchemaResolver, type SocleBackend } from '@ekwo-ai/core';
 
 /** A Postgres connection, reduced to what this server needs. */
 export interface SqlClient {
@@ -152,7 +153,7 @@ function arrayLiteral(values: unknown[]): string {
 /** Only such a name reaches a cast, so a type read from the catalogue is checked all the same. */
 const ARRAY_TYPE = /^[a-z_][a-z0-9_ ]*\[\]$/;
 
-export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
+export function sqlBackend(db: SqlClient, options: SqlBackendOptions): SocleBackend {
   const agent = options.agent;
   const claims = JSON.stringify({
     ...(options.claims ?? {}),
@@ -190,7 +191,7 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
    */
   const arrayParameters = new Map<string, Promise<ReadonlyMap<string, string>>>();
   function arraysOf(fn: string, schema?: string): Promise<ReadonlyMap<string, string>> {
-    const key = `${schema ?? 'public'}.${fn}`;
+    const key = `${schema ?? ''}.${fn}`;
     let found = arrayParameters.get(key);
     if (found === undefined) {
       found = asUser((tx) =>
@@ -199,8 +200,8 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
              from pg_proc p
              join pg_namespace n on n.oid = p.pronamespace
              cross join lateral unnest(p.proargnames, coalesce(p.proallargtypes, p.proargtypes::oid[])) as a (name, type)
-            where n.nspname = $1 and p.proname = $2`,
-          [schema ?? 'public', fn],
+            where n.nspname = coalesce($1, current_schema()) and p.proname = $2`,
+          [schema ?? null, fn],
         ),
       ).then(
         (rows) => new Map(rows.filter((row) => ARRAY_TYPE.test(row.type)).map((row) => [row.name, row.type])),
@@ -220,7 +221,9 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
     return callOf(fn, args, schema, arrays);
   }
 
-  return {
+  // Every call below receives its schema from `onSocle()`: a module's, or
+  // the socle's as the marker resolved it, once for this connection.
+  const backend: Backend = {
     mode: 'sql',
     actingAs: options.userId,
     agent,
@@ -314,6 +317,7 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): Backend {
       await db.close();
     },
   };
+  return onSocle(backend, socleSchemaResolver((schema) => socleMarkerInCatalogue((sql, params) => db.query(sql, params), schema)));
 }
 
 /** Opens a connection with the `postgres` driver. */

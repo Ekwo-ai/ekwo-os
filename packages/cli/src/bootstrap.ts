@@ -14,6 +14,7 @@
  */
 
 import { FALLBACK_BANK_ACCOUNT_SCHEME, readBankAccountIdentifier } from '@ekwo-ai/core';
+import { socleSchemaOf } from './socle.js';
 import type { SqlClient } from './sql.js';
 import { first, scalar } from './sql.js';
 
@@ -403,8 +404,9 @@ export async function schemaIsInstalled(db: SqlClient): Promise<boolean> {
     db,
     `select exists (
        select 1 from information_schema.tables
-        where table_schema = 'public' and table_name = 'instance'
+        where table_schema = $1 and table_name = 'instance'
      )`,
+    [await socleSchemaOf(db)],
   );
   return present === true;
 }

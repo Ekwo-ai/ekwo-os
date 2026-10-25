@@ -27,6 +27,7 @@ import {
 } from '../module/read.js';
 import { isInteractive } from '../prompt.js';
 import { applySeed } from '../seeds.js';
+import { socleSchemaOf } from '../socle.js';
 import { asUser, first, type SqlClient } from '../sql.js';
 import { setResult } from '../output.js';
 import { bold, cyan, dim, heading, line, note, skipped, step, table, warn } from '../ui.js';
@@ -155,7 +156,8 @@ async function listCommand(db: SqlClient, modules: EkwoModule[]): Promise<number
 async function registry(db: SqlClient): Promise<RegistryRow[]> {
   const exists = await first<{ present: boolean }>(
     db,
-    `select to_regclass('public.modules') is not null as present`,
+    `select to_regclass($1) is not null as present`,
+    [`${await socleSchemaOf(db)}.modules`],
   );
   if (exists?.present !== true) return [];
   return db.query<RegistryRow>(

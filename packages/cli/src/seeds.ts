@@ -16,6 +16,7 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { DEMO_SEED } from './bundle.js';
+import { useSocleSchema } from './socle.js';
 import type { SqlClient } from './sql.js';
 
 export interface Seed {
@@ -31,8 +32,14 @@ export async function listSeeds(dir: string): Promise<Seed[]> {
   return files.map((file) => ({ file, path: join(dir, file) }));
 }
 
+/**
+ * One seed, into the socle wherever it lives. A seed names no schema, so the
+ * connection's `search_path` is set to the socle's first, asked again here
+ * because a migration run on this same connection may just have moved it.
+ */
 export async function applySeed(db: SqlClient, seed: Seed): Promise<void> {
   const sql = await readFile(seed.path, 'utf8');
+  await useSocleSchema(db);
   try {
     await db.exec(sql);
   } catch (error) {

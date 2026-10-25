@@ -22,6 +22,7 @@ import {
   type Probe,
 } from './connection.js';
 import { NotInteractiveError, askSecret, isInteractive } from './prompt.js';
+import { useSocleSchema } from './socle.js';
 import { connect, type SqlClient } from './sql.js';
 import { dim, note } from './ui.js';
 
@@ -164,5 +165,13 @@ export async function openDatabase(
   // to whom no policy applies, and a reader of the log should not have to
   // know which commands are which.
   note(dim('Connected as the owner of the database: installing and operating, not keeping books. Row level security does not apply to this connection.'));
+  // The SQL of the commands names the socle's objects without a schema; with
+  // the socle's schema first on the path they resolve in either layout.
+  try {
+    await useSocleSchema(db);
+  } catch (error) {
+    await db.close().catch(() => {});
+    throw error;
+  }
   return { db, connection };
 }
