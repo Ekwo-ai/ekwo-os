@@ -204,9 +204,13 @@ sql_paths = [
 #
 # They are left out by default: a module nobody enabled is a schema nobody
 # should be able to reach over the API.
+#
+# `ekwo` is the socle's own schema (decision 0090). It is empty until the
+# release that moves the socle there, and is exposed ahead of it, after
+# `public` so a request that names no schema is served as before.
 [api]
 enabled = true
-schemas = ["public"]
+schemas = ["public", "ekwo"]
 extra_search_path = ["public"]
 max_rows = 1000
 
