@@ -249,12 +249,20 @@ describe('over PostgREST', () => {
     expect(backend.actingAs).toBeUndefined();
     await backend.select({ table: 'companies', columns: ['id'] });
     await backend.close();
-    expect(sent).toHaveLength(1);
-    const [request] = sent;
+    // First the marker that says where the socle lives (this stand-in answers
+    // it in `ekwo`), then the read, which names that schema. Both carry the
+    // key and neither carries an Authorization.
+    expect(sent).toHaveLength(2);
+    const [marker, request] = sent;
+    expect(marker?.url).toContain('/rest/v1/rpc/ekwo_schema_version');
+    expect(marker?.headers.get('content-profile')).toBe('ekwo');
     expect(request?.url).toContain('/rest/v1/companies');
-    expect(request?.headers.get(API_KEY_HEADER)).toBe(SOME_KEY);
-    expect(request?.headers.get('apikey')).toBe(PUBLISHABLE);
-    expect(request?.headers.has('authorization')).toBe(false);
+    expect(request?.headers.get('accept-profile')).toBe('ekwo');
+    for (const each of sent) {
+      expect(each.headers.get(API_KEY_HEADER)).toBe(SOME_KEY);
+      expect(each.headers.get('apikey')).toBe(PUBLISHABLE);
+      expect(each.headers.has('authorization')).toBe(false);
+    }
   });
 
   it('sends a person\'s token as the bearer, and no key', async () => {
