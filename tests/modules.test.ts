@@ -79,7 +79,8 @@ describe('the registry', () => {
       await rows<{ nspname: string }>(
         db,
         `select nspname from pg_namespace
-          where nspname not in ('public', 'auth', 'pg_catalog', 'information_schema', 'pg_toast')
+          -- \`public\` and \`ekwo\` are the socle's (decision 0090), not a module's.
+          where nspname not in ('public', 'ekwo', 'auth', 'pg_catalog', 'information_schema', 'pg_toast')
             and nspname not like 'pg_temp%' and nspname not like 'pg_toast_temp%'
             and nspname <> 'supabase_migrations'
           order by 1`,
