@@ -265,6 +265,14 @@
           "moduleMigrations": { "type": "integer", "minimum": 0 },
           "seeds": { "type": "array", "items": { "type": "string" } },
           "schemaVersion": { "type": ["string", "null"] },
+          "socleSchema": {
+            "enum": ["ekwo", "public"],
+            "$comment": "The schema the socle lives in after this run, found by its marker ekwo_schema_version() (decision 0090)."
+          },
+          "expose": {
+            "type": "string",
+            "$comment": "The one line that exposes the schema ekwo to the Data API. No migration can set it."
+          },
           "pending": { "type": "array", "items": { "type": "string" } },
           "unknown": {
             "type": "array",
