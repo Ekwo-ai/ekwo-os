@@ -73,3 +73,13 @@ published PDF.
 - **Statements.** No Palau text prescribes a layout; the statements follow IAS 1
   with expenses by nature. The IFRS Foundation page of Palau could not be read.
 - **E-invoicing.** None found, so `obligation` is `none`.
+
+## A gap of the core
+
+`npm run check:no-country-literals` reads the string `'pw'` that
+`tests/cli/cli.test.ts` (line 138) passes as a database password as the Palau pack
+expected by hand. It is not a country there. The test is the core's and a pack does
+not touch it: the check fails until that line carries a comment
+`// country-literal: 'pw' is a password in this test, not the Palau pack` or the
+password is renamed. Nothing else fails: the pack tests, `pack check --all`, the
+typecheck and the other `check:*` are green.
