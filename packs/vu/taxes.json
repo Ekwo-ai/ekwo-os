@@ -1,0 +1,250 @@
+[
+  {
+    "code": "VU-S-15",
+    "name": "Sale, standard rate 15 %",
+    "description": "A taxable supply of goods or services made in Vanuatu by a registered person, neither zero-rated nor exempt",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Value Added Tax Act [Cap. 247], s. 11(1) — the rate of value added tax is 15 % of the value of the supply (12.5 % before the increase of 1 January 2018). Form CT 205: box 5 is the total sales including VAT, box 6 the zero-rated supplies, box 7 the difference (taxable sales, VAT included) and box 8 the VAT collected, box 7 divided by 7.6667 (the tax fraction 3/23). The engine posts the exclusive base to box 7a, which is not a box of the form, and the VAT to box 8.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "8",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "VU-S-ZR-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "Goods exported or supplied for use outside Vanuatu, or services performed or used outside Vanuatu, taxable at 0 %",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "vat_category": "G",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Value Added Tax Act [Cap. 247], s. 11(2) and Schedule 3, clause 1 — a supply of goods the registered person exports, or that is supplied for consumption or use outside Vanuatu, and clause 4 — services physically performed outside Vanuatu, are zero-rated; clause 5 adds services to a non-resident outside Vanuatu with limits. Zero-rated supplies are box 6 of form CT 205, included in box 5; the supplier keeps the input tax credit.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "VU-S-ZR",
+    "name": "Sale, zero-rated (other)",
+    "description": "A zero-rated supply made in Vanuatu that is not an export — international transport, aid projects, going concerns, supplies to international organisations",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Value Added Tax Act [Cap. 247], s. 11(2) and Schedule 3 — besides exports: (2) goods situated outside Vanuatu at the time of supply, (3) international transport of passengers and goods, (7) approved aid projects, (9) the transfer of a going concern between registered persons by written agreement, (11) services to overseas postal organisations, (12) services to a visiting vessel, (13) payments to a State agency under an Appropriation Act, (14) supplies to an international organisation holding an approval certificate. One tax code carries the list; which clause applies is the preparer's judgement. Box 6 of form CT 205.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "VU-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply the VAT Act exempts — financial services, residential rental, education, donated goods of a non-profit body",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Value Added Tax Act [Cap. 247], s. 10 and Schedule 1 — exempt supplies: (1) financial services, (2) donated goods or services of a non-profit body, (3) residential accommodation by way of hire, (4) rental of leasehold land used for a dwelling, (5) the sale of a dwelling used for five years for those rentals, (6) education by a registered educational institution. An exempt supply is not a taxable supply, carries no input credit and is disregarded for the registration threshold (s. 12(2)(a)). Form CT 205 has no box for exempt sales: they appear on no line of the return.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "sequence": 40
+  },
+  {
+    "code": "VU-P-15",
+    "name": "Purchase, standard rate 15 %",
+    "description": "Goods or services bought in Vanuatu from a registered person for the taxable activity, with a tax invoice",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Value Added Tax Act [Cap. 247], s. 11(1) and s. 19 — the VAT paid on local purchases and expenses of the taxable activity is deducted from the VAT collected; the tax invoice (s. 21) is the proof. Form CT 205: box 11 is the purchases including VAT (imports excluded), box 12 the VAT paid, box 11 divided by 7.6667. The engine posts the exclusive base to box 11a (not a box of the form) and the VAT to box 12.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "VU-P-15-NC",
+    "name": "Purchase, standard rate 15 % — no input credit",
+    "description": "A purchase carrying 15 % VAT that gives no input credit — bought for exempt supplies or for private use",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Value Added Tax Act [Cap. 247], s. 19 — the credit is for VAT on purchases used in the taxable activity; where no credit is allowed the VAT is part of the cost of the purchase and appears in no box of the return. This code books the VAT into the expense or asset account (tax on base) and posts nothing to the form.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "VU-P-0",
+    "name": "Purchase, no VAT",
+    "description": "A purchase from a supplier who charged no VAT — exempt, unregistered or outside Vanuatu",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Value Added Tax Act [Cap. 247], s. 10 and Schedule 1 — a purchase from an exempt supplier (financial services, residential rental, education…) or outside the scope of the tax carries no VAT and no box of form CT 205.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "sequence": 70
+  },
+  {
+    "code": "VU-P-IMP",
+    "name": "Purchase, import of goods",
+    "description": "Goods imported into Vanuatu, VAT paid to the Customs Service at the border",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2018-01-01",
+    "legal_reference": "Value Added Tax Act [Cap. 247], s. 11(1)(b) — on importation the tax is 15 % of the customs value plus the customs duty, the excise tax and the cost of transport and insurance to Vanuatu, collected by Customs at the border. Form CT 205, box 13: the VAT paid to Customs on imported goods, which box 11 excludes (“do not include imported goods here”). The customs value goes to box 13a, which is not a box of the form.",
+    "source": "vat-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "13a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "13"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "13a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 80
+  }
+]

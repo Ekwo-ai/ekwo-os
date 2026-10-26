@@ -1,0 +1,321 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "One month of books of a Port Vila trading company, VAT-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "VU-IFRS-SFP",
+    "VU-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-vu",
+      "name": "Port Vila Retail Ltd",
+      "type": "customer",
+      "country": "VU"
+    },
+    {
+      "ref": "cust-nz",
+      "name": "Auckland Tea Traders Ltd",
+      "type": "customer",
+      "country": "NZ"
+    },
+    {
+      "ref": "cust-au",
+      "name": "Sydney Consulting Pty Ltd",
+      "type": "customer",
+      "country": "AU"
+    },
+    {
+      "ref": "supp-vu",
+      "name": "Santo Wholesalers Ltd",
+      "type": "supplier",
+      "country": "VU"
+    },
+    {
+      "ref": "supp-cn",
+      "name": "Shenzhen Components Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-vu",
+      "date": "2026-01-08",
+      "why": "A domestic sale at the standard rate of 15 %: the exclusive base in box 7a, the VAT in box 8.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale",
+          "quantity": 10,
+          "unit_price": 12000,
+          "tax": "VU-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-vu",
+      "date": "2026-01-12",
+      "why": "An exempt supply, financial services (Schedule 1, clause 1): no box of the return, no VAT, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Loan arrangement fees, January",
+          "quantity": 1,
+          "unit_price": 45000,
+          "tax": "VU-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-nz",
+      "date": "2026-01-15",
+      "why": "An export of goods, zero-rated (Schedule 3, clause 1): box 6, no output VAT, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Packaged tea, export consignment",
+          "quantity": 500,
+          "unit_price": 240,
+          "tax": "VU-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-au",
+      "date": "2026-01-19",
+      "why": "A service used outside Vanuatu, zero-rated: box 6.",
+      "lines": [
+        {
+          "name": "Market research report for use abroad",
+          "quantity": 1,
+          "unit_price": 90000,
+          "tax": "VU-S-ZR-EXP",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-vu",
+      "date": "2026-01-21",
+      "why": "A zero-rated supply made inside Vanuatu, a supply to an international organisation holding an approval certificate (Schedule 3, clause 14): box 6 although the supply is made in the country.",
+      "lines": [
+        {
+          "name": "Bottled water, local sale",
+          "quantity": 200,
+          "unit_price": 450,
+          "tax": "VU-S-ZR",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-vu",
+      "date": "2026-01-23",
+      "why": "The sale of a delivery van used in the business at the standard rate: the form has no box for capital assets, so it joins box 7 and the VAT joins box 8.",
+      "lines": [
+        {
+          "name": "Used delivery van",
+          "quantity": 1,
+          "unit_price": 80000,
+          "tax": "VU-S-15",
+          "account": "4750"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-vu",
+      "date": "2026-01-26",
+      "why": "A credit note for one unit returned from INV-001, so box 7a and box 8 fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "VU-S-15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-vu",
+      "date": "2026-01-09",
+      "why": "A local purchase at the standard rate, credit allowed in full: box 11a and the VAT in box 12, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "VU-P-15",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-vu",
+      "date": "2026-01-11",
+      "why": "Goods of a capital nature bought locally: the VAT is claimed in box 12 with the other inputs.",
+      "lines": [
+        {
+          "name": "Packaging machine",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "VU-P-15",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-vu",
+      "date": "2026-01-13",
+      "why": "A vehicle bought for the private use of the owner: no input credit (the credit is for purchases used in the taxable activity), the VAT joins the cost and reaches no box.",
+      "lines": [
+        {
+          "name": "Utility vehicle for the owner",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "VU-P-15-NC",
+          "account": "1660"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-vu",
+      "date": "2026-01-16",
+      "why": "An insurance premium on a general policy treated as an exempt or out-of-scope purchase: no VAT, and no box of the return receives it.",
+      "lines": [
+        {
+          "name": "Business insurance premium",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "VU-P-0",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-20",
+      "why": "An import of goods: the VAT paid to Customs at the border is claimed in box 13 and held on the import control account until settled.",
+      "lines": [
+        {
+          "name": "Imported electronic components for resale",
+          "quantity": 1,
+          "unit_price": 250000,
+          "tax": "VU-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-27",
+      "why": "An import of capital goods: the VAT paid to Customs is claimed in box 13 as well.",
+      "lines": [
+        {
+          "name": "Imported labelling machine",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "VU-P-IMP",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-vu",
+      "date": "2026-01-30",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 11a and the VAT of box 12 fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "VU-P-15",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 45000,
+      "contact": "cust-vu",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The invoice INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 120000,
+      "contact": "cust-nz",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-07",
+      "amount": 46000,
+      "contact": "supp-vu",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, VAT included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 20000,
+      "contact": "cust-au",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Sydney Consulting Pty Ltd before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}

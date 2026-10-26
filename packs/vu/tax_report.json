@@ -1,0 +1,167 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "VU-VAT",
+  "name": "VAT return (form CT 205)",
+  "period": [
+    "month",
+    "quarter"
+  ],
+  "valid_from": "2018-01-01",
+  "legal_reference": "Form CT 205, Value Added Tax Return (Value Added Tax Act [Cap 247]): boxes 1 to 4 are the taxpayer's identity and period, boxes 5 to 10 the VAT on sales and income, boxes 11 to 15 the VAT on purchases and expenses and box 16 the difference (refund or VAT to pay); boxes 17 to 19 are the pay-in slip. The return is filed for a taxable period of one month (Category A) or of three months for a person whose taxable supplies stay under VT 8 million and who applied for it (s. 15 of the Act). The form is VAT-inclusive: boxes 5, 7 and 11 are totals here (exclusive base plus VAT) and the exclusive figures sit in boxes 7a and 11a. Box 16 is signed: negative is the refund. The quarterly periods are anchored on January–March here; the Director may fix other months for a Category B person (s. 15(1)(b)), see the README.",
+  "source": "vat-return",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 27,
+    "legal_reference": "Value Added Tax Act [Cap. 247], s. 16(1)(b) — the return is due by the 27th day of the month following the taxable period, and if that day is not a working day by the working day that follows; s. 16(1)(a) puts the return of a period ending on 30 November at the 5th of January. The payment is due with the return (form reminders). The rollover to the next working day and the November exception are not computed by the pack.",
+    "source": "vat-act"
+  },
+  "boxes": [
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Box 5 — Total sales and income for the period (VAT included)",
+      "sequence": 10,
+      "legal_reference": "Form CT 205, box 5 — the total sales and income of the period including VAT, zero-rated supplies included; exempt supplies are not taxable supplies and the form has no line for them. Here box 6 plus box 7.",
+      "source": "vat-return",
+      "plus": [
+        "6:base",
+        "7"
+      ]
+    },
+    {
+      "box": "6",
+      "kind": "base",
+      "name": "Box 6 — Zero-rated supplies included in box 5",
+      "sequence": 20,
+      "legal_reference": "Form CT 205, box 6 — the zero-rated supplies of the period (Schedule 3 of the Act), included in box 5.",
+      "source": "vat-return"
+    },
+    {
+      "box": "7",
+      "kind": "total",
+      "name": "Box 7 — Taxable sales (box 5 less box 6), VAT included",
+      "sequence": 30,
+      "legal_reference": "Form CT 205, box 7 — box 6 subtracted from box 5, the supplies charged with VAT, VAT included. Here the exclusive base of box 7a plus the VAT of box 8.",
+      "source": "vat-return",
+      "plus": [
+        "7a:base",
+        "8:tax"
+      ]
+    },
+    {
+      "box": "7a",
+      "kind": "base",
+      "name": "Box 7a — Taxable sales, VAT excluded",
+      "sequence": 40,
+      "legal_reference": "Not a box of the form: the exclusive value of the supplies of box 7, which the engine posts and from which box 7 is rebuilt.",
+      "source": "vat-return"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Box 8 — VAT collected by you (box 7 divided by 7.6667)",
+      "sequence": 50,
+      "legal_reference": "Form CT 205, box 8 — box 7 divided by 7.6667, the tax fraction 3/23 of the 15 % rate (15/115).",
+      "source": "vat-return"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Box 9 — Adjustments to VAT collected",
+      "sequence": 60,
+      "legal_reference": "Form CT 205, box 9 — adjustments added to the VAT collected (the Department's VAT guidance). Declared and empty: an adjustment is a decision of the preparer, no tax code posts to it.",
+      "source": "vat-return"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Box 10 — Total VAT collected on sales and income (boxes 8 and 9)",
+      "sequence": 70,
+      "legal_reference": "Form CT 205, box 10 — boxes 8 and 9 added.",
+      "source": "vat-return",
+      "plus": [
+        "8",
+        "9"
+      ]
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "Box 11 — Total business purchases and expenses (VAT included, imports excluded)",
+      "sequence": 80,
+      "legal_reference": "Form CT 205, box 11 — total business-related purchases and expenses including VAT, imported goods excluded (they go to box 13). Here the exclusive base of box 11a plus the VAT of box 12.",
+      "source": "vat-return",
+      "plus": [
+        "11a:base",
+        "12:tax"
+      ]
+    },
+    {
+      "box": "11a",
+      "kind": "base",
+      "name": "Box 11a — Local purchases carrying creditable VAT, VAT excluded",
+      "sequence": 90,
+      "legal_reference": "Not a box of the form: the exclusive value of the purchases of box 11, which the engine posts and from which box 11 is rebuilt.",
+      "source": "vat-return"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "Box 12 — VAT paid on purchases (box 11 divided by 7.6667)",
+      "sequence": 100,
+      "legal_reference": "Form CT 205, box 12 — box 11 divided by 7.6667.",
+      "source": "vat-return"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Box 13 — VAT paid to Customs on imported goods",
+      "sequence": 110,
+      "legal_reference": "Form CT 205, box 13 — the VAT paid to Customs on imported goods, 15 % of the customs value plus duty, excise and carriage to Vanuatu (s. 11(1)(b)).",
+      "source": "vat-return"
+    },
+    {
+      "box": "13a",
+      "kind": "base",
+      "name": "Box 13a — Imports, value for VAT",
+      "sequence": 120,
+      "legal_reference": "Not a box of the form: the value on which Customs charged the VAT of box 13, which the engine posts for the statement of the tax base.",
+      "source": "vat-return"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Box 14 — Adjustments to VAT paid",
+      "sequence": 130,
+      "legal_reference": "Form CT 205, box 14 — adjustments added to the VAT paid (refer to the VAT guide). Declared and empty: an adjustment is a decision of the preparer.",
+      "source": "vat-return"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Box 15 — Total VAT paid on purchases and expenses (boxes 12, 13 and 14)",
+      "sequence": 140,
+      "legal_reference": "Form CT 205, box 15 — boxes 12, 13 and 14 added.",
+      "source": "vat-return",
+      "plus": [
+        "12",
+        "13",
+        "14"
+      ]
+    },
+    {
+      "box": "16",
+      "kind": "total",
+      "name": "Box 16 — VAT to pay (positive) or VAT refund (negative), box 10 less box 15",
+      "sequence": 150,
+      "legal_reference": "Form CT 205, box 16 — the difference between box 10 and box 15: if box 15 is larger the difference is the refund, if box 10 is larger it is VAT to pay. Signed here: negative is the refund. Boxes 17 to 19 of the pay-in slip (the payment, the late payment penalty, the total) are not boxes of the return.",
+      "source": "vat-return",
+      "plus": [
+        "10"
+      ],
+      "minus": [
+        "15"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "VU",
+  "name": "Vanuatu",
+  "version": "0.1.0",
+  "schema_min": "20261023124650",
+  "seed_sequence": 228,
+  "released_at": "2026-10-27",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vat-act",
+        "title": "Value Added Tax Act [Cap. 247], Consolidated Edition 2020 — section 5 (time of supply), 10 and Schedules 1 and 2 (exempt supplies and importations), 11 (rate of 15 %, 0 % for the supplies of Schedule 3), 12 (registration above VT 4 million), 15 (taxable periods: one month, or three months for a person under VT 8 million who applies), 16 (returns, due the 27th of the following month), 17 (invoice or payments basis; payments basis when no election), 19 (tax payable), 21 (tax invoices), Schedule 3 (zero-rated supplies)",
+        "publisher": "Government of Vanuatu — Department of Customs and Inland Revenue (DCIR)",
+        "url": "https://vanuatucustoms.gov.vu/images/Laws_Regulations/VAT/247_Value_Added_Tax_Consolidated_2020.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-27"
+      },
+      {
+        "key": "vat-return",
+        "title": "Value Added Tax Return, form CT 205 (Value Added Tax Act [Cap 247]): sixteen numbered boxes — 5 to 10 the VAT on sales and income (box 5 total sales including VAT, box 6 zero-rated supplies, box 7 = box 5 less box 6, box 8 = box 7 divided by 7.6667, box 9 adjustments, box 10 = boxes 8 and 9), 11 to 15 the VAT on purchases and expenses (box 11 purchases including VAT but without imports, box 12 = box 11 divided by 7.6667, box 13 VAT paid to Customs on imported goods, box 14 adjustments, box 15 = boxes 12, 13 and 14) and box 16 the difference between boxes 10 and 15 (refund or VAT to pay); the pay-in slip carries boxes 17 to 19",
+        "publisher": "Government of Vanuatu — Department of Customs and Inland Revenue (DCIR)",
+        "url": "https://vanuatucustoms.gov.vu/images/Forms/rates_taxes_forms/VAT_Return_Form_English.xlsx",
+        "kind": "form",
+        "consulted_on": "2026-10-27"
+      },
+      {
+        "key": "vat-intro",
+        "title": "Value added tax — introduction: VAT at 15 % on most goods and services, registration above VT 4 million of taxable supplies in 12 months (voluntary below), exempt supplies (financial services, residential rental, education, donated goods of a non-profit body) and zero-rated supplies (exports), monthly return or quarterly below VT 8 million, due the 27th of the following month",
+        "publisher": "Government of Vanuatu — Department of Customs and Inland Revenue (DCIR)",
+        "url": "https://vanuatucustoms.gov.vu/taxes-and-licensing/taxes/value-added-tax-vat/introduction.html",
+        "kind": "guidance",
+        "consulted_on": "2026-10-27"
+      },
+      {
+        "key": "vat-rate-change",
+        "title": "Change of VAT rate to 15 per cent — the Parliament raised the rate from 12.5 % to 15 % from 1 January 2018; VAT-inclusive prices divide by 7.6667 (3/23) to find the VAT, VAT-exclusive prices multiply by 3/20",
+        "publisher": "Government of Vanuatu — Department of Customs and Inland Revenue (DCIR)",
+        "url": "https://vanuatucustoms.gov.vu/images/VAT/VAT_Rate_Change-Calculations_English.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-27"
+      },
+      {
+        "key": "vat-filing",
+        "title": "Filing your VAT Return — due date (27th of the month, or the next working day), payment, refunds, the late filing penalty (VT 30,000 for an individual, VT 50,000 for an entity, then a daily penalty), the late payment penalty (5 %) and the late payment interest (20 % a year, daily)",
+        "publisher": "Government of Vanuatu — Department of Customs and Inland Revenue (DCIR)",
+        "url": "https://vanuatucustoms.gov.vu/images/Brochures/IRD/eng/Filing_your_VAT_Return_21.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-27"
+      },
+      {
+        "key": "vat-registration",
+        "title": "VAT application for registration form — the person who carries on a taxable activity applies within 21 days of becoming liable; the form asks for the accounting basis (invoice or payments) and the taxable period (monthly, or three-monthly under VT 8 million)",
+        "publisher": "Government of Vanuatu — Department of Customs and Inland Revenue (DCIR)",
+        "url": "https://vanuatucustoms.gov.vu/images/Forms/VAT/VAT_Application_for_Registration_English.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-27"
+      },
+      {
+        "key": "tax-admin-act",
+        "title": "Tax Administration Act No. 37 of 2018 — returns, assessments, penalties and interest for the taxes the Department administers, VAT included",
+        "publisher": "Government of Vanuatu — Department of Customs and Inland Revenue (DCIR)",
+        "url": "https://vanuatucustoms.gov.vu/images/TAA/Tax_Administration_Act_No_37_of_2018.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-27"
+      },
+      {
+        "key": "ias-1",
+        "title": "IAS 1 Presentation of Financial Statements — the statement of financial position and the statement of profit or loss, expenses analysed by nature; no Vanuatu text prescribing a layout or a chart of accounts was found",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/list-of-standards/ias-1-presentation-of-financial-statements/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-27"
+      },
+      {
+        "key": "tax-portal",
+        "title": "Department of Customs and Inland Revenue — tax administration portal (forms, brochures, legislation, the VAT return and the registration application)",
+        "publisher": "Government of Vanuatu — Department of Customs and Inland Revenue (DCIR)",
+        "url": "https://vanuatucustoms.gov.vu",
+        "kind": "portal",
+        "consulted_on": "2026-10-27"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "VUV",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Department of Customs and Inland Revenue (DCIR)",
+      "source": "tax-portal"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Vanuatu reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "VU-IFRS-SFP",
+        "VU-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the texts read for Vanuatu, and no text read names a standard setter or a framework for company accounts. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-style statements below (IAS 1, expenses by nature), with the accounts a Vanuatu trading company keeps — VAT output and input tax, import VAT owed to Customs at the border, and the liabilities for withholding and contributions.",
+      "source": "ias-1"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Tax Act [Cap. 247], s. 21 — a registered person making a taxable supply to another registered person provides a tax invoice within 28 days of a request, with the particulars of the approved form; a buyer-created tax invoice needs the Director's approval and the words “buyer created tax invoice – VAT approved”. The text read states no document numbering rule, so numbering is `free`; the number format is a convention of this pack.",
+        "source": "vat-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Tax Act [Cap. 247], s. 5(1) — a supply takes place at the earliest of the time an invoice is issued and the time a payment is received; s. 17 lets the registered person account for the tax on an invoice basis or on a payments basis, and a person who elects nothing is deemed to be on the payments basis. `invoice_if_issued` states the invoice as the point of the tax where one is issued, the invoice basis; the payments basis and a payment received before the invoice are gaps recorded in the README.",
+        "source": "vat-act"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No structured e-invoice standard, Peppol profile or clearance system of the Department was found in the texts read; the VAT return is lodged at the counter, by post or by e-mail. `obligation` is `none` for want of a text, not on a finding that none exists.",
+    "source": "tax-portal"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "The texts read (Value Added Tax Act [Cap. 247] in its 2020 consolidation, form CT 205 and the Department's brochures) name no reverse charge on services bought from abroad: the form has no box for it and the Act's place-of-supply rule (s. 7) was not read to a conclusion. The pack therefore carries no purchase tax for them. This is a finding about the texts read, not a finding that no such rule exists: it is a gap recorded in the README.",
+      "source": "vat-act"
+    }
+  ]
+}
