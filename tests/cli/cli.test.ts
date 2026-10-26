@@ -95,11 +95,11 @@ describe('the connection helpers', () => {
     );
     expect(
       projectRefFrom(
-        'postgresql://postgres.abcdefghijklmnopqrst:pw@aws-0-eu-central-1.pooler.supabase.com:5432/postgres',
+        'postgresql://postgres.abcdefghijklmnopqrst:secret@aws-0-eu-central-1.pooler.supabase.com:5432/postgres',
       ),
     ).toBe('abcdefghijklmnopqrst');
     expect(
-      projectRefFrom('postgresql://postgres:pw@db.abcdefghijklmnopqrst.supabase.co:5432/postgres'),
+      projectRefFrom('postgresql://postgres:secret@db.abcdefghijklmnopqrst.supabase.co:5432/postgres'),
     ).toBe('abcdefghijklmnopqrst');
     expect(projectRefFrom('abcdefghijklmnopqrst')).toBe('abcdefghijklmnopqrst');
     expect(projectRefFrom('not a ref')).toBeUndefined();
@@ -112,16 +112,16 @@ describe('the connection helpers', () => {
   });
 
   it('offers both pooler generations for a region, on the session port', () => {
-    const candidates = poolerCandidates('abcdefghijklmnopqrst', 'pw', 'eu-west-3');
+    const candidates = poolerCandidates('abcdefghijklmnopqrst', 'secret', 'eu-west-3');
     expect(candidates).toEqual([
-      'postgresql://postgres.abcdefghijklmnopqrst:pw@aws-0-eu-west-3.pooler.supabase.com:5432/postgres',
-      'postgresql://postgres.abcdefghijklmnopqrst:pw@aws-1-eu-west-3.pooler.supabase.com:5432/postgres',
+      'postgresql://postgres.abcdefghijklmnopqrst:secret@aws-0-eu-west-3.pooler.supabase.com:5432/postgres',
+      'postgresql://postgres.abcdefghijklmnopqrst:secret@aws-1-eu-west-3.pooler.supabase.com:5432/postgres',
     ]);
   });
 
   it('keeps the pooler host that answers, and never the one that did not', async () => {
     const tried: string[] = [];
-    const chosen = await pickPoolerUrl('abcdefghijklmnopqrst', 'pw', 'eu-west-3', async (url) => {
+    const chosen = await pickPoolerUrl('abcdefghijklmnopqrst', 'secret', 'eu-west-3', async (url) => {
       tried.push(url);
       return url.includes('aws-1-');
     });
@@ -135,16 +135,16 @@ describe('the connection helpers', () => {
 
   it('says to copy the dashboard string when no pooler host answers', async () => {
     await expect(
-      pickPoolerUrl('abcdefghijklmnopqrst', 'pw', 'eu-west-3', async () => false),
+      pickPoolerUrl('abcdefghijklmnopqrst', 'secret', 'eu-west-3', async () => false),
     ).rejects.toThrow(NoPoolerHostError);
-    const error = await pickPoolerUrl('abcdefghijklmnopqrst', 'pw', 'eu-west-3', async () => false)
+    const error = await pickPoolerUrl('abcdefghijklmnopqrst', 'secret', 'eu-west-3', async () => false)
       .then(() => undefined)
       .catch((e: Error) => e);
     expect(error?.message).toContain('aws-0-eu-west-3.pooler.supabase.com');
     expect(error?.message).toContain('aws-1-eu-west-3.pooler.supabase.com');
     expect(error?.message).toContain('Session pooler');
     // The password is not echoed back into the message.
-    expect(error?.message).not.toContain('pw@');
+    expect(error?.message).not.toContain('secret@');
   });
 
   it('asks for TLS unless the string already says otherwise', () => {
