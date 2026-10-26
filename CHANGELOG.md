@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.21.0] — 2026-10-26
+
 ### Added
 
 - **An agent posts in the mode its company chose, or its session chose**
@@ -53,6 +55,10 @@ somewhere has already run it.
   `@ekwo-ai/mcp` exports the entry point both run, `runStdio()`. The command
   line keeps its one outside dependency: it runs the `@ekwo-ai/mcp` installed
   beside it, and otherwise the one of its own release through `npx`.
+- **Five country packs more, in the Pacific and Europe.** Fiji, Kiribati,
+  Papua New Guinea and Samoa; Monaco. Each with its chart, its taxes, its
+  periodic return — VAT, goods and services tax or value added goods and
+  services tax — its statements and a golden scenario checked by hand.
 
 ### Changed
 
@@ -85,6 +91,12 @@ somewhere has already run it.
   3. **SQL written by hand**: `public.<table>` becomes `ekwo.<table>` with
      0.22.0. Unqualified SQL keeps resolving for at least one release.
      Archives and backups already taken stay importable.
+- **The schema is 0.21.0 (`20261026030000`), and so is the floor of the
+  packages.** `@ekwo-ai/core` calls `replace_document_lines()`,
+  `create_document()` and `approve_document()`, which a 0.20.0 database does
+  not have. An installation runs `ekwo migrate` before upgrading the
+  packages. The end-to-end run against a real Supabase project was not run
+  for this release.
 
 ### Fixed
 
