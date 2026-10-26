@@ -210,3 +210,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('WST', 'Samoan tala', 'WS$', 2)
 on conflict (code) do nothing;
+
+-- Vanuatu vatu, ISO 4217 list one, no decimals (packs/vu/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('VUV', 'Vanuatu vatu', 'VT', 0)
+on conflict (code) do nothing;
