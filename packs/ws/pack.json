@@ -1,0 +1,199 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "WS",
+  "name": "Samoa",
+  "version": "0.1.0",
+  "schema_min": "20261023124650",
+  "seed_sequence": 225,
+  "released_at": "2026-10-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "vagst-act",
+        "title": "Value Added Goods and Services Tax Act 2015 — sections 8 (rate), 9 (registration), 15 (time of supply), 26 (input tax credit), 29 (GST periods), 30 (net GST), 33 (tax invoices), 41–42 (return and payment), Schedules 2 (exempt supplies) and 3 (zero-rated supplies)",
+        "publisher": "Government of Samoa — Ministry of Revenue",
+        "url": "https://revenue.gov.ws/wp-content/uploads/2022/08/Value-Added-Goods-and-Services-Tax-Act-2015.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "vagst-001",
+        "title": "Form VAGST 001 — Value Added Goods and Services Tax Return (fifteen boxes: sales, VAGST collected, purchases, VAGST paid, calculation)",
+        "publisher": "Government of Samoa — Ministry of Revenue",
+        "url": "https://revenue.gov.ws/wp-content/uploads/2022/09/VAGST-001.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "due-date-notice",
+        "title": "Notice to all taxpayers — tax returns and payments due for March 2025 (VAGST Category 'A' return due 22 April 2025; late filing fees, late payment interest and penalty)",
+        "publisher": "Government of Samoa — Ministry of Revenue",
+        "url": "https://revenue.gov.ws/2025/04/11/due-date-notice-vagst-paye-april-2025/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "vagst-registration",
+        "title": "Form IR31 — VAGST registration form",
+        "publisher": "Government of Samoa — Ministry of Revenue",
+        "url": "https://revenue.gov.ws/wp-content/uploads/2022/09/IR31-VAGST-Registration-Form-1.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "tax-admin-act",
+        "title": "Tax Administration Act 2012 — penalties, records and the return declaration",
+        "publisher": "Government of Samoa — Ministry of Revenue",
+        "url": "https://revenue.gov.ws/wp-content/uploads/2022/08/Tax-Administration-Act-2012.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "income-tax-act",
+        "title": "Income Tax Act 2012 — section 2: the tax year is the calendar year",
+        "publisher": "Government of Samoa — Ministry of Revenue",
+        "url": "https://revenue.gov.ws/wp-content/uploads/2022/08/Income-Tax-Act-2012.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "ias-1",
+        "title": "IAS 1 Presentation of Financial Statements — the statement of financial position and the statement of profit or loss, expenses analysed by nature; no Samoa text prescribing a layout or a chart of accounts was read",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/list-of-standards/ias-1-presentation-of-financial-statements/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "tax-portal",
+        "title": "Ministry of Revenue — tax administration portal (forms, public notices of filing deadlines, Samoa e-Tax for filing and paying online)",
+        "publisher": "Government of Samoa — Ministry of Revenue",
+        "url": "https://revenue.gov.ws/",
+        "kind": "portal",
+        "consulted_on": "2026-10-26"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "WST",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Samoa Ministry of Revenue",
+      "source": "tax-portal"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Samoa reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "WS-IFRS-SFP",
+        "WS-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the texts read for Samoa, and no text read names a standard setter or a framework for company accounts. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-style statements below (IAS 1, expenses by nature), with the accounts a Samoa trading company keeps — VAVAGST output and input tax, import VAVAGST owed to Customs, salary and wages tax withheld, superannuation contributions and withholding taxes payable.",
+      "source": "ias-1"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Value Added Goods and Services Tax Act 2015, s. 33 — a registered person making a taxable supply to another registered person issues the original tax invoice within 28 days of the time of supply, and none is required below $20; s. 39(3) requires copies to be kept. The text read states no document numbering rule, so numbering is `free`; the number format is a convention of this pack.",
+        "source": "vagst-act"
+      },
+      "tax_point": {
+        "legal_reference": "Value Added Goods and Services Tax Act 2015, s. 15(1) — a supply occurs on the earlier of the date the invoice for the supply is issued and the date any payment, part payment included, is made. `invoice_if_issued` states the invoice as the point of the tax where one is issued; a payment received before the invoice brings the supply forward, which the engine does not model for a cash-first sale (see the README). Section 26(2) allows the input tax credit in the GST period in which the input tax is paid, which the engine does not model either.",
+        "source": "vagst-act"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "The Ministry of Revenue runs a Tax Invoice Monitoring System (TIMS) for point-of-sale and electronic sales data devices, announced to vendors in public notices. No structured e-invoice standard or Peppol profile was found, so `obligation` is `none` for a business-to-business e-invoice; the reporting of sales to TIMS is not modelled (see the README).",
+    "source": "tax-portal"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Value Added Goods and Services Tax Act 2015, s. 8(1)(c) and s. 30 (component B) — a registered person who receives imported services is liable for GST on them and must prepare a recipient-created tax invoice (s. 19(3)); s. 19(2) reduces the value to the proportion for which no input tax credit would be available. A person making only taxable supplies therefore owes and recovers the same amount, and form VAGST 001 has no box for the reverse charge. The pack carries no purchase tax for services bought from abroad: this is a finding about the form read, and the case of a partly exempt person is a gap recorded in the README.",
+      "source": "vagst-act"
+    }
+  ]
+}

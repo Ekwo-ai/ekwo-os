@@ -1,0 +1,250 @@
+[
+  {
+    "code": "WS-S-15",
+    "name": "Sale, standard rate 15 %",
+    "description": "A taxable supply of goods or services made in Samoa by a registered person, neither zero-rated nor exempt",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Goods and Services Tax Act 2015, s. 8(3)(b) — GST is imposed at 15 % on a taxable supply that is not zero-rated. Form VAGST 001: box 3 is the total sales inclusive of VAGST, box 4 the zero-rated supplies, box 5 the difference (taxable sales, VAGST included) and box 6 the VAGST collected, box 5 divided by 7.66667 (the tax fraction of 15 %, 15/115). The engine posts the exclusive base to box 5a, which is not a box of the form, and the VAGST to box 6.",
+    "source": "vagst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "WS-S-ZR-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "Goods exported within 28 days of the supply, or services for use or consumption outside Samoa, taxable at 0 %",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "vat_category": "G",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Goods and Services Tax Act 2015, Schedule 3, Part 1, clause 1(a) and (e), and clause 2 — an export of goods is zero-rated unless the goods are re-imported or are not exported within 28 days of the supply (or a longer period the Commissioner sets); a supply of services for use or consumption outside Samoa is zero-rated on documentary proof acceptable to the Commissioner. Zero-rated supplies are box 4 of form VAGST 001, included in box 3. A zero-rated supply keeps the input credit.",
+    "source": "vagst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "WS-S-ZR",
+    "name": "Sale, zero-rated (other)",
+    "description": "A zero-rated supply made in Samoa that is not an export — international transport, educational services, medical goods or services provided in hospitals, water, electricity",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Goods and Services Tax Act 2015, Schedule 3, Part 1, clause 1 — besides exports, zero-rated: (g) international transport services, (h) supplies to the Head of State, (i) goods to the Gambling Control Authority, (j) educational services, (k) medical goods or services provided in hospitals, (l) water, (m) totalisator betting facilities, (n) the licensing of casinos, (o) electricity under the Electric Power Corporation Act 1980, and (f) some telecommunications services. One tax code carries the list; which item applies is the preparer's judgement. Box 4 of form VAGST 001.",
+    "source": "vagst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "4"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "4",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "WS-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply the VAGST Act exempts — financial services, bus and taxi passenger transport, donated goods of a non-profit body, the departure charge",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Goods and Services Tax Act 2015, Schedule 2, clause 1 — exempt supplies: (a) financial services, (b) donated goods or services of a non-profit body, (c) passenger transport by bus and taxi, (d) the departure charge, (e) interconnection fees between resident telecommunications suppliers, (f) the carriage of passengers by ships within Samoa, (g) supplies for an overseas funded aid project where the agreement says so. An exempt supply is not a taxable supply and carries no input credit; clause 2 treats a supply that is both exempt and zero-rated as zero-rated. Form VAGST 001 has no box for exempt sales: they are outside box 3 and appear on no line of the return.",
+    "source": "vagst-act",
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "sequence": 40
+  },
+  {
+    "code": "WS-P-15",
+    "name": "Purchase, standard rate 15 %",
+    "description": "Goods or services bought in Samoa from a registered person for the taxable activity, with a tax invoice",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Goods and Services Tax Act 2015, s. 26(1) — a registered person is allowed a credit for the input tax on a creditable acquisition to the extent that it was for making taxable supplies. Form VAGST 001: box 9 is the total taxable purchases and expenses received, VAGST included, and excludes tax paid to the Customs Service; box 10 is box 9 divided by 7.66667. The engine posts the exclusive base to box 9a, which is not a box of the form, and the VAGST to box 10. Apportionment for exempt or private use (s. 20 and s. 26) is the preparer's.",
+    "source": "vagst-001",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "9a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "10"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "9a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "10",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "WS-P-15-NC",
+    "name": "Purchase, standard rate 15 % — no input credit",
+    "description": "A purchase carrying 15 % VAGST that gives no input credit — bought for exempt supplies or for private use",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Goods and Services Tax Act 2015, s. 26(1) — the credit is allowed only to the extent that the acquisition was for making taxable supplies; s. 20 treats the application of goods to a private or exempt use as a taxable supply where a credit was allowed. A purchase made wholly for exempt supplies or private use gives no credit: the VAGST joins the cost and no box of the return receives the purchase. Which purchases are barred is the preparer's judgement.",
+    "source": "vagst-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "WS-P-0",
+    "name": "Purchase, no VAGST",
+    "description": "A purchase from a supplier who charged no VAGST — exempt, unregistered or outside Samoa",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Form VAGST 001, boxes 9 to 12 — only the VAGST actually paid on taxable purchases and expenses is declared; a purchase that carries no VAGST appears on no line of the return.",
+    "source": "vagst-001",
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "sequence": 70
+  },
+  {
+    "code": "WS-P-IMP",
+    "name": "Purchase, import of goods",
+    "description": "Goods imported into Samoa, VAGST paid to the Customs Service at the border",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2015-01-01",
+    "legal_reference": "Value Added Goods and Services Tax Act 2015, s. 8(1)(b) and s. 42(2) — GST on a taxable import is payable by the importer at the time of import, to the Comptroller of Customs (s. 43); s. 25 — the value of the import is the customs value plus freight and insurance, import duty, excise tax and levies. Form VAGST 001, box 11: tax adjustments, VAGST amount only, including VAGST paid to the Customs Service; box 9 excludes it. The customs value is posted to box 11a, which is not a box of the form. The VAGST owed to Customs sits on the import control account until paid.",
+    "source": "vagst-001",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "11"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "11",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 80
+  }
+]

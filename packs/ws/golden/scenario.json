@@ -1,0 +1,321 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Port Moresby trading company, GST-registered and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "PG-IFRS-SFP",
+    "PG-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-pg",
+      "name": "Port Moresby Retail Ltd",
+      "type": "customer",
+      "country": "PG"
+    },
+    {
+      "ref": "cust-za",
+      "name": "Durban Tea Traders (Pty) Ltd",
+      "type": "customer",
+      "country": "ZA"
+    },
+    {
+      "ref": "cust-gb",
+      "name": "Harlow Consulting Ltd",
+      "type": "customer",
+      "country": "GB"
+    },
+    {
+      "ref": "supp-pg",
+      "name": "Lae Wholesalers Ltd",
+      "type": "supplier",
+      "country": "PG"
+    },
+    {
+      "ref": "supp-cn",
+      "name": "Shenzhen Components Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-pg",
+      "date": "2026-01-08",
+      "why": "A domestic sale at the standard rate of 10 %: the exclusive base in box 5a, the GST in box 6.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale",
+          "quantity": 10,
+          "unit_price": 12000,
+          "tax": "PG-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-pg",
+      "date": "2026-01-12",
+      "why": "An exempt supply, school fees (note 2: education): box 2 only, no GST, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "School fees, January term",
+          "quantity": 1,
+          "unit_price": 45000,
+          "tax": "PG-S-EX",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-za",
+      "date": "2026-01-15",
+      "why": "An export of goods, zero-rated: box 3, no output GST, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Packaged tea, export consignment",
+          "quantity": 500,
+          "unit_price": 240,
+          "tax": "PG-S-ZR-EXP",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-gb",
+      "date": "2026-01-19",
+      "why": "A service exported, zero-rated: box 3.",
+      "lines": [
+        {
+          "name": "Market research report",
+          "quantity": 1,
+          "unit_price": 90000,
+          "tax": "PG-S-ZR-EXP",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-pg",
+      "date": "2026-01-21",
+      "why": "A zero-rated supply made inside Papua New Guinea, medical supplies (note 3, item f): box 3 although it never leaves the country.",
+      "lines": [
+        {
+          "name": "Medical supplies, local sale",
+          "quantity": 200,
+          "unit_price": 450,
+          "tax": "PG-S-ZR",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-pg",
+      "date": "2026-01-23",
+      "why": "The sale of a delivery van used in the business at the standard rate: the form has no line for capital assets, so it joins line 5 and the GST joins line 6.",
+      "lines": [
+        {
+          "name": "Used delivery van",
+          "quantity": 1,
+          "unit_price": 80000,
+          "tax": "PG-S-10",
+          "account": "4750"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-pg",
+      "date": "2026-01-26",
+      "why": "A credit note for one unit returned from INV-001, so box 5a and box 6 fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Office furniture, retail sale — one unit returned",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "PG-S-10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-pg",
+      "date": "2026-01-09",
+      "why": "A local purchase at the standard rate, credit allowed in full: box 8a and the GST in box 8, and a matched payment later on.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "PG-P-10",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-pg",
+      "date": "2026-01-11",
+      "why": "Goods of a capital nature bought locally: the GST is claimed in line 8 with the other inputs (note 4).",
+      "lines": [
+        {
+          "name": "Packaging machine",
+          "quantity": 1,
+          "unit_price": 300000,
+          "tax": "PG-P-10",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-pg",
+      "date": "2026-01-13",
+      "why": "A car bought by a business that is not a dealer in cars: no input credit (note 7), the GST joins the cost and reaches no box.",
+      "lines": [
+        {
+          "name": "Utility vehicle for the manager",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "PG-P-10-NC",
+          "account": "1660"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-004",
+      "type": "purchase_invoice",
+      "contact": "supp-pg",
+      "date": "2026-01-16",
+      "why": "An insurance premium, an exempt supply received: no GST, and no line of the return receives it.",
+      "lines": [
+        {
+          "name": "Business insurance premium",
+          "quantity": 1,
+          "unit_price": 30000,
+          "tax": "PG-P-0",
+          "account": "6410"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-005",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-20",
+      "why": "An import of goods: the GST paid to Customs at the border is claimed in line 8 and held on the import control account until settled.",
+      "lines": [
+        {
+          "name": "Imported electronic components for resale",
+          "quantity": 1,
+          "unit_price": 250000,
+          "tax": "PG-P-IMP",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-006",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-27",
+      "why": "An import of capital goods: the GST paid to Customs is claimed in line 8 as well.",
+      "lines": [
+        {
+          "name": "Imported labelling machine",
+          "quantity": 1,
+          "unit_price": 100000,
+          "tax": "PG-P-IMP",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-pg",
+      "date": "2026-01-30",
+      "why": "A purchase credit note for a short delivery on PINV-001, so box 8a and the GST of box 8 fall back down and a purchase_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "PG-P-10",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 45000,
+      "contact": "cust-pg",
+      "journal": "BNK",
+      "match": "INV-002",
+      "why": "The school fees of INV-002 collected in full: a matched inbound payment on an exempt sale."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 120000,
+      "contact": "cust-za",
+      "journal": "BNK",
+      "match": "INV-003",
+      "why": "The export of INV-003 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-07",
+      "amount": 44000,
+      "contact": "supp-pg",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full, GST included: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 20000,
+      "contact": "cust-gb",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received from Harlow Consulting Ltd before its next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}
