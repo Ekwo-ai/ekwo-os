@@ -534,6 +534,9 @@
     "small_business": "Special exemption scheme for small businesses — VAT not applicable.",
     "late_payment": "If payment is not made by the due date, interest at the statutory rate for commercial transactions and a fixed indemnity of 40 € for recovery costs are due by operation of law and without any reminder."
   },
+  "invoice_labels": {
+    "registrationNumber": "Enterprise number"
+  },
   "asset_categories": {
     "formation-expenses": "Formation expenses",
     "intangible-rd": "Research and development costs",
