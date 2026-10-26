@@ -54,10 +54,10 @@ code,parent,type,reconcilable,name,sequence
 2110,,liability_current,true,VAT payable to the Department of Customs and Inland Revenue — net of a filed return,530
 2125,,liability_current,false,Import VAT payable to Customs at the border,540
 2126,,liability_current,false,VAT on imported capital goods — held until paid,550
-2140,,liability_current,false,Salary and wages tax withheld and payable to the Department of Customs and Inland Revenue,560
+2140,,liability_current,false,Payroll deductions withheld and payable,560
 2150,,liability_current,false,Superannuation contributions payable,570
 2155,,liability_current,false,Excise duty payable,580
-2160,,liability_current,false,Withholding taxes payable to the Department of Customs and Inland Revenue,590
+2160,,liability_current,false,Other taxes withheld and payable to the Department of Customs and Inland Revenue,590
 2165,,liability_current,false,Other statutory amounts payable,600
 2180,,liability_current,false,Salaries payable,610
 2190,,liability_current,false,Directors' fees payable,620
