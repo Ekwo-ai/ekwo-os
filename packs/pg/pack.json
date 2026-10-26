@@ -1,0 +1,175 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "PG",
+  "name": "Papua New Guinea",
+  "version": "0.1.0",
+  "schema_min": "20261023124650",
+  "seed_sequence": 412,
+  "released_at": "2026-10-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "g1-form",
+        "title": "Form G1, Goods and Services Tax Return (effective 24 January 2016, Goods and Services Tax Act 2003 as amended) — lines 1 to 16 in three blocks: output debits (total sales, exempt sales, zero-rated sales, taxable sales divided by eleven), input credits (GST paid on business inputs less the share for exempt sales and private use) and the summary of GST payable or refundable; the notes on the exempt industries, the eight zero-rated sales, cars, the section 65A credit and the sales by province",
+        "publisher": "Papua New Guinea Internal Revenue Commission",
+        "url": "https://static.irc.gov.pg/2021/December/h8qIml-media-2018-05-01-G1-Goods-Services-Tax-Return.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "s65a-fact-sheet",
+        "title": "Fact Sheet, Section 65A of the GST Act, Payment of Tax in Special Cases — GST at a rate of 10 % on goods and services sold and on goods imported, output debit and input credit, a registered person files its return (form G1) by the 21st day of the following month, the G1 example (sales K11,000 including GST, output K1,000, input credit K750, K250 to pay)",
+        "publisher": "Papua New Guinea Internal Revenue Commission",
+        "url": "https://static.irc.gov.pg/2021/December/5ExWcL-media-GST-Section-65A-Fact-Sheet.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "gst-guide",
+        "title": "Goods and services tax (GST) in Papua New Guinea, a guide produced by KPMG's Port Moresby office (updated October 2025) — GST at 10 %, registration above K250,000 of taxable supplies in any 12 months, the zero-rated and exempt supplies, monthly returns, import GST at 10 % and the reverse charge on certain supplies from abroad; a professional firm's summary, not an official text",
+        "publisher": "KPMG Papua New Guinea, reproduced by Business Advantage PNG",
+        "url": "https://www.businessadvantagepng.com/goods-and-services-tax-gst-in-papua-new-guinea/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "ias-1",
+        "title": "IAS 1 Presentation of Financial Statements — the statement of financial position and the statement of profit or loss, expenses analysed by nature; no Papua New Guinea text prescribing a layout or a chart of accounts was read",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/list-of-standards/ias-1-presentation-of-financial-statements/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "tax-portal",
+        "title": "Internal Revenue Commission — tax administration portal (forms, guides, public notices of filing deadlines; GST is paid and returns are lodged at the IRC)",
+        "publisher": "Papua New Guinea Internal Revenue Commission",
+        "url": "https://www.irc.gov.pg/",
+        "kind": "portal",
+        "consulted_on": "2026-10-26"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "PGK",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Papua New Guinea Internal Revenue Commission",
+      "source": "tax-portal"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Papua New Guinea reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "PG-IFRS-SFP",
+        "PG-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the texts read for Papua New Guinea, and no text read names a standard setter or a framework for company accounts. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-style statements below (IAS 1, expenses by nature), with the accounts a Papua New Guinea trading company keeps — GST output and input tax, import GST owed to Customs, salary and wages tax withheld, superannuation contributions and withholding taxes payable.",
+      "source": "ias-1"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "No text read states the content of a tax invoice or a numbering rule. `sequential` and the number format are conventions of this pack and not rules of the law.",
+        "source": "g1-form"
+      },
+      "tax_point": {
+        "legal_reference": "No text read states when GST becomes due on a supply (the Goods and Services Tax Act 2003 itself could not be opened: PacLII and the IRC site refuse automated reads). `invoice_date` is the pack's simplification and not a finding of the law; the point of the tax is a gap recorded in the README.",
+        "source": "s65a-fact-sheet"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No structured e-invoice standard, Peppol profile or clearance system of the Internal Revenue Commission was found in the texts read; the GST return is the paper or spreadsheet form G1. `obligation` is `none` for want of a text, not on a finding that none exists.",
+    "source": "tax-portal"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "The guide read says the legislation contains reverse charge provisions for certain supplies made to a resident from outside Papua New Guinea, but neither the G1 form nor the fact sheet gives a line for it. The pack therefore carries no purchase tax for services bought from abroad. This is a finding about the texts read, not a finding that no reverse charge exists: it is a gap recorded in the README.",
+      "source": "gst-guide"
+    }
+  ]
+}
