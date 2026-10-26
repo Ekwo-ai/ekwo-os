@@ -1,0 +1,179 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "WS-VAGST",
+  "name": "VAGST return (form VAGST 001)",
+  "period": [
+    "bimonth"
+  ],
+  "valid_from": "2015-01-01",
+  "legal_reference": "Form VAGST 001, Value Added Goods and Services Tax Return (Value Added Goods and Services Tax Act 2015), filed for a GST period of two months (s. 29): fifteen numbered items, of which boxes 1 and 2 are the registration number and the name, boxes 3 to 8 the sales and the VAGST collected, boxes 9 to 12 the purchases and the VAGST paid, and boxes 13 to 15 the calculation. The form is VAGST-inclusive: boxes 3, 5 and 9 are totals here (exclusive base plus VAGST) and the exclusive figures sit in boxes 5a and 9a. Box 15 is signed: negative is the credit. The pack declares the bimonth anchored on January–February (Category B, periods ending in February, April, June…); Category A periods (ending in January, March, May…) are a gap of the core, see the README.",
+  "source": "vagst-001",
+  "deadline": {
+    "rule": "depends_on_taxpayer",
+    "legal_reference": "Value Added Goods and Services Tax Act 2015, s. 41(1) — the return is filed within 15 working days after the end of the GST period, and s. 42(1) makes the net GST payable by the same date; s. 41(2) lets the Commissioner set an alternative date for a non-profit body or a particular case. The date is a count of working days and depends on public holidays, so no day of the month is declared: the Ministry's notice for March 2025 gives Tuesday 22 April 2025 for the Category 'A' period February–March.",
+    "source": "vagst-act"
+  },
+  "boxes": [
+    {
+      "box": "3",
+      "kind": "total",
+      "name": "Box 3 — Total sales/income inclusive of VAGST",
+      "sequence": 30,
+      "legal_reference": "Form VAGST 001, box 3 — total sales and income inclusive of VAGST (including imported services consumed by exempt bodies), zero-rated supplies included. Here boxes 4 and 5 added.",
+      "source": "vagst-001",
+      "plus": [
+        "4",
+        "5"
+      ]
+    },
+    {
+      "box": "4",
+      "kind": "base",
+      "name": "Box 4 — Zero-rated supplies",
+      "sequence": 40,
+      "legal_reference": "Form VAGST 001, box 4 — the amount of zero-rated supplies, if any; included in box 3.",
+      "source": "vagst-001"
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Box 5 — Taxable sales (box 3 less box 4), VAGST included",
+      "sequence": 50,
+      "legal_reference": "Form VAGST 001, box 5 — subtract box 4 from box 3. Here the exclusive base of box 5a plus the VAGST of box 6.",
+      "source": "vagst-001",
+      "plus": [
+        "5a:base",
+        "6:tax"
+      ]
+    },
+    {
+      "box": "5a",
+      "kind": "base",
+      "name": "Box 5a — Taxable sales, VAGST excluded",
+      "sequence": 55,
+      "legal_reference": "Not a box of the form: the exclusive value of the taxable sales of box 5, which the engine posts and from which box 5 is rebuilt.",
+      "source": "vagst-001"
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "Box 6 — VAGST collected by you (box 5 divided by 7.66667)",
+      "sequence": 60,
+      "legal_reference": "Form VAGST 001, box 6 — divide box 5 by 7.66667, the tax fraction of 15 % (15/115). Value Added Goods and Services Tax Act 2015, s. 8(3)(b).",
+      "source": "vagst-act"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Box 7 — Tax adjustments (VAGST amount only), sales side",
+      "sequence": 70,
+      "legal_reference": "Form VAGST 001, box 7 — tax adjustments, VAGST amount only (adjustment events and bad debts). Declared and empty: a decision of the preparer, no tax code posts to it.",
+      "source": "vagst-001"
+    },
+    {
+      "box": "8",
+      "kind": "total",
+      "name": "Box 8 — Total output tax (boxes 6 and 7)",
+      "sequence": 80,
+      "legal_reference": "Form VAGST 001, box 8 — add box 6 and 7: total output tax.",
+      "source": "vagst-001",
+      "plus": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "box": "9",
+      "kind": "total",
+      "name": "Box 9 — Total taxable purchases/expenses received, VAGST included",
+      "sequence": 90,
+      "legal_reference": "Form VAGST 001, box 9 — total taxable purchases and expenses received including VAGST, excluding tax paid to the Customs Service. Here the exclusive base of box 9a plus the VAGST of box 10.",
+      "source": "vagst-001",
+      "plus": [
+        "9a:base",
+        "10:tax"
+      ]
+    },
+    {
+      "box": "9a",
+      "kind": "base",
+      "name": "Box 9a — Local purchases carrying creditable VAGST, VAGST excluded",
+      "sequence": 95,
+      "legal_reference": "Not a box of the form: the exclusive value of the local purchases whose VAGST is posted to box 10.",
+      "source": "vagst-001"
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "Box 10 — VAGST paid by you (box 9 divided by 7.66667)",
+      "sequence": 100,
+      "legal_reference": "Form VAGST 001, box 10 — divide box 9 by 7.66667. Value Added Goods and Services Tax Act 2015, s. 26(1).",
+      "source": "vagst-act"
+    },
+    {
+      "box": "11",
+      "kind": "tax",
+      "name": "Box 11 — Tax adjustments (VAGST amount only), including VAGST paid to Customs",
+      "sequence": 110,
+      "legal_reference": "Form VAGST 001, box 11 — tax adjustments, VAGST amount only, including VAGST paid to the Customs Service. The VAGST of imported goods is posted here.",
+      "source": "vagst-001"
+    },
+    {
+      "box": "11a",
+      "kind": "base",
+      "name": "Box 11a — Imports, customs value",
+      "sequence": 115,
+      "legal_reference": "Not a box of the form: the value of the imported goods whose VAGST is posted to box 11; the form asks for the VAGST only.",
+      "source": "vagst-001"
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Box 12 — Total input tax (boxes 10 and 11)",
+      "sequence": 120,
+      "legal_reference": "Form VAGST 001, box 12 — add box 10 and 11: total input tax.",
+      "source": "vagst-001",
+      "plus": [
+        "10",
+        "11"
+      ]
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Box 13 — VAGST to pay (positive) or VAGST credit (negative), box 8 less box 12",
+      "sequence": 130,
+      "legal_reference": "Form VAGST 001, box 13 — the difference between box 8 and box 12: if box 12 is greater, the difference is the VAGST credit; if box 8 is greater, it is the VAGST to pay. Value Added Goods and Services Tax Act 2015, s. 30, net GST payable (A+B)-C. Signed: negative is the credit.",
+      "source": "vagst-act",
+      "plus": [
+        "8"
+      ],
+      "minus": [
+        "12"
+      ]
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Box 14 — Credit brought forward from previous months",
+      "sequence": 140,
+      "legal_reference": "Form VAGST 001, box 14 — credit brought forward, entered as a positive amount. Declared and empty: it is the preparer's, from the previous return (s. 31, refunds).",
+      "source": "vagst-001"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Box 15 — VAGST to pay (positive) or total VAGST credit (negative)",
+      "sequence": 150,
+      "legal_reference": "Form VAGST 001, box 15 — if box 13 is VAGST to pay, subtract the credit brought forward of box 14; if box 13 is a credit, add box 14 to it. Signed: negative is the credit; the net GST is payable by the filing date (s. 42(1)).",
+      "source": "vagst-001",
+      "plus": [
+        "13"
+      ],
+      "minus": [
+        "14"
+      ]
+    }
+  ],
+  "period_default": "bimonth"
+}
