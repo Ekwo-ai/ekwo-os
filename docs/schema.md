@@ -1117,6 +1117,7 @@ Which template account plays which role, per country.
 | `tax_payee_name` | `text` | The administration a declaration of this country is paid to, by its official name in the pack's language — the payee of the debt settle_filing() carries to tax_payable_code. tax_payee() creates the company's contact for it under this name. Null until a pack names one, and then a settlement names nobody unless a contact already books to that account. |
 | `tax_payee_source_key` | `text` | The key of the entry of the pack's source register where the administration's name is read. |
 | `tax_payee_name_i18n` | `jsonb` | not null — The name of the administration in tax_payee_name, by language, as the administration publishes it in each language of the pack. tax_payee() creates the contact under the company's language here, else under tax_payee_name. |
+| `invoice_labels` | `jsonb` | not null — The words of an invoice the law of this country names (documents.invoice_labels of the pack and their translations), by language then by key of the InvoiceLabels of @ekwo-ai/invoice-pdf: {"fr": {"registrationNumber": "Numéro d'entreprise"}, "nl": {...}}. A renderer prints the word for the document's language over the word of the layout. Empty where the pack names none. |
 
 Constraints:
 
@@ -1132,6 +1133,7 @@ END)`
 - `CHECK (((einvoice_obligation IS NULL) OR (einvoice_obligation = ANY (ARRAY['mandatory'::text, 'on_request'::text, 'none'::text]))))`
 - `CHECK (((final_close_due IS NULL) OR (final_close_due = 'before_next_fiscal_year_ends'::text)))`
 - `CHECK (((fiscal_year_default IS NULL) OR (fiscal_year_default = ANY (ARRAY['calendar'::text, 'april'::text, 'july'::text, 'october'::text]))))`
+- `CHECK ((jsonb_typeof(invoice_labels) = 'object'::text))`
 - `CHECK (((legal_payment_days IS NULL) OR (legal_payment_days >= 0)))`
 - `CHECK (((party_scheme IS NULL) OR (party_scheme ~ '^[0-9]{4}$'::text)))`
 - `CHECK (((posted_edit_policy IS NULL) OR (posted_edit_policy = ANY (ARRAY['reversal_only'::text, 'unpost_if_untouched'::text]))))`

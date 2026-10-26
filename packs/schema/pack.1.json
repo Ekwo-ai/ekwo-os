@@ -334,6 +334,31 @@
       "pattern": "^[a-z0-9][a-z0-9-]{0,39}$",
       "description": "Key of an entry in certification.sources: where the legal reference written beside it can be read. The article stays on the item and the link stays in the register, so a text moved on its publisher's site is one line to change. `ekwo pack check` refuses a key the register does not carry; on a reviewed pack it also refuses a tax or a box that names none."
     },
+    "invoice_label": {
+      "type": "object",
+      "description": "One word of an invoice as the law of the country names it, in the pack's own language, with the article that names it.",
+      "required": [
+        "text",
+        "legal_reference",
+        "source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The word as the statute writes it, in defaults.language."
+        },
+        "legal_reference": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The article that requires this to be printed under this name, cited as the country cites it."
+        },
+        "source": {
+          "$ref": "#/$defs/source_ref"
+        }
+      }
+    },
     "rule_reference": {
       "type": "object",
       "description": "Where one rule of a country comes from: the article that imposes it, and the key of the register entry where that article is read. The shape a tax and a box of a declaration form already have, given to the rules that carry no legal_reference of their own because they are a word rather than a row.",
@@ -917,6 +942,49 @@
               "source": {
                 "$ref": "#/$defs/source_ref"
               }
+            }
+          }
+        },
+        "invoice_labels": {
+          "type": "object",
+          "description": "The words of an invoice that the law of this country names, over the words of the layout that are the same in every country (@ekwo-ai/invoice-pdf carries those, one set per language). Only what a statute prescribes: the title of the document, what an identifier is called, what the tax is called. Each word cites its article. The other languages are in i18n/<lang>.json, under invoice_labels. Compiled into country_defaults.invoice_labels, by language; a document is printed with the pack's word for its language, then the layout's, then English.",
+          "additionalProperties": false,
+          "properties": {
+            "invoice": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "creditNote": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "taxPointDate": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "vatNumber": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "registrationNumber": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "shareCapital": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "taxRate": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "taxSummary": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "taxBase": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "taxCharged": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "totalUntaxed": {
+              "$ref": "#/$defs/invoice_label"
+            },
+            "totalTax": {
+              "$ref": "#/$defs/invoice_label"
             }
           }
         }
@@ -2467,6 +2535,14 @@
             "type": "string"
           },
           "description": "By mention code. Where a statute prescribes the wording in this language, it is that wording and not a translation of another one."
+        },
+        "invoice_labels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "By key of documents.invoice_labels: the same word, as the statute writes it in this language. A key the manifest does not carry is refused."
         },
         "asset_categories": {
           "type": "object",

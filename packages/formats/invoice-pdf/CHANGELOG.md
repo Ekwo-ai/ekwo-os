@@ -7,6 +7,10 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Added
+- **`forLanguage(sets, tag)`**: the rule `labelsFor()` chooses a set of words
+  by — the whole tag, then its language — for any sets keyed by language, so
+  that a caller choosing among words of its own (a country's, in
+  `@ekwo-ai/core`) chooses the same way. Null where none fits.
 - **The words of the layout in German, Spanish, French and Dutch.** One set
   per language in `src/labels/<language>.ts`, gathered in `INVOICE_LABELS`;
   `labelsFor(tag)` picks the set of the whole tag, then of its language, then
