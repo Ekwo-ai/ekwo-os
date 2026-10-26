@@ -20,7 +20,7 @@ two decimals). The Ministry's forms and the Act's examples print amounts as
 
 ## Sources
 
-Eight entries in `pack.json`. Read at source: the Consumption Tax Act 2003
+Seven entries in `pack.json`. Read at source: the Consumption Tax Act 2003
 (Cap. 26.02, 2016 Revised Edition, from the Tonga trade portal), form CT206 and
 the CT overview page on the Ministry of Revenue and Customs site
 (`revenue.gov.to`), the Consumption Tax Regulations 2005 as revised in 2012 with
