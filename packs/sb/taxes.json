@@ -185,7 +185,7 @@
     "rate": 0,
     "scope": "sale",
     "treatment": "exempt",
-    "vat_category": "O",
+    "vat_category": "E",
     "valid_from": "2019-08-28",
     "legal_reference": "Goods Tax web page: goods tax generally does not apply to services that do not produce goods, sales of land or intangible property, used local goods or goods for export; sales tax applies only to the goods and services of Schedule One of the Sales Tax Act. A sale of goods under this code appears on no box: choose SB-GT-EX to declare it in the total sales of form GT4.",
     "source": "goods-tax-act",

@@ -3194,3 +3194,15 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('SB', 'iso_3166_1', 'Solomon Islands', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Solomon Islands levies no value added tax: the Inland Revenue Division administers a goods tax under the Goods Tax Act (Cap. 122), at 10 per cent on prescribed locally manufactured goods and 15 per cent on imported goods, and a sales tax under the Sales Tax Act (Cap. 125) on the goods and services of its Schedule One, and a registered person files a monthly return for each, form GT4 and form ST4, within 30 days of the end of the month.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

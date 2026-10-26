@@ -189,5 +189,11 @@
     "legal_reference": "No structured e-invoice standard, Peppol profile or clearance system of the Inland Revenue Division was found in the texts read; the returns are paper forms (GT4, ST4) and the eTax service. `obligation` is `none` for want of a text, not on a finding that none exists.",
     "source": "tax-portal"
   },
-  "not_taxed": []
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Sales Tax Act (Cap. 125) section 3(1) charges the purchaser a tax on the use or consumption of the prescribed goods and services, and section 3(6) has the importer of prescribed goods pay it on entry; neither the Act nor the forms read give a line of form ST4 for a service bought from a supplier abroad. The pack therefore carries no purchase tax for it. This is a finding about the texts read, not a finding that nothing is owed: it is a gap recorded in the README.",
+      "source": "sales-tax-act"
+    }
+  ]
 }
