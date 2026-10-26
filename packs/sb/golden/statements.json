@@ -1,7 +1,7 @@
 {
   "statements": [
     {
-      "code": "PG-IFRS-SFP",
+      "code": "SB-IFRS-SFP",
       "from": "2026-01-01",
       "to": "2026-12-31",
       "lines": {
@@ -40,7 +40,7 @@
       }
     },
     {
-      "code": "PG-IFRS-IS",
+      "code": "SB-IFRS-IS",
       "from": "2026-01-01",
       "to": "2026-12-31",
       "lines": {

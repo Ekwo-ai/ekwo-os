@@ -15,8 +15,8 @@
     }
   ],
   "statements": [
-    "PG-IFRS-SFP",
-    "PG-IFRS-IS"
+    "SB-IFRS-SFP",
+    "SB-IFRS-IS"
   ],
   "contacts": [
     {
@@ -265,7 +265,7 @@
       "ref": "PAY-001",
       "direction": "inbound",
       "date": "2026-02-05",
-      "amount": 13200,
+      "amount": 8800,
       "contact": "cust-sb",
       "journal": "BNK",
       "match": "INV-005",

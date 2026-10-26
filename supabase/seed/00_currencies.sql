@@ -220,3 +220,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('VUV', 'Vanuatu vatu', 'VT', 0)
 on conflict (code) do nothing;
+
+-- Solomon Islands dollar, ISO 4217 list one, two decimals (packs/sb/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('SBD', 'Solomon Islands dollar', 'SI$', 2)
+on conflict (code) do nothing;
