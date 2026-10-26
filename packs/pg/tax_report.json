@@ -1,0 +1,208 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "PG-GST",
+  "name": "GST return (form G1)",
+  "period": [
+    "month"
+  ],
+  "valid_from": "2024-01-01",
+  "legal_reference": "Form G1, Goods and Services Tax Return (Goods and Services Tax Act 2003 as amended), filed for a tax period (a month): sixteen lines in three blocks — output debits (1 to 7), input credits (8 to 12) and the summary of GST payable or refundable (13 to 16). The form is GST-inclusive on the sales side: lines 1 and 5 are totals here (exclusive base plus GST) and the exclusive figure sits in box 5a. A registered person files monthly (guide read; the form asks for a tax period month and year). Line 15 is signed: negative is the refund.",
+  "source": "g1-form",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 21,
+    "legal_reference": "IRC fact sheet on section 65A: the supplier, like all other persons registered for GST, is required to file its return by the 21st day of the following month. The payment is made with the return (form G1, line 15, remittance enclosed). A due date on a weekend or a holiday is not shifted by this rule.",
+    "source": "s65a-fact-sheet"
+  },
+  "boxes": [
+    {
+      "box": "1",
+      "kind": "total",
+      "name": "Line 1 — Total sales and employee benefits for the tax period, GST included",
+      "sequence": 10,
+      "legal_reference": "Form G1, line 1 — total sales and employee benefits for the tax period including GST charged, exempt and zero-rated sales included (note 1). Here lines 4 and 5 added.",
+      "source": "g1-form",
+      "plus": [
+        "4",
+        "5"
+      ]
+    },
+    {
+      "box": "2",
+      "kind": "base",
+      "name": "Line 2 — Less exempt sales",
+      "sequence": 20,
+      "legal_reference": "Form G1, line 2 — exempt sales of the period (note 2), included in line 1.",
+      "source": "g1-form"
+    },
+    {
+      "box": "3",
+      "kind": "base",
+      "name": "Line 3 — Zero rated sales",
+      "sequence": 30,
+      "legal_reference": "Form G1, line 3 — zero rated sales of the period (note 3), included in line 1.",
+      "source": "g1-form"
+    },
+    {
+      "box": "4",
+      "kind": "total",
+      "name": "Line 4 — Add lines 2 and 3",
+      "sequence": 40,
+      "legal_reference": "Form G1, line 4 — lines 2 and 3 added.",
+      "source": "g1-form",
+      "plus": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Line 5 — Total GST taxable sales (line 1 less line 4), GST included",
+      "sequence": 50,
+      "legal_reference": "Form G1, line 5 — deduct the total in line 4 from line 1. Here the exclusive base of box 5a plus the GST of box 6.",
+      "source": "g1-form",
+      "plus": [
+        "5a:base",
+        "6:tax"
+      ]
+    },
+    {
+      "box": "5a",
+      "kind": "base",
+      "name": "Line 5a — GST taxable sales, GST excluded",
+      "sequence": 55,
+      "legal_reference": "Not a line of the form: the exclusive value of the taxable sales of line 5, which the engine posts and from which line 5 is rebuilt.",
+      "source": "g1-form"
+    },
+    {
+      "box": "6",
+      "kind": "tax",
+      "name": "Line 6 — Output debits (line 5 divided by eleven)",
+      "sequence": 60,
+      "legal_reference": "Form G1, line 6 — divide the taxable sales of line 5 by eleven, the tax fraction of 10 %.",
+      "source": "g1-form"
+    },
+    {
+      "box": "7",
+      "kind": "tax",
+      "name": "Line 7 — Deferred import liabilities",
+      "sequence": 70,
+      "legal_reference": "Form G1, line 7 — only applicable to approved entities with GST liabilities deferred on imports. Declared and empty: a decision of the preparer, no tax code posts to it.",
+      "source": "g1-form"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Line 8 — GST paid on business inputs bought during the tax period",
+      "sequence": 80,
+      "legal_reference": "Form G1, line 8 — all the GST paid during the period when buying business inputs, capital goods and the GST paid on imports included, cars and the purchases of the exempt employee benefits left out (notes 4 and 7).",
+      "source": "g1-form"
+    },
+    {
+      "box": "8a",
+      "kind": "base",
+      "name": "Line 8a — Local purchases carrying creditable GST, GST excluded",
+      "sequence": 85,
+      "legal_reference": "Not a line of the form: the exclusive value of the local purchases whose GST is posted to line 8.",
+      "source": "g1-form"
+    },
+    {
+      "box": "8b",
+      "kind": "base",
+      "name": "Line 8b — Imports, customs value",
+      "sequence": 86,
+      "legal_reference": "Not a line of the form: the customs value of the imported goods whose GST is posted to line 8; the form asks for the GST only.",
+      "source": "g1-form"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Line 9 — Less GST paid for exempt sales",
+      "sequence": 90,
+      "legal_reference": "Form G1, line 9 — GST paid on the inputs used for exempt sales, by the apportionment of note 5. Declared and empty: the apportionment is a decision of the preparer (see the README).",
+      "source": "g1-form"
+    },
+    {
+      "box": "10",
+      "kind": "tax",
+      "name": "Line 10 — GST paid for private purposes",
+      "sequence": 100,
+      "legal_reference": "Form G1, line 10 — GST paid on goods and services bought for business and later used privately (note 6). Declared and empty: a decision of the preparer.",
+      "source": "g1-form"
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "Line 11 — Add lines 9 and 10",
+      "sequence": 110,
+      "legal_reference": "Form G1, line 11 — lines 9 and 10 added.",
+      "source": "g1-form",
+      "plus": [
+        "9",
+        "10"
+      ]
+    },
+    {
+      "box": "12",
+      "kind": "total",
+      "name": "Line 12 — Input credits (line 8 less line 11)",
+      "sequence": 120,
+      "legal_reference": "Form G1, line 12 — deduct the total in line 11 from line 8; copied to line 14.",
+      "source": "g1-form",
+      "plus": [
+        "8"
+      ],
+      "minus": [
+        "11"
+      ]
+    },
+    {
+      "box": "13",
+      "kind": "total",
+      "name": "Line 13 — Output debits (lines 6 and 7)",
+      "sequence": 130,
+      "legal_reference": "Form G1, line 13 — lines 6 and 7 added.",
+      "source": "g1-form",
+      "plus": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "box": "14",
+      "kind": "total",
+      "name": "Line 14 — Deduct input credits (from line 12)",
+      "sequence": 140,
+      "legal_reference": "Form G1, line 14 — the input credits of line 12.",
+      "source": "g1-form",
+      "plus": [
+        "12"
+      ]
+    },
+    {
+      "box": "16",
+      "kind": "tax",
+      "name": "Line 16 — GST section 65A credit allowable",
+      "sequence": 160,
+      "legal_reference": "Form G1, line 16 and note 8 — a person subject to a section 65A withholding notice enters the total payment withheld for the month. Declared and empty: the withholding is not modelled (see the README).",
+      "source": "g1-form"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Line 15 — GST payable (positive) or refundable (negative)",
+      "sequence": 150,
+      "legal_reference": "Form G1, line 15 — GST payable, remittance enclosed, or refundable; the output debits of line 13 less the input credits of line 14 and less the section 65A credit of line 16 (fact sheet example: K1,000 output, K750 input credit, K1,000 withheld, K750 refundable). Signed: negative is the refund.",
+      "source": "g1-form",
+      "plus": [
+        "13"
+      ],
+      "minus": [
+        "14",
+        "16"
+      ]
+    }
+  ],
+  "period_default": "month"
+}
