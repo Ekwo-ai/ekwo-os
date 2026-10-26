@@ -1,0 +1,193 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "SB",
+  "name": "Solomon Islands",
+  "version": "0.1.0",
+  "schema_min": "20261023124650",
+  "seed_sequence": 226,
+  "released_at": "2026-10-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "goods-tax-act",
+        "title": "Goods Tax Act (Cap. 122), reprint authorised by the Attorney General under the Legislation Act 2023 — Part VII section 38 (returns within thirty days), section 42 (payment within thirty days, sixty for a credit sale), section 47 (refunds), Part XI section 69 (tax imposed on the sale value at the rate of the Second Schedule), section 75 (goods tax stated on the invoice), the exempt goods of the First Schedule and the Second Schedule",
+        "publisher": "Solomon Islands Government — Inland Revenue Division",
+        "url": "https://www.ird.gov.sb/wp-content/uploads/2025/10/GOODS-TAX-ACT-CAP-122.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "gt-order-2019",
+        "title": "Goods Tax (Second Schedule) (Amendment) Order 2019, Legal Notice 73 of 28 August 2019 — the Second Schedule substituted: imported goods 15 %, prescribed locally manufactured goods 10 %, rice 5 %",
+        "publisher": "Solomon Islands Government — Inland Revenue Division",
+        "url": "https://www.ird.gov.sb/wp-content/uploads/2025/10/Goods-Tax-Second-Schedule-Amendment-Order-2019.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "sales-tax-act",
+        "title": "Sales Tax Act (Cap. 125), reprint authorised by the Attorney General under the Legislation Act 2023 — section 3 (the purchaser is charged the tax), section 13 (the vendor is the collector), section 14 (collected at the sale, remitted with the returns within thirty days after the end of the month), section 15 (returns), section 17 (liability, due on the 30th of the following month) and Schedule One (prescribed goods and services and their rates)",
+        "publisher": "Solomon Islands Government — Inland Revenue Division",
+        "url": "https://www.ird.gov.sb/wp-content/uploads/2025/10/SALE-TAX-ACT-CAP-125.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "gt4-form",
+        "title": "Goods Tax Return, form GT4 (formerly GT3, revised August 2025) — total sales of goods, less exempt goods, less rice taxed at 0 %, taxable sales, locally manufactured goods at 10 %, imported goods at 15 %, total goods tax payable; due within 30 days of the end of the month of the sales; and its instructions GTI 2 with the determination of sale value",
+        "publisher": "Solomon Islands Government — Inland Revenue Division",
+        "url": "https://www.ird.gov.sb/wp-content/uploads/2025/10/Goods-Tax-return-August-2025.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "st4-form",
+        "title": "Sales Tax Return, form ST4 (formerly ST3, revised August 2025) — one line per type of sale: amount of sales, rate, sales tax payable; total sales and total sales tax payable; due within 30 days of the end of the month of the sales; and its instructions STI 2 with the schedule of goods and services subject to sales tax",
+        "publisher": "Solomon Islands Government — Inland Revenue Division",
+        "url": "https://www.ird.gov.sb/wp-content/uploads/2025/10/Sales-Tax-return-August-2025.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "st-instructions",
+        "title": "Instructions to complete the Sales Tax Return (STI 2, revised August 2025) — the schedule of the goods and services subject to sales tax: petroleum and diesel at 10 cents a litre, fourteen services at 10 %, six items at an amount per unit",
+        "publisher": "Solomon Islands Government — Inland Revenue Division",
+        "url": "https://www.ird.gov.sb/wp-content/uploads/2025/10/Sales-Tax-Return-instructions-August-2025.pdf",
+        "kind": "guidance",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "ias-1",
+        "title": "IAS 1 Presentation of Financial Statements — the statement of financial position and the statement of profit or loss, expenses analysed by nature; no Solomon Islands text prescribing a layout or a chart of accounts was read",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/list-of-standards/ias-1-presentation-of-financial-statements/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "tax-portal",
+        "title": "Inland Revenue Division — tax administration portal (Goods Tax and Sales Tax pages, forms and publications, tax legislation, the eTax service)",
+        "publisher": "Solomon Islands Government — Inland Revenue Division",
+        "url": "https://www.ird.gov.sb/",
+        "kind": "portal",
+        "consulted_on": "2026-10-26"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "SBD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Solomon Islands Inland Revenue Division",
+      "source": "tax-portal"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Solomon Islands reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "SB-IFRS-SFP",
+        "SB-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the texts read for Solomon Islands, and no text read names a standard setter or a framework for company accounts. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-style statements below (IAS 1, expenses by nature), with the accounts a Solomon Islands trading company keeps — goods tax and sales tax collected, the net amount payable to the Inland Revenue Division, PAYE withheld, National Provident Fund contributions and withholding taxes payable.",
+      "source": "ias-1"
+    }
+  ],
+  "documents": {
+    "numbering": "sequential",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Goods Tax Act section 75 asks the goods tax to be stated on the wholesale invoice; no text read states a numbering rule. `sequential` and the number format are conventions of this pack and not rules of the law.",
+        "source": "goods-tax-act"
+      },
+      "tax_point": {
+        "legal_reference": "Sales Tax Act section 14: the tax is collected at the time of the sale on the whole amount of the value. Goods Tax Act section 42: payable within thirty days after the close of the month of the sale. `invoice_date` is the pack's approximation of the time of the sale; a credit sale of goods (sixty days to pay) is not modelled.",
+        "source": "sales-tax-act"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "No structured e-invoice standard, Peppol profile or clearance system of the Inland Revenue Division was found in the texts read; the returns are paper forms (GT4, ST4) and the eTax service. `obligation` is `none` for want of a text, not on a finding that none exists.",
+    "source": "tax-portal"
+  },
+  "not_taxed": []
+}
