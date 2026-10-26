@@ -20,6 +20,8 @@
  * `fetch`. Nothing in this folder imports anything from outside the core.
  */
 
+import { SCHEMA_FEATURES, supports, type SchemaFeature } from '../schema.js';
+
 export type Value = string | number | boolean | null;
 
 export type Filter =
@@ -187,10 +189,65 @@ export function socleMarkerAnswer(answer: { ok: boolean; status?: number | undef
   return undefined;
 }
 
-/** A backend that also says where the socle is. */
+/** A backend that also says where the socle is, and at which version. */
 export interface SocleBackend extends Backend {
   /** `ekwo` or `public`, resolved by the marker on first use. */
   socleSchema(): Promise<string>;
+  /**
+   * What `ekwo_schema_version()` answers, asked the first time a call touches
+   * something of `SCHEMA_FEATURES` and kept; `undefined` while it does not
+   * answer.
+   */
+  schemaVersion(): Promise<string | undefined>;
+}
+
+/** Each column of `SCHEMA_FEATURES`, by table: what a read leaves out below its version. */
+const FEATURE_COLUMNS = new Map<string, Array<{ column: string; feature: SchemaFeature }>>();
+/** Each function of `SCHEMA_FEATURES`, and the feature it belongs to. */
+const FEATURE_FUNCTIONS = new Map<string, SchemaFeature>();
+for (const [feature, objects] of Object.entries(SCHEMA_FEATURES) as Array<[SchemaFeature, (typeof SCHEMA_FEATURES)[SchemaFeature]]>) {
+  for (const qualified of objects.columns) {
+    const [table, column] = qualified.split('.') as [string, string];
+    FEATURE_COLUMNS.set(table, [...(FEATURE_COLUMNS.get(table) ?? []), { column, feature }]);
+  }
+  for (const fn of objects.functions) FEATURE_FUNCTIONS.set(fn, feature);
+}
+
+/** `amount` for `amount`, `amount::text` and `total:amount`, the forms a select list takes. */
+function selectedColumn(entry: string): string {
+  const cast = entry.indexOf('::');
+  const bare = cast === -1 ? entry : entry.slice(0, cast);
+  const alias = bare.indexOf(':');
+  return (alias === -1 ? bare : bare.slice(alias + 1)).trim();
+}
+
+/**
+ * Whether the schema behind `backend` has `feature`.
+ *
+ * A backend that has `schemaVersion()` answers from it: every one built by
+ * `onSocle()`, and any other that a surface gives the method — Ekwo Cloud's
+ * own, which reads the version of the project it is signed in to. A backend
+ * without it — and one whose database has not said its version — is taken
+ * to be at this release, which is what every call assumed before the floor
+ * was separated from the release: an unknown version never makes a current
+ * installation lose a column.
+ */
+export async function backendSupports(backend: Backend, feature: SchemaFeature): Promise<boolean> {
+  const versioned = backend as Partial<SocleBackend>;
+  if (typeof versioned.schemaVersion !== 'function') return true;
+  const installed = await versioned.schemaVersion();
+  return installed === undefined || supports(installed, feature);
+}
+
+/** The refusal of a call that needs a newer schema than the one it reached. */
+export function schemaTooOldFor(feature: SchemaFeature, installed: string, what: string): BooksError {
+  const since = SCHEMA_FEATURES[feature].since;
+  return new BooksError(
+    `schema_too_old_for: ${what} needs schema ${since} (${feature}), and this database is at ${installed}. Its operator runs \`ekwo migrate\`.`,
+    {
+      hint: 'Everything older than that keeps working on this database; this one thing waits for the update.',
+    },
+  );
 }
 
 /**
@@ -203,25 +260,100 @@ export interface SocleBackend extends Backend {
  */
 export function onSocle(inner: Backend, socleSchema: () => Promise<string>): SocleBackend {
   const schemaOf = async (schema: string | undefined): Promise<string> => schema ?? (await socleSchema());
+
+  // Asked once, and only by a call that touches a feature: a backend that
+  // never reads one of those columns never pays the round trip. An answer that
+  // fails is not kept, so the next call asks again.
+  let version: Promise<string | undefined> | undefined;
+  const schemaVersion = (): Promise<string | undefined> => {
+    if (version === undefined) {
+      version = (async () => {
+        const rows = await inner.rpc<unknown>(SOCLE_MARKER, {}, await socleSchema());
+        const answer = rows[0];
+        return typeof answer === 'string' ? answer : undefined;
+      })().then(
+        (answer) => {
+          if (answer === undefined) version = undefined;
+          return answer;
+        },
+        () => {
+          version = undefined;
+          return undefined;
+        },
+      );
+    }
+    return version;
+  };
+
+  // The columns among `named` of a socle table this database does not have
+  // yet, and the version it is at: nothing when none of them belongs to a
+  // feature — the version is not even asked then — when the call names a
+  // module's schema, or when the version is not known.
+  const lacking = async (
+    table: string,
+    schema: string | undefined,
+    named: readonly string[],
+  ): Promise<{ columns: Map<string, SchemaFeature>; installed: string } | undefined> => {
+    const gated = FEATURE_COLUMNS.get(table)?.filter((g) => named.includes(g.column));
+    if (gated === undefined || gated.length === 0) return undefined;
+    if (schema !== undefined && schema !== (await socleSchema())) return undefined;
+    const installed = await schemaVersion();
+    if (installed === undefined) return undefined;
+    const columns = new Map(gated.filter((g) => !supports(installed, g.feature)).map((g) => [g.column, g.feature]));
+    return columns.size === 0 ? undefined : { columns, installed };
+  };
+
+  const refuseCall = async (fn: string, schema: string | undefined): Promise<void> => {
+    const feature = FEATURE_FUNCTIONS.get(fn);
+    if (feature === undefined || (schema !== undefined && schema !== (await socleSchema()))) return;
+    const installed = await schemaVersion();
+    if (installed !== undefined && !supports(installed, feature)) throw schemaTooOldFor(feature, installed, `${fn}()`);
+  };
+
+  const refuseWrite = async (table: string, rows: Row[], schema: string | undefined): Promise<void> => {
+    const missing = await lacking(table, schema, [...new Set(rows.flatMap((row) => Object.keys(row)))]);
+    if (missing === undefined) return;
+    for (const row of rows) {
+      for (const key of Object.keys(row)) {
+        const feature = missing.columns.get(key);
+        if (feature !== undefined) throw schemaTooOldFor(feature, missing.installed, `writing ${table}.${key}`);
+      }
+    }
+  };
+
   return {
     mode: inner.mode,
     actingAs: inner.actingAs,
     agent: inner.agent,
     socleSchema,
+    schemaVersion,
     async rpc<T>(fn: string, args?: Record<string, unknown>, schema?: string): Promise<T[]> {
+      await refuseCall(fn, schema);
       return inner.rpc<T>(fn, args, await schemaOf(schema));
     },
     async rpcVoid(fn: string, args?: Record<string, unknown>, schema?: string): Promise<void> {
+      await refuseCall(fn, schema);
       return inner.rpcVoid(fn, args, await schemaOf(schema));
     },
     async select<T>(query: SelectQuery): Promise<T[]> {
-      return inner.select<T>({ ...query, schema: await schemaOf(query.schema) });
+      // A column a newer schema added is not asked of an older one: the row
+      // comes back without it, as it did from the release that introduced it.
+      const missing = await lacking(query.table, query.schema, query.columns.map(selectedColumn));
+      const columns =
+        missing === undefined ? query.columns : query.columns.filter((c) => !missing.columns.has(selectedColumn(c)));
+      return inner.select<T>({ ...query, columns, schema: await schemaOf(query.schema) });
     },
     async insert<T>(table: string, rows: Row[], returning?: string[], schema?: string): Promise<T[]> {
-      return inner.insert<T>(table, rows, returning, await schemaOf(schema));
+      await refuseWrite(table, rows, schema);
+      const missing = returning === undefined ? undefined : await lacking(table, schema, returning.map(selectedColumn));
+      const kept = missing === undefined ? returning : returning?.filter((c) => !missing.columns.has(selectedColumn(c)));
+      return inner.insert<T>(table, rows, kept, await schemaOf(schema));
     },
     async update<T>(table: string, patch: Row, where: Filter[], returning?: string[], schema?: string): Promise<T[]> {
-      return inner.update<T>(table, patch, where, returning, await schemaOf(schema));
+      await refuseWrite(table, [patch], schema);
+      const missing = returning === undefined ? undefined : await lacking(table, schema, returning.map(selectedColumn));
+      const kept = missing === undefined ? returning : returning?.filter((c) => !missing.columns.has(selectedColumn(c)));
+      return inner.update<T>(table, patch, where, kept, await schemaOf(schema));
     },
     async remove(table: string, where: Filter[], schema?: string): Promise<void> {
       return inner.remove(table, where, await schemaOf(schema));

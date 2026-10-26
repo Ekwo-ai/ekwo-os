@@ -9,7 +9,7 @@
  * draft documents and their lines.
  */
 
-import { BooksError, type Backend, type Filter, type Row } from './backend.js';
+import { BooksError, backendSupports, type Backend, type Filter, type Row } from './backend.js';
 import * as columns from './columns.js';
 import { amountIn, moneyFields } from './format.js';
 import type { DocType } from '../types.js';
@@ -119,32 +119,39 @@ export async function createDocument(
       where: [{ column: 'document_id', op: 'eq', value: id }],
       limit: 1,
     });
-    if (held.length === 0 && before['state'] === 'draft') await replaceLines(backend, id, resolved);
+    if (held.length === 0 && before['state'] === 'draft') await replaceLines(backend, args.company_id, id, resolved);
     return { ...((await getDocument(backend, { document_id: id })) as Row), replayed: true };
   }
 
   const currency = args.currency_code ?? (await companyCurrency(backend, args.company_id));
+  const header: Row = {
+    company_id: args.company_id,
+    doc_type: args.doc_type,
+    contact_id: args.contact_id,
+    document_date: args.document_date,
+    due_date: args.due_date ?? null,
+    accounting_date: args.accounting_date ?? null,
+    number: args.number ?? null,
+    supplier_reference: args.supplier_reference ?? null,
+    currency_code: currency,
+    journal_id: args.journal_id ?? null,
+    payment_reference: args.payment_reference ?? null,
+    client_ref: args.client_ref ?? null,
+  };
+
+  // A schema older than `create_document()` (0.21.0) is written the way it
+  // always was: the header, then its lines. A connection that drops between
+  // the two leaves a draft with none, which the replay above finishes.
+  if (!(await backendSupports(backend, 'documents_in_one_statement'))) {
+    const document = only(await backend.insert<Row>('documents', [header], ['id']), 'the document could not be created');
+    await insertLines(backend, args.company_id, document['id'] as string, resolved);
+    return getDocument(backend, { document_id: document['id'] as string });
+  }
 
   // The header and its lines in one statement: a line the database refuses
   // creates nothing, rather than an empty draft.
   const id = only(
-    await backend.rpc<string>('create_document', {
-      p_document: {
-        company_id: args.company_id,
-        doc_type: args.doc_type,
-        contact_id: args.contact_id,
-        document_date: args.document_date,
-        due_date: args.due_date ?? null,
-        accounting_date: args.accounting_date ?? null,
-        number: args.number ?? null,
-        supplier_reference: args.supplier_reference ?? null,
-        currency_code: currency,
-        journal_id: args.journal_id ?? null,
-        payment_reference: args.payment_reference ?? null,
-        client_ref: args.client_ref ?? null,
-      },
-      p_lines: resolved,
-    }),
+    await backend.rpc<string>('create_document', { p_document: header, p_lines: resolved }),
     'the document could not be created',
   );
   return getDocument(backend, { document_id: id });
@@ -318,8 +325,17 @@ async function productsFor(
  * Every line of a draft replaced by these, through `replace_document_lines()`:
  * one statement, so a line the database refuses leaves the draft with the
  * lines it had rather than with none.
+ *
+ * A schema older than that function (0.21.0) has the lines deleted and then
+ * inserted, as every release before it did — and there a refused line still
+ * leaves the draft without any, which is what `ekwo migrate` fixes.
  */
-async function replaceLines(backend: Backend, documentId: string, lines: ResolvedLine[]): Promise<void> {
+async function replaceLines(backend: Backend, company: string, documentId: string, lines: ResolvedLine[]): Promise<void> {
+  if (!(await backendSupports(backend, 'documents_in_one_statement'))) {
+    await backend.remove('document_lines', [{ column: 'document_id', op: 'eq', value: documentId }]);
+    await insertLines(backend, company, documentId, lines);
+    return;
+  }
   await backend.rpc('replace_document_lines', { p_document_id: documentId, p_lines: lines });
 }
 
@@ -388,7 +404,7 @@ export async function updateDocumentLines(
     args.lines,
   );
 
-  await replaceLines(backend, args.document_id, resolved);
+  await replaceLines(backend, company, args.document_id, resolved);
   return getDocument(backend, { document_id: args.document_id });
 }
 

@@ -28,7 +28,7 @@
     "node": ">=20"
   },
   "ekwo": {
-    "schemaMin": "0.21.0"
+    "schemaMin": "0.19.0"
   },
   "files": [
     "dist",

@@ -95,6 +95,28 @@ jobs:
           done
           diff modules/schema/module.1.json packages/cli/dist/assets/modules/schema/module.1.json
 
+  # The packages of this commit read a project at the schema floor. The test
+  # builds the database of the tag `v<SCHEMA_MIN>` from git — its migrations,
+  # modules and seeds — so it needs the tags, which the shallow clone of the
+  # jobs above does not have (there the file skips itself). A release that
+  # stops reading a project at the floor without raising `SCHEMA_MIN` fails
+  # here (`docs/releasing.md`, step 3).
+  schema-floor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test -- tests/schema_floor.test.ts --maxWorkers=1
+        env:
+          EKWO_SCHEMA_FLOOR_REQUIRED: '1'
+
   # The image the root Dockerfile builds is what Glama runs to list the
   # tools; the same check as above, against the container.
   mcp-image:

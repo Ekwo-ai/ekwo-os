@@ -18,6 +18,17 @@ const modulesDir = join(repoRoot, 'modules');
  */
 export const shimPath = join(here, 'supabase-shim.sql');
 
+/** Where a checkout keeps what a database is built from. */
+function treeOf(root: string): { migrations: string; seed: string; modules: string; shim: string } {
+  if (root === repoRoot) return { migrations: migrationsDir, seed: seedDir, modules: modulesDir, shim: shimPath };
+  return {
+    migrations: join(root, 'supabase', 'migrations'),
+    seed: join(root, 'supabase', 'seed'),
+    modules: join(root, 'modules'),
+    shim: join(root, 'tests', 'helpers', 'supabase-shim.sql'),
+  };
+}
+
 export interface Options {
   /** Apply `supabase/seed/*.sql` after the migrations. Default true. */
   seed?: boolean;
@@ -40,15 +51,21 @@ export interface Options {
    * applies them itself, on books written by the schema as it was.
    */
   withoutMigrations?: string[];
+  /**
+   * Another checkout to build from — its migrations, modules, seeds and shim
+   * — instead of this one. `tests/schema_floor.test.ts` builds the database
+   * of the tag at the schema floor this way, and runs this release against it.
+   */
+  root?: string;
 }
 
 /** Files applied, in order, by `freshDatabase`. */
-export async function migrationFiles(): Promise<string[]> {
-  return (await readdir(migrationsDir)).filter((f) => f.endsWith('.sql')).sort();
+export async function migrationFiles(root = repoRoot): Promise<string[]> {
+  return (await readdir(treeOf(root).migrations)).filter((f) => f.endsWith('.sql')).sort();
 }
 
-export async function seedFiles(): Promise<string[]> {
-  return (await readdir(seedDir)).filter((f) => f.endsWith('.sql')).sort();
+export async function seedFiles(root = repoRoot): Promise<string[]> {
+  return (await readdir(treeOf(root).seed)).filter((f) => f.endsWith('.sql')).sort();
 }
 
 export interface ModuleFile {
@@ -75,7 +92,8 @@ export interface ModuleFolder {
  * the order the folders sort. The folder is named after what the module is,
  * and the code is the key it was published under: they may differ.
  */
-export async function moduleFolders(): Promise<ModuleFolder[]> {
+export async function moduleFolders(root = repoRoot): Promise<ModuleFolder[]> {
+  const modulesDir = treeOf(root).modules;
   const entries = await readdir(modulesDir, { withFileTypes: true }).catch(() => []);
   const out: ModuleFolder[] = [];
   for (const entry of entries.filter((e) => e.isDirectory() && e.name !== 'schema').sort((a, b) => a.name.localeCompare(b.name))) {
@@ -89,8 +107,8 @@ export async function moduleFolders(): Promise<ModuleFolder[]> {
 }
 
 /** The module codes this checkout carries, sorted. */
-export async function moduleCodes(): Promise<string[]> {
-  return (await moduleFolders()).map((m) => m.code).sort();
+export async function moduleCodes(root = repoRoot): Promise<string[]> {
+  return (await moduleFolders(root)).map((m) => m.code).sort();
 }
 
 /**
@@ -100,10 +118,10 @@ export async function moduleCodes(): Promise<string[]> {
  * table with the socle and a module may one day depend on another. A duplicate
  * version anywhere is what `modules.test.ts` refuses.
  */
-export async function moduleMigrationFiles(): Promise<ModuleFile[]> {
+export async function moduleMigrationFiles(root = repoRoot): Promise<ModuleFile[]> {
   const out: ModuleFile[] = [];
-  for (const { code, folder } of await moduleFolders()) {
-    const dir = join(modulesDir, folder, 'supabase', 'migrations');
+  for (const { code, folder } of await moduleFolders(root)) {
+    const dir = join(treeOf(root).modules, folder, 'supabase', 'migrations');
     const exists = await stat(dir).catch(() => undefined);
     if (exists === undefined) continue;
     for (const file of (await readdir(dir)).filter((f) => f.endsWith('.sql')).sort()) {
@@ -114,11 +132,11 @@ export async function moduleMigrationFiles(): Promise<ModuleFile[]> {
 }
 
 /** The pack seeds a module compiled: `supabase/seed/modules/<section>/*.sql`. */
-export async function moduleSeedFiles(): Promise<ModuleFile[]> {
+export async function moduleSeedFiles(root = repoRoot): Promise<ModuleFile[]> {
   const out: ModuleFile[] = [];
-  for (const { code, section } of await moduleFolders()) {
+  for (const { code, section } of await moduleFolders(root)) {
     if (section === null) continue;
-    const dir = join(seedDir, 'modules', section);
+    const dir = join(treeOf(root).seed, 'modules', section);
     const exists = await stat(dir).catch(() => undefined);
     if (exists === undefined) continue;
     for (const file of (await readdir(dir)).filter((f) => f.endsWith('.sql')).sort()) {
@@ -213,22 +231,24 @@ export async function freshDatabase(options: Options = {}): Promise<PGlite> {
  * the rename that publishes it is atomic: the loser's copy is identical.
  */
 export async function schemaImage(options: Options = {}): Promise<string> {
+  const root = options.root ?? repoRoot;
+  const tree = treeOf(root);
   const leftOut = new Set(options.withoutMigrations ?? []);
-  const migrations = (await migrationFiles()).filter((f) => !leftOut.has(f)).map((f) => join(migrationsDir, f));
+  const migrations = (await migrationFiles(root)).filter((f) => !leftOut.has(f)).map((f) => join(tree.migrations, f));
   const moduleMigrations =
-    options.modules === false ? [] : (await moduleMigrationFiles()).map((m) => m.path);
-  const seeds = options.seed === false ? [] : (await seedFiles()).map((f) => join(seedDir, f));
+    options.modules === false ? [] : (await moduleMigrationFiles(root)).map((m) => m.path);
+  const seeds = options.seed === false ? [] : (await seedFiles(root)).map((f) => join(tree.seed, f));
   const moduleSeeds =
-    options.seed === false || options.modules === false ? [] : (await moduleSeedFiles()).map((m) => m.path);
+    options.seed === false || options.modules === false ? [] : (await moduleSeedFiles(root)).map((m) => m.path);
   // The order is the build's: the modules after the socle and before the
   // seeds, because a module migration may reference `public.companies` or
   // `public.accounts`, and a module's country seed writes its own reference
   // tables, which have to exist first.
-  const files = [shimPath, ...migrations, ...moduleMigrations, ...seeds, ...moduleSeeds];
+  const files = [tree.shim, ...migrations, ...moduleMigrations, ...seeds, ...moduleSeeds];
 
   const hash = createHash('sha256');
   for (const file of files) {
-    hash.update(relative(repoRoot, file)).update('\0').update(await readFile(file)).update('\0');
+    hash.update(relative(root, file)).update('\0').update(await readFile(file)).update('\0');
   }
   const dir = process.env.EKWO_TEST_SCHEMA_DIR ?? join(tmpdir(), 'ekwo-test-schema');
   const image = join(dir, `${hash.digest('hex').slice(0, 24)}.tar`);
@@ -240,7 +260,7 @@ export async function schemaImage(options: Options = {}): Promise<string> {
       try {
         await db.exec(await readFile(file, 'utf8'));
       } catch (error) {
-        throw new Error(`${relative(repoRoot, file)} failed: ${(error as Error).message}`);
+        throw new Error(`${relative(root, file)} failed: ${(error as Error).message}`);
       }
     }
     // A data directory written after a checkpoint opens without replaying

@@ -32,16 +32,42 @@ is half done is worse than one that is not cut.
    `packages/mcp/src/server.ts` and `packages/mcp/server.json`; tests keep each
    equal to the manifest.
 
-3. **The schema floor.** `ekwo.schemaMin` in the manifests of `ekwo-os`,
-   `@ekwo-ai/core` and `@ekwo-ai/mcp`, and `SCHEMA_MIN` in each package's
-   `src/schema.ts`. Raise it when the packages read something an older database
-   does not have; the packages refuse a database below it by name and say to
-   run `ekwo migrate`.
+3. **The schema floor — left where it is, unless a migration is breaking.**
+   `ekwo.schemaMin` in the manifests of `ekwo-os`, `@ekwo-ai/core` and
+   `@ekwo-ai/mcp`, and `SCHEMA_MIN` in each package's `src/schema.ts`, is the
+   oldest schema the packages still read. It is **not** the number of the
+   release, and cutting a release does not move it: a project below the floor
+   is shown nothing but "update", so a floor raised for nothing cuts off every
+   project that has not migrated yet (26 October 2026, a project at 0.19.0
+   locked out by a release that had only added a column and two functions).
+
+   - **An additive migration** — a table, a column, a function, a right
+     given — leaves the floor. What the packages read or call of it is named
+     in `SCHEMA_FEATURES` (`packages/core/src/schema.ts`) under the version
+     that introduced it: a read leaves the column out below that version, and
+     a call is either taken the older way or refused by name
+     (`schema_too_old_for`).
+   - **A breaking migration** — a table or a column renamed or dropped, a
+     function whose arguments or answer changed, a right taken away that a
+     call relied on — is the only reason to raise it, and then to the version
+     of that migration, never further. Say so in the changelog under
+     **Changed**, naming the migration (see below).
+
+   `tests/schema_floor.test.ts` is the proof: it builds a database from the
+   tag `v<floor>` — its migrations, modules and seeds — and runs the reads of
+   this release against it, as a member and over the MCP server. It needs the
+   tags (`git fetch --tags`); the CI job `schema-floor` runs it with the full
+   history. A release that breaks reading a project at the floor fails there,
+   and is fixed in `SCHEMA_FEATURES` or by a floor raised on purpose.
 
 4. **The changelog.** `[Unreleased]` becomes `## [x.y.z] — YYYY-MM-DD` under
    [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), with a fresh empty
    `[Unreleased]` above it. Read `git log` against it before closing the
-   section.
+   section. The schema is said in one line under **Changed** — "The schema is
+   x.y.z (`<timestamp>`); the floor of the packages stays at a.b.c." — and a
+   floor that rises gets its own entry: the new floor, the migration that is
+   breaking and why, and that an installation runs `ekwo migrate` before
+   upgrading the packages.
 
 5. **The generated files.** `npm run docs:schema` and `npm run inventory`; the
    CI compares both with what the generators produce.

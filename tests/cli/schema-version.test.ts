@@ -36,13 +36,15 @@ const PREVIOUS = '0.20.0';
 const BUMP = 'schema_version_0_21_0';
 
 /**
- * The floor the packages of this release declare. It rises only when a
- * package reads something an older schema does not have; 0.21.0 does —
- * `@ekwo-ai/core` calls `replace_document_lines()`, `create_document()` and
- * `approve_document()`, which 0.20.0 does not have, and the three packages
- * declare one floor.
+ * The floor the packages of this release declare. It is not the release: it
+ * rises only when a migration is breaking for what the packages read (see
+ * `docs/releasing.md`, step 3), and `tests/schema_floor.test.ts` proves it
+ * against the tag of that version. 0.21.0 only added — `create_document()`,
+ * `replace_document_lines()`, `companies.agent_posting` and what goes with
+ * them, which `SCHEMA_FEATURES` names — so the floor stayed at 0.19.0, the
+ * oldest schema the reads of this release were run against.
  */
-const FLOOR = '0.21.0';
+const FLOOR = '0.19.0';
 
 let db: SqlClient;
 let migrations: Migration[];

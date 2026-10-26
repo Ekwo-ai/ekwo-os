@@ -43,7 +43,7 @@ async function list(args: ParsedArgs, deps: BooksDeps): Promise<number> {
       [{ title: 'name' }, { title: 'posting' }, { title: 'state' }, { title: 'capabilities' }, { title: 'id' }],
       result.api_keys.map((k) => [
         String(k['name']),
-        String(k['posting_mode']),
+        String(k['posting_mode'] ?? '—'),
         String(k['state']),
         (k['capabilities'] as string[]).join(', '),
         dim(String(k['id'])),

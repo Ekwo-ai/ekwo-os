@@ -16,7 +16,15 @@ export {
   type BankAccountIdentifier,
   type BankAccountScheme,
 } from './bank-accounts.js';
-export { SCHEMA_MIN, compareSchemaVersions, schemaIsAtLeast } from './schema.js';
+export {
+  SCHEMA_FEATURES,
+  SCHEMA_MIN,
+  compareSchemaVersions,
+  missingFeatures,
+  schemaIsAtLeast,
+  supports,
+  type SchemaFeature,
+} from './schema.js';
 export { isRefusalState, socleCode } from './refusal.js';
 export { IDENTITY_ENV, isServiceRoleKey, serviceRoleRefusal, type KeySlot } from './identity.js';
 export {

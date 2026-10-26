@@ -25,12 +25,29 @@ onto `instance.schema_version` for an existing one.
 not the version: a release that adds nothing a package reads leaves it. The MCP
 server enforces it; the CLI, which carries the migrations, prints it.
 
+**Amended on 26 October 2026: the floor moves only on a breaking migration.**
+From 0.12 to 0.21 the floor was raised to the release number at every release,
+including releases whose migrations only added. A client that stops at the
+floor — Ekwo Cloud shows nothing but "update" below it — then cut off every
+project that had not migrated yet. The floor is now the oldest schema the
+packages really read, proven by `tests/schema_floor.test.ts` against the
+migrations and seeds of the tag `v<floor>`. What the packages use that is newer
+than the floor is listed in `SCHEMA_FEATURES` with the version that introduced
+it, and `supports(installed, feature)` answers for it: the core leaves a
+column out of a read below its version, takes the older route, or refuses the
+call by name (`schema_too_old_for`). The floor rises only for a migration that
+renames, drops, changes a contract or takes back a right a call relied on, and
+only to that migration's version.
+
 **Tag first, publish after**, so a published version is always one whose
 source can be read. `docs/releasing.md` is the procedure.
 
 ## Consequences
 
 - An old database is refused by name instead of half-working.
+- A database between the floor and the release is served in full, except for
+  the features of `SCHEMA_FEATURES` it does not have yet, which are refused by
+  name or offered once it is updated.
 
 ## See also
 

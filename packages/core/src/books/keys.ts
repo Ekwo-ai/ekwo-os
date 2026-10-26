@@ -8,7 +8,7 @@
  * made with the key carries, and has no way to raise a key afterwards.
  */
 
-import { type Backend, type Row } from './backend.js';
+import { backendSupports, schemaTooOldFor, type Backend, type Row, type SocleBackend } from './backend.js';
 import * as columns from './columns.js';
 import { only } from './shared.js';
 
@@ -58,16 +58,22 @@ export interface CreateApiKeyArgs {
 }
 
 export async function createApiKey(backend: Backend, args: CreateApiKeyArgs): Promise<unknown> {
-  const created = only(
-    await backend.rpc<Row>('create_api_key', {
-      p_company_id: args.company_id,
-      p_name: args.name,
-      p_capabilities: args.capabilities,
-      p_expires_at: args.expires_at ?? null,
-      p_posting_mode: args.posting_mode ?? 'review',
-    }),
-    'the key could not be issued',
-  );
+  const call: Record<string, unknown> = {
+    p_company_id: args.company_id,
+    p_name: args.name,
+    p_capabilities: args.capabilities,
+    p_expires_at: args.expires_at ?? null,
+  };
+  // A schema older than the posting modes (0.21.0) issues a key with the four
+  // arguments it always took, and has no mode to fix on it: asking for
+  // autopilot there is refused by name rather than dropped.
+  if (await backendSupports(backend, 'agent_posting')) {
+    call['p_posting_mode'] = args.posting_mode ?? 'review';
+  } else if (args.posting_mode === 'autopilot') {
+    const installed = (await (backend as SocleBackend).schemaVersion()) ?? 'an older version';
+    throw schemaTooOldFor('agent_posting', installed, 'a key in autopilot');
+  }
+  const created = only(await backend.rpc<Row>('create_api_key', call), 'the key could not be issued');
   return {
     api_key: created,
     note: 'The secret is in this answer and nowhere else — only its hash is stored. Show it to the user once, and tell them it cannot be read back.',

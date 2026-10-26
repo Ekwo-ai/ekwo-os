@@ -9,6 +9,44 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **What a schema newer than the floor brought, named once:
+  `SCHEMA_FEATURES` and `supports(installed, feature)`** in `@ekwo-ai/core`,
+  with `missingFeatures(installed)`. Each feature carries the version that
+  introduced it and the columns and functions it is made of —
+  `tax_payee_name_i18n` (0.20.0), `documents_in_one_statement` and
+  `agent_posting` (0.21.0). A backend built by `onSocle()` now knows the
+  version of its database (`schemaVersion()`, asked once, the first time a
+  call touches a feature) and acts on the list: a read leaves out a column
+  the database does not have yet, a draft is written in two statements below
+  `create_document()`, and a call that needs a newer schema — approving a
+  draft, setting how agents post, a key in autopilot — is refused by name,
+  `schema_too_old_for`, with the version it needs.
+- **`tests/schema_floor.test.ts`, and the CI job `schema-floor` that runs it
+  with the full history.** It builds the database of the tag `v<SCHEMA_MIN>`
+  from git — its migrations, modules and seeds — and runs this release against
+  it: every object a feature names is missing there and present here, every
+  function and column the packages read by name exists there or belongs to a
+  feature, a first invoice is booked over the MCP server, and every read-only
+  tool answers without asking for what the schema lacks.
+
+### Changed
+
+- **The schema floor of the packages is 0.19.0, and it is no longer the
+  release number.** `SCHEMA_MIN` and `ekwo.schemaMin` of `ekwo-os`,
+  `@ekwo-ai/core` and `@ekwo-ai/mcp` go from 0.21.0 back to 0.19.0, the floor
+  `tests/schema_floor.test.ts` proves. Until now the floor was raised to the
+  version of every release, and a client that stops at the floor — Ekwo Cloud
+  shows nothing but "update" below it — locked out every project that had not
+  migrated, for releases that had only added. The floor now moves only when a
+  migration is breaking (a rename, a drop, a changed contract, a right taken
+  back), to that migration's version; an additive migration names what the
+  packages use of it in `SCHEMA_FEATURES` (`docs/releasing.md`, step 3, and
+  decision 0059, amended). A release says, under **Changed**, the schema it
+  defines and the floor it keeps, and a floor that rises gets an entry of its
+  own naming the breaking migration.
+
 ## [0.21.1] — 2026-10-26
 
 ### Fixed
