@@ -205,3 +205,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('PGK', 'Papua New Guinean kina', 'K', 2)
 on conflict (code) do nothing;
+
+-- Samoan tala, ISO 4217 list one, two decimals (packs/ws/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('WST', 'Samoan tala', 'WS$', 2)
+on conflict (code) do nothing;
