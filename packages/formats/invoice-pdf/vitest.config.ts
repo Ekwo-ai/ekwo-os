@@ -9,5 +9,9 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     include: ['test/**/*.test.ts'],
+    // A test renders whole documents, fonts embedded, several times over: the
+    // runner's default of five seconds is too short on a shared CI machine.
+    // The same limit as the root configuration.
+    testTimeout: 60_000,
   },
 });

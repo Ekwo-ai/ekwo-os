@@ -9,6 +9,16 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.21.1] — 2026-10-26
+
+### Fixed
+
+- The packages of 0.21.0 that were not on npm are published: the tests of
+  `@ekwo-ai/invoice-pdf`, run before it is published, render whole documents
+  several times over and exceeded the test runner's default five seconds on
+  the release machine; they now have the same limit as the rest of the
+  repository. Nothing else changes from 0.21.0, and the schema stays 0.21.0.
+
 ## [0.21.0] — 2026-10-26
 
 ### Added

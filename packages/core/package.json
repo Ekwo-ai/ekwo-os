@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/core",
-  "version": "0.21.0",
+  "version": "0.21.1",
   "description": "TypeScript row types and a typed Supabase client for the Ekwo OS accounting schema.",
   "keywords": [
     "accounting",
@@ -48,20 +48,20 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@ekwo-ai/camt053": "^0.21.0",
-    "@ekwo-ai/cfonb120": "^0.21.0",
-    "@ekwo-ai/coda": "^0.21.0",
-    "@ekwo-ai/factur-x": "^0.21.0",
-    "@ekwo-ai/fec": "^0.21.0",
-    "@ekwo-ai/invoice-pdf": "^0.21.0",
-    "@ekwo-ai/journal-items": "^0.21.0",
-    "@ekwo-ai/journal-report": "^0.21.0",
-    "@ekwo-ai/myinvois": "^0.21.0",
-    "@ekwo-ai/peppol-ubl": "^0.21.0",
-    "@ekwo-ai/transaction-journal": "^0.21.0",
-    "@ekwo-ai/trial-balance": "^0.21.0",
-    "@ekwo-ai/verifactu": "^0.21.0",
-    "@ekwo-ai/xaf": "^0.21.0"
+    "@ekwo-ai/camt053": "^0.21.1",
+    "@ekwo-ai/cfonb120": "^0.21.1",
+    "@ekwo-ai/coda": "^0.21.1",
+    "@ekwo-ai/factur-x": "^0.21.1",
+    "@ekwo-ai/fec": "^0.21.1",
+    "@ekwo-ai/invoice-pdf": "^0.21.1",
+    "@ekwo-ai/journal-items": "^0.21.1",
+    "@ekwo-ai/journal-report": "^0.21.1",
+    "@ekwo-ai/myinvois": "^0.21.1",
+    "@ekwo-ai/peppol-ubl": "^0.21.1",
+    "@ekwo-ai/transaction-journal": "^0.21.1",
+    "@ekwo-ai/trial-balance": "^0.21.1",
+    "@ekwo-ai/verifactu": "^0.21.1",
+    "@ekwo-ai/xaf": "^0.21.1"
   },
   "peerDependencies": {
     "@supabase/supabase-js": "^2.0.0"

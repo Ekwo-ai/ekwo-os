@@ -27,7 +27,7 @@ export const SERVER_NAME = '@ekwo-ai/mcp';
  * `tests/mcp/surface.test.ts` keeps the two equal, so a release that bumps one
  * and forgets the other fails the build.
  */
-export const SERVER_VERSION = '0.21.0';
+export const SERVER_VERSION = '0.21.1';
 
 /** Everything a tool returns: JSON, pretty-printed, as one text block. */
 function ok(payload: unknown): CallToolResult {
