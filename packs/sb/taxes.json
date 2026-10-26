@@ -1,0 +1,242 @@
+[
+  {
+    "code": "SB-GT-L10",
+    "name": "Goods tax, locally manufactured goods 10 %",
+    "description": "A prescribed locally manufactured good sold by its manufacturer or a wholesaler, goods tax at 10 % of the sale value",
+    "kind": "sales_tax",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2019-08-28",
+    "legal_reference": "Goods Tax Act (Cap. 122) section 69 and the Second Schedule as substituted by the Goods Tax (Second Schedule) (Amendment) Order 2019: prescribed locally manufactured goods 10 %. The tax is stated on the wholesale invoice (section 75) and declared on the Goods Tax Return, form GT4 (formerly GT3): the exclusive sales in box G5, the tax in box G6.",
+    "source": "gt-order-2019",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G5"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "G6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G5",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "G6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "SB-GT-I15",
+    "name": "Goods tax, imported goods 15 %",
+    "description": "An imported good sold by a wholesaler or by an importer as retailer, goods tax at 15 % of the sale value",
+    "kind": "sales_tax",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2019-08-28",
+    "legal_reference": "Goods Tax Act (Cap. 122) section 69 and the Second Schedule as substituted by the Order of 2019: imported goods 15 %. Form GT4, line imported goods 15 %: the exclusive sales in box G7, the tax in box G8. Goods tax on goods an importer brings in is paid to Customs at the port of entry and is not a line of this return.",
+    "source": "gt-order-2019",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G7"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "G8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G7",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "G8",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "SB-GT-RICE",
+    "name": "Goods tax, rice at 0 %",
+    "description": "Rice, which the return form taxes at the rate of zero percent",
+    "kind": "sales_tax",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2019-08-28",
+    "legal_reference": "Form GT4 'Less Sale of Rice taxed at 0%' and its instructions: 'Rice is taxable but at the rate of zero percent. Write here the amount of rice you have sold which is subject to the 0% rate.' The Second Schedule of the Act (Order of 2019) still lists rice at 5 %: the two texts differ and the pack follows the current form, see the README. Box G3 of the return.",
+    "source": "gt4-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "SB-GT-EX",
+    "name": "Goods tax, exempt or not liable goods",
+    "description": "Goods the Goods Tax Act exempts (medicines, goods for governments, charities and disabled people), goods exported, and sales not subject to goods tax",
+    "kind": "sales_tax",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2019-08-28",
+    "legal_reference": "Form GT4 'Less Exempt Goods' and its instructions: exempt sales are those sales not subject to Goods Tax. The Goods Tax web page lists the exempt goods (drugs, medicines and surgical goods, goods used by governments and charitable organisations, goods designed for use by disabled people) and says goods tax does not apply to goods for export. Box G2 of the return, included in the total sales of box G1.",
+    "source": "gt4-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "G2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "G2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "SB-ST-10",
+    "name": "Sales tax, prescribed services 10 %",
+    "description": "A service of the Schedule One of the Sales Tax Act charged at 10 % of its value (telecommunications, restaurants, professional services, hire, repairs and the other items the Schedule lists at a percentage)",
+    "kind": "sales_tax",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2024-02-05",
+    "legal_reference": "Sales Tax Act (Cap. 125) section 3(1) and Schedule One, in the reprint in force on 5 February 2024; the Sales Tax Return instructions of August 2025 list the services at 10 %. Charged by the vendor at the time of the sale (section 14) and declared on the Sales Tax Return, form ST4 (formerly ST3): the sales in box S1, the tax in box S2. The items taxed at an amount per unit are not carried (see the README).",
+    "source": "st-instructions",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "S1"
+        },
+        {
+          "type": "tax",
+          "account": "2105",
+          "box": "S2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "S1",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2105",
+          "box": "S2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "SB-S-0",
+    "name": "Sale, not subject to goods tax or sales tax",
+    "description": "A sale of a good or a service the two taxes do not reach, or an export",
+    "kind": "sales_tax",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "O",
+    "valid_from": "2019-08-28",
+    "legal_reference": "Goods Tax web page: goods tax generally does not apply to services that do not produce goods, sales of land or intangible property, used local goods or goods for export; sales tax applies only to the goods and services of Schedule One of the Sales Tax Act. A sale of goods under this code appears on no box: choose SB-GT-EX to declare it in the total sales of form GT4.",
+    "source": "goods-tax-act",
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "sequence": 60
+  },
+  {
+    "code": "SB-P-ST10",
+    "name": "Purchase, sales tax 10 % paid, not creditable",
+    "description": "A prescribed service bought for the business on which sales tax of 10 % was charged: the tax joins the cost",
+    "kind": "sales_tax",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2024-02-05",
+    "legal_reference": "Sales Tax Act (Cap. 125) section 3(1): the purchaser is charged the tax on the use or consumption of the prescribed goods and services. Neither the Act nor the forms read give a purchaser a credit for it: form ST4 declares the vendor's sales only, so the tax joins the cost and no box of the return receives the purchase.",
+    "source": "sales-tax-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 100
+  },
+  {
+    "code": "SB-P-0",
+    "name": "Purchase, without sales tax",
+    "description": "A purchase that carries no sales tax, goods tax included in the price paid to the supplier",
+    "kind": "sales_tax",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2024-02-05",
+    "legal_reference": "Form GT4 and form ST4 declare sales only: a purchase appears on no line of either return. Goods tax paid on goods bought from a manufacturer or wholesaler is in the price and is part of the cost.",
+    "source": "gt4-form",
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "sequence": 110
+  }
+]

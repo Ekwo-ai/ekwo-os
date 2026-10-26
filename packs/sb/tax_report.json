@@ -1,0 +1,155 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "SB-GT4-ST4",
+  "name": "Goods Tax Return (GT4) and Sales Tax Return (ST4)",
+  "period": [
+    "month"
+  ],
+  "valid_from": "2019-08-28",
+  "legal_reference": "Two monthly returns of the Inland Revenue Division, filed with the payment for the month of the sales: form GT4, Goods Tax Return (formerly GT3, revised August 2025), and form ST4, Sales Tax Return (formerly ST3, revised August 2025). A pack carries one periodic form, so both returns are boxes of one report here: boxes G1 to G9 are form GT4, boxes S1 to S4 form ST4, box T their sum. A company files the forms it is registered for; the boxes of the other stay empty. Both taxes are single-stage taxes without input credit: the return carries only what the taxpayer collected.",
+  "source": "gt4-form",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 30,
+    "legal_reference": "Form GT4 and form ST4: 'to be completed and forwarded with the tax payable to Inland Revenue Division within 30 days of the end of the month in which the sales were made'. Sales Tax Act section 14: remitted with the returns not later than thirty days after the end of the month; section 17(2): debt payable on the 30th day of the month following. The Inland Revenue Division notices give the 30th. Goods Tax Act section 42 allows sixty days for a credit sale: not modelled. A due date on a weekend or a holiday is not shifted by this rule; in February the 30th does not exist, see the README.",
+    "source": "st4-form"
+  },
+  "boxes": [
+    {
+      "box": "G1",
+      "kind": "total",
+      "name": "GT4 — Total sales of goods",
+      "sequence": 10,
+      "legal_reference": "Form GT4, 'Total Sales of Goods': the sales of goods of the month, exempt and rice included. Here the exempt sales, the rice and the taxable sales added.",
+      "source": "gt4-form",
+      "plus": [
+        "G2",
+        "G3",
+        "G4"
+      ]
+    },
+    {
+      "box": "G2",
+      "kind": "base",
+      "name": "GT4 — Less exempt goods",
+      "sequence": 20,
+      "legal_reference": "Form GT4, 'Less Exempt Goods': sales not subject to Goods Tax (instructions).",
+      "source": "gt4-form"
+    },
+    {
+      "box": "G3",
+      "kind": "base",
+      "name": "GT4 — Less sale of rice taxed at 0%",
+      "sequence": 30,
+      "legal_reference": "Form GT4, 'Less Sale of Rice taxed at 0%'.",
+      "source": "gt4-form"
+    },
+    {
+      "box": "G4",
+      "kind": "total",
+      "name": "GT4 — Taxable sales of goods",
+      "sequence": 40,
+      "legal_reference": "Form GT4, 'Taxable Sales of Goods': total sales less exempt sales and rice (instructions). Here the two taxable bases added.",
+      "source": "gt4-form",
+      "plus": [
+        "G5",
+        "G7"
+      ]
+    },
+    {
+      "box": "G5",
+      "kind": "base",
+      "name": "GT4 — Locally manufactured goods, sales at 10 %",
+      "sequence": 50,
+      "legal_reference": "Form GT4, 'Locally manufactured Goods 10%': the taxable sales at 10 %, valued by the determination of sale value of the instructions.",
+      "source": "gt4-form"
+    },
+    {
+      "box": "G6",
+      "kind": "tax",
+      "name": "GT4 — Goods tax payable on locally manufactured goods",
+      "sequence": 60,
+      "legal_reference": "Form GT4, goods tax payable on the locally manufactured goods: 10 % of box G5.",
+      "source": "gt4-form"
+    },
+    {
+      "box": "G7",
+      "kind": "base",
+      "name": "GT4 — Imported goods, sales at 15 %",
+      "sequence": 70,
+      "legal_reference": "Form GT4, 'Imported Goods 15%': the taxable sales at 15 %.",
+      "source": "gt4-form"
+    },
+    {
+      "box": "G8",
+      "kind": "tax",
+      "name": "GT4 — Goods tax payable on imported goods",
+      "sequence": 80,
+      "legal_reference": "Form GT4, goods tax payable on the imported goods: 15 % of box G7.",
+      "source": "gt4-form"
+    },
+    {
+      "box": "G9",
+      "kind": "total",
+      "name": "GT4 — Total goods tax payable",
+      "sequence": 90,
+      "legal_reference": "Form GT4, 'Total Goods Tax payable': the two taxes added.",
+      "source": "gt4-form",
+      "plus": [
+        "G6",
+        "G8"
+      ]
+    },
+    {
+      "box": "S1",
+      "kind": "base",
+      "name": "ST4 — Sales subject to sales tax at 10 %",
+      "sequence": 110,
+      "legal_reference": "Form ST4, 'Amount of Sales': the sales of the month of the services of Schedule One taxed at 10 %. The form has one line per type of sale; the pack carries them on one line.",
+      "source": "st4-form"
+    },
+    {
+      "box": "S2",
+      "kind": "tax",
+      "name": "ST4 — Sales tax payable",
+      "sequence": 120,
+      "legal_reference": "Form ST4, 'Sales Tax payable': the amount of sales times the rate of tax.",
+      "source": "st4-form"
+    },
+    {
+      "box": "S3",
+      "kind": "total",
+      "name": "ST4 — Total sales",
+      "sequence": 130,
+      "legal_reference": "Form ST4, 'Total Sales': the total amount of sales for all types of sales.",
+      "source": "st4-form",
+      "plus": [
+        "S1"
+      ]
+    },
+    {
+      "box": "S4",
+      "kind": "total",
+      "name": "ST4 — Total sales tax payable",
+      "sequence": 140,
+      "legal_reference": "Form ST4, 'Total Sales Tax payable': the total tax payable for all types of sales.",
+      "source": "st4-form",
+      "plus": [
+        "S2"
+      ]
+    },
+    {
+      "box": "T",
+      "kind": "total",
+      "name": "Goods tax and sales tax payable to the IRD",
+      "sequence": 150,
+      "legal_reference": "Not a line of either form: the two returns have the same due date (30 days after the end of the month) and one payment settles the tax account of the pack. Boxes G9 and S4 added.",
+      "source": "gt4-form",
+      "plus": [
+        "G9",
+        "S4"
+      ]
+    }
+  ],
+  "period_default": "month"
+}

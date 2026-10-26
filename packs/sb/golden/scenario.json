@@ -1,0 +1,305 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/golden",
+  "name": "A month of books of a Honiara trading company, registered for goods tax and sales tax and filing monthly",
+  "chart": "default",
+  "fiscal_year": {
+    "name": "Financial year 2026",
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  },
+  "periods": [
+    {
+      "code": "2026-01",
+      "from": "2026-01-01",
+      "to": "2026-01-31"
+    }
+  ],
+  "statements": [
+    "PG-IFRS-SFP",
+    "PG-IFRS-IS"
+  ],
+  "contacts": [
+    {
+      "ref": "cust-sb",
+      "name": "Honiara Retail Ltd",
+      "type": "customer",
+      "country": "SB"
+    },
+    {
+      "ref": "cust-au",
+      "name": "Brisbane Copra Traders Pty Ltd",
+      "type": "customer",
+      "country": "AU"
+    },
+    {
+      "ref": "cust-fj",
+      "name": "Suva Provisions Ltd",
+      "type": "customer",
+      "country": "FJ"
+    },
+    {
+      "ref": "supp-sb",
+      "name": "Gizo Wholesalers Ltd",
+      "type": "supplier",
+      "country": "SB"
+    },
+    {
+      "ref": "supp-cn",
+      "name": "Shenzhen Components Co.",
+      "type": "supplier",
+      "country": "CN"
+    }
+  ],
+  "documents": [
+    {
+      "ref": "INV-001",
+      "type": "sale_invoice",
+      "contact": "cust-sb",
+      "date": "2026-01-08",
+      "why": "A wholesale sale of a locally manufactured good: goods tax at 10 %, the exclusive base in box G5, the tax in box G6.",
+      "lines": [
+        {
+          "name": "Packaged biscuits, wholesale",
+          "quantity": 100,
+          "unit_price": 250,
+          "tax": "SB-GT-L10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-002",
+      "type": "sale_invoice",
+      "contact": "cust-sb",
+      "date": "2026-01-10",
+      "why": "A wholesale sale of an imported good: goods tax at 15 %, base in box G7, tax in box G8.",
+      "lines": [
+        {
+          "name": "Imported tinned fish, wholesale",
+          "quantity": 40,
+          "unit_price": 1000,
+          "tax": "SB-GT-I15",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-003",
+      "type": "sale_invoice",
+      "contact": "cust-sb",
+      "date": "2026-01-12",
+      "why": "Rice, taxed at the rate of zero percent on form GT4: box G3, no tax.",
+      "lines": [
+        {
+          "name": "Rice, 20 kg bags",
+          "quantity": 200,
+          "unit_price": 150,
+          "tax": "SB-GT-RICE",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-004",
+      "type": "sale_invoice",
+      "contact": "cust-sb",
+      "date": "2026-01-14",
+      "why": "An exempt good, medicines: box G2 only.",
+      "lines": [
+        {
+          "name": "Medicines, wholesale",
+          "quantity": 1,
+          "unit_price": 12000,
+          "tax": "SB-GT-EX",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "INV-005",
+      "type": "sale_invoice",
+      "contact": "cust-sb",
+      "date": "2026-01-16",
+      "why": "A service of Schedule One of the Sales Tax Act, restaurant services at 10 %: base in box S1, tax in box S2.",
+      "lines": [
+        {
+          "name": "Restaurant services, staff event",
+          "quantity": 1,
+          "unit_price": 8000,
+          "tax": "SB-ST-10",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-006",
+      "type": "sale_invoice",
+      "contact": "cust-sb",
+      "date": "2026-01-20",
+      "why": "Accounting services at 10 % sales tax, a second line of form ST4 carried in the same boxes.",
+      "lines": [
+        {
+          "name": "Accounting services, January",
+          "quantity": 1,
+          "unit_price": 20000,
+          "tax": "SB-ST-10",
+          "account": "4010"
+        }
+      ]
+    },
+    {
+      "ref": "INV-007",
+      "type": "sale_invoice",
+      "contact": "cust-au",
+      "date": "2026-01-22",
+      "why": "An export of copra: goods tax does not apply to goods for export, so the sale is outside both returns.",
+      "lines": [
+        {
+          "name": "Copra, export consignment",
+          "quantity": 500,
+          "unit_price": 60,
+          "tax": "SB-S-0",
+          "account": "4020"
+        }
+      ]
+    },
+    {
+      "ref": "INV-008",
+      "type": "sale_invoice",
+      "contact": "cust-fj",
+      "date": "2026-01-24",
+      "why": "A consultancy service to a customer abroad, outside sales tax: no tax, no box.",
+      "lines": [
+        {
+          "name": "Market study for a Suva customer",
+          "quantity": 1,
+          "unit_price": 15000,
+          "tax": "SB-S-0",
+          "account": "4030"
+        }
+      ]
+    },
+    {
+      "ref": "CN-001",
+      "type": "sale_credit_note",
+      "contact": "cust-sb",
+      "date": "2026-01-26",
+      "why": "A credit note for ten units returned from INV-001, so boxes G5 and G6 fall back down and a sale_credit_note is exercised.",
+      "lines": [
+        {
+          "name": "Packaged biscuits — ten units returned",
+          "quantity": 10,
+          "unit_price": 250,
+          "tax": "SB-GT-L10",
+          "account": "4000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-001",
+      "type": "purchase_invoice",
+      "contact": "supp-sb",
+      "date": "2026-01-09",
+      "why": "Trading stock bought from a wholesaler, goods tax in the price: no input credit, no box.",
+      "lines": [
+        {
+          "name": "Trading stock purchased for resale",
+          "quantity": 1,
+          "unit_price": 40000,
+          "tax": "SB-P-0",
+          "account": "5000"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-002",
+      "type": "purchase_invoice",
+      "contact": "supp-cn",
+      "date": "2026-01-13",
+      "why": "A machine imported by the company: goods tax paid to Customs joins the cost, no box.",
+      "lines": [
+        {
+          "name": "Packaging machine",
+          "quantity": 1,
+          "unit_price": 90000,
+          "tax": "SB-P-0",
+          "account": "1620"
+        }
+      ]
+    },
+    {
+      "ref": "PINV-003",
+      "type": "purchase_invoice",
+      "contact": "supp-sb",
+      "date": "2026-01-17",
+      "why": "Professional fees on which sales tax of 10 % was charged: the tax joins the cost, the purchase is on no box.",
+      "lines": [
+        {
+          "name": "Legal fees, lease review",
+          "quantity": 1,
+          "unit_price": 3000,
+          "tax": "SB-P-ST10",
+          "account": "6420"
+        }
+      ]
+    },
+    {
+      "ref": "PCN-001",
+      "type": "purchase_credit_note",
+      "contact": "supp-sb",
+      "date": "2026-01-30",
+      "why": "A short-delivery credit on PINV-001.",
+      "lines": [
+        {
+          "name": "Trading stock — short-delivery credit",
+          "quantity": 1,
+          "unit_price": 5000,
+          "tax": "SB-P-0",
+          "account": "5000"
+        }
+      ]
+    }
+  ],
+  "payments": [
+    {
+      "ref": "PAY-001",
+      "direction": "inbound",
+      "date": "2026-02-05",
+      "amount": 13200,
+      "contact": "cust-sb",
+      "journal": "BNK",
+      "match": "INV-005",
+      "why": "INV-005 collected in full, sales tax included: a matched inbound payment."
+    },
+    {
+      "ref": "PAY-002",
+      "direction": "inbound",
+      "date": "2026-02-06",
+      "amount": 30000,
+      "contact": "cust-au",
+      "journal": "BNK",
+      "match": "INV-007",
+      "why": "The export of INV-007 collected in full: a matched inbound payment in a foreign trade relationship."
+    },
+    {
+      "ref": "PAY-003",
+      "direction": "outbound",
+      "date": "2026-02-07",
+      "amount": 40000,
+      "contact": "supp-sb",
+      "journal": "BNK",
+      "match": "PINV-001",
+      "why": "PINV-001 settled in full: a matched outbound payment."
+    },
+    {
+      "ref": "PAY-004",
+      "direction": "inbound",
+      "date": "2026-02-10",
+      "amount": 5000,
+      "contact": "cust-fj",
+      "journal": "BNK",
+      "match": null,
+      "why": "An advance received before the next invoice, matched to nothing: reconcile() has to survive an open item."
+    }
+  ]
+}
