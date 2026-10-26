@@ -1,0 +1,262 @@
+[
+  {
+    "code": "PG-S-10",
+    "name": "Sale, standard rate 10 %",
+    "description": "A taxable supply of goods or services made in Papua New Guinea by a registered person, neither zero-rated nor exempt",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Form G1, line 5 — total GST taxable sales (line 1 less line 4), GST included — and line 6 — output debits, line 5 divided by eleven. GST is imposed at a rate of 10 % on the value of the goods and services sold and on goods imported (IRC fact sheet on section 65A). On the form G1, line 5 is the taxable sales including GST and line 6, the output debits, is line 5 divided by eleven, the tax fraction of 10 %. The engine posts the exclusive base to box 5a and the GST to box 6.",
+    "source": "s65a-fact-sheet",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "5a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "5a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "PG-S-ZR-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "Goods or services exported, or to be exported within 28 days, taxable at 0 %",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "vat_category": "G",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Form G1, note 3 (line 3, zero rated sales): (a) any sale for export, where the goods or services have been exported or will be exported within 28 days; (b) sales of travel outside Papua New Guinea; (d) ships or aircraft stores for use outside Papua New Guinea. A zero-rated sale keeps the input credit. Line 3 of the return, included in line 1.",
+    "source": "g1-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "PG-S-ZR",
+    "name": "Sale, zero-rated (other)",
+    "description": "A zero-rated supply made in Papua New Guinea that is not an export — a business sold as a going concern, medical supplies, prescription glasses, refined gold, silver or platinum sold by the refiner to a dealer or jeweller, sales by duty free shops",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Form G1, note 3 (line 3, zero rated sales): the eight zero-rated sales — (a) exports within 28 days, (b) travel outside Papua New Guinea, (c) sales by inward or outward duty free shops, (d) ships or aircraft stores for use outside Papua New Guinea, (e) businesses sold as a going concern, (f) medical supplies, (g) prescription glasses supplied by a registered doctor or optician, (h) refined gold, silver or platinum sold by the refiner to a dealer in metal or a jeweller. One tax code carries the whole list; which item applies is the preparer's judgement. The guide read adds supplies to resource companies, approved charities and prescribed foreign aid providers, which the form does not list: they are a gap (see the README). Line 3 of the return.",
+    "source": "g1-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "PG-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply the GST law exempts — health, education, gambling and financial services",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Form G1, note 2 (line 2, exempt sales): in general the only industries that make exempt sales are the health industry (hospitals, doctors, dentists, opticians, nurses or aid posts), education (school fees, boarding fees, text books and other educational goods and services supplied by schools), gambling and financial services. Employee benefits for motor vehicles and housing are exempt but kept out of line 2. No GST is charged and the GST paid on the inputs of an exempt sale is not credited (lines 8 and 9). Line 2 of the return, included in line 1.",
+    "source": "g1-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "2"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "2",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 40
+  },
+  {
+    "code": "PG-P-10",
+    "name": "Purchase, standard rate 10 %, creditable",
+    "description": "A local purchase of goods, services or capital goods at the standard rate, used to make taxable supplies",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Form G1, line 8 — GST paid on business inputs bought during the tax period, capital goods included (note 4). The input credit is the GST paid (IRC fact sheet on section 65A). The engine posts the exclusive base to box 8a, which is not a box of the form, and the GST to box 8. Apportionment for exempt sales (line 9) and private use (line 10) is the preparer's.",
+    "source": "g1-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "8a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "8",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 110
+  },
+  {
+    "code": "PG-P-10-NC",
+    "name": "Purchase, standard rate 10 %, GST not credited",
+    "description": "A purchase on which no input credit is claimed, such as a car for a business that does not deal in cars — the GST joins the cost",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Form G1, note 7 — no GST input credit is allowable for cars (a car, 4WD, station wagon, motor cycle, panel van or utility truck with a load capacity of less than one tonne, or a bus designed to carry fewer than nine passengers) unless the business is a dealer in cars or provides a rental car service; the GST paid on them is kept out of line 8 in full. Employee benefits of cars and housing carry no credit either (note 4). Which purchases are barred is the preparer's judgement. The GST joins the cost and no box of the return receives the purchase.",
+    "source": "g1-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 130
+  },
+  {
+    "code": "PG-P-0",
+    "name": "Purchase, exempt or without GST",
+    "description": "A purchase of an exempt supply (for example a financial service), carrying no GST",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2024-01-01",
+    "legal_reference": "Form G1, line 8 — only the GST actually paid on business inputs is declared; a purchase that carries no GST appears on no line of the return.",
+    "source": "g1-form",
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "sequence": 140
+  },
+  {
+    "code": "PG-P-IMP",
+    "name": "Purchase of imported goods, 10 % GST paid at Customs",
+    "description": "Imported goods: the GST paid to Customs at the border is claimed as input credit in line 8",
+    "kind": "vat",
+    "rate": 10,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2024-01-01",
+    "legal_reference": "GST is imposed on goods imported into Papua New Guinea at 10 % (IRC fact sheet on section 65A; import GST at 10 % on the majority of commercial imports, guide read). The GST paid at the border is a GST paid on a business input and goes to line 8 (note 4; line 7 is reserved to approved entities whose import GST is deferred). The customs value is posted to box 8b, which is not a box of the form. The GST owed to Customs sits on the import control account until paid.",
+    "source": "g1-form",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "8b"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "8"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "8b",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "8",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 150
+  }
+]
