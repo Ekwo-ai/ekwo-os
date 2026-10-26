@@ -480,6 +480,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`vc`](../packs/vc/) | Saint Vincent and the Grenadines | `404_pack_vc.sql` | en | `community` |
 | [`vg`](../packs/vg/) | British Virgin Islands | `140_pack_vg.sql` | en | `community` |
 | [`vn`](../packs/vn/) | Việt Nam | `55_pack_vn.sql` | vi | `community` |
+| [`ws`](../packs/ws/) | Samoa | `225_pack_ws.sql` | en | `community` |
 | [`xk`](../packs/xk/) | Kosova | `123_pack_xk.sql` | sq, en | `community` |
 | [`za`](../packs/za/) | South Africa | `88_pack_za.sql` | en | `community` |
 | [`zm`](../packs/zm/) | Zambia | `137_pack_zm.sql` | en | `community` |
