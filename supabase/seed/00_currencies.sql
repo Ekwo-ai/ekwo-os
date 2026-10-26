@@ -200,3 +200,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('FJD', 'Fijian dollar', 'FJ$', 2)
 on conflict (code) do nothing;
+
+-- Papua New Guinean kina, ISO 4217 list one, two decimals (packs/pg/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('PGK', 'Papua New Guinean kina', 'K', 2)
+on conflict (code) do nothing;
