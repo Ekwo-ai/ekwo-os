@@ -406,6 +406,7 @@ async function docPdf(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   pairs([
     ['file', `${out}  ${dim(`${result.byte_size} bytes, ${result.page_count} page(s)`)}`],
     ['logo', result.logo],
+    ...(result.pack_labels.length === 0 ? [] : [['law', `${result.pack_labels.join(', ')} ${dim('as the country\'s pack names them')}`] as [string, string]]),
     ['words', result.language === null || result.labels_language === result.language ? result.labels_language : `${result.labels_language} ${dim(`(no words in ${result.language} yet)`)}`],
     ...(result.verification_url === null ? [] : [['verification', `QR code of ${result.verification_url}`] as [string, string]]),
     ...(result.factur_x === null ? [] : [['factur-x', `${result.factur_x.profile}, embedded`] as [string, string]]),

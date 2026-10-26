@@ -99,19 +99,32 @@ export const INVOICE_LABELS: Readonly<Record<string, InvoiceLabels>> = {
 };
 
 /**
+ * The entry of `sets` for a BCP 47 tag: the whole tag (`pt-br`), then its
+ * language (`fr` for `fr-BE`), or null. Keys are lower-case subtags. The one
+ * rule by which a set of words is chosen for a language, here and for the
+ * words a country pack names (`country_defaults.invoice_labels`).
+ */
+export function forLanguage<T>(
+  sets: Readonly<Record<string, T>>,
+  tag: string | null | undefined,
+): { language: string; value: T } | null {
+  const whole = (tag ?? '').trim().toLowerCase().replace(/_/g, '-');
+  const primary = whole.split('-')[0] ?? '';
+  for (const language of [whole, primary]) {
+    if (language !== '' && Object.hasOwn(sets, language)) return { language, value: sets[language] as T };
+  }
+  return null;
+}
+
+/**
  * The words of the layout for a BCP 47 tag: the set of the whole tag
  * (`pt-br`), then of its language (`fr` for `fr-BE`), then English.
  * `language` is the set the words come from, so that a caller can say when a
  * document is printed in English for want of a set in its language.
  */
 export function labelsFor(tag: string | null | undefined): { language: string; labels: InvoiceLabels } {
-  const whole = (tag ?? '').trim().toLowerCase().replace(/_/g, '-');
-  const primary = whole.split('-')[0] ?? '';
-  for (const language of [whole, primary]) {
-    const labels = INVOICE_LABELS[language];
-    if (labels !== undefined) return { language, labels };
-  }
-  return { language: 'en', labels: ENGLISH_LABELS };
+  const found = forLanguage(INVOICE_LABELS, tag);
+  return found === null ? { language: 'en', labels: ENGLISH_LABELS } : { language: found.language, labels: found.value };
 }
 
 /**

@@ -1007,6 +1007,36 @@ function taxPayee(pack: Pack, country: string): string[] {
   ];
 }
 
+/**
+ * The words of an invoice the law names — `documents.invoice_labels` and their
+ * translations — into `country_defaults.invoice_labels`, by language then by
+ * key, the pack's own language among the others: the shape a renderer reads
+ * for the language of one document.
+ *
+ * Written only when the pack names a word, like `taxPayee`: a pack that names
+ * none keeps a seed that runs on a schema from before the column.
+ */
+function invoiceLabels(pack: Pack, country: string): string[] {
+  const words = pack.documents.invoice_labels;
+  // `ekwo pack check` refuses words in a pack that does not say its language.
+  const own = pack.manifest.defaults.language;
+  if (words.length === 0 || own === undefined) return [];
+  const byLanguage: Record<string, Record<string, string>> = {};
+  for (const word of words) {
+    (byLanguage[own] ??= {})[word.key] = word.text;
+    for (const [language, translated] of Object.entries(word.text_i18n)) (byLanguage[language] ??= {})[word.key] = translated;
+  }
+  const sorted = Object.fromEntries(
+    Object.entries(byLanguage)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([language, set]) => [language, Object.fromEntries(Object.entries(set).sort(([a], [b]) => a.localeCompare(b)))]),
+  );
+  return [
+    '',
+    `update country_defaults set invoice_labels = ${text(JSON.stringify(sorted))}::jsonb where country = ${text(country)};`,
+  ];
+}
+
 function documentRules(pack: Pack, country: string): string[] {
   const rules = pack.documents;
   const obligation =
@@ -1052,6 +1082,8 @@ function documentRules(pack: Pack, country: string): string[] {
     `  fiscal_year_default           = ${text(rules.fiscal_year_default)}`,
     ` where country = ${text(country)};`,
   ];
+
+  out.push(...invoiceLabels(pack, country));
 
   if (rules.mentions.length === 0) return out;
 

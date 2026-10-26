@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ENGLISH_LABELS, INVOICE_LABELS, labelsFor, renderInvoicePdf } from '../src/index.js';
+import { ENGLISH_LABELS, INVOICE_LABELS, forLanguage, labelsFor, renderInvoicePdf } from '../src/index.js';
 import { englishHeader, englishInvoice, greekInvoice, GREEK_LABELS } from './fixtures.js';
 
 const KEYS = Object.keys(ENGLISH_LABELS).sort();
@@ -38,6 +38,18 @@ describe('labelsFor', () => {
     expect(labelsFor('el')).toEqual({ language: 'en', labels: ENGLISH_LABELS });
     expect(labelsFor(null)).toEqual({ language: 'en', labels: ENGLISH_LABELS });
     expect(labelsFor('')).toEqual({ language: 'en', labels: ENGLISH_LABELS });
+  });
+});
+
+describe('forLanguage', () => {
+  it('chooses from any sets by the same rule, and answers null where none fits', () => {
+    const sets = { pt: 'one', 'pt-br': 'two' };
+    expect(forLanguage(sets, 'pt-BR')).toEqual({ language: 'pt-br', value: 'two' });
+    expect(forLanguage(sets, 'pt_PT')).toEqual({ language: 'pt', value: 'one' });
+    expect(forLanguage(sets, 'el')).toBeNull();
+    expect(forLanguage(sets, null)).toBeNull();
+    expect(forLanguage({ '': 'blank' }, '')).toBeNull();
+    expect(forLanguage({}, 'constructor')).toBeNull();
   });
 });
 

@@ -27,6 +27,7 @@ import { embedFacturX } from '@ekwo-ai/factur-x/pdf';
 import {
   EKWO_CREDIT,
   ENGLISH_LABELS,
+  forLanguage,
   InvoicePdfError,
   renderFacturXPdf,
   renderInvoicePdf,
@@ -143,6 +144,26 @@ export async function readInvoiceTheme(backend: Backend, companyId: string): Pro
 
 /** Every word of the invoice layout, by key: what a pack may name for the PDF to print. */
 export const INVOICE_LABEL_KEYS: readonly string[] = Object.keys(ENGLISH_LABELS).filter((key) => key !== 'units');
+
+/**
+ * The words of an invoice the law of the document's country names, in the
+ * document's language (`country_defaults.invoice_labels`), or nothing where
+ * the pack names none in it. They go over the words of the layout, so the
+ * order is the pack's word, then the layout's for the language, then English.
+ */
+async function readCountryLabels(
+  backend: Backend,
+  country: unknown,
+  language: unknown,
+): Promise<Partial<InvoiceLabels>> {
+  if (typeof country !== 'string' || country === '') return {};
+  const rows = await backend.select<{ invoice_labels: Record<string, Partial<InvoiceLabels>> | null }>({
+    table: 'country_defaults',
+    columns: ['invoice_labels'],
+    where: [{ column: 'country', op: 'eq', value: country }],
+  });
+  return forLanguage(rows[0]?.invoice_labels ?? {}, typeof language === 'string' ? language : null)?.value ?? {};
+}
 
 /** The module that keeps the validations and the fiscal records, by its code. */
 const EINVOICING = 'einvoicing';
@@ -312,7 +333,10 @@ export interface DocumentPdfArgs {
   /** Embed the CII of the document (Factur-X, EN 16931 profile): the PDF becomes a PDF/A-3 Factur-X invoice. */
   factur_x?: boolean | undefined;
   page_size?: PageSize | undefined;
-  /** Words of the layout over the set `@ekwo-ai/invoice-pdf` carries for the document's language. */
+  /**
+   * Words over the set `@ekwo-ai/invoice-pdf` carries for the document's
+   * language, and over the words the country's pack names in it.
+   */
   labels?: Partial<InvoiceLabels> | undefined;
 }
 
@@ -324,6 +348,12 @@ export interface DocumentPdf {
   language: string | null;
   /** The language the words of the layout were printed in: the document's, or `en` where no set of words exists for it yet. */
   labels_language: string;
+  /**
+   * The words printed as the law of the document's country names them
+   * (`documents.invoice_labels` of its pack, in the document's language), by
+   * key of the layout. Empty where the pack names none in that language.
+   */
+  pack_labels: string[];
   filename: string;
   title: string;
   media_type: 'application/pdf';
@@ -369,10 +399,12 @@ export async function renderDocumentPdf(
   const verification = await readVerification(backend, args.document_id, String(header.company_id));
   if (verification !== null) input.verification = verification;
 
+  const countryLabels = await readCountryLabels(backend, header.country, header.language);
+  const labels = { ...countryLabels, ...args.labels };
   const options = {
     theme: await readInvoiceTheme(backend, String(header.company_id)),
     ...(args.page_size === undefined ? {} : { pageSize: args.page_size }),
-    ...(args.labels === undefined ? {} : { labels: args.labels }),
+    ...(Object.keys(labels).length === 0 ? {} : { labels }),
     producer: '@ekwo-ai/core',
     credit: EKWO_CREDIT,
   };
@@ -409,6 +441,7 @@ export async function renderDocumentPdf(
     state: (header.state as string | null | undefined) ?? null,
     language: (header.language as string | null | undefined) ?? null,
     labels_language: rendered.labelsLanguage,
+    pack_labels: Object.keys(countryLabels).sort(),
     filename: rendered.filename,
     title: rendered.title,
     media_type: 'application/pdf',

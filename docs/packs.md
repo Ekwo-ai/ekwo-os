@@ -1565,6 +1565,50 @@ that does not, a duplicate code, and a validity that runs backwards. Retiring
 a wording is a `valid_to` and a new row, never an edit — the rule that governs
 a tax rate and a box of a form governs a sentence too.
 
+### The words of an invoice the law names: `documents.invoice_labels`
+
+The words of an invoice's layout — Invoice, Bill to, Due date, Amount due — are
+the same from one country to another, and
+[`@ekwo-ai/invoice-pdf`](../packages/formats/invoice-pdf/README.md) carries them
+once per language: « Facture » is written once for every French-speaking
+country. A few words are not the layout's: the law of a country names them,
+and names them its own way. A Belgian legal person prints its « numéro
+d'entreprise » on every invoice; the French set of the layout calls the same
+line « Numéro d'immatriculation ». The pack names those, and only those, each
+with the article that names it:
+
+```json
+"documents": {
+  "invoice_labels": {
+    "registrationNumber": {
+      "text": "Numéro d'entreprise",
+      "legal_reference": "Code des sociétés et des associations, art. 2:20, 4°",
+      "source": "csa-indications"
+    }
+  }
+}
+```
+
+A key is a key of the layout's words (`InvoiceLabels`), among the twelve the
+schema lists: the title of the document and of a credit note, the tax point,
+the VAT and registration numbers, the share capital, and the words of the tax
+— its rate, its summary, its base, its amount and the totals with and without
+it. The text is in `defaults.language`; the other languages translate it in
+their file, under the same key:
+
+```json
+{ "language": "nl", "invoice_labels": { "registrationNumber": "Ondernemingsnummer" } }
+```
+
+A declared language covers every word the manifest names, like every other
+section; a word the manifest does not name is refused in a language file. The
+words compile into `country_defaults.invoice_labels`, by language then by key,
+the pack's own language among the others, and the PDF of a document
+(`ekwo doc pdf`, `render_invoice_pdf`) prints the pack's word for the
+document's language, then the layout's, then English; its answer lists the
+words that came from the pack (`pack_labels`). A pack that names words needs
+`schema_min` of `20261026071500` or later.
+
 ## Versions, and what a company holds
 
 `pack.json.version` is semver:
@@ -1679,6 +1723,7 @@ one file.
   "tax_report_boxes": { "54": "Btw op de handelingen van de roosters 01, 02 en 03" },
   "statement_lines":  { "BE-BNB-ABBR-BS:10/15": "EIGEN VERMOGEN" },
   "legal_mentions":   { "reverse_charge": "Btw verlegd — …" },
+  "invoice_labels":   { "registrationNumber": "Ondernemingsnummer" },
   "asset_categories": { "machinery": "Installaties, machines en uitrusting" }
 }
 ```
@@ -1696,7 +1741,8 @@ declaration is a promise rather than a description:
 
 `ekwo pack check` fails, naming every missing key, if a declared language stops
 covering the accounts of every chart, the journals, the taxes, the boxes, the
-statement lines, the legal mentions or the asset categories. A file that is
+statement lines, the legal mentions, the words of an invoice or the asset
+categories. A file that is
 **not** declared may be partial — a key it does not carry falls back to the
 pack's own label — which is how a language is contributed one section at a
 time. A label under a code the pack does not carry is refused either way.

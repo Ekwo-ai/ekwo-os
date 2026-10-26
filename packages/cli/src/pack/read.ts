@@ -545,6 +545,23 @@ export interface PackMention {
 }
 
 /**
+ * One word of an invoice as the law of the country names it — the title of
+ * the document, what an identifier is called — over the word of the layout
+ * `@ekwo-ai/invoice-pdf` carries for every country of a language. `key` is a
+ * key of its `InvoiceLabels`; the schema lists the ones a pack may name.
+ */
+export interface PackInvoiceLabel {
+  key: string;
+  /** In the pack's own language. */
+  text: string;
+  /** The same word in the other languages of the pack, from `i18n/`. */
+  text_i18n: Record<string, string>;
+  legal_reference: string;
+  /** Key of the register entry where that reference can be read. */
+  source: string | null;
+}
+
+/**
  * Where one rule of a country comes from.
  *
  * A tax and a box of a declaration form are rows, and each carries its own
@@ -627,6 +644,8 @@ export interface PackDocumentRules {
   payment_formats: string[];
   fiscal_year_default: string | null;
   mentions: PackMention[];
+  /** The words of an invoice the law names, in the order the manifest gives them. */
+  invoice_labels: PackInvoiceLabel[];
 }
 
 /** How the records of an invoicing system reach the tax authority. */
@@ -1198,6 +1217,8 @@ export interface PackLabels {
   result_in_progress: Record<string, Record<string, string>>;
   /** By legal mention code. */
   legal_mentions: Record<string, Record<string, string>>;
+  /** By key of `documents.invoice_labels`. */
+  invoice_labels: Record<string, Record<string, string>>;
   /** By fixed-asset category code. */
   asset_categories: Record<string, Record<string, string>>;
   /** The labels of `corporate_tax.json`: `tax`, then `parameter:`, `rule:`, `rate:` and `credit:` with a code. */
@@ -1495,6 +1516,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
     statement_lines: {},
     result_in_progress: {},
     legal_mentions: {},
+    invoice_labels: {},
     asset_categories: {},
     corporate_tax: {},
   };
@@ -1530,7 +1552,8 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
       // A key names something the pack carries, or it is a typo nobody would
       // ever see: a label under a code that does not exist reaches no reader.
       const byCode = (
-        name: keyof PackLabels & ('charts' | 'accounts' | 'journals' | 'taxes' | 'legal_mentions' | 'asset_categories'),
+        name: keyof PackLabels &
+          ('charts' | 'accounts' | 'journals' | 'taxes' | 'legal_mentions' | 'invoice_labels' | 'asset_categories'),
         known: Set<string>,
         what: string,
       ): void => {
@@ -1548,6 +1571,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
       byCode('journals', new Set(manifest.journals.map((j) => j.code)), 'a journal');
       byCode('taxes', new Set(taxes.map((t) => t.code)), 'a tax');
       byCode('legal_mentions', new Set(documents.mentions.map((m) => m.code)), 'a legal mention');
+      byCode('invoice_labels', new Set(documents.invoice_labels.map((l) => l.key)), 'a word of documents.invoice_labels');
       byCode('asset_categories', new Set((fixedAssets?.categories ?? []).map((c) => c.code)), 'a fixed-asset category');
 
       // The labels of the corporate tax section are keyed by what they label
@@ -1616,6 +1640,13 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   // that one file is the whole of one language.
   for (const chart of charts) chart.name_i18n = labels.charts[chart.code] ?? {};
   for (const mention of documents.mentions) mention.text_i18n = labels.legal_mentions[mention.code] ?? {};
+  for (const label of documents.invoice_labels) label.text_i18n = labels.invoice_labels[label.key] ?? {};
+  if (documents.invoice_labels.length > 0 && manifest.defaults.language === undefined) {
+    issues.push({
+      path: 'pack.json documents.invoice_labels',
+      message: 'names words in the pack\'s own language, and defaults.language does not say which; set it',
+    });
+  }
   for (const category of fixedAssets?.categories ?? []) {
     category.name_i18n = labels.asset_categories[category.code] ?? {};
   }
@@ -1908,6 +1939,11 @@ function sourceRegister(
       path: `pack.json documents.mentions.${mention.code}`,
       source: mention.source,
       kind: 'other' as const,
+    })),
+    ...documents.invoice_labels.map((label) => ({
+      path: `pack.json documents.invoice_labels.${label.key}`,
+      source: label.source,
+      kind: 'rule' as const,
     })),
     ...(fixedAssets === null ? [] : [{ path: 'fixed_assets.json', source: fixedAssets.source, kind: 'other' as const }]),
     ...(fixedAssets?.categories ?? []).map((category) => ({
@@ -2414,6 +2450,7 @@ function languageCoverage(
     ],
     ['result_in_progress', statements.filter((st) => st.result_in_progress === 'combined').map((st) => st.code)],
     ['legal_mentions', documents.mentions.map((m) => m.code)],
+    ['invoice_labels', documents.invoice_labels.map((l) => l.key)],
     ['asset_categories', (fixedAssets?.categories ?? []).map((c) => c.code)],
     ['corporate_tax', corporateTaxLabelKeys(corporateTax)],
   ];
@@ -2910,6 +2947,17 @@ function normaliseDocumentRules(manifest: Manifest): PackDocumentRules {
       }) satisfies PackMention,
   );
 
+  const invoiceLabels = Object.entries((documents['invoice_labels'] ?? {}) as Record<string, Record<string, unknown>>).map(
+    ([key, label]) =>
+      ({
+        key,
+        text: String(label['text']),
+        text_i18n: {},
+        legal_reference: String(label['legal_reference']),
+        source: (label['source'] as string | undefined) ?? null,
+      }) satisfies PackInvoiceLabel,
+  );
+
   const references = (documents['references'] ?? {}) as Record<string, unknown>;
 
   return {
@@ -2937,6 +2985,7 @@ function normaliseDocumentRules(manifest: Manifest): PackDocumentRules {
     payment_formats: (bank['payment_formats'] as string[] | undefined) ?? [],
     fiscal_year_default: (manifest.defaults['fiscal_year_default'] as string | undefined) ?? null,
     mentions,
+    invoice_labels: invoiceLabels,
   };
 }
 
