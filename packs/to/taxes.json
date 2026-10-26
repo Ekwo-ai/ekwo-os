@@ -1,0 +1,250 @@
+[
+  {
+    "code": "TO-S-15",
+    "name": "Sale, standard rate 15 %",
+    "description": "A taxable supply of goods or services made in Tonga by a registered person, neither zero-rated nor exempt",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2005-10-01",
+    "legal_reference": "Consumption Tax Act 2003, s. 5(3)(a) — the rate of Consumption Tax is 15 per cent; s. 5(1) and s. 11 — the value of a supply is the consideration, and a price without a separate CT amount is reduced by the tax fraction r/(100+r). Form CT206: box 5 is the total taxable supplies including CT, box 6 the zero-rated supplies included in it, box 7 the difference (taxable supplies, CT included) and box 8 the CT collected, box 7 divided by 7.6667 (15/115). The engine posts the exclusive base to box 7a, which is not a box of the form, and the CT to box 8.",
+    "source": "ct-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "7a"
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "8"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "7a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "2100",
+          "box": "8",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "TO-S-ZR-EXP",
+    "name": "Sale, zero-rated (export)",
+    "description": "An export of goods or of services supplied for use outside Tonga, taxable at 0 %",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "export",
+    "vat_category": "G",
+    "valid_from": "2005-10-01",
+    "legal_reference": "Consumption Tax Order-in-Council GS 3B of 31 March 2005 (reproduced in the Consumption Tax Regulations), Order 2(a) and (b) — an export of goods and an export of services supplied for use outside Tonga are subject to the zero rate of Consumption Tax, under Consumption Tax Act 2003 s. 5(3)(a). Zero-rated supplies are box 6 of form CT206, included in box 5. A zero-rated supply keeps the input credit.",
+    "source": "ct-regs",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 20
+  },
+  {
+    "code": "TO-S-ZR",
+    "name": "Sale, zero-rated (other)",
+    "description": "A zero-rated supply made in Tonga that is not an export — international transport, a going concern transferred between registered persons, domestic electricity, the first 20 cubic metres of water a month, fishing and aquaculture supplies",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "domestic",
+    "vat_category": "Z",
+    "valid_from": "2005-10-01",
+    "legal_reference": "Consumption Tax Order-in-Council GS 3B of 31 March 2005, Order 2(c) to (f) — zero rate for international transport of goods or passengers, the transfer of a business as a going concern between registered persons (with the written agreement and notice the Order requires), electricity supplied for domestic purposes and the first 20 cubic metres of water a month for domestic purposes; the Order of 2005 as added also zero-rates supplies to His Majesty the King and electricity for commercial use; the Consumption Tax Order 2013, Order 3, zero-rates fishing vessels and gear, fuel for registered vessels and aquaculture materials within its provisos. One tax code carries the lists; which item applies is the preparer's judgement, and the Orders in force today were not all read (see the README). Box 6 of form CT206.",
+    "source": "ct-regs",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "6"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "6",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 30
+  },
+  {
+    "code": "TO-S-EX",
+    "name": "Sale, exempt",
+    "description": "A supply the Orders exempt — health, dental and nursing services, education, financial services, public transport, residential land lease",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "exempt",
+    "vat_category": "E",
+    "valid_from": "2005-10-01",
+    "legal_reference": "Consumption Tax Order-in-Council GS 3B of 31 March 2005, Order 1 — exempt supplies: (a) medical prescription, dental, nursing or health services, (b) education services, (c) financial services, (d) public transport services, (e) lease of land for residential purposes; Consumption Tax Act 2003, s. 5(3)(a). An exempt supply is not a taxable supply and carries no input credit (s. 17(5)). Form CT206 prints a line for exempt sales without a box number and says not to include them in box 5 or 6: the pack posts them to no box.",
+    "source": "ct-regs",
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "sequence": 40
+  },
+  {
+    "code": "TO-P-15",
+    "name": "Purchase, standard rate 15 %",
+    "description": "Goods or services bought in Tonga from a registered person for the enterprise, with a Consumption Tax invoice",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2005-10-01",
+    "legal_reference": "Consumption Tax Act 2003, s. 17 — a taxable person may claim a credit for the input tax paid on a taxable supply to the person, in the period in which the person holds the Consumption Tax invoice (s. 17(7)); s. 17(4) and (5) refuse the credit for a passenger vehicle, petroleum products not used wholly in the business, entertainment, and what serves exempt or private use. Form CT206: box 11 is the total taxable supplies purchased, CT included, excluding CT paid to Customs; box 12 is box 11 divided by 7.6667. The engine posts the exclusive base to box 11a, which is not a box of the form, and the CT to box 12. The apportionment is the preparer's.",
+    "source": "ct-206",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "11a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "12"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "11a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "12",
+          "box_factor": -100
+        }
+      ]
+    },
+    "sequence": 50
+  },
+  {
+    "code": "TO-P-15-NC",
+    "name": "Purchase, standard rate 15 % — no input credit",
+    "description": "A purchase carrying 15 % CT that gives no input credit — a passenger vehicle, entertainment, or goods bought for exempt supplies or private use",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "domestic",
+    "vat_category": "S",
+    "valid_from": "2005-10-01",
+    "legal_reference": "Consumption Tax Act 2003, s. 17(4) and (5) — no credit for a passenger vehicle (unless the person deals in or hires such vehicles), for petroleum products not used wholly in the business, for entertainment, or to the extent that the supply is used to make exempt supplies or for private purposes. The CT joins the cost and no box of the return receives the purchase. Which purchases are barred is the preparer's judgement.",
+    "source": "ct-act",
+    "postings": {
+      "invoice": [
+        {
+          "type": "tax_on_base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "tax_on_base"
+        }
+      ]
+    },
+    "sequence": 60
+  },
+  {
+    "code": "TO-P-0",
+    "name": "Purchase, no CT",
+    "description": "A purchase from a supplier who charged no CT — exempt, unregistered or outside Tonga",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "exempt",
+    "valid_from": "2005-10-01",
+    "legal_reference": "Form CT206, boxes 11 to 15 — only the CT actually paid on taxable supplies purchased is declared; a purchase that carries no CT appears on no line of the return. The Act allows no credit for CT that was not charged (s. 17(2)).",
+    "source": "ct-206",
+    "postings": {
+      "invoice": [],
+      "credit_note": []
+    },
+    "sequence": 70
+  },
+  {
+    "code": "TO-P-IMP",
+    "name": "Purchase, import of goods",
+    "description": "Goods imported into Tonga, CT paid to Customs at the border",
+    "kind": "vat",
+    "rate": 15,
+    "scope": "purchase",
+    "treatment": "import",
+    "valid_from": "2005-10-01",
+    "legal_reference": "Consumption Tax Act 2003, s. 22(2) and s. 23 — CT on a taxable import is payable by the importer at the time of import, collected by Customs with the duties; the value on which it is levied is the customs value plus insurance and freight, customs duty and other charges (the Ministry's worked example: 1,370.00 × 15 % = 205.50). Form CT206, box 13: CT paid to Customs; box 11 excludes it. The import value is posted to box 13a, which is not a box of the form. The CT owed to Customs sits on the import control account until paid.",
+    "source": "ct-206",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "13a"
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "13"
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "13a",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "account": "1150",
+          "box": "13",
+          "box_factor": -100
+        },
+        {
+          "type": "tax",
+          "factor": -100,
+          "account": "2125"
+        }
+      ]
+    },
+    "sequence": 80
+  }
+]

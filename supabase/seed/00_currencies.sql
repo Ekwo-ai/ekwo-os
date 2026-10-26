@@ -210,3 +210,8 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('WST', 'Samoan tala', 'WS$', 2)
 on conflict (code) do nothing;
+
+-- Tongan paʻanga, ISO 4217 list one, two decimals (packs/to/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('TOP', 'Tongan paʻanga', 'T$', 2)
+on conflict (code) do nothing;

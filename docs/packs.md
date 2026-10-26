@@ -471,6 +471,7 @@ says what they say. `ekwo pack describe <cc>` is everything one of them says.
 | [`tj`](../packs/tj/) | Ҷумҳурии Тоҷикистон (Республика Таджикистан) | `210_pack_tj.sql` | ru, en | `community` |
 | [`tm`](../packs/tm/) | Туркменистан | `406_pack_tm.sql` | ru, en | `community` |
 | [`tn`](../packs/tn/) | Tunisie | `85_pack_tn.sql` | fr | `community` |
+| [`to`](../packs/to/) | Tonga | `227_pack_to.sql` | en | `community` |
 | [`tr`](../packs/tr/) | Türkiye | `82_pack_tr.sql` | tr | `community` |
 | [`tt`](../packs/tt/) | Trinidad and Tobago | `405_pack_tt.sql` | en | `community` |
 | [`tw`](../packs/tw/) | 臺灣 | `53_pack_tw.sql` | zh, en | `community` |

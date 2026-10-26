@@ -1,0 +1,187 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json#/$defs/tax_report",
+  "code": "TO-CT",
+  "name": "Consumption Tax return (form CT206)",
+  "period": [
+    "month"
+  ],
+  "valid_from": "2005-10-01",
+  "legal_reference": "Form CT206, Consumption Tax Return (Consumption Tax Act 2003), filed for a Consumption Tax period of one month (s. 2, from 1 October 2005): boxes 1 to 4 are the identity and the period, boxes 5 to 10 the sales and the CT collected, boxes 11 to 15 the purchases and the CT paid, boxes 16 to 18 the credit brought forward and the result. The form is CT-inclusive: boxes 5, 7 and 11 are totals here (exclusive base plus CT) and the exclusive figures sit in boxes 7a and 11a. Box 18 is signed: negative is the credit. The form also prints a line for exempt sales, without a number, outside boxes 5 and 6; the pack posts none.",
+  "source": "ct-206",
+  "deadline": {
+    "rule": "day_of_month_after_period",
+    "day": 28,
+    "legal_reference": "Consumption Tax Act 2003, s. 21(1) — a taxable person lodges the return for each Consumption Tax period within 28 days after the end of the period, and s. 22(1) makes the CT payable by the same date. A month ends on the 28th to the 31st, so 28 days after the end is the 28th of the following month in every case.",
+    "source": "ct-act"
+  },
+  "boxes": [
+    {
+      "box": "5",
+      "kind": "total",
+      "name": "Box 5 — Total taxable supplies made for the period, CT included",
+      "sequence": 50,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 5 — total taxable supplies made for the period including CT, zero-rated supplies included. Here boxes 6 and 7 added.",
+      "source": "ct-206",
+      "plus": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "box": "6",
+      "kind": "base",
+      "name": "Box 6 — Zero-rated supplies included in box 5",
+      "sequence": 60,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 6 — zero-rated supplies included in box 5: exports and the other supplies the Orders put at the zero rate (Consumption Tax Act 2003, s. 5(3)(a)).",
+      "source": "ct-206"
+    },
+    {
+      "box": "7",
+      "kind": "total",
+      "name": "Box 7 — Taxable supplies at 15 % (box 5 less box 6), CT included",
+      "sequence": 70,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 7 — box 5 minus box 6. Here the exclusive base of box 7a plus the CT of box 8.",
+      "source": "ct-206",
+      "plus": [
+        "7a:base",
+        "8:tax"
+      ]
+    },
+    {
+      "box": "7a",
+      "kind": "base",
+      "name": "Box 7a — Taxable supplies at 15 %, CT excluded",
+      "sequence": 75,
+      "legal_reference": "Not a box of the form: the exclusive value of the taxable sales of box 7, which the engine posts and from which box 7 is rebuilt.",
+      "source": "ct-206"
+    },
+    {
+      "box": "8",
+      "kind": "tax",
+      "name": "Box 8 — CT collected (box 7 divided by 7.6667)",
+      "sequence": 80,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 8 — divide box 7 by 7.6667, the tax fraction of 15 % (15/115). Consumption Tax Act 2003, s. 11(1): tax fraction r/(100+r).",
+      "source": "ct-act"
+    },
+    {
+      "box": "9",
+      "kind": "tax",
+      "name": "Box 9 — Tax adjustments (CT amount only), sales side",
+      "sequence": 90,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 9 — tax adjustments, CT amount only (credit and debit notes outside the period, bad debts, private use). Declared and empty: a decision of the preparer, no tax code posts to it.",
+      "source": "ct-206"
+    },
+    {
+      "box": "10",
+      "kind": "total",
+      "name": "Box 10 — Total output tax (boxes 8 and 9)",
+      "sequence": 100,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 10 — add boxes 8 and 9: total output tax.",
+      "source": "ct-206",
+      "plus": [
+        "8",
+        "9"
+      ]
+    },
+    {
+      "box": "11",
+      "kind": "total",
+      "name": "Box 11 — Total taxable supplies purchased, CT included, excluding CT paid to Customs",
+      "sequence": 110,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 11 — total taxable supplies purchased including CT, excluding CT paid to the Customs. Here the exclusive base of box 11a plus the CT of box 12.",
+      "source": "ct-206",
+      "plus": [
+        "11a:base",
+        "12:tax"
+      ]
+    },
+    {
+      "box": "11a",
+      "kind": "base",
+      "name": "Box 11a — Local purchases carrying creditable CT, CT excluded",
+      "sequence": 115,
+      "legal_reference": "Not a box of the form: the exclusive value of the local purchases whose CT is posted to box 12.",
+      "source": "ct-206"
+    },
+    {
+      "box": "12",
+      "kind": "tax",
+      "name": "Box 12 — CT paid (box 11 divided by 7.6667)",
+      "sequence": 120,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 12 — divide box 11 by 7.6667. Consumption Tax Act 2003, s. 17(1) and (7): the credit is claimed in the period in which the person holds the Consumption Tax invoice.",
+      "source": "ct-act"
+    },
+    {
+      "box": "13",
+      "kind": "tax",
+      "name": "Box 13 — CT paid to Customs",
+      "sequence": 130,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 13 — add CT paid to Customs. The CT of imported goods is posted here; box 11 excludes it.",
+      "source": "ct-206"
+    },
+    {
+      "box": "13a",
+      "kind": "base",
+      "name": "Box 13a — Imports, value for CT",
+      "sequence": 135,
+      "legal_reference": "Not a box of the form: the value of the imported goods whose CT is posted to box 13; the form asks for the CT only.",
+      "source": "ct-206"
+    },
+    {
+      "box": "14",
+      "kind": "tax",
+      "name": "Box 14 — Tax adjustments (CT amount only), purchases side",
+      "sequence": 140,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 14 — add tax adjustments, CT amount only. Declared and empty: a decision of the preparer, no tax code posts to it.",
+      "source": "ct-206"
+    },
+    {
+      "box": "15",
+      "kind": "total",
+      "name": "Box 15 — Total input tax (boxes 12, 13 and 14)",
+      "sequence": 150,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 15 — add boxes 12, 13 and 14: total input tax.",
+      "source": "ct-206",
+      "plus": [
+        "12",
+        "13",
+        "14"
+      ]
+    },
+    {
+      "box": "16",
+      "kind": "tax",
+      "name": "Box 16 — CT credit brought forward",
+      "sequence": 160,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 16 — CT credit brought forward, entered as a positive amount. Declared and empty: it is the preparer's, from the previous return (Consumption Tax Act 2003, s. 24(1)(a): the excess is carried forward).",
+      "source": "ct-206"
+    },
+    {
+      "box": "17",
+      "kind": "total",
+      "name": "Box 17 — Total tax credit (boxes 15 and 16)",
+      "sequence": 170,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 17 — add box 15 and box 16: total tax credit.",
+      "source": "ct-206",
+      "plus": [
+        "15",
+        "16"
+      ]
+    },
+    {
+      "box": "18",
+      "kind": "total",
+      "name": "Box 18 — CT to pay (positive) or CT credit (negative), box 10 less box 17",
+      "sequence": 180,
+      "legal_reference": "Form CT206, Consumption Tax Return, box 18 — the difference between box 10 and box 17: if box 17 is larger the difference is the CT credit, if box 10 is larger it is the CT to pay. Consumption Tax Act 2003, s. 16, formula A – B. Signed: negative is the credit; the CT is payable by the filing date (s. 22(1)).",
+      "source": "ct-act",
+      "plus": [
+        "10"
+      ],
+      "minus": [
+        "17"
+      ]
+    }
+  ],
+  "period_default": "month"
+}

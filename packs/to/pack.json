@@ -1,0 +1,199 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "TO",
+  "name": "Tonga",
+  "version": "0.1.0",
+  "schema_min": "20261023124650",
+  "seed_sequence": 227,
+  "released_at": "2026-10-26",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "ct-act",
+        "title": "Consumption Tax Act 2003 (Cap. 26.02, 2016 Revised Edition) — s. 2 (Consumption Tax period: one month from 1 October 2005), s. 5(3) (rate 15 %; exempt and zero-rated by Order), s. 6 (registration at TOP 100,000), s. 9 (time of supply), s. 11 (tax fraction), s. 15 (reverse charge on foreign services), s. 16 (A – B), s. 17 (input tax credits), s. 18–19 (invoices, credit and debit notes), s. 21–22 (return and payment within 28 days), s. 24 (carry forward and refund)",
+        "publisher": "Government of Tonga",
+        "url": "https://tonga.tradeportal.org/media/ConsumptionTaxAct_2.pdf",
+        "kind": "law",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "ct-206",
+        "title": "Form CT206 — Consumption Tax Return (boxes 1 to 19: sales, CT collected, purchases, CT paid, credit brought forward, result; divisor 7.6667)",
+        "publisher": "Government of Tonga — Ministry of Revenue and Customs",
+        "url": "https://www.revenue.gov.to/sites/default/files/inline-files/CT%20Return%202022.pdf",
+        "kind": "form",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "ct-regs",
+        "title": "Consumption Tax Regulations (Cap. 26.02.1, 2012 Revised Edition) — the Orders-in-Council reproduced in its endnotes: GS 3B of 31 March 2005 (exempt supplies, zero-rated supplies, exempt imports) and the later Orders",
+        "publisher": "Government of Tonga — Ministry of Revenue and Customs",
+        "url": "https://web.archive.org/web/20181029003442/http://www.revenue.gov.to/Resource.aspx?ID=1065",
+        "kind": "law",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "ct-order-2013",
+        "title": "Consumption Tax Order 2013 — exempt imports and zero-rated supplies for fishing, pearl and aquaculture",
+        "publisher": "Government of Tonga — Ministry of Revenue and Customs",
+        "url": "https://web.archive.org/web/20181029003442/http://www.revenue.gov.to/Resource.aspx?ID=1344",
+        "kind": "law",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "ct-registration",
+        "title": "Consumption Tax registration form — application for registration (the Act requires it within 7 days of becoming liable)",
+        "publisher": "Government of Tonga — Ministry of Revenue and Customs",
+        "url": "https://www.revenue.gov.to/sites/default/files/inline-files/CTRegistrationform%20%281%29_0_0.doc",
+        "kind": "form",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "ct-overview",
+        "title": "Consumption Tax overview — 15 % since 1 April 2005, registration within 7 days, output tax less input tax, claims not allowed, CT on imports collected by Customs (worked example)",
+        "publisher": "Government of Tonga — Ministry of Revenue and Customs",
+        "url": "https://www.revenue.gov.to/consumption-tax-overview",
+        "kind": "guidance",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "ias-1",
+        "title": "IAS 1 Presentation of Financial Statements — the statement of financial position and the statement of profit or loss, expenses analysed by nature; no Tonga text prescribing a layout or a chart of accounts was read",
+        "publisher": "IFRS Foundation",
+        "url": "https://www.ifrs.org/issued-standards/list-of-standards/ias-1-presentation-of-financial-statements/",
+        "kind": "guidance",
+        "consulted_on": "2026-10-26"
+      },
+      {
+        "key": "tax-portal",
+        "title": "Ministry of Revenue and Customs — tax administration portal (forms, legislation, eTax for filing and paying online)",
+        "publisher": "Government of Tonga — Ministry of Revenue and Customs",
+        "url": "https://www.revenue.gov.to/",
+        "kind": "portal",
+        "consulted_on": "2026-10-26"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "WST",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "calendar",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2990",
+      "rounding": "6990",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5000",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6950",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6960",
+      "tax_payable": "2110",
+      "tax_receivable": "1155"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    },
+    "tax_payee": {
+      "name": "Tonga Ministry of Revenue and Customs",
+      "source": "tax-portal"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Tonga reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "TO-IFRS-SFP",
+        "TO-IFRS-IS"
+      ],
+      "legal_reference": "There is no legal chart of accounts in the texts read for Tonga, and no text read names a standard setter or a framework for company accounts. This chart is original: four digits, blocked so that each range reaches one line of the IFRS-style statements below (IAS 1, expenses by nature), with the accounts a Tonga trading company keeps — CT output and input tax, import CT owed to Customs, PAYE withheld, retirement fund contributions and withholding taxes payable.",
+      "source": "ias-1"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_if_issued",
+    "references": {
+      "numbering": {
+        "legal_reference": "Consumption Tax Act 2003, s. 18(1)–(2) — a registered person making a taxable supply to another registered person issues the original Consumption Tax invoice at the time of the supply, bearing the words CONSUMPTION TAX INVOICE and an individualised serial number; s. 19 does the same for credit and debit notes. The text read states no numbering sequence rule, so numbering is `free`; the number format is a convention of this pack.",
+        "source": "ct-act"
+      },
+      "tax_point": {
+        "legal_reference": "Consumption Tax Act 2003, s. 9(1) — a supply occurs on the earlier of the date the invoice for the supply is issued and the date any payment, part payment included, is made. `invoice_if_issued` states the invoice as the point of the tax where one is issued; a payment received before the invoice brings the supply forward, which the engine does not model for a cash-first sale (see the README). Section 17(7) allows the input tax credit in the period in which the person holds the Consumption Tax invoice (or the customs entry), which the engine follows by the date of the purchase.",
+        "source": "ct-act"
+      }
+    }
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "The Revenue Services Administration (Electronic Sales Register System) Regulations 2022, listed on the Ministry's legislation page, regulate electronic sales registers; their text was not read. No structured e-invoice standard or Peppol profile was found, so `obligation` is `none` for a business-to-business e-invoice; the electronic sales register is not modelled (see the README).",
+    "source": "tax-portal"
+  },
+  "not_taxed": [
+    {
+      "treatment": "foreign_services_received",
+      "legal_reference": "Consumption Tax Act 2003, s. 15 — a taxable person who receives services from outside Tonga is treated as making a taxable supply of them only to the extent that the person uses them to make exempt supplies, for personal or domestic use, or to provide entertainment. A person making only taxable supplies owes nothing on them, and form CT206 has no box for the reverse charge. The pack carries no purchase tax for services bought from abroad: the case of a partly exempt person is a gap recorded in the README.",
+      "source": "ct-act"
+    }
+  ]
+}
