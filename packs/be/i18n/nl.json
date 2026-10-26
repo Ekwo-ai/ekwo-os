@@ -534,6 +534,9 @@
     "small_business": "Bijzondere vrijstellingsregeling voor kleine ondernemingen — btw niet van toepassing.",
     "late_payment": "Bij niet-betaling op de vervaldag zijn van rechtswege en zonder ingebrekestelling een interest tegen de wettelijke rentevoet voor handelstransacties en een forfaitaire vergoeding van 40 € voor invorderingskosten verschuldigd."
   },
+  "invoice_labels": {
+    "registrationNumber": "Ondernemingsnummer"
+  },
   "asset_categories": {
     "formation-expenses": "Oprichtingskosten",
     "intangible-rd": "Kosten van onderzoek en ontwikkeling",

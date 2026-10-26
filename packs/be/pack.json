@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BE",
   "name": "Belgium",
-  "version": "1.23.0",
-  "schema_min": "20261023160200",
+  "version": "1.24.0",
+  "schema_min": "20261026071500",
   "seed_sequence": 10,
-  "released_at": "2026-10-23",
+  "released_at": "2026-10-26",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -258,6 +258,14 @@
         "url": "https://finance.belgium.be/en/E-services/Intervat",
         "consulted_on": "2026-10-23",
         "kind": "portal"
+      },
+      {
+        "key": "csa-indications",
+        "title": "Code des sociétés et des associations, art. 2:20 — les indications de tout document émanant d'une personne morale",
+        "publisher": "SPF Justice",
+        "url": "https://www.ejustice.just.fgov.be/eli/loi/2019/03/23/2019A40586/justel",
+        "consulted_on": "2026-10-26",
+        "kind": "law"
       }
     ]
   },
@@ -456,7 +464,14 @@
         "legal_reference": "Loi du 2 août 2002 concernant la lutte contre le retard de paiement dans les transactions commerciales, art. 5 et 6",
         "source": "retard-de-paiement"
       }
-    ]
+    ],
+    "invoice_labels": {
+      "registrationNumber": {
+        "text": "Numéro d'entreprise",
+        "legal_reference": "Code des sociétés et des associations, art. 2:20, 4°",
+        "source": "csa-indications"
+      }
+    }
   },
   "einvoicing": {
     "profile": "peppol-bis-3",

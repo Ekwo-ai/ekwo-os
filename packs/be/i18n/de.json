@@ -534,6 +534,9 @@
     "small_business": "Sonderregelung der Steuerbefreiung für Kleinunternehmen — Mehrwertsteuer nicht anwendbar.",
     "late_payment": "Bei Nichtzahlung bei Fälligkeit sind von Rechts wegen und ohne Mahnung Zinsen zum gesetzlichen Zinssatz für Handelsgeschäfte sowie eine Pauschalentschädigung von 40 € für Beitreibungskosten geschuldet."
   },
+  "invoice_labels": {
+    "registrationNumber": "Unternehmensnummer"
+  },
   "asset_categories": {
     "formation-expenses": "Gründungskosten",
     "intangible-rd": "Forschungs- und Entwicklungskosten",
