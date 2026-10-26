@@ -1,7 +1,7 @@
 {
   "statements": [
     {
-      "code": "WS-IFRS-SFP",
+      "code": "TO-IFRS-SFP",
       "from": "2026-01-01",
       "to": "2026-12-31",
       "lines": {
@@ -40,7 +40,7 @@
       }
     },
     {
-      "code": "WS-IFRS-IS",
+      "code": "TO-IFRS-IS",
       "from": "2026-01-01",
       "to": "2026-12-31",
       "lines": {
