@@ -31,6 +31,9 @@ somewhere has already run it.
   words that came from the pack (`pack_labels`). `be` 1.24.0 names its
   « numéro d'entreprise » (Code des sociétés et des associations, art. 2:20)
   in French, Dutch, German and English, with `schema_min` `20261026071500`.
+  The packages read the column as the feature `invoice_labels_by_pack` of
+  `SCHEMA_FEATURES`, since 0.22.0: on an older schema the PDF prints the
+  words of the layout.
 
 ## [0.24.0] — 2026-10-28
 
