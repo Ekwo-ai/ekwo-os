@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.21.3] — 2026-10-27
+
 ### Fixed
 
 - **`create_api_key` and `share_document` say they are destructive.** One

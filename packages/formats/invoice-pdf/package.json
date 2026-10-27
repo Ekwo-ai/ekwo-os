@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/invoice-pdf",
-  "version": "0.21.2",
+  "version": "0.21.3",
   "description": "The visual PDF of an invoice or a credit note, in TypeScript, from the rows a set of books publishes: A4 or Letter, multi-page, any language Intl knows, Noto Sans embedded. Ready to carry a Factur-X XML.",
   "keywords": [
     "invoice",
@@ -59,7 +59,7 @@
     "pdf-lib": "^1.17.1"
   },
   "devDependencies": {
-    "@ekwo-ai/factur-x": "^0.21.2",
+    "@ekwo-ai/factur-x": "^0.21.3",
     "@types/node": "^24.0.0",
     "jsqr": "^1.4.0",
     "tsx": "^4.20.0",
