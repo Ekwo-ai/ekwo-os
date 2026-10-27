@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.21.2] — 2026-10-27
+
 ### Added
 
 - **What a schema newer than the floor brought, named once:

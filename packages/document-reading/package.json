@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/document-reading",
-  "version": "0.21.1",
+  "version": "0.21.2",
   "description": "One reader for received invoices: CII, Factur-X and UBL read exactly, and a photograph or a plain PDF read by a vision model through a published schema and prompt — both into the EN 16931 ReceivedInvoice.",
   "keywords": [
     "invoice",
@@ -52,8 +52,8 @@
     "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
-    "@ekwo-ai/factur-x": "^0.21.1",
-    "@ekwo-ai/peppol-ubl": "^0.21.1"
+    "@ekwo-ai/factur-x": "^0.21.2",
+    "@ekwo-ai/peppol-ubl": "^0.21.2"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
