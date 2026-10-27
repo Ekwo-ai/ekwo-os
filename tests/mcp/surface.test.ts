@@ -247,6 +247,9 @@ describe('the tools a client is offered', () => {
       'close_fiscal_year',
       'reopen_fiscal_year',
       'close_fiscal_year_finally',
+      // They reach outside the ledger: a machine key, a public link.
+      'create_api_key',
+      'share_document',
     ]) {
       expect(byName.get(name)?.annotations?.destructiveHint, name).toBe(true);
     }

@@ -9,6 +9,13 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Fixed
+
+- **`create_api_key` and `share_document` say they are destructive.** One
+  issues a key that works in the books without a person, the other publishes
+  a document behind a public link; both reach outside the ledger, so a client
+  asks before calling them, like the other tools that do.
+
 ## [0.21.2] — 2026-10-27
 
 ### Added

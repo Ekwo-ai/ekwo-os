@@ -953,7 +953,8 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       description:
         'Issues a key so a script — a nightly import, a till, a bank feed — can work in one company without a person signing in. It carries an explicit list of capabilities and nothing else, it can never reach another company, and it cannot hold a capability you do not hold yourself — at issuance and at every use: if you lose a capability or leave the company, the key loses it too. Its posting_mode is fixed now and never raised afterwards: review by default, autopilot only when the user asks for it in so many words. The secret comes back once and is stored only as a hash: show it to the user and say it cannot be read back. Prefer this to sharing anybody\u2019s password, and never suggest a service key.',
       inputSchema: write.CreateApiKeyInput.shape,
-      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+      // Destructive: a key reaches the books without a person, until it is withdrawn.
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },
     async (args) => guard(() => write.createApiKey(backend, args)),
   );
@@ -1013,7 +1014,8 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       description:
         'Publishes a posted sales invoice, credit note or quote behind a link the customer opens without an account and without a password: the token in the url is the whole secret. It returns that token once and stores only its hash, so give the url to the customer and say it cannot be read back. The page shows the document as it was sent and what is still owed on it today, so the link stays worth opening after a payment. A purchase document is refused — it is a third party\u2019s own document — and so is a draft. A link is never edited: to change when it expires, withdraw it and make another.',
       inputSchema: write.ShareDocumentInput.shape,
-      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+      // Destructive: the document leaves the ledger for whoever holds the link.
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
     },
     async (args) => guard(() => write.shareDocument(backend, args)),
   );
