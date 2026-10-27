@@ -47,6 +47,18 @@ somewhere has already run it.
   defines and the floor it keeps, and a floor that rises gets an entry of its
   own naming the breaking migration.
 
+### Fixed
+
+- **An archive carries its own clock** (migration `20261027073538`).
+  `export_company()`, `export_company_manifest()`,
+  `export_company_tables()`, `export_company_table()` and `import_company()`
+  each set `statement_timeout` to `archive_statement_timeout()` (five
+  minutes) as a function setting, which PostgREST applies to the request
+  that calls them. On a hosted project the raise of the pre-request hook did
+  not always reach the work, and the nightly copy of a company of about
+  20 MB still stopped on the eight seconds of `authenticated`. Bodies,
+  signatures and grants are unchanged.
+
 ## [0.21.1] — 2026-10-26
 
 ### Fixed

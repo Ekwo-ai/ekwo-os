@@ -288,6 +288,22 @@ describe('the clock of a request that carries a key', () => {
     expect(clock.timeout).toBe('5min');
   });
 
+  it('is also said by each archive function itself, as PostgREST applies a function setting', async () => {
+    const settings = await rows<{ fn: string; timeout: string | null }>(
+      db,
+      `select p.oid::regprocedure::text as fn,
+              (select split_part(c, '=', 2) from unnest(p.proconfig) c where c like 'statement_timeout=%') as timeout
+         from pg_proc p
+        where p.oid in ('export_company(uuid)'::regprocedure, 'export_company_manifest(uuid)'::regprocedure,
+                        'export_company_tables(uuid)'::regprocedure, 'export_company_table(uuid, text)'::regprocedure,
+                        'import_company(jsonb, uuid)'::regprocedure)
+        order by 1`,
+    );
+    const { archive } = await one<{ archive: string }>(db, `select archive_statement_timeout() as archive`);
+    expect(settings).toHaveLength(5);
+    for (const setting of settings) expect(setting, setting.fn).toMatchObject({ timeout: archive });
+  });
+
   it('stays the role one for a call that is not an archive', async () => {
     const secret = await issue('Copie de nuit, lecture', ['entries.read']);
     const clock = await withRoleSettings(
