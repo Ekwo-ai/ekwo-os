@@ -213,7 +213,7 @@ describe('a connection, before any network', () => {
     expect(() => checkConnection({ ...base, anonKey: privileged, apiKey: SOME_KEY })).toThrow(/service_role/);
     expect(() => checkConnection({ ...base, accessToken: privileged })).toThrow(/service_role/);
     expect(() => checkConnection({ ...base, apiKey: privileged })).toThrow(/service_role/);
-    expect(() => checkConnection({ ...base, apiKey: ['sb', 'secret', 'x'].join('_') })).toThrow(/service_role/);
+    expect(() => checkConnection({ ...base, apiKey: 'sb_secret_x' })).toThrow(/service_role/);
   });
 
   it('answers a refused connection as a JSON-RPC error, not a crash', async () => {
