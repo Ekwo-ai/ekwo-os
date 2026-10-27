@@ -27,22 +27,22 @@ import {
 import { emptyDatabase, makeAuthUser, migrationsPath, seedPath } from './helpers.js';
 
 /** The schema this release defines. */
-const RELEASE = '0.21.0';
+const RELEASE = '0.22.0';
 
 /** What `ekwo_schema_version()` returned before the migration of this release. */
-const PREVIOUS = '0.20.0';
+const PREVIOUS = '0.21.0';
 
 /** The migration that carries the number, and nothing else. */
-const BUMP = 'schema_version_0_21_0';
+const BUMP = 'schema_version_0_22_0';
 
 /**
  * The floor the packages of this release declare. It is not the release: it
  * rises only when a migration is breaking for what the packages read (see
  * `docs/releasing.md`, step 3), and `tests/schema_floor.test.ts` proves it
- * against the tag of that version. 0.21.0 only added — `create_document()`,
- * `replace_document_lines()`, `companies.agent_posting` and what goes with
- * them, which `SCHEMA_FEATURES` names — so the floor stayed at 0.19.0, the
- * oldest schema the reads of this release were run against.
+ * against the tag of that version. 0.22.0 only added — one more column,
+ * `proposed_name`, in the answer of `suggest_duplicate_contacts()`, which a
+ * reader leaves out where it is not answered — so the floor stays at 0.19.0,
+ * the oldest schema the reads of this release were run against.
  */
 const FLOOR = '0.19.0';
 

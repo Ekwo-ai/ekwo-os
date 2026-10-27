@@ -9,8 +9,14 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.22.0] — 2026-10-27
+
 ### Changed
 
+- The schema is 0.22.0 (`20261027200000`); the floor of the packages stays at
+  0.19.0. The migration of this release only adds: `suggest_duplicate_contacts()`
+  keeps its name, its arguments and the columns it answered with, and gains
+  `proposed_name`, which a reader on an older schema leaves out.
 - **The contacts of one party are proposed together.** `suggest_duplicate_contacts()`
   walks the contacts a chain of pairs joins into one group, with one contact to
   keep for the whole group — the one more ledger lines and documents name, then

@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/myinvois",
-  "version": "0.21.3",
+  "version": "0.22.0",
   "description": "Malaysia's MyInvois e-Invoice (LHDNM) in TypeScript: the UBL 2.1 document of an invoice, credit note, debit note or refund note, the supplier's or self-billed, in JSON or XML, from a posted document, with every rule of the SDK it breaks named by LHDNM's own error code. Zero dependencies.",
   "keywords": [
     "myinvois",
