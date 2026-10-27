@@ -6,6 +6,12 @@
 > how few contacts of the company carry it, reads every word of the name at
 > any length, and counts what the longer name adds. The first rule proposed
 > "LG SERVICES" and "ASBL UCM SERVICES" on one shared trade.
+>
+> Amended 2026-10-27 by `20261027190000`: the contacts a chain of pairs joins
+> are one group, with one contact to keep and one row per other contact, and
+> each row proposes the simplest name the group carries. Three spellings of
+> one supplier were three pairs, and the kept contact kept the name the books
+> used most rather than the one a person would write.
 
 ## Context
 
@@ -38,6 +44,28 @@ strongest first:
 | `score` | `numeric` | 0 to 1, the strongest evidence of the pair |
 | `evidence` | `text` | The kinds of evidence, strongest first, comma-separated: `vat_number`, `registration_number`, `account`, `name` |
 | `because` | `text` | The evidence in sentences, in the same order, separated by `; ` |
+| `proposed_name` | `text` | The simplest name the group carries, proposed for the kept contact |
+
+**The contacts a chain of pairs joins are one group** (amendment of
+2026-10-27). The pairs are found as below, identifier by identifier and name
+by name; then the contacts they join, directly or through a third, are walked
+into one group. The group has one contact to keep — by the rule above, among
+the whole group — and one row per other contact, with the score and evidence
+of its strongest pair, the pair with the kept contact first. Rows of one
+group share their `keep_id`; a screen shows them as one line. A contact
+joined to the kept one only through a third, and carrying a VAT or
+registration number the kept one does not, is left out: `merge_contacts()`
+would refuse it.
+
+**A name is proposed for the group.** Each word of a name weighs by how few
+contacts of the company carry it; a word carried by a contact outside the
+group — a legal form, a trade, a town — says nothing about which party this
+is. The name proposed is the one of the group with the fewest such words,
+then the fewest words, then the shortest, then the kept contact's own: "Au
+Savoy" before "Savoy SRL" and "Au Savoy (Savoy SRL)". No list of legal forms,
+by the same reasoning as the weighing. It is written nowhere: a person keeps
+it or writes another, and the absorbed contacts keep their names, so the
+party is still found under any of them.
 
 It writes nothing. `merge_contacts(keep_id, absorb_id)` is still the act, and a
 person still chooses it.
@@ -109,6 +137,7 @@ caller may read; a company of somebody else gives no row.
 
 - `supabase/migrations/20261019104812_the_contacts_that_are_probably_one_party.sql`
 - `supabase/migrations/20261019140000_a_pair_by_name_weighs_its_words.sql`
+- `supabase/migrations/20261027190000_the_contacts_of_one_party_are_proposed_together.sql`
 - `tests/duplicate_contacts.test.ts`
 - [0045](0045-recognising-a-counterparty.md) — A counterparty is recognised from learned patterns
 - [0072](0072-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt

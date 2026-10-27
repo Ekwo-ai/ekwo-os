@@ -21,6 +21,7 @@ interface Pair {
   score: string;
   evidence: string;
   because: string;
+  proposed_name: string;
 }
 
 interface ContactOptions {
@@ -60,9 +61,25 @@ async function pairOf(a: string, b: string, companyId = fx.companyId): Promise<P
   );
 }
 
-/** Every pair that names one of `ids`. */
+/** Every row that names one of `ids`. */
 async function pairsNaming(...ids: string[]): Promise<Pair[]> {
   return (await suggestions()).filter((p) => ids.includes(p.keep_id) || ids.includes(p.absorb_id));
+}
+
+/** `ids` proposed as one group: the rows of one kept contact among them, naming all the others. */
+async function groupOf(...ids: string[]): Promise<{ keep: string; rows: Pair[] }> {
+  const rows = await pairsNaming(...ids);
+  const kept = new Set(rows.map((p) => p.keep_id));
+  expect(kept.size, 'one contact kept').toBe(1);
+  const keep = [...kept][0] ?? '';
+  expect(ids).toContain(keep);
+  expect([keep, ...rows.map((p) => p.absorb_id)].sort()).toEqual([...ids].sort());
+  return { keep, rows };
+}
+
+/** Makes a contact older than the others, so that which one is kept is not a toss-up on the same millisecond. */
+async function older(id: string, days: number): Promise<void> {
+  await db.query(`update contacts set created_at = now() - make_interval(days => $2) where id = $1`, [id, days]);
 }
 
 beforeAll(async () => {
@@ -107,8 +124,9 @@ describe('suggest_duplicate_contacts() proposes a pair', () => {
        values ($1, $2, 'counterparty_account', 'XX00 1111 2222 3333', 'learned')`,
       [fx.companyId, c],
     );
-    expect(await pairOf(a, c)).toMatchObject({ score: '1.000', evidence: 'account' });
-    expect(await pairOf(b, c)).toMatchObject({ score: '1.000', evidence: 'account' });
+    // Three contacts on one account are one group: two rows into one kept contact.
+    const { rows } = await groupOf(a, b, c);
+    for (const row of rows) expect(row).toMatchObject({ score: '1.000', evidence: 'account' });
   });
 
   it('on the same significant words of the name, in any order, scored as a name is scored', async () => {
@@ -145,11 +163,14 @@ describe('suggest_duplicate_contacts() proposes a pair', () => {
     const crowded = await contact('Brindlewood');
     const limited = await contact('Brindlewood Ltd');
     const anonyme = await contact('Brindlewood SA');
-    expect(await pairOf(crowded, limited)).toMatchObject({ score: '0.600' });
-    expect(await pairOf(crowded, anonyme)).toMatchObject({ score: '0.600' });
-    expect((await pairOf(crowded, limited))?.because).toMatch(/in the names of 2 contacts/);
-    // Two names that merely share a word are two parties.
-    expect(await pairOf(limited, anonyme)).toBeUndefined();
+    await older(crowded, 1);
+    const { keep, rows } = await groupOf(crowded, limited, anonyme);
+    expect(keep).toBe(crowded);
+    for (const row of rows) expect(row).toMatchObject({ score: '0.600', evidence: 'name' });
+    expect(rows.map((row) => row.because).join(' ')).toMatch(/in the names of 2 contacts/);
+    // Two names that merely share a word are two parties: no row joins them
+    // directly, only the name they are both in.
+    expect(rows.every((row) => row.keep_id === crowded)).toBe(true);
   });
 
   it('never when the longer name adds a word as rare as the one they share', async () => {
@@ -225,18 +246,36 @@ describe('a pair by name, on the names of books of about two hundred contacts', 
 
   const named = (pairs: Pair[], a: string, b: string) =>
     pairs.find((p) => [p.keep_id, p.absorb_id].sort().join() === [ids.get(a), ids.get(b)].sort().join());
+  /** The kept contact of the group `name` is in, or undefined. */
+  const keptFor = (pairs: Pair[], name: string) =>
+    pairs.find((p) => p.keep_id === ids.get(name) || p.absorb_id === ids.get(name))?.keep_id;
 
   it('proposes none of the pairs a shared generic word made', async () => {
     const pairs = await suggestions(books, reader);
     for (const [a, b] of twoParties) expect(named(pairs, a, b), `${a} and ${b}`).toBeUndefined();
   });
 
-  it('proposes every pair that is one party, by name, and nothing else', async () => {
+  it('proposes every pair that is one party, by name, in one group each, and nothing else', async () => {
     const pairs = await suggestions(books, reader);
     for (const [a, b] of oneParty) {
-      expect(named(pairs, a, b), `${a} and ${b}`).toMatchObject({ score: '0.900', evidence: 'name' });
+      expect(keptFor(pairs, a), `${a} and ${b}`).toBeDefined();
+      expect(keptFor(pairs, a), `${a} and ${b}`).toBe(keptFor(pairs, b));
     }
-    expect(pairs).toHaveLength(oneParty.length);
+    for (const p of pairs) expect(p).toMatchObject({ score: '0.900', evidence: 'name' });
+    // Six pairs join eleven names into five groups: one row per contact absorbed.
+    expect(pairs).toHaveLength(6);
+    // Three contacts in the Savoy group, every other group of two.
+    expect(new Set(pairs.map((p) => p.keep_id)).size).toBe(5);
+  });
+
+  it('proposes the simplest name of each group', async () => {
+    const pairs = await suggestions(books, reader);
+    const proposed = (name: string) => pairs.find((p) => p.keep_id === keptFor(pairs, name))?.proposed_name;
+    expect(proposed('Anthropic, PBC')).toBe('Anthropic');
+    expect(proposed('Supabase Pte Ltd')).toBe('Supabase');
+    expect(proposed('ISABEL NV')).toBe('Isabel');
+    expect(proposed('Savoy SRL')).toBe('Au Savoy');
+    expect(proposed('Garage Annez et fils')).toBe('Garage Annez');
   });
 });
 
@@ -316,6 +355,75 @@ describe('what is never proposed', () => {
     expect(await pairOf(a, b)).toBeUndefined();
     expect(await pairsNaming(pair?.absorb_id ?? '')).toEqual([]);
     expect(await pairOf(pair?.keep_id ?? '', c)).toMatchObject({ evidence: 'name' });
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The contacts of one party, together
+// ---------------------------------------------------------------------------
+
+describe('the contacts a chain of pairs joins are proposed together', () => {
+  it('as the rows of one kept contact, each with its strongest pair and one name proposed', async () => {
+    // Outside the group, a contact carries the legal form: `srl` says nothing
+    // about which party a name is.
+    await contact('Boulangerie Pellerin SRL');
+    const legal = await contact('Savoy SRL', { vat: 'TEST-VAT-0501' });
+    const simple = await contact('Au Savoy', { vat: 'TEST-VAT-0501' });
+    const both = await contact('Au Savoy (Savoy SRL)');
+    await older(legal, 1);
+
+    const rows = await pairsNaming(legal, simple, both);
+    expect(rows.map((p) => [p.keep_id, p.absorb_id, p.evidence, p.proposed_name])).toEqual([
+      [legal, simple, 'vat_number,name', 'Au Savoy'],
+      [legal, both, 'name', 'Au Savoy'],
+    ]);
+    // Three contacts, two rows: a screen shows one line.
+    expect(rows).toHaveLength(2);
+  });
+
+  it('keeps the contact of the whole group the books name most', async () => {
+    const a = await contact('Pemberton Wax');
+    const b = await contact('Wax Pemberton');
+    const c = await contact('Pemberton Wax Ltd');
+    await newDocument(db, fx.companyId, {
+      docType: 'sale_invoice',
+      contactId: c,
+      lines: [{ unitPrice: 40, taxCode: sale.taxCode, accountCode: sale.accountCode }],
+    });
+    const rows = await pairsNaming(a, b, c);
+    expect(rows.map((p) => p.keep_id)).toEqual([c, c]);
+    expect(rows.map((p) => p.absorb_id).sort()).toEqual([a, b].sort());
+  });
+
+  it('proposes the simplest name of a pair too, and the kept one when none is simpler', async () => {
+    await contact('Harbourside Marine NV');
+    const full = await contact('ISABEL NV');
+    const short = await contact('Isabel');
+    await older(full, 1);
+    expect(await pairOf(full, short)).toMatchObject({ keep_id: full, proposed_name: 'Isabel' });
+
+    const kept = await contact('Rowan Vale');
+    const other = await contact('Vale Rowan');
+    await older(kept, 1);
+    expect(await pairOf(kept, other)).toMatchObject({ keep_id: kept, proposed_name: 'Rowan Vale' });
+  });
+
+  it('leaves out a contact joined through a third that merge_contacts() would refuse', async () => {
+    const a = await contact('Thornbury Glass', { vat: 'TEST-VAT-0601' });
+    const b = await contact('Glass Thornbury');
+    const c = await contact('Thornbury Glass Ltd', { vat: 'TEST-VAT-0602' });
+    await older(a, 1);
+    expect(await pairOf(a, b)).toMatchObject({ keep_id: a, absorb_id: b });
+    expect(await pairsNaming(c)).toEqual([]);
+  });
+
+  it('ends on a ring of pairs', async () => {
+    const names = ['Ashcombe Tiles', 'Tiles Ashcombe', 'Ashcombe Tiles Ltd', 'Ashcombe Tiles SA', 'Ashcombe Tiles BV'];
+    const ids = [];
+    for (const name of names) ids.push(await contact(name));
+    const rows = await pairsNaming(...ids);
+    expect(rows).toHaveLength(4);
+    expect(new Set(rows.map((p) => p.keep_id)).size).toBe(1);
   });
 });
 

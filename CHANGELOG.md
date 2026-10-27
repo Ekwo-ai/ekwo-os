@@ -9,6 +9,22 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Changed
+
+- **The contacts of one party are proposed together.** `suggest_duplicate_contacts()`
+  walks the contacts a chain of pairs joins into one group, with one contact to
+  keep for the whole group — the one more ledger lines and documents name, then
+  the older — and one row per other contact, so three spellings of one supplier
+  are two rows into one kept contact, not three pairs. Each row carries
+  `proposed_name`, the simplest name the group holds: the fewest words carried
+  by contacts outside the group (a legal form, a trade), then the fewest words,
+  then the shortest — "Au Savoy" before "Savoy SRL". A proposal, written by
+  nobody but a person. A contact joined only through a third and carrying
+  another VAT or registration number than the kept one is left out, as
+  `merge_contacts()` would refuse it. The columns a reader had keep their names;
+  `ekwo contact duplicates` and the MCP tool show the name proposed. Decision
+  0075, amended.
+
 ## [0.21.3] — 2026-10-27
 
 ### Fixed

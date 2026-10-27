@@ -162,7 +162,11 @@ export interface SuggestDuplicateContactsArgs {
   company_id: string;
 }
 
-/** One probable pair, as `suggest_duplicate_contacts()` answers it, with the two names. */
+/**
+ * One contact to absorb, as `suggest_duplicate_contacts()` answers it, with
+ * the two names. The rows of one group — the contacts a chain of pairs joins
+ * — share their `keep_id` and their `proposed_name`.
+ */
 export interface DuplicateContactPair {
   keep_id: string;
   keep_name: string;
@@ -172,13 +176,16 @@ export interface DuplicateContactPair {
   /** The kinds of evidence, strongest first: `vat_number`, `registration_number`, `account`, `name`. */
   evidence: string[];
   because: string;
+  /** The simplest name the group carries: a proposal for the kept contact, written by nobody but a person. */
+  proposed_name: string;
 }
 
 /**
  * The contacts of a company that are probably one party, through
- * `suggest_duplicate_contacts()` (decision 0075): one pair per row, strongest
- * first, with the contact to keep, the score and the evidence. The pairs, the
- * scores and which one to keep are the database's; this puts the two names
+ * `suggest_duplicate_contacts()` (decision 0075): one row per contact to
+ * absorb, strongest first, with the contact to keep, the score, the evidence
+ * and the name proposed for the group. The groups, the scores, which one to
+ * keep and the name proposed are the database's; this puts the two names
  * beside the ids. It writes nothing: `mergeContacts()` joins a pair once a
  * person has chosen it.
  */
@@ -198,10 +205,11 @@ export async function suggestDuplicateContacts(backend: Backend, args: SuggestDu
     score: Number(row['score']),
     evidence: String(row['evidence']).split(','),
     because: String(row['because']),
+    proposed_name: String(row['proposed_name'] ?? nameOf.get(String(row['keep_id'])) ?? ''),
   }));
   return {
     pairs,
     count: pairs.length,
-    note: 'Probable pairs, strongest first; nothing was written. The contact to keep is the one more ledger lines and documents name, then the older. Show the user both contacts and merge a pair only once they confirm it, with the contact they choose to keep.',
+    note: 'Probable pairs, strongest first; nothing was written. The rows that share a keep_id are one group: the contacts a chain of pairs joins, with the contact to keep — the one more ledger lines and documents name, then the older — and proposed_name, the simplest name the group carries. Show the user the contacts of a group and merge a pair only once they confirm it, with the contact they choose to keep; rename the kept contact to the proposed name only if they want it.',
   };
 }

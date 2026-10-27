@@ -48,6 +48,7 @@ describe('suggest_duplicate_contacts', () => {
         absorb_name: 'Ashdown Pemberton',
         score: 0.9,
         evidence: ['name'],
+        proposed_name: 'Pemberton Ashdown',
       }),
     ]);
     expect(answer['count']).toBe(1);

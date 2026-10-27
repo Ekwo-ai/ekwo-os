@@ -125,10 +125,20 @@ async function duplicates(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   if (result.pairs.length === 0) note(dim('None.'));
   else {
     table(
-      [{ title: 'keep' }, { title: 'absorb' }, { title: 'score', align: 'right' }, { title: 'evidence' }],
-      result.pairs.map((p) => [p.keep_name, p.absorb_name, String(p.score), p.evidence.join(', ')]),
+      [{ title: 'keep' }, { title: 'absorb' }, { title: 'score', align: 'right' }, { title: 'evidence' }, { title: 'name proposed' }],
+      result.pairs.map((p) => [
+        p.keep_name,
+        p.absorb_name,
+        String(p.score),
+        p.evidence.join(', '),
+        p.proposed_name === p.keep_name ? '' : p.proposed_name,
+      ]),
     );
-    note(dim('ekwo contact merge <keep> <absorb> joins a pair; --json gives the ids and the evidence in sentences.'));
+    note(
+      dim(
+        'The rows of one kept contact are one party. ekwo contact merge <keep> <absorb> joins a pair; --json gives the ids and the evidence in sentences.',
+      ),
+    );
   }
   return 0;
 }
