@@ -45,7 +45,7 @@ import {
 import { fiscalRegime, type ClearancePrinted, type FiscalRegime } from '../einvoicing/fiscalisation.js';
 import { EINVOICE_FORMATS, type EinvoiceViolation } from '../einvoicing/formats.js';
 import { readEinvoiceSource } from '../einvoicing/issue.js';
-import { BooksError, type Backend, type Row } from './backend.js';
+import { BooksError, backendSupports, type Backend, type Row } from './backend.js';
 import { onlyVisible } from './shared.js';
 
 /** Every column of `document_header`, dates and figures as the text the database holds. */
@@ -148,8 +148,9 @@ export const INVOICE_LABEL_KEYS: readonly string[] = Object.keys(ENGLISH_LABELS)
 /**
  * The words of an invoice the law of the document's country names, in the
  * document's language (`country_defaults.invoice_labels`), or nothing where
- * the pack names none in it. They go over the words of the layout, so the
- * order is the pack's word, then the layout's for the language, then English.
+ * the pack names none in it — or where the schema is older than the column.
+ * They go over the words of the layout, so the order is the pack's word, then
+ * the layout's for the language, then English.
  */
 async function readCountryLabels(
   backend: Backend,
@@ -157,6 +158,7 @@ async function readCountryLabels(
   language: unknown,
 ): Promise<Partial<InvoiceLabels>> {
   if (typeof country !== 'string' || country === '') return {};
+  if (!(await backendSupports(backend, 'invoice_labels_by_pack'))) return {};
   const rows = await backend.select<{ invoice_labels: Record<string, Partial<InvoiceLabels>> | null }>({
     table: 'country_defaults',
     columns: ['invoice_labels'],

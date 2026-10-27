@@ -119,6 +119,16 @@ export const SCHEMA_FEATURES = {
     columns: ['companies.agent_posting', 'api_keys.posting_mode'],
     functions: ['approve_document', 'agent_posting_mode', 'document_version'],
   },
+  /**
+   * The words of an invoice the law of a country names, from its pack, over
+   * the words of the layout (`20261026071500_a_pack_names_the_words_of_its_invoices`).
+   * Below it, the PDF prints the words of the layout for its language.
+   */
+  invoice_labels_by_pack: {
+    since: '0.22.0',
+    columns: ['country_defaults.invoice_labels'],
+    functions: [],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

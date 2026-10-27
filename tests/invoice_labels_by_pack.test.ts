@@ -5,7 +5,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { INVOICE_LABELS } from '@ekwo-ai/invoice-pdf';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { readPack } from '../packages/cli/src/index.js';
-import { INVOICE_LABEL_KEYS, renderDocumentPdf } from '../packages/core/src/index.js';
+import { INVOICE_LABEL_KEYS, SCHEMA_FEATURES, renderDocumentPdf } from '../packages/core/src/index.js';
 import { sale, seller, type Seller } from '../modules/einvoicing/tests/helpers.js';
 import { freshDatabase, one } from './helpers/db.js';
 import { allPacks, packWhere, packsRoot } from './helpers/packs.js';
@@ -53,6 +53,13 @@ async function pdfIn(language: string): Promise<Awaited<ReturnType<typeof render
 
 beforeAll(async () => {
   db = await freshDatabase();
+  // The core reads the column on a schema that says it has it
+  // (`SCHEMA_FEATURES.invoice_labels_by_pack`). Until the release that brings
+  // it redefines `ekwo_schema_version()`, this database says the version it
+  // will be; a schema older than that prints the layout's words, which
+  // `tests/schema_floor.test.ts` checks at the floor.
+  const since = SCHEMA_FEATURES.invoice_labels_by_pack.since;
+  await db.query(`create or replace function ekwo_schema_version() returns text language sql immutable as $$ select '${since}'::text $$`);
   s = await seller(db, pack, 'Words Of The Law', { enable: false });
 }, 300_000);
 
