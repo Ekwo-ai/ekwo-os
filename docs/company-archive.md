@@ -171,6 +171,18 @@ statement. A tool that streams a large company table by table with
 `export_company_manifest()` and `export_company_table()`, as the CLI does,
 runs them in one `repeatable read` transaction.
 
+**Or in pages, over the API.** A request has a clock, and a company of ten
+years does not fit one. `export_company_outline()` is the manifest before a
+row is read — every table with its row count, no checksum — and
+`export_company_page(company, table, after, limit)` up to `limit` rows of one
+table after a cursor: the exact text of the data file for those rows, and the
+cursor of the next page. `readCompanyArchive()` of `@ekwo-ai/core` reads every
+table page after page, computes both checksums as it writes, and asks the
+outline again at the end: each page is its own snapshot, so counts that moved
+in between are `archive_moved`, and the archive is read again. The files and
+the manifest are the ones `export_company()` writes, byte for byte — see
+[decision 0092](decisions/0092-an-archive-is-read-in-pages.md).
+
 An export is recorded: `export_company()` and the CLI write `company_exported`
 on the audit trail of the company, with who did it. It is a record and not a
 control — the export reads nothing its caller could not read table by table.

@@ -119,6 +119,17 @@ export const SCHEMA_FEATURES = {
     columns: ['companies.agent_posting', 'api_keys.posting_mode'],
     functions: ['approve_document', 'agent_posting_mode', 'document_version'],
   },
+  /**
+   * The archive of a company read in pages, each a short request
+   * (`20261029020000_an_archive_is_read_in_pages`, decision 0092). Below it,
+   * `readCompanyArchive()` is refused by name; `export_company()` reads the
+   * whole archive in one statement there, as it always did.
+   */
+  archive_in_pages: {
+    since: '0.25.0',
+    columns: [],
+    functions: ['export_company_outline', 'export_company_page'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

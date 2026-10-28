@@ -37,8 +37,10 @@ describe('supports()', () => {
 
   it('lists what a version lacks, in the order the features are declared', () => {
     expect(missingFeatures(SCHEMA_MIN)).toEqual(Object.keys(SCHEMA_FEATURES));
-    expect(missingFeatures('0.20.0')).toEqual(['documents_in_one_statement', 'agent_posting']);
-    expect(missingFeatures('0.21.0')).toEqual([]);
+    expect(missingFeatures('0.20.0')).toEqual(['documents_in_one_statement', 'agent_posting', 'archive_in_pages']);
+    expect(missingFeatures('0.21.0')).toEqual(['archive_in_pages']);
+    expect(missingFeatures('0.24.0')).toEqual(['archive_in_pages']);
+    expect(missingFeatures('0.25.0')).toEqual([]);
   });
 });
 

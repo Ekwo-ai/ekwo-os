@@ -108,6 +108,7 @@ consequence.
 - [0074](0074-two-contacts-of-one-company-are-merged.md) — Two contacts of one company are merged, and the absorbed one is retired
 - [0075](0075-the-contacts-that-are-probably-one-party-are-proposed.md) — The contacts that are probably one party are proposed
 - [0081](0081-a-company-is-archived-before-it-leaves.md) — A company is archived before it leaves, and deleted by its owner by name
+- [0092](0092-an-archive-is-read-in-pages.md) — An archive is read in pages, and is the same archive
 - [0082](0082-a-company-numbers-its-documents-its-own-way.md) — A company numbers its documents its own way, and a change continues the series
 - [0091](0091-a-document-sent-from-a-phone-is-a-draft-purchase.md) — A document sent from a phone is a draft purchase, and waits for its contact
 

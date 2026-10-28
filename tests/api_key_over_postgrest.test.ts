@@ -296,11 +296,12 @@ describe('the clock of a request that carries a key', () => {
          from pg_proc p
         where p.oid in ('export_company(uuid)'::regprocedure, 'export_company_manifest(uuid)'::regprocedure,
                         'export_company_tables(uuid)'::regprocedure, 'export_company_table(uuid, text)'::regprocedure,
-                        'import_company(jsonb, uuid)'::regprocedure)
+                        'import_company(jsonb, uuid)'::regprocedure, 'export_company_outline(uuid)'::regprocedure,
+                        'export_company_page(uuid, text, jsonb, integer)'::regprocedure)
         order by 1`,
     );
     const { archive } = await one<{ archive: string }>(db, `select archive_statement_timeout() as archive`);
-    expect(settings).toHaveLength(5);
+    expect(settings).toHaveLength(7);
     for (const setting of settings) expect(setting, setting.fn).toMatchObject({ timeout: archive });
   });
 

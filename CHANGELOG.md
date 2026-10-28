@@ -9,6 +9,34 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **An archive is read in pages** (`20261029020000`, decision 0092). A
+  company too large for the clock of one request is copied over the API as
+  many short ones: `export_company_outline(company)` answers the manifest
+  before a row is read, every table with its row count; and
+  `export_company_page(company, table, after, limit)` up to `limit` rows of one
+  table after a cursor — on the primary key, or by position for the trail —
+  with the exact text of the data file and the canonical form of the rows
+  whose form differs. `readCompanyArchive()` in `@ekwo-ai/core` reads every
+  table page after page, computes `sha256` and `values_sha256` as it writes,
+  and compares the outline before and after: books that moved in between are
+  `archive_moved`. The files and the manifest are those `export_company()`
+  writes, byte for byte, and the format of the archive does not change. The
+  two functions are the feature `archive_in_pages` of `SCHEMA_FEATURES`, since
+  0.25.0: below it the core refuses the reading by name, and the floor stays
+  at 0.19.0.
+
+### Changed
+
+- `export_company_archive()` builds its manifest through
+  `company_archive_manifest()` and asks the right, the company and the sweep
+  through `company_archive_catalog()`; `company_archive_rows_query()` reads
+  the columns and the order of a table through `company_archive_row_shape()`.
+  The same places serve the outline and the pages. `export_company()` writes
+  the same bytes, which `tests/archive_in_pages.test.ts` holds across the
+  migration.
+
 ## [0.24.0] — 2026-10-28
 
 ### Added
