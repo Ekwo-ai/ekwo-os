@@ -65,7 +65,7 @@ describe('the anonymous role', () => {
       db,
       `select p.proname
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public' and p.prokind = 'f'
+        where n.nspname = 'ekwo' and p.prokind = 'f'
           and has_function_privilege('anon', p.oid, 'execute')
         order by 1`,
     );
@@ -152,7 +152,7 @@ describe('the anonymous role', () => {
       db,
       `select p.proname
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public' and p.prokind = 'f'
+        where n.nspname = 'ekwo' and p.prokind = 'f'
           and (p.proacl is null
                or exists (select 1 from aclexplode(p.proacl) a
                            where a.grantee = 0 and a.privilege_type = 'EXECUTE'))
@@ -238,7 +238,7 @@ describe('a boolean helper a guard is written on', () => {
               array_to_string(array(select format_type(t, null)
                                       from unnest(p.proargtypes) t), ', ') as args
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.prorettype = 'boolean'::regtype
           and array_to_string(array(select format_type(t, null)
                                       from unnest(p.proargtypes) t), ', ')

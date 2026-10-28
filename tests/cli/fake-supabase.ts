@@ -92,6 +92,10 @@ export function fakeSupabase(pg: PGlite): FakeSupabase {
     const headers = (init?.headers ?? {}) as Record<string, string>;
     const schema = headers['Content-Profile'] ?? headers['Accept-Profile'] ?? 'public';
     const path = `${schema}.${url.pathname.replace('/rest/v1/', '')}`.replace(`${schema}.rpc/`, `rpc/${schema}.`);
+    // PostgREST puts the profile first on the search path of the request, so
+    // what runs under the statement — a policy's helper, a trigger — finds
+    // the schema's tables; this stand-in does the same, and puts the path back.
+    const serve = async (): Promise<Response> => {
     try {
       if (path.startsWith('rpc/')) {
         const fn = path.slice(4);
@@ -198,6 +202,15 @@ export function fakeSupabase(pg: PGlite): FakeSupabase {
       return json(405, { message: 'method not allowed' });
     } catch (error) {
       return databaseError(error);
+    }
+    };
+
+    const pathBefore = (await pg.query<{ p: string }>(`select current_setting('search_path') as p`)).rows[0]?.p ?? 'public';
+    await pg.query(`select set_config('search_path', $1, false)`, [`${schema}, public`]);
+    try {
+      return await serve();
+    } finally {
+      await pg.query(`select set_config('search_path', $1, false)`, [pathBefore]);
     }
   };
 

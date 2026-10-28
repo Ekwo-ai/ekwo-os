@@ -23,7 +23,7 @@ import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Pack } from '../packages/cli/src/index.js';
-import { freshDatabase, one, repoRoot, rows } from './helpers/db.js';
+import { freshDatabase, one, readMigration, repoRoot, rows } from './helpers/db.js';
 import { filers, furnish, type Archive, type Furnished } from './helpers/company-archive.js';
 
 const FIX = '20261007190000_an_export_fits_a_key_request.sql';
@@ -92,7 +92,7 @@ afterAll(async () => {
 describe('an export after 20261007190000', () => {
   it('writes the archive of 0.11.0 byte for byte, and reads each table once', async () => {
     const { companyId } = furnished;
-    const fix = await readFile(join(repoRoot, 'supabase', 'migrations', FIX), 'utf8');
+    const fix = await readMigration(db, FIX);
 
     await db.query('begin');
     let before: Reading;
@@ -142,7 +142,7 @@ describe('an export after 20261007190000', () => {
     // A member who may export and may not read the books: the count the
     // administrator holds, now taken once for every table, still stops it.
     const { companyId } = furnished;
-    const fix = await readFile(join(repoRoot, 'supabase', 'migrations', FIX), 'utf8');
+    const fix = await readMigration(db, FIX);
     await db.query('begin');
     try {
       await db.exec(fix);
@@ -162,7 +162,7 @@ describe('an export after 20261007190000', () => {
           },
         ),
       );
-      expect(said).toMatch(/export_incomplete: public\.\w+ holds \d+ rows for this company and you may read 0/);
+      expect(said).toMatch(/export_incomplete: ekwo\.\w+ holds \d+ rows for this company and you may read 0/);
     } finally {
       await db.query('rollback');
     }

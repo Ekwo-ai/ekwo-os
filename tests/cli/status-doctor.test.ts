@@ -197,17 +197,17 @@ describe('doctor', () => {
       expect(report.problems).toBe(0);
     } finally {
       await db.query(
-        `alter role authenticator set pgrst.db_pre_request = 'public.ekwo_pre_request'`,
+        `alter role authenticator set pgrst.db_pre_request = 'ekwo.ekwo_pre_request'`,
       );
     }
   });
 
   it('says where the socle lives, and whether the Data API serves ekwo where it can tell', async () => {
-    // Until the socle moves (decision 0090) it is found in `public`, and the
-    // exposed schemas are a setting of the project this connection cannot
-    // read: nothing to report but the line to set, which is not a warning yet.
+    // The socle is in `ekwo` (decision 0090), and the exposed schemas are a
+    // setting of the project this connection cannot read: nothing to report
+    // but the line to check, which judges nothing.
     const before = await doctor(db, migrations);
-    expect(before.checks.find((c) => c.name === 'socle_schema')?.data).toEqual({ schema: 'public' });
+    expect(before.checks.find((c) => c.name === 'socle_schema')?.data).toEqual({ schema: 'ekwo' });
     const unknown = before.checks.find((c) => c.name === 'ekwo_exposed');
     expect(unknown?.severity).toBe('ok');
     expect(unknown?.details?.[0]).toContain('Exposed schemas');
@@ -216,7 +216,7 @@ describe('doctor', () => {
     await db.query(`alter role authenticator set pgrst.db_schemas = 'public, graphql_public'`);
     try {
       const missing = (await doctor(db, migrations)).checks.find((c) => c.name === 'ekwo_exposed');
-      expect(missing?.severity).toBe('warning');
+      expect(missing?.severity).toBe('problem');
       expect(missing?.data).toEqual({ exposed: false, schemas: ['public', 'graphql_public'] });
       expect(missing?.details?.[0]).toContain('"ekwo"');
 
@@ -391,7 +391,7 @@ describe('doctor: the privileges the schema declares', () => {
     const report = await doctor(db, migrations);
     const check = report.checks.find((c) => c.name === 'grants');
     expect(check?.severity, JSON.stringify(check, null, 2)).toBe('ok');
-    expect(check?.summary).toContain('public');
+    expect(check?.summary).toContain('ekwo');
   });
 
   it('fails on a grant that is missing, and names the table and the role', async () => {
@@ -399,7 +399,7 @@ describe('doctor: the privileges the schema declares', () => {
     const report = await doctor(db, migrations);
     const check = report.checks.find((c) => c.name === 'grants');
     expect(check?.severity).toBe('problem');
-    expect(check?.details?.join('\n')).toContain('public.table documents: authenticated is missing insert');
+    expect(check?.details?.join('\n')).toContain('ekwo.table documents: authenticated is missing insert');
     expect(report.problems).toBeGreaterThan(0);
   });
 
@@ -408,7 +408,7 @@ describe('doctor: the privileges the schema declares', () => {
     const report = await doctor(db, migrations);
     const check = report.checks.find((c) => c.name === 'grants');
     expect(check?.severity).toBe('problem');
-    expect(check?.details?.join('\n')).toContain('public.table entries: anon holds an extra select');
+    expect(check?.details?.join('\n')).toContain('ekwo.table entries: anon holds an extra select');
   });
 
   it('warns about a signed-in user who gained a verb no policy accepts', async () => {
@@ -416,12 +416,12 @@ describe('doctor: the privileges the schema declares', () => {
     const report = await doctor(db, migrations);
     const check = report.checks.find((c) => c.name === 'grants');
     expect(check?.severity).toBe('warning');
-    expect(check?.details?.join('\n')).toContain('public.table currencies: authenticated holds an extra delete');
+    expect(check?.details?.join('\n')).toContain('ekwo.table currencies: authenticated holds an extra delete');
     expect(report.problems).toBe(0);
   });
 
   it('warns about a default privilege somebody put back', async () => {
-    await db.exec('alter default privileges in schema public grant select on tables to anon;');
+    await db.exec('alter default privileges in schema ekwo grant select on tables to anon;');
     const report = await doctor(db, migrations);
     const check = report.checks.find((c) => c.name === 'grants');
     expect(check?.severity).toBe('warning');

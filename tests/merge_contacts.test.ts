@@ -108,7 +108,7 @@ async function references(): Promise<{ tbl: string; col: string }[]> {
        from pg_constraint c
        join unnest(c.conkey) as k(attnum) on true
        join pg_attribute a on a.attrelid = c.conrelid and a.attnum = k.attnum
-      where c.contype = 'f' and c.confrelid = 'public.contacts'::regclass and a.attname <> 'company_id'
+      where c.contype = 'f' and c.confrelid = 'ekwo.contacts'::regclass and a.attname <> 'company_id'
       order by 1, 2`,
   );
 }

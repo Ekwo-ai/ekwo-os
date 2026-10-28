@@ -201,7 +201,7 @@ describe('the lookup', () => {
     const readers = await rows<{ proname: string }>(
       db,
       `select p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname in ('public', 'fixed_assets', 'budgets', 'tax')
+        where n.nspname in ('ekwo', 'fixed_assets', 'budgets', 'tax')
           and p.prosrc ~ 'decimal_places|\\.rounding_method' order by 1`,
     );
     expect(readers.map((r) => r.proname)).toEqual(['rounding_of']);
@@ -421,7 +421,7 @@ describe('no hard-coded rounding is left in the live schema', () => {
       db,
       `select ns.nspname as schema, p.proname as name, p.prosrc as src
          from pg_proc p join pg_namespace ns on ns.oid = p.pronamespace
-        where ns.nspname in ('public', 'fixed_assets', 'budgets', 'tax')
+        where ns.nspname in ('ekwo', 'fixed_assets', 'budgets', 'tax')
         order by 1, 2`,
     );
     const guilty = bodies
@@ -440,7 +440,7 @@ describe('no hard-coded rounding is left in the live schema', () => {
     const views = await rows<{ table_name: string; view_definition: string }>(
       db,
       `select table_name, view_definition from information_schema.views
-        where table_schema = 'public'`,
+        where table_schema = 'ekwo'`,
     );
     const guiltyViews = views
       .filter((v) => lastArgumentsOfRound(v.view_definition).some((a) => /^\d+$/.test(a)))
@@ -450,7 +450,7 @@ describe('no hard-coded rounding is left in the live schema', () => {
     const generated = await rows<{ table_name: string; column_name: string }>(
       db,
       `select table_name, column_name from information_schema.columns
-        where table_schema = 'public' and generation_expression like '%round(%'`,
+        where table_schema = 'ekwo' and generation_expression like '%round(%'`,
     );
     expect(generated).toEqual([]);
   });
@@ -459,7 +459,7 @@ describe('no hard-coded rounding is left in the live schema', () => {
     const open = await rows<{ proname: string }>(
       db,
       `select p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.proname in ('round_amount', 'rounding_of', 'currency_unit', 'amount_text_format')
           and (has_function_privilege('anon', p.oid, 'execute')
                or p.proacl is null)

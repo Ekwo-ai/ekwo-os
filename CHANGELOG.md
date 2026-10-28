@@ -9,6 +9,39 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Changed
+
+- **The socle lives in its own schema, `ekwo`.** The migration
+  `20261028040000_the_socle_moves_to_its_schema` moves every object of the
+  socle out of `public` — by the exact list of the inventory, never
+  "everything in `public`", which on a shared database holds other things —
+  with `alter … set schema`, which keeps foreign keys, indexes, policies,
+  triggers, privileges and comments. Every function of the socle and of the
+  installed modules that named `public` in its `search_path` or its body is
+  written again with `ekwo`, and the functions that carried no `search_path`
+  got one — every module function, the module's schema then the socle's; the
+  socle's plpgsql functions and the SQL helpers a policy folds in, `ekwo` —
+  so that a request served under a module's profile finds the socle in what a
+  policy or a trigger calls. Those helpers are a call per row from here on;
+  the SQL readers a report folds into one plan stay inlined. An archive
+  written before the move keeps importing: `archive_under_current_names()` reads its `public.<table>` as
+  `ekwo.<table>`. PostgREST's request hook follows its function. The
+  connection that runs the migration, and the owner's role, go on with `ekwo`
+  first on their `search_path`, so SQL written by hand keeps answering for one
+  release. **Before `ekwo migrate`, `ekwo` has to be among the schemas the
+  Data API exposes** (Project Settings → Data API → Exposed schemas; `ekwo
+  migrate` and `ekwo doctor` have printed the line since 0.21.0): a project
+  that does not serve it answers `PGRST106` to every client. A client older
+  than this release reads `public` and finds nothing there — `@latest` for the
+  command line and the MCP server. The floor of the packages stays at 0.19.0.
+  Decision 0090, accepted; 0051 superseded in part.
+- **A module's SQL is read for the socle's schema of the day.** A module's
+  migrations are published and never edited, and they name the socle
+  `public.` as it was when they were written; `ekwo migrate`, `ekwo module`
+  and the test image read them with `ekwo.` in its place once the socle is
+  there (`socleNamed()` in `@ekwo-ai/core`). A file written for `ekwo` passes
+  unchanged.
+
 ## [0.22.0] — 2026-10-27
 
 ### Changed

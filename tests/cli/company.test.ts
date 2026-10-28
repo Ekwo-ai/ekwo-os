@@ -144,7 +144,7 @@ describe('ekwo company export', () => {
       for (const lineText of lines) expect(() => JSON.parse(lineText) as unknown).not.toThrow();
     }
     // Written as the database wrote it: the trailing zeros are still there.
-    expect(await readFile(join(out, 'data', 'public.bank_transactions.jsonl'), 'utf8')).toContain('"fee": 1.50');
+    expect(await readFile(join(out, 'data', 'ekwo.bank_transactions.jsonl'), 'utf8')).toContain('"fee": 1.50');
   });
 
   it('ran as the member it names, under row level security, and left the connection as it found it', async () => {
@@ -186,7 +186,7 @@ describe('ekwo company import', () => {
     const damaged = join(cwd, 'damaged');
     const exported = await ekwo(a, ['company', 'export', companyId, '--out', damaged]);
     expect(exported.exitCode).toBe(0);
-    const file = join(damaged, 'data', 'public.contacts.jsonl');
+    const file = join(damaged, 'data', 'ekwo.contacts.jsonl');
     await writeFile(file, (await readFile(file, 'utf8')).replace(/"name": "[^"]+"/, '"name": "Somebody else"'), 'utf8');
 
     const document = await ekwo(b, ['company', 'import', damaged]);

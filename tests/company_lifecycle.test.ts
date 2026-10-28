@@ -227,7 +227,7 @@ describe('an archived company', () => {
       ),
     );
     expect(archive.archive.manifest.company.id).toBe(companyId);
-    expect((archive.archive.tables['public.entries'] ?? []).length).toBe(seen.entries);
+    expect((archive.archive.tables['ekwo.entries'] ?? []).length).toBe(seen.entries);
   });
 
   it('keeps its members and its profile', async () => {
@@ -413,7 +413,7 @@ describe('deleting a company', () => {
     );
     // The trail is the one table of a company with no foreign key to it: it
     // outlives the company, as checked below.
-    for (const table of scoped.filter((t) => !(t.table_schema === 'public' && t.table_name === 'audit_log'))) {
+    for (const table of scoped.filter((t) => !(t.table_schema === 'ekwo' && t.table_name === 'audit_log'))) {
       const row = await one<{ n: number }>(
         db,
         `select count(*)::int as n from ${table.table_schema}.${table.table_name} where company_id = $1`,

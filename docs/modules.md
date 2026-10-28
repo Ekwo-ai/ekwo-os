@@ -8,7 +8,7 @@ posted sale and every time it was sent; `crm` keeps the record of a
 relationship — cards, segments, pipelines, deals and activities — on the
 socle's own contacts; `contracts` keeps what a company agreed with a party of
 its books, and issues the invoices its schedules say are due as draft
-documents of the socle. The socle stays in `public` and knows nothing about
+documents of the socle. The socle lives in its own schema, `ekwo`, and knows nothing about
 any of them.
 
 The decision behind this, with what it rules out, is in
@@ -78,12 +78,12 @@ host brings — so its functions check what can be checked without trusting
 the caller (the document is a posted sale, the profile is the pack's, the
 checksum is the text's) and its tables only ever move forward.
 `crm` is the first module whose rows are about contacts rather than about
-the books: it owns no contact, every row names one of `public.contacts` by a
+the books: it owns no contact, every row names one of `ekwo.contacts` by a
 composite key with its company, and the socle's `merge_contacts()` moves its
 rows with every other reference when two contacts turn out to be one party.
 `contracts` has the shape of `crm` and one more reach: what it issues is a
 document of the socle — a draft sales or purchase invoice written in
-`public.documents` as a person writes one, idempotent because the socle's
+`ekwo.documents` as a person writes one, idempotent because the socle's
 unique `client_ref` refuses a second document for one period.
 
 The folder under `modules/` is named after what the module is, lower case with
@@ -93,10 +93,25 @@ either.
 ## The six rules
 
 **1. One schema, and the socle is not it.** A module creates its own schema and
-everything it owns lives there. It depends on `public` by foreign key —
+everything it owns lives there. It depends on the socle by foreign key —
 `companies`, `accounts`, `contacts`, `products`, `fiscal_years` — and the
 dependency points one way: the socle has no hook, no callback and no way for a
 module to change what posting means.
+
+A module's SQL names the socle's schema. The files published before 0.23.0
+say `public.companies`, `public.is_company_member(…)` and
+`set search_path = public, pg_temp`, the socle's address of their day, and a
+published migration is never edited; so whoever applies a module's file —
+`ekwo migrate`, `ekwo module install`, the test image — reads it for the
+socle's schema of the day (`socleNamed()` in `@ekwo-ai/core`): with the socle
+in `ekwo`, `public.` before a name becomes `ekwo.`, `'public'` becomes
+`'ekwo'` and a `search_path = public` names `ekwo`. A file written today names
+`ekwo.` directly and passes unchanged. The move itself (`20261028040000`)
+wrote the functions of the modules already installed again the same way, and
+gave every module function that carried no path one of its own — its schema
+first, then `ekwo` — so that what it calls and the triggers it fires find the
+socle whatever path the request came in with. A new module function says the
+same in its own file: `set search_path = <schema>, ekwo, pg_temp`.
 
 **2. The ledger only through `post_module_entry()`.** A module hands over a
 company, a date, a tag and a list of lines; the function builds the draft and

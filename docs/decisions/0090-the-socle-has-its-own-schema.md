@@ -1,6 +1,8 @@
 # The socle has its own schema
 
-> Status: proposed
+> Status: accepted
+>
+> The socle moved on 28 October 2026, migration `20261028040000`.
 
 ## Context
 
@@ -60,6 +62,39 @@ name `public`, and recreates the functions of the modules that do.
 move names its tables `public.<table>`; `import_company()` reads them under
 the names of the release that imports them, so the archives already kept
 remain importable.
+
+## Outcome
+
+The second release is `20261028040000_the_socle_moves_to_its_schema.sql`
+(0.23.0). It moves the objects by the inventory's list — 81 tables and the
+one sequence no table owns, 6 views, 45 types, 355 function names — with
+`alter … set schema`, then reads every function of the socle and of the
+installed modules that names `public` back from the catalogue and writes it
+again with `ekwo`: `public.<name>` becomes `ekwo.<name>` and the string
+`'public'` becomes `'ekwo'`, in a `search_path` setting as in the archive
+functions that compare a schema by name. The archive registry is moved and
+`archive_under_current_names()` reads a `public.<table>` of the socle as
+`ekwo.<table>`, so the archives written before keep importing.
+`pgrst.db_pre_request` names `ekwo.ekwo_pre_request`. The connection that ran
+the file goes on with `ekwo` first on its path, and the owner's role gets the
+same default.
+
+A module's published files still say `public.`; whoever applies one reads it
+for the socle's schema of the day (`socleNamed()`, in `@ekwo-ai/core`), so a
+fresh installation runs them after the move unchanged on disk. A module
+function that carried no path got one — its schema, then `ekwo` — because a
+request served under a module's profile has the module on its path and the
+socle no longer; the socle's own functions got the same, `ekwo` first — the plpgsql
+ones, and the SQL helpers a policy folds in, because a policy of a module
+folds `module_enabled()` into its query and that helper then looked for
+`is_company_member()` on the path of the request. The planner calls those
+helpers per row where it used to inline them; the SQL readers a report folds
+into one plan keep no path and stay inlined, and `tests/load` holds the
+planner to its indexes. The command line and the MCP
+server still put the socle first on their connection, and the owner's role
+carries it by default, for the SQL a person types. The floor of
+the packages stayed at 0.19.0: a database before the move is read exactly as
+before.
 
 ## Consequences
 

@@ -127,7 +127,9 @@ async function describe(schema, { anchor = (name) => name, heading = '##' } = {}
   return tables.length + functions.length;
 }
 
-const socle = await describe('public');
+// The socle is in `ekwo` since 20261028040000, found by its marker (decision 0090).
+const socleSchema = (await q(`select to_regprocedure('ekwo.ekwo_schema_version()') is not null as moved`))[0]?.moved ? 'ekwo' : 'public';
+const socle = await describe(socleSchema);
 
 // The modules, one section each. They are schemas of their own, and the socle
 // ignores them — so they are documented after it and never mixed into it.
@@ -138,7 +140,7 @@ if (modules.length > 0) {
   out.push('');
   out.push('# Modules\n');
   out.push(
-    'One Postgres schema each, beside the socle. A module depends on `public` by foreign key',
+    'One Postgres schema each, beside the socle. A module depends on the socle (`ekwo`) by foreign key',
     'and reaches the ledger only through `post_module_entry()`. It is enabled per company, and',
     'PostgREST serves its schema only once the project exposes it.\n',
   );

@@ -3,7 +3,7 @@
  *
  * What the module decides — a card's fields, a merge, who may write — is
  * `modules/crm/tests`. What is asked here is that a model reaches it whole:
- * the toolset is offered only where `public.modules` carries the module, each
+ * the toolset is offered only where `ekwo.modules` carries the module, each
  * tool calls its function and hands back what the function returned, and a
  * refusal of the schema reaches the model under its own name. The currency is
  * the company's, read and never named.
@@ -109,7 +109,7 @@ afterAll(async () => {
 });
 
 describe('the crm toolset', () => {
-  it('is offered where public.modules carries crm, under its prefix, and not otherwise', async () => {
+  it('is offered where ekwo.modules carries crm, under its prefix, and not otherwise', async () => {
     expect(await installedModules(backend)).toContain('crm');
     const names = (await client.listTools()).tools.map((tool) => tool.name);
     expect(names.filter((name) => name.startsWith('crm_')).length).toBe(11);

@@ -2,7 +2,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { asUser, expectError, freshDatabase, one, repoRoot, rows } from './helpers/db.js';
+import { asUser, expectError, freshDatabase, one, readMigration, repoRoot, rows } from './helpers/db.js';
 import { newCompany } from './helpers/factory.js';
 import { allPacks, declarationPeriods, packWhere } from './helpers/packs.js';
 
@@ -366,7 +366,7 @@ describe('no country is written into this change', () => {
       '20260916094500_a_company_files_more_than_one_declaration.sql',
       '20260916103000_a_ledger_line_names_its_posting.sql',
     ]) {
-      const sql = await readFile(join(repoRoot, 'supabase', 'migrations', file), 'utf8');
+      const sql = await readMigration(db, file);
       const offending = sql
         .split('\n')
         .filter((l) => !l.trimStart().startsWith('--'))

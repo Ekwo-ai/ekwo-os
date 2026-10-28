@@ -223,6 +223,7 @@ export async function applyModuleMigrations(
   const result = await applyMigrations(db, migrations, (migration) => {
     step(`${migration.name} (${migration.file})`);
   });
+  await moduleFunctionsFollowTheSocle(db);
 
   // A migration may rename a module's schema — `assets` became `fixed_assets`
   // — and the API still serves the old name until somebody changes a setting
@@ -245,6 +246,21 @@ export async function applyModuleMigrations(
   }
 
   return result.applied.length;
+}
+
+/**
+ * Every module function that carries no `search_path` gets one — its schema,
+ * then the socle's — once the socle is in `ekwo` (decision 0090). A module's
+ * published files were written for a socle on every default path; the
+ * function the move created does the same for the modules installed after
+ * it, and nothing on a database before the move.
+ */
+export async function moduleFunctionsFollowTheSocle(db: SqlClient): Promise<void> {
+  const present = await db.query<{ there: boolean }>(
+    `select to_regprocedure('ekwo.module_functions_follow_the_socle(text)') is not null as there`,
+  );
+  if (present[0]?.there !== true) return;
+  await db.query(`select ekwo.module_functions_follow_the_socle(m.schema_name) from ekwo.modules m`);
 }
 
 // ------------------------------------------------------------ enable/disable

@@ -15,6 +15,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "noEmit": true,
+    "allowImportingTsExtensions": true,
     "paths": {
       "@ekwo-ai/core": ["./packages/core/src/index.ts"],
       "@ekwo-ai/fec": ["./packages/formats/fec/src/index.ts"],

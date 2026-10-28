@@ -81,7 +81,7 @@ let viewerId: string;
 let mine: Books;
 let theirs: Books;
 
-const SCHEMAS = ['public', 'fixed_assets', 'budgets', 'tax'];
+const SCHEMAS = ['ekwo', 'fixed_assets', 'budgets', 'tax'];
 
 async function asClient<T>(fn: () => Promise<T>): Promise<T> {
   return asUser(db, clientId, fn);
@@ -678,22 +678,22 @@ describe('a client writes nothing else — by the table', () => {
     expect(tables.length).toBeGreaterThan(25);
     const names = tables.map((t) => t.name);
     for (const must of [
-      'public.documents',
-      'public.document_lines',
-      'public.entries',
-      'public.entry_lines',
-      'public.payments',
-      'public.reconciliations',
-      'public.bank_transactions',
-      'public.tax_filings',
-      'public.tax_filing_boxes',
-      'public.accounts',
-      'public.journals',
-      'public.taxes',
-      'public.fiscal_years',
-      'public.companies',
-      'public.company_members',
-      'public.attachments',
+      'ekwo.documents',
+      'ekwo.document_lines',
+      'ekwo.entries',
+      'ekwo.entry_lines',
+      'ekwo.payments',
+      'ekwo.reconciliations',
+      'ekwo.bank_transactions',
+      'ekwo.tax_filings',
+      'ekwo.tax_filing_boxes',
+      'ekwo.accounts',
+      'ekwo.journals',
+      'ekwo.taxes',
+      'ekwo.fiscal_years',
+      'ekwo.companies',
+      'ekwo.company_members',
+      'ekwo.attachments',
     ]) {
       expect(names, must).toContain(must);
     }
@@ -851,14 +851,14 @@ describe('a client writes nothing else — by the function', () => {
    * function in neither list fails the test, which is the point of it.
    */
   const THEIRS_TO_CALL: Record<string, string> = {
-    'public.accept_invitation': 'how they became a member in the first place',
-    'public.set_preferences': 'their own language and display, keyed on their own user id',
-    'public.use_api_key': 'presents a secret; holds nothing without one',
-    'public.shared_document': 'what anybody holding a link may read',
-    'public.export_company': 'leaves with the books of their own company: reads, and says so on the trail',
-    'public.note_company_export': 'the line on the trail, which company.export is what allows',
-    'public.analytic_refresh_document_line': 'writes again, under row level security, the amounts the database derives from a split; no figure a person keyed',
-    'public.analytic_refresh_entry_line': 'writes again, under row level security, the amounts the database derives from a split; no figure a person keyed',
+    'ekwo.accept_invitation': 'how they became a member in the first place',
+    'ekwo.set_preferences': 'their own language and display, keyed on their own user id',
+    'ekwo.use_api_key': 'presents a secret; holds nothing without one',
+    'ekwo.shared_document': 'what anybody holding a link may read',
+    'ekwo.export_company': 'leaves with the books of their own company: reads, and says so on the trail',
+    'ekwo.note_company_export': 'the line on the trail, which company.export is what allows',
+    'ekwo.analytic_refresh_document_line': 'writes again, under row level security, the amounts the database derives from a split; no figure a person keyed',
+    'ekwo.analytic_refresh_entry_line': 'writes again, under row level security, the amounts the database derives from a split; no figure a person keyed',
   };
 
   let refused: Record<string, { sql: string; params: unknown[] }>;
@@ -870,257 +870,257 @@ describe('a client writes nothing else — by the function', () => {
       { account_code: second, debit: '0', credit: '10' },
     ]);
     refused = {
-      'public.post_document': { sql: `select post_document($1)`, params: [mine.draftDocumentId] },
+      'ekwo.post_document': { sql: `select post_document($1)`, params: [mine.draftDocumentId] },
       // Approving a draft for an agent to post is documents.post, asked here.
-      'public.approve_document': { sql: `select approve_document($1)`, params: [mine.draftDocumentId] },
+      'ekwo.approve_document': { sql: `select approve_document($1)`, params: [mine.draftDocumentId] },
       // Security invoker: the lines and the header are written under row level
       // security, which refuses a client the insert.
-      'public.replace_document_lines': {
+      'ekwo.replace_document_lines': {
         sql: `select replace_document_lines($1, '[{"name": "x", "unit_price": "1"}]'::jsonb)`,
         params: [mine.draftDocumentId],
       },
-      'public.create_document': {
+      'ekwo.create_document': {
         sql: `select create_document(jsonb_build_object('company_id', $1::uuid, 'doc_type', 'sale_invoice', 'document_date', '2026-01-01'), '[]'::jsonb)`,
         params: [mine.companyId],
       },
       // Presenting a key is a door and not a privilege: a client who does not
       // hold one is told the secret is not a key of this installation, in the
       // same words anybody else is told.
-      'public.present_api_key': { sql: `select present_api_key('not-a-key-of-this-installation')`, params: [] },
+      'ekwo.present_api_key': { sql: `select present_api_key('not-a-key-of-this-installation')`, params: [] },
       // A rehearsal is the real call inside a block that is rolled back, so it
       // is refused where posting is — before there is anything to roll back.
-      'public.rehearse_post_document': { sql: `select rehearse_post_document($1)`, params: [mine.draftDocumentId] },
-      'public.post_entry': { sql: `select post_entry($1)`, params: [mine.draftEntryId] },
-      'public.cancel_document': { sql: `select cancel_document($1)`, params: [mine.postedDocumentId] },
+      'ekwo.rehearse_post_document': { sql: `select rehearse_post_document($1)`, params: [mine.draftDocumentId] },
+      'ekwo.post_entry': { sql: `select post_entry($1)`, params: [mine.draftEntryId] },
+      'ekwo.cancel_document': { sql: `select cancel_document($1)`, params: [mine.postedDocumentId] },
       // Definer: it asks documents.post itself, before it reads anything.
-      'public.unpost_document': { sql: `select unpost_document($1)`, params: [mine.postedDocumentId] },
-      'public.reverse_entry': {
+      'ekwo.unpost_document': { sql: `select unpost_document($1)`, params: [mine.postedDocumentId] },
+      'ekwo.reverse_entry': {
         sql: `select reverse_entry((select entry_id from entry_lines where id = $1))`,
         params: [mine.receivableLineId],
       },
-      'public.match_reversal': {
+      'ekwo.match_reversal': {
         sql: `select match_reversal(l.entry_id, l.entry_id) from (select (select entry_id from entry_lines where id = $1) as entry_id) l`,
         params: [mine.receivableLineId],
       },
-      'public.post_payment': { sql: `select post_payment($1)`, params: [mine.draftPaymentId] },
+      'ekwo.post_payment': { sql: `select post_payment($1)`, params: [mine.draftPaymentId] },
       // The lifecycle of a company is its owner's: a client neither closes the
       // books nor deletes them, even with the name typed right (decision 0081).
-      'public.archive_company': { sql: `select archive_company($1)`, params: [mine.companyId] },
-      'public.unarchive_company': { sql: `select unarchive_company($1)`, params: [mine.companyId] },
-      'public.delete_company': {
+      'ekwo.archive_company': { sql: `select archive_company($1)`, params: [mine.companyId] },
+      'ekwo.unarchive_company': { sql: `select unarchive_company($1)`, params: [mine.companyId] },
+      'ekwo.delete_company': {
         sql: `select delete_company($1, (select name from companies where id = $1))`,
         params: [mine.companyId],
       },
-      'public.post_module_entry': {
+      'ekwo.post_module_entry': {
         sql: `select post_module_entry($1, 'assets', 'client:1', $2::date, 'by the client', $3::jsonb, null)`,
         params: [mine.companyId, FROM, lines],
       },
-      'public.reconcile': {
+      'ekwo.reconcile': {
         sql: `select reconcile($1, $2, 100)`,
         params: [mine.receivableLineId, mine.openPaymentLineId],
       },
-      'public.unreconcile': { sql: `select unreconcile($1)`, params: [mine.reconciliationId] },
-      'public.settle_from_statement': {
+      'ekwo.unreconcile': { sql: `select unreconcile($1)`, params: [mine.reconciliationId] },
+      'ekwo.settle_from_statement': {
         sql: `select settle_from_statement($1, array[$2]::uuid[])`,
         params: [mine.bankTransactionId, mine.receivableLineId],
       },
-      'public.confirm_contact': {
+      'ekwo.confirm_contact': {
         sql: `select confirm_contact($1, $2)`,
         params: [mine.bankTransactionId, mine.contactId],
       },
       // Merging two contacts is contacts.write and reconcile.write, asked as
       // soon as the kept contact is read (decision 0074).
-      'public.merge_contacts': {
+      'ekwo.merge_contacts': {
         sql: `select merge_contacts($1, $1)`,
         params: [mine.contactId],
       },
       // Naming a line is reconcile.write, asked before the line is read further.
-      'public.set_line_contact': {
+      'ekwo.set_line_contact': {
         sql: `select set_line_contact($1, $2)`,
         params: [mine.receivableLineId, mine.contactId],
       },
       // Several lines in one gesture, with or without a difference: reconcile.write,
       // asked before the set is checked further (decision 0071).
-      'public.reconcile_many': {
+      'ekwo.reconcile_many': {
         sql: `select * from reconcile_many(array[$1, $2]::uuid[])`,
         params: [mine.receivableLineId, mine.openPaymentLineId],
       },
-      'public.reconcile_with_difference': {
+      'ekwo.reconcile_with_difference': {
         sql: `select * from reconcile_with_difference(array[$1, $2]::uuid[], 'rounding')`,
         params: [mine.receivableLineId, mine.openPaymentLineId],
       },
-      'public.match_lines': {
+      'ekwo.match_lines': {
         sql: `select * from match_lines(array[$1, $2]::uuid[], null)`,
         params: [mine.receivableLineId, mine.openPaymentLineId],
       },
       // Leaving a line unnamed, and the undo: reconcile.write (decision 0072).
-      'public.leave_line_unnamed': {
+      'ekwo.leave_line_unnamed': {
         sql: `select leave_line_unnamed($1, 'by the client')`,
         params: [mine.receivableLineId],
       },
-      'public.undo_leave_line_unnamed': {
+      'ekwo.undo_leave_line_unnamed': {
         sql: `select undo_leave_line_unnamed($1)`,
         params: [mine.receivableLineId],
       },
       // Sure pairs matched in one gesture, and the gesture undone:
       // reconcile.write (decision 0073).
-      'public.reconcile_batch': {
+      'ekwo.reconcile_batch': {
         sql: `select reconcile_batch(jsonb_build_array(jsonb_build_array($1::text, $2::text)))`,
         params: [mine.receivableLineId, mine.openPaymentLineId],
       },
-      'public.unreconcile_batch': {
+      'ekwo.unreconcile_batch': {
         sql: `select unreconcile_batch(gen_random_uuid())`,
         params: [],
       },
       // What a decision teaches is contacts.write, which the policy of
       // contact_patterns asks of the motif it would write.
-      'public.learn_contact_patterns': {
+      'ekwo.learn_contact_patterns': {
         sql: `select learn_contact_patterns($1, $2, 'the line', 'Learned by the client', null, null, null, null, null)`,
         params: [mine.companyId, mine.contactId],
       },
-      'public.settle_cash_basis_tax': {
+      'ekwo.settle_cash_basis_tax': {
         sql: `select settle_cash_basis_tax($1, $2::date)`,
         params: [mine.postedDocumentId, TO],
       },
-      'public.prepare_filing': {
+      'ekwo.prepare_filing': {
         sql: `select prepare_filing($1, ($2::date + interval '2 years')::date, ($3::date + interval '2 years')::date)`,
         params: [mine.companyId, FROM, TO],
       },
-      'public.file_filing': { sql: `select file_filing($1, 'BY-THE-CLIENT')`, params: [mine.draftFilingId] },
-      'public.record_filing_outcome': {
+      'ekwo.file_filing': { sql: `select file_filing($1, 'BY-THE-CLIENT')`, params: [mine.draftFilingId] },
+      'ekwo.record_filing_outcome': {
         sql: `select record_filing_outcome($1, 'accepted', null, null)`,
         params: [mine.filedFilingId],
       },
-      'public.settle_filing': { sql: `select settle_filing($1)`, params: [mine.filedFilingId] },
+      'ekwo.settle_filing': { sql: `select settle_filing($1)`, params: [mine.filedFilingId] },
       // Naming the files of a send, and finding the administration a
       // settlement names: filings.write, as the acts they belong to.
-      'public.record_filing_files': {
+      'ekwo.record_filing_files': {
         sql: `select record_filing_files($1, gen_random_uuid())`,
         params: [mine.filedFilingId],
       },
-      'public.tax_payee': { sql: `select tax_payee($1)`, params: [mine.companyId] },
+      'ekwo.tax_payee': { sql: `select tax_payee($1)`, params: [mine.companyId] },
       // Posting the tax on turnover of a period writes an entry and prepares a
       // filing: filings.write, and posting.
-      'public.post_turnover_tax': {
+      'ekwo.post_turnover_tax': {
         sql: `select post_turnover_tax($1, $2::date, $3::date)`,
         params: [mine.companyId, FROM, TO],
       },
-      'public.supersede_filing': { sql: `select supersede_filing($1)`, params: [mine.filedFilingId] },
-      'public.reopen_filing': { sql: `select reopen_filing($1)`, params: [mine.rejectedFilingId] },
-      'public.lock_filed_period': { sql: `select lock_filed_period($1)`, params: [mine.filedFilingId] },
-      'public.auto_settle': {
+      'ekwo.supersede_filing': { sql: `select supersede_filing($1)`, params: [mine.filedFilingId] },
+      'ekwo.reopen_filing': { sql: `select reopen_filing($1)`, params: [mine.rejectedFilingId] },
+      'ekwo.lock_filed_period': { sql: `select lock_filed_period($1)`, params: [mine.filedFilingId] },
+      'ekwo.auto_settle': {
         sql: `select auto_settle($1, $2::date, $3::date, true)`,
         params: [mine.companyId, FROM, TO],
       },
       // Refused on the person before the file is looked at, so what the file
       // holds does not matter here; `bank_statement_import.test.ts` has the
       // same refusal with a statement that would otherwise import.
-      'public.import_bank_statement': {
+      'ekwo.import_bank_statement': {
         sql: `select import_bank_statement($1, '{"statements": []}'::jsonb)`,
         params: [mine.companyId],
       },
       // Refused on the person, by name, before the books are read.
-      'public.import_books': {
+      'ekwo.import_books': {
         sql: `select import_books($1, jsonb_build_object('source', 'fec', 'checksum', 'sha256:' || repeat('0', 64), 'entries', '[]'::jsonb))`,
         params: [mine.companyId],
       },
       // Invoker: the year it would open is refused by the policy of fiscal_years.
-      'public.import_fiscal_year_for': {
+      'ekwo.import_fiscal_year_for': {
         sql: `select import_fiscal_year_for($1, ($2::date - interval '20 years')::date)`,
         params: [mine.companyId, FROM],
       },
-      'public.close_fiscal_year': { sql: `select close_fiscal_year($1)`, params: [mine.fiscalYearId] },
-      'public.reopen_fiscal_year': { sql: `select reopen_fiscal_year($1)`, params: [mine.fiscalYearId] },
-      'public.close_fiscal_year_finally': {
+      'ekwo.close_fiscal_year': { sql: `select close_fiscal_year($1)`, params: [mine.fiscalYearId] },
+      'ekwo.reopen_fiscal_year': { sql: `select reopen_fiscal_year($1)`, params: [mine.fiscalYearId] },
+      'ekwo.close_fiscal_year_finally': {
         sql: `select close_fiscal_year_finally($1)`,
         params: [mine.fiscalYearId],
       },
-      'public.opening_balance': {
+      'ekwo.opening_balance': {
         sql: `select opening_balance($1, $2, $3::jsonb, true)`,
         params: [mine.companyId, mine.fiscalYearId, lines],
       },
-      'public.next_entry_number': {
+      'ekwo.next_entry_number': {
         sql: `select next_entry_number($1, $2::date)`,
         params: [mine.bankJournalId, FROM],
       },
-      'public.next_matching_number': { sql: `select next_matching_number($1)`, params: [mine.companyId] },
-      'public.catch_up_journal_sequence': {
+      'ekwo.next_matching_number': { sql: `select next_matching_number($1)`, params: [mine.companyId] },
+      'ekwo.catch_up_journal_sequence': {
         sql: `select catch_up_journal_sequence($1, $2::date, '9999')`,
         params: [mine.bankJournalId, FROM],
       },
-      'public.invite_member': {
+      'ekwo.invite_member': {
         sql: `select * from invite_member($1, 'accomplice@example.test', 'owner')`,
         params: [mine.companyId],
       },
-      'public.revoke_invitation': { sql: `select revoke_invitation($1)`, params: [mine.invitationId] },
+      'ekwo.revoke_invitation': { sql: `select revoke_invitation($1)`, params: [mine.invitationId] },
       // Leaving is theirs to do; taking the firm's accountant out is not.
-      'public.remove_member': { sql: `select remove_member($1, $2)`, params: [mine.companyId, accountantId] },
-      'public.set_member_role': {
+      'ekwo.remove_member': { sql: `select remove_member($1, $2)`, params: [mine.companyId, accountantId] },
+      'ekwo.set_member_role': {
         sql: `select set_member_role($1, $2, 'owner')`,
         params: [mine.companyId, clientId],
       },
-      'public.create_api_key': {
+      'ekwo.create_api_key': {
         sql: `select * from create_api_key($1, 'A key of their own', '["entries.write"]'::jsonb)`,
         params: [mine.companyId],
       },
-      'public.revoke_api_key': { sql: `select revoke_api_key($1)`, params: [mine.apiKeyId] },
-      'public.share_document': { sql: `select * from share_document($1)`, params: [mine.postedDocumentId] },
-      'public.revoke_share': { sql: `select revoke_share($1)`, params: [mine.shareId] },
+      'ekwo.revoke_api_key': { sql: `select revoke_api_key($1)`, params: [mine.apiKeyId] },
+      'ekwo.share_document': { sql: `select * from share_document($1)`, params: [mine.postedDocumentId] },
+      'ekwo.revoke_share': { sql: `select revoke_share($1)`, params: [mine.shareId] },
       // Publishing a hash in the company's name is filings.prove, which the
       // client preset does not hold.
-      'public.record_filing_proof': {
+      'ekwo.record_filing_proof': {
         sql: `select record_filing_proof('fiscal_year', $1, repeat('a', 64), 'opentimestamps', 'AA==')`,
         params: [mine.fiscalYearId],
       },
-      'public.upgrade_filing_proof': {
+      'ekwo.upgrade_filing_proof': {
         sql: `select upgrade_filing_proof(gen_random_uuid(), 'AA==')`,
         params: [],
       },
-      'public.enable_module': { sql: `select enable_module($1, 'budgets')`, params: [mine.companyId] },
-      'public.disable_module': { sql: `select disable_module($1, 'budgets')`, params: [mine.companyId] },
-      'public.pack_upgrade': {
+      'ekwo.enable_module': { sql: `select enable_module($1, 'budgets')`, params: [mine.companyId] },
+      'ekwo.disable_module': { sql: `select disable_module($1, 'budgets')`, params: [mine.companyId] },
+      'ekwo.pack_upgrade': {
         sql: `select * from pack_upgrade($1, (select country from companies where id = $1), true)`,
         params: [mine.companyId],
       },
-      'public.install_country_template': {
+      'ekwo.install_country_template': {
         sql: `select install_country_template($1, (select country from companies where id = $1), null, null)`,
         params: [mine.companyId],
       },
-      'public.pin_referenced_accounts': {
+      'ekwo.pin_referenced_accounts': {
         sql: `select pin_referenced_accounts($1)`,
         params: [mine.companyId],
       },
-      'public.create_company': {
+      'ekwo.create_company': {
         sql: `select create_company('A company of their own', (select country from companies where id = $1))`,
         params: [mine.companyId],
       },
-      'public.import_company': {
+      'ekwo.import_company': {
         sql: `select import_company(jsonb_build_object('manifest', jsonb_build_object('format', 'ekwo.company-archive')))`,
         params: [],
       },
-      'public.claim_instance_admin': { sql: `select claim_instance_admin($1)`, params: [clientId] },
-      'public.init_instance': {
+      'ekwo.claim_instance_admin': { sql: `select claim_instance_admin($1)`, params: [clientId] },
+      'ekwo.init_instance': {
         sql: `select init_instance('Theirs now', (select country from companies where id = $1))`,
         params: [mine.companyId],
       },
-      'public.register_instance': { sql: `select register_instance('client@example.test')`, params: [] },
-      'public.unregister_instance': { sql: `select unregister_instance()`, params: [] },
+      'ekwo.register_instance': { sql: `select register_instance('client@example.test')`, params: [] },
+      'ekwo.unregister_instance': { sql: `select unregister_instance()`, params: [] },
       // Sharing the installation is the installer's or an administrator's (0065).
-      'public.share_instance': { sql: `select share_instance(1)`, params: [] },
-      'public.unshare_instance': { sql: `select unshare_instance()`, params: [] },
-      'public.documents_refresh_totals': {
+      'ekwo.share_instance': { sql: `select share_instance(1)`, params: [] },
+      'ekwo.unshare_instance': { sql: `select unshare_instance()`, params: [] },
+      'ekwo.documents_refresh_totals': {
         sql: `select documents_refresh_totals($1)`,
         params: [mine.draftDocumentId],
       },
-      'public.documents_refresh_amount_paid': {
+      'ekwo.documents_refresh_amount_paid': {
         sql: `select documents_refresh_amount_paid($1)`,
         params: [mine.postedDocumentId],
       },
-      'public.documents_allocate_included_tax': {
+      'ekwo.documents_allocate_included_tax': {
         sql: `select documents_allocate_included_tax($1)`,
         params: [mine.draftDocumentId],
       },
-      'public.ekwo_pre_request': { sql: `select ekwo_pre_request()`, params: [] },
+      'ekwo.ekwo_pre_request': { sql: `select ekwo_pre_request()`, params: [] },
       'fixed_assets.create_fixed_asset': {
         sql: `select fixed_assets.create_fixed_asset($1, 'CLI', 'A van', $2::date, 1000, $3, $4, $5, null, 36)`,
         params: [mine.companyId, FROM, ...mine.accountCodes],
@@ -1186,20 +1186,20 @@ describe('a client writes nothing else — by the function', () => {
    * books did not move.
    */
   const QUIET = [
-    'fixed_assets.run_depreciation',
-    'public.auto_settle',
-    'public.confirm_contact',
-    'public.documents_allocate_included_tax',
-    'public.documents_refresh_amount_paid',
-    'public.documents_refresh_totals',
+    'ekwo.auto_settle',
+    'ekwo.confirm_contact',
+    'ekwo.documents_allocate_included_tax',
+    'ekwo.documents_refresh_amount_paid',
+    'ekwo.documents_refresh_totals',
     // PostgREST calls it at the start of every request. With no header on the
     // request — which is every request a person makes — it returns having done
     // nothing, and that is the whole of what it does here.
-    'public.ekwo_pre_request',
-    'public.pin_referenced_accounts',
-    'public.reopen_filing',
-    'public.settle_cash_basis_tax',
-    'public.unreconcile',
+    'ekwo.ekwo_pre_request',
+    'ekwo.pin_referenced_accounts',
+    'ekwo.reopen_filing',
+    'ekwo.settle_cash_basis_tax',
+    'ekwo.unreconcile',
+    'fixed_assets.run_depreciation',
   ];
 
   it('is refused by each of them, or changes nothing, and the books are what they were', async () => {

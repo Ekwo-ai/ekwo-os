@@ -1,6 +1,6 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { expectError, freshDatabase, one, openDatabase, rows } from './helpers/db.js';
+import { expectError, followSocle, freshDatabase, one, openDatabase, rows } from './helpers/db.js';
 
 /**
  * A session nobody prepared.
@@ -25,6 +25,7 @@ let db: PGlite;
 beforeAll(async () => {
   prepared = await freshDatabase();
   db = await openDatabase({ loadDataDir: await prepared.dumpDataDir('none') });
+  await followSocle(db);
 });
 
 afterAll(async () => {
@@ -86,7 +87,7 @@ describe('a session where nothing was ever set', () => {
       `select p.proname as name
          from pg_proc p
          join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.prorettype = 'boolean'::regtype
           and p.pronargs = 0
           and p.prokind = 'f'

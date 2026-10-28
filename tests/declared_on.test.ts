@@ -27,7 +27,7 @@ import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Pack, PackGolden } from '../packages/cli/src/index.js';
 import { exportAs, importAs, reseal, type Archive } from './helpers/company-archive.js';
-import { expectError, freshDatabase, one, repoRoot, rows } from './helpers/db.js';
+import { expectError, freshDatabase, one, readMigration, replayMigration, repoRoot, rows } from './helpers/db.js';
 import { newCompany, newInstanceAdmin, newUser } from './helpers/factory.js';
 import { replayScenario } from './helpers/golden-scenario.js';
 import { allPacks, packWhere } from './helpers/packs.js';
@@ -142,7 +142,7 @@ describe('an installation upgraded with books already in it', () => {
     ).h;
 
     for (const file of [...MIGRATIONS, ...LATER]) {
-      await db.exec(await readFile(join(repoRoot, 'supabase', 'migrations', file), 'utf8'));
+      await replayMigration(db, file);
     }
   }, 1_200_000);
 
@@ -183,7 +183,7 @@ describe('an installation upgraded with books already in it', () => {
     const column = await one<{ required: boolean }>(
       db,
       `select attnotnull as required from pg_attribute
-        where attrelid = 'public.entry_lines'::regclass and attname = 'declared_on'`,
+        where attrelid = 'ekwo.entry_lines'::regclass and attname = 'declared_on'`,
     );
     expect(column.required).toBe(true);
   });
@@ -199,12 +199,12 @@ describe('an installation upgraded with books already in it', () => {
 
   it('lifts the posted-line guard by its name, in the file of the backfill alone', async () => {
     for (const file of MIGRATIONS) {
-      const sql = await readFile(join(repoRoot, 'supabase', 'migrations', file), 'utf8');
+      const sql = await readMigration(db, file);
       const lifted = /disable trigger entry_lines_guard_posted;/.test(sql);
       expect(lifted, file).toBe(file === MIGRATIONS[1]);
     }
     // Lifted by name, and only by name: no blanket switch in the backfill.
-    const backfill = await readFile(join(repoRoot, 'supabase', 'migrations', MIGRATIONS[1] as string), 'utf8');
+    const backfill = await readMigration(db, MIGRATIONS[1] as string);
     expect(backfill).not.toMatch(/disable trigger (all|user)\b/);
   });
 });
@@ -356,7 +356,7 @@ describe('the day a line counts, as the engine writes it', () => {
       db,
       `select p.proname as name, p.prosrc as body from pg_proc p
          join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public' and p.prosrc ~* 'declared_lines\\(|tax_point_date'`,
+        where n.nspname = 'ekwo' and p.prosrc ~* 'declared_lines\\(|tax_point_date'`,
     );
     const readers = bodies.filter((b) => b.body.includes('declared_lines(')).map((b) => b.name).sort();
     expect(readers).toEqual(['filing_tax_movements', 'filings_touched_since', 'vat_return']);
@@ -400,9 +400,9 @@ describe('the day a line counts, in the company archive', () => {
     await b?.close();
   });
 
-  const entryLines = (archive: Archive): Record<string, unknown>[] => archive.tables['public.entry_lines'] ?? [];
+  const entryLines = (archive: Archive): Record<string, unknown>[] => archive.tables['ekwo.entry_lines'] ?? [];
   const checksum = (archive: Archive): string | undefined =>
-    archive.manifest.tables.find((t) => t.name === 'public.entry_lines')?.values_sha256;
+    archive.manifest.tables.find((t) => t.name === 'ekwo.entry_lines')?.values_sha256;
 
   it('carries declared_on on every ledger line', () => {
     const lines = entryLines(JSON.parse(text) as Archive);
@@ -436,7 +436,7 @@ describe('the day a line counts, in the company archive', () => {
     const back = JSON.parse(await exportAs(b, ownerInB, companyId)) as Archive;
     expect(checksum(back)).toBe(original);
     const resealed = JSON.parse(text) as Archive;
-    await reseal(b, resealed, 'public.entry_lines');
+    await reseal(b, resealed, 'ekwo.entry_lines');
     expect(checksum(resealed)).toBe(original);
   });
 });

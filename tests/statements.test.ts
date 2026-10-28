@@ -113,7 +113,7 @@ describe('the statements the packs carry', () => {
     const columns = await rows<{ table_name: string }>(
       db,
       `select table_name from information_schema.columns
-        where table_schema = 'public' and column_name = 'company_id'
+        where table_schema = 'ekwo' and column_name = 'company_id'
           and table_name in ('statement_templates', 'statement_line_templates', 'statement_line_rules')`,
     );
     expect(columns).toEqual([]);
@@ -692,7 +692,7 @@ describe('one evaluator, called by both reports', () => {
       db,
       `select p.proname
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.prosrc like '%evaluate_totals(%'
         order by 1`,
     );
@@ -708,7 +708,7 @@ describe('one evaluator, called by both reports', () => {
       db,
       `select p.proname
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.proname in ('vat_return', 'financial_statement', 'statement_figures')
           and (p.prosrc like '%foreach%plus_boxes%' or p.prosrc like '%foreach%plus_lines%')`,
     );
@@ -788,7 +788,7 @@ describe('one evaluator, called by both reports', () => {
     const open = await rows(
       db,
       `select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public' and p.proname = 'evaluate_totals'
+        where n.nspname = 'ekwo' and p.proname = 'evaluate_totals'
           and (p.proacl is null
                or has_function_privilege('anon', p.oid, 'EXECUTE'))`,
     );

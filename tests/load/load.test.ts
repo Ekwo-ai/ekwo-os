@@ -133,7 +133,7 @@ async function tableCounts(pg: PGlite): Promise<Map<string, number>> {
   const tables = await rows<{ name: string }>(
     pg,
     `select c.relname as name from pg_class c join pg_namespace n on n.oid = c.relnamespace
-      where n.nspname = 'public' and c.relkind = 'r' order by 1`,
+      where n.nspname = 'ekwo' and c.relkind = 'r' order by 1`,
   );
   const counts = new Map<string, number>();
   for (const { name } of tables) {
@@ -355,7 +355,7 @@ describe(`${DOCUMENTS} documents in each of ${COMPANIES} companies — packs/${p
     const analysed = await rows<{ tablename: string }>(
       pg,
       `select distinct tablename::text from pg_stats
-        where schemaname = 'public' and tablename = any ($1::text[])`,
+        where schemaname = 'ekwo' and tablename = any ($1::text[])`,
       [LARGE_TABLES],
     );
     const populated: string[] = [];
@@ -366,7 +366,7 @@ describe(`${DOCUMENTS} documents in each of ${COMPANIES} companies — packs/${p
     const estimate = await one<{ reltuples: number; n: number }>(
       pg,
       `select c.reltuples::float8 as reltuples, (select count(*)::int from entry_lines) as n
-         from pg_class c where c.oid = 'public.entry_lines'::regclass`,
+         from pg_class c where c.oid = 'ekwo.entry_lines'::regclass`,
     );
     expect(Math.abs(estimate.reltuples - estimate.n) / estimate.n).toBeLessThan(0.1);
   });

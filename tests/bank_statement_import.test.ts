@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { readCamt053, type StatementFile } from '@ekwo-ai/camt053';
-import { asUser, expectError, freshDatabase, one, openDatabase, repoRoot, rows } from './helpers/db.js';
+import { followSocle, asUser, expectError, freshDatabase, one, openDatabase, repoRoot, rows } from './helpers/db.js';
 import { newCompany, newUser, type Fixture } from './helpers/factory.js';
 
 /**
@@ -577,6 +577,7 @@ describe('on a session nobody prepared', () => {
     const company = await newCompany(db, { name: 'Session Neuve' });
     await bankAccount(company.companyId, ACCOUNT);
     const fresh = await openDatabase({ loadDataDir: await db.dumpDataDir('none') });
+    await followSocle(fresh);
     try {
       const { setting } = await one<{ setting: string | null }>(fresh, `select current_setting('ekwo.installing', true) as setting`);
       expect(setting).toBeNull();

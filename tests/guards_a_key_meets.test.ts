@@ -108,7 +108,7 @@ describe('every guard that asks whether anybody is signed in', () => {
       db,
       `select p.proname as fn
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname in ('public', 'fixed_assets', 'budgets', 'tax') and p.prokind = 'f'
+        where n.nspname in ('ekwo', 'fixed_assets', 'budgets', 'tax') and p.prokind = 'f'
           and (p.prosrc ~* 'auth\\.uid\\(\\)\\s+is\\s+null'
             or p.prosrc ~* 'auth\\.uid\\(\\)\\s+is\\s+not\\s+null')
         order by 1`,
@@ -126,7 +126,7 @@ describe('every guard that asks whether anybody is signed in', () => {
       db,
       `select p.proname as fn
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname in ('public', 'fixed_assets', 'budgets', 'tax') and p.prokind = 'f'
+        where n.nspname in ('ekwo', 'fixed_assets', 'budgets', 'tax') and p.prokind = 'f'
           and p.prosrc ~* 'if\\s+auth\\.uid\\(\\)\\s+is\\s+not\\s+null\\s+and\\s+not\\s'
         order by 1`,
     );

@@ -29,18 +29,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Pack } from '../packages/cli/src/index.js';
-import {
-  asUser,
-  expectError,
-  freshDatabase,
-  migrationFiles,
-  one,
-  openDatabase,
-  repoRoot,
-  rows,
-  seedFiles,
-  shimPath,
-} from './helpers/db.js';
+import { asUser, expectError, followSocle, freshDatabase, migrationFiles, one, openDatabase, replayMigration, repoRoot, rows, seedFiles, shimPath } from './helpers/db.js';
 import { newCompany, newContact, newDocument, newUser, taxId } from './helpers/factory.js';
 import { packWhere, roleOf } from './helpers/packs.js';
 
@@ -267,11 +256,12 @@ describe('the lines that were there before the core wrote the snapshot', () => {
     try {
       await old.exec(await readFile(shimPath, 'utf8'));
       for (const file of files.filter((name) => !SNAPSHOT.includes(name))) {
-        await old.exec(await readFile(join(repoRoot, 'supabase', 'migrations', file), 'utf8'));
+        await replayMigration(old, file);
       }
       for (const file of await seedFiles()) {
         await old.exec(await readFile(join(repoRoot, 'supabase', 'seed', file), 'utf8'));
       }
+      await followSocle(old);
       await old.exec(`select set_config('ekwo.installing', 'on', false);`);
 
       const company = await newCompany(old, { country: pack.manifest.country, name: 'Before' });
@@ -294,7 +284,7 @@ describe('the lines that were there before the core wrote the snapshot', () => {
       ).toEqual([]);
 
       for (const file of SNAPSHOT) {
-        await old.exec(await readFile(join(repoRoot, 'supabase', 'migrations', file), 'utf8'));
+        await replayMigration(old, file);
       }
 
       const carried = (id: string) =>

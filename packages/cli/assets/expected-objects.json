@@ -1,8 +1,8 @@
 {
   "schemaVersion": "0.22.0",
-  "migration": "20261027200000",
+  "migration": "20261028040000",
   "socle": {
-    "schema": "public",
+    "schema": "ekwo",
     "tables": [
       {
         "name": "account_templates",
@@ -5660,6 +5660,10 @@
         "arguments": "p_company_id uuid, p_module_code text, p_ref text"
       },
       {
+        "name": "module_functions_follow_the_socle",
+        "arguments": "p_schema text"
+      },
+      {
         "name": "module_is_enabled",
         "arguments": "p_company_id uuid, p_code text"
       },
@@ -7891,7 +7895,7 @@
       }
     ],
     "grants": {
-      "schema": "public",
+      "schema": "ekwo",
       "usage": {
         "anon": [
           "usage"
@@ -11366,6 +11370,13 @@
           "service_role": [
             "execute"
           ]
+        },
+        {
+          "name": "module_functions_follow_the_socle",
+          "arguments": "p_schema text",
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
         },
         {
           "name": "module_is_enabled",

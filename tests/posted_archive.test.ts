@@ -92,8 +92,8 @@ afterAll(async () => {
 describe('a company that arrives with documents already posted', () => {
   it('carries a tax and a line that disagree, which is the point', () => {
     const tables = (JSON.parse(archive) as { tables: Record<string, Record<string, unknown>[]> }).tables;
-    const tax = (tables['public.taxes'] ?? []).find((row) => row['code'] === standard.code);
-    const line = (tables['public.document_lines'] ?? []).find((row) => row['document_id'] === documentId);
+    const tax = (tables['ekwo.taxes'] ?? []).find((row) => row['code'] === standard.code);
+    const line = (tables['ekwo.document_lines'] ?? []).find((row) => row['document_id'] === documentId);
     expect(Number(tax?.['amount'])).toBe(standard.rate + 1);
     expect(Number(line?.['vat_rate'])).toBe(standard.rate);
   });
@@ -103,7 +103,7 @@ describe('a company that arrives with documents already posted', () => {
     // A line that names an account the archive does not carry, sealed again so
     // that the manifest agrees: what refuses it is the database, in the middle
     // of the load, after the guards were switched off.
-    (broken.tables['public.document_lines'] as Record<string, unknown>[])[0]!['account_id'] = '00000000-0000-4000-8000-000000000000';
+    (broken.tables['ekwo.document_lines'] as Record<string, unknown>[])[0]!['account_id'] = '00000000-0000-4000-8000-000000000000';
     for (const table of Object.keys(broken.tables)) await reseal(b, broken, table);
     const message = await asUser(b, adminOfB, () => expectError(b, `select import_company($1::jsonb, $2)`, [JSON.stringify(broken), ownerInB]));
     expect(message).not.toMatch(/archive_corrupt/);

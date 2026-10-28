@@ -73,7 +73,7 @@ describe('the column a VAT category lives in', () => {
       db,
       `select table_name as relation, data_type
          from information_schema.columns
-        where table_schema = 'public' and column_name = 'vat_category'
+        where table_schema = 'ekwo' and column_name = 'vat_category'
         order by table_name`,
     );
 

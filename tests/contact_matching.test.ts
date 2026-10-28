@@ -367,7 +367,7 @@ describe('what this never does', () => {
       db,
       `select p.proname
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.proname in ('suggest_contacts', 'confirm_contact', 'significant_words',
                             'matching_policy_of')
           and (p.prosrc ~ '''[A-Z]{2}[0-9]{2}[A-Z0-9]{10,}'''

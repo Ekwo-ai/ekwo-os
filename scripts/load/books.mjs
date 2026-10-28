@@ -126,7 +126,7 @@ async function columnsOf(db, table) {
   return db.query(
     `select a.attname as name, format_type(a.atttypid, a.atttypmod) as type
        from pg_attribute a
-      where a.attrelid = ('public.' || $1)::regclass
+      where a.attrelid = $1::regclass
         and a.attnum > 0 and not a.attisdropped and a.attgenerated = ''
       order by a.attnum`,
     [table],
@@ -143,7 +143,7 @@ async function referencesOf(db, table) {
        join pg_attribute att on att.attrelid = c.conrelid and att.attnum = k.col
        join pg_attribute ref on ref.attrelid = c.confrelid and ref.attnum = k.ref
       where c.contype = 'f'
-        and c.conrelid = ('public.' || $1)::regclass
+        and c.conrelid = $1::regclass
         and ref.attname = 'id'
         and target.relname = any ($2::text[])`,
     [table, COPIED_TABLES],
@@ -158,7 +158,7 @@ async function uniqueTextColumnsOf(db, table) {
        from pg_index i
        cross join lateral unnest(i.indkey::int2[]) as k(col)
        join pg_attribute att on att.attrelid = i.indrelid and att.attnum = k.col
-      where i.indrelid = ('public.' || $1)::regclass
+      where i.indrelid = $1::regclass
         and i.indisunique
         and att.atttypid = 'text'::regtype`,
     [table],

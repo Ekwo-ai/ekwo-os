@@ -570,7 +570,7 @@ async function writableTables(): Promise<Writable[]> {
     db,
     `select * from (
      select format('%I.%I', n.nspname, c.relname) as table,
-            case when c.oid = 'public.companies'::regclass then 'id'
+            case when c.oid = 'ekwo.companies'::regclass then 'id'
                  when exists (select 1 from pg_attribute k where k.attrelid = c.oid and k.attname = 'company_id' and not k.attisdropped)
                    then 'company_id' end as company_column,
             (select jsonb_build_object('column', a.attname, 'table', format('%I.%I', tn.nspname, tc.relname), 'key', fa.attname)
@@ -647,7 +647,7 @@ async function rowsOf(table: Writable, companyId: string): Promise<Record<string
 
 /** Rows of Alice's that a column pointing at this table could name. */
 async function aliceTargets(target: string): Promise<string[]> {
-  if (target === 'public.companies') return aliceCompanies();
+  if (target === 'ekwo.companies') return aliceCompanies();
   if (target === 'auth.users') return [alice];
   const state = await one<{ x: boolean }>(
     db,
@@ -682,7 +682,7 @@ async function aliceTargets(target: string): Promise<string[]> {
  */
 const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[]; calls?: (id: string) => { sql: string; params: unknown[] }[] }> = {
   // The lines of a draft of Bob's, replaced by one naming the id.
-  'public.replace_document_lines': {
+  'ekwo.replace_document_lines': {
     reads: ['account_id', 'product_id', 'tax_id'],
     calls: (id) =>
       (['account_id', 'product_id', 'tax_id'] as const).map((key) => ({
@@ -691,7 +691,7 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
       })),
   },
   // A draft of Bob's whose header names the id.
-  'public.create_document': {
+  'ekwo.create_document': {
     reads: ['company_id', 'contact_id', 'journal_id'],
     calls: (id) => [
       {
@@ -704,11 +704,11 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
       })),
     ],
   },
-  'public.set_preferences': {
+  'ekwo.set_preferences': {
     reads: ['preferred_company_id'],
     calls: (id) => [{ sql: `select preferred_company_id from set_preferences($1::jsonb)`, params: [{ preferred_company_id: id }] }],
   },
-  'public.post_module_entry': {
+  'ekwo.post_module_entry': {
     reads: ['account_id', 'contact_id'],
     calls: (id) => [
       {
@@ -721,7 +721,7 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
       },
     ],
   },
-  'public.opening_balance': {
+  'ekwo.opening_balance': {
     reads: ['contact_id'],
     calls: (id) => [
       {
@@ -730,15 +730,15 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
       },
     ],
   },
-  'public.general_ledger': {
+  'ekwo.general_ledger': {
     reads: [],
     calls: (id) => [{ sql: `select * from general_ledger($1, '1900-01-01'::date, '2999-12-31'::date, $2::uuid[])`, params: [bobBooks, [id]] }],
   },
-  'public.journal_book': {
+  'ekwo.journal_book': {
     reads: [],
     calls: (id) => [{ sql: `select * from journal_book($1, '1900-01-01'::date, '2999-12-31'::date, $2::uuid[])`, params: [bobBooks, [id]] }],
   },
-  'public.settle_from_statement': {
+  'ekwo.settle_from_statement': {
     reads: [],
     calls: (id) => [
       {
@@ -747,12 +747,12 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
       },
     ],
   },
-  'public.suggest_line_contacts': {
+  'ekwo.suggest_line_contacts': {
     reads: [],
     calls: (id) => [{ sql: `select * from suggest_line_contacts($1, $2::uuid[])`, params: [bobBooks, [id]] }],
   },
   // A set of lines to match: one of Alice's beside one of Bob's own.
-  'public.reconcile_many': {
+  'ekwo.reconcile_many': {
     reads: [],
     calls: (id) => [
       {
@@ -761,7 +761,7 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
       },
     ],
   },
-  'public.reconcile_with_difference': {
+  'ekwo.reconcile_with_difference': {
     reads: [],
     calls: (id) => [
       {
@@ -770,7 +770,7 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
       },
     ],
   },
-  'public.match_lines': {
+  'ekwo.match_lines': {
     reads: [],
     calls: (id) => [
       {
@@ -781,7 +781,7 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
   },
   // A batch of pairs: one of Alice's lines beside one of Bob's own, on
   // either side, as an object and as a list.
-  'public.reconcile_batch': {
+  'ekwo.reconcile_batch': {
     reads: ['debit_line_id', 'credit_line_id'],
     calls: (id) => [
       {
@@ -798,17 +798,17 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
       },
     ],
   },
-  'public.import_company': {
+  'ekwo.import_company': {
     reads: ['company_id', 'entry_id'],
-    calls: (id) => [{ sql: `select import_company($1::jsonb)`, params: [{ manifest: { company: { id } }, tables: { 'public.companies': [{ id, company_id: id }] } }] }],
+    calls: (id) => [{ sql: `select import_company($1::jsonb)`, params: [{ manifest: { company: { id } }, tables: { 'ekwo.companies': [{ id, company_id: id }] } }] }],
   },
   // These name an id only in what they write: the contact a line of the books
   // was matched to, the statement a new one follows.
-  'public.import_books': { reads: [], writesOnly: ['contact_id'] },
-  'public.import_bank_statement': { reads: [], writesOnly: ['previous_statement_id'] },
+  'ekwo.import_books': { reads: [], writesOnly: ['contact_id'] },
+  'ekwo.import_bank_statement': { reads: [], writesOnly: ['previous_statement_id'] },
   // The jsonb it takes is a list of calendar addresses; the subject it names
   // is an argument of its own, and the key is only what it writes on the trail.
-  'public.record_filing_proof': { reads: [], writesOnly: ['subject_id'] },
+  'ekwo.record_filing_proof': { reads: [], writesOnly: ['subject_id'] },
   // The jsonb they take is the authority's answer, kept verbatim; the
   // document is an argument of its own, and the keys are what they write on
   // the fiscal events.
@@ -852,14 +852,14 @@ describe('the other person, signed in', () => {
 
   it('is probed in every schema that holds a company’s rows, modules included', async () => {
     const schemas = await tenantSchemas();
-    expect(schemas).toEqual(expect.arrayContaining(['public', 'budgets', 'fixed_assets', 'tax']));
+    expect(schemas).toEqual(expect.arrayContaining(['ekwo', 'budgets', 'fixed_assets', 'tax']));
     // Every module table Alice could have rows in, she has: the probes below name them.
     const empty = await rows<{ name: string }>(
       db,
       `select format('%I.%I', n.nspname, c.relname) as name
          from pg_class c join pg_namespace n on n.oid = c.relnamespace
          join pg_attribute a on a.attrelid = c.oid and a.attname = 'company_id' and not a.attisdropped
-        where n.nspname = any ($1::text[]) and n.nspname <> 'public' and c.relkind = 'r'
+        where n.nspname = any ($1::text[]) and n.nspname <> 'ekwo' and c.relkind = 'r'
         order by 1`,
       [schemas],
     );
@@ -985,9 +985,9 @@ describe('the other person, signed in', () => {
     // functions only, and are not in the sweep), and the members, whose person
     // carries no key: found, not listed.
     expect(tables.map((table) => table.table)).toEqual(
-      expect.arrayContaining(['public.companies', 'public.tax_filing_boxes', 'public.company_members']),
+      expect.arrayContaining(['ekwo.companies', 'ekwo.tax_filing_boxes', 'ekwo.company_members']),
     );
-    expect(tables.find((table) => table.table === 'public.company_members')?.references).toEqual(
+    expect(tables.find((table) => table.table === 'ekwo.company_members')?.references).toEqual(
       expect.arrayContaining([{ column: 'user_id', target: 'auth.users' }]),
     );
     const differs: string[] = [];
@@ -1011,7 +1011,7 @@ describe('the other person, signed in', () => {
     }
     const own = new Map<string, Record<string, unknown>[]>();
     for (const table of tables) own.set(table.table, await rowsOf(table, bobBooks));
-    for (const name of ['public.companies', 'public.tax_filing_boxes', 'public.company_members']) {
+    for (const name of ['ekwo.companies', 'ekwo.tax_filing_boxes', 'ekwo.company_members']) {
       expect(own.get(name)?.length, name).toBeGreaterThan(0);
     }
 
@@ -1513,7 +1513,7 @@ describe('a company’s own defaults, on a shared installation', () => {
       db,
       `select a.attname::text as col, f.confrelid::regclass::text as target
          from pg_constraint f join pg_attribute a on a.attrelid = f.conrelid and a.attnum = f.conkey[1]
-        where f.conrelid = 'public.companies'::regclass and f.contype = 'f' and f.confrelid in ('accounts'::regclass, 'journals'::regclass)
+        where f.conrelid = 'ekwo.companies'::regclass and f.contype = 'f' and f.confrelid in ('accounts'::regclass, 'journals'::regclass)
         order by 1`,
     );
     expect(columns.length).toBeGreaterThanOrEqual(10);

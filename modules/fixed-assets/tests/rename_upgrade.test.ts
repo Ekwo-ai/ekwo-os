@@ -1,19 +1,25 @@
 import { readFile, readdir } from 'node:fs/promises';
+import { socleNamed } from '../../../packages/core/src/books/socle-names.ts';
 import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
   asUser,
+  followSocle,
   freshDatabase,
   migrationFiles,
+  moduleFunctionsFollowTheSocle,
   moduleMigrationFiles,
   moduleSeedFiles,
   one,
   openDatabase,
+  replayMigration,
+  replaySql,
   repoRoot,
   rows,
   seedFiles,
   shimPath,
+  socleSchemaOf,
 } from '../../../tests/helpers/db.js';
 import { newCompany, newInstanceAdmin } from '../../../tests/helpers/factory.js';
 
@@ -46,15 +52,17 @@ async function installedBefore(): Promise<PGlite> {
   await db.exec(await readFile(shimPath, 'utf8'));
   for (const file of await migrationFiles()) {
     if (file.startsWith(ARCHIVE_NAMES)) continue;
-    await db.exec(await readFile(join(socleDir, file), 'utf8'));
+    await replayMigration(db, file);
   }
+  await followSocle(db);
   for (const migration of await moduleMigrationFiles()) {
     if (migration.code === 'assets' && migration.version >= RENAME) continue;
-    await db.exec(await readFile(migration.path, 'utf8'));
+    await replaySql(db, migration.path);
   }
+  await moduleFunctionsFollowTheSocle(db);
   for (const file of await seedFiles()) await db.exec(await readFile(join(seedDir, file), 'utf8'));
   for (const seed of await moduleSeedFiles()) {
-    await db.exec(beforeTheRename(await readFile(seed.path, 'utf8')));
+    await db.exec(socleNamed(beforeTheRename(await readFile(seed.path, 'utf8')), await socleSchemaOf(db)));
   }
   await db.exec(`select set_config('ekwo.installing', 'on', false);`);
   return db;
@@ -62,13 +70,15 @@ async function installedBefore(): Promise<PGlite> {
 
 async function applyTheRename(db: PGlite): Promise<void> {
   const socle = (await readdir(socleDir)).find((f) => f.startsWith(ARCHIVE_NAMES)) as string;
-  await db.exec(await readFile(join(socleDir, socle), 'utf8'));
+  await replayMigration(db, socle);
   // The rename, then what the module published after it, in the order of
-  // their versions — as `ekwo migrate` applies them.
+  // their versions — as `ekwo migrate` applies them, read for the socle's
+  // schema of the day.
   for (const migration of await moduleMigrationFiles()) {
     if (migration.code !== 'assets' || migration.version < RENAME) continue;
-    await db.exec(await readFile(migration.path, 'utf8'));
+    await replaySql(db, migration.path);
   }
+  await moduleFunctionsFollowTheSocle(db);
 }
 
 /** Every row the module holds, and every entry it posted, as text. */

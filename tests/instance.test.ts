@@ -112,7 +112,7 @@ describe('instance administrators', () => {
       `select a.attname as column_name from pg_attribute a
          join pg_class c on c.oid = a.attrelid
          join pg_namespace n on n.oid = c.relnamespace
-        where n.nspname = 'public' and c.relname = 'instance_admins'
+        where n.nspname = 'ekwo' and c.relname = 'instance_admins'
           and a.attnum > 0 and not a.attisdropped`,
     );
     expect(columns.map((c) => c.column_name)).not.toContain('role');
@@ -306,7 +306,7 @@ describe('the version of the schema, asked on its own', () => {
          from pg_proc p
          join unnest(p.proallargtypes, p.proargnames) as a(atttypid, attname) on true
         where p.proname = 'installed_schema_version'
-          and p.pronamespace = 'public'::regnamespace`,
+          and p.pronamespace = 'ekwo'::regnamespace`,
     );
     expect(columns.map((c) => c.column_name).sort()).toEqual(['edition', 'schema_version']);
   });
@@ -352,7 +352,7 @@ describe('no tenant column anywhere', () => {
          from pg_attribute a
          join pg_class c on c.oid = a.attrelid
          join pg_namespace n on n.oid = c.relnamespace
-        where n.nspname = 'public' and c.relkind = 'r'
+        where n.nspname = 'ekwo' and c.relkind = 'r'
           and a.attnum > 0 and not a.attisdropped
           and a.attname in ('tenant_id', 'tenant', 'org_id')`,
     );

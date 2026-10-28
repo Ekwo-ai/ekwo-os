@@ -30,7 +30,9 @@ module.
 5. **A country is data.** No module names one. What Belgium decides is in
    `packs/be/<section>.json` and compiles into `supabase/seed/modules/<section>/`.
 6. **The registry is a table.** The last statement of a module's first
-   migration writes its row into `public.modules`.
+   migration writes its row into `ekwo.modules` (`public.modules` in the files
+   published before 0.23.0, read as `ekwo.` by whoever applies them — see
+   `docs/modules.md`).
 
 Migrations live in `<folder>/supabase/migrations/`, share the socle's history
 with the module in the recorded `name`, and their timestamps sort after the

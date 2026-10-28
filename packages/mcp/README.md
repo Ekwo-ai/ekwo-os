@@ -308,7 +308,7 @@ database's own words. `get_company` returns `your_capabilities` for exactly
 that reason.
 
 **The modules.** A module of this installation gets its own tools, under the
-prefix its `module.json` declares, and the server reads `public.modules` at
+prefix its `module.json` declares, and the server reads `ekwo.modules` at
 startup to know which: `fixed_assets_list`, `fixed_assets_create`,
 `fixed_assets_schedule`, `fixed_assets_run_depreciation`,
 `fixed_assets_dispose`, `budgets_list`, `budgets_upsert_lines`,

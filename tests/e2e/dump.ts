@@ -102,7 +102,7 @@ export async function canonicalDump(pg: PGlite, tables: string[]): Promise<strin
     const columns = (
       await pg.query<Column>(
         `select column_name, data_type from information_schema.columns
-          where table_schema = 'public' and table_name = $1
+          where table_schema = 'ekwo' and table_name = $1
           order by ordinal_position`,
         [table],
       )

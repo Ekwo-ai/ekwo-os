@@ -76,7 +76,7 @@ function recorder(version: string | Error): { inner: Backend; selects: SelectQue
   return { inner, selects, calls };
 }
 
-const socle = async (): Promise<string> => 'public';
+const socle = async (): Promise<string> => 'ekwo';
 
 describe('onSocle() on a database older than a feature', () => {
   it('leaves the columns of the feature out of a read, whatever their spelling', async () => {

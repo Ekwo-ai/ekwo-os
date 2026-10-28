@@ -356,7 +356,7 @@ describe('the territories of the common system of VAT', () => {
       db,
       `select c.relrowsecurity as enabled from pg_class c
          join pg_namespace n on n.oid = c.relnamespace
-        where n.nspname = 'public' and c.relname = 'territories'`,
+        where n.nspname = 'ekwo' and c.relname = 'territories'`,
     );
     expect(secured.enabled).toBe(true);
   });
@@ -387,7 +387,7 @@ describe('the territories of the common system of VAT', () => {
       db,
       `select p.proname as name
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.proname in ('territory_of', 'eu_vat_scope_of', 'is_eu_member', 'vat_prefix_of')
           and has_function_privilege('anon', p.oid, 'execute')`,
     );
@@ -397,7 +397,7 @@ describe('the territories of the common system of VAT', () => {
       db,
       `select p.proname as name
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.proname in ('territory_of', 'eu_vat_scope_of', 'is_eu_member', 'vat_prefix_of')
           and has_function_privilege('authenticated', p.oid, 'execute')
         order by p.proname`,

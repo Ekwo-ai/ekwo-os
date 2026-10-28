@@ -17,6 +17,8 @@
 
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
+import { socleNamed } from '@ekwo-ai/core';
+import { socleSchemaOf } from './socle.js';
 import type { SqlClient } from './sql.js';
 
 export interface Migration {
@@ -31,6 +33,7 @@ export interface Migration {
 }
 
 const FILE_PATTERN = /^(\d{14})_(.+)\.sql$/;
+
 
 /** Parses a migration filename, or returns `undefined` if it is not one. */
 export function parseMigrationFile(file: string): Omit<Migration, 'path'> | undefined {
@@ -110,7 +113,11 @@ export async function migrationGap(db: SqlClient, all: Migration[]): Promise<Gap
  * transaction of its own, and none may: the runner owns that.
  */
 export async function applyMigration(db: SqlClient, migration: Migration): Promise<void> {
-  const sql = await readFile(migration.path, 'utf8');
+  // A published file names the socle `public.` as it was when written — a
+  // module's file above all; it is read for the socle's schema of the day
+  // (`socleNamed`), asked here because the socle's own files, applied in the
+  // same run, may just have moved it.
+  const sql = socleNamed(await readFile(migration.path, 'utf8'), await socleSchemaOf(db));
   const statements = splitStatements(sql);
 
   await db.transaction(async (tx) => {

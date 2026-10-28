@@ -4,26 +4,28 @@
  * The clients of this release resolve the socle's schema by its marker,
  * `ekwo_schema_version()`, and name it on every call instead of leaning on a
  * server's default (decision 0090). This holds them to it on both layouts:
- * the database every other test uses, where the socle is in `public` and the
- * schema `ekwo` exists and is empty, and one where this file moves the socle
- * into `ekwo` the way the next release will — every object of the inventory,
- * with `alter … set schema` — and leaves nothing of it in `public`.
+ * the database every other test uses, where `20261028040000` has moved the
+ * socle into `ekwo` and left nothing of it in `public`, and an installation
+ * that has not run that file yet, built here from the migrations before it,
+ * where the socle is in `public` and the schema `ekwo` exists and is empty.
  *
- * On the moved layout the role's `search_path` still says `public`, so a call
+ * On the moved layout this file sets the path back to `public`, so a call
  * that did not name the socle's schema would not find a single table: the
- * backends answering at all is the proof that they name it.
+ * backends answering at all is the proof that they name it. The move itself
+ * is checked too: what `public` kept, what the functions name, what an
+ * archive written before still reads as, and how a module's published file is
+ * read.
  */
 
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { socleMarkerAnswer } from '../packages/core/src/index.js';
+import { socleMarkerAnswer, socleNamed } from '../packages/core/src/index.js';
 import { sqlBackend, type SqlClient } from '../packages/mcp/src/index.js';
 import { socleSchemaOf, useSocleSchema } from '../packages/cli/src/socle.js';
-import { readExpectedObjects } from '../packages/cli/src/inventory.js';
 import { UserClient } from '../packages/cli/src/rest.js';
 import { adapt } from './mcp/helpers.js';
 import { ANON_KEY, FAKE_URL, fakeSupabase } from './cli/fake-supabase.js';
-import { freshDatabase, one } from './helpers/db.js';
+import { freshDatabase, one, rows } from './helpers/db.js';
 import { newCompany } from './helpers/factory.js';
 
 type Queryable = Parameters<typeof adapt>[0];
@@ -46,43 +48,8 @@ function recording(db: PGlite): { client: SqlClient; statements: string[] } {
   return { client: wrap(adapt(db as unknown as Queryable, db)), statements };
 }
 
-/**
- * Moves every object of the socle's inventory from `public` to `ekwo`, and
- * points the functions' own `search_path` at it — what the migration of the
- * next release does, reduced to what these calls need.
- */
-async function moveTheSocle(db: PGlite): Promise<void> {
-  const expected = await readExpectedObjects();
-  if (expected === undefined) throw new Error('the CLI ships no inventory: run `npm run inventory`');
-  const socle = expected.socle;
-  const statements: string[] = [];
-  for (const table of socle.tables) statements.push(`alter table public.${table.name} set schema ekwo;`);
-  for (const view of socle.views) statements.push(`alter view public.${view} set schema ekwo;`);
-  const names = [...new Set(socle.functions.map((f) => f.name))];
-  const routines = await db.query<{ signature: string; kind: string }>(
-    `select p.oid::regprocedure::text as signature, p.prokind::text as kind
-       from pg_proc p where p.pronamespace = 'public'::regnamespace and p.proname = any($1)`,
-    [names],
-  );
-  for (const routine of routines.rows) {
-    statements.push(`alter ${routine.kind === 'a' ? 'aggregate' : 'routine'} ${routine.signature} set schema ekwo;`);
-  }
-  for (const type of socle.types) statements.push(`alter type public.${type.name} set schema ekwo;`);
-  // The signatures name types as `public` calls them, and each type moves
-  // along the way: with both schemas on the path, every name resolves.
-  await db.exec(`set search_path = public, ekwo;\n${statements.join('\n')}`);
-  await db.exec(`
-    do $$
-    declare r record;
-    begin
-      for r in select p.oid::regprocedure as routine from pg_proc p
-                where p.pronamespace = 'ekwo'::regnamespace and p.prokind in ('f', 'p')
-      loop
-        execute format('alter routine %s set search_path = ekwo, pg_temp', r.routine);
-      end loop;
-    end $$;
-  `);
-}
+/** The migration that moved the socle; left out to build the layout before it. */
+const THE_MOVE = '20261028040000_the_socle_moves_to_its_schema.sql';
 
 /**
  * The command line's PostgREST client, signed in as `userId`, against a
@@ -106,12 +73,12 @@ async function overPostgrest(db: PGlite, userId: string): Promise<{ client: User
   return { client, calls: instance.calls };
 }
 
-describe('the socle in public, ekwo created and empty', () => {
+describe('an installation before the move: the socle in public, ekwo created and empty', () => {
   let db: PGlite;
   let owner: string;
 
   beforeAll(async () => {
-    db = await freshDatabase();
+    db = await freshDatabase({ withoutMigrations: [THE_MOVE] });
     ({ ownerId: owner } = await newCompany(db));
   });
 
@@ -168,7 +135,7 @@ describe('the socle in public, ekwo created and empty', () => {
   });
 });
 
-describe('the socle moved to ekwo', () => {
+describe('this release: the socle moved to ekwo', () => {
   let db: PGlite;
   let owner: string;
   let version: string;
@@ -177,7 +144,6 @@ describe('the socle moved to ekwo', () => {
     db = await freshDatabase();
     ({ ownerId: owner } = await newCompany(db));
     version = (await one<{ v: string }>(db, 'select ekwo_schema_version() as v')).v;
-    await moveTheSocle(db);
     // Nothing of the socle is left where a call that names no schema would look.
     await db.exec(`set search_path = public`);
   });
@@ -224,6 +190,103 @@ describe('the socle moved to ekwo', () => {
     expect(path.search_path).toBe('ekwo, public');
     const count = await one<{ n: number }>(db, `select count(*)::int as n from companies where name = 'Test Company'`);
     expect(count.n).toBe(1);
+  });
+
+  it('names ekwo in every function of the socle and of the modules, settings and bodies alike', async () => {
+    const naming = await rows<{ schema: string; name: string }>(
+      db,
+      `select n.nspname as schema, p.proname as name
+         from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+        where n.nspname in (select 'ekwo' union all select schema_name from ekwo.modules)
+          and (p.prosrc ~ 'public\\.[a-z_]' or p.prosrc ~ '''public'''
+               or exists (select 1 from unnest(p.proconfig) c where c ~ 'public'))
+        order by 1, 2`,
+    );
+    expect(naming).toEqual([]);
+    const paths = await rows<{ path: string; n: number }>(
+      db,
+      `select c as path, count(*)::int as n from pg_proc p, unnest(p.proconfig) c
+        where p.pronamespace = 'ekwo'::regnamespace and c like 'search_path=%' group by 1 order by 1`,
+    );
+    expect(paths.map((p) => p.path)).toEqual(['search_path=ekwo', 'search_path=ekwo, pg_temp']);
+  });
+
+  it('keeps the modules where they were, pointing at the socle where it is', async () => {
+    const modules = await rows<{ schema_name: string; tables: number; foreign_keys: number }>(
+      db,
+      `select m.schema_name,
+              (select count(*)::int from pg_class c where c.relnamespace = to_regnamespace(m.schema_name) and c.relkind = 'r') as tables,
+              (select count(*)::int from pg_constraint k join pg_class r on r.oid = k.confrelid
+                where k.contype = 'f' and k.connamespace = to_regnamespace(m.schema_name) and r.relnamespace = 'ekwo'::regnamespace) as foreign_keys
+         from ekwo.modules m order by 1`,
+    );
+    expect(modules.length).toBeGreaterThan(3);
+    for (const m of modules) {
+      expect(m.tables, m.schema_name).toBeGreaterThan(0);
+      expect(m.foreign_keys, m.schema_name).toBeGreaterThan(0);
+    }
+  });
+
+  it('calls the request hook where it now lives', async () => {
+    const hook = await one<{ setting: string | null }>(
+      db,
+      `select (select s from unnest(coalesce(r.rolconfig, '{}')) as s where s like 'pgrst.db_pre_request=%') as setting
+         from pg_roles r where r.rolname = 'authenticator'`,
+    );
+    expect(hook.setting).toBe('pgrst.db_pre_request=ekwo.ekwo_pre_request');
+  });
+
+  it('reads an archive written before the move under the names of today', async () => {
+    const registry = await rows<{ table_schema: string }>(db, `select distinct table_schema from ekwo.company_archive_registry order by 1`);
+    expect(registry.map((r) => r.table_schema)).not.toContain('public');
+    const read = await one<{ out: { tables: Record<string, unknown>; manifest: { tables: Array<{ name: string }> } } }>(
+      db,
+      `select ekwo.archive_under_current_names($1::jsonb) as out`,
+      [
+        JSON.stringify({
+          tables: { 'public.contacts': [{ id: 1 }], 'public.not_of_the_socle': [], 'fixed_assets.assets': [] },
+          manifest: { tables: [{ name: 'public.contacts' }, { name: 'public.not_of_the_socle' }, { name: 'fixed_assets.assets' }] },
+        }),
+      ],
+    );
+    expect(Object.keys(read.out.tables).sort()).toEqual(['ekwo.contacts', 'fixed_assets.assets', 'public.not_of_the_socle']);
+    expect(read.out.tables['ekwo.contacts']).toEqual([{ id: 1 }]);
+    expect(read.out.manifest.tables.map((t) => t.name)).toEqual(['ekwo.contacts', 'public.not_of_the_socle', 'fixed_assets.assets']);
+    await expect(
+      db.query(`select ekwo.archive_under_current_names($1::jsonb)`, [
+        JSON.stringify({ tables: { 'public.contacts': [], 'ekwo.contacts': [] } }),
+      ]),
+    ).rejects.toThrow(/archive_corrupt/);
+  });
+});
+
+describe('a module’s published file is read for the socle’s schema of the day', () => {
+  const file = [
+    'create table assets.things (company_id uuid references public.companies(id));',
+    "create policy p on assets.things using (public.is_company_member(company_id, 'assets'));",
+    'create function assets.f() returns void language sql set search_path = public, pg_temp as $$ select 1 $$;',
+    "insert into public.modules (code, schema_name) values ('assets', 'assets');",
+    "-- A sentence that ends with the word public. Then another, with 'public' quoted.",
+  ].join('\n');
+
+  it('is left as published while the socle is in public', () => {
+    expect(socleNamed(file, 'public')).toBe(file);
+  });
+
+  it('names ekwo before every name, in search_path and in the quoted schema, once the socle is there', () => {
+    const read = socleNamed(file, 'ekwo');
+    expect(read).toContain('references ekwo.companies(id)');
+    expect(read).toContain('ekwo.is_company_member(company_id');
+    expect(read).toContain('set search_path = ekwo, pg_temp');
+    expect(read).toContain('insert into ekwo.modules');
+    expect(read).toContain("with 'ekwo' quoted");
+    expect(read).toContain('the word public. Then');
+    expect(read).not.toMatch(/public\.[a-z]/);
+  });
+
+  it('passes a file written for ekwo unchanged', () => {
+    const written = socleNamed(file, 'ekwo');
+    expect(socleNamed(written, 'ekwo')).toBe(written);
   });
 });
 

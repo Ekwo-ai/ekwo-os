@@ -973,7 +973,7 @@ describe('the three functions', () => {
       db,
       `select p.proname, p.prosrc
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.proname in ('opening_balance', 'close_fiscal_year', 'reopen_fiscal_year',
                             'opening_journal_id', 'has_opening_entry', 'fiscal_years_guard_closed',
                             'close_fiscal_year_finally', 'fiscal_year_final_close',
@@ -997,7 +997,7 @@ describe('the three functions', () => {
       db,
       `select column_name, column_default
          from information_schema.columns
-        where table_schema = 'public' and table_name = 'country_defaults'
+        where table_schema = 'ekwo' and table_name = 'country_defaults'
           and column_name in ('closing_style', 'current_year_result_profit_code',
                               'current_year_result_loss_code', 'retained_earnings_loss_code',
                               'opening_journal_code')

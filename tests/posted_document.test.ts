@@ -239,7 +239,7 @@ const columnsOf = (table: string) =>
     db,
     `select column_name as name, data_type as type, udt_name as udt, is_generated as generated
        from information_schema.columns
-      where table_schema = 'public' and table_name = $1
+      where table_schema = 'ekwo' and table_name = $1
         and column_name not in ('id', 'company_id', 'created_at')
       order by ordinal_position`,
     [table],

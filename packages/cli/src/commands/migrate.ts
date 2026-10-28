@@ -118,7 +118,8 @@ export async function migrateCommand(args: ParsedArgs, deps: CommandDeps = {}): 
     }
 
     // No migration can expose a schema to the Data API, so the line is
-    // printed on every run until the release that fills `ekwo`.
+    // printed on every run: the socle lives in `ekwo`, and a project that
+    // does not serve it answers nothing to any client.
     heading('Data API');
     note(dim(`The socle lives in ${socle}.`));
     note(EXPOSE_SOCLE_LINE);

@@ -10,12 +10,14 @@ an entry. The question is where they live and what they may touch.
 
 ## Decision
 
-**One Postgres schema per module; the socle stays in `public`.** A prefix on
+**One Postgres schema per module; the socle stays in `public`.** *(Superseded
+in part on 28 October 2026 by [0090](0090-the-socle-has-its-own-schema.md):
+the socle lives in `ekwo`. The rest of this record stands.)* A prefix on
 socle tables becomes unreadable after the fourth module. A schema is exposed to
 the API by one line of configuration, closed by one `revoke`, documented by
 one section, and absent entirely when not installed.
 
-**The registry is a table.** `public.modules` holds one row per installed
+**The registry is a table.** `modules`, in the socle, holds one row per installed
 module, written by the module's first migration; `company_modules` records who
 enabled what. There is no plugin registry in code to keep in step.
 

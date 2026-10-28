@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { asUser, expectError, freshDatabase, one, repoRoot, withoutTrigger } from './helpers/db.js';
+import { asUser, expectError, freshDatabase, one, readMigration, repoRoot, withoutTrigger } from './helpers/db.js';
 import { newCompany, newContact, newDocument, newUser, type Fixture } from './helpers/factory.js';
 import { packWhere } from './helpers/packs.js';
 
@@ -146,7 +146,7 @@ async function pay(index: number, debt: string, amount: number): Promise<void> {
 
 beforeAll(async () => {
   db = await freshDatabase();
-  backfill = await readFile(join(repoRoot, 'supabase', 'migrations', BACKFILL), 'utf8');
+  backfill = await readMigration(db, BACKFILL);
   // country-literal: the company is installed in the pack under test, which is
   // whichever one names the account a declaration owes on.
   fx = await newCompany(db, { country: pack.manifest.country, name: 'Deposit Fixture' });

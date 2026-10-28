@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { compilePack, packsDir, readPack } from '../packages/cli/src/index.js';
-import { asUser, expectError, freshDatabase, one, repoRoot, rows, withoutTrigger } from './helpers/db.js';
+import { asUser, expectError, freshDatabase, one, readMigration, repoRoot, rows, withoutTrigger } from './helpers/db.js';
 import { accountId, ledgerOf, newCompany, newContact, newDocument, taxId, type Fixture } from './helpers/factory.js';
 import { allPacks, somePack } from './helpers/packs.js';
 
@@ -494,7 +494,7 @@ describe('no country decided anywhere but in a pack', () => {
 
   it('leaves no country code and no country test in the migrations of this change', async () => {
     for (const name of MIGRATIONS) {
-      const sql = await readFile(join(repoRoot, 'supabase', 'migrations', name), 'utf8');
+      const sql = await readMigration(db, name);
       const statements = sql
         .split('\n')
         .filter((line) => !line.trimStart().startsWith('--'))
@@ -547,14 +547,14 @@ describe('no country decided anywhere but in a pack', () => {
     const naming = await rows<{ proname: string }>(
       db,
       `select p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public' and p.prosrc ~ 'half_up|half_even' order by 1`,
+        where n.nspname = 'ekwo' and p.prosrc ~ 'half_up|half_even' order by 1`,
     );
     expect(naming.map((r) => r.proname)).toEqual(['round_amount']);
 
     const reading = await rows<{ proname: string }>(
       db,
       `select p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname in ('public', 'fixed_assets', 'budgets', 'tax')
+        where n.nspname in ('ekwo', 'fixed_assets', 'budgets', 'tax')
           and p.prosrc ~ 'decimal_places|\\.rounding_method' order by 1`,
     );
     expect(reading.map((r) => r.proname)).toEqual(['rounding_of']);

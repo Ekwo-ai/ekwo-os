@@ -161,16 +161,25 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): SocleBack
     role: 'authenticated',
   });
 
+  const socle = socleSchemaResolver((schema) => socleMarkerInCatalogue((sql, params) => db.query(sql, params), schema));
+
   /**
    * One statement, as the user.
    *
    * `set_config(..., true)` and `set local role` are both transaction-scoped,
-   * so nothing leaks into the next call even on a pooled connection.
+   * so nothing leaks into the next call even on a pooled connection. The
+   * socle's schema goes first on the path of the transaction, as PostgREST
+   * puts the profile of a request: the statement names the schema itself, and
+   * what runs under it — a policy's helper, a trigger, a function written
+   * without a path of its own — finds the socle's tables as it did when they
+   * were on every default path (decision 0090).
    */
   async function asUser<T>(run: (tx: SqlClient) => Promise<T>): Promise<T> {
     try {
+      const schema = await socle();
       return await db.transaction(async (tx) => {
         await tx.query('select set_config($1, $2, true)', ['request.jwt.claims', claims]);
+        await tx.query('select set_config($1, $2, true)', ['search_path', `${schema}, public`]);
         if (agent !== undefined) {
           await tx.query(
             "select set_config('ekwo.agent', $1, true), set_config('ekwo.agent_session', $2, true)",
@@ -317,7 +326,7 @@ export function sqlBackend(db: SqlClient, options: SqlBackendOptions): SocleBack
       await db.close();
     },
   };
-  return onSocle(backend, socleSchemaResolver((schema) => socleMarkerInCatalogue((sql, params) => db.query(sql, params), schema)));
+  return onSocle(backend, socle);
 }
 
 /** Opens a connection with the `postgres` driver. */

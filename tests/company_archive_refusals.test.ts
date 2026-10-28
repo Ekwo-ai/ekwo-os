@@ -11,7 +11,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import type { Pack } from '../packages/cli/src/index.js';
-import { asUser, expectError, freshDatabase, one, openDatabase, rows } from './helpers/db.js';
+import { followSocle, asUser, expectError, freshDatabase, one, openDatabase, rows } from './helpers/db.js';
 import {
   breathe,
   exportAs,
@@ -86,15 +86,15 @@ describe('an archive that lies is refused whole', () => {
     (archive.tables[table] ?? [])[0] as Record<string, unknown>;
 
   it('a row changed after the manifest was written', async () => {
-    expect(await attempt((x) => { firstRow(x, 'public.contacts')['name'] = 'Somebody else'; }, false)).toContain('archive_corrupt');
+    expect(await attempt((x) => { firstRow(x, 'ekwo.contacts')['name'] = 'Somebody else'; }, false)).toContain('archive_corrupt');
   });
 
   it('rows that do not all have the same columns, or no company at all', async () => {
     expect(
-      await attempt((x) => { delete (x.tables['public.contacts'] as Record<string, unknown>[])[1]?.['notes']; }),
+      await attempt((x) => { delete (x.tables['ekwo.contacts'] as Record<string, unknown>[])[1]?.['notes']; }),
     ).toContain('archive_corrupt');
-    expect(await attempt((x) => { x.tables['public.companies'] = []; })).toContain('foreign_row');
-    expect(await attempt((x) => { delete firstRow(x, 'public.companies')['id']; })).toContain('foreign_row');
+    expect(await attempt((x) => { x.tables['ekwo.companies'] = []; })).toContain('foreign_row');
+    expect(await attempt((x) => { delete firstRow(x, 'ekwo.companies')['id']; })).toContain('foreign_row');
     expect(
       await attempt((x) => { delete (x.manifest.tables[0] as Partial<Manifest['tables'][number]>).rows; }, false),
     ).toContain('archive_corrupt');
@@ -102,14 +102,14 @@ describe('an archive that lies is refused whole', () => {
 
   it('a row that says it is of another company', async () => {
     expect(
-      await attempt((x) => { firstRow(x, 'public.contacts')['company_id'] = victim.companyId; }),
+      await attempt((x) => { firstRow(x, 'ekwo.contacts')['company_id'] = victim.companyId; }),
     ).toContain('foreign_row');
   });
 
   it('a figure hung on the declaration of a company that was already here', async () => {
     const message = await attempt((x) => {
-      (x.tables['public.tax_filing_boxes'] as Record<string, unknown>[]).push({
-        ...firstRow(x, 'public.tax_filing_boxes'), filing_id: victim.filingId, box: 'ZZ',
+      (x.tables['ekwo.tax_filing_boxes'] as Record<string, unknown>[]).push({
+        ...firstRow(x, 'ekwo.tax_filing_boxes'), filing_id: victim.filingId, box: 'ZZ',
       });
     });
     expect(message).toContain('foreign_row');
@@ -120,7 +120,7 @@ describe('an archive that lies is refused whole', () => {
   it('a reference that reaches into a company that was already here', async () => {
     const theirs = await one<{ id: string }>(b, `select id from entries where company_id = $1 limit 1`, [victim.companyId]);
     expect(
-      await attempt((x) => { firstRow(x, 'public.entries')['reversed_entry_id'] = theirs.id; }),
+      await attempt((x) => { firstRow(x, 'ekwo.entries')['reversed_entry_id'] = theirs.id; }),
       // The reference is a key with the company in it (decision 0065): it is
       // refused by that key, before the import asks whose rows arrived.
     ).toMatch(/foreign_row|entries_reversed_entry_id_company_id_fkey/);
@@ -128,7 +128,7 @@ describe('an archive that lies is refused whole', () => {
 
   it('an entry that does not balance', async () => {
     const message = await attempt((x) => {
-      const line = (x.tables['public.entry_lines'] as Record<string, unknown>[]).find((l) => Number(l['debit']) > 0);
+      const line = (x.tables['ekwo.entry_lines'] as Record<string, unknown>[]).find((l) => Number(l['debit']) > 0);
       (line as Record<string, unknown>)['debit'] = (Number((line as Record<string, unknown>)['debit']) + 1).toFixed(2);
     });
     expect(message).toContain('unbalanced_entry');
@@ -136,7 +136,7 @@ describe('an archive that lies is refused whole', () => {
 
   it('a matched amount its matchings do not add up to', async () => {
     const message = await attempt((x) => {
-      const line = (x.tables['public.entry_lines'] as Record<string, unknown>[]).find((l) => Number(l['matched_amount']) > 0);
+      const line = (x.tables['ekwo.entry_lines'] as Record<string, unknown>[]).find((l) => Number(l['matched_amount']) > 0);
       (line as Record<string, unknown>)['matched_amount'] = '0.01';
     });
     expect(message).toContain('matching_mismatch');
@@ -144,11 +144,11 @@ describe('an archive that lies is refused whole', () => {
 
   it('a matching letter ahead of its counter, and two years that overlap', async () => {
     expect(
-      await attempt((x) => { firstRow(x, 'public.matching_sequences')['last_number'] = 0; }),
+      await attempt((x) => { firstRow(x, 'ekwo.matching_sequences')['last_number'] = 0; }),
     ).toContain('counter_behind');
     expect(
       await attempt((x) => {
-        const years = x.tables['public.fiscal_years'] as Record<string, unknown>[];
+        const years = x.tables['ekwo.fiscal_years'] as Record<string, unknown>[];
         (years[0] as Record<string, unknown>)['start_date'] = '1990-01-01';
         (years[1] as Record<string, unknown>)['start_date'] = '1990-06-01';
       }),
@@ -157,17 +157,17 @@ describe('an archive that lies is refused whole', () => {
 
   it('a counter behind the numbers already used', async () => {
     const message = await attempt((x) => {
-      for (const counter of x.tables['public.journal_sequences'] as Record<string, unknown>[]) counter['last_number'] = 0;
+      for (const counter of x.tables['ekwo.journal_sequences'] as Record<string, unknown>[]) counter['last_number'] = 0;
     });
     expect(message).toContain('counter_behind');
   });
 
   it('a column, a table, a format or a version this installation does not know', async () => {
     expect(
-      await attempt((x) => { firstRow(x, 'public.contacts')['shoe_size'] = 43; }),
+      await attempt((x) => { firstRow(x, 'ekwo.contacts')['shoe_size'] = 43; }),
     ).toContain('unknown_column');
     expect(
-      await attempt((x) => { x.tables['public.company_members'] = []; }),
+      await attempt((x) => { x.tables['ekwo.company_members'] = []; }),
     ).toContain('unknown_table');
     expect(await attempt((x) => { x.manifest.format_version = 2; })).toContain('unknown_archive_version');
     expect(await attempt((x) => { x.manifest.format = 'something.else'; })).toContain('not_an_archive');
@@ -177,7 +177,7 @@ describe('an archive that lies is refused whole', () => {
     expect(
       await attempt((x) => {
         x.manifest.packs = [];
-        firstRow(x, 'public.company_packs')['version'] = '99.0.0';
+        firstRow(x, 'ekwo.company_packs')['version'] = '99.0.0';
       }),
     ).toContain('pack_too_old');
     expect(await attempt((x) => { (x.manifest.packs[0] as { version: string }).version = '99.0.0'; })).toContain('pack_too_old');
@@ -280,6 +280,7 @@ describe('the backend role, on a connection where nothing was ever set', () => {
     const data = await first.dumpDataDir('none');
     await first.close();
     db = await openDatabase({ loadDataDir: data });
+    await followSocle(db);
   }, 300_000);
 
   afterAll(async () => {
@@ -307,10 +308,10 @@ describe('the backend role, on a connection where nothing was ever set', () => {
         'not_instance_admin',
       );
       expect(await expectError(db, `select export_company($1)`, [companyId])).toContain('not_allowed');
-      expect(await expectError(db, `select * from export_company_table($1, 'public.entries')`, [companyId])).toContain(
+      expect(await expectError(db, `select * from export_company_table($1, 'ekwo.entries')`, [companyId])).toContain(
         'not_allowed',
       );
-      expect(await expectError(db, `select company_archive_row_count($1, 'public.entries')`, [companyId])).toContain(
+      expect(await expectError(db, `select company_archive_row_count($1, 'ekwo.entries')`, [companyId])).toContain(
         'not_allowed',
       );
       expect(await expectError(db, `select note_company_export($1)`, [companyId])).toContain('not_allowed');

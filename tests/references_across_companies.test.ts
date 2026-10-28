@@ -15,7 +15,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { freshDatabase, one, repoRoot } from './helpers/db.js';
+import { freshDatabase, one, readMigration, repoRoot } from './helpers/db.js';
 import { newCompany, newContact } from './helpers/factory.js';
 
 const MIGRATION = '20261007113412_a_tenant_measures_nothing_of_another.sql';
@@ -61,7 +61,7 @@ beforeAll(async () => {
   // The modules scope their own schemas after this migration, so they are
   // left out with it.
   db = await freshDatabase({ withoutMigrations: [MIGRATION, ...LATER], modules: false });
-  sql = await readFile(join(repoRoot, 'supabase', 'migrations', MIGRATION), 'utf8');
+  sql = await readMigration(db, MIGRATION);
   const country = (await one<{ country: string }>(db, `select country from chart_templates where is_default order by country limit 1`)).country;
   mine = (await newCompany(db, { country, name: 'Mine' })).companyId;
   theirs = (await newCompany(db, { country, name: 'Theirs' })).companyId;
@@ -84,9 +84,9 @@ describe('a reference that crosses companies, written before the keys held the c
       () => 'the migration ran',
       (error: Error) => error.message,
     );
-    expect(said).toMatch(/^reference_across_companies: 2 rows of schema public name a row of another company/);
-    expect(said).toContain('public.contacts.receivable_account_id names public.accounts of another company in 1 row');
-    expect(said).toContain('public.companies.receivable_account_id names public.accounts of another company in 1 row');
+    expect(said).toMatch(/^reference_across_companies: 2 rows of schema ekwo name a row of another company/);
+    expect(said).toContain('ekwo.contacts.receivable_account_id names ekwo.accounts of another company in 1 row');
+    expect(said).toContain('ekwo.companies.receivable_account_id names ekwo.accounts of another company in 1 row');
     expect(said).toContain('Nothing was changed');
     // No value of any row.
     for (const value of [mine, theirs, planted.contact, planted.account]) expect(said).not.toContain(value);

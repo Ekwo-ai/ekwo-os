@@ -85,7 +85,7 @@ describe('applying them', () => {
 
     // And the schema really is there.
     const tables = await db.query<{ count: string }>(
-      `select count(*)::text from information_schema.tables where table_schema = 'public'`,
+      `select count(*)::text from information_schema.tables where table_schema = 'ekwo'`,
     );
     expect(Number(tables[0]?.count)).toBeGreaterThanOrEqual(32);
   });

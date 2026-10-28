@@ -302,7 +302,7 @@ describe('no country lives in the core any more', () => {
       db,
       `select p.proname
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.prosrc ~ '''(BE|FR|UK|US|CA|GB|IE|NL|DE|LU)'''
         order by 1`,
     );
@@ -371,7 +371,7 @@ describe('no country lives in the core any more', () => {
          join pg_attribute a on a.attrelid = d.adrelid and a.attnum = d.adnum
          join pg_class c on c.oid = d.adrelid
          join pg_namespace n on n.oid = c.relnamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and pg_get_expr(d.adbin, d.adrelid) ~ '^''(EUR|USD|GBP|CAD|CHF|fr|en|nl|de)'''
         order by 1, 2`,
     );

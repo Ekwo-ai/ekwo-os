@@ -54,7 +54,7 @@ async function anyPolicy(): Promise<{ table: string; name: string }> {
        from pg_policy p
        join pg_class c on c.oid = p.polrelid
        join pg_namespace n on n.oid = c.relnamespace
-      where n.nspname = 'public'
+      where n.nspname = 'ekwo'
       order by c.relname, p.polname
       limit 1`,
   );
@@ -103,7 +103,7 @@ describe('a database at head', () => {
 describe('what the comparison reports', () => {
   it('calls a dropped policy a problem, and names it', async () => {
     const policy = await anyPolicy();
-    await db.exec(`drop policy "${policy.name}" on public."${policy.table}";`);
+    await db.exec(`drop policy "${policy.name}" on ekwo."${policy.table}";`);
 
     const report = await doctor(db, migrations, { expected });
     const check = report.checks.find((c) => c.name === 'catalogue');
@@ -113,7 +113,7 @@ describe('what the comparison reports', () => {
   });
 
   it('calls a policy nobody reviewed a problem too, because that is the security model', async () => {
-    await db.exec(`create policy "invented" on public.accounts for select using (true);`);
+    await db.exec(`create policy "invented" on ekwo.accounts for select using (true);`);
 
     const comparison = await compareCatalogue(db, expected);
     expect(comparison.policyFaults).toBe(1);
@@ -128,9 +128,9 @@ describe('what the comparison reports', () => {
 
   it("calls an operator's own table information, and never a failure", async () => {
     await db.exec(`
-      create table public.our_own_thing (id uuid primary key);
-      alter table public.our_own_thing enable row level security;
-      create policy our_own_thing_select on public.our_own_thing for select using (true);
+      create table ekwo.our_own_thing (id uuid primary key);
+      alter table ekwo.our_own_thing enable row level security;
+      create policy our_own_thing_select on ekwo.our_own_thing for select using (true);
     `);
 
     const comparison = await compareCatalogue(db, expected);
@@ -155,7 +155,7 @@ describe('what the comparison reports', () => {
     expect(expected.socle.functions.map((f) => `${f.name}(${f.arguments})`)).toEqual(
       expect.arrayContaining([gone, kept]),
     );
-    await db.exec(`drop function public.${gone};`);
+    await db.exec(`drop function ekwo.${gone};`);
 
     const comparison = await compareCatalogue(db, expected);
     const socle = comparison.sections.find((s) => s.code === 'socle');
@@ -164,7 +164,7 @@ describe('what the comparison reports', () => {
   });
 
   it('names a column whose type has moved, and does not call it missing', async () => {
-    await db.exec('alter table public.accounts alter column name type varchar(120);');
+    await db.exec('alter table ekwo.accounts alter column name type varchar(120);');
     const comparison = await compareCatalogue(db, expected);
     const socle = comparison.sections.find((s) => s.code === 'socle');
     expect(socle?.columns.missing).toEqual([]);
@@ -173,7 +173,7 @@ describe('what the comparison reports', () => {
   });
 
   it('says a missing table once, rather than once per column it took with it', async () => {
-    await db.exec('drop table public.audit_log cascade;');
+    await db.exec('drop table ekwo.audit_log cascade;');
     const comparison = await compareCatalogue(db, expected);
     const socle = comparison.sections.find((s) => s.code === 'socle');
     expect(socle?.tables.missing).toContain('audit_log');
@@ -239,7 +239,7 @@ describe('the modules', () => {
 
 describe('the shape a machine reads', () => {
   it('carries the whole comparison under the check, and survives a JSON round trip', async () => {
-    await db.exec('create table public.stray (id uuid primary key);');
+    await db.exec('create table ekwo.stray (id uuid primary key);');
     const report = await doctor(db, migrations, { expected });
     const parsed = JSON.parse(JSON.stringify(report)) as {
       checks: { name: string; severity: string; data?: Record<string, unknown> }[];

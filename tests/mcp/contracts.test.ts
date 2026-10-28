@@ -3,7 +3,7 @@
  *
  * What the module decides — which period is due, what a renewal extends to,
  * who may issue — is `modules/contracts/tests`. What is asked here is that a
- * model reaches it whole: the toolset is offered only where `public.modules`
+ * model reaches it whole: the toolset is offered only where `ekwo.modules`
  * carries the module, each tool calls its function and hands back what the
  * function returned, and a refusal of the schema reaches the model under its
  * own name. The currency and the tax are the company's, read and never named.
@@ -81,7 +81,7 @@ afterAll(async () => {
 });
 
 describe('the contracts toolset', () => {
-  it('is offered where public.modules carries contracts, under its prefix, and not otherwise', async () => {
+  it('is offered where ekwo.modules carries contracts, under its prefix, and not otherwise', async () => {
     expect(await installedModules(backend)).toContain('contracts');
     const names = (await client.listTools()).tools.map((tool) => tool.name);
     expect(names.filter((name) => name.startsWith('contracts_')).length).toBe(8);

@@ -1,8 +1,9 @@
 /**
  * Where the socle lives, for the connection that installs and operates it.
  *
- * The socle was created in `public` and moves to its own schema, `ekwo`
- * (decision 0090). The bookkeeping routes resolve it once per connection in
+ * The socle was created in `public` and lives in its own schema, `ekwo`,
+ * since `20261028040000` (decision 0090); a database that has not run that
+ * file yet still holds it in `public`. The bookkeeping routes resolve it once per connection in
  * `@ekwo-ai/core`; this file is the same question asked on the owner's
  * connection, by the same marker and the same catalogue query.
  *
@@ -54,4 +55,4 @@ export async function useSocleSchema(db: SqlClient): Promise<string> {
  * until the schema is exposed.
  */
 export const EXPOSE_SOCLE_LINE =
-  `Add "${SOCLE_SCHEMA}" to Project Settings → Data API → Exposed schemas (on a local stack, \`schemas\` under [api] in supabase/config.toml) — before the release that moves the socle there.`;
+  `Add "${SOCLE_SCHEMA}" to Project Settings → Data API → Exposed schemas (on a local stack, \`schemas\` under [api] in supabase/config.toml) — the socle lives there, and every call of every client names it.`;

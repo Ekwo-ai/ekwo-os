@@ -38,7 +38,7 @@ describe('row level security', () => {
       `select c.relname as tablename
          from pg_class c
          join pg_namespace n on n.oid = c.relnamespace
-        where n.nspname = 'public' and c.relkind = 'r' and not c.relrowsecurity
+        where n.nspname = 'ekwo' and c.relkind = 'r' and not c.relrowsecurity
         order by 1`,
     );
     expect(unprotected).toEqual([]);
@@ -48,9 +48,9 @@ describe('row level security', () => {
     const bare = await rows<{ tablename: string }>(
       db,
       `select t.tablename from pg_tables t
-        where t.schemaname = 'public'
+        where t.schemaname = 'ekwo'
           and not exists (select 1 from pg_policies p
-                           where p.schemaname = 'public' and p.tablename = t.tablename)
+                           where p.schemaname = 'ekwo' and p.tablename = t.tablename)
         order by 1`,
     );
     expect(bare).toEqual([]);
@@ -71,7 +71,7 @@ describe('row level security', () => {
       db,
       `select tablename || '.' || policyname as policy
          from pg_policies
-        where schemaname = 'public'
+        where schemaname = 'ekwo'
           and qual ~ '^has_capability\\(company_id, ''[a-z_.]+''::text\\)$'
         order by 1`,
     );
@@ -81,7 +81,7 @@ describe('row level security', () => {
       db,
       `select tablename || '.' || policyname as policy
          from pg_policies
-        where schemaname = 'public' and qual like '%companies_with_capability(%'`,
+        where schemaname = 'ekwo' and qual like '%companies_with_capability(%'`,
     );
     expect(once.length).toBeGreaterThan(40);
   });

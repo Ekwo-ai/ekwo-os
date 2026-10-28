@@ -16,7 +16,7 @@
  * the CI diff is the whole test. `oid` is never an ordering: it is an
  * allocation order, and `create or replace` is free to move a tuple.
  *
- * The socle is `public`. Each module is its own schema, listed separately, so
+ * The socle is `ekwo` (`public` before 20261028040000). Each module is its own schema, listed separately, so
  * the doctor can require only the modules a database actually carries.
  *
  * Each section carries a `grants` block too — which of `anon`,
@@ -163,7 +163,10 @@ export async function buildInventory() {
       });
     }
 
-    return { schemaVersion: version, migration, socle: await describe(db, 'public'), modules };
+    // The socle is in `ekwo` since 20261028040000, found by its marker as
+    // every client finds it (decision 0090).
+    const moved = (await db.query(`select to_regprocedure('ekwo.ekwo_schema_version()') is not null as moved`)).rows[0]?.moved;
+    return { schemaVersion: version, migration, socle: await describe(db, moved ? 'ekwo' : 'public'), modules };
   } finally {
     await db.close();
   }

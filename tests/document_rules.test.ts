@@ -79,7 +79,7 @@ describe('the document columns of the country model', () => {
       db,
       `select column_name, is_nullable, column_default
          from information_schema.columns
-        where table_schema = 'public' and table_name = 'country_defaults'
+        where table_schema = 'ekwo' and table_name = 'country_defaults'
           and column_name = any($1)
         order by column_name`,
       [ADDED],
@@ -647,7 +647,7 @@ describe('no country lives in what this change added', () => {
     const definitions = await rows<{ viewname: string; definition: string }>(
       db,
       `select viewname, definition from pg_views
-        where schemaname = 'public' and viewname in ('document_legal_mentions', 'document_line_items')`,
+        where schemaname = 'ekwo' and viewname in ('document_legal_mentions', 'document_line_items')`,
     );
     expect(definitions).toHaveLength(2);
     for (const view of definitions) {
@@ -687,7 +687,7 @@ describe('no country lives in what this change added', () => {
       db,
       `select p.proname
          from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.prosrc ilike '%country_defaults%'
           and (p.prosrc ilike '%legal_mention%' or p.prosrc ilike '%einvoice_profile%'
                or p.prosrc ilike '%tax_point_rule%' or p.prosrc ilike '%number_format%'

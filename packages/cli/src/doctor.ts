@@ -140,7 +140,7 @@ export function checkSocleSchema(socle: string): Check {
     summary:
       socle === SOCLE_SCHEMA
         ? `the socle lives in its own schema, ${SOCLE_SCHEMA}`
-        : `the socle lives in ${FORMER_SOCLE_SCHEMA}, and moves to ${SOCLE_SCHEMA} with the next release`,
+        : `the socle lives in ${FORMER_SOCLE_SCHEMA}: this database has not run the migration that moves it to ${SOCLE_SCHEMA} (ekwo migrate does)`,
     data: { schema: socle },
   };
 }
@@ -155,10 +155,12 @@ export function checkSocleSchema(socle: string): Check {
  * nothing can be known from a database connection, and the check says so and
  * prints the one line to set rather than guessing.
  *
- * A warning while the socle is still in `public`: nothing fails yet, and the
- * schema has to be exposed before the release that fills it. A problem once
- * the socle is in `ekwo` and the setting says it is not served: every request
- * of every client then answers that the schema is not exposed.
+ * Where the setting is not visible, the line to check is said and nothing is
+ * judged. Where it is: a warning while the socle is still in `public` —
+ * nothing fails yet, and the schema has to be exposed before `ekwo migrate`
+ * moves the socle there — and a problem once the socle is in `ekwo` and the
+ * setting says it is not served, because every request of every client then
+ * answers that the schema is not exposed.
  */
 async function checkSocleExposed(db: SqlClient, socle: string): Promise<Check> {
   const name = 'ekwo_exposed';
@@ -172,9 +174,11 @@ async function checkSocleExposed(db: SqlClient, socle: string): Promise<Check> {
   }
   const setting = found[0]?.setting ?? null;
   if (setting === null) {
+    // Nothing can be known from here: the line to check, said, not a warning
+    // about something that may well be right.
     return {
       name,
-      severity: socle === SOCLE_SCHEMA ? 'warning' : 'ok',
+      severity: 'ok',
       summary: `the exposed schemas are a setting of the project, not visible from this connection — make sure ${SOCLE_SCHEMA} is among them`,
       details: [EXPOSE_SOCLE_LINE],
       data: { exposed: null },

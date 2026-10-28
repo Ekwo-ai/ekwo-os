@@ -925,7 +925,7 @@ describe('the migration of this change', () => {
       db,
       `select p.proname from pg_proc p
          join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = 'public'
+        where n.nspname = 'ekwo'
           and p.proname in ('settle_cash_basis_tax', 'reconcile', 'unreconcile', 'post_document', 'post_payment')
           and has_function_privilege('anon', p.oid, 'execute')`,
     );

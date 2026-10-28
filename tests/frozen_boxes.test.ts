@@ -23,7 +23,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { PackGolden } from '../packages/cli/src/index.js';
-import { asUser, freshDatabase, one, repoRoot, rows } from './helpers/db.js';
+import { asUser, freshDatabase, one, replayMigration, repoRoot, rows } from './helpers/db.js';
 import { newCompany, newContact, newDocument } from './helpers/factory.js';
 import { replayScenario } from './helpers/golden-scenario.js';
 import { newMember, plainSale, refusalAs } from './helpers/integrity.js';
@@ -88,7 +88,7 @@ describe('an installation upgraded with books already in it', () => {
       await one<{ h: string }>(db, `select md5(string_agg(id::text || updated_at::text, ',' order by id)) as h from entry_lines`)
     ).h;
     for (const file of [MIGRATION, ...LATER]) {
-      await db.exec(await readFile(join(repoRoot, 'supabase', 'migrations', file), 'utf8'));
+      await replayMigration(db, file);
     }
   }, 1_200_000);
 

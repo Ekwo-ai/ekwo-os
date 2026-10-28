@@ -174,7 +174,7 @@ describe('the two install paths', () => {
                   coalesce('(' || numeric_precision || ',' || numeric_scale || ')', '') ||
                   case when is_nullable = 'YES' then ' null' else ' not null' end as line
              from information_schema.columns
-            where table_schema = 'public'
+            where table_schema = 'ekwo'
             order by table_name, column_name`,
         )
       ).rows.map((r) => r.line);
@@ -188,7 +188,7 @@ describe('the two install paths', () => {
           `select p.proname || '(' || pg_get_function_identity_arguments(p.oid) || ') ' ||
                   md5(pg_get_functiondef(p.oid)) as line
              from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-            where n.nspname = 'public'
+            where n.nspname = 'ekwo'
             order by 1`,
         )
       ).rows.map((r) => r.line);

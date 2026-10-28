@@ -28,7 +28,7 @@ describe('migrations', () => {
     const tables = (
       await rows<{ tablename: string }>(
         db,
-        `select tablename from pg_tables where schemaname = 'public' order by 1`,
+        `select tablename from pg_tables where schemaname = 'ekwo' order by 1`,
       )
     ).map((t) => t.tablename);
 
@@ -59,7 +59,7 @@ describe('migrations', () => {
         db,
         `select p.proname from pg_proc p
            join pg_namespace n on n.oid = p.pronamespace
-          where n.nspname = 'public' order by 1`,
+          where n.nspname = 'ekwo' order by 1`,
       )
     ).map((f) => f.proname);
 

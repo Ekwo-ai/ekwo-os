@@ -48,19 +48,7 @@ import {
   type PackGolden,
   type QueryRows,
 } from '../packages/cli/src/index.js';
-import {
-  asUser,
-  expectError,
-  freshDatabase,
-  migrationFiles,
-  moduleMigrationFiles,
-  moduleSeedFiles,
-  openDatabase,
-  repoRoot,
-  rows,
-  seedFiles,
-  shimPath,
-} from './helpers/db.js';
+import { asUser, expectError, followSocle, freshDatabase, migrationFiles, moduleFunctionsFollowTheSocle, moduleMigrationFiles, moduleSeedFiles, openDatabase, replayMigration, replaySql, repoRoot, rows, seedFiles, shimPath } from './helpers/db.js';
 import { newCompany } from './helpers/factory.js';
 import { replayScenario } from './helpers/golden-scenario.js';
 
@@ -71,6 +59,8 @@ const RESERVED = [
   'audit_record',
   'company_column',
   'company_references_by_id',
+  // The installer's, after a module's migrations (decision 0090).
+  'module_functions_follow_the_socle',
   'purge_audit_log',
   'refuse_merged_contacts_in',
   'scope_references_to_company',
@@ -117,16 +107,18 @@ async function strippedDatabase(): Promise<PGlite> {
   `);
 
   for (const file of await migrationFiles()) {
-    await db.exec(await readFile(join(repoRoot, 'supabase', 'migrations', file), 'utf8'));
+    await replayMigration(db, file);
   }
+  await followSocle(db);
   for (const migration of await moduleMigrationFiles()) {
-    await db.exec(await readFile(migration.path, 'utf8'));
+    await replaySql(db, migration.path);
   }
+  await moduleFunctionsFollowTheSocle(db);
   for (const file of await seedFiles()) {
     await db.exec(await readFile(join(repoRoot, 'supabase', 'seed', file), 'utf8'));
   }
   for (const seed of await moduleSeedFiles()) {
-    await db.exec(await readFile(seed.path, 'utf8'));
+    await replaySql(db, seed.path);
   }
   await db.exec(`select set_config('ekwo.installing', 'on', false);`);
   return db;
@@ -199,7 +191,7 @@ describe('what the grants say, against what the policies say', () => {
     db = await freshDatabase({ seed: false });
     const installed = await rows<{ schema_name: string }>(db, `select schema_name from modules`);
     sections = [];
-    for (const schema of ['public', ...installed.map((r) => r.schema_name)]) {
+    for (const schema of ['ekwo', ...installed.map((r) => r.schema_name)]) {
       sections.push(await describeGrants(queryRows(db), schema));
     }
   }, 180_000);
@@ -256,23 +248,23 @@ describe('what the grants say, against what the policies say', () => {
       .flatMap((s) => s.functions.filter((f) => f.anon.length > 0).map((f) => `${s.schema}.${f.name}`))
       .sort();
     expect(callable).toEqual([
-      'public.api_key_on_company',
-      'public.can_write_company',
-      'public.company_has_no_member',
-      'public.company_role',
-      'public.ekwo_pre_request',
-      'public.filing_proof',
-      'public.has_capability',
-      'public.installed_schema_version',
-      'public.instance_has_no_admin',
-      'public.is_any_company_member',
-      'public.is_company_member',
-      'public.is_company_owner',
-      'public.is_instance_admin',
-      'public.is_known_caller',
-      'public.module_enabled',
-      'public.present_api_key',
-      'public.shared_document',
+      'ekwo.api_key_on_company',
+      'ekwo.can_write_company',
+      'ekwo.company_has_no_member',
+      'ekwo.company_role',
+      'ekwo.ekwo_pre_request',
+      'ekwo.filing_proof',
+      'ekwo.has_capability',
+      'ekwo.installed_schema_version',
+      'ekwo.instance_has_no_admin',
+      'ekwo.is_any_company_member',
+      'ekwo.is_company_member',
+      'ekwo.is_company_owner',
+      'ekwo.is_instance_admin',
+      'ekwo.is_known_caller',
+      'ekwo.module_enabled',
+      'ekwo.present_api_key',
+      'ekwo.shared_document',
     ]);
   });
 
@@ -340,8 +332,8 @@ describe('what the grants say, against what the policies say', () => {
     expect(callable).toEqual([]);
   });
 
-  it('reserves ten functions to the connections that are not a client', () => {
-    const socle = sections.find((s) => s.schema === 'public');
+  it('reserves eleven functions to the connections that are not a client', () => {
+    const socle = sections.find((s) => s.schema === 'ekwo');
     const closed = (socle?.functions ?? [])
       .filter((f) => f.trigger !== true && f.authenticated.length === 0)
       .map((f) => f.name)
@@ -422,7 +414,7 @@ describe('a database whose roles start with nothing at all', () => {
       `select count(*)::text as n
          from pg_default_acl d
          join pg_namespace n on n.oid = d.defaclnamespace
-        where n.nspname in ('public', 'fixed_assets', 'budgets', 'tax')`,
+        where n.nspname in ('ekwo', 'fixed_assets', 'budgets', 'tax')`,
     );
     expect(left[0]?.n).toBe('0');
   });

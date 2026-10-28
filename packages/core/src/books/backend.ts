@@ -106,19 +106,8 @@ export interface Backend {
   close(): Promise<void>;
 }
 
-/**
- * Where the socle lives: its own schema, and the one it is leaving.
- *
- * The socle was created in `public` and moves to `ekwo` (decision 0090). A
- * client of either layout finds it by one marker, the function that carries
- * the schema's version: present in `ekwo`, the socle is there; absent, it is
- * still in `public`. Nothing else is guessed, and no other schema is tried —
- * a database that has neither is not an Ekwo installation, and the first
- * query says so in the database's own words.
- */
-export const SOCLE_SCHEMA = 'ekwo';
-export const FORMER_SOCLE_SCHEMA = 'public';
-export const SOCLE_MARKER = 'ekwo_schema_version';
+export { FORMER_SOCLE_SCHEMA, SOCLE_MARKER, SOCLE_SCHEMA, socleMarkerInCatalogue, socleNamed } from './socle-names.js';
+import { FORMER_SOCLE_SCHEMA, SOCLE_MARKER, SOCLE_SCHEMA } from './socle-names.js';
 
 /**
  * Answers whether the marker is in `schema`. Each route asks in its own way —
@@ -148,28 +137,6 @@ export function socleSchemaResolver(probe: SocleProbe): () => Promise<string> {
     }
     return resolved;
   };
-}
-
-/**
- * Whether the marker is in `schema`, read from the catalogue of a direct
- * connection.
- *
- * Asked as the connection, before any role is set: `pg_proc` is readable by
- * everybody, and the question is where a function is, not whether this user
- * may call it. `query` is the driver's, whichever it is.
- */
-export async function socleMarkerInCatalogue(
-  query: (sql: string, params: unknown[]) => Promise<Array<Record<string, unknown>>>,
-  schema: string,
-): Promise<boolean> {
-  const rows = await query(
-    `select exists (
-       select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-        where n.nspname = $1 and p.proname = $2 and p.pronargs = 0
-     ) as found`,
-    [schema, SOCLE_MARKER],
-  );
-  return rows[0]?.['found'] === true;
 }
 
 /**

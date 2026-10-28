@@ -23,17 +23,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Pack } from '../packages/cli/src/index.js';
-import {
-  expectError,
-  freshDatabase,
-  migrationFiles,
-  one,
-  openDatabase,
-  repoRoot,
-  rows,
-  seedFiles,
-  shimPath,
-} from './helpers/db.js';
+import { expectError, followSocle, freshDatabase, migrationFiles, one, openDatabase, readMigration, replayMigration, repoRoot, rows, seedFiles, shimPath } from './helpers/db.js';
 import { newCompany, newContact, newDocument } from './helpers/factory.js';
 import { packWhere, roleOf } from './helpers/packs.js';
 
@@ -266,11 +256,12 @@ describe('the documents that were here before the column was', () => {
     await before.exec(await readFile(shimPath, 'utf8'));
     for (const file of await migrationFiles()) {
       if (file === MIGRATION || READS_THE_COLUMN.includes(file)) continue;
-      await before.exec(await readFile(join(repoRoot, 'supabase', 'migrations', file), 'utf8'));
+      await replayMigration(before, file);
     }
     for (const file of await seedFiles()) {
       await before.exec(await readFile(join(repoRoot, 'supabase', 'seed', file), 'utf8'));
     }
+    await followSocle(before);
 
     const older = await newCompany(before, {
       country: pack.manifest.country,
@@ -308,7 +299,7 @@ describe('the documents that were here before the column was', () => {
     expect(columns[0]?.n, 'the column is not supposed to exist yet').toBe(0);
 
     await before.exec(
-      await readFile(join(repoRoot, 'supabase', 'migrations', MIGRATION), 'utf8'),
+      await readMigration(before, MIGRATION),
     );
 
     const filled = await rows<{ number: string; language: string }>(

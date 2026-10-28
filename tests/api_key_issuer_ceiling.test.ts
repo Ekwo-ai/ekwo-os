@@ -404,7 +404,7 @@ describe('api_key_reach', () => {
       await rows<{ column_name: string }>(
         db,
         `select column_name from information_schema.columns
-          where table_schema = 'public' and table_name = 'api_key_reach'`,
+          where table_schema = 'ekwo' and table_name = 'api_key_reach'`,
       )
     ).map((r) => r.column_name);
     expect(columns).not.toContain('key_hash');

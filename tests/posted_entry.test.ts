@@ -128,7 +128,7 @@ const columnsOf = (table: string) =>
     db,
     `select column_name as name, data_type as type
        from information_schema.columns
-      where table_schema = 'public' and table_name = $1 and is_generated = 'NEVER'
+      where table_schema = 'ekwo' and table_name = $1 and is_generated = 'NEVER'
         and column_name not in ('id', 'company_id', 'created_at')
       order by ordinal_position`,
     [table],

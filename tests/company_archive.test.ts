@@ -86,7 +86,7 @@ describe('what belongs to a company is read from the catalogue', () => {
     );
     const indirect = scoped.filter((t) => !t.has_company_id).map((t) => `${t.table_schema}.${t.table_name}`);
     expect(indirect).toEqual(
-      expect.arrayContaining(['public.journal_sequences', 'public.tax_filing_boxes', 'public.tax_filing_deposits']),
+      expect.arrayContaining(['ekwo.journal_sequences', 'ekwo.tax_filing_boxes', 'ekwo.tax_filing_deposits']),
     );
     const modules = await rows<{ schema_name: string }>(a, `select schema_name from modules`);
     for (const module of modules) {
@@ -119,7 +119,7 @@ describe('what belongs to a company is read from the catalogue', () => {
       `select table_schema, table_name from company_archive_tables()`,
     );
     for (const table of tables) {
-      const written = table.table_schema === 'public' ? table.table_name : `${table.table_schema}.${table.table_name}`;
+      const written = table.table_schema === 'ekwo' ? table.table_name : `${table.table_schema}.${table.table_name}`;
       expect(page, `docs/company-archive.md does not mention ${written}`).toContain(`\`${written}\``);
     }
   });
@@ -153,7 +153,7 @@ describe('what belongs to a company is read from the catalogue', () => {
          join pg_attribute a on a.attrelid = c.conrelid and a.attnum = k.attnum
         where c.contype = 'f' and ct.disposition = 'exported' and pt.disposition = 'exported'
           and pt.load_order >= ct.load_order and a.attname <> 'company_id'
-          and not (c.conrelid = 'public.companies'::regclass and a.attname = 'id')
+          and not (c.conrelid = 'ekwo.companies'::regclass and a.attname = 'id')
           and (a.attnotnull or not exists (select 1 from pg_attribute i
                                             where i.attrelid = c.conrelid and i.attname = 'id'))`,
     );
@@ -196,7 +196,7 @@ describe('what belongs to a company is read from the catalogue', () => {
       // Classifying is a row: one leaves, one stays and says why.
       await db.exec(`
         insert into company_archive_registry (table_name, disposition, load_order, via_column, via_table)
-        values ('zz_journal_marks', 'exported', 95, 'journal_id', 'public.journals');
+        values ('zz_journal_marks', 'exported', 95, 'journal_id', 'ekwo.journals');
         insert into company_archive_registry (table_name, disposition, reason)
         values ('zz_notes', 'excluded', 'A scratch table of this test, which no company would miss.');
       `);
@@ -206,8 +206,8 @@ describe('what belongs to a company is read from the catalogue', () => {
         [companyId],
       );
       const archive = JSON.parse(await exportAs(db, owner, companyId)) as Archive;
-      expect(archive.tables['public.zz_journal_marks']).toHaveLength(1);
-      expect(archive.manifest.excluded.map((t) => t.name)).toContain('public.zz_notes');
+      expect(archive.tables['ekwo.zz_journal_marks']).toHaveLength(1);
+      expect(archive.manifest.excluded.map((t) => t.name)).toContain('ekwo.zz_notes');
     } finally {
       await db.close();
     }
@@ -288,7 +288,7 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       const theirs = JSON.parse(await exportAs(a, client, leaves.companyId)) as Archive;
       const ours = JSON.parse(await exportAs(a, leaves.ownerId, leaves.companyId)) as Archive;
       const counts = (x: Archive): Record<string, number> =>
-        Object.fromEntries(x.manifest.tables.filter((t) => t.name !== 'public.audit_log').map((t) => [t.name, t.rows]));
+        Object.fromEntries(x.manifest.tables.filter((t) => t.name !== 'ekwo.audit_log').map((t) => [t.name, t.rows]));
       expect(counts(theirs)).toEqual(counts(ours));
 
       // Row level security hands back fewer rows and says nothing. The export says it.
@@ -298,7 +298,7 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       );
       const partial = await asUser(a, client, () => expectError(a, `select export_company($1)`, [leaves.companyId]));
       expect(partial).toContain('export_incomplete');
-      expect(partial).toContain('public.bank_');
+      expect(partial).toContain('ekwo.bank_');
 
       // And leaving is an act the company can see.
       const noted = await rows<{ actor_id: string }>(
@@ -323,7 +323,7 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       for (const file of archive.manifest.files.list) expect(file.storage_path).toContain(leaves.companyId);
 
       // Decimals are text, all the way down to six places.
-      const product = (archive.tables['public.products'] ?? [])[0] as Record<string, unknown>;
+      const product = (archive.tables['ekwo.products'] ?? [])[0] as Record<string, unknown>;
       expect(product['sale_price']).toBe('12.345678');
 
       // Furnished on purpose: a table this file fills is a table the import
@@ -335,14 +335,14 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
           'fixed_assets.disposals',
           // A regime of a tax on turnover is pack data no pack carries yet
           // (decision 0080); tests/turnover_tax_regime.test.ts exercises it.
-          'public.company_tax_regimes',
-          'public.turnover_tax_assessments',
+          'ekwo.company_tax_regimes',
+          'ekwo.turnover_tax_assessments',
           // A VAT scheme is a statement no company makes by default, and an
           // instalment a payment on account of a scheme that plans some;
           // tests/vat_schemes.test.ts exercises both.
-          'public.company_vat_schemes',
-          'public.declaration_instalments',
-          ...(empty.includes('public.company_filing_periods') ? ['public.company_filing_periods'] : []),
+          'ekwo.company_vat_schemes',
+          'ekwo.declaration_instalments',
+          ...(empty.includes('ekwo.company_filing_periods') ? ['ekwo.company_filing_periods'] : []),
         ].sort(),
       );
     });
@@ -415,7 +415,7 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
       // B's own testimony starts with the import.
       const back = JSON.parse(await exportAs(b, ownerInB, leaves.companyId)) as Archive;
       for (const table of archive.manifest.tables) {
-        if (table.name === 'public.audit_log') continue;
+        if (table.name === 'ekwo.audit_log') continue;
         const there = back.manifest.tables.find((t) => t.name === table.name);
         expect(there?.sha256, `${table.name} is not the same rows in B`).toBe(table.sha256);
       }

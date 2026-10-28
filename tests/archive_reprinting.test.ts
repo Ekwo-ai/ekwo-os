@@ -165,7 +165,7 @@ describe('an archive printed again by an honest reader', () => {
           [arrived],
         ).catch(() => undefined);
         if (counted === undefined) continue;
-        if (table.name === 'public.audit_log') {
+        if (table.name === 'ekwo.audit_log') {
           expect(counted.n, table.name).toBeGreaterThanOrEqual(table.rows);
         } else {
           expect(counted.n, table.name).toBe(table.rows);
@@ -178,7 +178,7 @@ describe('an archive printed again by an honest reader', () => {
 
   it('is refused all the same when a value was changed', async () => {
     const archive = JSON.parse(await exportText()) as Archive;
-    const lines = archive.tables['public.entry_lines'] as Record<string, unknown>[];
+    const lines = archive.tables['ekwo.entry_lines'] as Record<string, unknown>[];
     expect(lines.length).toBeGreaterThan(0);
     // One cent, on one line. Nothing else touched, and the row count is the
     // same — which is exactly the shape a checksum exists to catch.
@@ -187,12 +187,12 @@ describe('an archive printed again by an honest reader', () => {
     const said = await importInto(JSON.stringify(archive));
     expect(typeof said).toBe('string');
     expect(said as string).toMatch(/archive_corrupt/);
-    expect(said as string).toContain('public.entry_lines');
+    expect(said as string).toContain('ekwo.entry_lines');
   });
 
   it('is refused when a row is removed, printed again or not', async () => {
     const archive = JSON.parse(await exportText()) as Archive;
-    const lines = archive.tables['public.entry_lines'] as unknown[];
+    const lines = archive.tables['ekwo.entry_lines'] as unknown[];
     lines.pop();
 
     const said = await importInto(JSON.stringify(archive));
@@ -244,7 +244,7 @@ describe('an archive written before this migration', () => {
 describe('what each checksum of the manifest answers', () => {
   it('keeps the one `shasum` checks, over the bytes the database wrote', async () => {
     const archive = JSON.parse(await exportText()) as Archive;
-    const audit = archive.manifest.tables.find((t) => t.name === 'public.audit_log');
+    const audit = archive.manifest.tables.find((t) => t.name === 'ekwo.audit_log');
     expect(audit).toBeDefined();
     expect(audit!.sha256).toMatch(/^[0-9a-f]{64}$/);
 
@@ -254,7 +254,7 @@ describe('what each checksum of the manifest answers', () => {
     const lines = await asUser(a, ownerId, async () =>
       rows<{ row: string }>(
         a,
-        `select r::text as row from export_company_table($1, 'public.audit_log') as r`,
+        `select r::text as row from export_company_table($1, 'ekwo.audit_log') as r`,
         [companyId],
       ),
     );

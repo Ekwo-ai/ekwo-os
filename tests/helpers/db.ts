@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PGlite, type Extensions, type PGliteOptions } from '@electric-sql/pglite';
+import { FORMER_SOCLE_SCHEMA, SOCLE_SCHEMA, socleMarkerInCatalogue, socleNamed } from '../../packages/core/src/books/socle-names.ts';
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const repoRoot = join(here, '..', '..');
@@ -216,7 +217,61 @@ export async function freshDatabase(options: Options = {}): Promise<PGlite> {
   // every database, loaded or built.
   await db.exec(`select set_config('ekwo.installing', 'on', false);`);
 
+  await followSocle(db);
+
   return db;
+}
+
+/**
+ * The socle first on the path of this connection, wherever it is.
+ *
+ * A test writes its SQL unqualified — `select … from companies` — and the
+ * socle lives in `ekwo` since `20261028040000` (decision 0090): a data
+ * directory carries the objects, not the path of the connection that built
+ * it, so every database opened from one asks here. An image built before the
+ * move (`tests/schema_floor.test.ts`) has no marker in `ekwo` and keeps
+ * `public`.
+ */
+/**
+ * A migration file read for the socle's schema of the day, as `ekwo migrate`
+ * reads one (`socleNamed`): a file published before the move names
+ * `public.`, and a test that replays it on a database where the socle is in
+ * `ekwo` gets it with `ekwo.` in its place.
+ */
+export async function readMigration(db: PGlite, file: string, root = repoRoot): Promise<string> {
+  return socleNamed(await readFile(join(root, 'supabase', 'migrations', file), 'utf8'), await socleSchemaIn(db));
+}
+
+/** `readMigration`, run. */
+export async function replayMigration(db: PGlite, file: string, root = repoRoot): Promise<void> {
+  await db.exec(await readMigration(db, file, root));
+}
+
+/** Any published SQL file — a module's migration or seed — read the same way, and run. */
+export async function replaySql(db: PGlite, path: string): Promise<void> {
+  await db.exec(socleNamed(await readFile(path, 'utf8'), await socleSchemaIn(db)));
+}
+
+/**
+ * What `ekwo module` does once a module's migrations have run: every module
+ * function without a path of its own gets one, its schema then the socle's
+ * (`ekwo.module_functions_follow_the_socle()`, `20261028040000`). Nothing on
+ * a database before the move, where the function is not there.
+ */
+export async function moduleFunctionsFollowTheSocle(db: PGlite): Promise<void> {
+  const present = await db.query<{ there: boolean }>(
+    `select to_regprocedure('ekwo.module_functions_follow_the_socle(text)') is not null as there`,
+  );
+  if (present.rows[0]?.there !== true) return;
+  await db.query(`select ekwo.module_functions_follow_the_socle(m.schema_name) from ekwo.modules m`);
+}
+
+export async function followSocle(db: PGlite): Promise<void> {
+  await db.exec(`
+    select set_config('search_path',
+                      case when to_regprocedure('ekwo.ekwo_schema_version()') is null then 'public'
+                           else 'ekwo, public' end,
+                      false);`);
 }
 
 /**
@@ -230,6 +285,16 @@ export async function freshDatabase(options: Options = {}): Promise<PGlite> {
  * that build the same image at once both write it, each to its own file, and
  * the rename that publishes it is atomic: the loser's copy is identical.
  */
+/** `ekwo` once the marker is there, `public` until then — the question every client asks. */
+export async function socleSchemaOf(db: PGlite): Promise<string> {
+  return socleSchemaIn(db);
+}
+
+async function socleSchemaIn(db: PGlite): Promise<string> {
+  const found = await socleMarkerInCatalogue(async (sql, params) => (await db.query<Record<string, unknown>>(sql, params)).rows, SOCLE_SCHEMA);
+  return found ? SOCLE_SCHEMA : FORMER_SOCLE_SCHEMA;
+}
+
 export async function schemaImage(options: Options = {}): Promise<string> {
   const root = options.root ?? repoRoot;
   const tree = treeOf(root);
@@ -256,9 +321,17 @@ export async function schemaImage(options: Options = {}): Promise<string> {
 
   const db = await openDatabase();
   try {
+    // A module's file names the socle `public.`, as published; once the
+    // socle's own migrations have moved it to `ekwo` the file is read for
+    // that schema, as `ekwo migrate` reads it (`socleNamed`).
+    const moduleFiles = new Set([...moduleMigrations, ...moduleSeeds]);
+    const lastModuleMigration = moduleMigrations.at(-1);
     for (const file of files) {
       try {
-        await db.exec(await readFile(file, 'utf8'));
+        const published = await readFile(file, 'utf8');
+        const sql = moduleFiles.has(file) ? socleNamed(published, await socleSchemaIn(db)) : published;
+        await db.exec(sql);
+        if (file === lastModuleMigration) await moduleFunctionsFollowTheSocle(db);
       } catch (error) {
         throw new Error(`${relative(root, file)} failed: ${(error as Error).message}`);
       }
