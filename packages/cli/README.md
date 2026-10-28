@@ -541,7 +541,7 @@ exactly six fields:
   "organization": "My Organisation",
   "country": "<cc>",
   "edition": "community",
-  "schema_version": "0.23.0",
+  "schema_version": "0.24.0",
   "contact_email": "you@example.com"
 }
 ```

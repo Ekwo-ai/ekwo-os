@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.24.0] — 2026-10-28
+
 ### Added
 
 - **A document sent from a phone arrives as a draft purchase** (decision
@@ -29,6 +31,8 @@ somewhere has already run it.
 
 ### Changed
 
+- The schema is 0.24.0 (`20261028160000`); the floor of the packages stays at
+  0.19.0: the migration only adds, and the packages read nothing it added.
 - `documents.contact_id` is nullable **on a draft only**
   (`documents_contact_unless_draft`): a page nobody has read names no
   supplier yet. A document that leaves draft without a contact is refused
