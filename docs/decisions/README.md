@@ -111,6 +111,7 @@ consequence.
 - [0082](0082-a-company-numbers-its-documents-its-own-way.md) — A company numbers its documents its own way, and a change continues the series
 - [0091](0091-a-document-sent-from-a-phone-is-a-draft-purchase.md) — A document sent from a phone is a draft purchase, and waits for its contact
 - [0092](0092-a-late-payment-mention-is-the-companys-choice.md) — A late payment mention is the company's choice, on an invoice to a business
+- [0094](0094-an-archive-is-read-in-pages.md) — An archive is read in pages, and is the same archive
 
 ## Formats and modules
 

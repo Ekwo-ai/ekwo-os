@@ -25,3 +25,4 @@ export * from './imports.js';
 export * from './statements.js';
 export * from './analytics.js';
 export * from './document-pdf.js';
+export * from './archive.js';

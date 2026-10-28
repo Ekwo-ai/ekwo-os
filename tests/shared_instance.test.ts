@@ -809,6 +809,9 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
   // The jsonb it takes is a list of calendar addresses; the subject it names
   // is an argument of its own, and the key is only what it writes on the trail.
   'ekwo.record_filing_proof': { reads: [], writesOnly: ['subject_id'] },
+  // The jsonb it takes is the catalogue and the tables of an archive its
+  // caller built; the key is only what it writes in the list of files.
+  'ekwo.company_archive_manifest': { reads: [], writesOnly: ['attachment_id'] },
   // The jsonb they take is the authority's answer, kept verbatim; the
   // document is an argument of its own, and the keys are what they write on
   // the fiscal events.

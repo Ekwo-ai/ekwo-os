@@ -5016,6 +5016,18 @@
         "arguments": "p_capability text"
       },
       {
+        "name": "company_archive_catalog",
+        "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "company_archive_manifest",
+        "arguments": "p_company_id uuid, p_catalog jsonb, p_tables jsonb"
+      },
+      {
+        "name": "company_archive_page_query",
+        "arguments": "p_schema text, p_table text, p_where text"
+      },
+      {
         "name": "company_archive_predicate",
         "arguments": "p_schema text, p_table text, p_alias text"
       },
@@ -5030,6 +5042,10 @@
       {
         "name": "company_archive_row_counts",
         "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "company_archive_row_shape",
+        "arguments": "p_schema text, p_table text, OUT columns text, OUT decimals text, OUT order_columns text[], OUT key_types text[], OUT keyset boolean"
       },
       {
         "name": "company_archive_rows_query",
@@ -5398,6 +5414,14 @@
       {
         "name": "export_company_manifest",
         "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "export_company_outline",
+        "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "export_company_page",
+        "arguments": "p_company_id uuid, p_table text, p_after jsonb, p_limit integer"
       },
       {
         "name": "export_company_table",
@@ -9760,6 +9784,39 @@
           ]
         },
         {
+          "name": "company_archive_catalog",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "company_archive_manifest",
+          "arguments": "p_company_id uuid, p_catalog jsonb, p_tables jsonb",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "company_archive_page_query",
+          "arguments": "p_schema text, p_table text, p_where text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "company_archive_predicate",
           "arguments": "p_schema text, p_table text, p_alias text",
           "anon": [],
@@ -9795,6 +9852,17 @@
         {
           "name": "company_archive_row_counts",
           "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "company_archive_row_shape",
+          "arguments": "p_schema text, p_table text, OUT columns text, OUT decimals text, OUT order_columns text[], OUT key_types text[], OUT keyset boolean",
           "anon": [],
           "authenticated": [
             "execute"
@@ -10661,6 +10729,28 @@
         {
           "name": "export_company_manifest",
           "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "export_company_outline",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "export_company_page",
+          "arguments": "p_company_id uuid, p_table text, p_after jsonb, p_limit integer",
           "anon": [],
           "authenticated": [
             "execute"
