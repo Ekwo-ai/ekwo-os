@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.23.0",
-  "migration": "20261028070000",
+  "migration": "20261028152338",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -5260,6 +5260,10 @@
         "arguments": ""
       },
       {
+        "name": "documents_need_a_contact",
+        "arguments": ""
+      },
+      {
         "name": "documents_posting_mode",
         "arguments": ""
       },
@@ -5792,6 +5796,10 @@
         "arguments": "p_before date"
       },
       {
+        "name": "receive_purchase_document",
+        "arguments": "p_company_id uuid, p_reference text, p_taken_at timestamp with time zone, p_files jsonb"
+      },
+      {
         "name": "reconcile",
         "arguments": "p_line_a uuid, p_line_b uuid, p_amount numeric"
       },
@@ -5962,6 +5970,10 @@
       {
         "name": "statement_rule_catches",
         "arguments": "p_rule statement_line_rules, p_code text, p_account_type account_type, p_balance numeric"
+      },
+      {
+        "name": "storage_path_company",
+        "arguments": "p_name text"
       },
       {
         "name": "suggest_combination",
@@ -7139,6 +7151,10 @@
       {
         "table": "documents",
         "name": "documents_contact_id_not_merged"
+      },
+      {
+        "table": "documents",
+        "name": "documents_contact_named"
       },
       {
         "table": "documents",
@@ -10325,6 +10341,14 @@
           "service_role": []
         },
         {
+          "name": "documents_need_a_contact",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "documents_posting_mode",
           "arguments": "",
           "trigger": true,
@@ -11728,6 +11752,17 @@
           ]
         },
         {
+          "name": "receive_purchase_document",
+          "arguments": "p_company_id uuid, p_reference text, p_taken_at timestamp with time zone, p_files jsonb",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "reconcile",
           "arguments": "p_line_a uuid, p_line_b uuid, p_amount numeric",
           "anon": [],
@@ -12168,6 +12203,17 @@
         {
           "name": "statement_rule_catches",
           "arguments": "p_rule statement_line_rules, p_code text, p_account_type account_type, p_balance numeric",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "storage_path_company",
+          "arguments": "p_name text",
           "anon": [],
           "authenticated": [
             "execute"

@@ -883,6 +883,12 @@ describe('a client writes nothing else — by the function', () => {
         sql: `select create_document(jsonb_build_object('company_id', $1::uuid, 'doc_type', 'sale_invoice', 'document_date', '2026-01-01'), '[]'::jsonb)`,
         params: [mine.companyId],
       },
+      // A page sent from a phone is a draft purchase: documents.write, asked first.
+      'ekwo.receive_purchase_document': {
+        sql: `select receive_purchase_document($1, 'phone', now(),
+                jsonb_build_array(jsonb_build_object('storage_path', $1::text || '/inbox/phone/p1.jpg', 'mime_type', 'image/jpeg')))`,
+        params: [mine.companyId],
+      },
       // Presenting a key is a door and not a privilege: a client who does not
       // hold one is told the secret is not a key of this installation, in the
       // same words anybody else is told.

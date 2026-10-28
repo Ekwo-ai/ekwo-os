@@ -9,6 +9,33 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A document sent from a phone arrives as a draft purchase** (decision
+  0091, `20261028152338_a_purchase_arrives_from_the_phone`).
+  `receive_purchase_document(company, reference, taken_at, files)` writes one
+  draft `purchase_invoice` — `client_ref` the phone's reference, dated the day
+  it was taken, in the company's currency, no line yet — and one
+  `attachments` row per page on it, in the order sent. Security invoker,
+  `documents.write` asked first (`not_allowed`, 42501); every page a file
+  under `<company>/inbox/<reference>/`, an image or a PDF, and an object of
+  the bucket where the installation has Storage, each refusal by name.
+  Idempotent on the reference: a second call returns the same draft and adds
+  only the pages it lacks.
+- Where Supabase Storage is present, the migration creates the private bucket
+  `attachments` and three policies on `storage.objects`: the first folder of
+  a path is the company, read with `documents.read` or `filings.read`,
+  written and removed with `documents.write` or `filings.write`.
+
+### Changed
+
+- `documents.contact_id` is nullable **on a draft only**
+  (`documents_contact_unless_draft`): a page nobody has read names no
+  supplier yet. A document that leaves draft without a contact is refused
+  `document_without_contact`, before any other rule of posting.
+- `tests/socle_schema.test.ts` builds the layout before the move from the
+  migrations before it, as it says, rather than from every file but the move.
+
 ## [0.23.0] — 2026-10-28
 
 ### Changed

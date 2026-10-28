@@ -25,7 +25,7 @@ import { socleSchemaOf, useSocleSchema } from '../packages/cli/src/socle.js';
 import { UserClient } from '../packages/cli/src/rest.js';
 import { adapt } from './mcp/helpers.js';
 import { ANON_KEY, FAKE_URL, fakeSupabase } from './cli/fake-supabase.js';
-import { freshDatabase, one, rows } from './helpers/db.js';
+import { freshDatabase, migrationFiles, one, rows } from './helpers/db.js';
 import { newCompany } from './helpers/factory.js';
 
 type Queryable = Parameters<typeof adapt>[0];
@@ -78,7 +78,10 @@ describe('an installation before the move: the socle in public, ekwo created and
   let owner: string;
 
   beforeAll(async () => {
-    db = await freshDatabase({ withoutMigrations: [THE_MOVE] });
+    // The move and every file after it: those are written for the socle in
+    // `ekwo`, and an installation before the move has run none of them.
+    const fromTheMove = (await migrationFiles()).filter((file) => file >= THE_MOVE);
+    db = await freshDatabase({ withoutMigrations: fromTheMove });
     ({ ownerId: owner } = await newCompany(db));
   });
 
