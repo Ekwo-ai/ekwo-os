@@ -9,7 +9,12 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.23.0] — 2026-10-28
+
 ### Changed
+
+- The schema is 0.23.0 (`20261028070000`); the floor of the packages stays at
+  0.19.0: the socle is found by its marker in either layout.
 
 - **The socle lives in its own schema, `ekwo`.** The migration
   `20261028040000_the_socle_moves_to_its_schema` moves every object of the
