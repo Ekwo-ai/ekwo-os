@@ -39,11 +39,10 @@ const BUMP = 'schema_version_0_25_0';
  * The floor the packages of this release declare. It is not the release: it
  * rises only when a migration is breaking for what the packages read (see
  * `docs/releasing.md`, step 3), and `tests/schema_floor.test.ts` proves it
- * against the tag of that version. 0.25.0 only added — the words of an
- * invoice a pack names and a company's switch for the late payment mention,
- * which the packages read only from that version on
- * (`SCHEMA_FEATURES.invoice_labels_by_pack`, `late_payment_mention`) — so the floor stays at
- * 0.19.0, the oldest schema the reads of this release were run against.
+ * against the tag of that version. 0.25.0 only added — columns and
+ * functions which the packages read or call only where `SCHEMA_FEATURES` says
+ * the schema has them — so the floor stays at 0.19.0, the oldest schema the
+ * reads of this release were run against.
  */
 const FLOOR = '0.19.0';
 

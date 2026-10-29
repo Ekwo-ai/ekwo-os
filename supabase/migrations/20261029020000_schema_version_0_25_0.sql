@@ -18,7 +18,9 @@
 --   0092: one column on the company and the view of the legal mentions
 --   replaced (`late_payment_mention`);
 -- - `20261029010200_a_company_is_counted_never_read`, decision 0093:
---   `usage_figures()`, which no package calls, so it is no feature.
+--   `usage_figures()`, which no package calls, so it is no feature;
+-- - `20261029010300_a_contact_has_a_statement`: `contact_statement()`
+--   (`contact_statement`).
 --
 -- The floor of `ekwo-os`, `@ekwo-ai/core` and `@ekwo-ai/mcp` stays at 0.19.0:
 -- below this version a read leaves out what it adds.

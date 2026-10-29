@@ -141,6 +141,17 @@ export const SCHEMA_FEATURES = {
     columns: ['companies.invoice_late_payment_mention'],
     functions: [],
   },
+  /**
+   * The statement of account of a contact, read from the ledger by the
+   * schema (`20261029010300_a_contact_has_a_statement`). Below it,
+   * `contactStatement()` — the MCP server's `contact_statement` and
+   * `ekwo contact statement` — is refused by name.
+   */
+  contact_statement: {
+    since: '0.25.0',
+    columns: [],
+    functions: ['contact_statement'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

@@ -70,14 +70,16 @@ somewhere has already run it.
   `EkwoClient.contactStatement()`, the MCP server with the read-only tool
   `contact_statement`, and the command line with
   `ekwo contact statement <name|id> --from <date> [--to <date>]`, `--to`
-  being today when left out.
+  being today when left out. Below schema 0.25.0 they are refused by name,
+  `schema_too_old_for` (feature `contact_statement`).
 
 ### Changed
 
 - The schema is 0.25.0 (`20261029020000`); the floor of the packages stays at
   0.19.0: its migrations only add, and the packages read what they add only
   from 0.25.0 on (`SCHEMA_FEATURES`: `invoice_labels_by_pack`,
-  `late_payment_mention`).
+  `late_payment_mention`, `contact_statement`), refused by name on an older
+  schema.
 - The view `document_legal_mentions` selects the `late_payment` mention on a
   sale invoice to a business (`contacts.is_company`) only: no longer on a
   sale credit note, nor on an invoice to a consumer or one that names no
