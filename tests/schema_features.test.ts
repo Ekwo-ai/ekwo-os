@@ -39,7 +39,8 @@ describe('supports()', () => {
     expect(missingFeatures(SCHEMA_MIN)).toEqual(Object.keys(SCHEMA_FEATURES));
     expect(missingFeatures('0.20.0')).toEqual(['documents_in_one_statement', 'agent_posting', 'invoice_labels_by_pack']);
     expect(missingFeatures('0.21.0')).toEqual(['invoice_labels_by_pack']);
-    expect(missingFeatures('0.22.0')).toEqual([]);
+    expect(missingFeatures('0.24.0')).toEqual(['invoice_labels_by_pack']);
+    expect(missingFeatures('0.25.0')).toEqual([]);
   });
 });
 

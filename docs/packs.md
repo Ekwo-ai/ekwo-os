@@ -1607,7 +1607,7 @@ the pack's own language among the others, and the PDF of a document
 (`ekwo doc pdf`, `render_invoice_pdf`) prints the pack's word for the
 document's language, then the layout's, then English; its answer lists the
 words that came from the pack (`pack_labels`). A pack that names words needs
-`schema_min` of `20261026071500` or later.
+`schema_min` of `20261029010000` or later.
 
 ## Versions, and what a company holds
 

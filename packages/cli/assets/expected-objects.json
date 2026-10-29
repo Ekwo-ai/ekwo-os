@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.24.0",
-  "migration": "20261028160000",
+  "migration": "20261029010000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -1720,6 +1720,10 @@
           {
             "name": "fx_loss_code",
             "type": "text"
+          },
+          {
+            "name": "invoice_labels",
+            "type": "jsonb"
           },
           {
             "name": "language_default",

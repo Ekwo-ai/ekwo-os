@@ -11,7 +11,7 @@ import { freshDatabase, one } from './helpers/db.js';
 import { allPacks, packWhere, packsRoot } from './helpers/packs.js';
 
 /**
- * The words of an invoice the law of a country names (`20261026071500`).
+ * The words of an invoice the law of a country names (`20261029010000`).
  *
  * The words of the layout are held once per language by
  * `@ekwo-ai/invoice-pdf`; a pack names, in `documents.invoice_labels`, the few
@@ -59,7 +59,7 @@ beforeAll(async () => {
   // will be; a schema older than that prints the layout's words, which
   // `tests/schema_floor.test.ts` checks at the floor.
   const since = SCHEMA_FEATURES.invoice_labels_by_pack.since;
-  await db.query(`create or replace function ekwo_schema_version() returns text language sql immutable as $$ select '${since}'::text $$`);
+  await db.query(`create or replace function ekwo.ekwo_schema_version() returns text language sql immutable as $$ select '${since}'::text $$`);
   s = await seller(db, pack, 'Words Of The Law', { enable: false });
 }, 300_000);
 
