@@ -152,6 +152,17 @@ export const SCHEMA_FEATURES = {
     columns: [],
     functions: ['contact_statement'],
   },
+  /**
+   * A bank account created by the schema, its identifier read in the scheme
+   * of the company's country
+   * (`20261029010400_a_bank_account_is_created_by_its_function`). Below it,
+   * the MCP server's `create_bank_account` is refused by name.
+   */
+  create_bank_account: {
+    since: '0.25.0',
+    columns: [],
+    functions: ['create_bank_account'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

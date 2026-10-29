@@ -20,7 +20,9 @@
 -- - `20261029010200_a_company_is_counted_never_read`, decision 0093:
 --   `usage_figures()`, which no package calls, so it is no feature;
 -- - `20261029010300_a_contact_has_a_statement`: `contact_statement()`
---   (`contact_statement`).
+--   (`contact_statement`);
+-- - `20261029010400_a_bank_account_is_created_by_its_function`:
+--   `create_bank_account()` (`create_bank_account`).
 --
 -- The floor of `ekwo-os`, `@ekwo-ai/core` and `@ekwo-ai/mcp` stays at 0.19.0:
 -- below this version a read leaves out what it adds.

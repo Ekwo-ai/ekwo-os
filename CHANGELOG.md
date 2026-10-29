@@ -93,8 +93,8 @@ somewhere has already run it.
 - The schema is 0.25.0 (`20261029020000`); the floor of the packages stays at
   0.19.0: its migrations only add, and the packages read what they add only
   from 0.25.0 on (`SCHEMA_FEATURES`: `invoice_labels_by_pack`,
-  `late_payment_mention`, `contact_statement`), refused by name on an older
-  schema.
+  `late_payment_mention`, `contact_statement`, `create_bank_account`),
+  refused by name on an older schema.
 - The view `document_legal_mentions` selects the `late_payment` mention on a
   sale invoice to a business (`contacts.is_company`) only: no longer on a
   sale credit note, nor on an invoice to a consumer or one that names no
@@ -102,7 +102,8 @@ somewhere has already run it.
 - **The `create_bank_account` tool of the MCP server calls the function.**
   Its inputs and its answer are unchanged; a viewer is now told
   `not_allowed: … bank.write` instead of the policy's sentence, and a name
-  already taken is refused.
+  already taken is refused. Below schema 0.25.0 the tool is refused by name,
+  `schema_too_old_for` (feature `create_bank_account`).
 
 ## [0.24.0] — 2026-10-28
 
