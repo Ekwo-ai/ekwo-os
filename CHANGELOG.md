@@ -29,10 +29,14 @@ somewhere has already run it.
 
 ### Changed
 
+- The schema is 0.25.0 (`20261029022000`); the floor of the packages stays at
+  0.19.0: the migrations only add, and what the packages call of them is
+  named in `SCHEMA_FEATURES` under 0.25.0, refused by name on an older schema.
 - **The `create_bank_account` tool of the MCP server calls the function.**
   Its inputs and its answer are unchanged; a viewer is now told
   `not_allowed: … bank.write` instead of the policy's sentence, and a name
-  already taken is refused.
+  already taken is refused. Below schema 0.25.0 the tool is refused by name,
+  `schema_too_old_for` (feature `create_bank_account`).
 
 ## [0.24.0] — 2026-10-28
 
