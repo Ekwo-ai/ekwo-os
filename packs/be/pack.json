@@ -3,9 +3,9 @@
   "country": "BE",
   "name": "Belgium",
   "version": "1.24.0",
-  "schema_min": "20261026071500",
+  "schema_min": "20261029021600",
   "seed_sequence": 10,
-  "released_at": "2026-10-26",
+  "released_at": "2026-10-29",
   "certification": {
     "status": "proven",
     "evidence": [

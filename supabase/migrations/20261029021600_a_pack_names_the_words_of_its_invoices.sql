@@ -17,18 +17,20 @@
 -- layout. A pack that names none leaves the column empty, and the layout's
 -- words are printed as they were.
 --
--- No function and no grant: `country_defaults` is read by every caller that
--- may read the reference data (20260922162500), and the column with it.
+-- The table lives in the schema `ekwo` since 0.23.0 (20261028040000), and
+-- its name is written out in full here. No function and no grant:
+-- `ekwo.country_defaults` is read by every caller that may read the
+-- reference data (20260922162500), and the column with it.
 
-alter table country_defaults
+alter table ekwo.country_defaults
   add column if not exists invoice_labels jsonb not null default '{}'::jsonb;
 
-alter table country_defaults
+alter table ekwo.country_defaults
   drop constraint if exists country_defaults_invoice_labels_object;
 
-alter table country_defaults
+alter table ekwo.country_defaults
   add constraint country_defaults_invoice_labels_object
   check (jsonb_typeof(invoice_labels) = 'object');
 
-comment on column country_defaults.invoice_labels is
+comment on column ekwo.country_defaults.invoice_labels is
   'The words of an invoice the law of this country names (documents.invoice_labels of the pack and their translations), by language then by key of the InvoiceLabels of @ekwo-ai/invoice-pdf: {"fr": {"registrationNumber": "Numéro d''entreprise"}, "nl": {...}}. A renderer prints the word for the document''s language over the word of the layout. Empty where the pack names none.';

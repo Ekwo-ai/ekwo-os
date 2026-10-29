@@ -121,11 +121,11 @@ export const SCHEMA_FEATURES = {
   },
   /**
    * The words of an invoice the law of a country names, from its pack, over
-   * the words of the layout (`20261026071500_a_pack_names_the_words_of_its_invoices`).
+   * the words of the layout (`20261029021600_a_pack_names_the_words_of_its_invoices`).
    * Below it, the PDF prints the words of the layout for its language.
    */
   invoice_labels_by_pack: {
-    since: '0.22.0',
+    since: '0.25.0',
     columns: ['country_defaults.invoice_labels'],
     functions: [],
   },

@@ -21,7 +21,7 @@ somewhere has already run it.
   `@ekwo-ai/invoice-pdf` (`INVOICE_LABELS`, `labelsFor()`), the same for every
   country.
 - **The words of an invoice the law of a country names come from its pack**
-  (socle migration `20261026071500`). A pack may name, in
+  (socle migration `20261029021600`). A pack may name, in
   `documents.invoice_labels`, the few words its law prescribes — the title of
   the document, what an identifier is called, what the tax is called — each
   with its article, and translate them in its language files under the same
@@ -30,9 +30,9 @@ somewhere has already run it.
   layout's, then English; `ekwo doc pdf` and `render_invoice_pdf` list the
   words that came from the pack (`pack_labels`). `be` 1.24.0 names its
   « numéro d'entreprise » (Code des sociétés et des associations, art. 2:20)
-  in French, Dutch, German and English, with `schema_min` `20261026071500`.
+  in French, Dutch, German and English, with `schema_min` `20261029021600`.
   The packages read the column as the feature `invoice_labels_by_pack` of
-  `SCHEMA_FEATURES`, since 0.22.0: on an older schema the PDF prints the
+  `SCHEMA_FEATURES`, since 0.25.0: on an older schema the PDF prints the
   words of the layout.
 
 ## [0.24.0] — 2026-10-28
