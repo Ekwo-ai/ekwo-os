@@ -17,6 +17,8 @@
  * read.
  */
 
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { socleMarkerAnswer, socleNamed } from '../packages/core/src/index.js';
@@ -25,7 +27,7 @@ import { socleSchemaOf, useSocleSchema } from '../packages/cli/src/socle.js';
 import { UserClient } from '../packages/cli/src/rest.js';
 import { adapt } from './mcp/helpers.js';
 import { ANON_KEY, FAKE_URL, fakeSupabase } from './cli/fake-supabase.js';
-import { freshDatabase, migrationFiles, one, rows } from './helpers/db.js';
+import { freshDatabase, migrationFiles, one, repoRoot, rows } from './helpers/db.js';
 import { newCompany } from './helpers/factory.js';
 
 type Queryable = Parameters<typeof adapt>[0];
@@ -50,6 +52,9 @@ function recording(db: PGlite): { client: SqlClient; statements: string[] } {
 
 /** The migration that moved the socle; left out to build the layout before it. */
 const THE_MOVE = '20261028040000_the_socle_moves_to_its_schema.sql';
+
+/** A file after the move whose column the pack seeds write. */
+const WORDS_OF_A_PACK = '20261029010000_a_pack_names_the_words_of_its_invoices.sql';
 
 /**
  * The command line's PostgREST client, signed in as `userId`, against a
@@ -81,7 +86,12 @@ describe('an installation before the move: the socle in public, ekwo created and
     // The move and every file after it: those are written for the socle in
     // `ekwo`, and an installation before the move has run none of them.
     const fromTheMove = (await migrationFiles()).filter((file) => file >= THE_MOVE);
-    db = await freshDatabase({ withoutMigrations: fromTheMove });
+    // Today's seeds are loaded all the same, and the pack seeds write
+    // `country_defaults.invoice_labels`, which a file after the move adds to
+    // `ekwo`: it is added here to the socle in `public`, as nothing else.
+    const migrations = join(repoRoot, 'supabase', 'migrations');
+    const beforeSeeds = (await readFile(join(migrations, WORDS_OF_A_PACK), 'utf8')).replaceAll('ekwo.country_defaults', 'public.country_defaults');
+    db = await freshDatabase({ withoutMigrations: fromTheMove, beforeSeeds });
     ({ ownerId: owner } = await newCompany(db));
   });
 

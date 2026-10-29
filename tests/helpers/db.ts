@@ -53,6 +53,13 @@ export interface Options {
    */
   withoutMigrations?: string[];
   /**
+   * SQL run after the migrations and the modules, before the seeds. A layout
+   * built without the latest migrations still loads today's seeds, and a seed
+   * may write a column one of those migrations adds: the caller adds it here,
+   * where that layout keeps the socle.
+   */
+  beforeSeeds?: string;
+  /**
    * Another checkout to build from — its migrations, modules, seeds and shim
    * — instead of this one. `tests/schema_floor.test.ts` builds the database
    * of the tag at the schema floor this way, and runs this release against it.
@@ -315,6 +322,7 @@ export async function schemaImage(options: Options = {}): Promise<string> {
   for (const file of files) {
     hash.update(relative(root, file)).update('\0').update(await readFile(file)).update('\0');
   }
+  if (options.beforeSeeds !== undefined) hash.update('beforeSeeds\0').update(options.beforeSeeds);
   const dir = process.env.EKWO_TEST_SCHEMA_DIR ?? join(tmpdir(), 'ekwo-test-schema');
   const image = join(dir, `${hash.digest('hex').slice(0, 24)}.tar`);
   if (await stat(image).catch(() => undefined)) return image;
@@ -326,7 +334,9 @@ export async function schemaImage(options: Options = {}): Promise<string> {
     // that schema, as `ekwo migrate` reads it (`socleNamed`).
     const moduleFiles = new Set([...moduleMigrations, ...moduleSeeds]);
     const lastModuleMigration = moduleMigrations.at(-1);
+    const firstSeed = [...seeds, ...moduleSeeds][0];
     for (const file of files) {
+      if (file === firstSeed && options.beforeSeeds !== undefined) await db.exec(options.beforeSeeds);
       try {
         const published = await readFile(file, 'utf8');
         const sql = moduleFiles.has(file) ? socleNamed(published, await socleSchemaIn(db)) : published;
