@@ -125,6 +125,7 @@ consequence.
 - [0085](0085-one-reader-for-a-received-invoice.md) — One reader for a received invoice, and the model's part is data
 - [0086](0086-a-company-files-under-a-vat-scheme.md) — A company files under a VAT scheme, and its scheme decides its forms
 - [0095](0095-a-group-is-owned-by-its-parent.md) — A group of companies is owned by its parent, and reads its members as the caller
+- [0096](0096-an-intragroup-operation-is-paired-by-identifiers.md) — An operation between companies of a group is paired by their identifiers and its number, never guessed
 
 ## Installer, command line and MCP server
 
