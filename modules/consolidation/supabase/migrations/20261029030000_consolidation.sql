@@ -33,7 +33,12 @@
 -- out quietly short of a company.
 --
 -- **No country, no currency, no language.** The presentation currency of a
--- group is a code of `public.currencies`, given or taken from the parent.
+-- group is a code of `ekwo.currencies`, given or taken from the parent.
+--
+-- **Written for the socle in `ekwo`.** Every name of the socle is qualified
+-- with its schema, and every function carries its own path — this module's
+-- schema, then `ekwo` — so it finds the socle whatever path the request came
+-- in with. Hence `requires_socle_min`: the move of the socle to `ekwo`.
 
 create schema consolidation;
 
@@ -51,10 +56,10 @@ comment on type consolidation.method is
 
 create table consolidation.groups (
   id            uuid primary key default gen_random_uuid(),
-  company_id    uuid not null references public.companies(id) on delete cascade,
+  company_id    uuid not null references ekwo.companies(id) on delete cascade,
   code          text not null,
   name          text not null,
-  currency_code char(3) not null references public.currencies(code),
+  currency_code char(3) not null references ekwo.currencies(code),
   notes         text,
   created_at    timestamptz not null default now(),
   updated_at    timestamptz not null default now(),
@@ -74,7 +79,7 @@ create index consolidation_groups_currency_idx on consolidation.groups (currency
 
 create trigger consolidation_groups_set_updated_at
   before update on consolidation.groups
-  for each row execute function public.set_updated_at();
+  for each row execute function ekwo.set_updated_at();
 
 -- ---------------------------------------------------------------------------
 -- Members
@@ -83,8 +88,8 @@ create trigger consolidation_groups_set_updated_at
 create table consolidation.members (
   id                uuid primary key default gen_random_uuid(),
   group_id          uuid not null,
-  company_id        uuid not null references public.companies(id) on delete cascade,
-  member_company_id uuid not null references public.companies(id) on delete cascade,
+  company_id        uuid not null references ekwo.companies(id) on delete cascade,
+  member_company_id uuid not null references ekwo.companies(id) on delete cascade,
   method            consolidation.method not null,
   ownership_rate    numeric(7, 4) not null,
   integration_rate  numeric(7, 4) not null generated always as (
@@ -125,7 +130,7 @@ create index consolidation_members_member_idx on consolidation.members (member_c
 
 create trigger consolidation_members_set_updated_at
   before update on consolidation.members
-  for each row execute function public.set_updated_at();
+  for each row execute function ekwo.set_updated_at();
 
 -- ---------------------------------------------------------------------------
 -- The guard of a membership, for every way in
@@ -134,11 +139,12 @@ create trigger consolidation_members_set_updated_at
 create or replace function consolidation.guard_member()
 returns trigger
 language plpgsql
+set search_path = consolidation, ekwo, pg_temp
 as $$
 begin
   if (tg_op = 'INSERT' or new.member_company_id is distinct from old.member_company_id)
-     and not public.is_installer()
-     and not public.has_capability(new.member_company_id, 'entries.read') then
+     and not ekwo.is_installer()
+     and not ekwo.has_capability(new.member_company_id, 'entries.read') then
     -- The same sentence for a company that exists and one that does not: the
     -- refusal tells a stranger nothing about the companies of others.
     raise exception 'consolidation_member_unreadable: you cannot read the books of that company, so it cannot be put in a group'
@@ -174,15 +180,16 @@ create or replace function consolidation.require(p_company_id uuid, p_capability
 returns void
 language plpgsql
 stable
+set search_path = consolidation, ekwo, pg_temp
 as $$
 begin
   if p_company_id is null
-     or not public.module_is_enabled(p_company_id, 'consolidation')
-     or (not public.is_installer() and not public.module_enabled(p_company_id, 'consolidation')) then
+     or not ekwo.module_is_enabled(p_company_id, 'consolidation')
+     or (not ekwo.is_installer() and not ekwo.module_enabled(p_company_id, 'consolidation')) then
     raise exception 'consolidation_module_not_enabled: the consolidation module is not enabled on company %', p_company_id
       using errcode = '42501';
   end if;
-  if not public.is_installer() and not public.has_capability(p_company_id, p_capability) then
+  if not ekwo.is_installer() and not ekwo.has_capability(p_company_id, p_capability) then
     raise exception 'consolidation_not_allowed: % needs %', p_what, p_capability
       using errcode = '42501';
   end if;
@@ -201,6 +208,7 @@ create or replace function consolidation.create_group(
 )
 returns consolidation.groups
 language plpgsql
+set search_path = consolidation, ekwo, pg_temp
 as $$
 declare
   v_group consolidation.groups;
@@ -214,7 +222,7 @@ begin
 
   insert into consolidation.groups (company_id, code, name, currency_code, notes)
   select p_company_id, p_code, p_name, coalesce(p_currency_code, c.currency_code), p_notes
-    from public.companies c
+    from ekwo.companies c
    where c.id = p_company_id
   returning * into v_group;
 
@@ -237,6 +245,7 @@ create or replace function consolidation.add_member(
 )
 returns consolidation.members
 language plpgsql
+set search_path = consolidation, ekwo, pg_temp
 as $$
 declare
   v_member consolidation.members;
@@ -287,6 +296,7 @@ create or replace function consolidation.end_membership(
 )
 returns consolidation.members
 language plpgsql
+set search_path = consolidation, ekwo, pg_temp
 as $$
 declare
   v_member consolidation.members;
@@ -330,6 +340,7 @@ returns table (
 )
 language plpgsql
 stable
+set search_path = consolidation, ekwo, pg_temp
 as $$
 begin
   perform consolidation.require(p_company_id, 'consolidation.read', 'reading the perimeter of a group');
@@ -350,7 +361,7 @@ begin
            null::date,
            null::date,
            true
-      from public.companies p
+      from ekwo.companies p
      where p.id = p_company_id
     union all
     select m.member_company_id,
@@ -362,9 +373,9 @@ begin
            m.integration_rate,
            m.entered_on,
            m.left_on,
-           public.is_installer() or public.has_capability(m.member_company_id, 'entries.read')
+           ekwo.is_installer() or ekwo.has_capability(m.member_company_id, 'entries.read')
       from consolidation.members m
-      left join public.companies c on c.id = m.member_company_id
+      left join ekwo.companies c on c.id = m.member_company_id
      where m.group_id = p_group_id
        and m.company_id = p_company_id
        and m.entered_on <= p_on
@@ -385,13 +396,14 @@ create or replace function consolidation.require_readable(
 returns void
 language plpgsql
 stable
+set search_path = consolidation, ekwo, pg_temp
 as $$
 declare
   v_company uuid;
 begin
   perform consolidation.require(p_company_id, 'consolidation.read', 'reading a group');
 
-  if not public.is_installer() and not public.has_capability(p_company_id, 'entries.read') then
+  if not ekwo.is_installer() and not ekwo.has_capability(p_company_id, 'entries.read') then
     raise exception 'consolidation_member_unreadable: you cannot read the books of company %, the parent of the group', p_company_id
       using errcode = '42501';
   end if;
@@ -402,7 +414,7 @@ begin
      and m.company_id = p_company_id
      and m.entered_on <= p_to
      and (m.left_on is null or m.left_on >= p_from)
-     and not (public.is_installer() or public.has_capability(m.member_company_id, 'entries.read'))
+     and not (ekwo.is_installer() or ekwo.has_capability(m.member_company_id, 'entries.read'))
    order by m.entered_on, m.member_company_id
    limit 1;
 
@@ -434,6 +446,7 @@ returns table (
 )
 language sql
 immutable
+set search_path = consolidation, ekwo, pg_temp
 as $$
   values
     ('groups'::text, 'exported'::text, null::text, null::text, null::text, 1),
@@ -443,7 +456,7 @@ as $$
 $$;
 
 comment on function consolidation.archive_tables() is
-  'What an archive of one company does with each table of this module: its groups travel, their members do not — they name other companies of the installation. Read by `public.company_archive_tables()`.';
+  'What an archive of one company does with each table of this module: its groups travel, their members do not — they name other companies of the installation. Read by `ekwo.company_archive_tables()`.';
 
 -- ---------------------------------------------------------------------------
 -- Capabilities
@@ -453,28 +466,28 @@ comment on function consolidation.archive_tables() is
 -- are read with what the caller holds in that member.
 -- ---------------------------------------------------------------------------
 
-insert into public.capabilities (code, area, description) values
+insert into ekwo.capabilities (code, area, description) values
   ('consolidation.read',  'consolidation', 'Read the groups of a company and who is in each.'),
   ('consolidation.write', 'consolidation', 'Create groups and change who is in each, by which method and at which percentage of interest.')
 on conflict (code) do update set area = excluded.area, description = excluded.description;
 
-insert into public.role_capabilities (role, capability) values
-  ('viewer'::public.member_role,     'consolidation.read'),
-  ('accountant'::public.member_role, 'consolidation.read'),
-  ('accountant'::public.member_role, 'consolidation.write'),
-  ('owner'::public.member_role,      'consolidation.read'),
-  ('owner'::public.member_role,      'consolidation.write')
+insert into ekwo.role_capabilities (role, capability) values
+  ('viewer'::ekwo.member_role,     'consolidation.read'),
+  ('accountant'::ekwo.member_role, 'consolidation.read'),
+  ('accountant'::ekwo.member_role, 'consolidation.write'),
+  ('owner'::ekwo.member_role,      'consolidation.read'),
+  ('owner'::ekwo.member_role,      'consolidation.write')
 on conflict do nothing;
 
 -- The client preset holds what a viewer holds. Its label is read from the
 -- catalogue rather than written as a literal, so this file applies on a socle
 -- older than the preset.
-insert into public.role_capabilities (role, capability)
-select e.enumlabel::text::public.member_role, 'consolidation.read'
+insert into ekwo.role_capabilities (role, capability)
+select e.enumlabel::text::ekwo.member_role, 'consolidation.read'
   from pg_catalog.pg_enum e
   join pg_catalog.pg_type t on t.oid = e.enumtypid
   join pg_catalog.pg_namespace n on n.oid = t.typnamespace
- where n.nspname = 'public' and t.typname = 'member_role' and e.enumlabel = 'client'
+ where n.nspname = 'ekwo' and t.typname = 'member_role' and e.enumlabel = 'client'
 on conflict do nothing;
 
 -- ---------------------------------------------------------------------------
@@ -490,11 +503,11 @@ declare
 begin
   foreach v_table in array array['groups', 'members'] loop
     execute format(
-      'create policy %I on consolidation.%I for select using (public.module_enabled(company_id, %L) and public.has_capability(company_id, %L))',
+      'create policy %I on consolidation.%I for select using (ekwo.module_enabled(company_id, %L) and ekwo.has_capability(company_id, %L))',
       'consolidation_' || v_table || '_select', v_table, 'consolidation', 'consolidation.read');
     execute format(
-      'create policy %I on consolidation.%I for all using (public.module_enabled(company_id, %L) and public.has_capability(company_id, %L)) '
-      'with check (public.module_enabled(company_id, %L) and public.has_capability(company_id, %L))',
+      'create policy %I on consolidation.%I for all using (ekwo.module_enabled(company_id, %L) and ekwo.has_capability(company_id, %L)) '
+      'with check (ekwo.module_enabled(company_id, %L) and ekwo.has_capability(company_id, %L))',
       'consolidation_' || v_table || '_write', v_table, 'consolidation', 'consolidation.write', 'consolidation', 'consolidation.write');
   end loop;
 end;
@@ -534,7 +547,7 @@ revoke execute on function consolidation.guard_member() from public, anon, authe
 -- The registry row
 -- ---------------------------------------------------------------------------
 
-insert into public.modules (code, name, description, schema_name, version, status, requires_socle_min)
+insert into ekwo.modules (code, name, description, schema_name, version, status, requires_socle_min)
 values (
   'consolidation',
   'Consolidation',
@@ -542,7 +555,7 @@ values (
   'consolidation',
   '0.1.0',
   'available',
-  '20261007060225'
+  '20261028040000'
 )
 on conflict (code) do update set
   name = excluded.name,

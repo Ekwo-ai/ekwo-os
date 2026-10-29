@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.24.0",
-  "migration": "20261028160000",
+  "migration": "20261029030000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -13726,6 +13726,323 @@
           {
             "name": "variance",
             "arguments": "p_company_id uuid, p_budget_id uuid, p_from date, p_to date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          }
+        ],
+        "defaultPrivileges": []
+      }
+    },
+    {
+      "code": "consolidation",
+      "version": "0.1.0",
+      "schema": "consolidation",
+      "tables": [
+        {
+          "name": "groups",
+          "columns": [
+            {
+              "name": "code",
+              "type": "text"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "currency_code",
+              "type": "character(3)"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "name",
+              "type": "text"
+            },
+            {
+              "name": "notes",
+              "type": "text"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        },
+        {
+          "name": "members",
+          "columns": [
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "entered_on",
+              "type": "date"
+            },
+            {
+              "name": "group_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "integration_rate",
+              "type": "numeric(7,4)"
+            },
+            {
+              "name": "left_on",
+              "type": "date"
+            },
+            {
+              "name": "member_company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "method",
+              "type": "consolidation.method"
+            },
+            {
+              "name": "notes",
+              "type": "text"
+            },
+            {
+              "name": "ownership_rate",
+              "type": "numeric(7,4)"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        }
+      ],
+      "views": [],
+      "functions": [
+        {
+          "name": "add_member",
+          "arguments": "p_company_id uuid, p_group_id uuid, p_member_company_id uuid, p_method consolidation.method, p_ownership_rate numeric, p_entered_on date, p_left_on date, p_notes text"
+        },
+        {
+          "name": "archive_tables",
+          "arguments": ""
+        },
+        {
+          "name": "create_group",
+          "arguments": "p_company_id uuid, p_code text, p_name text, p_currency_code character, p_notes text"
+        },
+        {
+          "name": "end_membership",
+          "arguments": "p_company_id uuid, p_member_id uuid, p_left_on date"
+        },
+        {
+          "name": "guard_member",
+          "arguments": ""
+        },
+        {
+          "name": "perimeter",
+          "arguments": "p_company_id uuid, p_group_id uuid, p_on date"
+        },
+        {
+          "name": "require",
+          "arguments": "p_company_id uuid, p_capability text, p_what text"
+        },
+        {
+          "name": "require_readable",
+          "arguments": "p_company_id uuid, p_group_id uuid, p_from date, p_to date"
+        }
+      ],
+      "policies": [
+        {
+          "table": "groups",
+          "name": "consolidation_groups_select",
+          "command": "select"
+        },
+        {
+          "table": "groups",
+          "name": "consolidation_groups_write",
+          "command": "all"
+        },
+        {
+          "table": "members",
+          "name": "consolidation_members_select",
+          "command": "select"
+        },
+        {
+          "table": "members",
+          "name": "consolidation_members_write",
+          "command": "all"
+        }
+      ],
+      "triggers": [
+        {
+          "table": "groups",
+          "name": "consolidation_groups_set_updated_at"
+        },
+        {
+          "table": "members",
+          "name": "consolidation_members_guard"
+        },
+        {
+          "table": "members",
+          "name": "consolidation_members_set_updated_at"
+        }
+      ],
+      "types": [
+        {
+          "name": "method",
+          "kind": "enum",
+          "labels": [
+            "full",
+            "proportional",
+            "equity"
+          ]
+        }
+      ],
+      "grants": {
+        "schema": "consolidation",
+        "usage": {
+          "anon": [
+            "usage"
+          ],
+          "authenticated": [
+            "usage"
+          ],
+          "service_role": [
+            "usage"
+          ]
+        },
+        "tables": [
+          {
+            "name": "groups",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
+            "name": "members",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          }
+        ],
+        "views": [],
+        "sequences": [],
+        "functions": [
+          {
+            "name": "add_member",
+            "arguments": "p_company_id uuid, p_group_id uuid, p_member_company_id uuid, p_method consolidation.method, p_ownership_rate numeric, p_entered_on date, p_left_on date, p_notes text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "archive_tables",
+            "arguments": "",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "create_group",
+            "arguments": "p_company_id uuid, p_code text, p_name text, p_currency_code character, p_notes text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "end_membership",
+            "arguments": "p_company_id uuid, p_member_id uuid, p_left_on date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "guard_member",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
+          },
+          {
+            "name": "perimeter",
+            "arguments": "p_company_id uuid, p_group_id uuid, p_on date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "require",
+            "arguments": "p_company_id uuid, p_capability text, p_what text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "require_readable",
+            "arguments": "p_company_id uuid, p_group_id uuid, p_from date, p_to date",
             "anon": [],
             "authenticated": [
               "execute"
