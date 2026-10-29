@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261029030000",
+  "migration": "20261029071412",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -14015,6 +14015,14 @@
           "arguments": ""
         },
         {
+          "name": "intragroup_documents",
+          "arguments": "p_company_id uuid, p_group_id uuid, p_from date, p_to date"
+        },
+        {
+          "name": "intragroup_parties",
+          "arguments": "p_company_id uuid, p_group_id uuid, p_from date, p_to date"
+        },
+        {
           "name": "perimeter",
           "arguments": "p_company_id uuid, p_group_id uuid, p_on date"
         },
@@ -14175,6 +14183,28 @@
             "anon": [],
             "authenticated": [],
             "service_role": []
+          },
+          {
+            "name": "intragroup_documents",
+            "arguments": "p_company_id uuid, p_group_id uuid, p_from date, p_to date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "intragroup_parties",
+            "arguments": "p_company_id uuid, p_group_id uuid, p_from date, p_to date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
           },
           {
             "name": "perimeter",

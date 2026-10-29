@@ -120,6 +120,20 @@ somewhere has already run it.
   owner). An archive carries the groups of a company and leaves their members
   behind, since they name other companies. Written for the socle in `ekwo`:
   `requires_socle_min` is `20261028040000`.
+- **What the companies of a group invoiced each other** (module migration
+  `20261029071412_consolidation_intragroup`, decision 0096), the ground of the
+  eliminations. `consolidation.intragroup_parties(company, group, from, to)`
+  lists the contacts of each company of the group that are another company of
+  it — by VAT number, or by registration number in the same country, as
+  `party_identifier()` compares them; never by name.
+  `consolidation.intragroup_documents(company, group, from, to)` pairs each
+  posted sale to such a contact with the posted purchase of the other company
+  whose `supplier_reference` is the sale's number, an invoice with an invoice
+  and a credit note with a credit note, and gives each pair a status:
+  `matched`, `amount_differs`, `period_differs`, `purchase_missing` or
+  `sale_missing`. A document counts when both companies are in the group on
+  its date. Read as the caller after `require_readable()`; lists, writes
+  nothing and forces no pair.
 
 ### Changed
 
