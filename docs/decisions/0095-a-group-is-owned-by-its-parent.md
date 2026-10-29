@@ -71,7 +71,7 @@ come, are rows of the module's schema, never documents or entries of a member.
 
 ## See also
 
-- `modules/consolidation/supabase/migrations/20261020051627_consolidation.sql`
+- `modules/consolidation/supabase/migrations/20261029030000_consolidation.sql`
 - `modules/consolidation/tests/consolidation.test.ts`
 - [0051](0051-a-module-has-its-own-schema.md) — A module has its own schema and posts through a function
 - [0064](0064-a-key-writes-as-its-issuer.md) — A key writes as the person who issued it

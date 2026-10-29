@@ -90,4 +90,4 @@ too.
   kept elsewhere cannot be a member yet.
 
 The decision behind this shape is
-[decision 0092](../../docs/decisions/0092-a-group-is-owned-by-its-parent.md).
+[decision 0095](../../docs/decisions/0095-a-group-is-owned-by-its-parent.md).

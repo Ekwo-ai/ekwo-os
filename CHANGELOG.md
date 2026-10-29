@@ -102,6 +102,24 @@ somewhere has already run it.
   two functions are the feature `archive_in_pages` of `SCHEMA_FEATURES`, since
   0.25.0: below it the core refuses the reading by name, and the floor stays
   at 0.19.0.
+- **The `consolidation` module** (module migration
+  `20261029030000_consolidation`, decision 0095): groups of companies of the
+  installation. A group belongs to its parent, the company that enables the
+  module, which is always in the perimeter at 100 %; `consolidation.members`
+  names each other company it holds for a period, by a method (`full`,
+  `proportional`, `equity`) and at a percentage of interest, the integration
+  rate derived from them in a generated column. `create_group()`,
+  `add_member()` and `end_membership()` are idempotent; `perimeter(company,
+  group, date)` lists who is in on a date and whether the caller can read
+  each; `require_readable()` names the first member whose books the caller
+  cannot read. A trigger refuses a member the writer cannot read
+  (`entries.read` there) and two overlapping periods of one company in one
+  group. The module reads the members' books under their own row level
+  security and writes nothing in them. Capabilities `consolidation.read`
+  (viewer, client, accountant, owner) and `consolidation.write` (accountant,
+  owner). An archive carries the groups of a company and leaves their members
+  behind, since they name other companies. Written for the socle in `ekwo`:
+  `requires_socle_min` is `20261028040000`.
 
 ### Changed
 

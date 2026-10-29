@@ -3142,6 +3142,82 @@ Constraints:
 | `archive_tables()` | What an archive of one company does with each table of this module. Read by `ekwo.company_archive_tables()`. |
 | `variance(p_company_id uuid, p_budget_id uuid, p_from date, p_to date)` | Budget against ledger, per account, over a period, at the decimals of the company's currency. Both figures are in the sign a business states them in — an income account's credit balance is flipped — and the variance is the actual less the plan. Reads posted entries of kind `normal` only: a closing or appropriation entry is not what a period earned. |
 
+## `consolidation` — Consolidation
+
+Groups of companies of the installation: who is in each and for which period, by which method and at which percentage of interest, the share each brings in derived from them. Reads the members' books under their own row level security, and writes nothing in them or to the ledger.
+
+### Tables
+
+| Table | Purpose |
+|---|---|
+| [`groups`](#consolidation-groups) | A group of companies, owned by the company that consolidates it — its parent, which is always in the perimeter at 100 % and is never a row of members. |
+| [`members`](#consolidation-members) | One company of the installation in one group, for one period: from entered_on to left_on included, null while it stays. A change of interest or of method closes the row and opens the next; two periods of one company in one group never overlap. |
+
+<a id="consolidation-groups"></a>
+
+#### `groups`
+
+A group of companies, owned by the company that consolidates it — its parent, which is always in the perimeter at 100 % and is never a row of members.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `code` | `text` | not null — The caller's own key for the group, unique in the parent: create_group() with a code that exists returns that group. |
+| `name` | `text` | not null |
+| `currency_code` | `character(3)` | not null — The currency the group presents its consolidated figures in. The parent's own when create_group() is given none. |
+| `notes` | `text` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((code ~ '^[a-z0-9][a-z0-9_-]{0,62}$'::text))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, code)`
+
+<a id="consolidation-members"></a>
+
+#### `members`
+
+One company of the installation in one group, for one period: from entered_on to left_on included, null while it stays. A change of interest or of method closes the row and opens the next; two periods of one company in one group never overlap.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `group_id` | `uuid` | not null |
+| `company_id` | `uuid` | not null — The parent — the company the group belongs to, whose module and capabilities decide who sees and writes the row. The member itself is member_company_id. |
+| `member_company_id` | `uuid` | not null — The company held. Its books are read under its own row level security, and nothing is ever written in it. |
+| `method` | `consolidation.method` | not null |
+| `ownership_rate` | `numeric(7,4)` | not null — The percentage of interest the group holds in the member, above 0 and up to 100. |
+| `integration_rate` | `numeric(7,4)` | generated — The percentage of the member's figures the group takes in line by line, derived from the method: 100 for full, the ownership rate for proportional, 0 for equity. |
+| `entered_on` | `date` | not null |
+| `left_on` | `date` |  |
+| `notes` | `text` |  |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((member_company_id <> company_id))`
+- `CHECK (((ownership_rate > (0)::numeric) AND (ownership_rate <= (100)::numeric)))`
+- `CHECK (((left_on IS NULL) OR (left_on >= entered_on)))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, group_id, member_company_id, entered_on)`
+
+### Functions
+
+| Function | Purpose |
+|---|---|
+| `add_member(p_company_id uuid, p_group_id uuid, p_member_company_id uuid, p_method consolidation.method, p_ownership_rate numeric, p_entered_on date, p_left_on date, p_notes text)` | Puts a company in a group for a period, by a method and at a percentage of interest. The same call twice returns the first row; the same company and entry date with other terms is refused, as is a period overlapping another and a company whose books the caller cannot read. |
+| `archive_tables()` | What an archive of one company does with each table of this module: its groups travel, their members do not — they name other companies of the installation. Read by `ekwo.company_archive_tables()`. |
+| `create_group(p_company_id uuid, p_code text, p_name text, p_currency_code character, p_notes text)` | Creates a group owned by the company, in the currency given or the company's own. Idempotent by code: a code the company already has returns that group, unchanged. |
+| `end_membership(p_company_id uuid, p_member_id uuid, p_left_on date)` | Closes a period: p_left_on is the last day the company is in the perimeter. A change of interest or method is this, then add_member() from the next day. |
+| `guard_member()` | Refuses a member the writer cannot read (entries.read in that company) when it is put in the group — closing its period later needs no more than consolidation.write — and a period that overlaps another of the same company in the same group. A trigger, so the rule holds for psql and PostgREST as for the functions. |
+| `perimeter(p_company_id uuid, p_group_id uuid, p_on date)` | The companies in a group on a date: the parent first, at 100 %, then every member whose period holds the date, with its method, interest and integration rate, and whether the caller can read its books. A member the caller cannot read comes with readable false, and with its name and currency null when the caller cannot see the company at all. |
+| `require(p_company_id uuid, p_capability text, p_what text)` | Raises consolidation_module_not_enabled when the module is off for the company or the caller is not a member of it, and consolidation_not_allowed when the caller does not hold the capability. The first lines of every function of this module; the policies still decide every row. |
+| `require_readable(p_company_id uuid, p_group_id uuid, p_from date, p_to date)` | Raises consolidation_member_unreadable, naming the company, when the caller cannot read the books of the parent or of a member in the perimeter at any time between the two dates. What every consolidated figure calls first, so that none comes out short of a company. |
+
 ## `contracts` — Contracts
 
 What a company agreed with another party, kept beside the books on the same contacts: dates, renewal, notice, value, the signed file, amendments and templates, and schedules that issue draft sales or purchase invoices when their periods come. Knows no country, and never writes the ledger itself.

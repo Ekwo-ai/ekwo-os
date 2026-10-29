@@ -6,7 +6,7 @@
   "schema": "consolidation",
   "version": "0.1.0",
   "status": "available",
-  "requires_socle_min": "20261007060225",
+  "requires_socle_min": "20261028040000",
   "posts": false,
   "mcp": { "prefix": "consolidation" }
 }

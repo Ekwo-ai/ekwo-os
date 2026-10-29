@@ -91,7 +91,7 @@ unique `client_ref` refuses a second document for one period.
 `consolidation` is the first whose rows span companies: a group belongs to its
 parent, and the books of every member are read with what the caller holds in
 that member — the module grants nothing on them
-([decision 0092](decisions/0092-a-group-is-owned-by-its-parent.md)).
+([decision 0095](decisions/0095-a-group-is-owned-by-its-parent.md)).
 
 The folder under `modules/` is named after what the module is, lower case with
 hyphens — `fixed-assets` — and need not be the code. `ekwo module` takes
