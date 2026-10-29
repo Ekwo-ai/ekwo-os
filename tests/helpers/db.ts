@@ -86,6 +86,8 @@ export interface ModuleFolder {
   folder: string;
   /** `fixed_assets`, the pack section it compiles its seeds under, if any. */
   section: string | null;
+  /** `20261028040000`, the socle migration its manifest says it needs, if any. */
+  requiresSocleMin: string | null;
 }
 
 /**
@@ -101,8 +103,14 @@ export async function moduleFolders(root = repoRoot): Promise<ModuleFolder[]> {
     const manifest = JSON.parse(await readFile(join(modulesDir, entry.name, 'module.json'), 'utf8')) as {
       code: string;
       pack?: { section: string };
+      requires_socle_min?: string;
     };
-    out.push({ code: manifest.code, folder: entry.name, section: manifest.pack?.section ?? null });
+    out.push({
+      code: manifest.code,
+      folder: entry.name,
+      section: manifest.pack?.section ?? null,
+      requiresSocleMin: manifest.requires_socle_min ?? null,
+    });
   }
   return out;
 }
@@ -300,11 +308,24 @@ export async function schemaImage(options: Options = {}): Promise<string> {
   const tree = treeOf(root);
   const leftOut = new Set(options.withoutMigrations ?? []);
   const migrations = (await migrationFiles(root)).filter((f) => !leftOut.has(f)).map((f) => join(tree.migrations, f));
+  // A module that needs a socle migration left out is not installed, as
+  // `ekwo module` refuses it (`socle_too_old`): its file is written for a
+  // socle this database does not have yet.
+  const leftOutVersions = new Set([...leftOut].map((f) => f.slice(0, 14)));
+  const tooOld = new Set(
+    (await moduleFolders(root))
+      .filter((m) => m.requiresSocleMin !== null && leftOutVersions.has(m.requiresSocleMin))
+      .map((m) => m.code),
+  );
   const moduleMigrations =
-    options.modules === false ? [] : (await moduleMigrationFiles(root)).map((m) => m.path);
+    options.modules === false
+      ? []
+      : (await moduleMigrationFiles(root)).filter((m) => !tooOld.has(m.code)).map((m) => m.path);
   const seeds = options.seed === false ? [] : (await seedFiles(root)).map((f) => join(tree.seed, f));
   const moduleSeeds =
-    options.seed === false || options.modules === false ? [] : (await moduleSeedFiles(root)).map((m) => m.path);
+    options.seed === false || options.modules === false
+      ? []
+      : (await moduleSeedFiles(root)).filter((m) => !tooOld.has(m.code)).map((m) => m.path);
   // The order is the build's: the modules after the socle and before the
   // seeds, because a module migration may reference `public.companies` or
   // `public.accounts`, and a module's country seed writes its own reference
