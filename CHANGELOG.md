@@ -134,6 +134,20 @@ somewhere has already run it.
   `sale_missing`. A document counts when both companies are in the group on
   its date. Read as the caller after `require_readable()`; lists, writes
   nothing and forces no pair.
+- **The balances of a group in its own currency** (module migration
+  `20261030070000_consolidation_translation`, decision 0097).
+  `consolidation.set_rate(company, group, currency, from, to, closing,
+  average, source)` keeps the rates a group translates a currency at, per
+  period, in units of that currency for one unit of the group's.
+  `consolidation.translated_balances(company, group, from, to)` gives every
+  account of the parent and of each member in the group's currency by the
+  closing rate method — assets and liabilities at the closing rate, income and
+  expenses at the average rate of the period, equity at the rate of the day the
+  member entered — taken in at its integration rate, and ends each company
+  kept in another currency with its translation difference, the line of
+  equity that brings it back to zero. A rate the group has not set refuses by
+  name (`consolidation_rate_missing`); `currency_rates` is not read. An archive
+  of the parent carries the rates with its groups.
 
 ### Changed
 

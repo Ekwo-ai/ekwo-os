@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261029071412",
+  "migration": "20261030070000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -13990,6 +13990,55 @@
               "type": "timestamp with time zone"
             }
           ]
+        },
+        {
+          "name": "rates",
+          "columns": [
+            {
+              "name": "average_rate",
+              "type": "numeric(18,8)"
+            },
+            {
+              "name": "closing_rate",
+              "type": "numeric(18,8)"
+            },
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "currency_code",
+              "type": "character(3)"
+            },
+            {
+              "name": "group_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "period_from",
+              "type": "date"
+            },
+            {
+              "name": "period_to",
+              "type": "date"
+            },
+            {
+              "name": "source",
+              "type": "text"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
         }
       ],
       "views": [],
@@ -14033,6 +14082,14 @@
         {
           "name": "require_readable",
           "arguments": "p_company_id uuid, p_group_id uuid, p_from date, p_to date"
+        },
+        {
+          "name": "set_rate",
+          "arguments": "p_company_id uuid, p_group_id uuid, p_currency_code character, p_period_from date, p_period_to date, p_closing_rate numeric, p_average_rate numeric, p_source text"
+        },
+        {
+          "name": "translated_balances",
+          "arguments": "p_company_id uuid, p_group_id uuid, p_from date, p_to date"
         }
       ],
       "policies": [
@@ -14055,6 +14112,16 @@
           "table": "members",
           "name": "consolidation_members_write",
           "command": "all"
+        },
+        {
+          "table": "rates",
+          "name": "consolidation_rates_select",
+          "command": "select"
+        },
+        {
+          "table": "rates",
+          "name": "consolidation_rates_write",
+          "command": "all"
         }
       ],
       "triggers": [
@@ -14069,6 +14136,10 @@
         {
           "table": "members",
           "name": "consolidation_members_set_updated_at"
+        },
+        {
+          "table": "rates",
+          "name": "consolidation_rates_set_updated_at"
         }
       ],
       "types": [
@@ -14114,6 +14185,22 @@
           },
           {
             "name": "members",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
+            "name": "rates",
             "anon": [],
             "authenticated": [
               "delete",
@@ -14230,6 +14317,28 @@
           },
           {
             "name": "require_readable",
+            "arguments": "p_company_id uuid, p_group_id uuid, p_from date, p_to date",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "set_rate",
+            "arguments": "p_company_id uuid, p_group_id uuid, p_currency_code character, p_period_from date, p_period_to date, p_closing_rate numeric, p_average_rate numeric, p_source text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "translated_balances",
             "arguments": "p_company_id uuid, p_group_id uuid, p_from date, p_to date",
             "anon": [],
             "authenticated": [

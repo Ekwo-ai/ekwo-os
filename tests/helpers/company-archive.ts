@@ -470,6 +470,14 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
   });
   await db.query(`insert into consolidation.groups (company_id, code, name, currency_code)
                   select $1, 'main', $2, c.currency_code from companies c where c.id = $1`, [companyId, `Group ${tag}`]);
+  // And a rate it translates another currency at, which travels with it.
+  await db.query(
+    `insert into consolidation.rates (group_id, company_id, currency_code, period_from, period_to, closing_rate, average_rate)
+     select g.id, g.company_id, (select k.code from currencies k where k.code <> g.currency_code order by k.code limit 1),
+            $2::date, $3::date, 1.25, 1.2
+       from consolidation.groups g where g.company_id = $1`,
+    [companyId, golden.fiscalYear.start, golden.fiscalYear.end],
+  );
 
   // A piece on a document.
   const someDocument = [...replayed.documents.values()][0] as string;
