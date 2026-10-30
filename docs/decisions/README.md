@@ -126,6 +126,7 @@ consequence.
 - [0086](0086-a-company-files-under-a-vat-scheme.md) — A company files under a VAT scheme, and its scheme decides its forms
 - [0095](0095-a-group-is-owned-by-its-parent.md) — A group of companies is owned by its parent, and reads its members as the caller
 - [0096](0096-an-intragroup-operation-is-paired-by-identifiers.md) — An operation between companies of a group is paired by their identifiers and its number, never guessed
+- [0097](0097-a-group-translates-at-its-own-rates.md) — A group translates a member's currency at the rates it sets itself, by the closing rate method
 
 ## Installer, command line and MCP server
 

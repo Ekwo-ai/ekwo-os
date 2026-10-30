@@ -3152,6 +3152,7 @@ Groups of companies of the installation: who is in each and for which period, by
 |---|---|
 | [`groups`](#consolidation-groups) | A group of companies, owned by the company that consolidates it — its parent, which is always in the perimeter at 100 % and is never a row of members. |
 | [`members`](#consolidation-members) | One company of the installation in one group, for one period: from entered_on to left_on included, null while it stays. A change of interest or of method closes the row and opens the next; two periods of one company in one group never overlap. |
+| [`rates`](#consolidation-rates) | The rates a group translates a currency at, one row per currency and period: the closing rate of its last day, and the average rate of the period. Units of that currency for one unit of the group's currency. |
 
 <a id="consolidation-groups"></a>
 
@@ -3205,12 +3206,39 @@ Constraints:
 - `PRIMARY KEY (id)`
 - `UNIQUE (company_id, group_id, member_company_id, entered_on)`
 
+<a id="consolidation-rates"></a>
+
+#### `rates`
+
+The rates a group translates a currency at, one row per currency and period: the closing rate of its last day, and the average rate of the period. Units of that currency for one unit of the group's currency.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `group_id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `currency_code` | `character(3)` | not null |
+| `period_from` | `date` | not null |
+| `period_to` | `date` | not null |
+| `closing_rate` | `numeric(18,8)` | not null — The rate on period_to: what a member owns and owes is translated at it on that date, and its equity at the closing rate of the last period ending on or before the day it entered the group. |
+| `average_rate` | `numeric(18,8)` | The average rate from period_from to period_to: what a member earned and spent over exactly that period is translated at it. Null for a row kept only for its closing rate. |
+| `source` | `text` | Where the group took the rates from — a central bank, a published series — so that the figure can be traced. |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((period_from <= period_to))`
+- `CHECK (((closing_rate > (0)::numeric) AND ((average_rate IS NULL) OR (average_rate > (0)::numeric))))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, group_id, currency_code, period_to)`
+
 ### Functions
 
 | Function | Purpose |
 |---|---|
 | `add_member(p_company_id uuid, p_group_id uuid, p_member_company_id uuid, p_method consolidation.method, p_ownership_rate numeric, p_entered_on date, p_left_on date, p_notes text)` | Puts a company in a group for a period, by a method and at a percentage of interest. The same call twice returns the first row; the same company and entry date with other terms is refused, as is a period overlapping another and a company whose books the caller cannot read. |
-| `archive_tables()` | What an archive of one company does with each table of this module: its groups travel, their members do not — they name other companies of the installation. Read by `ekwo.company_archive_tables()`. |
+| `archive_tables()` | What an archive of one company does with each table of this module: its groups and the rates they translate at travel, their members do not — they name other companies of the installation. Read by `ekwo.company_archive_tables()`. |
 | `create_group(p_company_id uuid, p_code text, p_name text, p_currency_code character, p_notes text)` | Creates a group owned by the company, in the currency given or the company's own. Idempotent by code: a code the company already has returns that group, unchanged. |
 | `end_membership(p_company_id uuid, p_member_id uuid, p_left_on date)` | Closes a period: p_left_on is the last day the company is in the perimeter. A change of interest or method is this, then add_member() from the next day. |
 | `guard_member()` | Refuses a member the writer cannot read (entries.read in that company) when it is put in the group — closing its period later needs no more than consolidation.write — and a period that overlaps another of the same company in the same group. A trigger, so the rule holds for psql and PostgREST as for the functions. |
@@ -3219,6 +3247,8 @@ Constraints:
 | `perimeter(p_company_id uuid, p_group_id uuid, p_on date)` | The companies in a group on a date: the parent first, at 100 %, then every member whose period holds the date, with its method, interest and integration rate, and whether the caller can read its books. A member the caller cannot read comes with readable false, and with its name and currency null when the caller cannot see the company at all. |
 | `require(p_company_id uuid, p_capability text, p_what text)` | Raises consolidation_module_not_enabled when the module is off for the company or the caller is not a member of it, and consolidation_not_allowed when the caller does not hold the capability. The first lines of every function of this module; the policies still decide every row. |
 | `require_readable(p_company_id uuid, p_group_id uuid, p_from date, p_to date)` | Raises consolidation_member_unreadable, naming the company, when the caller cannot read the books of the parent or of a member in the perimeter at any time between the two dates. What every consolidated figure calls first, so that none comes out short of a company. |
+| `set_rate(p_company_id uuid, p_group_id uuid, p_currency_code character, p_period_from date, p_period_to date, p_closing_rate numeric, p_average_rate numeric, p_source text)` | Sets the rates a group translates a currency at for a period: the closing rate of its last day and, when given, the average rate of the period, in units of that currency for one unit of the group's. The same currency and last day again replaces the row: a rate is corrected, never doubled. |
+| `translated_balances(p_company_id uuid, p_group_id uuid, p_from date, p_to date)` | The balance of every account of the parent and of each member in the group between two dates, translated into the group's currency by the closing rate method: assets and liabilities at the closing rate of p_to, income and expenses of the period at its average rate, equity at the closing rate of the day the company entered the group — then taken in at its integration rate. A company in another currency ends with its translation difference, the line of equity that brings its translated balance back to zero. A rate the group has not set refuses by name. |
 
 ## `contracts` — Contracts
 
