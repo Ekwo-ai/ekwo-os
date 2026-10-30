@@ -1383,15 +1383,18 @@ describe('the other person, through a machine key', () => {
     const ids = await aliceIds();
     const functions = await takingUuid();
     const differs: string[] = [];
-    await throughKey(bobSecret, async () => {
-      for (const fn of functions) {
+    // One transaction per function: every probe is a savepoint, and the
+    // thousands of them in one transaction ran the database out of shared
+    // memory once the schema had a few more functions to ask.
+    for (const fn of functions) {
+      await throughKey(bobSecret, async () => {
         const nobodys = await outcome(fn.call, [NOWHERE], [NOWHERE]);
         for (const { table, id } of ids) {
           const theirs = await outcome(fn.call, [id], [id]);
           if (theirs !== nobodys) differs.push(`${fn.name}(${table}): ${theirs} / ${nobodys}`);
         }
-      }
-    });
+      });
+    }
     expect(differs).toEqual([]);
   });
 
