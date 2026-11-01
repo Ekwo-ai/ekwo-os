@@ -151,6 +151,22 @@ somewhere has already run it.
 
 ### Changed
 
+- **A bank statement is imported once, whatever format it arrives in**
+  (`20261101070518_a_statement_is_recognised_in_any_format`, decision 0047).
+  The same account, closing day and opening and closing balances, read from
+  another format — a CODA and then a camt.053 of the same day, a CFONB 120
+  and then a camt.053 of the same month — is refused by name,
+  `statement_already_covered`, and nothing of it is written: the lines of a
+  CFONB 120 carry no bank reference and CODA's is informative only, so the
+  statement is what is recognised. The same format replayed is unchanged.
+  Three more things the CODA and CFONB 120 readers showed are settled in the
+  same file: a statement numbering that starts again at 1 in a new year is no
+  longer a `statement_number_gap` (`bank_statement_continuity` counts within
+  the year, and gives `previous_sequence_number`); a statement with no booked
+  line and no closing balance — a CODA day without movement — closes at its
+  opening balance instead of being refused `statement_without_balances`; and
+  the source format is read from the reader's `format` and `version`, then
+  from `namespace` as before, so the word stored does not change.
 - The schema is 0.25.0 (`20261029020000`); the floor of the packages stays at
   0.19.0: its migrations only add, and the packages read what they add only
   from 0.25.0 on (`SCHEMA_FEATURES`: `invoice_labels_by_pack`,

@@ -106,6 +106,7 @@ const HINTS: Record<string, string> = {
   statement_without_balances: 'Without an opening and a closing balance nothing proves the lines are all there. Nothing was imported.',
   unreadable_statement_line: 'A booked line cannot be held as it is — no amount, no date, another currency than the account, or more decimals than the ledger keeps. Nothing was imported.',
   statement_conflict: 'A statement with this identifier and date was already imported with other balances. The bank may have reissued it; nothing was changed.',
+  statement_already_covered: 'The same statement — same account, closing day and balances — was already imported from another format, so this file would bring the same month in twice. Nothing was written. Ask the user whether it is the same statement; if it truly is another one, the bank has to tell them why it reads the same.',
   statement_currency_mismatch: 'The statement is in another currency than the bank account it belongs to. Nothing is converted on import.',
   bank_account_mismatch: 'The bank account named is not the account the statement is of.',
   no_bank_account: 'The payment names no bank account and its journal has no default account. create_bank_account adds one and wires it to the journal.',

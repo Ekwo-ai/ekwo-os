@@ -19,13 +19,16 @@ import { newCompany, type Fixture } from './helpers/factory.js';
  * adapter in between: if this file needed one, the shape the bricks share
  * would not be shared.
  *
- * The answer to the question is not the one anybody would like, and the last
- * two `describe` blocks assert it as it is rather than as it should be:
- * replaying a format against itself creates nothing; across formats, the lines
- * are recognised **only when the bank writes the same reference in both** —
- * which CODA's own standard says it does not promise — and a CFONB 120 has no
- * bank reference at all, so its month is imported twice. docs/decisions/0047-a-statement-is-imported-once.md
- * says what would close that, and it is not in this change.
+ * Replaying a format against itself creates nothing. Across formats, a line is
+ * recognised only when the bank writes the same reference in both — which
+ * CODA's own standard says it does not promise — and a CFONB 120 has no bank
+ * reference at all. So what is recognised is the **statement**: the same
+ * account, the same closing day, the same two balances, from another format,
+ * is refused by name (`statement_already_covered`) and nothing of it is
+ * written. docs/decisions/0047-a-statement-is-imported-once.md gives the
+ * reasons. The last block holds what the readers showed besides: a day
+ * without movement, a numbering that starts again each January, and the key
+ * the source format is read from.
  */
 
 interface Report {
@@ -242,40 +245,39 @@ describe('the same day from a CODA, then from a camt.053', () => {
   const SAME = iban('BE', '999000000505'); // country-literal: an invented account has to be of somewhere
   const OTHER = iban('BE', '999000000606'); // country-literal: the same
 
-  it('when the bank writes the same reference in both: the lines are known, and the day is still two statements', async () => {
+  it('when the bank writes the same reference in both: the statement is recognised, and nothing is written', async () => {
     const accountId = await bankAccount(fx.companyId, SAME);
     const [coda] = (await importFile(readCoda(codaDay(SAME)))) as [Report];
     expect(coda).toMatchObject({ lines_imported: 3, lines_known: 0 });
 
-    const [camt] = (await importFile(readCamt053(camtDay(SAME, (line) => line.reference)))) as [Report];
-    expect(camt).toMatchObject({ already_imported: false, lines_imported: 0, lines_known: 3, warnings: [] });
+    await expect(importFile(readCamt053(camtDay(SAME, (line) => line.reference)))).rejects.toThrow(
+      /statement_already_covered: statement STMT-2026-03-05 .* closing on 2026-03-05 \(1000\.00 → 1400\.10\) was already imported from coda\.2 as 2026-042/,
+    );
     expect(await lineCount(accountId)).toBe(3);
-    // The statement itself is not recognised: the two formats name it differently.
-    const statements = await rows<{ statement_ref: string; source_format: string }>(
+    const statements = await rows<{ source_format: string }>(
       db,
-      `select statement_ref, source_format from bank_statements where bank_account_id = $1 order by created_at, statement_ref`,
+      `select source_format from bank_statements where bank_account_id = $1`,
       [accountId],
     );
-    expect(statements.map((statement) => statement.source_format).sort()).toEqual([
-      'coda.2',
-      'urn:iso:std:iso:20022:tech:xsd:camt.053.001.08',
-    ]);
+    expect(statements.map((statement) => statement.source_format)).toEqual(['coda.2']);
   });
 
-  it('when it does not — another reference, or none: THE DAY IS IMPORTED TWICE, and nothing says so', async () => {
+  it('when it does not — another reference, or none: the statement is still recognised', async () => {
     const accountId = await bankAccount(fx.companyId, OTHER);
     await importFile(readCoda(codaDay(OTHER)));
 
-    const [camt] = (await importFile(readCamt053(camtDay(OTHER, () => null)))) as [Report];
-    // This is the gap, asserted as it is. When it is closed this expectation
-    // fails, and whoever closes it turns it round.
-    expect(camt).toMatchObject({ lines_imported: 3, lines_known: 0, warnings: [] });
-    expect(await lineCount(accountId)).toBe(6);
+    await expect(importFile(readCamt053(camtDay(OTHER, () => null)))).rejects.toThrow(/statement_already_covered/);
+    expect(await lineCount(accountId)).toBe(3);
+  });
+
+  it('and the same format replayed is still the same statement, not a refusal', async () => {
+    const [again] = (await importFile(readCoda(codaDay(OTHER)))) as [Report];
+    expect(again).toMatchObject({ already_imported: true, lines_imported: 0, lines_known: 3 });
   });
 });
 
 describe('the same day from a CFONB 120, then from a camt.053', () => {
-  it('IS IMPORTED TWICE, whatever the bank references: the format gives a movement none to be recognised by', async () => {
+  it('is imported once: the format gives a movement no reference, and the statement is what is recognised', async () => {
     const account = ibanOf('FR', '99999', '00001', '00000000707') as string; // country-literal: the caller's word
     const accountId = await bankAccount(fx.companyId, account);
     const cfonb = readCfonb120(
@@ -296,9 +298,87 @@ describe('the same day from a CFONB 120, then from a camt.053', () => {
     expect(cfonb.statements[0]!.lines.every((line) => line.bankReference === null)).toBe(true);
     expect((await importFile(cfonb))[0]).toMatchObject({ lines_imported: 3 });
 
-    const [camt] = (await importFile(readCamt053(camtDay(account, (line) => line.reference)))) as [Report];
-    // The gap again, asserted as it is.
-    expect(camt).toMatchObject({ lines_imported: 3, lines_known: 0, warnings: [] });
-    expect(await lineCount(accountId)).toBe(6);
+    await expect(importFile(readCamt053(camtDay(account, (line) => line.reference)))).rejects.toThrow(
+      /statement_already_covered: .* was already imported from cfonb120 as/,
+    );
+    expect(await lineCount(accountId)).toBe(3);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// What the readers showed besides
+// ---------------------------------------------------------------------------
+
+describe('what the readers of fixed positions showed besides', () => {
+  /** One movement of a hundred, on the day given (DDMMYY). */
+  const movement = (day: string): MovementSpec[] => [
+    { sequence: 1, reference: `REF-${day}`, amount: 100_000n, valueDate: day, entryDate: day, free: 'VERSEMENT' },
+  ];
+
+  it('a day without movement closes where it opens, and is imported', async () => {
+    const account = iban('BE', '999000000808'); // country-literal: an invented account has to be of somewhere
+    const accountId = await bankAccount(fx.companyId, account);
+    const read = readCoda(codaFile({ account, opening: 1_000_000n, openingDate: '040326', codedSequence: 50, empty: true }));
+    expect(read.statements[0]!.closingBalance).toBeNull();
+
+    const [report] = (await importFile(read)) as [Report];
+    expect(report).toMatchObject({ lines_read: 0, lines_imported: 0, warnings: [] });
+    const statement = await one<Record<string, unknown>>(
+      db,
+      `select statement_date::text, balance_start::text, balance_end_declared::text, balance_end_computed::text
+         from bank_statements where bank_account_id = $1`,
+      [accountId],
+    );
+    expect(statement).toEqual({
+      statement_date: '2026-03-04',
+      balance_start: '1000.00',
+      balance_end_declared: '1000.00',
+      balance_end_computed: '1000.00',
+    });
+  });
+
+  it('a statement with lines and no closing balance is still refused', async () => {
+    const read = readCamt053(camtDay(iban('BE', '999000000505'), (line) => line.reference)); // country-literal: the account above
+    read.statements[0]!.closingBalance = null;
+    await expect(importFile(read)).rejects.toThrow(/statement_without_balances/);
+  });
+
+  it('a numbering that starts again in January is no hole, and a hole after it still is', async () => {
+    const account = iban('BE', '999000000909'); // country-literal: an invented account has to be of somewhere
+    await bankAccount(fx.companyId, account);
+    const december = readCoda(
+      codaFile({ account, created: '311226', codedSequence: 250, opening: 1_000_000n, openingDate: '301226', closingDate: '311226', movements: movement('311226') }),
+    );
+    expect((await importFile(december))[0]!.warnings).toEqual([]);
+
+    const january = readCoda(
+      codaFile({ account, created: '020127', codedSequence: 1, opening: 1_100_000n, openingDate: '311226', closingDate: '020127', movements: movement('020127') }),
+    );
+    expect((await importFile(january))[0]).toMatchObject({ statement_ref: '2027-001', warnings: [] });
+
+    const third = readCoda(
+      codaFile({ account, created: '050127', codedSequence: 3, opening: 1_200_000n, openingDate: '020127', closingDate: '050127', movements: movement('050127') }),
+    );
+    const [report] = (await importFile(third)) as [Report];
+    expect(report.warnings).toEqual([
+      {
+        code: 'statement_number_gap',
+        message: 'statement 2027-003 is numbered 3 and the previous one 1',
+        missing_statements: 1,
+      },
+    ]);
+  });
+
+  it('the source format is read from its own key, and the word stored is the one it always was', async () => {
+    const account = iban('BE', '999000001010'); // country-literal: an invented account has to be of somewhere
+    const accountId = await bankAccount(fx.companyId, account);
+    const { namespace: _namespace, ...read } = readCoda(codaFile({ account, opening: 1_000_000n, movements: movement('050326') }));
+    await importFile(read);
+    const statement = await one<{ source_format: string }>(
+      db,
+      `select source_format from bank_statements where bank_account_id = $1`,
+      [accountId],
+    );
+    expect(statement.source_format).toBe('coda.2');
   });
 });
