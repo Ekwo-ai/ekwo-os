@@ -148,6 +148,18 @@ somewhere has already run it.
   equity that brings it back to zero. A rate the group has not set refuses by
   name (`consolidation_rate_missing`); `currency_rates` is not read. An archive
   of the parent carries the rates with its groups.
+- **The MCP server can start with a short list of tools** (`EKWO_MCP_TOOLS=on_demand`).
+  A session then offers the fifteen tools of a first session with a set of
+  books (`CORE_TOOLS`) and two more: `search_tools`, which finds a tool by a
+  few words of the task and says whether it reads, adds or destroys, and
+  `load_tools`, which adds the tools named and tells the client its list
+  changed. Unset or `all`, every tool is offered at the start, as before; a
+  value that is neither is refused, `bad_tool_loading`.
+- **How a tool of the MCP server is designed** is written down in
+  `packages/mcp/TOOL_DESIGN.md`: one tool per task, a name a model can guess,
+  a description for a model, its effect on the books, inputs without
+  guesswork, the database's words in a refusal. The rules a machine can check
+  are checked on every tool a client is offered.
 
 ### Changed
 
@@ -167,6 +179,19 @@ somewhere has already run it.
   opening balance instead of being refused `statement_without_balances`; and
   the source format is read from the reader's `format` and `version`, then
   from `namespace` as before, so the word stored does not change.
+- **Every tool of the MCP server says what it does to the books, and one that
+  does not, does not compile.** Read, additive or destructive
+  (`TOOL_EFFECTS`, `annotationsFor()`, `effectOf()`), carried as
+  `readOnlyHint` and `destructiveHint`; `buildServer()` registers tools
+  through a `RegisterTool` that requires them. A module tool declares
+  `effect` — with `idempotent` and `openWorld` where they apply — in place of
+  `readOnly`, so its writes are no longer all destructive: a CRM card, a note,
+  a segment, a deal, a contract, a schedule, a tax answer and a kept
+  computation are additive; a depreciation booked, a disposal, budget lines
+  replaced, an electronic invoice issued or sent, a fiscal record chained and
+  the due invoices of the contracts — which a schedule may post — stay
+  destructive.
+
 - The schema is 0.25.0 (`20261029020000`); the floor of the packages stays at
   0.19.0: its migrations only add, and the packages read what they add only
   from 0.25.0 on (`SCHEMA_FEATURES`: `invoice_labels_by_pack`,

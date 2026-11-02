@@ -9,7 +9,7 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { FISCAL_SYSTEM_ENV, cloudOfferSilenced, directoryTransport, parseFiscalSystem, registrationInvitation, type EinvoiceTransport, type FiscalSystem } from '@ekwo-ai/core';
 import type { Backend, Row, SessionPosting } from './backend.js';
-import { ENV, openBackend, readConfig, sessionPostingFrom } from './config.js';
+import { ENV, openBackend, readConfig, sessionPostingFrom, toolLoadingFrom } from './config.js';
 import { assertSchemaSupported } from './schema.js';
 import { buildServer } from './server.js';
 import { installedModules } from './tools/modules.js';
@@ -24,6 +24,10 @@ export interface Started {
 }
 
 export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env): Promise<Started> {
+  // Read before anything else, so a bad value is refused whether or not a
+  // database is configured.
+  const tools = toolLoadingFrom(env);
+  const loading = tools === undefined ? {} : { tools };
   let config;
   try {
     config = readConfig(env);
@@ -35,7 +39,7 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
     const reason = error as Error;
     const backend = unconfiguredBackend(reason);
     return {
-      server: buildServer(backend),
+      server: buildServer(backend, loading),
       backend,
       summary: `ekwo-mcp: started without a database — every tool will answer with what to configure. ${reason.message} ${sessionSaid(sessionPostingFrom(env))}.`,
     };
@@ -60,6 +64,7 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
       offerCloud: !cloudOfferSilenced(env),
       ...(einvoiceTransport === undefined ? {} : { einvoiceTransport }),
       ...(fiscalSystem === undefined ? {} : { fiscalSystem }),
+      ...loading,
     }),
     backend,
     summary:
@@ -67,6 +72,7 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
       `, schema ${schemaVersion}` +
       `${modules.length > 0 ? `, modules: ${modules.join(', ')}` : ''}` +
       `${einvoiceTransport === undefined ? '' : `, electronic invoices to the folder ${env[ENV.einvoiceDirectory]?.trim() ?? ''}`}` +
+      `${tools === 'on_demand' ? ', tools on demand' : ''}` +
       `. ${posting}`,
   };
 }

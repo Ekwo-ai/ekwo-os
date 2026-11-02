@@ -24,6 +24,7 @@ import { IDENTITY_ENV, SESSION_POSTING, isServiceRoleKey, serviceRoleRefusal } f
 import { EkwoMcpError, type AgentSession, type Backend, type SessionPosting } from './backend.js';
 import { postgrestBackend } from './postgrest.js';
 import { connect, sqlBackend } from './sql.js';
+import { TOOL_LOADING, type ToolLoading } from './tools/loading.js';
 
 export interface Config {
   mode: 'postgrest' | 'sql';
@@ -44,6 +45,7 @@ export const ENV = {
   actAsUserId: 'EKWO_ACT_AS_USER_ID',
   einvoiceDirectory: 'EKWO_EINVOICE_DIRECTORY',
   agentPosting: 'EKWO_AGENT_POSTING',
+  tools: 'EKWO_MCP_TOOLS',
 } as const;
 
 const SURFACE = 'this server';
@@ -77,6 +79,23 @@ export function sessionPostingFrom(env: NodeJS.ProcessEnv): SessionPosting | und
     );
   }
   return value as SessionPosting;
+}
+
+/**
+ * How the session's tools are offered, from `EKWO_MCP_TOOLS`: `all` at the
+ * handshake, or `on_demand` — a first session's tools, and `search_tools` and
+ * `load_tools` for the rest. Unset, all. A value that is neither is refused
+ * rather than read as one.
+ */
+export function toolLoadingFrom(env: NodeJS.ProcessEnv): ToolLoading | undefined {
+  const value = trimmed(env, ENV.tools);
+  if (value === undefined) return undefined;
+  if (!(TOOL_LOADING as readonly string[]).includes(value)) {
+    throw new EkwoMcpError(
+      `bad_tool_loading: ${ENV.tools} is ${TOOL_LOADING.join(' or ')}, got "${value}". Left unset, every tool is offered at the start.`,
+    );
+  }
+  return value as ToolLoading;
 }
 
 /** `--autopilot` or `--review` among the arguments of the server, at most one of them. */

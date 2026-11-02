@@ -19,7 +19,7 @@ export {
   type SelectQuery,
   type SessionPosting,
 } from './backend.js';
-export { ENV, isServiceRoleKey, openBackend, readConfig, sessionPostingFlag, sessionPostingFrom, type Config } from './config.js';
+export { ENV, isServiceRoleKey, openBackend, readConfig, sessionPostingFlag, sessionPostingFrom, toolLoadingFrom, type Config } from './config.js';
 export { amountIn, decimal, money, moneyFields, type Decimal } from '@ekwo-ai/core';
 export { connect, sqlBackend, type SqlBackendOptions, type SqlClient } from './sql.js';
 export { AGENT_HEADER, AGENT_SESSION_HEADER, API_KEY_HEADER, postgrestBackend, type PostgrestBackendOptions } from './postgrest.js';
@@ -37,8 +37,11 @@ export {
   SERVER_VERSION,
   buildServer,
   instructionsFor,
+  type RegisterTool,
   type ServerOptions,
 } from './server.js';
+export { TOOL_EFFECTS, annotationsFor, effectOf, type EffectAnnotations, type EffectDetails, type ToolEffect } from './tools/effect.js';
+export { CORE_TOOLS, LOADING_TOOLS, TOOL_LOADING, loadTools, searchTools, type FoundTool, type ToolLoading } from './tools/loading.js';
 export { SCHEMA_MIN, assertSchemaSupported, installedSchemaVersion } from './schema.js';
 export { einvoiceTransportFrom, postingSummary, serverFromEnvironment, shouldInviteToRegister, type Started } from './start.js';
 export { STDIO_HELP, runStdio, type StdioOptions } from './stdio.js';

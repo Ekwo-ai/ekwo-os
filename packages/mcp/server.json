@@ -68,6 +68,11 @@
           "name": "EKWO_AGENT_POSTING",
           "description": "Optional: autopilot or review, how this session posts documents. Unset, each company's agent_posting decides",
           "isRequired": false
+        },
+        {
+          "name": "EKWO_MCP_TOOLS",
+          "description": "Optional: on_demand starts with a first session's tools and finds the others with search_tools. Unset, all",
+          "isRequired": false
         }
       ]
     }

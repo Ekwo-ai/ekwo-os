@@ -75,6 +75,7 @@ import {
   contractsUpsert,
 } from '@ekwo-ai/core';
 import { companyId, isoDate, uuid } from './read.js';
+import type { ToolEffect } from './effect.js';
 
 /** One module's tools, as the loader sees them. */
 export interface ModuleToolset {
@@ -105,7 +106,17 @@ export interface ModuleTool {
   title: string;
   description: string;
   input: z.ZodObject<z.ZodRawShape>;
-  readOnly: boolean;
+  /**
+   * What it does to the books: `read`, `additive` or `destructive`, by the
+   * rule of `packages/mcp/TOOL_DESIGN.md` — posting, replacing, removing or
+   * reaching outside the books is destructive; making a draft, a record or a
+   * setting a person can change back is additive.
+   */
+  effect: ToolEffect;
+  /** Calling it twice with the same arguments does what calling it once did. */
+  idempotent?: boolean;
+  /** It reaches something outside the database: the transport of an electronic invoice. */
+  openWorld?: boolean;
   run(backend: Backend, args: Record<string, never>, context: ModuleToolContext): Promise<unknown>;
 }
 
@@ -153,7 +164,7 @@ const FIXED_ASSETS: ModuleToolset = {
     {
       verb: 'list',
       title: 'Fixed assets',
-      readOnly: true,
+      effect: 'read',
       description:
         'The register of fixed assets of a company at a date: what each one cost, what has been written off it and what is left. It reads what has been *booked*, so it ties back to the accumulated depreciation account on the balance sheet. An asset disposed of before that date is not in it.',
       input: z.object({
@@ -179,7 +190,7 @@ const FIXED_ASSETS: ModuleToolset = {
     {
       verb: 'create',
       title: 'Record a fixed asset',
-      readOnly: false,
+      effect: 'destructive',
       description:
         'Creates a fixed asset and writes its depreciation schedule in one call. Give a `category_code` of the country pack — the categories are those of its `fixed_assets.json` — and the method, the duration and the coefficient come from it; anything you pass yourself wins over the category. The three accounts are the asset account, the accumulated depreciation account and the depreciation charge. Nothing is booked here: fixed_assets_run_depreciation is what posts.',
       input: z.object({
@@ -231,7 +242,7 @@ const FIXED_ASSETS: ModuleToolset = {
     {
       verb: 'schedule',
       title: 'Depreciation schedule',
-      readOnly: true,
+      effect: 'read',
       description:
         'The planned depreciation of one asset, period by period, with the amount, the accumulated total and the net book value after each one, and the entry that booked it where it has been booked. The schedule always sums to exactly the cost less the residual value: the last line takes the remainder.',
       input: z.object({ company_id: companyId, asset_id: uuid }),
@@ -263,7 +274,8 @@ const FIXED_ASSETS: ModuleToolset = {
     {
       verb: 'run_depreciation',
       title: 'Book the depreciation',
-      readOnly: false,
+      effect: 'destructive',
+      idempotent: true,
       description:
         'Books every planned period that ends on or before a date, one ledger entry per period, through the socle\'s own posting function. It is idempotent: a period already booked is skipped, and the database refuses a second entry for it anyway. A closed financial year or a locked period refuses the posting — report the refusal, do not move the date.',
       input: z.object({
@@ -284,7 +296,7 @@ const FIXED_ASSETS: ModuleToolset = {
     {
       verb: 'dispose',
       title: 'Dispose of a fixed asset',
-      readOnly: false,
+      effect: 'destructive',
       description:
         'Takes an asset off the books on a date: clears its cost and its accumulated depreciation, books the proceeds against the account you name, and presents the result the way the country pack says — one gain or loss line, or the value sold and the proceeds in full. Run fixed_assets_run_depreciation first: a disposal is refused while a period that has already ended is still unbooked. There is no undo.',
       input: z.object({
@@ -330,7 +342,7 @@ const BUDGETS: ModuleToolset = {
     {
       verb: 'list',
       title: 'Budgets',
-      readOnly: true,
+      effect: 'read',
       description:
         'The budgets of a company, with the financial year each one is for and whether it is a draft, approved or closed. Start here: budgets_variance needs a budget_id.',
       input: z.object({ company_id: companyId }),
@@ -350,7 +362,8 @@ const BUDGETS: ModuleToolset = {
     {
       verb: 'upsert_lines',
       title: 'Write budget lines',
-      readOnly: false,
+      effect: 'destructive',
+      idempotent: true,
       description:
         'Adds lines to a budget: one figure per account and per period. State the amount the way a business says it out loud — an income and a cost are both positive — and the comparison flips the ledger, not you. A line already there for the same account and period is replaced.',
       input: z.object({
@@ -430,7 +443,7 @@ const BUDGETS: ModuleToolset = {
     {
       verb: 'variance',
       title: 'Budget against ledger',
-      readOnly: true,
+      effect: 'read',
       description:
         'What was planned against what was booked, per account, over a period. Both figures are in the sign a business states them in, and the variance is the actual less the plan — so a negative figure on an income account is revenue that did not arrive, and a positive one on a cost account is overspending. It reads posted entries of kind `normal`: a closing or appropriation entry is not what a period earned. A budget line is taken whole or not at all, so ask for a window that contains the periods the budget was written in.',
       input: z.object({
@@ -486,7 +499,7 @@ const EINVOICING: ModuleToolset = {
     {
       verb: 'validate',
       title: 'Check an electronic invoice',
-      readOnly: true,
+      effect: 'read',
       description:
         'Writes the electronic invoice of a posted sale invoice or credit note, in the profile its company\'s country pack declares, and lists every rule of the format it breaks — as the format names them, word for word. Records nothing and sends nothing. A broken rule is fixed in the books (the customer\'s electronic address, a due date, a reference), never in the file. A profile no brick writes is refused as format_without_brick.',
       input: z.object({
@@ -505,7 +518,9 @@ const EINVOICING: ModuleToolset = {
     {
       verb: 'issue',
       title: 'Issue an electronic invoice',
-      readOnly: false,
+      effect: 'destructive',
+      idempotent: true,
+      openWorld: true,
       description:
         'Writes the electronic invoice of a posted sale and keeps it — the exact file, its checksum and the rules it breaks; the same file twice is one issue. With send, also hands it to the transport this server is configured with and records what came back. A file that breaks a rule is kept and never sent (einvoice_not_sendable, with the rules); a document already on its way is refused (einvoice_already_sent). Submitted is not delivered: follow it with einvoicing_status. Ask the user before sending: a file that leaves is in a customer\'s hands.',
       input: z.object({
@@ -530,7 +545,9 @@ const EINVOICING: ModuleToolset = {
     {
       verb: 'status',
       title: 'Where an electronic invoice stands',
-      readOnly: false,
+      effect: 'additive',
+      idempotent: true,
+      openWorld: true,
       description:
         'Everything known of the electronic invoice of one document: each file issued, each sending and every answer the service gave, verbatim. state is not_issued, issued, or the state of the latest sending: prepared, submitted, accepted_by_access_point, delivered, rejected or failed. With refresh, asks the configured transport again about the sending still open and records its answer. A rejected or failed document is sent again with einvoicing_issue.',
       input: z.object({
@@ -553,7 +570,7 @@ const EINVOICING: ModuleToolset = {
     {
       verb: 'fiscalise',
       title: 'Chain the fiscal record of an invoice',
-      readOnly: false,
+      effect: 'destructive',
       description:
         'Writes the fiscal record of a posted sale — the record its company\'s country pack requires the invoicing software to keep for every invoice, in the format of its einvoicing.fiscalisation block — chains it after the last record of the invoicing system, with the hash of that record, and keeps its file. Records nothing when the record breaks a rule (the rules are listed, as the format names them) or with dry_run. A record once chained is never changed: a mistake is an anulacion, then a new alta. The answer carries verification_url, what the QR code of the invoice encodes. Refused by name where the pack declares no regime (no_fiscalisation_regime) or no brick writes its format (format_without_brick). Ask the user before chaining: a record is kept as the law requires, for good.',
       input: z.object({
@@ -586,7 +603,7 @@ const EINVOICING: ModuleToolset = {
     {
       verb: 'fiscalisation_status',
       title: 'Where the fiscal records of a company stand',
-      readOnly: true,
+      effect: 'read',
       description:
         'The fiscalisation regime of a company, as its country pack declares it, and where its records stand: each chain of an invoicing system, walked both ways (verified, or the first break), the records still to be sent to the authority, the posted sales from the start of the obligation that have no record — named here, never fiscalised on their own — and the latest events. Under a clearance regime (kind clearance), missing is the posted sales without the authority\'s validation, and clearance counts those validated, waiting, rejected by the authority or by the buyer, and cancelled at the authority while still posted. A broken chain is for the company\'s accountant before anything else.',
       input: z.object({
@@ -604,7 +621,7 @@ const EINVOICING: ModuleToolset = {
     {
       verb: 'clearance',
       title: 'Record a submission to the authority, or its answer',
-      readOnly: false,
+      effect: 'additive',
       description:
         'Under a clearance regime — the authority validates every invoice before it is issued, and an invoice is valid only once validated — records what happened to a posted sale: submitted (it left for the authority, with the reference the authority gave on receipt), validated (with the identifier the authority gave it, the moment it validated it and, where the regime has one, the verification link the invoice carries as a QR code), rejected (by the authority, or by the buyer after validation and within the window the pack declares, with the reason) or cancelled (by the issuer, after validation and within the pack\'s window, with the reason). Nothing is sent by this tool: it records what the host that talks to the authority reports, and the answer verbatim in answer. Every transition that cannot have happened is refused by name (clearance_pending, clearance_state_backwards, clearance_window_closed, clearance_not_cancellable, clearance_verification_missing, clearance_verification_unbuilt…). Refused where the pack declares no clearance regime (fiscal_regime_not_clearance). Never record an answer nobody received: an invoice recorded as validated is one the books treat as valid.',
       input: z.object({
@@ -651,7 +668,7 @@ const EINVOICING: ModuleToolset = {
     {
       verb: 'list',
       title: 'Electronic invoices sent',
-      readOnly: true,
+      effect: 'read',
       description:
         'Every sending of electronic invoices of a company, or of one document, latest first: the document, the file, the channel and the service, the reference it gave, the state and the last words the service said.',
       input: z.object({
@@ -721,7 +738,7 @@ const TAX: ModuleToolset = {
     {
       verb: 'estimate',
       title: 'Corporate income tax of a year',
-      readOnly: true,
+      effect: 'read',
       description:
         'The corporate income tax of a financial year as the ledger stands on a day — the whole year when no day is given — line by line, each with its article: the accounting result the country pack starts from, every adjustment with its base and percentage, the losses of earlier years used, the taxable base, every rate with the slice it takes, a rate refused with the parameter in the way (`not_declared` or `not_met`), the credits, and `estimated_tax`. Reads and writes nothing. It is an estimate from what is booked and from a reading of the rules: never call it the tax due, never call it compliant, and say that the user\'s accountant checks it before anything is filed. During the year it is the tax on the year so far; it forecasts nothing. A rate refused as `not_declared` is a question for the user: tax_parameters, then tax_declare_parameter with their answer.',
       input: z.object({
@@ -749,7 +766,7 @@ const TAX: ModuleToolset = {
     {
       verb: 'parameters',
       title: 'What the company declares for its tax',
-      readOnly: true,
+      effect: 'read',
       description:
         'The facts the country pack asks a company to declare for a financial year — a judgement (is it a small company, who holds its capital) or an amount (its turnover, what it paid its director) — each with its article, and the company\'s answer, or `declared: false`. A condition of a rate that is not declared is not met, so a reduced rate waits for these. Only the user answers them: ask, then tax_declare_parameter.',
       input: z.object({ company_id: companyId, fiscal_year_id: fiscalYearId }),
@@ -793,7 +810,8 @@ const TAX: ModuleToolset = {
     {
       verb: 'declare_parameter',
       title: 'Declare a fact for the tax',
-      readOnly: false,
+      effect: 'additive',
+      idempotent: true,
       description:
         'Writes the company\'s answer to one parameter of tax_parameters for one financial year, replacing an earlier answer: `true` or `false` for a judgement, a decimal string for an amount. Write only what the user has stated, in their words — never a judgement you inferred from the books, which say nothing of who holds the capital or whether a condition is met. Ask before writing. The database refuses a code the country does not ask for (`unknown_tax_parameter`) and a value of the wrong kind (`tax_parameter_type`).',
       input: z.object({
@@ -850,7 +868,7 @@ const TAX: ModuleToolset = {
     {
       verb: 'adjustments',
       title: 'What the tax adds back or deducts',
-      readOnly: true,
+      effect: 'read',
       description:
         'The adjustment rules of the country pack in force for a financial year — what each adds back to the accounting result or deducts from it, its percentage or the formula that works it out, the accounts the pack catches by itself, and its article — with what the company named under each: an account read from the ledger every time, for every year or for this one, or an amount stated for this year. The pack catches by itself only what a chart keeps on an account of its own; everything else counts only once it is named here, with tax_declare_adjustment. `not_in_force` lists what the company named under a rule that does not apply to this year.',
       input: z.object({ company_id: companyId, fiscal_year_id: fiscalYearId }),
@@ -932,7 +950,8 @@ const TAX: ModuleToolset = {
     {
       verb: 'declare_adjustment',
       title: 'Name what falls under an adjustment',
-      readOnly: false,
+      effect: 'additive',
+      idempotent: true,
       description:
         'Names what falls under one rule of tax_adjustments: an account, whose balance the estimate reads from the ledger every time — for every year, or for one — or an amount stated for one year. A rule whose percentage is a formula needs the parameters the formula names (`adjustment_parameter_missing` says which). Which expense falls under which rule is the user\'s call, or their accountant\'s: take the account and the amount from them, ask before writing, and run tax_estimate afterwards to show what moved. The database refuses a rule the country does not carry (`unknown_adjustment_rule`).',
       input: z.object({
@@ -1000,7 +1019,7 @@ const TAX: ModuleToolset = {
     {
       verb: 'losses',
       title: 'Losses carried forward',
-      readOnly: true,
+      effect: 'read',
       description:
         'What is left of each loss of an earlier year, by the day its year ended: the loss, what final computations have used of it, and what remains for a later profit. The stock moves only when a computation is called final. How much of it a year may use is the country\'s limit, applied by tax_estimate.',
       input: z.object({
@@ -1017,7 +1036,7 @@ const TAX: ModuleToolset = {
     {
       verb: 'record_computation',
       title: 'Keep an estimate',
-      readOnly: false,
+      effect: 'additive',
       description:
         'Keeps what tax_estimate says now as the next computation of the year, numbered, with its lines, so that it can be read again after the ledger moves. It stays an estimate: calling a computation final is the owner\'s act, outside this server, and only a final one names the tax due. Writes nothing to the ledger. Record only when the user asks.',
       input: z.object({
@@ -1039,7 +1058,7 @@ const TAX: ModuleToolset = {
     {
       verb: 'computations',
       title: 'Computations kept',
-      readOnly: true,
+      effect: 'read',
       description:
         'The computations kept for a company, latest first, or for one financial year: the version, the day the ledger was read on, the accounting result, the taxable base, the loss of the year and the tax, and the status — `estimate`, `final` (called final by an owner; the only one whose tax is the tax due) or `superseded` (a final one withdrawn, kept).',
       input: z.object({
@@ -1134,7 +1153,7 @@ const CRM: ModuleToolset = {
     {
       verb: 'search',
       title: 'Search the cards',
-      readOnly: true,
+      effect: 'read',
       description:
         'The contacts the company follows — one card each — filtered: a text found in the name, the e-mail or the organisation\'s name, a relationship status, a segment the contact is in now, a stage one of its deals is at, a country and a language (ISO codes; the organisation\'s where the person has none), an owner, no_outbound, active since or inactive since a moment (inactive includes a card on which nothing ever happened). Every filter is optional. Most recently active first. Each row is the contact, its organisation\'s name, its status, priority, owner, last activity and the slugs of its segments. A contact without a card is not here: crm_upsert_card creates one. Merged contacts are left out.',
       input: z.object({
@@ -1173,7 +1192,7 @@ const CRM: ModuleToolset = {
     {
       verb: 'card',
       title: 'One contact, whole',
-      readOnly: true,
+      effect: 'read',
       description:
         'Everything on one contact in one object: the contact as the books hold it (its contact_type says whether it is a prospect — other — or a customer), its organisation, its card (null when it has none yet), the segments it is in now, the open deals with it — for an organisation, with its people too — and its 20 latest activities. Read this before writing anything about a contact. A contact of another company is refused, crm_unknown_contact.',
       input: z.object({ company_id: companyId, contact_id: contactId }),
@@ -1189,7 +1208,7 @@ const CRM: ModuleToolset = {
     {
       verb: 'segments',
       title: 'The segments',
-      readOnly: true,
+      effect: 'read',
       description:
         'Every segment of the company as a tree — a taxonomy branch, a target segment, a cohort, a brand — each with its parent, its depth, the path of slugs from its root, and how many contacts are in it now (one who left is not counted). A parent comes just before its children. Start here for crm_join_segment, crm_leave_segment or a search by segment.',
       input: z.object({ company_id: companyId }),
@@ -1200,7 +1219,7 @@ const CRM: ModuleToolset = {
     {
       verb: 'board',
       title: 'A pipeline, stage by stage',
-      readOnly: true,
+      effect: 'read',
       description:
         'A pipeline as a board: its stages in order — each open, won or lost — the deals at each stage with their contact, amount, currency, expected date and owner, how many there are, and the sum of the amounts by currency, for each stage and for the pipeline. Amounts are never added across currencies. Without pipeline_id, every pipeline of the company: that is where the pipeline and stage ids for crm_open_deal and crm_move_deal come from. Open deals only, unless include_closed. A company starts with no pipeline: one is created by its users, not by this server.',
       input: z.object({
@@ -1221,7 +1240,7 @@ const CRM: ModuleToolset = {
     {
       verb: 'timeline',
       title: 'What happened',
-      readOnly: true,
+      effect: 'read',
       description:
         'The activities of one contact, or of one deal — notes, e-mails, calls, meetings, messages, signals, enrichments, tasks, and the moves the module wrote itself — most recent first. Name a contact, a deal, or both. since keeps what happened from that moment on; kinds keeps those kinds only, each one of ' +
         words(CRM_ACTIVITY_KINDS) +
@@ -1250,7 +1269,8 @@ const CRM: ModuleToolset = {
     {
       verb: 'upsert_card',
       title: 'Write a card',
-      readOnly: false,
+      effect: 'additive',
+      idempotent: true,
       description:
         'Creates the card of a contact, or changes it: each key the patch names takes its value, every other field keeps its own. The keys are status (where the relationship stands: one of ' +
         words(CRM_RELATIONSHIP_STATUSES) +
@@ -1277,7 +1297,7 @@ const CRM: ModuleToolset = {
     {
       verb: 'log_activity',
       title: 'Log an activity',
-      readOnly: false,
+      effect: 'additive',
       description:
         'Writes one thing that happened with a contact — a note, an e-mail sent or received, a call, a meeting, a message, a signal read elsewhere, an enrichment, a task — optionally about one of the company\'s deals, and moves the card\'s last activity. kind is one of ' +
         words(CRM_ACTIVITY_KINDS) +
@@ -1318,7 +1338,8 @@ const CRM: ModuleToolset = {
     {
       verb: 'join_segment',
       title: 'Put a contact in a segment',
-      readOnly: false,
+      effect: 'additive',
+      idempotent: true,
       description:
         'Puts a contact in a segment of the company, or back in it: a contact who had left is in again, with the same membership. added_by is who did it, a handle; note is why. A segment of another company is refused, crm_unknown_segment.',
       input: z.object({
@@ -1343,7 +1364,7 @@ const CRM: ModuleToolset = {
     {
       verb: 'leave_segment',
       title: 'Take a contact out of a segment',
-      readOnly: false,
+      effect: 'additive',
       description:
         'Takes a contact out of a segment. The membership is kept with the moment it ended, so the history stays readable and crm_join_segment can put the contact back. A contact that was never in the segment is refused, crm_not_a_member.',
       input: z.object({ company_id: companyId, segment_id: segmentId, contact_id: contactId }),
@@ -1360,7 +1381,7 @@ const CRM: ModuleToolset = {
     {
       verb: 'open_deal',
       title: 'Open a deal',
-      readOnly: false,
+      effect: 'additive',
       description:
         'Opens a piece of business with one contact in one pipeline, at the first open stage of that pipeline. An amount is always in a currency: name currency_code (ISO 4217), or the company\'s own currency is taken. Nothing is written to the books. A pipeline of another company is refused, crm_unknown_pipeline; one with no open stage, crm_pipeline_without_open_stage. Ask the user before opening a deal they did not ask for.',
       input: z.object({
@@ -1393,7 +1414,8 @@ const CRM: ModuleToolset = {
     {
       verb: 'move_deal',
       title: 'Move a deal',
-      readOnly: false,
+      effect: 'additive',
+      idempotent: true,
       description:
         'Moves a deal to another stage of its own pipeline and logs the move as an activity. A won stage closes the deal and makes its party a customer — the organisation at the root of the contact\'s chain: a prospect becomes customer, a supplier becomes both — which also needs the right to write contacts; a lost stage closes it too; going back to an open stage opens it again. The same stage again changes nothing. A stage of another pipeline is refused, crm_stage_not_in_pipeline. Confirm with the user before moving a deal to won or lost.',
       input: z.object({
@@ -1459,7 +1481,7 @@ const CONTRACTS: ModuleToolset = {
     {
       verb: 'list',
       title: 'The contracts',
-      readOnly: true,
+      effect: 'read',
       description:
         'The contracts of the company, each with its party, its kind, its side (sale: the company invoices; purchase: it is invoiced), its state, its dates, its currency and value, and its nearest deadline. Filtered by state (one of ' +
         words(CONTRACT_STATES) +
@@ -1490,7 +1512,7 @@ const CONTRACTS: ModuleToolset = {
     {
       verb: 'card',
       title: 'One contract, whole',
-      readOnly: true,
+      effect: 'read',
       description:
         'Everything on one contract in one object: the contract, its party, its signed file with its checksum, its schedules, its history — versions, amendments, tacit renewals — the latest documents it issued with their number, state and total, and its deadlines. Read this before changing a contract or issuing from it.',
       input: z.object({ company_id: companyId, contract_id: contractId }),
@@ -1506,7 +1528,8 @@ const CONTRACTS: ModuleToolset = {
     {
       verb: 'upsert',
       title: 'Write a contract',
-      readOnly: false,
+      effect: 'additive',
+      idempotent: true,
       description:
         'Creates the contract of that number, or changes it: each key the patch names takes its value, every other field keeps its own. The keys are ' +
         words(CONTRACT_FIELDS) +
@@ -1535,7 +1558,7 @@ const CONTRACTS: ModuleToolset = {
     {
       verb: 'schedule',
       title: 'Write a schedule',
-      readOnly: false,
+      effect: 'additive',
       description:
         'Adds a line a contract invoices at its own rhythm, or changes one (schedule_id). The keys are ' +
         words(CONTRACT_SCHEDULE_FIELDS) +
@@ -1562,7 +1585,8 @@ const CONTRACTS: ModuleToolset = {
     {
       verb: 'issue_due',
       title: 'Issue what is due',
-      readOnly: false,
+      effect: 'destructive',
+      idempotent: true,
       description:
         'Issues every period that has come on that day: for each schedule of a signed or active contract whose next_on is on or before it, one draft document per period — a sales invoice on a sale, a purchase invoice on a purchase — to the contract\'s party, contract_reference set to its number, and next_on moved on. Renewals and expiries come first. Twice for the same day issues once: the socle refuses a second document for one period. Drafts stay drafts unless the schedule says auto_post. Show the user what is due first (contracts_deadlines, kinds next_issue) and issue only once they agree; then show the drafts before anything is posted.',
       input: z.object({
@@ -1581,7 +1605,7 @@ const CONTRACTS: ModuleToolset = {
     {
       verb: 'deadlines',
       title: 'What the contracts ask, and when',
-      readOnly: true,
+      effect: 'read',
       description:
         'Every date a running contract asks somebody to act on, soonest first: notice (the last day notice can be given before the next term, or before the end), renewal, end, next_issue (the next period a schedule issues) and indexation (when a price is due to be indexed). Filtered by a window of days, a contract, or kinds, each one of ' +
         words(CONTRACT_DEADLINE_KINDS) +
@@ -1608,7 +1632,7 @@ const CONTRACTS: ModuleToolset = {
     {
       verb: 'amend',
       title: 'Record an amendment',
-      readOnly: false,
+      effect: 'additive',
       description:
         'Records what changes in a contract and from when, numbered next in its history, with the signed file (attachment_id) and the day it was signed. kind amendment applies its changes now: the fields of the contract by name, and under "schedules" the fields of each schedule, by id — a new unit_price after an indexation, for instance. kind version records another text of the contract with its file and changes nothing. A renewal is written by the module itself on its day. Kinds: ' +
         words(CONTRACT_AMENDMENT_KINDS.filter((kind) => kind !== 'renewal')) +
@@ -1641,7 +1665,7 @@ const CONTRACTS: ModuleToolset = {
     {
       verb: 'from_template',
       title: 'A contract from a template',
-      readOnly: false,
+      effect: 'additive',
       description:
         'Makes a draft contract of one of the company\'s templates (contracts_list with templates: true lists them): the number, party, side and kind given, starting on starts_on, the values of the template\'s variables kept on the contract — a required one left empty is refused, contracts_missing_variable — and the template\'s schedule copied, starting on starts_on. Answers the contract, its schedules, and the clauses: the html with the values in place, or the docx file to fill. Nothing is sent or signed. Ask the user for every value rather than inventing one.',
       input: z.object({

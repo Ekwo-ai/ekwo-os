@@ -14,7 +14,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { ENV, MODULE_TOOLSETS, SERVER_NAME, SERVER_VERSION, buildServer, type Backend } from '../../packages/mcp/src/index.js';
+import { ENV, MODULE_TOOLSETS, SERVER_NAME, SERVER_VERSION, buildServer, effectOf, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase, repoRoot } from '../helpers/db.js';
 import { newCompany, type Fixture } from '../helpers/factory.js';
 import { backendFor } from './helpers.js';
@@ -271,10 +271,21 @@ describe('the tools a client is offered', () => {
       for (const tool of tools) {
         expect(tool.annotations?.title, tool.name).toBe(tool.title);
         expect(tool.annotations?.title?.length ?? 0, tool.name).toBeGreaterThan(0);
-        if (tool.annotations?.readOnlyHint !== true) {
-          expect(typeof tool.annotations?.destructiveHint, tool.name).toBe('boolean');
-        }
+        // Read, additive or destructive: packages/mcp/TOOL_DESIGN.md, § 4.
+        expect(effectOf(tool.annotations), tool.name).toBeDefined();
+        // § 2: a name a model can guess, within the protocol's length.
+        expect(tool.name, tool.name).toMatch(/^[a-z][a-z0-9_]{0,63}$/);
       }
+      const effect = (name: string) => effectOf(tools.find((candidate) => candidate.name === name)?.annotations);
+      // A module's writes are not all destructive: a note or a card is added,
+      // a file sent or an entry that may be booked is not.
+      for (const name of ['crm_log_activity', 'crm_upsert_card', 'contracts_from_template', 'tax_record_computation']) {
+        expect(effect(name), name).toBe('additive');
+      }
+      for (const name of ['contracts_issue_due', 'einvoicing_issue', 'einvoicing_fiscalise']) {
+        expect(effect(name), name).toBe('destructive');
+      }
+      expect(tools.find((tool) => tool.name === 'einvoicing_issue')?.annotations?.openWorldHint).toBe(true);
       // The writes of the modules the directory looked at, by name.
       for (const name of ['fixed_assets_create', 'fixed_assets_dispose', 'fixed_assets_run_depreciation', 'budgets_upsert_lines']) {
         const tool = tools.find((candidate) => candidate.name === name);

@@ -9,7 +9,8 @@
  * that a missing tax is not zero per cent stops inventing one.
  */
 
-import { McpServer, ResourceTemplate } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { McpServer, ResourceTemplate, type RegisteredTool, type ToolCallback } from '@modelcontextprotocol/sdk/server/mcp.js';
+import type { AnySchema, ZodRawShapeCompat } from '@modelcontextprotocol/sdk/server/zod-compat.js';
 import type { CallToolResult, ToolAnnotations } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from './backend.js';
@@ -17,6 +18,8 @@ import { columns, relayableCloudOffer, relayableInvitation, type EinvoiceTranspo
 import * as read from './tools/read.js';
 import * as write from './tools/write.js';
 import { toolsetsFor } from './tools/modules.js';
+import { TOOL_EFFECTS, annotationsFor, type EffectAnnotations } from './tools/effect.js';
+import { ON_DEMAND_INSTRUCTIONS, loadTools, searchTools, startOnDemand, type ToolLoading } from './tools/loading.js';
 
 export const SERVER_NAME = '@ekwo-ai/mcp';
 /**
@@ -103,6 +106,13 @@ export interface ServerOptions {
    * never a local or private address, are asked for.
    */
   logoFetch?: LogoFetch;
+  /**
+   * How the tools are offered: `all` at the handshake, the default, or
+   * `on_demand` — the tools of a first session, plus `search_tools` and
+   * `load_tools` for the others. `start.ts` reads `EKWO_MCP_TOOLS`. See
+   * `tools/loading.ts`.
+   */
+  tools?: ToolLoading;
 }
 
 /**
@@ -128,6 +138,7 @@ export function instructionsFor(options: ServerOptions = {}): string {
     INSTRUCTIONS,
     ...(options.inviteToRegister === true ? [relayableInvitation()] : []),
     ...(options.offerCloud === true ? [relayableCloudOffer()] : []),
+    ...(options.tools === 'on_demand' ? [ON_DEMAND_INSTRUCTIONS] : []),
   ].join('\n\n');
 }
 
@@ -147,16 +158,40 @@ function titled<T extends { title?: string; annotations?: ToolAnnotations }>(con
 }
 
 /**
- * A server on which no tool can be registered without `annotations.title`.
- *
- * Done once, on the server, rather than at each of the registrations below:
- * a tool added later goes through the same door, and `tests/mcp/surface.test.ts`
- * reads the list a client sees to make sure none slipped past.
+ * `registerTool`, as this server allows it: with a title, a description and
+ * the hints of what the tool does (`tools/effect.ts`). A registration without
+ * them does not compile.
  */
-function withTitledTools(server: McpServer): McpServer {
-  const register = server.registerTool.bind(server);
-  server.registerTool = ((name, config, callback) => register(name, titled(config), callback)) as McpServer['registerTool'];
-  return server;
+export type RegisterTool = <
+  OutputArgs extends ZodRawShapeCompat | AnySchema,
+  InputArgs extends undefined | ZodRawShapeCompat | AnySchema = undefined,
+>(
+  name: string,
+  config: {
+    title: string;
+    description: string;
+    inputSchema?: InputArgs;
+    outputSchema?: OutputArgs;
+    annotations: EffectAnnotations;
+    _meta?: Record<string, unknown>;
+  },
+  cb: ToolCallback<InputArgs>,
+) => RegisteredTool;
+
+/**
+ * The one door every tool of this server goes through: it copies the title
+ * into the annotations and keeps each registered tool by name, for
+ * `search_tools` and `load_tools`. Done once rather than at each
+ * registration below, so a tool added later goes through it too, and
+ * `tests/mcp/surface.test.ts` reads the list a client sees to make sure none
+ * slipped past.
+ */
+function toolRegistrar(server: McpServer, registered: Map<string, RegisteredTool>): RegisterTool {
+  return (name, config, cb) => {
+    const tool = server.registerTool(name, titled(config), cb);
+    registered.set(name, tool);
+    return tool;
+  };
 }
 
 /**
@@ -176,13 +211,13 @@ export function sessionPosting(backend: Backend): string {
 }
 
 export function buildServer(backend: Backend, options: ServerOptions = {}): McpServer {
-  const server = withTitledTools(
-    new McpServer({ name: SERVER_NAME, version: SERVER_VERSION }, { instructions: instructionsFor(options) }),
-  );
+  const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION }, { instructions: instructionsFor(options) });
+  const tools = new Map<string, RegisteredTool>();
+  const register = toolRegistrar(server, tools);
 
   // -------------------------------------------------------------------- read
 
-  server.registerTool(
+  register(
     'list_companies',
     {
       title: 'List companies',
@@ -194,7 +229,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async () => guard(() => read.listCompanies(backend)),
   );
 
-  server.registerTool(
+  register(
     'get_company',
     {
       title: 'Company settings',
@@ -206,7 +241,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.getCompany(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'list_accounts',
     {
       title: 'Chart of accounts',
@@ -218,7 +253,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.listAccounts(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'search_contacts',
     {
       title: 'Find a contact',
@@ -230,7 +265,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.searchContacts(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'suggest_duplicate_contacts',
     {
       title: 'Find the contacts that are probably one party',
@@ -242,7 +277,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.suggestDuplicateContacts(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'contact_statement',
     {
       title: 'Statement of a contact',
@@ -254,7 +289,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.contactStatement(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'list_documents',
     {
       title: 'List documents',
@@ -266,7 +301,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.listDocuments(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'get_document',
     {
       title: 'Read a document',
@@ -278,7 +313,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.getDocument(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'render_invoice_pdf',
     {
       title: 'The PDF of an invoice',
@@ -306,7 +341,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     },
   );
 
-  server.registerTool(
+  register(
     'get_preferences',
     {
       title: 'What this user prefers',
@@ -318,7 +353,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.getPreferences(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'list_api_keys',
     {
       title: 'Machine keys of a company',
@@ -330,7 +365,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.listApiKeys(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'list_invitations',
     {
       title: 'Invitations into a company',
@@ -342,7 +377,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.listInvitations(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'list_shares',
     {
       title: 'Public links onto documents',
@@ -354,7 +389,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.listShares(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'list_bank_transactions',
     {
       title: 'Bank transactions',
@@ -366,7 +401,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.listBankTransactions(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'trial_balance',
     {
       title: 'Trial balance',
@@ -378,7 +413,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.trialBalance(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'general_ledger',
     {
       title: 'General ledger',
@@ -390,7 +425,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.generalLedger(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'journal_book',
     {
       title: 'Journal book',
@@ -402,7 +437,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.journalBook(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'suggest_line_contacts',
     {
       title: 'Suggest the contact of lines that name nobody',
@@ -414,7 +449,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.suggestLineContacts(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'suggest_item_combinations',
     {
       title: 'Suggest which open items settle each other',
@@ -426,7 +461,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.suggestItemCombinations(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'matching_difference_options',
     {
       title: 'The reasons and the tolerance for booking a difference',
@@ -438,7 +473,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.matchingDifferenceOptions(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'aged_balance',
     {
       title: 'Aged balance',
@@ -450,7 +485,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.agedBalance(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'vat_return',
     {
       title: 'VAT return',
@@ -462,7 +497,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.vatReturn(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'instalment_plan',
     {
       title: 'VAT instalments of a period',
@@ -474,7 +509,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.instalmentPlan(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'ec_sales_list',
     {
       title: 'Recapitulative statement of European Union supplies',
@@ -486,7 +521,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.ecSalesList(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'portfolio_upcoming_filings',
     {
       title: 'Returns falling due, across your companies',
@@ -498,7 +533,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.portfolioUpcomingFilings(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'portfolio_filings_touched_since',
     {
       title: 'Declared periods that moved, across your companies',
@@ -510,7 +545,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.portfolioFilingsTouchedSince(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'list_statements',
     {
       title: 'List financial statements',
@@ -522,7 +557,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.listStatements(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'financial_statement',
     {
       title: 'Financial statement',
@@ -534,7 +569,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.financialStatement(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'financial_analysis',
     {
       title: 'Financial analysis',
@@ -546,7 +581,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.financialAnalysis(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'list_analytic_axes',
     {
       title: 'Analytic axes',
@@ -558,7 +593,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.listAnalyticAxes(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'analytic_report',
     {
       title: 'Result by analytic value',
@@ -570,7 +605,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.analyticReport(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'generate_fec',
     {
       title: 'Generate the French FEC',
@@ -582,7 +617,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.generateFec(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'describe_pack',
     {
       title: 'Where a country pack comes from',
@@ -594,7 +629,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.describePack(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'status',
     {
       title: 'Installation status',
@@ -606,7 +641,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async () => guard(() => read.status(backend, { inviteToRegister: options.inviteToRegister === true })),
   );
 
-  server.registerTool(
+  register(
     'read_audit_log',
     {
       title: 'Audit trail',
@@ -620,7 +655,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
 
   // ------------------------------------------------------------------- write
 
-  server.registerTool(
+  register(
     'search_products',
     {
       title: 'Find a product',
@@ -632,7 +667,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.searchProducts(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'create_product',
     {
       title: 'Add a product',
@@ -644,7 +679,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.createProduct(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'update_product',
     {
       title: 'Change a product',
@@ -656,7 +691,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.updateProduct(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'create_contact',
     {
       title: 'Create a contact',
@@ -668,7 +703,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.createContact(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'merge_contacts',
     {
       title: 'Merge two contacts of one company',
@@ -680,7 +715,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.mergeContacts(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'create_document',
     {
       title: 'Create a draft invoice',
@@ -692,7 +727,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.createDocument(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'update_document_lines',
     {
       title: 'Replace the lines of a draft',
@@ -704,7 +739,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.updateDocumentLines(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'post_document',
     {
       title: 'Post a document to the ledger',
@@ -718,7 +753,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.postDocument(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'cancel_document',
     {
       title: 'Undo a posted invoice',
@@ -730,7 +765,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.undoDocument(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'reverse_entry',
     {
       title: 'Reverse a posted entry',
@@ -742,7 +777,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.reverseEntry(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'record_payment',
     {
       title: 'Record a payment',
@@ -754,7 +789,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.recordPayment(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'reconcile',
     {
       title: 'Match two ledger lines',
@@ -766,7 +801,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.reconcile(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'unreconcile',
     {
       title: 'Undo a matching',
@@ -778,7 +813,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.unreconcile(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'set_line_contact',
     {
       title: 'Name the contact of a ledger line',
@@ -790,7 +825,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.setLineContact(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'leave_line_unnamed',
     {
       title: 'Leave a ledger line without a contact',
@@ -802,7 +837,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.leaveLineUnnamed(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'undo_leave_line_unnamed',
     {
       title: 'Take back leaving a line without a contact',
@@ -814,7 +849,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.undoLeaveLineUnnamed(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'reconcile_many',
     {
       title: 'Match several ledger lines together',
@@ -826,7 +861,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.reconcileMany(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'reconcile_with_difference',
     {
       title: 'Match ledger lines and book a small difference',
@@ -838,7 +873,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.reconcileWithDifference(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'settle_from_statement',
     {
       title: 'Settle a bank statement line',
@@ -850,7 +885,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.settleFromStatement(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'create_bank_account',
     {
       title: 'Add a bank account',
@@ -862,7 +897,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.createBankAccount(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'list_bank_accounts',
     {
       title: 'Bank accounts',
@@ -874,7 +909,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => read.listBankAccounts(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'create_bank_transaction',
     {
       title: 'Add a bank transaction',
@@ -886,7 +921,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.createBankTransaction(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'import_bank_statement',
     {
       title: 'Import a bank statement',
@@ -898,7 +933,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.importBankStatement(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'create_company',
     {
       title: 'Create a company',
@@ -910,7 +945,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.createCompany(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'update_company_profile',
     {
       title: 'Change the company itself',
@@ -922,7 +957,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.updateCompanyProfile(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'set_number_prefix',
     {
       title: 'Change what a journal prints in its numbers',
@@ -934,7 +969,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.setNumberPrefix(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'set_preferences',
     {
       title: 'Change what this user prefers',
@@ -946,7 +981,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.setPreferences(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'invite_member',
     {
       title: 'Invite somebody into a company',
@@ -958,7 +993,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.inviteMember(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'create_api_key',
     {
       title: 'Issue a key to a machine',
@@ -971,7 +1006,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.createApiKey(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'revoke_api_key',
     {
       title: 'Withdraw a machine key',
@@ -983,7 +1018,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.revokeApiKey(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'revoke_invitation',
     {
       title: 'Withdraw an invitation',
@@ -995,7 +1030,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.revokeInvitation(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'remove_member',
     {
       title: 'Take somebody out of a company',
@@ -1007,7 +1042,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.removeMember(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'set_member_role',
     {
       title: 'Move a member to another preset',
@@ -1019,7 +1054,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.setMemberRole(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'share_document',
     {
       title: 'Publish a document behind a link',
@@ -1032,7 +1067,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.shareDocument(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'revoke_share',
     {
       title: 'Withdraw a published link',
@@ -1044,7 +1079,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.revokeShare(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'pin_accounts',
     {
       title: 'Pin accounts to the working chart',
@@ -1056,7 +1091,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.pinAccounts(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'lock_period',
     {
       title: 'Lock a period',
@@ -1068,7 +1103,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.lockPeriod(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'import_books',
     {
       title: 'Import books from another system',
@@ -1079,7 +1114,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.importBooksTool(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'opening_balance',
     {
       title: 'Import an opening balance',
@@ -1091,7 +1126,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.openingBalance(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'close_fiscal_year',
     {
       title: 'Close a fiscal year',
@@ -1103,7 +1138,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.closeFiscalYear(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'reopen_fiscal_year',
     {
       title: 'Re-open a closed fiscal year',
@@ -1115,7 +1150,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     async (args) => guard(() => write.reopenFiscalYear(backend, args)),
   );
 
-  server.registerTool(
+  register(
     'close_fiscal_year_finally',
     {
       title: 'Close a fiscal year for good',
@@ -1297,18 +1332,19 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
 
   for (const toolset of toolsetsFor(options.modules ?? [])) {
     for (const tool of toolset.tools) {
-      server.registerTool(
+      register(
         `${toolset.prefix}_${tool.verb}`,
         {
           title: tool.title,
           description: tool.description,
           inputSchema: tool.input.shape,
-          // A module tool that is not read-only writes the books — an asset
-          // recorded, a depreciation booked, budget lines replaced — and says
-          // so, the way the socle's writes above do.
-          annotations: tool.readOnly
-            ? { readOnlyHint: true, openWorldHint: false }
-            : { readOnlyHint: false, destructiveHint: true, openWorldHint: false },
+          // Said by the module, the way the socle's tools say it above: a
+          // card or a note is added, a depreciation booked or a file sent
+          // destroys. See packages/mcp/TOOL_DESIGN.md.
+          annotations: annotationsFor(tool.effect, {
+            ...(tool.idempotent === undefined ? {} : { idempotent: tool.idempotent }),
+            ...(tool.openWorld === undefined ? {} : { openWorld: tool.openWorld }),
+          }),
         },
         async (args: unknown) =>
           guard(() =>
@@ -1334,6 +1370,43 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
         }),
       );
     }
+  }
+
+  // ------------------------------------------------------------- on demand
+  //
+  // Registered last, so that they see every tool above. A session that asked
+  // for all of them never sees these two.
+
+  if (options.tools === 'on_demand') {
+    register(
+      'search_tools',
+      {
+        title: 'Search tools',
+        description:
+          'Finds the tools of this server by what they do: give a word or two of the task — "fixed asset", "contract", "bank statement", "budget" — and get the matching tools, best first, each with its title, the first sentence of its description, whether it reads, adds or destroys (effect), and whether it is loaded in this session. Without a query, every tool. It changes nothing; load_tools adds the ones you need.',
+        inputSchema: {
+          query: z.string().max(200).optional().describe('Words of the task. Left out, every tool is listed.'),
+          effect: z.enum(TOOL_EFFECTS).optional().describe('Only the tools that read, that add, or that are destructive.'),
+          limit: z.number().int().min(1).max(200).optional().describe('At most this many, 20 by default.'),
+        },
+        annotations: { readOnlyHint: true, openWorldHint: false },
+      },
+      async (args) => guard(async () => searchTools(tools, args.query, args.effect, args.limit ?? 20)),
+    );
+    register(
+      'load_tools',
+      {
+        title: 'Load tools',
+        description:
+          'Adds the tools you name to this session, by the names search_tools gave. The tool list changes and your client is told so; call them as any other. Answers which were loaded, which were already there and which this server does not have. It changes the tools you see, never the books, and loading a tool gives it no right the database would refuse.',
+        inputSchema: {
+          names: z.array(z.string().min(1).max(64)).min(1).max(50).describe('The names of the tools to add, as search_tools lists them.'),
+        },
+        annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+      },
+      async (args) => guard(async () => loadTools(tools, args.names)),
+    );
+    startOnDemand(tools);
   }
 
   return server;

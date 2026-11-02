@@ -109,6 +109,9 @@ Optional:
                           instructions of an unregistered installation
   EKWO_NO_CLOUD_OFFER     1 leaves the offer of a free Ekwo Cloud account
                           out of the instructions (so does CI)
+  EKWO_MCP_TOOLS          on_demand starts with the tools of a first session;
+                          search_tools and load_tools find and add the
+                          others. Unset, every tool from the start
 
 Row level security applies either way. This server has no privileges of its
 own and refuses a service_role key.

@@ -137,6 +137,7 @@ alongside the server; the recommended route needs no driver at all.
 | `EKWO_NO_CLOUD_OFFER` | Optional. `1` leaves the offer of a free Ekwo Cloud account out of the instructions; so does `CI` |
 | `EKWO_AGENT_POSTING` | Optional. `autopilot` or `review`: how this session posts, as `--autopilot` and `--review` choose it. Unset, each company's `agent_posting` decides. See [Review or autopilot](#review-or-autopilot) |
 | `EKWO_EINVOICE_DIRECTORY` | Optional. The folder electronic invoices are sent to by `einvoicing_issue` with `send`. Unset, files are issued and kept, and sending is refused as `no_transport` |
+| `EKWO_MCP_TOOLS` | Optional. `on_demand` starts the session with the tools of a first session and lets the agent find and add the others; unset or `all`, every tool from the start. See [Tools on demand](#tools-on-demand) |
 | `EKWO_FISCAL_SYSTEM` | Optional. The invoicing system `einvoicing_fiscalise` chains fiscal records under, as JSON: `name`, `id`, `version`, `installation`, `producerName`, `producerTaxId`, and the booleans a regime may ask (`verifactuOnly`, `multipleTaxpayers`, `multipleTaxpayersNow`). Unset, fiscalising is refused as `no_fiscal_system`; malformed, the server does not start |
 
 ### Started with nothing set
@@ -344,6 +345,35 @@ declaration box each of its postings feeds.
 **Prompts.** `close_month` walks the month-end checklist — drafts, unmatched
 bank lines, the balance, the VAT, what is still open. `prepare_vat_return`
 pulls the boxes and ties them back to the ledger before anything is filed.
+
+### What each tool does to the books
+
+Every tool says it in its annotations, which a client reads to decide when to
+ask first: it **reads** (`readOnlyHint: true`), it **adds** — a draft, a
+contact, a note, a setting a person can change back (`destructiveHint:
+false`) — or it is **destructive**: it posts, cancels, replaces, removes, or
+reaches outside the books, a key, a public link, a file sent
+(`destructiveHint: true`). A tool registered without them does not compile,
+and a test reads them on every tool a client is offered, the modules'
+included. How to choose, and the rest of the rules a tool of this server
+follows: [`TOOL_DESIGN.md`](TOOL_DESIGN.md).
+
+### Tools on demand
+
+Every tool is offered at the start by default. With `EKWO_MCP_TOOLS=on_demand`
+a session starts with the tools of a first session — `status`,
+`list_companies`, `get_company`, `list_accounts`, `describe_pack`,
+`search_contacts`, `create_contact`, `list_documents`, `get_document`,
+`create_document`, `post_document`, `record_payment`, `trial_balance`,
+`general_ledger`, `vat_return` — and two more:
+
+| Tool | What it does |
+|---|---|
+| `search_tools` | The tools that match a few words of the task, best first, each with its title, its first sentence, whether it reads, adds or destroys, and whether it is loaded. Filters by `effect` |
+| `load_tools` | Adds the tools named to the session. The server tells the client its tool list changed |
+
+A model then carries a short list rather than every description. A client
+that never reads the list again keeps the default.
 
 ## Review or autopilot
 
