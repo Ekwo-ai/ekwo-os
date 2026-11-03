@@ -733,6 +733,51 @@
           "note": { "type": "string" }
         }
       },
+      "balance": {
+        "$comment": "trial_balance(): every account with opening_balance, debit, credit and closing_balance over the period, from posted entries only, and the debit and credit totals. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["period", "accounts", "totals"],
+        "properties": {
+          "period": { "type": "object", "required": ["from", "to"] },
+          "accounts": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "totals": {
+            "type": "object",
+            "required": ["debit", "credit"],
+            "properties": { "debit": { "type": "string" }, "credit": { "type": "string" } }
+          }
+        }
+      },
+      "ledger": {
+        "$comment": "general_ledger(): every posted line of the account named, or of every account, over the period, with journal, entry, contact, debit, credit, matching_number and the running balance of its account. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["period", "lines", "count"],
+        "properties": {
+          "period": { "type": "object", "required": ["from", "to"] },
+          "lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "count": { "type": "integer" }
+        }
+      },
+      "journal": {
+        "$comment": "journal_totals() and journal_book(): the entries, lines, debit and credit of each journal asked for, then every line of every posted entry of the period in the order a book is read. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["period", "journals", "lines", "count"],
+        "properties": {
+          "period": { "type": "object", "required": ["from", "to"] },
+          "journals": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "count": { "type": "integer" }
+        }
+      },
+      "aged": {
+        "$comment": "aged_balance(): what is still open on the receivable or payable accounts at a day, per contact and account, in not_due, days_1_30, days_31_60, days_61_90, days_over_90 and total. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["at", "group", "rows"],
+        "properties": {
+          "at": { "type": "string" },
+          "group": { "enum": ["receivable", "payable"] },
+          "rows": { "type": "array", "items": { "$ref": "#/$defs/row" } }
+        }
+      },
       "proof stamp": {
         "$comment": "The proof recorded for the sha256 of the file, without its bytes. already_proved: the same bytes were proved before and nothing was submitted. calendars_failed: the calendars that did not answer, when enough others did.",
         "type": "object",

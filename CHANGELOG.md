@@ -11,6 +11,15 @@ somewhere has already run it.
 
 ### Added
 
+- **The books read back from a terminal.** `ekwo balance` prints the trial
+  balance of a period, `ekwo ledger [<account>]` the general ledger of one
+  account or of all of them, `ekwo journal [<journal>]` the journal book with
+  the totals of each journal, and `ekwo aged [--payable]` what is still open,
+  by days overdue. Each calls the function of `@ekwo-ai/core` the MCP server
+  calls for `trial_balance`, `general_ledger`, `journal_book` and
+  `aged_balance` — `trialBalance()`, `generalLedger()`, `journalBook()` and
+  `agedBalance()`, moved there from the server — and prints the database's
+  figures as they came. `--json` answers with the same document as the tool.
 - **The PDF of an invoice is in the words of its language.** A sale invoice
   or credit note whose `language` is German, Spanish, French or Dutch prints
   "Facture", "Échéance", "Montant dû"… in that language, without a `--labels`

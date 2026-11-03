@@ -445,6 +445,25 @@ describe('every command answers --json with one document of the published shape'
     expect(byActivity.exitCode).toBe(0);
     expect((byActivity.data as { values: unknown[] }).values).toEqual([]);
 
+    // The books read back: the trial balance, a ledger, the journal book and
+    // the aged balance, each the figures of the database, as text.
+    const trial = await asPerson(['balance', '--from', '2026-01-01', '--to', '2026-12-31']);
+    expect(trial.exitCode).toBe(0);
+    const totals = (trial.data as { totals: { debit: string; credit: string } }).totals;
+    expect(totals.debit).toMatch(/^\d+\.\d{2}$/);
+    expect(totals.credit).toBe(totals.debit);
+    const ledger = await asPerson(['ledger', sales, '--from', '2026-01-01', '--to', '2026-12-31']);
+    expect((ledger.data as { count: number }).count).toBeGreaterThan(0);
+    expect((ledger.data as { lines: { account_code: string }[] }).lines.every((l) => l.account_code === sales)).toBe(true);
+    const missing = await asPerson(['ledger', 'no-such-account', '--from', '2026-01-01']);
+    expect(missing.error).toMatchObject({ message: expect.stringContaining('not_found: no account no-such-account') });
+    const book = await asPerson(['journal', '--from', '2026-01-01', '--to', '2026-12-31']);
+    expect((book.data as { count: number }).count).toBeGreaterThan(0);
+    const receivable = await asPerson(['aged', '--at', '2026-12-31']);
+    expect(receivable.data).toMatchObject({ at: '2026-12-31', group: 'receivable' });
+    expect((await asPerson(['aged', '--payable', '--at', '2026-12-31'])).data).toMatchObject({ group: 'payable' });
+    expect((await asPerson(['aged', '--payable', '--receivable'])).error).toMatchObject({ kind: 'usage' });
+
     // Books from elsewhere: a balance on two accounts of the chart, rehearsed.
     const cash = await root.query<{ code: string }>(`select a.code from bank_accounts b join accounts a on a.id = b.account_id where b.id = $1`, [bankAccount]);
     const balance = join(cwd, 'balance.csv');

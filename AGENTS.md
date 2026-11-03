@@ -208,7 +208,8 @@ reach and whether you may write; without that box ticked, you read.
 | A received Peppol file, or whether a recipient is on Peppol (no installation needed) | `ekwo peppol validate <file>`, `ekwo peppol lookup <participant>` | — |
 | The VAT return of a period | — | `vat_return` |
 | The VAT instalments a company's scheme asks for in a year | `ekwo status` | `instalment_plan` |
-| Trial balance, ledger | — | `trial_balance`, `general_ledger` |
+| Trial balance, ledger, journal book | `ekwo balance --from <date> --to <date>`, `ekwo ledger [<account>] --from …`, `ekwo journal [<journal>] --from …` | `trial_balance`, `general_ledger`, `journal_book` |
+| What customers still owe, by days overdue | `ekwo aged [--payable] --at <date>` | `aged_balance` |
 | The result by project, cost centre or site | `ekwo analytic report --axis <code> --from … --to …` | `list_analytic_axes`, `analytic_report` |
 
 A line names its account and its tax by **code**, never by rate: several taxes

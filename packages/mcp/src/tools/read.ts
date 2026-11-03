@@ -16,7 +16,7 @@ import {
   type FecQueryRow,
 } from '@ekwo-ai/fec';
 import { z } from 'zod';
-import { EkwoMcpError, type Backend, type Filter, type Row, type SessionPosting } from '../backend.js';
+import { type Backend, type Filter, type Row, type SessionPosting } from '../backend.js';
 import {
   DOC_TYPES,
   REGISTRATION_INVITATION,
@@ -34,7 +34,19 @@ import {
 
 // Moved to the core with the writing half they are read back by; exported
 // from here under the names they always had.
-export { analyticReport, contactStatement, getDocument, listAnalyticAxes, listDocuments, searchContacts, suggestDuplicateContacts } from '@ekwo-ai/core';
+export {
+  agedBalance,
+  analyticReport,
+  contactStatement,
+  generalLedger,
+  getDocument,
+  journalBook,
+  listAnalyticAxes,
+  listDocuments,
+  searchContacts,
+  suggestDuplicateContacts,
+  trialBalance,
+} from '@ekwo-ai/core';
 
 export const uuid = z.string().uuid();
 export const isoDate = z
@@ -520,26 +532,6 @@ export const TrialBalanceInput = z.object({
   to: isoDate,
 });
 
-export async function trialBalance(
-  backend: Backend,
-  args: z.infer<typeof TrialBalanceInput>,
-): Promise<unknown> {
-  const rows = await backend.rpc<Record<string, unknown>>('trial_balance', {
-    p_company_id: args.company_id,
-    p_from: args.from,
-    p_to: args.to,
-  });
-  const accounts = moneyFields(rows, ['opening_balance', 'debit', 'credit', 'closing_balance']);
-  const total = (key: string): string =>
-    accounts.reduce((sum, row) => sum + Number(row[key] ?? 0), 0).toFixed(2);
-
-  return {
-    period: { from: args.from, to: args.to },
-    accounts,
-    totals: { debit: total('debit'), credit: total('credit') },
-  };
-}
-
 export const GeneralLedgerInput = z.object({
   company_id: companyId,
   from: isoDate,
@@ -547,40 +539,6 @@ export const GeneralLedgerInput = z.object({
   account_code: z.string().min(1).optional().describe('The account to detail, by its code, e.g. "400000".'),
   account_ids: z.array(uuid).optional().describe('The accounts to detail, by id. Leave both out for every account.'),
 });
-
-export async function generalLedger(
-  backend: Backend,
-  args: z.infer<typeof GeneralLedgerInput>,
-): Promise<unknown> {
-  let ids = args.account_ids ?? null;
-  if (args.account_code !== undefined) {
-    const accounts = await backend.select<{ id: string }>({
-      table: 'accounts',
-      columns: ['id'],
-      where: [
-        { column: 'company_id', op: 'eq', value: args.company_id },
-        { column: 'code', op: 'eq', value: args.account_code },
-      ],
-    });
-    ids = [...(ids ?? []), ...accounts.map((account) => account.id)];
-    if (ids.length === 0) {
-      throw new EkwoMcpError(`not_found: no account ${args.account_code} in this company.`);
-    }
-  }
-
-  const rows = await backend.rpc<Record<string, unknown>>('general_ledger', {
-    p_company_id: args.company_id,
-    p_from: args.from,
-    p_to: args.to,
-    p_account_ids: ids,
-  });
-
-  return {
-    period: { from: args.from, to: args.to },
-    lines: moneyFields(rows, ['debit', 'credit', 'running_balance']),
-    count: rows.length,
-  };
-}
 
 export const JournalBookInput = z.object({
   company_id: companyId,
@@ -590,77 +548,11 @@ export const JournalBookInput = z.object({
   journal_ids: z.array(uuid).optional().describe('The journals to read, by id.'),
 });
 
-/**
- * The book of a journal — every line of every posted entry of the period, in
- * the order a book is read — and the head of each journal, the totals the
- * database adds up (`journal_totals()`). Both are the core's functions; this
- * only names a journal by its code.
- */
-export async function journalBook(
-  backend: Backend,
-  args: z.infer<typeof JournalBookInput>,
-): Promise<unknown> {
-  let ids = args.journal_ids ?? null;
-  if (args.journal_code !== undefined) {
-    const journals = await backend.select<{ id: string }>({
-      table: 'journals',
-      columns: ['id'],
-      where: [
-        { column: 'company_id', op: 'eq', value: args.company_id },
-        { column: 'code', op: 'eq', value: args.journal_code },
-      ],
-    });
-    ids = [...(ids ?? []), ...journals.map((journal) => journal.id)];
-    if (ids.length === 0) {
-      throw new EkwoMcpError(`not_found: no journal ${args.journal_code} in this company.`);
-    }
-  }
-
-  const totals = await backend.rpc<Record<string, unknown>>('journal_totals', {
-    p_company_id: args.company_id,
-    p_from: args.from,
-    p_to: args.to,
-  });
-  const lines = await backend.rpc<Record<string, unknown>>('journal_book', {
-    p_company_id: args.company_id,
-    p_from: args.from,
-    p_to: args.to,
-    p_journal_ids: ids,
-  });
-  const asked = ids === null ? null : new Set(ids);
-
-  return {
-    period: { from: args.from, to: args.to },
-    journals: moneyFields(
-      totals.filter((row) => asked === null || asked.has(String(row['journal_id']))),
-      ['debit', 'credit'],
-    ),
-    lines: moneyFields(lines, ['debit', 'credit']),
-    count: lines.length,
-  };
-}
-
 export const AgedBalanceInput = z.object({
   company_id: companyId,
   at: isoDate.optional().describe('The day to age at. Defaults to today.'),
   group: z.enum(['receivable', 'payable']).optional(),
 });
-
-export async function agedBalance(
-  backend: Backend,
-  args: z.infer<typeof AgedBalanceInput>,
-): Promise<unknown> {
-  const rows = await backend.rpc<Record<string, unknown>>('aged_balance', {
-    p_company_id: args.company_id,
-    p_at: args.at ?? new Date().toISOString().slice(0, 10),
-    p_group: args.group ?? 'receivable',
-  });
-  return {
-    at: args.at ?? new Date().toISOString().slice(0, 10),
-    group: args.group ?? 'receivable',
-    rows: moneyFields(rows, ['not_due', 'days_1_30', 'days_31_60', 'days_61_90', 'days_over_90', 'total']),
-  };
-}
 
 // ---------------------------------------------------------------------------
 // Open items that settle each other

@@ -7,6 +7,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { UsageError, boolFlag, parseArgs, type ParsedArgs } from './args.js';
 import { analyticCommand } from './commands/analytic.js';
+import { agedCommand, balanceCommand, journalCommand, ledgerCommand } from './commands/reports.js';
 import { companyCommand } from './commands/company.js';
 import { contactCommand } from './commands/contact.js';
 import { crmCommand } from './commands/crm.js';
@@ -79,6 +80,10 @@ export const COMMANDS = [
   'payment',
   'match',
   'analytic',
+  'balance',
+  'ledger',
+  'journal',
+  'aged',
   'import',
   'proof',
   'einvoice',
@@ -205,6 +210,18 @@ ${bold('Connecting')} ${dim('(every command)')}
               result and fixed-asset movement of each value of the axis, from
               the posted ledger, a parent with the subtotal of the values
               below it, the part no share of the axis reaches, and the total.
+  ${cyan('balance')}     --from <date> [--to <date>] — the trial balance: opening balance,
+              debit, credit and closing balance of every account, and the totals.
+  ${cyan('ledger')}      [<account>] --from <date> [--to <date>] — every posted line of an
+              account, or of all of them, with the balance carried forward and
+              a running balance.
+  ${cyan('journal')}     [<journal>] --from <date> [--to <date>] — the book of a journal,
+              or of every one: its totals, then each line in the order a book
+              is read.
+  ${cyan('aged')}        [--receivable | --payable] [--at <date>] — what each customer still
+              owes, or what is still owed to each supplier, by days overdue.
+              --to and --at are today when they are not given. Posted entries
+              only; the figures are the database's.
   ${cyan('import')}      <source> <file>… — books kept elsewhere, whole or not at all:
               trial-balance, fec, journal-items, journal-report,
               transaction-journal, xaf, or the export of another ledger by
@@ -618,6 +635,14 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await lineCommand(args, deps);
       case 'analytic':
         return await analyticCommand(args, deps);
+      case 'balance':
+        return await balanceCommand(args, deps);
+      case 'ledger':
+        return await ledgerCommand(args, deps);
+      case 'journal':
+        return await journalCommand(args, deps);
+      case 'aged':
+        return await agedCommand(args, deps);
       case 'payment':
         return await paymentCommand(args, deps);
       case 'match':
