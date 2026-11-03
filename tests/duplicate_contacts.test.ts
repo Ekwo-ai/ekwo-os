@@ -431,6 +431,38 @@ describe('the contacts a chain of pairs joins are proposed together', () => {
 // Bounded
 // ---------------------------------------------------------------------------
 
+describe('the contacts of a kind', () => {
+  it('are proposed among themselves when their types are named, and every contact is read when none is', async () => {
+    const customer = await contact('Vellacott Pumps', { vat: 'TEST-VAT-0910' });
+    const supplier = await contact('Vellacott Pumps Works', { vat: 'TEST-VAT-0910' });
+    const relation = await contact('Oberwald Kestrel', { vat: 'TEST-VAT-0911' });
+    const twin = await contact('Kestrel Oberwald', { vat: 'TEST-VAT-0911' });
+    await db.query(`update contacts set contact_type = 'supplier' where id = $1`, [supplier]);
+    await db.query(`update contacts set contact_type = 'other' where id = any ($1::uuid[])`, [[relation, twin]]);
+
+    const asked = (types: string[] | null) =>
+      asUser(db, accountant, () =>
+        rows<Pair>(db, `select * from suggest_duplicate_contacts($1, $2::contact_type[])`, [fx.companyId, types]),
+      );
+    const joins = (found: Pair[], a: string, b: string) =>
+      found.some((p) => (p.keep_id === a && p.absorb_id === b) || (p.keep_id === b && p.absorb_id === a));
+
+    const parties = await asked(['customer', 'supplier', 'both']);
+    expect(joins(parties, customer, supplier)).toBe(true);
+    expect(joins(parties, relation, twin)).toBe(false);
+
+    const others = await asked(['other']);
+    expect(joins(others, relation, twin)).toBe(true);
+    expect(joins(others, customer, supplier)).toBe(false);
+
+    // Null, or the company alone: every contact, as before the argument existed.
+    for (const found of [await asked(null), await suggestions()]) {
+      expect(joins(found, customer, supplier)).toBe(true);
+      expect(joins(found, relation, twin)).toBe(true);
+    }
+  });
+});
+
 describe('at two thousand contacts', () => {
   it('answers well under eight seconds', async () => {
     const big = await newCompany(db, { name: 'Many Contacts' });

@@ -161,6 +161,8 @@ export async function mergeContacts(backend: Backend, args: MergeContactsArgs): 
 
 export interface SuggestDuplicateContactsArgs {
   company_id: string;
+  /** Only the contacts of these types are proposed among; every contact when absent. */
+  contact_types?: string[];
 }
 
 /**
@@ -191,7 +193,11 @@ export interface DuplicateContactPair {
  * person has chosen it.
  */
 export async function suggestDuplicateContacts(backend: Backend, args: SuggestDuplicateContactsArgs): Promise<unknown> {
-  const found = await backend.rpc<Row>('suggest_duplicate_contacts', { p_company_id: args.company_id });
+  // Named only when asked: a call with the company alone reaches a schema before `20261103175933` too.
+  const found = await backend.rpc<Row>('suggest_duplicate_contacts', {
+    p_company_id: args.company_id,
+    ...(args.contact_types === undefined ? {} : { p_contact_types: args.contact_types }),
+  });
   const ids = [...new Set(found.flatMap((row) => [String(row['keep_id']), String(row['absorb_id'])]))];
   const named =
     ids.length === 0

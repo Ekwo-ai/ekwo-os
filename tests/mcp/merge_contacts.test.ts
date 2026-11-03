@@ -58,6 +58,34 @@ describe('suggest_duplicate_contacts', () => {
   });
 });
 
+describe('suggest_duplicate_contacts, among the contacts of some types', () => {
+  it('passes contact_types through, and reads every contact without it', async () => {
+    const a = await newContact(db, fx.companyId, { country: pack.manifest.country, name: 'Quillfeather Morrow' });
+    const b = await newContact(db, fx.companyId, { country: pack.manifest.country, name: 'Morrow Quillfeather' });
+    await db.query(`update contacts set contact_type = 'other' where id = any ($1::uuid[])`, [[a, b]]);
+    const pairOf = (answer: unknown) =>
+      (record(answer)['pairs'] as { keep_id: string; absorb_id: string }[]).filter((p) =>
+        [a, b].includes(p.absorb_id),
+      );
+
+    expect(pairOf(await readTools.suggestDuplicateContacts(backend, { company_id: fx.companyId }))).toHaveLength(1);
+    expect(
+      pairOf(await readTools.suggestDuplicateContacts(backend, { company_id: fx.companyId, contact_types: ['other'] })),
+    ).toHaveLength(1);
+    expect(
+      pairOf(
+        await readTools.suggestDuplicateContacts(backend, {
+          company_id: fx.companyId,
+          contact_types: ['customer', 'supplier', 'both'],
+        }),
+      ),
+    ).toEqual([]);
+    expect(readTools.SuggestDuplicateContactsInput.safeParse({ company_id: fx.companyId, contact_types: [] }).success).toBe(
+      false,
+    );
+  });
+});
+
 describe('merge_contacts', () => {
   it('retires the absorbed contact into the kept one, and says what moved', async () => {
     const keep = await newContact(db, fx.companyId, { country: pack.manifest.country, name: 'Marlow Jane' });

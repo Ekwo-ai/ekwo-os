@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261101070518",
+  "migration": "20261103175933",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -6029,7 +6029,7 @@
       },
       {
         "name": "suggest_duplicate_contacts",
-        "arguments": "p_company_id uuid"
+        "arguments": "p_company_id uuid, p_contact_types contact_type[]"
       },
       {
         "name": "suggest_item_combinations",
@@ -12393,7 +12393,7 @@
         },
         {
           "name": "suggest_duplicate_contacts",
-          "arguments": "p_company_id uuid",
+          "arguments": "p_company_id uuid, p_contact_types contact_type[]",
           "anon": [],
           "authenticated": [
             "execute"

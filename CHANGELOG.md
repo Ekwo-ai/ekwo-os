@@ -160,6 +160,16 @@ somewhere has already run it.
   a description for a model, its effect on the books, inputs without
   guesswork, the database's words in a refusal. The rules a machine can check
   are checked on every tool a client is offered.
+- **Duplicates are proposed among the contacts of a kind**
+  (`20261103175933_duplicates_are_proposed_among_the_contacts_of_a_kind`,
+  decision 0075). `suggest_duplicate_contacts(company, contact_types)` reads
+  only the contacts of the types named, every contact when the second
+  argument is null, its default, so a call with the company alone answers as
+  before; the MCP tool takes `contact_types`, optional. A company whose
+  contacts are mostly kept beside the books no longer walks them all to
+  propose duplicates among its customers and suppliers: on 33 082 contacts,
+  228 of them parties of the books, the reading ran past the 8 s statement
+  timeout of the Data API.
 
 ### Changed
 

@@ -190,6 +190,11 @@ export const SearchContactsInput = z.object({
 
 export const SuggestDuplicateContactsInput = z.object({
   company_id: companyId,
+  contact_types: z
+    .array(z.enum(['customer', 'supplier', 'both', 'employee', 'other']))
+    .min(1)
+    .optional()
+    .describe('Propose only among the contacts of these types; every contact when absent.'),
 });
 
 export const ContactStatementInput = z.object({
