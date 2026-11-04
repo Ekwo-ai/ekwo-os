@@ -464,6 +464,28 @@ describe('every command answers --json with one document of the published shape'
     expect((await asPerson(['aged', '--payable', '--at', '2026-12-31'])).data).toMatchObject({ group: 'payable' });
     expect((await asPerson(['aged', '--payable', '--receivable'])).error).toMatchObject({ kind: 'usage' });
 
+    // The declarations of a period the company files on: the VAT return in
+    // the order its form is printed, and the statement of supplies to other
+    // Member States. Both days are asked for.
+    const declared = await root.query<{ from: string; to: string }>(
+      `select to_char(s, 'YYYY-MM-DD') as from,
+              to_char(s + make_interval(months => declaration_period_months(p)) - interval '1 day', 'YYYY-MM-DD') as to
+         from companies c,
+              lateral (select coalesce(c.vat_period, 'month'::declaration_period) as p) v,
+              lateral (select declaration_period_start(v.p, date '2026-06-01') as s) d
+        where c.id = $1`,
+      [keyed.rows[0]?.company_id],
+    );
+    const vatPeriod = declared.rows[0] as { from: string; to: string };
+    const vat = await asPerson(['vat', '--from', vatPeriod.from, '--to', vatPeriod.to]);
+    expect(vat.exitCode).toBe(0);
+    expect(vat.data).toMatchObject({ period: vatPeriod, boxes: expect.any(Array) });
+    expect((vat.data as { boxes: { amount: string }[] }).boxes.every((b) => /^-?\d+\.\d{2}$/.test(b.amount))).toBe(true);
+    expect((await asPerson(['vat', '--from', vatPeriod.from])).error).toMatchObject({ kind: 'usage' });
+    const ecsl = await asPerson(['ecsl', '--from', vatPeriod.from, '--to', vatPeriod.to]);
+    expect(ecsl.exitCode).toBe(0);
+    expect(ecsl.data).toMatchObject({ period: vatPeriod, lines: expect.any(Array), undeclarable_lines: expect.any(Number) });
+
     // Books from elsewhere: a balance on two accounts of the chart, rehearsed.
     const cash = await root.query<{ code: string }>(`select a.code from bank_accounts b join accounts a on a.id = b.account_id where b.id = $1`, [bankAccount]);
     const balance = join(cwd, 'balance.csv');

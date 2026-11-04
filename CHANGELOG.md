@@ -20,6 +20,16 @@ somewhere has already run it.
   `aged_balance` — `trialBalance()`, `generalLedger()`, `journalBook()` and
   `agedBalance()`, moved there from the server — and prints the database's
   figures as they came. `--json` answers with the same document as the tool.
+- **The declarations of a period from a terminal.** `ekwo vat --from <date>
+  --to <date>` prints the VAT return box by box, in the order its form is
+  printed, and `ekwo ecsl` the recapitulative statement of supplies to other
+  Member States, with a warning for each line that cannot be filed as it
+  stands. `--form <code>` names the declaration where the country files
+  several; a period the company does not file that form on is refused by the
+  database, by name. Both call `vatReturn()` and `ecSalesList()` of
+  `@ekwo-ai/core`, moved there from the MCP server, which still answers
+  `vat_return` and `ec_sales_list` with them. They prepare figures; they file
+  nothing.
 - **The PDF of an invoice is in the words of its language.** A sale invoice
   or credit note whose `language` is German, Spanish, French or Dutch prints
   "Facture", "Échéance", "Montant dû"… in that language, without a `--labels`

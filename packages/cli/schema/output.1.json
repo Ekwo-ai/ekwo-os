@@ -778,6 +778,28 @@
           "rows": { "type": "array", "items": { "$ref": "#/$defs/row" } }
         }
       },
+      "vat": {
+        "$comment": "vat_return(): every box of the form for the period, with box, kind, name, amount, computed, sequence, print_sequence, hidden and report_code, and the form read. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["period", "report_code", "boxes", "note"],
+        "properties": {
+          "period": { "type": "object", "required": ["from", "to"] },
+          "report_code": { "type": ["string", "null"] },
+          "boxes": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "note": { "type": "string" }
+        }
+      },
+      "ecsl": {
+        "$comment": "ec_sales_list(): one line per customer VAT number and nature of supply over the period, with vat_country, amount, currency_code, documents, contact_ids, contact_names and issue, and how many lines cannot be filed as they stand. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["period", "lines", "undeclarable_lines", "note"],
+        "properties": {
+          "period": { "type": "object", "required": ["from", "to"] },
+          "lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "undeclarable_lines": { "type": "integer" },
+          "note": { "type": "string" }
+        }
+      },
       "proof stamp": {
         "$comment": "The proof recorded for the sha256 of the file, without its bytes. already_proved: the same bytes were proved before and nothing was submitted. calendars_failed: the calendars that did not answer, when enough others did.",
         "type": "object",

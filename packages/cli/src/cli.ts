@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { UsageError, boolFlag, parseArgs, type ParsedArgs } from './args.js';
 import { analyticCommand } from './commands/analytic.js';
 import { agedCommand, balanceCommand, journalCommand, ledgerCommand } from './commands/reports.js';
+import { ecslCommand, vatCommand } from './commands/declarations.js';
 import { companyCommand } from './commands/company.js';
 import { contactCommand } from './commands/contact.js';
 import { crmCommand } from './commands/crm.js';
@@ -84,6 +85,8 @@ export const COMMANDS = [
   'ledger',
   'journal',
   'aged',
+  'vat',
+  'ecsl',
   'import',
   'proof',
   'einvoice',
@@ -222,6 +225,13 @@ ${bold('Connecting')} ${dim('(every command)')}
               owes, or what is still owed to each supplier, by days overdue.
               --to and --at are today when they are not given. Posted entries
               only; the figures are the database's.
+  ${cyan('vat')}         --from <date> --to <date> [--form <code>] — the VAT return of the
+              period, box by box in the order the form is printed, summed from
+              posted entries; a period the company does not file on is refused.
+  ${cyan('ecsl')}        --from <date> --to <date> [--form <code>] — the recapitulative
+              statement of supplies to other Member States, per customer VAT
+              number and nature, and the lines that cannot be filed as they
+              stand. Both prepare figures; neither files anything.
   ${cyan('import')}      <source> <file>… — books kept elsewhere, whole or not at all:
               trial-balance, fec, journal-items, journal-report,
               transaction-journal, xaf, or the export of another ledger by
@@ -643,6 +653,10 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await journalCommand(args, deps);
       case 'aged':
         return await agedCommand(args, deps);
+      case 'vat':
+        return await vatCommand(args, deps);
+      case 'ecsl':
+        return await ecslCommand(args, deps);
       case 'payment':
         return await paymentCommand(args, deps);
       case 'match':

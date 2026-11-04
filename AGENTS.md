@@ -206,7 +206,8 @@ reach and whether you may write; without that box ticked, you read.
 | The record of a relationship: cards, segments, deals (module `crm`) | `ekwo crm search`, `ekwo crm card <contact>`, `ekwo crm board`, then `ekwo crm log …` / `ekwo crm deal move <deal> <stage>` | `crm_search`, `crm_card`, `crm_board`, then `crm_log_activity` / `crm_move_deal` |
 | The contracts of the company, and the invoices they say are due (module `contracts`) | `ekwo contracts list`, `ekwo contracts deadlines`, then `ekwo contracts issue --on <date>` | `contracts_list`, `contracts_deadlines`, then `contracts_issue_due` |
 | A received Peppol file, or whether a recipient is on Peppol (no installation needed) | `ekwo peppol validate <file>`, `ekwo peppol lookup <participant>` | — |
-| The VAT return of a period | — | `vat_return` |
+| The VAT return of a period | `ekwo vat --from <date> --to <date> [--form <code>]` | `vat_return` |
+| The recapitulative statement of supplies to other Member States | `ekwo ecsl --from <date> --to <date> [--form <code>]` | `ec_sales_list` |
 | The VAT instalments a company's scheme asks for in a year | `ekwo status` | `instalment_plan` |
 | Trial balance, ledger, journal book | `ekwo balance --from <date> --to <date>`, `ekwo ledger [<account>] --from …`, `ekwo journal [<journal>] --from …` | `trial_balance`, `general_ledger`, `journal_book` |
 | What customers still owe, by days overdue | `ekwo aged [--payable] --at <date>` | `aged_balance` |

@@ -38,6 +38,7 @@ export {
   agedBalance,
   analyticReport,
   contactStatement,
+  ecSalesList,
   generalLedger,
   getDocument,
   journalBook,
@@ -46,6 +47,7 @@ export {
   searchContacts,
   suggestDuplicateContacts,
   trialBalance,
+  vatReturn,
 } from '@ekwo-ai/core';
 
 export const uuid = z.string().uuid();
@@ -598,26 +600,6 @@ export const VatReturnInput = z.object({
     ),
 });
 
-export async function vatReturn(
-  backend: Backend,
-  args: z.infer<typeof VatReturnInput>,
-): Promise<unknown> {
-  const rows = await backend.rpc<Record<string, unknown>>('vat_return', {
-    p_company_id: args.company_id,
-    p_from: args.from,
-    p_to: args.to,
-    p_report_code: args.report_code ?? null,
-  });
-  const form = rows.find((row) => row['report_code'] !== null)?.['report_code'] ?? null;
-  return {
-    period: { from: args.from, to: args.to },
-    report_code: form,
-    boxes: moneyFields(rows, ['amount']),
-    note:
-      'A box flagged computed is a total the form derives from the others, following the plus and minus lists of the country pack, or the rate of one other box where the form states a line as a multiplication; hidden means the form does not print it. Everything else is summed from what the tax postings wrote on the ledger lines. Order by print_sequence to print the form the way its administration does, which is not always the order the boxes are worked out in.',
-  };
-}
-
 export const InstalmentPlanInput = z.object({
   company_id: companyId,
   from: isoDate.describe('First day of the period of the declaration the instalments are paid on account of — usually 1 January.'),
@@ -654,26 +636,6 @@ export const EcSalesListInput = z.object({
       'Which recapitulative statement form, when the installation carries one and you are filing it. Name it and the period is checked against the cadence this company files that statement on, which is not the cadence of its periodic return in most countries. Leave it out to read the figures without any period being refused.',
     ),
 });
-
-export async function ecSalesList(
-  backend: Backend,
-  args: z.infer<typeof EcSalesListInput>,
-): Promise<unknown> {
-  const rows = await backend.rpc<Record<string, unknown>>('ec_sales_list', {
-    p_company_id: args.company_id,
-    p_from: args.from,
-    p_to: args.to,
-    p_report_code: args.report_code ?? null,
-  });
-  const undeclarable = rows.filter((row) => row['issue'] !== null);
-  return {
-    period: { from: args.from, to: args.to },
-    lines: moneyFields(rows, ['amount']),
-    undeclarable_lines: undeclarable.length,
-    note:
-      'One line per customer VAT number and per nature of supply — goods, services — summed from the posted ledger in the company currency, credit notes deducted. A line carrying an issue cannot be filed as it stands: no_vat_number means the customer has none recorded, vat_country_is_the_company_country means the number is not in another Member State. Report those separately instead of adding them into the total, and do not remove them from the figures. It prepares a statement; it files nothing.',
-  };
-}
 
 export const PortfolioUpcomingFilingsInput = z.object({
   from: isoDate.describe('First day a return may fall due on. Go back a few days to catch what is already late.'),
