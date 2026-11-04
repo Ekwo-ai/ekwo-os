@@ -9,6 +9,18 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.24.1] — 2026-11-04
+
+### Fixed
+
+- **The health checks read the labels of an enum the same way from every
+  client.** `ekwo doctor` asked for them as a `name[]`, which the Supabase
+  Management API returns as the text `{a,b,c}` rather than a list, and the
+  checks stopped with `(b.labels ?? []).join is not a function` — so an
+  update run through that API could not start. The labels are now asked for
+  as text, and a client that still returns an array as its literal is read
+  into the same list, quoted labels and commas included.
+
 ## [0.24.0] — 2026-10-28
 
 ### Added
@@ -2381,7 +2393,6 @@ of 0.12.2.
   against it, with a refusal that now says why its bytes may differ.
   [`docs/company-archive.md`](docs/company-archive.md) says what each checksum
   guarantees and what it does not.
-
 
 ## [0.8.0] — 2026-09-23
 

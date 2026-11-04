@@ -182,6 +182,55 @@ describe('what the comparison reports', () => {
   });
 });
 
+describe('the labels of an enum', () => {
+  /**
+   * A client that hands every array back as its Postgres literal, the way the
+   * Supabase Management API returns a `name[]`.
+   */
+  function literalArrays(inner: SqlClient): SqlClient {
+    const literal = (items: unknown[]): string =>
+      `{${items.map((x) => `"${String(x).replace(/["\\]/g, (c) => `\\${c}`)}"`).join(',')}}`;
+    return {
+      exec: (sql) => inner.exec(sql),
+      transaction: (fn) => inner.transaction(fn),
+      close: () => inner.close(),
+      async query<T>(sql: string, params?: unknown[]): Promise<T[]> {
+        const rows = await inner.query<Record<string, unknown>>(sql, params);
+        return rows.map((row) =>
+          Object.fromEntries(
+            Object.entries(row).map(([k, v]) => [k, Array.isArray(v) ? literal(v) : v]),
+          ),
+        ) as T[];
+      },
+    };
+  }
+
+  function anEnum(): string {
+    const found = expected.socle.types.find((t) => t.kind === 'enum');
+    if (found === undefined) throw new Error('the socle defines no enum');
+    return found.name;
+  }
+
+  it('compare the same whether the client returns an array or its literal', async () => {
+    const asArray = await compareCatalogue(db, expected);
+    const asLiteral = await compareCatalogue(literalArrays(db), expected);
+    expect(asLiteral.sections).toEqual(asArray.sections);
+    expect(asLiteral.changed).toBe(0);
+  });
+
+  it('name a label that is not expected, commas and quotes included, from either form', async () => {
+    const name = anEnum();
+    await db.exec(`alter type ekwo.${name} add value 'one, "two"'`);
+    const asArray = await compareCatalogue(db, expected);
+    const asLiteral = await compareCatalogue(literalArrays(db), expected);
+    expect(asLiteral.sections).toEqual(asArray.sections);
+    const socle = asLiteral.sections.find((s) => s.schema === 'ekwo');
+    const said = socle?.types.changed.join('\n') ?? '';
+    expect(said).toContain(`${name} holds (`);
+    expect(said).toContain(', one, "two")');
+  });
+});
+
 describe('the schema version the database reports', () => {
   it('never gates the comparison: an older installation is compared and told', async () => {
     const older: ExpectedObjects = { ...expected, schemaVersion: '99.0.0' };
