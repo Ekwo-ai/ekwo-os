@@ -224,6 +224,16 @@ somewhere has already run it.
   the same bytes, which `tests/archive_in_pages.test.ts` holds across the
   migration.
 
+### Fixed
+
+- **The health checks read the labels of an enum the same way from every
+  client.** `ekwo doctor` asked for them as a `name[]`, which the Supabase
+  Management API returns as the text `{a,b,c}` rather than a list, and the
+  checks stopped with `(b.labels ?? []).join is not a function` — so an
+  update run through that API could not start. The labels are now asked for
+  as text, and a client that still returns an array as its literal is read
+  into the same list, quoted labels and commas included.
+
 ## [0.24.0] — 2026-10-28
 
 ### Added

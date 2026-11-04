@@ -239,11 +239,11 @@ async function readSchema(db: SqlClient, schema: string): Promise<ExpectedSchema
       order by c.relname, t.tgname`,
     [schema],
   );
-  const types = await db.query<{ name: string; kind: string; labels: string[] | null }>(
+  const types = await db.query<{ name: string; kind: string; labels: string[] | string | null }>(
     `select t.typname as name,
             case t.typtype when 'e' then 'enum' when 'd' then 'domain' else 'composite' end as kind,
             case when t.typtype = 'e' then (
-              select array_agg(e.enumlabel order by e.enumsortorder)
+              select array_agg(e.enumlabel::text order by e.enumsortorder)
                 from pg_enum e where e.enumtypid = t.oid
             ) end as labels
        from pg_type t join pg_namespace n on n.oid = t.typnamespace
@@ -271,10 +271,55 @@ async function readSchema(db: SqlClient, schema: string): Promise<ExpectedSchema
     types: types.map((t) => ({
       name: t.name,
       kind: t.kind,
-      ...(t.labels === null ? {} : { labels: t.labels }),
+      ...(t.labels === null ? {} : { labels: readTextArray(t.labels) }),
     })),
     grants,
   };
+}
+
+/**
+ * A Postgres text array as a list of strings, whichever form the client hands
+ * it in.
+ *
+ * Most clients decode a `text[]` into an array, but not every one does: the
+ * Supabase Management API returns an array of an unknown element type as its
+ * literal, `{a,b,"c, d"}`. Reading both forms here means a client that returns
+ * text never breaks the comparison. Only one-dimensional arrays are expected;
+ * an unquoted `NULL` element is dropped, since an enum label is never null.
+ */
+export function readTextArray(value: readonly string[] | string): string[] {
+  if (typeof value !== 'string') return [...value];
+  const literal = value.trim();
+  if (!literal.startsWith('{') || !literal.endsWith('}')) {
+    throw new InventoryError(`not a Postgres array literal: ${value}`);
+  }
+  const body = literal.slice(1, -1);
+  const out: string[] = [];
+  if (body === '') return out;
+  let i = 0;
+  while (i <= body.length) {
+    let item = '';
+    let quoted = false;
+    if (body[i] === '"') {
+      quoted = true;
+      i++;
+      while (i < body.length && body[i] !== '"') {
+        if (body[i] === '\\') i++;
+        item += body[i] ?? '';
+        i++;
+      }
+      i++; // the closing quote
+    } else {
+      while (i < body.length && body[i] !== ',') {
+        item += body[i];
+        i++;
+      }
+      item = item.trim();
+    }
+    if (quoted || item.toUpperCase() !== 'NULL') out.push(item);
+    i++; // the comma
+  }
+  return out;
 }
 
 /** The live grants of one schema, for the doctor's own check. */
