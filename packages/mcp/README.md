@@ -2,7 +2,7 @@
 
 The [Model Context Protocol](https://modelcontextprotocol.io) server for
 [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os). It lets an AI agent work on
-the books in your own Postgres: read the ledger, raise an invoice, post it, match
+your company data in your own Postgres: read the accounts, raise an invoice, record it, match
 a payment, prepare the VAT return — **as you**, under the row
 level security of your own installation.
 
@@ -28,12 +28,12 @@ connection. The scope asked for is `books`.
 An agent reading this without a browser can start from
 [`/.well-known/oauth-protected-resource`](https://mcp.ekwo.ai/.well-known/oauth-protected-resource).
 
-The books stay where they are: the hosted server holds none, and connects to
+The company data stays where it is: the hosted server holds none of it, and connects to
 the instance the person chooses when they approve it. On the same screen they decide
 whether the agent may write; otherwise it reads. The hosted server is operated
 by [Ekwo Cloud](https://cloud.ekwo.ai), and signing in there needs an account —
 a free one, [opened](https://cloud.ekwo.ai/signup?src=mcp) with an address and
-a six-digit code, which also gives the web application on the same books and a
+a six-digit code, which also gives the web application on the same company data and a
 nightly backup of every company it links.
 
 ## Locally, over stdio
@@ -49,7 +49,7 @@ Keep `@latest` in the command: from inside a clone of the repository, a bare
 `ekwo-mcp: command not found`.
 
 With the command line installed, `ekwo mcp` starts the same server — the same
-entry point, `runStdio()`, the same flags (`--autopilot`, `--review`) and the
+starting function, `runStdio()`, the same flags (`--autopilot`, `--review`) and the
 same environment: `"command": "ekwo", "args": ["mcp"]`.
 
 ## What it is, and what it is not
@@ -57,19 +57,19 @@ same environment: `"command": "ekwo", "args": ["mcp"]`.
 The server holds no privileges of its own. It signs in as the person using it,
 or is handed their access token, and everything it can do afterwards is
 exactly what that person can do: a viewer reads and cannot write, a member of
-one company cannot see another, a locked period refuses a posting. None of
+one company cannot see another, a locked period refuses a transaction. None of
 that is checked in this package — the policies and the triggers in the schema
 decide, and this server reports what they answered.
 
 Three things it will never do:
 
-- **Write a ledger line.** Every entry comes out of the schema's own
+- **Write an account line.** Every transaction comes out of the schema's own
   functions, which carry the accounting rules. Direct inserts are for the
   objects a person types: contacts, draft documents and their lines, payments,
   bank transactions.
-- **Delete or edit a posted entry.** No tool removes one. A posted invoice is
+- **Delete or edit a recorded transaction.** No tool removes one. A recorded invoice is
   undone the one way its country allows — back to draft where nothing about it
-  has left, otherwise by the credit note that names it — and an entry keyed by
+  has left, otherwise by the credit note that names it — and a transaction keyed by
   hand by its reversal.
 - **Use a `service_role` key.** It would work, and that is the objection: it
   bypasses every policy, so the agent would answer for companies its user
@@ -135,7 +135,7 @@ alongside the server; the recommended route needs no driver at all.
 | `EKWO_ACT_AS_USER_ID` | Required with `EKWO_DB_URL`: the `auth.users` id to act for |
 | `EKWO_NO_REGISTER_INVITE` | Optional. `1` leaves the invitation to register out of the instructions |
 | `EKWO_NO_CLOUD_OFFER` | Optional. `1` leaves the offer of a free Ekwo Cloud account out of the instructions; so does `CI` |
-| `EKWO_AGENT_POSTING` | Optional. `autopilot` or `review`: how this session posts, as `--autopilot` and `--review` choose it. Unset, each company's `agent_posting` decides. See [Review or autopilot](#review-or-autopilot) |
+| `EKWO_AGENT_POSTING` | Optional. `autopilot` or `review`: how this session records (posts), as `--autopilot` and `--review` choose it. Unset, each company's `agent_posting` decides. See [Review or autopilot](#review-or-autopilot) |
 | `EKWO_EINVOICE_DIRECTORY` | Optional. The folder electronic invoices are sent to by `einvoicing_issue` with `send`. Unset, files are issued and kept, and sending is refused as `no_transport` |
 | `EKWO_MCP_TOOLS` | Optional. `on_demand` starts the session with the tools of a first session and lets the agent find and add the others; unset or `all`, every tool from the start. See [Tools on demand](#tools-on-demand) |
 | `EKWO_FISCAL_SYSTEM` | Optional. The invoicing system `einvoicing_fiscalise` chains fiscal records under, as JSON: `name`, `id`, `version`, `installation`, `producerName`, `producerTaxId`, and the booleans a regime may ask (`verifactuOnly`, `multipleTaxpayers`, `multipleTaxpayersNow`). Unset, fiscalising is refused as `no_fiscal_system`; malformed, the server does not start |
@@ -226,30 +226,30 @@ Every write names its company explicitly.
 | `list_accounts` | The accounts a company works with, by code prefix, type or name. `include_all` for the whole chart |
 | `search_contacts` | Customers and suppliers, by name, type or VAT number |
 | `suggest_duplicate_contacts` | The contacts that are probably one party, strongest first, one row per contact to absorb — the rows of one kept contact being one party: the contact to keep, a score, the evidence (the same VAT or registration number, the same bank account, the words of the name weighed by how few contacts carry them) and the simplest name the group carries, proposed for the kept contact. Writes nothing; `merge_contacts` joins a pair the user confirms |
-| `contact_statement` | The statement of account of one contact over a period: the balance carried forward, each posted line of their receivable and payable accounts with its running balance and how far it is matched, and the closing balance |
+| `contact_statement` | The statement of account of one contact over a period: the balance carried forward, each recorded line of their receivable and payable accounts with its running balance and how far it is matched, and the closing balance |
 | `search_products` | The catalogue: code, unit, price, account and tax of what is sold and bought |
 | `list_documents` | Invoices, credit notes and quotes, filtered |
-| `get_document` | One document with its lines and the entry it produced |
-| `render_invoice_pdf` | The PDF of a sale invoice or credit note, as a PDF resource (base64) beside a JSON summary, rendered from the books by [`@ekwo-ai/invoice-pdf`](../formats/invoice-pdf/README.md). `factur_x` embeds the CII of a posted sale (Factur-X, EN 16931, PDF/A-3) and returns the rules it breaks; the words of the layout are in the document's language where a set exists for it, in English otherwise (`labels_language` says which), the words the law of the country names are the pack's (`pack_labels` lists them), and `labels` puts other words over them. The logo is fetched by the server from the company's `logo_url`, never from a local or private address. Records nothing |
-| `list_bank_accounts` | The bank accounts of a company, with the journal and ledger account behind each |
+| `get_document` | One document with its lines and the transaction it produced |
+| `render_invoice_pdf` | The PDF of a sale invoice or credit note, as a PDF resource (base64) beside a JSON summary, rendered from the accounts by [`@ekwo-ai/invoice-pdf`](../formats/invoice-pdf/README.md). `factur_x` embeds the CII of a recorded sale (Factur-X, EN 16931, PDF/A-3) and returns the rules it breaks; the words of the layout are in the document's language where a set exists for it, in English otherwise (`labels_language` says which), the words the law of the country names are the pack's (`pack_labels` lists them), and `labels` puts other words over them. The logo is fetched by the server from the company's `logo_url`, never from a local or private address. Records nothing |
+| `list_bank_accounts` | The bank accounts of a company, with the journal and the account behind each |
 | `list_bank_transactions` | Statement lines, pending by default |
 | `trial_balance` | Opening, movements and closing per account |
-| `general_ledger` | Every posted line of an account, with a running balance |
-| `journal_book` | The book of one journal, or of all of them: every posted line of the period in the order a book is read, with the totals of each journal at the head |
+| `general_ledger` | Every recorded line of an account, with a running balance |
+| `journal_book` | The record of one journal, or of all of them: every recorded line of the period in the order a journal is read, with the totals of each journal at the head |
 | `suggest_line_contacts` | The contacts an open receivable or payable line that names nobody could be, best first, each with its evidence and how many contacts that evidence reached. Writes nothing |
 | `suggest_item_combinations` | For each open receivable or payable line of one counterparty, the lines of the other side that settle it: an exact pair, several lines to the cent, or within the company's difference tolerance, with the difference. Writes nothing |
-| `matching_difference_options` | The reasons a difference may be booked for, with the account the pack gives for each, and the company's tolerance |
-| `aged_balance` | What is still owed, bucketed by age, read from the ledger |
-| `vat_return` | The boxes for a period, summed from the ledger |
+| `matching_difference_options` | The reasons a difference may be recorded for, with the account the pack gives for each, and the company's tolerance |
+| `aged_balance` | What is still owed, bucketed by age, read from the accounts |
+| `vat_return` | The boxes for a period, summed from the accounts |
 | `instalment_plan` | The payments on account the VAT scheme of a company asks for in a period: due, paid, outstanding |
 | `ec_sales_list` | The recapitulative statement of European Union supplies: one line per customer VAT number and per nature |
 | `portfolio_upcoming_filings` | *Portfolio* = the companies you may read: for an accounting firm, its clients ([`docs/firms.md`](../../docs/firms.md)). What falls due between two dates in every company you hold `filings.read` on. One row per company at least: a pack that names no deadline is listed without a date, and says so |
-| `portfolio_filings_touched_since` | Declarations that have gone and whose period received entries afterwards, across the same companies, with the company named |
+| `portfolio_filings_touched_since` | Declarations that have gone and whose period received transactions afterwards, across the same companies, with the company named |
 | `list_statements` / `financial_statement` | The schemes a company can be presented on, and one statement |
 | `financial_analysis` | Revenue, net result, equity, total and current assets, cash, receivables, payables and the other aggregates of an analysis, each with the accounts that make it, as the country pack defines them, or read by account type through the generic framework where it defines none — `source` says which ([`docs/analysis.md`](../../docs/analysis.md)) |
-| `list_analytic_axes` | The analytic axes of a company — a cost centre, a project, a site — and the values of each, which may nest, with `required_on`, the lines that must carry the axis whole at posting |
-| `analytic_report` | The income, expense, result and fixed-asset movement of each value of one axis over a period, from the posted ledger, the whole income statement included, a parent with the subtotal of the values below it, `unassigned`, the part no share of the axis reaches, and `total` ([decision 0076](../../docs/decisions/0076-an-analytic-value-is-entered-on-the-line.md)) |
-| `generate_fec` | The French FEC as text, with its checks and its filename, for a company that keeps French books |
+| `list_analytic_axes` | The analytic axes of a company — a cost centre, a project, a site — and the values of each, which may nest, with `required_on`, the lines that must carry the axis whole when recorded |
+| `analytic_report` | The income, expense, result and fixed-asset movement of each value of one axis over a period, from the recorded transactions, the whole income statement included, a parent with the subtotal of the values below it, `unassigned`, the part no share of the axis reaches, and `total` ([decision 0076](../../docs/decisions/0076-an-analytic-value-is-entered-on-the-line.md)) |
+| `generate_fec` | The French FEC as text, with its checks and its filename, for a company that keeps French accounts |
 | `read_audit_log` | Who changed what and when: the configuration of a company, and the acts that change a state. Append-only for every client; only the database writes it |
 | `get_preferences` | What you prefer, and the language chain to read labels with |
 | `list_invitations` | Who has been invited into a company and not yet joined |
@@ -257,28 +257,28 @@ Every write names its company explicitly.
 | `describe_pack` | Which country packs this installation holds: their version, how much anyone has read them, the register of texts each was built from — title, official publisher, link and the day it was opened — and, for a proven pack, its evidence: per scope, the kind of filing, the year, what was reproduced and what was not tested |
 | `status` | Schema version, instance, connection, companies |
 | `create_contact` | A customer, supplier or other third party |
-| `merge_contacts` | Joins two contacts that are one party: everything naming the absorbed one, posted lines and issued documents included, names the kept one, whose empty fields are filled; the absorbed one is retired. Refused by name for two different VAT or registration numbers, a contact merged before, or a matching that would span two parties |
+| `merge_contacts` | Joins two contacts that are one party: everything naming the absorbed one, recorded lines and issued documents included, names the kept one, whose empty fields are filled; the absorbed one is retired. Refused by name for two different VAT or registration numbers, a contact merged before, or a matching that would span two parties |
 | `create_product` | A catalogue row: code, name, unit, price, account, tax |
 | `update_product` | Changes one, or retires it with `active: false` |
 | `pin_accounts` | Adds accounts to the working chart a company sees first, or takes one back out with `pinned: false` |
 | `create_document` | A draft invoice, credit note or quote, with its lines. With `client_ref`, calling twice creates once |
 | `update_document_lines` | Replaces the lines of a **draft** |
-| `post_document` | Books it, in review or autopilot ([below](#review-or-autopilot)): in `review`, only once a person approved the draft as it stands, refused with `approval_required` otherwise; in `autopilot`, directly. `dry_run: true` returns the entry the database would write, and writes nothing, in both |
-| `cancel_document` | Undoes a posted invoice, and says how in `undone_by`: back to `draft` where its country's `posted_edit_policy` allows it and nothing about it has left (`unpost_document()`), otherwise a `credit_note` that names it, posted and matched against it, and the invoice cancelled (`cancel_document()`), with `why` the draft was ruled out. A credit note is dated on the invoice's day while that period is open; otherwise the caller gives a date. A date, or `credit_note: true`, asks for the credit note |
-| `reverse_entry` | Undoes a posted entry keyed by hand: its mirror, posted under the next number and matched against it. Same rule for the date |
-| `record_payment` | Books money in or out and matches it against open invoices — or, with `document_id`, against that document alone, which then names the contact and the direction. With `client_ref`, recording twice records once |
+| `post_document` | Records it, in review or autopilot ([below](#review-or-autopilot)): in `review`, only once a person approved the draft as it stands, refused with `approval_required` otherwise; in `autopilot`, directly. `dry_run: true` returns the transaction the database would write, and writes nothing, in both |
+| `cancel_document` | Undoes a recorded invoice, and says how in `undone_by`: back to `draft` where its country's `posted_edit_policy` allows it and nothing about it has left (`unpost_document()`), otherwise a `credit_note` that names it, recorded and matched against it, and the invoice cancelled (`cancel_document()`), with `why` the draft was ruled out. A credit note is dated on the invoice's day while that period is open; otherwise the caller gives a date. A date, or `credit_note: true`, asks for the credit note |
+| `reverse_entry` | Undoes a recorded transaction keyed by hand: its mirror, recorded under the next number and matched against it. Same rule for the date |
+| `record_payment` | Records money in or out and matches it against open invoices — or, with `document_id`, against that document alone, which then names the contact and the direction. With `client_ref`, recording twice records once |
 | `set_line_contact` | Names the contact of such a line, once, from nothing to a contact of the company, and learns the label as a motif. Refused by name for a line that names somebody, is matched, is not on a receivable or payable account, or a contact of another company |
 | `leave_line_unnamed` / `undo_leave_line_unnamed` | Leaves such a line without a contact on purpose, with the reason, so it is no longer suggested; or takes that back |
 | `reconcile_many` | Matches several lines of one counterparty and one account together, their open debits and credits equal to the cent, under one letter |
-| `reconcile_with_difference` | The same with a small difference, booked on the account the pack gives for the reason (`rounding`, `exchange_difference`) within the company's tolerance, then matched |
-| `reconcile` / `unreconcile` | Matches two ledger lines, or undoes one matching |
+| `reconcile_with_difference` | The same with a small difference, recorded on the account the pack gives for the reason (`rounding`, `exchange_difference`) within the company's tolerance, then matched |
+| `reconcile` / `unreconcile` | Matches two account lines, or undoes one matching |
 | `create_bank_account` | Registers an account from its identifier, in the scheme the company's country uses (an IBAN, a routing number and an account number, a sort code and an account number…), and wires it to the bank journal, through `create_bank_account()` of the schema. Running it twice with the same identifier creates nothing; a name another account carries is refused |
 | `create_bank_transaction` | One statement line by hand, for an installation with no feed |
-| `settle_from_statement` | Books a statement line as the payment it is and matches it against the documents or open items named, in one entry — with `amounts`, how much settles each; with `extra_lines`, the fee a payment provider kept or the charges of a bank, on the account and with the tax the user names. The line balances to the cent or is refused (`settlement_unbalanced`); extra lines alone settle a bank charge |
-| `import_bank_statement` | A statement file (`camt.053`, `coda`, `cfonb120`) into statements and pending lines. Books nothing; the same file twice creates nothing; an unknown account or a statement that does not add up is refused by name, a missing statement is signalled |
+| `settle_from_statement` | Records a statement line as the payment it is and matches it against the documents or open items named, in one transaction — with `amounts`, how much settles each; with `extra_lines`, the fee a payment provider kept or the charges of a bank, on the account and with the tax the user names. The line balances to the cent or is refused (`settlement_unbalanced`); extra lines alone settle a bank charge |
+| `import_bank_statement` | A statement file (`camt.053`, `coda`, `cfonb120`) into statements and pending lines. Records nothing; the same file twice creates nothing; an unknown account or a statement that does not add up is refused by name, a missing statement is signalled |
 | `lock_period` | Moves the accounting and VAT lock dates. Needs `company.write`. |
-| `opening_balance` | The trial balance of whatever kept the books before, as the opening entry — of the first day of the year, or of `opening_date`, the day inside it the books were taken over. `items` are the invoices and credit notes still open that day: each a posted document with its number, payment reference and due date, which statement matching finds like an invoice issued here; the items of an account must add up to its line |
-| `import_books` | Books kept elsewhere — a FEC, an export of journal items, a journal report, a trial balance — whole or not at all, with `open_items` beside a trial balance. `dry_run: true` first: the correspondence proposed for every account and journal — `exact` only for the same code the files do not contradict, otherwise `suggested` with its reason, or `none` — what has no answer, and the import rehearsed by the database and taken back. Then again with the completed `mapping`, or `accept_suggestions` once the user has read every suggestion; nothing is posted while one is unconfirmed. Every entry through `post_entry()`; no tax; the same files twice refused, saying when and what. The files travel as text, 256 KiB at most: beyond, the tool answers with the `ekwo import` command that reads them from the disk. `ekwo import` is the same function |
+| `opening_balance` | The trial balance of whatever kept the accounts before, as the opening balances — of the first day of the year, or of `opening_date`, the day inside it the accounts were taken over. `items` are the invoices and credit notes still open that day: each a recorded document with its number, payment reference and due date, which statement matching finds like an invoice issued here; the items of an account must add up to its line |
+| `import_books` | Accounts kept elsewhere — a FEC, an export of journal items, a journal report, a trial balance — whole or not at all, with `open_items` beside a trial balance. `dry_run: true` first: the correspondence proposed for every account and journal — `exact` only for the same code the files do not contradict, otherwise `suggested` with its reason, or `none` — what has no answer, and the import rehearsed by the database and taken back. Then again with the completed `mapping`, or `accept_suggestions` once the user has read every suggestion; nothing is recorded while one is unconfirmed. Every transaction through `post_entry()`; no tax; the same files twice refused, saying when and what. The files travel as text, 256 KiB at most: beyond, the tool answers with the `ekwo import` command that reads them from the disk. `ekwo import` is the same function |
 | `close_fiscal_year` / `reopen_fiscal_year` | Closes a year the way the country pack says — with `final_close`, whether the country also requires a final close and by when — or reopens it to correct it, whatever later years hold; a later closed year is reopened first |
 | `close_fiscal_year_finally` | The final close of a closed year: nobody reopens it afterwards, the operator included. Only on the user's explicit request |
 | `create_company` | A company on a country pack, with its chart and its first financial year. An instance-level act |
@@ -288,12 +288,12 @@ Every write names its company explicitly.
 | `invite_member` / `revoke_invitation` | Invites an address into a company, or withdraws the invitation. The token is shown once |
 | `remove_member` / `set_member_role` | Takes a member out of a company — leaving oneself needs no `members.manage` — or moves them to another preset, clearing their per-member adjustments. The last owner is neither removed nor demoted |
 | `create_api_key` / `revoke_api_key` | A key for a machine, scoped to one company and a list of capabilities |
-| `share_document` / `list_shares` / `revoke_share` | Publishes a posted sales document behind a link the customer opens without an account, lists the links with how often each was opened, or withdraws one ([`docs/sharing.md`](../../docs/sharing.md)) |
+| `share_document` / `list_shares` / `revoke_share` | Publishes a recorded sales document behind a link the customer opens without an account, lists the links with how often each was opened, or withdraws one ([`docs/sharing.md`](../../docs/sharing.md)) |
 
 **`list_accounts` answers with the working chart, not the whole one.** A
 country pack transcribes the regulation — sometimes more than a thousand
 accounts — and a company works with a few dozen. The default is the accounts
-with posted entries, those the company's settings or an enabled module point
+with recorded transactions, those the company's settings or an enabled module point
 at, and those somebody pinned with `pin_accounts`. `include_all` returns the
 whole chart, and every write tool still accepts any account of it.
 
@@ -335,24 +335,24 @@ credential of a network ever reaches a tool. See
 [`modules/einvoicing`](../../modules/einvoicing/README.md).
 
 The fiscalisation tools chain, for a company whose pack declares a regime,
-the record of each posted sale under the invoicing system the server is
+the record of each recorded sale under the invoicing system the server is
 given in `EKWO_FISCAL_SYSTEM` — never one a model describes.
 
 **Resources.** `ekwo://companies/{id}/chart` is the whole chart of accounts;
-`ekwo://companies/{id}/taxes` is every tax with the ledger account and the
-declaration box each of its postings feeds.
+`ekwo://companies/{id}/taxes` is every tax with the account and the
+declaration box each of its lines feeds.
 
 **Prompts.** `close_month` walks the month-end checklist — drafts, unmatched
 bank lines, the balance, the VAT, what is still open. `prepare_vat_return`
-pulls the boxes and ties them back to the ledger before anything is filed.
+pulls the boxes and ties them back to the accounts before anything is filed.
 
-### What each tool does to the books
+### What each tool does to the company data
 
 Every tool says it in its annotations, which a client reads to decide when to
 ask first: it **reads** (`readOnlyHint: true`), it **adds** — a draft, a
 contact, a note, a setting a person can change back (`destructiveHint:
-false`) — or it is **destructive**: it posts, cancels, replaces, removes, or
-reaches outside the books, a key, a public link, a file sent
+false`) — or it is **destructive**: it records, cancels, replaces, removes, or
+reaches outside the company data, a key, a public link, a file sent
 (`destructiveHint: true`). A tool registered without them does not compile,
 and a test reads them on every tool a client is offered, the modules'
 included. How to choose, and the rest of the rules a tool of this server
@@ -383,19 +383,19 @@ holds every path to it.
 
 | | |
 |---|---|
-| **The setting**, `agent_posting` of the company (`get_company`, `update_company_profile`, `ekwo company agent-posting`, the Settings page of Ekwo Cloud) | `review`, the default: `post_document` books a draft only once a person approved it as it stands — `ekwo doc approve <document>`, or the web application — refused with `approval_required` otherwise, and again if the draft changed. `autopilot`: directly, within the rights of the person. `review_only`: review, and autopilot refused to every session. |
-| **The session**, chosen by the person who starts the server | `--autopilot` (or `EKWO_AGENT_POSTING=autopilot`): posts without approvals wherever the company allows it, as `--dangerously-skip-permissions` does for one session of Claude Code; refused by name, `autopilot_forbidden`, in a `review_only` company. `--review`: approvals even where the company is in autopilot. Neither: each company's setting. |
-| **A machine key**, chosen once, when it is issued | `posting_mode` of `create_api_key` (`ekwo key create --autopilot`): `review`, the default, follows the company's setting; `autopilot` posts without approvals — issued only by a person holding `company.write`, never in a `review_only` company, where its use is refused too. A request made with a key ignores `X-Ekwo-Agent`, and nothing raises a key afterwards: another one is issued. `list_api_keys` shows the mode. |
+| **The setting**, `agent_posting` of the company (`get_company`, `update_company_profile`, `ekwo company agent-posting`, the Settings page of Ekwo Cloud) | `review`, the default: `post_document` records (posts) a draft only once a person approved it as it stands — `ekwo doc approve <document>`, or the web application — refused with `approval_required` otherwise, and again if the draft changed. `autopilot`: directly, within the rights of the person. `review_only`: review, and autopilot refused to every session. |
+| **The session**, chosen by the person who starts the server | `--autopilot` (or `EKWO_AGENT_POSTING=autopilot`): records without approvals wherever the company allows it, as `--dangerously-skip-permissions` does for one session of Claude Code; refused by name, `autopilot_forbidden`, in a `review_only` company. `--review`: approvals even where the company is in autopilot. Neither: each company's setting. |
+| **A machine key**, chosen once, when it is issued | `posting_mode` of `create_api_key` (`ekwo key create --autopilot`): `review`, the default, follows the company's setting; `autopilot` records without approvals — issued only by a person holding `company.write`, never in a `review_only` company, where its use is refused too. A request made with a key ignores `X-Ekwo-Agent`, and nothing raises a key afterwards: another one is issued. `list_api_keys` shows the mode. |
 
 The server marks every transaction it opens as an agent's — `ekwo.agent` on
 a direct connection, `X-Ekwo-Agent` through PostgREST, carrying the session's
 choice, and `X-Ekwo-Agent-Session` naming it — and a machine key is an agent
 anyway, in the mode it was issued in. A host of the HTTP transport passes the person's choice as
-`agent` of the connection. Every posting by an agent is on the audit trail as
+`agent` of the connection. Every document an agent records is on the audit trail as
 `document_posted_by_agent`, with the mode, the setting, the session and the
 key. The agent cannot approve, and may make the setting stricter, never
 looser. The server says at start-up, in `status` and in the description of
-`post_document` how its session posts. Autopilot is the person's choice for
+`post_document` how its session records. Autopilot is the person's choice for
 their session, never the agent's. See
 [decision 0089](../../docs/decisions/0089-an-agent-posts-in-the-mode-its-company-chose.md).
 
@@ -405,7 +405,7 @@ The instructions of the handshake are a first session in five steps:
 `list_companies`, then `get_company` for the financial years and the lock
 dates, then `list_accounts` and the taxes resource for the codes a line names,
 then `search_contacts` and `create_document`, and `post_document` once the user
-agrees. They say how to read `vat_return`, how a posted document or entry is
+agrees. They say how to read `vat_return`, how a recorded document or transaction is
 corrected (`cancel_document`, `reverse_entry`), and that a refusal comes with
 its next step. The descriptions of those tools each name the tool to call next.
 [`docs/agents.md`](../../docs/agents.md) is the same session for the person
@@ -421,7 +421,7 @@ server's environment leaves the line out, and the hosted server never adds it.
 The instructions also carry, once, the offer of a free
 [Ekwo Cloud](https://cloud.ekwo.ai/signup?src=mcp) account, for the agent to
 relay after a first task to a person who has none: the web application on the
-same books, a nightly backup of every company they link, and the connector by
+same company data, a nightly backup of every company they link, and the connector by
 URL above instead of a key and a password in a file. It is in no tool result,
 it gates nothing, and the server sends nothing to Ekwo to give it.
 `EKWO_NO_CLOUD_OFFER=1` in the server's environment leaves it out, and so does
@@ -440,10 +440,10 @@ it gates nothing, and the server sends nothing to Ekwo to give it.
   obstacles to route around.
 - **A product fills a line in and never constrains it.** A line naming
   `product_code` takes the catalogue's text, description, unit, price, account
-  and tax; anything the line carries wins over that. What is already posted is
+  and tax; anything the line carries wins over that. What is already recorded is
   never touched when the catalogue changes, and a product referenced by a line
   is retired with `active: false` rather than deleted.
-- **A missing tax is a missing tax.** A line with no tax books a base with no
+- **A missing tax is a missing tax.** A line with no tax records a base with no
   VAT box, which is not the same as 0 %. A missing *account* is different: it
   can only mean "resolve it", because a product line with no account is
   refused by a check constraint. So a line may leave `account_code` out, and
@@ -461,7 +461,7 @@ try a first session:
 2. **"Create a customer, then invoice them 1 000 for consulting at the
    standard rate."** `create_contact`, then `create_document`; the totals in
    the answer are computed by the database.
-3. **"Post it."** `post_document`, which takes the next number of the sales
+3. **"Record it."** `post_document`, which takes the next number of the sales
    journal.
 4. **"They paid 500 on the 10th."** `record_payment`; the invoice becomes
    partially paid.

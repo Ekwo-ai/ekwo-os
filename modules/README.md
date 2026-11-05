@@ -1,18 +1,18 @@
 # `modules/` — one Postgres schema each, beside the socle
 
-The socle is `public`: companies, accounts, taxes, entries, documents, the
+The socle is `public`: companies, accounts, taxes, transactions, documents, the
 reports. What is built beside it lives here, one folder and one schema per
 module.
 
-| Module code | Folder | Schema | Posts to the ledger | Country data |
+| Module code | Folder | Schema | Records to the accounts | Country data |
 |---|---|---|---|---|
 | `assets` | [`fixed-assets`](fixed-assets/) | `fixed_assets` | yes, through `post_module_entry()` | `packs/<cc>/fixed_assets.json` |
 | `budgets` | [`budgets`](budgets/) | `budgets` | no | none |
 | `tax` | [`corporate-tax`](corporate-tax/) | `tax` | the provision of a computation, through `post_module_entry()` | `packs/<cc>/corporate_tax.json` |
-| `einvoicing` | [`einvoicing`](einvoicing/) | `einvoicing` | no: it issues the electronic file of a posted sale and records every sending | the profile the pack declares |
+| `einvoicing` | [`einvoicing`](einvoicing/) | `einvoicing` | no: it issues the electronic file of a recorded sale and records every sending | the profile the pack declares |
 | `crm` | [`crm`](crm/) | `crm` | no: it keeps the relationship on the socle's contacts, and a won deal makes its party a customer | none |
-| `contracts` | [`contracts`](contracts/) | `contracts` | no: its schedules issue draft documents of the socle, booked by `post_document()` only where a schedule says `auto_post` | none |
-| `consolidation` | [`consolidation`](consolidation/) | `consolidation` | no: it reads the members' books under their own row level security and writes nothing in them | none |
+| `contracts` | [`contracts`](contracts/) | `contracts` | no: its schedules issue draft documents of the socle, recorded by `post_document()` only where a schedule says `auto_post` | none |
+| `consolidation` | [`consolidation`](consolidation/) | `consolidation` | no: it reads the members' accounts under their own row level security and writes nothing in them | none |
 
 `schema/module.1.json` is the published shape of a `module.json`, and
 `ekwo module list` refuses one that does not match it.
@@ -21,9 +21,9 @@ module.
 
 1. **One schema, and the socle is not it.** A module depends on `public` by
    foreign key; the socle has no hook, no callback and no idea it exists.
-2. **The ledger only through `post_module_entry()`.** The words `entries` and
+2. **The accounts only through `post_module_entry()`.** The words `entries` and
    `entry_lines` never appear in a write statement here, and a test over every
-   file of this folder refuses one that does. Reading the ledger is allowed.
+   file of this folder refuses one that does. Reading the accounts is allowed.
 3. **Row level security on every table**, through `module_enabled()` where the
    table carries a `company_id`.
 4. **A module does its own grants.** `public` gets them from Supabase; a schema
@@ -39,7 +39,7 @@ Migrations live in `<folder>/supabase/migrations/`, share the socle's history
 with the module in the recorded `name`, and their timestamps sort after the
 socle migration the manifest declares it needs, `requires_socle_min`. Tests live in `<folder>/tests/` and the root `npm test` runs
 them. The folder is named after what the module is and need not be its code:
-the code is written on every entry a module posts and never changes, a folder
+the code is written on every transaction a module records and never changes, a folder
 and a schema may be renamed — `fixed-assets` and `fixed_assets` were both
 `assets` until version 2.0.0 of that module.
 
@@ -50,16 +50,16 @@ The full version, and how to write a module in a day, is
 ## Planned modules
 
 Three modules are decided and not written yet. They follow the rules above: a
-schema of their own, and the ledger reached only through `post_module_entry()`.
+schema of their own, and the accounts reached only through `post_module_entry()`.
 No date is attached to them.
 
-- **`carbon` — sustainability accounting on the same ledger.** Emissions
-  accounted for as strictly as money: spend-based from the entries already
+- **`carbon` — sustainability accounting on the same accounts.** Emissions
+  accounted for as strictly as money: spend-based from the transactions already
   there, activity-based from physical quantities recorded against the same
   documents, the GHG Protocol's three scopes, emission factors loaded as
   versioned data with their source, and reporting aligned on what a small
   company is actually asked for (VSME, ESRS E1). Every tonne points at the
-  entry and the document that justify it.
+  transaction and the document that justify it.
 - **`crypto` — digital assets.** Wallets and venues, acquisition lots, fair
   value at the close, and realised gains by the method the country allows —
   pack data, not a setting. The exports of platforms are read by format

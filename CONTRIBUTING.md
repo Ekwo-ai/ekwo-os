@@ -8,7 +8,7 @@ that has cost somebody a day.
 Ekwo is built by a network, not a vendor ([MANIFESTO.md](MANIFESTO.md)).
 You do not have to write TypeScript to matter here:
 
-- **You keep books for a living.** Review the pack for your country — the
+- **You keep accounts for a living.** Review the pack for your country — the
   chart, the taxes, the declaration boxes — against the law you apply every
   day, and put your name on it. A pack is *reviewed* when a named
   professional has read it, and never before. Open an issue titled
@@ -42,7 +42,7 @@ to. Fork it, push a branch to your fork, open a pull request against `main`.
 Four things happen, in this order.
 
 1. **The bot asks for the agreement**, once. It comments on your first pull
-   request with the sentence to post back; the signature is recorded on the
+   request with the sentence to reply with; the signature is recorded on the
    `cla-signatures` branch and covers everything you send afterwards. A pull
    request with an unsigned author is not merged, whatever else is true of it.
 2. **The CI has to be green.** It runs the tests on three versions of Node and
@@ -92,14 +92,14 @@ that does five is read when somebody has a day.
    *customers* on one chart and *recoverable VAT* on another. Use the company
    defaults, the contact overrides, or `tax_postings.account_id`.
 7. **Raise, do not warn.** An exception handler that swallows an error and
-   returns is how an invoice ends up with no entry and nobody notices.
+   returns is how an invoice ends up with no transaction and nobody notices.
 8. **Derive totals, never key them in.** If a header and its lines can
    disagree, one day they will.
 
 ## Country rules
 
 A tax régime is data, not code. Everything a country adds — a chart of
-accounts, its journals, its taxes and where each one posts, the boxes of the
+accounts, its journals, its taxes and the account each one records to, the boxes of the
 periodic return, the financial statements, the sentences the law puts on an
 invoice, the translations — is a set of files under `packs/<cc>/`, compiled
 into one SQL seed that is committed. [`docs/packs.md`](docs/packs.md) is the
@@ -140,7 +140,7 @@ request that will be sent back.
    apply, at which point it becomes `reviewed`, with their name and the date in
    the manifest. `maintained` means the maintainers keep it current and nobody
    has reviewed it. `proven` means a maintained pack reproduced the accepted
-   filing of a real company whose books were imported, and its
+   filing of a real company whose accounts were imported, and its
    `certification.evidence` says, scope by scope, what was reproduced and what
    was not tested; it is still not a review. There is no status that means "certified by Ekwo", and
    writing a pack is not reviewing it.
@@ -232,7 +232,7 @@ the review. A country pack without a golden scenario is refused by
 `ekwo pack check` and by the CI — see [`docs/packs.md`](docs/packs.md), "Golden
 scenario".
 
-### A test may book in a country. It may not expect one.
+### A test may record in a country. It may not expect one.
 
 A test about the core walks `listPacks()` and takes its expectation from the
 pack — a role of the manifest, an account of a chart, a box of the declaration
@@ -241,7 +241,7 @@ everything, `packWhere('taxes on collection', …)` to pick the pack that carrie
 the property under test rather than the country that happens to have it, and
 `somePack` where a test needs a pack and does not care which.
 
-Setting up may still name a country: a scenario books invoices somewhere, and
+Setting up may still name a country: a scenario records invoices somewhere, and
 saying where is how it stays readable. Adding a pack then touches the pack
 folder and its `golden/`, and nothing under `tests/`.
 
@@ -262,7 +262,7 @@ is genuinely right, one comment says so and why:
 twice — once through the CLI's runner, once the way `supabase db push` and
 `psql -f` do — and compares every row of every table the seeds write; then it
 takes a company installed at 1.0.0, upgrades its pack, opens a financial year,
-books two invoices, files the VAT return, prints both financial statements,
+records two invoices, files the VAT return, prints both financial statements,
 closes the year, re-opens it and closes it again, comparing every figure to one
 it works out itself from `sum(debit) - sum(credit)`.
 
