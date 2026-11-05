@@ -14,7 +14,7 @@
         "result": "reproduced",
         "fiscal_year": 2025,
         "filing": "French liasse fiscale 2033 (régime simplifié)",
-        "summary": "On the books of a French SAS under the simplified regime, imported from another system, every amount of the bilan and the compte de résultat it filed matches to the euro: 33 lines of the 2033-A and 2033-B, read through the 2050 to 2052 forms the pack carries, net amounts only.",
+        "summary": "On the accounts of a French SAS under the simplified regime, imported from another system, every amount of the bilan and the compte de résultat it filed matches to the euro: 33 lines of the 2033-A and 2033-B, read through the 2050 to 2052 forms the pack carries, net amounts only.",
         "checked_on": "2026-10-10"
       },
       {
@@ -22,7 +22,7 @@
         "result": "not_tested",
         "fiscal_year": 2025,
         "filing": "French CA3 VAT return",
-        "summary": "Not tested: neither the filed returns nor any VAT posting are in the imported books.",
+        "summary": "Not tested: neither the filed returns nor any VAT transaction is in the imported accounts.",
         "checked_on": "2026-10-10"
       }
     ],

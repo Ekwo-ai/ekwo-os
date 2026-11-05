@@ -1,7 +1,7 @@
 # Country packs
 
 A country is data. Everything Belgium or France adds to Ekwo — a chart of
-accounts, journals, VAT codes, the accounts each of them posts to, the boxes
+accounts, journals, VAT codes, the accounts each of them records to, the boxes
 of the periodic return — is a set of files under `packs/<cc>/`, compiled into
 one SQL seed that is committed. There is no module per country, no Python
 hook, and no field in the format through which a pack could run anything.
@@ -66,17 +66,17 @@ a country.** An association buys, sells and banks through the same journals as
 a company and files the same VAT return; only the accounts differ, and the
 statements that present them. So do the roles — receivable, payable, suspense
 — which stay in `defaults.roles`, and `ekwo pack check` refuses a pack whose
-role codes and tax posting accounts are not in *every* chart it ships.
+role codes and the accounts its taxes record to are not in *every* chart it ships.
 
 `ekwo init --chart <code>` picks one; without the flag, an interactive install
 asks only when the pack offers several, and a non-interactive one refuses and
-lists them. `ekwo status` prints the chart each company keeps its books on.
+lists them. `ekwo status` prints the chart each company keeps its accounts on.
 
 ## Financial statements
 
-`statements.json` holds one entry per scheme: a `code`, a `kind`
+`statements.json` holds one item per scheme: a `code`, a `kind`
 (`balance_sheet`, `income_statement`, `allocation`), a `framework`, and its
-lines. A line is either summed from the ledger, through `rules`, or computed
+lines. A line is either summed from the accounts, through `rules`, or computed
 from other lines, through `plus` and `minus` — there is no expression
 language, as there is none for a declaration form.
 
@@ -115,9 +115,9 @@ A statement prints its whole frame and a return omits a box that comes to
 nothing, which is one argument to it and not a second evaluator.
 
 A `balance_sheet` reads balances cumulative to the end of the period; an
-`income_statement` reads the movements inside it, **less the entries
+`income_statement` reads the movements inside it, **less the transactions
 `close_fiscal_year()` marks `kind = 'closing'`**, so a closed year still
-reports what it earned. A balance sheet keeps those entries: they are what
+reports what it earned. A balance sheet keeps those transactions: they are what
 carries the result onto the line it shows.
 
 **A chart names the statements it reports on.** A statement named by exactly
@@ -127,7 +127,7 @@ the country-less pack whose rules are all `account_type` — which is what the
 eighteen account types buy, and what gives a British or American chart with no
 legal codes a balance sheet that ties out.
 
-**A sign belongs to a line summed from the ledger, and to no other.** `sign:
+**A sign belongs to a line summed from the accounts, and to no other.** `sign:
 -1` is how a scheme prints a credit balance as a positive figure, and
 `financial_statement()` applies it when it sums the line. A total is then
 worked out from lines that already read that way, so a sign on the total would
@@ -161,7 +161,7 @@ one account on the same side, two lines that carry the same fact key, and — th
 check that makes a balance sheet balance — **a chart with an account that
 reaches no line of any of its statements**. A heading, an account with
 children, may reach none: it straddles the lines its children are split over
-and nothing is posted to it.
+and nothing is recorded to it.
 
 Every file is validated against [`packs/schema/pack.1.json`](../packs/schema/pack.1.json),
 a JSON Schema draft 2020-12 that describes all of them: the manifest is the
@@ -177,7 +177,7 @@ inside a quoted field. The parser is forty lines and refuses anything else.
 ## The analysis section
 
 `analysis.json` says what the accounts of the chart mean to an analysis of the
-books: which of them make the revenue, the net result, the equity, the total
+company data: which of them make the revenue, the net result, the equity, the total
 and the current assets, the cash, what customers owe and what is owed to
 suppliers. A statement cannot say it — its lines are the national rubrics, and
 `21/28` means nothing to a screen that draws a current ratio in every country
@@ -227,7 +227,7 @@ the section.
 
 **Each aggregate cites its text** — `legal_reference`, required: the class of
 the chart or the rubric of the statement it mirrors, as the country cites it —
-and names the register entry it is read in, in `source`.
+and names the register item it is read in, in `source`.
 
 **`charts`** lists the charts of the pack the rules are written for, and is
 left out for the default chart alone. A second chart — one for associations —
@@ -547,7 +547,7 @@ seed stale**, including a file the compiler never reads, such as
 The generated files under `golden/` are the deliberate exception —
 `vat_return.json`, `statements.json`, `trial_balance.json` and, where the pack
 has an analysis section, `analysis.json` are outside the checksum, and `golden/scenario.json` is inside it. A scenario is a decision
-about what a country's books look like, and moving it moves the pack; the
+about what a country's accounts look like, and moving it moves the pack; the
 expectations are what the engine made of that scenario, so a checksum that
 moved because the statements function gained a line would tell every operator
 that Belgium had changed.
@@ -588,7 +588,7 @@ the first twenty printed and the rest counted. A usage fault — an unknown pack
 no country and no `--all` — exits 2 instead, and names what the checkout
 carries.
 
-## What a tax says, and where its postings land
+## What a tax says, and where its amounts land
 
 A tax in `taxes.json` says how much and what kind; its `postings` say where
 the money goes, per kind of document.
@@ -598,11 +598,11 @@ the money goes, per kind of document.
 | `kind` | `vat`, `gst`, `sales_tax`, `withholding`, `other`. A label for the reports, never an input to the calculation. Defaults to `vat`. |
 | `recoverable` | `false` when the buyer never gets the tax back — American sales tax, Canadian PST, a wholly non-deductible VAT. |
 | `price_include` | The unit price of a line carrying this tax already holds it (British, Australian and most retail). The engine adds the tax to the gross of the **tax group**, rounds it once as BR-CO-14 requires, takes it back off to get the base, and shares that base over the lines in proportion to their gross with the remainder on the last — so the document totals the price that was quoted, to the unit. A discount applies to the gross, before the conversion. Only a percentage tax may declare it: a fixed amount has no rate to divide by, and `ekwo pack check` refuses one. |
-| `base_includes_tax` | The taxable base of this tax contains the tax itself, and the rate is the rate of the law applied to that base: on a net amount N the tax is N × rate / (100 − rate), on a price that holds it (`price_include`) the price × rate / 100 — exact, rounded once on the tax group. The box of the `base` posting reports the base plus the tax, shared over the ledger lines so that it adds up. Only a percentage below 100 may declare it; `ekwo pack check` refuses the rest. An EN 16931 invoice cannot carry such a tax (BR-CO-17). [Decision 0077](decisions/0077-a-tax-computed-inside-its-own-base.md). |
+| `base_includes_tax` | The taxable base of this tax contains the tax itself, and the rate is the rate of the law applied to that base: on a net amount N the tax is N × rate / (100 − rate), on a price that holds it (`price_include`) the price × rate / 100 — exact, rounded once on the tax group. The box of the `base` item reports the base plus the tax, shared over the account lines so that it adds up. Only a percentage below 100 may declare it; `ekwo pack check` refuses the rest. An EN 16931 invoice cannot carry such a tax (BR-CO-17). [Decision 0077](decisions/0077-a-tax-computed-inside-its-own-base.md). |
 | `jurisdiction` | ISO 3166-2 **with** the country prefix (`CA-QC`, `US-CA`) for a tax levied by a state. Null in Europe. |
-| `cash_basis`, `cash_basis_transition_account` | The tax falls due when the invoice is paid, not when it is issued. `post_document` books it — and the base it is computed on — on the transition account and on no declaration box; the matching moves the settled share to the account and the box it is declared on. A cash-basis tax has to name its transition account and takes **one** `tax` posting per document kind, with no `tax_on_base`: `ekwo pack check` refuses the rest. |
+| `cash_basis`, `cash_basis_transition_account` | The tax falls due when the invoice is paid, not when it is issued. `post_document` records it — and the base it is computed on — on the transition account and on no declaration box; the matching moves the settled share to the account and the box it is declared on. A cash-basis tax has to name its transition account and takes **one** `tax` item per document kind, with no `tax_on_base`: `ekwo pack check` refuses the rest. |
 
-A posting has one of three types:
+An item of `postings` has one of three types:
 
 - **`base`** — the taxed amount itself. It carries no account: the account is
   the one the document line names.
@@ -612,7 +612,7 @@ A posting has one of three types:
   part of what the thing cost, so it lands on the accounts of the lines it
   taxes, split in proportion to their bases.
 
-`factor` is the share of the amount that reaches the ledger, `box_factor` the
+`factor` is the share of the amount that reaches the accounts, `box_factor` the
 share reported in the box, and the two are independent because a box is filled
 with the sign and the fraction the form expects. The Belgian vehicle tax uses
 both:
@@ -637,20 +637,20 @@ On a 1 000 € car: 1 000 on the vehicle, 105 on the deductible VAT account, 105
 more on the vehicle, 1 210 owed to the supplier. Grid 83 reports 1 105 —
 Belgium asks for the base **plus** the non-deductible VAT, which is what the
 form's « TVA déductible non comprise » means. A wholly non-deductible tax is
-the same shape with one `tax_on_base` posting at 100 % and no `tax` posting.
-France needs no `box` on its `tax_on_base` posting at all: the CA3 carries no
+the same shape with one `tax_on_base` item at 100 % and no `tax` item.
+France needs no `box` on its `tax_on_base` item at all: the CA3 carries no
 grid for the base of a purchase.
 
-The postings of one side share out the tax of the group, which is rounded once
-(EN 16931 BR-CO-14); the last posting of each side takes the remainder, so two
+The items of one side share out the tax of the group, which is rounded once
+(EN 16931 BR-CO-14); the last item of each side takes the remainder, so two
 halves of 0,63 come out as 0,32 and 0,31 rather than 0,32 twice.
 
-On a purchase a positive `factor` books on the side of the base, the debit,
+On a purchase a positive `factor` records on the side of the base, the debit,
 and a negative one on the other side. A tax the buyer self-assesses — a
 reverse charge, an acquisition from another Member State, a service from
-abroad — therefore puts the positive posting on the tax it deducts and `-100`
+abroad — therefore puts the positive item on the tax it deducts and `-100`
 on the tax it owes, as `DE-P-DRITT-19` does (2244 and 6813). `ekwo pack check`
-refuses the reverse: a purchase tax whose two tax postings are one asset and
+refuses the reverse: a purchase tax whose two tax items are one asset and
 one liability account, with the positive factor on the liability.
 
 `defaults.rounding_method` and `defaults.cash_rounding_unit` belong to the same
@@ -663,7 +663,7 @@ country is anybody's fallback.
 every amount the schema writes; the other half is `decimal_places` on the
 currency the pack names in `defaults.currency`, which says that the yen has
 none and the dinar has three. A pack that declares `half_even` therefore
-changes what its country's ledger holds, and the four methods — half up, half
+changes what its country's accounts hold, and the four methods — half up, half
 even, down, up — are all applied to the absolute value, so a credit note is
 always its invoice with the sign flipped. `cash_rounding_unit` is still
 declared and read by nothing: the socle has no cash-payment path to round a
@@ -674,18 +674,18 @@ total on.
 A software subscription, hosting or an API billed from abroad is the most
 common purchase of a young company, and in most countries the buyer owes the
 tax on it: a reverse charge, a self-assessment, a withholding of the
-supplier's tax. A pack that says nothing about it lets the books carry no tax
+supplier's tax. A pack that says nothing about it lets the accounts carry no tax
 at all. So **a pack whose taxes include a rated purchase VAT, GST or sales tax
 says something about it**, in one of two ways:
 
 - **a purchase tax with treatment `foreign_services_received`** — or, in a
   Member State, `intracom_acquisition_services` for a supplier of another
-  Member State, the return often splitting the two — posted like
+  Member State, the return often splitting the two — recorded like
   `DE-P-DRITT-19`: the tax owed credited, the tax deducted debited. A tax the
   buyer may deduct only later (`AR-P-EXT`, a period after) or not at all
   (`SN-P-NR-18-ND`, a cost) keeps the same treatment and says so in its
-  postings;
-- **or a `not_taxed` entry in `pack.json`**, where the country's law leaves
+  `postings`;
+- **or a `not_taxed` item in `pack.json`**, where the country's law leaves
   the case untaxed in the buyer's hands, with the article that says so and the
   key of its text in the register:
 
@@ -697,10 +697,10 @@ says something about it**, in one of two ways:
 ]
 ```
 
-`ekwo pack check` refuses a pack that does neither, an entry naming a
+`ekwo pack check` refuses a pack that does neither, an item naming a
 treatment one of the pack's own purchase taxes carries, and an
 `intracom_*` treatment outside the common system of the European Union's VAT.
-`ekwo pack describe` and the MCP tool `describe_pack` return the entries
+`ekwo pack describe` and the MCP tool `describe_pack` return the items
 beside the treatments the taxes carry. Where the law taxes the case only for some buyers — a business
 whose purchases all serve taxable supplies owes nothing, one with exempt
 supplies pays — the pack carries the tax for the case where it is due and
@@ -708,20 +708,20 @@ its README says when a purchase takes no code.
 
 ### A base is written once, and printed as often as the form likes
 
-**A tax carries one `base` posting per kind of document**, so a taxable amount
+**A tax carries one `base` item per kind of document**, so a taxable amount
 has one definition. `ekwo pack check` refuses a second one. A form that prints
-the same base twice is therefore never a tax with two base postings, and it is
+the same base twice is therefore never a tax with two base items, and it is
 printed twice in one of two ways: **by a total when the second place is a sum**,
-and **by the posting itself when it is not**.
+and **by the item itself when it is not**.
 
 **By a total**, when the second place is a sum: a return that asks for a
 sale's taxable amount both in a rate breakdown and in a turnover line defines it
 once in the breakdown, and declares the turnover line a `total` adding up the
 breakdown boxes.
 
-**By the posting itself**, when the second place is not a sum — a box printed
+**By the item itself**, when the second place is not a sum — a box printed
 inside a parent box that also holds other things, or one amount reported both
-as an output and as an input. The posting **names every box it prints in**:
+as an output and as an input. The item **names every box it prints in**:
 
 ```json
 { "code": "EE-P-ICG-24", "rate": 24, "scope": "purchase",
@@ -731,15 +731,15 @@ as an output and as an input. The posting **names every box it prints in**:
                              { "type": "tax", "factor": -100, "account": "2310", "box": "4" } ] } }
 ```
 
-`box` takes a string or a list; the first is the box the posting is known by,
+`box` takes a string or a list; the first is the box the item is known by,
 and `box_factor` applies to each. `ekwo pack check` refuses an empty list, a box
 named twice, a box the form does not carry, and a box the form declares a
 `total`.
 
 **When you meet it**, ask whether the second place is a sum. If it is — the
 turnover line above a rate breakdown, the box that adds the four boxes printed
-under it — declare a `total` naming what the postings wrote. If it is not,
-name both boxes on the posting. What is never right is two base postings: two
+under it — declare a `total` naming what the items wrote. If it is not,
+name both boxes on the item. What is never right is two base items: two
 definitions of one figure, kept in step by whoever reads the pack next, and
 `pack check` refuses them before that can start.
 
@@ -748,7 +748,7 @@ definitions of one figure, kept in step by whoever reads the pack next, and
 A tax says the same fact three times over. `treatment` is Ekwo's own word for
 what the operation is. `vat_category` is BT-118 and BT-151 of EN 16931, from
 the UNCL5305 subset the standard publishes. `exemption_code` is BT-121, from
-the VATEX list. Neither of the last two is read by the ledger or by the
+the VATEX list. Neither of the last two is read by the accounts or by the
 declaration — they are read by whoever renders the invoice — so until
 `ekwo pack check` learned the correspondence, a pack could declare an export
 taxed at the standard rate and every test in this repository would pass.
@@ -790,7 +790,7 @@ does not reach:
   name is still held to its treatment, its reason and its rate.
 
 Should such a country publish reason codes of its own, the pack's register
-declares that list on one `standard` entry with `"reason_codes": true`, and
+declares that list on one `standard` item with `"reason_codes": true`, and
 the column takes its codes.
 
 Which side of that line a pack is on is never written in code: it is the row of
@@ -824,12 +824,12 @@ A few decisions behind the table are worth knowing before filling a column in:
 
 ## What an exemption depends on
 
-A tax code is the answer. Sometimes the *question* is not in the books either,
+A tax code is the answer. Sometimes the *question* is not in the company data either,
 and `conditions` is where a pack says which question it was.
 
 A sale for resale is untaxed because the buyer handed over a certificate; a
 seller collects in a territory only once its sales there cross a threshold.
-Neither is a fact the ledger holds.
+Neither is a fact the accounts hold.
 
 ```json
 { "code": "US-CA-S-RESALE", "rate": 0, "scope": "sale", "treatment": "exempt",
@@ -845,7 +845,7 @@ Five words, and the vocabulary is closed:
 | `buyer_status` | a quality of the buyer the statute names — a government, a body the law exempts as such |
 | `transport_evidence` | proof that what was sold went where the exemption requires it to have gone |
 | `seller_threshold` | a running total the seller crossed, or has not: economic nexus, a distance-selling limit, a small-business franchise |
-| `supply_nature` | what is supplied, classified more finely than any ledger holds it |
+| `supply_nature` | what is supplied, classified more finely than any chart of accounts holds it |
 
 **It says what the question is and never how to answer it.** There is no value
 beside a word here: no threshold amount, no certificate number, no date, no
@@ -858,14 +858,14 @@ which is where a reviewer reads them.
 
 **Nothing in the core reads it**, exactly like `treatment`: it documents the
 tax so that an application can put the question to a human being instead of
-pretending to answer it, and what the tax *does* is said by its postings. It
+pretending to answer it, and what the tax *does* is said by its `postings`. It
 compiles to `tax_templates.conditions` and stops there, the way `source_key`
 does — this is the pack's transcription of a country's rule, not a property of
 the tax a company went on to edit, and `taxes` carries `country` and `code`,
 which is the join.
 
 **What it does not record is the evidence itself** — a certificate held on a
-contact, a running total per territory. A pack states the code a bookkeeper
+contact, a running total per territory. A pack states the code an accountant
 reaches for once the answer is known, and says what the question was.
 
 ## Which declaration a box belongs to
@@ -873,22 +873,22 @@ reaches for once the answer is known, and says what the question was.
 A box number is unique inside one form and nowhere else. Belgium and France
 each file one periodic return, so `59` has never been ambiguous; a Canadian
 company files the federal GST/HST return and the Québec one at the same time,
-and line `101` of one is not line `101` of the other. Every posting therefore
+and line `101` of one is not line `101` of the other. Every item of `postings` therefore
 carries a `report_code`, which the compiler fills from the `code` of
-`tax_report.json` — `BE-VAT-PERIODIC`, `FR-CA3` — and which a posting may
+`tax_report.json` — `BE-VAT-PERIODIC`, `FR-CA3` — and which an item may
 override with `"report": "…"` when a country files more than one.
 
-A tax whose postings name no box at all is on no form of the pack: the return
+A tax whose `postings` name no box at all is on no form of the pack: the return
 does not print it and `settle_filing()` does not clear it. That is the place
 for a tax declared on a return the pack does not carry — a self-assessed tax on
 a service bought from abroad, a withholding — and it stays on the liability
-its `tax` posting names until an entry, or the return that declares it,
+its `tax` item names until a transaction, or the return that declares it,
 clears it. Say which in the pack's README.
 
 ## The boxes of a declaration, and how a total is computed
 
 `tax_report.json` is one form — `BE-VAT-PERIODIC`, `FR-CA3` — and its boxes.
-A `base` or a `tax` box is summed from what the postings wrote on the ledger;
+A `base` or a `tax` box is summed from what the `postings` wrote on the accounts;
 a `total` is computed from the others:
 
 ```json
@@ -951,10 +951,10 @@ coarser units says so, with the text that sets it —
 
 `unit` is a power of ten (1, 10, 1000); `ekwo pack check` and the database both
 refuse anything else, because a unit of 0.05 is a coin and belongs to
-`defaults.cash_rounding_unit`. The ledger keeps its cents and `vat_return()`
+`defaults.cash_rounding_unit`. The accounts keep their cents and `vat_return()`
 answers the exact figures; `prepare_filing()` freezes each box at the unit, from
 its own exact figure, and `filing_drift()` compares at the same unit, so the
-cents a ledger holds are not a drift. A frozen box has no scale of its own: a
+cents the accounts hold are not a drift. A frozen box has no scale of its own: a
 return in a currency without decimals freezes `1000000`, not `1000000.00`.
 
 `defaults.vat_period`, the former place for this, is still read; a pack that
@@ -988,11 +988,11 @@ does. `ekwo pack check` refuses:
 - boxes that are worked out from each other, by name — the cycle a dependency
   order cannot survive. Declaring a total **after** the total it names is not a
   cycle and is not refused: a form prints what it likes in the order it likes;
-- a formula or a rate on a box that is summed from the ledger;
+- a formula or a rate on a box that is summed from the accounts;
 - a rate beside a `plus` or a `minus` list, which would be two ways of
   computing one figure, and a `rate` without a `rate_of` or the reverse;
 - the same box declared twice with the same kind;
-- a tax that posts to a box the form does not declare;
+- a tax that records to a box the form does not declare;
 - a form that names no cadence, and a proposed cadence the form is not filed on.
 
 The form is reference data and is never copied into a company: a chart of
@@ -1003,7 +1003,7 @@ code** with its own `valid_from`, like a new VAT rate is a new tax code, and
 ### A total is a list of boxes, or a rate of one box
 
 A total is a list of boxes in every European return, because a European return
-reports a tax the ledger already worked out, document by document. A sales tax
+reports a tax the accounts already worked out, document by document. A sales tax
 return does not: it works the taxable total out for the period and then states
 each tax line as a multiplication in as many words. CDTFA-401-A says *multiply
 line 12 by 0.06*, and the pack says the same thing with two named fields:
@@ -1022,7 +1022,7 @@ format gained.
 
 A box is a list **or** a rate, never both, and only a computed box carries
 either: `ekwo pack check` and a check constraint both refuse the rest. Where
-the second line of a form is a sum of what the postings already wrote, it is a
+the second line of a form is a sum of what the `postings` already wrote, it is a
 `plus` list and not a rate — the rule of "a base is written once" above is
 unchanged.
 
@@ -1124,7 +1124,7 @@ pack never sets it.
 **The engine refuses; it does not choose, and it keeps what it saw.**
 `post_document()` writes the three answers on the document —
 `seller_territory_code`, `buyer_territory_code`, `supply_territory_resolved` —
-where they are frozen with the rest of a posted document. It compares the
+where they are frozen with the rest of a recorded document. It compares the
 conditions of every tax on the document with the three answers above and raises
 `tax_territory_mismatch` where they disagree, naming the tax, the party, the
 territory asked for and the territory found. Where a tax asks about a party the
@@ -1161,8 +1161,8 @@ compile into twenty-three columns of `country_defaults` and into
 `legal_mention_templates`. None of them has a default: a pack that says
 nothing leaves null, and a reader that needs the value says which one is
 missing rather than borrowing another country's law. One null is read, and
-said to be: a pack silent on `posted_edit_policy` keeps a posted document as
-it was posted, which is the stricter answer rather than another country's.
+said to be: a pack silent on `posted_edit_policy` keeps a recorded document as
+it was recorded, which is the stricter answer rather than another country's.
 
 ```json
 "documents": {
@@ -1315,13 +1315,13 @@ itself, and why France declares `delivery_date` and is right to.
 reads the column, and it turns the word plus a document's own dates into one
 date. `post_document()` writes that date onto `documents.tax_point_date` — EN
 16931's BT-7, which a document may also state itself, and a stated fact
-outranks a rule — and onto every ledger line a tax posting writes. Each line
+outranks a rule — and onto every account line an item of a tax's `postings` writes. Each line
 keeps the day it counts for a return in `entry_lines.declared_on` — its tax
-point, or its entry's date where it has none — and `vat_return()` reads the
+point, or its transaction's date where it has none — and `vat_return()` reads the
 period on that column, so a figure lands in the period its tax fell due in
-rather than the period its entry was booked in. A document that says nothing new answers
-exactly as it did: null means the entry's own date. The payment branch of a rule is honoured
-through `cash_basis`, and the recapitulative statement reads the entry date.
+rather than the period its transaction was recorded in. A document that says nothing new answers
+exactly as it did: null means the transaction's own date. The payment branch of a rule is honoured
+through `cash_basis`, and the recapitulative statement reads the transaction date.
 
 **The schemes** are ISO 6523 identifier codes, four digits, and there are two
 because they are not the same identifier: `party_scheme` is how a party is
@@ -1330,12 +1330,12 @@ French SIRET) and `vat_scheme` is the VAT identifier (`9925`, `9957`). Where a
 country has two registration identifiers, declare the one its invoices carry
 and name the other in the legal reference.
 
-**The article behind each rule** is `documents.references`, one entry per
+**The article behind each rule** is `documents.references`, one item per
 rule and not one for the section. A tax and a box of a declaration form are
 rows and carry their own `legal_reference` and `source`; the rules here are
 words — `gapless_per_year`, `30`, `invoice_date` — with nowhere to write
 either, and a word looks exactly the same whether somebody read the decree or
-guessed. Three entries, because they are three articles of two or three
+guessed. Three items, because they are three articles of two or three
 different texts in every country covered so far: `numbering` answers for the
 style and the pattern together, `payment_terms` for `legal_payment_days` alone
 (the interest and the indemnity stay in `late_payment_reference`, which is a
@@ -1347,9 +1347,9 @@ profile, because the section is one rule. All four pairs compile into
 Where the value declared is a derogation rather than the country's
 principle, say so in the reference.
 
-**Whether a posted document goes back to draft** is `posted_edit_policy`, and
+**Whether a recorded document goes back to draft** is `posted_edit_policy`, and
 it is the one document rule that loosens rather than binds. `reversal_only`:
-a posted document is undone by a credit note that names it, `cancel_document()`,
+a recorded document is undone by a credit note that names it, `cancel_document()`,
 and in no other way. `unpost_if_untouched`: it may also go back to draft,
 through `unpost_document()`, while nothing about it has left — never sent nor
 on Peppol, not settled, not credited, no declaration gone over it, its period
@@ -1358,7 +1358,7 @@ drew, which then goes back to the counter. Say nothing and the country reads
 as `reversal_only`. Declare `unpost_if_untouched` only with the article that
 allows it under `references.posted_edit_policy` — `ekwo pack check` refuses it
 without one, on every status — and say in it why the irreversibility your own
-accounting law gives a recorded entry does not reach a document nobody
+accounting law gives a recorded transaction does not reach a document nobody
 received.
 
 **The bank formats** are a known list rather than free text — `camt.052`,
@@ -1440,7 +1440,7 @@ moved:
 | Field | What it says |
 |---|---|
 | `mandatory_from` | One date, or one per category of taxpayer (`who`, a short name the legal reference explains). Where the law phases the obligation by size, every step carries `turnover_above` — the annual turnover or revenue above which a taxpayer is in it, an `amount` and its `currency` — and may carry its own `legal_reference` and `source` |
-| `exemption` | The thresholds below which a taxpayer is exempted, as a dated history, oldest first: `turnover_below` (an amount and its currency), `valid_from` (the first day it holds, as the text dates it), `legal_reference` and `source`, all four required. Each holds until the next one's `valid_from`; when the threshold moves, an entry is added and none is removed, so a past period keeps its answer |
+| `exemption` | The thresholds below which a taxpayer is exempted, as a dated history, oldest first: `turnover_below` (an amount and its currency), `valid_from` (the first day it holds, as the text dates it), `legal_reference` and `source`, all four required. Each holds until the next one's `valid_from`; when the threshold moves, an item is added and none is removed, so a past period keeps its answer |
 | `clearance` | Exclusive of `hash`. `verification` — where the link the invoice carries to the authority's verification comes from: `returned` by the authority with its validation, `computed` by the issuer from the invoice and the authority's answer, or `none` — and, as ISO 8601 durations counted from the validation (`PT72H`, `P15D`), `cancellation_window`, how long the issuer may still cancel a validated invoice, and `rejection_window`, how long the buyer may reject it; each left out where the law grants none, and then the database refuses it. Where `verification` is `computed`, `verification_url` gives the link per environment (`production`, `test`), `{identifier}` for the identifier the authority gave and any other `{name}` for that value of its answer; `printed` names what the invoice prints of its validation beside the QR code, each `field` of the validation (`identifier`, `validated_at`, `reference`, `submitted_at`) under a `label`, a key of the invoice labels of `@ekwo-ai/invoice-pdf`, and a `heading` among them |
 | `announced_from` | The day an obligation is announced to start while no text in force sets it, with `announced_by` and `announced_on`: who announced it, and when. Exclusive of `mandatory_from`; an announced day binds nobody, and `fiscalisationStatus()` counts no sale against it |
 | `format` | The brick that writes the record, by the key of `FISCALISATION_FORMATS` in `@ekwo-ai/core`; one no brick writes is refused by name when a record is asked for, `format_without_brick` |
@@ -1450,8 +1450,8 @@ moved:
 | `submission` | The default `mode` and every mode the law allows: `realtime` (each record as it is made), `batch` (in messages), `none` (kept, handed over on request); the size of a batch, the wait between sendings, the longest a pending record waits; `channel`, who carries the records (a short name); `cadence`, where the law sets periods: per category of taxpayer (`who`) and kind of data (`data`), the `period` one sending covers (`day`, `week`, `ten_days`, `month`, `two_months`, `quarter`, `half_year`, `year`) and when it is `due` — `days_after_period` with `days`, or `month_after_period_from_day` with `day`, from that day to the end of the month after the period |
 | `events` | How often a summary event is kept, and in which modes |
 | `reported` | What a reporting regime reports — a scope, `what`, a short name the legal reference explains — and who reports it, `by`: `supplier`, `customer` or both (the supplier when left out). A sibling of `events`: those are the records a system keeps of its own life, these the operations the authority is told of |
-| `tax_attributes` | What the brick needs on a tax line that its category does not decide alone, by code of a tax of this pack. Under a clearance regime, what the electronic invoice itself needs: the brick of the pack's e-invoicing profile reads them on the rows of `document_tax_summary` — the tax type of the format's own list, for instance, or the sentence of an exemption (`exemption_reason`), which a line of the books may override with its own |
-| `line_attributes` | What the brick needs on every line that the books do not record, where the format's own list has an entry for whatever is not one of its named cases — a classification `Others`. Given on each line of a document the brick writes; left out, nothing is given. A line that is one of the named cases says so in its own `attributes` (`document_lines.attributes`, pre-filled from `products.attributes`), which win. The legal reference says why the entry is the right one and which lines it is wrong for |
+| `tax_attributes` | What the brick needs on a tax line that its category does not decide alone, by code of a tax of this pack. Under a clearance regime, what the electronic invoice itself needs: the brick of the pack's e-invoicing profile reads them on the rows of `document_tax_summary` — the tax type of the format's own list, for instance, or the sentence of an exemption (`exemption_reason`), which a line of the document may override with its own |
+| `line_attributes` | What the brick needs on every line that the company data does not record, where the format's own list has an item for whatever is not one of its named cases — a classification `Others`. Given on each line of a document the brick writes; left out, nothing is given. A line that is one of the named cases says so in its own `attributes` (`document_lines.attributes`, pre-filled from `products.attributes`), which win. The legal reference says why the item is the right one and which lines it is wrong for |
 
 Every sub-object may carry its own `legal_reference` and `source`; the block
 carries both, and `ekwo pack check` refuses it without them. It also refuses
@@ -1476,10 +1476,10 @@ that declares none compiles as before,
 reads when it chains a record. `fiscaliseDocument()` refuses a reporting
 regime by name — `format_without_brick` while no brick writes its format,
 `fiscal_regime_without_chain` once one does — and `fiscalisationStatus()`
-counts posted sales as missing a record only under a chained regime in force,
+counts recorded sales as missing a record only under a chained regime in force,
 from its earliest `mandatory_from`. Under a clearance regime in force it
-counts the posted sales without the authority's validation, from the same
-day: the books do not say a company's turnover, so the status names the
+counts the recorded sales without the authority's validation, from the same
+day: the company data does not say a company's turnover, so the status names the
 threshold of exemption that holds today and leaves to the company whether it
 is bound. The submission and every answer are recorded by
 `einvoicing.record_clearance_submission()` and
@@ -1529,7 +1529,7 @@ The codes are facts of each sale, not pack data: a product carries them in
 `{"hs_code": "<code>"}`, with every other attribute its format asks. A line
 that names a product takes the attributes it does not carry. The database
 refuses a code off the pattern of its classification
-(`classification_code_invalid`); a posted line keeps its codes. A pack that
+(`classification_code_invalid`); a recorded line keeps its codes. A pack that
 declares no classification says nothing in the seed, and the attributes of
 its lines are checked by their shape alone.
 
@@ -1681,11 +1681,11 @@ tax code — and every difference falls into one of three rules:
 |---|---|
 | `addition` | The pack has something the company does not. Copied in. |
 | `closure` | The pack has closed the validity of a tax the company still holds open. Applied — this is how a rate change reaches a company: the old one stops, the new one is an addition. |
-| `review` | Everything else: a label that differs, a rate that differs on the same code, a posting that books somewhere else. **Listed and never applied without `--apply`.** |
+| `review` | Everything else: a label that differs, a rate that differs on the same code, a tax item that records somewhere else. **Listed and never applied without `--apply`.** |
 
 A row the company holds and the pack does not is listed under its own heading
 and is never applied, whatever is asked: nothing is removed from a company's
-books by an upgrade. An account may carry entries and a tax may be on a posted
+data by an upgrade. An account may carry transactions and a tax may be on a recorded
 document, and a pack that retires a code retires it with a `valid_to`.
 
 **The recorded version moves only when nothing is left waiting.** A company
@@ -1758,10 +1758,10 @@ own preference comes before the company's.
 
 ## Golden scenario
 
-A pack that compiles says nothing about whether it adds up. A tax that posts
-to the wrong grid and a grid that expects the wrong postings agree with each
+A pack that compiles says nothing about whether it adds up. A tax that records
+to the wrong grid and a grid that expects the wrong `postings` agree with each
 other: the seed builds, every unit test passes, and the return is wrong.
-`packs/<cc>/golden/` is the second opinion — one year of books somebody wrote
+`packs/<cc>/golden/` is the second opinion — one year of company data somebody wrote
 down, and beside it the declaration, the statements and the trial balance the
 engine makes of them, to the cent, in the pack's own currency.
 
@@ -1864,9 +1864,9 @@ Member States of the European Union on each side the pack offers one; a tax due 
 recoverable tax **where the pack has them**. A country with no cash-basis tax
 is not asked for one.
 
-One assertion is not read from a file: the posted ledger balances. A golden
-regenerated from a broken engine would agree with itself; double entry would
-not.
+One assertion is not read from a file: the recorded accounts balance. A golden
+regenerated from a broken engine would agree with itself; double-entry accounting
+would not.
 
 **A pack with no golden is refused** — by `readPack`, so by `ekwo pack check`
 and by the CI — unless the manifest says why:
@@ -1878,13 +1878,13 @@ and by the CI — unless the manifest says why:
 which `ekwo pack check` and `ekwo pack list` print. `packs/generic/` is the
 one exemption in this repository, and the reason is structural: a framework
 has no chart, no journal, no tax and no currency, so no company can be
-installed on it and there is no year of books to replay. Its lines are proved
+installed on it and there is no year of transactions to replay. Its lines are proved
 where they are reachable — through a chart that names no statement of its own
 and falls back to it — and its analysis through a company whose country pack
 defines none.
 
 **What a golden does not prove.** That the figures are the law. A box expected
-wrongly and a posting written wrongly pass together, which is the whole reason
+wrongly and a tax item written wrongly pass together, which is the whole reason
 the two things under "Certification, and who may say what" exist: a source on
 every tax and every box, and a status that says out loud how much anyone has
 read. It is also
@@ -1944,8 +1944,8 @@ turnover annualised) or `as_is`.
 
 A company declares its regime in `company_tax_regimes`, by whole financial
 years; under it, a document line carrying a tax of a kind in `replaces` is
-refused at posting. `turnover_tax_return()` computes a period,
-`post_turnover_tax()` posts it against `defaults.roles.tax_payable` and
+refused when it is recorded. `turnover_tax_return()` computes a period,
+`post_turnover_tax()` records it against `defaults.roles.tax_payable` and
 prepares the filing of the regime's form, and `upcoming_filings()` lists that
 form in the place of the periodic return. A pack without the file says
 nothing in its seed.
@@ -1972,7 +1972,7 @@ its forms as a list in `tax_report.json`:
 ```
 
 A list carries at most one form whose `role` is `periodic` — the one the
-postings are for, and the one a single-form pack has without saying so — and
+`postings` of the taxes are for, and the one a single-form pack has without saying so — and
 every other form says it is `annual`. A form that restates another names it in
 `reads_postings_of`, and each of its base or tax boxes names the boxes of that
 form it adds up in `from`; a tax box may instead `reads` the payments on
@@ -2042,7 +2042,7 @@ accounting result  →  adjustments  →  losses  →  base  →  rates  →  cr
 
 **One discipline above the others: a figure nobody verified is left out.**
 Every rate, rule, limit, schedule and credit carries a `legal_reference` and a
-`valid_from`, both required by the schema, and a `source` naming the entry of
+`valid_from`, both required by the schema, and a `source` naming the item of
 the [register](#the-register-of-sources) where the text was read. A rule that
 is missing makes an estimate too high by something a reader can see is
 missing; a figure that was guessed makes it wrong in a way nobody can see.
@@ -2069,8 +2069,8 @@ associations — cannot be estimated, and says so: `no_result_statement`.
 
 `expense`, `payable` and, where the chart keeps one apart, `receivable`.
 `ekwo pack check` refuses a code missing from any chart of the pack. The
-provision of a computation is booked on `expense` against `payable`;
-`receivable` is declared and not read yet: the company books its payments in
+provision of a computation is recorded on `expense` against `payable`;
+`receivable` is declared and not read yet: the company records its payments in
 advance itself.
 
 ### What a company declares: `parameters`
@@ -2083,9 +2083,9 @@ advance itself.
 
 A judgement (`boolean`) or an amount (`amount`), stated by the company for
 each financial year in `tax.company_parameters`. **Nothing infers one.** A
-turnover ceiling is a declared amount even though a ledger holds a turnover:
+turnover ceiling is a declared amount even though the accounts hold a turnover:
 the law's figure is restated to twelve months and summed over a group, and the
-books know neither. The `name` is the question, written to be answered with a
+accounts know neither. The `name` is the question, written to be answered with a
 yes, a no or a figure.
 
 Where a threshold is indexed every year and the indexed figure could not be
@@ -2105,7 +2105,7 @@ assessment year 2027.
 
 | Field | Is |
 |---|---|
-| `direction` | `add_back` for an expense the tax refuses, `deduction` for an income it leaves out or an allowance the books do not carry |
+| `direction` | `add_back` for an expense the tax refuses, `deduction` for an income it leaves out or an allowance the accounts do not carry |
 | `percent` | the share of the base the rule moves — **the refused share**, so a restaurant bill deductible for 69 % is a rule of 31 |
 | `formula` | instead of `percent`, where the share depends on what the company states about the expense — see below |
 | `accounts` | the accounts of the pack's chart whose **whole** balance falls under the rule, in the vocabulary of a statement rule: `account_code`, `code_prefix`, `code_range` |
@@ -2195,16 +2195,16 @@ cited yet.
 
 ### A date, and the day it is read on
 
-Every dated entry has `valid_from`, an optional `valid_to`, and `valid_on`:
+Every dated item has `valid_from`, an optional `valid_to`, and `valid_on`:
 
 | `valid_on` | Reads the validity on | For a law that applies to |
 |---|---|---|
 | `period_start` (the default) | the first day of the financial year | *financial years opened from* a date |
 | `period_end` | the last day | *financial years closed from* a date — which is also how an **assessment year** is said: Belgian assessment year 2026 is `"valid_from": "2025-12-31", "valid_on": "period_end"` |
 
-**A figure that changes is a new entry, never an edit**: the same `code`, a
+**A figure that changes is a new item, never an edit**: the same `code`, a
 new `valid_from`, and a `valid_to` the day before on the old one. The Belgian
-ceiling on the cars of 2023 to 2025 is four entries of one code — 75 %, 50 %,
+ceiling on the cars of 2023 to 2025 is four items of one code — 75 %, 50 %,
 25 %, then nothing deductible. `ekwo pack check` refuses two versions in force
 on one day, and versions of one code that disagree about `valid_on`.
 
@@ -2214,7 +2214,7 @@ A section comes with **at least three fictitious companies whose tax was
 worked out by hand**, and `ekwo pack check` refuses a section without them:
 a company with a profit, a year that ends in a loss, and, where a rate has
 conditions, a company kept out of that rate. Each carries the
-journal entries of its year, what it declares, the losses it carried in, and
+transactions of its year, what it declares, the losses it carried in, and
 under `expected` every line `tax.estimate()` has to return — with the
 arithmetic written out, one step per sentence, in `computation`:
 
@@ -2243,7 +2243,7 @@ language the manifest declares has to cover every key.
 Two passes, and the first one is where nearly everything is caught. Every file
 is validated against [`packs/schema/pack.1.json`](../packs/schema/pack.1.json)
 — its shape, its required fields, its closed vocabularies — and then against
-the rest of the pack, which is what a schema cannot do: a tax may not post to a
+the rest of the pack, which is what a schema cannot do: a tax may not record to a
 box the form does not carry, and only the pack knows which boxes the form
 carries. The second pass compiles and compares the committed seeds. A pack that
 fails the first never reaches the second.
@@ -2267,7 +2267,7 @@ number.
 **The roles and the journals.** A code in `defaults.roles` that is missing
 from **any one** chart of the pack, named with the chart it is missing from —
 a second chart is exactly where this goes wrong. A `defaults.journal_roles`
-entry naming something that is not a journal. A role name the schema does not
+item naming something that is not a journal. A role name the schema does not
 know, which is how a typo in a role is caught rather than silently ignored.
 
 **The closing style.** A pack that declares `closing_style` and does not name
@@ -2275,18 +2275,18 @@ the accounts that style needs: `retained_earnings` for the first,
 `current_year_result_profit` and `current_year_result_loss` for the other two.
 No `journal_roles.opening`. An opening journal that exists but is not of
 journal type `opening` — which is the mistake worth naming, because the code
-resolves and the year-end entries would land on a journal that carries ordinary
+resolves and the year-end transactions would land on a journal that carries ordinary
 traffic.
 
-**The taxes and their postings.** Two taxes with the same code. A `group`,
+**The taxes and their `postings`.** Two taxes with the same code. A `group`,
 which is reserved for the country that stacks two taxes on one line and which
-the core does not carry yet. More than one `base` posting on a document kind. A
-`tax` posting with no account, or a `base` or `tax_on_base` posting carrying
+the core does not carry yet. More than one `base` item on a document kind. A
+`tax` item with no account, or a `base` or `tax_on_base` item carrying
 one — those two land on the account of the line they tax, so an account on them
 is a misunderstanding worth stopping. An account, or a
-`cash_basis_transition_account`, that is missing from a chart. A posting whose
-`box` the declaration form does not carry — each of them, where the posting
-names several — an empty list of them, the same box named twice by one posting,
+`cash_basis_transition_account`, that is missing from a chart. An item whose
+`box` the declaration form does not carry — each of them, where the item
+names several — an empty list of them, the same box named twice by one item,
 or a box the form declares a `total`.
 
 `treatment`, `vat_category` and `exemption_code` are held to the table under
@@ -2300,20 +2300,20 @@ tax, what it says, what the source says instead and which source.
 
 Where the common system of VAT does not reach the country (per `territories`,
 on the day of `released_at`), the rules of that section apply: a VATEX code is
-refused, another list's code only with a register entry declaring
+refused, another list's code only with a register item declaring
 `"reason_codes": true`, an exempt line needs a code or a `legal_reference`, the
 `intracom_*` treatments are refused, and a category is asked for only with an
 e-invoicing profile. Every message names the country, the day and the scope the
 table gives it.
 
 A cash-basis tax has four of its own: it names its transition account, takes
-exactly one `tax` posting per document kind and no `tax_on_base`, and its `tax`
-posting names a box.
+exactly one `tax` item per document kind and no `tax_on_base`, and its `tax`
+item names a box.
 
 A pack whose taxes include a rated purchase VAT, GST or sales tax and that
 says nothing about a service bought from a supplier abroad — see
 [A service bought from a supplier abroad](#a-service-bought-from-a-supplier-abroad).
-A `not_taxed` entry naming a treatment one of the pack's own purchase taxes
+A `not_taxed` item naming a treatment one of the pack's own purchase taxes
 carries, the same treatment twice, an `intracom_*` treatment outside the
 common system of the European Union's VAT, or a `source` the register does not
 hold.
@@ -2324,7 +2324,7 @@ country; and where a tax names `seller_in`, the regime it is held to is that
 territory's.
 
 **The declaration form.** The same box declared twice with the same kind. A
-formula on a `base` or a `tax` box, which is summed from the ledger. A
+formula on a `base` or a `tax` box, which is summed from the accounts. A
 reference to a box the form does not carry, or to a kind it does not carry. A
 bare reference that matches two kinds — `08` where the form carries `08:base`
 and `08:tax` — which is refused with both spellings offered rather than
@@ -2334,7 +2334,7 @@ computed at the same `sequence` or later.
 **The statements.** Two statements with the same code; two lines of one
 statement with the same code. A `parent` that is not a line of the same
 statement. A formula naming a line of another statement, or its own line. A
-line that is both summed from the ledger and computed from other lines, in
+line that is both summed from the accounts and computed from other lines, in
 either direction. Totals that depend only on each other. One account reaching
 two lines other than as a debit side and a credit side. **An account of a chart
 that reaches no line of any statement covering that chart** — the check that
@@ -2346,17 +2346,17 @@ part a qualified name such as `bas:m9`, with no empty or padded part and no
 dimension twice; and two lines of one statement may not carry the same key,
 which is how a key missing a member shows up.
 
-**The register of sources.** Two entries claiming one key — a reference would
-resolve to whichever came first. An entry that is not shaped like one: a field
+**The register of sources.** Two items claiming one key — a reference would
+resolve to whichever came first. An item that is not shaped like one: a field
 missing, a field nobody defined, a `kind` outside the six, a `url` that is not
 absolute and `https`. A `source` naming a key the pack's register does not
 carry, which reads as a text and is a typo; the message lists the keys there
-are. A pack whose status is not `community` and whose register holds no entry
+are. A pack whose status is not `community` and whose register holds no item
 anybody can open, because `maintained`, `proven` and `reviewed` are all claims
 that somebody keeps this current and none is sayable about a list of titles.
 And on a `reviewed` pack, a tax or a box that names no source at all — that one
 is a warning on a `maintained` or a `proven` pack and nothing on a `community`
-one. A `proven` pack whose `certification.evidence` holds no entry with the
+one. A `proven` pack whose `certification.evidence` holds no item with the
 result `reproduced`, because the status is the claim that one did. A bare
 string in the register is a warning everywhere: it is the shape the field had
 before, and a pack written against it still compiles.
@@ -2374,12 +2374,12 @@ carry. And on a `reviewed` pack, a document rule that is declared and cites no
 article at all — that one is a warning on every other status, including
 `community`, because a country whose law nobody has written down yet is the
 normal state of a new pack and not a defect of it. The exception is
-`posted_edit_policy: unpost_if_untouched`, which lets a posted entry be taken
+`posted_edit_policy: unpost_if_untouched`, which lets a recorded document be taken
 away: it is refused without an article on every status.
 
-**The zones and the bank scheme.** A `zones` entry with no `docs/zones/<zone>.md` beside the pack, and a `bank.account_scheme` that `BANK_ACCOUNT_SCHEMES` does not carry (the schema refuses it before anything else runs).
+**The zones and the bank scheme.** A `zones` item with no `docs/zones/<zone>.md` beside the pack, and a `bank.account_scheme` that `BANK_ACCOUNT_SCHEMES` does not carry (the schema refuses it before anything else runs).
 
-**The bank formats, as a warning.** A `bank.statement_formats` entry that no
+**The bank formats, as a warning.** A `bank.statement_formats` item that no
 brick of `packages/formats/` reads is printed once per format, and never
 fails the check: the name is true — the banks of the country send that file —
 and the debt is kept by name in `tests/bank_statement_formats.test.ts`, which
@@ -2420,7 +2420,7 @@ twice. A section that leaves out `revenue`, `net_result`, `equity` or
 `total_assets`. An aggregate with no `legal_reference`, or a `source` the
 register does not hold. A rule of a kind a statement line does not know, or
 missing what its kind takes — both bounds of a `code_range`, the code of the
-others, the type of an `account_type` rule. A `charts` entry that is not a
+others, the type of an `account_type` rule. A `charts` item that is not a
 chart of the pack. And a rule that reaches **no account** of a chart it is
 written for: a range typed one digit off reads as a definition and catches
 nothing, and an aggregate that is silently nil is the figure this check is
@@ -2461,7 +2461,7 @@ rate, limit, schedule and credit, so a pack that cannot cite a figure cannot
 write it.
 
 **What it does not refuse, and why that is worth knowing.** An extra column in
-the CSV is ignored rather than rejected. A posting whose `report` names a form
+the CSV is ignored rather than rejected. A tax item whose `report` names a form
 other than the one in `tax_report.json` is not cross-checked, because the pack
 carries one form; the day a country files two, it will be. A pack with no
 `certification` block compiles as `community` without a word, and `by` and `on`
@@ -2476,7 +2476,7 @@ reviewer holding *Arrêté royal n° 20 du 20 juillet 1970, tableau A* has a
 citation and a search engine. The other half is **where that text can be
 read**, and it belongs in one place rather than on four hundred rules.
 
-`certification.sources` is that place. Each entry is a text:
+`certification.sources` is that place. Each item is a text:
 
 ```json
 "certification": {
@@ -2515,7 +2515,7 @@ reviewer opening a pack has the reading list before they have read a rule.
 | `url` | absolute and `https`, and a permanent identifier wherever the publisher has one — an ELI on Legilux and on the Moniteur belge, a `LEGITEXT` on Légifrance, a short alias such as `/akt/kms` on Riigi Teataja |
 | `consulted_on` | the day somebody opened it and read what it served |
 | `kind` | one of six, below |
-| `reason_codes` | optional, and true on the one entry that publishes this country's exemption reason codes — see [What a tax says on the invoice](#what-a-tax-says-on-the-invoice-treatment-category-and-reason). At most one per register, and it has to be a `standard` |
+| `reason_codes` | optional, and true on the one item that publishes this country's exemption reason codes — see [What a tax says on the invoice](#what-a-tax-says-on-the-invoice-treatment-category-and-reason). At most one per register, and it has to be a `standard` |
 
 Six kinds, and the vocabulary is closed so that a register reads the same
 across countries:
@@ -2591,13 +2591,13 @@ rather than a refusal: a missing link is a link that is missing, never a figure
 that is wrong.
 
 **The manifest says out loud how much anyone has read it**, and `ekwo init`
-prints it in as many words before anyone books anything:
+prints it in as many words before anyone records anything:
 
 | Status | What it means | Who sets it |
 |---|---|---|
 | `community` | contributed, not read by an accountant | whoever proposes the pack. It is the honest answer for a new pack, and the right one until the row below happens |
 | `maintained` | maintained by Ekwo, not yet reviewed by an accountant | the maintainers, on a pack they keep up to date themselves. Nobody else, because nobody else is committing to keep it current |
-| `proven` | proven on the real books of a company, not yet reviewed by an accountant: the pack reproduced, to the unit they were filed in, the statements that company filed and the administration accepted, after its books were imported | the maintainers, with the evidence in the same pull request — see [What a proven pack shows](#what-a-proven-pack-shows) |
+| `proven` | proven on the real accounts of a company, not yet reviewed by an accountant: the pack reproduced, to the unit they were filed in, the statements that company filed and the administration accepted, after its accounts were imported | the maintainers, with the evidence in the same pull request — see [What a proven pack shows](#what-a-proven-pack-shows) |
 | `reviewed` | read by a named professional, on the date shown | the reviewer, in the pull request that carries their name. Not the pack's author, unless the author is the professional and says so under their own name |
 
 A pack with no `certification` block at all compiles as `community`, which is
@@ -2614,7 +2614,7 @@ and gives the status of each.
 
 ### What a proven pack shows
 
-`proven` sits between `maintained` and `reviewed`. A real company's books are
+`proven` sits between `maintained` and `reviewed`. A real company's accounts are
 imported into a throwaway installation, the pack computes that company's
 statements, and they are compared line by line with what the company filed and
 the administration accepted. Where they match to the unit they were filed in,
@@ -2623,7 +2623,7 @@ its legal form, its regime, the accounts it moves. It says nothing about a
 regime it does not use, which is why the status is never called *certified* or
 *validated*, and why an operator is still warned on `ekwo init`.
 
-What was compared is written in the manifest, one entry per scope, the scopes
+What was compared is written in the manifest, one item per scope, the scopes
 that could not be tested included:
 
 ```json
@@ -2660,11 +2660,11 @@ that could not be tested included:
 | `summary` | one plain sentence |
 | `checked_on` | the day of the comparison |
 
-An entry names the kind of filing and **never the company**: no name, no
+An item names the kind of filing and **never the company**: no name, no
 registration number, no amount that would identify it. `ekwo pack check`
-refuses a `proven` pack, or chart, whose evidence holds no `reproduced` entry;
+refuses a `proven` pack, or chart, whose evidence holds no `reproduced` item;
 a pack whose proof only partly landed stays `maintained`, and may carry its
-evidence there. `ekwo pack describe <cc>` prints the entries, and the seed
+evidence there. `ekwo pack describe <cc>` prints the items, and the seed
 header lists them. The seed also writes them to `country_packs.evidence`, so an
 installation answers for itself — the MCP tool `describe_pack` returns them —
 without a clone of this repository. A pack that carries evidence needs
@@ -2758,7 +2758,7 @@ source most packs need:
    in the register anyway: whoever installs your pack will need it, and the
    register is the one place in the pack where they will look.
 
-Each of them becomes an entry of `certification.sources` with a key you will
+Each of them becomes an item of `certification.sources` with a key you will
 use for the rest of the day — see
 [The register of sources](#the-register-of-sources). Write them as you open
 them, with `consulted_on` set to today, and never write a URL you have not
@@ -2812,7 +2812,7 @@ type is what the generic financial statements read, what the ageing reads and
 what a close reads.
 
 **Make the headings headings.** An account with children is a heading: nothing
-is posted to it, and the statement check below expects it to reach no line.
+is recorded to it, and the statement check below expects it to reach no line.
 
 If your country has a second chart — associations, sole traders, a small-company
 variant — add it as a second file and declare both under `charts`, exactly one
@@ -2825,10 +2825,10 @@ that present them.
 In `defaults.roles`, name the accounts the installer wires: `receivable` and
 `payable` are required, and `suspense`, `rounding`, `retained_earnings`,
 `sales`, `purchase`, `bank` and `cash` are what a company needs to be installed
-and to book. If the pack declares a periodic return, name `tax_payable` — the
+and to record transactions. If the pack declares a periodic return, name `tax_payable` — the
 account `settle_filing()` carries a declared period's net to — and
 `tax_receivable` for a period that ends in a credit, both reconcilable and
-apart from the accounts the taxes post to. Leave `tax_receivable` out only
+apart from the accounts the taxes record to. Leave `tax_receivable` out only
 where the chart keeps one control account for both signs; say which article
 makes the credit a claim on the administration in the pack's README, since a
 role carries no citation of its own. Add `fx_gain` and `fx_loss` if any company of your country will
@@ -2868,7 +2868,7 @@ not on somebody's year end.
 
 **A final close, where the law requires one.** A close is reversible:
 `reopen_fiscal_year()` undoes it to correct the year. Some laws require the
-books of a year to be frozen for good by a set day; say so under
+accounts of a year to be frozen for good by a set day; say so under
 `defaults.final_close`, with the article:
 
 ```json
@@ -2897,10 +2897,10 @@ that collects the tax the periodic return declares — the payee of the debt
 }
 ```
 
-Both are required. The source is an entry of the register **published by that
+Both are required. The source is an item of the register **published by that
 administration** — its portal, a form, its guidance — where the name can be
 read; a ministry, a law firm or a summary elsewhere is not one. A pack whose
-register holds no such entry leaves `tax_payee` out rather than writing a name
+register holds no such item leaves `tax_payee` out rather than writing a name
 from memory. It compiles into `country_defaults.tax_payee_name`, and
 `tax_payee()` creates the company's contact for the administration under it,
 on the accounts settling uses. The pack needs `schema_min` of
@@ -2908,7 +2908,7 @@ on the accounts settling uses. The pack needs `schema_min` of
 
 **The same administration in another language of the pack.** In a country of
 several languages the administration publishes its name in each — SPF Finances,
-FOD Financiën, FOD Finanzen, FPS Finance — and a company keeping its books in
+FOD Financiën, FOD Finanzen, FPS Finance — and a company keeping its accounts in
 one of them pays the administration under that name. A language file carries
 it beside `pack_name`, in the shape of `defaults.tax_payee`:
 
@@ -2920,7 +2920,7 @@ it beside `pack_name`, in the shape of `defaults.tax_payee`:
 }
 ```
 
-The source is an entry of the same register, **published by the
+The source is an item of the same register, **published by the
 administration in that language** — usually the page of its portal in that
 language; a page of another publisher that names the administration in that
 language is not one. `tax_payee` is optional in every language file, declared
@@ -2933,15 +2933,15 @@ language (`companies.language`), else under the pack's own, and recognises an
 existing contact under any of them. A pack that translates the name needs
 `schema_min` of `20261023160200` or later.
 
-### 4. The taxes, and where each one posts
+### 4. The taxes, and where each one lands
 
-`taxes.json`. One entry per code, and a code is a rate at a date: a new rate is
+`taxes.json`. One item per code, and a code is a rate at a date: a new rate is
 a new code plus a `valid_to` on the old one, never an edit, which is how the
 return of a past period keeps giving the same answer.
 
 Each tax carries a `legal_reference`, and it is required — the article, not the
 word "TODO" — and a `source` naming which text of step 0 that article is in. Its `postings` say where the money goes, per kind of document, out
-of the three posting types described above. Start with the plain cases in both
+of the three item types described above. Start with the plain cases in both
 directions, then the ones that are actually specific to your country: a partly
 deductible tax, a reverse charge, a tax due on collection.
 
@@ -2956,7 +2956,7 @@ there, `exemption_code` stays null on every tax, the article goes in
 `legal_reference`, the `intracom_*` treatments do not exist, and `vat_category`
 is asked for only if you declare an e-invoicing profile.
 
-Where a code is the answer to a question the books do not hold — a certificate
+Where a code is the answer to a question the company data does not hold — a certificate
 the buyer signed, a threshold the seller crossed — say which question in
 `conditions`, from the five words under
 [What an exemption depends on](#what-an-exemption-depends-on). It is a word and
@@ -2966,31 +2966,31 @@ article is already in `legal_reference`.
 ### 5. The declaration form
 
 `tax_report.json` is one form and its boxes. A `base` or a `tax` box is summed
-from what the postings wrote on the ledger; a `total` is a list to add, a list
+from what the `postings` wrote on the accounts; a `total` is a list to add, a list
 to subtract and a floor at zero — or, where the form states a line as a
 multiplication, a `rate` and the `rate_of` box it applies to. There is no
 expression language, in any country. The totals are worked out in the order
 they depend on each other, so declare the boxes in whatever order reads best
 and give a box a `print_sequence` where the administration prints it somewhere
 else. Every box carries its own `legal_reference` and, like a tax, the `source`
-of the text it is in — usually the form itself, which is the entry of step 0
+of the text it is in — usually the form itself, which is the item of step 0
 the boxes actually came from.
 
-Then go back to `taxes.json` and put a `box` on each posting. The two files are
+Then go back to `taxes.json` and put a `box` on each item of `postings`. The two files are
 checked against each other, which is the first place a country pack usually
 turns out to be wrong.
 
-Each tax takes **one `base` posting per kind of document**. Where your form
+Each tax takes **one `base` item per kind of document**. Where your form
 prints the same taxable amount somewhere else — a turnover line above a rate
 breakdown, a memo box inside a box — that second place is a `total` naming the
-first where it is a sum, and one more box on the posting's own `box` list where
-it is not. Never a second posting: see "A base is written once, and printed as
+first where it is a sum, and one more box on the item's own `box` list where
+it is not. Never a second item: see "A base is written once, and printed as
 often as the form likes".
 
 ### 6. The financial statements
 
-`statements.json`, one entry per scheme your country prescribes, with the
-`rules` that sum each line from the ledger. If your country prescribes none —
+`statements.json`, one item per scheme your country prescribes, with the
+`rules` that sum each line from the accounts. If your country prescribes none —
 or you are not ready to map them — leave the file out and let your chart fall
 back to `packs/generic/`, the country-less pack whose rules are all
 `account_type`. That is what the eighteen account types buy, and it gives a
@@ -3029,7 +3029,7 @@ error names it.
 ### 8. The other languages
 
 One file per language, `i18n/<lang>.json`, and that file is the only place a
-translation lives. Add the languages your country's books are actually kept in
+translation lives. Add the languages your country's accounts are actually kept in
 to `manifest.languages` **once they are complete**: a declared language has to
 cover the accounts of every chart, the journals, the taxes, the boxes, the
 statement lines, the legal mentions and the asset categories, and `pack.json`
@@ -3037,7 +3037,7 @@ declaring one it does not cover is a pack that does not build. A file that is
 not declared may be partial, which is how a language is contributed one section
 at a time.
 
-### 9. A year of books, and the figures it produces
+### 9. A year of transactions, and the figures it produces
 
 This is the step. Everything above can be internally consistent and wrong.
 
@@ -3063,9 +3063,9 @@ positive rate, a credit note, a matched payment and an unmatched one, and an
 intra-Union reverse charge, a tax due on collection or a partly recoverable tax
 **only where your pack has one**.
 
-One assertion is not read from a file: the posted ledger balances. A golden
-regenerated from a broken engine would agree with itself; double entry would
-not.
+One assertion is not read from a file: the recorded accounts balance. A golden
+regenerated from a broken engine would agree with itself; double-entry accounting
+would not.
 
 If your country's filing taxonomy names facts your statements carry, or its
 form owes an arithmetic to a text, write them into `golden/expectations.json`
@@ -3172,7 +3172,7 @@ node scripts/check-no-country-literals-in-tests.mjs
 It runs in CI and fails on three things: a country code inside an `expect(…)`
 next to the word `country`, a list of two or more country codes or pack slugs
 anywhere, and a pack named by hand where `listPacks()` would have found it.
-Setting up may still name a country — a scenario books invoices somewhere, and
+Setting up may still name a country — a scenario records invoices somewhere, and
 saying where is how it stays readable. Expecting one may not. Where a literal
 is genuinely right, one comment says so and why:
 
@@ -3182,7 +3182,7 @@ is genuinely right, one comment says so and why:
 
 ## What is not in a pack
 
-The engine: posting, matching, the returns, the installer. Also deliberately
+The engine: recording, matching, the returns, the installer. Also deliberately
 out — the rates of American sales tax (thousands of jurisdictions, monthly
 changes; the form belongs here, a maintained rate feed does not), the XML of
 the filing formats (format libraries in `packages/formats/`), analytics,

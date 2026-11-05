@@ -14,7 +14,7 @@
         "result": "reproduced",
         "fiscal_year": 2025,
         "filing": "NBB abridged annual accounts",
-        "summary": "On the books of a Belgian SA, imported from another system, every line of the income statement it filed with the National Bank of Belgium matches to the euro.",
+        "summary": "On the accounts of a Belgian SA, imported from another system, every line of the income statement it filed with the National Bank of Belgium matches to the euro.",
         "checked_on": "2026-10-10"
       },
       {
@@ -30,7 +30,7 @@
         "result": "partly_reproduced",
         "fiscal_year": 2025,
         "filing": "NBB abridged annual accounts",
-        "summary": "The profit to appropriate matches; the loss brought forward and the result carried forward do not, because the year-end close books the result of the year alone and the statement does not read the balance brought forward.",
+        "summary": "The profit to appropriate matches; the loss brought forward and the result carried forward do not, because the year-end close records the result of the year alone and the statement does not read the balance brought forward.",
         "checked_on": "2026-10-10"
       },
       {
@@ -38,7 +38,7 @@
         "result": "not_tested",
         "fiscal_year": 2025,
         "filing": "Belgian periodic VAT return (Intervat)",
-        "summary": "Not tested: the imported books carry no VAT code on their lines, and Ekwo OS builds a VAT return only from tax-coded documents.",
+        "summary": "Not tested: the imported accounts carry no VAT code on their lines, and Ekwo OS builds a VAT return only from tax-coded documents.",
         "checked_on": "2026-10-10"
       }
     ],
