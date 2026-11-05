@@ -574,7 +574,7 @@ describe('the certification scale', () => {
 
   it('says what a proven pack is, and still warns the operator about it', () => {
     const said = describeCertification({ status: 'proven' });
-    expect(said).toBe('proven on the real books of a company — not yet reviewed by an accountant');
+    expect(said).toBe('proven on the real accounts of a company — not yet reviewed by an accountant');
     expect(said).not.toMatch(/certified|validated/);
     // One company's filing covers the cases that company uses, not the operator's.
     expect(needsWarning('proven')).toBe(true);

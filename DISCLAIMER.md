@@ -17,7 +17,7 @@ its quote.*
 Ekwo OS gives a business a place to hold its accounting and tax data — a
 PostgreSQL schema it installs on a database it controls — together with:
 
-- **schemas** for ledgers, documents, taxes, declarations and financial
+- **schemas** for accounts, documents, taxes, declarations and financial
   statements;
 - **country packs**: a reading of a country's charts of accounts, taxes,
   declaration boxes and statements, written as files with their sources;
@@ -35,7 +35,7 @@ Ekwo and its contributors do not provide, through the software, the
 documentation, the country pages or any exchange on an issue, a forum or a
 chat:
 
-- accounting, bookkeeping or statutory audit services;
+- accounting, account-keeping or statutory audit services;
 - tax advice, tax preparation or tax representation;
 - financial, investment, legal or regulatory advice;
 - any certification, attestation or opinion on anyone's accounts or returns.
@@ -45,23 +45,23 @@ particular situation. No professional relationship, engagement or duty of
 care arises from using the software, reading its documentation or
 contributing to it.
 
-## 3. Your books, your filings, your deadlines
+## 3. Your accounts, your filings, your deadlines
 
 You — the business, or the professional you engage — remain solely
 responsible for:
 
-- the accuracy and completeness of your books and of the entries they hold;
+- the accuracy and completeness of your accounts and of the transactions they hold;
 - every return, declaration, filing, payment and deposit, its content and its
   date, in every country where you have an obligation;
 - the choice of chart of accounts, tax treatments, rates, regimes and
   elections that apply to you;
 - checking what the software computes before you rely on it.
 
-Ekwo does not keep your books, does not file anything with any authority on
+Ekwo does not keep your accounts for you, does not file anything with any authority on
 its own initiative, and does not monitor your deadlines on your behalf. Ekwo
 transmits no return to any tax administration. A
 figure the software computes — a VAT box, a balance sheet line, a tax
-estimate, a due date — is only as right as the entries behind it and the
+estimate, a due date — is only as right as the transactions behind it and the
 rules it was given. A deadline the software shows is an aid, not a notice; it
 does not replace the calendar of the administration concerned.
 
@@ -78,7 +78,7 @@ not that it is consistent with the law.
   been read by an accounting or tax professional.
 - **maintained**: written by Ekwo, which updates it when it can; no update is
   promised; not reviewed by an accounting or tax professional.
-- **proven**: maintained, and it reproduced, after a real company's books
+- **proven**: maintained, and it reproduced, after a real company's accounts
   were imported, the statements that company filed and the administration
   accepted. It proves the cases that company uses, never every regime of the
   country, and the pack lists what was reproduced and what was not tested.
@@ -100,7 +100,7 @@ declaration.
 An AI agent connected through the MCP server acts with your rights and on
 your instruction. What it reads from a document, proposes or drafts is the
 output of a model you chose, which Ekwo neither supplies nor controls. Check it
-before it is posted or filed.
+before it is recorded or filed.
 
 ## 6. Software you can change
 
@@ -156,7 +156,7 @@ written as data, the tools — and the judgement stays with people who are
 qualified to exercise it and answerable for it. A country pack can be read by
 a named professional, and its status says so: `reviewed` carries their name
 and the date they read it (§4). Those same people are who a business turns to
-for the work itself — setting the books up, taking them over, answering for a
+for the work itself — setting the accounts up, taking them over, answering for a
 filing — and the tools are built so they can read and check everything the
 software produced.
 

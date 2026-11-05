@@ -52,7 +52,7 @@ export function describeCertification(facts: CertificationFacts): string {
         ? 'reviewed by an accountant'
         : `reviewed by ${by}${on === undefined ? '' : ` on ${on}`}`;
     case 'proven':
-      return 'proven on the real books of a company — not yet reviewed by an accountant';
+      return 'proven on the real accounts of a company — not yet reviewed by an accountant';
     case 'maintained':
     case 'ekwo':
       return 'maintained by Ekwo — not yet reviewed by an accountant';

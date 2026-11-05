@@ -522,7 +522,7 @@ function boundaryOf(
     rows.push({
       kind: 'declaration',
       subject: declaration.code,
-      free: `Computed from the ledger, frozen box by box, ${written}, ${settled}. The deposit number and the administration’s own words come back into your own database.`,
+      free: `Computed from your company data, frozen box by box, ${written}, ${settled}. The deposit number and the administration’s own words come back into your own database.`,
       operated: 'Transmission: the credentials, the certificate and a channel somebody keeps running. The return stays yours.',
     });
   }
@@ -541,7 +541,7 @@ function boundaryOf(
       kind: 'bank_statement',
       subject: format.format,
       free: format.read
-        ? `A ${format.format} file the bank hands over is read and matched against the ledger.`
+        ? `A ${format.format} file the bank hands over is read and matched against the accounts.`
         : `Not yet: no brick of packages/formats/ reads ${format.format}.`,
       operated: 'Fetching the statement without being handed it: a PSD2 aggregator contract.',
     });

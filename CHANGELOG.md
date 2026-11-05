@@ -11,10 +11,10 @@ somewhere has already run it.
 
 ### Added
 
-- **The books read back from a terminal.** `ekwo balance` prints the trial
-  balance of a period, `ekwo ledger [<account>]` the general ledger of one
-  account or of all of them, `ekwo journal [<journal>]` the journal book with
-  the totals of each journal, and `ekwo aged [--payable]` what is still open,
+- **The accounts read back from a terminal.** `ekwo balance` prints the trial
+  balance of a period, `ekwo ledger [<account>]` the account detail of one
+  account or of all of them, `ekwo journal [<journal>]` the journals line by line
+  with the totals of each, and `ekwo aged [--payable]` what is still open,
   by days overdue. Each calls the function of `@ekwo-ai/core` the MCP server
   calls for `trial_balance`, `general_ledger`, `journal_book` and
   `aged_balance` — `trialBalance()`, `generalLedger()`, `journalBook()` and
@@ -74,23 +74,23 @@ somewhere has already run it.
   decision 0093). `ekwo.usage_figures()` returns, for every company the
   caller is on, one row per figure — a name, a number of rows, and when the
   most recent was created: members, invitations, contacts, products,
-  documents by type and state, entries by state, bank statements, payments,
+  documents by type and state, transactions by state, bank statements, payments,
   and each enabled module with its tables. What the country pack lays down is
   left out, and no name, amount or label leaves the function. A member or the
   holder of a key of the company may call it, whatever the key's
   capabilities. The list is `docs/usage-figures.md`.
 - **The statement of account of a contact** (`20261029010300_a_contact_has_a_statement`).
   `contact_statement(company, contact, from, to)` reads one customer or
-  supplier out of the ledger: a first row with the balance carried forward to
-  `from` (`row_kind` `opening`), then every posted line of the period on an
+  supplier out of the accounts: a first row with the balance carried forward to
+  `from` (`row_kind` `opening`), then every recorded line of the period on an
   account of type `asset_receivable` or `liability_payable` that names the
-  contact, in ledger order — date, journal, entry, the document it books,
+  contact, in the order of the accounts — date, journal, transaction, the document it records,
   debit, credit and running balance, debit minus credit in the currency of
   the company. Each line says how far a matching settles it today:
   `matched_amount`, `open_amount` and `matching_state` (`open`, `partial`,
   `matched`). The accounts are told by their type, as `aged_balance()` reads
   them, so the statement closes on what the aged balance says the contact
-  owes; the other side of each entry, the drafts and the other contacts are
+  owes; the other side of each transaction, the drafts and the other contacts are
   not in it. The running balance is computed over the whole period, so a page
   of the result keeps it. Security invoker, `entries.read`; refused by name:
   `unknown_company`, `not_allowed`, `unknown_contact`, `invalid_period`.
@@ -104,8 +104,8 @@ somewhere has already run it.
   (`20261029010400_a_bank_account_is_created_by_its_function`).
   `create_bank_account(company, identifier, name, bank name, bic, currency,
   journal, ledger account)` reads the identifier in the
-  scheme the country's pack declares, takes the bank journal and the ledger
-  account the country template chose unless others are named, points the
+  scheme the country's pack declares, takes the bank journal and the bank
+  account of the chart the country template chose unless others are named, points the
   journal back at the account, answers the existing account for the same
   identifier however it is spelled (`created = false`), and refuses by name:
   `not_allowed` without `bank.write`, `missing_account_identifier`,
@@ -124,7 +124,7 @@ somewhere has already run it.
   with the exact text of the data file and the canonical form of the rows
   whose form differs. `readCompanyArchive()` in `@ekwo-ai/core` reads every
   table page after page, computes `sha256` and `values_sha256` as it writes,
-  and compares the outline before and after: books that moved in between are
+  and compares the outline before and after: data that moved in between is
   `archive_moved`. The files and the manifest are those `export_company()`
   writes, byte for byte, and the format of the archive does not change. The
   two functions are the feature `archive_in_pages` of `SCHEMA_FEATURES`, since
@@ -139,10 +139,10 @@ somewhere has already run it.
   rate derived from them in a generated column. `create_group()`,
   `add_member()` and `end_membership()` are idempotent; `perimeter(company,
   group, date)` lists who is in on a date and whether the caller can read
-  each; `require_readable()` names the first member whose books the caller
+  each; `require_readable()` names the first member whose accounts the caller
   cannot read. A trigger refuses a member the writer cannot read
   (`entries.read` there) and two overlapping periods of one company in one
-  group. The module reads the members' books under their own row level
+  group. The module reads the members' accounts under their own row level
   security and writes nothing in them. Capabilities `consolidation.read`
   (viewer, client, accountant, owner) and `consolidation.write` (accountant,
   owner). An archive carries the groups of a company and leaves their members
@@ -155,7 +155,7 @@ somewhere has already run it.
   it — by VAT number, or by registration number in the same country, as
   `party_identifier()` compares them; never by name.
   `consolidation.intragroup_documents(company, group, from, to)` pairs each
-  posted sale to such a contact with the posted purchase of the other company
+  recorded sale to such a contact with the recorded purchase of the other company
   whose `supplier_reference` is the sale's number, an invoice with an invoice
   and a credit note with a credit note, and gives each pair a status:
   `matched`, `amount_differs`, `period_differs`, `purchase_missing` or
@@ -177,15 +177,15 @@ somewhere has already run it.
   name (`consolidation_rate_missing`); `currency_rates` is not read. An archive
   of the parent carries the rates with its groups.
 - **The MCP server can start with a short list of tools** (`EKWO_MCP_TOOLS=on_demand`).
-  A session then offers the fifteen tools of a first session with a set of
-  books (`CORE_TOOLS`) and two more: `search_tools`, which finds a tool by a
+  A session then offers the fifteen tools of a first session with a
+  company (`CORE_TOOLS`) and two more: `search_tools`, which finds a tool by a
   few words of the task and says whether it reads, adds or destroys, and
   `load_tools`, which adds the tools named and tells the client its list
   changed. Unset or `all`, every tool is offered at the start, as before; a
   value that is neither is refused, `bad_tool_loading`.
 - **How a tool of the MCP server is designed** is written down in
   `packages/mcp/TOOL_DESIGN.md`: one tool per task, a name a model can guess,
-  a description for a model, its effect on the books, inputs without
+  a description for a model, its effect on the company data, inputs without
   guesswork, the database's words in a refusal. The rules a machine can check
   are checked on every tool a client is offered.
 - **Duplicates are proposed among the contacts of a kind**
@@ -194,9 +194,9 @@ somewhere has already run it.
   only the contacts of the types named, every contact when the second
   argument is null, its default, so a call with the company alone answers as
   before; the MCP tool takes `contact_types`, optional. A company whose
-  contacts are mostly kept beside the books no longer walks them all to
+  contacts are mostly kept beside the accounts no longer walks them all to
   propose duplicates among its customers and suppliers: on 33 082 contacts,
-  228 of them parties of the books, the reading ran past the 8 s statement
+  228 of them parties to its transactions, the reading ran past the 8 s statement
   timeout of the Data API.
 
 ### Changed
@@ -212,12 +212,12 @@ somewhere has already run it.
   Three more things the CODA and CFONB 120 readers showed are settled in the
   same file: a statement numbering that starts again at 1 in a new year is no
   longer a `statement_number_gap` (`bank_statement_continuity` counts within
-  the year, and gives `previous_sequence_number`); a statement with no booked
+  the year, and gives `previous_sequence_number`); a statement with no recorded
   line and no closing balance — a CODA day without movement — closes at its
   opening balance instead of being refused `statement_without_balances`; and
   the source format is read from the reader's `format` and `version`, then
   from `namespace` as before, so the word stored does not change.
-- **Every tool of the MCP server says what it does to the books, and one that
+- **Every tool of the MCP server says what it does to your company data, and one that
   does not, does not compile.** Read, additive or destructive
   (`TOOL_EFFECTS`, `annotationsFor()`, `effectOf()`), carried as
   `readOnlyHint` and `destructiveHint`; `buildServer()` registers tools
@@ -225,9 +225,9 @@ somewhere has already run it.
   `effect` — with `idempotent` and `openWorld` where they apply — in place of
   `readOnly`, so its writes are no longer all destructive: a CRM card, a note,
   a segment, a deal, a contract, a schedule, a tax answer and a kept
-  computation are additive; a depreciation booked, a disposal, budget lines
+  computation are additive; a depreciation recorded, a disposal, budget lines
   replaced, an electronic invoice issued or sent, a fiscal record chained and
-  the due invoices of the contracts — which a schedule may post — stay
+  the due invoices of the contracts — which a schedule may record — stay
   destructive.
 
 - The schema is 0.25.0 (`20261029020000`); the floor of the packages stays at

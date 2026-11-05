@@ -1,19 +1,19 @@
 # Why we are building Ekwo
 
-Every business on earth keeps books. The books say whether it is alive,
-whether it can pay its people next month, whether it can afford to try
-something. For most small businesses, that knowledge lives in software they
-rent, behind a price list they do not control, in a format they cannot take
+Every business on earth runs on its data — its finance, its customers, its
+operations. That data says whether it is alive, whether it can pay its people
+next month, whether it can afford to try something. For most small businesses,
+that knowledge lives in software they rent, behind a price list they do not control, in a format they cannot take
 with them. Leaving means starting again.
 
 We think that is backwards. **The data belongs to the business.** The rules
-that turn it into books — a chart of accounts, a VAT return, a year-end —
+that turn it into accounts — a chart of accounts, a VAT return, a year-end —
 belong to everyone who has to follow them.
 
-And two things are changing at once. The work of keeping books, which used to
-need a person at a keyboard, is being done by machines — which is either the
+And two things are changing at once. The work of running a company's finance, which used
+to need a person at a keyboard, is being done by machines — which is either the
 moment a business finally understands its own numbers, or the moment it hands
-them to someone else's model and stops looking. And *what* has to be booked is
+them to someone else's model and stops looking. And *what* has to be recorded is
 changing too: invoices that travel as structured data between administrations
 rather than as paper, assets that exist only on a chain, payments that settle
 in seconds, a tonne of carbon that will have to be accounted for as strictly as
@@ -22,17 +22,18 @@ currency, one kind of asset and one person typing is not going to survive that.
 
 So Ekwo is five commitments.
 
-## 1. Books a business owns, not rents.
+## 1. A world model a business owns, not rents.
 
-A company should be able to keep its own books, understand them, and act on
-them, with software it owns and an agent it controls. Not a subscription
-that reads its data; a ledger in a database it holds the keys to, with an open
+A company should be able to run its own finance, understand it, and act on
+it, with software it owns and agents it controls. Not a subscription
+that reads its data; the world model of the company — ERP, CRM and Finance — in a
+database it holds the keys to, with an open
 API and an AI that works *for* it. Every installation stands on its own, with
 us or without us, for as long as its owner wants it to. That is the test every
 feature passes before it lands, and it is the whole point.
 
 Autonomy is also knowledge. A trial balance that balances, a VAT return
-computed from the ledger rather than typed in, a year-end close that a small
+computed from the accounts rather than typed in, a year-end close that a small
 business can run itself: these are not features, they are the difference
 between a business that knows where it stands and one that hopes.
 
@@ -40,14 +41,14 @@ between a business that knows where it stands and one that hopes.
 
 Ekwo is designed to be operated by a machine. The data sits in Postgres, the
 REST API and its OpenAPI description come with it, and an MCP server sits on
-top: an agent built on the model you choose can read the ledger, raise an
-invoice, post it, match a payment, pull the VAT return — as *you*, under your own row level security,
-without the data leaving your account. The agent is a user of the books, with
+top: an agent built on the model you choose can read the accounts, raise an
+invoice, record it, match a payment, pull the VAT return — as *you*, under your own row level security,
+without the data leaving your account. The agent is a user of the company data, with
 the same rights and the same limits as the human beside it, and it can be
 replaced by another one tomorrow.
 
 The other half of that sentence matters more. **Nothing in the core calls a
-model.** A posting, a tax, a declaration box, a reconciliation rule is
+model.** A transaction, a tax, a declaration box, a reconciliation rule is
 deterministic, reproducible and reviewable: the same inputs give the same
 figure, on your machine and on an auditor's, this year and in seven years when
 someone asks why. A model that guesses at a number nobody can reproduce is not
@@ -67,22 +68,22 @@ report on — MiCA, and the reporting obligations that start to bite in 2026 —
 and, close behind, the emissions that will sit in a report next to the
 revenue.
 
-An accounting core either has room for that in its shape, or it does not. Ours
+The core of a company's data either has room for that in its shape, or it does not. Ours
 is built for it: amounts carry their currency and their rounding rather than
 assuming cents; formats live in independent libraries, organised by format and
 never by country, so a new one is a package and not a fork; and anything that
-is not double-entry bookkeeping — fixed assets, budgets, and next carbon,
+is not the balanced accounts themselves — fixed assets, budgets, and next carbon,
 stocks, crypto-assets — lives in its own Postgres schema, with its own
-migrations and its own tests, reaching the ledger through one function and
-never writing an entry behind its back.
+migrations and its own tests, reaching the accounts through one function and
+never recording a transaction behind its back.
 
 Crypto is the honest example of what this buys. A token is not a currency and
 not a stock: it needs its own inventory, its own cost basis, its own
 revaluation, and a reporting obligation nobody had two years ago. That is a
 module, written against a schema that was made ready for it — not a rewrite of
-the general ledger. The carbon module is the same bet from the
-other end: a tonne of CO₂ posted against the transaction that caused it, in the
-same books, with the same audit trail. Nobody does that inside open source
+the accounts. The carbon module is the same bet from the
+other end: a tonne of CO₂ recorded against the transaction that caused it, in the
+same company data, with the same audit trail. Nobody does that inside open source
 accounting today. It is where the name points.
 
 ## 4. Free and independent data infrastructure, in every country.
@@ -129,7 +130,7 @@ without asking us. The roadmap is public. The decisions are written down, with
 their reasons, in this repository — including the ones we got wrong and had to
 take back.
 
-Bring your expertise. If you keep books, if you write software, if you know
+Bring your expertise. If you run a company's finance, if you write software, if you know
 your country's rules and are tired of seeing them re-implemented badly behind a
 paywall: this is the place to put that knowledge where it cannot be taken away. Start with
 [CONTRIBUTING.md](CONTRIBUTING.md), or open an issue and say where you are
@@ -137,7 +138,7 @@ from.
 
 ---
 
-*Ekwo is maintained by Ekwo (EKWO OÜ). The name is the promise: an
-accounting core that is open, that the business owns, that a machine can
-operate and a human still checks — and that leaves a lighter
-footprint, on the books and, in time, on the world.*
+*Ekwo is maintained by Ekwo (EKWO OÜ). The name is the promise: the
+world model of the company, open, owned by the business, that a machine can
+operate and a human can read — and that leaves a lighter
+footprint, on the accounts and, in time, on the world.*

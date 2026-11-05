@@ -506,7 +506,7 @@ describe('bootstrap', () => {
     expect(pack?.certificationStatus).toBe('proven');
     expect(pack?.certifiedBy).toBeNull();
     expect(describeCertification({ status: pack!.certificationStatus, by: pack!.certifiedBy, on: pack!.certifiedAt })).toBe(
-      'proven on the real books of a company — not yet reviewed by an accountant',
+      'proven on the real accounts of a company — not yet reviewed by an accountant',
     );
     // Proven is not reviewed, so the operator is warned and not merely told.
     expect(needsWarning(pack!.certificationStatus)).toBe(true);
