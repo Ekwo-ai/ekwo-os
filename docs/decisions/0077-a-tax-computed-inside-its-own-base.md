@@ -38,7 +38,7 @@ law.** It is a closed, named key of the tax, like `price_include` — no
 expression, no formula, no country in the core. It is a column of `taxes` and
 `tax_templates`, compiled from `taxes.json` and copied onto the tax a company
 installs, and a snapshot on `document_lines`, derived while the document is a
-draft and kept once it is posted, like `unit_price_includes_tax` and BT-152.
+draft and kept once it is recorded, like `unit_price_includes_tax` and BT-152.
 
 **One function says how much tax a group carries.** `tax_amount_of(amount,
 rate, price_include, base_includes_tax)`, unrounded, read by the breakdown
@@ -57,10 +57,11 @@ BR-CO-14). The two new cells are exact in `numeric`: one division, rounded
 once.
 
 **The declaration reads the base the rate was applied to.** The box of the
-`base` posting of such a tax reports the net plus the tax: each ledger line
-its net plus its share of the group's tax, shares cumulated in booking order
+`base` row of such a tax (`tax_postings`) reports the net plus the tax: each
+account line its net plus its share of the group's tax, shares cumulated in
+recording order
 and rounded on the cumulated figure, so the boxes of one tax add up to the base
-plus the tax of the group exactly. The ledger keeps the net on the account of
+plus the tax of the group exactly. The accounts keep the net on the account of
 the line. `document_tax_summary` says the same in two appended columns,
 `base_includes_tax` and `taxable_amount`.
 
@@ -68,8 +69,8 @@ the line. `document_tax_summary` says the same in two appended columns,
 cannot be computed inside their base: the check constraints
 `taxes_base_includes_tax_needs_a_rate` and
 `tax_templates_base_includes_tax_needs_a_rate`, and `ekwo pack check`, refuse
-them. A tax group whose lines disagree on the snapshot is refused at posting,
-`mixed_base_includes_tax`.
+them. A tax group whose lines disagree on the snapshot is refused when it is
+recorded, `mixed_base_includes_tax`.
 
 ## Consequences
 
@@ -98,4 +99,4 @@ them. A tax group whose lines disagree on the snapshot is refused at posting,
 - `tests/base_includes_tax.test.ts`
 - [0022](0022-a-price-that-holds-its-tax.md) — A price that holds its tax is converted per group
 - [0020](0020-one-tax-engine-several-kinds-of-tax.md) — One tax engine, several kinds of tax
-- [`docs/packs.md`](../packs.md#what-a-tax-says-and-where-its-postings-land)
+- [`docs/packs.md`](../packs.md#what-a-tax-says-and-where-its-amounts-land)

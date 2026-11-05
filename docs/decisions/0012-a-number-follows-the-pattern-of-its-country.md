@@ -1,20 +1,20 @@
-# A number is drawn at posting, from the country's pattern
+# A number is drawn at recording, from the country's pattern
 
 > Status: accepted
 
 ## Context
 
-Entry numbers must be unique, often gapless by law, and readable. A company
-taking over books from another system arrives with years of numbers its
+Transaction numbers must be unique, often gapless by law, and readable. A company
+taking over its accounts from another system arrives with years of numbers its
 returns and its auditor already know.
 
 ## Decision
 
-**A number is assigned at posting, not at creation.** A deleted draft leaves
+**A number is assigned when the transaction is recorded, not at creation.** A deleted draft leaves
 no hole.
 
 **The counter is a row of `journal_sequences`**, per journal and per period
-the pattern implies, so concurrent bookings serialise on that row and not on
+the pattern implies, so concurrent recordings serialise on that row and not on
 the journal.
 
 **The pattern is pack data.** `country_defaults.number_format` uses a closed
@@ -34,11 +34,11 @@ hole.
 number through; an owner grants it to the person doing the import and takes it
 back. Duplicates are still refused by the unique index on
 `(company_id, number)`. The rule has no exemption for the installation,
-because gapless numbering is a rule about the books, not a permission.
+because gapless numbering is a rule about the accounts, not a permission.
 
 **The counter catches up.** `number_counter()` reads a counter back out of a
 number through its pattern, and `catch_up_journal_sequence()` advances the
-sequence, so the first entry after an import continues the series. A number in
+sequence, so the first transaction after an import continues the series. A number in
 another system's shape does not parse and leaves the counter alone.
 
 **Undoing gives the number back only where that leaves no hole.** See
@@ -52,5 +52,5 @@ another system's shape does not parse and leaves the counter alone.
 ## See also
 
 - `tests/numbering.test.ts`
-- [0014 A posted entry is immutable](0014-a-posted-entry-is-immutable.md)
+- [0014 A recorded transaction is immutable](0014-a-posted-entry-is-immutable.md)
 - [0033 What a country requires on a document is data](0033-what-a-country-requires-on-a-document-is-data.md)

@@ -5,8 +5,8 @@
 ## Context
 
 Everything else in the schema is derived on demand. A filed declaration has
-left the building: the administration holds a set of figures, and the ledger
-will differ the moment anything is posted into the period.
+left the building: the administration holds a set of figures, and the accounts
+will differ the moment anything is recorded in the period.
 
 ## Decision
 
@@ -34,42 +34,42 @@ exact figures. Each box is rounded from its own exact figure.
 
 **The accounts are roles of the pack** (`tax_payable`, `tax_receivable`),
 refused by name when missing. They must be distinct from the accounts the taxes
-post to, or settling would net a period against itself; where a national chart
+are recorded on, or settling would net a period against itself; where a national chart
 keeps a claim on the State among assets and a debt among liabilities, the pack
 adds two reconcilable sub-accounts named after what they hold.
 
-**It settles the ledger, not the boxes.** The lines cleared are those the
+**It settles the accounts, not the boxes.** The lines cleared are those the
 return read; the debt is what they sum to. `filing_drift()` says how far the
-boxes and the ledger differ; no account absorbs the difference.
+boxes and the accounts differ; no account absorbs the difference.
 
 **It settles the tax of its own form** (amended 19 October 2026,
 `20261019161437`). A tax line is cleared when the box it names is on the
 filing's form, or when it names none, its tax writes a box of that form
-through another posting — the form prints the base and computes the tax — and
-it is not on the account a tax due on collection waits on. A tax booked on a
+through another line — the form prints the base and computes the tax — and
+it is not on the account a tax due on collection waits on. A tax recorded on a
 liability no box of the form carries — self-assessed on a service bought from
 abroad, withheld, levied by a province beside the federal return — stays where
-it was posted, for the return that declares it or an entry somebody writes.
+it was recorded, for the return that declares it or a transaction somebody writes.
 Before, every tax line of the period was cleared, and the debt of the return
 could exceed its boxes.
 
 **A filing knows when it is due.** `prepare_filing()` writes
 `tax_filings.due_date` from `filing_deadline()`, and the debt the settlement
-posts matures on it. No rule in the pack, no date.
+records matures on it. No rule in the pack, no date.
 
 **A credit has two outcomes and no default.** Carried forward or claimed back
 is the company's choice, which `settle_filing()` requires and records.
 
 **The administration is a third party**, whose contact account must be the one
-the pack names; this is checked when the entry is written.
+the pack names; this is checked when the transaction is written.
 
 **No rounding of the debt** unless a pack declares a rule.
 
 ### After filing
 
-**An entry in a declared period is ordinary, and it is signalled.**
+**A transaction in a declared period is ordinary, and it is signalled.**
 `filings_touched_since()` lists declarations whose period moved after they
-went, entry by entry — an entry is "about" a declaration when a line names a
+went, transaction by transaction — a transaction is "about" a declaration when a line names a
 box, the same test the tax lock uses.
 
 **The lock is its own function and comes last.** Locking at filing would lock
@@ -85,8 +85,8 @@ modelled.
 
 ## Consequences
 
-- The database can always say which figures were sent, and how far the ledger has moved since.
-- Late entries are allowed and visible; corrections supersede, never overwrite.
+- The database can always say which figures were sent, and how far the accounts have moved since.
+- Late transactions are allowed and visible; corrections supersede, never overwrite.
 
 ## See also
 

@@ -1,30 +1,31 @@
-# Reports read the ledger and know no country
+# Reports read the accounts and know no country
 
 > Status: accepted
 
 ## Context
 
 A report computed from documents cannot tie back to the balance sheet, and a
-report that joins carelessly lets unposted lines into a balance.
+report that joins carelessly lets lines not yet recorded into a balance.
 
 ## Decision
 
-**Posted entries are filtered in `WHERE`, never in a `LEFT JOIN` condition.** A
-line whose entry is not posted survives an outer join with a null entry and
-walks into the closing balance. The schema tests for this class of bug.
+**Recorded transactions are filtered in `WHERE`, never in a `LEFT JOIN`
+condition.** A line whose transaction is not recorded survives an outer join
+with a null transaction and walks into the closing balance. The schema tests
+for this class of bug.
 
-**The aged balance reads the ledger, not the invoices.** It buckets what is
+**The aged balance reads the accounts, not the invoices.** It buckets what is
 still unmatched on reconcilable third-party accounts, by `date_maturity`, and
 a test asserts that it ties to the balance sheet.
 
-**Balances are cumulative from the beginning of the books.**
+**Balances are cumulative from the first day of the accounts.**
 `trial_balance()` computes the opening balance of a period as the sum of
-everything booked before it. There are no posted *à-nouveaux*: an opening
-entry on top of a cumulative ledger would count a balance twice (see
+everything recorded before it. There are no recorded *à-nouveaux*: an opening
+transaction on top of cumulative accounts would count a balance twice (see
 [0031](0031-opening-and-closing-are-parameters.md)).
 
 **`vat_return()` knows no country rule.** It sums `declaration_box` and
-`box_amount` off the ledger lines and evaluates the totals a form declares as
+`box_amount` off the account lines and evaluates the totals a form declares as
 data. Three repository-wide tests assert that no function of the schema, no
 migration and no source file of the CLI, the MCP server or the core holds a
 country code.

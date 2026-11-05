@@ -52,8 +52,8 @@ What the core has today does not reach it. A line carries one tax, and the
 reserved `group` of a pack is refused, so the tax of the chain cannot read the
 own tax of the same line to deduct it. A tax computes on the line's amount,
 never on a presumed one. Nothing keeps a margin. The pieces it does have are
-the ones this design is made of: a tax's postings, its boxes and their factors
-(decision 0019), a share booked as a cost on the accounts of the lines
+the ones this design is made of: a tax's rows of `tax_postings`, its boxes and their
+factors (decision 0019), a share recorded as a cost on the accounts of the lines
 (`tax_on_base`), a tax computed inside its own base (decision 0077), the
 territories of the parties (decision 0024), and the classification of a line
 — its code held in `document_lines.attributes` under the attribute name its
@@ -91,18 +91,18 @@ with a price per unit in place of the percentage.
 The amount is rounded once per group as every tax is (BR-CO-14), the base
 first, at the currency, then the tax: the worked example above to the cent.
 
-**3. How it posts.** On the seller's side the tax of the chain is not revenue:
-its `tax` posting credits the account of the tax collected for others and adds
-to the receivable, and its `base` posting books nothing on the ledger
+**3. How it is recorded.** On the seller's side the tax of the chain is not revenue:
+its `tax` row credits the account of the tax collected for others and adds
+to the receivable, and its `base` row records nothing in the accounts
 (`factor` 0) and reports the presumed base in its box (`box_factor` 100), so
 the declaration receives the base and the tax as the form asks. On the buyer's
-side the tax is not recoverable: one `tax_on_base` posting at 100 % puts it on
-the cost of the goods, as a non-deductible VAT is booked today. A credit note
-reverses both with their own postings.
+side the tax is not recoverable: one `tax_on_base` row at 100 % puts it on
+the cost of the goods, as a non-deductible VAT is recorded today. A credit note
+reverses both with their own rows.
 
 **4. What the declaration reads.** The boxes of a substitution return are
-declaration boxes like any other (decision 0023), filled by the postings, per
-form; a destination state with its own return is a second form, which waits
+declaration boxes like any other (decision 0023), filled by the rows of `tax_postings`,
+per form; a destination state with its own return is a second form, which waits
 for a pack to carry more than one declaration form.
 
 ## Consequences
@@ -119,7 +119,7 @@ for a pack to carry more than one declaration form.
   rate; a buyer or seller under a simplified regime; the inventory adjustment
   when a good enters or leaves the regime; and the transmission of a return,
   which is the user's.
-- Until it is built, a Brazilian pack books the own ICMS with decision 0077
+- Until it is built, a Brazilian pack records the own ICMS with decision 0077
   and says in its README that the tax of the chain is not computed.
 
 ## See also
@@ -127,6 +127,6 @@ for a pack to carry more than one declaration form.
 - [0077](0077-a-tax-computed-inside-its-own-base.md) — A tax computed inside its own base is one key of the tax
 - [0078](0078-a-line-names-what-was-sold.md) — A line names what was sold, by the classification its country declares
 - [0020](0020-one-tax-engine-several-kinds-of-tax.md) — One tax engine, several kinds of tax
-- [0019](0019-tax-postings-carry-the-account-and-the-box.md) — A tax posting carries the account and the box
+- [0019](0019-tax-postings-carry-the-account-and-the-box.md) — A tax carries the account and the box
 - [0024](0024-a-tax-follows-the-territory-of-the-parties.md) — A tax follows the territory of the parties
 - [`packs/ca/README.md`](../../packs/ca/README.md) — one tax code per document line

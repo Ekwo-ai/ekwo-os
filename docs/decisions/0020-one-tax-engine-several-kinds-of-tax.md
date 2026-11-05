@@ -18,28 +18,28 @@ reads, or an explicit statement that nothing reads it yet.
 computed like a VAT. `recoverable` and `jurisdiction` likewise say what a tax
 *is*, so nothing guesses it from a code.
 
-**Non-deductible VAT is a cost, booked on the line's own account.**
+**Non-deductible VAT is a cost, recorded on the line's own account.**
 `tax_posting_type` gains `tax_on_base`: like `base` it carries no account (the
 document line names it); its amount is a share of the tax. Example: a Belgian
-company car at 21 % with deduction capped at 50 % books 1 000 on the vehicle,
-105 on deductible VAT, 105 more on the vehicle, 1 210 to the supplier; box 83
-reports 1 105 (base plus the non-deductible share) through
+company car at 21 % with deduction capped at 50 % records 1 000 on the
+vehicle, 105 on deductible VAT, 105 more on the vehicle, 1 210 to the
+supplier; box 83 reports 1 105 (base plus the non-deductible share) through
 `box_factor_percent`, with no new column.
 
 **A `tax_on_base` line is not a tax line.** It sits on a base account and
 belongs to the base side of the declaration; `tax_line = true` would split one
 grid into two rows.
 
-**The postings of one side share out the tax of the group; the last takes the
+**The tax lines of one side share out the tax of the group; the last takes the
 remainder.** The group's tax is rounded once (BR-CO-14) and shared: 3,00 at
-21 % is 0,63, shared 0,32 and 0,31 — rounding 0,315 twice would book 0,64
+21 % is 0,63, shared 0,32 and 0,31 — rounding 0,315 twice would record 0,64
 against a document totalling 3,63. The same rule spreads a `tax_on_base` share
 over several accounts in proportion to their bases.
 
-**A declaration figure is not a ledger figure.** Box amounts round per
-posting, so on that 3,00 invoice the ledger books 0,31 where box 82 reports
-0,32. Only the ledger has to balance; letting a grid drive a posting is the
-alternative refused.
+**A declaration figure is not an account figure.** Box amounts round per
+line, so on that 3,00 invoice the accounts record 0,31 where box 82 reports
+0,32. Only the accounts have to balance; letting a grid drive a recorded
+amount is the alternative refused.
 
 **No country is anybody's default.** A pack says how its country rounds; a
 pack that says nothing gets the column's own neutral default (`half_up`,
@@ -58,8 +58,8 @@ new codes named in a test of their own.
 
 ## Consequences
 
-- A new kind of tax is a label and postings, not a code path.
-- Box figures and ledger figures may differ by rounding, by design.
+- A new kind of tax is a label and rows, not a code path.
+- Box figures and account figures may differ by rounding, by design.
 
 ## See also
 

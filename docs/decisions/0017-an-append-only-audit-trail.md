@@ -1,14 +1,14 @@
-# An append-only audit trail surrounds the ledger
+# An append-only audit trail surrounds the accounts
 
 > Status: accepted
 
 ## Context
 
-The ledger is immutable once posted and corrected by reversal. What sits
-around it — the chart, journals, taxes and their accounts, bank accounts,
+The accounts are immutable once recorded and corrected by reversal. What sits
+around them — the chart, journals, taxes and their accounts, bank accounts,
 contacts, products, financial years, memberships and roles, the pack version
-— decides how every future entry is booked. An auditor asking who changed the
-VAT account on a tax, and when, needs an answer.
+— decides how every future transaction is recorded. An auditor asking who
+changed the VAT account on a tax, and when, needs an answer.
 
 ## Decision
 
@@ -16,12 +16,12 @@ VAT account on a tax, and when, needs an answer.
 audited table.** It records who (`auth.uid()`, and the machine key if one was
 presented), what (table, natural key, row before and after as `jsonb`,
 operation), when, and the `company_id` row level security reads. It also
-records acts: a document posted or cancelled, an entry posted or reversed, a
-payment booked, matched or unmatched, a year closed or reopened, a pack
-upgraded, a company exported or imported.
+records acts: a document confirmed or cancelled, a transaction recorded or
+reversed, a payment recorded, matched or unmatched, a year closed or reopened,
+a pack upgraded, a company exported or imported.
 
-**The ledger lines are not copied.** Entries are immutable and corrected by a
-visible act; the trail records the act of posting, not its content.
+**The account lines are not copied.** Transactions are immutable and corrected
+by a visible act; the trail records the act of recording, not its content.
 
 **Not `pgaudit`.** It is unavailable under PGlite, where the schema is tested,
 and it writes to the Postgres log, which an application cannot query and a

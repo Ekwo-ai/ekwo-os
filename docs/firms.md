@@ -1,7 +1,7 @@
 # `docs/firms.md` — an accounting firm and its clients
 
 An accounting firm, a fiduciary, a bookkeeper with thirty customers, a group
-that keeps the books of its three subsidiaries: somebody who keeps **several
+that keeps the accounts of its three subsidiaries: somebody who keeps **several
 companies that are not all theirs**. This page is what Ekwo gives them, where
 each piece lives, and what is still missing.
 
@@ -56,7 +56,7 @@ So it follows the rights, and cannot drift from them:
 | A collaborator who joined last week and was given two | those two |
 | The person who runs a client company (`client`) | that one company — the same function serves them |
 | Somebody whose `filings.read` was revoked on a company | every company but that one |
-| The administrator of the instance, member of no company | none: creating companies is not keeping their books |
+| The administrator of the instance, member of no company | none: creating companies is not keeping their accounts |
 
 The functions run as the caller (`security invoker`) and name the capability
 they filter on, because a company's *row* is visible to people its
@@ -70,8 +70,8 @@ without a date.
 
 ## The client is a guest with narrow rights
 
-The `client` preset is the person who runs a company whose books the firm
-keeps. They **read** everything that is theirs — documents, the ledger, the
+The `client` preset is the person who runs a company whose accounts the firm
+keeps. They **read** everything that is theirs — documents, the accounts, the
 frozen declarations and the proofs of deposit — they **hand pieces over**
 (`documents.deposit`: an attachment on their own company, signed by them,
 insert only), and they write nothing else. Inviting one is one call:
@@ -80,7 +80,7 @@ insert only), and they write nothing else. Inviting one is one call:
 select * from invite_member(:company, 'owner@client.example', 'client');
 ```
 
-The ledger is included on purpose: the books are the client's, and the firm is
+The accounts are included on purpose: they are the client's, and the firm is
 the guest who keeps them. A firm that wants to show less revokes a capability
 on that member; see *Who may do what* in the [README](../README.md).
 `set_member_role()` moves a member to another preset, `remove_member()` takes
@@ -109,16 +109,16 @@ every proof that their returns were filed.
 |---|---|---|
 | Who owns the installation | the firm | the client |
 | The client is | a guest (`client`) | the owner; the firm's collaborator is invited as `accountant` |
-| Suits | small businesses and the self-employed: the firm does everything | a company that keeps part of its own books |
+| Suits | small businesses and the self-employed: the firm does everything | a company that keeps part of its own accounts |
 | The portfolio | one call, in the firm's installation | crosses installations, so it is a control plane, which is operated, not installed |
 | The client leaves | `export_company()`: their company, whole, as an archive another installation takes in | `pg_dump`, and nothing else |
 
 Both are meant to exist. **A** is what this schema serves today.
 
-## The client leaves with the books
+## The client leaves with their accounts
 
 Arrangement A is only honest if the way out exists, and it does. A company
-leaves an installation as an archive — entries, documents, pieces, the bank,
+leaves an installation as an archive — transactions, documents, pieces, the bank,
 the declarations with the figures they were frozen with and the proof each one
 went, the trail — and arrives in another installation as a living company, with
 its numbers, its locks and its identifiers. `ekwo company export` and

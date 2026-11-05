@@ -1,6 +1,6 @@
 # Languages
 
-Accounting is done in a language. A Belgian company keeps its books in French,
+Accounting is done in a language. A Belgian company keeps its accounts in French,
 in Dutch or in German; its accountant reads the chart of accounts in one of
 them, and the National Bank expects the annual accounts in the one the company
 files in. Software that picks a language for the user, or that translates only
@@ -59,7 +59,7 @@ others:
 ```
 
 On a template, `name` is the language the pack itself is written in. On a
-company's own row, `name` is the language that company keeps its books in,
+company's own row, `name` is the language that company keeps its accounts in,
 because `install_country_template()` copies the chosen label into it — and the
 other languages travel along in `name_i18n`, so a German-speaking colleague of
 a French-speaking company is answered without going back to the template.
@@ -76,7 +76,7 @@ select label_for(name, name_i18n, preferred_languages(:company)) from accounts;
 
 1. **the reader's own preference** — `user_preferences.language`, which the
    person sets for themselves and which applies in every company they work in;
-2. **the company's language** — `companies.language`, what these books are
+2. **the company's language** — `companies.language`, what this company's accounts are
    kept in;
 3. **the pack's language** — `country_defaults.language_default`, what the
    country's own files are written in.
@@ -101,7 +101,7 @@ falls back to the company and then to the pack exactly as above.
 signed-in reader's preference as that first link.
 
 It serves a reader with no session — somebody opening the shared link to an
-invoice has no preference and no membership. A person reading their own books
+invoice has no preference and no membership. A person reading their own company data
 starts at their preference; a document being rendered starts at its own
 language.
 
@@ -110,13 +110,13 @@ language.
 `documents.language` is a column of the document, and that is the difference
 between a language and a preference. It is filled when the document is created,
 from the customer's language, then the company's, then the pack's — the same
-chain, walked once — and it is frozen the moment the document is posted, the
+chain, walked once — and it is frozen the moment the document is recorded, the
 way `document_lines.vat_category` and `vat_rate` are frozen against a later
 rate change.
 
 While a document is a draft it keeps following the chain: it carries no number
-and no entry, the customer on it may still change, and so may that customer's
-own language. A draft may also be given a language by hand. Once it is posted,
+and no transaction, the customer on it may still change, and so may that customer's
+own language. A draft may also be given a language by hand. Once it is recorded,
 an update that moves it is refused by name:
 
 ```
@@ -220,11 +220,11 @@ visibly untranslated; a guessed one is wrong and looks right.
 
 ## What the language is *not*
 
-`companies.language` is the language of the books. It is not a locale, and it
+`companies.language` is the language of the accounts. It is not a locale, and it
 decides nothing else: how a date or a number is written is
 `user_preferences.date_display_format` and `number_display_format`, which
 belong to a person and not to a company, and the currency is
-`companies.currency_code`. A country that keeps its books in one language and
+`companies.currency_code`. A country that keeps its accounts in one language and
 writes its dates in three is an ordinary country, so the two questions are
 asked separately and stored separately.
 

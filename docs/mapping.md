@@ -63,7 +63,7 @@ An empty cell means there is no counterpart, which is itself information.
 | `taxes.exemption_code` | BT-121 exemption reason code | |
 | `taxes.legal_reference` | *(the article the tax rests on, written for a reviewer; BT-120 is `document_tax_summary.exemption_reason`)* | |
 
-## Entries and ledger lines
+## Transactions and account lines
 
 | Ekwo | EN 16931 | FEC |
 |---|---|---|
@@ -168,7 +168,7 @@ no move, and there is deliberately no counterpart to them.
 [`@ekwo-ai/peppol-ubl`](../packages/formats/peppol-ubl/) reads one row of
 `document_header`, the rows of `document_line_items` and the rows of
 `document_tax_summary`, under the column names above, and nothing else: no
-join to a table and no option is needed for a posted sale to come out with no
+join to a table and no option is needed for a recorded sale to come out with no
 rule broken. Dates are selected `::text`. What the views do not say yet, and
 the brick therefore reports rather than writes: the net price of a line keyed
 with its tax in it (BT-146, BR-26), document and line allowances and charges,
@@ -180,7 +180,7 @@ no code (BR-O-10).
 [`@ekwo-ai/factur-x`](../packages/formats/factur-x/) takes a plain
 invoice object and emits EN 16931 CII XML. It lives in this repository under
 `packages/formats/`, but `@ekwo-ai/core` does not depend on it: a format is
-something you add on top of the ledger, not something the ledger needs. The
+something you add on top of the accounts, not something the accounts need. The
 mapping is therefore written here and asserted in `tests/mcp/products.test.ts`
 without the library.
 
@@ -220,7 +220,7 @@ above says: `number` → `number` (BT-1), `document_date` → `issueDate` (BT-2)
 
 | What | Why not |
 |---|---|
-| A line type telling invoice lines from ledger lines | Documents and entries are two tables, so a line never has to say which one it belongs to. |
+| A line type telling invoice lines from account lines | Documents and transactions are two tables, so a line never has to say which one it belongs to. |
 | A product catalogue with variants | A catalogue is an application concern, not an accounting one. |
 | Analytic columns created at runtime | A schema that alters itself cannot be migrated or secured. |
 | Per-company defaults stored as JSON | A plain column per company default is simpler and joinable. |
@@ -232,9 +232,9 @@ above says: `number` → `number` (BT-1), `document_date` → `issueDate` (BT-2)
 balances of the financial year first, then its movements in chronological
 order. `generateFec()` in `@ekwo-ai/fec` turns them into the file, and
 `checkFec()` applies the file-level rules — mandatory fields, one side per
-line, each entry balancing — before you hand it over.
+line, each transaction balancing — before you hand it over.
 
-The opening lines are computed from the ledger and never posted, one per
+The opening lines are computed from the accounts and never recorded, one per
 balance-sheet account, plus one for the result of a year that has not been
 closed yet. They appear only when the period is exactly a financial year. The
 sources below are those of a movement line; an opening line takes its journal

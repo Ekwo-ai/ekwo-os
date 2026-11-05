@@ -35,7 +35,7 @@ rather than assembling its own.
 the schema because several callers ask. A pack that says nothing gets
 `no_fiscal_year_default`, never a January nobody chose.
 
-**A bank account is created from its IBAN alone.** The journal and ledger
+**A bank account is created from its IBAN alone.** The journal and the
 account behind it are already chosen by the country template; the IBAN is the
 fact nobody can derive and the natural key (unique on `(company_id, iban)`),
 which makes creation idempotent. A company with no bank account is a `doctor`

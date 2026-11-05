@@ -34,7 +34,7 @@ non-deductible share is shared over accounts.
 
 **The line keeps the gross and the flag.** `amount_incl_tax` is the price as
 quoted; `unit_price_includes_tax` is a snapshot from the tax while the
-document is a draft, frozen at posting, so a pack upgrade cannot rewrite a sent
+document is a draft, frozen when it is recorded, so a pack upgrade cannot rewrite a sent
 invoice. `document_line_items` and `shared_document()` publish both.
 
 **Three refusals, each as early as possible.** A fixed-amount tax cannot be

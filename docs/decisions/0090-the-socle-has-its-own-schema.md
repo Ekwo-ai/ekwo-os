@@ -6,7 +6,7 @@
 
 ## Context
 
-The socle — the companies, the ledger, the documents, the taxes, the reports
+The socle — the companies, the accounts, the documents, the taxes, the reports
 and every function that guards them — was created in `public`, and
 [0051](0051-a-module-has-its-own-schema.md) kept it there while each module
 got a schema of its own.
@@ -113,6 +113,6 @@ before.
 
 ## See also
 
-- [0051](0051-a-module-has-its-own-schema.md) — A module has its own schema and posts through a function
+- [0051](0051-a-module-has-its-own-schema.md) — A module has its own schema and records through a function
 - [0003](0003-the-schema-grants-its-own-rights.md) — The schema grants its own rights
 - [0058](0058-doctor-compares-against-a-generated-inventory.md) — `ekwo doctor` compares against a generated inventory

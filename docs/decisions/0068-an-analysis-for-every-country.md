@@ -19,7 +19,7 @@ alone (`packs/generic/statements.json`, decision 0030). The revenue is the
 `income` accounts; the total assets are every asset type; the equity is
 `equity` and `equity_retained` with the result not closed. Three aggregates are
 not like that: staff costs, the financial result and the tax on the result are
-booked on `expense` and `income_other` accounts beside everything else.
+recorded on `expense` and `income_other` accounts beside everything else.
 
 ## Decision
 
@@ -67,7 +67,7 @@ framework's rule must be an `account_type` rule, which the table checks too.
 - The framework's `purchases` is every charge typed `expense` or
   `expense_direct_cost`, staff costs and interest included, because the types
   say no more. A margin computed from it is the margin of the account types.
-- With the books balanced, the framework's `total_assets` equals `equity`
+- With the accounts balanced, the framework's `total_assets` equals `equity`
   plus `current_liabilities` plus `long_term_debt`, to the cent: between them
   they take every account that carries forward, `off_balance` aside.
 - `financial_analysis()` returns one more column. A caller that names its

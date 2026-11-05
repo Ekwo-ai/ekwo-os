@@ -1,4 +1,4 @@
-# Several lines settle together, and a small difference is booked
+# Several lines settle together, and a small difference is recorded
 
 > Status: accepted
 
@@ -15,7 +15,7 @@ The proposals behind those gestures already exist for a bank statement line:
 `suggest_combination()` walks one counterparty's open items oldest first and
 proposes a subset that reaches the amount
 ([0046](0046-settling-applies-identification-and-offers-resemblance.md)).
-Writing a second search for ledger lines would give two answers to one
+Writing a second search for account lines would give two answers to one
 question.
 
 A small difference is the other half. Leaving it open keeps the invoice in
@@ -33,9 +33,9 @@ the first subset it meets is the greedy one whenever the greedy walk had one,
 and it finds the subsets the greedy walk stepped over. Its bounds are written
 once, in `matching_search_bounds()`: 40 candidates for a line, 10 lines in a
 subset, 20 000 steps of the walk, 3 proposals for a line. A statement line
-and a ledger line both ask it.
+and an account line both ask it.
 
-**Proposals between ledger lines, never applied.**
+**Proposals between account lines, never applied.**
 `suggest_item_combinations(company, contact)` proposes, for each open
 receivable or payable line, what lines of the other side of the same
 counterparty and account settle it: an exact pair, then several lines to the
@@ -44,23 +44,23 @@ difference tolerance, with the difference signed. Each proposal has a stable
 id. Lines naming nobody and lines in a foreign currency are not searched.
 
 **Several lines in one gesture.** `reconcile_many(lines)` matches a set of
-posted lines of one company, one reconcilable account and one counterparty —
+recorded lines of one company, one reconcilable account and one counterparty —
 a line naming nobody is attributed by the matching, as with `reconcile()` —
 in the company's currency, whose open debits and credits are equal to the
 cent. It pairs them oldest first through `reconcile()`, which stays the only
 writer of a matching. Anything else is refused by name; a total a cent off is
 refused, not settled in part.
 
-**A difference is booked, never forgiven.** `reconcile_with_difference(lines,
+**A difference is recorded, never forgiven.** `reconcile_with_difference(lines,
 reason)` takes the same set when its totals differ by no more than the
-company's difference tolerance, posts an entry in the miscellaneous journal
-that books the difference on the same account and counterparty against the
+company's difference tolerance, records a transaction in the miscellaneous
+journal that carries the difference on the same account and counterparty against the
 account the pack gives for the reason, and matches everything under one
 letter. The reasons are the roles packs carry: `rounding` (the company's
 rounding account, from the pack role `rounding`) and `exchange_difference`
 (the pack roles `fx_loss` for a charge, `fx_gain` for an income). No pack
 names an account for bank charges or a payment discount, so neither is a
-reason; a reason without an account is refused rather than booked on a
+reason; a reason without an account is refused rather than recorded on a
 neighbour. `matching_difference_reasons()` and `matching_difference_tolerance()`
 tell a screen what it may propose.
 
@@ -69,10 +69,10 @@ units of the currency like the other numbers of `matching_settings`, 500 when
 the company has no opinion. Raising `amount_tolerance_units` instead would let
 `auto_settle()` settle a short payment with nobody looking.
 
-**Undoing takes back what was booked.** The entry of a difference is named on
+**Undoing takes back what was recorded.** The transaction of a difference is named on
 the matchings of its line (`reconciliations.adjustment_entry_id`).
-`unreconcile()` of one of them removes every matching of that line, posts the
-mirror of the entry and matches the line with its mirror, so neither stays
+`unreconcile()` of one of them removes every matching of that line, records the
+mirror of the transaction and matches the line with its mirror, so neither stays
 open.
 
 ## Consequences
@@ -82,7 +82,7 @@ open.
 - `suggest_combination()` answers as before whenever the greedy walk found a
   subset within the bounds, and now also when it did not; it considers the 40
   oldest open items of the window rather than all of them.
-- A difference is always an entry with a reason and an account a pack gave;
+- A difference is always a transaction with a reason and an account a pack gave;
   the difference of a locked period is refused by `post_entry()`.
 - A pack that adds a role for bank charges or discounts adds a reason without
   touching the gesture.

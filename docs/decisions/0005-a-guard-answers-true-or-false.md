@@ -45,7 +45,7 @@ that skips the check is a way to act in somebody else's company.
 **A guard reads as the schema, not as the caller.** A guard that asks "is the
 company still there?" under the caller's row level security is answered *no
 row* by whoever cannot read `companies` — a machine key — and "no row" must
-never be the answer that lets an act through. Guards on posted rows are
+never be the answer that lets an act through. Guards on recorded rows are
 therefore `security definer`.
 
 **A flag in a session setting is not a privilege.** A custom GUC is writable by

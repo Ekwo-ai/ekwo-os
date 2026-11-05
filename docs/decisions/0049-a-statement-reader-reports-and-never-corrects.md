@@ -20,10 +20,10 @@ its own `types.ts`.
 or `{kind: 'other', value, scheme, issuer}`, as ISO 20022 allows. IBAN check
 digits are verified; a failure is a violation, returned as written.
 
-**One line per transaction where it is provably the same money.** An entry with
-several transactions is split only if each carries an amount in the entry's
+**One line per transaction where it is provably the same money.** A statement movement with
+several transactions is split only if each carries an amount in the movement's
 currency and they add up exactly; each line then carries enough to rebuild the
-batch. Otherwise the entry stays one line (`batch_not_split`). In both cases a
+batch. Otherwise the movement stays one line (`batch_not_split`). In both cases a
 statement's lines sum to its movement. A total and its details are never both
 counted.
 

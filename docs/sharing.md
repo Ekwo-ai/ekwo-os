@@ -16,7 +16,7 @@ at is the application's, and it lives outside this repository.
 
 **A share is not a seat.** The customer who opens a link holds nothing in the
 installation. The person whose company it is — the client of the firm that
-keeps the books here — is the opposite case: a member of that one company on
+keeps the company's accounts here — is the opposite case: a member of that one company on
 the `client` preset, who reads everything of it, hands pieces over with
 `documents.deposit`, and writes nothing else. `documents.share` is not in that
 preset: publishing a company's invoice stays with whoever issues it.
@@ -72,7 +72,7 @@ cancelled and carry a number. Each refusal is named:
 |---|---|
 | `share_not_a_sale` | a purchase document: somebody else's own document, their prices, their bank details, their mentions |
 | `share_cancelled_document` | the document was cancelled |
-| `share_draft_document` | an invoice or a credit note that has not been posted |
+| `share_draft_document` | an invoice or a credit note that has not been recorded |
 | `share_unnumbered_document` | anything else without a number |
 | `share_expires_in_the_past` | an expiry that is already behind us |
 
@@ -134,7 +134,7 @@ line was quoted at, `null` everywhere else, so a renderer never has to divide
 anything to know what it holds.
 
 **The legal mentions come out in the document's own language**, frozen when
-the document was posted. They are the sentences `document_legal_mentions`
+the document was recorded. They are the sentences `document_legal_mentions`
 produces for a printed invoice, so a link and a PDF cannot disagree.
 
 ## The same answer for every kind of no

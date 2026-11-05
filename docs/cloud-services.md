@@ -6,7 +6,7 @@ know what you never have to buy.*
 
 Ekwo Cloud is a set of optional services operated by **Ekwo**. They are not part of this repository, they carry no licence of this
 repository, and **nothing here needs them.** An installation that never hears
-of Ekwo Cloud keeps its books, computes its statements, prepares its returns
+of Ekwo Cloud runs its finance, computes its statements, prepares its returns
 and exports everything, for as long as its database runs.
 
 ## Where the line falls
@@ -20,7 +20,7 @@ The test, applied without exception:
 > **Does it keep working on its own, with us or without us?**
 
 If yes, it is in this repository, under AGPL, and no licence key gates it. A
-trial balance computed by Postgres, a VAT return read off the ledger, an
+trial balance computed by Postgres, a VAT return read off the accounts, an
 invoice rendered to a PDF, a chart of accounts — none of these needs anything
 of ours to be running.
 
@@ -31,7 +31,7 @@ If no, it is a service, because something has to be kept alive for it to work:
 | Bank connections | a PSD2 aggregator contract |
 | Peppol sending and receiving | an access point and its certificate — the open `einvoicing` module writes and checks the file, and records every sending |
 | Transmission to tax administrations and business registers | transmission credentials and a channel kept running — the return itself stays the business's |
-| The AI agents that book, match and check | models trained, run and supervised |
+| The AI agents that record, match and check | models trained, run and supervised |
 | A portfolio across installations, for an accounting firm | a control plane above installations that do not see each other |
 | Operating instances: monitoring, upgrades, backups | a fleet watched over time |
 
@@ -40,7 +40,7 @@ If no, it is a service, because something has to be kept alive for it to work:
 This matters as much as the list above. **What comes back from a filing is open
 core.** The deposit number, the acknowledgement, the words the administration
 used and the file that was sent are rows and attachments of your own database —
-`tax_filing_deposits`, under the same policies as the rest of your books.
+`tax_filing_deposits`, under the same policies as the rest of your company data.
 
 A company that stops paying for the transmission keeps every proof that it
 filed. The channel is recorded as two words, `portal` or `service`, and the
@@ -51,7 +51,7 @@ list of what may be.
 
 - **Removing the attribution in the footer.** That is an attribution, not a
   toll. Charging to hide it would make it a fine.
-- **Any part of the accounting core**: the schema, the posting rules, the
+- **Any part of the accounting core**: the schema, the recording rules, the
   reports, the charts of accounts, the tax rules, the export formats.
 - **Exporting your own data.** `pg_dump` works, and it is the same schema on
   both sides. That is the whole argument for installing this at all.

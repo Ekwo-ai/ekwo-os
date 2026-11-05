@@ -1,12 +1,12 @@
-# Books at volume
+# Company data at volume
 
 How the schema behaves when there is something in it, how that is checked, and
 what is still to be measured.
 
-Most of `tests/` books a handful of documents, and Postgres plans a handful of
+Most of `tests/` records a handful of documents, and Postgres plans a handful of
 rows the same way whatever the indexes are. `tests/load/` fills an instance
-with several companies and years of books, and checks that the reads people
-rely on stay fast as the books grow.
+with several companies and years of company data, and checks that the reads people
+rely on stay fast as the data grows.
 
 ## What runs, and where
 
@@ -16,7 +16,7 @@ rely on stay fast as the books grow.
 | Runs | on every push, with the rest of `npm test` | by hand, before a release |
 | Asserts | **the shape of the query plans** | nothing about time; a path over budget is reported `OVER` |
 
-Both read the same definitions: `scripts/load/books.mjs` makes the books and
+Both read the same definitions: `scripts/load/books.mjs` makes the data and
 `scripts/load/hot-paths.mjs` defines the reads and their budgets.
 
 **The plan is the assertion, the clock is a report.** A time measured on a
@@ -29,11 +29,11 @@ pass unchanged across packs with very different charts.
 [Decision 0060](decisions/0060-the-plan-is-the-assertion-the-clock-is-a-report.md)
 has the reasoning.
 
-## The books
+## The data
 
 Several companies, each with the same number of documents spread over five
 financial years, 500 contacts, and a month of bank statement for the company
-under test. The template year is posted by the engine itself from a country
+under test. The template year is recorded by the engine itself from a country
 pack's golden scenario, then copied to reach the volume, and the copy is
 checked afterwards for balance and referential integrity. The data is
 deterministic and contains no real names; the pack is a parameter,
@@ -43,11 +43,11 @@ deterministic and contains no real names; the pack is a parameter,
 
 | Path | Call | Budget |
 |---|---|---|
-| General ledger of one account over a year | `general_ledger()` | 500 ms |
+| Account detail of one account over a year | `general_ledger()` | 500 ms |
 | Trial balance of a year | `trial_balance()` | 1 s |
 | Aged receivables at year end | `aged_balance()` | 1 s |
 | Tax return of one period | `vat_return()` | 1 s |
-| Entries file of a whole year | `fec_lines()` | 5 s |
+| Transactions file of a whole year | `fec_lines()` | 5 s |
 | Contact suggestions over a month of statement | `suggest_contacts()` | 5 s |
 
 Each is called the way a client calls it, once as the database owner and once
@@ -79,6 +79,6 @@ Still to be measured:
 - **Times on a real Postgres.** Every time above comes from PGlite: the ratios
   are informative, the absolute figures are not what a hosted project shows.
 - **The API layer** — the pooler, PostgREST and JSON serialisation.
-- **Sustained writes**: bulk posting, imports and the close of a large year.
+- **Sustained writes**: bulk recording, imports and the close of a large year.
 - **Many companies rather than large ones**, at the scale of a firm with
   hundreds of clients.

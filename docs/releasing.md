@@ -65,7 +65,7 @@ is half done is worse than one that is not cut.
    `[Unreleased]` above it. Read `git log` against it before closing the
    section. The schema is said in one line under **Changed** — "The schema is
    x.y.z (`<timestamp>`); the floor of the packages stays at a.b.c." — and a
-   floor that rises gets its own entry: the new floor, the migration that is
+   floor that rises gets its own item: the new floor, the migration that is
    breaking and why, and that an installation runs `ekwo migrate` before
    upgrading the packages.
 
@@ -101,7 +101,7 @@ is half done is worse than one that is not cut.
    `EKWO_E2E_LOAD_DOCUMENTS` adds the load paths of [`load.md`](load.md).
 
    The project has to be empty and one nobody minds losing: the script installs,
-   books and closes a year, and deletes nothing on its own. `--reset` empties it
+   records and closes a year, and deletes nothing on its own. `--reset` empties it
    so a failed run can be replayed — for a throwaway project and nothing else.
    It is not in the CI: it costs money, and a shared project would be one two
    releases install into at once. Run it with several packs, including ones with
@@ -212,7 +212,7 @@ databases nobody here controls, and a correction is a new file.
 
 ## Names that change before 1.0
 
-Ekwo keeps books in every country its packs cover — value added tax, goods and
+Ekwo runs the finance of companies in every country its packs cover — value added tax, goods and
 services tax, sales tax, or none. A few names in the schema, the MCP server and
 the command line still carry the vocabulary of value added tax, which is one
 régime among several. They are renamed before 1.0 so that a name says what a
@@ -260,7 +260,7 @@ The arguments, the result and what the function computes stay as they are.
 | `--vat <number>` | `--tax-number <number>` | `ekwo contact add`, `ekwo contact list` |
 | `country_defaults.vat_scheme` | `tax_number_scheme` | column: the electronic address scheme a party is reached by through its tax number |
 | `taxes.vat_category`, `tax_templates.vat_category`, `document_lines.vat_category` | `tax_category` | columns: the category code of the e-invoicing standards (UNCL5305) |
-| `document_lines.vat_rate` | `tax_rate` | column: the percentage frozen on the line when it is posted |
+| `document_lines.vat_rate` | `tax_rate` | column: the percentage frozen on the line when it is recorded |
 | `vatBalance`, type `DescribedVatBalance` | `taxBalance`, `DescribedTaxBalance` | `ekwo pack describe --json`, the command line's library |
 
 ### Former names already superseded

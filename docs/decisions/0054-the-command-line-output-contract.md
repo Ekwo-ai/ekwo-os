@@ -5,7 +5,7 @@
 ## Context
 
 A caller with a shell and nothing else — a script, an agent — must be able to
-tell success, a finding, a wrong call and a refusal of the books apart without
+tell success, a finding, a wrong call and a refusal of the database apart without
 knowing which command it ran.
 
 ## Decision
@@ -26,7 +26,7 @@ the list of commands and fails on one without a case.
   `pack check`, `pack status`, `pack upgrade` (with `data` and no `error`);
 - `2` — a wrong call: bad arguments, nobody to act as, a `service_role` key,
   a refusal of the shared layer decided before the database was asked;
-- `3` — the books declined, decided by SQLSTATE and never by wording: `P0001`,
+- `3` — the database declined, decided by SQLSTATE and never by wording: `P0001`,
   `P0002`, `42501`, `55006` and class `23`. A `PGRST…` code stays 1.
 
 **What a refusal is called is read in one place**, `@ekwo-ai/core`

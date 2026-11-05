@@ -5,7 +5,7 @@
 ## Context
 
 A schema can be bilingual in shape — `name_i18n` beside `name` — and
-monolingual in fact. A company keeping its books in one of its country's
+monolingual in fact. A company running its finance in one of its country's
 languages should get the chart, the journals, the taxes and the return in that
 language.
 

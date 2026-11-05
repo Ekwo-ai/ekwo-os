@@ -46,7 +46,7 @@ PostgREST would.
 **Secrets are not written by the installer.** The database password and
 `service_role` key come from a flag, the environment or a masked prompt and are
 forgotten; `ekwo.json` holds only what is safe to commit. (The signed-in
-session of the bookkeeping commands is a separate, documented file — see
+session of the commands that run the finance is a separate, documented file — see
 [0055](0055-the-command-line-acts-as-a-signed-in-person.md).)
 
 **Few runtime dependencies**: the Postgres driver and the project's own core.

@@ -59,8 +59,8 @@ pack check` requires a given `jurisdiction` to name a known territory.
 **It refuses, it does not choose.** `post_document()` resolves the three
 territories on every document, writes them on it (`seller_territory_code`,
 `buyer_territory_code`, `supply_territory_resolved` — text, not foreign keys,
-since the last rung may be a country no pack books in; frozen at posting,
-cleared on unpost), and refuses a tax the document contradicts:
+since the last rung may be a country no pack records in; frozen when the document is recorded,
+cleared when it goes back to draft), and refuses a tax the document contradicts:
 `tax_territory_mismatch`, naming the tax, the condition and the territory
 found. A rule table that *suggests* taxes is out of scope: the core chooses no
 tax for anyone.

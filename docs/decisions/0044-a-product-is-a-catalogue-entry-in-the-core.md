@@ -1,4 +1,4 @@
-# A product is a catalogue entry in the core, not stock
+# A product is a catalogue item in the core, not stock
 
 > Status: accepted
 
@@ -14,12 +14,12 @@ written once.
 either not exist or point at a table the core does not ship.
 
 **It is a catalogue, not stock.** No quantity on hand, valuation or movements:
-stock has its own correctness problems, and next to the ledger a wrong movement
-becomes a wrong entry.
+stock has its own correctness problems, and next to the accounts a wrong movement
+becomes a wrong transaction.
 
 **A product pre-fills a line and never constrains it.** The line keeps its own
 text, price, unit, account and tax; what the caller gave wins. A renamed
-product cannot alter last month's invoice. `product_id` on a posted line is a
+product cannot alter last month's invoice. `product_id` on a recorded line is a
 reference to where it came from; `on delete restrict` and `active = false`
 protect it.
 

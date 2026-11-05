@@ -7,7 +7,7 @@
 A consolidated figure removes what the companies of a group sold to each
 other: the revenue of one and the expense of the other, the receivable of one
 and the payable of the other. Before anything is removed, the two sides have
-to be found — the sale in the seller's books, the purchase in the buyer's —
+to be found — the sale in the seller's accounts, the purchase in the buyer's —
 and each company keeps its own contacts, typed by its own people. The buyer
 knows the seller as a supplier among others, under whatever name it was
 given.
@@ -33,7 +33,7 @@ invoice and a credit note with a credit note.
 **What does not pair is listed, never forced.** `intragroup_documents()` gives
 every pair, and every side without one, a status — `matched`,
 `amount_differs`, `period_differs`, `purchase_missing`, `sale_missing` — for a
-person to correct in the books of the company that is wrong. A document counts
+person to correct in the accounts of the company that is wrong. A document counts
 when both companies are in the group on its date.
 
 ## Consequences
@@ -41,10 +41,10 @@ when both companies are in the group on its date.
 - A company of the group whose contact carries no VAT or registration number
   is not recognised: its operations do not appear until the number is typed.
   `intragroup_parties()` is where to look first.
-- A purchase booked without the seller's number comes out as
+- A purchase recorded without the seller's number comes out as
   `sale_missing`, and its sale as `purchase_missing`: two rows, each pointing
   at a document to complete.
-- Amounts are compared in the currency of each document, as booked. The
+- Amounts are compared in the currency of each document, as recorded. The
   translation of currencies comes with the consolidated figures.
 - Nothing is written: the eliminations themselves, and the adjustments of the
   module's own schema, read these pairs and come next.

@@ -40,7 +40,7 @@ each company copied, with a sha256 of the pack.
    and its type, a tax code and its meaning, and a box in a form version are
    immutable.
 
-**What a pack carries.** Beyond a chart, taxes and postings: declaration
+**What a pack carries.** Beyond a chart, taxes and the accounts they record to: declaration
 forms and their totals; financial statements and a country-less generic
 framework; several charts per country; what the country requires on a
 document; labels in every declared language; filing cadences, deadlines and
@@ -51,7 +51,7 @@ noticing what still lived in a function.
 **What is deliberately not in a pack.** Rates that change monthly across tens
 of thousands of jurisdictions (a feed, not reviewed data; the form still
 belongs in the pack), payroll, inventory, analytics and the translation of the
-application itself. Revaluation of open items, cash accounting as a ledger,
+application itself. Revaluation of open items, cash accounting as a separate set of accounts,
 several taxes stacked on one line, and the cash-flow statement are accepted by
 the format and implemented by nobody until a country needs them.
 

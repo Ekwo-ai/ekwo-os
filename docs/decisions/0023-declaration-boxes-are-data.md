@@ -23,7 +23,7 @@ discussion about the core, not a field in a pack.
 
 **A reference names a box and a kind.** `"54"` suffices where a line carries
 one figure; `"08:base"` and `"08:tax"` where a line prints both. `kind` says
-how a box gets its amount — the ledger fills a `base` or a `tax`, the form
+how a box gets its amount — the recorded transactions fill a `base` or a `tax`, the form
 works out a `total` — so a computed line is always `kind: "total"`, whatever
 the form calls it.
 
@@ -33,12 +33,12 @@ nothing is a cycle and names the boxes (`formula_cycle`). `print_sequence` is
 separate from `sequence` (optional, defaults to it), and `vat_return()`
 returns the resolved value so a renderer orders by one column.
 
-**A posting may name a list of boxes.** Some forms print one amount in boxes
+**A tax line may name a list of boxes.** Some forms print one amount in boxes
 no total can derive from each other (a memo box inside a box inside a box; a
 service received from abroad in both an output and an input box). `box` in
 `taxes.json` takes a string or a list; the amount is written to each with the
-same factor. A posting per box was refused (two definitions of one taxable
-amount); a junction table was refused (postings have no identity of their own
+same factor. A tax line per box was refused (two definitions of one taxable
+amount); a junction table was refused (tax lines have no identity of their own
 and the list is one element long almost everywhere). `declaration_boxes
 text[]` sits beside `declaration_box`, which stays first
 (`declaration_boxes[1] = declaration_box` by check constraint, a trigger fills
@@ -58,13 +58,13 @@ period, so a past return keeps its answer.
 computed, name, sequence, `hidden` and `report_code`. Hidden totals are
 returned and flagged. Without `report_code`, the periodic return of the
 company's fiscal country in force on the last day; two candidates is an error,
-not a guess. A company in a country with no pack gets its ledger boxes and no
+not a guess. A company in a country with no pack gets the boxes its accounts fill and no
 total.
 
 ## Consequences
 
 - `ekwo pack check` refuses a bare reference matching two kinds, a reference to
-  an undeclared box or to the box itself, a tax posting to a box the form does
+  an undeclared box or to the box itself, a tax line pointing to a box the form does
   not declare, and a cycle.
 - Three repository-wide tests forbid a country code in any function,
   migration, or source file of the CLI, MCP server and core.
@@ -72,5 +72,5 @@ total.
 ## See also
 
 - `tests/tax_report.test.ts`, `tests/vat_return_formats.test.ts`
-- [0018 Reports read the ledger](0018-reports-read-the-ledger.md)
+- [0018 Reports read the accounts](0018-reports-read-the-ledger.md)
 - [0037 A filed declaration is frozen](0037-a-filed-declaration-is-frozen.md)

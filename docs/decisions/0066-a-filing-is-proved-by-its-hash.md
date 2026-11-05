@@ -1,4 +1,4 @@
-# A filing is proved by its hash, on a public ledger
+# A filing is proved by its hash, on a public record
 
 > Status: accepted
 
@@ -13,7 +13,7 @@ today is the file that went, or that it existed on the day it says.
 
 ## Decision
 
-**A proof is the sha256 of the exact bytes, committed to a public ledger.**
+**A proof is the sha256 of the exact bytes, committed to a public record.**
 `filing_proofs` holds one row per hash and per method, about a declaration,
 the annual accounts of a financial year, or a document. The file never leaves:
 only its hash does, with a random nonce appended before submission.

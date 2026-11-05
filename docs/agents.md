@@ -1,6 +1,6 @@
 # For agents: a first session with Ekwo
 
-This page is for an AI agent that keeps books with Ekwo OS for somebody, and
+This page is for an AI agent that runs somebody's finance with Ekwo OS, and
 for the person who sets that agent up. It gives the five steps of a first
 session, the same on the MCP server and on the command line, and what the
 agent reads at each one. Installing comes before it, and is in
@@ -46,7 +46,7 @@ An empty list means the person has not been invited to a company yet; `status`
 The financial years and whether each is closed, the lock dates, the journals,
 and the accounts that play the receivable, payable and suspense roles — the
 same document on both sides, from one function of `@ekwo-ai/core`. A date the
-agent books on falls in an open year, after the lock date.
+agent records on falls in an open year, after the lock date.
 
 ### 3. Learn the codes a line names
 
@@ -62,7 +62,7 @@ pack a code comes from, its version, and how far it has been reviewed:
 real company, for the scopes its `evidence` names, and says which were not
 tested) or `reviewed`.
 
-### 4. Make a draft, show it, post it once the person agrees
+### 4. Make a draft, show it, record it once the person agrees
 
 | MCP | Command line |
 |---|---|
@@ -71,12 +71,12 @@ tested) or `reviewed`.
 | `post_document`, after the person says yes | `ekwo post <doc>`, after the person says yes |
 
 The draft comes back with the totals the database computed. The agent shows it
-— and on the command line the entry `--dry-run` would write — and posts once
-the person has agreed to that document. `--ref` on anything that creates makes
+— and on the command line the transaction `--dry-run` would write — and records
+it (posts it) once the person has agreed to that document. `--ref` on anything that creates makes
 a repeated call return what the first one made. When the money moves,
-`record_payment` (`ekwo payment record`) books it and matches it.
+`record_payment` (`ekwo payment record`) records it and matches it.
 
-### 5. Read the return, and correct what is posted
+### 5. Read the return, and correct what is recorded
 
 | MCP | Command line |
 |---|---|
@@ -84,34 +84,34 @@ a repeated call return what the first one made. When the money moves,
 | `cancel_document`, `reverse_entry` | `ekwo cancel <doc>`, `ekwo reverse <entry>` |
 
 `vat_return` gives the boxes of a period with their names and amounts, summed
-from what was posted; a draft is in no box. It prepares figures, and filing
+from what was recorded; a draft is in no box. It prepares figures, and filing
 them is done by the person, on their administration's portal or through an
 operator they appoint ([`filing.md`](filing.md)). The prompt
-`prepare_vat_return` walks through checking the boxes against the ledger.
+`prepare_vat_return` walks through checking the boxes against the accounts.
 
-A posted entry stays as it was posted, and is corrected by another one.
+A recorded transaction stays as it was recorded, and is corrected by another one.
 `cancel_document` undoes an invoice the one way its country allows — back to
 draft where nothing has left, by the credit note that names it otherwise — and
-says which. `reverse_entry` undoes an entry keyed by hand. A paid document is
+says which. `reverse_entry` undoes a transaction keyed by hand. A paid document is
 unmatched first with `unreconcile`, when the person says so.
 
 ## When the database says no
 
 A refusal is the answer, and it says what to do next. It starts with a name —
 `period_locked`, `entry_unbalanced`, `reversal_date_needed`,
-`unknown_contact`, `not_found` — followed by a sentence: book on a later date,
+`unknown_contact`, `not_found` — followed by a sentence: record on a later date,
 ask the person for a date, look the contact up with `search_contacts`, list
 the companies with `list_companies`. On the command line the same sentence is
 in `error.hint` of the `--json` document, and the exit code is 3 for a refusal
-of the books and 2 for a call to change.
+of the database and 2 for a call to change.
 
 ## What the agent asks the person first
 
-Every post, cancellation, reversal, payment and lock is confirmed by the
-person, for that specific action — and for posting a document, the database
+Every recording, cancellation, reversal, payment and lock is confirmed by the
+person, for that specific action — and for recording (posting) a document, the database
 holds the agent to it (below). A tax rule, a rate, an account or a deadline
 always comes from the pack; where the pack does not cover the case, the agent
-says so and brings in the person's accountant, who works in the same books —
+says so and brings in the person's accountant, who works in the same accounts —
 or, for a person without one, the accountants who work with Ekwo at
 [ekwo.ai/partners/directory](https://ekwo.ai/partners/directory/).
 
@@ -123,34 +123,34 @@ questions, and a setting that forbids that flag.
 
 - **The setting** is the company's `agent_posting`, in its settings beside its
   profile (`ekwo company agent-posting`, `update_company_profile`, the Settings
-  page of Ekwo Cloud). `review`, the default: an agent posts a document only
+  page of Ekwo Cloud). `review`, the default: an agent records (posts) a document only
   once a person approved that draft as it stands (`ekwo doc approve
   <document>`), and a draft changed afterwards is approved again — otherwise
   `post_document` is refused with `approval_required`. `autopilot`: agents
-  post directly, within the rights of the person they act for. `review_only`:
+  record directly, within the rights of the person they act for. `review_only`:
   as review, and no session may switch to autopilot. Only a person with
   `company.write` changes it; an agent may make it stricter when asked, never
   looser.
 - **The session** is the person's choice for one session of their agent:
   `ekwo-mcp --autopilot` or `ekwo mcp --autopilot` (or
-  `EKWO_AGENT_POSTING=autopilot`) posts without approvals wherever the
+  `EKWO_AGENT_POSTING=autopilot`) records without approvals wherever the
   company allows it, the way `--dangerously-skip-permissions` does for one
   session of Claude Code; `--review` asks for approvals even where the company
   is in autopilot. In a company that is `review_only`, a session in autopilot
   is refused by name, `autopilot_forbidden`.
 - **A machine key** gets its mode once, when it is issued, and keeps it:
-  `ekwo key create --autopilot` (`posting_mode` of `create_api_key`) posts
+  `ekwo key create --autopilot` (`posting_mode` of `create_api_key`) records
   without approvals; without it, the company's setting decides. Only a person
   with `company.write` issues a key in autopilot, never in a `review_only`
   company — where such a key is refused too — and a request made with a key
   cannot choose another mode. A key wanted in another mode is issued again.
 
 Autopilot is the person's decision, for their session or their company, never
-the agent's. Every posting an agent makes is on the audit trail as
+the agent's. Every document an agent records is on the audit trail as
 `document_posted_by_agent`, with the mode, the session and the key, so what
-an agent booked in autopilot can always be told apart. The MCP server says at
+an agent recorded in autopilot can always be told apart. The MCP server says at
 start-up and in `status` which mode its session runs in, and `post_document`
-says it in its description. A person signed in posts as before.
+says it in its description. A person signed in records as before.
 
 ## Registering the installation
 
@@ -168,7 +168,7 @@ mention it once, with what it gives and the one command:
 What it gives today: a note when a security advisory concerns the version the
 installation runs, release notes for new versions of the schema and the
 country packs, and the country and the version counted among the
-installations Ekwo serves. It sends six fields and no ledger data; they are
+installations Ekwo serves. It sends six fields and no accounting data; they are
 listed in
 [`packages/cli/README.md`](../packages/cli/README.md#registering-with-ekwo).
 
@@ -184,7 +184,7 @@ it in its environment.
 
 Nothing here needs an account. A free one on
 [Ekwo Cloud](https://cloud.ekwo.ai/signup) adds the web application on the
-same books, a nightly backup of every company the person links, and the
+same company data, a nightly backup of every company the person links, and the
 connector `https://mcp.ekwo.ai/mcp`, approved in the browser, in place of the
 address, key and password of the configuration above. The command line offers
 it in one line after `ekwo init` and after a first `ekwo company export`, each

@@ -7,11 +7,11 @@
 Nothing in the schema said how a company ends. `companies` had no state but
 "here", and the policy `companies_delete` let an owner run
 `delete from companies`. Thirty-nine foreign keys cascade from that table, so
-one statement erased the whole books — entries, documents, the bank, the
+one statement erased the whole of its data — transactions, documents, the bank, the
 declarations and their proofs — with no confirmation and no export first.
 
 Two different endings exist in practice. A company that stopped trading keeps
-its books for the period its country's law sets: nothing more is posted, and
+its accounts for the period its country's law sets: nothing more is recorded, and
 everything stays readable and exportable. A company that should never have
 existed — a test, a mistake, a duplicate — goes entirely. A client of the
 core (a screen, the command line, an agent over MCP) needs both, judged once,
@@ -20,17 +20,18 @@ in the database.
 ## Decision
 
 **A company is archived by its owner, and restored by its owner.**
-`companies.archived_at` is the state: null while the books are kept, a moment
+`companies.archived_at` is the state: null while the company runs its finance, a moment
 once they are closed. `archive_company()` and `unarchive_company()` set and
 clear it; both are idempotent, answer the row and write `company_archived` or
 `company_unarchived` on the trail. The column is written by nobody else: a
 trigger refuses a hand-written change (`company_archive_not_a_column`).
 
-**An archived company is read-only for the ledger.** The three capability
-guards that already judge every path to a posted entry, a booked document and
+**An archived company is read-only for the accounts.** The three capability
+guards that already judge every path to a recorded transaction, a recorded
+document and
 a closed or re-opened year (migration `20260913083216_capabilities`) ask
-one question more and refuse with `company_archived`. Posting a payment or an
-entry of a module goes through the same transition and meets the same
+one question more and refuse with `company_archived`. Recording a payment or a
+transaction of a module goes through the same transition and meets the same
 refusal. Reading, `export_company()`, the members and the profile stay as
 they were.
 
@@ -61,6 +62,6 @@ is `company_deleted`, with the name and the country.
 
 ## See also
 
-- [0043](0043-a-company-leaves-with-its-books.md) — a company leaves with its books
+- [0043](0043-a-company-leaves-with-its-books.md) — a company leaves with its data
 - `supabase/migrations/20261020121427_a_company_is_archived_before_it_leaves.sql`
 - `tests/company_lifecycle.test.ts`

@@ -1,6 +1,6 @@
 # The archive of one company
 
-A firm keeps the books of N companies in one installation, and each of them
+A firm keeps the accounts of N companies in one installation, and each of them
 belongs to somebody. `export_company()` writes one company out, whole, in a
 format that needs nothing of Ekwo to be read; `import_company()` takes it into
 another installation, where it is a living company again — same identifiers,
@@ -38,7 +38,7 @@ empty file.
   ignored by an import, which lets the database compute them again.
 - **A decimal is a string**: `"debit": "1210.00"`, `"sale_price": "12.345678"`.
   `1210.00` is a valid JSON number and most parsers hand it back as a float; an
-  archive of a ledger must not depend on which. Integers and booleans are JSON
+  archive of accounts must not depend on which. Integers and booleans are JSON
   numbers and booleans.
 - **A date is `YYYY-MM-DD`; a timestamp is ISO 8601 in UTC**, whatever the time
   zone of the session that exported.
@@ -47,7 +47,7 @@ empty file.
   own data, a bank's raw line for one — so *a tool that rewrites an archive
   must not parse and print the rows*: `1.50` would come back `1.5` and the
   checksum of the file with it. The CLI copies lines; it never parses them.
-- **Rows are in primary key order**, so two exports of the same books are the
+- **Rows are in primary key order**, so two exports of the same company data are the
   same bytes.
 
 ### `manifest.json`
@@ -104,12 +104,12 @@ Everything the database holds about the company:
 | | Tables |
 |---|---|
 | The company and its settings | `companies`, `company_packs`, `company_modules`, `company_filing_periods`, `matching_settings`, the regime of a tax on turnover it declared, in `company_tax_regimes`, and the VAT scheme it recorded, in `company_vat_schemes` |
-| The chart and what books on it | `fiscal_years`, `accounts`, `journals`, `taxes`, `tax_postings`, `analytic_axes`, `analytic_values`, `products` |
+| The chart and what is recorded on it | `fiscal_years`, `accounts`, `journals`, `taxes`, `tax_postings`, `analytic_axes`, `analytic_values`, `products` |
 | Third parties | `contacts`, `contact_patterns`, and which contacts were merged into which, with what moved, in `contact_merges` |
-| The ledger | `entries`, `entry_lines`, `entry_line_analytics`, the counters that number it: `journal_sequences`, `matching_sequences`, which files its history was taken over from, in `book_imports`, and the lines left without a contact on purpose, in `lines_left_unnamed` |
-| Documents and money | `documents`, `document_lines`, the analytic split keyed on each line in `document_line_analytics`, `payments`, `reconciliations`, the gestures several of them were made in, in `reconciliation_batches`, and which posted documents went back to draft, with the entry each gave up, in `document_unpostings` |
+| The accounts | `entries`, `entry_lines`, `entry_line_analytics`, the counters that number it: `journal_sequences`, `matching_sequences`, which files its history was taken over from, in `book_imports`, and the lines left without a contact on purpose, in `lines_left_unnamed` |
+| Documents and money | `documents`, `document_lines`, the analytic split keyed on each line in `document_line_analytics`, `payments`, `reconciliations`, the gestures several of them were made in, in `reconciliation_batches`, and which recorded documents went back to draft, with the transaction each gave up, in `document_unpostings` |
 | The bank | `bank_accounts`, `bank_statements`, `bank_transactions`, and which lines each statement lists in `bank_statement_lines` |
-| Declarations | `tax_filings`, the figures each was frozen with in `tax_filing_boxes`, and the proof each one went in `tax_filing_deposits`; the hashes committed to a public ledger in `filing_proofs`, with their proofs; the tax on turnover of each period as it was computed and posted, in `turnover_tax_assessments`; what was paid on account of a declaration, in `declaration_instalments` |
+| Declarations | `tax_filings`, the figures each was frozen with in `tax_filing_boxes`, and the proof each one went in `tax_filing_deposits`; the hashes committed to a public record in `filing_proofs`, with their proofs; the tax on turnover of each period as it was computed and recorded, in `turnover_tax_assessments`; what was paid on account of a declaration, in `declaration_instalments` |
 | Pieces | `attachments` — the rows |
 | The trail | `audit_log` of the company, in the order of `occurred_at` and `sequence` — without its row ids, which are the installation's own counter, are not a signed-in reader's to read, and are drawn again on arrival |
 | Modules | `fixed_assets.fixed_assets`, `fixed_assets.depreciation_lines`, `fixed_assets.disposals`, `budgets.budgets`, `budgets.lines`, and what the company declared and computed for its corporate income tax: `tax.company_parameters`, `tax.adjustments`, `tax.credits`, `tax.computations`, `tax.computation_lines`, `tax.losses`, `tax.loss_uses`, `tax.prepayments`; and every electronic invoice issued, as the exact file, with each sending and what came back: `einvoicing.issues`, `einvoicing.transmissions`, `einvoicing.transmission_events`, with the chain of fiscal records kept as it was hashed and the events of the system that kept it: `einvoicing.fiscal_chain`, `einvoicing.fiscal_events`, and each submission to the authority under a clearance regime with what it gave the invoice: `einvoicing.clearances`; and the record of every relationship kept on the same contacts: `crm.cards`, `crm.segments`, `crm.segment_members`, `crm.pipelines`, `crm.stages`, `crm.deals`, `crm.activities`; and what the company agreed with its parties and the documents its schedules issued: `contracts.templates`, `contracts.contracts`, `contracts.schedules`, `contracts.amendments`, `contracts.issues`; and the groups the company consolidates, with the rates each translates a currency at: `consolidation.groups`, `consolidation.rates` |
@@ -164,7 +164,7 @@ member. Three conditions, all checked by the database:
 3. **The archive is whole.** Each table is counted as the caller and counted
    again by a definer function that answers a number and nothing else; a
    difference is `export_incomplete`, by table. A member whose `bank.read` was
-   revoked does not leave with books that have no bank in them. A module turned
+   revoked does not leave with accounts that have no bank in them. A module turned
    off with rows in it stops the export too, until it is turned back on.
 
 **One snapshot.** `export_company()` reads the manifest and every table in one
@@ -217,7 +217,7 @@ Refused before a row is written:
 The rows are then inserted as they are — not replayed through `post_entry()`,
 which would draw new numbers and new dates — with the user triggers of the
 tables being filled switched off for the length of the transaction and the
-foreign keys left on. **This takes a lock on those tables: bookkeeping in the
+foreign keys left on. **This takes a lock on those tables: recording in the
 other companies of the installation waits until the import ends.** Seconds for
 an ordinary company; choose the moment for a large one.
 
@@ -226,7 +226,7 @@ And checked afterwards, which is what the triggers would have guaranteed:
 | Refusal | What was found |
 |---|---|
 | `foreign_row` | A row hung itself on a parent of another company, or a reference points into a company that was already here. Asked of every foreign key between exported tables, read from the catalogue. |
-| `unbalanced_entry` | An entry does not agree with its lines, or a posted one does not balance. |
+| `unbalanced_entry` | A transaction does not agree with its lines, or a recorded one does not balance. |
 | `matching_mismatch` | A line says it is matched for another amount than its matchings add up to. |
 | `counter_behind` | A journal has not counted up to a number it already used, or the matching to a letter; the next one would collide. |
 | `overlapping_years` | Two financial years of the company overlap. |

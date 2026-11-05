@@ -1,11 +1,11 @@
-# An invoice file is written from the books
+# An invoice file is written from the company data
 
 > Status: accepted
 
 ## Context
 
 Packs declare Peppol BIS 3 as their e-invoicing profile. An invoice file must
-say exactly what the ledger holds, and a posted sale must be sendable from what
+say exactly what the accounts hold, and a recorded sale must be sendable from what
 the core publishes, without options patched in by the caller.
 
 ## Decision
@@ -17,7 +17,7 @@ access point is an operated service
 
 **It reads the rows the views publish** — `document_header`,
 `document_line_items`, `document_tax_summary` — and writes the figures as
-posted. It does not share the input type of the older Factur-X brick, which
+recorded. It does not share the input type of the older Factur-X brick, which
 computes totals and defaults a currency, unit and payment means; that brick is
 the one to move to this contract.
 
@@ -54,7 +54,7 @@ code *or* a text, and the text satisfies it.
 
 ## Consequences
 
-- A posted sale of every golden year comes out with no rule broken from three
+- A recorded sale of every golden year comes out with no rule broken from three
   views and no option.
 - Open: the net unit price of a price-inclusive line, a category for supplies
   outside the scope of the tax, allowances and charges.

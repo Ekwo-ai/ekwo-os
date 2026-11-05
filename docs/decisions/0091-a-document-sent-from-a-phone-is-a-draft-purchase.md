@@ -6,10 +6,10 @@
 
 A receipt is photographed where it is handed over, on a phone, and read later,
 at a desk. The purchase inbox of Ekwo Cloud read a dropped file in the
-browser and wrote nothing before *Post*: a phone had nowhere to put a page
-for later, and nothing in the books said a document was waiting.
+browser and wrote nothing until the purchase was recorded: a phone had nowhere to put
+a page for later, and nothing in the company data said a document was waiting.
 
-The books already have a place for each half of it. A purchase is a row of
+The company data already has a place for each half of it. A purchase is a row of
 `documents`; its pages are rows of `attachments` on that document (decision
 0069); a creation repeated after a dropped connection is found again by
 `documents.client_ref`, the idempotency key of a creation. What they did not have is a document
@@ -35,7 +35,7 @@ key alike.
 `documents.contact_id` is nullable on a draft only
 (`documents_contact_unless_draft`), and a document that leaves draft without
 one is refused by name (`document_without_contact`) before any other rule of
-posting speaks. A draft without a contact is, by construction, a document a
+recording speaks. A draft without a contact is, by construction, a document a
 phone sent and nobody has read: that is how an inbox finds them.
 
 **The paths are checked, not trusted.** Each page is a file under
@@ -60,7 +60,7 @@ name those files. A policy an operator wrote by hand stays beside them.
   byte passes through Ekwo Cloud.
 - Whoever reads the inbox — Ekwo Cloud's *Purchases*, an agent — finds the
   drafts with no contact, reads their pages, names the supplier, writes the
-  lines and posts: the draft becomes the ordinary purchase, with its pages.
+  lines and records it: the draft becomes the ordinary purchase, with its pages.
 - A reader of `documents` meets a null `contact_id` on such a draft, and only
   there.
 - An installation older than this file answers `PGRST202` for the function;

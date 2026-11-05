@@ -19,7 +19,7 @@ gave `products.attributes` and `document_lines.attributes`,
 `{"<name>": "<value>"}`: what an electronic invoice format asks of a line that
 no other column says, under the name the brick of the format reads,
 pre-filled from the product, copied by a credit note and frozen once the
-document is posted. The MyInvois classification of a line is one of them.
+document is recorded. The MyInvois classification of a line is one of them.
 
 A first draft of this decision added a second place —
 `products.classifications` and `document_lines.classifications`, by scheme —
@@ -75,6 +75,6 @@ of the attributes are the pack's, and the patterns with them.
 - `supabase/migrations/20261019170000_a_line_carries_what_its_format_asks.sql`
 - `supabase/migrations/20261020072100_a_classification_is_checked_on_its_attribute.sql`
 - `tests/line_classifications.test.ts`
-- [0044](0044-a-product-is-a-catalogue-entry-in-the-core.md) — A product is a catalogue entry in the core, not stock
+- [0044](0044-a-product-is-a-catalogue-entry-in-the-core.md) — A product is a catalogue item in the core, not stock
 - [0025](0025-a-country-is-a-pack-of-data.md) — A country is a pack of data
 - [`docs/packs.md`](../packs.md#what-was-sold-by-the-classification-of-the-country-classifications)

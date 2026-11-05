@@ -10,7 +10,7 @@ being its invoice with the sign flipped. A binary float cannot hold some
 halves: `2.675 * 100` is `267.49999999999994`, so a naive half-up gives `2.67`
 where the rule says `2.68`. And `round(x, 2)` everywhere is right for the euro
 and wrong for the yen (no decimals) and the dinar (three): a yen invoice of
-1 234,5 would be booked at 1 234,50 and settled at 1 235.
+1 234,5 would be recorded at 1 234,50 and settled at 1 235.
 
 ## Decision
 
@@ -54,8 +54,8 @@ the comments, so the reader learns which columns are promises.
 
 ## Consequences
 
-- A whole ledger in a zero-decimal currency — a fixture pack with a fictional
-  country code — goes through entry, payment, matching, return, trial balance
+- A whole set of accounts in a zero-decimal currency — a fixture pack with a fictional
+  country code — goes through recording, payment, matching, return, trial balance
   and close with every figure a whole unit.
 - **Known gap:** monetary columns are still `numeric(16, 2)`, so a
   three-decimal amount rounded correctly by the engine is rounded again by the

@@ -6,7 +6,7 @@
 
 The path that bypasses the application — psql, a script, another client — is
 exactly the path that needs stopping. And an error handler that logs and
-returns leaves the document saved and the entry missing, cleanly and
+returns leaves the document saved and the transaction missing, cleanly and
 silently.
 
 ## Decision
@@ -51,5 +51,5 @@ an action and a reason. Silence is not a possible output.
 ## See also
 
 - `tests/locks.test.ts`
-- [0014 A posted entry is immutable](0014-a-posted-entry-is-immutable.md)
+- [0014 A recorded transaction is immutable](0014-a-posted-entry-is-immutable.md)
 - [0031 Opening and closing are parameters](0031-opening-and-closing-are-parameters.md)

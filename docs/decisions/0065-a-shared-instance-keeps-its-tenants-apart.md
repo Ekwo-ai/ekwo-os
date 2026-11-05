@@ -85,15 +85,15 @@ A preferred company the caller may not know of is refused as one that does
 not exist.
 
 **A guard reads nothing for a company the writer may not know of, and still
-guards.** The definer guards that read the row a new value names — of a posted
-document, its lines, a posted entry and its lines, and the files of a deposit —
+guards.** The definer guards that read the row a new value names — of a recorded
+document, its lines, a recorded transaction and its lines, and the files of a deposit —
 look for it in the row's own company. When a person or a machine key writes a
 row into a company they may not know of, `assert_writes_into_known_company()`
 refuses them before anything is read, with one answer whether the company
 exists or not. A first draft stepped aside there instead and left the refusal
 to row level security; but row level security does not stop the backend role,
 the owner or a scheduled job, and on a shared installation they may know of
-no company, so a posted row moved unguarded for them. Only a person or a key
+no company, so a recorded row moved unguarded for them. Only a person or a key
 is ever refused that way; every other writer meets every guard.
 
 **A migration that makes a reference composite says first what would fail
@@ -209,5 +209,5 @@ administrators, which on a shared installation are the operator's.
 - `tests/shared_instance.test.ts`, `tests/mcp/shared_instance.test.ts`,
   `tests/references_across_companies.test.ts`
 - [0001 One installation belongs to one customer](0001-one-installation-is-one-customer.md)
-- [0043 A company leaves with its books](0043-a-company-leaves-with-its-books.md)
+- [0043 A company leaves with its data](0043-a-company-leaves-with-its-books.md)
 - [0064 A key writes as the person who issued it](0064-a-key-writes-as-its-issuer.md)

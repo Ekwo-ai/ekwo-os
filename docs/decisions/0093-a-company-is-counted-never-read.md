@@ -4,8 +4,8 @@
 
 ## Context
 
-Whoever runs an installation for somebody else needs to know whether the books
-are in use: whether contacts were created, invoices drafted or posted, a bank
+Whoever runs an installation for somebody else needs to know whether the company
+data is in use: whether contacts were created, invoices drafted or recorded, a bank
 statement brought in, and when the last thing was written. A host keeping an
 instance alive answers support with it; an operator linked to a company by a
 key decides with it whether an instance is still worth keeping.
@@ -15,7 +15,7 @@ a key that reads far more than counts, or with the `service_role` key, which
 reads everything of every company — and it took an hour by hand for one
 installation of three companies. Worse, it mixed what people made with what
 the country pack lays down at creation: a thousand accounts, a few dozen taxes
-and their postings, which are the same for every company of a country.
+and the rows that say where each lands, which are the same for every company of a country.
 
 ## Decision
 
@@ -25,11 +25,11 @@ recent was created. No name, amount, label, document number or identifier
 other than the company's own leaves the function. The list is public, in
 `docs/usage-figures.md`, so that whoever is counted can read what is counted.
 
-**What the pack lays down is not a figure.** Accounts, taxes, tax postings,
+**What the pack lays down is not a figure.** Accounts, taxes, the rows of `tax_postings`,
 journals and declaration boxes are left out; members, invitations, contacts,
 products, fiscal years, bank accounts and statements, payments, imports,
 declarations, the VAT scheme chosen and the instalments paid on account,
-attachments, documents by type and state and entries by state
+attachments, documents by type and state and transactions by state
 are in.
 
 **Modules are counted without the socle naming one.** For each module enabled
@@ -49,7 +49,7 @@ transaction PostgREST opens for it. It lives in the socle's schema, `ekwo`
 ## Consequences
 
 - A host that keeps a key per linked company learns how each is used with one
-  call per key, and stores counts rather than books.
+  call per key, and stores counts rather than company data.
 - A company's figures change when the list does; adding a figure is a
   migration and a line of `docs/usage-figures.md`.
 - The function sends nothing. An installation nobody calls with a key reports

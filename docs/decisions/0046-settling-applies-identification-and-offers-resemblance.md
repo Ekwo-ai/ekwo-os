@@ -5,7 +5,7 @@
 ## Context
 
 A wrong counterparty misfiles a line. A wrong settlement misstates a debt: it
-marks paid an invoice nobody paid, and the books balance either way, so the
+marks paid an invoice nobody paid, and the accounts balance either way, so the
 error stays invisible until a customer disputes it.
 
 ## Decision
@@ -17,11 +17,11 @@ piece of evidence pointing at one thing.
 **Offered, never applied: resemblance.** A subset of invoices adding up to the
 transaction is the usual shape of a customer paying a month at once. The
 greedy oldest-first walk finds one deterministically, and cannot prove that no
-other subset also fits. A wrong combination is the one mistake the ledger
+other subset also fits. A wrong combination is the one mistake the accounts
 cannot show afterwards.
 
 **Never automatic: a partial payment.** Less money than is open is a deposit, a
-discount, a short payment or an error — four treatments nothing in the books
+discount, a short payment or an error — four treatments nothing in the accounts
 distinguishes. The machine proposes; a person decides — and says it, with the
 amount each item is settled by when the oldest-first walk is not what
 happened.
@@ -30,25 +30,25 @@ happened.
 provider is the invoices less the fee it kept; a payment to a supplier may
 carry the charges of the bank. The difference is a charge only a person can
 name — its account, and the tax it bears, which the provider's invoice says
-and the statement does not. Named, it is booked beside the settlement as an
+and the statement does not. Named, it is recorded beside the settlement as an
 extra line, and the statement line balances to the cent against the items and
-those lines, or nothing is booked.
+those lines, or nothing is recorded.
 
 **Never a settlement: an internal transfer.** Money between two accounts of the
 same company is recognised by the counterparty account being the company's
 own, named, and left.
 
-**A statement line becomes a payment, not an entry.** `post_payment()` and
-`reconcile()` already do the accounting; a function writing the ledger from a
-statement would be a second way of booking money. The one exception is a line
-with extra lines: its entry carries the two lines `post_payment()` would write
+**A statement line becomes a payment, not a transaction of its own.** `post_payment()` and
+`reconcile()` already do the accounting; a function writing the accounts from a
+statement would be a second way of recording money. The one exception is a line
+with extra lines: its transaction carries the two lines `post_payment()` would write
 — the bank on the same ladder, the counterparty on
 `resolve_counterpart_account()` — and the extra lines beside them, a tax on one
-booked from the postings of a purchase invoice. It goes through
+recorded from the lines of a purchase invoice. It goes through
 `post_entry()`, the payment points at it for what it settles, and the
-matchings are still `reconcile()`'s. One entry rather than a payment plus a
-second entry for the fee, because the bank line is one movement and points at
-one entry.
+matchings are still `reconcile()`'s. One transaction rather than a payment plus a
+second transaction for the fee, because the bank line is one movement and points at
+one transaction.
 
 **A pass reports every line.** `auto_settle()` returns, for every line inside
 its window, an action and a reason — including "nothing matches" and a refusal
@@ -59,10 +59,10 @@ exception escaping the loop would skip lines in silence.
 
 - An automatic pass never marks an invoice paid on resemblance.
 - A person reviews combinations and partial payments.
-- `auto_settle()` books no extra line: a fee is never inferred from a
+- `auto_settle()` records no extra line: a fee is never inferred from a
   difference.
 - An extra line is in the currency of the company: a statement line carries no
-  rate to book one at, and one in another currency is refused.
+  rate to record one at, and one in another currency is refused.
 
 ## See also
 

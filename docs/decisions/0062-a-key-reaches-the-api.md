@@ -66,7 +66,7 @@ follows without being rewritten — `companies`, `company_members`,
 `company_modules`, `company_filing_periods`, `matching_settings`, `audit_log`,
 and `module_enabled()` for a module's tables. This is the open question of 0006
 answered: a key reads the rows that *describe* the company it was minted for,
-which is the company it can already read the ledger of. It reads nothing of any
+which is the company it can already read the accounts of. It reads nothing of any
 other, because `api_keys.company_id` is one company and there is no second one
 to name.
 
@@ -126,7 +126,7 @@ release before a key could reach the API. **One was written afterwards and
 copied the older phrasing from its neighbours**: `pack_upgrade()`, which is
 definer, is executable by `authenticated`, asks for `company.write`, and with
 `p_apply` moves a company onto another version of its country pack — the chart
-of accounts, the taxes and where each one posts, the boxes of the declaration
+of accounts, the taxes and where each one is recorded, the boxes of the declaration
 form. A key holding nothing but `entries.read` was answered. `20261005090000`
 closes it.
 
@@ -161,4 +161,4 @@ being found a year later.
   `tests/grants.test.ts`
 - [0002 The surface is closed, not merely empty](0002-the-surface-is-closed-not-merely-empty.md)
 - [0006 A machine key is a narrow caller](0006-a-machine-key-is-a-narrow-caller.md)
-- [0043 A company leaves with its books](0043-a-company-leaves-with-its-books.md)
+- [0043 A company leaves with its data](0043-a-company-leaves-with-its-books.md)

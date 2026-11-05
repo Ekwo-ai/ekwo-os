@@ -4,7 +4,7 @@
 
 ## Context
 
-A group presents its figures in one currency, and a member may keep its books
+A group presents its figures in one currency, and a member may keep its accounts
 in another. Before the figures of the companies are added up, each balance of
 such a member has to be expressed in the group's currency, and three questions
 follow: which method, which rates, and where the difference the rates leave
@@ -50,8 +50,8 @@ balance divided by it, rounded in the group's currency by `round_amount()`.
   is the accountant's to check. Historical rates per movement of equity may
   come later.
 - A member that entered or left during the period is translated for the whole
-  period, as its books carry it.
-- Nothing is written in a member or to the ledger; the consolidated statements
+  period, as its accounts carry it.
+- Nothing is written in a member or to its accounts; the consolidated statements
   read these lines and come next.
 
 ## Alternatives considered

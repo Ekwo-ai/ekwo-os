@@ -1,19 +1,19 @@
-# An agent posts in the mode its company chose
+# An agent records in the mode its company chose
 
 > Status: accepted
 
 ## Context
 
-An agent keeps books through the MCP server, which acts as the person who
+An agent runs a company's finance through the MCP server, which acts as the person who
 connected it ([0053](0053-the-mcp-server-acts-as-the-user.md)), or through a
 machine key, which writes as the person who issued it
 ([0064](0064-a-key-writes-as-its-issuer.md)). Either way it holds
 `documents.post` as soon as that person does, and `post_document` took a
-document id and nothing else. "Ask the user before posting" was a sentence in
+document id and nothing else. "Ask the user before recording" was a sentence in
 the description of the tool: a model may follow it, and nothing checked that it
-did. A posted entry is not edited; it is corrected by a credit note.
+did. A recorded transaction is not edited; it is corrected by a credit note.
 
-A person keeps control of the books by setting the rules and the rights. What
+A person keeps control of the company data by setting the rules and the rights. What
 was missing is the choice of how far an agent goes within them — for the
 company, and for one session of one agent.
 
@@ -28,9 +28,9 @@ flag the person passes to one session to skip the questions
 its profile — read by `get_company`, written by `update_company_profile`,
 `ekwo company agent-posting` and, in Ekwo Cloud, its Settings page:
 
-- `review`, the default — a document an agent proposes is posted once a
-  person approved the draft as it stands; a session may opt into autopilot;
-- `autopilot` — agents post directly, within the rights of the person they act
+- `review`, the default — a document an agent proposes is recorded (posted)
+  once a person approved the draft as it stands; a session may opt into autopilot;
+- `autopilot` — agents record directly, within the rights of the person they act
   for;
 - `review_only` — review, and no session may opt into autopilot.
 
@@ -45,7 +45,7 @@ PostgREST: `agent_call()`. The value of the mark is the session's choice:
 `--review`, or `EKWO_AGENT_POSTING`, sets it for a local server; a host of the
 HTTP transport passes it as `agent` of the connection. `ekwo.agent_session` /
 `X-Ekwo-Agent-Session` names the session. `agent_posting_mode(company)` is what
-a posting meets: the session's choice where it made one, the setting otherwise
+a recording meets: the session's choice where it made one, the setting otherwise
 — `review` in a `review_only` company, and `autopilot_forbidden` when the
 session asked for autopilot there.
 
@@ -56,23 +56,23 @@ default — a session without the flag: the company's setting decides — or
 mark. `create_api_key(…, p_posting_mode)` issues a key in autopilot only to a
 person who may change `agent_posting` (`company.write`), never in a
 `review_only` company (`autopilot_forbidden`, as for the use of such a key),
-and to an agent only from a session that already posts in autopilot there — a
+and to an agent only from a session that already records in autopilot there — a
 key is not a way for an agent to loosen what a person chose for it. Nothing
 writes the column afterwards: a key wanted in another mode is issued again.
 One column on the existing table, shown by `list_api_keys` and `ekwo key
 list`.
 
-A person signed in — in the web application, on the command line — posts as
-before: posting is their approval. The database cannot tell a person from a
+A person signed in — in the web application, on the command line — records as
+before: recording is their approval. The database cannot tell a person from a
 program using that person's own session without the mark, and does not pretend
 to: a program that wants the protection connects as an agent.
 
 **The database enforces it**, so the command line, the REST API and the MCP
-server answer the same way. A trigger on the posting itself
+server answer the same way. A trigger on the recording itself
 (`documents_posting_mode`, beside `documents_assert_may_post`) holds every path
-that sets a document to posted: `autopilot_forbidden` by name, and in review
+that sets a document to `posted`: `autopilot_forbidden` by name, and in review
 `approval_required` unless the trail holds an approval of the version being
-posted, written since the document last went back to draft.
+recorded, written since the document last went back to draft.
 
 **An approval is an act on the audit trail, bound to a version of the draft.**
 `approve_document(document)` writes `document_approved` on `audit_log`, with
@@ -89,7 +89,7 @@ asks, and a key holding `company.write` does not switch its own company to
 autopilot. Autopilot for one session is the person's choice too: they start
 the session with it.
 
-**Every posting by an agent is on the trail**, in every mode:
+**Every recording by an agent is on the trail**, in every mode:
 `document_posted_by_agent`, with the mode it met, the company's setting, the
 session, the key (the row's `api_key_id`), and in review the version and the
 approval it rests on (`approved_by`, `approved_at`), beside the
@@ -100,24 +100,25 @@ approval it rests on (`approved_by`, `approved_at`), beside the
 companies autopilot is refused; the descriptions of `post_document` and
 `cancel_document` say it too.
 
-**A rehearsal is not held to it.** `rehearse_post_document()` posts and rolls
-back; showing a person the entry is how they decide to approve it.
+**A rehearsal is not held to it.** `rehearse_post_document()` records and rolls
+back; showing a person the transaction is how they decide to approve it.
 
 ## Consequences
 
 - An installation upgraded to this release is in review for every company: an
-  agent that posted directly is refused until a person approves, sets the
+  agent that recorded directly is refused until a person approves, sets the
   company to autopilot, or starts the session with `--autopilot`.
 - The approval lives where an application can show it: the rows of
   `audit_log` with `action = 'document_approved'` and the document's id.
-- The rule holds every posting of a document, including the ones a function
+- The rule holds every recording of a document, including the ones a function
   makes on the agent's behalf. In review, an agent's `cancel_document` that
   issues a credit note, and a contract schedule with `auto_post` issued by an
   agent, are refused the same way: the credit note or the invoice was never
   approved. The person cancels, or issues, or approves the drafts.
 - A key's program chooses autopilot for itself with a header, the way a
   session does; a company that wants none of it is `review_only`.
-- What is held today is the posting of a document. A manual entry, a payment
+- What is held today is the recording of a document. A transaction keyed by
+  hand, a payment
   and a matching are not covered by the mode yet; they remain bounded by the
   capabilities of the key or the person.
 

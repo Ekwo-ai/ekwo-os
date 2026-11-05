@@ -28,8 +28,8 @@ the scheme governs the filing periods rather than duplicating them.**
   `periodic_return_code()` and the mirror `companies.vat_period` keep one
   answer. A form that restates another one's figures names it in
   `reads_postings_of`, and each of its base and tax boxes lists the boxes of
-  that form it adds up (`from`). The taxes post for one form; an annual
-  return does not get a second set of postings.
+  that form it adds up (`from`). The taxes are recorded for one form; an annual
+  return does not get a second set of tax rows.
 - `vat_schemes.json` declares the schemes: the forms filed under each and on
   which cadences, `charges_vat`, ceilings as a closed measure, an activity, an
   amount, a currency, dates and the article that sets them, and a schedule
@@ -45,8 +45,8 @@ the scheme governs the filing periods rather than duplicating them.**
   does not file; a row the scheme does not allow is refused.
 - `vat_return()` refuses by name a form the scheme does not file and a
   cadence it does not file it on, and takes the scheme's form when none is
-  named. Under a scheme that charges no VAT, a sale charging VAT is refused at
-  posting and the `small_business` mention is printed.
+  named. Under a scheme that charges no VAT, a sale charging VAT is refused when
+  it is recorded and the `small_business` mention is printed.
 - Instalments are a plan and a record: `instalment_plan()` computes what is
   due from the frozen return of the previous period, `declaration_instalments`
   holds what was paid, a box with `reads` deducts either, and
@@ -61,7 +61,7 @@ the scheme governs the filing periods rather than duplicating them.**
 - `upcoming_filings()` and `portfolio_upcoming_filings()` gained a column,
   `instalment`, and were dropped and created again.
 - An annual return reads exactly what the periodic one would have, over the
-  year: the two can never disagree about a posting.
+  year: the two can never disagree about a recorded amount.
 - The corporate tax module keeps its own instalments for now. Its plan is a
   schedule of percentages of a previous year's tax, the same shape as this
   one; reading the core's would remove the second copy.

@@ -4,14 +4,14 @@
 
 ## Context
 
-The command line writes contacts, drafts and lines, posts, records payments,
+The command line writes contacts, drafts and lines, records them, records payments,
 matches and lists what is owed — the same acts the MCP server performs. Two
-implementations would book the same invoice differently the day one is fixed.
+implementations would record the same invoice differently the day one is fixed.
 
 ## Decision
 
 **The functions moved to the core; they were not written again.** Column
-lists, amount formatting and the functions for contacts, documents, posting,
+lists, amount formatting and the functions for contacts, documents, recording,
 payments and matching live in `packages/core/src/books`, which imports nothing
 from outside the repository. The CLI's `Backend` is its PostgREST client.
 
@@ -28,20 +28,20 @@ refuses a command that queries a table or calls a schema function directly.
 **`--ref` is a column, not a lookup.** `client_ref` on `contacts`, `documents`
 and `payments`, unique per company where given, trimmed and not blank. A replay
 returns the row with `replayed: true` and *finishes* what a dropped connection
-left (a draft without lines gets them; an unbooked payment is booked; matching
+left (a draft without lines gets them; an unrecorded payment is recorded; matching
 runs again on what is still open). It does not compare contents.
 
 **`--dry-run` is the database rehearsing.** `rehearse_post_document()` calls
 `post_document()` in a block and leaves it by its own exception, so the
 subtransaction rolls back and the answer survives. Any description of what
-posting would do would be a second implementation of posting.
+recording would do would be a second implementation of recording.
 
 **No short line syntax.** A string like `"Audit 1 500 EUR@21"` parses several
 ways and turns a rate into a choice of tax. `--line` takes named fields by
 code; `--stdin` takes JSON with the MCP tool's field names, refusing unknown
 fields.
 
-**`payment record --doc` reads the ledger** (`open_items()`) for direction and
+**`payment record --doc` reads the accounts** (`open_items()`) for direction and
 counterparty, not a table of document types in TypeScript. `match` names the
 document's open items and chooses nothing.
 

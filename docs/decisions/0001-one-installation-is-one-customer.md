@@ -5,7 +5,7 @@
 ## Context
 
 A multi-tenant accounting database carries a `tenant_id` on every table and
-the permanent risk that one customer reads another's books. Ekwo OS is
+the permanent risk that one customer reads another's company data. Ekwo OS is
 installed by each customer on their own Supabase project, so the question is
 what an installation knows about itself and who administers it.
 
@@ -36,7 +36,7 @@ key. `member_role` still carries `instance_admin` so an interface renders one
 list of roles, and `company_members` refuses it by check constraint.
 
 **An instance administrator creates companies and invites members, and that is
-all.** They cannot read a ledger they were not invited to; a test asserts it.
+all.** They cannot read accounts they were not invited to; a test asserts it.
 
 **The first user to ask takes the instance.** `claim_instance_admin()` is open
 while there is no administrator and closed afterwards — the same bootstrap the

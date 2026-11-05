@@ -36,10 +36,10 @@ the four template tables plus `country_defaults` that
 
 1. **Amounts are positive.** `entry_lines` refuses a negative debit or credit
    and refuses a line carrying both. A reversal flips the side.
-2. **A posted entry balances.** A check constraint on `entries`, with
+2. **A recorded transaction balances.** A check constraint on `entries`, with
    `total_debit` and `total_credit` maintained from the lines by trigger.
 3. **Totals are derived.** `document_lines.amount_untaxed` is generated;
-   document and entry totals are maintained by trigger; `documents.amount_paid`
+   document and transaction totals are maintained by trigger; `documents.amount_paid`
    is recomputed from the matching on the third-party lines. Nothing is keyed
    in.
 4. **A locked period refuses writes.** Triggers on `entries` and
@@ -54,15 +54,15 @@ the four template tables plus `country_defaults` that
    read and the right to hand a piece over, `accountant` write, and `owner`
    administration of the company and its members. An
    instance administrator can see the list of companies and invite people
-   into them; they cannot read a ledger they were not invited to.
+   into them; they cannot read the accounts of a company they were not invited to.
 7. **The instance row is a singleton.** A primary key of `1` and a check
    constraint make a second row impossible, not merely unusual.
 8. **A piece goes on its document.** An invoice, a credit note or a receipt
-   is attached to the document (`attachments.entity_type = 'document'`). An
-   entry that a document posted refuses a file and names the document to use;
-   an entry no document posted keeps its own piece (decision 0069).
+   is attached to the document (`attachments.entity_type = 'document'`). A
+   transaction that a document recorded refuses a file and names the document to use;
+   a transaction no document recorded keeps its own piece (decision 0069).
 9. **A tax lands by its code, not on a line.** A document line carries its
-   base and names its tax (`document_lines.tax_id`); the posting writes the
+   base and names its tax (`document_lines.tax_id`); recording writes the
    tax on the account the tax points to (`tax_postings`). A line put on such
    an account is refused (`tax_account_on_a_line`), with the taxes that land
    there named; the credit note of a document that already carries one copies
@@ -95,11 +95,11 @@ expense types.
 
 ## How a tax lands
 
-A tax says how much. Its postings say where.
+A tax says how much. Its `tax_postings` say where.
 
 For each tax and each document kind (`invoice` or `credit_note`), `tax_postings`
-holds at most one `base` posting and any number of `tax` postings. Each one
-carries a `factor_percent`, a ledger account (for tax postings) and a
+holds at most one `base` row and any number of `tax` rows. Each one
+carries a `factor_percent`, an account (for `tax` rows) and a
 `declaration_box` with its own `box_factor_percent` — and, beside it,
 `declaration_boxes`, every box the form prints that one amount in. It is almost
 always the single box `declaration_box` names, and it is longer on a form that
@@ -108,14 +108,14 @@ shows one figure in boxes that are not sums of one another.
 `post_document()` applies them:
 
 - the base amount goes to the account of the document line, and picks up the
-  box of the base posting — one line and one box, whatever the form does with
+  box of the `base` row — one line and one box, whatever the form does with
   the figure afterwards: `vat_return()` is what reads the list and sums the
   line into each box of it;
-- for each tax posting, `round(tax x |factor| / 100, 2)` goes to that
-  posting's account — on the same side as the base when `factor_percent` is
+- for each `tax` row, `round(tax x |factor| / 100, 2)` goes to that
+  row's account — on the same side as the base when `factor_percent` is
   positive, on the opposite side when it is negative;
 - the declaration box receives `round(tax x box_factor / 100, 2)`,
-  independently of which side the ledger amount landed on.
+  independently of which side the amount landed on in the accounts.
 
 A Belgian purchase of goods from another Member State of the European Union at 21 % is therefore four rows:
 
@@ -125,15 +125,15 @@ A Belgian purchase of goods from another Member State of the European Union at 2
 | invoice | tax | 100 | 411000 recoverable | 59 | 100 |
 | invoice | tax | −100 | 451000 payable | 55 | 100 |
 
-which books `604 debit 1000 / 411 debit 210 / 451 credit 210 / 440 credit 1000`,
-fills boxes 86, 59 and 55, and leaves the supplier owed 1 000. The ledger and
+which records `604 debit 1000 / 411 debit 210 / 451 credit 210 / 440 credit 1000`,
+fills boxes 86, 59 and 55, and leaves the supplier owed 1 000. The accounts and
 the return say the same thing, because they are the same rows.
 
-## Posting a document
+## Recording a document
 
 `post_document(document_id)` in order:
 
-1. refuses a document that is already posted, cancelled, empty, or a quote;
+1. refuses a document that is already recorded, cancelled, empty, or a quote;
 2. refuses a tax that is not in force on the accounting date, or a
    fixed-amount tax;
 3. checks the period is open;
@@ -142,21 +142,21 @@ the return say the same thing, because they are the same rows.
 6. writes the third-party counterpart as the difference of everything above,
    with `date_maturity` from the due date or the contact's payment terms;
 7. raises if that counterpart disagrees with the document total by more than
-   half a cent — the ledger is right by construction, so the header is what is
+   half a cent — the accounts are right by construction, so the header is what is
    wrong;
-8. numbers and posts the entry, and points the document at it.
+8. numbers and records the transaction, and points the document at it.
 
 ## Settling a statement line
 
-`settle_from_statement(transaction, line_ids, amounts, extra_lines)` books a
+`settle_from_statement(transaction, line_ids, amounts, extra_lines)` records a
 bank statement line as the payment it is and matches it against the open
-items named, in one entry. `amounts` says how much settles each item, in the
+items named, in one transaction. `amounts` says how much settles each item, in the
 order named; left out, the items are settled oldest first — in full when
 there are extra lines. `extra_lines` are
 what the money is net of or carries besides — the fee a payment provider kept
 from a payout, the charges of a bank, a small difference — as
 `{account, amount, tax?, description?}`, by code, a positive amount a charge
-(debited), a tax inside the amount and booked from the postings of a purchase
+(debited), a tax inside the amount and recorded from the `tax_postings` of a purchase
 invoice. The line balances to the cent: money in is the items less the extra
 lines, money out the items plus them, and `settlement_unbalanced` names the
 difference otherwise. A payout of 97.00 for an invoice of 100.00 is

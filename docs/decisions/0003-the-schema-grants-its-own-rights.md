@@ -8,7 +8,7 @@ A Supabase project carries default privileges on `public` — `grant all` on
 tables, sequences and functions to `anon`, `authenticated` and
 `service_role`. A schema that relies on them borrows its security from the
 project. That gives `anon`, the role behind the publishable key any visitor
-holds, INSERT, UPDATE and DELETE on every ledger table, with row level
+holds, INSERT, UPDATE and DELETE on every accounting table, with row level
 security as the only layer. It is also an unwritten dependency: the defaults
 live in `pg_default_acl`, keyed by schema, so dropping and recreating `public`
 leaves an installation that migrates cleanly, looks healthy, and answers
@@ -31,9 +31,9 @@ only — reference tables a pack installs, tables written only by a
 on any table, view or sequence. `service_role` gets what a person gets and no
 more: it bypasses row level security, so its grants are its only limit.
 
-**DELETE is granted where deleting is bookkeeping.** Deleting a draft entry,
-document or payment is ordinary; deleting a posted one is refused by the
-guards of the posted state. On `audit_log`, INSERT, UPDATE and DELETE are
+**DELETE is granted where deleting is ordinary accounting.** Deleting a draft
+transaction, document or payment is ordinary; deleting a recorded one is
+refused by the guards of the `posted` state. On `audit_log`, INSERT, UPDATE and DELETE are
 withheld as a statement of intent beside the trigger that refuses them.
 
 **A grant decides which verbs may be attempted; a policy decides on which rows

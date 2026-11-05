@@ -1,13 +1,13 @@
 # Modules
 
 A module is a Postgres schema beside the socle. `fixed_assets` holds fixed
-assets and their depreciation; `budgets` holds a plan and compares it to the ledger;
-`tax` estimates the corporate income tax of a year from the books and from the
+assets and their depreciation; `budgets` holds a plan and compares it to the accounts;
+`tax` estimates the corporate income tax of a year from the accounts and from the
 rules a country pack carries; `einvoicing` keeps the electronic invoice of a
-posted sale and every time it was sent; `crm` keeps the record of a
+recorded sale and every time it was sent; `crm` keeps the record of a
 relationship — cards, segments, pipelines, deals and activities — on the
 socle's own contacts; `contracts` keeps what a company agreed with a party of
-its books, and issues the invoices its schedules say are due as draft
+its accounts, and issues the invoices its schedules say are due as draft
 documents of the socle; `consolidation` keeps groups of companies and who is
 in each, for which period and at which percentage of interest. The socle lives
 in its own schema, `ekwo`, and knows nothing about any of them.
@@ -47,29 +47,29 @@ packs/<cc>/fixed_assets.json          the source of that data
 
 | Field | What it decides |
 |---|---|
-| `code` | The key of `public.modules`, and what is written on every entry the module posts. Immutable — which is why the fixed assets module is still `assets` after its schema became `fixed_assets`. |
+| `code` | The key of `public.modules`, and what is written on every transaction the module records. Immutable — which is why the fixed assets module is still `assets` after its schema became `fixed_assets`. |
 | `schema` | The Postgres schema. One per module, never `public`. It may be renamed by a migration; the code may not. |
 | `status` | `draft` is refused by `enable_module()`, `available` is enableable, `deprecated` keeps the companies it has and takes no new one. |
 | `requires_socle_min` | The oldest socle migration it needs, by timestamp. `ekwo module enable` checks it against the history. |
-| `posts` | Whether it writes to the ledger. A module that says `false` is held to it by a test. |
+| `posts` | Whether it writes to the accounts. A module that says `false` is held to it by a test. |
 | `mcp.prefix` | Every MCP tool of the module is `<prefix>_<verb>`. |
 | `pack.section` | The file a country pack carries for it, `packs/<cc>/<section>.json`, and the folder it compiles into, `supabase/seed/modules/<section>/`. |
 
 The six that ship are six different shapes, and a new one is usually like
 one of them.
 
-| Module | Folder | Country data | Posts | Written by |
+| Module | Folder | Country data | Records (`posts`) | Written by |
 |---|---|---|---|---|
 | `assets` | `fixed-assets` | its own section, `fixed_assets` | yes | clients, under its policies, and `post_module_entry()` |
 | `budgets` | `budgets` | none | no | clients, under its policies |
 | `tax` | `corporate-tax` | its own section, `corporate_tax` — the most of the four | the provision of a computation, since version 1.1.0 | `security definer` functions, and no role; its declarations, clients under its policies |
 | `einvoicing` | `einvoicing` | none of its own: the `einvoicing` section every pack already carries, read where the socle compiled it | no | `security definer` functions, and no role; the file itself is written in TypeScript, by a brick |
-| `crm` | `crm` | none | no — winning a deal changes the socle's contact, never the ledger | clients, under its policies, directly or through its `security invoker` functions |
-| `contracts` | `contracts` | none | no — it writes draft documents of the socle, under the socle's policies, and asks `post_document()` to book one only where a schedule says `auto_post` | clients, under its policies, directly or through its `security invoker` functions |
-| `consolidation` | `consolidation` | none | no — it reads the members' books, never writes in them | clients, under its policies, directly or through its `security invoker` functions; a trigger holds who may put a company in a group |
+| `crm` | `crm` | none | no — winning a deal changes the socle's contact, never the accounts | clients, under its policies, directly or through its `security invoker` functions |
+| `contracts` | `contracts` | none | no — it writes draft documents of the socle, under the socle's policies, and asks `post_document()` to record one only where a schedule says `auto_post` | clients, under its policies, directly or through its `security invoker` functions |
+| `consolidation` | `consolidation` | none | no — it reads the members' accounts, never writes in them | clients, under its policies, directly or through its `security invoker` functions; a trigger holds who may put a company in a group |
 
-`fixed-assets` has country data and posts. `budgets` has neither.
-`corporate-tax` — code `tax` — has the most country data and posts one
+`fixed-assets` has country data and records. `budgets` has neither.
+`corporate-tax` — code `tax` — has the most country data and records one
 thing, the provision of a computation, on the accounts its pack names: every
 table that holds a result is written by a
 `security definer` function and by no role, which is how "only an owner calls
@@ -77,10 +77,10 @@ a computation final" holds for psql and PostgREST alike. `einvoicing` is the
 same shape with one more side: what it keeps is produced outside the database
 — a file a brick of `packages/formats/` writes, sent through a transport the
 host brings — so its functions check what can be checked without trusting
-the caller (the document is a posted sale, the profile is the pack's, the
+the caller (the document is a recorded sale, the profile is the pack's, the
 checksum is the text's) and its tables only ever move forward.
 `crm` is the first module whose rows are about contacts rather than about
-the books: it owns no contact, every row names one of `ekwo.contacts` by a
+the accounts: it owns no contact, every row names one of `ekwo.contacts` by a
 composite key with its company, and the socle's `merge_contacts()` moves its
 rows with every other reference when two contacts turn out to be one party.
 `contracts` has the shape of `crm` and one more reach: what it issues is a
@@ -89,7 +89,7 @@ document of the socle — a draft sales or purchase invoice written in
 unique `client_ref` refuses a second document for one period.
 
 `consolidation` is the first whose rows span companies: a group belongs to its
-parent, and the books of every member are read with what the caller holds in
+parent, and the accounts of every member are read with what the caller holds in
 that member — the module grants nothing on them
 ([decision 0095](decisions/0095-a-group-is-owned-by-its-parent.md)).
 
@@ -103,7 +103,7 @@ either.
 everything it owns lives there. It depends on the socle by foreign key —
 `companies`, `accounts`, `contacts`, `products`, `fiscal_years` — and the
 dependency points one way: the socle has no hook, no callback and no way for a
-module to change what posting means.
+module to change what recording means.
 
 A module's SQL names the socle's schema. The files published before 0.23.0
 say `public.companies`, `public.is_company_member(…)` and
@@ -120,12 +120,12 @@ first, then `ekwo` — so that what it calls and the triggers it fires find the
 socle whatever path the request came in with. A new module function says the
 same in its own file: `set search_path = <schema>, ekwo, pg_temp`.
 
-**2. The ledger only through `post_module_entry()`.** A module hands over a
+**2. Writes to the accounts only through `post_module_entry()`.** A module hands over a
 company, a date, a tag and a list of lines; the function builds the draft and
 calls `post_entry()`, which is where sides, rounding, numbering and period
 locks live. A module never names `entries` or `entry_lines` in a write
 statement, and a test over `modules/**` refuses one that does. Reading the
-ledger is another matter and is allowed — `budgets.variance` does exactly that.
+accounts is another matter and is allowed — `budgets.variance` does exactly that.
 
 ```sql
 select public.post_module_entry(
@@ -141,8 +141,8 @@ select public.post_module_entry(
 The tag `(module_code, ref)` is unique per company, so **a module is idempotent
 because the database refuses the duplicate**, not because the module remembered
 to look. That is what `entries.module_code` and `entries.module_ref` are for,
-and it is why no `entry_kind` value is added per module: a depreciation entry is
-an ordinary entry that a report may leave in.
+and it is why no `entry_kind` value is added per module: a depreciation transaction is
+an ordinary transaction that a report may leave in.
 
 **3. Row level security on every table, through `module_enabled()`.** A table
 that carries `company_id` gets a policy of the shape
@@ -269,7 +269,7 @@ gives them back. Nothing a module wrote is ever deleted by a disable.
 
 ### `archive_tables`, and why it is not optional
 
-A company leaves an installation with its books
+A company leaves an installation with its accounts
 ([`company-archive.md`](company-archive.md)), and a module's rows are part of
 them. The socle finds every table that belongs to a company in the catalogue,
 and refuses to export anything while one of them is unclassified — so a module
@@ -298,8 +298,8 @@ table yet.
 ### Renaming what a module owns
 
 A schema, a table or a function of a module may be renamed; its **code** may
-not, because the code is written on every entry the module posted and a posted
-entry does not move. The fixed assets module is the worked example: its schema
+not, because the code is written on every transaction the module recorded and a recorded
+transaction does not move. The fixed assets module is the worked example: its schema
 was `assets` and is `fixed_assets` since version 2.0.0, its code is `assets`
 still.
 
@@ -354,7 +354,7 @@ registry takes in the database.
 
 The guards in `tests/modules.test.ts` are what will tell you if you got it
 wrong: row level security, `module_enabled()` in the policies, `company_id` on
-every table of a company, no country literal, no write to the ledger, the
+every table of a company, no country literal, no write to the accounts, the
 manifest against its schema, and the migration timestamps in order.
 `tests/company_archive.test.ts` adds one: a table of yours that belongs to a
 company and that `archive_tables()` does not classify.

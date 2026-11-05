@@ -23,19 +23,19 @@ debt was paid.
 ## Decision
 
 **The pack names the administration.** `defaults.tax_payee` carries its
-official name in the pack's language and the key of the register entry,
+official name in the pack's language and the key of its source in the register,
 published by that administration, where the name is read. It is per country,
 beside `roles.tax_payable`, because the account a declaration settles to is per
-country: two payees on one account could not be told apart by the ledger. It
+country: two payees on one account could not be told apart by the accounts. It
 compiles into `country_defaults.tax_payee_name` and `tax_payee_source_key`. A
-pack whose register holds no entry published by the collecting administration
+pack whose register holds no source published by the collecting administration
 names none; nobody guesses one.
 
 **The account is the link.** The company's contact for the administration is
 the one active contact whose payable account is the pack's `tax_payable`
 account — exactly the contact `settle_filing()` accepts. `tax_payee(company)`
-returns it; where several book there, the one under the pack's name; where none
-does, it creates one under the pack's name, booking its payable side to
+returns it; where several are recorded there, the one under the pack's name; where none
+does, it creates one under the pack's name, recording its payable side to
 `tax_payable` and its receivable side to `tax_receivable`. No column on the
 company records the choice, so nothing has to be kept in step with the
 contacts. Several contacts with none under the pack's name is refused by name
@@ -68,7 +68,7 @@ caller has to remember to record it.
   somebody, and the payment that quotes its reference settles it by itself.
 - The first settlement of a company creates a contact. It is an ordinary
   contact: renamed, merged or given another account, it stays the
-  administration as long as it is the one booking to `tax_payable`.
+  administration as long as it is the one recorded to `tax_payable`.
 - A declaration whose debt is paid in several transfers stays `accepted` until
   the last one, and an unmatched payment takes it back.
 - A company that keeps several contacts on the tax account is asked to say

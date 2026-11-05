@@ -69,5 +69,5 @@ not data.
 ## See also
 
 - `tests/document_rules.test.ts`, `tests/tax_point.test.ts`
-- [0050 An invoice is written from the books](0050-an-invoice-is-written-from-the-books.md)
+- [0050 An invoice file is written from the company data](0050-an-invoice-is-written-from-the-books.md)
 - [`international.md`](../international.md)

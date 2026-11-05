@@ -5,12 +5,12 @@
 ## Context
 
 Statements overlap, get re-sent, and arrive in different formats. Importing
-the same movement twice leaves the ledger with money nobody can find; merging
+the same movement twice leaves the accounts with money nobody can find; merging
 two genuine identical movements loses one.
 
 ## Decision
 
-**A statement never becomes an entry.** `import_bank_statement()` stops at
+**A statement never becomes a transaction.** `import_bank_statement()` stops at
 `bank_transactions`, state `pending`; a line becomes a payment when something
 says what it pays.
 
@@ -59,10 +59,10 @@ statements that read the same in every figure are the same month far more
 often than not, and when they are not, a person has to know why. A statement
 entered by hand carries no source format and is never taken for a duplicate.
 
-**A statement with nothing booked closes where it opens.** A CODA of a day
+**A statement with no movement closes where it opens.** A CODA of a day
 without movement has no new balance record, and the reader invents none
 ([0049](0049-a-statement-reader-reports-and-never-corrects.md)). The import
-knows what that means: with no booked line, the closing balance is the opening
+knows what that means: with no line, the closing balance is the opening
 one, on the end of the period or the day of that balance. A statement *with*
 lines and no closing balance is still refused, `statement_without_balances`.
 
@@ -72,7 +72,7 @@ first reader used — the word stored is the same either way.
 
 ## Consequences
 
-- Amounts finer than two decimals and entries in another currency than their
+- Amounts finer than two decimals and lines in another currency than their
   account are refused rather than converted.
 - A numbering gap is signalled, never refused. A number that does not grow,
   on a statement of a later year than the previous one, is a numbering that

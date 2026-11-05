@@ -1,24 +1,24 @@
-# The sure pairs are matched in one gesture, and what undoes an entry is matched as it is posted
+# The sure pairs are matched in one gesture, and what undoes a transaction is matched as it is recorded
 
 > Status: accepted
 
 ## Context
 
-A matching screen over books brought in from elsewhere opens on hundreds of
+A matching screen over accounts brought in from elsewhere opens on hundreds of
 proposals, and most of them are not questions. One invoice of 1 200.00 and
 one payment of 1 200.00 of the same customer, with nothing else of that
 amount on the account; a subscription billed and paid every month for the
 same amount. Clicking each of them is a gesture repeated until nobody reads
 what they click.
 
-Some pairs are not even proposals: an entry and its reversal, an invoice and
+Some pairs are not even proposals: a transaction and its reversal, an invoice and
 the credit note that names it. `reverse_entry()` and `cancel_document()`
-already match the mirror they post
+already match the mirror they record
 ([0071](0071-several-lines-settle-together-and-a-difference-is-booked.md)
-builds on the same path). Three ways of posting a mirror did not: a reversal
-keyed as a draft that names its entry and posted by `post_entry()`; a credit
-note that names its invoice, posted by `post_document()` for part of it; and
-the mirror `unreconcile()` posts to take back an exchange difference, which
+builds on the same path). Three ways of recording a mirror did not: a reversal
+keyed as a draft that names its transaction and recorded by `post_entry()`; a
+credit note that names its invoice, recorded by `post_document()` for part of
+it; and the mirror `unreconcile()` records to take back an exchange difference, which
 left two open lines behind. A payment is not one of them: `payments` names no
 document, and the library that records the payment of a document matches it
 with that document's open items as it records it.
@@ -33,9 +33,9 @@ searches (`matchable_lines()`, which `suggest_item_combinations()` reads too).
 The evidence, in the order the rules are read, each on what the earlier ones
 left:
 
-- `same_document` — both lines are of one document, or the settlement's entry
-  carries the document's number or payment reference;
-- `reversal` — one entry undoes the other, or a credit note names the invoice;
+- `same_document` — both lines are of one document, or the settlement's
+  transaction carries the document's number or payment reference;
+- `reversal` — one transaction undoes the other, or a credit note names the invoice;
 - `unique_amount` — the one open debit and the one open credit of that amount;
 - `recurring_in_date_order` — several lines of one amount: the oldest invoice
   (the debit of a receivable, the credit of a payable) with the first
@@ -52,20 +52,21 @@ undoes, through `unreconcile()`, every matching of the batch still standing,
 and records when and by whom. Both ask `reconcile.write`; a batch is written
 by these two functions and by nothing else.
 
-**What undoes an entry is matched as it is posted.** When an entry that names
-what it undoes (`reversed_entry_id`) is posted, and when a credit note that
-names its invoice (`reversed_document_id`) is posted — the invoice posted, of
+**What undoes a transaction is matched as it is recorded.** When a transaction
+that names what it undoes (`reversed_entry_id`) is recorded, and when a credit
+note that names its invoice (`reversed_document_id`) is recorded — the invoice
+recorded, of
 the matching kind, in the same currency at the same rate — their third-party
 lines are matched with the other's on the spot, through `match_reversal()`,
 for what both still have open, never across two counterparties. A credit note
 for part of an invoice settles that part. The caller has to be one who may
 match (`reconcile.write`, and `settings.read` where reconcilable is written);
-for anybody else the posting goes through as before and the two lines stay
+for anybody else the recording goes through as before and the two lines stay
 open, where `suggest_sure_pairs()` proposes them as `reversal`.
 
 **A person undoes it like any matching.** An automatic matching is an
 ordinary row of `reconciliations`: `unreconcile(id)` removes it and what it
-booked, and the two lines are open again. The matching of an invoice that
+recorded, and the two lines are open again. The matching of an invoice that
 `cancel_document()` cancelled stays, as before: a cancelled document stays
 cancelled.
 
@@ -76,7 +77,7 @@ cancelled.
 - A pair in the list is exact and of one counterparty on one account; what
   needs a difference or several lines stays with `suggest_item_combinations()`.
 - A reversal or a credit note naming its invoice no longer leaves two open
-  items that cancel on paper. Unposting such a credit note, or the invoice it
+  items that cancel on paper. Undoing the recording of such a credit note, or the invoice it
   names, asks for the matching to be undone first, as for a payment.
 - A unique amount is paired whichever line is older: an advance paid before
   its invoice is still its pair. Only several lines of one amount are read in
@@ -86,5 +87,5 @@ cancelled.
 
 - `supabase/migrations/20261018230000_sure_pairs_are_matched_in_one_gesture.sql`
 - `tests/sure_pairs.test.ts`
-- [0071](0071-several-lines-settle-together-and-a-difference-is-booked.md) — Several lines settle together, and a small difference is booked
+- [0071](0071-several-lines-settle-together-and-a-difference-is-booked.md) — Several lines settle together, and a small difference is recorded
 - [0072](0072-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt

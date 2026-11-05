@@ -4,7 +4,7 @@
 
 ## Context
 
-Indexes existing proves nothing when every test books a handful of documents:
+Indexes existing proves nothing when every test records a handful of documents:
 Postgres plans fifteen rows the same way with or without them. The question is
 whether the schema holds with tens of thousands of invoices.
 
@@ -23,12 +23,12 @@ depends on statistics.
 **Several companies, or the test forbids the right plan.** With one company a
 sequential scan is correct; the load instance holds five.
 
-**The volume is a copy of what the engine posted.** Each company books its
+**The volume is a copy of what the engine recorded.** Each company records its
 pack's golden year through the real functions; that year is cloned by SQL with
 new identifiers and dates shifted by whole years, column lists read from the
 catalogue. The copy skips triggers, so afterwards every foreign key is
-re-checked by anti-join, every entry for balance, and one more document is
-posted through the engine. A test fails by name if the engine writes to a
+re-checked by anti-join, every transaction for balance, and one more document is
+recorded through the engine. A test fails by name if the engine writes to a
 table the generator does not know.
 
 **Plans are read with `auto_explain`** and nested statements, because `EXPLAIN`

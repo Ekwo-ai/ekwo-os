@@ -4,21 +4,21 @@
 
 ## Context
 
-Books taken over in two passes — a ledger exported line by line, then the
+Accounts taken over in two passes — an account detail exported line by line, then the
 documents, or two exports of two systems — create the same party twice under
 two spellings: "Marlow Jane" and "Jane Marlow". Each contact then carries
 half of one history. The aged balance shows two rows for one debtor, a payment
-booked against one cannot be matched with an invoice of the other
+recorded against one cannot be matched with an invoice of the other
 (`reconcile_contact_mismatch`, a matching settles the items of one party), and
-what the books learned about the party is split between them.
+what the accounts learned about the party is split between them.
 
-Nothing could join them. A posted line keeps its contact
+Nothing could join them. A recorded line keeps its contact
 ([0014](0014-a-posted-entry-is-immutable.md)), so does an issued document
 ([0015](0015-a-posted-document-is-frozen.md)), and `set_line_contact()` names
 a line once, from nobody to somebody
 ([0070](0070-a-line-that-names-nobody-is-named-once.md)) — never from one
-contact to another. Reversing every entry to book it again under the right
-name rewrites a ledger that was never wrong about anything but a spelling.
+contact to another. Reversing every transaction to record it again under the
+right name rewrites accounts that were never wrong about anything but a spelling.
 
 ## Decision
 
@@ -30,8 +30,8 @@ caller's own reference (`client_ref`) still find it, and it says where its
 history went.
 
 **What moves is read from the catalogue, not from a list.** Every foreign key
-to `contacts`, in the socle and in the modules: the ledger lines, posted ones
-included; the documents, issued ones included; the statement lines; the
+to `contacts`, in the socle and in the modules: the account lines, recorded
+ones included; the documents, issued ones included; the statement lines; the
 payments; the contacts whose parent it was; the rows of a module, such as a
 disposal of an asset. A table added later is moved without a line here. Two
 references are not foreign keys and are moved by name: the files attached to
@@ -40,15 +40,15 @@ the contact (`attachments`, `entity_type = 'contact'`), and the learned motifs
 becomes one, with its counters added and its confidence derived from them
 again; the others move.
 
-**The guards of what was posted let exactly this through.** One exemption in
-the guard of a posted line and one in the guard of an issued document:
+**The guards of what was recorded let exactly this through.** One exemption in
+the guard of a recorded line and one in the guard of an issued document:
 `contact_id` alone, from the absorbed contact to the kept one, in the
 transaction in which `merge_contacts()` recorded that merge in
 `contact_merges`. It is the transaction-local exemption of
 `set_line_contact()`, held to a row rather than to a setting: any session may
 raise a setting, so a member allowed to merge could have raised one by hand
-and moved a single posted line of their choosing; nobody but `merge_contacts()`
-writes a merge, as nobody but `unpost_document()` writes an unposting. No
+and moved a single recorded line of their choosing; nobody but `merge_contacts()`
+writes a merge, as nobody but `unpost_document()` undoes a recording. No
 amount, account, date, tax box or number moves. Each line and document let
 through is written to the trail where it is let through
 (`line_contact_merged`, `document_contact_merged`), and the merge itself once,
@@ -61,9 +61,9 @@ One row per absorbed contact, read by whoever reads the contacts, written by
 
 **It asks `contacts.write` and `reconcile.write`.** The first is the record of
 the party. The second is who an item belongs to: naming the counterparty of a
-posted line already asks it, and a merge restates the counterparty of matched
+recorded line already asks it, and a merge restates the counterparty of matched
 and open items alike. It does not ask `entries.write` or `documents.post`,
-because it writes no entry and issues nothing. The function is `security
+because it writes no transaction and issues nothing. The function is `security
 definer`, so that a policy the caller does not meet — on the statement lines,
 on the payments — cannot leave part of the history behind without a word: a
 merge is whole or refused.
@@ -123,7 +123,7 @@ makes with that list.
   item of both histories in one list, and the matching across the two spellings
   is possible.
 - The kept contact is recognised by everything either was recognised by.
-- An invoice issued to the absorbed contact and printed again from the books
+- An invoice issued to the absorbed contact and printed again from the accounts
   names the kept contact; the file that was sent is the record of what was
   sent.
 - A call naming the absorbed contact — by a reference kept in another system,
@@ -134,7 +134,7 @@ makes with that list.
 
 - `supabase/migrations/20261019090000_two_contacts_of_one_company_are_merged.sql`
 - `tests/merge_contacts.test.ts`
-- [0014](0014-a-posted-entry-is-immutable.md) — A posted entry is immutable, in an open period too
-- [0015](0015-a-posted-document-is-frozen.md) — A posted document is frozen
+- [0014](0014-a-posted-entry-is-immutable.md) — A recorded transaction is immutable, in an open period too
+- [0015](0015-a-posted-document-is-frozen.md) — A confirmed document is frozen
 - [0045](0045-recognising-a-counterparty.md) — A counterparty is recognised from learned patterns
 - [0070](0070-a-line-that-names-nobody-is-named-once.md) — A third-party line that names nobody is named once

@@ -4,7 +4,7 @@
 
 ## Context
 
-A purchase reaches the books in two ways. A structured e-invoice — CII,
+A purchase reaches the company data in two ways. A structured e-invoice — CII,
 UBL, a PDF carrying its Factur-X XML — is read exactly by the readers of
 `@ekwo-ai/factur-x` and `@ekwo-ai/peppol-ubl`, into the EN 16931
 `ReceivedInvoice` (decision 0050). Everything else — a photograph of a till
@@ -75,14 +75,14 @@ either: each line without a period of its own takes it, which is what
 EN 16931 means by it, and the draft returns it beside the lines. No
 migration was added: a period column on `documents` and `document_lines`,
 read and written by the e-invoicing bricks, is a change of the core of its
-own, to be made when an invoice issued from the books needs to carry one.
+own, to be made when an invoice issued from the accounts needs to carry one.
 
 ## Consequences
 
 - A product keeps the model call, its metering and the writes; it drops its
   schema, its prompt and its check.
 - The supplier, the account and the tax are chosen from the draft by the
-  product, in the company's books and pack: the package knows no chart and
+  product, in the company's accounts and pack: the package knows no chart and
   no rate.
 - `ReceivedInvoice` with `syntax: 'model'` may carry `''` where the type
   says a text is required. A consumer that sorts or totals received invoices
@@ -92,4 +92,4 @@ own, to be made when an invoice issued from the books needs to carry one.
 
 - [`packages/document-reading/README.md`](../../packages/document-reading/README.md) — how a product chains the reader
 - [0048](0048-format-libraries-are-mit-one-package-per-format.md) — Format libraries are MIT, one package per format
-- [0050](0050-an-invoice-is-written-from-the-books.md) — An invoice file is written from the books
+- [0050](0050-an-invoice-is-written-from-the-books.md) — An invoice file is written from the company data

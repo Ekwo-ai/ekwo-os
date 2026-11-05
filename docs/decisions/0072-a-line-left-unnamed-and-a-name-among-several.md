@@ -6,8 +6,8 @@
 
 `suggest_line_contacts()` proposes a contact for every open receivable or
 payable line that names nobody
-([0070](0070-a-line-that-names-nobody-is-named-once.md)). Two things show on
-real books.
+([0070](0070-a-line-that-names-nobody-is-named-once.md)). Two things show in
+real accounts.
 
 Some of those lines have nobody worth creating as a contact: a cash
 difference, a one-off refund to somebody who will never be a customer again.
@@ -24,7 +24,7 @@ that scored highest was the supplier of the licence, not the person owed.
 `leave_line_unnamed(line, reason)` writes the line and the reason, with who
 decided it, in `lines_left_unnamed`; `undo_leave_line_unnamed(line)` removes
 it. Both ask `reconcile.write`, which is what naming a line asks, and the
-trail records both acts. Only a posted, open receivable or payable line that
+trail records both acts. Only a recorded, open receivable or payable line that
 names nobody is left this way. `suggest_line_contacts()` no longer proposes
 such a line. Nothing of the line moves: it stays an open item, it can be
 matched, and `set_line_contact()` can still name it, which makes the record
@@ -52,4 +52,4 @@ path, so a statement line carrying several names is answered the same way.
 - `tests/line_unnamed.test.ts`
 - [0045](0045-recognising-a-counterparty.md) — A counterparty is recognised from learned patterns
 - [0070](0070-a-line-that-names-nobody-is-named-once.md) — A third-party line that names nobody is named once
-- [0071](0071-several-lines-settle-together-and-a-difference-is-booked.md) — Several lines settle together, and a small difference is booked
+- [0071](0071-several-lines-settle-together-and-a-difference-is-booked.md) — Several lines settle together, and a small difference is recorded

@@ -1,9 +1,9 @@
-# Taking over books kept elsewhere
+# Taking over accounts kept elsewhere
 
-Somebody who wants to try Ekwo on their own books arrives with them. They
+Somebody who wants to try Ekwo on their own accounts arrives with them. They
 come from another package, or from nowhere in particular — a spreadsheet —
 and what they hold is the same everywhere: a chart of accounts, parties,
-entries, the balances of a day. This page is how those get in.
+transactions, the balances of a day. This page is how those get in.
 
 ## The three parts
 
@@ -13,17 +13,17 @@ file(s) ──reader──▶ books ──correspondence──▶ import_books()
 ```
 
 1. **A reader per source**, in [`packages/formats/`](../packages/formats/README.md),
-   MIT and on its own. It reads a file and returns **books**: accounts,
-   contacts, entries, an opening balance, and `violations` for what does not add
+   MIT and on its own. It reads a file and returns **the company data**: accounts,
+   contacts, transactions, an opening balance, and `violations` for what does not add
    up. Each declares the shape in its own `types.ts`; the shape is the same in
    all of them, field for field, and it is not a shared abstraction — the same
    choice the three statement readers made.
 2. **The correspondence**, in `@ekwo-ai/core` (`importBooks()`,
    `proposeMapping()`): which account of the company's chart each account of
-   the old books becomes, and which journal each old journal goes to. It is
+   the old chart becomes, and which journal each old journal goes to. It is
    proposed, saved by the caller and given back. It is the one part only the
    user can settle.
-3. **`import_books()`**, in the schema: the books, already in the company's
+3. **`import_books()`**, in the schema: that data, already in the company's
    codes, written in one transaction through `post_entry()` and
    `opening_balance()`.
 
@@ -34,10 +34,10 @@ same `importBooks()`. Neither holds a rule.
 
 | Source | Brick | Reads |
 |---|---|---|
-| `trial-balance` | `@ekwo-ai/trial-balance` | A CSV of `account`, `debit`, `credit` or one signed `balance`. Becomes the opening entry of a year, or of the day inside it the books were taken over; with it, the list of the invoices still open (`readOpenItems()`). |
+| `trial-balance` | `@ekwo-ai/trial-balance` | A CSV of `account`, `debit`, `credit` or one signed `balance`. Becomes the opening balances of a year, or of the day inside it the accounts were taken over; with it, the list of the invoices still open (`readOpenItems()`). |
 | `fec` | `@ekwo-ai/fec` (`readFec()`) | The *fichier des écritures comptables*, found by the names of its columns, in any of the variants of the text. |
-| `journal-items` | `@ekwo-ai/journal-items` | The lines of every entry exported as CSV from the list view of an ERP whose ledger is a table of lines, under its labels or its field names; the chart and the partners beside it. |
-| `journal-report` | `@ekwo-ai/journal-report` | A journal report or a general ledger detail, saved as CSV from a cloud service's spreadsheet export; the chart and the contacts beside it. |
+| `journal-items` | `@ekwo-ai/journal-items` | The lines of every transaction exported as CSV from the list view of an ERP that keeps its accounts as a table of lines, under its labels or its field names; the chart and the partners beside it. |
+| `journal-report` | `@ekwo-ai/journal-report` | A journal report or a *General Ledger Detail* report, saved as CSV from a cloud service's spreadsheet export; the chart and the contacts beside it. |
 | `transaction-journal` | `@ekwo-ai/transaction-journal` | A transaction journal saved as CSV from a spreadsheet export, each transaction a run of rows under one date, type and number; the list of accounts beside it. |
 | `xaf` | `@ekwo-ai/xaf` (`readXaf()`) | An XML Audit File Financial, version 3.2 or 4.0: accounts, parties, the opening balance with the day it opens, and every transaction, in one XML file whose totals are checked against its lines. |
 
@@ -60,8 +60,8 @@ What they share, and why:
   of bytes is valid Latin. A date written in digits in an order the file does
   not state is refused until the caller names the order. An amount that could
   be read two ways — a comma in a comma-separated file — is refused.
-- **Nothing is corrected.** An entry that does not balance comes back as the
-  file wrote it, with a violation. The import then refuses books with a
+- **Nothing is corrected.** A transaction that does not balance comes back as the
+  file wrote it, with a violation. The import then refuses data with a
   violation; it does not repair them.
 - **Amounts never pass through a float.** They are added as integers of
   millionths and returned as decimal strings, never negative: the side is the
@@ -81,7 +81,7 @@ What they share, and why:
 }
 ```
 
-Each account of the old books is matched to an account of the company's chart,
+Each account of the old chart is matched to an account of the company's chart,
 and each old journal to a journal. Ekwo proposes a candidate from the codes and
 then checks it against what the files say about the account — its type, its
 name, the side of its balance — because two charts can give the same digits to
@@ -94,13 +94,13 @@ different things. Each proposal is marked:
 - **`given`** — the caller's own answer, flagged `doubtful` where the files
   contradict it.
 
-**Nothing is posted while an account the books use is only suggested**
+**Nothing is recorded while an account the data uses is only suggested**
 (`import_unconfirmed_accounts`). The user confirms a suggestion by writing it
 under `accounts`, or accepts all of them after reading them
 (`--accept-suggestions`). A dry run prints what to read first.
 
-`@opening` turns the entries of a journal into the opening entry of the year —
-what the *à-nouveaux* of a FEC are. `*` stands for the entries of a source with
+`@opening` turns the transactions of a journal into the opening balances of the year —
+what the *à-nouveaux* of a FEC are. `*` stands for the transactions of a source with
 no journal.
 
 **Given back, it wins.** Save the correspondence (`--save-mapping`), answer the
@@ -116,21 +116,21 @@ import_books(p_company_id uuid, p_books jsonb,
 ```
 
 It runs as the caller and needs `entries.write` and `entries.post`. In one
-transaction it opens the fiscal years the books need (with `p_open_years`),
+transaction it opens the fiscal years the data needs (with `p_open_years`),
 finds or creates the parties, checks every account code before writing
-anything, posts each entry through `post_entry()`, writes the opening balance
-through `opening_balance()` — on the day the books give, with the open items of
+anything, records each transaction through `post_entry()`, writes the opening balance
+through `opening_balance()` — on the day the data gives, with the open items of
 `opening.items` — and records the import in `book_imports`. The same
 files imported twice are refused (`import_already_done`), with what the first
 import wrote.
 
 **The rehearsal** is the same function with `p_dry_run`: everything runs and is
 rolled back, so a rehearsal is refused exactly as the import would be and shows
-the numbers the entries would take.
+the numbers the transactions would take.
 
 ## An opening on the day of the takeover
 
-Books are rarely taken over on the first day of a year. The trial balance of
+Accounts are rarely taken over on the first day of a year. The trial balance of
 the day before the takeover is the opening; the invoices and credit notes
 still open that day come beside it, as a second CSV:
 
@@ -151,14 +151,14 @@ ekwo import trial-balance balance.csv --open-items open-items.csv \
 are written `YYYY-MM-DD`. `supplier reference` and `label` are optional
 columns.
 
-- **The opening entry is dated on the day of the takeover**, on the opening
-  journal. With `--allow-result-accounts` it carries the income and expense of
+- **The opening balances are dated on the day of the takeover**, on the opening
+  journal. With `--allow-result-accounts` they carry the income and expense of
   the months before at their figure of the day.
-- **Each open item becomes a posted document** on the opening journal, booked
+- **Each open item becomes a recorded document** on the opening journal, recorded
   on that day and dated on the day it was issued, with its number, its payment
   reference and its due date. Its one line names the suspense account of the
-  company and carries no tax, so its entry puts the amount on the receivable
-  or payable of its party against the suspense account: nothing is booked to
+  company and carries no tax, so its transaction puts the amount on the receivable
+  or payable of its party against the suspense account: nothing is recorded to
   revenue, expense or tax a second time. A statement line that quotes the
   reference finds it (`suggest_matches()`), and `settle_from_statement()` and
   `reconcile()` settle it, as they would an invoice issued here.
@@ -169,8 +169,8 @@ columns.
   (`opening_items_unbalanced`), with both figures.
 
 Read on either side of the day: a trial balance or a statement that ends the
-day before the takeover reads nothing of these books; one that covers the
-whole year reads what the previous system held plus what was booked since; one
+day before the takeover reads nothing of this data; one that covers the
+whole year reads what the previous system held plus what was recorded since; one
 that starts on the day reads the year-to-date figures as a movement of its
 period. A tax return reads none of it — the opening carries no tax and no box,
 and the returns of the months before were filed from the previous system.
@@ -182,31 +182,31 @@ each item names its contact by id, and the MCP tool `opening_balance`
 
 ## Invoices and their pieces
 
-The ledger is the minimum an import brings. When the former system also holds
+The accounts are the minimum an import brings. When the former system also holds
 the invoices — a purchase with its supplier, lines and taxes, and the PDF
 behind it — bring them in as documents: the purchase or sale becomes a
-`documents` row, its entry is the one the document posts, and the PDF goes on
+`documents` row, its transaction is the one the document records, and the PDF goes on
 the document (`attachments.entity_type = 'document'`). Never hang the PDF on a
-ledger entry that stands in for an invoice: a document is what a reader opens
-to find the receipt, and an entry posted by a document refuses a file
+transaction that stands in for an invoice: a document is what a reader opens
+to find the receipt, and a transaction recorded by a document refuses a file
 (decision 0069). For a year already closed, reopen it with
-`reopen_fiscal_year()` — entries already posted in the years after it do not
+`reopen_fiscal_year()` — transactions already recorded in the years after it do not
 prevent that, and a later year that is closed is reopened first — replace the
-imported purchase entries by documents (reversing the imported entries on their
+imported purchase transactions by documents (reversing the imported transactions on their
 own date), check that the trial balance is unchanged account by account, and
-close it again. The years after read the result from the ledger, so nothing
+close it again. The years after read the result from the accounts, so nothing
 moves in them when nothing changed. A year under a final close
 (`close_fiscal_year_finally()`) is not reopened: its pieces go on its
-documents as they are, since a piece is not a change of the books.
+documents as they are, since a piece is not a change of the accounts.
 
 ## What an import does not do
 
 - **No tax.** A line arrives with an account and an amount, not with the tax
-  that produced it. The history feeds the ledger, the trial balance and the
+  that produced it. The history feeds the accounts, the trial balance and the
   financial statements, and no box of a VAT return: a period kept elsewhere
   was declared from where it was kept. An invoice brought in as a document is
   the exception: it carries its tax as the tax of its lines (`tax_id`), never
-  as a line on the VAT account — the VAT line of the former ledger is read as
+  as a line on the VAT account — the VAT line of the former system is read as
   the tax of the base lines, and a document line on an account a tax lands on
   is refused (`tax_account_on_a_line`, decision 0083).
 - **No matching yet.** The readers keep the reconciliation mark of each line
@@ -214,7 +214,7 @@ documents as they are, since a piece is not a change of the books.
   matched against its payment in Ekwo, with `reconcile`.
 - **No chart.** An account the company's chart does not have is not created.
   The correspondence points it at one that exists, or the user adds it first.
-- **No bank statement.** A statement is not books: it books nothing, and its
+- **No bank statement.** A statement is not accounts: it records nothing, and its
   lines wait for a payment. `ekwo import camt.053 | coda | cfonb120` hands it
   to `import_bank_statement()`, the MCP server's tool of the same name.
 

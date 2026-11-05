@@ -30,8 +30,8 @@ resolves every key against it.
 and the end-to-end test breaks when it moves.
 
 **A brick reads the flat rows the views publish and writes the figures as
-posted.** It computes no total and defaults no currency, unit or payment
-means: a file that recomputes can disagree with the ledger, and a default is a
+recorded.** It computes no total and defaults no currency, unit or payment
+means: a file that recomputes can disagree with the accounts, and a default is a
 value nobody chose. No figure is a JavaScript `number`.
 
 **Zero runtime dependencies.** Validators, schemas and reference files are

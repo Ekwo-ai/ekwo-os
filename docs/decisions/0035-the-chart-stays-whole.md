@@ -16,10 +16,10 @@ companies use a different fraction.
 `accounts_in_use(company, from, to)` answers from what the company already
 holds:
 
-- **moved** — the account carries a line of a posted entry (inside the period,
+- **moved** — the account carries a line of a recorded transaction (inside the period,
   or ever);
 - **referenced** — the configuration names it by foreign key: a role, a
-  contact override, a journal, a tax posting, a cash-basis transition account,
+  contact override, a journal, a tax account, a cash-basis transition account,
   a bank account, a product (undated);
 - **a module** — an enabled module holds it, asked through
   `<schema>.accounts_in_use(uuid)` by the convention of `can_disable()`;
@@ -33,11 +33,11 @@ of businesses into a chart. Both replace a fact with an opinion.
 
 **`accounts.pinned` is the column an operator edits**, and
 `install_country_template()` pins what it wires: roles, financial journal
-accounts, tax posting accounts, transition accounts — about a dozen per
+accounts, tax accounts, transition accounts — about a dozen per
 country whatever the chart's size.
 
 **Pinning restricts nothing.** A line takes any non-deprecated account. A tool
-that narrowed what may be booked would make a wrong entry by being helpful.
+that narrowed what may be recorded would make a wrong transaction by being helpful.
 
 **Left out on purpose:** closing accounts resolved only when a year is closed;
 parents of used accounts (headings would bring the hierarchy back); accounts on
@@ -49,7 +49,7 @@ draft documents (an undated draft would be in use in every period).
 ## Consequences
 
 - The chart keeps its legal depth while the list offered to a person or an agent stays short.
-- Nothing restricts what may be booked.
+- Nothing restricts what may be recorded.
 
 ## See also
 

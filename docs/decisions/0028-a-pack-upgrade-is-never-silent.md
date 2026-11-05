@@ -4,7 +4,7 @@
 
 ## Context
 
-A company copies its pack at install time and books on those accounts for
+A company copies its pack at install time and records on those accounts for
 years. A later pack version must reach it without overwriting what an
 operator may have changed on purpose — an account renamed deliberately looks
 exactly like one the pack renamed.
@@ -32,8 +32,8 @@ definer`, checks `company.write` first, and records itself in the audit trail.
 **A used account does not move between statements.** Because codes and types
 are frozen by use (see
 [0009](0009-accounts-have-types-and-are-resolved-by-role.md)),
-`pack_upgrade(…, apply => true)` refuses by name rather than move a booked
-account to another line of a filed statement.
+`pack_upgrade(…, apply => true)` refuses by name rather than move an
+account that carries transactions to another line of a filed statement.
 
 **Adding anything is a version.** A pack that grows without bumping its version
 is a pack nobody can upgrade to; adding a tax is a minor version.

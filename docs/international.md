@@ -1,6 +1,6 @@
 # Ekwo OS in every country
 
-> How one core keeps the books of any country: what the core knows, what a
+> How one core runs the finance of a company in any country: what the core knows, what a
 > country pack says, where the packs stand today and what comes next. The
 > format of a pack is recorded in
 > [decision 0025](decisions/0025-a-country-is-a-pack-of-data.md); the format
@@ -21,9 +21,9 @@ is read from that pack at run time.
 
 ## What the core knows, and what a pack says
 
-The core carries the mechanics every ledger shares:
+The core carries the mechanics every set of accounts shares:
 
-- double entry enforced by the database, account types, journals, periods,
+- double-entry accounting enforced by the database, account types, journals, periods,
   opening balances and a year-end close whose style the pack chooses;
 - taxes as rows — their kind (value added tax, GST, sales tax, withholding),
   whether they are recoverable, tax-inclusive prices, taxes due on collection,
@@ -41,7 +41,7 @@ more than one; the taxes with their rate history; the declaration form; the
 balance sheet and income statement schemes; the rules of an invoice; the
 depreciation rules of fixed assets and, for some countries, the corporate
 income tax; the translations. Every tax and every box cites the official text
-it comes from, and every pack carries a year of books with the declaration,
+it comes from, and every pack carries a year of company data with the declaration,
 the statements and the trial balance they must produce, to the cent.
 
 File formats are separate MIT packages under
@@ -71,7 +71,7 @@ A pack carries one of four statuses, which `ekwo init` and `ekwo status` print:
 |---|---|
 | `community` | Written from the official texts and checked by the tools and the golden year; no professional has signed it |
 | `maintained` | As above, and kept current by the maintainers |
-| `proven` | As above, and it reproduced the statements a real company filed and the administration accepted, after its books were imported; the pack lists the scopes reproduced and the ones not tested |
+| `proven` | As above, and it reproduced the statements a real company filed and the administration accepted, after its accounts were imported; the pack lists the scopes reproduced and the ones not tested |
 | `reviewed` | Read against the law by a named professional of the country, who signs it |
 
 There is no status meaning "certified by Ekwo": writing a pack is not reviewing
@@ -87,7 +87,7 @@ it. How a professional reviews a pack is in
 | The fiscalisation of invoices: a record chained by a hash, a clearance by the authority before issue, the data reported | **Done**, as pack data and the `einvoicing` module; the call to an authority is the host's |
 | Opening balances and a year-end close | **Done** — `opening_balance()`, `close_fiscal_year()`, `reopen_fiscal_year()`, and the final close `close_fiscal_year_finally()`, required where the pack says so |
 | A tax engine beyond the European value added tax | **Done** — GST, sales and use taxes, withholding, non-recoverable and tax-inclusive taxes, taxes computed inside their own base, several taxes on one document |
-| Taxes due on collection | **Done**; cash accounting as a ledger is not |
+| Taxes due on collection | **Done**; cash accounting as a whole is not |
 | Exchange differences | **Realised differences done**; revaluation of open items not yet |
 | A cash-flow statement | **Not yet** — the format accepts one, and no pack prescribes it yet |
 | Consolidation across companies | **Not yet** |
@@ -96,7 +96,7 @@ it. How a professional reviews a pack is in
 ## How a country is added
 
 A country is added the same way whoever adds it: from the official texts, in a
-pull request, checked by `ekwo pack check` and proved by its own year of books.
+pull request, checked by `ekwo pack check` and proved by its own year of company data.
 The walkthrough is
 [Adding a country in a day](packs.md#adding-a-country-in-a-day), and
 [`CONTRIBUTING.md`](../CONTRIBUTING.md) lists the invariants a pack may not
@@ -154,7 +154,7 @@ now pulls from the FDMS. The socle has no device certificate, no fiscal day,
 no signature and no QR code; the pack declares `einvoicing.obligation: none`,
 since nothing obliges an exchange between businesses, and every document
 carries a mention saying it is not a fiscal tax invoice. What would close the
-gap: a virtual fiscal device module that signs and submits each posted sale and
+gap: a virtual fiscal device module that signs and submits each recorded sale and
 credit note and stores the FDMS signature and QR code. Same family as Zambia
 (Smart Invoice), Kenya (eTIMS), Uganda (EFRIS) and Tanzania.
 
@@ -162,11 +162,11 @@ credit note and stores the FDMS signature and QR code. Same family as Zambia
 ask for the buyer's contact details on a fiscal tax invoice; the contact has a
 phone, the document view does not carry it.
 
-**Two currencies, one ledger.** The US dollar circulates beside the Zimbabwe
+**Two currencies, one set of accounts.** The US dollar circulates beside the Zimbabwe
 Gold (ZWG). VAT received in foreign currency is paid in that currency, import
 VAT and the tax on imported services in foreign currency (s. 38(4), (4a),
 s. 13(6)), and Part V of the VAT 7 splits sales, purchases and the amount
-payable between foreign and local currency. A box adds up postings and cannot
+payable between foreign and local currency. A box adds up recorded amounts and cannot
 be filtered on the currency of the document, so Part V is not computed. The
 pack's default currency is ZWG and the company chooses its own at `init`. The
 golden format has no document currency either, so a scenario cannot show an
@@ -182,7 +182,7 @@ expressed.
 
 **Credit notes on their own line.** The VAT 7 declares debit and credit notes
 as adjustments (lines 18 and 29) at the VAT-inclusive consideration. The pack
-routes credit-note postings there with the value net of tax; the form's
+routes the amounts of a credit note there with the value net of tax; the form's
 consideration is value plus tax.
 
 **A time of supply of five clauses.** Section 8(1) takes the earliest of
@@ -210,7 +210,7 @@ Italy's SdI: the pack says where the verification link comes from (here,
 each submission in `einvoicing.clearances` — `submitted`, `validated` with the
 identifier, the moment and the link, `rejected` by the authority or the buyer,
 `cancelled` — refusing every transition that cannot have happened and every
-cancellation or rejection after its window. The status names each posted sale
+cancellation or rejection after its window. The status names each recorded sale
 without a validation. The document submitted is written by
 `@ekwo-ai/myinvois` through the ordinary path of issue: the tax type of each
 tax and the classification of each line are attributes the pack gives
@@ -230,18 +230,18 @@ RM1 million from 1 January 2026 — and its guideline sets the threshold below
 which a taxpayer is exempted, raised to RM1,000,000 in December 2025 and to
 RM3,000,000 by version 4.8 of 30 August 2026, § 1.6.1(e). The pack carries
 both as dated data: each step of `mandatory_from` with its `turnover_above`,
-and `exemption` as a history that gains an entry when the threshold moves.
-Two gaps stay. The books do not hold a company's turnover, so the status
+and `exemption` as a history that gains a line when the threshold moves.
+Two gaps stay. The accounts do not hold a company's turnover, so the status
 cannot tell which step binds a company, or whether it is exempted: it counts
 from the earliest step and says the threshold in force, and the answer is the
-company's. And the RM1,000,000 threshold is not an entry, because no text the
+company's. And the RM1,000,000 threshold is not in that history, because no text the
 pack cites gives the day it took effect; the RM3,000,000 one is dated from the
 guideline that states it.
 
-**Cancelled at the authority, undone in the books.** A cancellation in
-MyInvois voids the e-Invoice; the ledger still holds the posted sale until
-`cancel_document()` undoes it, with a credit note in the books. The status
-lists a sale cancelled at the authority and still posted, and does not count
+**Cancelled at the authority, undone in the accounts.** A cancellation in
+MyInvois voids the e-Invoice; the accounts still hold the recorded sale until
+`cancel_document()` undoes it, with a credit note in the accounts. The status
+lists a sale cancelled at the authority and still recorded, and does not count
 the credit note that undoes it as missing a validation of its own. A buyer's
 rejection leaves the e-Invoice valid until the supplier cancels it; the status
 lists it apart.
@@ -339,7 +339,7 @@ input VAT (article 266 speaks of the standard rate only); the pack adds their ta
 the standard tax before the credit, and a payer mixing rates is not modelled.
 
 **Reverse charge without credit.** The tax a buyer withholds from a foreign
-supplier (article 260) is paid with the return and never credited; the pack posts
+supplier (article 260) is paid with the return and never credited; the pack records
 it to a non-recoverable VAT expense against the collected-VAT account.
 
 **A return form with no readable text.** The boxes follow articles 264 to 266
@@ -355,7 +355,7 @@ monthly return by the 20th of the following month and payment by the 25th
 article 95; the pack describes no registration rule and says so.
 
 **Input tax follows payment.** Article 110 credits the tax paid to suppliers; the
-core posts the credit on the invoice, so a purchase not yet paid at the month end
+core records the credit on the invoice, so a purchase not yet paid at the month end
 needs a manual correction.
 
 **Chart and return form not readable.** The standard chart of accounts and the
@@ -371,10 +371,10 @@ took its place (Ministry of Economy and Finance, order No. 191 of 2024). The pac
 copies the new one, all 321 accounts of its chapters 1 to 4, and leaves out the
 off-balance chapter.
 
-**Tax kept "by type" in a single account.** The instruction books input VAT in
-`4410` and the debt to the budget in `6410`, each with an analytic ledger by tax.
-The pack gives that ledger its own sub-accounts, because the pack format needs the
-posting accounts and the settlement account of a tax to differ.
+**Tax kept "by type" in a single account.** The instruction records input VAT in
+`4410` and the debt to the budget in `6410`, each with an analytic breakdown by tax.
+The pack gives that breakdown its own sub-accounts, because the pack format needs the
+accounts a tax is recorded on and its settlement account to differ.
 
 **A tax point that takes the earlier of two dates.** Article 242 of the Tax Code
 dates a supply of goods at the earlier of the invoice and the shipment; the format
@@ -401,7 +401,7 @@ period would be a change of the format, not of this pack.
 
 **A reverse charge that is also a credit.** Section 33 lets the purchaser of an
 imported business-to-business service deduct the tax it accounts for; the pack
-posts the output tax and the input tax in two boxes of the return.
+records the output tax and the input tax in two boxes of the return.
 
 ## From Cambodia
 
@@ -424,11 +424,11 @@ is required or issued if earlier, due seven days after delivery or performance
 **Credit excluded or prorated.** Article 13 excludes the tax on accommodation, meals,
 entertainment, passenger vehicles and petroleum products for most taxpayers, and
 article 15 prorates the credit of a taxpayer with taxable and non-taxable supplies.
-A purchase code that posts a part of the tax to the expense is not expressible as a
+A purchase code that records a part of the tax to the expense is not expressible as a
 rate on the line; the pack assumes full deductibility and says so.
 
 **A currency with no minor unit, used alongside the dollar.** The riel has no
-decimals; businesses also bank in US dollars. The pack keeps the books in riel.
+decimals; businesses also bank in US dollars. The pack keeps the accounts in riel.
 
 ## From Lao PDR
 
@@ -471,7 +471,7 @@ of Shrawan, about 16 July; the format offers `july`, a year that begins on
 
 **A reverse charge that is also a deduction.** Section 8(2) makes the person who
 acquires a service from outside Nepal assess the tax and section 17(5b) lets it
-be deducted; the pack posts the output tax and the input tax in two boxes of the
+be deducted; the pack records the output tax and the input tax in two boxes of the
 return.
 
 ## From Burundi
@@ -483,7 +483,7 @@ transport. The pack carries one tax for each, and the 10 % has its own box in th
 The items that depend on a ministerial ordinance (listed foodstuffs, operations assimilated
 to exports) are not listed, because no ordinance was readable.
 
-**A chart the law cites and no open source gives.** Article 51 requires books kept as
+**A chart the law cites and no open source gives.** Article 51 requires accounts kept as
 the national accounting plan provides, and the plan itself (PCN) could not be read; the
 pack's chart is its own grouping and says so.
 
@@ -510,7 +510,7 @@ exemptions and the version of the form.
 
 **An official chart.** Unlike several pages of this file, the chart is not the pack's own
 grouping: Portaria n.º 49/2008 publishes the Código de Contas and the pack takes its
-codes and names, classes 1 to 7, down to the levels a trading company posts to, with the
+codes and names, classes 1 to 7, down to the levels a trading company records to, with the
 code's own sub-accounts of 244 for the VAT.
 
 **A form that cannot be fully filled.** The return carries the fields of the Modelo 106
@@ -551,7 +551,7 @@ read, not its list of accounts; the pack's chart is its own and says so.
 
 **A tax paid by the beneficiary.** Article 06.01.09 bis makes the beneficiary
 of a service from a person without an establishment liquidate the tax on a
-separate form. The pack posts the tax and its deduction in two boxes of the
+separate form. The pack records the tax and its deduction in two boxes of the
 monthly return; the separate form is a gap in the pack.
 
 **A threshold the pack cannot enforce.** VAT is compulsory from an annual
@@ -580,7 +580,7 @@ service on credit to prove it; the pack declares `delivery_date` and writes the
 gap in its README.
 
 **Tax paid at customs.** Importers pay the VAT before the goods leave the
-customs office (article 254); the pack posts it to account 4361 and deducts it
+customs office (article 254); the pack records it to account 4361 and deducts it
 in the box for imports.
 
 ## From Malawi
@@ -610,7 +610,7 @@ replaces fiscal devices; the socle has no way to call it, so
 return prints the VAT due in box 10A and the VAT credit in box 11B, only one of
 the two filled. The pack carries one total, box `10`, which is output tax minus
 input tax credit: positive is line 10, negative is line 11. The refund claim and
-the credit carried to the next period (line 8) are not postings of the format.
+the credit carried to the next period (line 8) are not amounts the format records.
 
 **Two dates for the same return.** The Revenue Law (Amendment) Act 2023 gives the
 21st of the month for a return furnished in person and the 23rd through the Tax

@@ -35,25 +35,25 @@ consequence.
 - [0006](0006-a-machine-key-is-a-narrow-caller.md) — A machine key is a caller narrower than a person
 - [0007](0007-an-invitation-names-an-address.md) — An invitation names an address, not a user id
 
-## The ledger
+## The accounts
 
-- [0008](0008-documents-and-entries-are-two-layers.md) — Documents and entries are two joined layers
+- [0008](0008-documents-and-entries-are-two-layers.md) — Documents and transactions are two joined layers
 - [0069](0069-a-piece-goes-on-its-document.md) — A piece goes on its document
-- [0076](0076-an-analytic-value-is-entered-on-the-line.md) — An analytic value is entered on the line, and read from the ledger
+- [0076](0076-an-analytic-value-is-entered-on-the-line.md) — An analytic value is entered on the line, and read from the accounts
 - [0009](0009-accounts-have-types-and-are-resolved-by-role.md) — Accounts have types and are resolved by role
 - [0010](0010-amounts-are-positive-and-totals-derived.md) — Amounts are positive; totals are derived
 - [0011](0011-an-amount-is-rounded-at-its-currency.md) — An amount is rounded at the decimals of its currency
-- [0012](0012-a-number-follows-the-pattern-of-its-country.md) — A number is drawn at posting, from the country's pattern
+- [0012](0012-a-number-follows-the-pattern-of-its-country.md) — A number is drawn at recording, from the country's pattern
 - [0013](0013-locks-live-in-the-database-and-everything-raises.md) — Locks live in the database, and everything raises
-- [0014](0014-a-posted-entry-is-immutable.md) — A posted entry is immutable, in an open period too
-- [0015](0015-a-posted-document-is-frozen.md) — A posted document is frozen
+- [0014](0014-a-posted-entry-is-immutable.md) — A recorded transaction is immutable, in an open period too
+- [0015](0015-a-posted-document-is-frozen.md) — A confirmed document is frozen
 - [0016](0016-a-correction-is-one-gesture.md) — A correction is one gesture
-- [0017](0017-an-append-only-audit-trail.md) — An append-only audit trail surrounds the ledger
-- [0018](0018-reports-read-the-ledger.md) — Reports read the ledger and know no country
+- [0017](0017-an-append-only-audit-trail.md) — An append-only audit trail surrounds the accounts
+- [0018](0018-reports-read-the-ledger.md) — Reports read the accounts and know no country
 
 ## Taxes
 
-- [0019](0019-tax-postings-carry-the-account-and-the-box.md) — A tax posting carries the account and the box
+- [0019](0019-tax-postings-carry-the-account-and-the-box.md) — A tax carries the account and the box
 - [0020](0020-one-tax-engine-several-kinds-of-tax.md) — One tax engine, several kinds of tax
 - [0021](0021-cash-basis-vat-and-realised-exchange-differences.md) — Cash-basis VAT waits; exchange differences are realised
 - [0022](0022-a-price-that-holds-its-tax.md) — A price that holds its tax is converted per group
@@ -73,7 +73,7 @@ consequence.
 - [0029](0029-a-golden-year-is-the-contract-of-a-pack.md) — A golden year is the contract of a pack
 - [0030](0030-charts-and-financial-statements-are-data.md) — A country has charts, and a financial statement is data
 - [0031](0031-opening-and-closing-are-parameters.md) — Opening and closing are parameters, not code
-- [0032](0032-the-fec-carries-its-opening-balances.md) — The audit file carries opening balances, never posted
+- [0032](0032-the-fec-carries-its-opening-balances.md) — The audit file carries opening balances, never recorded
 - [0067](0067-an-opening-on-the-day-of-the-takeover.md) — An opening on the day of the takeover, with its open items
 - [0068](0068-an-analysis-for-every-country.md) — An analysis for every country, by account type
 - [0033](0033-what-a-country-requires-on-a-document-is-data.md) — What a country requires on a document is data
@@ -87,7 +87,7 @@ consequence.
 - [0038](0038-a-deadline-is-a-rule-of-the-country.md) — A deadline is a rule of the country; null is an answer
 - [0039](0039-a-deposit-is-an-event.md) — A deposit is an event, written from the frozen figures
 - [0040](0040-a-portfolio-is-what-the-caller-may-read.md) — A portfolio is what the caller may read
-- [0066](0066-a-filing-is-proved-by-its-hash.md) — A filing is proved by its hash, on a public ledger
+- [0066](0066-a-filing-is-proved-by-its-hash.md) — A filing is proved by its hash, on a public record
 - [0087](0087-a-declaration-is-paid-to-a-contact-the-pack-names.md) — A declaration is paid to a contact the pack names, and is paid when its debt is matched
 - [0088](0088-a-deposit-is-written-by-the-core.md) — A deposit is written by the core's functions, and the administration is named in the company's language
 
@@ -95,16 +95,16 @@ consequence.
 
 - [0041](0041-a-company-has-a-profile-and-a-first-year.md) — A company has a profile; its first year is a parameter
 - [0042](0042-a-document-is-shared-by-a-link.md) — A document is shared by a link that is the whole secret
-- [0043](0043-a-company-leaves-with-its-books.md) — A company leaves with its books
-- [0044](0044-a-product-is-a-catalogue-entry-in-the-core.md) — A product is a catalogue entry in the core, not stock
+- [0043](0043-a-company-leaves-with-its-books.md) — A company leaves with its data
+- [0044](0044-a-product-is-a-catalogue-entry-in-the-core.md) — A product is a catalogue item in the core, not stock
 - [0078](0078-a-line-names-what-was-sold.md) — A line names what was sold, by the classification its country declares
 - [0045](0045-recognising-a-counterparty.md) — A counterparty is recognised from learned patterns
 - [0046](0046-settling-applies-identification-and-offers-resemblance.md) — Settling applies identification, offers resemblance
 - [0047](0047-a-statement-is-imported-once.md) — A bank statement is imported once
 - [0070](0070-a-line-that-names-nobody-is-named-once.md) — A third-party line that names nobody is named once
-- [0071](0071-several-lines-settle-together-and-a-difference-is-booked.md) — Several lines settle together, and a small difference is booked
+- [0071](0071-several-lines-settle-together-and-a-difference-is-booked.md) — Several lines settle together, and a small difference is recorded
 - [0072](0072-a-line-left-unnamed-and-a-name-among-several.md) — A line may be left unnamed, and a name among several is a doubt
-- [0073](0073-sure-pairs-are-matched-in-one-gesture.md) — The sure pairs are matched in one gesture, and what undoes an entry is matched as it is posted
+- [0073](0073-sure-pairs-are-matched-in-one-gesture.md) — The sure pairs are matched in one gesture, and what undoes a transaction is matched as it is recorded
 - [0074](0074-two-contacts-of-one-company-are-merged.md) — Two contacts of one company are merged, and the absorbed one is retired
 - [0075](0075-the-contacts-that-are-probably-one-party-are-proposed.md) — The contacts that are probably one party are proposed
 - [0081](0081-a-company-is-archived-before-it-leaves.md) — A company is archived before it leaves, and deleted by its owner by name
@@ -117,8 +117,8 @@ consequence.
 
 - [0048](0048-format-libraries-are-mit-one-package-per-format.md) — Format libraries are MIT, one package per format
 - [0049](0049-a-statement-reader-reports-and-never-corrects.md) — A statement reader reports and never corrects
-- [0050](0050-an-invoice-is-written-from-the-books.md) — An invoice file is written from the books
-- [0051](0051-a-module-has-its-own-schema.md) — A module has its own schema and posts through a function
+- [0050](0050-an-invoice-is-written-from-the-books.md) — An invoice file is written from the company data
+- [0051](0051-a-module-has-its-own-schema.md) — A module has its own schema and records through a function
 - [0090](0090-the-socle-has-its-own-schema.md) — The socle has its own schema, `ekwo` (proposed)
 - [0063](0063-a-module-code-outlives-its-names.md) — A module code outlives its names
 - [0084](0084-a-contract-issues-drafts-of-the-socle.md) — A contract issues drafts of the socle
@@ -133,7 +133,7 @@ consequence.
 - [0052](0052-the-installer-needs-only-node-and-a-customer-project.md) — The installer needs only Node and the customer's project
 - [0053](0053-the-mcp-server-acts-as-the-user.md) — The MCP server acts as the user
 - [0064](0064-a-key-writes-as-its-issuer.md) — A key writes as the person who issued it
-- [0089](0089-an-agent-posts-in-the-mode-its-company-chose.md) — An agent posts in the mode its company chose: review or autopilot
+- [0089](0089-an-agent-posts-in-the-mode-its-company-chose.md) — An agent records in the mode its company chose: review or autopilot
 - [0054](0054-the-command-line-output-contract.md) — The command line answers one document and an exit code
 - [0055](0055-the-command-line-acts-as-a-signed-in-person.md) — The command line acts as a signed-in person
 - [0056](0056-the-command-line-computes-no-amount.md) — The command line computes no amount

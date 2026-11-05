@@ -17,7 +17,7 @@ chart code is `default`, a mechanism word; the pack names the chart.
 
 **Journals, taxes and the declaration form are common to a country's
 charts.** Roles stay on `country_defaults`, and `ekwo pack check` refuses a
-pack whose role codes and tax posting accounts are not in every chart it
+pack whose role codes and tax accounts are not in every chart it
 ships.
 
 **`ekwo init --chart` asks only when there is a choice**, preselecting nothing
@@ -40,14 +40,14 @@ chart reaches a line of some statement of that chart. At runtime
 `unmapped_accounts()` answers the same for a company, and the MCP tool returns
 that list beside the statement.
 
-**A sign belongs to a line summed from the ledger.** `sign: -1` flips a credit
+**A sign belongs to a line summed from the accounts.** `sign: -1` flips a credit
 balance to print positive. Totals are computed from lines that already read the
 way the scheme prints them, so `ekwo pack check` refuses `sign` (including an
 explicit `1`) on a line with `plus` or `minus`; a total against the direction
 of its components is a line of its own.
 
-**Closing and appropriation entries.** An income statement leaves out
-`kind = 'closing'` and `'appropriation'` entries; a balance sheet keeps both;
+**Closing and appropriation transactions.** An income statement leaves out
+`kind = 'closing'` and `'appropriation'` transactions; a balance sheet keeps both;
 an allocation section reads `appropriation`. See
 [0031](0031-opening-and-closing-are-parameters.md).
 
@@ -72,4 +72,4 @@ members, verified against the taxonomy version, and null where unverified.
 ## See also
 
 - `tests/charts.test.ts`, `tests/statements.test.ts`
-- [0018 Reports read the ledger](0018-reports-read-the-ledger.md)
+- [0018 Reports read the accounts](0018-reports-read-the-ledger.md)

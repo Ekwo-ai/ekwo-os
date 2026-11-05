@@ -1,12 +1,12 @@
-# A module has its own schema and posts through a function
+# A module has its own schema and records through a function
 
 > Status: accepted
 
 ## Context
 
-Fixed assets, budgets, a carbon ledger are not the accounting core. Each is
+Fixed assets, budgets, a carbon register are not the accounting core. Each is
 tables, a calculation and a report a company wants or not — and each ends with
-an entry. The question is where they live and what they may touch.
+a transaction. The question is where they live and what they may touch.
 
 ## Decision
 
@@ -21,7 +21,7 @@ one section, and absent entirely when not installed.
 module, written by the module's first migration; `company_modules` records who
 enabled what. There is no plugin registry in code to keep in step.
 
-**A module never writes the ledger by hand: `post_module_entry()` does.**
+**A module never writes the accounts by hand: `post_module_entry()` does.**
 Postgres has no privilege that forbids a schema from writing a table (privileges
 belong to roles), so the rule is structural: a module hands over a company, a
 date, a tag and lines as data, and the socle builds the draft and calls
@@ -29,7 +29,7 @@ date, a tag and lines as data, and the socle builds the draft and calls
 `entries` or `entry_lines`.
 
 **The tag makes a module idempotent, enforced by the database.**
-`entries.module_code` and `module_ref`, unique per company: the second booking
+`entries.module_code` and `module_ref`, unique per company: the second recording
 of a period fails on insert. That is also why `entry_kind` gains no value per
 module.
 
@@ -44,7 +44,7 @@ Nothing a module wrote is deleted by a disable. The same convention answers
 
 **A country is data inside a module too.** `packs/<cc>/<module>.json` compiles
 into the module's seed, applied only by the module runner. Accounts a module
-posts to are roles of the country model, so `ekwo pack check` already verifies
+records to are roles of the country model, so `ekwo pack check` already verifies
 them in every chart. Mechanisms are named, not countries (e.g. a disposal is
 `net_result` or `gross`), and roles carry no defaults.
 
@@ -59,8 +59,8 @@ push`, which knows only the socle's files.
 PostgREST error into the same sentence.
 
 **A module refuses rather than guesses** where guessing would untie the register
-from the ledger (a method it does not implement, rewriting a booked schedule, a
-disposal while an earlier period is unbooked). Conventions that are a reading
+from the accounts (a method it does not implement, rewriting a recorded schedule, a
+disposal while an earlier period is unrecorded). Conventions that are a reading
 of the rules are listed for an accountant in the module's README.
 
 ## Consequences

@@ -13,8 +13,8 @@ second kind of asset had to be named beside it.
 
 A module's names are not all of the same kind. Its code is the key of
 `public.modules`, of `company_modules`, of the capabilities it declares, and it
-is written on every entry it posts, in `entries.module_code`. A posted entry
-does not move, for anybody ([decision 0014](0014-a-posted-entry-is-immutable.md)
+is written on every transaction it records, in `entries.module_code`. A recorded
+transaction does not move, for anybody ([decision 0014](0014-a-posted-entry-is-immutable.md)
 and the guard of `20260918161538`). Its schema, its tables and its functions are
 names an API client calls.
 
@@ -24,8 +24,8 @@ names an API client calls.
 schema, the tables, the functions, the constraints, the policies, the MCP
 prefix, the pack section and the folder of the module are renamed by a
 migration and a release. The code is not: renaming it would mean rewriting the
-tag of posted entries, in closed years and filed periods, which is exactly what
-the ledger refuses.
+tag of recorded transactions, in closed years and filed periods, which is exactly what
+the accounts refuse.
 
 **A rename happens in place, in one idempotent migration.** `alter schema …
 rename` and `alter table … rename` keep the rows, the keys, the policies and

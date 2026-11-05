@@ -9,9 +9,9 @@ holds proves nothing to anybody else.
 
 A **filing proof** answers both questions without asking anyone to trust the
 company or the installation. The sha256 of the exact bytes of the file is
-committed to a public ledger that nobody controls, and the proof of that
+committed to a public record that nobody controls, and the proof of that
 commitment is kept. Anybody who holds the file recomputes the hash, reads the
-proof, and checks it against the ledger with software of their own choosing.
+proof, and checks it against that record with software of their own choosing.
 
 The company is the one that publishes. It decides which filing to prove and
 when, and it decides whom to show the file to — an investor, a bank, a
@@ -20,7 +20,7 @@ hand over, and the proof makes that choice verifiable. Only the company stamps
 its own filings.
 
 The feature is the same for every company in every country. It reads no pack
-and has no national variant: a hash is a hash, and a public ledger is public
+and has no national variant: a hash is a hash, and a public record is public
 everywhere. What is proved can be any declaration, the annual accounts of any
 financial year, or any document.
 
@@ -73,7 +73,7 @@ only way in. A complete proof does not move.
 
 A company that leaves an installation takes its proofs with it
 ([`company-archive.md`](company-archive.md)). A proof is checked against the
-public ledger and not against the installation, so it means the same thing in
+public record and not against the installation, so it means the same thing in
 any installation.
 
 ## The public door
@@ -191,7 +191,7 @@ string period, string entityScheme, string entityId, string jurisdiction
 
 | Attester | What it proves | Cost of keys |
 |---|---|---|
-| An address the company controls | The company itself published these hashes. This is the strong form | The company keeps a key, in a wallet or a signing service, and links the address to its identity: on its website, in its registry entry, or through a second attestation |
+| An address the company controls | The company itself published these hashes. This is the strong form | The company keeps a key, in a wallet or a signing service, and links the address to its identity: on its website, in its listing in a registry, or through a second attestation |
 | The operator of the installation | An installation observed that this company published these hashes | One operational key per installation; weaker, because the operator vouches for the company |
 
 ### Onchain or offchain

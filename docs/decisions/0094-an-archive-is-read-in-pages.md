@@ -8,11 +8,11 @@ A copy of a company over the API was one call, `export_company()`, which
 reads the manifest and every table in one statement
 ([0043](0043-a-company-leaves-with-its-books.md)). One statement is one
 snapshot, which is what makes the archive whole: the lines agree with their
-entries, the counters with the numbers they gave. It is also one request,
+transactions, the counters with the numbers they gave. It is also one request,
 and a request has a clock — eight seconds for `authenticated` on a hosted
 project, five minutes since `20261027073538` gave the archive functions their
 own. A company of about 20 MB already came close to the first. A company of
-ten years of entries, or of a few thousand pieces, meets the second: no clock
+ten years of transactions, or of a few thousand pieces, meets the second: no clock
 is long enough for every company, and a longer one keeps a connection of the
 pool busy for as long.
 
@@ -45,8 +45,8 @@ whose form differs, which the page gives by their place.
 
 **Each page is its own snapshot, and the archive is checked at both ends.**
 The client asks the outline before the first page and after the last. A row
-added or removed anywhere changes a count; every act that changes a posted
-figure — a posting, a matching, a payment, a closing — writes a line on the
+added or removed anywhere changes a count; every act that changes a recorded
+figure — a recording, a matching, a payment, a closing — writes a line on the
 trail, which is a table of the archive and so a count too. Outlines that
 differ are `archive_moved`, and the archive is read again. A table read with
 fewer rows than its outline gave, the outlines agreeing, is
@@ -74,7 +74,7 @@ SQL or PostgREST, a nightly copy over PostgREST.
   edit; the archive still imports, and that draft is what it was at one of the
   two moments. One statement, or one `repeatable read` transaction, remains
   the way to one snapshot, and the command line keeps it.
-- A copy that meets `archive_moved` reads again. At night the books rarely
+- A copy that meets `archive_moved` reads again. At night the accounts rarely
   move; a client that retries a few times and then says so is enough.
 - Incremental copies are not decided here. Pages make the full copy of any
   company possible over the API; whether a copy should be smaller than the

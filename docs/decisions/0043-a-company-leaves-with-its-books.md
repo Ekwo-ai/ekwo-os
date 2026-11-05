@@ -1,4 +1,4 @@
-# A company leaves with its books
+# A company leaves with its data
 
 > Status: accepted
 
@@ -6,7 +6,7 @@
 
 Several companies in one installation is the normal case, and `pg_dump` takes
 the installation or nothing. Without a way to cut one company out, "the client
-owns the books" depends on the goodwill of whoever runs the installation.
+owns its data" depends on the goodwill of whoever runs the installation.
 
 ## Decision
 
@@ -57,7 +57,7 @@ turns them back on.
 
 **The archive is not trusted.** Before writing: checksums, every row's
 `company_id`, no unknown table or column. After: row counts through the
-company, foreign keys staying inside it, entries agreeing with lines and
+company, foreign keys staying inside it, transactions agreeing with lines and
 balanced, matchings agreeing, counters not behind used numbers, years not
 overlapping. One failure and nothing stays. `import_company()` is `security
 definer`, guarded like `create_company()`, and writes `company_imported` —

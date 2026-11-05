@@ -10,20 +10,20 @@
 > Amended 2026-10-27 by `20261027190000`: the contacts a chain of pairs joins
 > are one group, with one contact to keep and one row per other contact, and
 > each row proposes the simplest name the group carries. Three spellings of
-> one supplier were three pairs, and the kept contact kept the name the books
+> one supplier were three pairs, and the kept contact kept the name the accounts
 > used most rather than the one a person would write.
 
 ## Context
 
 `merge_contacts()` joins two contacts once somebody has said which two
-([0074](0074-two-contacts-of-one-company-are-merged.md)). Books taken over in
+([0074](0074-two-contacts-of-one-company-are-merged.md)). Accounts taken over in
 two passes leave dozens of such pairs among thousands of contacts — "Marlow
 Jane" and "Jane Marlow", "Dupont" and "Dupont Holdings", one supplier imported
 with its VAT number and again with its bank account — and nobody reads two
 thousand contacts side by side to find them.
 
-The books already know how a party is recognised. A statement line and a
-ledger line that name nobody are weighed by `contact_candidates()`
+The accounts already know how a party is recognised. A statement line and an
+account line that name nobody are weighed by `contact_candidates()`
 ([0045](0045-recognising-a-counterparty.md),
 [0070](0070-a-line-that-names-nobody-is-named-once.md)): the account, the
 learned motifs, the significant words of a name, and a doubt when those words
@@ -39,7 +39,7 @@ strongest first:
 
 | Column | Type | What it says |
 |---|---|---|
-| `keep_id` | `uuid` | The contact to keep: the one more ledger lines and documents name, then the older, then the smaller id |
+| `keep_id` | `uuid` | The contact to keep: the one more account lines and documents name, then the older, then the smaller id |
 | `absorb_id` | `uuid` | The contact to absorb into it |
 | `score` | `numeric` | 0 to 1, the strongest evidence of the pair |
 | `evidence` | `text` | The kinds of evidence, strongest first, comma-separated: `vat_number`, `registration_number`, `account`, `name` |
@@ -70,7 +70,7 @@ party is still found under any of them.
 It writes nothing. `merge_contacts(keep_id, absorb_id)` is still the act, and a
 person still chooses it.
 
-**The evidence is what the books recognise a party by.**
+**The evidence is what the accounts recognise a party by.**
 
 - The same **VAT number** or the same **registration number**, compared once
   punctuation and case are set aside: 1.
@@ -96,7 +96,7 @@ person still chooses it.
   the same name, 0.900 otherwise — capped at 0.600 when the shorter name
   agrees with several contacts, since it cannot say which one is the twin;
   the threshold is the company's `name_threshold`. `contact_candidates()` is
-  not changed by the weighing: a statement line and a ledger line are
+  not changed by the weighing: a statement line and an account line are
   suggested as before.
 
 **One scoring path.** The score of a name and its cap move out of
@@ -125,13 +125,13 @@ caller may read; a company of somebody else gives no row.
 
 - A screen lists the pairs, shows the two contacts and the sentences, and
   calls `merge_contacts()` on the pair a person confirms.
-- A statement line, a ledger line and a pair of contacts are scored by one
+- A statement line, an account line and a pair of contacts are scored by one
   rule; a change to how a name scores changes all three. Which pairs of
   contacts are compared at all is the duplicates' own: the weighing of the
   words reads two names, where a line reads one text.
 - Contacts with the same name and nothing else to tell them apart are
   proposed. Many contacts sharing one exact name are many pairs; that is what
-  the books say.
+  the accounts say.
 
 ## See also
 

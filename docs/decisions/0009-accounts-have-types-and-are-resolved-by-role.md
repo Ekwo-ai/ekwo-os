@@ -8,7 +8,7 @@ With five account types (asset, liability, equity, income, expense), the aged
 balance, reconcilability and the mapping to statements live in code patterns
 on account codes. `411` means *customers* on the French chart and
 *recoverable VAT* on the Belgian one, so a pattern that works in one country
-books to the wrong account in another.
+records to the wrong account in another.
 
 ## Decision
 
@@ -40,14 +40,14 @@ which is a real answer, so nothing fills it in.
 
 **A code and a type are frozen by the first use.** Statement rules and
 declaration boxes reach accounts by code, so renumbering a used account would
-move a booked year to another line of a filed statement. A trigger refuses a
+move a recorded year to another line of a filed statement. A trigger refuses a
 change of code (`account_code_frozen`) or type (`account_type_frozen`) once
-the account carries a ledger line, is named by a tax posting or plays a role.
+the account carries an account line, is named by a tax line or plays a role.
 Label, translations, notes, parent, `reconcilable`, `deprecated` and `pinned`
 stay editable. An account given the wrong code is deprecated and replaced.
 
 **Mapping by code range is presentation, and presentation is allowed.** The
-rule against choosing an account *to post to* by prefix is about posting.
+rule against choosing an account *to record to* by prefix is about recording.
 Statement schemes and filing taxonomies map by ranges of the legal chart, and
 refusing that would mean hand-listing hundreds of codes per country.
 

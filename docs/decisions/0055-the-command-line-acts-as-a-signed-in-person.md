@@ -5,12 +5,12 @@
 ## Context
 
 `--db-url` is the owner of the database: `auth.uid()` is null and no policy
-applies. That is right for installing and wrong for anything that touches a
-ledger.
+applies. That is right for installing and wrong for anything that touches
+the accounts.
 
 ## Decision
 
-**Bookkeeping commands sign in and go through PostgREST with the user's own
+**The commands that run the finance sign in and go through PostgREST with the user's own
 token**, where row level security is satisfied rather than imitated. Commands
 that connect as the owner (`init`, `migrate`, `status`, `doctor`) say so when
 they connect.

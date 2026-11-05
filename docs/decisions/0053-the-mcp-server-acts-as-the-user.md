@@ -4,7 +4,7 @@
 
 ## Context
 
-An agent connected to the books must see exactly what its user may see,
+An agent connected to the company data must see exactly what its user may see,
 and must not become a second place where accounting rules are decided.
 
 ## Decision
@@ -20,12 +20,12 @@ requires `EKWO_ACT_AS_USER_ID`, and every query runs in a transaction that sets
 `request.jwt.claims` and switches to `authenticated`. Otherwise the fallback
 would silently be the privileged mode.
 
-**Every ledger write goes through a function of the schema** — `post_document`,
+**Every write to the accounts goes through a function of the schema** — `post_document`,
 `post_payment`, `post_entry`, `reconcile`, `unreconcile`. Direct inserts are
 limited to what a person types: contacts, draft documents and lines, payments,
 bank transactions.
 
-**No tool edits a posted entry.** Corrections are reversals and credit notes
+**No tool edits a recorded transaction.** Corrections are reversals and credit notes
 ([0016](0016-a-correction-is-one-gesture.md)).
 
 **Amounts cross as decimal strings in both directions** (`amount::text`,
@@ -43,9 +43,9 @@ test can exercise) and over parameterised SQL.
 
 **It refuses an older database.** Each package declares a `schema_min`; the
 server checks `ekwo_schema_version()` before offering a tool, because an
-agent improvising around a missing column improvises an entry.
+agent improvising around a missing column improvises a transaction.
 
-**The shared bookkeeping layer lives in the core.** The functions between a
+**The shared accounting layer lives in the core.** The functions between a
 tool and the database (codes to ids, product pre-fill, two-step creations)
 are in `packages/core/src/books`, shared with the CLI; the server keeps its
 input schemas, descriptions, `explain()` and its backends.

@@ -28,13 +28,13 @@ the only one this cycle needs.
 
 ### 1. Compute
 
-`vat_return(company, from, to, report_code)` reads the ledger and answers box by
+`vat_return(company, from, to, report_code)` reads the accounts and answers box by
 box. Which boxes there are, what each of them sums and which are computed from
 others is **pack data** (`tax_report.json`); the function contains no country
 rule. A figure belongs to the period its tax fell due in — `tax_point_of()` —
-and not to the date of the entry, where a country says the two differ.
+and not to the date of the transaction, where a country says the two differ.
 
-Nothing is stored. Asked twice, it answers twice, and after an entry lands in
+Nothing is stored. Asked twice, it answers twice, and after a transaction lands in
 the period it answers differently. That is right for preparing and wrong for
 having filed, which is the reason for step 2.
 
@@ -113,7 +113,7 @@ prove it went.
 
 A company may also **prove** a filed file existed on a given day:
 `ekwo proof stamp <file> --filing` commits its SHA-256 to a public timestamp
-ledger, and anybody holding the file can check it later without an account.
+record, and anybody holding the file can check it later without an account.
 Only the hash leaves. [`filing-proofs.md`](filing-proofs.md) is the detail.
 
 ### 7. Settle and pay
@@ -121,17 +121,17 @@ Only the hash leaves. [`filing-proofs.md`](filing-proofs.md) is the detail.
 `settle_filing(filing, credit, reference, contact, date)` clears the tax
 accounts the declared period moved **on that form** and carries the net to the
 account **the pack names** — `tax_payable`, or `tax_receivable` where the period
-ends in a credit and the chart keeps the two apart. One entry per declaration,
+ends in a credit and the chart keeps the two apart. One transaction per declaration,
 through `post_entry()`, and a unique index so replaying is refused by the
 database. The debt matures on the filing's `due_date`, which `prepare_filing()`
 writes from the pack's deadline rule.
 
 What "on that form" means is `filing_tax_movements()`: a tax line whose box is
 on the form, or a tax line with no box whose tax prints its base in a box of
-the form — the form that computes the tax from the base. A tax the pack books
+the form — the form that computes the tax from the base. A tax the pack records
 on a liability no box of the form carries — the buyer's self-assessed tax on a
 service from abroad, a withholding, a second return of another authority —
-stays on its account, for its own return or an entry the company writes; so
+stays on its account, for its own return or a transaction the company writes; so
 does a tax due on collection that still waits on its transition account. A
 period in which nothing else moved has nothing to settle, and says so.
 
@@ -141,34 +141,34 @@ the schema's.
 
 The debt is then an open item like any other, and it names the administration.
 The pack says who that is (`defaults.tax_payee`); `tax_payee(company)` finds
-the company's contact for it — the one contact that books to the account the
+the company's contact for it — the one contact recorded against the account the
 pack names — or creates it under the pack's name, in the company's language
 where the pack gives one, and `settle_filing()` names it when its caller names
-nobody. Give the entry the reference the payment will
+nobody. Give the transaction the reference the payment will
 quote, and `auto_settle()` matches the payment against it — by reference, like
 any other payment.
 
 When that debt is matched in full, by whatever path, the declaration is
 **paid**: the outcome is written on it and on the send it answers, as
 `record_filing_outcome(…, 'paid')` writes it, whoever matched the payment —
-somebody who keeps the books without filing included. Undoing the matching
+somebody who runs their finance without filing included. Undoing the matching
 takes it back to accepted. A declaration whose debt was matched before this
 existed was recorded paid by `20261023160000`.
 
 ### 8. Correct
 
-Two different things, and calling them by the same name is how books go wrong:
+Two different things, and calling them by the same name is how accounts go wrong:
 
 - **A refusal** — the administration never accepted it. Send again, or
   `reopen_filing()` and redo the figures.
-- **A corrective** — the administration accepted it and the books have moved
+- **A corrective** — the administration accepted it and the accounts have moved
   since. `supersede_filing()` opens a new declaration pointing at the old one,
   which becomes `superseded`. Nothing is overwritten: what was sent stays as it
   was sent, and the corrective's settlement carries **the difference** and not
   the period all over again.
 
 `filings_touched_since()` is what makes step 8 start on time: it lists the
-declarations whose period the ledger moved after they were filed. A late entry
+declarations whose period the accounts moved after they were filed. A late transaction
 is not refused — a supplier invoice arrives when it arrives — but it is never
 silent. A company that wants the period shut says so with `lock_filed_period()`,
 which moves the tax lock forward only, and refuses while there are still tax
@@ -210,16 +210,16 @@ the scheme files — or say that it files none (`vat_scheme_files_no_return`).
 | | Normal scheme | Simplified scheme | Exemption |
 |---|---|---|---|
 | Forms | the periodic return | the annual return | none |
-| VAT on sales | charged | charged | refused at posting (`vat_charged_under_exemption`) |
+| VAT on sales | charged | charged | refused at recording (`vat_charged_under_exemption`) |
 | Invoice mention | — | — | the pack's `small_business` mention |
 | During the year | — | instalments | — |
 
-**An annual return restates the periodic one.** The taxes of a pack post for
-its periodic return. An annual form does not get a second set of postings: it
-names the form whose postings it reads (`reads_postings_of`), and each of its
+**An annual return restates the periodic one.** The taxes of a pack record for
+its periodic return. An annual form does not get a second set of `tax_postings`: it
+names the form whose `tax_postings` it reads (`reads_postings_of`), and each of its
 boxes lists the boxes of that form it adds up. Line 5A of the French CA12 is
 what line 08 of the CA3 would have received over the year, and the two forms
-can never disagree about a posting.
+can never disagree about a recorded amount.
 
 **Instalments.** A scheme that asks for payments on account declares them as a
 schedule: in which months, which percentage, of which box of the previous
@@ -228,10 +228,10 @@ period's return, and the base under which nothing is due.
 1. `instalment_plan(company, from, to)` says what is due on account of the
    declaration of a period: the month (and the day, where the law gives one
    day to everybody), the base read on the previous period's return as
-   `prepare_filing()` froze it — or as the books compute it where nothing was
+   `prepare_filing()` froze it — or as the accounts compute it where nothing was
    frozen — the amount due, what was paid and what is outstanding.
 2. `declaration_instalments` records what was paid: the instalment, the day,
-   the amount, and the entry that carried it where there is one.
+   the amount, and the transaction that carried it where there is one.
 3. The annual return deducts them in the box that reads them —
    `instalments_paid`, or `instalments_due` for a form that deducts what was
    due whether paid or not — and its totals carry the balance.
@@ -242,7 +242,7 @@ period's return, and the base under which nothing is due.
    `instalment_plan` reads the plan.
 
 **A ceiling is an alert.** `vat_scheme_ceilings_crossed(company, from, to)`
-compares the turnover of the books with the ceilings of the scheme the company
+compares the turnover in the accounts with the ceilings of the scheme the company
 is on. Nothing changes a scheme by itself: leaving one is a decision the
 company records, from the first day of a financial year.
 
@@ -263,7 +263,7 @@ that matter across all of them:
 [`firms.md`](firms.md#what-portfolio-means-here) defines it. It is not a list anybody maintains: it is the companies on which the
 caller holds `filings.read`. An accountant of forty companies gets forty, the
 person who runs one of them gets that one, and the administrator of the
-instance — who creates companies and keeps no books — gets none.
+instance — who creates companies and keeps no accounts — gets none.
 
 Two things differ from the per-company readings. **The window is on the day a
 return is due**, not on the period. And **every company is in the answer**: a
@@ -288,7 +288,7 @@ portal, with no file written for it, is the ordinary state of most packs, and a
 deadline a pack has not declared is printed `not declared`. The same answers
 are asserted end to end, pack by pack, by the test suite: the golden year is
 replayed, the return computed and frozen, the file written and read back to the
-cent where a brick exists, and the settlement posted where the pack names an
+cent where a brick exists, and the settlement recorded where the pack names an
 account.
 
 ---

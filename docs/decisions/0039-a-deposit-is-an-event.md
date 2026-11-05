@@ -17,7 +17,7 @@ after a country; a second country depositing the same shape would use it.
 answer (most forms are filed by hand on a portal).
 
 **Its input is the freeze.** The brick takes `tax_filing_boxes`, the figures
-as filed; recomputing from the ledger would drift from the filing.
+as filed; recomputing from the accounts would drift from the filing.
 
 **One value per grid where the form has one.** A grid given twice is a
 violation, not a silent drop.
@@ -53,8 +53,8 @@ what an administration holds; a refused declaration is held by nobody.
 portal sessions belong to whoever operates the sending
 ([`cloud-services.md`](../cloud-services.md)), never to this repository.
 The proof — deposit number, acknowledgement,
-the file — lives in the company's database under the same policies as its
-books, so stopping a subscription never takes the proof away. The channel is
+the file — lives in the company's database under the same policies as the rest of
+its data, so stopping a subscription never takes the proof away. The channel is
 `portal` (a person uploads) or `service` (named as text); the core keeps no
 list of providers.
 
@@ -64,8 +64,8 @@ list of providers.
   written with `filings.write`, like the deposit that names it
   (`20261010203452`): an attachment of a declaration, or one a deposit names
   as the file sent or the receipt. Every other attachment is read with
-  `documents.read` and written with `documents.write`, so a member who books
-  without reading the declarations sees neither the deposits nor their files.
+  `documents.read` and written with `documents.write`, so a member who records
+  transactions without reading the declarations sees neither the deposits nor their files.
 
 ## See also
 

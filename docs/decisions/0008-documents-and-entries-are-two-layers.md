@@ -1,12 +1,12 @@
-# Documents and entries are two joined layers
+# Documents and transactions are two joined layers
 
 > Status: accepted
 
 ## Context
 
-An invoice answers to EN 16931 and Peppol; an entry answers to the chart of
+An invoice answers to EN 16931 and Peppol; a transaction answers to the chart of
 accounts and to the audit file. A single table for both gives a shorter
-schema and a display-type discriminator on every ledger line.
+schema and a display-type discriminator on every account line.
 
 ## Decision
 
@@ -28,17 +28,17 @@ foreign key.** `entry_lines(entry_id, company_id)` references
 `entries(id, company_id)`, so the denormalisation cannot drift, and row level
 security needs no join to the parent on the largest tables.
 
-**`entry_date`, `state` and `journal_id` are not copied onto entry lines.**
+**`entry_date`, `state` and `journal_id` are not copied onto `entry_lines`.**
 Reports join. If that ever hurts, the answer is an index or a materialised
 view, not a second source of truth for three facts.
 
 ## Consequences
 
 - Matching, attachments and e-invoicing are written once, for one document table.
-- Reports pay a join to the entry header; that is the accepted cost.
+- Reports pay a join to the transaction header; that is the accepted cost.
 
 ## See also
 
 - [0010 Amounts are positive and totals are derived](0010-amounts-are-positive-and-totals-derived.md)
-- [0015 A posted document is frozen](0015-a-posted-document-is-frozen.md)
+- [0015 A confirmed document is frozen](0015-a-posted-document-is-frozen.md)
 - [`schema.md`](../schema.md), [`mapping.md`](../mapping.md)

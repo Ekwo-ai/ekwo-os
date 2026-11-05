@@ -7,12 +7,12 @@
 A company bills most of what it sells under an agreement: a subscription, a
 licence, a maintenance contract, a lease of equipment. It buys the same way.
 What was agreed — the party, the term, how it renews and with how much notice,
-the price of each line and how often it is invoiced — lived outside the books,
+the price of each line and how often it is invoiced — lived outside the company data,
 and the invoices it said were due were keyed by hand, month after month, with
 the contract's number copied into the reference when somebody remembered.
 
 The `crm` module showed the shape of a module whose rows are about contacts
-rather than about the ledger. A contracts module has one more reach: what it
+rather than about the accounts. A contracts module has one more reach: what it
 produces is an invoice, which is the socle's.
 
 ## Decision
@@ -39,11 +39,12 @@ The module never names `entries` or `entry_lines`, and calls no
 `post_module_entry()`: its manifest says `"posts": false`.
 
 **`auto_post` asks the socle, as a person would.** A schedule that says so
-has each of its documents booked by `post_document()`, which needs
-`documents.post` — asked by name before the first one is written. The entry is
+has each of its documents recorded by `post_document()`, which needs
+`documents.post` — asked by name before the first one is written. The
+transaction is
 the socle's, built by the socle's rules, exactly as if a member had pressed
 the button. Without it, the drafts wait for somebody to read them, which is
-the default because AGENTS.md has an agent post nothing without the user.
+the default because AGENTS.md has an agent record nothing without the user.
 
 **Idempotent because the socle refuses the duplicate.** The draft of a period
 carries `client_ref = contracts:<schedule>:<first day>`, unique per company in
@@ -88,7 +89,7 @@ Signature itself stays out of this version.
 
 ## Consequences
 
-- An invoice issued from a contract is an ordinary document: it is posted,
+- An invoice issued from a contract is an ordinary document: it is recorded,
   sent, paid, credited and archived by the socle's own functions, and a
   report reads it like any other.
 - Deleting a draft takes its issue with it; `next_on` stays where it is, so

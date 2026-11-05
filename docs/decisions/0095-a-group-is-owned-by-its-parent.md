@@ -4,12 +4,12 @@
 
 ## Context
 
-A group that consolidates its companies needs the books of several companies
+A group that consolidates its companies needs the accounts of several companies
 at once. Every row of Ekwo belongs to one company, and every policy asks
 whether the caller is a member of it and holds the capability there
 ([0051](0051-a-module-has-its-own-schema.md) for a module: `module_enabled()`
 and the module's own capability). A group is the first thing that spans
-companies, so it has to say whose it is, and how the books of the others are
+companies, so it has to say whose it is, and how the accounts of the others are
 read.
 
 Two answers were open. A group could stand above the companies, with members
@@ -42,7 +42,7 @@ change of interest closes one and opens the next, and the perimeter of a past
 date stays what it was.
 
 **Nothing is written in a member.** Eliminations and adjustments, when they
-come, are rows of the module's schema, never documents or entries of a member.
+come, are rows of the module's schema, never documents or transactions of a member.
 
 ## Consequences
 
@@ -53,19 +53,19 @@ come, are rows of the module's schema, never documents or entries of a member.
   row stays, with `readable = false`.
 - An archive of the parent carries its groups and not their members, which
   name other companies of the installation by id.
-- A company kept in another installation cannot be a member. Reading books
+- A company kept in another installation cannot be a member. Reading accounts
   across installations is a question for later, and this shape does not
   prevent it.
 
 ## Alternatives considered
 
 - **A group with members of its own and a reading role across companies.**
-  Rejected: it is a second way into a company's books beside its own
+  Rejected: it is a second way into a company's accounts beside its own
   membership, and the one place a company's policies would not decide who reads
   them.
 - **A `security definer` reading of the members.** Rejected for the same
   reason: whoever holds `consolidation.read` in the parent would read the
-  members' books without being a member of them.
+  members' accounts without being a member of them.
 - **A typed integration rate.** Rejected: it can disagree with its method, and
   nothing would say which one is right.
 
@@ -73,5 +73,5 @@ come, are rows of the module's schema, never documents or entries of a member.
 
 - `modules/consolidation/supabase/migrations/20261029030000_consolidation.sql`
 - `modules/consolidation/tests/consolidation.test.ts`
-- [0051](0051-a-module-has-its-own-schema.md) — A module has its own schema and posts through a function
+- [0051](0051-a-module-has-its-own-schema.md) — A module has its own schema and records through a function
 - [0064](0064-a-key-writes-as-its-issuer.md) — A key writes as the person who issued it

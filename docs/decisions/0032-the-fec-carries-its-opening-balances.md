@@ -1,16 +1,16 @@
-# The audit file carries opening balances, never posted
+# The audit file carries opening balances, never recorded
 
 > Status: accepted
 
 ## Context
 
 The French *fichier des écritures comptables* (FEC) is a per-year file. A tax
-inspector reads the *à-nouveaux* first, yet the ledger deliberately holds none
+inspector reads the *à-nouveaux* first, yet the accounts deliberately hold none
 (see [0031](0031-opening-and-closing-are-parameters.md)).
 
 ## Decision
 
-**Opening lines exist in the export and nowhere else.** The ledger stays
+**Opening lines exist in the export and nowhere else.** The accounts stay
 cumulative; the file carries them because the file is per year. Amounts come
 from `trial_balance()`, the one place a cumulative balance is computed.
 
@@ -24,12 +24,12 @@ would have left it on, which `closing_style` decides (a result account under
 inside the income statement). A pack naming no such account, or an income
 account, gets `no_result_account`.
 
-**The entries a close writes are left out of the file of the year they
+**The transactions a close writes are left out of the file of the year they
 close.** Kept, they would show the result twice and the income statement read
 from the file would be nil. Left out, the file of a closed year is byte for
 byte the file of the same year open. Two tests hold that.
 
-**`financial_statement()` keeps appropriation entries and the audit file
+**`financial_statement()` keeps appropriation transactions and the audit file
 leaves out both kinds**, deliberately: an appropriation section is part of a
 statutory income statement; the audit file is the movements themselves.
 
@@ -43,11 +43,11 @@ reason to hold an export back.
 
 ## Consequences
 
-- Opening lines are one entry per year, aggregated per account, with no
-  sub-ledger detail — the project's reading, flagged for an accountant.
+- Opening lines are one transaction per year, aggregated per account, with no
+  detail by contact — the project's reading, flagged for an accountant.
 - `@ekwo-ai/fec` writes the file; the core no longer re-exports it.
 
 ## See also
 
 - `tests/fec.test.ts`, `packages/formats/fec/`
-- [0018 Reports read the ledger](0018-reports-read-the-ledger.md)
+- [0018 Reports read the accounts](0018-reports-read-the-ledger.md)
