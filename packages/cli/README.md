@@ -1,10 +1,10 @@
 # ekwo
 
 The installer and the operator's tool for [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os).
-One command turns a Supabase project you already own into a set of double-entry
-books: the schema, every country pack, the first administrator, the first
-company and its first financial year. The same command line then keeps books,
-as a signed-in person.
+One command turns a Supabase project you already own into balanced accounts:
+the schema, every country pack, the first administrator, the first
+company and its first financial year. The same command line then runs your
+finance, as a signed-in person.
 
 ```sh
 npx -y ekwo-os@latest init
@@ -47,7 +47,7 @@ You need Node 20 or later. No Supabase CLI, no Docker.
    three questions whose wrong answer is expensive: the country, the chart and
    the language.
 
-4. **Sign in** as that administrator and start booking — in the web
+4. **Sign in** as that administrator and start recording — in the web
    application, [Ekwo Cloud](https://cloud.ekwo.ai/signup?src=cli), which opens your own
    instance; through an AI agent and the [MCP server](../mcp/README.md); from
    this command line; or through the REST API Supabase generates.
@@ -81,8 +81,8 @@ than one answer. Each refusal lists the values the pack accepts.
 ## Several countries in one installation: `init --no-company`
 
 An installation is not in a country; its companies are. `ekwo init` loads every
-pack of the release whatever `--country` says, so one installation keeps the
-books of companies in as many countries as it holds packs. When there is no
+pack of the release whatever `--country` says, so one installation runs the
+finance of companies in as many countries as it holds packs. When there is no
 "first company" to name — a group, a firm, a holding with subsidiaries abroad —
 install without one, then create each company in its own country:
 
@@ -113,12 +113,12 @@ end of a successful run.
 **1. Turn off self sign-up on your project.**
 Supabase dashboard → **Authentication → Sign In / Providers → "Allow new users
 to sign up"**, switched off. An Ekwo installation is closed: the people who
-keep the books are invited. A stranger who signs up sees nothing, but there is
+run its finance are invited. A stranger who signs up sees nothing, but there is
 no reason to let them in.
 
 **2. Keep two administrators.**
 An instance administrator invites everybody else. With one, a lost password or
-a closed mailbox is a set of books nobody can let anyone into. Create a second
+a closed mailbox is company data nobody can let anyone into. Create a second
 account and add it with `claim_instance_admin()`, or invite it from the
 application.
 
@@ -133,7 +133,7 @@ scoped to one company.
 [`DISCLAIMER.md`](../../DISCLAIMER.md), at the root of the repository. A
 country pack is a reading of a country's rules at the date of its version.
 `ekwo init` prints the review status of the pack it installs for the same
-reason. The books are yours, in every country where you file.
+reason. The accounts are yours, in every country where you file.
 
 ## What `init` does, step by step
 
@@ -156,12 +156,12 @@ project reports what was already there and creates nothing a second time.
 | `ekwo init` | The whole installation, interactive or not: the socle's migrations, the reference seeds, then the modules', as `ekwo migrate` applies them. `--no-company` stops before the first company: see [several countries](#several-countries-in-one-installation-init---no-company). |
 | `ekwo migrate` | Applies the migrations this release adds, after showing the gap — the socle's, then the modules'. Re-applies the reference seeds, which are idempotent. `--no-modules` leaves the modules alone. |
 | `ekwo status` | Schema version installed against available, pending migrations, the instance, its administrators, the country packs it holds and, per company, the pack version it copied. On an installation that is not registered, a short invitation to [register](#registering-with-ekwo). Exits 1 when something is pending. |
-| `ekwo doctor` | Every object this release defines and every privilege it grants, against what the database holds; row level security on every table, a policy on every protected table, no pending migration, no membership pointing at a deleted user, every company with a bank account, statements that tie to their lines, posted entries that balance. Exits 1 on a problem, 0 on warnings. |
+| `ekwo doctor` | Every object this release defines and every privilege it grants, against what the database holds; row level security on every table, a policy on every protected table, no pending migration, no membership pointing at a deleted user, every company with a bank account, statements that tie to their lines, recorded transactions that balance. Exits 1 on a problem, 0 on warnings. |
 | `ekwo register` | Opt in to security advisories and release notes. Optional: everything works the same without it. Also the retry when the announcement did not go through. |
 | `ekwo unregister` | Opt back out. Clears the address and the date on the instance row. |
 | `ekwo demo` | Loads the sample company. Fictional data, explicit request only. |
 | `ekwo module` | What is installed beside the socle, applies a module's migrations and its country seeds, and turns one on or off for a company. |
-| `ekwo company` | `new` creates a company in its own country, through `create_company()`, and `list` shows the companies held here. `show` reads the company in use as the person signed in — its financial years, lock dates, journals and accounts by role — the same document as the MCP tool `get_company`. One company leaves an installation with its books — `export` writes an archive anybody can read, as a member under row level security — and arrives in another one alive: `import` takes it in whole or not at all. |
+| `ekwo company` | `new` creates a company in its own country, through `create_company()`, and `list` shows the companies held here. `show` reads the company in use as the person signed in — its financial years, lock dates, journals and accounts by role — the same document as the MCP tool `get_company`. One company leaves an installation with its data — `export` writes an archive anybody can read, as a member under row level security — and arrives in another one alive: `import` takes it in whole or not at all. |
 | `ekwo pack` | Compiles a country pack into its seed, and refuses a seed that is no longer the output of its pack. Runs in a checkout of the repository only. |
 | `ekwo login` | Signs in to an instance as yourself and keeps the session, in your own configuration directory. See [acting as a person](#acting-as-a-person-login-use-whoami). |
 | `ekwo logout` | Ends that session, here and on the instance. |
@@ -169,37 +169,37 @@ project reports what was already there and creates nothing a second time.
 | `ekwo whoami` | Who you are on which instance, the companies you can see, and what you may do on the one in use. |
 | `ekwo contact add` / `list` | A customer or a supplier, and finding one again. |
 | `ekwo contact duplicates` | The contacts that are probably one party, strongest first, through `suggest_duplicate_contacts()`: one row per contact to absorb, the rows of one kept contact being one party, with a score, the evidence — the same VAT or registration number, the same bank account, the words of the name weighed by how few contacts carry them — and the simplest name the group carries, proposed for the kept contact. Writes nothing. |
-| `ekwo contact merge <keep> <absorb>` | One party created twice — two spellings, two imports — joined through `merge_contacts()`: everything that names the second, posted lines and issued documents included, names the first; the first takes the fields it left empty; the second is retired, never deleted, and named by nothing again. By name or id. |
+| `ekwo contact merge <keep> <absorb>` | One party created twice — two spellings, two imports — joined through `merge_contacts()`: everything that names the second, recorded lines and issued documents included, names the first; the first takes the fields it left empty; the second is retired, never deleted, and named by nothing again. By name or id. |
 | `ekwo contact statement` | What went through the accounts of one contact over a period, the balance it runs to, and what is still open. |
-| `ekwo doc new` / `doc line add` | A draft document — any kind, with `--type` — and one more line on it. A draft books nothing. `ekwo invoice` is the old name of `ekwo doc`, kept as an alias. |
-| `ekwo doc approve <document>` | Approves a draft, as it stands, for an agent to post where agents post in `review`, through `approve_document()`. Signed in as yourself, with `documents.post`; refused to a machine key. A change to the draft afterwards needs another approval. |
-| `ekwo company agent-posting [review\|autopilot\|review_only]` | The setting `agent_posting`: how an agent — a machine key, the MCP server — books a document of the company in use. `review`, the default, once a person approved it, unless the agent's session was started with `--autopilot`; `autopilot`, directly, within its rights, each posting on the audit trail; `review_only`, review with autopilot refused to every session. Without a value, says which. Signed in as yourself, with `company.write`; an agent may only make it stricter. |
-| `ekwo key list [--all]` / `ekwo key create <name> --capability <code>… [--expires <timestamp>] [--autopilot]` | The machine keys of the company in use, with what each may do and how it posts; and one more, through `create_api_key()`, its secret shown once. A key posts as the company's `agent_posting` says; `--autopilot` issues one that posts without approvals — with `company.write`, never in a `review_only` company — and the mode is fixed for good: a key wanted in another mode is issued again. Needs `members.manage`. |
+| `ekwo doc new` / `doc line add` | A draft document — any kind, with `--type` — and one more line on it. A draft records nothing. `ekwo invoice` is the old name of `ekwo doc`, kept as an alias. |
+| `ekwo doc approve <document>` | Approves a draft, as it stands, for an agent to record (post) where agents record in `review`, through `approve_document()`. Signed in as yourself, with `documents.post`; refused to a machine key. A change to the draft afterwards needs another approval. |
+| `ekwo company agent-posting [review\|autopilot\|review_only]` | The setting `agent_posting`: how an agent — a machine key, the MCP server — records a document of the company in use. `review`, the default, once a person approved it, unless the agent's session was started with `--autopilot`; `autopilot`, directly, within its rights, each recording on the audit trail; `review_only`, review with autopilot refused to every session. Without a value, says which. Signed in as yourself, with `company.write`; an agent may only make it stricter. |
+| `ekwo key list [--all]` / `ekwo key create <name> --capability <code>… [--expires <timestamp>] [--autopilot]` | The machine keys of the company in use, with what each may do and how it records; and one more, through `create_api_key()`, its secret shown once. A key records as the company's `agent_posting` says; `--autopilot` issues one that records without approvals — with `company.write`, never in a `review_only` company — and the mode is fixed for good: a key wanted in another mode is issued again. Needs `members.manage`. |
 | `ekwo mcp [--autopilot\|--review]` | The MCP server, over stdio, for an agent: the same server as `ekwo-mcp` of [`@ekwo-ai/mcp`](../mcp/README.md), with its flags and its environment (`ekwo mcp --help`). The `@ekwo-ai/mcp` installed beside this CLI, or the one of its release through `npx` — this CLI keeps its one outside dependency. In `.mcp.json`: `"command": "ekwo", "args": ["mcp"]`. |
-| `ekwo post <document>` | Books it, through `post_document()`. `--dry-run` shows the entry the database would write and writes nothing. Signed in as yourself, you post in any mode; with a machine key, the company's `agent_posting` applies, or the key's own autopilot. |
-| `ekwo cancel <document>` | Undoes a posted invoice, and says how. Back to draft, through `unpost_document()`, where its country allows it and nothing about it has left; otherwise through `cancel_document()`: the credit note that names it, posted and matched against it, and the invoice cancelled. `--date` books the credit note on another day than the invoice's, which is how a locked period is stepped over; `--credit` asks for the note where a draft was possible. |
-| `ekwo reverse <entry>` | Undoes a posted entry keyed by hand, through `reverse_entry()`: its mirror, posted and matched against it. By id or by number; `--date` as for `cancel`. |
-| `ekwo line contacts suggest [--line <line>]…` / `ekwo line contact set <line> <contact>` | The open receivable and payable lines that name nobody — open items of books imported line by line — with the contacts each could be, best first: a learned motif, the number of a document of the company quoted in the label, the description or the reference of the entry, the words of a contact's name, and how many contacts the same evidence reached. `set` names one, once, through `set_line_contact()`, and the label is learned for the next time. A contact by name or id. |
+| `ekwo post <document>` | Records it, through `post_document()`. `--dry-run` shows the transaction the database would write and writes nothing. Signed in as yourself, you record in any mode; with a machine key, the company's `agent_posting` applies, or the key's own autopilot. |
+| `ekwo cancel <document>` | Undoes a recorded invoice, and says how. Back to draft, through `unpost_document()`, where its country allows it and nothing about it has left; otherwise through `cancel_document()`: the credit note that names it, recorded and matched against it, and the invoice cancelled. `--date` records the credit note on another day than the invoice's, which is how a locked period is stepped over; `--credit` asks for the note where a draft was possible. |
+| `ekwo reverse <entry>` | Undoes a recorded transaction keyed by hand, through `reverse_entry()`: its mirror, recorded and matched against it. By id or by number; `--date` as for `cancel`. |
+| `ekwo line contacts suggest [--line <line>]…` / `ekwo line contact set <line> <contact>` | The open receivable and payable lines that name nobody — open items of accounts imported line by line — with the contacts each could be, best first: a learned motif, the number of a document of the company quoted in the label, the description or the reference of the transaction, the words of a contact's name, and how many contacts the same evidence reached. `set` names one, once, through `set_line_contact()`, and the label is learned for the next time. A contact by name or id. |
 | `ekwo line unnamed leave <line> --reason <text>` / `ekwo line unnamed undo <line>` | Leaves such a line without a contact on purpose, with the reason, through `leave_line_unnamed()`: it is no longer suggested a contact and stays an open item. `undo` takes it back. |
-| `ekwo line combinations suggest [--contact <contact>]` / `ekwo line match <line> <line>… [--difference <reason>]` / `ekwo line differences list` | Which open receivable and payable lines of one counterparty settle each other — an exact pair, several lines to the cent, or within the company's difference tolerance — through `suggest_item_combinations()`; `match` matches the lines named in one gesture under one letter (`reconcile_many()`), or with `--difference` books the difference on the account the pack gives for the reason and matches everything (`reconcile_with_difference()`); `differences list` gives the reasons, their accounts and the tolerance. |
-| `ekwo payment record` | Money in or out, booked and matched. With `--doc`, against that document. |
-| `ekwo match <transaction> <document>… [--amount <amount>]… [--extra "account=<code>,amount=<amount>,tax=<code>"]…` | A bank statement line pays documents, through `settle_from_statement()`: `--amount`, once per document, says how much settles each; `--extra` books the fee or the charges the line is net of in the same entry, and alone settles a bank charge. The line balances to the cent or is refused. |
-| `ekwo analytic axes`, `ekwo analytic report --axis <code> --from <date> --to <date>` | The analytic axes of the company and their values; and the income, expense, result and fixed-asset movement of each value of one axis over a period, read by `analytic_report()` from the posted ledger, a parent with the subtotal of the values below it, then the part no share of the axis reaches and the total of the period. |
-| `ekwo balance --from <date> [--to <date>]` | The trial balance: opening balance, debit, credit and closing balance of every account over the period, from posted entries only, read by `trial_balance()`, and the debit and credit totals. |
-| `ekwo ledger [<account>] --from <date> [--to <date>]` | Every posted line of one account by its code, or of every account, with the balance carried forward to the first day and a running balance, read by `general_ledger()`. |
-| `ekwo journal [<journal>] --from <date> [--to <date>]` | The book of one journal by its code, or of every journal: the totals of each, then every line of every posted entry in the order a book is read, from `journal_totals()` and `journal_book()`. |
+| `ekwo line combinations suggest [--contact <contact>]` / `ekwo line match <line> <line>… [--difference <reason>]` / `ekwo line differences list` | Which open receivable and payable lines of one counterparty settle each other — an exact pair, several lines to the cent, or within the company's difference tolerance — through `suggest_item_combinations()`; `match` matches the lines named in one gesture under one letter (`reconcile_many()`), or with `--difference` records the difference on the account the pack gives for the reason and matches everything (`reconcile_with_difference()`); `differences list` gives the reasons, their accounts and the tolerance. |
+| `ekwo payment record` | Money in or out, recorded and matched. With `--doc`, against that document. |
+| `ekwo match <transaction> <document>… [--amount <amount>]… [--extra "account=<code>,amount=<amount>,tax=<code>"]…` | A bank statement line pays documents, through `settle_from_statement()`: `--amount`, once per document, says how much settles each; `--extra` records the fee or the charges the line is net of in the same transaction, and alone settles a bank charge. The line balances to the cent or is refused. |
+| `ekwo analytic axes`, `ekwo analytic report --axis <code> --from <date> --to <date>` | The analytic axes of the company and their values; and the income, expense, result and fixed-asset movement of each value of one axis over a period, read by `analytic_report()` from the recorded accounts, a parent with the subtotal of the values below it, then the part no share of the axis reaches and the total of the period. |
+| `ekwo balance --from <date> [--to <date>]` | The trial balance: opening balance, debit, credit and closing balance of every account over the period, from recorded transactions only, read by `trial_balance()`, and the debit and credit totals. |
+| `ekwo ledger [<account>] --from <date> [--to <date>]` | Every recorded line of one account by its code, or of every account, with the balance carried forward to the first day and a running balance, read by `general_ledger()`. |
+| `ekwo journal [<journal>] --from <date> [--to <date>]` | One journal by its code, or every journal: the totals of each, then every line of every recorded transaction in the order a journal is read, from `journal_totals()` and `journal_book()`. |
 | `ekwo aged [--receivable \| --payable] [--at <date>]` | What each customer still owes, or what is still owed to each supplier, at a day, by days overdue, read by `aged_balance()` from the lines no matching has settled. `--to` and `--at` are today when they are not given, and the output says so. |
 | `ekwo vat --from <date> --to <date> [--form <code>]` | The VAT return of the period, read by `vat_return()`: every box with its name and amount, in the order the form of the country pack prints them, the boxes the form derives from the others marked computed. `--form` names the declaration where the country files several. A period the company does not file that form on is refused by the database, by name. It prepares figures; it files nothing. |
 | `ekwo ecsl --from <date> --to <date> [--form <code>]` | The recapitulative statement of supplies to customers in other Member States, read by `ec_sales_list()`: one line per customer VAT number and nature, credit notes deducted, and a warning for each line that cannot be filed as it stands. With `--form`, the period is checked against the cadence the company files that statement on. |
 | `ekwo statement [<code> --from <date> --to <date>]` | Without a code, the balance sheets and income statements the company can be presented on, read by `available_statements()` — the schemes of its country pack, the ones its chart reports on marked default, and the generic framework by account type. With a code, that statement for the period, read by `financial_statement()`: every line, nil included, in the order the scheme prints it, totals in bold, and every account no line catches, from `unmapped_accounts()`, so a statement that does not tie out says so. It prepares figures; it files nothing. |
-| `ekwo import <source> <file>…` | Books kept elsewhere — `trial-balance`, `fec`, `journal-items`, `journal-report`, `transaction-journal`, `xaf` — whole or not at all, through `import_books()`, with a correspondence of accounts and journals you save and give back; or a bank statement — `camt.053`, `coda`, `cfonb120` — as pending lines. `--dry-run` rehearses. See [taking over books](#taking-over-books-ekwo-import). |
-| `ekwo doc list` / `show` | What exists, and with `--unpaid` what is posted and still owed. See [keeping books](#keeping-books). |
-| `ekwo doc pdf <document>` | The PDF of a sale invoice or credit note, rendered from the books by [`@ekwo-ai/invoice-pdf`](../formats/invoice-pdf/README.md), with the logo the company names by URL (fetched by this command, from a public http(s) address only). Written to `--out`, or under its own name in the current directory. `--factur-x` embeds the CII of a posted sale and makes it a Factur-X PDF/A-3 (the rules it breaks end on exit 1); `--page-size Letter`; the words of the layout are in the document's language where a set exists for it (de, en, es, fr, nl), in English otherwise, and `--labels <file.json>` puts other words over them. `ekwo document` is the whole word of `ekwo doc`. Records nothing. |
+| `ekwo import <source> <file>…` | Accounts kept elsewhere — `trial-balance`, `fec`, `journal-items`, `journal-report`, `transaction-journal`, `xaf` — whole or not at all, through `import_books()`, with a correspondence of accounts and journals you save and give back; or a bank statement — `camt.053`, `coda`, `cfonb120` — as pending lines. `--dry-run` rehearses. See [taking over your accounts](#taking-over-your-accounts-ekwo-import). |
+| `ekwo doc list` / `show` | What exists, and with `--unpaid` what is recorded and still owed. See [running your finance](#running-your-finance). |
+| `ekwo doc pdf <document>` | The PDF of a sale invoice or credit note, rendered from the company data by [`@ekwo-ai/invoice-pdf`](../formats/invoice-pdf/README.md), with the logo the company names by URL (fetched by this command, from a public http(s) address only). Written to `--out`, or under its own name in the current directory. `--factur-x` embeds the CII of a recorded sale and makes it a Factur-X PDF/A-3 (the rules it breaks end on exit 1); `--page-size Letter`; the words of the layout are in the document's language where a set exists for it (de, en, es, fr, nl), in English otherwise, and `--labels <file.json>` puts other words over them. `ekwo document` is the whole word of `ekwo doc`. Records nothing. |
 | `ekwo proof stamp` / `upgrade` / `verify` | The sha256 of a filed file — a declaration, the annual accounts of a financial year, a document — committed to Bitcoin through the public OpenTimestamps calendars; only the hash leaves. `upgrade` completes the pending proofs of the company and is made to run on a schedule; `verify` checks a file against its proof and the block it names, and `--out` writes the `.ots` file any verifier reads. See [`docs/filing-proofs.md`](../../docs/filing-proofs.md). |
-| `ekwo einvoice validate` / `issue` / `status` / `list` | The electronic invoice of a posted sale, in the format its country pack declares, through the `einvoicing` module: `validate` writes it and names the rules it breaks (exit 1 if any), `issue` keeps it and with `--send --to <directory>` writes it to that folder, `status --refresh` follows it. See [`modules/einvoicing`](../../modules/einvoicing/README.md). |
-| `ekwo einvoice fiscalise` / `fiscalisation` | The fiscal record a country's fiscalisation regime requires for every invoice — VERI*FACTU is one — written by the brick its pack names and chained after the last record of the invoicing system described by `--system <file>` (or `EKWO_FISCAL_SYSTEM`); `--dry-run` writes it and chains nothing, a record that breaks a rule is never chained (exit 1). `fiscalisation` walks each chain, and names the records still to send and the posted sales without a record. |
-| `ekwo einvoice clearance <document> submitted\|validated\|rejected\|cancelled` | Under a clearance regime — the authority validates every invoice before it is issued — records what happened to a posted sale: its submission (`--reference`, `--issue`), the authority's validation (`--identifier`, `--validated-at`, `--verification-url` — or, where the pack builds the link, `--detail` and `--environment`), a rejection by the authority or the buyer (`--reason`, `--by`), its cancellation (`--reason`), each `--at` a moment, `--detail <file>` the answer as JSON. It dials nobody; the database refuses a transition that cannot have happened, and a window of the pack that has closed. `fiscalisation` then counts the sales validated, waiting, rejected and cancelled. |
-| `ekwo peppol validate <file>` / `lookup <participant>` | The Peppol network, with no installation and no sign-in. `validate` reads a UBL invoice or credit note as it arrived and names the rules it breaks — the arithmetic of EN 16931 and the electronic addresses of both parties — with exit 1 if any; nothing is booked. `lookup` checks a participant identifier (`0208:0999999922`, `iso6523-actorid-upis::…` or a symbolic scheme) and asks the DNS of the Service Metadata Locator whether it is registered, and with which Service Metadata Publisher; `--test` asks the acceptance network. Exit 0 only for a registered participant. See [`@ekwo-ai/peppol-ubl`](../formats/peppol-ubl/README.md#participant-identifiers-and-the-sml). |
+| `ekwo einvoice validate` / `issue` / `status` / `list` | The electronic invoice of a recorded sale, in the format its country pack declares, through the `einvoicing` module: `validate` writes it and names the rules it breaks (exit 1 if any), `issue` keeps it and with `--send --to <directory>` writes it to that folder, `status --refresh` follows it. See [`modules/einvoicing`](../../modules/einvoicing/README.md). |
+| `ekwo einvoice fiscalise` / `fiscalisation` | The fiscal record a country's fiscalisation regime requires for every invoice — VERI*FACTU is one — written by the brick its pack names and chained after the last record of the invoicing system described by `--system <file>` (or `EKWO_FISCAL_SYSTEM`); `--dry-run` writes it and chains nothing, a record that breaks a rule is never chained (exit 1). `fiscalisation` walks each chain, and names the records still to send and the recorded sales without a record. |
+| `ekwo einvoice clearance <document> submitted\|validated\|rejected\|cancelled` | Under a clearance regime — the authority validates every invoice before it is issued — records what happened to a recorded sale: its submission (`--reference`, `--issue`), the authority's validation (`--identifier`, `--validated-at`, `--verification-url` — or, where the pack builds the link, `--detail` and `--environment`), a rejection by the authority or the buyer (`--reason`, `--by`), its cancellation (`--reason`), each `--at` a moment, `--detail <file>` the answer as JSON. It dials nobody; the database refuses a transition that cannot have happened, and a window of the pack that has closed. `fiscalisation` then counts the sales validated, waiting, rejected and cancelled. |
+| `ekwo peppol validate <file>` / `lookup <participant>` | The Peppol network, with no installation and no sign-in. `validate` reads a UBL invoice or credit note as it arrived and names the rules it breaks — the arithmetic of EN 16931 and the electronic addresses of both parties — with exit 1 if any; nothing is recorded. `lookup` checks a participant identifier (`0208:0999999922`, `iso6523-actorid-upis::…` or a symbolic scheme) and asks the DNS of the Service Metadata Locator whether it is registered, and with which Service Metadata Publisher; `--test` asks the acceptance network. Exit 0 only for a registered participant. See [`@ekwo-ai/peppol-ubl`](../formats/peppol-ubl/README.md#participant-identifiers-and-the-sml). |
 
 There is no `eject`, because there is nothing to eject from. The schema is in
 your database, the migrations are in the repository under AGPL-3.0, and
@@ -234,7 +234,7 @@ reference of commands and flags in one document, for an agent.
 | Exit code | Means |
 |---|---|
 | `0` | Done. |
-| `1` | It failed for a reason that is not the books — the network, a bug — **or a check found something** (`doctor`, `status`, `pack check`). |
+| `1` | It failed for a reason that is not the accounts — the network, a bug — **or a check found something** (`doctor`, `status`, `pack check`). |
 | `2` | The command was called wrong, or needed an answer with no terminal to ask it on. |
 | `3` | **The database refused**: a locked period, a capability you do not hold, a constraint. The call was well formed; the accounting said no. |
 
@@ -246,7 +246,7 @@ answer is exit code 2 with the flag to pass.
 ## Acting as a person: `login`, `use`, `whoami`
 
 `init`, `migrate`, `status` and `doctor` connect as the owner of the database.
-Anything that keeps books acts as **a person**, through the instance's API,
+Anything that runs your finance acts as **a person**, through the instance's API,
 under row level security — the same route and the same functions as the MCP
 server.
 
@@ -271,7 +271,7 @@ ekwo use "Example One"
 - **Never a `service_role` key**: it is refused by name, at every door it could
   arrive by. `ekwo init` remains the one command that takes it.
 
-## Keeping books
+## Running your finance
 
 ```bash
 ekwo contact add "Client Example" --country <cc> --ref crm-42
@@ -295,15 +295,15 @@ ekwo doc list --unpaid --since 2026-06-01 --json
 - **`--ref`, so that nothing is created twice.** The same reference a second
   time returns what the first call created and writes nothing. A `<document>`
   is its id, its number, or the `--ref` it was created under.
-- **`--dry-run` on `post`** runs the posting for real and rolls it back, so the
-  entry shown is the one that would be written, and a refusal is the real one.
+- **`--dry-run` on `post`** runs the recording for real and rolls it back, so the
+  transaction shown is the one that would be written, and a refusal is the real one.
 - **`--stdin`** takes one JSON object with the fields of the matching MCP tool,
   for a program.
 
-## Taking over books: `ekwo import`
+## Taking over your accounts: `ekwo import`
 
-To try Ekwo on your own books, bring them. One reader per source, and nothing
-is posted while an account has no answer:
+To try Ekwo on your own accounts, bring them. One reader per source, and
+nothing is recorded while an account has no answer:
 
 ```bash
 ekwo import fec FEC20251231.txt --dry-run --open-years --save-mapping map.json
@@ -314,29 +314,29 @@ ekwo import camt.053 statement.xml                 # or coda, cfonb120: pending 
 
 | Source | What it reads |
 |---|---|
-| `trial-balance` | A trial balance as CSV, which becomes the opening entry of the year `--opening-date` starts |
+| `trial-balance` | A trial balance as CSV, which becomes the opening balances of the year `--opening-date` starts |
 | `fec` | A French *fichier des écritures comptables* |
-| `journal-items` | The lines of every entry exported as CSV from a ledger kept as a table of lines, with its chart of accounts and partners |
+| `journal-items` | The lines of every transaction exported as CSV from software that keeps its accounts as a table of lines, with its chart of accounts and partners |
 | `journal-report` | A journal report or general ledger detail saved as CSV, with its chart and contacts |
 | `transaction-journal` | A transaction journal saved as CSV, with its list of accounts |
 | `xaf` | An XML Audit File Financial, version 3.2 or 4.0 |
 | `camt.053`, `coda`, `cfonb120` | A bank statement: its lines, pending, ready for `ekwo match` |
 
-`ekwo import --help` also lists the exports of other ledgers by the software
-they come from, and [`docs/compatibility.md`](../../docs/compatibility.md)
+`ekwo import --help` also lists the exports of other accounting software
+by the product they come from, and [`docs/compatibility.md`](../../docs/compatibility.md)
 gives each one's export and official page.
 
-- **The correspondence is yours.** Every account and journal of the old books
+- **The correspondence is yours.** Every account and journal of the old accounts
   needs an answer in the company's chart. Ekwo proposes one for each — `exact`
   only for the same code, otherwise `suggested` with its reason — and
   `--save-mapping` writes them as JSON for you to check. `--mapping` gives it
   back; `--accept-suggestions` takes every suggestion once you have read them.
 - **`--dry-run` is the real import, taken back**, so the numbers shown are the
-  ones the entries would take and a refusal is the real one.
+  ones the transactions would take and a refusal is the real one.
 - **Whole or not at all.** The import is one transaction: one refusal and
   nothing stays. The same files twice are refused, saying when they were
   imported and what that import wrote.
-- **No tax on history.** An imported line feeds the ledger, the balances and
+- **No tax on history.** An imported line feeds the accounts, the balances and
   the statements, not the boxes of a declaration: a period kept elsewhere was
   declared from where it was kept.
 
@@ -372,7 +372,7 @@ ekwo company export "My Company" --out ./my-company   # manifest.json + one JSON
 ekwo company import ./my-company --owner <user id>    # whole, or not at all
 ```
 
-**A company leaves with its books.** `export` runs as a member holding
+**A company leaves with its data.** `export` runs as a member holding
 `company.export`, under row level security, and writes an archive anybody can
 read. `import` takes it into another installation in one transaction, or
 refuses; members do not travel, `--owner` names the first one. Attached files
@@ -396,7 +396,7 @@ the migrations. A missing object, a missing or extra policy, a changed column
 type and a privilege the anonymous role should not hold are problems; your own
 extra tables are reported as information. It also checks row level security on
 every table, pending migrations, memberships of deleted users, companies
-without a bank account, and posted entries that do not balance.
+without a bank account, and recorded transactions that do not balance.
 
 Two checks say where the socle lives — its own schema `ekwo` since 0.23.0, `public`
 on a database that has not migrated yet ([decision 0090](../../docs/decisions/0090-the-socle-has-its-own-schema.md)):
@@ -433,7 +433,7 @@ ekwo pack upgrade "My Company" --db-url "…"       # move it to the version thi
 ```
 
 `upgrade` applies additions on its own, lists everything else for a person to
-read, never removes anything from a company's books, and takes `--apply` to
+read, never removes anything from a company's accounts, and takes `--apply` to
 accept what it listed.
 
 ## Flags
@@ -467,10 +467,10 @@ the connection string: copy it from the dashboard, Connect → Session pooler.
 | `--fiscal-year <year>` | Calendar year of the first financial year. Defaults to this year. |
 | `--fiscal-year-start <date>` | The day that year opens, as `YYYY-MM-DD`. Needed only where the pack names no usual opening month (`defaults.fiscal_year_default`). |
 | `--currency <code>` | Currency of the company. Defaults to the pack's `defaults.currency`. |
-| `--language <xx>` | Language of the books, two letters. Defaults to `country_defaults.language_default`, which the pack fills. It decides which label of the pack lands on each account; the others are kept in `name_i18n`. |
-| `--bank-identifier <value>` | Creates the main bank account, wired to the bank journal and its ledger account. What it is written in is the country's: an IBAN, an ABA routing number and an account number (`"021000021 123456789"`), a sort code and an account number, a BSB, an IFSC, a CLABE… `ekwo pack describe <cc>` names it, and it is checked. A country whose pack declares none is asked for an account number as the bank wrote it. `--iban` is the old spelling and is refused where the banks do not use IBANs. Omitted, no bank account is created and `ekwo doctor` says so. |
+| `--language <xx>` | Language of the accounts, two letters. Defaults to `country_defaults.language_default`, which the pack fills. It decides which label of the pack lands on each account; the others are kept in `name_i18n`. |
+| `--bank-identifier <value>` | Creates the main bank account, wired to the bank journal and its account in the chart. What it is written in is the country's: an IBAN, an ABA routing number and an account number (`"021000021 123456789"`), a sort code and an account number, a BSB, an IFSC, a CLABE… `ekwo pack describe <cc>` names it, and it is checked. A country whose pack declares none is asked for an account number as the bank wrote it. `--iban` is the old spelling and is refused where the banks do not use IBANs. Omitted, no bank account is created and `ekwo doctor` says so. |
 | `--bic <bic>` | Optional, on that account, for a bank that has one. |
-| `--bank-name <name>` | Optional. It also names the account in the books. |
+| `--bank-name <name>` | Optional. It also names the account in the chart. |
 | `--demo` | Also load the sample company. |
 | `--register` | Register without being asked. `--register-email` sets the address. |
 | `--registry-url <url>` | Where the registration is announced. |
@@ -554,7 +554,7 @@ exactly six fields:
 }
 ```
 
-No ledger data, no user list, no connection string. `instance_id` is generated
+No company data, no user list, no connection string. `instance_id` is generated
 by your own database and is not a licence key. A failed announcement is a soft
 message, not a failed install: `ekwo register` retries it. `ekwo unregister`
 clears the local fields.
@@ -564,7 +564,7 @@ clears the local fields.
 Everything above works without an account, and always will. A free account on
 [Ekwo Cloud](https://cloud.ekwo.ai/signup?src=cli) — an address and a
 six-digit code, no password to invent — adds the web application on the same
-books, a nightly backup of every company you link, and one connector URL,
+company data, a nightly backup of every company you link, and one connector URL,
 `https://mcp.ekwo.ai/mcp`, for your AI agent, approved in your browser, instead
 of a key and a password in a file.
 
@@ -588,7 +588,7 @@ clone, against an empty project you can throw away:
 npm run e2e:supabase
 ```
 
-It installs, migrates, signs in, books, files a declaration and closes the
+It installs, migrates, signs in, records, files a declaration and closes the
 year, and prints a pass/fail table with how long each step took.
 [`docs/releasing.md`](../../docs/releasing.md) lists what it reads.
 

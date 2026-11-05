@@ -4,7 +4,8 @@ TypeScript row types and a typed client for the
 [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os) accounting schema.
 
 - **Types of the whole schema**, hand written so they stay readable: accounts,
-  journals, entries and lines, documents and lines, taxes and tax postings,
+  journals, transactions and their lines, documents and lines, taxes and the
+  tax amounts of each line,
   and the row shapes the report functions return.
 - **The French FEC lives in [`@ekwo-ai/fec`](../formats/fec/)**, which is MIT
   and depends on nothing. It is no longer re-exported here: import it from
@@ -12,8 +13,8 @@ TypeScript row types and a typed client for the
 - **A thin client** over the functions that carry the accounting rules —
   `post_document`, `reconcile`, `trial_balance`, `vat_return`, `fec_lines`.
   Everything else is a table, and Supabase already exposes those as REST.
-- **The functions the command line and the MCP server share** — keeping the
-  books, issuing an electronic invoice, proving a filing by its hash — so a
+- **The functions the command line and the MCP server share** — running the
+  finance, issuing an electronic invoice, proving a filing by its hash — so a
   rule exists once.
 - **No runtime dependency of its own.** `@supabase/supabase-js` is an optional
   peer; `@ekwo-ai/fec` is there because `generateFec()` on the client writes
@@ -66,8 +67,8 @@ const file = generateFec(lines, { decimalSeparator: ',', fieldSeparator: '|' });
 | `ACCOUNT_TYPES`, `internalGroup(type)` | The eighteen account types and their balance-sheet group. |
 | `isRegistered(instance)` | Whether the operator opted into registering with Ekwo. |
 | `isSale`, `isCreditNote`, `isAccountable` | Document type predicates. |
-| `createContact`, `createDocument`, `addDocumentLine`, `updateDocumentLines`, `postDocument`, `recordPayment`, `reconcile`, `settleFromStatement`, `listDocuments`, `getDocument`, … | Keeping the books, once for every surface: the functions the MCP server and the `ekwo` command line both call. Each takes a `Backend` — five operations, `select` `insert` `update` `remove` `rpc` — that the caller implements over whatever reaches the database as a user. No accounting rule is in them; the schema holds those. |
-| `validateEinvoice`, `issueEinvoice`, `einvoiceStatus`, `listEinvoiceTransmissions`, `EinvoiceTransport`, `directoryTransport` | The electronic invoice of a posted sale, through the `einvoicing` module, and the contract a transport implements — `send`, `status`, `receive`, `lookup`, with no credential crossing it. The one transport that ships writes files to a folder. |
+| `createContact`, `createDocument`, `addDocumentLine`, `updateDocumentLines`, `postDocument`, `recordPayment`, `reconcile`, `settleFromStatement`, `listDocuments`, `getDocument`, … | Running the finance, once for every surface: the functions the MCP server and the `ekwo` command line both call. Each takes a `Backend` — five operations, `select` `insert` `update` `remove` `rpc` — that the caller implements over whatever reaches the database as a user. No accounting rule is in them; the schema holds those. |
+| `validateEinvoice`, `issueEinvoice`, `einvoiceStatus`, `listEinvoiceTransmissions`, `EinvoiceTransport`, `directoryTransport` | The electronic invoice of a recorded sale, through the `einvoicing` module, and the contract a transport implements — `send`, `status`, `receive`, `lookup`, with no credential crossing it. The one transport that ships writes files to a folder. |
 | `proveFile`, `upgradeFilingProofs`, `lookupFilingProof`, `checkProof` | The sha256 of a filed file committed to Bitcoin through the public OpenTimestamps calendars, and checked later by anybody holding the file ([`docs/filing-proofs.md`](../../docs/filing-proofs.md)). |
 | `BooksError`, `isRefusalState`, `socleCode`, `isServiceRoleKey` | What an error of that layer looks like, what counts as the database refusing, and the one key no surface accepts. |
 | Types | `Instance`, `InstanceAdmin`, `MemberRole`, `CompanyRole`, `Account`, `Journal`, `Entry`, `EntryLine`, `EkwoDocument`, `DocumentLine`, `Tax`, `TaxPosting`, `Contact`, `TrialBalanceRow`, `AgedBalanceRow`, `VatReturnRow`, … |
