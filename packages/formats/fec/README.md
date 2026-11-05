@@ -4,7 +4,7 @@ The French **FEC** — *fichier des écritures comptables* — in TypeScript, wi
 no dependencies.
 
 Eighteen columns, in the order fixed by the arrêté du 29 juillet 2013 (art.
-A. 47 A-1 du Livre des procédures fiscales). Give it ledger rows and it gives
+A. 47 A-1 du Livre des procédures fiscales). Give it account lines and it gives
 you the file, the name the administration expects, and the list of what does
 not add up.
 
@@ -19,7 +19,7 @@ const name = fecFileName('123456789', '2026-12-31'); // 123456789FEC20261231.txt
 
 `FecQueryRow` is the row shape of the `fec_lines(company, from, to)` function of
 [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os), declared here so that nothing is
-imported from it. Any book-keeping system that can produce those columns can
+imported from it. Any accounting system that can produce those columns can
 use this package; it reads no database and knows no accounting.
 
 ## The opening lines
@@ -28,11 +28,11 @@ A file that covers a whole financial year starts with its *à-nouveaux*: one
 line per balance-sheet account, at the balance it carried on the last day of
 the year before, on the opening journal and dated on the first day of the year.
 This package does nothing special with them — they arrive as ordinary rows,
-they carry one entry number of their own, and `checkFec` balances them like any
-other entry.
+they carry one transaction number of their own, and `checkFec` balances them
+like any other transaction.
 
 Where they come from is the producer's business. In Ekwo OS they are computed
-from the ledger rather than posted, and two of their properties are worth
+from the accounts rather than recorded, and two of their properties are worth
 knowing when you read a file:
 
 - **An unclosed year still carries its result.** When the year before has not
@@ -40,7 +40,7 @@ knowing when you read a file:
   nobody has allocated yet, and it arrives as one more opening line on the
   balance-sheet account the close would have put it on. The file balances
   whether or not the meeting has happened.
-- **The entries of a year-end close are not in the file of the year they
+- **The transactions of a year-end close are not in the file of the year they
   close.** They would show the result twice — once in the ordinary movements,
   once on the balance sheet — so the income statement reads from the movements
   as it always did, and the result reaches the balance sheet in the opening
@@ -52,9 +52,9 @@ extract of movements, and `fecFileName` is built from a year end.
 ## Reading one back
 
 `readFec()` goes the other way: the file this package writes, and the one any
-package that keeps books in France hands over when asked for a year, into the
+software that keeps accounts in France hands over when asked for a year, into the
 plain shape every reader of an accounting export in this repository declares
-— accounts, parties, entries, violations.
+— accounts, parties, transactions (`entries`), violations.
 
 ```ts
 import { readFec } from '@ekwo-ai/fec';
@@ -74,15 +74,15 @@ books.violations; // an entry that does not balance, a line with two sides, an e
 - The separator is the one the header uses, a tab or a vertical bar. Dates are
   `AAAAMMJJ`, refused otherwise; an amount has a comma or a point as its
   decimal mark and nothing else.
-- An entry is the lines that share a `JournalCode` and an `EcritureNum`. Each
+- A transaction is the lines that share a `JournalCode` and an `EcritureNum`. Each
   line keeps its party (`CompAuxNum`), its currency amount (`Montantdevise`,
   `Idevise`) and its reconciliation mark (`EcritureLet`).
-- A FEC is kept in the currency of the books and never says which, so
-  `currency` is null. The *à-nouveaux* arrive as the entries of their journal,
+- A FEC is kept in the currency of the accounts and never says which, so
+  `currency` is null. The *à-nouveaux* arrive as the transactions of their journal,
   like any other: saying that journal is the opening is the importer's
   business.
 
-What does not add up comes back in `violations`, the entry as written beside
+What does not add up comes back in `violations`, the transaction as written beside
 it; what is not a FEC is thrown as a `BooksFileError` with a `code`. In
 [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os) this is `ekwo import fec <file>`.
 

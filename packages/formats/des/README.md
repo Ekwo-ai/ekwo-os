@@ -18,7 +18,7 @@ const { file, filename, violations } = generateDes(rows, {
 
 `StatementRow` is the row shape of the `ec_sales_list(company, from, to)`
 function of [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os), declared here so
-that nothing is imported from it. Any book-keeping system that can produce
+that nothing is imported from it. Any accounting system that can produce
 those columns can use this package; it reads no database and knows no
 accounting.
 
@@ -102,7 +102,7 @@ nothing else: no convention, no extension beyond `.xml`, no size limit.
 ## Why the état récapitulatif TVA on goods is not here
 
 It is a real format with a published schema, and it was left out on purpose
-rather than forgotten. Two things in it do not come from a set of books:
+rather than forgotten. Two things in it do not come from a company's accounts:
 
 - **`envelopeId` is a habilitation number** issued by the collection centre to
   a declarant who asked for one. A file writer cannot invent it, and a package

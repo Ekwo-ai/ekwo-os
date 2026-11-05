@@ -1,10 +1,10 @@
 # `@ekwo-ai/journal-report`
 
-Reads a **journal report**, or a **general ledger detail**, saved as CSV — the
-report a cloud ledger prints of every journal it posted, one row
+Reads a **journal report**, or a **General Ledger Detail** report, saved as CSV —
+the report a cloud accounting service prints of every journal it recorded, one row
 per line with the number of its journal — into plain objects, in TypeScript,
 with no dependencies. Beside it, the chart of accounts and the contacts, which
-the same ledger exports as CSV directly.
+the same service exports as CSV directly.
 
 ```ts
 import { readJournalReport } from '@ekwo-ai/journal-report';
@@ -26,13 +26,13 @@ person, so:
   `Debit` and a `Credit` — the title rows above it are passed over;
 - a **line** is a row whose date cell holds a date; the rows that head a group,
   total it, or give an opening or closing balance are passed over;
-- lines are gathered into entries by their **journal number** (`Journal ID`,
+- lines are gathered into transactions by their **journal number** (`Journal ID`,
   `Journal Number`, `Journal #`), which the report has to carry: add the column
   in the report's column picker before exporting it, with the account code. A
   report without it is refused by name — there would be no way to put its lines
-  back into entries.
+  back into transactions.
 
-Optional columns: `Source` (kept as the journal of the entry), `Account`,
+Optional columns: `Source` (kept as the journal of the transaction), `Account`,
 `Description`, `Narration`, `Reference`, `Contact`.
 
 - A **date written in digits** — `03/04/2026` — is read in the order the

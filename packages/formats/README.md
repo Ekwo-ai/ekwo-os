@@ -13,12 +13,12 @@ Each package here:
 - **imports nothing from the core** — not `@ekwo-ai/core`, not the schema, not
   another library;
 - declares the **flat row shapes** it reads or returns in its own types, so any
-  book-keeping system that can produce those columns can use it;
+  accounting system that can produce those columns can use it;
 - returns what does not add up in `violations[]`, and never corrects it.
 
 ## What is here
 
-**Written from the ledger.** They read the rows the core's reports return —
+**Written from the accounts.** They read the rows the core's reports return —
 `financial_statement()`, `vat_return()`, `ec_sales_list()`, `fec_lines()`, the
 `document_*` views — and produce the bytes and the file name an administration
 expects:
@@ -30,7 +30,7 @@ expects:
 | [`vat-consignment`](vat-consignment/) | A periodic VAT return, written from the figures it was filed with |
 | [`intra-consignment`](intra-consignment/), [`des`](des/), [`ecdf`](ecdf/), [`vd`](vd/) | Four recapitulative statements of European Union supplies, from the same rows of `ec_sales_list()` |
 
-**Electronic invoices, written and read.** Each writes the file of a posted
+**Electronic invoices, written and read.** Each writes the file of a recorded
 invoice and lists every published rule it breaks by its identifier; each also
 reads a received invoice into the same `ReceivedInvoice` shape — parties,
 dates, lines, VAT breakdown, totals as exact decimal text, attachments — so a
@@ -68,7 +68,7 @@ field names, which is what `import_bank_statement()` takes:
 | [`coda`](coda/) | CODA |
 | [`cfonb120`](cfonb120/) | CFONB 120 |
 
-**Books kept elsewhere, read.** They return accounts, parties, entries and an
+**Accounts kept elsewhere, read.** They return accounts, parties, transactions and an
 opening balance under the same names, which is what `import_books()` takes once
 the codes are translated into a company's chart. They are named after the file,
 never after the software that writes it:
@@ -76,8 +76,8 @@ never after the software that writes it:
 | Package | Format |
 |---|---|
 | [`trial-balance`](trial-balance/) | A trial balance as CSV, and the open items beside it |
-| [`journal-items`](journal-items/) | The lines of every entry, exported as CSV from a ledger kept as a table of lines |
-| [`journal-report`](journal-report/) | A journal report or general ledger detail saved as CSV |
+| [`journal-items`](journal-items/) | The lines of every transaction, exported as CSV from an accounting system kept as a table of lines |
+| [`journal-report`](journal-report/) | A journal report or a General Ledger Detail report saved as CSV |
 | [`transaction-journal`](transaction-journal/) | A transaction journal saved as CSV |
 | [`xaf`](xaf/) | XML Audit File Financial, versions 3.2 and 4.0 |
 | [`fec`](fec/) | The FEC, read back with `readFec()` |
@@ -104,5 +104,5 @@ layout. A Factur-X PDF is made by handing it `embedFacturX`:
 
 `tests/formats.test.ts` enforces the licence, the isolation and the
 dependencies of every package in this directory, and `tests/` carries an
-end-to-end test per package, from a country pack's year of books through the
+end-to-end test per package, from a country pack's year of transactions through the
 real engine into the file.

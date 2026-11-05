@@ -28,7 +28,7 @@ const { file, filename, violations } = generateVatConsignment(boxes, {
 which is the row shape of `tax_filing_boxes` in
 [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os) — the figures **as they were
 frozen at filing**. That is the input on purpose: what is deposited has to be
-what the declaration says, and a file that recomputes from the ledger can
+what the declaration says, and a file that recomputes from the accounts can
 diverge from the filing it is meant to carry.
 
 ## What it does
@@ -97,7 +97,7 @@ this file and not a defect of the figures.
 `negative_amount` is worth a sentence too. This form never lets a grid go below
 zero: what reduces a figure has a grid of its own — 48 and 49 for credit notes
 issued, 61 and 62 for regularisations. A negative figure reaching this package
-means the books netted something the form wants shown apart.
+means the accounts netted something the form wants shown apart.
 
 Three things are refused by exception instead, because they make the whole file
 meaningless: a period that is neither a month nor a quarter, a declarant number

@@ -18,7 +18,7 @@ const { file, filename, violations } = generateVd(rows, {
 
 `StatementRow` is the row shape of the `ec_sales_list(company, from, to)`
 function of [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os), declared here so
-that nothing is imported from it. Any book-keeping system that can produce
+that nothing is imported from it. Any accounting system that can produce
 those columns can use this package; it reads no database and knows no
 accounting.
 
@@ -111,7 +111,7 @@ month — against the report it is being loaded into, and nothing else.
 
 - **Form VDP, the corrections.** It exists, it is described, and it has **no
   file format**: the e-MTA offers loading from a file for VD and only manual
-  entry for VDP. Nothing here can be written against a specification that does
+  input for VDP. Nothing here can be written against a specification that does
   not exist.
 - **Call-off stock**, column 6 of the form. It is a separate schema with its own
   namespace, `VD_NV_toimingud`, and it reports movements of stock rather than

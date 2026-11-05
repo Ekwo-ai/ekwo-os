@@ -27,7 +27,7 @@ for (const statement of statements) {
 }
 ```
 
-It knows no database and no ledger. The shape it returns is declared in
+It knows no database and no accounts. The shape it returns is declared in
 [`src/types.ts`](./src/types.ts), imported from nowhere, and is **field for
 field the shape [`@ekwo-ai/camt053`](../camt053/) declares for itself** — so
 whatever takes a camt.053 that was read takes a CFONB 120 that was read, without
@@ -66,9 +66,9 @@ reader does not supply one (see *The account* below).
   beneficiary of money going out — and the other way round when the movement
   carries a reject code, where the parties keep the roles they had in the
   original.
-- Reports a movement **booked outside its statement**
+- Reports a movement **the bank recorded outside its statement**
   (`booking_date_outside_statement`): the brochure defines a statement as the
-  movements booked strictly after the date of the old balance and up to the
+  movements recorded strictly after the date of the old balance and up to the
   date of the new one.
 
 ## The account, and the country nobody wrote

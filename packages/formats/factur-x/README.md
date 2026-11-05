@@ -12,7 +12,7 @@ Factur-X / ZUGFeRD electronic invoices in TypeScript.
   into the same plain result `@ekwo-ai/peppol-ubl` returns from UBL — see [Reading](#reading).
 - **Totals you can trust.** One VAT group per category and rate, VAT computed on the rounded
   basis, prepayments, credit notes referencing the original invoice.
-- Zero dependencies for the XML part; `pdf-lib` only for the PDF part (separate entry point).
+- Zero dependencies for the XML part; `pdf-lib` only for the PDF part (a separate `/pdf` export).
 
 ## Install
 
@@ -168,7 +168,7 @@ element limits.
 
 **Limits.**
 
-- The PDF is opened with `pdf-lib`, already the dependency of the `/pdf` entry point:
+- The PDF is opened with `pdf-lib`, already the dependency of the `/pdf` export:
   the attachment is found in the `EmbeddedFiles` name tree of the catalogue, under one
   of the three names above. An attachment reachable only from a page annotation, an
   encrypted PDF, and a stream in a filter `pdf-lib` does not decode are not read: they

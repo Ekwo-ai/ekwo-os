@@ -6,7 +6,7 @@ dependencies: the XML of the AEAT's schema, the SHA-256 fingerprint that
 chains each record to the one before, and the URL the QR code of the invoice
 carries.
 
-Give it a posted document as the books hold it, the system that generates the
+Give it a recorded document as the accounts hold it, the system that generates the
 record and the record before it, and it gives you the record, its fingerprint,
 and every rule of the AEAT the record breaks — named by the AEAT's own error
 code.
@@ -78,10 +78,10 @@ document, a document that is not a sale, never numbered or dated, an amount
 that is not a number. Everything else comes back from `write` in `violations`,
 beside a record that says what it was given.
 
-## The figures are the books' figures
+## The figures are the accounts' figures
 
 Nothing is recomputed. Bases, taxes and totals are written as they were
-posted, with two decimals, and where they do not add up the AEAT's rule is
+recorded, with two decimals, and where they do not add up the AEAT's rule is
 named rather than the figure corrected — with the AEAT's own tolerance of
 10.00 where it publishes one (1142, 2005, 2006). No figure passes through a
 `number`: amounts arrive as the text Postgres prints a `numeric` as, are
@@ -89,7 +89,7 @@ compared as exact decimals on `bigint`, and leave as the same digits.
 
 One transformation is made, because the AEAT asks for it: **a credit note is
 a rectification by difference** (`TipoRectificativa` `I`), and its figures are
-written negative — the books hold them positive, on a document whose type says
+written negative — the accounts hold them positive, on a document whose type says
 it is a credit. The AEAT's own example is a rectification "por diferencias"
 with a tax of `-110` (FAQ for developers, question 27).
 
@@ -102,7 +102,7 @@ Each violation is `{ code, message, severity }`:
   AEAT's own sentence, followed by what this record holds. `severity` is the
   AEAT's category: `rejected` (the record is refused) or `accepted` (accepted
   with errors, to be corrected).
-- What the AEAT never sees, because it is missing from the books before it is
+- What the AEAT never sees, because it is missing from the accounts before it is
   missing from the record, is **`input:<what>`**, severity `input`:
   `input:currency`, `input:aeat_qualification`, `input:rectification_type`.
 
@@ -111,7 +111,7 @@ refuses it too. **Empty `violations` is the only state to chain and send in.**
 
 | Code | What is checked |
 |---|---|
-| 4102 | A required value the books do not hold: the seller's NIF or name, the description, the buyer's name, the breakdown |
+| 4102 | A required value the accounts do not hold: the seller's NIF or name, the description, the buyer's name, the breakdown |
 | 4113 | More than 12 `DetalleDesglose` |
 | 1100 | A text or an amount longer than the schema allows |
 | 1104, 1130 | `NumSerieFactura`: at most 60 characters, printable ASCII, none of `" ' < > =` |
@@ -160,9 +160,9 @@ invoice and the invoice without the buyer's identification (art. 6.1.d of the
 Real Decreto 1619/2012). A credit note to a buyer not identified is `R5`, the
 rectification of a simplified invoice. A credit note to an identified buyer is
 `R1`, `R2`, `R3` or `R4` by the article of the LIVA it rectifies under — four
-legal grounds the books do not record — so it reads `rectification_type`, and
+legal grounds the accounts do not record — so it reads `rectification_type`, and
 without it reports `input:rectification_type` and writes no `TipoFactura`. `F3`
-(an invoice replacing simplified ones) is never written: the books do not hold
+(an invoice replacing simplified ones) is never written: the accounts do not hold
 the invoices it would replace.
 
 **`FacturasRectificadas`** is written from `rectified_number` and
@@ -199,7 +199,7 @@ does:
   (`ES-S-ICG` → `E5`, `ES-S-ICS` → `N2`), and on `ES-S-NS` (`N2`);
 - `aeat_regime` for a company under a special regime — the cash criterion
   (`07`), REBU (`03`), the equivalence surcharge (`18`), agriculture (`19`)… —
-  which is a fact of the company the books do not record;
+  which is a fact of the company the accounts do not record;
 - `rectification_type` (`R1`–`R4`) and `rectified_number`, `rectified_date`
   on a credit note.
 
@@ -219,7 +219,7 @@ is not a record's to do:
   views carry no such column.
 - **A buyer outside the Member States** cannot be written: its `IDType` (03
   passport, 04 identity document of the country, 05 certificate of residence,
-  06 other) is the document the buyer showed, which the books do not hold. It
+  06 other) is the document the buyer showed, which the accounts do not hold. It
   is reported (1102).
 - **Corrections** (`Subsanacion`, `RechazoPrevio`, `SinRegistroPrevio`), the
   **third party or buyer as issuer** (`EmitidaPorTerceroODestinatario`,

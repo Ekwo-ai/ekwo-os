@@ -20,7 +20,7 @@ const { file, filename, declarations, violations } = generateEcdf(rows, {
 
 `StatementRow` is the row shape of the `ec_sales_list(company, from, to)`
 function of [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os), declared here so
-that nothing is imported from it. Any book-keeping system that can produce
+that nothing is imported from it. Any accounting system that can produce
 those columns can use this package; it reads no database and knows no
 accounting.
 
@@ -115,7 +115,7 @@ whatever the producer flagged, `unknown_nature`, `wrong_currency`,
 - **Corrections.** States III and V of the goods form and state II of the
   services form carry them, with the period being corrected and, on the goods
   side, a localised "Oui"/"Ja" in field 15. Producing one means knowing what
-  was filed before, which is a question for the books.
+  was filed before, which is a question for the accounts.
 - **Call-off stock**, states IV and V of the goods form. The published example
   predates them and the type of their boolean fields could not be read from any
   document available without an account, so nothing is guessed at here.

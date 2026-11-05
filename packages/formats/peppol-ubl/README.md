@@ -4,7 +4,7 @@ A sales **invoice or credit note as the Peppol network carries it** — UBL 2.1
 in the profile Peppol BIS Billing 3.0 of the European standard EN 16931 — in
 TypeScript, with no dependencies.
 
-Give it a posted document as the books hold it and it gives you the file, a
+Give it a recorded document as the accounts hold it and it gives you the file, a
 name for it, and every published rule the file breaks — named by the identifier
 the rule is published under.
 
@@ -27,12 +27,12 @@ a certificate and somebody on call, and this package has none of the three: you
 get the same UBL anybody gets, and you send it through the access point you
 chose.
 
-## The figures are the books' figures
+## The figures are the accounts' figures
 
 Nothing is recomputed. A total, a base and a tax are written as they were
-posted, and where they do not add up the rule they break is named rather than
+recorded, and where they do not add up the rule they break is named rather than
 the figure corrected. An invoice is an accounting document before it is an XML
-one: a file that disagrees with the ledger it came from by a cent is worse than
+one: a file that disagrees with the accounts it came from by a cent is worse than
 a file that is refused, because the first is found by whoever files the VAT
 return.
 
@@ -42,21 +42,21 @@ text Postgres prints a `numeric` as, are compared as exact decimals on
 and not with a tolerance; a sum a binary float gets wrong in its last bit is a
 rule reported broken on an invoice that is right.
 
-Two things are derived, because the standard has a place for them and the books
+Two things are derived, because the standard has a place for them and the accounts
 hold them in another shape:
 
-- **The VAT breakdown.** The books keep one row per tax; the standard wants one
+- **The VAT breakdown.** The accounts keep one row per tax; the standard wants one
   group per category and rate (BG-23). Two taxes at one rate — goods and
   services at the standard rate — are one group: their bases added, their taxes
   added, nothing rounded again.
-- **The net price of a discounted line.** The books hold the price as keyed and
+- **The net price of a discounted line.** The accounts hold the price as keyed and
   a discount in percent; the standard wants the net price (BT-146), and has room
   for the gross one and the discount beside it (BT-148, BT-147). All three are
   written, exact to the last digit — `27.7778` less 10 % is `25.00002` — so
-  that the quantity times the net price is still the line the books rounded.
+  that the quantity times the net price is still the line the accounts rounded.
 
 A line's category and rate are read from the line and from nowhere else. In
-Ekwo OS a line keeps the category and the rate it was posted with, so that a
+Ekwo OS a line keeps the category and the rate it was recorded with, so that a
 rate that changes later restates no invoice already sent; a line that says
 neither has neither, and BR-CO-04 says so.
 
@@ -80,7 +80,7 @@ that wanted it is reported. In particular:
   account under the code (UNTDID 4461) and there is no code that means "probably
   a transfer". It comes back as `payment-means-missing`.
 - **A price keyed with its tax in it** has no net price here. That one is the
-  line's base divided by its quantity — a rounding decision, and so the books'
+  line's base divided by its quantity — a rounding decision, and so the accounts'
   to make: pass it as `net_unit_price`, or read BR-26.
 - **A `Date` object is refused.** A driver hands a `date` column back as an
   instant, at a midnight that is UTC for one driver and local for the next.
@@ -217,10 +217,10 @@ against it found what reading had not:
   one (R053, R054); and **the UBL binding has rules of its own** beside the
   standard's, so three decimals are UBL-DT-01 as well as BR-DEC-*, and a line
   without a category UBL-SR-48 as well as BR-CO-04.
-- **A line of the books did not say its VAT category.** The end-to-end test
+- **A line of the accounts did not say its VAT category.** The end-to-end test
   found `document_line_items.vat_category` empty on every line of every pack,
-  and the first version joined a silent line to its tax by `tax_id`. The books
-  now write the line when it is posted, and the join is gone: it read the tax
+  and the first version joined a silent line to its tax by `tax_id`. The accounts
+  now write the line when it is recorded, and the join is gone: it read the tax
   of today into an invoice of last year.
 - **A reason is a code *or a text*.** The same test reported BR-E-10, BR-G-10
   and BR-AE-10 on a pack that codes no exemption, and called the code missing.

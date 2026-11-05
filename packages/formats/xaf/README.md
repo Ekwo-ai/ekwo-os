@@ -2,7 +2,7 @@
 
 Reads an **XML Audit File Financial** — the *XML Auditfile Financieel*, XAF,
 the file an accounting package hands over when an auditor or a tax authority
-asks for the books of a year — into plain objects, in TypeScript, with no
+asks for the accounts of a year — into plain objects, in TypeScript, with no
 dependencies. Versions **3.2** and **4.0** are read, each recognised by the
 namespace of its schema.
 
@@ -21,14 +21,14 @@ books.violations;  // a transaction that does not balance, totals the lines disa
 
 ## What is read
 
-| Part of the books | Where it sits in the file |
+| Part of the accounts | Where it sits in the file |
 |---|---|
 | currency | `header/curCode` |
 | accounts | `company/generalLedger/ledgerAccount`: `accID`, `accDesc`, `accTp` (`B`, `P`, `M`, kept as written) |
 | parties | `company/customersSuppliers/customerSupplier`: `custSupID`, `custSupName`, `eMail`, `taxRegIdent`, `commerceNr`, the country of its first address |
 | opening balance | `company/openingBalance/obLine`: `accID`, `amnt`, `amntTp`; its date `opBalDate` in 3.2, `header/startDate` in 4.0, which has none |
-| entries | `company/transactions/journal` (`jrnID`, `desc`) `/transaction` (`nr`, `desc`, `trDt`) |
-| lines | `trLine`: `accID`, `desc`, `amnt` and `amntTp` (`D` or `C`), `custSupID`, `docRef` (the first one is the entry's reference), `currency/curCode` and `curAmnt`, and in 3.2 `matchKeyID` |
+| transactions | `company/transactions/journal` (`jrnID`, `desc`) `/transaction` (`nr`, `desc`, `trDt`) |
+| lines | `trLine`: `accID`, `desc`, `amnt` and `amntTp` (`D` or `C`), `custSupID`, `docRef` (the first one is the transaction's reference), `currency/curCode` and `curAmnt`, and in 3.2 `matchKeyID` |
 
 - An amount is an `xsd:decimal`; its side is `amntTp`. A negative amount is
   the other side.
@@ -70,7 +70,7 @@ with where each came from — and from the pages of that portal:
 It was written against the audit file **Exact Online** exports, as its help
 centre describes it on the same day:
 [Auditfiles in xml-formaat (XAF) exporteren](https://support.exactonline.com/community/s/article/All-All-HNO-Task-general-importexport-gen-impexp-auditt?language=nl_NL)
-— *Import/Export > Export > Audit file*; entries not yet processed are not in
+— *Import/Export > Export > Audit file*; transactions not yet processed are not in
 the file. `ekwo import exact-online <file>` is the same as `ekwo import xaf`.
 
 The fixtures under `test/fixtures/`, one per version, are written by hand, hold

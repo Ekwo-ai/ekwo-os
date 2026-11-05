@@ -27,7 +27,7 @@ for (const statement of statements) {
 }
 ```
 
-It knows no database and no ledger. The shape it returns is declared in
+It knows no database and no accounts. The shape it returns is declared in
 [`src/types.ts`](./src/types.ts), imported from nowhere, and is **field for
 field the shape [`@ekwo-ai/camt053`](../camt053/) declares for itself** — so
 whatever takes a camt.053 that was read takes a CODA that was read, without an

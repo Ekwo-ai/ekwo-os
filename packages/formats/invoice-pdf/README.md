@@ -1,7 +1,7 @@
 # @ekwo-ai/invoice-pdf
 
 The visual PDF of a sale invoice or credit note, in TypeScript, from the rows a
-set of books publishes.
+company's accounts publish.
 
 - **One sober layout**, A4 or Letter: the seller (its logo and its name), the
   title, number, dates and references; the buyer and, where the goods went
@@ -66,7 +66,7 @@ const { file, filename, pageCount } = await renderInvoicePdf(
 
 ## The input
 
-What the books already publish, and nothing else: one field per column of
+What the accounts already publish, and nothing else: one field per column of
 four views of [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os), declared in
 [`src/types.ts`](src/types.ts) so that nothing is imported from it. Any
 invoicing system that produces the same rows can use this package. A column
@@ -108,8 +108,8 @@ that a document was printed in English for want of a set in its language.
 `options.labels` puts the caller's words over that set, whole or in part.
 
 A country's own words — what its tax is called, what the law wants printed —
-are not labels: they are `tax_name` and the mentions, which the books give in
-the document's language.
+are not labels: they are `tax_name` and the mentions, which the accounts give
+in the document's language.
 
 Amounts, dates and country names are written by `Intl` in the same language.
 A tag `Intl` does not accept is refused (`invalid_language`).
@@ -300,8 +300,8 @@ document says so under its title.
 
 ## What it does not do
 
-- **Keep the copy that was sent.** A posted document is reproducible from the
-  books ([decision 0015](../../../docs/decisions/0015-a-posted-document-is-frozen.md)),
+- **Keep the copy that was sent.** A recorded document is reproducible from the
+  accounts ([decision 0015](../../../docs/decisions/0015-a-posted-document-is-frozen.md)),
   but the copy a customer received is the one that counts, and it should be
   kept as it was — an attachment of the document, with its checksum. Next.
 - **Send it by e-mail.** Next, beside it.

@@ -1,8 +1,8 @@
 # `@ekwo-ai/journal-items`
 
-Reads an **export of journal items** — the lines of every entry, one row per
-line, saved as CSV from the list view of an ERP whose ledger is a table of
-lines — into plain objects, in TypeScript, with no dependencies. Beside it, the
+Reads an **export of journal items** — the lines of every transaction, one row
+per line, saved as CSV from the list view of an ERP whose accounts are kept as
+a table of lines — into plain objects, in TypeScript, with no dependencies. Beside it, the
 chart of accounts and the partners exported from the same screen.
 
 ```ts
@@ -27,7 +27,7 @@ the field an export for re-import writes:
 
 | Column | Labels | Field names |
 |---|---|---|
-| the entry | `Number`, or `Journal Entry` | `move_name`, or `move_id` |
+| the transaction | `Number`, or `Journal Entry` | `move_name`, or `move_id` |
 | journal | `Journal` | `journal_id` |
 | date | `Date` | `date` |
 | account | `Account` | `account_id` |
@@ -41,14 +41,15 @@ the field an export for re-import writes:
 | matching | `Matching #` | `matching_number` |
 | status | `Status` | `parent_state` |
 
-- Lines belong to one entry when they share its **number**; without that
+- Lines belong to one transaction when they share its **number**; without that
   column, its display name.
 - An **account** arrives as it is displayed, its code and then its name
   (`400000 Receivable`). With the chart beside it the display is matched whole;
   without, the code is what comes before the first space.
 - A **partner** arrives as its name, and is identified by it.
-- A line whose entry is **not posted** is refused in `violations`: filter the
-  export on posted entries, which is what books are made of.
+- A line whose transaction is not in the **`Posted`** status is refused in
+  `violations`: filter the export on that status, which is what accounts are
+  made of.
 - **Dates** are ISO, `YYYY-MM-DD`; **amounts** have a point for decimal mark,
   a minus for a negative. A negative debit is a credit, and the other way
   round.
@@ -67,8 +68,8 @@ its name is not turned into a code.
 The shape declared in [`src/types.ts`](./src/types.ts), which is, field for
 field, the shape every reader of an accounting export in this repository
 declares for itself. Amounts are decimal strings, never negative; the side is
-the sign. What does not add up comes back in `violations` and the entry comes
-back as written; what is not an export of journal items is thrown as a
+the sign. What does not add up comes back in `violations` and the transaction
+comes back as written; what is not an export of journal items is thrown as a
 `BooksFileError` with a `code`.
 
 It knows no chart of accounts. Which account of another chart each code

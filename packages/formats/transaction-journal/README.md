@@ -1,7 +1,7 @@
 # `@ekwo-ai/transaction-journal`
 
-Reads a **transaction journal** saved as CSV — the report a ledger prints of
-every transaction it posted, one after the other, each line of a transaction
+Reads a **transaction journal** saved as CSV — the report an accounting service
+prints of every transaction it recorded, one after the other, each line of a transaction
 on a row of its own — into plain objects, in TypeScript, with no
 dependencies. Beside it, the list of accounts, exported the same way.
 
@@ -17,7 +17,7 @@ books.violations; // a transaction that does not balance, a line that belongs to
 
 ## The files
 
-**The journal** (required). Such a ledger exports its reports as a
+**The journal** (required). Such a service exports its reports as a
 spreadsheet, not as CSV: open it and save it as CSV. A report is laid out for a
 person, and nothing on a line names the transaction it belongs to, so it is
 read in order:
@@ -32,7 +32,7 @@ read in order:
 - a row with **no account ends** it: the total of a transaction, a blank row,
   the total of the report, the footer.
 
-Optional columns: `Transaction Type` (kept as the journal of the entry), `Num`
+Optional columns: `Transaction Type` (kept as the journal of the transaction), `Num`
 (its number and reference), `Name` — or `Customer full name`, `Vendor`,
 `Supplier`, `Employee` where the report shows those instead — and
 `Memo/Description`.

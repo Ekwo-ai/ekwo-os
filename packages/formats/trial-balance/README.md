@@ -5,8 +5,8 @@ credit, or one signed balance — into plain objects, in TypeScript, with no
 dependencies.
 
 It is the one thing every accounting package prints and every spreadsheet
-saves, which makes it the way in for books that come from anywhere: the
-balances of the day the new books open on.
+saves, which makes it the way in for accounts that come from anywhere:
+the balances of the day the new accounts open on.
 
 ```ts
 import { readTrialBalance } from '@ekwo-ai/trial-balance';
@@ -51,8 +51,9 @@ column:
 ## What it returns
 
 The shape declared in [`src/types.ts`](./src/types.ts) — accounts, contacts,
-entries, an opening balance, violations — which is, field for field, the shape
-every reader of an accounting export in this repository declares for itself.
+transactions (`entries`), an opening balance, violations — which is, field for
+field, the shape every reader of an accounting export in this repository
+declares for itself.
 A trial balance fills `opening` and leaves `entries` empty. It says no
 currency and no date: the file has neither, and whatever takes the balance is
 told the day it opens on.
@@ -103,7 +104,7 @@ It knows no chart of accounts. The codes are the ones the file wrote; which
 account of another chart each becomes is the importer's business. In
 [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os) that is `ekwo import
 trial-balance <file> --opening-date <day> [--open-items <file>]`, where the day
-is the first of a year or the day inside it the books were taken over, and
-each open item becomes a posted document.
+is the first of a year or the day inside it the accounts were taken over,
+and each open item becomes a recorded document.
 
 MIT.

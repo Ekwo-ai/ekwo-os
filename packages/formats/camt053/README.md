@@ -27,7 +27,7 @@ for (const statement of statements) {
 }
 ```
 
-It knows no database, no ledger and no country. The shape it returns is
+It knows no database, no accounts and no country. The shape it returns is
 declared in [`src/types.ts`](./src/types.ts) and imported from nowhere.
 
 Every other brick beside this one *writes* a file an administration takes. This
@@ -54,8 +54,9 @@ written to hurt the reader does not.
   overdrawn balance is negative — and returns it as a **decimal string with the
   digits the file wrote**. Sums are made on integers of hundred-thousandths
   (the schema allows five decimals); no figure passes through a `number`.
-- Checks that **opening balance + booked entries = closing balance**, to the
-  last decimal. When it is not, the statement comes back as the bank wrote it,
+- Checks that **opening balance + booked entries = closing balance** (an entry
+  is the statement's `Ntry`), to the last decimal. When it is not, the
+  statement comes back as the bank wrote it,
   `balanced` is `false`, and `balance_mismatch` says the difference. **Nothing
   is corrected**: a reader that adjusts a balance hides the one fact the check
   exists to show — a truncated export, a missing page, a line lost on the way.
@@ -81,7 +82,7 @@ written to hurt the reader does not.
   undoes an earlier one, where the parties keep the roles they had in the
   original: a transfer that bounced comes back *from* the party it was sent to.
 - Takes the **day the bank wrote**. `2026-03-31T23:30:00+02:00` is 31 March; it
-  is not moved to UTC, which would book it on another day for half the planet.
+  is not moved to UTC, which would record it on another day for half the planet.
 - Returns the bank's own reference (`AcctSvcrRef`, of the transaction, else of
   the entry), the entry reference, the end-to-end identifier **as written** —
   including the `NOTPROVIDED` placeholder, which is the bank's word and not an
@@ -157,7 +158,7 @@ tests show the schema **accepting** a statement that does not add up.
 
 - **It converts nothing.** An entry in another currency is reported; what was
   ordered in dollars is returned in dollars beside what moved in the account's
-  currency. Rates belong to whoever keeps the books.
+  currency. Rates belong to whoever keeps the accounts.
 - **It matches nothing.** It does not know an invoice from a salary. It hands
   over what reconciliation needs, separated.
 - **It does not decide what a duplicate is.** Two lines with the same date,

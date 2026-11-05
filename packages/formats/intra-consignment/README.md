@@ -17,7 +17,7 @@ const { file, filename, violations } = generateIntraConsignment(rows, {
 
 `StatementRow` is the row shape of the `ec_sales_list(company, from, to)`
 function of [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os), declared here so
-that nothing is imported from it. Any book-keeping system that can produce
+that nothing is imported from it. Any accounting system that can produce
 those columns can use this package; it reads no database and knows no
 accounting.
 
@@ -99,7 +99,7 @@ another.
   and nothing in the rows this package reads describes one.
 - **Corrections of an earlier period.** The schema carries them as an ordinary
   client line with a signed delta and a `CorrectingPeriod`; producing one means
-  knowing what was filed before, which is a question for the books and not for
+  knowing what was filed before, which is a question for the accounts and not for
   a file writer.
 - **Filing.** This package writes bytes. Uploading them, signing them and
   reading the acknowledgement are Intervat's business.

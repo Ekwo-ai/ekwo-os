@@ -10,7 +10,7 @@ taxonomy **26.0**, abridged model for companies with capital (**m01-f**).
   the NBB taxonomy package by
   [`scripts/build-taxonomy.mjs`](scripts/build-taxonomy.mjs) — not transcribed by hand. Sources
   and method: [`docs/sources.md`](docs/sources.md).
-- **Two ways in.** Reporting codes (`20/58`, `9904`), or the fact keys a book-keeping system
+- **Two ways in.** Reporting codes (`20/58`, `9904`), or the fact keys an accounting system
   already stores next to each statement line (`met:am1|bas:m9|rst:m2`).
 - **Partial forms welcome.** Only the codes you provide are emitted; Filing fills the rest.
   `unknownCodes()` tells you which of your codes the model would skip.
@@ -66,7 +66,7 @@ See [`examples/basic.ts`](examples/basic.ts) for a runnable version (`npm run ex
 
 ### From statement lines that already carry their taxonomy key
 
-A book-keeping system that stores the CBSO fact key next to each line of its
+An accounting system that stores the CBSO fact key next to each line of its
 financial statements does not need to know the reporting codes at all. Hand the
 lines over as they are:
 

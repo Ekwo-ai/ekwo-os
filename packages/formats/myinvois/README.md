@@ -7,8 +7,8 @@ It writes the eight document types of the MyInvois SDK: the invoice, the
 credit note, the debit note and the refund note, each as the supplier issues
 it or **self-billed** by the buyer, in the JSON syntax or the XML one.
 
-Give it a posted document as the books hold it, with what MyInvois asks and
-the books do not hold — the LHDNM identifiers of both parties, the supplier's
+Give it a recorded document as the accounts hold it, with what MyInvois asks
+and the accounts do not hold — the LHDNM identifiers of both parties, the supplier's
 MSIC code, the moment of issuance — and it gives you the document, a name for
 it, and every rule of the SDK the document breaks, named by LHDNM's own error
 code where it publishes one.
@@ -82,8 +82,8 @@ MYINVOIS.write(input, syntax = 'json'): {
 ```
 
 - **Which document.** A `sale_invoice` is an invoice (`01`) and a
-  `sale_credit_note` a credit note (`02`) without being told. The books keep
-  no separate type for a debit note or a refund note — a debit note is booked
+  `sale_credit_note` a credit note (`02`) without being told. The accounts keep
+  no separate type for a debit note or a refund note — a debit note is recorded
   as an invoice that adds to an earlier one, a refund note as a credit note
   whose money went back — so `kind: 'debit-note'` (`03`) and
   `kind: 'refund-note'` (`04`) are asked for by name, and refused on a
@@ -102,7 +102,7 @@ MYINVOIS.write(input, syntax = 'json'): {
   `requiresSignature` says so.
 - **The moment of issuance** is written in UTC, which is what the SDK asks
   for `IssueDate` and `IssueTime`. It is not the date of the document in the
-  books: a document issued at 07:00 in Kuala Lumpur is issued the day before
+  accounts: a document issued at 07:00 in Kuala Lumpur is issued the day before
   in UTC.
 
 `write` throws a `MyInvoisError` for what makes a document absurd: no
@@ -111,10 +111,10 @@ line, an amount that is not a number, a moment that is not ISO 8601 with an
 offset, a kind the document cannot be. Everything else comes back in
 `violations`, beside a document that says what it was given.
 
-## The figures are the books' figures
+## The figures are the accounts' figures
 
 Nothing is recomputed. Totals, bases and taxes are written as they were
-posted, and where they do not add up the mathematical mapping of the SDK they
+recorded, and where they do not add up the mathematical mapping of the SDK they
 break is named rather than the figure corrected. No figure passes through a
 `number`: amounts arrive as the text Postgres prints a `numeric` as, are
 compared as exact decimals on `bigint` — `src/decimal.ts` is the file of
@@ -126,19 +126,19 @@ Three figures are derived, each without rounding:
 
 - **The subtotal of a line** (`ItemPriceExtension`) is its price times its
   quantity, exactly, and **its discount** the subtotal less the net amount
-  the books posted, with the rate (`MultiplierFactorNumeric`) the keyed
+  the accounts recorded, with the rate (`MultiplierFactorNumeric`) the keyed
   percentage over a hundred.
-- **The tax of a line.** The books round the tax of all the lines under one
+- **The tax of a line.** The accounts round the tax of all the lines under one
   tax once, so the tax of a line is a figure they hold only where the line is
   alone under its tax, or where the row carries it (`tax_amount`). Otherwise
   it is base times rate, written only where that is exact to the cent for
-  every line of the tax and adds up to what was posted; anywhere else it is
+  every line of the tax and adds up to what was recorded; anywhere else it is
   reported, `input:line_tax_amount`.
 - **The amount payable** is the total including tax. A payment received
   after the document was issued is a payment, not the prepayment
-  `PrepaidPayment` records, and the books do not say when it was received.
+  `PrepaidPayment` records, and the accounts do not say when it was received.
 
-A credit note's figures are positive, as the books hold them and as LHDNM's
+A credit note's figures are positive, as the accounts hold them and as LHDNM's
 samples write them: its type code says what it is.
 
 ## Violations
@@ -153,7 +153,7 @@ Each violation is `{ code, message, line? }`, the shape of
 | `length:<element>` | A value longer than the SDK's "Number of Chars" allows |
 | `format:<element>` | A value not shaped as the SDK describes it, where it publishes no code for it |
 | `math:<element>` | A total that is not what the SDK's mathematical mappings make of the figures beside it |
-| `input:<what>` | What the books do not hold and the caller gives: `input:supplier_tin`, `input:tax_type`, `input:classification`… |
+| `input:<what>` | What the accounts do not hold and the caller gives: `input:supplier_tin`, `input:tax_type`, `input:classification`… |
 
 **Empty `violations` is the only state to submit in.** A document that breaks
 a rule leaves out what it does not know, and the schema may refuse it too.
@@ -174,7 +174,7 @@ a rule leaves out what it does not know, and the schema may refuse it too.
 | `length:` | The document number (50), the names (300), the TIN (14), a BRN (20), an NRIC, passport or army number (12), the MSIC code (five digits), the activity description (300), the bank account (150), the payment terms (300), the bill reference (150), a line's description (300), a reason of exemption (300), a UUID (26) |
 | `format:` | A TIN: `IG` and digits for an individual; for a non-individual one of the prefixes `C`, `CS`, `D`, `F`, `FA`, `PT`, `TA`, `TC`, `TN`, `TR`, `TP`, `J`, `LE`, then digits that start with no zero and end with one (FAQ); a general TIN, `EI…`, is not checked |
 | `math:` | The total including tax against the total excluding tax plus the tax; the total tax against its tax types; the net total against the lines; per tax type, the tax against the taxes of its lines and the base against their net amounts (except for an exemption, `E`); per line, the net against the subtotal less the discount |
-| `input:` | The TIN of each party; the supplier's SST and tourism tax numbers (the supplier alone knows whether it is registered); its MSIC code; the buyer's telephone, which the views do not publish; the tax type of each tax; the classification of each line; the tax of a line the books did not keep; the net price of a line keyed with its tax; the exchange rate of a foreign currency; the payment mode of an account to pay into; the adjusted document of a note; a country with no three-letter code in LHDNM's list |
+| `input:` | The TIN of each party; the supplier's SST and tourism tax numbers (the supplier alone knows whether it is registered); its MSIC code; the buyer's telephone, which the views do not publish; the tax type of each tax; the classification of each line; the tax of a line the accounts did not keep; the net price of a line keyed with its tax; the exchange rate of a foreign currency; the payment mode of an account to pay into; the adjusted document of a note; a country with no three-letter code in LHDNM's list |
 
 What only LHDNM can check is not checked here: that a TIN exists and goes
 with the identification beside it (the taxpayer validator, `ERR…`), that a
@@ -215,7 +215,7 @@ that a document is not a duplicate, and the signature.
 | `discount_percent` | `cac:AllowanceCharge`, with `ChargeIndicator` false |
 | `item_name`, else `item_description` | `cac:Item/cbc:Description` |
 | `vat_rate` | `cac:TaxSubtotal/cbc:Percent` |
-| `tax_code`, else `vat_category` and `vat_rate` | Which tax of the breakdown the line was booked under |
+| `tax_code`, else `vat_category` and `vat_rate` | Which tax of the breakdown the line was recorded under |
 | `myinvois_classification` | `cac:CommodityClassification/cbc:ItemClassificationCode[@listID="CLASS"]`, one code or several separated by commas, each checked against LHDNM's list |
 | `exemption_reason` | The `TaxExemptionReason` of this line, over the one of its tax |
 
@@ -229,9 +229,9 @@ amount exempted. Where `taxCurrency` is given for a document in another
 currency, as LHDNM's foreign currency sample does, `cbc:TaxCurrencyCode` is
 written, and every `TaxAmount` — of the document, of each subtotal, of each
 line — is in it, from `tax_charged_in_tax_currency` of each row: the tax as
-the books posted it in ringgit. The taxable amounts and the totals stay in
+the accounts recorded it in ringgit. The taxable amounts and the totals stay in
 the document's currency. A line that shares its tax with others has no tax
-of its own in ringgit, which the books posted once for the group, and is
+of its own in ringgit, which the accounts recorded once for the group, and is
 reported (`input:line_tax_in_tax_currency`). `cac:TaxScheme/cbc:ID` is `OTH`
 in the scheme `UN/ECE 5153`, agency `6`, as every sample of the SDK writes
 it: Malaysia's taxes are not a value added tax.
@@ -239,7 +239,7 @@ it: Malaysia's taxes are not a value added tax.
 ### What the rows must carry for the document to be complete
 
 None of it is in the three views alone. In Ekwo OS the core gives it, from
-the country pack and from the books (`EINVOICE_FORMATS` in `@ekwo-ai/core`,
+the country pack and from the company data (`EINVOICE_FORMATS` in `@ekwo-ai/core`,
 profile `myinvois`): the pack's fiscalisation regime gives each tax its
 `myinvois_tax_type` and every line its `myinvois_classification`, and
 `companies.identifiers` and `contacts.identifiers` give each party its TIN,
@@ -248,13 +248,13 @@ its SST and tourism tax registrations by scheme. Any other caller gives it:
 - **`myinvois_tax_type`** on each row of `document_tax_summary` (or on a
   line): `01` Sales Tax, `02` Service Tax, `03` Tourism Tax, `04` High-Value
   Goods Tax, `05` Sales Tax on Low Value Goods, `06` Not Applicable, `E` Tax
-  exemption. Nothing in the books decides it: a category `S` at 10 % is the
+  exemption. Nothing in the accounts decides it: a category `S` at 10 % is the
   Sales Tax in the Malaysian pack and could be any tax in another, and
   whether an export or a sale outside the scope of the tax is `06` or `E` is
   a reading of the law this package does not make.
 - **`myinvois_classification`** on each line: one code of LHDNM's 45, or
   several. It describes what was sold for LHDNM's purposes — a computer, a
-  donation, a disbursement, `022` Others — which the books do not record.
+  donation, a disbursement, `022` Others — which the company data does not record.
 - **`tax_amount`** on a line that shares its tax with others, where base
   times rate is not exact to the cent.
 - **`tax_code`** on a line, where two taxes of the document share a category
@@ -263,7 +263,7 @@ its SST and tourism tax registrations by scheme. Any other caller gives it:
 ## Named gaps
 
 What this package does not write, because it could not be sourced, because
-the books do not hold it, or because it is not a document's to do:
+the company data does not hold it, or because it is not a document's to do:
 
 - **The signature, the submission, the UIN and the QR code**, as said above.
 - **The consolidated e-Invoice** (classification `004`, the general TIN
@@ -274,7 +274,7 @@ the books do not hold it, or because it is not a document's to do:
   neither the full numbers nor the rules of their use beyond the consolidated
   sample, and none is invented here: a TIN is always given.
 - **Fixed-rate taxes**: `PerUnitAmount` and `BaseUnitMeasure`, the way the
-  tourism tax is charged per room per night. The books hold a tax as a rate.
+  tourism tax is charged per room per night. The accounts hold a tax as a rate.
 - **Invoice-level allowances and charges**, `PrepaidPayment`,
   `PayableRoundingAmount`, `InvoicePeriod` (frequency and period of billing),
   the shipping recipient (`cac:Delivery`), the customs forms No. 1, 2 and 9,
@@ -341,7 +341,7 @@ beside it, kept unmodified under `test/codelist/` and compiled into
 | Unit types (2,162, UN/ECE Recommendation 20) | <https://sdk.myinvois.hasil.gov.my/codes/unit-types/> | `UnitTypes.json` | `UNIT_CODES` |
 | Payment modes (8) | <https://sdk.myinvois.hasil.gov.my/codes/payment-methods/> | `PaymentMethods.json` | `PAYMENT_MODES` |
 
-**ISO 3166-1, two letters to three.** The books hold a country as its
+**ISO 3166-1, two letters to three.** The company data holds a country as its
 two-letter code and MyInvois wants the three-letter one; the pairs are the
 columns "ISO-alpha2 Code" and "ISO-alpha3 Code" of the M49 table of the
 United Nations Statistics Division, *Standard country or area codes for
