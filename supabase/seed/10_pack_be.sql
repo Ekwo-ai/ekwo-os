@@ -4,7 +4,7 @@
 -- Change the pack and run `ekwo pack build be`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
--- Proven on the real books of a company — not yet reviewed by an accountant.
+-- Proven on the real accounts of a company — not yet reviewed by an accountant.
 -- Written from:
 --   Arrêté royal du 21 octobre 2018 portant exécution des articles III.82 à III.95 du Code de droit économique, annexe 1 — plan comptable minimum normalisé (SPF Justice — Moniteur belge (Justel))
 --     https://www.ejustice.just.fgov.be/eli/arrete/2018/10/21/2018014350/justel

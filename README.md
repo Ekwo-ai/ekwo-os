@@ -67,7 +67,7 @@ A double-entry accounting core for Postgres. There is no server to run:
 Supabase turns the schema into a REST API with an OpenAPI description, and row
 level security decides who sees what.
 
-- **Double entry, enforced by the database.** A transaction cannot be recorded
+- **Balanced accounts, enforced by the database.** A transaction cannot be recorded
   unless it balances, and a locked period refuses writes at the trigger — not
   in a form validator.
 - **Documents and transactions are two layers.** An invoice answers to EN 16931

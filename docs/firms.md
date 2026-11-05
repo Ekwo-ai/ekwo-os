@@ -1,6 +1,6 @@
 # `docs/firms.md` — an accounting firm and its clients
 
-An accounting firm, a fiduciary, a bookkeeper with thirty customers, a group
+An accounting firm, a fiduciary, an accountant with thirty customers, a group
 that keeps the accounts of its three subsidiaries: somebody who keeps **several
 companies that are not all theirs**. This page is what Ekwo gives them, where
 each piece lives, and what is still missing.

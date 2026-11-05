@@ -4,7 +4,7 @@
 -- Change the pack and run `ekwo pack build ee`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
--- Proven on the real books of a company — not yet reviewed by an accountant.
+-- Proven on the real accounts of a company — not yet reviewed by an accountant.
 -- Written from:
 --   Käibemaksuseadus (Riigi Teataja)
 --     https://www.riigiteataja.ee/akt/kms
