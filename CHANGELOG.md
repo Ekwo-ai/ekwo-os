@@ -30,6 +30,15 @@ somewhere has already run it.
   `@ekwo-ai/core`, moved there from the MCP server, which still answers
   `vat_return` and `ec_sales_list` with them. They prepare figures; they file
   nothing.
+- **The financial statements from a terminal.** `ekwo statement` lists the
+  balance sheets and income statements a company can be presented on — the
+  schemes of its country pack, the ones its chart reports on marked default,
+  and the generic framework by account type — and `ekwo statement <code>
+  --from <date> --to <date>` prints one, line by line in the order the scheme
+  prints it, with a warning that names every account no line catches. Both
+  call `listStatements()` and `financialStatement()` of `@ekwo-ai/core`, moved
+  there from the MCP server, which still answers `list_statements` and
+  `financial_statement` with them. They prepare figures; they file nothing.
 - **The PDF of an invoice is in the words of its language.** A sale invoice
   or credit note whose `language` is German, Spanish, French or Dutch prints
   "Facture", "Échéance", "Montant dû"… in that language, without a `--labels`

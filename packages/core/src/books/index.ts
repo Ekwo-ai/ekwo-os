@@ -26,5 +26,6 @@ export * from './statements.js';
 export * from './analytics.js';
 export * from './reports.js';
 export * from './declarations.js';
+export * from './financial-statements.js';
 export * from './document-pdf.js';
 export * from './archive.js';

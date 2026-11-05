@@ -800,6 +800,19 @@
           "note": { "type": "string" }
         }
       },
+      "statement": {
+        "$comment": "Without a code, available_statements(): every scheme the company can be presented on, with code, name, kind, framework, country, chart_code and is_default. With a code, financial_statement() and unmapped_accounts(): every line of the scheme for the period, with line_code, parent_code, name, sequence, is_total, amount and xbrl_element, and the accounts no line catches, with their balance. Amounts are decimal strings.",
+        "type": "object",
+        "required": ["note"],
+        "properties": {
+          "statements": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "period": { "type": "object", "required": ["from", "to"] },
+          "statement_code": { "type": "string" },
+          "lines": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "unmapped_accounts": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "note": { "type": "string" }
+        }
+      },
       "proof stamp": {
         "$comment": "The proof recorded for the sha256 of the file, without its bytes. already_proved: the same bytes were proved before and nothing was submitted. calendars_failed: the calendars that did not answer, when enough others did.",
         "type": "object",

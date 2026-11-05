@@ -486,6 +486,29 @@ describe('every command answers --json with one document of the published shape'
     expect(ecsl.exitCode).toBe(0);
     expect(ecsl.data).toMatchObject({ period: vatPeriod, lines: expect.any(Array), undeclarable_lines: expect.any(Number) });
 
+    // The financial statements: the schemes the company can be presented
+    // on, then one of them for the year, every line in the order it prints.
+    const schemes = await asPerson(['statement']);
+    expect(schemes.exitCode).toBe(0);
+    const statements = (schemes.data as { statements: { code: string; is_default: boolean }[] }).statements;
+    expect(statements.length).toBeGreaterThan(0);
+    const scheme = (statements.find((s) => s.is_default) ?? statements[0])?.code as string;
+    const fiscal = { from: '2026-01-01', to: '2026-12-31' };
+    const statement = await asPerson(['statement', scheme, '--from', fiscal.from, '--to', fiscal.to]);
+    expect(statement.exitCode).toBe(0);
+    expect(statement.data).toMatchObject({ period: fiscal, statement_code: scheme, lines: expect.any(Array), unmapped_accounts: expect.any(Array) });
+    expect((statement.data as { lines: { amount: string }[] }).lines.every((l) => /^-?\d+\.\d{2}$/.test(l.amount))).toBe(true);
+    // Printed for a person: the heading, then every line under its code.
+    const printed = await capture(() =>
+      run(['statement', scheme, '--from', fiscal.from, '--to', fiscal.to], { fetchImpl: instance.fetchImpl, env, cwd }),
+    );
+    expect(printed.exitCode).toBe(0);
+    expect(printed.stdout).toContain(`${scheme} of Example One, ${fiscal.from} to ${fiscal.to}`);
+    const first = (statement.data as { lines: { line_code: string }[] }).lines[0];
+    if (first !== undefined) expect(printed.stdout).toContain(first.line_code);
+    expect((await asPerson(['statement', scheme, '--from', fiscal.from])).error).toMatchObject({ kind: 'usage' });
+    expect((await asPerson(['statement', scheme, 'extra', '--from', fiscal.from, '--to', fiscal.to])).error).toMatchObject({ kind: 'usage' });
+
     // Books from elsewhere: a balance on two accounts of the chart, rehearsed.
     const cash = await root.query<{ code: string }>(`select a.code from bank_accounts b join accounts a on a.id = b.account_id where b.id = $1`, [bankAccount]);
     const balance = join(cwd, 'balance.csv');

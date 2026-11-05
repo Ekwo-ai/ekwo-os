@@ -39,11 +39,13 @@ export {
   analyticReport,
   contactStatement,
   ecSalesList,
+  financialStatement,
   generalLedger,
   getDocument,
   journalBook,
   listAnalyticAxes,
   listDocuments,
+  listStatements,
   searchContacts,
   suggestDuplicateContacts,
   trialBalance,
@@ -701,23 +703,6 @@ export const ListStatementsInput = z.object({
     .describe('The day to read the schemes in force at. Defaults to today.'),
 });
 
-export async function listStatements(
-  backend: Backend,
-  args: z.infer<typeof ListStatementsInput>,
-): Promise<unknown> {
-  const rows = await backend.rpc<Record<string, unknown>>('available_statements', {
-    p_company_id: args.company_id,
-    p_at: args.at ?? null,
-  });
-  return {
-    statements: rows,
-    note:
-      rows.length === 0
-        ? 'No statement applies to this company. Its country pack declares none and the generic framework has not been seeded.'
-        : 'is_default marks the schemes the chart of accounts of this company reports on. The ones with no country are the generic framework by account type, which fits any chart.',
-  };
-}
-
 export const FinancialStatementInput = z.object({
   company_id: companyId,
   statement_code: z
@@ -727,38 +712,6 @@ export const FinancialStatementInput = z.object({
   from: isoDate,
   to: isoDate,
 });
-
-export async function financialStatement(
-  backend: Backend,
-  args: z.infer<typeof FinancialStatementInput>,
-): Promise<unknown> {
-  const [lines, unmapped] = await Promise.all([
-    backend.rpc<Record<string, unknown>>('financial_statement', {
-      p_company_id: args.company_id,
-      p_statement_code: args.statement_code,
-      p_from: args.from,
-      p_to: args.to,
-    }),
-    backend.rpc<Record<string, unknown>>('unmapped_accounts', {
-      p_company_id: args.company_id,
-      p_statement_code: args.statement_code,
-      p_from: args.from,
-      p_to: args.to,
-    }),
-  ]);
-
-  return {
-    period: { from: args.from, to: args.to },
-    statement_code: args.statement_code,
-    lines: moneyFields(lines, ['amount']),
-    unmapped_accounts: moneyFields(unmapped, ['balance']),
-    note:
-      'Every line of the scheme is returned, nil included, in the order it is printed; a line flagged is_total is derived from the others. ' +
-      (unmapped.length === 0
-        ? 'No account of this company falls outside the scheme, so it ties out.'
-        : 'unmapped_accounts lists accounts this scheme catches on no line — say so rather than presenting a statement that does not tie out.'),
-  };
-}
 
 export const FinancialAnalysisInput = z.object({
   company_id: companyId,

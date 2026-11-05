@@ -9,6 +9,7 @@ import { UsageError, boolFlag, parseArgs, type ParsedArgs } from './args.js';
 import { analyticCommand } from './commands/analytic.js';
 import { agedCommand, balanceCommand, journalCommand, ledgerCommand } from './commands/reports.js';
 import { ecslCommand, vatCommand } from './commands/declarations.js';
+import { statementCommand } from './commands/statement.js';
 import { companyCommand } from './commands/company.js';
 import { contactCommand } from './commands/contact.js';
 import { crmCommand } from './commands/crm.js';
@@ -87,6 +88,7 @@ export const COMMANDS = [
   'aged',
   'vat',
   'ecsl',
+  'statement',
   'import',
   'proof',
   'einvoice',
@@ -232,6 +234,10 @@ ${bold('Connecting')} ${dim('(every command)')}
               statement of supplies to other Member States, per customer VAT
               number and nature, and the lines that cannot be filed as they
               stand. Both prepare figures; neither files anything.
+  ${cyan('statement')}   [<code> --from <date> --to <date>] — without a code, the balance
+              sheets and income statements the company can be presented on; with
+              one, that statement line by line in the order the scheme prints it,
+              and every account no line catches. It files nothing.
   ${cyan('import')}      <source> <file>… — books kept elsewhere, whole or not at all:
               trial-balance, fec, journal-items, journal-report,
               transaction-journal, xaf, or the export of another ledger by
@@ -657,6 +663,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await vatCommand(args, deps);
       case 'ecsl':
         return await ecslCommand(args, deps);
+      case 'statement':
+        return await statementCommand(args, deps);
       case 'payment':
         return await paymentCommand(args, deps);
       case 'match':

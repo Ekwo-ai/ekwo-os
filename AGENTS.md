@@ -208,6 +208,7 @@ reach and whether you may write; without that box ticked, you read.
 | A received Peppol file, or whether a recipient is on Peppol (no installation needed) | `ekwo peppol validate <file>`, `ekwo peppol lookup <participant>` | — |
 | The VAT return of a period | `ekwo vat --from <date> --to <date> [--form <code>]` | `vat_return` |
 | The recapitulative statement of supplies to other Member States | `ekwo ecsl --from <date> --to <date> [--form <code>]` | `ec_sales_list` |
+| A balance sheet or an income statement on a scheme of the pack | `ekwo statement`, then `ekwo statement <code> --from <date> --to <date>` | `list_statements`, then `financial_statement` |
 | The VAT instalments a company's scheme asks for in a year | `ekwo status` | `instalment_plan` |
 | Trial balance, ledger, journal book | `ekwo balance --from <date> --to <date>`, `ekwo ledger [<account>] --from …`, `ekwo journal [<journal>] --from …` | `trial_balance`, `general_ledger`, `journal_book` |
 | What customers still owe, by days overdue | `ekwo aged [--payable] --at <date>` | `aged_balance` |
