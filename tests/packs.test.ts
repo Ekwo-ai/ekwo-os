@@ -260,11 +260,14 @@ describe('the compiled packs against the seeds they replace', () => {
     // 2,1 % the French sale side already had, and the rates of article 296 of
     // the CGI, one code per overseas department that levies them. Then the
     // service to a taxable person established outside the European Union
-    // (CGI, art. 259, 1°), outside the scope of French VAT.
+    // (CGI, art. 259, 1°), outside the scope of French VAT, and the same
+    // service from Belgium (Code TVA, art. 21, § 2), outside the scope of
+    // Belgian VAT.
     expect(added('tax_templates').map((r) => `${r['country']}/${r['code']}`)).toEqual([
       'BE/BE-P-21-50-I',
       'BE/BE-P-21-50-S',
       'BE/BE-P-21-ND',
+      'BE/BE-S-PS-HUE',
       'FR/FR-P-021',
       'FR/FR-P-021-GP',
       'FR/FR-P-021-MQ',
