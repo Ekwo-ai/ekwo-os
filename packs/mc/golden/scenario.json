@@ -169,6 +169,22 @@
       ]
     },
     {
+      "ref": "V9",
+      "type": "sale_invoice",
+      "contact": "client-ch",
+      "date": "2026-02-24",
+      "why": "Une prestation de services à un assujetti établi hors de l'Union européenne (CTCA, art. 11, 1°) : située hors de Monaco comme celle de V8, elle remplit aussi la ligne 05, mais l'état récapitulatif ne la liste pas, et ce n'est pas l'exportation de biens de la ligne 04.",
+      "lines": [
+        {
+          "name": "Prestation de conseil",
+          "quantity": 1,
+          "unit_price": 1500,
+          "tax": "MC-S-PS-HUE",
+          "account": "706000"
+        }
+      ]
+    },
+    {
       "ref": "V7",
       "type": "sale_invoice",
       "contact": "client-mc",

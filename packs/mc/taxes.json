@@ -346,6 +346,36 @@
     }
   },
   {
+    "code": "MC-S-PS-HUE",
+    "name": "Prestation de services à un assujetti établi hors de l'Union européenne",
+    "description": "Lieu de la prestation hors de Monaco : hors du champ de la taxe de la Principauté, ligne 05 (E2 du modèle de référence)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "CTCA, art. 11, 1° — le lieu des prestations de services est situé à Monaco lorsque le preneur est un assujetti agissant en tant que tel qui a à Monaco le siège de son activité économique ou un établissement stable auquel les services sont fournis ; une prestation à un assujetti établi hors de l'Union européenne, hors des dérogations des art. 11-0 A à 14 bis, est donc située hors de Monaco, hors du champ de la taxe de la Principauté. CTCA, art. 71-0, II, 2° — la facture reste due pour une prestation réputée ne pas être effectuée dans l'Union européenne.",
+    "source": "ctca",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "sequence": 75,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "05"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "05",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
     "code": "MC-S-EXP",
     "name": "Exportation hors UE",
     "description": "Exoneree",

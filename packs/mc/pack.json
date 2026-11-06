@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "MC",
   "name": "Monaco",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "schema_min": "20261023124650",
   "seed_sequence": 411,
-  "released_at": "2026-10-24",
+  "released_at": "2026-11-06",
   "certification": {
     "status": "community",
     "sources": [
@@ -14,7 +14,7 @@
         "title": "Code des taxes sur le chiffre d'affaires (créé par l'ordonnance n° 11.887 du 19 février 1996), texte consolidé au 1er août 2026 — taxe sur la valeur ajoutée (arts 1 à 112 et annexe, art. A-1 à A-191)",
         "publisher": "Principauté de Monaco — Legimonaco",
         "url": "https://legimonaco.mc/code/code-taxes-chiffre-affaires@2026.08.01",
-        "consulted_on": "2026-10-24",
+        "consulted_on": "2026-11-06",
         "kind": "law"
       },
       {
@@ -39,6 +39,14 @@
         "publisher": "Direction générale des finances publiques (France)",
         "url": "https://www.impots.gouv.fr/sites/default/files/formulaires/3310-ca3-sd/2026/3310-ca3-sd_5377.pdf",
         "consulted_on": "2026-10-24",
+        "kind": "form"
+      },
+      {
+        "key": "notice-ca3-2026",
+        "title": "Notice 3310-NOT-CA3-SD (n° 50449#29, 2026) du modèle français de déclaration — ligne E2, « prestations de services rendues à un preneur établi à l'étranger – même si elles sont taxées chez ce dernier » ; référence de numérotation, comme le formulaire (voir README.md)",
+        "publisher": "Direction générale des finances publiques (France)",
+        "url": "https://www.impots.gouv.fr/sites/default/files/formulaires/3310-ca3-sd/2026/3310-ca3-sd_5426.pdf",
+        "consulted_on": "2026-11-06",
         "kind": "form"
       },
       {

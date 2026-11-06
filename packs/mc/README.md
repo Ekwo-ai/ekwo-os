@@ -17,7 +17,8 @@ Principality is French.
 
 ## Sources
 
-Five texts, every one of them opened on 24 October 2026:
+Six texts, every one of them opened on 24 October 2026 and the CTCA again on
+6 November 2026, at the same consolidation (1 August 2026):
 
 | What | Text | Publisher |
 |---|---|---|
@@ -25,6 +26,7 @@ Five texts, every one of them opened on 24 October 2026:
 | Books, annual inventory, ten-year retention, annual accounts | Code de commerce, consolidated at 17 October 2026 (art. 10–13, 51-6, 51-7) | Legimonaco |
 | Structure of the chart | Règlement ANC 2014-03 (plan comptable général) | Autorité des normes comptables, France |
 | Numbering of the return's boxes | Form 3310-CA3-SD, French model | DGFiP, France |
+| What line E2 of that model holds | Notice 3310-NOT-CA3-SD, 2026, opened on 6 November 2026 | DGFiP, France |
 | Where the administration is reached | Page "how to declare a business to the Department of Tax Services" | MonEntreprise |
 
 ## How Monaco's VAT relates to France's
@@ -41,7 +43,7 @@ France, which the core already records in `territories` (`MC`, parent `FR`,
 
 ## The taxes
 
-Twenty-two codes, dated from 1 January 2014 (the date from which the current
+Twenty-three codes, dated from 1 January 2014 (the date from which the current
 wording of art. 51 applies, per the Ordonnance Souveraine 4.199 of 20 February
 2013). The rates are 20 % (art. 51), 10 % (arts 52, 56, 56 bis), 5.5 %
 (art. 52-0) and 2.10 % (arts 58, 59, 95). Services follow art. 40, 2, c: the
@@ -52,10 +54,59 @@ that has the authorisation uses the codes without the suffix.
 
 Also present: the intra-Community delivery (art. 31, I, 1°), the export outside
 the Union (art. 29, 1° and 2°), the service to a taxable person established in
-another Member State (art. 11, hence outside the Monegasque tax), the
-acquisition of goods from another Member State (art. 2, I), the service bought
+another Member State (art. 11, hence outside the Monegasque tax), the same
+service to a taxable person established outside the European Union (art. 11,
+since 0.2.0, below), the acquisition of goods from another Member State (art. 2, I), the service bought
 from a supplier established outside Monaco and France (art. 62, 2), the
 purchase of fixed assets (own box) and the purchase with no tax.
+
+## Sales without Monegasque VAT, and the lines they report to
+
+| Code | Operation | Article | Line | Category, reason |
+|---|---|---|---|---|
+| `MC-S-ICG` | delivery of goods to a taxable person in another Member State | CTCA, art. 31, I, 1° | `06` | `K`, `VATEX-EU-IC` |
+| `MC-S-ICS` | service to a taxable person established in another Member State | CTCA, art. 11, 1° | `05` | `K`, `VATEX-EU-IC` |
+| `MC-S-PS-HUE` | service to a taxable person established **outside the European Union** | CTCA, art. 11, 1° | `05` | `O`, `VATEX-EU-O` |
+| `MC-S-EXP` | export of goods outside the European Union | CTCA, art. 29, I, 1° and 2° | `04` | `G`, `VATEX-EU-G` |
+
+**`MC-S-PS-HUE`, since 0.2.0.** Article 11, 1° of the CTCA places a service
+to a taxable person at Monaco when that person has there the seat of its
+business or the fixed establishment the service is supplied to. A service
+to a taxable person established outside the European Union, outside the
+derogations of articles 11-0 A to 14 bis, is therefore supplied outside
+Monaco and outside the scope of the Principality's tax; article 71-0, II, 2°
+still asks for an invoice. It is not the export of goods of article 29, and
+it is not in the recapitulative statement, which is why it has a code of its
+own beside `MC-S-ICS`.
+
+Its line, `05`, is read on the French model the pack numbers its return
+after: the French notice of 2026 puts on line E2 (the pack's `05`) the
+"prestations de services rendues à un preneur établi à l'étranger – même si
+elles sont taxées chez ce dernier". The Monegasque model itself is still not
+readable (see the next section), so this line is exactly as certain as the
+`05` of `MC-S-ICS` and no more: a Monegasque accountant confirms both at
+once. Article 70, 1 asks the return for the total of the operations carried
+out, so the sale belongs on the return whatever its line.
+
+What it does not say: the core's `applies_when` has no condition for an
+operation outside the scope (`not_subject`), and this pack carries no invoice
+mention anyway; rule BR-O-02 of EN 16931 refuses a seller VAT identifier on
+an invoice with a line in category `O`, which matters the day a structured
+invoice is exchanged (see [`packs/fr/README.md`](../fr/README.md)).
+
+**A customer in France is a domestic customer.** Article 15 of the convention
+of 18 May 1963 has the tax applied on the same bases and at the same rates as
+in France, and the core treats Monaco as France for the common system, so no
+sale code of this pack names a territory the buyer must be in: a sale to a
+customer established in France takes `MC-S-20`, `MC-S-10`, `MC-S-055` or
+`MC-S-021`, the domestic rate, and lines 08 to 13. The French return asks for
+the tax on sales to Monaco again on its line 18; whether the Monegasque model
+has a line for the sales to France could not be read, and the pack carries
+none.
+
+**Supplies for vessels and aircraft** (CTCA, art. 29, II, 2° to 7°, read on
+6 November 2026) carry no code: neither the French notice the pack numbers
+its return after nor any Monegasque text that opened names their line.
 
 ## The return, and what is not verified about it
 
