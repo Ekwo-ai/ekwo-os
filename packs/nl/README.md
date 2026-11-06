@@ -119,6 +119,48 @@ nature. It is not declared as a form, because a pack declares one form — see
 [`../../docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet) — and no brick
 writes its file yet.
 
+### A service to a business outside the European Union: on no rubric
+
+`NL-S-BEU` (since 0.6.0) is the service supplied to a business established
+outside the European Union. Article 6, paragraph 1 of the *Wet op de
+omzetbelasting 1968* places a service "verricht voor een als zodanig
+handelende ondernemer" where that business has the seat of its activity, or
+at the fixed establishment it is supplied to (`wet-ob-2026`, the text in
+force from 1 January 2026, opened on 6 November 2026): such a service is not
+taxed in the Netherlands. Treatment `not_subject`, category `O`, reason
+`VATEX-EU-O`, as the French (`FR-S-PS-HUE`), German (`DE-S-NSTB`) and Spanish
+(`ES-S-NS`) packs carry the same operation.
+
+**It reports to no rubric, and that is the return's own rule.** The
+*Toelichting bij de btw-aangifte 2026* of October 2026
+(`toelichting-ob-2026-oktober`, opened the same day) gives rubric 1e to
+goods and services "die u in Nederland levert" at 0 % or not taxed with you,
+3a to goods exported, and 3b to supplies "naar en in andere landen binnen de
+EU"; none of them takes a service located outside the European Union.
+Ondernemersplein, the government's portal for businesses, says it in so many
+words for a customer outside the European Union: "U zet geen btw op de
+factuur. En u geeft deze dienst niet aan in uw Nederlandse btw-aangifte"
+(`ondernemersplein-diensten-buitenland`). So the code posts its base to no
+box, as `NL-S-VRIJ-OZ` does, and the customer is on no ICP statement, unlike
+`NL-S-ICD` in 3b.
+
+What this code does **not** say:
+
+- **The sentence on the invoice.** The pack's mentions are chosen by
+  `applies_when`, and that vocabulary has no condition for an operation
+  outside the scope (`not_subject`): an invoice with this code prints none.
+  Which mention article 35a of the Wet OB asks of an invoice for a service
+  taxed abroad was not read for this version; giving `not_subject` a condition
+  is a change of the core in any case. The e-invoice carries category `O` and
+  the reason `VATEX-EU-O`; rule BR-O-02 of EN 16931 refuses the VAT
+  identifiers of both parties on such an invoice, so the structured file is
+  written without them and names the seller by its registration number; the
+  printed invoice keeps both numbers. What the Dutch rules of Peppol (NL-R)
+  add for such a sale was not read.
+- **Supplies for vessels and aircraft** (table II, part a, of the Wet OB)
+  carry no code: neither the item of the table nor the rubric the
+  *Toelichting* gives them was read for this version.
+
 ## The financial statements
 
 `statements.json` carries the models of the *Besluit modellen jaarrekening*
@@ -174,8 +216,10 @@ quarterly: both positive rates, a credit note, an intra-Community supply of
 goods and one of services, an export, an intra-Community acquisition, a service
 from each side of the Union's border, a domestic reverse charge on each side,
 an exempt letting, a purchase whose deduction is excluded and a fixed asset.
-The third quarter ends in a refund (5g = −630). The result of the open year,
-23 945 euros, is the gap between line E and line I of the balance sheet until
+The third quarter ends in a refund (5g = −630). Since 0.6.0 the fourth
+quarter also carries a service to a business outside the European Union,
+1 500 euros in the books and on no rubric. The result of the open year,
+25 445 euros, is the gap between line E and line I of the balance sheet until
 the year is closed.
 
 ## What a Dutch reviewer should look at first

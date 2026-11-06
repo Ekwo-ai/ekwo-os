@@ -359,6 +359,22 @@
           "account": "WOmzNodOdh"
         }
       ]
+    },
+    {
+      "ref": "V10",
+      "type": "sale_invoice",
+      "contact": "klant-us",
+      "date": "2026-12-08",
+      "why": "Een dienst aan een ondernemer buiten de Europese Unie: de plaats is die van de afnemer (Wet OB, art. 6, lid 1), niet in Nederland belast. De omzet staat in de boeken en op geen enkele rubriek van de aangifte, en de afnemer staat niet op de opgaaf ICP, anders dan bij de dienst in rubriek 3b.",
+      "lines": [
+        {
+          "name": "Adviesuren voor een afnemer buiten de Europese Unie",
+          "quantity": 10,
+          "unit_price": 150,
+          "tax": "NL-S-BEU",
+          "account": "WOmzNodOdh"
+        }
+      ]
     }
   ],
   "payments": [

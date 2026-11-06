@@ -247,6 +247,32 @@
     "sequence": 70
   },
   {
+    "code": "NL-S-BEU",
+    "name": "Dienst aan een ondernemer buiten de Europese Unie — niet in Nederland belast",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2012-10-01",
+    "legal_reference": "Wet op de omzetbelasting 1968, art. 6, lid 1 — de plaats van een dienst, verricht voor een als zodanig handelende ondernemer, is de plaats waar die ondernemer de zetel van zijn bedrijfsuitoefening heeft gevestigd (of de vaste inrichting waarvoor de dienst wordt verricht); een dienst aan een ondernemer buiten de Europese Unie is dus niet in Nederland belast. Geen rubriek van de aangifte: de Toelichting bij de btw-aangifte 2026 geeft 1e aan wat u in Nederland levert, 3a aan uitgevoerde goederen en 3b aan prestaties binnen de Europese Unie, en Ondernemersplein: «u geeft deze dienst niet aan in uw Nederlandse btw-aangifte».",
+    "source": "wet-ob-2026",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 75
+  },
+  {
     "code": "NL-S-UIT",
     "name": "Uitvoer van goederen buiten de EU — 0 %",
     "kind": "vat",

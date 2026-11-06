@@ -432,6 +432,7 @@
     "NL-S-VERL": "Sale — VAT reverse-charged to the customer (domestic)",
     "NL-S-ICL": "Intra-Community supply of goods — 0%",
     "NL-S-ICD": "Service to a business in another Member State — VAT reverse-charged",
+    "NL-S-BEU": "Service to a business outside the European Union — not taxed in the Netherlands",
     "NL-S-UIT": "Export of goods outside the EU — 0%",
     "NL-S-VRIJ-OZ": "Letting of immovable property — exempt",
     "NL-P-21": "Purchase 21% — deductible",

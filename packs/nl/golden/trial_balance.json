@@ -48,9 +48,9 @@
       "closing": "-14053.00"
     },
     "BVorDebHad": {
-      "debit": "42049.00",
+      "debit": "43549.00",
       "credit": "13507.50",
-      "closing": "28541.50"
+      "closing": "30041.50"
     },
     "WBedAeaAdv": {
       "debit": "1500.00",
@@ -94,8 +94,8 @@
     },
     "WOmzNodOdh": {
       "debit": "0.00",
-      "credit": "1900.00",
-      "closing": "-1900.00"
+      "credit": "3400.00",
+      "closing": "-3400.00"
     },
     "WOmzNodOdi": {
       "debit": "0.00",

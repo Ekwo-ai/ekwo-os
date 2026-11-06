@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "NL",
   "name": "Nederland",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "schema_min": "20261023124650",
   "seed_sequence": 17,
-  "released_at": "2026-10-23",
+  "released_at": "2026-11-06",
   "certification": {
     "status": "community",
     "sources": [
@@ -144,6 +144,30 @@
         "url": "https://download.belastingdienst.nl/belastingdienst/docs/toelichting_bij_btw_aangifte_ob0731t62fd.pdf",
         "consulted_on": "2026-09-21",
         "kind": "form"
+      },
+      {
+        "key": "wet-ob-2026",
+        "title": "Wet op de omzetbelasting 1968, tekst geldend vanaf 1 januari 2026 — art. 6, lid 1, de plaats van een dienst verricht voor een als zodanig handelende ondernemer",
+        "publisher": "Overheid.nl — Wettenbank (wetten.overheid.nl)",
+        "url": "https://wetten.overheid.nl/BWBR0002629/2026-01-01",
+        "consulted_on": "2026-11-06",
+        "kind": "law"
+      },
+      {
+        "key": "toelichting-ob-2026-oktober",
+        "title": "Toelichting bij de btw-aangifte (omzetbelasting) 2026, uitgave oktober 2026 — rubrieken 1e, 3a en 3b, en «Welke diensten mag u niet opnemen in uw btw-aangifte en opgaaf ICP?»",
+        "publisher": "Belastingdienst",
+        "url": "https://download.belastingdienst.nl/belastingdienst/docs/toelichting_bij_btw_aangifte_ob0731t63fd.pdf",
+        "consulted_on": "2026-11-06",
+        "kind": "form"
+      },
+      {
+        "key": "ondernemersplein-diensten-buitenland",
+        "title": "Btw bij diensten in het buitenland — een afnemer uit een land buiten de EU: «U zet geen btw op de factuur. En u geeft deze dienst niet aan in uw Nederlandse btw-aangifte.»",
+        "publisher": "Ondernemersplein — KVK, namens de overheid",
+        "url": "https://ondernemersplein.overheid.nl/btw-bij-diensten-in-het-buitenland/",
+        "consulted_on": "2026-11-06",
+        "kind": "guidance"
       },
       {
         "key": "nt-ob-2026",
