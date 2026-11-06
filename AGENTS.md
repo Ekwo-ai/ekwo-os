@@ -209,6 +209,7 @@ reach and whether you may write; without that box ticked, you read.
 | The VAT return of a period | `ekwo vat --from <date> --to <date> [--form <code>]` | `vat_return` |
 | The recapitulative statement of supplies to other Member States | `ekwo ecsl --from <date> --to <date> [--form <code>]` | `ec_sales_list` |
 | A balance sheet or an income statement on a scheme of the pack | `ekwo statement`, then `ekwo statement <code> --from <date> --to <date>` | `list_statements`, then `financial_statement` |
+| A month closed, or a financial year (and undone) — only when the user asked for that one | `ekwo close month <YYYY-MM>`, `ekwo close year <name> [--final]`; `ekwo reopen month\|year …` — each asks, and needs `--yes` outside a terminal | `lock_period`, `close_fiscal_year`, `close_fiscal_year_finally`, `reopen_fiscal_year` |
 | The VAT instalments a company's scheme asks for in a year | `ekwo status` | `instalment_plan` |
 | Trial balance, ledger, journal book | `ekwo balance --from <date> --to <date>`, `ekwo ledger [<account>] --from …`, `ekwo journal [<journal>] --from …` | `trial_balance`, `general_ledger`, `journal_book` |
 | What customers still owe, by days overdue | `ekwo aged [--payable] --at <date>` | `aged_balance` |

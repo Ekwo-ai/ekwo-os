@@ -69,6 +69,19 @@ somewhere has already run it.
   call `listStatements()` and `financialStatement()` of `@ekwo-ai/core`, moved
   there from the MCP server, which still answers `list_statements` and
   `financial_statement` with them. They prepare figures; they file nothing.
+- **A month and a year closed from a terminal.** `ekwo close month
+  <YYYY-MM>` moves the lock date of the company to the last day of the month,
+  forward only, and `ekwo reopen month` moves it back to the day before;
+  `ekwo close year <name>` closes a financial year through
+  `close_fiscal_year()` and says when the country also requires a final
+  close, which `--final` performs, and `ekwo reopen year` undoes an ordinary
+  close. Each shows what it is about to do and asks; outside a terminal, and
+  under `--json`, it refuses unless `--yes` is given, so that nothing closes
+  the books by ricochet. They call `lockPeriod()`, `closeFiscalYear()`,
+  `closeFiscalYearFinally()` and `reopenFiscalYear()` of `@ekwo-ai/core`,
+  moved there from the MCP server, which still answers `lock_period`,
+  `close_fiscal_year`, `close_fiscal_year_finally` and `reopen_fiscal_year`
+  with them.
 - **The PDF of an invoice is in the words of its language.** A sale invoice
   or credit note whose `language` is German, Spanish, French or Dutch prints
   "Facture", "Échéance", "Montant dû"… in that language, without a `--labels`

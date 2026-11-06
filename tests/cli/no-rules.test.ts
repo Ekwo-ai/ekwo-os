@@ -19,7 +19,7 @@ import { describe, expect, it } from 'vitest';
 import { repoRoot } from '../helpers/db.js';
 
 const src = join(repoRoot, 'packages', 'cli', 'src');
-const BOOKKEEPING = ['contact.ts', 'document.ts', 'einvoice.ts', 'payment.ts', 'reports.ts', 'declarations.ts', 'statement.ts'];
+const BOOKKEEPING = ['contact.ts', 'document.ts', 'einvoice.ts', 'payment.ts', 'reports.ts', 'declarations.ts', 'statement.ts', 'close.ts'];
 
 /** Code without its comments: the prose is allowed to say "round". */
 function code(text: string): string {

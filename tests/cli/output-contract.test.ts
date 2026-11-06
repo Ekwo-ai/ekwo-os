@@ -556,6 +556,15 @@ describe('every command answers --json with one document of the published shape'
     const received = join(repoRoot, 'packages', 'formats', 'peppol-ubl', 'test', 'fixtures', 'invoice-standard.xml');
     expect((await asProver(['peppol', 'validate', received])).data).toMatchObject({ valid: true });
 
+    // A month closed and opened again: the lock date moved by an owner, once
+    // --yes says the person keeping the books agreed — under --json there is
+    // nobody to ask.
+    expect((await asPerson(['close', 'month', '2026-01'])).error).toMatchObject({ kind: 'usage', name: 'confirmation_required' });
+    const closedMonth = await asPerson(['close', 'month', '2026-01', '--yes']);
+    expect(closedMonth.data).toMatchObject({ company: { lock_date: '2026-01-31' } });
+    const reopenedMonth = await asPerson(['reopen', 'month', '2026-01', '--yes']);
+    expect(reopenedMonth.data).toMatchObject({ company: { lock_date: '2025-12-31' }, previous_lock_date: '2026-01-31' });
+
     expect((await asPerson(['logout'])).data).toMatchObject({ signedOut: true });
     // The commands that install act as nobody, and carry no such field.
     expect((await json(['status'])).context).toBeUndefined();

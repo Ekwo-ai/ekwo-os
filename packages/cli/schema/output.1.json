@@ -813,6 +813,45 @@
           "note": { "type": "string" }
         }
       },
+      "close month": {
+        "$comment": "lockPeriod() of @ekwo-ai/core — the MCP server's lock_period — with the lock date moved to the last day of the month. previous_lock_date is what it was, null when the company was not locked.",
+        "type": "object",
+        "required": ["company", "previous_lock_date", "note"],
+        "properties": {
+          "company": { "type": "object", "required": ["id", "name", "lock_date", "tax_lock_date"] },
+          "previous_lock_date": { "type": ["string", "null"] },
+          "note": { "type": "string" }
+        }
+      },
+      "reopen month": {
+        "$comment": "lockPeriod() with the lock date moved back to the day before the month. previous_lock_date is what it was.",
+        "type": "object",
+        "required": ["company", "previous_lock_date", "note"],
+        "properties": {
+          "company": { "type": "object", "required": ["id", "name", "lock_date", "tax_lock_date"] },
+          "previous_lock_date": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      },
+      "close year": {
+        "$comment": "Without --final, close_fiscal_year() and fiscal_year_final_close(): the result as the currency writes it, its kind, the closing style of the country and the entries written; then whether the country requires a final close, by when and under which reference. With --final, close_fiscal_year_finally(). The amount is a decimal string.",
+        "type": "object",
+        "required": ["note"],
+        "properties": {
+          "close": { "type": "object", "required": ["fiscal_year_id", "result"] },
+          "final_close": { "type": "object", "required": ["fiscal_year_id"] },
+          "note": { "type": "string" }
+        }
+      },
+      "reopen year": {
+        "$comment": "reopen_fiscal_year(): the entries the close wrote, reversed.",
+        "type": "object",
+        "required": ["reopen", "note"],
+        "properties": {
+          "reopen": { "type": "object" },
+          "note": { "type": "string" }
+        }
+      },
       "proof stamp": {
         "$comment": "The proof recorded for the sha256 of the file, without its bytes. already_proved: the same bytes were proved before and nothing was submitted. calendars_failed: the calendars that did not answer, when enough others did.",
         "type": "object",
