@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "LU",
   "name": "Luxembourg",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "schema_min": "20261023124650",
   "seed_sequence": 12,
-  "released_at": "2026-10-23",
+  "released_at": "2026-11-06",
   "certification": {
     "status": "community",
     "sources": [
@@ -23,6 +23,14 @@
         "publisher": "Legilux — Journal officiel du Grand-Duché de Luxembourg",
         "url": "https://legilux.public.lu/eli/etat/leg/loi/1979/02/12/n1/jo",
         "consulted_on": "2026-09-16",
+        "kind": "law"
+      },
+      {
+        "key": "memorial-2009-a216",
+        "title": "Loi du 10 novembre 2009 portant transposition de la directive 2008/8/CE (lieu des prestations de services) et modifiant la loi modifiée du 12 février 1979 concernant la TVA, art. I, (2) — l'article 17 remplacé, dont le par. 1er, point b) (Mémorial A n° 216 du 11 novembre 2009, p. 3750) ; le texte coordonné au 1er janvier 2026 porte le même point b) mot pour mot",
+        "publisher": "Journal officiel du Grand-Duché de Luxembourg — Legilux",
+        "url": "https://data.legilux.public.lu/filestore/eli/etat/leg/memorial/2009/a216/fr/pdf/eli-etat-leg-memorial-2009-a216-fr-pdf.pdf",
+        "consulted_on": "2026-11-06",
         "kind": "law"
       },
       {

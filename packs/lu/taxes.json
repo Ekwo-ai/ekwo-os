@@ -442,6 +442,36 @@
     }
   },
   {
+    "code": "LU-S-PS-HUE",
+    "name": "Prestation de services à un assujetti établi hors de l'Union européenne",
+    "description": "Lieu de la prestation hors du Luxembourg : hors du champ de la TVA luxembourgeoise, case 019",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Loi TVA modifiée du 12 février 1979, art. 17, par. 1er, point b) — le lieu des prestations de services fournies à un assujetti agissant en tant que tel est l'endroit où l'assujetti a établi le siège de son activité économique, ou l'établissement stable auquel elles sont fournies (rédaction de la loi du 10 novembre 2009, Mémorial A n° 216) ; une prestation à un assujetti établi hors de l'Union européenne, hors des dérogations des par. 2 et suivants, n'est donc pas située au Luxembourg. Formulaire eCDF TVA_DECM 2026, I.B.9 : les prestations à des identifiés à la TVA dans un autre État membre de l'Union européenne vont en 423 et 424, « c) Autres opérations réalisées (imposables) à l'étranger » en 019.",
+    "source": "memorial-2009-a216",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "sequence": 125,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "019"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "019",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
     "code": "LU-S-EXP",
     "name": "Exportation hors de l’Union européenne",
     "kind": "vat",

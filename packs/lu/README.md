@@ -106,6 +106,48 @@ filed on the fourteenth is on time under either reading. The text cited is the
 AED's coordinated version of 1 January 2026, which is not opposable; Legilux
 serves the official one.
 
+### A service to a business outside the European Union: field 019
+
+`LU-S-PS-HUE` (since 1.12.0) is the service supplied to a taxable person
+established outside the European Union. Article 17, paragraph 1, point b) of
+the law places a service "fournie à un assujetti agissant en tant que tel" where
+that taxable person has established the seat of its economic activity, or at
+the fixed establishment it is supplied to. The point was read in the official
+publication of the law of 10 November 2009 that wrote it (Mémorial A n° 216,
+`memorial-2009-a216`), and the AED's coordinated text of 1 January 2026
+(`loi-tva-coordonnee`) carries the same words; both were opened on
+6 November 2026. Outside the derogations of paragraph 2 and following, such a
+service is not located in Luxembourg. Treatment `not_subject`, category `O`,
+reason `VATEX-EU-O`, as the French (`FR-S-PS-HUE`), German (`DE-S-NSTB`) and
+Spanish (`ES-S-NS`) packs carry the same operation.
+
+**The field is 019.** Section I.B.9 of the 2026 form (`declaration-tva`),
+"Opérations réalisées (imposables) à l'étranger", gives 423 and 424 to
+"prestations de services à des identifiés à la TVA dans un autre Etat membre"
+— 423 alone leads to the recapitulative statement, footnote 5 — and 019 to
+"c) Autres opérations réalisées (imposables) à l'étranger". The service to a
+business outside the European Union is the latter. 019 is one of the
+deductions of 021, so it raises the global turnover (012) and leaves the
+taxable turnover (022) where it was. No notice of the AED explaining the
+fields beyond the form's own footnotes was read: this reading rests on the
+structure of the form, and a Luxembourg reviewer should confirm it.
+
+What this code does **not** say:
+
+- **The sentence on the invoice.** The pack's mentions are chosen by
+  `applies_when`, and that vocabulary has no condition for an operation
+  outside the scope (`not_subject`): an invoice with this code prints none.
+  Which mention article 63 asks of an invoice for a service located abroad was
+  not read for this version; giving `not_subject` a condition is a change of
+  the core in any case. The e-invoice carries category `O` and the reason
+  `VATEX-EU-O`; rule BR-O-02 of EN 16931 refuses the VAT identifiers of both
+  parties on such an invoice, so the structured file is written without them
+  and names the seller by its registration number; the printed invoice keeps
+  both numbers.
+- **Supplies for vessels and aircraft** (article 43) carry no code: the form
+  gives them field 015, "Autres exonérations (art.43 et 60bis)", but the
+  points of article 43 that exempt them were not read for this version.
+
 ## VAT schemes: what `vat_schemes.json` does not declare yet
 
 The pack declares no VAT scheme, so a Luxembourg company files exactly as it
@@ -176,14 +218,14 @@ obligation no longer depends on a size the core cannot hold.
 
 `golden/scenario.json` is a year of a Luxembourg trading company filing
 quarterly: the four positive rates, a credit note, an intra-Union supply, an
-export, an intra-Union acquisition of goods and one of services, two matched
-payments and one on account. The three files beside it are what the engine
-makes of that year, to the cent.
+export, an intra-Union acquisition of goods and one of services, a service
+to a business outside the European Union (since 1.12.0, field 019), two
+matched payments and one on account. The three files beside it are what the
+engine makes of that year, to the cent.
 
-The balance sheet of that year does not balance, and that is not a defect: the
-result of an open financial year is not on the balance sheet until
-`close_fiscal_year()` puts it there, so the assets exceed the liabilities by
-exactly the result of the profit and loss account — 16 300 euros here.
+The result of the open year, 22 300 euros, is line 321 of the abridged
+balance sheet, inside the equity of line 301, and both sides of the balance
+sheet come to 31 036 euros.
 
 ## What a Luxembourg reviewer should look at first
 

@@ -59,6 +59,11 @@
       "lines": [{ "name": "Prestation d'ingénierie pour un preneur allemand", "quantity": 1, "unit_price": 3500, "tax": "LU-S-ICS", "account": "7033" }]
     },
     {
+      "ref": "V9", "type": "sale_invoice", "contact": "client-ch", "date": "2026-10-13", "due_date": "2026-11-12",
+      "why": "Une prestation de services à un assujetti établi hors de l'Union européenne : son lieu est celui du preneur (loi TVA, art. 17, par. 1er, point b), hors du champ de la TVA luxembourgeoise. La déclaration la porte en case 019, les autres opérations réalisées à l'étranger, et non en 423, réservée aux preneurs identifiés dans un autre État membre de l'Union européenne et reprise à l'état récapitulatif.",
+      "lines": [{ "name": "Prestation d'ingénierie pour un preneur établi hors de l'Union européenne", "quantity": 1, "unit_price": 2500, "tax": "LU-S-PS-HUE", "account": "7033" }]
+    },
+    {
       "ref": "A1", "type": "purchase_invoice", "contact": "fourn-lu", "date": "2026-01-28", "due_date": "2026-02-27",
       "why": "Un achat à l'intérieur du pays : la déclaration luxembourgeoise ne demande aucune base à l'entrée, seulement la taxe déductible de la case 458.",
       "lines": [{ "name": "Marchandises", "quantity": 1, "unit_price": 5000, "tax": "LU-P-17", "account": "6061" }]
