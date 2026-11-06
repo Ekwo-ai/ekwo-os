@@ -28,6 +28,7 @@
     "check:ohada": "node scripts/ohada-packs.mjs",
     "docs:schema": "node scripts/generate-schema-doc.mjs",
     "inventory": "node scripts/generate-expected-objects.mjs",
+    "inventory:place-of-supply": "node scripts/inventory-place-of-supply.mjs",
     "e2e:supabase": "node scripts/e2e-supabase.mjs",
     "release:check": "node scripts/check-trusted-publishing.mjs",
     "release:publish": "node scripts/publish.mjs"
