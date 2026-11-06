@@ -776,6 +776,18 @@ on).
 | `exempt` | either | `E` | the article claimed, from the VATEX list |
 | `not_subject` | either | `O` | `VATEX-EU-O` |
 
+**A service to a taxable person has two codes, not one.** Article 44 of
+Directive 2006/112/EC puts it where the customer is established, in another
+Member State or outside the European Union alike. The first is
+`intracom_services`, category `K`, in the European statement of services; the
+second is outside the scope of the seller's VAT, `not_subject`, category `O`,
+on a line of its own and in no statement. A pack inside the common system that
+carries the first carries the second, and
+[`tests/place_of_supply_services.test.ts`](../tests/place_of_supply_services.test.ts)
+refuses one that does not, apart from the packs it still lists by name while
+they are corrected wave by wave. `node scripts/inventory-place-of-supply.mjs`
+prints where every pack stands.
+
 **The last column applies where the European Union's VAT does.** The VATEX list
 names articles of Directive 2006/112/EC, so for a country the common system
 does not reach:
