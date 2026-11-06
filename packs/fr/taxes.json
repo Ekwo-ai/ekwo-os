@@ -366,6 +366,36 @@
     }
   },
   {
+    "code": "FR-S-PS-HUE",
+    "name": "Prestation de services à un assujetti établi hors de l'Union européenne",
+    "description": "Lieu de la prestation hors de France : hors du champ de la TVA française, ligne E2 de la CA3 (case 05 du pack)",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "CGI, art. 259, 1° — le lieu des prestations de services est situé en France lorsque le preneur est un assujetti agissant en tant que tel établi ou domicilié en France (BOI-TVA-CHAMP-20-50, § 10) ; une prestation à un assujetti établi hors de l'Union européenne, hors des dérogations des art. 259 A à 259 D, n'est donc pas située en France. Notice 3310-NOT-CA3-SD (2026), ligne E2 : « prestations de services rendues à un preneur établi à l'étranger – même si elles sont taxées chez ce dernier ».",
+    "source": "boi-tva-champ-20-50",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "sequence": 75,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "05"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "05",
+          "box_factor": -100
+        }
+      ]
+    }
+  },
+  {
     "code": "FR-S-EXP",
     "name": "Exportation hors UE",
     "description": "Exoneree",

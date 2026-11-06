@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.22.0",
+  "version": "1.23.0",
   "schema_min": "20261023124650",
   "seed_sequence": 11,
-  "released_at": "2026-10-23",
+  "released_at": "2026-11-06",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -90,6 +90,22 @@
         "url": "https://www.impots.gouv.fr/formulaire/3310-ca3-sd/tva-et-taxes-assimilees-regime-du-reel-normal-mini-reel",
         "consulted_on": "2026-09-21",
         "kind": "form"
+      },
+      {
+        "key": "notice-ca3-2026",
+        "title": "Notice 3310-NOT-CA3-SD (n° 50449#29, 2026) pour remplir la déclaration n° 3310-CA3 et ses annexes — ligne E2, « prestations de services rendues à un preneur établi à l'étranger – même si elles sont taxées chez ce dernier »",
+        "publisher": "DGFiP",
+        "url": "https://www.impots.gouv.fr/sites/default/files/formulaires/3310-ca3-sd/2026/3310-ca3-sd_5426.pdf",
+        "consulted_on": "2026-11-06",
+        "kind": "form"
+      },
+      {
+        "key": "boi-tva-champ-20-50",
+        "title": "BOI-TVA-CHAMP-20-50 — TVA, champ d'application et territorialité, lieu des prestations de services (règles générales de l'art. 259 du CGI, § 10), version en vigueur depuis le 7 novembre 2018",
+        "publisher": "DGFiP — BOFiP-Impôts",
+        "url": "https://bofip.impots.gouv.fr/bofip/1485-PGP.html",
+        "consulted_on": "2026-11-06",
+        "kind": "guidance"
       },
       {
         "key": "ca12",

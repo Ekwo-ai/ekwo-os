@@ -258,7 +258,9 @@ describe('the compiled packs against the seeds they replace', () => {
     // non-deductible VAT the engine could not express before. Then the six
     // French services taxes that fall due when they are paid, the purchase at
     // 2,1 % the French sale side already had, and the rates of article 296 of
-    // the CGI, one code per overseas department that levies them.
+    // the CGI, one code per overseas department that levies them. Then the
+    // service to a taxable person established outside the European Union
+    // (CGI, art. 259, 1°), outside the scope of French VAT.
     expect(added('tax_templates').map((r) => `${r['country']}/${r['code']}`)).toEqual([
       'BE/BE-P-21-50-I',
       'BE/BE-P-21-50-S',
@@ -292,6 +294,7 @@ describe('the compiled packs against the seeds they replace', () => {
       'FR/FR-S-085-RE',
       'FR/FR-S-10-ENC',
       'FR/FR-S-20-ENC',
+      'FR/FR-S-PS-HUE',
     ]);
   });
 

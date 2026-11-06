@@ -125,7 +125,7 @@ form's and the declarant can fill them: **15** and **5B** (inside 16), **21**,
 | TC, T3, T4, T5 | Corsica, article 297 |
 | T7 | withholding of VAT on authors' rights |
 | I1 to I6 | see above |
-| 18 | operations to Monaco, which the pack does not tell apart |
+| 18 | operations to Monaco, which the pack does not tell apart — see [Sales without French VAT](#sales-without-french-vat-and-the-lines-they-report-to) |
 | 22A | a percentage, not an amount |
 | TD | the pack's `28` is line 16 less line 23, which is TD; without the energy excise lines, TD and 28 are the same amount |
 | X1 to Z5, M1 to M9 | the energy excise, declared on the same form |
@@ -134,6 +134,74 @@ form's and the declarant can fill them: **15** and **5B** (inside 16), **21**,
 
 Line **14** of earlier versions of the form is not on the form in
 force: the rates it used to gather from an annex are lines T1 to T7 now.
+
+## Sales without French VAT, and the lines they report to
+
+Since 1.23.0 the pack carries five sale codes that charge no French VAT.
+Each is a different operation in the law, lands on its own line of the
+CA3 (pack box, then the line printed on the form in force, as in the table
+above) and says so on the invoice through its category and its reason:
+
+| Code | Operation | Article | CA3 | Category, reason |
+|---|---|---|---|---|
+| `FR-S-ICG` | delivery of goods to a taxable person in another Member State | CGI, art. 262 ter, I | `06` (F2) | `K`, `VATEX-EU-IC` |
+| `FR-S-ICS` | service to a taxable person established in another Member State | CGI, art. 259, 1° | `05` (E2) | `K`, `VATEX-EU-IC` |
+| `FR-S-PS-HUE` | service to a taxable person established **outside the European Union** | CGI, art. 259, 1° | `05` (E2) | `O`, `VATEX-EU-O` |
+| `FR-S-EXP` | export of goods outside the European Union | CGI, art. 262, I | `04` (E1) | `G`, `VATEX-EU-G` |
+| `FR-S-AL` | domestic supply whose VAT the customer owes | CGI, art. 283, 2 nonies | `05` (E2) | `AE`, `VATEX-EU-AE` |
+
+**`FR-S-PS-HUE`, the service to a business outside the European Union.**
+Article 259, 1° of the CGI places a service to a taxable person where that
+person is established; the DGFiP's commentary states the rule as "le lieu
+des prestations de services est réputé se situer en France lorsque le
+preneur est un assujetti agissant en tant que tel établi ou domicilié en
+France" (BOI-TVA-CHAMP-20-50, § 10, `boi-tva-champ-20-50`). A service to a
+taxable person established outside the European Union, outside the
+derogations of articles 259 A to 259 D, is therefore outside the scope of
+French VAT. The notice of the CA3 (3310-NOT-CA3-SD, 2026, `notice-ca3-2026`)
+puts it on line **E2**, which names "prestations de services rendues à un
+preneur établi à l'étranger – même si elles sont taxées chez ce dernier";
+the pack's box for E2 is `05`. It is not an export of goods (line E1), and
+it is not in the European statement of services, which is why it is a code
+of its own rather than `FR-S-ICS` used for a customer it does not describe.
+Both texts were opened on 6 November 2026. Légifrance answered every
+automated read that day with a browser challenge, so the article itself was
+last opened there on 15 September 2026 (`cgi`); the commentary quotes the
+rule it applies.
+
+What this code does **not** say:
+
+- **The sentence on the invoice.** The pack's mentions are chosen by
+  `applies_when`, and that vocabulary has no condition for an operation
+  outside the scope (`not_subject`): the core maps `reverse_charge`,
+  `intra_eu_goods`, `intra_eu_services`, `export` and `exempt` to treatments,
+  and nothing to this one. An invoice with this code therefore prints no
+  sentence of the pack; the e-invoice carries category `O` and the reason
+  `VATEX-EU-O`. Giving `not_subject` a condition is a change of the core.
+- **The e-invoice, under EN 16931.** Rule BR-O-02 of the standard refuses a
+  seller VAT identifier on an invoice that has a line in category `O`, and a
+  French seller always has one, and the rules of
+  [`@ekwo-ai/peppol-ubl`](../../packages/formats/peppol-ubl/README.md) apply
+  it. The category is the one the German (`DE-S-NSTB`) and Spanish
+  (`ES-S-NS`) packs use for the same operation; how the French platforms
+  expect such a sale on a structured invoice was not read, and is an open
+  question for an accountant or a platform.
+
+**A customer in Monaco is a domestic customer.** Monaco is treated as France
+for the common system of VAT (`territories`: `MC`, parent `FR`,
+`eu_vat_scope` `full`), and no French sale code names a territory the buyer
+must be in, so a sale to a customer in Monaco takes `FR-S-20`, `FR-S-10`,
+`FR-S-055` or `FR-S-021` and the French rate, like a sale in France. The
+notice asks for the tax on those sales again on line **18**, "Dont TVA sur
+opérations à destination de Monaco", inside line 16. The pack does not carry
+line 18: telling those sales apart needs one code per rate conditioned on the
+buyer's territory (`applies_when.buyer_in`), posting its tax to `08` and
+`18`, which is the next change of this section and not this version.
+
+**Supplies for vessels and aircraft** (CGI, art. 262, II, 2° to 7°) carry no
+code. The notice names article 262, I, 2° for line E1 and "affaires
+exonérées" among the operations of line E2; neither line names article 262,
+II, and the pack does not pick one.
 
 ## VAT schemes and form 3517-S (CA12)
 

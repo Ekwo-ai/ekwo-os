@@ -15,6 +15,7 @@
     { "ref": "client-be", "name": "Studio Cobalt SRL", "type": "customer", "country": "BE", "vat_number": "BE0999999999", "auxiliary_code": "C0002" },
     { "ref": "fourn-fr", "name": "Fournitures Alcyon SARL", "type": "supplier", "country": "FR", "vat_number": null, "auxiliary_code": "F0001" },
     { "ref": "fourn-de", "name": "Papeterie Nordwind GmbH", "type": "supplier", "country": "DE", "vat_number": "DE999999999", "auxiliary_code": "F0002" },
+    { "ref": "client-hue", "name": "Client assujetti établi hors de l'Union européenne", "type": "customer", "country": "CH", "vat_number": null, "auxiliary_code": "C0004" },
     { "ref": "client-re", "name": "Comptoir Bourbon SARL", "type": "customer", "country": "FR", "territory": "RE", "vat_number": null, "auxiliary_code": "C0003" }
   ],
   "documents": [
@@ -60,6 +61,11 @@
         { "name": "Matériel de bureau", "quantity": 4, "unit_price": 1000, "tax": "FR-S-085-RE", "account": "707000" },
         { "name": "Produits alimentaires", "quantity": 1, "unit_price": 1500, "tax": "FR-S-021-RE", "account": "707000" }
       ]
+    },
+    {
+      "ref": "V9", "type": "sale_invoice", "contact": "client-hue", "date": "2026-10-14", "due_date": "2026-11-13",
+      "why": "Une prestation de services à un assujetti établi hors de l'Union européenne : son lieu est celui du preneur (CGI, art. 259, 1°), hors du champ de la TVA française, et la notice de la CA3 la porte en ligne E2, la case 05 du pack. Ni l'exportation de biens de la ligne 04, ni le service intracommunautaire de V7, qui va aussi en 05 mais pas dans l'état récapitulatif.",
+      "lines": [{ "name": "Prestation d'ingénierie pour un preneur établi hors de l'Union européenne", "quantity": 1, "unit_price": 2500, "tax": "FR-S-PS-HUE", "account": "706000" }]
     },
     {
       "ref": "A1", "type": "purchase_invoice", "contact": "fourn-fr", "date": "2026-01-30", "due_date": "2026-03-01",

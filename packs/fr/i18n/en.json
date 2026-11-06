@@ -428,6 +428,7 @@
     "FR-S-AL": "Sale, reverse charge",
     "FR-S-ICG": "Intra-Community supply",
     "FR-S-ICS": "Intra-Community service",
+    "FR-S-PS-HUE": "Service to a taxable person established outside the European Union",
     "FR-S-EXP": "Export outside the EU",
     "FR-P-20": "Purchase 20%",
     "FR-P-20-ENC": "Purchase of services 20% — VAT deductible on payment",
