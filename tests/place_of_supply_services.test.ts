@@ -19,7 +19,8 @@ import {
  * its category `K`, its line of the return and the European statement of
  * services; the second is outside the scope of the seller's VAT, category
  * `O`, on another line and in no statement. A pack that carries only the
- * first leaves its user picking the intra-Community code for a customer it
+ * first leaves its user picking the code of a service inside the European
+ * Union for a customer it
  * does not describe, or the export of goods for a sale that is not one. The
  * defect was found on one pack and was on twenty-two.
  *
@@ -56,7 +57,7 @@ describe('a service to a taxable customer outside the European Union', () => {
     expect(rows.some((row) => row.verdict === 'ok'), 'at least one pack carries the code the rule asks for').toBe(true);
   });
 
-  it('is named by every pack inside the common system that names an intra-Community service', () => {
+  it('is named by every pack inside the common system of the European Union that names an intra-Community service', () => {
     const refused = rows
       .filter((row) => row.verdict === 'open' && !STILL_OPEN.has(row.pack))
       .map(
@@ -87,7 +88,7 @@ describe('a service to a taxable customer outside the European Union', () => {
     expect(inventoryRow(right.pack, manifest, taxes, territories).verdict).toBe('ok');
   });
 
-  it('does not apply where the country is outside the common system, or names no intra-Community service', async () => {
+  it('does not apply where the country is outside the common system of the European Union, or names no intra-Community service', async () => {
     const territories = await readTerritories(join(packsDir(), '..'));
     const right = rows.find((row) => row.verdict === 'ok') as InventoryRow;
     const { manifest, taxes } = await packFiles(right.pack);
