@@ -13,6 +13,7 @@
   "contacts": [
     { "ref": "client-be", "name": "Atelier Lumen SRL", "type": "customer", "country": "BE", "vat_number": null, "auxiliary_code": "C0001" },
     { "ref": "client-nl", "name": "Studio Cobalt BV", "type": "customer", "country": "NL", "vat_number": "NL999999999B01", "auxiliary_code": "C0002" },
+    { "ref": "client-hue", "name": "Client assujetti établi hors de l'Union européenne", "type": "customer", "country": "CH", "vat_number": null, "auxiliary_code": "C0003" },
     { "ref": "fourn-be", "name": "Fournitures Alcyon SRL", "type": "supplier", "country": "BE", "vat_number": null, "auxiliary_code": "F0001" },
     { "ref": "fourn-de", "name": "Papeterie Nordwind GmbH", "type": "supplier", "country": "DE", "vat_number": "DE999999999", "auxiliary_code": "F0002" }
   ],
@@ -51,6 +52,11 @@
       "ref": "V7", "type": "sale_credit_note", "contact": "client-nl", "date": "2026-09-21", "due_date": null,
       "why": "Une note de crédit sur la livraison intracommunautaire V4 : la déclaration la porte en grille 48, positivement et dans une grille qui n'est pas celle de la livraison, tandis que le relevé récapitulatif la déduit du client. C'est le seul document du scénario qui prouve que les deux ne se lisent pas de la même façon.",
       "lines": [{ "name": "Retour d'une partie des marchandises livrées aux Pays-Bas", "quantity": 1, "unit_price": 2000, "tax": "BE-S-ICG", "account": "700000" }]
+    },
+    {
+      "ref": "V8", "type": "sale_invoice", "contact": "client-hue", "date": "2026-10-14", "due_date": "2026-11-13",
+      "why": "Une prestation de services à un assujetti établi hors de l'Union européenne : son lieu est celui du preneur (Code TVA, art. 21, § 2), hors du champ de la TVA belge, et la notice de la déclaration la porte en grille 47 avec les opérations réalisées à l'étranger. Ni l'exportation de biens, ni le service intracommunautaire de V6, qui va en grille 44 et au relevé récapitulatif.",
+      "lines": [{ "name": "Prestation d'ingénierie pour un preneur établi hors de l'Union européenne", "quantity": 1, "unit_price": 2500, "tax": "BE-S-PS-HUE", "account": "704000" }]
     },
     {
       "ref": "A1", "type": "purchase_invoice", "contact": "fourn-be", "date": "2026-01-31", "due_date": "2026-03-02",

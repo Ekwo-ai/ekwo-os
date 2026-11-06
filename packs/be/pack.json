@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BE",
   "name": "Belgium",
-  "version": "1.24.0",
+  "version": "1.25.0",
   "schema_min": "20261029010000",
   "seed_sequence": 10,
-  "released_at": "2026-10-29",
+  "released_at": "2026-11-06",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -129,6 +129,22 @@
         "publisher": "SPF Finances",
         "url": "https://finances.belgium.be/fr/entreprises/tva/declaration/declaration-periodique",
         "consulted_on": "2026-09-15",
+        "kind": "form"
+      },
+      {
+        "key": "loi-2009-11-26",
+        "title": "Loi du 26 novembre 2009 modifiant le Code de la taxe sur la valeur ajoutée, art. 7 — l'article 21 remplacé, dont le § 2, lieu des prestations de services fournies à un assujetti (Moniteur belge du 4 décembre 2009, p. 75123-75124) ; les seules modifications ultérieures de l'article, lois du 29 décembre 2010 et du 19 décembre 2025, portent sur son § 3",
+        "publisher": "SPF Justice — Moniteur belge",
+        "url": "https://www.ejustice.just.fgov.be/mopdf/2009/12/04_1.pdf#Page7",
+        "consulted_on": "2026-11-06",
+        "kind": "law"
+      },
+      {
+        "key": "notice-625-2019",
+        "title": "Notice 625.2 pour la rédaction des déclarations périodiques à la TVA (2019), cadre II — grille 44 (article 21, § 2), grille 47 (autres opérations exemptées et autres opérations effectuées à l'étranger), grille 49",
+        "publisher": "SPF Finances",
+        "url": "https://finances.belgium.be/sites/default/files/downloads/165-625-directives-2019.pdf",
+        "consulted_on": "2026-11-06",
         "kind": "form"
       },
       {

@@ -385,6 +385,7 @@
     "BE-S-CC": "Sale, reverse charge",
     "BE-S-ICG": "Intra-Community supply",
     "BE-S-ICS": "Intra-Community service",
+    "BE-S-PS-HUE": "Service to a taxable person established outside the European Union",
     "BE-S-EXP": "Export outside the EU",
     "BE-P-21-G": "Purchase of goods 21%",
     "BE-P-21-S": "Purchase of services 21%",

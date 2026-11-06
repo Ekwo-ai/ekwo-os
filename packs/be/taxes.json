@@ -222,6 +222,35 @@
     }
   },
   {
+    "code": "BE-S-PS-HUE",
+    "name": "Prestation de services à un assujetti établi hors de l'Union européenne",
+    "description": "Lieu de la prestation hors de Belgique : hors du champ de la TVA belge, grille 47",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Code TVA, art. 21, § 2 — le lieu des prestations de services fournies à un assujetti agissant en tant que tel est l'endroit où il a établi le siège de son activité économique, ou l'établissement stable auquel elles sont fournies ; une prestation à un assujetti établi hors de l'Union européenne, hors des exceptions de l'art. 21, § 3 et de l'art. 21ter, n'est donc pas localisée en Belgique. Notice 625.2 (2019), cadre II, F, grille 47 : « des opérations réalisées à l'étranger qui ouvrent un droit à déduction de la taxe belge en amont, à l'exception des services intracommunautaires repris en grille [44] » ; ses notes de crédit en grille 49.",
+    "source": "loi-2009-11-26",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "sequence": 75,
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "47"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "49"
+        }
+      ]
+    }
+  },
+  {
     "code": "BE-S-EXP",
     "name": "Exportation hors UE",
     "description": "Exemptee",

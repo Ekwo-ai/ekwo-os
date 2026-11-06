@@ -29,6 +29,68 @@ III). An intra-Community acquisition of goods is therefore printed in 86 and
 | An acquisition of investment goods or of goods for 82 | `BE-P-ICG-21` prints in 81, the grid of goods bought for resale or production. |
 | The credit notes of 86 and 88 in 85 | The help gives 84 to them and 85 to *the other* operations of the frame: they stay in 84 only. |
 
+## Sales without Belgian VAT, and the grids they report to
+
+The pack carries five sale codes that charge no Belgian VAT, the fourth since 1.25.0.
+Each is a different operation in the Code and lands on its own grid of the
+periodic return (form 625), with its credit notes in 48 or 49:
+
+| Code | Operation | Article | Grid, credit notes | Category, reason |
+|---|---|---|---|---|
+| `BE-S-CC` | domestic supply whose VAT the customer owes | AR n° 1, art. 20 | `45`, `49` | `AE`, `VATEX-EU-AE` |
+| `BE-S-ICG` | delivery of goods to a taxable person in another Member State of the European Union | Code, art. 39bis | `46`, `48` | `K`, `VATEX-EU-IC` |
+| `BE-S-ICS` | service to a taxable person established in another Member State of the European Union | Code, art. 21, § 2 | `44`, `48` | `K`, `VATEX-EU-IC` |
+| `BE-S-PS-HUE` | service to a taxable person established **outside the European Union** | Code, art. 21, § 2 | `47`, `49` | `O`, `VATEX-EU-O` |
+| `BE-S-EXP` | export of goods outside the European Union | Code, art. 39 | `47`, `49` | `G`, `VATEX-EU-G` |
+
+**`BE-S-PS-HUE`, the service to a business outside the European Union.**
+Article 21, § 2 of the Code places a service supplied to a taxable person
+acting as such "à l'endroit où cet assujetti a établi le siège de son activité
+économique", or at the fixed establishment it is supplied to. The paragraph was
+read in the law of 26 November 2009 that wrote it (`loi-2009-11-26`, Moniteur
+belge of 4 December 2009, p. 75124); the amendment list of the consolidated
+Code on Justel names only two later laws touching article 21, of 29 December
+2010 and 19 December 2025, and both were opened: each rewrites a point of § 3.
+The consolidated text itself did not display to an automated read on
+6 November 2026, which is why the source is the publication of the law. A
+service to a taxable person established outside the European Union, outside
+the exceptions of article 21, § 3 and article 21ter, is therefore not located
+in Belgium. The notice of the return (625.2, 2019, `notice-625-2019`) gives
+grid 44 to the services that article 21, § 2 locates in another Member State
+of the European Union, and grid 47 to "des opérations réalisées à l'étranger
+qui ouvrent un droit à déduction de la taxe belge en amont, à l'exception des
+services intracommunautaires repris en grille [44]"; its credit notes go to
+grid 49, which takes those of "the other operations of frame II". The
+customer is in no recapitulative statement. Both texts were opened on
+6 November 2026.
+
+What this code does **not** say:
+
+- **A service that would be exempt in Belgium.** Grid 47 takes the
+  operations abroad that open a right to deduct; the same notice puts in
+  grid 00 the operations "effectuées dans un pays tiers et qui n'ouvrent pas
+  de droit à déduction de la taxe belge en amont". Which services of
+  article 44 open that right when the customer is outside the European Union
+  is article 45 of the Code, which the pack does not read: such a service is a
+  question for an accountant, and the code is not written for it.
+- **The sentence on the invoice.** The pack's mentions are chosen by
+  `applies_when`, and that vocabulary has no condition for an operation
+  outside the scope (`not_subject`). An invoice with this code prints no
+  sentence of the pack; the e-invoice carries category `O` and the reason
+  `VATEX-EU-O`, as the French (`FR-S-PS-HUE`), German (`DE-S-NSTB`) and
+  Spanish (`ES-S-NS`) packs do. Giving `not_subject` a condition is a change of
+  the core. Rule BR-O-02 of EN 16931 refuses the VAT identifiers of both
+  parties on such an invoice: the structured file is written without them and
+  names the seller by its registration number, which the published rules of
+  Peppol accept (`family-o-vat-numbers` in
+  [`@ekwo-ai/peppol-ubl`](../../packages/formats/peppol-ubl/README.md)). The
+  printed invoice keeps both numbers.
+
+**Supplies for vessels and aircraft** (Code, art. 42) carry no code. The
+notice names articles 39 to 42 for grid 47, so the grid is known; the article
+itself was not read on the day this section was written, and the pack does not
+write a code from the notice alone.
+
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
 The section rests on the edition of the Income Tax Code 1992 for assessment
