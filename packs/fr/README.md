@@ -178,14 +178,14 @@ What this code does **not** say:
   and nothing to this one. An invoice with this code therefore prints no
   sentence of the pack; the e-invoice carries category `O` and the reason
   `VATEX-EU-O`. Giving `not_subject` a condition is a change of the core.
-- **The e-invoice, under EN 16931.** Rule BR-O-02 of the standard refuses a
-  seller VAT identifier on an invoice that has a line in category `O`, and a
-  French seller always has one, and the rules of
-  [`@ekwo-ai/peppol-ubl`](../../packages/formats/peppol-ubl/README.md) apply
-  it. The category is the one the German (`DE-S-NSTB`) and Spanish
-  (`ES-S-NS`) packs use for the same operation; how the French platforms
-  expect such a sale on a structured invoice was not read, and is an open
-  question for an accountant or a platform.
+- **The e-invoice, under EN 16931.** Rule BR-O-02 of the standard refuses the
+  VAT identifiers of the seller and of the buyer on an invoice that is in
+  category `O`. The books keep both numbers and the printed invoice shows
+  them; the structured file is written without them and names the seller by
+  its registration number, which the published rules of EN 16931 accept. The
+  category is the one the German (`DE-S-NSTB`) and Spanish (`ES-S-NS`) packs
+  use for the same operation; what the French platforms add for such a sale
+  on a structured invoice was not read.
 
 **A customer in Monaco is a domestic customer.** Monaco is treated as France
 for the common system of VAT (`territories`: `MC`, parent `FR`,

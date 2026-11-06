@@ -90,9 +90,9 @@ out, so the sale belongs on the return whatever its line.
 
 What it does not say: the core's `applies_when` has no condition for an
 operation outside the scope (`not_subject`), and this pack carries no invoice
-mention anyway; rule BR-O-02 of EN 16931 refuses a seller VAT identifier on
-an invoice with a line in category `O`, which matters the day a structured
-invoice is exchanged (see [`packs/fr/README.md`](../fr/README.md)).
+mention anyway; rule BR-O-02 of EN 16931 refuses the VAT identifiers of both
+parties on an invoice in category `O`, and a structured invoice is written
+without them (see [`packs/fr/README.md`](../fr/README.md)).
 
 **A customer in France is a domestic customer.** Article 15 of the convention
 of 18 May 1963 has the tax applied on the same bases and at the same rates as
