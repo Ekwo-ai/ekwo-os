@@ -90,6 +90,11 @@ describe('generateCiiXml', () => {
     expect(out).not.toContain('RateApplicablePercent');
   });
 
+  it('writes a legal identifier without a scheme where the books name none', () => {
+    const out = generateCiiXml({ ...domesticInvoice, seller: { ...domesticInvoice.seller, legalId: { value: '0999 999 922' } } });
+    expect(out).toContain('<ram:SpecifiedLegalOrganization><ram:ID>0999999922</ram:ID></ram:SpecifiedLegalOrganization>');
+  });
+
   it('escapes XML special characters', () => {
     const out = generateCiiXml({ ...exampleInvoice, note: 'Terms & conditions <v2>' });
     expect(out).toContain('<ram:Content>Terms &amp; conditions &lt;v2&gt;</ram:Content>');

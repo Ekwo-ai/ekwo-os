@@ -19,7 +19,7 @@ An empty cell means there is no counterpart, which is itself information.
 |---|---|---|
 | `companies.name` | BT-27 seller name | |
 | `companies.legal_name` | BT-27 | |
-| `companies.vat_number` | BT-31 seller VAT identifier | |
+| `companies.vat_number` | BT-31 seller VAT identifier | left out of a document wholly in category O (BR-O-02) |
 | `companies.registration_number` | BT-30 seller legal registration | |
 | `companies.country` | BT-40 seller country | |
 | `companies.peppol_scheme`, `.peppol_identifier` | BT-34 seller electronic address, with its scheme (BT-34-1) | |
@@ -45,7 +45,7 @@ An empty cell means there is no counterpart, which is itself information.
 | Ekwo | EN 16931 | FEC |
 |---|---|---|
 | `contacts.name` | BT-44 buyer name / BT-27 seller name | `CompAuxLib` |
-| `contacts.vat_number` | BT-48 buyer VAT identifier | |
+| `contacts.vat_number` | BT-48 buyer VAT identifier | left out of a document wholly in category O (BR-O-02) |
 | `contacts.registration_number` | BT-47 buyer legal registration | |
 | `contacts.auxiliary_code` | | `CompAuxNum` |
 | `contacts.email` | BT-43 buyer contact email | |

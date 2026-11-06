@@ -6,6 +6,19 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+- **A document wholly outside the scope of VAT is written without VAT
+  identifiers.** Where every line is in category O, the file carries neither
+  the seller's VAT identifier (BT-31) nor the buyer's (BT-48), whatever the
+  header hands over: BR-O-02 refuses both, and the books of a seller that
+  charges no VAT on a sale still hold its number. The seller is named by its
+  registration number (BT-30). A document that mixes the category with
+  another keeps what it was given and is reported whole (BR-O-02, BR-O-11,
+  BR-O-12). `isOutsideScope()` answers the question for a writer of another
+  syntax. The case `broken-o-vat-numbers` gives way to `family-o-vat-numbers`,
+  which the published Schematron finds valid; the record was played again on
+  6 November 2026.
+
 ### Added
 - **`ReceivedInvoice.syntax` may be `'model'`.** A received invoice read off a
   photograph or a plain PDF by a vision model, through

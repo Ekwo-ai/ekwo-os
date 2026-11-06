@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PeppolUblError, generatePeppolUbl, type PeppolUblInput } from '../src/index.js';
+import { PeppolUblError, generatePeppolUbl, isOutsideScope, type PeppolUblInput } from '../src/index.js';
 import { add, formatDecimal, multiply, parseDecimal, roundXPath, significantScale } from '../src/decimal.js';
 import { CASES } from './fixtures/cases.js';
 
@@ -128,6 +128,31 @@ describe('from the books to the standard', () => {
   it('outside the scope of VAT there is no rate, not a rate of zero', () => {
     const o = named('invoice-outside-scope');
     expect(generatePeppolUbl(o.input, o.options).file).not.toContain('<cbc:Percent>');
+  });
+
+  it('outside the scope of VAT nobody is named by a VAT number, whatever the books hand over', () => {
+    // BR-O-02. The books keep the numbers of both parties; the file is written without them.
+    const given = named('family-o-vat-numbers');
+    expect(given.input.header.seller_vat_number).toBe('BE0999999922');
+    expect(given.input.header.buyer_vat_number).toBe('NL999999999B01');
+    expect(isOutsideScope(given.input.lines)).toBe(true);
+    const { file, violations } = generatePeppolUbl(given.input, given.options);
+    expect(file).not.toContain('<cac:PartyTaxScheme>');
+    expect(file).toContain('<cac:PartyLegalEntity>');
+    expect(violations).toEqual([]);
+
+    // One line in another category and the document keeps what it was given:
+    // it is refused whole, and what it needs is to be two invoices.
+    const mixed = named('broken-mixed-outside-scope');
+    expect(isOutsideScope(mixed.input.lines)).toBe(false);
+    const written = generatePeppolUbl(mixed.input, mixed.options);
+    expect(written.file).toContain('<cac:PartyTaxScheme>');
+    expect(written.violations.map((each) => each.code)).toEqual(expect.arrayContaining(['BR-O-02', 'BR-O-11', 'BR-O-12']));
+
+    // A line that is layout is not a line, here either; a document of nothing but layout is outside nothing.
+    expect(isOutsideScope([{ line_type: 'section', vat_category: null }, ...given.input.lines])).toBe(true);
+    expect(isOutsideScope([{ line_type: 'section', vat_category: null }])).toBe(false);
+    expect(isOutsideScope([])).toBe(false);
   });
 
   it('a credit note keeps its due date where its schema has room for one', () => {

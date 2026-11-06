@@ -6,6 +6,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+- **A legal identifier may come without a scheme.** `LegalIdentifier.scheme`
+  is optional: where the books name no scheme for a registration number, the
+  identifier (BT-30) is written without `schemeID`.
+
 ### Added
 - **`ReceivedInvoice.syntax` may be `'model'`.** A received invoice read off a
   photograph or a plain PDF by a vision model, through

@@ -21,7 +21,7 @@
  * the file does not hold, and the rule that wanted it is reported.
  */
 
-import { CUSTOMIZATION_ID, PeppolUblError, generatePeppolUbl } from '@ekwo-ai/peppol-ubl';
+import { CUSTOMIZATION_ID, PeppolUblError, generatePeppolUbl, isOutsideScope } from '@ekwo-ai/peppol-ubl';
 import type { DocumentHeaderRow, DocumentLineRow, DocumentTaxRow } from '@ekwo-ai/peppol-ubl';
 import { computeTotals, generateCiiXml, GUIDELINES } from '@ekwo-ai/factur-x';
 import type { Invoice, InvoiceLine, Party, VatCategory } from '@ekwo-ai/factur-x';
@@ -234,6 +234,16 @@ function writeFacturX(source: EinvoiceSource): WrittenEinvoice {
 
   const seller = partyOf(header, 'seller', violations);
   const buyer = partyOf(header, 'buyer', violations);
+  // Wholly outside the scope of VAT, an invoice of EN 16931 names neither
+  // party by a VAT identifier (BR-O-02): one question, asked of the brick that
+  // answers it for UBL. The books keep both numbers; the file names the seller
+  // by its registration number (BT-30), which BR-CO-26 takes in its place.
+  if (isOutsideScope(source.lines as unknown as DocumentLineRow[])) {
+    delete seller.vatId;
+    delete buyer.vatId;
+    const registration = text(header['seller_registration_number']);
+    if (registration !== null) seller.legalId = { value: registration };
+  }
   if (seller.vatId === undefined && text(header['seller_registration_number']) === null) {
     violations.push({
       code: 'BR-CO-26',

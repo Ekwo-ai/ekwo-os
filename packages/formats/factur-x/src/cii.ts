@@ -44,7 +44,7 @@ const tag = (name: string, value: string | undefined | null) => (value ? `<${nam
 function partyXml(name: 'SellerTradeParty' | 'BuyerTradeParty', party: Party, profile: Profile): string {
   const a = party.address;
   const legal = party.legalId
-    ? `<ram:SpecifiedLegalOrganization><ram:ID schemeID="${escapeXml(party.legalId.scheme)}">${escapeXml(party.legalId.value.replace(/\s/g, ''))}</ram:ID></ram:SpecifiedLegalOrganization>`
+    ? `<ram:SpecifiedLegalOrganization><ram:ID${party.legalId.scheme ? ` schemeID="${escapeXml(party.legalId.scheme)}"` : ''}>${escapeXml(party.legalId.value.replace(/\s/g, ''))}</ram:ID></ram:SpecifiedLegalOrganization>`
     : '';
   const contact =
     profile === 'en16931' || profile === 'extended'

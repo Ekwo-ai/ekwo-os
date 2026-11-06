@@ -254,6 +254,18 @@ somewhere has already run it.
 
 ### Fixed
 
+- **A sale outside the scope of VAT is written without VAT identifiers on a
+  structured invoice.** EN 16931 refuses the VAT identifiers of the seller
+  and of the buyer on an invoice in category O (BR-O-02), and the books of a
+  company that sells a service to a business outside the European Union hold
+  both. `@ekwo-ai/peppol-ubl` and the Factur-X writer of `@ekwo-ai/core` now
+  leave them out of a document wholly in that category and name the seller by
+  its registration number (BT-30); the printed invoice is unchanged. The
+  published Schematron of Peppol BIS Billing 3.0 finds the UBL file valid
+  (`family-o-vat-numbers`), and the published rules of EN 16931 for CII find
+  the Factur-X file valid. A document that mixes the category with another is
+  still refused whole.
+
 - **The health checks read the labels of an enum the same way from every
   client.** `ekwo doctor` asked for them as a `name[]`, which the Supabase
   Management API returns as the text `{a,b,c}` rather than a list, and the

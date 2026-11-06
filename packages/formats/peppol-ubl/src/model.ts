@@ -179,6 +179,18 @@ function endpoint(
   return { scheme: text(given ? given.scheme : scheme) ?? '', id };
 }
 
+/**
+ * Whether a document is wholly outside the scope of VAT: it has product lines,
+ * and every one of them is in category O. Such a document is written without
+ * the VAT identifiers of its parties (BR-O-02); `generatePeppolUbl()` leaves
+ * them out, and a writer of another syntax of EN 16931 asks the same question
+ * here rather than answer it a second time.
+ */
+export function isOutsideScope(lines: readonly Pick<DocumentLineRow, 'line_type' | 'vat_category'>[]): boolean {
+  const priced = lines.filter((row) => (row.line_type ?? 'product') === 'product');
+  return priced.length > 0 && priced.every((row) => text(row.vat_category)?.toUpperCase() === 'O');
+}
+
 function party(
   header: DocumentHeaderRow,
   who: 'seller' | 'buyer',
@@ -341,6 +353,17 @@ export function buildModel(given: PeppolUblInput, options: PeppolUblOptions): Do
     .map((row, index) => line(row, index + 1));
   if (lines.length === 0) throw new PeppolUblError('the document has no line');
 
+  // A document whose every line is outside the scope of VAT names neither
+  // party by a VAT identifier: BR-O-02 refuses the seller's (BT-31) and the
+  // buyer's (BT-48) on it, and a network that plays the rule refuses the file.
+  // The books keep both numbers and the printed invoice shows them; the file
+  // names the seller by its registration number (BT-30), which BR-CO-26 takes
+  // in its place. A document that mixes the category with another keeps what
+  // it was given: BR-O-11 and BR-O-12 refuse it whole, and what it needs is to
+  // be two invoices, not to lose a number.
+  const outsideScope = isOutsideScope(input.lines);
+  const named = (who: PartyModel): PartyModel => (outsideScope ? { ...who, vatId: null } : who);
+
   const taxExclusive = amount(header.amount_untaxed, 'the total without VAT');
   const taxInclusive = amount(header.amount_total, 'the total with VAT');
   const paid = optionalAmount(header.amount_paid, 'the amount paid');
@@ -381,8 +404,8 @@ export function buildModel(given: PeppolUblInput, options: PeppolUblOptions): Do
       precedingNumber === null
         ? null
         : { number: precedingNumber, issueDate: date(options.precedingInvoice?.issueDate, 'the date of the preceding invoice') },
-    seller: party(header, 'seller', options.sellerEndpoint, options.sellerRegistrationScheme),
-    buyer: party(header, 'buyer', options.buyerEndpoint, options.buyerRegistrationScheme),
+    seller: named(party(header, 'seller', options.sellerEndpoint, options.sellerRegistrationScheme)),
+    buyer: named(party(header, 'buyer', options.buyerEndpoint, options.buyerRegistrationScheme)),
     delivery: deliveryDate !== null || deliveryAddress !== null ? { date: deliveryDate, address: deliveryAddress } : null,
     payment: meansCode === null ? null : { meansCode, reference, iban, bic },
     paymentWithoutMeans: meansCode === null && (iban !== null || bic !== null || reference !== null),

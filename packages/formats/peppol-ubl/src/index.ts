@@ -22,7 +22,7 @@ import { check } from './rules.js';
 import type { PeppolUbl, PeppolUblInput, PeppolUblOptions } from './types.js';
 import { writeUbl } from './ubl.js';
 
-export { PeppolUblError } from './model.js';
+export { PeppolUblError, isOutsideScope } from './model.js';
 export { CUSTOMIZATION_ID, PROFILE_ID } from './ubl.js';
 export { SCHEMES_NOT_ON_PEPPOL } from './rules.js';
 export {

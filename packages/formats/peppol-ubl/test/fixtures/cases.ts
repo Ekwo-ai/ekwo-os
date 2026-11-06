@@ -461,12 +461,22 @@ function family(category: string): Case[] {
   return [
     { name: `family-${tag}`, why: `Category ${category}, as it should be.`, input: base(), options: endpoints },
     { name: `broken-${tag}-no-group`, why: `A line in category ${category} and no group for it.`, input: { ...base(), taxes: [] }, options: endpoints },
-    {
-      name: `broken-${tag}-vat-numbers`,
-      why: `Category ${category} with the VAT numbers the other way round: there where there should be none, absent where they are required.`,
-      input: withHeader(base(), category === 'O' ? { seller_vat_number: 'BE0999999922' } : { seller_vat_number: null, buyer_vat_number: null, buyer_registration_number: null }),
-      options: endpoints,
-    },
+    category === 'O'
+      ? {
+          // Outside the scope of VAT the rule is the other way round — no VAT
+          // number at all (BR-O-02) — and the generator answers it itself: the
+          // books hand over both numbers, and the file is written without them.
+          name: 'family-o-vat-numbers',
+          why: 'Category O, the books giving the VAT numbers of both parties: the file leaves them out, and is right.',
+          input: withHeader(base(), { seller_vat_number: 'BE0999999922', buyer_vat_number: 'NL999999999B01' }),
+          options: endpoints,
+        }
+      : {
+          name: `broken-${tag}-vat-numbers`,
+          why: `Category ${category} without the VAT numbers it requires.`,
+          input: withHeader(base(), { seller_vat_number: null, buyer_vat_number: null, buyer_registration_number: null }),
+          options: endpoints,
+        },
     { name: `broken-${tag}-rate`, why: `A rate of 6 on a line and a group of category ${category}.`, input: { ...line({ vat_rate: '6' }), taxes: tax({ tax_rate: '6' }).taxes }, options: endpoints },
     { name: `broken-${tag}-base`, why: `A group of category ${category} whose base is not its lines.`, input: tax({ base_amount: '499.99' }), options: endpoints },
     {

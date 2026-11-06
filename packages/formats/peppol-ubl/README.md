@@ -124,6 +124,15 @@ The rules re-read here, 112 of them:
 | the categories S, Z, E, AE, K, G and O | BR-*-01, -02, -05, -08, -09, -10 for each, BR-IC-11, BR-IC-12, BR-O-11, BR-O-12, PEPPOL-EN16931-P0104 to P0111 |
 | the totals | BR-CO-10, BR-CO-14, BR-CO-15, BR-CO-16 |
 | decimals | BR-DEC-09, -12, -14, -16, -18, -19, -20, -23, UBL-DT-01 |
+
+**Outside the scope of VAT, nobody is named by a VAT number.** A document
+whose every line is in category O is written without the VAT identifiers of
+its parties (BT-31, BT-48), whatever the header hands over: BR-O-02 refuses
+them, and the books of a seller that charges no VAT on a sale still hold its
+number. The seller is named by its registration number (BT-30), which
+BR-CO-26 takes in its place. A document that mixes the category with another
+keeps what it was given and is reported whole: it is two invoices.
+`isOutsideScope()` answers the question for a writer of another syntax.
 | check digits | PEPPOL-COMMON-R040 (GLN), R043 (Belgian enterprise number) |
 | code lists | BR-CL-03, -04, -11, -14, -16, -17, -18, -22, -23, -25, PEPPOL-EN16931-CL007, CL008 |
 
@@ -148,7 +157,7 @@ in a JavaScript runtime executes XSLT 2.0 except SaxonJS, which this repository
 does not depend on for a test and whose licence is not an open-source one. So:
 
 - the Schematron was **played by hand**, from outside the repository, on
-  18 September 2026: release **3.0.20** of Peppol BIS Billing (which ships the
+  6 November 2026: release **3.0.20** of Peppol BIS Billing (which ships the
   EN 16931 rules at version 1.3.15), compiled with SchXslt 1.10.1, run with
   SaxonJS. `scripts/play-schematron.mjs` is the whole procedure and checks the
   SHA-256 of everything it downloads;
@@ -157,7 +166,7 @@ does not depend on for a test and whose licence is not an open-source one. So:
 - the test suite holds the package to that record on every run: the generator
   must still write those files **byte for byte**, and for every one of them the
   rules this package reports must be **exactly** the fatal rules the Schematron
-  reported — no more, no fewer. The 16 files meant to be right are right for
+  reported — no more, no fewer. The 17 files meant to be right are right for
   both, without a warning;
 - every one of the 112 rules named above was reported by the published
   Schematron on at least one of those files, and the Schematron reported

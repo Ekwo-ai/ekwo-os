@@ -49,7 +49,8 @@ export interface PostalAddress {
  * (`"0002"` SIREN/SIRET, `"0208"` Belgian enterprise number, `"0009"` SIRET…).
  */
 export interface LegalIdentifier {
-  scheme: string;
+  /** Left out where the books name no scheme for the number: the identifier is then written without one. */
+  scheme?: string;
   value: string;
 }
 

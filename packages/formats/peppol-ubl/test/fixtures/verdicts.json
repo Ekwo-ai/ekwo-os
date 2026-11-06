@@ -1,6 +1,6 @@
 {
   "$comment": "Written by scripts/play-schematron.mjs: what the published Schematron said of each file beside this one. Not edited by hand.",
-  "played_on": "2026-09-18",
+  "played_on": "2026-11-06",
   "release": "Peppol BIS Billing 3.0, v3.0.20",
   "sources": {
     "CEN-EN16931-UBL.sch": "bdcbb7b702cce55c7f8c789bef0cb9bebf6d376140c1776e683bd6d9bc0ad331",
@@ -466,12 +466,6 @@
       ],
       "warning": []
     },
-    "broken-o-vat-numbers": {
-      "fatal": [
-        "BR-O-02"
-      ],
-      "warning": []
-    },
     "broken-parties": {
       "fatal": [
         "BR-10",
@@ -634,6 +628,10 @@
       "warning": []
     },
     "family-k": {
+      "fatal": [],
+      "warning": []
+    },
+    "family-o-vat-numbers": {
       "fatal": [],
       "warning": []
     },
