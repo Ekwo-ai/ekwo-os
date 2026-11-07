@@ -131,6 +131,7 @@
     "FI-S-0-EXP": "Export outside the European Union",
     "FI-S-0-ICG": "Intra-Community supply of goods",
     "FI-S-0-ICS": "Supply of services to another Member State, reverse charge",
+    "FI-S-NONEU-S": "Supply of services to a taxable person established outside the European Union",
     "FI-S-RAKENNUS": "Sale of construction services, reverse charge",
     "FI-S-VAPAA-132": "Health care and education, exempt",
     "FI-S-VAPAA-135": "Financial and insurance services and transfer of real estate, exempt",

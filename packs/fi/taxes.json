@@ -149,6 +149,25 @@
     "sequence": 80
   },
   {
+    "code": "FI-S-NONEU-S",
+    "name": "Palvelun myynti elinkeinonharjoittajalle Euroopan unionin ulkopuolelle",
+    "description": "Myyntimaa ei ole Suomi: ei Suomen arvonlisäveroa, peruste kohdassa 309",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Arvonlisäverolaki 65 § — elinkeinonharjoittajalle, joka toimii tässä ominaisuudessaan, luovutettu palvelu on myyty Suomessa, jos se luovutetaan ostajan täällä sijaitsevaan kiinteään toimipaikkaan, tai, jos sitä ei luovuteta kiinteään toimipaikkaan, jos ostajan liiketoiminnan kotipaikka on täällä; Euroopan unionin ulkopuolelle sijoittautuneelle elinkeinonharjoittajalle luovutettu palvelu ei siten ole myyty Suomessa, ellei jäljempänä toisin säädetä. Verohallinnon ohje Value-added taxation of cross-border supply and acquisition of services (15.11.2021): kohtaan 0-verokannan alainen liikevaihto ilmoitetaan muun muassa EU:n ulkopuolelle myydyt palvelut.",
+    "source": "vero-palvelukauppa",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "309" }],
+      "credit_note": [{ "type": "base", "box": "309", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 85
+  },
+  {
     "code": "FI-S-RAKENNUS",
     "name": "Rakentamispalvelun myynti, käännetty verovelvollisuus",
     "description": "Ostaja on verovelvollinen arvonlisäverolain 8 c §:n mukaisesti",

@@ -100,6 +100,16 @@
       ]
     },
     {
+      "ref": "V9",
+      "type": "sale_invoice",
+      "contact": "asiakas-us",
+      "date": "2026-04-08",
+      "why": "Konsulttipalvelu yhdysvaltalaiselle elinkeinonharjoittajalle, Euroopan unionin ulkopuolelle: arvonlisäverolain 65 §:n mukaan palvelua ei ole myyty Suomessa, eikä Suomen veroa makseta. Peruste kohdassa 309 (0-verokannan alainen liikevaihto), ei kohdassa 312, joka koskee muihin EU-maihin myytyjä palveluja.",
+      "lines": [
+        { "name": "Konsulttipalvelu", "quantity": 1, "unit_price": 3000, "tax": "FI-S-NONEU-S", "account": "3020" }
+      ]
+    },
+    {
       "ref": "O1",
       "type": "purchase_invoice",
       "contact": "tavarantoimittaja-fi",

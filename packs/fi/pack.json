@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FI",
   "name": "Finland",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "schema_min": "20261023124650",
   "seed_sequence": 67,
-  "released_at": "2026-10-23",
+  "released_at": "2026-11-07",
   "certification": {
     "status": "community",
     "sources": [
@@ -88,6 +88,14 @@
         "url": "https://www.vero.fi/contentassets/ef5905e0f5b74bcba89aa9ba9c34015d/finnish-tax-administration_description-of-the-data-file_vsralvkv_290824.pdf",
         "consulted_on": "2026-09-25",
         "kind": "form"
+      },
+      {
+        "key": "vero-palvelukauppa",
+        "title": "Value-added taxation of cross-border supply and acquisition of services — Verohallinnon syventävä ohje 15.11.2021: kohtaan 0-verokannan alainen liikevaihto ilmoitetaan muun muassa EU:n ulkopuolelle myydyt palvelut",
+        "publisher": "Verohallinto",
+        "url": "https://www.vero.fi/en/detailed-guidance/guidance/48679/value-added-taxation-of-cross-border-supply-and-acquisition-of-services/",
+        "consulted_on": "2026-11-07",
+        "kind": "guidance"
       },
       {
         "key": "vero-laskutus",

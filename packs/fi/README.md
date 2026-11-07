@@ -26,6 +26,7 @@ Every rate, box, mention and statement line carries its own
 | The 24 % rate it replaced | Laki 706/2012, voimaan 1.1.2013 | `finlex.fi/fi/laki/alkup/2012/20120706` |
 | The reduced-rate reform | Laki 691/2024 (14 %, voimaan 1.1.2025) ja laki 1358/2025 (13,5 %, voimaan 1.1.2026); laki 921/2024 (Yleisradion maksu, voimaan 1.1.2026) | `finlex.fi` |
 | Form VSRALVKV and its box list | Verohallinto, data file description A86/200/2016, version 1.10 (27.2.2026) | `vero.fi/contentassets/.../vsralvkv_290824.pdf` |
+| Which box a service sold outside the European Union goes to | Verohallinto, Value-added taxation of cross-border supply and acquisition of services (15.11.2021) | `vero.fi/en/detailed-guidance/guidance/48679/` |
 | When the return is filed and paid | Laki oma-aloitteisten verojen verotusmenettelystä 768/2016, and Verohallinto's own page | `finlex.fi/fi/lainsaadanto/2016/768`; `vero.fi/en/.../when-to-file-and-pay/` |
 | Chart of accounts, no statutory chart | Kirjanpitolaki (KPL) 1336/1997, 2 luku 2 § | `finlex.fi/fi/laki/ajantasa/1997/19971336` |
 | Balance sheet and income statement schemes | Kirjanpitoasetus (KPA) 1339/1997, 1 luku | `finlex.fi/fi/laki/ajantasa/1997/19971339` |
@@ -153,6 +154,33 @@ person whose annual turnover is at most 100 000 € apply for the calendar
 quarter, and one whose turnover is at most 30 000 € apply for the calendar
 year. `period_default` is `month`, the one answer the law gives everybody
 before an election.
+
+### A service to a business outside the European Union: box 309
+
+`FI-S-NONEU-S` (since 0.4.0) is a service supplied to a taxable person
+established outside the European Union. Arvonlisäverolaki 65 § places a
+service to a business in Finland only when it is supplied to the buyer's
+fixed establishment here, or, failing one, when the buyer's business is
+domiciled here; a buyer established outside the European Union therefore
+receives a service that is not sold in Finland, outside the scope of Finnish
+VAT unless a later section says otherwise. The section was read on Finlex on
+7 November 2026. Treatment `not_subject`, category `O`, reason `VATEX-EU-O`,
+as the French, German and Belgian packs carry the same operation.
+
+**The box is 309.** Verohallinto's guidance on cross-border services
+(`vero-palvelukauppa`, issued 15 November 2021) lists, among the items
+reported under "Turnover taxable at zero VAT rate", "services sold to
+non-EU countries"; box 312 is the services subject to the general rule sold
+to other EU Member States. The golden year books one such service to a
+business in the United States in April (V9: 3 000.00 in box 309, no tax,
+on 3020).
+
+What this code does **not** say: the sentence on the invoice — the pack's
+mentions are chosen by `applies_when`, which has no condition for an
+operation outside the scope (`not_subject`), so an invoice with this code
+prints none; the e-invoice carries category `O` and `VATEX-EU-O`. Nor the
+exceptions to 65 § (immovable property, passenger transport, events and the
+rest of the sections that follow), which carry no code of their own.
 
 ## Electronic invoicing
 
