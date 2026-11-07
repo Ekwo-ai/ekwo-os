@@ -13,8 +13,10 @@ import {
   SCHEMA_FEATURES,
   SCHEMA_MIN,
   backendSupports,
+  generalLedger,
   missingFeatures,
   onSocle,
+  subledger,
   supports,
   type Backend,
   type SelectQuery,
@@ -37,10 +39,11 @@ describe('supports()', () => {
 
   it('lists what a version lacks, in the order the features are declared', () => {
     expect(missingFeatures(SCHEMA_MIN)).toEqual(Object.keys(SCHEMA_FEATURES));
-    expect(missingFeatures('0.20.0')).toEqual(['documents_in_one_statement', 'agent_posting', 'invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages']);
-    expect(missingFeatures('0.21.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages']);
-    expect(missingFeatures('0.24.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages']);
-    expect(missingFeatures('0.25.0')).toEqual([]);
+    expect(missingFeatures('0.20.0')).toEqual(['documents_in_one_statement', 'agent_posting', 'invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact']);
+    expect(missingFeatures('0.21.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact']);
+    expect(missingFeatures('0.24.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact']);
+    expect(missingFeatures('0.25.0')).toEqual(['subledger', 'ledger_by_contact']);
+    expect(missingFeatures('0.26.0')).toEqual([]);
   });
 });
 
@@ -129,6 +132,22 @@ describe('onSocle() on a database older than a feature', () => {
     expect(calls).not.toContain('approve_document');
     expect(await backendSupports(backend, 'tax_payee_name_i18n')).toBe(true);
     expect(await backendSupports(backend, 'documents_in_one_statement')).toBe(false);
+  });
+
+  it('reads the general ledger as before, and refuses by name what 0.26.0 brought to it', async () => {
+    const { inner, calls } = recorder('0.25.0');
+    const backend = onSocle(inner, socle);
+    const period = { company_id: 'c', from: '2026-01-01', to: '2026-12-31' };
+    await generalLedger(backend, period);
+    expect(calls).toContain('general_ledger');
+    await expect(generalLedger(backend, { ...period, contact_ids: ['x'] })).rejects.toThrow(
+      /^schema_too_old_for: general_ledger\(\) by contact needs schema 0\.26\.0 \(ledger_by_contact\), and this database is at 0\.25\.0/,
+    );
+    await expect(subledger(backend, period)).rejects.toThrow(
+      /^schema_too_old_for: subledger\(\) needs schema 0\.26\.0 \(subledger\)/,
+    );
+    expect(calls.filter((c) => c === 'general_ledger')).toHaveLength(1);
+    expect(calls).not.toContain('subledger');
   });
 });
 

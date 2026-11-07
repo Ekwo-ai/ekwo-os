@@ -21,6 +21,7 @@ import type {
   InstanceEdition,
   InstanceAdmin,
   IsoDate,
+  SubledgerRow,
   TrialBalanceRow,
   Uuid,
   VatReturnRow,
@@ -149,6 +150,22 @@ export class EkwoClient {
       p_to: range.to,
     });
     return unwrap(result, 'contact_statement');
+  }
+
+  /**
+   * The subsidiary ledger: per control account and contact, the balance
+   * brought forward to `from`, the debits, the credits and the closing
+   * balance, the lines naming nobody in a row of their own. Every receivable
+   * and payable account unless `accountIds` names some.
+   */
+  async subledger(range: PeriodRange & { accountIds?: Uuid[] }): Promise<SubledgerRow[]> {
+    const result = await this.db.rpc<SubledgerRow[]>('subledger', {
+      p_company_id: range.companyId,
+      p_from: range.from,
+      p_to: range.to,
+      p_account_ids: range.accountIds ?? null,
+    });
+    return unwrap(result, 'subledger');
   }
 
   /** The French FEC for a period, ready to be written to disk. */

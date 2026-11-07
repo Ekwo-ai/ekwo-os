@@ -49,3 +49,18 @@ export function amountIn(value: string | number): string {
   }
   return text;
 }
+
+/** Decimal texts added up exactly, at the largest scale among them. */
+export function addDecimals(values: readonly string[]): string {
+  const scale = Math.max(0, ...values.map((value) => (value.split('.')[1] ?? '').length));
+  const total = values.reduce((sum, value) => {
+    const negative = value.trim().startsWith('-');
+    const [whole = '0', fraction = ''] = value.trim().replace(/^[-+]/, '').split('.');
+    const units = BigInt(`${whole}${fraction.padEnd(scale, '0')}`);
+    return sum + (negative ? -units : units);
+  }, 0n);
+  const negative = total < 0n;
+  const digits = (negative ? -total : total).toString().padStart(scale + 1, '0');
+  const out = scale === 0 ? digits : `${digits.slice(0, -scale)}.${digits.slice(-scale)}`;
+  return negative ? `-${out}` : out;
+}

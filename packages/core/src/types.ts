@@ -665,6 +665,31 @@ export interface AgedBalanceRow {
   total: Decimal;
 }
 
+/**
+ * One row of `subledger(company_id, from, to, account_ids)`: a control
+ * account read for one contact, or — `contact_id` null — for the lines of
+ * the account that name nobody. Debit minus credit, in the company currency.
+ */
+export interface SubledgerRow {
+  account_id: Uuid;
+  account_code: string;
+  account_name: string;
+  account_type: string;
+  /** Null on the row of the lines that name no contact. */
+  contact_id: Uuid | null;
+  contact_name: string | null;
+  /** What stood before `from`. */
+  opening_balance: Decimal;
+  debit: Decimal;
+  credit: Decimal;
+  /** What stands at `to`. */
+  closing_balance: Decimal;
+  /** The lines of the period. */
+  line_count: number;
+  /** The lines dated up to `to` that a matching has not settled, today. */
+  open_items: number;
+}
+
 /** One row of `vat_return(company_id, from, to)`. */
 export interface VatReturnRow {
   box: string;

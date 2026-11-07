@@ -27,6 +27,7 @@
 
 import { createHash } from 'node:crypto';
 import { BooksError, type Backend, type Row } from '../books/backend.js';
+import { addDecimals } from '../books/format.js';
 import { companyCurrency, onlyVisible } from '../books/shared.js';
 import { fiscalRegime, generatedNow } from './fiscalisation.js';
 import { einvoiceFormat, type EinvoiceSource, type EinvoiceViolation } from './formats.js';
@@ -158,21 +159,6 @@ export async function readEinvoiceSource(backend: Backend, documentId: string): 
   }
   const accounting = documents[0] === undefined ? null : await accountingOf(backend, documents[0], header, taxes);
   return { header, lines, taxes, preceding, issuedAt: generatedNow(), accounting };
-}
-
-/** Decimal texts added up exactly, at the largest scale among them. */
-function addDecimals(values: readonly string[]): string {
-  const scale = Math.max(0, ...values.map((value) => (value.split('.')[1] ?? '').length));
-  const total = values.reduce((sum, value) => {
-    const negative = value.trim().startsWith('-');
-    const [whole = '0', fraction = ''] = value.trim().replace(/^[-+]/, '').split('.');
-    const units = BigInt(`${whole}${fraction.padEnd(scale, '0')}`);
-    return sum + (negative ? -units : units);
-  }, 0n);
-  const negative = total < 0n;
-  const digits = (negative ? -total : total).toString().padStart(scale + 1, '0');
-  const out = scale === 0 ? digits : `${digits.slice(0, -scale)}.${digits.slice(-scale)}`;
-  return negative ? `-${out}` : out;
 }
 
 /**

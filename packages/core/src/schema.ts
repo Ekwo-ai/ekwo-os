@@ -174,6 +174,31 @@ export const SCHEMA_FEATURES = {
     columns: [],
     functions: ['export_company_outline', 'export_company_page'],
   },
+  /**
+   * A control account read contact by contact: the balance brought forward,
+   * the debits, the credits and the closing balance of each contact, and the
+   * lines naming nobody apart
+   * (`20261107100000_a_control_account_reads_contact_by_contact`). Below it,
+   * `subledger()` — the MCP server's `subledger` — is refused by name.
+   */
+  subledger: {
+    since: '0.26.0',
+    columns: [],
+    functions: ['subledger'],
+  },
+  /**
+   * The lines of some contacts from `general_ledger()`, each with its own
+   * balance carried forward and running balance — its argument
+   * `p_contact_ids`, added by the same migration. It is an argument, not a
+   * function or a column, so nothing here names an object: below it,
+   * `generalLedger()` refuses `contact_ids` by name and still reads every
+   * contact as before.
+   */
+  ledger_by_contact: {
+    since: '0.26.0',
+    columns: [],
+    functions: [],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;
