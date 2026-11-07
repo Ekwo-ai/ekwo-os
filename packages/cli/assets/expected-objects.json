@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261103175933",
+  "migration": "20261107100000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -5509,7 +5509,7 @@
       },
       {
         "name": "general_ledger",
-        "arguments": "p_company_id uuid, p_from date, p_to date, p_account_ids uuid[]"
+        "arguments": "p_company_id uuid, p_from date, p_to date, p_account_ids uuid[], p_contact_ids uuid[]"
       },
       {
         "name": "has_capability",
@@ -6018,6 +6018,10 @@
       {
         "name": "storage_path_company",
         "arguments": "p_name text"
+      },
+      {
+        "name": "subledger",
+        "arguments": "p_company_id uuid, p_from date, p_to date, p_account_ids uuid[]"
       },
       {
         "name": "suggest_combination",
@@ -10985,7 +10989,7 @@
         },
         {
           "name": "general_ledger",
-          "arguments": "p_company_id uuid, p_from date, p_to date, p_account_ids uuid[]",
+          "arguments": "p_company_id uuid, p_from date, p_to date, p_account_ids uuid[], p_contact_ids uuid[]",
           "anon": [],
           "authenticated": [
             "execute"
@@ -12361,6 +12365,17 @@
         {
           "name": "storage_path_company",
           "arguments": "p_name text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "subledger",
+          "arguments": "p_company_id uuid, p_from date, p_to date, p_account_ids uuid[]",
           "anon": [],
           "authenticated": [
             "execute"
