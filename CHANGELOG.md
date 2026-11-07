@@ -9,6 +9,34 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **A control account read contact by contact.** `subledger(company, from,
+  to, accounts)` gives, per receivable or payable account — the accounts the
+  pack types `asset_receivable` and `liability_payable`, or the ones named —
+  and per contact, the balance brought forward before the period, the debit
+  and the credit of the period, the closing balance, the number of lines of
+  the period and the number still open; the lines that name no contact are a
+  row of their own. Per account the rows add up to `trial_balance()` to the
+  cent. It is refused by name, as `contact_statement()` is, to whoever may not
+  read the ledger (`unknown_company`, `not_allowed`, `invalid_period`,
+  `unknown_account`) (`20261107100000_a_control_account_reads_contact_by_contact`).
+- **The lines of some contacts from the general ledger.** `general_ledger()`
+  takes a fifth argument, `p_contact_ids`, default null: the lines of those
+  contacts only, each with its own balance carried forward and running
+  balance on the account — the detail of a row of the subsidiary ledger. A
+  call with four arguments or fewer is answered exactly as before.
+- **`subledger` in the MCP server and `@ekwo-ai/core`.** The tool returns the
+  rows and, per account, the control: the account's figures in the trial
+  balance, the sum of its named contacts, and the difference — the lines
+  naming nobody — with `ties_out` when that row is the difference to the
+  cent. `general_ledger` takes `contact_ids`. In the core, `subledger()`,
+  `generalLedger({ contact_ids })` and `EkwoClient.subledger()`. Both are
+  features of schema 0.26.0 in `SCHEMA_FEATURES` (`subledger`,
+  `ledger_by_contact`): below it they are refused by name,
+  `schema_too_old_for`, and everything else reads as before; the floor of the
+  packages does not move.
+
 ## [0.25.0] — 2026-11-07
 
 ### Added

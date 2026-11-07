@@ -43,6 +43,7 @@ const READ_TOOLS = [
   'suggest_item_combinations',
   'matching_difference_options',
   'aged_balance',
+  'subledger',
   'vat_return',
   'instalment_plan',
   'ec_sales_list',

@@ -234,12 +234,13 @@ Every write names its company explicitly.
 | `list_bank_accounts` | The bank accounts of a company, with the journal and ledger account behind each |
 | `list_bank_transactions` | Statement lines, pending by default |
 | `trial_balance` | Opening, movements and closing per account |
-| `general_ledger` | Every posted line of an account, with a running balance |
+| `general_ledger` | Every posted line of an account, with a running balance; `contact_ids` keeps the lines of those contacts, each with its own balance carried forward and running balance |
 | `journal_book` | The book of one journal, or of all of them: every posted line of the period in the order a book is read, with the totals of each journal at the head |
 | `suggest_line_contacts` | The contacts an open receivable or payable line that names nobody could be, best first, each with its evidence and how many contacts that evidence reached. Writes nothing |
 | `suggest_item_combinations` | For each open receivable or payable line of one counterparty, the lines of the other side that settle it: an exact pair, several lines to the cent, or within the company's difference tolerance, with the difference. Writes nothing |
 | `matching_difference_options` | The reasons a difference may be booked for, with the account the pack gives for each, and the company's tolerance |
 | `aged_balance` | What is still owed, bucketed by age, read from the ledger |
+| `subledger` | A receivable or payable account read contact by contact: per contact the balance brought forward, the debit and credit of the period, the closing balance, the lines of the period and those still open, the lines naming nobody in a row of their own; and the control of each account — its trial balance figures, the sum of its contacts and the difference, the lines naming nobody. `account_code` for one account, every receivable and payable account otherwise. Needs schema 0.26.0 |
 | `vat_return` | The boxes for a period, summed from the ledger |
 | `instalment_plan` | The payments on account the VAT scheme of a company asks for in a period: due, paid, outstanding |
 | `ec_sales_list` | The recapitulative statement of European Union supplies: one line per customer VAT number and per nature |

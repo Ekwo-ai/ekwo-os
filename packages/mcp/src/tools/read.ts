@@ -4,7 +4,7 @@
  * Every one of these is a query the signed-in user could have run themselves;
  * nothing here widens what they may see. The reports come from the schema's
  * own functions — `trial_balance`, `general_ledger`, `aged_balance`,
- * `vat_return`, `fec_lines` — rather than from sums computed here, because a
+ * `subledger`, `vat_return`, `fec_lines` — rather than from sums computed here, because a
  * second implementation of a balance is a second answer to the same question.
  */
 
@@ -47,6 +47,7 @@ export {
   listDocuments,
   listStatements,
   searchContacts,
+  subledger,
   suggestDuplicateContacts,
   trialBalance,
   vatReturn,
@@ -542,6 +543,11 @@ export const GeneralLedgerInput = z.object({
   to: isoDate,
   account_code: z.string().min(1).optional().describe('The account to detail, by its code, e.g. "400000".'),
   account_ids: z.array(uuid).optional().describe('The accounts to detail, by id. Leave both out for every account.'),
+  contact_ids: z
+    .array(uuid)
+    .min(1)
+    .optional()
+    .describe('The lines of these contacts only (from search_contacts or subledger), each with its own balance carried forward and running balance. Needs schema 0.26.0.'),
 });
 
 export const JournalBookInput = z.object({
@@ -556,6 +562,17 @@ export const AgedBalanceInput = z.object({
   company_id: companyId,
   at: isoDate.optional().describe('The day to age at. Defaults to today.'),
   group: z.enum(['receivable', 'payable']).optional(),
+});
+
+export const SubledgerInput = z.object({
+  company_id: companyId,
+  from: isoDate.describe('First day of the period. The balance brought forward is the one before it.'),
+  to: isoDate.describe('Last day of the period.'),
+  account_code: z
+    .string()
+    .min(1)
+    .optional()
+    .describe('One control account, by its code. Left out: every receivable and payable account of the chart.'),
 });
 
 // ---------------------------------------------------------------------------

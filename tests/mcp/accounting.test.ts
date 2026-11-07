@@ -9,6 +9,7 @@
 
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { SCHEMA_FEATURES } from '../../packages/core/src/index.js';
 import { readTools, writeTools, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase } from '../helpers/db.js';
 import { newCompany, numberShape, type Fixture } from '../helpers/factory.js';
@@ -324,6 +325,54 @@ describe('the books, through the tools', () => {
     expect(lines.every((line) => line['matching_state'] === 'matched' && line['open_amount'] === '0.00')).toBe(true);
     expect(statement['closing_balance']).toBe('0.00');
     expect(statement['count']).toBe(3);
+  });
+
+  it('reads the receivable account contact by contact, tied to the trial balance', async () => {
+    // `subledger()` and the contacts of `general_ledger()` are read on a schema
+    // that says it has them (`SCHEMA_FEATURES.subledger`, `ledger_by_contact`).
+    // Until the release that brings them redefines `ekwo_schema_version()`,
+    // this database says the version it will be, for this test only, to a
+    // backend of its own — the server's keeps the version it already read.
+    const version = await db.query<{ definition: string }>(
+      `select pg_get_functiondef('ekwo.ekwo_schema_version()'::regprocedure) as definition`,
+    );
+    await db.query(
+      `create or replace function ekwo.ekwo_schema_version() returns text language sql immutable as $$ select '${SCHEMA_FEATURES.subledger.since}'::text $$`,
+    );
+    const backend = backendFor(db, fx.ownerId);
+    try {
+      const period = { company_id: fx.companyId, from: '2026-01-01', to: '2026-12-31' };
+      const ledger = record(await readTools.subledger(backend, { ...period, account_code: '400000' }));
+      const rows = list(ledger['rows']);
+      const customer = rows.find((row) => row['contact_id'] === customerId);
+      expect(customer).toMatchObject({
+        account_code: '400000',
+        opening_balance: '0.00',
+        debit: '1210.00',
+        credit: '1210.00',
+        closing_balance: '0.00',
+        line_count: 3,
+        open_items: 0,
+      });
+
+      const control = list(ledger['control']);
+      expect(control).toHaveLength(1);
+      expect(control[0]).toMatchObject({ account_code: '400000', ties_out: true });
+      const trial = list(record(await readTools.trialBalance(backend, period))['accounts']).find(
+        (row) => row['account_code'] === '400000',
+      );
+      expect(record(control[0]!['control_account'])['closing_balance']).toBe(trial?.['closing_balance']);
+      expect(record(control[0]!['control_account'])['debit']).toBe(trial?.['debit']);
+
+      // The lines of that row, from the general ledger.
+      const lines = list(
+        record(await readTools.generalLedger(backend, { ...period, account_code: '400000', contact_ids: [customerId] }))['lines'],
+      );
+      expect(lines.map((line) => line['running_balance'])).toEqual(['1210.00', '710.00', '0.00']);
+      expect(new Set(lines.map((line) => line['contact_id']))).toEqual(new Set([customerId]));
+    } finally {
+      await db.exec(version.rows[0]!.definition);
+    }
   });
 
   it('reads the trial balance back, and it balances', async () => {
