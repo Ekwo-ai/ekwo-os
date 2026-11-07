@@ -1,0 +1,54 @@
+[
+  {
+    "code": "NR-S-NA",
+    "name": "Sale, not subject to any general tax on turnover",
+    "description": "Every sale a Nauruan business makes — domestic, exported, or delivered from outside Nauru to a place outside Nauru",
+    "kind": "other",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "Nauru has no value added tax, goods and services tax or general sales tax in force that this pack's research found. The Nauru Revenue Office's list of the legislation it administers (consulted 7 November 2026) holds the Revenue Administration Act, the Employment and Services Tax Act 2014, the Business Tax Act 2016, the Telecommunications Service Tax Act 2009 and the Gaming Act 2011; this is an absence in that list and not a statement read from a text, and the customs side was not checked. What Nauru levies instead is outside this pack: business profits tax on the taxable income of a person who conducts business in Nauru (rate by entity type, residency and turnover; 20 % for individuals, partnerships and trusts, with a tax-free threshold of 250,000 dollars for Nauruan residents), small business tax of 2.5 % of the gross revenue of a non-resident individual with annual gross revenue up to 250,000 dollars, and non-resident tax of 20 % on interest, royalties and insurance premiums derived from Nauru (Business Tax Act 2016); employment and services tax, which the payer withholds on employment income and, for services, on the fees of non-resident independent service providers at 20 % (Employment and Services Tax Act 2014; the Employment and Services Tax Q and A Guide 2022-2023, questions 1, 10 and 12) — an income tax withheld at payment, not a tax a supplier adds to its customer's invoice; and telecommunications service tax of 10 % on the gross sales of telecommunication services by a service provider (Telecommunications Service Tax Act 2009), which is confined to one sector and is not modelled. None is a general tax an invoice line carries and credits on the other side. There is accordingly no rate for this code to state and no box for its base: the code exists so that every line still carries a tax code the engine can post, and states plainly that Nauru has no general turnover tax. If such a tax is enacted, this code must be replaced.",
+    "source": "nro-legislation",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 10
+  },
+  {
+    "code": "NR-P-NA",
+    "name": "Purchase, not subject to any general tax on turnover",
+    "description": "Every purchase a Nauruan business books — domestic, imported, or delivered from outside Nauru to a place outside Nauru",
+    "kind": "other",
+    "rate": 0,
+    "scope": "purchase",
+    "treatment": "not_subject",
+    "valid_from": "2000-01-01",
+    "legal_reference": "The purchase side of NR-S-NA. Nauru has no value added tax, goods and services tax or general sales tax in force that this pack's research found. The Nauru Revenue Office's list of the legislation it administers (consulted 7 November 2026) holds the Revenue Administration Act, the Employment and Services Tax Act 2014, the Business Tax Act 2016, the Telecommunications Service Tax Act 2009 and the Gaming Act 2011; this is an absence in that list and not a statement read from a text, and the customs side was not checked. What Nauru levies instead is outside this pack: business profits tax on the taxable income of a person who conducts business in Nauru (rate by entity type, residency and turnover; 20 % for individuals, partnerships and trusts, with a tax-free threshold of 250,000 dollars for Nauruan residents), small business tax of 2.5 % of the gross revenue of a non-resident individual with annual gross revenue up to 250,000 dollars, and non-resident tax of 20 % on interest, royalties and insurance premiums derived from Nauru (Business Tax Act 2016); employment and services tax, which the payer withholds on employment income and, for services, on the fees of non-resident independent service providers at 20 % (Employment and Services Tax Act 2014; the Employment and Services Tax Q and A Guide 2022-2023, questions 1, 10 and 12) — an income tax withheld at payment, not a tax a supplier adds to its customer's invoice; and telecommunications service tax of 10 % on the gross sales of telecommunication services by a service provider (Telecommunications Service Tax Act 2009), which is confined to one sector and is not modelled. None is a general tax an invoice line carries and credits on the other side. There is accordingly no rate for this code to state and no box for its base: the code exists so that every line still carries a tax code the engine can post, and states plainly that Nauru has no general turnover tax. If such a tax is enacted, this code must be replaced. Nothing a Nauruan business buys carries a recoverable value added tax. An import may carry customs duty, which this pack does not model and did not source.",
+    "source": "nro-legislation",
+    "vat_category": "O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base"
+        }
+      ]
+    },
+    "sequence": 20
+  }
+]

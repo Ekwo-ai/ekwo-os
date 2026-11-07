@@ -3255,3 +3255,23 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- Nauru
+--
+-- Not a Member State and a third country of the Directive: the common system
+-- of VAT reaches a defined territory of the European Union and nowhere else.
+-- ---------------------------------------------------------------------------
+
+insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values
+  ('NR', 'iso_3166_1', 'Nauru', null, 'none', null, null, null,
+   'Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Nauru is a third country to it. The Nauru Revenue Office''s list of the legislation it administers holds no value added tax, goods and services tax or general sales tax; what it levies instead is business tax under the Business Tax Act 2016, employment and services tax withheld at payment under the Employment and Services Tax Act 2014, and a telecommunications service tax on one sector.')
+on conflict (code) do update set
+  code_source     = excluded.code_source,
+  name            = excluded.name,
+  parent_code     = excluded.parent_code,
+  eu_vat_scope    = excluded.eu_vat_scope,
+  eu_vat_from     = excluded.eu_vat_from,
+  eu_vat_to       = excluded.eu_vat_to,
+  vat_prefix      = excluded.vat_prefix,
+  legal_reference = excluded.legal_reference;

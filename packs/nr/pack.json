@@ -1,0 +1,159 @@
+{
+  "$schema": "https://ekwo.ai/schemas/pack/1.json",
+  "country": "NR",
+  "name": "Nauru",
+  "version": "0.1.0",
+  "schema_min": "20261011120000",
+  "seed_sequence": 500,
+  "released_at": "2026-11-07",
+  "certification": {
+    "status": "community",
+    "sources": [
+      {
+        "key": "nro-legislation",
+        "title": "Legislation administered by the Nauru Revenue Office (Revenue Administration Act, Employment and Services Tax Act 2014, Business Tax Act 2016, Telecommunications Service Tax Act 2009, Gaming Act 2011)",
+        "publisher": "Nauru Revenue Office",
+        "url": "https://naurufinance.info/nro-administered-legislation/",
+        "consulted_on": "2026-11-07",
+        "kind": "guidance"
+      },
+      {
+        "key": "nro-key-dates",
+        "title": "Key dates: quarterly and annual business tax returns, monthly withholding returns, tax year 1 July to 30 June",
+        "publisher": "Nauru Revenue Office",
+        "url": "https://naurufinance.info/nro-key-dates/",
+        "consulted_on": "2026-11-07",
+        "kind": "guidance"
+      },
+      {
+        "key": "est-guide",
+        "title": "Employment and Services Tax Q & A Guide 2022-2023",
+        "publisher": "Nauru Revenue Office",
+        "url": "https://naurufinance.info/wp-content/uploads/2023/08/QA-Employment-and-Services-Tax-2022-23.pdf",
+        "consulted_on": "2026-11-07",
+        "kind": "guidance"
+      },
+      {
+        "key": "nro",
+        "title": "Nauru Revenue Office — forms, the FMIS portal and contacts",
+        "publisher": "Nauru Revenue Office",
+        "url": "https://naurufinance.info/nauru-revenue-office/",
+        "consulted_on": "2026-11-07",
+        "kind": "portal"
+      }
+    ]
+  },
+  "defaults": {
+    "currency": "AUD",
+    "language": "en",
+    "rounding_method": "half_up",
+    "closing_style": "retained_earnings",
+    "fiscal_year_default": "july",
+    "roles": {
+      "receivable": "1100",
+      "payable": "2000",
+      "suspense": "2090",
+      "rounding": "6490",
+      "retained_earnings": "3200",
+      "sales": "4000",
+      "purchase": "5010",
+      "bank": "1010",
+      "cash": "1000",
+      "fx_gain": "4700",
+      "fx_loss": "6450",
+      "asset_disposal_gain": "4750",
+      "asset_disposal_loss": "6460"
+    },
+    "journal_roles": {
+      "sales": "SAL",
+      "purchase": "PUR",
+      "miscellaneous": "GEN",
+      "opening": "OPN"
+    }
+  },
+  "languages": [],
+  "journals": [
+    {
+      "code": "SAL",
+      "type": "sales",
+      "name": "Sales journal",
+      "sequence": 10
+    },
+    {
+      "code": "PUR",
+      "type": "purchase",
+      "name": "Purchases journal",
+      "sequence": 20
+    },
+    {
+      "code": "BNK",
+      "type": "bank",
+      "name": "Bank",
+      "sequence": 30
+    },
+    {
+      "code": "CSH",
+      "type": "cash",
+      "name": "Petty cash",
+      "sequence": 40
+    },
+    {
+      "code": "GEN",
+      "type": "general",
+      "name": "General journal",
+      "sequence": 50
+    },
+    {
+      "code": "OPN",
+      "type": "opening",
+      "name": "Opening balances",
+      "sequence": 60
+    }
+  ],
+  "charts": [
+    {
+      "code": "default",
+      "name": "Nauru reference chart of accounts",
+      "accounts": "accounts.csv",
+      "default": true,
+      "audience": "companies",
+      "statements": [
+        "NR-IFRS-SFP",
+        "NR-IFRS-IS"
+      ],
+      "legal_reference": "Nauru prescribes no chart of accounts that this pack's research found. The Nauru Revenue Office publishes the taxes it administers (consulted 7 November 2026): business profits tax, small business tax and non-resident tax under the Business Tax Act 2016, employment and services tax withheld by the payer under the Employment and Services Tax Act 2014, and telecommunications service tax; none of the pages read numbers accounts. This chart is therefore original: four digits, blocked so that each range reaches one line item of the statement of financial position and the statement of profit or loss, following IAS 1. It carries a business profits tax provision with its quarterly instalments, a payable for employment and services tax and non-resident tax withheld, and no tax-clearing account for a turnover tax, because Nauru has no general one in force. The name of the Nauruan-language terms a Nauruan accountant would use is not supplied: see the README.",
+      "source": "nro-legislation"
+    }
+  ],
+  "documents": {
+    "numbering": "free",
+    "number_format": "{CODE}-{YYYY}-{NNNN}",
+    "legal_payment_days": null,
+    "late_payment_reference": null,
+    "tax_point": "invoice_date",
+    "references": {
+      "numbering": {
+        "legal_reference": "Nauru has no general turnover tax in force that this pack's research found, so no tax invoice regime conditions a tax position on an invoice carrying a sequential number (see the tax codes NR-S-NA and NR-P-NA). This pack's research did not read the Corporations Act, the Revenue Administration Act or any text on the books a Nauruan business must keep or for how long; `numbering` is `free` and `number_format` is a convention this pack proposes. A local reviewer should confirm there is no rule.",
+        "source": "nro-legislation"
+      },
+      "payment_terms": {
+        "legal_reference": "This pack's research found no Nauruan text setting a payment term between two businesses in the absence of an agreement, or a statutory rate of late-payment interest on a commercial debt; it did not search for one. `legal_payment_days` and `late_payment_reference` are therefore empty and a seller's terms are a matter of contract.",
+        "source": "nro-legislation"
+      },
+      "tax_point": {
+        "legal_reference": "This field has no true value for Nauru: it names the day a country's general rule makes its own turnover tax chargeable, and no such tax is in force. `invoice_date` is declared as the closest commercial convention — a convention, not a rule read from a text, and not a statement about when business profits tax or the employment and services tax withholding arises (the latter on the day the payer pays the income or fee, Employment and Services Tax Q and A Guide 2022-2023, question 1).",
+        "source": "est-guide"
+      }
+    },
+    "mentions": []
+  },
+  "einvoicing": {
+    "profile": null,
+    "mandatory_from": null,
+    "obligation": "none",
+    "party_scheme": null,
+    "vat_scheme": null,
+    "legal_reference": "This pack's research found no Nauruan law obliging a business to issue or accept an electronic invoice, and no Peppol Authority for Nauru; the Nauru Revenue Office pages read (consulted 7 November 2026) mention none, and the official legislation database (ronlaw.gov.nr) could not be searched. `obligation` is therefore `none` and `profile`, `party_scheme` and `vat_scheme` are null; no VAT identifier exists for a scheme to carry. This is an absence of evidence and a local reviewer should confirm it.",
+    "source": "nro-legislation"
+  }
+}
