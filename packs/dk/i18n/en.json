@@ -157,6 +157,7 @@
     "DK-P-25": "Purchase — 25% standard rate, deductible",
     "DK-S-EU-GOODS-0": "Sale of goods to other EU countries — 0%",
     "DK-S-EU-SERVICES-0": "Sale of services to other EU countries — reverse charge",
+    "DK-S-NONEU-SERVICES": "Sale of services to a taxable person outside the EU",
     "DK-S-EXPORT-0": "Export outside the EU — 0%",
     "DK-S-EXEMPT-PROPERTY": "Letting of immovable property — VAT exempt",
     "DK-P-EU-GOODS": "Acquisition of goods from other EU countries — reverse charge",

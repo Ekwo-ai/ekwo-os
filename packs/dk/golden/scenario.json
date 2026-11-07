@@ -59,6 +59,11 @@
       "lines": [ { "name": "Husleje, lager, 2. kvartal", "quantity": 1, "unit_price": 18000, "tax": "DK-S-EXEMPT-PROPERTY", "account": "6040" } ]
     },
     {
+      "ref": "V7", "type": "sale_invoice", "contact": "kunde-no", "date": "2026-10-14",
+      "why": "En rådgivningsydelse til en virksomhed i Norge, uden for EU: leveringsstedet er efter § 16, stk. 1, hvor køberen har etableret sin virksomhed, så ydelsen er uden for dansk moms. Den angives i rubrik C, ikke i rubrik B-ydelser, som kun gælder købere i andre EU-lande.",
+      "lines": [ { "name": "Rådgivning", "quantity": 1, "unit_price": 6000, "tax": "DK-S-NONEU-SERVICES", "account": "6030" } ]
+    },
+    {
       "ref": "P1", "type": "purchase_invoice", "contact": "leverandoer-dk", "date": "2026-01-20",
       "why": "Indkøb af kontorartikler til standardsatsen: fradragsberettiget købsmoms i rubrikken Købsmoms.",
       "lines": [ { "name": "Kontorartikler", "quantity": 1, "unit_price": 6000, "tax": "DK-P-25", "account": "7120" } ]

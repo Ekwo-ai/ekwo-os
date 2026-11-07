@@ -89,6 +89,28 @@
       "sequence": 40
     },
     {
+      "code": "DK-S-NONEU-SERVICES",
+      "name": "Salg af ydelser til afgiftspligtig person uden for EU",
+      "kind": "vat",
+      "rate": 0,
+      "scope": "sale",
+      "treatment": "not_subject",
+      "valid_from": "2010-01-01",
+      "legal_reference": "Momsloven, § 16, stk. 1 — leveringsstedet for ydelser er her i landet, når ydelsen leveres til en afgiftspligtig person, der handler i denne egenskab, og som har etableret stedet for sin økonomiske virksomhed her i landet eller har et fast forretningssted her i landet, hvortil ydelsen leveres; en ydelse til en afgiftspligtig person etableret uden for EU har derfor, uden for undtagelserne i stk. 2 og 3, § 18, § 19, stk. 1, § 21, stk. 1, § 21 a og § 21 b, ikke leveringssted her i landet og er uden for dansk moms. Momsbekendtgørelsen, § 79, stk. 7 — i rubrik C anføres værdien uden afgift af leverancer af andre varer og ydelser til købere her i landet, til andre EU-lande og til steder uden for EU",
+      "source": "momsloven",
+      "vat_category": "O",
+      "exemption_code": "VATEX-EU-O",
+      "postings": {
+        "invoice": [
+          { "type": "base", "box": "c" }
+        ],
+        "credit_note": [
+          { "type": "base", "box": "c", "box_factor": -100 }
+        ]
+      },
+      "sequence": 45
+    },
+    {
       "code": "DK-S-EXPORT-0",
       "name": "Udførsel til steder uden for EU — 0 %",
       "kind": "vat",

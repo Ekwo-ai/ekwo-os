@@ -127,6 +127,34 @@ the first day of the *third* month after the period ends (§ 57, stk. 3 and
 and several weeks early for a quarterly or half-yearly filer (see
 [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet)).
 
+### A service to a business outside the EU: rubrik C
+
+`DK-S-NONEU-SERVICES` (since 0.4.0) is a service supplied to a taxable person
+established outside the European Union. Momslovens § 16, stk. 1 places a
+service to a taxable person here only when that person has established its
+business, or a fixed establishment the service is supplied to, in Denmark; a
+customer established outside the EU therefore receives a service supplied
+outside Denmark, outside the scope of Danish VAT, except under the
+derogations the paragraph names itself: stk. 2 and 3, § 18, § 19, stk. 1,
+§ 21, stk. 1, § 21 a and § 21 b. The paragraph was read in the
+consolidated act LBK nr 209 of 27 February 2024 on retsinformation.dk on
+7 November 2026. Treatment `not_subject`, category `O`, reason `VATEX-EU-O`,
+as the French, German and Belgian packs carry the same operation.
+
+**The box is rubrik C.** Momsbekendtgørelsens § 79, stk. 7 gives rubrik C the
+value of the other goods and services supplied without VAT "til købere her i
+landet, til andre EU-lande og til steder uden for EU"; rubrik B-ydelser
+(stk. 6) is only the services to another EU country where the buyer pays the
+tax. The golden year books one such service to a Norwegian business in the
+fourth quarter (V7: 6 000.00 in rubrik C, no tax, on 6030).
+
+What this code does **not** say: the sentence on the invoice — the pack's
+mentions are chosen by `applies_when`, which has no condition for an
+operation outside the scope (`not_subject`), so an invoice with this code
+prints none; the e-invoice carries category `O` and `VATEX-EU-O`. Nor the
+derogations § 16 names, which carry no code of their own and were not read
+for this version.
+
 ## What a country outside no reduced rate still needs read carefully
 
 `vat_category` and `exemption_code` follow the table of
