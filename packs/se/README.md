@@ -102,9 +102,40 @@ Tullverket).
 
 `SE-MOMS` är blankett SKV 4700, ruta för ruta, läst ur broschyren SKV 409.
 Rutorna 06, 07, 08 (uttag, vinstmarginalbeskattning, frivillig uthyrning), 23
-och 37–38 (trepartshandel), 40 (övriga tjänster utanför Sverige) samt 61 och
-62 (import till 12 och 6 procent) är deklarerade för att blanketten ska vara
-komplett men bär ingen skattekod i detta paket — se avsnittet om luckor nedan.
+och 37–38 (trepartshandel) samt 61 och 62 (import till 12 och 6 procent) är
+deklarerade för att blanketten ska vara komplett men bär ingen skattekod i
+detta paket — se avsnittet om luckor nedan.
+
+### Tjänst till en beskattningsbar person utanför EU: ruta 40
+
+`SE-S-NONEU-SERVICES` (sedan 0.4.0) är en tjänst till en beskattningsbar
+person som är etablerad utanför Europeiska unionen. Enligt 6 kap. 33 §
+mervärdesskattelagen är en sådan tjänst tillhandahållen inom landet bara om
+köparen har sätet för sin ekonomiska verksamhet eller ett fast
+etableringsställe i Sverige som tjänsten tillhandahålls; en köpare etablerad
+utanför EU ger alltså, utom i undantagen från huvudregeln, en tjänst som är
+tillhandahållen utomlands och ligger utanför svensk moms. Paragrafen lästes
+på riksdagen.se den 7 november 2026. Behandling `not_subject`, kategori `O`,
+orsak `VATEX-EU-O`, som de franska, tyska och belgiska paketen bär samma
+transaktion.
+
+**Rutan är 40.** SKV 409, utgåva 21, beskriver ruta 40 som övrig försäljning
+av tjänster omsatta utanför Sverige som inte redovisas i ruta 39, och nämner
+uttryckligen »tjänster du säljer till köpare i ett land utanför EU«. Ruta 39
+gäller bara köpare i ett annat EU-land. Golden-scenariot bokför en sådan
+tjänst i första kvartalet (V10, ruta 40, ingen skatt) på det nya kontot 3075
+*Försäljning tjänster till land utanför EU*, inom nettoomsättningens intervall
+3010–3091.
+
+Det koden **inte** säger:
+
+- **Texten på fakturan.** Paketets fakturatexter väljs av `applies_when`, och
+  den vokabulären har inget villkor för en transaktion utanför
+  tillämpningsområdet (`not_subject`): en faktura med den här koden skriver
+  ingen. E-fakturan bär kategori `O` och orsaken `VATEX-EU-O`.
+- **Undantagen från huvudregeln** i 6 kap. (tjänster med anknytning till
+  fastighet, persontransport, evenemang och de andra särreglerna) bär ingen
+  egen kod; de paragraferna lästes inte för den här versionen.
 
 **Ingen `deadline` är deklarerad**, och det är ett medvetet val: formatets
 tre regler för `deadline` kan inte uttrycka den svenska förfallodagen (se

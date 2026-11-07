@@ -100,6 +100,7 @@ code,parent,type,reconcilable,name,sequence
 3050,,income,false,Försäljning varor till annat EU-land,990
 3060,,income,false,Försäljning varor utanför EU,1000
 3070,,income,false,Försäljning tjänster till annat EU-land,1010
+3075,,income,false,Försäljning tjänster till land utanför EU,1015
 3080,,income,false,Försäljning köparen skattskyldig i Sverige,1020
 3090,,income,false,Fakturerade frakter,1030
 3091,,income,false,Fakturerade tjänster,1040

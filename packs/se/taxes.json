@@ -220,6 +220,36 @@
     "sequence": 60
   },
   {
+    "code": "SE-S-NONEU-SERVICES",
+    "name": "Försäljning av tjänster till beskattningsbar person utanför EU",
+    "description": "Tjänsten omsätts utomlands enligt huvudregeln; utanför svensk moms, ruta 40",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2023-07-01",
+    "legal_reference": "Mervärdesskattelag (2023:200) 6 kap. 33 § — en tjänst som tillhandahålls en beskattningsbar person som agerar i denna egenskap är tillhandahållen inom landet om den beskattningsbara personen har sätet för sin ekonomiska verksamhet i Sverige eller ett fast etableringsställe här som tjänsten tillhandahålls; en tjänst till en beskattningsbar person etablerad utanför Europeiska unionen är därför, utom i undantagen från huvudregeln, tillhandahållen utomlands. SKV 409, utgåva 21, ruta 40 — övrig försäljning av tjänster omsatta utanför Sverige som inte redovisas i ruta 39, bland annat »tjänster du säljer till köpare i ett land utanför EU«.",
+    "source": "ml",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "40"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "40",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 65
+  },
+  {
     "code": "SE-S-EXEMPT-FIN",
     "name": "Finansieringstjänst, undantagen från moms",
     "description": "Kreditgivning och förmedling av krediter; ruta 42",
