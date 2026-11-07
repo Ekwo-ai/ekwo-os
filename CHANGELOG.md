@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.25.0] — 2026-11-07
+
 ### Added
 
 - **The books read back from a terminal.** `ekwo balance` prints the trial
@@ -199,6 +201,17 @@ somewhere has already run it.
   228 of them parties of the books, the reading ran past the 8 s statement
   timeout of the Data API.
 
+- **A service to a business outside the European Union has its tax code in
+  the packs of Western Europe** — `fr` 1.23.0, `mc` 0.2.0, `be` 1.25.0,
+  `nl` 0.6.0 and `lu` 1.12.0. A service supplied to a business established
+  outside the European Union is taxed where that business is, so it is
+  outside the scope of the seller's VAT: each pack now books it with a code
+  of its own, treatment `not_subject`, category O and reason `VATEX-EU-O`,
+  on the box or grid its return gives to operations abroad (or on none,
+  where the return does not declare them), with the article of the law and
+  the notice of the return among its sources. A permanent test checks that
+  every pack carrying the intra-Community service also carries this one.
+
 ### Changed
 
 - **A bank statement is imported once, whatever format it arrives in**
@@ -265,6 +278,10 @@ somewhere has already run it.
   (`family-o-vat-numbers`), and the published rules of EN 16931 for CII find
   the Factur-X file valid. A document that mixes the category with another is
   still refused whole.
+
+## [0.24.1] — 2026-11-04
+
+### Fixed
 
 - **The health checks read the labels of an enum the same way from every
   client.** `ekwo doctor` asked for them as a `name[]`, which the Supabase
