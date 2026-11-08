@@ -105,6 +105,25 @@
     "sequence": 50
   },
   {
+    "code": "CZ-S-SLUZBY-3Z",
+    "name": "Poskytnutí služby osobě povinné k dani se sídlem mimo Evropskou unii",
+    "description": "Prestation de services à un assujetti établi hors de l'Union européenne : lieu hors du territoire tchèque, sans taxe tchèque, řádek 26",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Zákon č. 235/2004 Sb., § 9 odst. 1 — le lieu de la prestation d'un service à un assujetti est le lieu où celui-ci a le siège de son activité économique, transposition de l'article 44 de la directive 2006/112/CE ; pour un preneur établi hors de l'Union, la prestation a son lieu mimo tuzemsko et n'est pas soumise à la taxe tchèque. Pokyny k vyplnění přiznání k dani z přidané hodnoty, 25 5412 MFin 5412 – vzor č. 22, ř. 26 : « Poskytnutí služby s místem plnění mimo tuzemsko (§ 24a), mimo plnění vykazovaných na ř. 21 a ř. 24 » se déclare parmi les autres plnění s nárokem na odpočet daně.",
+    "source": "pokyny-priznani-dph",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "postings": {
+      "invoice": [{ "type": "base", "box": "26" }],
+      "credit_note": [{ "type": "base", "box": "26", "box_factor": -100 }]
+    },
+    "kind": "vat",
+    "sequence": 55
+  },
+  {
     "code": "CZ-S-OSV-NAJEM",
     "name": "Nájem nemovité věci osvobozený od daně",
     "description": "Bail immobilier exonéré sans droit à déduction",

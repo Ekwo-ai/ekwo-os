@@ -21,7 +21,7 @@ the register below; no second language file is declared.
 
 Every rate, box, mention and statement line carries its own `legal_reference`
 and names the entry of `certification.sources` its article is in. The
-register holds twenty-one texts.
+register holds twenty-two texts.
 
 | What | Text | Publisher |
 |---|---|---|
@@ -29,6 +29,7 @@ register holds twenty-one texts.
 | Sazba TVA à 21 %/12 % depuis le 1er janvier 2024 | Zákon č. 349/2023 Sb. (konsolidační balíček) | e-Sbírka |
 | Seuils d'assujettissement et de l'option trimestrielle depuis le 1er janvier 2025 | Informations de la Finanční správa (transposition de la directive UE 2020/285) | financnisprava.gov.cz |
 | Formulaire de la déclaration | Přiznání k DPH, tiskopis 25 5401 MFin 5401, vzor č. 25 | financnisprava.gov.cz |
+| Ligne de la déclaration d'un service rendu hors du territoire | Pokyny k vyplnění přiznání k DPH, 25 5412 MFin 5412, vzor č. 22 | financnisprava.gov.cz |
 | Kontrolní hlášení, souhrnné hlášení | Pages dédiées et formulaire 25 5525 | financnisprava.gov.cz |
 | Comptabilité, plan comptable directeur, bilan, compte de résultat | Zákon č. 563/1991 Sb. et vyhláška č. 500/2002 Sb. | e-Sbírka |
 | Délai de paiement supplétif et intérêt de retard | Zákon č. 89/2012 Sb. (§ 1963, § 1970) et nařízení vlády č. 351/2013 Sb. | e-Sbírka, Česká národní banka |
@@ -70,12 +71,31 @@ même compte 431.
 
 ## Les taxes
 
-Douze codes : deux taux positifs (21 %, 12 %, en vigueur depuis le 1er janvier
+Treize codes : deux taux positifs (21 %, 12 %, en vigueur depuis le 1er janvier
 2024 — zákon č. 349/2023 Sb. a fusionné les anciens taux réduits de 10 % et
 15 %), trois opérations exonérées avec droit à déduction (livraison
 intracommunautaire de biens, prestation de services intracommunautaire B2B,
-export), une exonération sans droit à déduction (bail immobilier, § 56a), et
+export), une prestation de services hors du champ (un assujetti établi hors
+de l'Union), une exonération sans droit à déduction (bail immobilier, § 56a), et
 six codes côté achat dont quatre autoliquidés par l'acquéreur.
+
+**Un service rendu à un assujetti établi hors de l'Union se déclare au
+řádek 26.** `CZ-S-SLUZBY-3Z` (depuis 0.5.0) : le § 9 odst. 1 place le service
+à un assujetti au siège de son activité, si bien que pour un preneur établi
+hors de l'Union le lieu est mimo tuzemsko et la taxe tchèque n'est pas due.
+Traitement `not_subject`, catégorie `O`, motif `VATEX-EU-O`, comme les packs
+français, allemand et belge portent la même opération. Les Pokyny k vyplnění
+officiels (25 5412, vzor č. 22, lus le 8 novembre 2026) rangent au řádek 26
+« Poskytnutí služby s místem plnění mimo tuzemsko (§ 24a), mimo plnění
+vykazovaných na ř. 21 a ř. 24 » ; le řádek 21 et le souhrnné hlášení ne
+reçoivent que le service rendu dans un autre État membre (`CZ-S-SLUZBY-EU`).
+L'année golden porte un tel service à une entreprise des États-Unis en mars
+(V8 : 12 000,00 au řádek 26, sans taxe, sur 602). Ce que ce code ne dit pas :
+la mention de facture (`applies_when` n'a aucune condition pour une opération
+hors du champ, la facture n'en imprime donc aucune ; la facture électronique
+porte la catégorie `O` et `VATEX-EU-O`), ni les exceptions au § 9 odst. 1
+(§ 10 à § 10k : immeubles, transport de personnes, manifestations…), sans
+code propre.
 
 **L'autoliquidation, à l'achat, s'écrit en deux jambes sur les mêmes comptes
 de TVA collectée et déductible que les opérations ordinaires.** Le montant
@@ -119,7 +139,7 @@ Hors périmètre, chacun faute de modélisation :
 ## La déclaration
 
 `CZ-DPH-PRIZNANI` transcrit une partie du tiskopis 25 5401 : les řádky 1 à 3,
-10, 20 à 22, 40, 41, 43, 46, 50 et 62 à 65, avec les libellés du formulaire.
+10, 20 à 22, 26, 40, 41, 43, 46, 50 et 62 à 65, avec les libellés du formulaire.
 Le řádek 43 (« Zdanitelná plnění řádků 3-13 — základní sazba ») est un total
 au sens du format : il reporte, côté déduction, la taxe déjà déclarée aux
 řádky 3 et 10, jamais une seconde écriture.
@@ -164,7 +184,7 @@ de transposition tchèque n'existe à `released_at`.
 
 1. **Les articles cités**, un par un, dans le texte consolidé sur
    e-sbirka.gov.cz.
-2. **La structure fine du formulaire 25 5401** (řádky 4 à 9, 11 à 13, 23 à 26,
+2. **La structure fine du formulaire 25 5401** (řádky 4 à 9, 11 à 13, 23 à 25,
    30 à 34, 42, 44, 45, 47, 51 à 53, 60, 61, 66), à confronter aux « Pokyny k
    vyplnění » officiels.
 3. **Le choix de la prestation exonérée réduite (12 %) et de l'exonération

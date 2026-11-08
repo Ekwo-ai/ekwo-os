@@ -57,6 +57,11 @@
       "lines": [{ "name": "Vrácení — kancelářský nábytek", "quantity": 2, "unit_price": 5000, "tax": "CZ-S-21", "account": "604" }]
     },
     {
+      "ref": "V8", "type": "sale_invoice", "contact": "zakaznik-us", "date": "2026-03-16",
+      "why": "Une prestation de services à un assujetti établi aux États-Unis, hors de l'Union : son lieu est au siège du preneur (§ 9 odst. 1), mimo tuzemsko, sans taxe tchèque ; řádek 26, pas le řádek 21 réservé aux services rendus dans un autre État membre, ni le souhrnné hlášení.",
+      "lines": [{ "name": "IT poradenství", "quantity": 1, "unit_price": 12000, "tax": "CZ-S-SLUZBY-3Z", "account": "602" }]
+    },
+    {
       "ref": "Z1", "type": "purchase_invoice", "contact": "dodavatel-cz", "date": "2026-01-12",
       "why": "Un achat domestique au taux de base, intégralement déductible : řádek 40.",
       "lines": [{ "name": "Kancelářské potřeby", "quantity": 1, "unit_price": 3000, "tax": "CZ-P-21", "account": "501" }]

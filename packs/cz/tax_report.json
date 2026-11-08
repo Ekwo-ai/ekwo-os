@@ -138,6 +138,14 @@
       "source": "priznani-dph-tiskopis"
     },
     {
+      "box": "26",
+      "kind": "base",
+      "name": "Ostatní uskutečněná plnění s nárokem na odpočet daně",
+      "sequence": 115,
+      "legal_reference": "Tiskopis 25 5401, řádek 26 ; Pokyny k vyplnění přiznání k DPH, 25 5412 – vzor č. 22 : notamment la prestation de services dont le lieu est hors du territoire tchèque (§ 24a), hors des plnění des řádky 21 et 24.",
+      "source": "pokyny-priznani-dph"
+    },
+    {
       "box": "50",
       "kind": "base",
       "name": "Plnění osvobozená od daně bez nároku na odpočet daně",
