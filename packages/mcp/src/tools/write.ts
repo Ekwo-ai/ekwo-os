@@ -29,6 +29,7 @@ import {
   createApiKey as issueKey,
   idsByCode,
   importStatementFile,
+  setBankAccountStatementProfile,
   moneyFields,
   only,
 } from '@ekwo-ai/core';
@@ -691,7 +692,7 @@ export const ImportBankStatementInput = z.object({
     .optional()
     .describe('Only for `cfonb120`, which identifies an account by a bank code, a branch code and a number, and names no country. With the two letters of the country the account is held in, the statement is matched on the IBAN those make there; left out, on the three joined, as written. Never guessed.'),
   csv_profile: CsvProfileInput.optional().describe(
-    'Only for `csv`, and required for it: the lay-out of the file. A CSV names no account either, so `bank_account_id` is required with it too.',
+    "Only for `csv`: the lay-out of the file. Left out, the profile kept on the bank account (`statement_profile` in list_bank_accounts) is used, and the import is refused csv_profile_required only when the account has none. Given, and the import succeeds, it is kept on the account for every later file of that bank, whoever imports it. A CSV names no account either, so `bank_account_id` is required with it.",
   ),
   opening_balance: z
     .string()
@@ -704,6 +705,33 @@ export const ImportBankStatementInput = z.object({
     .optional()
     .describe('Only for `csv`: the closing balance the bank shows, the same way.'),
 });
+
+export const UpdateBankAccountInput = z.object({
+  company_id: companyId,
+  bank_account_id: uuid,
+  statement_profile: CsvProfileInput.nullable().describe(
+    'The lay-out of the CSV statements this account\'s bank exports, kept on the account for every member and every import; null forgets it. Checked as the reader checks it (invalid_profile otherwise). An import given csv_profile keeps it here too.',
+  ),
+});
+
+/**
+ * Changes a bank account: today, the profile of its CSV statements — the
+ * lay-out of its bank's export, described once on the account. The core does
+ * the work, so the command line's `ekwo bank profile` takes the same road.
+ */
+export async function updateBankAccount(
+  backend: Backend,
+  args: z.infer<typeof UpdateBankAccountInput>,
+): Promise<unknown> {
+  const account = await setBankAccountStatementProfile(backend, args);
+  return {
+    bank_account: account,
+    note:
+      args.statement_profile === null
+        ? 'The account keeps no profile now: a CSV of it is imported with csv_profile again, which the account then keeps.'
+        : 'A CSV of this account is now imported without csv_profile: import_bank_statement reads this one.',
+  };
+}
 
 /**
  * Reads the file with the brick of its format and hands the statements to

@@ -22,6 +22,7 @@ import {
   REGISTRATION_INVITATION,
   columns,
   listApiKeys as listKeys,
+  listBankAccounts as listCompanyBankAccounts,
   money,
   moneyFields,
   namesOf,
@@ -381,17 +382,7 @@ export async function listBankAccounts(
   backend: Backend,
   args: z.infer<typeof ListBankAccountsInput>,
 ): Promise<unknown> {
-  const accounts = await backend.select<Row>({
-    table: 'bank_accounts',
-    columns: columns.BANK_ACCOUNT,
-    where: [
-      { column: 'company_id', op: 'eq', value: args.company_id },
-      ...(args.include_inactive === true
-        ? []
-        : ([{ column: 'active', op: 'eq', value: true }] satisfies Filter[])),
-    ],
-    order: [{ column: 'name' }],
-  });
+  const accounts = await listCompanyBankAccounts(backend, args);
   return {
     bank_accounts: accounts,
     note:

@@ -13,6 +13,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { SCHEMA_FEATURES } from '../../packages/core/src/index.js';
 import { readTools, writeTools, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase, repoRoot, rows } from '../helpers/db.js';
 import { newCompany, type Fixture } from '../helpers/factory.js';
@@ -30,6 +31,13 @@ let customerId: string;
 
 beforeAll(async () => {
   db = await freshDatabase();
+  // The profile of a bank account's CSV statements is kept on a schema that
+  // says it has the column (`SCHEMA_FEATURES.statement_profile`). Until the
+  // release that brings it redefines `ekwo_schema_version()`, this database
+  // says the version it will be; `schema_floor.test.ts` proves the older one.
+  await db.query(
+    `create or replace function ekwo.ekwo_schema_version() returns text language sql immutable as $$ select '${SCHEMA_FEATURES.statement_profile.since}'::text $$`,
+  );
   one = await newCompany(db, { country: 'BE', name: 'Banque Une SRL' });
   two = await newCompany(db, { country: 'BE', name: 'Banque Deux SRL' });
 
@@ -454,6 +462,9 @@ describe('import_bank_statement of a CSV', () => {
         bank_account_id: accountId,
       }),
     ).rejects.toThrow(/statement_without_balances/);
+    // An import that failed keeps nothing on the account.
+    const [kept] = await rows<{ statement_profile: unknown }>(db, 'select statement_profile from bank_accounts where id = $1', [accountId]);
+    expect(kept?.statement_profile).toBeNull();
   });
 
   it('imports a row with a fee as two lines, proved by the running balance, and a second time creates nothing', async () => {
@@ -480,5 +491,92 @@ describe('import_bank_statement of a CSV', () => {
 
     const again = record(await writeTools.importBankStatement(accountant, args));
     expect(list(again['statements'])[0]).toMatchObject({ already_imported: true, lines_imported: 0, lines_known: 3 });
+  });
+
+  it('keeps the profile it was given on the account, for every member', async () => {
+    const [kept] = await rows<{ statement_profile: unknown }>(db, 'select statement_profile from bank_accounts where id = $1', [accountId]);
+    expect(kept?.statement_profile).toEqual(csvProfile);
+    const listed = list(record(await readTools.listBankAccounts(viewer, { company_id: one.companyId }))['bank_accounts']);
+    expect(listed.find((account) => account['id'] === accountId)?.['statement_profile']).toEqual(csvProfile);
+  });
+
+  it('reads the next file of the account with the profile it keeps', async () => {
+    const next = [
+      'Date,Name,Type,Gross,Fee,Balance,Transaction ID',
+      '08/05/2026,Bea Client,Payment received,100.00,0.00,"1,264.90",TX-0003',
+    ].join('\n');
+    const result = record(
+      await writeTools.importBankStatement(accountant, { company_id: one.companyId, format: 'csv', content: next, bank_account_id: accountId }),
+    );
+    expect(result['csv_profile']).toEqual({ source: 'account', kept_on_account: true });
+    expect(list(result['statements'])[0]).toMatchObject({ statement_ref: '2026-05-08/2026-05-08', lines_imported: 1 });
+    // The profile given again, unchanged, is not written again.
+    const same = record(
+      await writeTools.importBankStatement(accountant, { company_id: one.companyId, format: 'csv', content: next, bank_account_id: accountId, csv_profile: csvProfile }),
+    );
+    expect(same['csv_profile']).toEqual({ source: 'given', kept_on_account: true });
+  });
+});
+
+describe('update_bank_account', () => {
+  const profile = {
+    delimiter: ';',
+    dateFormat: 'DD.MM.YYYY',
+    decimalSeparator: ',' as const,
+    columns: { date: 'Booking date', debit: 'Debit', credit: 'Credit', balance: 'Balance' },
+  };
+  let accountId: string;
+
+  beforeAll(async () => {
+    const [account] = await rows<{ id: string }>(
+      db,
+      "select id from bank_accounts where company_id = $1 and replace(iban, ' ', '') = 'BE96999000000101'",
+      [one.companyId],
+    );
+    accountId = account!.id;
+  });
+
+  it('keeps a profile on the account, and list_bank_accounts returns it', async () => {
+    const result = record(
+      await writeTools.updateBankAccount(accountant, { company_id: one.companyId, bank_account_id: accountId, statement_profile: profile }),
+    );
+    expect(record(result['bank_account'])['statement_profile']).toEqual(profile);
+    const listed = list(record(await readTools.listBankAccounts(accountant, { company_id: one.companyId }))['bank_accounts']);
+    expect(listed.find((account) => account['id'] === accountId)?.['statement_profile']).toEqual(profile);
+  });
+
+  it('refuses a profile no file could be read with, and changes nothing', async () => {
+    await expect(
+      writeTools.updateBankAccount(accountant, {
+        company_id: one.companyId,
+        bank_account_id: accountId,
+        statement_profile: { ...profile, dateFormat: 'DD.MM' },
+      }),
+    ).rejects.toMatchObject({ code: 'invalid_profile' });
+    const [kept] = await rows<{ statement_profile: unknown }>(db, 'select statement_profile from bank_accounts where id = $1', [accountId]);
+    expect(kept?.statement_profile).toEqual(profile);
+  });
+
+  it('is refused to a viewer, and to another company', async () => {
+    await expect(
+      writeTools.updateBankAccount(viewer, { company_id: one.companyId, bank_account_id: accountId, statement_profile: null }),
+    ).rejects.toThrow(/not_allowed/);
+    await expect(
+      writeTools.updateBankAccount(otherOwner, { company_id: two.companyId, bank_account_id: accountId, statement_profile: null }),
+    ).rejects.toMatchObject({ code: 'unknown_bank_account' });
+  });
+
+  it('forgets it with null, after which a CSV without a profile is refused', async () => {
+    await writeTools.updateBankAccount(accountant, { company_id: one.companyId, bank_account_id: accountId, statement_profile: null });
+    const [kept] = await rows<{ statement_profile: unknown }>(db, 'select statement_profile from bank_accounts where id = $1', [accountId]);
+    expect(kept?.statement_profile).toBeNull();
+    await expect(
+      writeTools.importBankStatement(accountant, {
+        company_id: one.companyId,
+        format: 'csv',
+        content: 'Booking date;Debit;Credit;Balance\n01.06.2026;;10,00;10,00',
+        bank_account_id: accountId,
+      }),
+    ).rejects.toMatchObject({ code: 'csv_profile_required' });
   });
 });

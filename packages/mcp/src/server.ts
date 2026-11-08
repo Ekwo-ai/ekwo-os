@@ -914,11 +914,23 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Bank accounts',
       description:
-        'The bank accounts of a company, with their identifier and the scheme it is written in, the journal they book through and the ledger account behind each. Read it before recording a payment on a particular account, and to find out whether the company has one at all.',
+        'The bank accounts of a company, with their identifier and the scheme it is written in, the journal they book through, the ledger account behind each and statement_profile, the lay-out of its CSV statements when one is kept (null otherwise). Read it before recording a payment on a particular account, and to find out whether the company has one at all.',
       inputSchema: read.ListBankAccountsInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
     async (args) => guard(() => read.listBankAccounts(backend, args)),
+  );
+
+  register(
+    'update_bank_account',
+    {
+      title: 'Change a bank account',
+      description:
+        "Keeps on a bank account the profile of its CSV statements — the delimiter, the date format, the decimal mark and which column is the date, the amount, the balance — so that import_bank_statement reads a CSV of it without csv_profile, for every member of the company. null forgets it. An import given csv_profile keeps it there too, so this is for describing the lay-out before the first file, or correcting it. A profile no file could be read with is refused (invalid_profile). Nothing is imported or booked.",
+      inputSchema: write.UpdateBankAccountInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.updateBankAccount(backend, args)),
   );
 
   register(
@@ -938,7 +950,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Import a bank statement',
       description:
-        'Reads a bank statement file and writes its statements and lines. `format` says what the file is — `camt.053` (the ISO 20022 XML statement), `coda`, `cfonb120`, or `csv` with the profile of its columns (`csv_profile`) and the account it is of (`bank_account_id`), which are the ones this server reads today — and `content` is the file as text. It is never guessed from the content. It books nothing: every line waits as pending, to be settled afterwards. Safe to repeat: the same file imported twice creates nothing the second time, and a statement overlapping an earlier one imports only the new lines. Refused by name, with nothing written: an account the company does not have (create it first with create_bank_account — an import never creates one), a statement whose opening balance plus lines is not its closing balance, a line in another currency. Signalled in `warnings`, not refused: an opening balance that is not the previous closing one, which means a statement is missing.',
+        'Reads a bank statement file and writes its statements and lines. `format` says what the file is — `camt.053` (the ISO 20022 XML statement), `coda`, `cfonb120`, or `csv` with the account it is of (`bank_account_id`) and the profile of its columns (`csv_profile`, kept on the account once an import with it succeeds, and read from there when left out), which are the ones this server reads today — and `content` is the file as text. It is never guessed from the content. It books nothing: every line waits as pending, to be settled afterwards. Safe to repeat: the same file imported twice creates nothing the second time, and a statement overlapping an earlier one imports only the new lines. Refused by name, with nothing written: an account the company does not have (create it first with create_bank_account — an import never creates one), a statement whose opening balance plus lines is not its closing balance, a line in another currency. Signalled in `warnings`, not refused: an opening balance that is not the previous closing one, which means a statement is missing.',
       inputSchema: write.ImportBankStatementInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
