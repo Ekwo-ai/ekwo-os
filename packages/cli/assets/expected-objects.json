@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261107100000",
+  "migration": "20261108120000",
   "socle": {
     "schema": "ekwo",
     "tables": [

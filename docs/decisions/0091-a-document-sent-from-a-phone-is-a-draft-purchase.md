@@ -66,6 +66,13 @@ name those files. A policy an operator wrote by hand stays beside them.
 - An installation older than this file answers `PGRST202` for the function;
   the phone keeps the document and says the company cannot receive it yet.
 
+## Later
+
+- 08/11/2026: the door also takes an XML page, the file of an electronic
+  invoice received from an access point, read exactly by whoever reads the
+  inbox (`20261108120000_an_electronic_invoice_arrives_by_the_same_door.sql`,
+  `tests/receive_purchase_document_xml.test.ts`).
+
 ## See also
 
 - `supabase/migrations/20261028152338_a_purchase_arrives_from_the_phone.sql`

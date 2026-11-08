@@ -11,6 +11,14 @@ somewhere has already run it.
 
 ### Added
 
+- **An electronic invoice received arrives by the inbox's door.**
+  `receive_purchase_document()` takes an XML page — `application/xml` or
+  `text/xml`, the file of an electronic invoice an access point received —
+  beside images and PDF: the same draft purchase with no contact and no
+  line, its file attached, idempotent on the reference, open to a person or
+  a machine key holding `documents.write`. Any other type is still refused,
+  `inbox_file_type` now saying « images, PDF and XML »
+  (`20261108120000_an_electronic_invoice_arrives_by_the_same_door`).
 - **A control account read contact by contact.** `subledger(company, from,
   to, accounts)` gives, per receivable or payable account — the accounts the
   pack types `asset_receivable` and `liability_payable`, or the ones named —
