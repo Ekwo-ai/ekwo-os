@@ -29,7 +29,13 @@ const STATEMENT_MIME_TYPES: Record<StatementFormat, string> = {
   csv: 'text/csv',
 };
 
-export type { CsvStatementProfile } from '@ekwo-ai/csv-statement';
+export type { CsvStatementColumns, CsvStatementProfile } from '@ekwo-ai/csv-statement';
+/**
+ * The tokenizer the CSV reader splits a file with (RFC 4180, the separator
+ * given): for a client that shows a preview of a file before a profile is
+ * chosen for it, so the preview splits the rows exactly as the reader will.
+ */
+export { parseCsv, type CsvRow } from '@ekwo-ai/csv-statement';
 
 /**
  * What a reader needs and a file does not say. Each is for the formats it
