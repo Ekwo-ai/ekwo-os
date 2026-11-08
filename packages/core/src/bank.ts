@@ -16,10 +16,13 @@
  *
  * A format is added here the day a brick reads it, not the day a pack mentions
  * it — the test above is what keeps the two from being confused.
+ *
+ * `csv` is one reader for every lay-out, and a file of it is read only with
+ * the profile of its columns, which the caller gives (`@ekwo-ai/csv-statement`).
  */
 
 /** The statement formats a brick of this repository can read. */
-export const STATEMENT_FORMATS = ['camt.053', 'coda', 'cfonb120'] as const;
+export const STATEMENT_FORMATS = ['camt.053', 'coda', 'cfonb120', 'csv'] as const;
 
 /** One of the formats above. */
 export type StatementFormat = (typeof STATEMENT_FORMATS)[number];

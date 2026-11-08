@@ -19,6 +19,7 @@ import {
   describeStatementFile,
   importStatementFile,
   type BookSource,
+  type CsvStatementProfile,
   type ImportMapping,
   type StatementFormat,
 } from '@ekwo-ai/core';
@@ -44,7 +45,13 @@ const IMPORT_FLAGS = [
   'date-order',
   'bank-account',
   'iban-country',
+  'profile',
+  'opening-balance',
+  'closing-balance',
 ] as const;
+
+/** The flags that only a statement takes, and those only a CSV statement does. */
+const CSV_FLAGS = ['profile', 'opening-balance', 'closing-balance'] as const;
 
 const ENCODINGS = ['utf-8', 'iso-8859-1', 'iso-8859-15'] as const;
 const DATE_ORDERS = ['dmy', 'mdy', 'ymd'] as const;
@@ -93,7 +100,7 @@ export async function importCommand(args: ParsedArgs, deps: BooksDeps = {}): Pro
 }
 
 async function importBookFiles(args: ParsedArgs, deps: BooksDeps, source: BookSource, paths: string[]): Promise<number> {
-  for (const flag of ['bank-account', 'iban-country']) {
+  for (const flag of ['bank-account', 'iban-country', ...CSV_FLAGS]) {
     if (args.flags.has(flag)) throw new UsageError(`bad_flag: --${flag} is for a bank statement, and ${source} is books.`);
   }
   const encoding = oneOf(stringFlag(args, 'encoding'), ENCODINGS, '--encoding');
@@ -206,10 +213,35 @@ async function importStatements(args: ParsedArgs, deps: BooksDeps, format: State
   for (const flag of ['mapping', 'save-mapping', 'open-years', 'opening-date', 'open-items', 'allow-result-accounts', 'keep-numbers', 'accept-suggestions', 'date-order', 'encoding']) {
     if (args.flags.has(flag)) throw new UsageError(`bad_flag: --${flag} is for books, and ${format} is a bank statement.`);
   }
+  if (format !== 'csv') {
+    for (const flag of CSV_FLAGS) {
+      if (args.flags.has(flag)) throw new UsageError(`bad_flag: --${flag} is for a csv statement, and this is ${format}.`);
+    }
+  }
   const bankAccount = stringFlag(args, 'bank-account');
   const ibanCountry = stringFlag(args, 'iban-country');
   const dryRun = boolFlag(args, 'dry-run');
-  const files = await Promise.all(paths.map(async (path) => ({ name: basename(path), content: await readFile(path, 'utf8') })));
+  const profilePath = stringFlag(args, 'profile');
+  if (format === 'csv' && profilePath === undefined) {
+    throw new UsageError('missing_argument: --profile <file.json>, the profile of the CSV\'s columns (see the README of @ekwo-ai/csv-statement). A CSV does not say which column is what, and it is not guessed.');
+  }
+  if (format === 'csv' && bankAccount === undefined && !dryRun) {
+    throw new UsageError('missing_argument: --bank-account <id>. A CSV names no account: say which one it is of.');
+  }
+  const csv =
+    format === 'csv'
+      ? {
+          csv_profile: await readProfile(profilePath as string),
+          opening_balance: stringFlag(args, 'opening-balance'),
+          closing_balance: stringFlag(args, 'closing-balance'),
+        }
+      : {};
+  const files = await Promise.all(
+    paths.map(async (path) => ({
+      name: basename(path),
+      content: format === 'csv' ? csvText(await readFile(path), path, csv.csv_profile?.encoding) : await readFile(path, 'utf8'),
+    })),
+  );
 
   const { backend, company } = await openBooks(args, deps);
   const results: Row[] = [];
@@ -219,7 +251,12 @@ async function importStatements(args: ParsedArgs, deps: BooksDeps, format: State
       // A statement changes nothing that a rehearsal could show beyond what
       // the file holds: it books nothing, and the same file twice is a no-op.
       // So a dry run reads the file and does not ask the database.
-      const read = describeStatementFile(format, file.content, ibanCountry);
+      const read = describeStatementFile(format, file.content, {
+        ibanCountry,
+        profile: csv.csv_profile,
+        openingBalance: csv.opening_balance,
+        closingBalance: csv.closing_balance,
+      });
       results.push({ file: file.name, ...read });
       step(`${file.name}: ${text(read['statements'])} statement(s), ${text(read['lines'])} line(s)`);
       continue;
@@ -231,6 +268,7 @@ async function importStatements(args: ParsedArgs, deps: BooksDeps, format: State
       file_name: file.name,
       bank_account_id: bankAccount === undefined ? undefined : uuidArg(bankAccount, '--bank-account'),
       iban_country: ibanCountry,
+      ...csv,
     });
     results.push({ file: file.name, ...result });
     for (const statement of (result['statements'] ?? []) as Row[]) {
@@ -255,6 +293,29 @@ function oneOf<T extends string>(value: string | undefined, allowed: readonly T[
   if (value === undefined) return undefined;
   if (!(allowed as readonly string[]).includes(value)) throw new UsageError(`bad_value: ${flag} is one of ${allowed.join(', ')}, got "${value}".`);
   return value as T;
+}
+
+/** A CSV as text, in the encoding its profile names: the bytes are decoded here, fatally, as the reader would. */
+function csvText(bytes: Uint8Array, path: string, encoding: CsvStatementProfile['encoding']): string {
+  try {
+    return new TextDecoder(encoding ?? 'utf-8', { fatal: true }).decode(bytes);
+  } catch {
+    throw new UsageError(`bad_value: ${path} is not ${encoding ?? 'utf-8'}; name the encoding it was saved in, in the profile.`);
+  }
+}
+
+/** A CSV profile, from the JSON file the user keeps beside the account's exports. */
+async function readProfile(path: string): Promise<CsvStatementProfile> {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(await readFile(path, 'utf8'));
+  } catch (error) {
+    throw new UsageError(`bad_value: --profile ${path} is not a JSON file that can be read (${error instanceof Error ? error.message : String(error)}).`);
+  }
+  if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    throw new UsageError(`bad_value: --profile ${path} is not a profile: a JSON object with delimiter, dateFormat, decimalSeparator and columns.`);
+  }
+  return parsed as CsvStatementProfile;
 }
 
 async function readMapping(path: string): Promise<Partial<ImportMapping>> {

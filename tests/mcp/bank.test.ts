@@ -407,3 +407,78 @@ describe('import_bank_statement', () => {
     ).rejects.toThrow(/unbalanced_statement/);
   });
 });
+
+describe('import_bank_statement of a CSV', () => {
+  // A statement exported as CSV by a payment service: a gross amount, its fee
+  // and the running balance, on the account the statements above were of.
+  const content = [
+    'Date,Name,Type,Gross,Fee,Balance,Transaction ID',
+    '04/05/2026,Ada Client,Payment received,"1,200.00",-35.10,"1,214.90",TX-0001',
+    '06/05/2026,,Withdrawal,-50.00,0.00,"1,164.90",TX-0002',
+  ].join('\n');
+  const csvProfile = {
+    delimiter: ',',
+    dateFormat: 'DD/MM/YYYY',
+    decimalSeparator: '.' as const,
+    thousandsSeparator: ',',
+    columns: { date: 'Date', counterparty: 'Name', description: 'Type', amount: 'Gross', fee: 'Fee', balance: 'Balance', reference: 'Transaction ID' },
+  };
+  let accountId: string;
+
+  beforeAll(async () => {
+    const [account] = await rows<{ id: string }>(
+      db,
+      "select id from bank_accounts where company_id = $1 and replace(iban, ' ', '') = 'BE96999000000101'",
+      [one.companyId],
+    );
+    accountId = account!.id;
+  });
+
+  it('is refused without the profile of its columns, and without the account it is of', async () => {
+    await expect(
+      writeTools.importBankStatement(accountant, { company_id: one.companyId, format: 'csv', content, bank_account_id: accountId }),
+    ).rejects.toMatchObject({ code: 'csv_profile_required' });
+    await expect(
+      writeTools.importBankStatement(accountant, { company_id: one.companyId, format: 'csv', content, csv_profile: csvProfile }),
+    ).rejects.toMatchObject({ code: 'csv_bank_account_required' });
+  });
+
+  it('is refused by the database when nothing proves its lines are all there', async () => {
+    const withoutBalance = { ...csvProfile, columns: { ...csvProfile.columns, balance: undefined } };
+    await expect(
+      writeTools.importBankStatement(accountant, {
+        company_id: one.companyId,
+        format: 'csv',
+        content,
+        csv_profile: withoutBalance,
+        bank_account_id: accountId,
+      }),
+    ).rejects.toThrow(/statement_without_balances/);
+  });
+
+  it('imports a row with a fee as two lines, proved by the running balance, and a second time creates nothing', async () => {
+    const args = { company_id: one.companyId, format: 'csv' as const, content, csv_profile: csvProfile, bank_account_id: accountId, file_name: 'activity.csv' };
+    const result = record(await writeTools.importBankStatement(accountant, args));
+    expect(result).toMatchObject({ format: 'csv', version: null, violations: [] });
+    expect(list(result['statements'])[0]).toMatchObject({ statement_ref: '2026-05-04/2026-05-06', already_imported: false, lines_imported: 3 });
+    const lines = await rows<{ amount: string; reference: string; counterpart_name: string | null }>(
+      db,
+      `select t.amount::text as amount, t.reference, t.counterpart_name
+         from bank_transactions t join bank_statements s on s.id = t.statement_id
+        where s.statement_ref = '2026-05-04/2026-05-06' order by t.sequence`,
+    );
+    expect(lines).toEqual([
+      { amount: '1200.00', reference: 'TX-0001', counterpart_name: 'Ada Client' },
+      { amount: '-35.10', reference: 'TX-0001', counterpart_name: 'Ada Client' },
+      { amount: '-50.00', reference: 'TX-0002', counterpart_name: null },
+    ]);
+    const [statement] = await rows<{ balance_start: string; balance_end_declared: string; source_format: string }>(
+      db,
+      "select balance_start::text, balance_end_declared::text, source_format from bank_statements where statement_ref = '2026-05-04/2026-05-06'",
+    );
+    expect(statement).toEqual({ balance_start: '50.00', balance_end_declared: '1164.90', source_format: 'csv' });
+
+    const again = record(await writeTools.importBankStatement(accountant, args));
+    expect(list(again['statements'])[0]).toMatchObject({ already_imported: true, lines_imported: 0, lines_known: 3 });
+  });
+});

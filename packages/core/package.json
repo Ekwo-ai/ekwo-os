@@ -51,6 +51,7 @@
     "@ekwo-ai/camt053": "^0.25.0",
     "@ekwo-ai/cfonb120": "^0.25.0",
     "@ekwo-ai/coda": "^0.25.0",
+    "@ekwo-ai/csv-statement": "^0.25.0",
     "@ekwo-ai/factur-x": "^0.25.0",
     "@ekwo-ai/fec": "^0.25.0",
     "@ekwo-ai/invoice-pdf": "^0.25.0",

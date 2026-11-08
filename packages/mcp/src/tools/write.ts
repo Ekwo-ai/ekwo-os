@@ -637,11 +637,44 @@ export async function createBankTransaction(
  */
 export { STATEMENT_FORMATS } from '@ekwo-ai/core';
 
+/** A column of a CSV: its header as written, or its position counted from 1. */
+const csvColumn = z.union([z.string().min(1), z.number().int().min(1)]);
+
+/** The profile of a CSV's columns, as `@ekwo-ai/csv-statement` describes it. The reader checks it again. */
+export const CsvProfileInput = z.object({
+  delimiter: z.string().min(1).describe('The character between two fields: `,`, `;`, a tab, `|`.'),
+  encoding: z.enum(['utf-8', 'iso-8859-1', 'windows-1252']).optional().describe('Default utf-8. Never guessed.'),
+  skipRows: z.number().int().min(0).optional().describe('Lines above the header: a title, an account line.'),
+  header: z.boolean().optional().describe('Whether the first row read is a header. Default true; without one, columns are named by position.'),
+  skipFooterRows: z.number().int().min(0).optional().describe('Rows at the end that are not movements: a total.'),
+  dateFormat: z.string().min(1).describe('How a date is written, with DD, MM and YYYY (or YY): `DD/MM/YYYY`, `MM/DD/YYYY`, `YYYY-MM-DD`.'),
+  decimalSeparator: z.enum(['.', ',']),
+  thousandsSeparator: z.string().max(1).optional().describe('The mark between groups of three digits, when the file writes one.'),
+  sign: z.enum(['as-written', 'inverted']).optional().describe('`inverted` when a positive amount is money out, as a card statement writes a purchase.'),
+  newestFirst: z.boolean().optional().describe('The file lists the newest row first.'),
+  columns: z
+    .object({
+      date: csvColumn,
+      valueDate: csvColumn.optional(),
+      amount: csvColumn.optional(),
+      debit: csvColumn.optional(),
+      credit: csvColumn.optional(),
+      fee: csvColumn.optional(),
+      currency: csvColumn.optional(),
+      counterparty: csvColumn.optional(),
+      counterpartyAccount: csvColumn.optional(),
+      description: z.union([csvColumn, z.array(csvColumn)]).optional(),
+      reference: csvColumn.optional(),
+      balance: csvColumn.optional(),
+    })
+    .describe('Which column says what, by header or by position from 1. `date` is required, and either `amount` or `debit`/`credit`. A `fee` column makes a second line of each row with a fee. A `balance` column (the running balance) proves the statement.'),
+});
+
 export const ImportBankStatementInput = z.object({
   company_id: companyId,
   format: z
     .enum(STATEMENT_FORMATS)
-    .describe('What the file is. Required, and never guessed from the content: `camt.053` is the ISO 20022 XML statement, `coda` the coded statement of account of 128-character records, `cfonb120` the statement of 120-character records.'),
+    .describe('What the file is. Required, and never guessed from the content: `camt.053` is the ISO 20022 XML statement, `coda` the coded statement of account of 128-character records, `cfonb120` the statement of 120-character records, `csv` a statement exported as CSV, read with `csv_profile`.'),
   content: z.string().min(1).describe('The file itself, as text (UTF-8).'),
   file_name: z.string().min(1).optional().describe('The name the file had, kept on the statement.'),
   storage_path: z
@@ -657,6 +690,19 @@ export const ImportBankStatementInput = z.object({
     .length(2)
     .optional()
     .describe('Only for `cfonb120`, which identifies an account by a bank code, a branch code and a number, and names no country. With the two letters of the country the account is held in, the statement is matched on the IBAN those make there; left out, on the three joined, as written. Never guessed.'),
+  csv_profile: CsvProfileInput.optional().describe(
+    'Only for `csv`, and required for it: the lay-out of the file. A CSV names no account either, so `bank_account_id` is required with it too.',
+  ),
+  opening_balance: z
+    .string()
+    .regex(/^-?[0-9]+(\.[0-9]+)?$/)
+    .optional()
+    .describe('Only for `csv` without a running balance column: the opening balance the bank shows for the period, as a decimal string. The import needs both balances to prove no line is missing.'),
+  closing_balance: z
+    .string()
+    .regex(/^-?[0-9]+(\.[0-9]+)?$/)
+    .optional()
+    .describe('Only for `csv`: the closing balance the bank shows, the same way.'),
 });
 
 /**

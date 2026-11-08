@@ -73,7 +73,7 @@ export interface CsvStatementColumns {
 export interface CsvStatementProfile {
   /** The character between two fields: `,`, `;`, a tab, `|`… One character. */
   delimiter: string;
-  /** Default `utf-8`, fatally: a byte that is not UTF-8 is refused, never replaced. */
+  /** How the bytes are decoded. Default `utf-8`, fatally: a byte that is not UTF-8 is refused, never replaced. Ignored when the input is already a string. */
   encoding?: Encoding;
   /** Lines before the header row (or before the first row, when there is no header): a title, an account line. Default 0. */
   skipRows?: number;

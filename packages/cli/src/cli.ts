@@ -252,7 +252,8 @@ ${bold('Connecting')} ${dim('(every command)')}
               trial-balance, fec, journal-items, journal-report,
               transaction-journal, xaf, or the export of another ledger by
               its name (ekwo import --help). Or a
-              bank statement: camt.053, coda, cfonb120, pending lines for match.
+              bank statement: camt.053, coda, cfonb120, csv (with --profile),
+              pending lines for match.
   ${cyan('proof')}       stamp <file> --filing <id> | --year <id> | --document <id> — the
               sha256 of a filed file, committed to Bitcoin through the public
               OpenTimestamps calendars; only the hash leaves. upgrade — complete
@@ -516,6 +517,12 @@ ${bold('ekwo import')} ${dim('(one command, one reader per source; nothing is po
                             ymd, for a date written only in digits. Never guessed.
   --bank-account <id>       A statement: the account, where the file names it otherwise.
   --iban-country <cc>       cfonb120: the country the account is held in.
+  --profile <file.json>     csv: the profile of the file's columns — delimiter,
+                            date format, decimal mark, which column is the date,
+                            the amount (or debit and credit), the balance…
+                            Required, never guessed; csv also needs --bank-account.
+  --opening-balance <n>     csv without a balance column: the balances the bank
+  --closing-balance <n>     shows for the period, as 1250.00. Both prove it.
 
 ${bold('Environment')}
   EKWO_DB_URL               Same as --db-url. SUPABASE_DB_URL also works.

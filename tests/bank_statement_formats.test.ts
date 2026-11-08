@@ -20,7 +20,7 @@ import { allPacks } from './helpers/packs.js';
 const READ: readonly string[] = writeTools.STATEMENT_FORMATS;
 
 /** Named by a pack, read by nothing. Each is a brick to write. */
-const OWED = ['bai2', 'camt.052', 'csv', 'mt940', 'ofx'];
+const OWED = ['bai2', 'camt.052', 'mt940', 'ofx'];
 
 const named = [...new Set(allPacks.flatMap((pack) => pack.documents.bank_statement_formats))].sort();
 
