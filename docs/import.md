@@ -215,7 +215,7 @@ documents as they are, since a piece is not a change of the books.
 - **No chart.** An account the company's chart does not have is not created.
   The correspondence points it at one that exists, or the user adds it first.
 - **No bank statement.** A statement is not books: it books nothing, and its
-  lines wait for a payment. `ekwo import camt.053 | coda | cfonb120` hands it
+  lines wait for a payment. `ekwo import camt.053 | coda | cfonb120 | csv` hands it
   to `import_bank_statement()`, the MCP server's tool of the same name.
 
 ## Adding a source

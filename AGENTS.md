@@ -199,7 +199,7 @@ reach and whether you may write; without that box ticked, you read.
 | A small difference, booked with its reason and matched | `ekwo line differences list`, then `ekwo line match <line>… --difference <reason>` | `matching_difference_options`, then `reconcile_with_difference` |
 | A payment | `ekwo payment record --doc <doc> --amount … --date … --bank-account <id>` | `record_payment` |
 | Books kept elsewhere (FEC, journal items, a report, a trial balance) | `ekwo import <source> <files…> --dry-run --save-mapping map.json`, then `--mapping map.json` | `import_books` (`dry_run` first) |
-| A bank statement file | `ekwo import camt.053 <file>` (or `coda`, `cfonb120`) | `import_bank_statement` |
+| A bank statement file | `ekwo import camt.053 <file>` (or `coda`, `cfonb120`; `csv` with `--profile <file.json> --bank-account <id>`, the profile of its columns) | `import_bank_statement` |
 | A link the customer opens without an account | — | `share_document` |
 | The PDF of an invoice or a credit note, with the company's logo | `ekwo doc pdf <doc> [--factur-x] [--out file]` | `render_invoice_pdf` |
 | The electronic invoice of a posted sale (module `einvoicing`) | `ekwo einvoice validate <doc>`, then `ekwo einvoice issue <doc>` | `einvoicing_validate`, then `einvoicing_issue` |

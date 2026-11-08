@@ -44,6 +44,36 @@ somewhere has already run it.
   `ledger_by_contact`): below it they are refused by name,
   `schema_too_old_for`, and everything else reads as before; the floor of the
   packages does not move.
+- **A statement exported as CSV, read with the profile of its columns.** A
+  new MIT brick, [`@ekwo-ai/csv-statement`](packages/formats/csv-statement/):
+  one reader for every bank, payment service and card issuer, and no bank in
+  it. The caller gives the lay-out as data — delimiter, encoding, date format,
+  decimal and thousands marks, which column is the date, the amount or the
+  debit and the credit, the fee, the currency, the counterparty, the text, the
+  transaction id, the running balance; rows to skip above and below; a sign
+  inverted for a card; newest first — and `readCsvStatement(content, profile,
+  options)` returns the shape every statement reader returns, so
+  `import_bank_statement()` takes it as it is. A fee in its own column makes
+  two lines of one entry, the gross amount and the fee, because they are
+  matched to two different things. The balances come from a running balance
+  column, every row checked against the one before, or from the caller
+  (`openingBalance`, `closingBalance`); none are invented, and a statement
+  without them comes back with null balances, which the import refuses as
+  before (`statement_without_balances`). Rows in another currency than the
+  account's are left out and said (`other_currency`).
+- **`csv` among the statement formats.** `STATEMENT_FORMATS` names it, and
+  `readStatementFile()` and `describeStatementFile()` take, as their third
+  argument, the options — `{ ibanCountry, profile, account, currency,
+  openingBalance, closingBalance }` — where a string is still the country of a
+  `cfonb120`. A CSV without a profile is refused by name,
+  `csv_profile_required`. `importStatementFile()` takes `csv_profile`,
+  `opening_balance` and `closing_balance`, and reads the identifier and the
+  currency from the bank account named, which a CSV requires
+  (`csv_bank_account_required`). The MCP tool `import_bank_statement` takes
+  the same arguments; `ekwo import csv <file> --profile <file.json>
+  --bank-account <id>` imports from a terminal, with `--opening-balance` and
+  `--closing-balance`. No migration: the schema already stores what a CSV
+  gives, under the source format `csv`.
 
 ## [0.25.0] — 2026-11-07
 
