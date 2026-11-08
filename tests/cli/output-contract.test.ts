@@ -343,6 +343,44 @@ describe('every command answers --json with one document of the published shape'
     expect((await asPerson(['match', statementLine.rows[0]?.id as string, 'd-1'])).exitCode).toBe(0);
     const paid = await asPerson(['payment', 'record', '--doc', 'd-1', '--amount', '70.00', '--date', '2026-06-30', '--bank-account', bankAccount, '--ref', 'p-1']);
     expect(paid.exitCode).toBe(0);
+    // The profile of the account's CSV statements, kept on the account: given
+    // to a first import, read by the next, read and forgotten by `ekwo bank`.
+    // This database says the version that keeps it, for these commands only.
+    const [versioned] = (
+      await root.query<{ definition: string }>(
+        `select pg_get_functiondef(p.oid) as definition from pg_proc p where p.proname = 'ekwo_schema_version'`,
+      )
+    ).rows;
+    const schemaOfVersion = versioned?.definition.match(/FUNCTION ([a-z_]+)\.ekwo_schema_version/)?.[1] ?? 'public';
+    await root.query(
+      `create or replace function ${schemaOfVersion}.ekwo_schema_version() returns text language sql immutable as $$ select '0.26.0'::text $$`,
+    );
+    try {
+      const csvProfile = { delimiter: ',', dateFormat: 'YYYY-MM-DD', decimalSeparator: '.', columns: { date: 'Date', amount: 'Amount', balance: 'Balance', reference: 'Id' } };
+      const profilePath = join(cwd, 'bank-profile.json');
+      const first = join(cwd, 'bank-1.csv');
+      const second = join(cwd, 'bank-2.csv');
+      await writeFile(profilePath, JSON.stringify(csvProfile));
+      await writeFile(first, 'Date,Amount,Balance,Id\n2026-06-21,10.00,10.00,B-1\n');
+      await writeFile(second, 'Date,Amount,Balance,Id\n2026-06-22,5.00,15.00,B-2\n');
+      const accounts = await asPerson(['bank', 'list']);
+      expect(accounts.data).toMatchObject({ count: 1, bank_accounts: [{ id: bankAccount, statement_profile: null }] });
+      const imported = await asPerson(['import', 'csv', first, '--csv-profile', profilePath, '--bank-account', bankAccount]);
+      expect(imported.exitCode).toBe(0);
+      expect(imported.data).toMatchObject({ files: [{ csv_profile: { source: 'given', kept_on_account: true } }] });
+      expect((await asPerson(['bank', 'profile', bankAccount])).data).toMatchObject({ statement_profile: csvProfile });
+      const next = await asPerson(['import', 'csv', second, '--bank-account', bankAccount]);
+      expect(next.data).toMatchObject({ files: [{ csv_profile: { source: 'account', kept_on_account: true } }] });
+      const cleared = await asPerson(['bank', 'profile', bankAccount, '--clear']);
+      expect(cleared.data).toMatchObject({ bank_account: { id: bankAccount, statement_profile: null } });
+      const refused = await asPerson(['import', 'csv', second, '--bank-account', bankAccount]);
+      expect(refused.exitCode).not.toBe(0);
+      expect(refused.error).toMatchObject({ message: expect.stringContaining('--csv-profile') });
+      const set = await asPerson(['bank', 'profile', bankAccount, profilePath]);
+      expect(set.data).toMatchObject({ bank_account: { statement_profile: csvProfile } });
+    } finally {
+      await root.query(versioned?.definition as string);
+    }
     for (const document of [contact, draft, shown, paid]) {
       expect(document.context).toEqual(used.context);
     }

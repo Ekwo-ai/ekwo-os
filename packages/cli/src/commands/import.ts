@@ -18,6 +18,7 @@ import {
   importBooks,
   describeStatementFile,
   importStatementFile,
+  bankAccountStatementProfile,
   type BookSource,
   type CsvStatementProfile,
   type ImportMapping,
@@ -45,13 +46,17 @@ const IMPORT_FLAGS = [
   'date-order',
   'bank-account',
   'iban-country',
-  'profile',
+  'csv-profile',
   'opening',
   'closing',
 ] as const;
 
-/** The flags that only a statement takes, and those only a CSV statement does. */
-const CSV_FLAGS = ['profile', 'opening', 'closing'] as const;
+/**
+ * The flags only a CSV statement takes. The profile of its columns is
+ * `--csv-profile`, the word of the MCP server's `csv_profile`: `--profile`
+ * names the profile of an instance, for every command.
+ */
+const CSV_FLAGS = ['csv-profile', 'opening', 'closing'] as const;
 
 const ENCODINGS = ['utf-8', 'iso-8859-1', 'iso-8859-15'] as const;
 const DATE_ORDERS = ['dmy', 'mdy', 'ymd'] as const;
@@ -219,41 +224,57 @@ async function importStatements(args: ParsedArgs, deps: BooksDeps, format: State
     }
   }
   const bankAccount = stringFlag(args, 'bank-account');
+  const bankAccountId = bankAccount === undefined ? undefined : uuidArg(bankAccount, '--bank-account');
   const ibanCountry = stringFlag(args, 'iban-country');
   const dryRun = boolFlag(args, 'dry-run');
-  const profilePath = stringFlag(args, 'profile');
-  if (format === 'csv' && profilePath === undefined) {
-    throw new UsageError('missing_argument: --profile <file.json>, the profile of the CSV\'s columns (see the README of @ekwo-ai/csv-statement). A CSV does not say which column is what, and it is not guessed.');
+  const profilePath = stringFlag(args, 'csv-profile');
+  if (format === 'csv' && bankAccountId === undefined && (!dryRun || profilePath === undefined)) {
+    throw new UsageError(
+      dryRun
+        ? 'missing_argument: --csv-profile <file.json>, or --bank-account <id> whose account keeps one. A CSV does not say which column is what, and it is not guessed.'
+        : 'missing_argument: --bank-account <id>. A CSV names no account: say which one it is of.',
+    );
   }
-  if (format === 'csv' && bankAccount === undefined && !dryRun) {
-    throw new UsageError('missing_argument: --bank-account <id>. A CSV names no account: say which one it is of.');
-  }
+  const given = profilePath === undefined ? undefined : await readProfile(profilePath);
   const csv =
     format === 'csv'
       ? {
-          csv_profile: await readProfile(profilePath as string),
+          csv_profile: given,
           opening_balance: stringFlag(args, 'opening'),
           closing_balance: stringFlag(args, 'closing'),
         }
       : {};
+
+  const { backend, company } = await openBooks(args, deps);
+  // Without --csv-profile, the profile kept on the account: the bytes are
+  // decoded in the encoding it names, and the import reads it again there.
+  const profile =
+    format === 'csv' && given === undefined
+      ? await bankAccountStatementProfile(backend, { company_id: company.id, bank_account_id: bankAccountId as string })
+      : given;
+  if (format === 'csv' && profile === null) {
+    throw new UsageError(
+      'missing_argument: --csv-profile <file.json>, the profile of the CSV\'s columns (see the README of @ekwo-ai/csv-statement). This account keeps none yet; once a file is imported with one, it keeps it for the next.',
+    );
+  }
   const files = await Promise.all(
     paths.map(async (path) => ({
       name: basename(path),
-      content: format === 'csv' ? csvText(await readFile(path), path, csv.csv_profile?.encoding) : await readFile(path, 'utf8'),
+      content: format === 'csv' ? csvText(await readFile(path), path, profile?.encoding) : await readFile(path, 'utf8'),
     })),
   );
 
-  const { backend, company } = await openBooks(args, deps);
   const results: Row[] = [];
   heading(`${dryRun ? 'Read' : 'Imported'} ${format}, in ${company.name}`);
   for (const file of files) {
     if (dryRun) {
       // A statement changes nothing that a rehearsal could show beyond what
       // the file holds: it books nothing, and the same file twice is a no-op.
-      // So a dry run reads the file and does not ask the database.
+      // So a dry run reads the file and asks the database nothing but the
+      // profile kept on the account, when none was given.
       const read = describeStatementFile(format, file.content, {
         ibanCountry,
-        profile: csv.csv_profile,
+        profile: profile ?? undefined,
         openingBalance: csv.opening_balance,
         closingBalance: csv.closing_balance,
       });
@@ -266,7 +287,7 @@ async function importStatements(args: ParsedArgs, deps: BooksDeps, format: State
       format,
       content: file.content,
       file_name: file.name,
-      bank_account_id: bankAccount === undefined ? undefined : uuidArg(bankAccount, '--bank-account'),
+      bank_account_id: bankAccountId,
       iban_country: ibanCountry,
       ...csv,
     });
@@ -275,6 +296,10 @@ async function importStatements(args: ParsedArgs, deps: BooksDeps, format: State
       step(`${file.name}: statement ${text(statement['reference'] ?? statement['id'])}, ${text(statement['lines_imported'])} line(s) imported`);
     }
     for (const violation of (result['violations'] ?? []) as Row[]) warn(`${file.name}: ${text(violation['message'])}`);
+    const kept = result['csv_profile'] as { source: string; kept_on_account: boolean } | undefined;
+    if (kept?.source === 'given' && kept.kept_on_account) {
+      step('the profile of its columns is kept on the account: the next CSV of it needs no --csv-profile');
+    }
   }
   setResult({
     source: format,
@@ -305,15 +330,15 @@ function csvText(bytes: Uint8Array, path: string, encoding: CsvStatementProfile[
 }
 
 /** A CSV profile, from the JSON file the user keeps beside the account's exports. */
-async function readProfile(path: string): Promise<CsvStatementProfile> {
+export async function readProfile(path: string): Promise<CsvStatementProfile> {
   let parsed: unknown;
   try {
     parsed = JSON.parse(await readFile(path, 'utf8'));
   } catch (error) {
-    throw new UsageError(`bad_value: --profile ${path} is not a JSON file that can be read (${error instanceof Error ? error.message : String(error)}).`);
+    throw new UsageError(`bad_value: ${path} is not a JSON file that can be read (${error instanceof Error ? error.message : String(error)}).`);
   }
   if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-    throw new UsageError(`bad_value: --profile ${path} is not a profile: a JSON object with delimiter, dateFormat, decimalSeparator and columns.`);
+    throw new UsageError(`bad_value: ${path} is not a profile: a JSON object with delimiter, dateFormat, decimalSeparator and columns.`);
   }
   return parsed as CsvStatementProfile;
 }

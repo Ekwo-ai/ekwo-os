@@ -884,6 +884,34 @@
           "written": { "type": "string" }
         }
       },
+      "bank list": {
+        "$comment": "The bank accounts of the company, by name, each a row of bank_accounts with statement_profile — the profile of its CSV statements, or null — left out below schema 0.26.0.",
+        "type": "object",
+        "required": ["bank_accounts", "count"],
+        "properties": {
+          "bank_accounts": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "count": { "type": "integer" }
+        }
+      },
+      "bank profile": {
+        "oneOf": [
+          {
+            "$comment": "Read: the profile kept on the account (the CsvStatementProfile of @ekwo-ai/csv-statement), or null.",
+            "type": "object",
+            "required": ["bank_account_id", "statement_profile"],
+            "properties": {
+              "bank_account_id": { "type": "string" },
+              "statement_profile": { "type": ["object", "null"] }
+            }
+          },
+          {
+            "$comment": "Kept or forgotten: the account as it now is.",
+            "type": "object",
+            "required": ["bank_account"],
+            "properties": { "bank_account": { "$ref": "#/$defs/row" } }
+          }
+        ]
+      },
       "payment record": {
         "type": "object",
         "required": ["payment", "entry", "entry_lines", "matched", "note"],

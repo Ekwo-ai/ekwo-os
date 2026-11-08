@@ -31,6 +31,7 @@ import { migrateCommand } from './commands/migrate.js';
 import { moduleCommand } from './commands/module.js';
 import { packCommand } from './commands/pack.js';
 import { matchCommand, paymentCommand } from './commands/payment.js';
+import { bankCommand } from './commands/bank.js';
 import { proofCommand, type ProofDeps } from './commands/proof.js';
 import { registerCommand, unregisterCommand } from './commands/register.js';
 import { statusCommand } from './commands/status.js';
@@ -80,6 +81,7 @@ export const COMMANDS = [
   'cancel',
   'reverse',
   'line',
+  'bank',
   'payment',
   'match',
   'analytic',
@@ -207,6 +209,10 @@ ${bold('Connecting')} ${dim('(every command)')}
               [--difference <reason>] — match them in one gesture, booking a
               small difference with its reason; differences list — the
               reasons and the tolerance.
+  ${cyan('bank')}        list [--all] — the bank accounts of the company, and whether each
+              keeps the profile of its CSV statements; profile <account>
+              [<file.json> | --clear] — read, keep or forget that profile, the
+              lay-out of its bank's export, for every member and every import.
   ${cyan('payment')}     record — money in or out, booked and matched.
   ${cyan('match')}       <bank transaction> <document>… — a statement line pays documents.
               --amount <amount>, once per document, says how much settles
@@ -252,7 +258,7 @@ ${bold('Connecting')} ${dim('(every command)')}
               trial-balance, fec, journal-items, journal-report,
               transaction-journal, xaf, or the export of another ledger by
               its name (ekwo import --help). Or a
-              bank statement: camt.053, coda, cfonb120, csv (with --profile),
+              bank statement: camt.053, coda, cfonb120, csv (with --csv-profile),
               pending lines for match.
   ${cyan('proof')}       stamp <file> --filing <id> | --year <id> | --document <id> — the
               sha256 of a filed file, committed to Bitcoin through the public
@@ -517,10 +523,12 @@ ${bold('ekwo import')} ${dim('(one command, one reader per source; nothing is po
                             ymd, for a date written only in digits. Never guessed.
   --bank-account <id>       A statement: the account, where the file names it otherwise.
   --iban-country <cc>       cfonb120: the country the account is held in.
-  --profile <file.json>     csv: the profile of the file's columns — delimiter,
+  --csv-profile <file.json> csv: the profile of the file's columns — delimiter,
                             date format, decimal mark, which column is the date,
                             the amount (or debit and credit), the balance…
-                            Required, never guessed; csv also needs --bank-account.
+                            Never guessed. Left out, the one the account keeps;
+                            given, kept on the account once the import succeeds.
+                            csv also needs --bank-account.
   --opening <n>     csv without a balance column: the balances the bank
   --closing <n>     shows for the period, as 1250.00. Both prove it.
 
@@ -686,6 +694,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await closeCommand(args, deps);
       case 'reopen':
         return await reopenCommand(args, deps);
+      case 'bank':
+        return await bankCommand(args, deps);
       case 'payment':
         return await paymentCommand(args, deps);
       case 'match':
