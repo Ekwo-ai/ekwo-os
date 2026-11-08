@@ -324,7 +324,7 @@ ekwo import csv export.csv --profile bank.json --bank-account <id>   # a CSV, re
 | `transaction-journal` | A transaction journal saved as CSV, with its list of accounts |
 | `xaf` | An XML Audit File Financial, version 3.2 or 4.0 |
 | `camt.053`, `coda`, `cfonb120` | A bank statement: its lines, pending, ready for `ekwo match` |
-| `csv` | A statement exported as CSV — a bank, a payment service, a card — described by a column profile, a JSON file (see [`@ekwo-ai/csv-statement`](../formats/csv-statement/README.md)). `--bank-account` names the account, since the file does not; without a running balance column, `--opening-balance` and `--closing-balance` give the balances the bank shows, which prove no line is missing |
+| `csv` | A statement exported as CSV — a bank, a payment service, a card — described by a column profile, a JSON file (see [`@ekwo-ai/csv-statement`](../formats/csv-statement/README.md)). `--bank-account` names the account, since the file does not; without a running balance column, `--opening` and `--closing` give the balances the bank shows, which prove no line is missing |
 
 `ekwo import --help` also lists the exports of other ledgers by the software
 they come from, and [`docs/compatibility.md`](../../docs/compatibility.md)

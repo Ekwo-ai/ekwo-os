@@ -71,8 +71,8 @@ somewhere has already run it.
   currency from the bank account named, which a CSV requires
   (`csv_bank_account_required`). The MCP tool `import_bank_statement` takes
   the same arguments; `ekwo import csv <file> --profile <file.json>
-  --bank-account <id>` imports from a terminal, with `--opening-balance` and
-  `--closing-balance`. No migration: the schema already stores what a CSV
+  --bank-account <id>` imports from a terminal, with `--opening` and
+  `--closing`. No migration: the schema already stores what a CSV
   gives, under the source format `csv`.
 
 ## [0.25.0] — 2026-11-07

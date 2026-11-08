@@ -521,8 +521,8 @@ ${bold('ekwo import')} ${dim('(one command, one reader per source; nothing is po
                             date format, decimal mark, which column is the date,
                             the amount (or debit and credit), the balance…
                             Required, never guessed; csv also needs --bank-account.
-  --opening-balance <n>     csv without a balance column: the balances the bank
-  --closing-balance <n>     shows for the period, as 1250.00. Both prove it.
+  --opening <n>     csv without a balance column: the balances the bank
+  --closing <n>     shows for the period, as 1250.00. Both prove it.
 
 ${bold('Environment')}
   EKWO_DB_URL               Same as --db-url. SUPABASE_DB_URL also works.

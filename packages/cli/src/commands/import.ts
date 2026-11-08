@@ -46,12 +46,12 @@ const IMPORT_FLAGS = [
   'bank-account',
   'iban-country',
   'profile',
-  'opening-balance',
-  'closing-balance',
+  'opening',
+  'closing',
 ] as const;
 
 /** The flags that only a statement takes, and those only a CSV statement does. */
-const CSV_FLAGS = ['profile', 'opening-balance', 'closing-balance'] as const;
+const CSV_FLAGS = ['profile', 'opening', 'closing'] as const;
 
 const ENCODINGS = ['utf-8', 'iso-8859-1', 'iso-8859-15'] as const;
 const DATE_ORDERS = ['dmy', 'mdy', 'ymd'] as const;
@@ -232,8 +232,8 @@ async function importStatements(args: ParsedArgs, deps: BooksDeps, format: State
     format === 'csv'
       ? {
           csv_profile: await readProfile(profilePath as string),
-          opening_balance: stringFlag(args, 'opening-balance'),
-          closing_balance: stringFlag(args, 'closing-balance'),
+          opening_balance: stringFlag(args, 'opening'),
+          closing_balance: stringFlag(args, 'closing'),
         }
       : {};
   const files = await Promise.all(
