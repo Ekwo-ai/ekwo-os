@@ -52,6 +52,9 @@ export default defineConfig({
       '@ekwo-ai/cfonb120': fileURLToPath(
         new URL('./packages/formats/cfonb120/src/index.ts', import.meta.url),
       ),
+      '@ekwo-ai/csv-statement': fileURLToPath(
+        new URL('./packages/formats/csv-statement/src/index.ts', import.meta.url),
+      ),
       '@ekwo-ai/trial-balance': fileURLToPath(
         new URL('./packages/formats/trial-balance/src/index.ts', import.meta.url),
       ),

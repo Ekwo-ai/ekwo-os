@@ -42,6 +42,7 @@ const ALLOWED_DEPENDENCIES: Record<string, readonly string[]> = {
   '@ekwo-ai/camt053': [],
   '@ekwo-ai/coda': [],
   '@ekwo-ai/cfonb120': [],
+  '@ekwo-ai/csv-statement': [],
   '@ekwo-ai/trial-balance': [],
   '@ekwo-ai/journal-items': [],
   '@ekwo-ai/journal-report': [],

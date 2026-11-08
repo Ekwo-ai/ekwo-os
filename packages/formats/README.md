@@ -67,6 +67,7 @@ field names, which is what `import_bank_statement()` takes:
 | [`camt053`](camt053/) | ISO 20022 camt.053 |
 | [`coda`](coda/) | CODA |
 | [`cfonb120`](cfonb120/) | CFONB 120 |
+| [`csv-statement`](csv-statement/) | CSV, described by a column profile the caller gives: a bank, a payment service, a card |
 
 **Books kept elsewhere, read.** They return accounts, parties, entries and an
 opening balance under the same names, which is what `import_books()` takes once
