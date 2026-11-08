@@ -183,6 +183,10 @@ format, UTF-16), `empty_file`, `malformed_csv` (a quote never closed),
 `invalid_profile`, `missing_column` (a header without a column the profile
 names, or with it twice; the message lists the columns the header has).
 
+`checkCsvStatementProfile(profile)` throws the same `invalid_profile` without a
+file, for a caller that keeps a profile — beside the account its files come
+from — and wants to refuse one no file could be read with before keeping it.
+
 **Returned** in `violations`, with the row and, where there is one, the line:
 
 | code | when |

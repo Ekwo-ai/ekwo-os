@@ -240,6 +240,17 @@ interface Movement {
 }
 
 /**
+ * Checks a profile without a file, as the reader checks it before reading
+ * one: for a caller that keeps a profile — on the bank account its files come
+ * from — and refuses to keep one no file could be read with. Throws a
+ * `StatementFileError` `invalid_profile` naming what is wrong.
+ */
+export function checkCsvStatementProfile(profile: CsvStatementProfile): void {
+  checkProfile(profile);
+  dateReader(profile.dateFormat);
+}
+
+/**
  * Read a statement exported as CSV — a string, or the bytes as they came —
  * with the profile of its columns, into one statement, its lines, and what
  * does not add up.
