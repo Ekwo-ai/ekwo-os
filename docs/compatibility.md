@@ -30,7 +30,7 @@ what is coming. It says nothing else about the software named.
 | ISO 20022 camt.053 | `ekwo import camt.053` | available |
 | CODA (Febelfin, version 2) | `ekwo import coda` | available |
 | CFONB 120 | `ekwo import cfonb120` | available |
-| CSV, described by a column profile — a bank, a payment service, a card | `ekwo import csv --profile <file.json> --bank-account <id>` | available |
+| CSV, described by a column profile — a bank, a payment service, a card | `ekwo import csv --bank-account <id> [--csv-profile <file.json>]` — the profile is kept on the account after the first import | available |
 
 ## What an import does not take over
 
