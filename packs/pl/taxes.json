@@ -143,6 +143,29 @@
     "sequence": 60
   },
   {
+    "code": "PL-S-USLUGI-SPOZA-UE",
+    "name": "Świadczenie usług na rzecz podatnika spoza Unii Europejskiej (art. 28b)",
+    "description": "Service à un assujetti établi hors de l'Union européenne : lieu de la prestation hors du territoire polonais, sans taxe polonaise. Pole P_11 seulement, jamais P_12 ni la déclaration récapitulative VAT-UE.",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Ustawa o VAT art. 28b ust. 1 — le lieu de la prestation de services à un assujetti est le lieu où le preneur a le siège de son activité économique ; pour un preneur établi hors de l'Union, la prestation a son lieu poza terytorium kraju et n'est pas soumise à la taxe polonaise. Broszura JPK_VAT z deklaracją (styczeń 2026), Tabela 8, pole K_11 — « wysokość podstawy opodatkowania wynikającą z dostaw towarów oraz świadczenia usług, dla których miejsce świadczenia znajduje się poza terytorium kraju », reporté en P_11 ; K_12 et P_12 ne reçoivent que les services dont le lieu est dans un autre État membre (art. 100 ust. 1 pkt 4).",
+    "source": "broszura-jpk",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "11" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "11", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 65
+  },
+  {
     "code": "PL-S-ZW-NAJEM",
     "name": "Najem nieruchomości mieszkalnej na cele mieszkaniowe — zwolniony",
     "description": "Exemple de vente exonérée (location d'un bien immobilier résidentiel à usage d'habitation). Pole P_10.",

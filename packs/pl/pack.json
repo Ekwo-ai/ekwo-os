@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "PL",
   "name": "Polska",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "schema_min": "20261011120000",
   "seed_sequence": 64,
-  "released_at": "2026-09-22",
+  "released_at": "2026-11-08",
   "certification": {
     "status": "community",
     "sources": [
@@ -54,7 +54,7 @@
         "title": "JPK_VAT z deklaracją [JPK_V7M(3), JPK_V7K(3)] — broszura informacyjna dot. struktury, Warszawa, styczeń 2026 r.",
         "publisher": "Ministerstwo Finansów",
         "url": "https://www.podatki.gov.pl/media/wgbkrejs/broszura-jpk_vat-z-deklaracj%C4%85-od-1-lutego-2026-r.pdf",
-        "consulted_on": "2026-09-22",
+        "consulted_on": "2026-11-08",
         "kind": "form"
       },
       {

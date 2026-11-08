@@ -71,7 +71,7 @@ separate accumulated-depreciation account).
 
 ## Taxes
 
-Eighteen codes. The standard rate is 23 % and the main reduced rate 8 % since
+Nineteen codes. The standard rate is 23 % and the main reduced rate 8 % since
 1 January 2011 — **but these are not the nominal rates of art. 41** (22 % and
 7 %): art. 146ef raises them to 23 % and 8 % while defence spending exceeds
 3 % of GDP, a period open since 1 January 2024 and extended each year by the
@@ -84,6 +84,35 @@ general B2B rule (`PL-S-USLUGI-UE`) is not taxed at 0 % but falls outside
 Polish territorial scope, reported in P_11/P_12. A domestic exemption is
 illustrated by the letting of residential premises (`PL-S-ZW-NAJEM`, art. 43
 ust. 1 pkt 36).
+
+### A service to a business outside the European Union: P_11 alone
+
+`PL-S-USLUGI-SPOZA-UE` (since 0.3.0) is a service supplied to a taxable
+person established outside the European Union. Art. 28b ust. 1 places a
+service to a taxable person where the buyer has the seat of its business, so
+for a buyer outside the Union the service is supplied poza terytorium kraju,
+outside the scope of Polish VAT. Treatment `not_subject`, category `O`,
+reason `VATEX-EU-O`, as the French, German and Belgian packs carry the same
+operation.
+
+**The box is P_11, and only P_11.** The Ministry of Finance's brochure on the
+JPK_VAT z deklaracją (version (3), January 2026, read again on 8 November
+2026) defines K_11 as the base of supplies of goods and services "dla których
+miejsce świadczenia znajduje się poza terytorium kraju", carried to P_11 and
+into the total P_37 (Tabela 8 and Tabela 16); K_12 and P_12 hold, "odrębnie
+uwzględnioną również w pozycji K_11", only the services whose place of supply
+is in another Member State, the ones the VAT-UE summary declares. So
+`PL-S-USLUGI-UE` posts to P_11 and P_12, and this code to P_11 alone. The
+golden year books one such service to a business in the United States in
+April (V9: 6 000.00 in P_11 and in P_37, no tax, on 8100).
+
+What this code does **not** say: the sentence on the invoice — the pack's
+mentions are chosen by `applies_when`, which has no condition for an
+operation outside the scope (`not_subject`), so an invoice with this code
+prints none; the e-invoice carries category `O` and `VATEX-EU-O`. Nor the
+exceptions to art. 28b (immovable property, passenger transport, events and
+the other articles that follow), which carry no code of their own. Nor the
+marking of the record in KSeF (FA(3)) beyond its category.
 
 On the purchase side, seven codes cover the self-assessment mechanisms Polish
 law has today: intra-Community acquisition of goods (WNT), services imported
@@ -171,7 +200,7 @@ A reviewer should look first at:
 1. **The chart of accounts.** Whether it is really usable by a Polish
    accountant who thinks in zespoły, and which accounts a small company
    lacks.
-2. **The list of rates and exemptions.** Eighteen codes cover only a subset
+2. **The list of rates and exemptions.** Nineteen codes cover only a subset
    of załączniki 3, 10 and 15 and of art. 43 ust. 1 (which has more than
    forty points); this is the first place the pack will need to grow.
 3. **The January 2026 period.** The JPK_V7(3) form applies only from

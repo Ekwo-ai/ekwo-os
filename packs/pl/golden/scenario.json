@@ -66,6 +66,11 @@
       "lines": [{ "name": "Zwrot — meble biurowe", "quantity": 2, "unit_price": 1000, "tax": "PL-S-23", "account": "8100" }]
     },
     {
+      "ref": "V9", "type": "sale_invoice", "contact": "klient-us", "date": "2026-04-14",
+      "why": "Une prestation de services à un assujetti établi aux États-Unis, hors de l'Union : son lieu est au siège du preneur (art. 28b ust. 1), poza terytorium kraju, sans taxe polonaise ; P_11 seulement, pas P_12 ni VAT-UE, qui ne portent que les services rendus dans un autre État membre.",
+      "lines": [{ "name": "Usługi doradcze IT", "quantity": 1, "unit_price": 6000, "tax": "PL-S-USLUGI-SPOZA-UE", "account": "8100" }]
+    },
+    {
       "ref": "Z1", "type": "purchase_invoice", "contact": "dostawca-pl", "date": "2026-02-10",
       "why": "Un achat domestique de services au taux normal, entièrement déductible : P_42/P_43.",
       "lines": [{ "name": "Usługi księgowe — luty 2026", "quantity": 1, "unit_price": 2000, "tax": "PL-P-23", "account": "8230" }]
