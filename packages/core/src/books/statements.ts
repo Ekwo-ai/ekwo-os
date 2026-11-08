@@ -19,7 +19,8 @@ import {
   type CsvStatementProfile,
 } from '@ekwo-ai/csv-statement';
 import type { StatementFormat } from '../bank.js';
-import { BooksError, type Backend, type Row } from './backend.js';
+import { BooksError, backendSupports, type Backend, type Row } from './backend.js';
+import { bankAccountOf, profileOf } from './bank-accounts.js';
 
 /** What each format is delivered as, for the attachment the caller may have stored. */
 const STATEMENT_MIME_TYPES: Record<StatementFormat, string> = {
@@ -66,7 +67,12 @@ export interface ImportStatementFileArgs {
   bank_account_id?: string | undefined;
   /** Only for `cfonb120`, which names no country: the country the account is held in. Never guessed. */
   iban_country?: string | undefined;
-  /** Only for `csv`, and required for it: the profile of the file's columns. */
+  /**
+   * Only for `csv`: the profile of the file's columns. Left out, the profile
+   * kept on the bank account is used, and the import is refused
+   * `csv_profile_required` only when the account has none either. Given, and
+   * the import succeeds, it is kept on the account for the next file.
+   */
   csv_profile?: CsvStatementProfile | undefined;
   /** Only for `csv`: the opening balance the bank declares, when the file has no running balance. */
   opening_balance?: string | undefined;
@@ -147,9 +153,10 @@ export function describeStatementFile(
  * `violations` beside what was imported.
  */
 export async function importStatementFile(backend: Backend, args: ImportStatementFileArgs): Promise<Record<string, unknown>> {
+  const csv = args.format === 'csv' ? await csvOptions(backend, args) : undefined;
   const file = readStatementFile(args.format, args.content, {
     ibanCountry: args.iban_country,
-    ...(args.format === 'csv' ? await csvOptions(backend, args) : {}),
+    ...(csv?.options ?? {}),
   });
   const bytes = Buffer.from(args.content, 'utf8');
   const source = {
@@ -172,45 +179,109 @@ export async function importStatementFile(backend: Backend, args: ImportStatemen
     checksum: source.checksum,
     statements,
     violations: file.violations,
+    ...(csv === undefined ? {} : { csv_profile: await keepProfile(backend, args, csv) }),
     note: 'A statement is not an entry: every imported line waits as `pending`, and nothing was booked or paid. Importing the same file again creates nothing; a statement that overlaps an earlier one imports only what is new (`lines_known` is the rest). `warnings` names a missing statement — an opening balance that is not the previous closing one — which is signalled and never refused.',
   };
 }
 
+/** What `csvOptions()` found: the options of the reader, and where the profile came from. */
+interface CsvImport {
+  options: StatementReadOptions;
+  source: 'given' | 'account';
+  /** The profile the account held before this import, `null` for none. */
+  kept: CsvStatementProfile | null;
+}
+
 /**
- * What a CSV does not say and the account does: its identifier and its
- * currency. A CSV names no account, so it is imported into the one the caller
- * names (`bank_account_id`), and the statement carries that account's IBAN —
- * or the identifier its bank gives it — and currency, read from the account
- * itself rather than asked twice.
+ * What a CSV does not say and the account does: its identifier, its currency
+ * and, unless the caller gives one, the profile of its columns. A CSV names
+ * no account, so it is imported into the one the caller names
+ * (`bank_account_id`), and the statement carries that account's IBAN — or the
+ * identifier its bank gives it — and currency, read from the account itself
+ * rather than asked twice. The profile is the account's too: the lay-out of a
+ * bank's export, described once and kept on the account
+ * (`bank_accounts.statement_profile`); a schema without the column keeps
+ * none, and a CSV is read there only with the profile its caller gives.
  */
-async function csvOptions(backend: Backend, args: ImportStatementFileArgs): Promise<StatementReadOptions> {
-  // Refused before the database is asked anything.
-  if (args.csv_profile === undefined) readStatementFile('csv', args.content);
+async function csvOptions(backend: Backend, args: ImportStatementFileArgs): Promise<CsvImport> {
   if (args.bank_account_id === undefined) {
+    // Refused before the database is asked anything: without a profile, for
+    // the profile first, as it always was.
+    if (args.csv_profile === undefined) readStatementFile('csv', args.content);
     throw new BooksError('csv_bank_account_required: a CSV names no account, so it is imported into the one named by bank_account_id', {
       code: 'csv_bank_account_required',
       hint: 'Nothing was imported. Name the bank account the file is of (list them with the bank accounts of the company).',
     });
   }
-  const [account] = await backend.select<Row>({
-    table: 'bank_accounts',
-    columns: ['id', 'iban', 'account_identifier', 'currency_code'],
-    where: [
-      { column: 'id', op: 'eq', value: args.bank_account_id },
-      { column: 'company_id', op: 'eq', value: args.company_id },
-    ],
-  });
-  if (account === undefined) {
-    throw new BooksError(`unknown_bank_account: ${args.bank_account_id} is not a bank account of this company`);
+  const account = await bankAccountOf(backend, args.company_id, args.bank_account_id, [
+    'id',
+    'iban',
+    'account_identifier',
+    'currency_code',
+    'statement_profile',
+  ]);
+  const kept = profileOf(account['statement_profile']);
+  const profile = args.csv_profile ?? kept ?? undefined;
+  if (profile === undefined) {
+    throw new BooksError('csv_profile_required: a CSV is read with the profile of its columns, and none was given nor kept on this bank account', {
+      code: 'csv_profile_required',
+      hint: 'Nothing was imported. Give the profile — the delimiter, the date format, the decimal mark and which column is the date and the amount — as @ekwo-ai/csv-statement describes it. Once a file of this account is imported with it, the account keeps it for the next one.',
+    });
   }
   const identifier = [account['iban'], account['account_identifier'], account['id']].find(
     (value): value is string => typeof value === 'string' && value.trim() !== '',
   );
   return {
-    profile: args.csv_profile,
-    account: identifier,
-    currency: typeof account['currency_code'] === 'string' ? account['currency_code'].trim() : undefined,
-    openingBalance: args.opening_balance,
-    closingBalance: args.closing_balance,
+    options: {
+      profile,
+      account: identifier,
+      currency: typeof account['currency_code'] === 'string' ? account['currency_code'].trim() : undefined,
+      openingBalance: args.opening_balance,
+      closingBalance: args.closing_balance,
+    },
+    source: args.csv_profile === undefined ? 'account' : 'given',
+    kept,
   };
+}
+
+/**
+ * The profile given to an import that succeeded, kept on its bank account:
+ * described once, it serves every member and every way in — the web
+ * application, the command line, the MCP server — for the next file of that
+ * bank. Written only when it differs from what the account holds, and never on
+ * a schema without the column; a person without the right to change the
+ * account imported nothing either, as the import asks the same `bank.write`.
+ */
+async function keepProfile(
+  backend: Backend,
+  args: ImportStatementFileArgs,
+  csv: CsvImport,
+): Promise<{ source: 'given' | 'account'; kept_on_account: boolean }> {
+  const profile = csv.options.profile as CsvStatementProfile;
+  const unchanged = csv.kept !== null && canonical(csv.kept) === canonical(profile);
+  if (csv.source === 'account' || unchanged) return { source: csv.source, kept_on_account: csv.kept !== null };
+  if (!(await backendSupports(backend, 'statement_profile'))) return { source: csv.source, kept_on_account: false };
+  const written = await backend.update<Row>(
+    'bank_accounts',
+    { statement_profile: profile },
+    [
+      { column: 'id', op: 'eq', value: args.bank_account_id as string },
+      { column: 'company_id', op: 'eq', value: args.company_id },
+    ],
+    ['id'],
+  );
+  return { source: csv.source, kept_on_account: written.length > 0 };
+}
+
+/** JSON with its keys sorted, so two profiles compare whatever order a database gave their keys. */
+function canonical(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
+  if (value !== null && typeof value === 'object') {
+    return `{${Object.keys(value)
+      .filter((key) => (value as Row)[key] !== undefined)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${canonical((value as Row)[key])}`)
+      .join(',')}}`;
+  }
+  return JSON.stringify(value);
 }

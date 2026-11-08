@@ -11,6 +11,32 @@ somewhere has already run it.
 
 ### Added
 
+- **A bank account keeps the profile of its CSV statements.** The lay-out of
+  a CSV export is the bank's, so it belongs to the account the file is of:
+  `bank_accounts.statement_profile` (jsonb, nullable) holds the
+  `CsvStatementProfile` of `@ekwo-ai/csv-statement`, as that package
+  describes it
+  (`20261108152128_a_bank_account_keeps_the_profile_of_its_csv_statements`,
+  additive; `SCHEMA_FEATURES.statement_profile`, since 0.26.0).
+  `importStatementFile()` reads a CSV given no `csv_profile` with the profile
+  the account keeps, and refuses `csv_profile_required` only when it keeps
+  none; a `csv_profile` given to an import that succeeds is kept on the
+  account — described once, it serves every member and every way in, the web
+  application, the command line, the MCP server and an agent. The answer
+  says where the profile came from and whether the account keeps it
+  (`csv_profile: { source, kept_on_account }`). Outside an import, the MCP
+  tool `update_bank_account` and `ekwo bank profile <account> [<file.json> |
+  --clear]` set or forget it, checked as the reader checks it
+  (`invalid_profile`, through the new `checkCsvStatementProfile()` of
+  `@ekwo-ai/csv-statement`); `list_bank_accounts` and `ekwo bank list`
+  return it. `listBankAccounts()`, `bankAccountStatementProfile()` and
+  `setBankAccountStatementProfile()` are in `@ekwo-ai/core`. On a schema
+  below 0.26.0 the column is left out of every read, an import keeps
+  nothing, and a profile set by hand is refused `schema_too_old_for`.
+- **`ekwo import csv` takes the profile as `--csv-profile`.** `--profile`
+  names the profile of an instance, for every command, and the two collided:
+  the profile of a CSV's columns is now `--csv-profile <file.json>`, the word
+  of the MCP server's `csv_profile`, and optional once the account keeps one.
 - **An electronic invoice received arrives by the inbox's door.**
   `receive_purchase_document()` takes an XML page — `application/xml` or
   `text/xml`, the file of an electronic invoice an access point received —
@@ -70,7 +96,7 @@ somewhere has already run it.
   `opening_balance` and `closing_balance`, and reads the identifier and the
   currency from the bank account named, which a CSV requires
   (`csv_bank_account_required`). The MCP tool `import_bank_statement` takes
-  the same arguments; `ekwo import csv <file> --profile <file.json>
+  the same arguments; `ekwo import csv <file> --csv-profile <file.json>
   --bank-account <id>` imports from a terminal, with `--opening` and
   `--closing`. No migration: the schema already stores what a CSV
   gives, under the source format `csv`.

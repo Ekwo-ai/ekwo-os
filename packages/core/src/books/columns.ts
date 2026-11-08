@@ -350,6 +350,8 @@ export const BANK_ACCOUNT = [
   'account_id',
   'journal_id',
   'active',
+  // The profile of its CSV statements; left out of a read below schema 0.26.0.
+  'statement_profile',
 ];
 
 export const BANK_TRANSACTION = [

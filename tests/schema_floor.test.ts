@@ -44,7 +44,10 @@ import {
   compareSchemaVersions,
   createApiKey,
   getCompany,
+  importStatementFile,
+  listBankAccounts,
   setAgentPosting,
+  setBankAccountStatementProfile,
   supports,
   type SchemaFeature,
 } from '../packages/core/src/index.js';
@@ -330,6 +333,41 @@ describe.runIf(READY)(`a project at the schema floor (${TAG})`, () => {
       const company = (await getCompany(backendFor(floor, DEMO_OWNER), { company_id: companyId })) as { company: Record<string, unknown> };
       expect(company.company['id']).toBe(companyId);
       expect('agent_posting' in company.company).toBe(false);
+    });
+
+    it('imports a CSV with the profile given, and keeps none where the floor has nowhere to keep it', async () => {
+      const backend = backendFor(floor, DEMO_OWNER);
+      const [account] = await rows<{ id: string; currency_code: string }>(
+        floor,
+        `insert into bank_accounts (company_id, name, currency_code, account_id, journal_id)
+         select c.id, 'Floor CSV', c.currency_code,
+                (select id from accounts where company_id = c.id and account_type = 'asset_cash' order by code limit 1),
+                (select id from journals where company_id = c.id and journal_type = 'bank' order by code limit 1)
+           from companies c where c.id = $1
+         returning id, currency_code`,
+        [companyId],
+      );
+      const listed = await listBankAccounts(backend, { company_id: companyId });
+      expect(listed.find((row) => row['id'] === account!.id)).toBeDefined();
+      expect(listed.every((row) => !('statement_profile' in row))).toBe(true);
+
+      const profile = { delimiter: ',', dateFormat: 'YYYY-MM-DD', decimalSeparator: '.' as const, columns: { date: 'Date', amount: 'Amount', balance: 'Balance', reference: 'Id' } };
+      const content = ['Date,Amount,Balance,Id', '2026-05-04,100.00,100.00,F-1', '2026-05-05,-40.00,60.00,F-2'].join('\n');
+      const result = await importStatementFile(backend, {
+        company_id: companyId,
+        format: 'csv',
+        content,
+        csv_profile: profile,
+        bank_account_id: account!.id,
+      });
+      expect(result['csv_profile']).toEqual({ source: 'given', kept_on_account: false });
+
+      await expect(
+        setBankAccountStatementProfile(backend, { company_id: companyId, bank_account_id: account!.id, statement_profile: profile }),
+      ).rejects.toThrow(/^schema_too_old_for: writing bank_accounts\.statement_profile needs schema 0\.26\.0 \(statement_profile\)/);
+      await expect(
+        importStatementFile(backend, { company_id: companyId, format: 'csv', content, bank_account_id: account!.id }),
+      ).rejects.toMatchObject({ code: 'csv_profile_required' });
     });
   });
 });

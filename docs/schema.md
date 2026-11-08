@@ -530,6 +530,7 @@ Bank and card accounts, each mapped to a ledger account and a journal.
 | `updated_at` | `timestamp with time zone` | not null |
 | `account_scheme` | `text` | The scheme account_identifier is written in, as the country pack names it. Null on a free-text account number. |
 | `account_identifier` | `text` | What identifies the account at its bank, in the canonical form of its scheme: the parts in order, one space between them. An IBAN is one such identifier and has its own column too, kept for what already reads it. |
+| `statement_profile` | `jsonb` | How the CSV statements of this account are laid out: the CsvStatementProfile of @ekwo-ai/csv-statement (delimiter, date format, decimal mark, which column says what). Written by the core when a CSV import given a profile succeeds, or set on the account; read when a CSV is imported without one. Optional: null until somebody describes the lay-out, and never used by the other statement formats. |
 
 Constraints:
 

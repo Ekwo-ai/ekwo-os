@@ -22,6 +22,7 @@ export * from './lines.js';
 export * from './matching.js';
 export * from './payments.js';
 export * from './imports.js';
+export * from './bank-accounts.js';
 export * from './statements.js';
 export * from './analytics.js';
 export * from './reports.js';

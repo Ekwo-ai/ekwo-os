@@ -199,6 +199,17 @@ export const SCHEMA_FEATURES = {
     columns: [],
     functions: [],
   },
+  /**
+   * The profile of a bank account's CSV statements, kept on the account
+   * (`20261108152128_a_bank_account_keeps_the_profile_of_its_csv_statements`).
+   * Below it, a CSV is imported only with the profile its caller gives, which
+   * is not kept, and `update_bank_account` is refused by name.
+   */
+  statement_profile: {
+    since: '0.26.0',
+    columns: ['bank_accounts.statement_profile'],
+    functions: [],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

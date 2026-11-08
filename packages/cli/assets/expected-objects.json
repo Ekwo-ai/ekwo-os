@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261108120000",
+  "migration": "20261108152128",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -520,6 +520,10 @@
           {
             "name": "name",
             "type": "text"
+          },
+          {
+            "name": "statement_profile",
+            "type": "jsonb"
           },
           {
             "name": "updated_at",
