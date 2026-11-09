@@ -170,6 +170,28 @@ asked about. A table with no `company_id` is reference data of the
 installation, like `country_defaults`, and gets the signed-in select policy. A
 test refuses any other arrangement.
 
+**On a table that grows, ask once per statement.** Written as above, both
+functions run for every row a scan visits — neither can be inlined — and a
+table of ten thousand rows pays fifty thousand nested calls before any filter
+of the query is read. That is how `crm.search_cards()` came to time out on a
+company of 10 500 cards. The `using` of such a table compares `company_id`
+with the companies where both answer yes, in a sub-select that depends on no
+column, which Postgres runs once per statement:
+
+```sql
+  for select using (
+    company_id = any ((select array(
+      select x from unnest(public.companies_with_capability('crm.read')) as x
+       where public.module_enabled(x, 'crm')))::uuid[])
+  );
+```
+
+It lets through exactly the rows the first shape does, and still names
+`module_enabled()`. `with check` keeps the first shape: it runs once per row
+written. `modules/crm/supabase/migrations/20261109120000_crm_reads_hold_at_volume.sql`
+rewrites the module's policies this way, and `modules/crm/tests/search_at_volume.test.ts`
+counts the capability checks of a read to keep them so.
+
 **The capability is the module's own**, declared in the module's own migration
 with `capabilities.area` set to the module code — `assets.read` /
 `assets.write` / `assets.post`, `budgets.read` / `budgets.write` — and added to

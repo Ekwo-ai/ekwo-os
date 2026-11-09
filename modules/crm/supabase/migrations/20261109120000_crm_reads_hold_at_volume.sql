@@ -45,6 +45,34 @@
 -- the module's first migrations wrote them, so this file applies on every
 -- socle the module accepts (`requires_socle_min`); the installer reads it for
 -- the socle's schema of the day, `ekwo.` since 20261028040000.
+--
+-- ---------------------------------------------------------------------------
+-- 2. What the plans showed besides, and why nothing else changes
+--
+-- With the policies asking once, a search reads every card of the company
+-- once — 10 500 at that size, in about 30 ms on PGlite — joins each to its
+-- contact and its organisation by primary key, and keeps the 50 latest with
+-- a top-N sort in a few kilobytes. Read and left as they are:
+--
+-- - **The segments of each row** are computed for the rows returned only:
+--   Postgres moves the sub-select past the sort, 50 loops, not 10 500.
+-- - **The organisation's fallback** for country and language is one probe of
+--   the primary key per card, under a microsecond each.
+-- - **The ordering by last activity** is a top-N heap sort; an index on it
+--   would not be used, for the reason below.
+-- - **The text match** runs on the rows already joined; at ten times the
+--   size it is a tenth of the 0.3 s the whole search then takes on PGlite.
+--
+-- `search_cards()` is a SQL function with a search_path of its own, so
+-- Postgres does not inline it and plans its query once for any arguments:
+-- every `p_… is null or …` stays in the plan, and no index serving one
+-- filter — trigram, partial or ordered — can be chosen for it. Giving each
+-- filter its index means building the query per call, a larger change than
+-- the size asks for: the search answers in under 0.4 s at ten times the
+-- size on PGlite, against a statement timeout counted in seconds.
+-- `segment_tree()`, `board()` and `timeline()` asked per row the same way,
+-- the tree most of all (2.7 s, 30 000 memberships counted), and need nothing
+-- more than this.
 -- ---------------------------------------------------------------------------
 
 do $$

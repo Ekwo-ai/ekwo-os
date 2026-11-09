@@ -101,6 +101,25 @@ somewhere has already run it.
   `--closing`. No migration: the schema already stores what a CSV
   gives, under the source format `csv`.
 
+### Fixed
+
+- **The search of the `crm` module answers on a company of an imported
+  address book.** `crm.search_cards()` ended in a statement timeout on a
+  company of about 33 000 contacts and 10 500 cards: every table of the
+  module asked `module_enabled()` and `has_capability()` again for each row a
+  scan visited, five nested calls per card before any filter was read. The
+  policies now compare `company_id` with the companies where both answer
+  yes, worked out once per statement — the shape the socle gave its own
+  tables in 0.4.0 — and a row passes exactly when it passed before; `with
+  check` is unchanged (`20261109120000_crm_reads_hold_at_volume`, module
+  `crm`, additive). Measured on PGlite as a member, each call of the search
+  went from 1.2 s to 10–35 ms at that size and from 12 s to 40–370 ms at ten
+  times it; `crm.segment_tree()` from 2.7 s to 12 ms, and 27 s to 0.2 s.
+  `crm.board()` and `crm.timeline()` were already fast and are faster. Same
+  functions, same arguments, same rows, same rights. The module's
+  `search_at_volume.test.ts` builds a company of that size and holds the
+  reads to a bound, to a count of capability checks and to the same rows.
+
 ## [0.25.0] — 2026-11-07
 
 ### Added
