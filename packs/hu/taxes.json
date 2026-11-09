@@ -136,14 +136,37 @@
     "conditions": ["buyer_status"],
     "postings": {
       "invoice": [
-        { "type": "base", "box": "92" }
+        { "type": "base", "box": ["91", "92"] }
       ],
       "credit_note": [
-        { "type": "base", "box": "92", "box_factor": -100 }
+        { "type": "base", "box": ["91", "92"], "box_factor": -100 }
       ]
     },
     "kind": "vat",
     "sequence": 60
+  },
+  {
+    "code": "HU-S-SZOLG-HARMADIK",
+    "name": "Harmadik országban letelepedett adóalany részére nyújtott szolgáltatás",
+    "description": "A teljesítési hely általános szabálya (37. § (1)) alá tartozó szolgáltatás, ha az igénybevevő a Közösségen kívül letelepedett adóalany: a teljesítési hely belföldön kívül van, magyar adó nincs, a 91. sor",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Áfa tv. 37. § (1) — az adóalanynak nyújtott szolgáltatás teljesítési helye ott van, ahol az igénybevevő adóalany gazdasági céllal letelepedett, az irányelv 44. cikkének átültetése; a Közösségen kívül letelepedett igénybevevő esetén a szolgáltatás az Áfa tv. területi hatályán kívül teljesül, magyar adó nem terheli. A 2665 kitöltési útmutatója szerint a 91. sorban kell feltüntetni „az Áfa tv. területi hatályán kívül teljesített szolgáltatásnyújtás ellenértékét, akár közösségi, akár harmadik országos, akár belföldi adóalany felé történt a teljesítés”; a 92. sor ennek csak a Közösségen belüli, összesítő nyilatkozatba kerülő részét veszi fel.",
+    "source": "nyomtatvany-2665",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "postings": {
+      "invoice": [
+        { "type": "base", "box": "91" }
+      ],
+      "credit_note": [
+        { "type": "base", "box": "91", "box_factor": -100 }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 65
   },
   {
     "code": "HU-S-EXEMPT",
