@@ -82,6 +82,14 @@
       ]
     },
     {
+      "ref": "V9",
+      "type": "sale_invoice",
+      "contact": "client-us",
+      "date": "2026-03-10",
+      "why": "Tanácsadási szolgáltatás egy amerikai adóalany részére: a teljesítési hely az igénybevevő székhelye (37. § (1)), belföldön kívül, magyar adó nélkül; csak a 91. sor, sem a 92. sor, sem az összesítő nyilatkozat.",
+      "lines": [{ "name": "Informatikai tanácsadás", "quantity": 1, "unit_price": 700000, "tax": "HU-S-SZOLG-HARMADIK", "account": "8110" }]
+    },
+    {
       "ref": "V7",
       "type": "sale_invoice",
       "contact": "tenant-hu",

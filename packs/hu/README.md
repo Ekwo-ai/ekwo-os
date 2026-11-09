@@ -93,10 +93,33 @@ absent a Hungarian rule that says otherwise.
 
 ## The taxes
 
-Fifteen codes: three positive rates (27%, 18%, 5%), four zero-rated or
-exempt sale codes, a domestic reverse charge on each side, and five
-purchase-side codes for the deduction and for the three shapes of
-self-assessment this pack carries.
+Sixteen codes: three positive rates (27%, 18%, 5%), four zero-rated or
+exempt sale codes, a service outside the scope of Hungarian VAT, a domestic
+reverse charge on each side, and five purchase-side codes for the deduction
+and for the three shapes of self-assessment this pack carries.
+
+**A service to a taxable customer established outside the European Union is
+reported on row 91.** `HU-S-SZOLG-HARMADIK` (since 0.4.0): Áfa tv. 37. § (1)
+places a service to a taxable person where that person is established, so for
+a customer outside the Union the place of supply is outside Hungary and no
+Hungarian VAT is due. Treatment `not_subject`, category `O`, reason
+`VATEX-EU-O`, as the French, German, Belgian and Czech packs carry the same
+operation. The 2665 guide (read on 9 November 2026) puts on row 91 "az Áfa
+tv. területi hatályán kívül teljesített szolgáltatásnyújtás ellenértékét,
+akár közösségi, akár harmadik országos, akár belföldi adóalany felé történt a
+teljesítés", and on row 92 only the part of row 91 ("a 91. sor összegéből")
+supplied to a taxable person of another Member State under 37. § (1), the
+figure the 26A60 recapitulative statement repeats. So `HU-S-EUDL` now posts
+its base to both rows 91 and 92 (it posted to 92 alone before 0.4.0, which
+left row 91 short of the services supplied in other Member States), and the
+new code to row 91 alone. The golden quarter carries such a service to a
+business in the United States in March (V9: 700 000 HUF on row 91, no tax,
+on 8110). What the code does not say: the invoice sentence (`applies_when`
+has no condition for an operation outside the scope, so the invoice prints
+none; the electronic invoice carries category `O` and `VATEX-EU-O`), nor the
+exceptions to 37. § (1) (38.–46. §: immovable property, passenger transport,
+events…), which have no code of their own. Row 93 (a service to another
+Member State whose place of supply does not follow 37. § (1)) is not modelled.
 
 **27% is the highest standard VAT rate in the European Union** (Áfa tv. 82. §
 (1)). 18% (82. § (3), 3/A. számú melléklet) reaches milk and dairy products

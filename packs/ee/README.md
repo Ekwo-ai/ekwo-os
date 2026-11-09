@@ -34,6 +34,7 @@ These are the texts the pack as a whole was built from.
 | Form KMD and its completion instructions | Rahandusministri 10.06.2014 määrus nr 17 „Käibedeklaratsiooni vorm“, annex 1, in the wording of määrus nr 20 of 14.05.2025, in force 01.07.2025 | `riigiteataja.ee/aktilisa/1300/5202/5008/RAM_m17_lisa1.pdf`; the Tax and Customs Board publishes the same form, and an English edition, at `emta.ee` |
 | Chart of accounts, internal rules, the statement schemes | Raamatupidamise seadus (RPS) § 8, § 11 and annexes 1 and 2 | `riigiteataja.ee`, act 110072025003; annex 1 in the wording of the Act of 18.09.2024, in force 01.07.2025 |
 | How the schemes are presented | Raamatupidamise Toimkonna juhend RTJ 2, „Nõuded informatsiooni esitusviisile raamatupidamise aastaaruandes“ | `fin.ee`, and annex 2 to rahandusministri 22.12.2017 määrus nr 105 |
+| The place of a service supplied to a business outside the Union, and its box | KMS § 1 (1) 3, § 10 (4) 9 and § 15 (4) 1, with the Ministry of Finance's commentary of January 2026; the Tax and Customs Board's guide to completing form KMD, boxes 3 and 3.1 | `fin.ee`; `emta.ee` |
 | E-invoicing | RPS § 7¹ (7), in force 01.07.2025, and the Ministry of Finance's page on source documents and e-invoices | `riigiteataja.ee`, same act; `fin.ee` |
 | Where a declared period's balance lands | KMS § 27 (1), § 29 (1) and § 34 (1), with the Ministry of Finance's commentary of January 2026 | `riigiteataja.ee`, same act; `fin.ee` |
 | Payment term, late-payment interest, recovery costs | Võlaõigusseadus § 82¹, § 113 and § 113¹ | `riigiteataja.ee`, act 120062026018 |
@@ -118,8 +119,25 @@ so a posting names every box it prints in:
 | a service received from outside the Union | `1`, `7` | 1, 7 |
 | an intra-Community supply of goods | `3`, `31`, `311` | 3, 3.1, 3.1.1 |
 | a service supplied to another Member State | `3`, `31` | 3, 3.1 |
+| a service supplied to a business outside the Union | `3` | 3 |
 | an export | `3`, `32` | 3, 3.2 |
 | input VAT on an import, a fixed asset or a car | `5` and the box for that kind | 5 and 5.1 to 5.4 |
+
+**A service to a business outside the European Union goes in box 3 alone.**
+`EE-S-00-3RIIK` (since 1.15.0): KMS § 10 (4) 9 puts a service to a business
+of a non-Member State outside Estonia, and § 1 (1) 3 with § 15 (4) 1 still
+has it declared in Estonia at the zero rate, the tax being the customer's
+abroad. The Tax and Customs Board's guide to form KMD (read on 9 November
+2026) keeps box 3.1 for the services supplied to a taxable person of another
+Member State and sends every other zero-rated service to box 3 alone; the
+Ministry's commentary on § 15 (4) 1 says the same service is reported as
+zero-rated turnover. The code carries treatment `not_subject`, category `O`
+and `VATEX-EU-O`, the operation Article 44 of Directive 2006/112/EC places
+outside the seller's country, as `EE-S-00-ICS` carries `K` for the service
+inside the Union although the Act calls both zero-rated; the French, German,
+Belgian and Czech packs carry the same operation with the same category. The
+golden year has one such sale to a business in the United States in March
+(V8: 3 200.00 in box 3 and in no other, on account 3050).
 
 **Boxes 6, 6.1, 7, 7.1 and 9 are informational**, in the instructions' own
 words: their amounts are already inside box 1, or in box 9's case deliberately
@@ -165,6 +183,13 @@ module; `4990 Tulumaks` and `2360 Tulumaksukohustis` let one be booked by hand.
 
 ## What this pack does not carry
 
+- **The invoice sentence of a service supplied outside Estonia.** The
+  Ministry's commentary asks the invoice to name the provision the zero rate
+  rests on, § 15 (4) 1; `applies_when` has no condition for an operation
+  outside the scope, so the invoice of `EE-S-00-3RIIK` prints none, and the
+  electronic invoice carries category `O` and `VATEX-EU-O`. The exceptions to
+  § 10 (4) 9 (immovable property, passenger transport, events…) have no code
+  of their own either.
 - **KMD INF**, the annex listing invoices of 1 000 euros or more per partner
   per period: a list of documents, which the pack format cannot describe.
 - **The KMS § 44 cash-accounting scheme**: it applies to a whole taxable

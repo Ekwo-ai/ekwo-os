@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EE",
   "name": "Estonia",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "schema_min": "20261023124650",
   "seed_sequence": 13,
-  "released_at": "2026-10-23",
+  "released_at": "2026-11-09",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -45,10 +45,10 @@
       },
       {
         "key": "kms-kommentaarid",
-        "title": "Käibemaksuseadus Rahandusministeeriumi kommentaaridega, seisuga jaanuar 2026 — § 27, § 29 ja § 34",
+        "title": "Käibemaksuseadus Rahandusministeeriumi kommentaaridega, seisuga jaanuar 2026 — § 1, § 10, § 15, § 27, § 29 ja § 34",
         "publisher": "Rahandusministeerium",
         "url": "https://fin.ee/sites/default/files/documents/2026-01/K%C3%A4ibemaksuseaduse%20kommentaarid%20jaanuar%202026.pdf",
-        "consulted_on": "2026-09-21",
+        "consulted_on": "2026-11-09",
         "kind": "guidance"
       },
       {
@@ -98,6 +98,14 @@
         "url": "https://www.emta.ee/ariklient/maksud-ja-tasumine/kaibemaks/kaibedeklaratsiooni-ja-aruannete-esitamine",
         "consulted_on": "2026-09-15",
         "kind": "form"
+      },
+      {
+        "key": "kmd-taitmine",
+        "title": "Käibedeklaratsiooni täitmine — lahtrid 3 ja 3.1: teise liikmesriigi maksukohustuslasele osutatud teenused lahtris 3.1, ülejäänud nullmääraga teenused üksnes lahtris 3",
+        "publisher": "Maksu- ja Tolliamet",
+        "url": "https://www.emta.ee/ariklient/maksud-ja-tasumine/kaibemaks/kaibedeklaratsiooni-ja-aruannete-esitamine/kaibedeklaratsiooni-taitmine",
+        "consulted_on": "2026-11-09",
+        "kind": "guidance"
       },
       {
         "key": "e-mta",
