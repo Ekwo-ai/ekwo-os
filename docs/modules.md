@@ -150,13 +150,15 @@ that carries `company_id` gets a policy of the shape
 ```sql
 create policy fixed_assets_select on fixed_assets.fixed_assets
   for select using (
-    public.module_enabled(company_id, 'assets')
-    and public.has_capability(company_id, 'assets.read')
+    company_id = any ((select array(
+      select x from unnest(public.companies_with_capability('assets.read')) as x
+       where public.module_enabled(x, 'assets')))::uuid[])
   );
 create policy fixed_assets_write on fixed_assets.fixed_assets
   for all using (
-    public.module_enabled(company_id, 'assets')
-    and public.has_capability(company_id, 'assets.write')
+    company_id = any ((select array(
+      select x from unnest(public.companies_with_capability('assets.write')) as x
+       where public.module_enabled(x, 'assets')))::uuid[])
   )
   with check (
     public.module_enabled(company_id, 'assets')
@@ -170,27 +172,30 @@ asked about. A table with no `company_id` is reference data of the
 installation, like `country_defaults`, and gets the signed-in select policy. A
 test refuses any other arrangement.
 
-**On a table that grows, ask once per statement.** Written as above, both
+**The `using` asks once per statement.** Written the plain way,
+`using (module_enabled(company_id, …) and has_capability(company_id, …))`, both
 functions run for every row a scan visits — neither can be inlined — and a
 table of ten thousand rows pays fifty thousand nested calls before any filter
 of the query is read. That is how `crm.search_cards()` came to time out on a
-company of 10 500 cards. The `using` of such a table compares `company_id`
-with the companies where both answer yes, in a sub-select that depends on no
-column, which Postgres runs once per statement:
+company of 10 500 cards, and every module of this repository was written that
+way until November 2026. The shape above asks the same question the other way
+round: `companies_with_capability()` lists the companies where
+`has_capability()` answers yes, `module_enabled()` is asked about each, and the
+sub-select, which depends on no column, is an InitPlan Postgres runs once per
+statement. It lets through exactly the rows the plain shape does, and still
+names `module_enabled()`. `with check` keeps the plain shape: it runs once per
+row written, which is what a check is for.
 
-```sql
-  for select using (
-    company_id = any ((select array(
-      select x from unnest(public.companies_with_capability('crm.read')) as x
-       where public.module_enabled(x, 'crm')))::uuid[])
-  );
-```
-
-It lets through exactly the rows the first shape does, and still names
-`module_enabled()`. `with check` keeps the first shape: it runs once per row
-written. `modules/crm/supabase/migrations/20261109120000_crm_reads_hold_at_volume.sql`
-rewrites the module's policies this way, and `modules/crm/tests/search_at_volume.test.ts`
-counts the capability checks of a read to keep them so.
+`tests/policies_ask_once.test.ts` refuses a `using` that calls a function with
+a column of the row, outside a sub-select or inside one that refers to the row;
+`npm run inventory:policies` prints the verdict on every policy. Each module
+rewrote its published policies in a migration of its own — `crm` in
+`20261109120000_crm_reads_hold_at_volume.sql`, the others in
+`<timestamp>_<code>_policies_ask_once.sql`, which find them by their shape in
+the catalogue — and the module's `policies_ask_once.test.ts`
+(`tests/helpers/policy-proof.ts`) shows the same rows for a member, a member
+without the capabilities, a member of another company and a machine key,
+before and after.
 
 **The capability is the module's own**, declared in the module's own migration
 with `capabilities.area` set to the module code — `assets.read` /

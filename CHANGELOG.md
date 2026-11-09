@@ -119,6 +119,34 @@ somewhere has already run it.
   functions, same arguments, same rows, same rights. The module's
   `search_at_volume.test.ts` builds a company of that size and holds the
   reads to a bound, to a count of capability checks and to the same rows.
+- **Every other module asks once per statement too.** `budgets`,
+  `consolidation`, `contracts`, `einvoicing`, `assets` (schema
+  `fixed_assets`) and `tax` (`corporate-tax`) were written with the policy
+  `crm` had, and paid the same per row the day a company had many rows there.
+  Each gets the same rewrite in a migration of its own
+  (`20261109153212_budgets_policies_ask_once`,
+  `20261109154107_consolidation_policies_ask_once`,
+  `20261109154842_contracts_policies_ask_once`,
+  `20261109155021_einvoicing_policies_ask_once`,
+  `20261109155512_assets_policies_ask_once`,
+  `20261109160318_tax_policies_ask_once`; additive, safe to run twice): the
+  policies are found by their shape in the catalogue, each keeps the
+  capability it named and any condition it added (`computation_id is null`
+  on `tax.losses`), and `with check` is unchanged. Same rows, same rights:
+  each module's `policies_ask_once.test.ts` records what a member, a member
+  without the module's capabilities, a member of another company and a
+  machine key read, update and delete before and after, and the plan of a
+  read as a member, an InitPlan where it was a filter per row. `budgets` and
+  `assets` need the socle's `companies_with_capability()` (0.4.0), later than
+  their `requires_socle_min`; `ekwo migrate` applies the socle first.
+- **No policy may ask per row again.** `npm run inventory:policies`
+  (`scripts/inventory-policies.mjs`) prints every policy of the socle and of
+  every module with whether its `using` and its `with check` call a function
+  with a column of the row, read from the expression Postgres evaluates; and
+  `tests/policies_ask_once.test.ts` refuses a `using` that does. Seventeen
+  policies of the socle still do — they combine the test with another, ask
+  `is_company_member()`, or reach their company through a parent row — and
+  are listed by name until a change of their own; the list only shrinks.
 
 ## [0.25.0] — 2026-11-07
 

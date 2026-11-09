@@ -25,7 +25,10 @@ module.
    `entry_lines` never appear in a write statement here, and a test over every
    file of this folder refuses one that does. Reading the ledger is allowed.
 3. **Row level security on every table**, through `module_enabled()` where the
-   table carries a `company_id`.
+   table carries a `company_id`, and asked once per statement: the `using`
+   compares `company_id` with a sub-select that depends on no column
+   (`docs/modules.md`, rule 3; `tests/policies_ask_once.test.ts` refuses the
+   rest).
 4. **A module does its own grants.** `public` gets them from Supabase; a schema
    a migration created gets nothing.
 5. **A country is data.** No module names one. What Belgium decides is in
