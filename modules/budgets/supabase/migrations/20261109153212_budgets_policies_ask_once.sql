@@ -35,10 +35,11 @@
 --
 -- **Read from the catalogue.** The policies are found by their shape in
 -- `pg_policies` rather than listed, so the capability each one names is
--- carried over and cannot be mistyped here. The block refuses to finish if it
--- found none — it ran twice, or the policies changed shape and this file has
--- to be read again — or if a policy of the schema still asks either function
--- about `company_id` row by row.
+-- carried over and cannot be mistyped here. Run twice, it changes nothing the
+-- second time. It refuses to finish if it found neither the old shape nor the
+-- new one — the policies changed and this file has to be read again — or if
+-- a policy of the schema still asks either function about `company_id` row by
+-- row.
 --
 -- **Older files, older socle.** Names of the socle are written `public.`, as
 -- the module's first migrations wrote them; the installer reads the file for
@@ -60,6 +61,7 @@ begin
       from pg_policies p
      cross join lateral regexp_match(p.qual, v_shape) as m
      where p.schemaname = v_schema
+       and m is not null
      order by p.tablename, p.policyname
   loop
     execute format(
@@ -70,8 +72,14 @@ begin
     v_changed := v_changed + 1;
   end loop;
 
-  if v_changed = 0 then
-    raise exception 'no policy of % has the shape module_enabled(company_id, …) and has_capability(company_id, …): either this ran twice, or the policies changed shape and this migration has to be read again', v_schema;
+  -- Run a second time, it finds the policies already rewritten and changes
+  -- nothing; finding neither shape means the policies changed and this file
+  -- has to be read again.
+  if v_changed = 0 and not exists (
+    select 1 from pg_policies p
+     where p.schemaname = v_schema and p.qual like '%companies_with_capability(%'
+  ) then
+    raise exception 'no policy of % has the shape module_enabled(company_id, …) and has_capability(company_id, …), and none was rewritten: the policies changed shape and this migration has to be read again', v_schema;
   end if;
 
   select count(*) into v_left

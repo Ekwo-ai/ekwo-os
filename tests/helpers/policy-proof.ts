@@ -139,6 +139,9 @@ export interface PolicyProof {
   /** `schema.table` → how a read of it as the member evaluates the policy, before and after the migration. */
   plansBefore: Record<string, PolicyEvaluation>;
   plansAfter: Record<string, PolicyEvaluation>;
+  /** Every policy of the schema after the migration, and after it ran a second time. */
+  policiesAfter: string[];
+  policiesAfterSecondRun: string[];
 }
 
 export interface PolicyEvaluation {
@@ -209,6 +212,18 @@ export async function provePolicyRewrite(options: {
   await replaySql(db, file.path);
   const after = await whatEachReaches(db, options.schema, callers);
   const plansAfter = await plansOfEveryTable(db, options.schema, callers[0]!);
+  const policies = async () =>
+    (
+      await rows<{ p: string }>(
+        db,
+        `select tablename || ' ' || policyname || ' ' || cmd || ' ' || coalesce(qual, '') || ' ' || coalesce(with_check, '') as p
+           from pg_policies where schemaname = $1 order by 1`,
+        [options.schema],
+      )
+    ).map((r) => r.p);
+  const policiesAfter = await policies();
+  await replaySql(db, file.path);
+  const policiesAfterSecondRun = await policies();
   return {
     db,
     fixture: { companyId: mine.companyId, ownerId: mine.ownerId, otherCompanyId: other.companyId, otherOwnerId: other.ownerId },
@@ -217,6 +232,8 @@ export async function provePolicyRewrite(options: {
     after,
     plansBefore,
     plansAfter,
+    policiesAfter,
+    policiesAfterSecondRun,
   };
 }
 
@@ -283,9 +300,11 @@ export function expectEachCallerInItsPlace(proof: PolicyProof, filled: string[])
  * Every table of the schema a policy ties to a company, read as the member:
  * before the migration the policy was a filter calling the functions on each
  * row — which is what makes this assertion able to fail — and after it, an
- * InitPlan and no such filter.
+ * InitPlan and no such filter. The migration, run a second time — as an
+ * upgrade that replays a module's files does — changes no policy.
  */
 export function expectPoliciesAskedOnce(proof: PolicyProof): void {
+  expect(proof.policiesAfterSecondRun).toEqual(proof.policiesAfter);
   const tables = Object.keys(proof.plansAfter);
   expect(tables.length).toBeGreaterThan(0);
   for (const table of tables) {
