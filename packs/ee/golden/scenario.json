@@ -120,6 +120,16 @@
       ]
     },
     {
+      "ref": "V8",
+      "type": "sale_invoice",
+      "contact": "klient-us",
+      "date": "2026-03-17",
+      "why": "Konsultatsiooniteenus ühendusevälise riigi ettevõtjale: käibe tekkimise koht ei ole Eesti (KMS § 10 lg 4 p 9), deklareeritakse nullmääraga üksnes lahtris 3, mitte lahtris 3.1 ega ühendusesisese käibe aruandes.",
+      "lines": [
+        { "name": "IT-konsultatsioon", "quantity": 1, "unit_price": 3200, "tax": "EE-S-00-3RIIK", "account": "3050" }
+      ]
+    },
+    {
       "ref": "O5",
       "type": "purchase_invoice",
       "contact": "tarnija-ee",

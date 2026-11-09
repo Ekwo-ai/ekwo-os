@@ -37,7 +37,7 @@ import {
 
 // country-literal: the packs still open on 6 November 2026, from the inventory; each wave removes its own
 const STILL_OPEN = new Set([
-  'at', 'bg', 'cy', 'ee', 'gr', 'hr',
+  'at', 'bg', 'cy', 'gr', 'hr',
   'it', 'lt', 'mt', 'pt', 'ro',
 ]);
 
