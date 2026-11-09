@@ -237,11 +237,11 @@ describe('the search finds the rows it found before, on a small company', () => 
   });
 
   it('gives nothing once the module is turned off, and every row back when it is on again', async () => {
-    const [{ sql }] = calls();
-    const before = await asUser(small, smallOwner, () => rows(small, sql!));
+    const sql = calls()[0]!.sql;
+    const before = await asUser(small, smallOwner, () => rows(small, sql));
     await asUser(small, smallOwner, () => small.query(`select disable_module($1, 'crm')`, [smallCompany]));
-    expect(await asUser(small, smallOwner, () => rows(small, sql!))).toEqual([]);
+    expect(await asUser(small, smallOwner, () => rows(small, sql))).toEqual([]);
     await asUser(small, smallOwner, () => small.query(`select enable_module($1, 'crm')`, [smallCompany]));
-    expect(await asUser(small, smallOwner, () => rows(small, sql!))).toEqual(before);
+    expect(await asUser(small, smallOwner, () => rows(small, sql))).toEqual(before);
   });
 });
