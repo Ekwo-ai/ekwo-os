@@ -43,9 +43,12 @@ and being `security definer` it cannot be inlined. Policies on large tables
 compare `company_id` with `(select companies_with_capability(…))`, evaluated
 once; that function lists candidate companies (memberships, the key's company)
 and asks `has_capability()` about each, so there is still one definition of who
-may do what. As a bonus the planner can use the policy to find rows. Policies
-that combine the test with another condition, reach the company through a
-parent, or belong to modules stay per-row; `with check` clauses are untouched.
+may do what. As a bonus the planner can use the policy to find rows. A
+module's policies ask the same way, with `module_enabled()` asked about each
+company of the list. Policies of the socle that combine the test with another
+condition, ask `is_company_member()` or reach the company through a parent stay
+per-row, each named in `tests/policies_ask_once.test.ts`, which refuses any
+other; `with check` clauses are untouched.
 
 **A filter that no index serves is fixed with a column, not with copies.**
 Where functions filter declaration lines on a date spread over two tables, the
