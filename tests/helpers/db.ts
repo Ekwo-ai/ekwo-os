@@ -47,9 +47,10 @@ export interface Options {
    */
   extensions?: Extensions;
   /**
-   * Socle migrations to leave out, by file name: the database is then the one
-   * an installation held before they were published, and an upgrade test
-   * applies them itself, on books written by the schema as it was.
+   * Migrations to leave out, by file name — the socle's, or a module's: the
+   * database is then the one an installation held before they were
+   * published, and an upgrade test applies them itself, on books written by
+   * the schema as it was.
    */
   withoutMigrations?: string[];
   /**
@@ -327,7 +328,7 @@ export async function schemaImage(options: Options = {}): Promise<string> {
   const moduleMigrations =
     options.modules === false
       ? []
-      : (await moduleMigrationFiles(root)).filter((m) => !tooOld.has(m.code)).map((m) => m.path);
+      : (await moduleMigrationFiles(root)).filter((m) => !tooOld.has(m.code) && !leftOut.has(m.file)).map((m) => m.path);
   const seeds = options.seed === false ? [] : (await seedFiles(root)).map((f) => join(tree.seed, f));
   const moduleSeeds =
     options.seed === false || options.modules === false
