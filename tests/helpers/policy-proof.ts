@@ -160,15 +160,20 @@ export async function provePolicyRewrite(options: {
   migration: string;
   /** Writes the module's rows for one company, as the owner of the database. */
   fill: (db: PGlite, companyId: string, ownerId: string) => Promise<void>;
-  /** Options of `newCompany`, where the module needs a pack of a kind. */
-  company?: Parameters<typeof newCompany>[1];
+  /**
+   * Makes each of the two companies, where the module's own tests make theirs
+   * another way (a pack of a kind, a profile filled in). `newCompany` when
+   * left out. The module is turned on here, either way.
+   */
+  company?: (db: PGlite, name: string) => Promise<{ companyId: string; ownerId: string }>;
 }): Promise<PolicyProof> {
   const file = (await moduleMigrationFiles()).find((m) => m.file === options.migration);
   if (file === undefined) throw new Error(`no module migration ${options.migration}`);
   const db = await freshDatabase({ withoutMigrations: [options.migration] });
 
-  const mine = await newCompany(db, { name: 'Proof SRL', ...options.company });
-  const other = await newCompany(db, { name: 'Neighbour SRL', ...options.company });
+  const make = options.company ?? ((into: PGlite, name: string) => newCompany(into, { name }));
+  const mine = await make(db, 'Proof SRL');
+  const other = await make(db, 'Neighbour SRL');
   for (const { companyId, ownerId } of [mine, other]) {
     await asUser(db, ownerId, () => db.query(`select enable_module($1, $2)`, [companyId, options.module]));
   }
