@@ -45,10 +45,16 @@ once; that function lists candidate companies (memberships, the key's company)
 and asks `has_capability()` about each, so there is still one definition of who
 may do what. As a bonus the planner can use the policy to find rows. A
 module's policies ask the same way, with `module_enabled()` asked about each
-company of the list. Policies of the socle that combine the test with another
-condition, ask `is_company_member()` or reach the company through a parent stay
-per-row, each named in `tests/policies_ask_once.test.ts`, which refuses any
-other; `with check` clauses are untouched.
+company of the list. Membership has the same counterpart,
+`companies_of_caller()`, which asks `is_company_member()` about each candidate.
+A term that reads no column (`is_instance_admin()`) stays `or`-ed beside the
+comparison, as a sub-select; a policy that reaches its company through a parent
+compares the parent's id with the parent's ids in those companies, a sub-select
+that no longer refers to the row and is hashed once. The only policies that
+still ask per row are the two of `attachments` that choose a capability with
+`attachment_is_filing_deposit_file(id)`, a definer function about one piece,
+named in `tests/policies_ask_once.test.ts`, which refuses any other; `with
+check` clauses are untouched.
 
 **A filter that no index serves is fixed with a column, not with copies.**
 Where functions filter declaration lines on a date spread over two tables, the

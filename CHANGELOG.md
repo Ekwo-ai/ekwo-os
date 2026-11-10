@@ -147,6 +147,28 @@ somewhere has already run it.
   policies of the socle still do — they combine the test with another, ask
   `is_company_member()`, or reach their company through a parent row — and
   are listed by name until a change of their own; the list only shrinks.
+- **The socle's own last policies ask once per statement.** Fifteen of those
+  seventeen are rewritten (`20261110124117_the_socle_policies_ask_once`,
+  additive): `companies`, `company_members`, `company_filing_periods`,
+  `company_modules`, `company_tax_regimes`, `company_vat_schemes` and
+  `matching_settings` compare with `companies_of_caller()`, new — the
+  companies where `is_company_member()` answers yes, worked out once, as
+  `companies_with_capability()` is for `has_capability()`; `api_keys`,
+  `company_invitations`, the update of `companies` and the deposits a client
+  reads compare with `companies_with_capability()`, the `or
+  is_instance_admin()` and `auth.uid()` terms kept; `journal_sequences`,
+  `tax_filing_boxes` and `tax_filing_deposits` compare their parent's id
+  with the ids of the parent in those companies, read once and hashed,
+  where `has_capability()` was asked for every journal or filing. `with
+  check` is unchanged. Same rows, same rights:
+  `tests/socle_policies_ask_once.test.ts` records what eight callers — the
+  owner, a member holding no capability, a client, a member of another
+  company, a person of no company, an instance administrator and two
+  machine keys — read, update and delete in each touched table, before and
+  after, and the plan of a read as a member. The two policies of
+  `attachments` stay on the list: the capability a row needs is chosen by
+  `attachment_is_filing_deposit_file(id)`, a definer function that answers
+  about one piece and has no set-returning form yet.
 
 ## [0.25.0] — 2026-11-07
 

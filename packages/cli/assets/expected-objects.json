@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261109160318",
+  "migration": "20261110124117",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -5012,6 +5012,10 @@
         "arguments": ""
       },
       {
+        "name": "companies_of_caller",
+        "arguments": ""
+      },
+      {
         "name": "companies_vat_period_is_a_filing_period",
         "arguments": ""
       },
@@ -9771,6 +9775,17 @@
           "anon": [],
           "authenticated": [],
           "service_role": []
+        },
+        {
+          "name": "companies_of_caller",
+          "arguments": "",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
         },
         {
           "name": "companies_vat_period_is_a_filing_period",
