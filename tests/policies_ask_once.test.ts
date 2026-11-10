@@ -25,33 +25,30 @@ import { freshDatabase } from './helpers/db.js';
  * check` is not held: it is evaluated once per row written, which is what a
  * check is for.
  *
- * The socle's policies listed below still ask per row. They were found by the
- * inventory of 9 November 2026 and are left for a change of their own: each
- * combines the test with another (`or is_instance_admin()`, `uploaded_by =
- * auth.uid()`), asks `is_company_member()` — which has no "companies where"
- * counterpart yet — or reaches its company through a parent row in a
- * correlated sub-select, and none is the mechanical rewrite the modules got.
+ * Two policies of the socle still ask per row, and only these. The inventory
+ * of 9 November 2026 found seventeen; `20261110124117_the_socle_policies_ask_once.sql`
+ * rewrote fifteen with the rights each grants unchanged
+ * (`tests/socle_policies_ask_once.test.ts` is the proof). The two left are
+ * the policies of `attachments` that choose the capability a row needs:
+ *
+ *     case when entity_type = 'tax_filing' or attachment_is_filing_deposit_file(id)
+ *          then company_id = any ((select companies_with_capability('filings.…'))::uuid[])
+ *          else company_id = any ((select companies_with_capability('documents.…'))::uuid[]) end
+ *
+ * Each branch already asks once; the condition does not.
+ * `attachment_is_filing_deposit_file(id)` is security definer and answers
+ * about one attachment, on purpose — the policy asks it for callers who may
+ * not read the deposits (decision 0065) — and it has no set-returning
+ * counterpart. Asking it as a sub-select of the policy would read the
+ * deposits as the caller, which is a different right, so they stay until a
+ * change gives that function its "attachments where" form.
+ *
  * The list only shrinks: a policy that comes to ask once has to leave it, and
  * a policy that is not on it is refused.
  */
 const STILL_PER_ROW = new Set([
-  'ekwo.api_keys api_keys_select',
   'ekwo.attachments attachments_select',
-  'ekwo.attachments attachments_select_own_deposit',
   'ekwo.attachments attachments_write',
-  'ekwo.companies companies_select',
-  'ekwo.companies companies_update',
-  'ekwo.company_filing_periods company_filing_periods_select',
-  'ekwo.company_invitations company_invitations_select',
-  'ekwo.company_members company_members_select',
-  'ekwo.company_modules company_modules_select',
-  'ekwo.company_tax_regimes company_tax_regimes_select',
-  'ekwo.company_vat_schemes company_vat_schemes_select',
-  'ekwo.journal_sequences journal_sequences_select',
-  'ekwo.matching_settings matching_settings_select',
-  'ekwo.tax_filing_boxes tax_filing_boxes_select',
-  'ekwo.tax_filing_boxes tax_filing_boxes_write',
-  'ekwo.tax_filing_deposits tax_filing_deposits_select',
 ]);
 
 /** The policies whose `using` asks per row and that the list does not allow, with the calls behind each. */
