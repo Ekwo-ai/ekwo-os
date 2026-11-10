@@ -50,7 +50,7 @@ line summing both nets to book value.
 
 ## The taxes
 
-Thirteen codes. The standard rate is 21% and the reduced rate 11%, both since
+Fourteen codes. The standard rate is 21% and the reduced rate 11%, both since
 1 August 2025 (Legea nr. 141/2025, art. II pct. 42, amending Codul fiscal art.
 291) — a single reduced rate replacing the former pair of 9% and 5%, and the
 standard rate raised from 19%. A transitional 9% rate for a single dwelling
@@ -62,13 +62,39 @@ Zero rate covers export (`RO-S-EXPORT`, art. 294 alin. (1)) and the
 intra-Community supply of goods (`RO-S-ICG`, art. 294 alin. (2) lit. a));
 a service under the general B2B place-of-supply rule to an EU customer
 (`RO-S-ICS`, art. 278 alin. (2)) is not a zero-rated supply but an operation
-outside Romania's territorial scope, reported at rd. 3 of the return. An
+outside Romania's territorial scope, reported at rd. 3 of the return and, since
+0.4.0, at its memo row rd. 3.1 too. An
 exemption without credit is illustrated by interest on a loan granted
 (`RO-S-EXE`, art. 292 alin. (2) lit. a) pct. 1) — `VATEX-EU-135` is a generic
 placeholder for the article and should be confirmed by an accountant if the
 VATEX list later publishes a narrower code. `RO-S-RC-331` illustrates the
 domestic reverse charge of art. 331 alin. (2) on a supply of cereals, one of
 the goods the formularul 300 itself asks about by name in its Da/Nu boxes.
+
+**A service to a taxable customer established outside the European Union is
+reported at rd. 3 alone.** `RO-S-SERV-NON-UE` (since 0.4.0): art. 278 alin. (2)
+places a service to a taxable person where that person is established, so for
+a customer outside the Union the service is not taxable in Romania. The
+instructions of the formularul 300 (annex 2 to Ordinul ANAF nr. 174/2026, read
+on 10 November 2026) put on rd. 3 the supplies "care nu sunt impozabile în
+România pentru că nu au locul livrării/prestării stabilit, conform art. 275 şi
+278 din Codul fiscal, în România", and the form's own heading says "în UE sau
+în afara UE"; rd. 3.1, "din care", takes only the services of art. 278 alin.
+(2) supplied to taxable persons "stabilite în Uniunea Europeană", the figure
+the recapitulative statement 390 repeats. So `RO-S-ICS` now posts its base to
+both rd. 3 and rd. 3.1 (it posted to rd. 3 alone before 0.4.0, which left the
+memo row empty), and the new code to rd. 3 alone. The box code of rd. 3.1 is
+`3A`, because a box code cannot hold a dot; its name and legal reference say
+"rd. 3.1". Treatment `not_subject`, category `O`, reason `VATEX-EU-O`, as the
+French, Hungarian, Czech and Portuguese packs carry the same operation. The
+golden half-year carries such a service to a business in the United States in
+May (V9: 2 000 RON at rd. 3, no tax, on 704). What the code does not say: the
+invoice sentence (`applies_when` has no condition for an operation outside the
+scope, so the invoice prints none; the electronic invoice carries category `O`
+and `VATEX-EU-O`), nor the exceptions to the general rule of art. 278 alin. (4)
+and (6) (immovable property, passenger transport, events, restaurants, short
+hire of means of transport, the services used in Romania by a customer outside
+the Union), which have no code of their own.
 
 Purchase-side, seven codes cover the self-assessment mechanisms the law
 provides today: the intra-Community acquisition of goods (`RO-P-ICG-21`) and
@@ -85,7 +111,8 @@ happened.
 `RO-D300` transcribes the formularul 300 in the version approved by Ordinul
 președintelui ANAF nr. 174/2026, in force for periods from January 2026. Only
 the rows this pack's taxes reach are declared, together with the totals that
-close the form (rd. 19, 30, 31, 35, 36, 37, 44, 45); the memo rows (3.1, 5.1,
+close the form (rd. 19, 30, 31, 35, 36, 37, 44, 45) and, since 0.4.0, the memo
+row 3.1 (box `3A`); the other memo rows (5.1,
 7.1, 12.1, 12.2, 20.1, 22.1, 26.1, 26.2, 29.1), the regularisation rows (2, 4,
 6, 8, 16, 18, 21, 23, 28, 33, 34) and the carry-forward rows (38, 39, 41, 42)
 are not — see "What the socle cannot do" below. The general rule is the

@@ -116,6 +116,29 @@ travel and entertainment expenses), modelled as a wholly non-deductible tax
 rather than declared on the return at all, because nothing in the Declaração
 Periódica do IVA reports what art. 21.º excludes.
 
+**A service to a taxable customer established outside the European Union is
+reported in campo 8.** `PT-S-PS-HUE` (since 0.5.0): art. 6.º, n.º 6, alínea
+a) of the Código do IVA places a service to a taxable person where that person
+is established, so for a customer in a third country the service is neither
+located nor taxed in Portugal, and art. 20.º, n.º 1, alínea b), II) keeps the
+right to deduct. The instructions of the Declaração Periódica do IVA (read on
+10 November 2026) list in campo 8 the "prestações de serviços abrangidas pela
+regra geral de localização da alínea a) do n.º 6 do artigo 6.º do CIVA, em
+que o adquirente é sujeito passivo estabelecido num país terceiro", and the
+binding ruling of process n.º 16210 says the same of transport services; the
+same service to a business of another Member State stays in campo 7 and on
+the recapitulative statement (`PT-S-ICS`). Treatment `not_subject`, category
+`O`, reason `VATEX-EU-O`, as the French, Hungarian and Czech packs carry the
+same operation. The golden year carries one such service to a business in the
+United States in October (V10: 3 000.00 in campo 8, no tax, on 72). What the
+code does not say: the invoice sentence. The same ruling asks for "IVA -
+Autoliquidação [regra-geral art.º 6.º, n.º 6, al.ª a)]" on the invoice, and
+`applies_when` has no condition for an operation outside the scope, so the
+invoice prints none; the electronic invoice carries category `O` and
+`VATEX-EU-O`. The exceptions to the general rule (art. 6.º, n.os 7 to 12:
+immovable property, transport of passengers, events, restaurants, short hire
+of means of transport) have no code of their own.
+
 **Imports.** The VAT on an import is ordinarily assessed and collected by
 customs; the importer deducts what the customs receipt shows (art. 19.º, n.º 1,
 alínea b), and n.º 2, alínea b)) and declares nothing as liquidated.

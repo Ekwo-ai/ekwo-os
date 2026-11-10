@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "RO",
   "name": "Romania",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "schema_min": "20261023124650",
   "seed_sequence": 72,
-  "released_at": "2026-10-23",
+  "released_at": "2026-11-10",
   "certification": {
     "status": "community",
     "sources": [
@@ -14,7 +14,7 @@
         "title": "Legea nr. 227/2015 privind Codul fiscal, cu modificările și completările ulterioare — formă consolidată",
         "publisher": "Ministerul Justiției — Portalul Legislativ",
         "url": "https://legislatie.just.ro/Public/DetaliiDocument/171282",
-        "consulted_on": "2026-09-25",
+        "consulted_on": "2026-11-10",
         "kind": "law"
       },
       {
@@ -30,7 +30,7 @@
         "title": "Ordinul președintelui ANAF nr. 174/2026 pentru aprobarea modelului și conținutului formularului (300) „Decont de taxă pe valoarea adăugată”",
         "publisher": "Agenția Națională de Administrare Fiscală",
         "url": "https://static.anaf.ro/static/10/Anaf/legislatie/OPANAF_174_2026.pdf",
-        "consulted_on": "2026-09-25",
+        "consulted_on": "2026-11-10",
         "kind": "regulation"
       },
       {

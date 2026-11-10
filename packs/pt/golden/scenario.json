@@ -15,6 +15,7 @@
     { "ref": "cliente-obras", "name": "Construções Serra d'Arga, S.A.", "type": "customer", "country": "PT" },
     { "ref": "cliente-fr", "name": "Atelier Lumen SAS", "type": "customer", "country": "FR", "vat_number": "FR00999999999" },
     { "ref": "cliente-ao", "name": "Comercial Kianda, Lda.", "type": "customer", "country": "AO" },
+    { "ref": "cliente-us", "name": "Harbor Point Analytics Inc.", "type": "customer", "country": "US" },
     { "ref": "fornecedor-pt", "name": "Distribuidora do Douro, Lda.", "type": "supplier", "country": "PT" },
     { "ref": "fornecedor-equip", "name": "Equipamentos Vouga, S.A.", "type": "supplier", "country": "PT" },
     { "ref": "fornecedor-de", "name": "Nordwind Maschinen GmbH", "type": "supplier", "country": "DE", "vat_number": "DE999999999" },
@@ -65,6 +66,11 @@
       "ref": "V9", "type": "sale_invoice", "contact": "cliente-fr", "date": "2026-08-07", "due_date": "2026-09-06",
       "why": "Uma prestação intracomunitária de serviços: localizada no Estado-membro do adquirente, que aí se autoliquida — o mesmo campo 7 da transmissão de bens, mas a chave S na declaração recapitulativa em vez da chave E.",
       "lines": [{ "name": "Assistência técnica prestada em França", "quantity": 1, "unit_price": 2500, "tax": "PT-S-ICS", "account": "72" }]
+    },
+    {
+      "ref": "V10", "type": "sale_invoice", "contact": "cliente-us", "date": "2026-10-20", "due_date": "2026-11-19",
+      "why": "Uma prestação de serviços a um sujeito passivo estabelecido nos Estados Unidos: localizada na sede do adquirente pela regra geral da alínea a) do n.º 6 do artigo 6.º, não tributada em Portugal; o valor vai para o campo 8, como a exportação, e não para o campo 7 nem para a declaração recapitulativa.",
+      "lines": [{ "name": "Consultoria informática", "quantity": 1, "unit_price": 3000, "tax": "PT-S-PS-HUE", "account": "72" }]
     },
     {
       "ref": "C1", "type": "purchase_invoice", "contact": "fornecedor-pt", "date": "2026-01-22", "due_date": "2026-02-21",

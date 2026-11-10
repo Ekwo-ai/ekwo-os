@@ -285,6 +285,24 @@
     }
   },
   {
+    "code": "PT-S-PS-HUE",
+    "name": "Prestação de serviços a sujeito passivo estabelecido fora da União Europeia",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "Código do IVA, art. 6.º, n.º 6, alínea a) — uma prestação de serviços a um sujeito passivo é tributável onde o adquirente tem a sede, o estabelecimento estável ou o domicílio; a um sujeito passivo estabelecido num país terceiro, não é localizada nem tributada em território nacional (Informação vinculativa, processo n.º 16210) e confere direito à dedução (art. 20.º, n.º 1, alínea b), II)). Declaração periódica, quadro 06, campo 8 — as instruções nomeiam as «prestações de serviços abrangidas pela regra geral de localização da alínea a) do n.º 6 do artigo 6.º do CIVA, em que o adquirente é sujeito passivo estabelecido num país terceiro»; fora da declaração recapitulativa",
+    "source": "portaria-221-2017",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "sequence": 135,
+    "postings": {
+      "invoice": [{ "type": "base", "box": "8" }],
+      "credit_note": [{ "type": "base", "box": "8", "box_factor": -100 }]
+    }
+  },
+  {
     "code": "PT-S-ISP",
     "name": "Operação interna com inversão do sujeito passivo",
     "kind": "vat",

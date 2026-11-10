@@ -97,6 +97,24 @@
     "source": "codul-fiscal",
     "sequence": 50,
     "postings": {
+      "invoice": [ { "type": "base", "box": ["3", "3A"] } ],
+      "credit_note": [ { "type": "base", "box": ["3", "3A"], "box_factor": -100 } ]
+    }
+  },
+  {
+    "code": "RO-S-SERV-NON-UE",
+    "name": "Prestare de servicii către o persoană impozabilă stabilită în afara Uniunii Europene — neimpozabilă în România",
+    "kind": "vat",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2016-01-01",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "legal_reference": "Codul fiscal, art. 278 alin. (2) — locul de prestare a serviciilor către o persoană impozabilă care acționează ca atare este locul unde aceasta își are stabilit sediul activității economice; pentru un beneficiar stabilit în afara Uniunii Europene, serviciul nu este impozabil în România (excepțiile de la art. 278 alin. (4) și (6) nu sunt modelate). Formularul 300, rd. 3 — «livrările de bunuri/prestările de servicii care nu sunt impozabile în România pentru că nu au locul livrării/prestării stabilit, conform art. 275 şi 278 din Codul fiscal, în România» (în UE sau în afara UE); nu și rd. 3.1, rezervat serviciilor prestate persoanelor impozabile stabilite în Uniunea Europeană, nici declarația 390.",
+    "source": "opanaf-174-2026",
+    "sequence": 55,
+    "postings": {
       "invoice": [ { "type": "base", "box": "3" } ],
       "credit_note": [ { "type": "base", "box": "3", "box_factor": -100 } ]
     }

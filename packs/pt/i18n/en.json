@@ -150,6 +150,7 @@
     "PT-S-ICG": "Exempt intra-Community supply of goods",
     "PT-S-ICS": "Intra-Community supply of services (reverse-charged to the customer)",
     "PT-S-EXP": "Exempt export",
+    "PT-S-PS-HUE": "Service to a taxable person established outside the European Union (supplied outside Portugal)",
     "PT-S-ISP": "Domestic supply under the reverse charge",
     "PT-S-EXE": "Exempt domestic supply",
     "PT-P-BENS-23": "Purchase of goods for resale at the standard rate (23 %), deductible",
