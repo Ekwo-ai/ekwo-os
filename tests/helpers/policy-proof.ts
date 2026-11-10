@@ -70,15 +70,35 @@ export async function asCaller<T>(db: PGlite, caller: Caller, fn: () => Promise<
   }
 }
 
-/** The tables of `schema` whose policies are about a company, with the columns of their primary key. */
-async function companyTables(db: PGlite, schema: string): Promise<{ table: string; key: string[] }[]> {
-  return rows<{ table: string; key: string[] }>(
+/**
+ * A table a proof walks: its qualified name, the columns of its primary key,
+ * and the column the write sets to itself — the one its policies read the
+ * company through (`company_id`, or a parent's id).
+ */
+export interface Guarded {
+  table: string;
+  key: string[];
+  column: string;
+}
+
+/** `qualified` as a proof walks it, its primary key read from the catalogue. */
+export async function guarded(db: PGlite, qualified: string, column = 'company_id'): Promise<Guarded> {
+  const key = await one<{ key: string[] }>(
     db,
-    `select c.relname as table,
-            coalesce((select array_agg(a.attname::text order by a.attnum)
+    `select coalesce((select array_agg(a.attname::text order by a.attnum)
                         from pg_index i
                         join pg_attribute a on a.attrelid = i.indrelid and a.attnum = any (i.indkey)
-                       where i.indrelid = c.oid and i.indisprimary), '{}') as key
+                       where i.indrelid = $1::regclass and i.indisprimary), '{}') as key`,
+    [qualified],
+  );
+  return { table: qualified, key: key.key, column };
+}
+
+/** The tables of `schema` whose policies are about a company. */
+async function companyTables(db: PGlite, schema: string): Promise<Guarded[]> {
+  const names = await rows<{ table: string }>(
+    db,
+    `select c.relname as table
        from pg_class c
        join pg_namespace n on n.oid = c.relnamespace
       where n.nspname = $1 and c.relkind = 'r'
@@ -88,6 +108,9 @@ async function companyTables(db: PGlite, schema: string): Promise<{ table: strin
       order by c.relname`,
     [schema],
   );
+  const out: Guarded[] = [];
+  for (const { table } of names) out.push(await guarded(db, `${schema}.${table}`));
+  return out;
 }
 
 /** A write tried and undone: the keys of the rows it reached, or the message it raised. */
@@ -103,19 +126,22 @@ async function tryWrite(db: PGlite, sql: string): Promise<string[] | string> {
   }
 }
 
-/** What each caller reads, updates and deletes in each table of the schema that a policy ties to a company. */
-export async function whatEachReaches(db: PGlite, schema: string, callers: Caller[]): Promise<Record_> {
-  const tables = await companyTables(db, schema);
+/**
+ * What each caller reads, updates and deletes in each table of the schema
+ * that a policy ties to a company — or in the tables named, where a proof
+ * walks a list of its own.
+ */
+export async function whatEachReaches(db: PGlite, schema: string | Guarded[], callers: Caller[]): Promise<Record_> {
+  const tables = typeof schema === 'string' ? await companyTables(db, schema) : schema;
   const out: Record_ = {};
   for (const caller of callers) {
     out[caller.name] = {};
-    for (const { table, key } of tables) {
-      const qualified = `${schema}.${table}`;
+    for (const { table, key, column } of tables) {
       const keyText = key.length > 0 ? `(${key.map((k) => `t.${k}`).join(', ')})::text` : `t::text`;
-      out[caller.name]![qualified] = await asCaller(db, caller, async () => ({
-        read: (await db.query<{ r: string }>(`select t::text as r from ${qualified} t`)).rows.map((r) => r.r).sort(),
-        update: await tryWrite(db, `update ${qualified} t set company_id = t.company_id returning ${keyText} as k`),
-        delete: await tryWrite(db, `delete from ${qualified} t returning ${keyText} as k`),
+      out[caller.name]![table] = await asCaller(db, caller, async () => ({
+        read: (await db.query<{ r: string }>(`select t::text as r from ${table} t`)).rows.map((r) => r.r).sort(),
+        update: await tryWrite(db, `update ${table} t set ${column} = t.${column} returning ${keyText} as k`),
+        delete: await tryWrite(db, `delete from ${table} t returning ${keyText} as k`),
       }));
     }
   }
@@ -147,6 +173,8 @@ export interface PolicyProof {
 export interface PolicyEvaluation {
   initPlans: number;
   perRowFilters: string[];
+  /** The sub-plans run again for every row: those Postgres does not hash once. */
+  perRowSubPlans: string[];
 }
 
 /**
@@ -240,7 +268,7 @@ export async function provePolicyRewrite(options: {
 async function plansOfEveryTable(db: PGlite, schema: string, caller: Caller): Promise<Record<string, PolicyEvaluation>> {
   const out: Record<string, PolicyEvaluation> = {};
   for (const { table } of await companyTables(db, schema)) {
-    out[`${schema}.${table}`] = policyEvaluation(await planOf(db, caller, `select * from ${schema}.${table}`));
+    out[table] = policyEvaluation(await planOf(db, caller, `select * from ${table}`));
   }
   return out;
 }
@@ -255,20 +283,35 @@ export async function planOf(db: PGlite, caller: Caller, sql: string): Promise<R
 
 /**
  * How a plan evaluates the policy of a table: the InitPlans it runs once per
- * statement, and the filters that still call `module_enabled()` or
- * `has_capability()` with a column — once per row.
+ * statement, the filters that still call `module_enabled()`,
+ * `has_capability()` or `is_company_member()` — with a column, once per row —
+ * and the sub-plans that are not hashed, which Postgres runs again for each
+ * row. A `hashed SubPlan` is run once and probed.
  */
 export function policyEvaluation(plan: Record<string, unknown>): PolicyEvaluation {
   let initPlans = 0;
   const perRowFilters: string[] = [];
+  const perRowSubPlans: string[] = [];
+  // Postgres 17 names a sub-plan `SubPlan 4` and says `hashed SubPlan 4`
+  // where it is used; earlier versions put `hashed` in the name itself.
+  const text = JSON.stringify(plan);
   for (const node of nodesOf(plan as never) as Iterable<Record<string, unknown>>) {
     if (node['Parent Relationship'] === 'InitPlan') initPlans += 1;
+    const name = node['Subplan Name'];
+    if (
+      node['Parent Relationship'] === 'SubPlan' &&
+      typeof name === 'string' &&
+      !name.startsWith('hashed ') &&
+      !new RegExp(`hashed ${name}\\b`).test(text)
+    ) {
+      perRowSubPlans.push(name);
+    }
     const filter = node['Filter'];
-    if (typeof filter === 'string' && /(module_enabled|has_capability)\(\w*\.?company_id/.test(filter)) {
+    if (typeof filter === 'string' && /\b(module_enabled|has_capability|is_company_member)\([\w.]*\b(company_id|id)\b/.test(filter)) {
       perRowFilters.push(filter);
     }
   }
-  return { initPlans, perRowFilters };
+  return { initPlans, perRowFilters, perRowSubPlans };
 }
 
 /**

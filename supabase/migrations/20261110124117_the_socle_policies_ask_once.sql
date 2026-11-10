@@ -48,7 +48,11 @@
 --
 -- The sub-select no longer refers to the row: Postgres runs it once, hashes
 -- the ids it returns, and probes the hash for each row (a "hashed SubPlan"),
--- with `companies_with_capability()` an InitPlan inside it. The parent table
+-- with `companies_with_capability()` an InitPlan inside it. Postgres 17
+-- already turned the `exists` into a hashed sub-plan, but that sub-plan
+-- called `has_capability()` for every row of the parent it read — every
+-- journal, every filing of every company the caller is on; it now calls
+-- nothing per row. The parent table
 -- is read under its own policies in both forms, as the invoker, so a row of
 -- the parent the caller may not see admits nothing before or after. It
 -- applies to `journal_sequences`, `tax_filing_boxes` (read and write) and
