@@ -11,6 +11,20 @@ somewhere has already run it.
 
 ### Added
 
+- **What is overdue, across the portfolio, in one call.**
+  `portfolio_overview(on)` gives one row per company the caller holds
+  `entries.read` on: what customers owe it and what it owes its suppliers
+  (`customers_open`, `suppliers_open`), the part past its due date
+  (`*_overdue`), the part more than ninety days past it (`*_overdue_over_90`),
+  how many parties are late on each side (`*_late`), and the company's
+  `currency_code` (`20261111080000_the_portfolio_reads_what_is_overdue`,
+  additive; `SCHEMA_FEATURES.portfolio_overview`, since 0.26.0). It is
+  `aged_balance()` of each company, for both groups, summed — built on it in a
+  lateral join, never beside it (decision 0040) — so its figures are the
+  ageing's to the cent. Every company of the portfolio is a row, with zeros
+  where nothing is open, and a company whose ledger the caller may not read is
+  absent. `security invoker`. The MCP tool `portfolio_overview` serves it;
+  below 0.26.0 it is refused by name, `schema_too_old_for`.
 - **A bank account keeps the profile of its CSV statements.** The lay-out of
   a CSV export is the bank's, so it belongs to the account the file is of:
   `bank_accounts.statement_profile` (jsonb, nullable) holds the

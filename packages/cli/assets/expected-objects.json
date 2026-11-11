@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261110124117",
+  "migration": "20261111080000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -5786,6 +5786,10 @@
       {
         "name": "portfolio_filings_touched_since",
         "arguments": "p_from date, p_to date"
+      },
+      {
+        "name": "portfolio_overview",
+        "arguments": "p_on date"
       },
       {
         "name": "portfolio_upcoming_filings",
@@ -11751,6 +11755,17 @@
         {
           "name": "portfolio_filings_touched_since",
           "arguments": "p_from date, p_to date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "portfolio_overview",
+          "arguments": "p_on date",
           "anon": [],
           "authenticated": [
             "execute"

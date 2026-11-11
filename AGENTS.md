@@ -214,6 +214,7 @@ reach and whether you may write; without that box ticked, you read.
 | The VAT instalments a company's scheme asks for in a year | `ekwo status` | `instalment_plan` |
 | Trial balance, ledger, journal book | `ekwo balance --from <date> --to <date>`, `ekwo ledger [<account>] --from …`, `ekwo journal [<journal>] --from …` | `trial_balance`, `general_ledger`, `journal_book` |
 | What customers still owe, by days overdue | `ekwo aged [--payable] --at <date>` | `aged_balance` |
+| What is overdue, customers and suppliers, in every company of the portfolio | — | `portfolio_overview` |
 | The result by project, cost centre or site | `ekwo analytic report --axis <code> --from … --to …` | `list_analytic_axes`, `analytic_report` |
 
 A line names its account and its tax by **code**, never by rate: several taxes
