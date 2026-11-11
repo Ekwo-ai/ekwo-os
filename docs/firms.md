@@ -34,20 +34,27 @@ It is the normal case of this schema and not an edition of it. There is no
 > uses the word (*portefeuille de clients*, *klantenportefeuille*,
 > *Mandantenstamm*). It has nothing to do with investments.
 
-The word appears in two functions, and means the same thing in both:
+The word appears in three functions, and means the same thing in all of them:
 
 | Function | The question a firm asks on Monday morning |
 |---|---|
 | `portfolio_upcoming_filings(from, to)` | Across all my clients, which returns fall due between these two dates — and which have I not started? |
 | `portfolio_filings_touched_since(from, to)` | Across all my clients, which returns that already went have had their period written to since? |
+| `portfolio_overview(on)` | Across all my clients, who is paying late, and whom are they late to pay? |
 
 Each is the per-company reading (`upcoming_filings()`,
-`filings_touched_since()`) asked of every company of the portfolio, with the
-company named on each row. See [`filing.md`](filing.md#several-companies-at-once)
+`filings_touched_since()`, `aged_balance()`) asked of every company of the
+portfolio, with the company named on each row. `portfolio_overview()` is one
+row per company: what customers owe it and what it owes its suppliers, the
+part past its due date and the part more than ninety days past it, and how
+many parties are late on each side, in the company's currency — rows in
+different currencies are never added together. See [`filing.md`](filing.md#several-companies-at-once)
 for the columns.
 
 **Nobody maintains a portfolio.** It is not a list, a table or a setting: it is
-"the companies on which the caller holds `filings.read`", computed each time.
+"the companies on which the caller holds the capability the reading needs",
+computed each time: `filings.read` for the declarations, `entries.read` for
+what is open in the ledger.
 So it follows the rights, and cannot drift from them:
 
 | Who calls | Their portfolio |

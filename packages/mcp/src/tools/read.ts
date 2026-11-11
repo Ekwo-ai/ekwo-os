@@ -672,6 +672,34 @@ export async function portfolioUpcomingFilings(
   };
 }
 
+export const PortfolioOverviewInput = z.object({
+  on: isoDate.optional().describe('The day to read what is overdue on. Defaults to today.'),
+});
+
+export async function portfolioOverview(
+  backend: Backend,
+  args: z.infer<typeof PortfolioOverviewInput>,
+): Promise<unknown> {
+  const on = args.on ?? new Date().toISOString().slice(0, 10);
+  const rows = await backend.rpc<Record<string, unknown>>('portfolio_overview', { p_on: on });
+  return {
+    on,
+    companies: rows.length,
+    overview: moneyFields(rows, [
+      'customers_open',
+      'customers_overdue',
+      'customers_overdue_over_90',
+      'suppliers_open',
+      'suppliers_overdue',
+      'suppliers_overdue_over_90',
+    ]),
+    note:
+      rows.length === 0
+        ? 'You hold entries.read on no company of this installation, so there is no portfolio to read. It is not the same as nobody owing anything: a company you could read would be listed even with nothing open.'
+        : 'One row per company you hold entries.read on, every one of them, with zeros where nothing is open. customers_* is what customers owe the company, suppliers_* what the company owes its suppliers, both from aged_balance on that day: open is everything still unmatched, overdue the part past its due date, overdue_over_90 the part more than ninety days past it, late how many parties have something overdue. Amounts are in the currency_code of each row; never add two rows of different currencies. It reads; whether to remind a customer or pay a supplier is for whoever keeps the books.',
+  };
+}
+
 export const PortfolioFilingsTouchedSinceInput = z.object({
   from: isoDate.optional().describe('Only declarations whose period ends on or after this day.'),
   to: isoDate.optional().describe('Only declarations whose period starts on or before this day.'),

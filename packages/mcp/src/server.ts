@@ -558,6 +558,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   register(
+    'portfolio_overview',
+    {
+      title: 'What is overdue, across your companies',
+      description:
+        'What customers owe each company past their due date, and what each company owes its suppliers past theirs, on one day, in every company you may read the ledger of — for an accounting firm, its clients; for a person, the company they run. One row per company: what is open, what is overdue, what is more than ninety days late, and how many parties are late, on each side, in the currency of the company. It is aged_balance of every company, summed: aged_balance itself gives the detail party by party. Every company of the portfolio is in the answer, with zeros where nothing is open; a company left out would be indistinguishable from one owed nothing. It reads; it reminds nobody and pays nothing.',
+      inputSchema: read.PortfolioOverviewInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.portfolioOverview(backend, args)),
+  );
+
+  register(
     'list_statements',
     {
       title: 'List financial statements',

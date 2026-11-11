@@ -45,8 +45,14 @@ month after it overlaps the window.
   reads `companies` as a member); a form filed in another country than the
   company's may find no deadline; periods follow the calendar year.
 
+- A reading of the ledger across the portfolio filters on the capability the
+  ledger is read with: `portfolio_overview(on)`, what is overdue on each side,
+  is the companies the caller holds `entries.read` on, `aged_balance()` of
+  each in a lateral join.
+
 ## See also
 
 - `tests/filing_portfolio.test.ts`
+- `tests/portfolio_overview.test.ts`
 - [0038 A deadline is a rule of the country](0038-a-deadline-is-a-rule-of-the-country.md)
 - [`firms.md`](../firms.md)

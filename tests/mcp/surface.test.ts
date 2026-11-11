@@ -49,6 +49,7 @@ const READ_TOOLS = [
   'ec_sales_list',
   'portfolio_upcoming_filings',
   'portfolio_filings_touched_since',
+  'portfolio_overview',
   'list_statements',
   'financial_statement',
   'financial_analysis',
