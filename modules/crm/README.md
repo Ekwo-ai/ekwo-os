@@ -32,6 +32,7 @@ and exposes them as functions an agent or a screen calls.
 | `crm.open_deal(company, pipeline, contact, title, …)` | Opens a deal at the first `open` stage of the pipeline. |
 | `crm.move_deal(company, deal, stage)` | Moves a deal; a `won` or `lost` stage closes it, and a won deal makes its party a customer. |
 | `crm.card_of(company, contact)` | One contact as one JSON object: the contact, its organisation, its card, its segments, its open deals, its 20 latest activities. |
+| `crm.contact_vcard(company, contact)` | One contact as the text of a vCard 3.0, for an address book: name, organisation, job title, e-mail, telephone, address, profile URL, note. |
 | `crm.search_cards(company, query, status, segment, stage, country, language, owner, no_outbound, active_since, inactive_since, limit)` | The cards, filtered; every filter optional. |
 | `crm.segment_tree(company)` | Every segment as a tree — parent, depth, path of slugs — with how many contacts are in it now. |
 | `crm.board(company, pipeline, include_closed)` | One pipeline, or all of them: the stages in order, the deals at each, the totals by currency per stage and per pipeline. |
@@ -72,13 +73,14 @@ insert into crm.stages (company_id, pipeline_id, name, position, outcome) values
 
 ## From an agent
 
-Once `public.modules` carries `crm`, the MCP server offers eleven tools, each
+Once `public.modules` carries `crm`, the MCP server offers twelve tools, each
 the function of the same name above, called through `@ekwo-ai/core`:
 
 | Tool | Function | Writes |
 |---|---|---|
 | `crm_search` | `crm.search_cards()` | no |
 | `crm_card` | `crm.card_of()` | no |
+| `crm_contact_vcard` | `crm.contact_vcard()` — the contact as a vCard 3.0, for an address book | no |
 | `crm_segments` | `crm.segment_tree()` — every segment, in tree order, with its members now | no |
 | `crm_board` | `crm.board()` — a pipeline, or all of them: stages in order, their deals, totals by currency | no |
 | `crm_timeline` | `crm.timeline()` — the activities of a contact or of a deal | no |
@@ -112,6 +114,7 @@ by its id or by its name; add `--json` to any of them.
 ```sh
 ekwo crm search --status contacted --inactive-since 2026-10-01
 ekwo crm card "Ada Lovelace"
+ekwo crm vcard "Ada Lovelace" --out ada.vcf      # for an address book; without --out, "Ada Lovelace.vcf"
 ekwo crm card set "Ada Lovelace" --status in_discussion --owner sales --tag event --tag fair
 ekwo crm segments
 ekwo crm board                      # every pipeline; or: ekwo crm board <pipeline-id> --closed
@@ -145,6 +148,15 @@ card, or were in the same segment, the two rows become one — the kept
 contact's answers first, the absorbed one's filling the gaps, the tags joined,
 a `no_outbound` on either side kept — in the transaction `merge_contacts()`
 recorded, and in no other.
+
+**A vCard is built here, once.** `crm.contact_vcard()` writes the vCard 3.0
+an address book takes, from the socle's contact and the module's card, so a
+screen, an agent and a terminal hand over the same file. The name goes whole
+into `FN` and into the family-name component of `N`: where a given name ends
+is a custom of each language, and the books keep one name. An organisation is
+written as one (`ORG`, `X-ABShowAs:COMPANY`); a person carries their
+organisation, and its address when they have none of their own. The country
+is its ISO code, as the contact holds it.
 
 **The functions are `security invoker`.** The policies decide every row:
 `crm.read` reads, `crm.write` writes, on a company that holds the module. The

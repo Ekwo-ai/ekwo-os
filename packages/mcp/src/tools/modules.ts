@@ -47,6 +47,7 @@ import {
   CRM_RELATIONSHIP_STATUSES,
   crmBoard,
   crmCard,
+  crmContactVcard,
   crmJoinSegment,
   crmLeaveSegment,
   crmLogActivity,
@@ -1199,6 +1200,22 @@ const CRM: ModuleToolset = {
       async run(backend, args) {
         return inSchema('crm', () =>
           crmCard(backend, {
+            company_id: args['company_id'] as unknown as string,
+            contact_id: args['contact_id'] as unknown as string,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'contact_vcard',
+      title: 'One contact, as a vCard',
+      effect: 'read',
+      description:
+        'One contact as the text of a vCard 3.0 (media_type text/vcard), for an address book: its name as the books hold it, its organisation, the job title and profile URL of its card, its e-mail, telephone, address and note. Hand the text over as a .vcf file when the user wants the contact in their address book; nothing is written. A contact of another company is refused, crm_unknown_contact.',
+      input: z.object({ company_id: companyId, contact_id: contactId }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmContactVcard(backend, {
             company_id: args['company_id'] as unknown as string,
             contact_id: args['contact_id'] as unknown as string,
           }),

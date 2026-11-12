@@ -289,7 +289,9 @@ ${bold('Connecting')} ${dim('(every command)')}
               --active-since --inactive-since] — the cards; card <contact> —
               one contact, whole; card set <contact> [--status --priority
               --owner --tag <tag>… --job-title --linkedin --source
-              --no-outbound yes|no --custom <json>]; segments — the tree, with
+              --no-outbound yes|no --custom <json>]; vcard <contact> [--out
+              <file.vcf>] — the contact as a vCard, for an address book;
+              segments — the tree, with
               its members; board [<pipeline>] [--closed] — the stages, their
               deals and totals by currency; timeline <contact> [--deal --since
               --kind <kind>…]; log <contact> --kind <kind> [--subject --body

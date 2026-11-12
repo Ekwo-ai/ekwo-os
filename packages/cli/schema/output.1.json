@@ -1101,6 +1101,17 @@
           "activities": { "type": "array", "items": { "$ref": "#/$defs/row" } }
         }
       },
+      "crm vcard": {
+        "$comment": "One contact as the vCard 3.0 crm.contact_vcard() writes, and the file it was written to: the contact's name, or --out.",
+        "type": "object",
+        "required": ["vcard", "media_type", "contact_id", "written_to"],
+        "properties": {
+          "vcard": { "type": "string" },
+          "media_type": { "const": "text/vcard" },
+          "contact_id": { "type": "string" },
+          "written_to": { "type": "string" }
+        }
+      },
       "crm card set": {
         "$comment": "The card as crm.upsert_card() left it: the fields the flags named changed, every other one as it was.",
         "type": "object",

@@ -153,6 +153,25 @@ export async function crmCard(backend: Backend, args: { company_id: string; cont
   return callOne(backend, 'card_of', { p_company_id: args.company_id, p_contact_id: args.contact_id });
 }
 
+/** The media type of a vCard, for a file or a response that carries one. */
+export const VCARD_MEDIA_TYPE = 'text/vcard';
+
+/**
+ * `crm.contact_vcard()`: one contact as the text of a vCard 3.0, for an
+ * address book — built by the function, handed back as it wrote it.
+ */
+export async function crmContactVcard(
+  backend: Backend,
+  args: { company_id: string; contact_id: string },
+): Promise<{ vcard: string; media_type: string }> {
+  const [vcard] = (await call(backend, 'contact_vcard', {
+    p_company_id: args.company_id,
+    p_contact_id: args.contact_id,
+  })) as unknown[];
+  if (typeof vcard !== 'string') throw new BooksError(`crm_no_answer: ${CRM_SCHEMA}.contact_vcard answered nothing`);
+  return { vcard, media_type: VCARD_MEDIA_TYPE };
+}
+
 /** `crm.segment_tree()`: every segment, in tree order, with its members now. */
 export async function crmSegments(backend: Backend, args: { company_id: string }): Promise<{ segments: Row[]; count: number }> {
   const segments = await call(backend, 'segment_tree', { p_company_id: args.company_id });
