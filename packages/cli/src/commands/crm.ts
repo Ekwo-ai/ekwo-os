@@ -1,9 +1,9 @@
 /**
- * `ekwo crm search | card | card set | segments | board | timeline | log |
+ * `ekwo crm search | card | card set | vcard | segments | board | timeline | log |
  * join | leave | deal open | deal move` — the `crm` module from a terminal.
  *
  * Each verb is one function of the core — `crmSearch()`, `crmCard()`,
- * `crmUpsertCard()`, `crmSegments()`, `crmBoard()`, `crmTimeline()`,
+ * `crmContactVcard()`, `crmUpsertCard()`, `crmSegments()`, `crmBoard()`, `crmTimeline()`,
  * `crmLogActivity()`, `crmJoinSegment()`, `crmLeaveSegment()`,
  * `crmOpenDeal()`, `crmMoveDeal()` — which the MCP server calls for the
  * `crm_*` tool of the same name, and each of those is one function of the
@@ -20,6 +20,7 @@ import {
   CRM_RELATIONSHIP_STATUSES,
   crmBoard,
   crmCard,
+  crmContactVcard,
   crmJoinSegment,
   crmLeaveSegment,
   crmLogActivity,
@@ -32,6 +33,7 @@ import {
   resolveContact,
   type Backend,
 } from '@ekwo-ai/core';
+import { writeFile } from 'node:fs/promises';
 import { UsageError, boolFlag, numberFlag, rejectUnknownFlags, stringFlag, stringFlags, type ParsedArgs } from '../args.js';
 import { BOOKS_FLAGS, given, openBooks, required, uuidArg, type BooksDeps } from '../books.js';
 import { setResult } from '../output.js';
@@ -48,6 +50,7 @@ const SEARCH_FLAGS = [
   'active-since', 'inactive-since', 'limit',
 ] as const;
 const CARD_FLAGS = [...BOOKS_FLAGS] as const;
+const VCARD_FLAGS = [...BOOKS_FLAGS, 'out'] as const;
 const CARD_SET_FLAGS = [
   ...BOOKS_FLAGS, 'status', 'priority', 'owner', 'tag', 'job-title', 'linkedin', 'source', 'no-outbound', 'custom',
 ] as const;
@@ -65,6 +68,7 @@ const DEAL_MOVE_FLAGS = [...BOOKS_FLAGS] as const;
 const USAGE =
   'usage: ekwo crm search [--query --status <status> --segment --stage --country --language --owner --no-outbound yes|no --active-since --inactive-since --limit]' +
   ' | ekwo crm card <contact>' +
+  ' | ekwo crm vcard <contact> [--out <file.vcf>]' +
   ' | ekwo crm card set <contact> [--status <status> --priority <priority> --owner --tag <tag>… --job-title --linkedin --source --no-outbound yes|no --custom <json>]' +
   ' | ekwo crm segments' +
   ' | ekwo crm board [<pipeline-id>] [--closed]' +
@@ -102,6 +106,7 @@ export async function crmCommand(args: ParsedArgs, deps: BooksDeps = {}): Promis
   const action = args.positional[0];
   if (action === 'search') return search(args, deps);
   if (action === 'card') return args.positional[1] === 'set' ? cardSet(args, deps) : card(args, deps);
+  if (action === 'vcard') return vcard(args, deps);
   if (action === 'segments') return segments(args, deps);
   if (action === 'board') return board(args, deps);
   if (action === 'timeline') return timeline(args, deps);
@@ -151,6 +156,28 @@ async function search(args: ParsedArgs, deps: BooksDeps): Promise<number> {
       ]),
     );
   }
+  return 0;
+}
+
+/** A file name made of a contact's name: only the characters a file system refuses are left out. */
+function vcardFileName(name: string): string {
+  const base = name.replace(/[\\/:*?"<>|\u0000-\u001f]+/g, ' ').replace(/\s+/g, ' ').trim();
+  return `${base === '' ? 'contact' : base}.vcf`;
+}
+
+async function vcard(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, VCARD_FLAGS);
+  const { backend, company } = await openBooks(args, deps);
+  const contact = await contactOf(backend, company.id, args.positional[1]);
+  const result = await crmContactVcard(backend, { company_id: company.id, contact_id: contact.id });
+  const out = stringFlag(args, 'out') ?? vcardFileName(contact.name);
+  await writeFile(out, result.vcard, 'utf8');
+  setResult({ ...result, contact_id: contact.id, written_to: out });
+
+  heading(`${contact.name}, as a vCard`);
+  pairs([['file', `${out}  ${dim(result.media_type)}`]]);
+  line();
+  note(dim('Built from the books by crm.contact_vcard(): open it to add the contact to an address book.'));
   return 0;
 }
 

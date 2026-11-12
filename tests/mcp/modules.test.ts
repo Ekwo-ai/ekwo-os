@@ -138,6 +138,7 @@ describe('the loader', () => {
     expect(names.filter((name) => name.startsWith('crm_')).sort()).toEqual([
       'crm_board',
       'crm_card',
+      'crm_contact_vcard',
       'crm_join_segment',
       'crm_leave_segment',
       'crm_log_activity',

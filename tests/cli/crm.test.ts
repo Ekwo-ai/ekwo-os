@@ -130,6 +130,26 @@ describe('ekwo crm', () => {
     expect((await ekwo(['crm', 'card', 'set', orgId, '--priority', 'high'])).exitCode).toBe(0);
   });
 
+  it('vcard writes the contact as the vCard the schema builds, to a file named after it or to --out', async () => {
+    const cwd = process.cwd();
+    process.chdir(root);
+    try {
+      const named = await ekwo(['crm', 'vcard', 'Ada Lovelace']);
+      expect(named.command).toBe('crm vcard');
+      expect(named.exitCode).toBe(0);
+      expect(named.data).toMatchObject({ contact_id: personId, media_type: 'text/vcard', written_to: 'Ada Lovelace.vcf' });
+      const text = await readFile(join(root, 'Ada Lovelace.vcf'), 'utf8');
+      expect(text).toBe((named.data as { vcard: string }).vcard);
+      expect(text.split('\r\n')).toEqual(expect.arrayContaining(['BEGIN:VCARD', 'FN:Ada Lovelace', 'ORG:Northwind Trading', 'END:VCARD']));
+    } finally {
+      process.chdir(cwd);
+    }
+    const out = join(root, 'northwind.vcf');
+    const org = await ekwo(['crm', 'vcard', orgId, '--out', out]);
+    expect(org.data).toMatchObject({ contact_id: orgId, written_to: out });
+    expect(await readFile(out, 'utf8')).toContain('X-ABShowAs:COMPANY');
+  });
+
   it('search filters by text and by status', async () => {
     const byText = await ekwo(['crm', 'search', '--query', 'northwind']);
     expect(byText.command).toBe('crm search');

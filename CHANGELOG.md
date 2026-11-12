@@ -11,6 +11,19 @@ somewhere has already run it.
 
 ### Added
 
+- **A contact of the `crm` module, as a vCard.** `crm.contact_vcard(company,
+  contact)` writes the vCard 3.0 an address book takes (RFC 2426), from the
+  socle's contact and the module's card: the name whole in `FN` and `N` — the
+  books keep one name, and where a given name ends is a custom of each
+  language — the organisation in `ORG` (and `X-ABShowAs:COMPANY` for an
+  organisation itself), the card's job title and profile URL, the e-mail, the
+  telephone, the address — a person without one takes their organisation's —
+  with the country as its ISO code, the note, and `UID urn:uuid:<contact>`;
+  lines end in CRLF and fold past 75 octets
+  (`20261112070000_crm_contact_vcard`, module migration, additive). The MCP
+  tool `crm_contact_vcard`, `ekwo crm vcard <contact> [--out <file.vcf>]` and
+  `crmContactVcard()` of `@ekwo-ai/core` hand over the same text, so every
+  screen that offers "add to my contacts" builds the file from one place.
 - **A bank account keeps the profile of its CSV statements.** The lay-out of
   a CSV export is the bank's, so it belongs to the account the file is of:
   `bank_accounts.statement_profile` (jsonb, nullable) holds the

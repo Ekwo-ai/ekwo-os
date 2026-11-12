@@ -112,7 +112,7 @@ describe('the crm toolset', () => {
   it('is offered where ekwo.modules carries crm, under its prefix, and not otherwise', async () => {
     expect(await installedModules(backend)).toContain('crm');
     const names = (await client.listTools()).tools.map((tool) => tool.name);
-    expect(names.filter((name) => name.startsWith('crm_')).length).toBe(11);
+    expect(names.filter((name) => name.startsWith('crm_')).length).toBe(12);
     expect(names.filter((name) => name.startsWith('crm_') === false && /^crm/.test(name))).toEqual([]);
     expect((await client.listPrompts()).prompts.map((p) => p.name)).toContain('crm_morning_review');
 
@@ -220,6 +220,20 @@ describe('the crm toolset', () => {
     expect((left['membership'] as { left_at: string | null }).left_at).not.toBeNull();
     const after = await call('crm_segments', { company_id: companyId });
     expect((after['segments'] as { slug: string; members: number }[]).find((s) => s.slug === 'retail')?.members).toBe(0);
+  });
+
+  it('hands over a contact as the vCard the schema writes', async () => {
+    const answer = await call('crm_contact_vcard', { company_id: companyId, contact_id: personId });
+    expect(answer['media_type']).toBe('text/vcard');
+    const lines = String(answer['vcard']).split('\r\n');
+    expect(lines[0]).toBe('BEGIN:VCARD');
+    expect(lines).toContain('FN:Ada Lovelace');
+    expect(lines).toContain('ORG:Northwind Trading');
+    expect(lines).toContain('EMAIL;TYPE=INTERNET:ada@northwind.example');
+    expect(lines).toContain(`UID:urn:uuid:${personId}`);
+    await expect(
+      call('crm_contact_vcard', { company_id: companyId, contact_id: segmentId }),
+    ).rejects.toThrow(/crm_unknown_contact/);
   });
 
   it('hands the schema\'s refusals to the model under their own names', async () => {
