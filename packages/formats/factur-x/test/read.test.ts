@@ -93,16 +93,19 @@ const compact = (s: string): string => s.replace(/\s/g, '');
 function expectedFrom(invoice: Invoice, profile: Profile) {
   const totals = computeTotals(invoice);
   const detailed = profile === 'en16931' || profile === 'extended';
+  // MINIMUM holds the header and four totals; BASIC WL adds everything but the lines.
+  const minimum = profile === 'minimum';
+  const lined = !minimum && profile !== 'basic-wl';
   const party = (p: Invoice['seller']) => ({
     name: p.name,
     vatId: p.vatId === undefined ? null : compact(p.vatId),
     legalId: p.legalId === undefined ? null : { value: compact(p.legalId.value), scheme: p.legalId.scheme },
-    electronicAddress: p.electronicAddress ?? null,
+    electronicAddress: minimum ? null : (p.electronicAddress ?? null),
     address: {
-      lines: [p.address.line1, p.address.line2, p.address.line3].filter((line) => line !== undefined),
-      city: p.address.city,
-      postalCode: p.address.postalCode,
-      region: p.address.subdivision ?? null,
+      lines: minimum ? [] : [p.address.line1, p.address.line2, p.address.line3].filter((line) => line !== undefined),
+      city: minimum ? null : p.address.city,
+      postalCode: minimum ? null : p.address.postalCode,
+      region: minimum ? null : (p.address.subdivision ?? null),
       country: p.address.country,
     },
     contact: detailed && p.contact ? { name: p.contact.name ?? null, phone: p.contact.phone ?? null, email: p.contact.email ?? null } : null,
@@ -116,21 +119,21 @@ function expectedFrom(invoice: Invoice, profile: Profile) {
     typeCode: DOCUMENT_TYPE_CODES[invoice.type ?? 'invoice'],
     number: invoice.number,
     issueDate: invoice.issueDate,
-    dueDate: invoice.dueDate ?? null,
-    deliveryDate: invoice.deliveryDate ?? invoice.issueDate,
+    dueDate: minimum ? null : (invoice.dueDate ?? null),
+    deliveryDate: minimum ? null : (invoice.deliveryDate ?? invoice.issueDate),
     currency: invoice.currency ?? 'EUR',
     buyerReference: invoice.buyerReference ?? null,
     orderReference: invoice.orderReference ?? null,
-    contractReference: invoice.contractReference ?? null,
-    precedingInvoices: invoice.precedingInvoice
+    contractReference: minimum ? null : (invoice.contractReference ?? null),
+    precedingInvoices: invoice.precedingInvoice && !minimum
       ? [{ number: invoice.precedingInvoice.number, issueDate: invoice.precedingInvoice.issueDate ?? null }]
       : [],
-    notes: invoice.note ? [invoice.note.replace(/\s+/g, ' ').trim()] : [],
+    notes: invoice.note && !minimum ? [invoice.note.replace(/\s+/g, ' ').trim()] : [],
     seller: party(invoice.seller),
     buyer: party(invoice.buyer),
-    paymentTerms: payment?.terms ?? null,
+    paymentTerms: minimum ? null : (payment?.terms ?? null),
     paymentMeans:
-      payment && (payment.iban || payment.meansCode)
+      !minimum && payment && (payment.iban || payment.meansCode)
         ? [
             {
               code: payment.meansCode ?? '58',
@@ -140,24 +143,24 @@ function expectedFrom(invoice: Invoice, profile: Profile) {
             },
           ]
         : [],
-    taxes: totals.breakdown.map((group) => ({
+    taxes: (minimum ? [] : totals.breakdown).map((group) => ({
       category: group.category,
       rate: group.category === 'O' ? null : money(group.rate),
       base: money(group.basis),
       tax: money(group.tax),
     })),
     totals: {
-      lineTotal: money(totals.lineTotal),
+      lineTotal: minimum ? null : money(totals.lineTotal),
       allowanceTotal: null,
       chargeTotal: null,
       taxExclusive: money(totals.taxBasisTotal),
       taxTotal: money(totals.taxTotal),
       taxInclusive: money(totals.grandTotal),
-      prepaid: totals.prepaid ? money(totals.prepaid) : null,
+      prepaid: totals.prepaid && !minimum ? money(totals.prepaid) : null,
       rounding: null,
       payable: money(totals.duePayable),
     },
-    lines: invoice.lines.map((line, i) => ({
+    lines: (lined ? invoice.lines : []).map((line, i) => ({
       id: line.id ?? String(i + 1),
       note: line.note ?? null,
       quantity: line.quantity.toFixed(4),
@@ -166,8 +169,8 @@ function expectedFrom(invoice: Invoice, profile: Profile) {
       vatCategory: category(line),
       vatRate: category(line) === 'O' ? null : money(category(line) === 'S' ? line.vatRate : 0),
       name: line.name,
-      description: line.description ?? null,
-      sellerItemId: line.sellerItemId ?? null,
+      description: detailed ? (line.description ?? null) : null,
+      sellerItemId: detailed ? (line.sellerItemId ?? null) : null,
     })),
   };
 }

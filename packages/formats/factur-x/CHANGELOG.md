@@ -6,6 +6,17 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+- **Each profile is valid against its own schema.** BASIC wrote the seller's
+  item identifier (BT-155) and the item description (BT-154), which start at
+  EN 16931; BASIC WL and MINIMUM wrote the lines, and MINIMUM the addresses,
+  the payment and the VAT breakdown, which their schemas leave out. Each
+  profile now writes what its schema admits, and `test/xsd.test.ts` validates
+  the five of them against the Factur-X 1.09 XSDs with `xmllint`
+  ([#238](https://github.com/Ekwo-ai/ekwo-os/issues/238)).
+- `readCii` no longer reports `BR-CO-16` on a MINIMUM file, which has no
+  element for the amount already paid.
+
 ### Changed
 - **A legal identifier may come without a scheme.** `LegalIdentifier.scheme`
   is optional: where the books name no scheme for a registration number, the

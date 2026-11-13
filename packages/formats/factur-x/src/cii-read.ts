@@ -519,5 +519,8 @@ export function readCii(input: string | Uint8Array, options: ReadOptions = {}): 
     attachments,
   };
 
-  return { invoice, violations: [...reader.violations, ...checkReceived(invoice)], profile };
+  // MINIMUM has no element for the amount already paid (BT-113): its amount
+  // due cannot be held to the total with VAT, so BR-CO-16 is not checked there.
+  const checked = checkReceived(invoice).filter((each) => !(profile === 'minimum' && each.code === 'BR-CO-16'));
+  return { invoice, violations: [...reader.violations, ...checked], profile };
 }
