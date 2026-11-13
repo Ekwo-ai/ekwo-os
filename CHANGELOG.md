@@ -9,7 +9,16 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.25.2] — 2026-11-13
+
+The release that carries 0.25.1 to every package: the Release workflow now
+installs `xmllint`, which the tests of `@ekwo-ai/factur-x` run when the
+package is published.
+
 ## [0.25.1] — 2026-11-13
+
+Tagged, and published for five format packages only; 0.25.2 is the same
+code for all of them.
 
 ### Fixed
 

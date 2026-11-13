@@ -48,6 +48,9 @@ jobs:
       # reproducible.
       - run: npm install -g npm@11.21.0
       - run: npm ci
+      # Publishing a package runs its tests, and those of @ekwo-ai/factur-x
+      # validate its profiles against their XSDs with xmllint.
+      - run: command -v xmllint || (sudo apt-get update && sudo apt-get install -y --no-install-recommends libxml2-utils)
       # Every package must be one this run can publish: a package without a
       # trusted publisher would stop the run half way, after the packages
       # before it are already on the registry. See docs/releasing.md.
