@@ -1,9 +1,9 @@
-# Start with Claude: try Ekwo on your own books
+# Start with Claude: try Ekwo on your own company data
 
-This is the shortest way to see your own books in Ekwo: a free database of
+This is the shortest way to see your own company data in Ekwo: a free database of
 your own, one command to install, and then Claude — the desktop application or
 Claude Code — doing the rest in plain sentences. You bring an export of your
-books from wherever they are kept today; Claude takes them over, answers
+accounts from wherever they are kept today; Claude takes them over, answers
 questions about them and prepares your next VAT return. The web application,
 [Ekwo Cloud](https://cloud.ekwo.ai), opens this same instance whenever you
 would rather click than type.
@@ -15,7 +15,7 @@ one block into a settings file.
 **Before you start, know what is not there yet** (the full list is
 [at the end](#what-this-does-not-do-yet)): Ekwo prepares a declaration and you
 file it; imported history carries no VAT; the reconciliation marks of your old
-books are not re-applied.
+accounts are not re-applied.
 
 ## What you need
 
@@ -25,12 +25,12 @@ books are not re-applied.
   `node --version` in a terminal to check.
 - **Claude Desktop** ([claude.ai/download](https://claude.ai/download)) or
   **Claude Code**.
-- **An export of your books.** The simplest is a trial balance as a CSV file —
-  account, debit, credit — which every ledger can produce. A full export from
-  another ledger works too. [`compatibility.md`](compatibility.md) lists every
+- **An export of your accounts.** The simplest is a trial balance as a CSV
+  file — account, debit, credit — which every accounting software can produce.
+  A full export from another one works too. [`compatibility.md`](compatibility.md) lists every
   export Ekwo reads, with the official page that says how to produce each one.
 
-Try it on a copy first: nothing here touches the software your books come from.
+Try it on a copy first: nothing here touches the software your accounts come from.
 
 ## 1. Create a free Supabase project
 
@@ -64,10 +64,10 @@ The installer asks its questions one by one:
 | It asks | What to answer |
 |---|---|
 | The connection string | The session pooler line from step 1, with your password in it |
-| The country | The country whose rules your books follow. Nothing is preselected |
-| Your organisation, then the first company | Names. The company is the one whose books you are bringing |
+| The country | The country whose rules your accounts follow. Nothing is preselected |
+| Your organisation, then the first company | Names. The company is the one whose accounts you are bringing |
 | The first day of the financial year | Only where the country does not fix one |
-| The chart of accounts and the language of the books | Only where the country publishes more than one |
+| The chart of accounts and the language of the company data | Only where the country publishes more than one |
 | How often the company files its VAT return | Only where that depends on the company |
 | Your main bank account | Optional, written the way your country's banks write it. Enter skips it |
 | The administrator's e-mail address, the secret key and a password | This is **you**: the user Claude will sign in as. Choose a real password and keep it |
@@ -153,13 +153,13 @@ browser. [`packages/mcp`](../packages/mcp/README.md) explains both routes.
 ## 4. Several companies, several countries
 
 Start a conversation. Claude reads the description of every tool, so you speak
-about your books, not about tools.
+about your company, not about tools.
 
 **"Is Ekwo connected? List my companies."** Claude calls `status` and
 `list_companies`: the schema version, and the company the installer created,
 with you as its owner.
 
-One installation keeps the books of as many companies as you like, in as many
+One installation keeps the accounts of as many companies as you like, in as many
 countries: the installer loads the rules of every country Ekwo has a pack for.
 
 **"Create a second company, Harbourlight Ledger Ltd, in the United Kingdom,
@@ -172,7 +172,7 @@ taxes and VAT return, in its own currency, with you as its owner:
 | Põhjatuul OÜ | EE | EUR | owner |
 | Harbourlight Ledger Ltd | GB | GBP | owner |
 
-Every tool that reads or writes the books names its company, so tell Claude
+Every tool that reads or writes the company data names its company, so tell Claude
 which one you mean whenever it could be either. Where a country leaves a
 choice open — the first day of the year, a chart, a language — the tool
 refuses to guess, and Claude asks you.
@@ -183,12 +183,12 @@ single first company — a group, a firm — can start with
 `ekwo init --no-company`; see the
 [installation guide](../packages/cli/README.md#several-countries-in-one-installation-init---no-company).
 
-## 5. Ask Claude to take over your books
+## 5. Ask Claude to take over your accounts
 
 **"Here is the trial balance of Põhjatuul OÜ at 1 January 2026. Import it —
 show me first what you would do."** Attach the CSV (in Claude Code, give its
 path). Claude calls `import_books` with `dry_run` on, which writes nothing. The
-answer is the **correspondence**: for every account of your old books, the
+answer is the **correspondence**: for every account of your old software, the
 account of the new chart it would go to, and why. A few lines of it, from the
 two companies above:
 
@@ -202,7 +202,7 @@ two companies above:
 **Read every line before you agree.** Only the same code, confirmed by what
 the file says of the account, is `exact`; everything else is `suggested` and
 waits for you, or `none`. Two charts can use the same digits for different
-things, so a suggestion can be wrong. Nothing is posted while a line is only
+things, so a suggestion can be wrong. Nothing is recorded while a line is only
 suggested.
 
 **"610 is 1100, as you suggest. 090 is the bank current account, 1300."**
@@ -211,24 +211,24 @@ the database runs the whole import and takes it back, so what you see is what
 would happen, and any refusal is the real one. When every suggestion is right:
 **"Every suggestion is right, accept them."**
 
-**"That's right. Import it for real."** The opening entry is posted, all of it
-or none of it. The same file a second time is refused rather than counted
+**"That's right. Import it for real."** The opening transaction is recorded, all of
+it or none of it. The same file a second time is refused rather than counted
 twice.
 
-For a larger history — the entries of a whole year — the steps are the same.
+For a larger history — the transactions of a whole year — the steps are the same.
 A file that does not balance, or a date it does not make unambiguous, is
 refused by name rather than guessed. The tool takes up to 256 KiB of text;
 beyond that it answers with the `ekwo import` command that reads the files
 from your disk and runs the same import ([`import.md`](import.md)). Claude Code
 can run it for you.
 
-Bank statements are not books: say **"import this bank statement"** and Claude
-uses `import_bank_statement`, which records the lines to be matched and books
-nothing.
+Bank statements are not accounts: say **"import this bank statement"** and
+Claude uses `import_bank_statement`, which keeps the lines to be matched and
+records no transaction.
 
 ## 6. Ask questions, prepare a return
 
-Now it is your books. Sentences that work, and what answers them:
+Now it is your company data. Sentences that work, and what answers them:
 
 | You say | Claude uses |
 |---|---|
@@ -236,15 +236,15 @@ Now it is your books. Sentences that work, and what answers them:
 | "Every movement on the customers account." | `general_ledger` |
 | "Who owes me money, and since when?" | `aged_balance` |
 | "Everything that went through with this customer this year." | `search_contacts`, `contact_statement` |
-| "Invoice Lõuna Pagarid 1 000 for consulting at the standard rate, and post it." | `search_contacts`, `create_document`, `post_document` |
+| "Invoice Lõuna Pagarid 1 000 for consulting at the standard rate, and record it." | `search_contacts`, `create_document`, `post_document` |
 | "Send them a link to the invoice." | `share_document` |
 | "Prepare my VAT return for January." | `vat_return` |
 
-The return is computed from what was booked in Ekwo during the period, box by
+The return is computed from what was recorded in Ekwo during the period, box by
 box, in the form the country's administration uses.
 
 Claude finds its way on its own: the server tells it, at the handshake, what to
-call first and how to correct what is posted. The same first session, tool by
+call first and how to correct what is recorded. The same first session, tool by
 tool, is in [`agents.md`](agents.md).
 
 **Filing is yours.** Ekwo prepares the figures; you send them on your tax
@@ -256,18 +256,18 @@ sent, noticing a period that changed afterwards — is in [`filing.md`](filing.m
 
 - **No filing.** Ekwo prepares a declaration and does not transmit it to an
   administration. Sending it, and answering for it, is yours.
-- **No VAT on imported history.** An imported line feeds the ledger, the
+- **No VAT on imported history.** An imported line feeds the accounts, the
   balances and the financial statements, and no box of a VAT return: a period
   kept elsewhere was declared from where it was kept.
 - **No reconciliation marks.** Open items are matched again in Ekwo, with
   `reconcile` ("match this payment with that invoice").
 - **No new accounts.** An old account the new chart does not have is pointed
   at one that exists, or added first.
-- **No documents.** Old invoices arrive as the entries they were posted as.
+- **No documents.** Old invoices arrive as the transactions they were recorded as.
 
 Before you rely on anything Ekwo prepares, read [DISCLAIMER.md](../DISCLAIMER.md):
 a country pack is a reading of the rules at the date of its version, and the
-books are yours.
+company data is yours.
 
 ## Checked for real
 
