@@ -103,13 +103,6 @@ somewhere has already run it.
 
 ### Fixed
 
-- **`@ekwo-ai/factur-x`: each profile is valid against its own schema.** BASIC,
-  the default, wrote the seller's item identifier (BT-155) and the item
-  description (BT-154), which start at EN 16931; BASIC WL and MINIMUM wrote
-  elements their schemas leave out. Each profile now writes what its schema
-  admits, and the tests validate the five of them against the Factur-X 1.09
-  XSDs with `xmllint`
-  ([#238](https://github.com/Ekwo-ai/ekwo-os/issues/238)).
 - **The search of the `crm` module answers on a company of an imported
   address book.** `crm.search_cards()` ended in a statement timeout on a
   company of about 33 000 contacts and 10 500 cards: every table of the
@@ -176,6 +169,29 @@ somewhere has already run it.
   `attachments` stay on the list: the capability a row needs is chosen by
   `attachment_is_filing_deposit_file(id)`, a definer function that answers
   about one piece and has no set-returning form yet.
+
+### Changed
+
+- **`@ekwo-ai/factur-x`: the currency of an invoice is stated.**
+  `Invoice.currency` (BT-5) is required, and `generateCiiXml` throws a
+  `TypeError` naming the field when it is absent or not a three-letter code.
+  It was optional and fell back to the euro. An invoice in euros states
+  `currency: 'EUR'`; the e-invoicing of `@ekwo-ai/core` already passed the
+  currency of the document.
+
+## [0.25.1] — 2026-11-13
+
+Published from its own branch, `release/0.25.1`.
+
+### Fixed
+
+- **`@ekwo-ai/factur-x`: each profile is valid against its own schema.** BASIC,
+  the default, wrote the seller's item identifier (BT-155) and the item
+  description (BT-154), which start at EN 16931; BASIC WL and MINIMUM wrote
+  elements their schemas leave out. Each profile now writes what its schema
+  admits, and the tests validate the five of them against the Factur-X 1.09
+  XSDs with `xmllint`
+  ([#238](https://github.com/Ekwo-ai/ekwo-os/issues/238)).
 
 ## [0.25.0] — 2026-11-07
 

@@ -131,7 +131,7 @@ const PEPPOL_BIS_3: EinvoiceFormat = {
 // Factur-X, EN 16931 profile — UN/CEFACT CII D16B, by @ekwo-ai/factur-x
 //
 // The older brick. It takes a plain invoice object of JavaScript numbers,
-// computes its own totals and fills in what it is not given: a currency, a
+// computes its own totals and fills in what it is not given: a
 // unit, a payment means, a delivery date, the sentence of an exemption.
 // Decision 0050 names it as the brick to move to the contract of the views;
 // until it is, this adapter holds it to the books from the outside:

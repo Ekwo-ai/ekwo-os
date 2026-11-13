@@ -121,7 +121,7 @@ function expectedFrom(invoice: Invoice, profile: Profile) {
     issueDate: invoice.issueDate,
     dueDate: minimum ? null : (invoice.dueDate ?? null),
     deliveryDate: minimum ? null : (invoice.deliveryDate ?? invoice.issueDate),
-    currency: invoice.currency ?? 'EUR',
+    currency: invoice.currency,
     buyerReference: invoice.buyerReference ?? null,
     orderReference: invoice.orderReference ?? null,
     contractReference: minimum ? null : (invoice.contractReference ?? null),

@@ -30,6 +30,7 @@ const invoice = {
   number: 'INV-2026-0042',
   issueDate: '2026-03-31',
   dueDate: '2026-04-30',
+  currency: 'EUR',                                      // required: no currency is assumed
   seller: {
     name: 'Exemple Conseil SA',
     vatId: 'BE0123456749',

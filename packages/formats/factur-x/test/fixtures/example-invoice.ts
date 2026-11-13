@@ -36,6 +36,7 @@ export const exampleInvoice: Invoice = {
 export const domesticInvoice: Invoice = {
   number: 'INV-2026-0043',
   issueDate: '2026-04-02',
+  currency: 'EUR',
   dueDate: '2026-05-02',
   seller: exampleInvoice.seller,
   buyer: {

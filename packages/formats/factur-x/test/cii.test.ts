@@ -47,6 +47,15 @@ describe('generateCiiXml', () => {
     expect(generateCiiXml(exampleInvoice, { profile: 'en16931' })).toContain('<ram:BICID>GKCCBEBB</ram:BICID>');
   });
 
+  it('writes the currency the invoice states, and refuses an invoice that states none', () => {
+    const swiss = generateCiiXml({ ...exampleInvoice, currency: 'chf' });
+    expect(swiss).toContain('<ram:InvoiceCurrencyCode>CHF</ram:InvoiceCurrencyCode>');
+    expect(swiss).toContain('<ram:TaxTotalAmount currencyID="CHF">0.00</ram:TaxTotalAmount>');
+    const { currency: _currency, ...without } = exampleInvoice;
+    expect(() => generateCiiXml(without as typeof exampleInvoice)).toThrow(/invoice\.currency is required/);
+    expect(() => generateCiiXml({ ...exampleInvoice, currency: 'euro' })).toThrow(TypeError);
+  });
+
   it('adds up the totals', () => {
     expect(xml).toContain('<ram:LineTotalAmount>4050.00</ram:LineTotalAmount>');
     expect(xml).toContain('<ram:TaxTotalAmount currencyID="EUR">0.00</ram:TaxTotalAmount>');

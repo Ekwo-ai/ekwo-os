@@ -116,8 +116,8 @@ export interface Invoice {
   dueDate?: IsoDate;
   /** Actual delivery date (BT-72). Defaults to the issue date. */
   deliveryDate?: IsoDate;
-  /** Invoice currency (BT-5). Defaults to `"EUR"`. */
-  currency?: CurrencyCode;
+  /** Invoice currency (BT-5). Stated by the caller: an invoice has no currency by default. */
+  currency: CurrencyCode;
   seller: Party;
   buyer: Party;
   lines: InvoiceLine[];

@@ -6,6 +6,15 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+- **The currency of an invoice is stated.** `Invoice.currency` (BT-5) is
+  required, and `generateCiiXml` throws a `TypeError` naming the field when it
+  is absent or not a three-letter code. It was optional and fell back to the
+  euro, which wrote a wrong invoice for every other currency without a word.
+  An invoice in euros states `currency: 'EUR'`.
+
+## [0.25.1] — 2026-11-13
+
 ### Fixed
 - **Each profile is valid against its own schema.** BASIC wrote the seller's
   item identifier (BT-155) and the item description (BT-154), which start at

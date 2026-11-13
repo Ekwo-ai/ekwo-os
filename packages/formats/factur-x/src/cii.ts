@@ -92,7 +92,11 @@ export function generateCiiXml(invoice: Invoice, options: GenerateOptions = {}):
   // MINIMUM is the header and four totals: the note, the delivery, the
   // payment, the VAT breakdown and the preceding invoice start at BASIC WL.
   const minimum = profile === 'minimum';
-  const currency = (invoice.currency ?? 'EUR').toUpperCase();
+  // The currency (BT-5) is the caller's to state: no currency is assumed.
+  if (typeof invoice.currency !== 'string' || !/^[A-Za-z]{3}$/.test(invoice.currency)) {
+    throw new TypeError('invoice.currency is required: the ISO 4217 code of the invoice currency (BT-5), for example "CHF"');
+  }
+  const currency = invoice.currency.toUpperCase();
   const totals = computeTotals(invoice);
   const typeCode = DOCUMENT_TYPE_CODES[invoice.type ?? 'invoice'];
 
