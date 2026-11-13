@@ -19,7 +19,7 @@ a project of its own, and the move is checked by comparing both trial balances,
 to the cent. A company can also be exported from one installation and imported
 into another, wherever each one runs.
 
-*Version 1.3 — 10 October 2026. This page covers the software of this
+*Version 1.4 — 13 November 2026. This page covers the software of this
 repository, the site at ekwo.ai and the hosted service at cloud.ekwo.ai,
 including the MCP server at mcp.ekwo.ai. Each section says which one it is
 about.*

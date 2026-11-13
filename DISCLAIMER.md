@@ -7,7 +7,7 @@ adviser and not a financial, legal or investment adviser, and installing it,
 using it or reading this site does not make Ekwo, or anyone who contributed to
 it, your accountant or your adviser.
 
-*Version 2.2 — 15 October 2026. This page applies to Ekwo OS, the software
+*Version 2.3 — 13 November 2026. This page applies to Ekwo OS, the software
 of this repository, and to the site at ekwo.ai. The managed edition is
 governed by its own terms, and so is every engagement of Ekwo Consulting, by
 its quote.*

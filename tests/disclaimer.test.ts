@@ -21,7 +21,7 @@ describe('the disclaimer', () => {
     expect(text).toMatch(/not an accounting firm/);
     for (const heading of [
       'What Ekwo does not provide',
-      'Your books, your filings, your deadlines',
+      'Your company data, your filings, your deadlines',
       'Software you can change',
       'No warranty, no liability',
       'European Union',
