@@ -108,8 +108,12 @@ back to `C62` (unit). See `UNIT_CODES` and `toUnitCode`.
   [`@ekwo-ai/invoice-pdf`](../invoice-pdf/README.md#pdfa-3) has them, and veraPDF finds no
   failed rule of PDF/A-3b in it once embedded; validate any other PDF with the tool of your
   platform before going live.
-- No XSD or Schematron validation is performed. Test against a validator such as the FNFE
-  Factur-X validator or the Mustang project.
+- Each profile writes the elements its schema admits: MINIMUM the header and the totals,
+  BASIC WL the whole document without its lines, BASIC the lines without the seller's item
+  identifier (BT-155) and the item description (BT-154), which start at EN 16931. The tests
+  validate every profile against the Factur-X 1.09 XSDs.
+- No validation is performed at run time, and the Schematron rules are not run by the tests.
+  Test against a validator such as the FNFE Factur-X validator or the Mustang project.
 
 ## Reading
 

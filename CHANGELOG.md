@@ -9,6 +9,18 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.25.1] — 2026-11-13
+
+### Fixed
+
+- **`@ekwo-ai/factur-x`: each profile is valid against its own schema.** BASIC,
+  the default, wrote the seller's item identifier (BT-155) and the item
+  description (BT-154), which start at EN 16931; BASIC WL and MINIMUM wrote
+  elements their schemas leave out. Each profile now writes what its schema
+  admits, and the tests validate the five of them against the Factur-X 1.09
+  XSDs with `xmllint`
+  ([#238](https://github.com/Ekwo-ai/ekwo-os/issues/238)).
+
 ## [0.25.0] — 2026-11-07
 
 ### Added

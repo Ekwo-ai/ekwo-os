@@ -50,6 +50,8 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
       - run: npm ci
+      # The Factur-X profiles are validated against their XSDs with xmllint.
+      - run: command -v xmllint || (sudo apt-get update && sudo apt-get install -y --no-install-recommends libxml2-utils)
       - run: npm run typecheck
       # Vitest slices files by ceil(files / 16): with 177 files the first fifteen
       # shards take them all and the sixteenth is empty, which vitest reports as a
