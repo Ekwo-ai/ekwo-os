@@ -105,7 +105,8 @@ somewhere has already run it.
 
 - **The pages the site renders from this repository speak of company data.**
   The manifesto, the README, the disclaimer (version 2.3), the privacy page
-  (version 1.4) and what a country page says a pack does for free now say
+  (version 1.4), the guide to a first session on your own data, `AGENTS.md`
+  and what a country page says a pack does for free now say
   company data, accounts, transactions, recorded and confirmed, the words of
   the site. A proven pack reads "proven on the real data of a company", in
   `ekwo pack describe`, `ekwo init`, `ekwo status` and the header of its seed.
