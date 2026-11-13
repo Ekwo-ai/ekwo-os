@@ -13,7 +13,7 @@ All notable changes to this project are documented here. The format follows
   euro, which wrote a wrong invoice for every other currency without a word.
   An invoice in euros states `currency: 'EUR'`.
 
-## [0.25.1] — 2026-11-13
+## [0.25.2] — 2026-11-13
 
 ### Fixed
 - **Each profile is valid against its own schema.** BASIC wrote the seller's

@@ -179,9 +179,11 @@ somewhere has already run it.
   `currency: 'EUR'`; the e-invoicing of `@ekwo-ai/core` already passed the
   currency of the document.
 
-## [0.25.1] — 2026-11-13
+## [0.25.2] — 2026-11-13
 
-Published from its own branch, `release/0.25.1`.
+Published from its own branch, `release/0.25.2`. 0.25.1 was tagged and
+published for five format packages only; 0.25.2 is the same code for all of
+them, with a Release workflow that installs `xmllint`.
 
 ### Fixed
 
