@@ -55,7 +55,7 @@ somewhere has already run it.
   cent. It is refused by name, as `contact_statement()` is, to whoever may not
   read the ledger (`unknown_company`, `not_allowed`, `invalid_period`,
   `unknown_account`) (`20261107100000_a_control_account_reads_contact_by_contact`).
-- **The lines of some contacts from the general ledger.** `general_ledger()`
+- **The transactions of some contacts, account by account.** `general_ledger()`
   takes a fifth argument, `p_contact_ids`, default null: the lines of those
   contacts only, each with its own balance carried forward and running
   balance on the account — the detail of a row of the subsidiary ledger. A
@@ -100,6 +100,16 @@ somewhere has already run it.
   --bank-account <id>` imports from a terminal, with `--opening` and
   `--closing`. No migration: the schema already stores what a CSV
   gives, under the source format `csv`.
+
+### Changed
+
+- **The pages the site renders from this repository speak of company data.**
+  The manifesto, the README, the disclaimer (version 2.3), the privacy page
+  (version 1.4) and what a country page says a pack does for free now say
+  company data, accounts, transactions, recorded and confirmed, the words of
+  the site. A proven pack reads "proven on the real data of a company", in
+  `ekwo pack describe`, `ekwo init`, `ekwo status` and the header of its seed.
+  Table, column and function names do not change, nor does any figure.
 
 ### Fixed
 
@@ -429,8 +439,8 @@ them, with a Release workflow that installs `xmllint`.
   opening balance instead of being refused `statement_without_balances`; and
   the source format is read from the reader's `format` and `version`, then
   from `namespace` as before, so the word stored does not change.
-- **Every tool of the MCP server says what it does to the books, and one that
-  does not, does not compile.** Read, additive or destructive
+- **Every tool of the MCP server says what it does to the company data, and one
+  that does not, does not compile.** Read, additive or destructive
   (`TOOL_EFFECTS`, `annotationsFor()`, `effectOf()`), carried as
   `readOnlyHint` and `destructiveHint`; `buildServer()` registers tools
   through a `RegisterTool` that requires them. A module tool declares
