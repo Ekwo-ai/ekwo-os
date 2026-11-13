@@ -2613,7 +2613,7 @@ prints it in as many words before anyone books anything:
 |---|---|---|
 | `community` | contributed, not read by an accountant | whoever proposes the pack. It is the honest answer for a new pack, and the right one until the row below happens |
 | `maintained` | maintained by Ekwo, not yet reviewed by an accountant | the maintainers, on a pack they keep up to date themselves. Nobody else, because nobody else is committing to keep it current |
-| `proven` | proven on the real books of a company, not yet reviewed by an accountant: the pack reproduced, to the unit they were filed in, the statements that company filed and the administration accepted, after its books were imported | the maintainers, with the evidence in the same pull request — see [What a proven pack shows](#what-a-proven-pack-shows) |
+| `proven` | proven on the real data of a company, not yet reviewed by an accountant: the pack reproduced, to the unit they were filed in, the statements that company filed and the administration accepted, after its data was imported | the maintainers, with the evidence in the same pull request — see [What a proven pack shows](#what-a-proven-pack-shows) |
 | `reviewed` | read by a named professional, on the date shown | the reviewer, in the pull request that carries their name. Not the pack's author, unless the author is the professional and says so under their own name |
 
 A pack with no `certification` block at all compiles as `community`, which is
