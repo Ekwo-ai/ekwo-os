@@ -128,11 +128,19 @@
       "source": "nyomtatvany-2665"
     },
     {
+      "box": "91",
+      "kind": "base",
+      "name": "Az Áfa tv. területi hatályán kívül teljesített szolgáltatásnyújtás ellenértéke — az értékesítő oldala",
+      "sequence": 155,
+      "legal_reference": "2665A-02 lap, 91. sor: „az Áfa tv. területi hatályán kívül teljesített szolgáltatásnyújtás ellenértéke, akár közösségi, akár harmadik országos, akár belföldi adóalany felé történt a teljesítés”; a 92. és a 93. sor ennek az összegéből veszi fel a Közösségen belüli szolgáltatásokat. Áfa tv. 37. § (1).",
+      "source": "nyomtatvany-2665"
+    },
+    {
       "box": "92",
       "kind": "base",
       "name": "Másik tagállamban letelepedett adóalany részére nyújtott, a teljesítési hely általános szabálya alá tartozó szolgáltatás ellenértéke — az értékesítő oldala",
       "sequence": 160,
-      "legal_reference": "2665A-02 lap, 92. sor; Áfa tv. 37. § (1).",
+      "legal_reference": "2665A-02 lap, 92. sor: „a 91. sor összegéből” a másik tagállamban letelepedett adóalanynak nyújtott, a 37. § (1) alá tartozó szolgáltatás ellenértéke, egyezően a 26A60 összesítő nyilatkozat 03. lapjával; Áfa tv. 37. § (1).",
       "source": "nyomtatvany-2665"
     },
     {

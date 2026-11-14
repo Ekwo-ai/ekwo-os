@@ -358,6 +358,36 @@
     "sequence": 90
   },
   {
+    "code": "EE-S-00-3RIIK",
+    "name": "Teenuse käive ühendusevälise riigi ettevõtjale",
+    "description": "Teenus ettevõtlusega tegelevale ühendusevälise riigi isikule: käibe tekkimise koht ei ole Eesti, Eesti käibemaksu ei arvestata; üksnes lahter 3",
+    "rate": 0,
+    "scope": "sale",
+    "treatment": "not_subject",
+    "valid_from": "2010-01-01",
+    "legal_reference": "KMS § 10 lg 4 p 9 — teenuse käibe tekkimise koht ei ole Eesti, kui teenust osutatakse ettevõtlusega tegelevale ühendusevälise riigi isikule (nõukogu direktiivi 2006/112/EÜ artikkel 44); KMS § 1 lg 1 p 3 ja § 15 lg 4 p 1 — selline teenus deklareeritakse Eestis nullmääraga, reaalne maksukohustus lasub saajal välisriigis. Maksu- ja Tolliameti juhend vormi KMD täitmiseks: lahtris 3.1 deklareeritakse üksnes teise liikmesriigi maksukohustuslasele osutatud teenused, ülejäänud nullmääraga teenused üksnes lahtris 3.",
+    "source": "kmd-taitmine",
+    "vat_category": "O",
+    "exemption_code": "VATEX-EU-O",
+    "postings": {
+      "invoice": [
+        {
+          "type": "base",
+          "box": "3"
+        }
+      ],
+      "credit_note": [
+        {
+          "type": "base",
+          "box": "3",
+          "box_factor": -100
+        }
+      ]
+    },
+    "kind": "vat",
+    "sequence": 95
+  },
+  {
     "code": "EE-S-00-EXP",
     "name": "Kauba eksport",
     "description": "Maksustatav 0% määraga",
