@@ -210,6 +210,18 @@ export const SCHEMA_FEATURES = {
     columns: ['bank_accounts.statement_profile'],
     functions: [],
   },
+  /**
+   * What customers and suppliers owe past their date, one row per company of
+   * the caller's portfolio
+   * (`20261111080000_the_portfolio_reads_what_is_overdue`). Below it,
+   * `portfolio_overview()` — the MCP server's `portfolio_overview` — is
+   * refused by name.
+   */
+  portfolio_overview: {
+    since: '0.26.0',
+    columns: [],
+    functions: ['portfolio_overview'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;
