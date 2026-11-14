@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261110124117",
+  "migration": "20261114070000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -4043,6 +4043,10 @@
           {
             "name": "rounding_unit",
             "type": "numeric"
+          },
+          {
+            "name": "short_name",
+            "type": "text"
           },
           {
             "name": "valid_from",

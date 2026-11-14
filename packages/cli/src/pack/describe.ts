@@ -91,6 +91,8 @@ export interface DescribedFile {
 export interface DescribedDeclaration {
   code: string;
   name: string;
+  /** How the accountants of the country name it in a few words. Null where the pack does not say. */
+  shortName: string | null;
   /** `periodic` for the return the postings are for, `annual` for a form filed once a year under a scheme. */
   role: string;
   /** The cadences the form is filed on, from the shortest to the longest. */
@@ -340,6 +342,7 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
     declarations.push({
       code: report.code,
       name: report.name,
+      shortName: report.short_name,
       role: report.role,
       periods: report.periods,
       periodDefault: report.period_default,

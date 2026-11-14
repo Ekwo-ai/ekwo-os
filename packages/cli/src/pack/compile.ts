@@ -726,11 +726,19 @@ function taxReport(pack: Pack, report: PackReport, country: string): string[] {
           '  rounding_source_key = excluded.rounding_source_key,',
         ];
 
+  // The short name is written the same way: only where the pack names one,
+  // so that a pack which does not still loads on a schema from before
+  // `20261114070000`.
+  const shortName = report.short_name;
+  const shortColumns = shortName === null ? '' : ', short_name';
+  const shortValues = shortName === null ? '' : `, ${text(shortName)}`;
+  const shortUpdate = shortName === null ? [] : ['  short_name          = excluded.short_name,'];
+
   const out = [
     'insert into tax_report_templates',
     '  (country, code, name, periods, period_default, valid_from, valid_to, legal_reference,',
     '   is_periodic_return, deadline_rule, deadline_day, deadline_plus_days,',
-    `   deadline_reference, deadline_source_key, file_format${roundingColumns}${formColumns})`,
+    `   deadline_reference, deadline_source_key, file_format${roundingColumns}${shortColumns}${formColumns})`,
     'values',
     `  (${text(country)}, ${text(report.code)}, ${text(report.name)}, ${periods(report.periods)}, ` +
       `${enumeration(report.period_default, 'declaration_period')}, ` +
@@ -739,7 +747,7 @@ function taxReport(pack: Pack, report: PackReport, country: string): string[] {
       `${enumeration(report.deadline?.rule ?? null, 'filing_deadline_rule')}, ` +
       `${number(report.deadline?.day ?? null)}, ${number(report.deadline?.plus_days ?? null)}, ` +
       `${text(report.deadline?.legal_reference ?? null)}, ${text(report.deadline?.source ?? null)}, ` +
-      `${text(report.file_format)}${roundingValues}${formValues})`,
+      `${text(report.file_format)}${roundingValues}${shortValues}${formValues})`,
     'on conflict (country, code) do update set',
     '  name                = excluded.name,',
     '  periods             = excluded.periods,',
@@ -754,6 +762,7 @@ function taxReport(pack: Pack, report: PackReport, country: string): string[] {
     '  deadline_reference  = excluded.deadline_reference,',
     '  deadline_source_key = excluded.deadline_source_key,',
     ...roundingUpdate,
+    ...shortUpdate,
     ...formUpdate,
     '  file_format         = excluded.file_format;',
     '',

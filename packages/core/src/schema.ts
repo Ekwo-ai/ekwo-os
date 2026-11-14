@@ -200,6 +200,19 @@ export const SCHEMA_FEATURES = {
     functions: [],
   },
   /**
+   * How the accountants of a country name a declaration in a few words,
+   * declared by the pack, and the names of each form in the answer of
+   * `upcoming_filings()` and `portfolio_upcoming_filings()` — `report_name`
+   * and `report_short_name` (`20261114070000_a_declaration_has_a_short_name`).
+   * Below it, those two columns are absent and a screen names a form by its
+   * code.
+   */
+  filing_short_name: {
+    since: '0.26.0',
+    columns: ['tax_report_templates.short_name'],
+    functions: [],
+  },
+  /**
    * The profile of a bank account's CSV statements, kept on the account
    * (`20261108152128_a_bank_account_keeps_the_profile_of_its_csv_statements`).
    * Below it, a CSV is imported only with the profile its caller gives, which

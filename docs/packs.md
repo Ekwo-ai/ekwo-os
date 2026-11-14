@@ -976,6 +976,15 @@ return in a currency without decimals freezes `1000000`, not `1000000.00`.
 `defaults.vat_period`, the former place for this, is still read; a pack that
 says both and says two different things is refused.
 
+**How the accountants of the country name the form** is `short_name`, a few
+words in the language of the country — `"short_name": "TVA CA3"` beside
+`"name": "Déclaration de TVA 3310-CA3"`. It is what a calendar or a list of
+deadlines shows; `name` stays the official title. Read it on the portal or in
+the notice of the administration, and leave it out where you have not: a
+screen then shows `name`. At most forty characters, without leading or
+trailing spaces. `upcoming_filings()` and `portfolio_upcoming_filings()` answer
+with both, `report_name` and `report_short_name`.
+
 Which cadence a given company files a given declaration on is a row of
 `company_filing_periods`, settled at install — one row per form, because a
 company is subject to several declarations and the cadence of one says nothing

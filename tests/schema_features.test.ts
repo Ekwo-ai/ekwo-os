@@ -39,10 +39,10 @@ describe('supports()', () => {
 
   it('lists what a version lacks, in the order the features are declared', () => {
     expect(missingFeatures(SCHEMA_MIN)).toEqual(Object.keys(SCHEMA_FEATURES));
-    expect(missingFeatures('0.20.0')).toEqual(['documents_in_one_statement', 'agent_posting', 'invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'statement_profile']);
-    expect(missingFeatures('0.21.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'statement_profile']);
-    expect(missingFeatures('0.24.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'statement_profile']);
-    expect(missingFeatures('0.25.0')).toEqual(['subledger', 'ledger_by_contact', 'statement_profile']);
+    expect(missingFeatures('0.20.0')).toEqual(['documents_in_one_statement', 'agent_posting', 'invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile']);
+    expect(missingFeatures('0.21.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile']);
+    expect(missingFeatures('0.24.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile']);
+    expect(missingFeatures('0.25.0')).toEqual(['subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile']);
     expect(missingFeatures('0.26.0')).toEqual([]);
   });
 });
