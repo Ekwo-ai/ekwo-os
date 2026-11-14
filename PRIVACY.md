@@ -1,13 +1,13 @@
 # What Ekwo knows about you
 
-**Ekwo is one piece of software, and you choose where your books live.** The
+**Ekwo is one piece of software, and you choose where your company data lives.** The
 same open-source schema runs everywhere; what changes is who operates the
 database, and what Ekwo holds follows from that choice.
 
 | | **Your own Supabase project** | **A project Ekwo hosts for you** |
 |---|---|---|
-| Where your books are | On a project you own and pay for | On a project Ekwo runs for you, in Ekwo's Supabase organisation, in the region of your continent |
-| What reaches Ekwo | **Nothing**, unless you link it to an Ekwo Cloud account (§3) | Your books, kept for you, and what §3 lists |
+| Where your company data is | On a project you own and pay for | On a project Ekwo runs for you, in Ekwo's Supabase organisation, in the region of your continent |
+| What reaches Ekwo | **Nothing**, unless you link it to an Ekwo Cloud account (§3) | Your company data, kept for you, and what §3 lists |
 | Is an account needed | **No** — the licence forbids requiring one | Yes: the account is how the project is reached |
 | How you leave | Stop using it; there is nothing to close | Move the project to your own Supabase account, or take a `pg_dump` |
 
@@ -19,7 +19,7 @@ a project of its own, and the move is checked by comparing both trial balances,
 to the cent. A company can also be exported from one installation and imported
 into another, wherever each one runs.
 
-*Version 1.3 — 10 October 2026. This page covers the software of this
+*Version 1.4 — 13 November 2026. This page covers the software of this
 repository, the site at ekwo.ai and the hosted service at cloud.ekwo.ai,
 including the MCP server at mcp.ekwo.ai. Each section says which one it is
 about.*
@@ -27,7 +27,7 @@ about.*
 ## 1. The software on your own project
 
 **Nothing reaches Ekwo.** `npx ekwo-os init` installs the schema on a Supabase
-project you create and pay for. Your ledger, your documents, your VAT returns
+project you create and pay for. Your accounts, your transactions, your documents, your VAT returns
 and your customers' names are written to your database and stay there. There
 is no telemetry, no call home, no licence check and no account required — the
 licence (AGPL-3.0) forbids making one a condition of using the software.
@@ -71,7 +71,7 @@ is the whole page.
 
 An account is free. Each thing below exists because it was **asked for**:
 linking an instance is a deliberate act, a backup runs on an instance you
-linked, and an agent reads your books only after you approved it in your
+linked, and an agent reads your company data only after you approved it in your
 browser. Nothing here is turned on by default, and what Ekwo Cloud holds is
 this and nothing else:
 
@@ -81,13 +81,13 @@ this and nothing else:
 | Your answers to three questions — the kind of work you do, your organisation, your countries, what you keep and what you want | To know who Ekwo is for. Left blank, they stay blank |
 | The address of your Supabase project and its publishable key | To reach the instance you linked |
 | The key your instance issued us, **encrypted** | To take the backup you asked for. It is stored as ciphertext, never in plain text |
-| Your backups — **the bytes of your books** | See below |
-| **Your books themselves**, when Ekwo hosts your project or your company is on the trial instance | To run the project you asked Ekwo to host. On the trial instance each company is isolated by row level security: no member of one company can see another |
+| Your backups — **the bytes of your company data** | See below |
+| **Your company data itself**, when Ekwo hosts your project or your company is on the trial instance | To run the project you asked Ekwo to host. On the trial instance each company is isolated by row level security: no member of one company can see another |
 | A **hash** of each agent token, never the token | To recognise an agent you allowed, without being able to replay it |
 | The name and redirect address of each agent that asked for access | So you can see and revoke what is connected |
 | Your support messages and our answers | To answer you |
 
-### The backups hold your books
+### The backups hold your company data
 
 The daily backup exports your companies and keeps the bytes. **That is a copy
 of your accounting data on our infrastructure**, with its checksum, and it is
@@ -95,20 +95,20 @@ the whole point of the feature: it is what makes it restorable into an empty
 installation. It is there, and you should decide with that in mind. Unlink an
 instance and its backups go with it.
 
-### When Ekwo reads your books
+### When Ekwo reads your company data
 
-**Ekwo may open your backups, and read the books of an instance you linked,
+**Ekwo may open your backups, and read the company data of an instance you linked,
 for two purposes:**
 
 - **In your interest** — to answer a support request, to check that the
-  entries recorded by you or by an agent follow the rules of your country, and
+  transactions recorded by you or by an agent follow the rules of your country, and
   to tell you about an error it notices. This is part of the service you asked
   for (Article 6(1)(b) GDPR).
 - **To improve the service** — to find where the software, an importer or a
   country pack gets something wrong, and correct it for everybody, and to
   improve the agents of Ekwo Cloud, including by training them on examples
-  drawn from the books. This rests
-  on Ekwo's legitimate interest in a service that keeps correct books
+  drawn from the company data. This rests
+  on Ekwo's legitimate interest in a service that keeps correct accounts
   (Article 6(1)(f) GDPR), and you can object to it by writing to the address
   in §8.
 
@@ -121,13 +121,13 @@ You can ask what was read and when, as §7 describes.
 `mcp.ekwo.ai` acts **as you**, with the rights row level security gives you on
 your own instance, and only after you have approved it in your browser. Its log
 records that a call happened and which tool was called. **It does not record the
-content of your books** — not the amounts, not the names, not the documents.
+content of your company data** — not the amounts, not the names, not the documents.
 
 ## 4. What we do not do
 
 We do not sell anything about you. We do not run advertising, and nothing here
 is shared with an advertising network. We do not build a profile of you, and
-your books are never handed to another company to train its models.
+your company data is never handed to another company to train its models.
 
 ## 5. Who else is involved
 
@@ -136,7 +136,7 @@ through them requires: **Supabase** (the database of the control plane, in the
 European Union, and the projects Ekwo hosts, in the region of the continent you
 chose), **Netlify** (serving the site and the application) and the provider
 that sends the sign-in codes. Each holds data under its own terms as Ekwo's
-processor, and none of them is given your books to do anything with.
+processor, and none of them is given your company data to do anything with.
 
 ## 6. How long it is kept
 
@@ -158,8 +158,8 @@ Ekwo Cloud, or by writing to the address below. We answer in a month at the
 latest, and free of charge.
 
 You can also take everything and go, and that is a property of the software
-rather than a favour: your books are an ordinary PostgreSQL database with the
-open schema. On your own project they are reachable with any PostgreSQL client
+rather than a favour: your company data is an ordinary PostgreSQL database with
+the open schema. On your own project it is reachable with any PostgreSQL client
 without asking Ekwo; a project Ekwo hosts moves to your own Supabase account in
 one step. A backup taken by Ekwo Cloud restores into an installation that has
 never seen the company — that restore is exercised against a real project
