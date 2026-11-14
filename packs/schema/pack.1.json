@@ -1508,6 +1508,13 @@
           ],
           "description": "The file this form is deposited as, named after the brick that writes it (`vat-consignment` for the Belgian XML Intervat takes). Leave it out where no brick writes the form yet: a form nobody can write is still one a company files by hand on a portal."
         },
+        "short_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "pattern": "^\\S(.*\\S)?$",
+          "description": "How the accountants of the country name this declaration in a few words, in its language (`TVA CA3` beside `Déclaration de TVA 3310-CA3`): what a calendar or a list of deadlines shows. Read it on the portal or the notice of the administration; leave it out where you have not, and a screen shows `name`."
+        },
         "period_default": {
           "enum": [
             "month",

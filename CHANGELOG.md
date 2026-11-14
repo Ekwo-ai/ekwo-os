@@ -11,6 +11,21 @@ somewhere has already run it.
 
 ### Added
 
+- **A declaration has a short name, and the calendar says it.** A form of
+  `tax_report.json` may declare `short_name`, how the accountants of the
+  country name it in a few words and in its language — what a list of
+  deadlines shows, where `name` is the official title. The pack reads it on
+  the portal or the notice of the administration, and leaves it out where it
+  has not; at most forty characters, refused empty by the schema of a pack
+  and by the column. `tax_report_templates.short_name` holds it, and
+  `upcoming_filings()` and `portfolio_upcoming_filings()` answer with two
+  columns more at the end of each row, `report_name` and `report_short_name`,
+  from the form of the company's fiscal country
+  (`20261114070000_a_declaration_has_a_short_name`, additive;
+  `SCHEMA_FEATURES.filing_short_name`, since 0.26.0). `ekwo pack describe
+  --json` gives it as `shortName`. A pack that names none compiles the seed it
+  compiled before. No pack declares one yet: each is read on its
+  administration's own pages, country by country.
 - **A bank account keeps the profile of its CSV statements.** The lay-out of
   a CSV export is the bank's, so it belongs to the account the file is of:
   `bank_accounts.statement_profile` (jsonb, nullable) holds the
