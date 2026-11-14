@@ -51,8 +51,13 @@
     },
     {
       "ref": "V6", "type": "sale_invoice", "contact": "client-de", "date": "2026-04-14", "due_date": "2026-05-14",
-      "why": "O prestare de servicii generice către o persoană impozabilă germană, neimpozabilă în România conform regulii generale B2B: rd. 3 din formularul 300.",
+      "why": "O prestare de servicii generice către o persoană impozabilă germană, neimpozabilă în România conform regulii generale B2B: rd. 3 din formularul 300 și, fiind prestată unei persoane impozabile din Uniunea Europeană, și rd. 3.1.",
       "lines": [{ "name": "Servicii de consultanță IT", "quantity": 1, "unit_price": 3500, "tax": "RO-S-ICS", "account": "704" }]
+    },
+    {
+      "ref": "V9", "type": "sale_invoice", "contact": "client-us", "date": "2026-05-12", "due_date": "2026-06-11",
+      "why": "Consultanță prestată unei societăți stabilite în Statele Unite: locul prestării este sediul beneficiarului (art. 278 alin. (2)), în afara României, fără TVA românesc; baza merge la rd. 3, nu și la rd. 3.1, rezervat serviciilor către persoane impozabile din Uniunea Europeană, și nici în declarația 390.",
+      "lines": [{ "name": "Consultanță IT", "quantity": 1, "unit_price": 2000, "tax": "RO-S-SERV-NON-UE", "account": "704" }]
     },
     {
       "ref": "V7", "type": "sale_invoice", "contact": "client-ro-financiar", "date": "2026-05-20", "due_date": "2026-06-19",

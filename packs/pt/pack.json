@@ -2,13 +2,37 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "PT",
   "name": "Portugal",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "schema_min": "20261023124650",
   "seed_sequence": 43,
-  "released_at": "2026-10-23",
+  "released_at": "2026-11-10",
   "certification": {
     "status": "community",
     "sources": [
+      {
+        "key": "civa-art6",
+        "title": "Código do IVA, art. 6.º — localização das operações",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva6.aspx",
+        "consulted_on": "2026-11-10",
+        "kind": "law"
+      },
+      {
+        "key": "civa-art20",
+        "title": "Código do IVA, art. 20.º — operações que conferem o direito à dedução",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/civa_rep/Pages/iva20.aspx",
+        "consulted_on": "2026-11-10",
+        "kind": "law"
+      },
+      {
+        "key": "iv-16210",
+        "title": "Informação vinculativa, processo n.º 16210 — prestações de serviços a sujeitos passivos estabelecidos fora da União Europeia, campo 8 do quadro 06",
+        "publisher": "Autoridade Tributária e Aduaneira",
+        "url": "https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/informacoes_vinculativas/despesa/civa/Documents/INFORMACAO_16210.pdf",
+        "consulted_on": "2026-11-10",
+        "kind": "guidance"
+      },
       {
         "key": "civa-art7",
         "title": "Código do IVA, artigo 7.º — Facto gerador e exigibilidade do imposto",
@@ -126,7 +150,7 @@
         "title": "Declaração periódica do IVA e anexo R — modelo oficial e instruções de preenchimento",
         "publisher": "Autoridade Tributária e Aduaneira",
         "url": "https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/modelos_formularios/iva/documents/declaracao_periodica_iva.pdf",
-        "consulted_on": "2026-09-22",
+        "consulted_on": "2026-11-10",
         "kind": "form"
       },
       {
