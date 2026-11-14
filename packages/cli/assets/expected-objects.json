@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261110124117",
+  "migration": "20261112070000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -15617,6 +15617,10 @@
           "arguments": "p_company_id uuid, p_contact_id uuid"
         },
         {
+          "name": "contact_vcard",
+          "arguments": "p_company_id uuid, p_contact_id uuid"
+        },
+        {
           "name": "fold_card_on_merge",
           "arguments": ""
         },
@@ -15671,6 +15675,10 @@
         {
           "name": "upsert_card",
           "arguments": "p_company_id uuid, p_contact_id uuid, p_patch jsonb"
+        },
+        {
+          "name": "vcard_value",
+          "arguments": "p_value text"
         }
       ],
       "policies": [
@@ -16030,6 +16038,17 @@
             ]
           },
           {
+            "name": "contact_vcard",
+            "arguments": "p_company_id uuid, p_contact_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "fold_card_on_merge",
             "arguments": "",
             "trigger": true,
@@ -16163,6 +16182,17 @@
           {
             "name": "upsert_card",
             "arguments": "p_company_id uuid, p_contact_id uuid, p_patch jsonb",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "vcard_value",
+            "arguments": "p_value text",
             "anon": [],
             "authenticated": [
               "execute"
