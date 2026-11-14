@@ -49,7 +49,8 @@ those figures. Called again on a draft, it refreshes; called on a declaration
 that has gone, it refuses and names what is needed instead: a corrective.
 
 `filing_deadline()` says when the return is due, where the pack carries the
-rule; `upcoming_filings()` lists what is due between two dates. A pack that
+rule; `upcoming_filings()` lists what is due between two dates, each form
+with its official name and the short name the pack gives it, if any. A pack that
 declares no rule answers null rather than a date that would be wrong.
 
 ### 3. Produce the file

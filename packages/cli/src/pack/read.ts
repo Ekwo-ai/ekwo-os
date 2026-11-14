@@ -919,6 +919,13 @@ export interface PackReport {
    * still a form a company files by hand on a portal.
    */
   file_format: string | null;
+  /**
+   * How the accountants of the country name the form in a few words, in its
+   * language — "TVA CA3" beside "Déclaration de TVA 3310-CA3". Read on the
+   * portal or the notice of the administration, never made up; null where
+   * the pack does not say, and a screen then shows `name`.
+   */
+  short_name: string | null;
   boxes: PackReportBox[];
 }
 
@@ -2664,6 +2671,7 @@ function normaliseReport(raw: Record<string, unknown>): PackReport {
     deadline: normaliseDeadline(raw['deadline']),
     rounding: normaliseRounding(raw['rounding']),
     file_format: (raw['file_format'] as string | undefined) ?? null,
+    short_name: (raw['short_name'] as string | undefined) ?? null,
     boxes,
   };
 }
