@@ -11,6 +11,19 @@ somewhere has already run it.
 
 ### Added
 
+- **A financial year opens on any of the twelve months.**
+  `defaults.fiscal_year_default` named four opening months — `calendar`,
+  `april`, `july`, `october` — where the law of most countries names twelve,
+  so a pack whose country fixes 1 March or 1 September had nothing to declare
+  it with; the pack us named the gap. The vocabulary is now `calendar` (1
+  January, the one name of that month) and the eleven others by name,
+  `february` to `december`, in the pack schema, in the check on
+  `country_defaults.fiscal_year_default` and in `fiscal_year_bounds()`, which
+  reads the month by its place in the same list
+  (`20261115070000_a_financial_year_opens_on_any_month`, additive: every
+  value admitted before is admitted after, and no year already opened
+  moves). The 52-53-week year is still named by its days
+  (`--fiscal-year-start`), as before.
 - **A bank account keeps the profile of its CSV statements.** The lay-out of
   a CSV export is the bank's, so it belongs to the account the file is of:
   `bank_accounts.statement_profile` (jsonb, nullable) holds the

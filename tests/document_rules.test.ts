@@ -97,7 +97,7 @@ describe('the document columns of the country model', () => {
       ['tax_point_rule', 'whenever'],
       ['party_scheme', '208'],
       ['vat_scheme', 'VAT'],
-      ['fiscal_year_default', 'march'],
+      ['fiscal_year_default', 'midsummer'],
     ] as const) {
       const message = await expectError(
         db,

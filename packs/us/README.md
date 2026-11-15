@@ -400,10 +400,10 @@ retail keeps.
 
 The golden scenario is a 52-week year, 28 June 2026 to 26 June 2027, which is
 364 days ending on the last Saturday of June. It works: `fiscal_years` takes
-arbitrary bounds. What does not work is `defaults.fiscal_year_default`, whose
-vocabulary is `calendar`, `april`, `july` and `october` — four opening months,
-where the law allows twelve and then allows a year that does not begin on the
-first of a month at all. The pack declares `calendar`, which is the ordinary
+arbitrary bounds. `defaults.fiscal_year_default` names any of the twelve
+opening months the law allows; what it cannot propose is a year that does not
+begin on the first of a month at all, so a company that keeps a 52-53-week
+year names its first day. The pack declares `calendar`, which is the ordinary
 American corporate answer.
 
 The scenario also shows what falls out of it: California's reporting period is

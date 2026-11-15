@@ -538,10 +538,19 @@
         "fiscal_year_default": {
           "enum": [
             "calendar",
+            "february",
+            "march",
             "april",
+            "may",
+            "june",
             "july",
-            "october"
-          ]
+            "august",
+            "september",
+            "october",
+            "november",
+            "december"
+          ],
+          "description": "Month the first financial year of a company is offered to open on: calendar for 1 January, or one of the eleven other months by name. A proposal, never imposed: a company names another first day with --fiscal-year-start."
         },
         "vat_period": {
           "enum": [

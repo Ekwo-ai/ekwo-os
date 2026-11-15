@@ -1285,6 +1285,16 @@ engine consumes a format it produces the same numbers it always did.
 `ekwo pack check` refuses a token nobody defined and a pattern with no
 counter, or with two.
 
+**The first financial year.** `defaults.fiscal_year_default` is the month a
+company's first year is offered to open on: `calendar` for 1 January, or one
+of the eleven other months by name, `february` to `december`. It is a
+proposal: `create_company()` and `ekwo init` open the first year on the first
+day of that month, and `--fiscal-year-start` names any other day. A pack that
+says nothing leaves null, and the first year is then refused
+(`no_fiscal_year_default`) until somebody names its first day. A 52-53-week
+year does not open on the first of a month, so no value proposes one: a
+company that keeps one names its days.
+
 **Whether the profile is obligatory** is `einvoicing.obligation`, in a closed
 vocabulary of three words, so that "no obligation" and "nobody looked up the
 date" are never confused:

@@ -32,6 +32,12 @@ afterAll(async () => {
   await db.close();
 });
 
+/** The vocabulary of `defaults.fiscal_year_default`, January first. */
+const MONTHS = [
+  'calendar', 'february', 'march', 'april', 'may', 'june',
+  'july', 'august', 'september', 'october', 'november', 'december',
+];
+
 async function bounds(year: number, start: string | null = null): Promise<{ start_date: string; end_date: string }> {
   return one<{ start_date: string; end_date: string }>(
     db,
@@ -47,11 +53,46 @@ describe('fiscal_year_bounds', () => {
       `select fiscal_year_default from country_defaults where country = $1`,
       [country],
     );
-    const month = { calendar: '01', april: '04', july: '07', october: '10' }[
-      declared.fiscal_year_default
-    ];
+    const month = String(MONTHS.indexOf(declared.fiscal_year_default) + 1).padStart(2, '0');
+    expect(MONTHS, declared.fiscal_year_default).toContain(declared.fiscal_year_default);
     const opened = await bounds(2026);
     expect(opened.start_date).toBe(`2026-${month}-01`);
+  });
+
+  it('opens on any of the twelve months a pack may name', async () => {
+    try {
+      for (const [index, opening] of MONTHS.entries()) {
+        await db.query(`update country_defaults set fiscal_year_default = $1 where country = $2`, [
+          opening,
+          country,
+        ]);
+        const month = String(index + 1).padStart(2, '0');
+        const opened = await bounds(2026);
+        expect(opened.start_date, opening).toBe(`2026-${month}-01`);
+        // The day before the same day a year later: 1 March closes on the
+        // last day of February.
+        const close = new Date(Date.UTC(2027, index, 0)).toISOString().slice(0, 10);
+        expect(opened.end_date, opening).toBe(close);
+      }
+      expect((await bounds(2027)).end_date).toBe('2028-11-30');
+    } finally {
+      await db.query(
+        `update country_defaults set fiscal_year_default = 'calendar' where country = $1`,
+        [country],
+      );
+    }
+  });
+
+  it('refuses a month by a name the vocabulary does not have', async () => {
+    // `calendar` is January's only name: one month, one word.
+    for (const value of ['january', 'March', 'mid-year']) {
+      const message = await expectError(
+        db,
+        `update country_defaults set fiscal_year_default = $1 where country = $2`,
+        [value, country],
+      );
+      expect(message, value).toMatch(/violates check constraint/);
+    }
   });
 
   it('closes on the day before the same day a year later', async () => {

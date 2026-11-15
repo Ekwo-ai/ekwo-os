@@ -60,7 +60,8 @@ export async function chooseCountry(
 
 /**
  * When the first financial year opens. The country model names a month —
- * `calendar`, `april`, `july`, `october` — and the flag names a day. A pack
+ * `calendar` for January, or one of the eleven others by name — and the
+ * flag names a day. A pack
  * that declares neither is asked about when there is a terminal, and refused
  * when there is not: opening somebody's books on a date nobody chose is found
  * out a year later, in a closing.
