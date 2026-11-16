@@ -1904,6 +1904,7 @@ function sourceRegister(
       })),
     ...fiscalisationSources(documents.einvoice_fiscalisation).map((reference) => ({ ...reference, kind: 'rule' as const })),
     ...finalCloseSources(manifest),
+    ...otherComprehensiveIncomeSources(manifest),
     ...taxPayeeSources(manifest),
     ...Object.entries(labels.tax_payee).map(([language, payee]) => ({
       path: `i18n/${language}.json tax_payee`,
@@ -2131,6 +2132,25 @@ export function taxPayeeOf(manifest: Manifest): { name: string; source: string }
   const raw = manifest.defaults['tax_payee'];
   if (raw === null || raw === undefined || typeof raw !== 'object') return null;
   return raw as { name: string; source: string };
+}
+
+/** `defaults.other_comprehensive_income` of a manifest, or null where the pack declares none. */
+export function otherComprehensiveIncomeOf(
+  manifest: Manifest,
+): { accounts: string[]; closes_to: string; legal_reference: string; source?: string | null } | null {
+  const raw = manifest.defaults['other_comprehensive_income'];
+  if (raw === null || raw === undefined || typeof raw !== 'object') return null;
+  return raw as { accounts: string[]; closes_to: string; legal_reference: string; source?: string | null };
+}
+
+/**
+ * The register key of `defaults.other_comprehensive_income`, where a pack
+ * declares it: what stays out of the result is a rule read somewhere.
+ */
+function otherComprehensiveIncomeSources(manifest: Manifest): { path: string; source: string | null; kind: 'rule' }[] {
+  const rule = otherComprehensiveIncomeOf(manifest);
+  if (rule === null) return [];
+  return [{ path: 'pack.json defaults.other_comprehensive_income', source: rule.source ?? null, kind: 'rule' }];
 }
 
 /** `defaults.final_close` of a manifest, or null where the country says nothing. */
@@ -4512,6 +4532,7 @@ function crossReferences(manifest: Manifest, charts: PackChart[], taxes: PackTax
     }
   }
   issues.push(...closingRules(manifest, journals));
+  issues.push(...otherComprehensiveIncomeRules(manifest, charts));
   const seen = new Set<string>();
   for (const tax of taxes) {
     if (seen.has(tax.code)) issues.push({ path: `taxes.json ${tax.code}`, message: 'duplicate code' });
@@ -4746,6 +4767,59 @@ function closingRules(manifest: Manifest, journals: Set<string>): Issue[] {
     }
   }
   return issues;
+}
+
+/**
+ * What `defaults.other_comprehensive_income` has to hold, chart by chart.
+ *
+ * `close_fiscal_year()` leaves the accounts it names out of the result and
+ * books them on the account they close to. A head that catches nothing is a
+ * typo the close would never notice; a head that catches a balance-sheet
+ * account would name something the close never empties; and an account to
+ * close to that is itself emptied at the year end would take the figure out
+ * of the balance sheet. All three are said here rather than on somebody's
+ * year end.
+ */
+function otherComprehensiveIncomeRules(manifest: Manifest, charts: PackChart[]): Issue[] {
+  const rule = otherComprehensiveIncomeOf(manifest);
+  if (rule === null) return [];
+  const issues: Issue[] = [];
+  const path = 'defaults.other_comprehensive_income';
+  for (const chart of charts) {
+    for (const head of rule.accounts) {
+      const caught = chart.accounts.filter((account) => account.code.startsWith(head));
+      if (caught.length === 0) {
+        issues.push({ path: `${path}.accounts`, message: `${head} is the head of no account of chart ${chart.code}` });
+      }
+      for (const account of caught.filter((a) => carriedForward(a.type))) {
+        issues.push({
+          path: `${path}.accounts`,
+          message: `${head} catches ${account.code}, a ${account.type} account of chart ${chart.code}; other comprehensive income is an income or expense account`,
+        });
+      }
+    }
+    const target = chart.accounts.find((account) => account.code === rule.closes_to);
+    if (target === undefined) {
+      issues.push({ path: `${path}.closes_to`, message: `${rule.closes_to} is not in chart ${chart.code}` });
+    } else if (!carriedForward(target.type)) {
+      issues.push({
+        path: `${path}.closes_to`,
+        message: `${rule.closes_to} is a ${target.type} account of chart ${chart.code}; other comprehensive income closes to an account on the balance sheet`,
+      });
+    }
+  }
+  return issues;
+}
+
+/**
+ * Whether an account of this type stays on the balance sheet from one year to
+ * the next, as the generated column `accounts.carries_forward` says: every
+ * group but income and expense.
+ */
+function carriedForward(type: string): boolean {
+  if (!(ACCOUNT_TYPES as readonly string[]).includes(type)) return true;
+  const group = internalGroup(type as AccountType);
+  return group !== 'income' && group !== 'expense';
 }
 
 async function readJson(path: string): Promise<unknown> {

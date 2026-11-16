@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "US",
   "name": "United States",
-  "version": "0.11.0",
-  "schema_min": "20261023124650",
+  "version": "0.12.0",
+  "schema_min": "20261121070000",
   "seed_sequence": 15,
   "released_at": "2026-10-23",
   "certification": {
@@ -257,6 +257,14 @@
     "rounding_method": "half_up",
     "closing_style": "retained_earnings",
     "fiscal_year_default": "calendar",
+    "other_comprehensive_income": {
+      "accounts": [
+        "84"
+      ],
+      "closes_to": "3420",
+      "legal_reference": "FASB ASC 220-10-45-14 — the total of other comprehensive income for a period is transferred to a component of equity presented separately from retained earnings and additional paid-in capital, under a descriptive title such as accumulated other comprehensive income. Accounts 8400 to 8499 are the ones caption 21 of rule 5-03 prints, and 3420 is that component.",
+      "source": "fasb-asc"
+    },
     "roles": {
       "receivable": "1100",
       "payable": "2000",
