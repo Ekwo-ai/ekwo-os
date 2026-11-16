@@ -74,6 +74,26 @@ somewhere has already run it.
   a schema without the table or one of its columns, the pack is described
   without `charts`, never with an error. No migration; `SCHEMA_MIN` stays
   0.19.0.
+- **Other comprehensive income closes to its own account.**
+  `close_fiscal_year()` closed every income and expense account into the
+  result of the year, where generally accepted accounting principles keep
+  other comprehensive income out of it and accumulate it in a component of
+  equity of its own; the pack us told a company with a translation adjustment
+  not to use its accounts `8400` and `8410`. A pack may now declare
+  `defaults.other_comprehensive_income` — the heads of the codes that are
+  other comprehensive income, the balance-sheet account they close to, the
+  article — compiled into four nullable `country_defaults` columns. The close
+  reads the result over the other income and expense accounts, books these,
+  summed, on their own account, and returns the figure as
+  `other_comprehensive_income`; `statement_account_matches()` puts what
+  nobody has closed in the same place, so a balance sheet before and after
+  the close agree (`20261121070000_other_comprehensive_income_closes_apart`,
+  additive; `other_comprehensive_income_account()` is the one predicate both
+  read). `ekwo pack check` refuses a head that catches no account, a head
+  that catches a balance-sheet account, and an account to close to that is
+  not on the balance sheet. The pack us declares `84` closing to `3420`,
+  accumulated other comprehensive income (FASB ASC 220-10-45-14), and
+  becomes 0.12.0. A pack that says nothing closes exactly as before.
 
 ### Fixed
 

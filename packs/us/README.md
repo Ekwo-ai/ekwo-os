@@ -294,12 +294,16 @@ accumulated depreciation below it, negative, and total assets adds the two. A
 reader who expects a net book value on one line is reading a different
 presentation from the one the rule prescribes.
 
-**Other comprehensive income is a caption this pack cannot fill honestly.**
-Caption 21 of rule 5-03 is there and two accounts reach it, but
-`close_fiscal_year()` closes every income account to retained earnings, and
-generally accepted accounting principles close those two to accumulated other
-comprehensive income instead. Until the core handles it, a company with foreign
-currency translation adjustments should not use `8400` and `8410`.
+**Other comprehensive income closes to its own account.** Caption 21 of rule
+5-03 is there and two accounts reach it, `8400` and `8410`. Generally accepted
+accounting principles keep them out of net income and accumulate them in a
+component of equity of their own (ASC 220-10-45-14), so the pack declares the
+head `84` under `defaults.other_comprehensive_income`, closing to `3420`,
+accumulated other comprehensive income: `close_fiscal_year()` leaves them out
+of the result, which reaches retained earnings, and books them on `3420`.
+Reclassification adjustments — what leaves accumulated other comprehensive
+income when a security is sold or a foreign entity disposed of — are entries
+the company writes; nothing computes them.
 
 **No fact keys.** A registrant files in Inline XBRL against the taxonomy the
 Financial Accounting Standards Board publishes, and this pack carries no keys

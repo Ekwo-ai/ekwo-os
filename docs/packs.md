@@ -2921,6 +2921,33 @@ day for one year. Leave it out where the law asks for nothing: the final close
 is still offered by `close_fiscal_year_finally()`, and never asked for. The
 pack needs `schema_min` of `20261018130000` or later.
 
+**Other comprehensive income, where the framework keeps it out of the result.**
+Some frameworks present a few income and expense accounts below the result — a
+foreign currency translation adjustment, an unrealised gain on a security —
+and accumulate them in a component of equity of their own rather than in
+retained earnings. Say which accounts, and where they go, under
+`defaults.other_comprehensive_income`:
+
+```json
+"other_comprehensive_income": {
+  "accounts": ["84"],
+  "closes_to": "3420",
+  "legal_reference": "the article that keeps them out of the result, as the country cites it",
+  "source": "a key of certification.sources"
+}
+```
+
+Each entry of `accounts` is the head of a code: it catches the code it names
+and every code that begins with it, so an account a company adds under it is
+caught too. `close_fiscal_year()` reads the result of the year over the other
+income and expense accounts, and books these, summed, on `closes_to`; a
+balance sheet drawn before the close puts them there too, so the two agree.
+`ekwo pack check` refuses a head that catches no account of a chart, a head
+that catches a balance-sheet account, and a `closes_to` that is not on the
+balance sheet. Leave it out where every income and expense account is part of
+the result, which is what a pack that says nothing gets. The pack needs
+`schema_min` of `20261121070000` or later.
+
 **Who a declaration is paid to.** `defaults.tax_payee` names the administration
 that collects the tax the periodic return declares — the payee of the debt
 `settle_filing()` carries to `roles.tax_payable`:
