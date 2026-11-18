@@ -34,6 +34,7 @@ and exposes them as functions an agent or a screen calls.
 | `crm.move_deal(company, deal, stage)` | Moves a deal; a `won` or `lost` stage closes it, and a won deal makes its party a customer. Its body is `crm.place_deal()`, which the answer to a quote uses too. |
 | `crm.attach_document(company, deal, document)` / `crm.detach_document(company, document)` | A document carried by a deal, or taken off it. A document another deal carries is refused, `crm_document_in_another_deal`. |
 | `crm.deal_documents_of(company, deal)` | The documents of a deal, each with its answer and its `quote_status`, as the card and the board give them. |
+| `crm.deal_of_document(company, document)` | The deal a document belongs to, read from the document's side: its id, title, amount and currency, its stage (id, name, outcome), `closed_at` and `closed_outcome` — the won deal of an accepted quote too. Null when no deal carries it; a document the caller cannot read in the company is refused, `crm_unknown_document`. |
 | `crm.card_of(company, contact)` | One contact as one JSON object: the contact, its organisation, its card, its segments, its open deals with the documents they carry, its 20 latest activities. |
 | `crm.contact_vcard(company, contact)` | One contact as the text of a vCard 3.0, for an address book: name, organisation, job title, e-mail, telephone, address, profile URL, note. |
 | `crm.search_cards(company, query, status, segment, stage, country, language, owner, no_outbound, active_since, inactive_since, limit)` | The cards, filtered; every filter optional. |
@@ -87,7 +88,14 @@ document.
 select crm.attach_document(:company, :deal, :quote);
 select accept_document(:quote, 'The buyer');   -- the deal is won, its party a customer
 select undo_document_answer(:quote);           -- the deal is open again where it was
+select crm.deal_of_document(:company, :quote);  -- the deal, read from the quote's side
 ```
+
+A newer client on a database whose module has not received
+`crm.deal_of_document()` reads it as absent: `crmDealOfDocument()` answers
+`{ deal: null, available: false }`, never an error. A module's migrations
+are not counted by `ekwo_schema_version()`, so the read asks for the function
+itself rather than for a version (`ekwo module migrate crm` brings it).
 
 ## The first pipeline
 
@@ -109,7 +117,7 @@ insert into crm.stages (company_id, pipeline_id, name, position, outcome) values
 
 ## From an agent
 
-Once `public.modules` carries `crm`, the MCP server offers fourteen tools, each
+Once `public.modules` carries `crm`, the MCP server offers fifteen tools, each
 the function of the same name above, called through `@ekwo-ai/core`:
 
 | Tool | Function | Writes |
@@ -119,6 +127,7 @@ the function of the same name above, called through `@ekwo-ai/core`:
 | `crm_contact_vcard` | `crm.contact_vcard()` — the contact as a vCard 3.0, for an address book | no |
 | `crm_segments` | `crm.segment_tree()` — every segment, in tree order, with its members now | no |
 | `crm_board` | `crm.board()` — a pipeline, or all of them: stages in order, their deals, totals by currency | no |
+| `crm_deal_of_document` | `crm.deal_of_document()` — the deal a document belongs to, as `{ deal, available }` | no |
 | `crm_timeline` | `crm.timeline()` — the activities of a contact or of a deal | no |
 | `crm_upsert_card` | `crm.upsert_card()` | yes |
 | `crm_log_activity` | `crm.log_activity()` | yes |
@@ -161,6 +170,7 @@ ekwo crm join <segment-id> "Ada Lovelace"      # leave: ekwo crm leave <segment-
 ekwo crm deal open <pipeline-id> "Northwind Trading" --title "Annual subscription" --amount 12000 [--currency <code>]
 ekwo crm deal move <deal-id> <stage-id>
 ekwo crm deal attach <deal-id> <document>      # by id, number or reference; detach: ekwo crm deal detach <document>
+ekwo crm deal of <document>                    # the deal it belongs to, its stage and its closing
 ekwo doc accept <document> --by "The buyer"    # the deal that carries it is won
 ```
 

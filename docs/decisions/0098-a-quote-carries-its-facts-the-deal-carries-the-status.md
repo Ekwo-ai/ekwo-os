@@ -86,6 +86,11 @@ move is on the deal's timeline as a system activity naming the document.
 - A client reads the facts and the status from schema 0.26.0
   (`SCHEMA_FEATURES.quote_answer`); below it they are absent, and the three
   calls are refused by name.
+- The link is read from both sides: `crm.deal_documents_of()` gives the
+  documents of a deal, `crm.deal_of_document()` the deal of a document. A
+  client on a database whose module lacks the second reads it as absent: a
+  module's migrations are not counted by the schema version, so the core asks
+  for the function itself.
 
 ## See also
 

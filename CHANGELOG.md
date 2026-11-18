@@ -9,6 +9,24 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **The deal a document belongs to, read from the document's side.**
+  `crm.deal_of_document(company, document)` answers the deal that carries a
+  document — its id, title, amount as a decimal string and currency, its
+  stage (id, name, outcome), `closed_at` and `closed_outcome` — the won deal
+  of an accepted quote too, which `crm.card_of()` does not list. Null when no
+  deal carries the document; a document the caller cannot read in the
+  company is refused, `crm_unknown_document`; it needs `crm.read`
+  (`modules/crm/supabase/migrations/20261118201000_crm_deal_of_document.sql`,
+  additive). `crmDealOfDocument()` in `@ekwo-ai/core` answers
+  `{ deal, available }`, the MCP tool `crm_deal_of_document` and
+  `ekwo crm deal of <document>`. On a database whose `crm` module has not
+  received the function, the read is absent — `available` false, `deal`
+  null — never an error: a module's migrations are not counted by
+  `ekwo_schema_version()`, so the core asks for the function, not for a
+  version. `SCHEMA_MIN` stays 0.19.0.
+
 ## [0.26.0] — 2026-11-18
 
 ### Added
