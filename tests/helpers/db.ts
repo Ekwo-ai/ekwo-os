@@ -325,10 +325,12 @@ export async function schemaImage(options: Options = {}): Promise<string> {
       .filter((m) => m.requiresSocleMin !== null && leftOutVersions.has(m.requiresSocleMin))
       .map((m) => m.code),
   );
-  const moduleMigrations =
+  const moduleFilesKept =
     options.modules === false
       ? []
-      : (await moduleMigrationFiles(root)).filter((m) => !tooOld.has(m.code) && !leftOut.has(m.file)).map((m) => m.path);
+      : (await moduleMigrationFiles(root)).filter((m) => !tooOld.has(m.code) && !leftOut.has(m.file));
+  const moduleMigrations = moduleFilesKept.map((m) => m.path);
+  const moduleOf = new Map(moduleFilesKept.map((m) => [m.path, m.code]));
   const seeds = options.seed === false ? [] : (await seedFiles(root)).map((f) => join(tree.seed, f));
   const moduleSeeds =
     options.seed === false || options.modules === false
@@ -357,16 +359,28 @@ export async function schemaImage(options: Options = {}): Promise<string> {
     const moduleFiles = new Set([...moduleMigrations, ...moduleSeeds]);
     const lastModuleMigration = moduleMigrations.at(-1);
     const firstSeed = [...seeds, ...moduleSeeds][0];
+    // A module migration that asks the socle for an object by name and is
+    // refused (`socle_too_old`) was written for a newer socle than this one,
+    // which the manifest's `requires_socle_min` — older than every file of the
+    // module — cannot say. `ekwo module` stops there; so does this, and the
+    // module's later files are not applied.
+    const refused = new Set<string>();
     for (const file of files) {
       if (file === firstSeed && options.beforeSeeds !== undefined) await db.exec(options.beforeSeeds);
+      const code = moduleOf.get(file);
       try {
-        const published = await readFile(file, 'utf8');
-        const sql = moduleFiles.has(file) ? socleNamed(published, await socleSchemaIn(db)) : published;
-        await db.exec(sql);
-        if (file === lastModuleMigration) await moduleFunctionsFollowTheSocle(db);
+        if (code === undefined || !refused.has(code)) {
+          const published = await readFile(file, 'utf8');
+          const sql = moduleFiles.has(file) ? socleNamed(published, await socleSchemaIn(db)) : published;
+          await db.exec(sql);
+        }
       } catch (error) {
-        throw new Error(`${relative(root, file)} failed: ${(error as Error).message}`);
+        if (code === undefined || !(error as Error).message.startsWith('socle_too_old:')) {
+          throw new Error(`${relative(root, file)} failed: ${(error as Error).message}`);
+        }
+        refused.add(code);
       }
+      if (file === lastModuleMigration) await moduleFunctionsFollowTheSocle(db);
     }
     // A data directory written after a checkpoint opens without replaying
     // the write-ahead log.

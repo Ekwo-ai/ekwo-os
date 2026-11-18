@@ -741,6 +741,10 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
     reads: [],
     calls: (id) => [{ sql: `select * from general_ledger($1, '1900-01-01'::date, '2999-12-31'::date, $2::uuid[])`, params: [bobBooks, [id]] }],
   },
+  'ekwo.quote_statuses': {
+    reads: [],
+    calls: (id) => [{ sql: `select * from quote_statuses($1::uuid[])`, params: [[id]] }],
+  },
   'ekwo.subledger': {
     reads: [],
     calls: (id) => [{ sql: `select * from subledger($1, '1900-01-01'::date, '2999-12-31'::date, $2::uuid[])`, params: [bobBooks, [id]] }],

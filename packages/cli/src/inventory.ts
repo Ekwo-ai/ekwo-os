@@ -235,7 +235,15 @@ async function readSchema(db: SqlClient, schema: string): Promise<ExpectedSchema
        from pg_trigger t
        join pg_class c on c.oid = t.tgrelid
        join pg_namespace n on n.oid = c.relnamespace
+       -- A trigger whose function is a module's, on a table of another
+       -- schema, is that module's: crm follows the answer to a quote with
+       -- its own trigger on the socle's documents, and a socle without the
+       -- module is not missing it. A function of the socle (ekwo, or public
+       -- before the move) serves the tables of every schema.
+       join pg_proc f on f.oid = t.tgfoid
+       join pg_namespace fn on fn.oid = f.pronamespace
       where n.nspname = $1 and not t.tgisinternal
+        and (fn.oid = n.oid or fn.nspname in ('ekwo', 'public'))
       order by c.relname, t.tgname`,
     [schema],
   );

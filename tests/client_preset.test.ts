@@ -873,6 +873,10 @@ describe('a client writes nothing else — by the function', () => {
       'ekwo.post_document': { sql: `select post_document($1)`, params: [mine.draftDocumentId] },
       // Approving a draft for an agent to post is documents.post, asked here.
       'ekwo.approve_document': { sql: `select approve_document($1)`, params: [mine.draftDocumentId] },
+      // The answer to a quote is documents.write, asked first.
+      'ekwo.accept_document': { sql: `select accept_document($1)`, params: [mine.draftDocumentId] },
+      'ekwo.decline_document': { sql: `select decline_document($1)`, params: [mine.draftDocumentId] },
+      'ekwo.undo_document_answer': { sql: `select undo_document_answer($1)`, params: [mine.draftDocumentId] },
       // Security invoker: the lines and the header are written under row level
       // security, which refuses a client the insert.
       'ekwo.replace_document_lines': {

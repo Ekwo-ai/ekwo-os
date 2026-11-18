@@ -7242,10 +7242,6 @@
       },
       {
         "table": "documents",
-        "name": "crm_follow_document_answer"
-      },
-      {
-        "table": "documents",
         "name": "documents_assert_may_post"
       },
       {
