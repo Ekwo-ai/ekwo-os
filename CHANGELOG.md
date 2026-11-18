@@ -11,6 +11,40 @@ somewhere has already run it.
 
 ### Added
 
+- **A quote carries its answer as dated facts, and its status is derived.**
+  `documents.accepted_at`, `accepted_by` and `declined_at`, on a
+  `sale_quote` or a `purchase_order` only and never both answers at once,
+  written by `accept_document()`, `decline_document()` and
+  `undo_document_answer()` — each refusing by name what it cannot do, asking
+  `documents.write`, and recording the act on the audit trail; nothing is
+  booked. `quote_status(document)` derives `draft`, `sent`, `accepted`,
+  `declined`, `expired` (no answer and `due_date` past) or `cancelled`, and
+  `quote_statuses()` reads it for a list: the one source every reader asks
+  (`20261118144012_a_quote_carries_its_answer`, additive;
+  `SCHEMA_FEATURES.quote_answer`, since 0.26.0). An agent records an answer in
+  the mode its company chose, on the posting's own trigger
+  (`documents_posting_mode`): `approval_required` in review without a
+  person's approval of the quote as it stands, `document_answered_by_agent` on
+  the trail. `get_document` and `list_documents` carry the facts and
+  `quote_status`; the MCP tools `accept_document`, `decline_document` and
+  `undo_document_answer`, and `ekwo doc accept`, `doc decline` and `doc answer
+  undo`. The word of each status is in every language file of
+  `@ekwo-ai/invoice-pdf` (`quoteDraft` … `quoteExpired`), read by
+  `quoteStatusLabel()`. Decision 0098.
+- **A deal of the `crm` module carries its documents, and a quote's answer
+  moves it.** `crm.deal_documents` links a document to one deal of the same
+  company; `crm.attach_document()` and `crm.detach_document()` write it —
+  `crm_attach_document`, `crm_detach_document`, `ekwo crm deal attach` and
+  `deal detach` — and `crm.card_of()` and `crm.board()` give each deal its
+  documents with their `quote_status`. A trigger of the module follows the
+  answer, in the database: accepted moves the deal to the first `won` stage
+  of its pipeline and makes its party a customer; declined, to the first
+  `lost` stage once no other quote of the deal is alive; sent and expired
+  move nothing; undone opens the deal again where it was. A pipeline without
+  the stage, a company without the module and a database without it: the
+  quote carries its facts and nothing fails. `crm.place_deal()` is the body
+  `crm.move_deal()` and the trigger share
+  (`20261118145000_crm_deal_documents`, module migration, additive).
 - **A financial year opens on any of the twelve months.**
   `defaults.fiscal_year_default` named four opening months — `calendar`,
   `april`, `july`, `october` — where the law of most countries names twelve,

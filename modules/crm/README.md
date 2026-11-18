@@ -22,6 +22,7 @@ and exposes them as functions an agent or a screen calls.
 | `crm.segment_members` | A contact in a segment. Leaving sets `left_at` and keeps the row; joining again clears it. |
 | `crm.pipelines`, `crm.stages` | A sequence of stages, each `open`, `won` or `lost`. |
 | `crm.deals` | A piece of business with one contact, moving through one pipeline. Closed with its date and outcome at a `won` or `lost` stage. |
+| `crm.deal_documents` | The documents a deal carries — the versions of a quote, an order, the invoices of its phases. A document belongs to one deal at most, of the same company. |
 | `crm.activities` | Everything that happened: a note, an e-mail, a call, a meeting, a signal, a deal moving. |
 
 | Function | What it does |
@@ -30,12 +31,14 @@ and exposes them as functions an agent or a screen calls.
 | `crm.log_activity(company, contact, kind, …, source, source_ref)` | Writes an activity and moves the card's `last_activity_at`. The same `(source, source_ref)` twice returns the activity already kept. |
 | `crm.join_segment(company, segment, contact, added_by, note)` / `crm.leave_segment(company, segment, contact)` | In and out of a segment, with the membership remembered. |
 | `crm.open_deal(company, pipeline, contact, title, …)` | Opens a deal at the first `open` stage of the pipeline. |
-| `crm.move_deal(company, deal, stage)` | Moves a deal; a `won` or `lost` stage closes it, and a won deal makes its party a customer. |
-| `crm.card_of(company, contact)` | One contact as one JSON object: the contact, its organisation, its card, its segments, its open deals, its 20 latest activities. |
+| `crm.move_deal(company, deal, stage)` | Moves a deal; a `won` or `lost` stage closes it, and a won deal makes its party a customer. Its body is `crm.place_deal()`, which the answer to a quote uses too. |
+| `crm.attach_document(company, deal, document)` / `crm.detach_document(company, document)` | A document carried by a deal, or taken off it. A document another deal carries is refused, `crm_document_in_another_deal`. |
+| `crm.deal_documents_of(company, deal)` | The documents of a deal, each with its answer and its `quote_status`, as the card and the board give them. |
+| `crm.card_of(company, contact)` | One contact as one JSON object: the contact, its organisation, its card, its segments, its open deals with the documents they carry, its 20 latest activities. |
 | `crm.contact_vcard(company, contact)` | One contact as the text of a vCard 3.0, for an address book: name, organisation, job title, e-mail, telephone, address, profile URL, note. |
 | `crm.search_cards(company, query, status, segment, stage, country, language, owner, no_outbound, active_since, inactive_since, limit)` | The cards, filtered; every filter optional. |
 | `crm.segment_tree(company)` | Every segment as a tree — parent, depth, path of slugs — with how many contacts are in it now. |
-| `crm.board(company, pipeline, include_closed)` | One pipeline, or all of them: the stages in order, the deals at each, the totals by currency per stage and per pipeline. |
+| `crm.board(company, pipeline, include_closed)` | One pipeline, or all of them: the stages in order, the deals at each with the documents they carry, the totals by currency per stage and per pipeline. |
 | `crm.timeline(company, contact, deal, since, kinds, limit)` | The activities of a contact or of a deal, latest first. |
 
 ```sql
@@ -51,6 +54,39 @@ select crm.log_activity(:company, :ada, 'email_out', 'First contact',
 select crm.open_deal(:company, :sales_pipeline, :org, 'Annual subscription', 12000);
 select crm.move_deal(:company, :deal, :won_stage);  -- Northwind Trading is now a customer
 select crm.card_of(:company, :org);
+```
+
+## A quote moves its deal
+
+The socle records the answer to a quote — `accepted_at`, `accepted_by`,
+`declined_at`, written by `accept_document()`, `decline_document()` and
+`undo_document_answer()` — and derives its status with `quote_status()`:
+`draft`, `sent`, `accepted`, `declined`, `expired`, `cancelled`. The quote
+carries its dated facts; **the deal carries the commercial status**
+([decision 0098](../../docs/decisions/0098-a-quote-carries-its-facts-the-deal-carries-the-status.md)).
+
+Once a deal carries a quote (`crm.attach_document()`), a trigger of this
+module on the socle's `documents` moves the deal when the answer moves — in
+the database, with no agent and no approval of its own:
+
+| The quote | The deal |
+|---|---|
+| accepted | to the first `won` stage of its pipeline, and its party becomes a customer |
+| declined | to the first `lost` stage, once no other quote of the deal is alive (neither declined, expired nor cancelled) |
+| sent, expired | stays: open stages are each company's own |
+| answer undone | back to the stage it was at before the answer closed it, else the last open stage of its pipeline |
+
+A pipeline without a `won` (or `lost`) stage keeps the deal where it is, and
+the fact stays on the quote. An answer recorded before the quote was
+attached moves nothing. A company that has not enabled the module, a quote no
+deal carries, and a database without the module: the quote carries its
+facts, nothing else changes. Every move is on the deal's timeline, naming the
+document.
+
+```sql
+select crm.attach_document(:company, :deal, :quote);
+select accept_document(:quote, 'The buyer');   -- the deal is won, its party a customer
+select undo_document_answer(:quote);           -- the deal is open again where it was
 ```
 
 ## The first pipeline
@@ -73,7 +109,7 @@ insert into crm.stages (company_id, pipeline_id, name, position, outcome) values
 
 ## From an agent
 
-Once `public.modules` carries `crm`, the MCP server offers twelve tools, each
+Once `public.modules` carries `crm`, the MCP server offers fourteen tools, each
 the function of the same name above, called through `@ekwo-ai/core`:
 
 | Tool | Function | Writes |
@@ -88,6 +124,7 @@ the function of the same name above, called through `@ekwo-ai/core`:
 | `crm_log_activity` | `crm.log_activity()` | yes |
 | `crm_join_segment` / `crm_leave_segment` | `crm.join_segment()` / `crm.leave_segment()` | yes |
 | `crm_open_deal` / `crm_move_deal` | `crm.open_deal()` / `crm.move_deal()` | yes |
+| `crm_attach_document` / `crm_detach_document` | `crm.attach_document()` / `crm.detach_document()` — a quote carried by a deal, whose answer (`accept_document`, `decline_document`) then moves it | yes |
 
 and one prompt, `crm_morning_review`: the cards that went quiet, the deals
 past their expected date, and what to suggest — written only once the user
@@ -123,6 +160,8 @@ ekwo crm log "Ada Lovelace" --kind note --subject "Asked for a quote" [--deal <d
 ekwo crm join <segment-id> "Ada Lovelace"      # leave: ekwo crm leave <segment-id> <contact>
 ekwo crm deal open <pipeline-id> "Northwind Trading" --title "Annual subscription" --amount 12000 [--currency <code>]
 ekwo crm deal move <deal-id> <stage-id>
+ekwo crm deal attach <deal-id> <document>      # by id, number or reference; detach: ekwo crm deal detach <document>
+ekwo doc accept <document> --by "The buyer"    # the deal that carries it is won
 ```
 
 ## Decisions worth knowing
@@ -157,6 +196,12 @@ is a custom of each language, and the books keep one name. An organisation is
 written as one (`ORG`, `X-ABShowAs:COMPANY`); a person carries their
 organisation, and its address when they have none of their own. The country
 is its ISO code, as the contact holds it.
+
+**An answer moves a deal by the module's rule.** The trigger
+that follows the answer to a quote is `security definer`: whoever records
+the answer holds `documents.write`, and the module's rule — won, lost,
+opened again — applies whatever else they hold, as a deal moving by hand
+would, on the timeline with the document named.
 
 **The functions are `security invoker`.** The policies decide every row:
 `crm.read` reads, `crm.write` writes, on a company that holds the module. The

@@ -190,6 +190,7 @@ reach and whether you may write; without that box ticked, you read.
 | What a customer owes, line by line | `ekwo contact statement "<name>" --from <date> --to <date>` | `contact_statement` |
 | Accounts and tax codes | the country's set-up page | `list_accounts`, `describe_pack` |
 | A draft invoice | `ekwo doc new --contact <name> --line "name=…,price=…,account=<code>,tax=<code>" --ref <yours>` | `create_document` |
+| The answer to a quote or an order, and its status | `ekwo doc accept <doc> --by <who>`, `ekwo doc decline <doc>`, `ekwo doc answer undo <doc>` | `accept_document`, `decline_document`, `undo_document_answer` |
 | See the transaction before recording it | `ekwo post <doc> --dry-run` | — |
 | Record it | `ekwo post <doc>` | `post_document` |
 | Undo it | `ekwo cancel <doc>` | `cancel_document` |
@@ -205,6 +206,7 @@ reach and whether you may write; without that box ticked, you read.
 | The PDF of an invoice or a credit note, with the company's logo | `ekwo doc pdf <doc> [--factur-x] [--out file]` | `render_invoice_pdf` |
 | The electronic invoice of a recorded sale (module `einvoicing`) | `ekwo einvoice validate <doc>`, then `ekwo einvoice issue <doc>` | `einvoicing_validate`, then `einvoicing_issue` |
 | The record of a relationship: cards, segments, deals (module `crm`) | `ekwo crm search`, `ekwo crm card <contact>`, `ekwo crm vcard <contact>`, `ekwo crm board`, then `ekwo crm log …` / `ekwo crm deal move <deal> <stage>` | `crm_search`, `crm_card`, `crm_contact_vcard`, `crm_board`, then `crm_log_activity` / `crm_move_deal` |
+| A quote carried by a deal, whose answer then wins or loses it (module `crm`) | `ekwo crm deal attach <deal> <doc>`, `ekwo crm deal detach <doc>` | `crm_attach_document`, `crm_detach_document` |
 | The contracts of the company, and the invoices they say are due (module `contracts`) | `ekwo contracts list`, `ekwo contracts deadlines`, then `ekwo contracts issue --on <date>` | `contracts_list`, `contracts_deadlines`, then `contracts_issue_due` |
 | A received Peppol file, or whether a recipient is on Peppol (no installation needed) | `ekwo peppol validate <file>`, `ekwo peppol lookup <participant>` | — |
 | The VAT return of a period | `ekwo vat --from <date> --to <date> [--form <code>]` | `vat_return` |
