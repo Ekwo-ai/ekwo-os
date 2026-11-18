@@ -928,6 +928,8 @@ describe('the other person, signed in', () => {
     expect(differs).toEqual([]);
   });
 
+  // One probe per function and per row: the time grows with the schema, so
+  // this test names its own limit instead of living at the edge of the default.
   it('is answered about every row of Alice’s, named by its id, as about a row that does not exist, by every function that takes an id', async () => {
     const ids = await aliceIds();
     expect(ids.length).toBeGreaterThan(40);
@@ -944,7 +946,7 @@ describe('the other person, signed in', () => {
       }
     });
     expect(differs).toEqual([]);
-  });
+  }, 240_000);
 
   it('is answered about an id of Alice’s inside an object or a list as about an id nobody holds', async () => {
     const found = await rows<{ name: string; keys: string[] | null; list: boolean }>(
@@ -1390,6 +1392,8 @@ describe('the other person, through a machine key', () => {
     expect(read).toBeGreaterThan(20);
   });
 
+  // One probe per function and per row: the time grows with the schema, so
+  // this test names its own limit instead of living at the edge of the default.
   it('is answered about every row of Alice’s, named by its id, as about nothing, by every function that takes an id', async () => {
     const ids = await aliceIds();
     const functions = await takingUuid();
@@ -1407,7 +1411,7 @@ describe('the other person, through a machine key', () => {
       });
     }
     expect(differs).toEqual([]);
-  });
+  }, 240_000);
 
   it('is answered about Alice’s company as about one that does not exist', async () => {
     await throughKey(bobSecret, async () => {
