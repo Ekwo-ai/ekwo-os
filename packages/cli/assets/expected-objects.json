@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261115100000",
+  "migration": "20261118144012",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -2291,6 +2291,14 @@
         "name": "documents",
         "columns": [
           {
+            "name": "accepted_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "accepted_by",
+            "type": "text"
+          },
+          {
             "name": "accounting_date",
             "type": "date"
           },
@@ -2349,6 +2357,10 @@
           {
             "name": "currency_code_tax",
             "type": "character(3)"
+          },
+          {
+            "name": "declined_at",
+            "type": "timestamp with time zone"
           },
           {
             "name": "delivery_address_line1",
@@ -4740,6 +4752,10 @@
     ],
     "functions": [
       {
+        "name": "accept_document",
+        "arguments": "p_document_id uuid, p_accepted_by text, p_at timestamp with time zone"
+      },
+      {
         "name": "accept_invitation",
         "arguments": "p_token text"
       },
@@ -5204,6 +5220,10 @@
         "arguments": "p_tax_point_date date, p_entry_date date"
       },
       {
+        "name": "decline_document",
+        "arguments": "p_document_id uuid, p_at timestamp with time zone"
+      },
+      {
         "name": "default_statement_code",
         "arguments": "p_company_id uuid, p_kind text, p_at date"
       },
@@ -5278,6 +5298,10 @@
       {
         "name": "document_territory",
         "arguments": "p_document_id uuid, p_party text"
+      },
+      {
+        "name": "document_to_answer",
+        "arguments": "p_document_id uuid"
       },
       {
         "name": "document_version",
@@ -5852,6 +5876,14 @@
         "arguments": "p_before date"
       },
       {
+        "name": "quote_status",
+        "arguments": "p_document documents"
+      },
+      {
+        "name": "quote_statuses",
+        "arguments": "p_document_ids uuid[]"
+      },
+      {
         "name": "read_bank_account_identifier",
         "arguments": "p_scheme text, p_raw text"
       },
@@ -6150,6 +6182,10 @@
       {
         "name": "unarchive_company",
         "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "undo_document_answer",
+        "arguments": "p_document_id uuid"
       },
       {
         "name": "undo_leave_line_unnamed",
@@ -9101,6 +9137,17 @@
       ],
       "functions": [
         {
+          "name": "accept_document",
+          "arguments": "p_document_id uuid, p_accepted_by text, p_at timestamp with time zone",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "accept_invitation",
           "arguments": "p_token text",
           "anon": [],
@@ -10259,6 +10306,17 @@
           ]
         },
         {
+          "name": "decline_document",
+          "arguments": "p_document_id uuid, p_at timestamp with time zone",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "default_statement_code",
           "arguments": "p_company_id uuid, p_kind text, p_at date",
           "anon": [],
@@ -10423,6 +10481,17 @@
         {
           "name": "document_territory",
           "arguments": "p_document_id uuid, p_party text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "document_to_answer",
+          "arguments": "p_document_id uuid",
           "anon": [],
           "authenticated": [
             "execute"
@@ -11930,6 +11999,28 @@
           ]
         },
         {
+          "name": "quote_status",
+          "arguments": "p_document documents",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "quote_statuses",
+          "arguments": "p_document_ids uuid[]",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "read_bank_account_identifier",
           "arguments": "p_scheme text, p_raw text",
           "anon": [],
@@ -12702,6 +12793,17 @@
         {
           "name": "unarchive_company",
           "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "undo_document_answer",
+          "arguments": "p_document_id uuid",
           "anon": [],
           "authenticated": [
             "execute"

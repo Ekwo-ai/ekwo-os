@@ -163,7 +163,8 @@ export async function newDocument(
       | 'sale_credit_note'
       | 'purchase_invoice'
       | 'purchase_credit_note'
-      | 'sale_quote';
+      | 'sale_quote'
+      | 'purchase_order';
     number?: string;
     contactId: string;
     date?: string;
