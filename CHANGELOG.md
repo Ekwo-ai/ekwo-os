@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.26.0] — 2026-11-18
+
 ### Added
 
 - **A quote carries its answer as dated facts, and its status is derived.**
@@ -190,6 +192,22 @@ somewhere has already run it.
   `--closing`. No migration: the schema already stores what a CSV
   gives, under the source format `csv`.
 
+- **Four country packs more, in Europe and the Pacific.** Andorra; Palau,
+  Solomon Islands and Nauru, each at 0.1.0 and of status `community`. Each
+  with its chart, its taxes, its statements and a golden scenario checked by
+  hand, and the periodic return of its country where the country has one —
+  the general indirect tax of Andorra, the goods and services tax of Palau,
+  the goods tax and sales tax of Solomon Islands. Nauru has no general
+  consumption tax in force, and its pack declares none.
+- **A service to a business outside the European Union has its tax code in
+  the packs of Northern, Central and Eastern Europe and of Portugal** —
+  `se` 0.4.0, `dk` 0.4.0, `fi` 0.4.0, `ee` 1.15.0, `pl` 0.3.0, `cz` 0.5.0,
+  `hu` 0.4.0, `ro` 0.4.0 and `pt` 0.5.0. Such a service is taxed where the
+  business is, so it is outside the scope of the seller's VAT: each pack
+  books it with a code of its own, treatment `not_subject`, category O and
+  reason `VATEX-EU-O`, on the box its return gives to operations abroad or
+  on none, with the article of the law among its sources.
+
 ### Changed
 
 - **The pages the site renders from this repository speak of company data.**
@@ -200,6 +218,17 @@ somewhere has already run it.
   the site. A proven pack reads "proven on the real data of a company", in
   `ekwo pack describe`, `ekwo init`, `ekwo status` and the header of its seed.
   Table, column and function names do not change, nor does any figure.
+
+- **The schema is 0.26.0 (`20261118170000`); the floor of the packages stays
+  at 0.19.0.** Every migration of this release adds; what the packages read
+  or call of it is a feature of `SCHEMA_FEATURES` since 0.26.0, left out or
+  refused by name below it.
+- **`@ekwo-ai/factur-x`: the currency of an invoice is stated.**
+  `Invoice.currency` (BT-5) is required, and `generateCiiXml` throws a
+  `TypeError` naming the field when it is absent or not a three-letter code.
+  It was optional and fell back to the euro. An invoice in euros states
+  `currency: 'EUR'`; the e-invoicing of `@ekwo-ai/core` already passed the
+  currency of the document.
 
 ### Fixed
 
@@ -269,15 +298,6 @@ somewhere has already run it.
   `attachments` stay on the list: the capability a row needs is chosen by
   `attachment_is_filing_deposit_file(id)`, a definer function that answers
   about one piece and has no set-returning form yet.
-
-### Changed
-
-- **`@ekwo-ai/factur-x`: the currency of an invoice is stated.**
-  `Invoice.currency` (BT-5) is required, and `generateCiiXml` throws a
-  `TypeError` naming the field when it is absent or not a three-letter code.
-  It was optional and fell back to the euro. An invoice in euros states
-  `currency: 'EUR'`; the e-invoicing of `@ekwo-ai/core` already passed the
-  currency of the document.
 
 ## [0.25.2] — 2026-11-13
 
