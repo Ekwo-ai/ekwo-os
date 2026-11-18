@@ -1202,6 +1202,15 @@
         "required": ["link"],
         "properties": { "link": { "$ref": "#/$defs/row" } }
       },
+      "crm deal of": {
+        "$comment": "The deal a document belongs to, as crm.deal_of_document() reads it: id, title, amount as a decimal string, currency_code, stage (id, name, outcome), closed_at and closed_outcome. deal is null when no deal carries the document; available is false, and deal null, on a database whose crm module has not received the read.",
+        "type": "object",
+        "required": ["deal", "available"],
+        "properties": {
+          "deal": { "oneOf": [{ "$ref": "#/$defs/row" }, { "type": "null" }] },
+          "available": { "type": "boolean" }
+        }
+      },
       "contracts list": {
         "$comment": "The contracts of the company in use, filtered, as contracts.list_contracts() returns them: each with its party's name and its nearest deadline, in the order of their numbers. templates is there under --templates: the active templates, as contracts.list_templates() returns them.",
         "type": "object",

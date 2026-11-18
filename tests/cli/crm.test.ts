@@ -243,7 +243,24 @@ describe('ekwo crm deal attach, and the answer to the quote', () => {
       closed_outcome: 'lost',
     });
 
+    // Read from the document's side: the lost deal, closed.
+    const of = await ekwo(['crm', 'deal', 'of', 'quote-7']);
+    expect(of.exitCode).toBe(0);
+    expect(of.data).toEqual({
+      available: true,
+      deal: {
+        id: dealId,
+        title: 'Fit-out',
+        amount: null,
+        currency_code: null,
+        stage: { id: stages['Lost'], name: 'Lost', outcome: 'lost' },
+        closed_at: expect.any(String),
+        closed_outcome: 'lost',
+      },
+    });
+
     expect((await ekwo(['crm', 'deal', 'detach', 'quote-7'])).exitCode).toBe(0);
+    expect((await ekwo(['crm', 'deal', 'of', 'quote-7'])).data).toEqual({ available: true, deal: null });
     const again = await ekwo(['crm', 'deal', 'detach', 'quote-7']);
     expect(again.exitCode).toBe(EXIT_REFUSED);
     expect(again.error).toMatchObject({ kind: 'refusal', name: 'crm_document_not_attached' });

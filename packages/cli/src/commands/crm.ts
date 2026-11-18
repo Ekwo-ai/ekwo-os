@@ -1,12 +1,13 @@
 /**
  * `ekwo crm search | card | card set | vcard | segments | board | timeline | log |
- * join | leave | deal open | deal move | deal attach | deal detach` — the `crm`
- * module from a terminal.
+ * join | leave | deal open | deal move | deal attach | deal detach | deal of` — the
+ * `crm` module from a terminal.
  *
  * Each verb is one function of the core — `crmSearch()`, `crmCard()`,
  * `crmContactVcard()`, `crmUpsertCard()`, `crmSegments()`, `crmBoard()`, `crmTimeline()`,
  * `crmLogActivity()`, `crmJoinSegment()`, `crmLeaveSegment()`,
- * `crmOpenDeal()`, `crmMoveDeal()`, `crmAttachDocument()`, `crmDetachDocument()` — which the MCP server calls for the
+ * `crmOpenDeal()`, `crmMoveDeal()`, `crmAttachDocument()`, `crmDetachDocument()`,
+ * `crmDealOfDocument()` — which the MCP server calls for the
  * `crm_*` tool of the same name, and each of those is one function of the
  * `crm` schema. Nothing is decided here: a status, a priority or a kind is
  * checked against the words of the schema's enums as the core lists them —
@@ -24,6 +25,7 @@ import {
   crmCard,
   crmDetachDocument,
   crmContactVcard,
+  crmDealOfDocument,
   crmJoinSegment,
   crmLeaveSegment,
   crmLogActivity,
@@ -84,6 +86,7 @@ const USAGE =
   ' | ekwo crm deal open <pipeline-id> <contact> --title <title> [--amount --currency --expected --url --owner]' +
   ' | ekwo crm deal move <deal-id> <stage-id>' +
   ' | ekwo crm deal attach <deal-id> <document> | ekwo crm deal detach <document>' +
+  ' | ekwo crm deal of <document>' +
   ` — <status> is ${STATUSES}; <priority> is ${PRIORITIES}; <kind> is ${KINDS}`;
 
 /** A word of one of the schema's enums, refused here with the list rather than guessed at. */
@@ -123,6 +126,7 @@ export async function crmCommand(args: ParsedArgs, deps: BooksDeps = {}): Promis
   if (action === 'deal' && args.positional[1] === 'move') return dealMove(args, deps);
   if (action === 'deal' && args.positional[1] === 'attach') return dealAttach(args, deps);
   if (action === 'deal' && args.positional[1] === 'detach') return dealDetach(args, deps);
+  if (action === 'deal' && args.positional[1] === 'of') return dealOf(args, deps);
   throw new UsageError(USAGE);
 }
 
@@ -488,5 +492,41 @@ async function dealDetach(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   setResult(result);
   heading('Deal');
   step(`${wanted} is off deal ${dim(text(result.link['deal_id']))}`);
+  return 0;
+}
+
+/**
+ * `ekwo crm deal of <document>`: the deal that carries the document — by its
+ * id, its number or its reference — with its stage and whether it is closed.
+ * No deal is an answer, as is a database whose crm module has not received
+ * the read yet.
+ */
+async function dealOf(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, DEAL_DOCUMENT_FLAGS);
+  const wanted = args.positional[2];
+  if (wanted === undefined) throw new UsageError(`missing_argument: the document, by id, number or reference. ${USAGE}`);
+  const { backend, company } = await openBooks(args, deps);
+  const documentId = await resolveDocument(backend, company.id, wanted);
+  const result = await crmDealOfDocument(backend, { company_id: company.id, document_id: documentId });
+  setResult(result);
+  heading('Deal');
+  if (!result.available) {
+    note('this database does not read the deal of a document yet: its operator runs ekwo module migrate crm');
+    return 0;
+  }
+  if (result.deal === null) {
+    step(`${wanted} is carried by no deal`);
+    return 0;
+  }
+  const deal = result.deal;
+  const stage = (deal['stage'] ?? {}) as Row;
+  const amount = deal['amount'] === null ? '' : `${text(deal['amount'])} ${text(deal['currency_code'])}`;
+  const closed = deal['closed_outcome'] === null ? '' : `${text(deal['closed_outcome'])}, ${text(deal['closed_at'])}`;
+  pairs([
+    ['deal', `${text(deal['title'])} ${dim(text(deal['id']))}`],
+    ['stage', `${text(stage['name'])} (${text(stage['outcome'])})`],
+    ['amount', amount],
+    ['closed', closed],
+  ]);
   return 0;
 }

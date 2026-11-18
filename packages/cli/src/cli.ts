@@ -304,8 +304,9 @@ ${bold('Connecting')} ${dim('(every command)')}
               --currency]; deal move <deal> <stage> — a won stage makes the
               party a customer; deal attach <deal> <document> | deal detach
               <document> — the quotes a deal carries: accepted wins it,
-              declined loses it once no other is alive. The same functions as
-              the crm_* tools.
+              declined loses it once no other is alive; deal of <document> —
+              the deal a document belongs to, its stage and its closing. The
+              same functions as the crm_* tools.
               --status ${CRM_RELATIONSHIP_STATUSES.join('|')};
               --priority ${CRM_PRIORITIES.join('|')};
               --kind ${CRM_ACTIVITY_KINDS.join('|')}.
