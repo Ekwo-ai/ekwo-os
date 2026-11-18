@@ -17,6 +17,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { EXIT_REFUSED, EXIT_USAGE, run, validate, type OutputDocument } from '../../packages/cli/src/index.js';
 import { asUser, freshDatabase, one, repoRoot, rows } from '../helpers/db.js';
+import { SCHEMA_FEATURES } from '../../packages/core/src/index.js';
 import { newCompany, newUser } from '../helpers/factory.js';
 import { ANON_KEY, FAKE_URL, fakeSupabase, type FakeSupabase } from './fake-supabase.js';
 
@@ -210,5 +211,41 @@ describe('ekwo crm', () => {
     const bad = await ekwo(['crm', 'search', '--status', 'prospect']);
     expect(bad.exitCode).toBe(EXIT_USAGE);
     expect(bad.error?.message).toContain('in_discussion');
+  });
+});
+
+describe('ekwo crm deal attach, and the answer to the quote', () => {
+  // The answer to a quote is asked of a schema that says it has it
+  // (`SCHEMA_FEATURES.quote_answer`): until the release that brings it, this
+  // database says the version it will be.
+  beforeAll(async () => {
+    await pg.query(
+      `create or replace function ekwo.ekwo_schema_version() returns text language sql immutable as $$ select '${SCHEMA_FEATURES.quote_answer.since}'::text $$`,
+    );
+  });
+
+  it('attaches a quote by its reference; declining it loses the deal, and detach takes it off', async () => {
+    const buyer = await contact('Fabrikam Industries', true, null);
+    await pg.query(
+      `insert into documents (company_id, doc_type, contact_id, document_date, client_ref) values ($1, 'sale_quote', $2, '2026-06-15', 'quote-7')`,
+      [companyId, buyer],
+    );
+    const opened = await ekwo(['crm', 'deal', 'open', pipelineId, 'Fabrikam Industries', '--title', 'Fit-out']);
+    const dealId = String(((opened.data as { deal: Row }).deal)['id']);
+
+    const attached = await ekwo(['crm', 'deal', 'attach', dealId, 'quote-7']);
+    expect(attached.exitCode).toBe(0);
+    expect((attached.data as { link: Row }).link).toMatchObject({ deal_id: dealId });
+
+    expect((await ekwo(['doc', 'decline', 'quote-7'])).exitCode).toBe(0);
+    expect(await one<Row>(pg, `select stage_id, closed_outcome::text from crm.deals where id = $1`, [dealId])).toEqual({
+      stage_id: stages['Lost'],
+      closed_outcome: 'lost',
+    });
+
+    expect((await ekwo(['crm', 'deal', 'detach', 'quote-7'])).exitCode).toBe(0);
+    const again = await ekwo(['crm', 'deal', 'detach', 'quote-7']);
+    expect(again.exitCode).toBe(EXIT_REFUSED);
+    expect(again.error).toMatchObject({ kind: 'refusal', name: 'crm_document_not_attached' });
   });
 });

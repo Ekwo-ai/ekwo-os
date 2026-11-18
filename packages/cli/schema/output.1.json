@@ -1190,6 +1190,18 @@
         "required": ["deal"],
         "properties": { "deal": { "$ref": "#/$defs/row" } }
       },
+      "crm deal attach": {
+        "$comment": "The link crm.attach_document() kept: the deal, the document, the company. An answer recorded on the document from then on moves the deal.",
+        "type": "object",
+        "required": ["link"],
+        "properties": { "link": { "$ref": "#/$defs/row" } }
+      },
+      "crm deal detach": {
+        "$comment": "The link crm.detach_document() took away, as it was. The deal stays at its stage.",
+        "type": "object",
+        "required": ["link"],
+        "properties": { "link": { "$ref": "#/$defs/row" } }
+      },
       "contracts list": {
         "$comment": "The contracts of the company in use, filtered, as contracts.list_contracts() returns them: each with its party's name and its nearest deadline, in the order of their numbers. templates is there under --templates: the active templates, as contracts.list_templates() returns them.",
         "type": "object",

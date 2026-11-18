@@ -291,3 +291,33 @@ export async function crmMoveDeal(
   });
   return { deal: deal(row) };
 }
+
+/**
+ * `crm.attach_document()`: a document of the company — a quote, an order, an
+ * invoice — carried by a deal. From then on, the answer recorded on a quote
+ * moves the deal in the database: accepted wins it, declined loses it once
+ * no other quote of it is alive, undone opens it again.
+ */
+export async function crmAttachDocument(
+  backend: Backend,
+  args: { company_id: string; deal_id: string; document_id: string },
+): Promise<{ link: Row }> {
+  const link = await callOne(backend, 'attach_document', {
+    p_company_id: args.company_id,
+    p_deal_id: args.deal_id,
+    p_document_id: args.document_id,
+  });
+  return { link };
+}
+
+/** `crm.detach_document()`: the document off the deal that carried it; the deal stays where it is. */
+export async function crmDetachDocument(
+  backend: Backend,
+  args: { company_id: string; document_id: string },
+): Promise<{ link: Row }> {
+  const link = await callOne(backend, 'detach_document', {
+    p_company_id: args.company_id,
+    p_document_id: args.document_id,
+  });
+  return { link };
+}

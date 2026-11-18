@@ -302,7 +302,10 @@ ${bold('Connecting')} ${dim('(every command)')}
               --deal --source --source-ref]; join | leave <segment> <contact>;
               deal open <pipeline> <contact> --title <title> [--amount
               --currency]; deal move <deal> <stage> — a won stage makes the
-              party a customer. The same functions as the crm_* tools.
+              party a customer; deal attach <deal> <document> | deal detach
+              <document> — the quotes a deal carries: accepted wins it,
+              declined loses it once no other is alive. The same functions as
+              the crm_* tools.
               --status ${CRM_RELATIONSHIP_STATUSES.join('|')};
               --priority ${CRM_PRIORITIES.join('|')};
               --kind ${CRM_ACTIVITY_KINDS.join('|')}.

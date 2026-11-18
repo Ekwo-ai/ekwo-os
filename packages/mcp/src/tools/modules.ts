@@ -52,6 +52,8 @@ import {
   crmLeaveSegment,
   crmLogActivity,
   crmMoveDeal,
+  crmAttachDocument,
+  crmDetachDocument,
   crmOpenDeal,
   crmSearch,
   crmSegments,
@@ -1238,7 +1240,7 @@ const CRM: ModuleToolset = {
       title: 'A pipeline, stage by stage',
       effect: 'read',
       description:
-        'A pipeline as a board: its stages in order — each open, won or lost — the deals at each stage with their contact, amount, currency, expected date and owner, how many there are, and the sum of the amounts by currency, for each stage and for the pipeline. Amounts are never added across currencies. Without pipeline_id, every pipeline of the company: that is where the pipeline and stage ids for crm_open_deal and crm_move_deal come from. Open deals only, unless include_closed. A company starts with no pipeline: one is created by its users, not by this server.',
+        'A pipeline as a board: its stages in order — each open, won or lost — the deals at each stage with their contact, amount, currency, expected date, owner and the documents they carry with their quote_status, how many there are, and the sum of the amounts by currency, for each stage and for the pipeline. Amounts are never added across currencies. Without pipeline_id, every pipeline of the company: that is where the pipeline and stage ids for crm_open_deal and crm_move_deal come from. Open deals only, unless include_closed. A company starts with no pipeline: one is created by its users, not by this server.',
       input: z.object({
         company_id: companyId,
         pipeline_id: uuid.optional().describe('One pipeline. Left out, all of them.'),
@@ -1446,6 +1448,47 @@ const CRM: ModuleToolset = {
             company_id: args['company_id'] as unknown as string,
             deal_id: args['deal_id'] as unknown as string,
             stage_id: args['stage_id'] as unknown as string,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'attach_document',
+      title: 'Attach a quote to a deal',
+      effect: 'additive',
+      idempotent: true,
+      description:
+        'Attaches a document of the company — a sale quote, a purchase order, an invoice — to a deal of the same company; a deal carries several (versions, phases), a document one deal at most (crm_document_in_another_deal otherwise). From then on the answer recorded on a quote moves the deal, in the database and with no further call: accept_document wins it and makes its party a customer; decline_document loses it once no other quote of the deal is alive (neither declined nor expired); undo_document_answer opens it again. An answer recorded before attaching moves nothing. crm_card and crm_board show each deal\'s documents with their quote_status.',
+      input: z.object({
+        company_id: companyId,
+        deal_id: uuid.describe('The deal. crm_board or crm_card gives its id.'),
+        document_id: uuid.describe('The document, of the same company. list_documents gives its id.'),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmAttachDocument(backend, {
+            company_id: args['company_id'] as unknown as string,
+            deal_id: args['deal_id'] as unknown as string,
+            document_id: args['document_id'] as unknown as string,
+          }),
+        );
+      },
+    },
+    {
+      verb: 'detach_document',
+      title: 'Take a document off its deal',
+      effect: 'destructive',
+      description:
+        'Takes a document off the deal that carries it; the deal stays at its stage. Refused for a document no deal carries, crm_document_not_attached. Ask the user first.',
+      input: z.object({
+        company_id: companyId,
+        document_id: uuid.describe('The document to take off its deal.'),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmDetachDocument(backend, {
+            company_id: args['company_id'] as unknown as string,
+            document_id: args['document_id'] as unknown as string,
           }),
         );
       },

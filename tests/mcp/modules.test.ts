@@ -136,9 +136,11 @@ describe('the loader', () => {
       'tax_record_computation',
     ]);
     expect(names.filter((name) => name.startsWith('crm_')).sort()).toEqual([
+      'crm_attach_document',
       'crm_board',
       'crm_card',
       'crm_contact_vcard',
+      'crm_detach_document',
       'crm_join_segment',
       'crm_leave_segment',
       'crm_log_activity',

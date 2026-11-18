@@ -13,6 +13,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { SCHEMA_FEATURES } from '../../packages/core/src/index.js';
 import { buildServer, installedModules, type Backend } from '../../packages/mcp/src/index.js';
 import { asUser, freshDatabase, one, rows } from '../helpers/db.js';
 import { newCompany } from '../helpers/factory.js';
@@ -261,5 +262,53 @@ describe('the crm toolset', () => {
     expect(text).toContain(companyId);
     expect(text).toContain('10 days');
     for (const tool of ['crm_search', 'crm_board', 'crm_card', 'crm_timeline']) expect(text).toContain(tool);
+  });
+});
+
+describe('a quote a deal carries', () => {
+  // `accept_document` is asked of a schema that says it has it
+  // (`SCHEMA_FEATURES.quote_answer`). Until the release that brings it
+  // redefines `ekwo_schema_version()`, this database says the version it will
+  // be, and says its own again after.
+  let definition: string;
+  beforeAll(async () => {
+    definition = (
+      await one<{ definition: string }>(db, `select pg_get_functiondef('ekwo.ekwo_schema_version()'::regprocedure) as definition`)
+    ).definition;
+    await db.query(
+      `create or replace function ekwo.ekwo_schema_version() returns text language sql immutable as $$ select '${SCHEMA_FEATURES.quote_answer.since}'::text $$`,
+    );
+  });
+  afterAll(async () => {
+    await db.query(definition);
+  });
+
+  it('is attached with crm_attach_document, and accept_document wins the deal with no other call', async () => {
+    const buyer = await contact('Contoso Partners', true, null, null);
+    const quote = (
+      await one<{ id: string }>(
+        db,
+        `insert into documents (company_id, doc_type, contact_id, document_date) values ($1, 'sale_quote', $2, '2026-06-15') returning id`,
+        [companyId, buyer],
+      )
+    ).id;
+    const opened = record((await call('crm_open_deal', { company_id: companyId, pipeline_id: pipelineId, contact_id: buyer, title: 'Fit-out' }))['deal']);
+    const linked = record((await call('crm_attach_document', { company_id: companyId, deal_id: opened['id'], document_id: quote }))['link']);
+    expect(linked).toMatchObject({ deal_id: opened['id'], document_id: quote });
+
+    const accepted = await call('accept_document', { document_id: quote, accepted_by: 'The buyer' });
+    expect(record(accepted['document'])['quote_status']).toBe('accepted');
+
+    const board = await call('crm_board', { company_id: companyId, pipeline_id: pipelineId, include_closed: true });
+    const deals = ((board['pipelines'] as Record<string, unknown>[])[0]?.['stages'] as { name: string; deals: Record<string, unknown>[] }[])
+      .find((stage) => stage.name === 'Won')?.deals;
+    expect(deals?.find((deal) => deal['id'] === opened['id'])).toMatchObject({
+      closed_outcome: 'won',
+      documents: [expect.objectContaining({ id: quote, quote_status: 'accepted' })],
+    });
+    expect((await one<{ t: string }>(db, `select contact_type::text as t from contacts where id = $1`, [buyer])).t).toBe('customer');
+
+    await call('crm_detach_document', { company_id: companyId, document_id: quote });
+    await expect(call('crm_detach_document', { company_id: companyId, document_id: quote })).rejects.toThrow(/crm_document_not_attached/);
   });
 });
