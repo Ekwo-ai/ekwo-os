@@ -140,6 +140,7 @@ describe('the loader', () => {
       'crm_board',
       'crm_card',
       'crm_contact_vcard',
+      'crm_deal_of_document',
       'crm_detach_document',
       'crm_join_segment',
       'crm_leave_segment',

@@ -48,6 +48,7 @@ import {
   crmBoard,
   crmCard,
   crmContactVcard,
+  crmDealOfDocument,
   crmJoinSegment,
   crmLeaveSegment,
   crmLogActivity,
@@ -1252,6 +1253,25 @@ const CRM: ModuleToolset = {
             company_id: args['company_id'] as unknown as string,
             pipeline_id: args['pipeline_id'],
             include_closed: args['include_closed'],
+          }),
+        );
+      },
+    },
+    {
+      verb: 'deal_of_document',
+      title: 'The deal a document belongs to',
+      effect: 'read',
+      description:
+        'The deal that carries a document — a quote, an order, an invoice — read from the document\'s side: { deal, available }. deal is its id, title, amount and currency, its stage (id, name, outcome: open, won or lost), closed_at and closed_outcome — the won deal of an accepted quote too, which crm_card no longer lists — or null when no deal carries the document. available is false, and deal null, on a database whose crm module has not received this read yet. A document of another company is refused, crm_unknown_document.',
+      input: z.object({
+        company_id: companyId,
+        document_id: uuid.describe('The document. list_documents gives its id.'),
+      }),
+      async run(backend, args) {
+        return inSchema('crm', () =>
+          crmDealOfDocument(backend, {
+            company_id: args['company_id'] as unknown as string,
+            document_id: args['document_id'] as unknown as string,
           }),
         );
       },

@@ -13,7 +13,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { SCHEMA_FEATURES } from '../../packages/core/src/index.js';
+import { BooksError, SCHEMA_FEATURES, crmDealOfDocument } from '../../packages/core/src/index.js';
 import { buildServer, installedModules, type Backend } from '../../packages/mcp/src/index.js';
 import { asUser, freshDatabase, one, rows } from '../helpers/db.js';
 import { newCompany } from '../helpers/factory.js';
@@ -113,7 +113,7 @@ describe('the crm toolset', () => {
   it('is offered where ekwo.modules carries crm, under its prefix, and not otherwise', async () => {
     expect(await installedModules(backend)).toContain('crm');
     const names = (await client.listTools()).tools.map((tool) => tool.name);
-    expect(names.filter((name) => name.startsWith('crm_')).length).toBe(14);
+    expect(names.filter((name) => name.startsWith('crm_')).length).toBe(15);
     expect(names.filter((name) => name.startsWith('crm_') === false && /^crm/.test(name))).toEqual([]);
     expect((await client.listPrompts()).prompts.map((p) => p.name)).toContain('crm_morning_review');
 
@@ -308,7 +308,67 @@ describe('a quote a deal carries', () => {
     });
     expect((await one<{ t: string }>(db, `select contact_type::text as t from contacts where id = $1`, [buyer])).t).toBe('customer');
 
+    // Read from the document's side, the won deal is there, which crm_card no longer lists.
+    expect(await call('crm_deal_of_document', { company_id: companyId, document_id: quote })).toEqual({
+      available: true,
+      deal: {
+        id: opened['id'],
+        title: 'Fit-out',
+        amount: null,
+        currency_code: null,
+        stage: { id: stages['Won'], name: 'Won', outcome: 'won' },
+        closed_at: expect.any(String),
+        closed_outcome: 'won',
+      },
+    });
+
     await call('crm_detach_document', { company_id: companyId, document_id: quote });
     await expect(call('crm_detach_document', { company_id: companyId, document_id: quote })).rejects.toThrow(/crm_document_not_attached/);
+    expect(await call('crm_deal_of_document', { company_id: companyId, document_id: quote })).toEqual({ available: true, deal: null });
+  });
+
+  it('refuses with crm_deal_of_document a document of another company, and reads nothing where the function is absent', async () => {
+    const other = await newCompany(db, { name: 'Ailleurs SA' });
+    const foreign = (
+      await one<{ id: string }>(
+        db,
+        `insert into documents (company_id, doc_type, document_date) values ($1, 'sale_quote', '2026-06-15') returning id`,
+        [other.companyId],
+      )
+    ).id;
+    await expect(call('crm_deal_of_document', { company_id: companyId, document_id: foreign })).rejects.toThrow(/crm_unknown_document/);
+
+    // A database whose crm module has not received the read: absent, never an error.
+    await db.query(`alter function crm.deal_of_document(uuid, uuid) rename to deal_of_document_hidden`);
+    try {
+      expect(await call('crm_deal_of_document', { company_id: companyId, document_id: foreign })).toEqual({ available: false, deal: null });
+    } finally {
+      await db.query(`alter function crm.deal_of_document_hidden(uuid, uuid) rename to deal_of_document`);
+    }
+  });
+});
+
+describe('crmDealOfDocument over PostgREST', () => {
+  // PostgREST answers PGRST202 for a function its cache does not hold: the
+  // read is absent there, and any other refusal still reaches the caller.
+  const refusing = (error: Error) =>
+    ({
+      mode: 'postgrest',
+      actingAs: undefined,
+      rpc: () => Promise.reject(error),
+    }) as unknown as Backend;
+  const args = { company_id: crypto.randomUUID(), document_id: crypto.randomUUID() };
+
+  it('is absent where the function is not in the schema cache', async () => {
+    const missing = new BooksError(
+      'Could not find the function crm.deal_of_document(p_company_id, p_document_id) in the schema cache',
+      { code: 'PGRST202' },
+    );
+    expect(await crmDealOfDocument(refusing(missing), args)).toEqual({ deal: null, available: false });
+  });
+
+  it('hands any other refusal back', async () => {
+    const refused = new BooksError('crm_not_allowed: reading the deal of a document needs crm.read', { code: '42501' });
+    await expect(crmDealOfDocument(refusing(refused), args)).rejects.toThrow(/crm_not_allowed/);
   });
 });

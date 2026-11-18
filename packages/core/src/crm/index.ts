@@ -321,3 +321,44 @@ export async function crmDetachDocument(
   });
   return { link };
 }
+
+/**
+ * A function of the schema absent from the database: PostgREST's `PGRST202`
+ * or Postgres's `42883`, by code where the route keeps it, by its sentence
+ * where it does not.
+ */
+function functionAbsent(error: unknown, fn: string): boolean {
+  const code = (error as { code?: unknown } | null)?.code;
+  const message = error instanceof Error ? error.message : String(error);
+  if (!message.includes(fn)) return false;
+  return code === 'PGRST202' || code === '42883' || /could not find the function|function [^(\s]+\(.*\) does not exist|PGRST202|42883/i.test(message);
+}
+
+/**
+ * `crm.deal_of_document()`: the deal a document belongs to — its id, title,
+ * amount and currency, its stage (id, name, outcome), `closed_at` and
+ * `closed_outcome` — open, won or lost alike. `deal` is null when no deal
+ * carries the document.
+ *
+ * The function came with a migration of the module after 0.26.0, and a
+ * module's migrations are not counted by `ekwo_schema_version()`: where the
+ * database does not have it yet, the read is absent — `available` false and
+ * `deal` null — never an error.
+ */
+export async function crmDealOfDocument(
+  backend: Backend,
+  args: { company_id: string; document_id: string },
+): Promise<{ deal: Row | null; available: boolean }> {
+  let answer: unknown;
+  try {
+    [answer] = (await call(backend, 'deal_of_document', {
+      p_company_id: args.company_id,
+      p_document_id: args.document_id,
+    })) as unknown[];
+  } catch (error) {
+    if (functionAbsent(error, 'deal_of_document')) return { deal: null, available: false };
+    throw error;
+  }
+  if (answer === undefined || answer === null) return { deal: null, available: true };
+  return { deal: deal(answer as Row), available: true };
+}
