@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.26.0",
-  "migration": "20261118170000",
+  "migration": "20261118201000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -15783,6 +15783,10 @@
           "arguments": "p_company_id uuid, p_deal_id uuid"
         },
         {
+          "name": "deal_of_document",
+          "arguments": "p_company_id uuid, p_document_id uuid"
+        },
+        {
           "name": "detach_document",
           "arguments": "p_company_id uuid, p_document_id uuid"
         },
@@ -16266,6 +16270,17 @@
           {
             "name": "deal_documents_of",
             "arguments": "p_company_id uuid, p_deal_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "deal_of_document",
+            "arguments": "p_company_id uuid, p_document_id uuid",
             "anon": [],
             "authenticated": [
               "execute"

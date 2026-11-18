@@ -247,6 +247,59 @@ describe('the link', () => {
   });
 });
 
+describe('the deal of a document', () => {
+  const dealOfDocument = (company: string, document: string) =>
+    asUser(db, ownerId, () =>
+      one<{ deal: Record<string, unknown> | null }>(db, `select crm.deal_of_document($1, $2) as deal`, [company, document]),
+    ).then((row) => row.deal);
+
+  it('is null for a document no deal carries', async () => {
+    const document = await quote(companyId, await contact(companyId, 'Lucerne Publishing'));
+    expect(await dealOfDocument(companyId, document)).toBeNull();
+  });
+
+  it('is the won deal of an accepted quote, with its stage and its closing', async () => {
+    const party = await contact(companyId, 'Adventure Works');
+    const document = await quote(companyId, party);
+    const deal = await dealWith(party, [document]);
+    await answer(`select accept_document($1, 'The buyer')`, document);
+
+    const read = await dealOfDocument(companyId, document);
+    expect(read).toEqual({
+      id: deal,
+      title: 'Annual subscription',
+      amount: '12000.00',
+      currency_code: expect.any(String),
+      stage: { id: stages['Won'], name: 'Won', outcome: 'won' },
+      closed_at: expect.any(String),
+      closed_outcome: 'won',
+    });
+  });
+
+  it('is an open deal with no closing while the quote waits', async () => {
+    const party = await contact(companyId, 'Margie Travel');
+    const document = await quote(companyId, party);
+    const deal = await dealWith(party, [document]);
+    expect(await dealOfDocument(companyId, document)).toMatchObject({
+      id: deal,
+      stage: { id: stages['Proposal'], name: 'Proposal', outcome: 'open' },
+      closed_at: null,
+      closed_outcome: null,
+    });
+  });
+
+  it('refuses a document of another company as attaching it does', async () => {
+    const other = await newCompany(db, { country: HOME, name: 'Far Away SA' });
+    const foreign = await quote(other.companyId, await contact(other.companyId, 'Foreign Party'));
+    await asUser(db, ownerId, async () => {
+      expect(await expectError(db, `select crm.deal_of_document($1, $2)`, [companyId, foreign])).toMatch(/^crm_unknown_document: /);
+      expect(await expectError(db, `select crm.deal_of_document($1, $2)`, [other.companyId, foreign])).toMatch(
+        /^crm_module_not_enabled: /,
+      );
+    });
+  });
+});
+
 describe('a database without the module', () => {
   it('accepts and declines a quote with no error', async () => {
     const bare = await freshDatabase({ modules: false });
