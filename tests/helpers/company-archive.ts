@@ -424,6 +424,19 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
      values ($1, $2, $3, 'note', 'Signed', 'archive-test', $4)`,
     [companyId, party.id, deal.id, `note-${tag}`],
   );
+  // The quote the deal carries, accepted: the link travels with the deal and
+  // the document, and the answer with the document.
+  const quote = await one<{ id: string }>(
+    db,
+    `insert into documents (company_id, doc_type, contact_id, document_date, accepted_at, accepted_by)
+     values ($1, 'sale_quote', $2, '2026-03-01', '2026-03-05', 'The buyer') returning id`,
+    [companyId, party.id],
+  );
+  await db.query(`insert into crm.deal_documents (company_id, deal_id, document_id) values ($1, $2, $3)`, [
+    companyId,
+    deal.id,
+    quote.id,
+  ]);
 
   // A sixth module: what the company agreed with the same party — a template,
   // a contract made from it, a schedule, an amendment, and the document one

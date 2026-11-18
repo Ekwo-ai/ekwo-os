@@ -113,7 +113,7 @@ describe('the crm toolset', () => {
   it('is offered where ekwo.modules carries crm, under its prefix, and not otherwise', async () => {
     expect(await installedModules(backend)).toContain('crm');
     const names = (await client.listTools()).tools.map((tool) => tool.name);
-    expect(names.filter((name) => name.startsWith('crm_')).length).toBe(12);
+    expect(names.filter((name) => name.startsWith('crm_')).length).toBe(14);
     expect(names.filter((name) => name.startsWith('crm_') === false && /^crm/.test(name))).toEqual([]);
     expect((await client.listPrompts()).prompts.map((p) => p.name)).toContain('crm_morning_review');
 
