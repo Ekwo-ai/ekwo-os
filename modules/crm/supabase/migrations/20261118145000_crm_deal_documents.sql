@@ -78,8 +78,10 @@ create table crm.deal_documents (
   stage_before_answer_id uuid,
   created_at             timestamptz not null default now(),
   updated_at             timestamptz not null default now(),
-  -- A document belongs to one deal at most.
-  unique (document_id),
+  -- A document belongs to one deal at most. The company leads the key: a row
+  -- that names a document of another company fails on the foreign key, never
+  -- on "duplicate", which would say the document exists and is carried.
+  unique (company_id, document_id),
   foreign key (deal_id, company_id) references crm.deals (id, company_id) on delete cascade,
   foreign key (document_id, company_id) references public.documents (id, company_id) on delete cascade
 );

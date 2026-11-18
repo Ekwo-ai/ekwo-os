@@ -3568,7 +3568,7 @@ The documents a deal carries — the versions of a quote, an order, the invoices
 Constraints:
 
 - `PRIMARY KEY (id)`
-- `UNIQUE (document_id)`
+- `UNIQUE (company_id, document_id)`
 
 <a id="crm-deals"></a>
 

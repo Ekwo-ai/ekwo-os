@@ -859,6 +859,9 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
   // The keys it names are those of the contract it writes, from its own
   // arguments; the values of the variables are text.
   'contracts.from_template': { reads: [], writesOnly: ['attachment_id', 'contact_id', 'template_id'] },
+  // The stages a move writes into the activity it logs, read from the deal it
+  // moves under row level security; nothing in the jsonb it takes is read.
+  'crm.place_deal': { reads: [], writesOnly: ['from_stage_id', 'to_stage_id'] },
 };
 
 describe('the other person, signed in', () => {
