@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.25.0",
-  "migration": "20261118144012",
+  "migration": "20261118145000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -7239,6 +7239,10 @@
       {
         "table": "document_unpostings",
         "name": "document_unpostings_audit"
+      },
+      {
+        "table": "documents",
+        "name": "crm_follow_document_answer"
       },
       {
         "table": "documents",
@@ -15506,6 +15510,39 @@
           ]
         },
         {
+          "name": "deal_documents",
+          "columns": [
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "deal_id",
+              "type": "uuid"
+            },
+            {
+              "name": "document_id",
+              "type": "uuid"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "stage_before_answer_id",
+              "type": "uuid"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        },
+        {
           "name": "deals",
           "columns": [
             {
@@ -15730,6 +15767,10 @@
           "arguments": ""
         },
         {
+          "name": "attach_document",
+          "arguments": "p_company_id uuid, p_deal_id uuid, p_document_id uuid"
+        },
+        {
           "name": "board",
           "arguments": "p_company_id uuid, p_pipeline_id uuid, p_include_closed boolean"
         },
@@ -15742,11 +15783,23 @@
           "arguments": "p_company_id uuid, p_contact_id uuid"
         },
         {
+          "name": "deal_documents_of",
+          "arguments": "p_company_id uuid, p_deal_id uuid"
+        },
+        {
+          "name": "detach_document",
+          "arguments": "p_company_id uuid, p_document_id uuid"
+        },
+        {
           "name": "fold_card_on_merge",
           "arguments": ""
         },
         {
           "name": "fold_membership_on_merge",
+          "arguments": ""
+        },
+        {
+          "name": "follow_document_answer",
           "arguments": ""
         },
         {
@@ -15772,6 +15825,10 @@
         {
           "name": "open_deal",
           "arguments": "p_company_id uuid, p_pipeline_id uuid, p_contact_id uuid, p_title text, p_amount numeric, p_currency_code character, p_expected_on date, p_external_url text, p_owner text"
+        },
+        {
+          "name": "place_deal",
+          "arguments": "p_company_id uuid, p_deal_id uuid, p_stage_id uuid, p_why jsonb"
         },
         {
           "name": "require",
@@ -15821,6 +15878,16 @@
         {
           "table": "cards",
           "name": "crm_cards_write",
+          "command": "all"
+        },
+        {
+          "table": "deal_documents",
+          "name": "crm_deal_documents_select",
+          "command": "select"
+        },
+        {
+          "table": "deal_documents",
+          "name": "crm_deal_documents_write",
           "command": "all"
         },
         {
@@ -15898,6 +15965,10 @@
         {
           "table": "cards",
           "name": "crm_cards_set_updated_at"
+        },
+        {
+          "table": "deal_documents",
+          "name": "crm_deal_documents_set_updated_at"
         },
         {
           "table": "deals",
@@ -16042,6 +16113,22 @@
             ]
           },
           {
+            "name": "deal_documents",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
             "name": "deals",
             "anon": [],
             "authenticated": [
@@ -16137,6 +16224,17 @@
             ]
           },
           {
+            "name": "attach_document",
+            "arguments": "p_company_id uuid, p_deal_id uuid, p_document_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "board",
             "arguments": "p_company_id uuid, p_pipeline_id uuid, p_include_closed boolean",
             "anon": [],
@@ -16170,6 +16268,28 @@
             ]
           },
           {
+            "name": "deal_documents_of",
+            "arguments": "p_company_id uuid, p_deal_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "detach_document",
+            "arguments": "p_company_id uuid, p_document_id uuid",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "fold_card_on_merge",
             "arguments": "",
             "trigger": true,
@@ -16179,6 +16299,14 @@
           },
           {
             "name": "fold_membership_on_merge",
+            "arguments": "",
+            "trigger": true,
+            "anon": [],
+            "authenticated": [],
+            "service_role": []
+          },
+          {
+            "name": "follow_document_answer",
             "arguments": "",
             "trigger": true,
             "anon": [],
@@ -16240,6 +16368,17 @@
           {
             "name": "open_deal",
             "arguments": "p_company_id uuid, p_pipeline_id uuid, p_contact_id uuid, p_title text, p_amount numeric, p_currency_code character, p_expected_on date, p_external_url text, p_owner text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "place_deal",
+            "arguments": "p_company_id uuid, p_deal_id uuid, p_stage_id uuid, p_why jsonb",
             "anon": [],
             "authenticated": [
               "execute"
