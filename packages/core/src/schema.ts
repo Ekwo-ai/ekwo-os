@@ -235,6 +235,20 @@ export const SCHEMA_FEATURES = {
     columns: [],
     functions: ['portfolio_overview'],
   },
+  /**
+   * The answer to a quote or an order — `accepted_at`, `accepted_by`,
+   * `declined_at`, written by `accept_document()`, `decline_document()` and
+   * `undo_document_answer()` — and its status derived by `quote_status()`,
+   * read for a list through `quote_statuses()`
+   * (`20261118144012_a_quote_carries_its_answer`). Below it, the columns are
+   * absent from a read, a document carries no `quote_status`, and the three
+   * calls are refused by name.
+   */
+  quote_answer: {
+    since: '0.26.0',
+    columns: ['documents.accepted_at', 'documents.accepted_by', 'documents.declined_at'],
+    functions: ['accept_document', 'decline_document', 'undo_document_answer', 'quote_statuses'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

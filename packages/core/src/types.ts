@@ -409,7 +409,22 @@ export interface EkwoDocument {
   reversed_document_id: Uuid | null;
   entry_id: Uuid | null;
   sent_at: IsoTimestamp | null;
+  /** When the other party accepted a quote or an order (schema 0.26.0). */
+  accepted_at?: IsoTimestamp | null;
+  /** Who accepted it, in the words of whoever recorded it (schema 0.26.0). */
+  accepted_by?: string | null;
+  /** When the other party declined a quote or an order (schema 0.26.0). */
+  declined_at?: IsoTimestamp | null;
+  /** Derived by the schema's `quote_status()`; null on a document no answer is given to (schema 0.26.0). */
+  quote_status?: QuoteStatus | null;
 }
+
+/**
+ * The status of a quote or an order, derived by the schema from its facts —
+ * `sent_at`, `accepted_at`, `declined_at`, `due_date` and the state — and
+ * stored nowhere: `quote_status()` is its one source.
+ */
+export type QuoteStatus = 'draft' | 'sent' | 'accepted' | 'declined' | 'expired' | 'cancelled';
 
 /** What a product is: a service or goods. They are not taxed the same way. */
 export type ProductKind = 'service' | 'goods';

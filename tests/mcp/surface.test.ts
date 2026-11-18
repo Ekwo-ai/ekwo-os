@@ -70,6 +70,9 @@ const WRITE_TOOLS = [
   'create_document',
   'update_document_lines',
   'post_document',
+  'accept_document',
+  'decline_document',
+  'undo_document_answer',
   'cancel_document',
   'reverse_entry',
   'record_payment',
@@ -244,6 +247,10 @@ describe('the tools a client is offered', () => {
     for (const name of [
       'post_document',
       'cancel_document',
+      // An answer wins or loses the deal that carries the quote.
+      'accept_document',
+      'decline_document',
+      'undo_document_answer',
       'reverse_entry',
       'lock_period',
       'opening_balance',

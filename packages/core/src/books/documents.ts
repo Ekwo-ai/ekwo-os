@@ -9,10 +9,11 @@
  * draft documents and their lines.
  */
 
+import { labelsFor, type InvoiceLabels } from '@ekwo-ai/invoice-pdf';
 import { BooksError, backendSupports, type Backend, type Filter, type Row } from './backend.js';
 import * as columns from './columns.js';
 import { amountIn, moneyFields } from './format.js';
-import type { DocType } from '../types.js';
+import type { DocType, QuoteStatus } from '../types.js';
 import { companyCurrency, createdBefore, idsByCode, namesOf, only, onlyVisible } from './shared.js';
 
 export const DOC_TYPES = [
@@ -25,6 +26,35 @@ export const DOC_TYPES = [
 ] as const satisfies readonly DocType[];
 
 export const DOCUMENT_STATES = ['draft', 'posted', 'cancelled'] as const;
+
+/** The documents an answer is given to: accepted or declined by the other party. */
+export const ANSWERED_DOC_TYPES = ['sale_quote', 'purchase_order'] as const satisfies readonly DocType[];
+
+/**
+ * The words of `quote_status()`, in the order a quote lives them. The schema
+ * derives the status; this list only names its values, and a test holds it
+ * equal to what the function can answer.
+ */
+export const QUOTE_STATUSES = ['draft', 'sent', 'accepted', 'declined', 'expired', 'cancelled'] as const satisfies readonly QuoteStatus[];
+
+/** Where the word of each status is, among the words of a document's language. */
+export const QUOTE_STATUS_LABEL_KEYS = {
+  draft: 'quoteDraft',
+  sent: 'quoteSent',
+  accepted: 'quoteAccepted',
+  declined: 'quoteDeclined',
+  expired: 'quoteExpired',
+  cancelled: 'cancelled',
+} as const satisfies Record<QuoteStatus, keyof InvoiceLabels>;
+
+/**
+ * The word of a status in a language — the document's, the person's — from
+ * the same language files as the words of a document, English where the
+ * language has none.
+ */
+export function quoteStatusLabel(status: QuoteStatus, language?: string | null): string {
+  return labelsFor(language).labels[QUOTE_STATUS_LABEL_KEYS[status]];
+}
 export const PAYMENT_STATES = ['not_paid', 'partially_paid', 'paid', 'overpaid', 'reversed'] as const;
 
 /** A line as a caller writes it: codes or ids, and whatever a product can fill in. */
@@ -431,6 +461,105 @@ export async function approveDocument(backend: Backend, args: ApproveDocumentArg
   };
 }
 
+export interface AcceptDocumentArgs {
+  document_id: string;
+  /** Who accepted it, in your words: a name, a role, the reference of a signed copy. */
+  accepted_by?: string | undefined;
+  /** When it was accepted. Left out: now. Never in the future. */
+  at?: string | undefined;
+}
+
+export interface DeclineDocumentArgs {
+  document_id: string;
+  /** When it was declined. Left out: now. Never in the future. */
+  at?: string | undefined;
+}
+
+export interface UndoDocumentAnswerArgs {
+  document_id: string;
+}
+
+/** The document as `get_document` shows it, after an answer was recorded on it. */
+async function answered(backend: Backend, documentId: string, note: string): Promise<unknown> {
+  const read = (await getDocument(backend, { document_id: documentId })) as Row;
+  return { document: read['document'], note };
+}
+
+/**
+ * Records that the other party accepted a quote or an order, through
+ * `accept_document()`: a dated fact on the document, nothing booked. The
+ * status is then `accepted`. The schema refuses an invoice
+ * (`document_not_answerable`), a declined document
+ * (`document_already_answered`), a date to come (`answer_in_the_future`), and
+ * an agent in review without a person's approval of the document as it
+ * stands (`approval_required`).
+ */
+export async function acceptDocument(backend: Backend, args: AcceptDocumentArgs): Promise<unknown> {
+  only(
+    await backend.rpc<Row>('accept_document', {
+      p_document_id: args.document_id,
+      ...(args.accepted_by === undefined ? {} : { p_accepted_by: args.accepted_by }),
+      ...(args.at === undefined ? {} : { p_at: args.at }),
+    }),
+    `document ${args.document_id}`,
+  );
+  return answered(
+    backend,
+    args.document_id,
+    'The acceptance is recorded on the document; nothing is booked. Where a deal of the crm module carries it, the deal is won. undo_document_answer takes it back.',
+  );
+}
+
+/** Records that the other party declined a quote or an order, through `decline_document()`. */
+export async function declineDocument(backend: Backend, args: DeclineDocumentArgs): Promise<unknown> {
+  only(
+    await backend.rpc<Row>('decline_document', {
+      p_document_id: args.document_id,
+      ...(args.at === undefined ? {} : { p_at: args.at }),
+    }),
+    `document ${args.document_id}`,
+  );
+  return answered(
+    backend,
+    args.document_id,
+    'The refusal is recorded on the document; nothing is booked. Where a deal of the crm module carries it and no other quote of the deal is still alive, the deal is lost. undo_document_answer takes it back.',
+  );
+}
+
+/** Takes back the answer recorded on a quote or an order, through `undo_document_answer()`. */
+export async function undoDocumentAnswer(backend: Backend, args: UndoDocumentAnswerArgs): Promise<unknown> {
+  only(
+    await backend.rpc<Row>('undo_document_answer', { p_document_id: args.document_id }),
+    `document ${args.document_id}`,
+  );
+  return answered(
+    backend,
+    args.document_id,
+    'The answer is taken back: the document is unanswered again. A deal of the crm module its answer had closed is open again.',
+  );
+}
+
+/**
+ * Each document with `quote_status`, read from the schema's `quote_statuses()`
+ * — the status is derived there, once, and never worked out here. Null on a
+ * document no answer is given to. Below 0.26.0 the documents come back as
+ * they were read, without the field.
+ */
+async function withQuoteStatus(backend: Backend, documents: Row[]): Promise<Row[]> {
+  if (!(await backendSupports(backend, 'quote_answer'))) return documents;
+  const answerable = documents
+    .filter((doc) => (ANSWERED_DOC_TYPES as readonly string[]).includes(doc['doc_type'] as string))
+    .map((doc) => doc['id'] as string);
+  const statuses =
+    answerable.length === 0
+      ? []
+      : await backend.rpc<{ document_id: string; quote_status: QuoteStatus }>('quote_statuses', {
+          p_document_ids: answerable,
+        });
+  const byId = new Map(statuses.map((row) => [row.document_id, row.quote_status]));
+  return documents.map((doc) => ({ ...doc, quote_status: byId.get(doc['id'] as string) ?? null }));
+}
+
 export async function postDocument(
   backend: Backend,
   args: PostDocumentArgs,
@@ -635,7 +764,7 @@ export async function listDocuments(
   const names = await namesOf(backend, 'contacts', documents.map((doc) => doc['contact_id'] as string));
 
   return {
-    documents: documents.map((doc) => ({
+    documents: (await withQuoteStatus(backend, documents)).map((doc) => ({
       ...doc,
       contact_name: names[doc['contact_id'] as string] ?? null,
     })),
@@ -647,14 +776,17 @@ export async function getDocument(
   backend: Backend,
   args: GetDocumentArgs,
 ): Promise<unknown> {
-  const document = onlyVisible(
-    await backend.select<Row>({
-      table: 'documents',
-      columns: columns.DOCUMENT,
-      where: [{ column: 'id', op: 'eq', value: args.document_id }],
-    }),
-    `document ${args.document_id}`,
-  );
+  const [document] = await withQuoteStatus(backend, [
+    onlyVisible(
+      await backend.select<Row>({
+        table: 'documents',
+        columns: columns.DOCUMENT,
+        where: [{ column: 'id', op: 'eq', value: args.document_id }],
+      }),
+      `document ${args.document_id}`,
+    ),
+  ]);
+  if (document === undefined) throw new BooksError(`document ${args.document_id}`);
 
   const lines = await backend.select<Row>({
     table: 'document_lines',

@@ -116,7 +116,9 @@ export function commandLabel(args: ParsedArgs): string {
   if (command === 'line' && action !== 'match' && args.positional[1] !== undefined) return `line ${action} ${args.positional[1]}`;
   // `doc line add`: the one verb of three words. Under either of its names, the
   // label repeats the words that were typed.
-  if ((command === 'doc' || command === 'invoice' || command === 'document') && action === 'line' && args.positional[1] !== undefined) {
+  // `doc answer undo` is the other, the noun of the answer and its verb.
+  if ((command === 'doc' || command === 'invoice' || command === 'document') && (action === 'line' || action === 'answer') && args.positional[1] !== undefined) {
+    if (action === 'answer') return `${command} answer ${args.positional[1]}`;
     return `${command} line ${args.positional[1]}`;
   }
   // `crm card set` and `crm deal open|move`: a noun and its verb. `crm card

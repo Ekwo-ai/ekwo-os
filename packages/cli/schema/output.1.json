@@ -103,6 +103,15 @@
         "replayed": { "const": true }
       }
     },
+    "quoteAnswer": {
+      "$comment": "The document after accept_document(), decline_document() or undo_document_answer(): its row as getDocument() of @ekwo-ai/core reads it — accepted_at, accepted_by, declined_at and the quote_status the database derives — and the sentence of what follows.",
+      "type": "object",
+      "required": ["document", "note"],
+      "properties": {
+        "document": { "$ref": "#/$defs/row" },
+        "note": { "type": "string" }
+      }
+    },
     "companyRef": {
       "type": "object",
       "required": ["id", "name"],
@@ -597,6 +606,12 @@
         "properties": { "documents": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
       },
       "doc pdf": { "$ref": "#/$defs/documentPdf" },
+      "doc accept": { "$ref": "#/$defs/quoteAnswer" },
+      "doc decline": { "$ref": "#/$defs/quoteAnswer" },
+      "doc answer undo": { "$ref": "#/$defs/quoteAnswer" },
+      "document accept": { "$ref": "#/$defs/quoteAnswer" },
+      "document decline": { "$ref": "#/$defs/quoteAnswer" },
+      "document answer undo": { "$ref": "#/$defs/quoteAnswer" },
       "document pdf": { "$ref": "#/$defs/documentPdf" },
       "invoice pdf": { "$ref": "#/$defs/documentPdf" },
       "doc list": {

@@ -15,6 +15,7 @@ import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { EXIT_REFUSED, EXIT_USAGE, run, validate, type OutputDocument } from '../../packages/cli/src/index.js';
+import { SCHEMA_FEATURES } from '../../packages/core/src/index.js';
 import { expectError, freshDatabase, one, repoRoot, rows } from '../helpers/db.js';
 import { newCompany, newUser } from '../helpers/factory.js';
 import { roleOf, somePack } from '../helpers/packs.js';
@@ -555,5 +556,47 @@ describe('the verbs', () => {
     const elsewhere = await ekwo(['doc', 'list', '--company', 'Example Two']);
     expect(elsewhere.context?.company).toEqual({ id: otherCompanyId, name: 'Example Two' });
     expect((elsewhere.data as { documents: Row[] }).documents).toEqual([]);
+  });
+});
+
+describe('the answer to a quote', () => {
+  let quoteContactId: string;
+
+  beforeAll(async () => {
+    // The facts of an answer arrive with the release after 0.25.0, and the
+    // command line asks for them only from a database that says it is there:
+    // this one carries the migration, so it says the version that ships it.
+    await pg.query(
+      `create or replace function ekwo.ekwo_schema_version() returns text language sql immutable as $$ select '${SCHEMA_FEATURES.quote_answer.since}'::text $$`,
+    );
+    quoteContactId = ((await ekwo(['contact', 'add', 'Quote Example', '--country', HOME, '--ref', 'quote-contact'])).data as { contact: Row })
+      .contact['id'] as string;
+  });
+
+  it('doc accept, doc decline and doc answer undo record the answer to a quote, and doc show says its status', async () => {
+    const created = await ekwo([
+      'doc', 'new', '--type', 'sale_quote', '--contact', quoteContactId, '--date', '2026-06-15', '--ref', 'quote-1',
+      '--line', `name=Audit,price=900.00,account=${SALES}`,
+    ]);
+    const quoteId = ((created.data as { document: Row }).document)['id'] as string;
+    expect(((await ekwo(['doc', 'show', quoteId])).data as { document: Row }).document['quote_status']).toBe('draft');
+
+    const accepted = await ekwo(['doc', 'accept', 'quote-1', '--by', 'The buyer', '--at', '2026-06-20']);
+    expect(accepted.exitCode).toBe(0);
+    expect((accepted.data as { document: Row }).document).toMatchObject({ quote_status: 'accepted', accepted_by: 'The buyer' });
+    expect(await one<Row>(pg, `select accepted_at::date::text as on, declined_at from documents where id = $1`, [quoteId])).toEqual({
+      on: '2026-06-20',
+      declined_at: null,
+    });
+
+    const refused = await ekwo(['doc', 'decline', quoteId]);
+    expect(refused.exitCode).toBe(EXIT_REFUSED);
+    expect(refused.error?.name).toBe('document_already_answered');
+
+    expect((await ekwo(['doc', 'answer', 'undo', quoteId])).exitCode).toBe(0);
+    const declined = await ekwo(['doc', 'decline', quoteId]);
+    expect((declined.data as { document: Row }).document['quote_status']).toBe('declined');
+    const listed = await ekwo(['doc', 'list', '--type', 'sale_quote']);
+    expect((listed.data as { documents: Row[] }).documents.map((d) => d['quote_status'])).toEqual(['declined']);
   });
 });

@@ -196,6 +196,16 @@ export interface InvoiceLabels {
   draftInvoice: string;
   draftCreditNote: string;
   cancelled: string;
+  /**
+   * The status of a quote or an order, as a screen shows it beside the
+   * document: the words of the values `quote_status()` derives, `cancelled`
+   * being the word above.
+   */
+  quoteDraft: string;
+  quoteSent: string;
+  quoteAccepted: string;
+  quoteDeclined: string;
+  quoteExpired: string;
   number: string;
   date: string;
   dueDate: string;

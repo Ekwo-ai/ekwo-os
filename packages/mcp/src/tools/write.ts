@@ -42,11 +42,13 @@ export * from './import-books.js';
 // model fills in stay here, beside their descriptions; the functions are
 // exported from here under the names they always had.
 export {
+  acceptDocument,
   cancelDocument,
   closeFiscalYear,
   closeFiscalYearFinally,
   createContact,
   createDocument,
+  declineDocument,
   leaveLineUnnamed,
   lockPeriod,
   mergeContacts,
@@ -60,6 +62,7 @@ export {
   setLineContact,
   settleFromStatement,
   undoDocument,
+  undoDocumentAnswer,
   undoLeaveLineUnnamed,
   unreconcile,
   updateDocumentLines,
@@ -380,6 +383,32 @@ export const PostDocumentInput = z.object({
     .boolean()
     .optional()
     .describe('True: the database posts for real and takes it back, and the entry it would have written is returned. Nothing is written; a refusal is the one posting would give.'),
+});
+
+const answeredAt = z
+  .string()
+  .min(10)
+  .optional()
+  .describe('When the other party answered: an ISO date or timestamp, as the user says it. Left out: now. Never in the future (answer_in_the_future).');
+
+export const AcceptDocumentInput = z.object({
+  document_id: uuid.describe('The sale quote or purchase order the other party accepted.'),
+  accepted_by: z
+    .string()
+    .min(1)
+    .max(200)
+    .optional()
+    .describe('Who accepted it, in the user\'s words: a name, a role, the reference of a signed copy.'),
+  at: answeredAt,
+});
+
+export const DeclineDocumentInput = z.object({
+  document_id: uuid.describe('The sale quote or purchase order the other party declined.'),
+  at: answeredAt,
+});
+
+export const UndoDocumentAnswerInput = z.object({
+  document_id: uuid.describe('The sale quote or purchase order whose answer was recorded by mistake.'),
 });
 
 export const CancelDocumentInput = z.object({

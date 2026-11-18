@@ -294,7 +294,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'List documents',
       description:
-        'Invoices, credit notes and quotes of a company, filtered by type, state, settlement state, contact or date range. `state` is the document (draft, posted, cancelled) and `payment_state` is the settlement (not_paid, partially_paid, paid) — two different questions. Returns headers and totals, not lines; use get_document for those.',
+        'Invoices, credit notes and quotes of a company, filtered by type, state, settlement state, contact or date range. `state` is the document (draft, posted, cancelled) and `payment_state` is the settlement (not_paid, partially_paid, paid) — two different questions. A quote or an order also carries its answer (accepted_at, accepted_by, declined_at) and `quote_status` — draft, sent, accepted, declined, expired or cancelled — derived by the database from those facts; null on other documents. Returns headers and totals, not lines; use get_document for those.',
       inputSchema: read.ListDocumentsInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -775,6 +775,45 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },
     async (args) => guard(() => write.postDocument(backend, args)),
+  );
+
+  register(
+    'accept_document',
+    {
+      title: 'Record that a quote was accepted',
+      description:
+        "Records on a sale quote or a purchase order that the other party accepted it: accepted_at (now, or the moment the user gives) and accepted_by, who accepted. A dated fact on the document — nothing is booked — and its quote_status becomes accepted. Where the crm module holds a deal that carries this quote, the deal is won by the database itself, and its party becomes a customer. Refused by name on an invoice (document_not_answerable), on a declined quote (document_already_answered: undo_document_answer first), for a moment to come (answer_in_the_future). The database holds you to the company's agent_posting as for a posting: in review, only once a person approved the quote as it stands (approval_required otherwise); in autopilot, directly; recorded on the audit trail as an agent's. Ask the user before calling it." +
+        sessionPosting(backend),
+      inputSchema: write.AcceptDocumentInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.acceptDocument(backend, args)),
+  );
+
+  register(
+    'decline_document',
+    {
+      title: 'Record that a quote was declined',
+      description:
+        "Records on a sale quote or a purchase order that the other party declined it: declined_at, now or the moment the user gives. Nothing is booked; its quote_status becomes declined. Where the crm module holds a deal that carries this quote and no other quote of that deal is still alive, the deal is lost. Refused by name on an invoice (document_not_answerable), on an accepted quote (document_already_answered: undo_document_answer first), for a moment to come (answer_in_the_future). Held to the company's agent_posting as a posting is (approval_required in review without a person's approval). Ask the user before calling it." +
+        sessionPosting(backend),
+      inputSchema: write.DeclineDocumentInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.declineDocument(backend, args)),
+  );
+
+  register(
+    'undo_document_answer',
+    {
+      title: 'Take back the answer recorded on a quote',
+      description:
+        'Takes back an acceptance or a refusal recorded on a sale quote or a purchase order by mistake: the quote is unanswered again, and its quote_status is sent, expired or draft as its facts say. A deal of the crm module that the answer had won or lost opens again at the stage it was at. Refused on a quote with no answer (document_not_answered). Held to the company\'s agent_posting as a posting is. Ask the user before calling it.' +
+        sessionPosting(backend),
+      inputSchema: write.UndoDocumentAnswerInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.undoDocumentAnswer(backend, args)),
   );
 
   register(

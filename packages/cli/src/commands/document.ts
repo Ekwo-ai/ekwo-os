@@ -1,6 +1,7 @@
 /**
  * The verbs on a document: `doc new`, `doc line add`, `doc approve`, `post`,
- * `cancel`, `doc list` and `doc show`.
+ * `cancel`, `doc list` and `doc show` — and, on a quote or an order, the
+ * other party's answer: `doc accept`, `doc decline` and `doc answer undo`.
  *
  * All five work on the same object, so they are named after it. A document is
  * a sale invoice, a purchase invoice — a bill — a quote or a credit note,
@@ -19,8 +20,11 @@
 import {
   DOCUMENT_STATES,
   DOC_TYPES,
+  acceptDocument,
   addDocumentLine,
   approveDocument,
+  declineDocument,
+  undoDocumentAnswer,
   undoDocument,
   createDocument,
   getDocument,
@@ -67,6 +71,8 @@ const LINE_ADD_FLAGS = [
 ] as const;
 const POST_FLAGS = [...BOOKS_FLAGS, 'dry-run'] as const;
 const APPROVE_FLAGS = [...BOOKS_FLAGS] as const;
+const ACCEPT_FLAGS = [...BOOKS_FLAGS, 'by', 'at'] as const;
+const DECLINE_FLAGS = [...BOOKS_FLAGS, 'at'] as const;
 const CANCEL_FLAGS = [...BOOKS_FLAGS, 'date', 'credit'] as const;
 const LIST_FLAGS = [...BOOKS_FLAGS, 'unpaid', 'since', 'until', 'type', 'state', 'contact', 'limit'] as const;
 
@@ -87,7 +93,10 @@ function printDocument(result: Row): void {
     ['document', `${text(document['doc_type'])} ${text(document['number']) || dim('no number yet')}  ${dim(text(document['id']))}`],
     ['contact', text(document['contact_name'])],
     ['date', text(document['document_date'])],
-    ['state', `${text(document['state'])}, ${text(document['payment_state'])}`],
+    // A quote or an order says where its answer stands, as the database derives it.
+    document['quote_status'] === undefined || document['quote_status'] === null
+      ? ['state', `${text(document['state'])}, ${text(document['payment_state'])}`]
+      : ['status', answerOf(document)],
     ['untaxed', `${text(document['amount_untaxed'])} ${text(document['currency_code'])}`],
     ['tax', `${text(document['amount_tax'])} ${text(document['currency_code'])}`],
     ['total', `${text(document['amount_total'])} ${text(document['currency_code'])}`],
@@ -106,6 +115,19 @@ function printDocument(result: Row): void {
       ]),
     );
   }
+}
+
+/** `accepted 2026-11-18 by The buyer`, `declined 2026-11-18`, or the status alone. */
+function answerOf(document: Row): string {
+  const status = text(document['quote_status']);
+  if (document['accepted_at'] !== null && document['accepted_at'] !== undefined) {
+    const by = text(document['accepted_by']);
+    return `${status} ${text(document['accepted_at']).slice(0, 10)}${by === '' ? '' : ` by ${by}`}`;
+  }
+  if (document['declined_at'] !== null && document['declined_at'] !== undefined) {
+    return `${status} ${text(document['declined_at']).slice(0, 10)}`;
+  }
+  return status;
 }
 
 export function printEntry(result: Row): void {
@@ -237,6 +259,35 @@ async function docApprove(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   return 0;
 }
 
+/**
+ * `ekwo doc accept <document> [--by <who>] [--at <date>]`, `ekwo doc decline
+ * <document> [--at <date>]` and `ekwo doc answer undo <document>`: the other
+ * party's answer to a quote or an order, recorded as a dated fact by
+ * `accept_document()`, `decline_document()` and `undo_document_answer()`.
+ * Nothing is booked; a deal of the `crm` module that carries the quote moves
+ * in the database.
+ */
+async function docAnswer(args: ParsedArgs, deps: BooksDeps, answer: 'accept' | 'decline' | 'undo'): Promise<number> {
+  rejectUnknownFlags(args, answer === 'accept' ? ACCEPT_FLAGS : answer === 'decline' ? DECLINE_FLAGS : BOOKS_FLAGS);
+  const { backend, company } = await openBooks(args, deps);
+  const wanted = required(args.positional[answer === 'undo' ? 2 : 1], 'the quote or order', '<document>');
+  const documentId = await resolveDocument(backend, company.id, wanted);
+  const at = stringFlag(args, 'at');
+  const result = (
+    answer === 'accept'
+      ? await acceptDocument(backend, given({ document_id: documentId, accepted_by: stringFlag(args, 'by'), at }) as { document_id: string })
+      : answer === 'decline'
+        ? await declineDocument(backend, given({ document_id: documentId, at }) as { document_id: string })
+        : await undoDocumentAnswer(backend, { document_id: documentId })
+  ) as Row;
+  setResult(result);
+  heading(`${answer === 'accept' ? 'Accepted' : answer === 'decline' ? 'Declined' : 'Answer taken back'}, in ${company.name}`);
+  printDocument(result);
+  line();
+  note(dim(text(result['note'])));
+  return 0;
+}
+
 export async function cancelCommand(args: ParsedArgs, deps: BooksDeps = {}): Promise<number> {
   rejectUnknownFlags(args, CANCEL_FLAGS);
   const { backend, company } = await openBooks(args, deps);
@@ -293,12 +344,16 @@ export async function docCommand(args: ParsedArgs, deps: BooksDeps = {}): Promis
   if (action === 'show') return docShow(args, deps);
   if (action === 'pdf') return docPdf(args, deps);
   if (action === 'approve') return docApprove(args, deps);
+  if (action === 'accept') return docAnswer(args, deps, 'accept');
+  if (action === 'decline') return docAnswer(args, deps, 'decline');
+  if (action === 'answer' && second === 'undo') return docAnswer(args, deps, 'undo');
   throw new UsageError(
     'usage: ekwo doc new --contact <name|id> --line "name=…,price=…,tax=…" [--type --date --ref]' +
       ' | ekwo doc line add <document> --price <amount> [--name --account --tax]' +
       ' | ekwo doc list [--unpaid --since <date> --until <date> --type --state --contact]' +
       ' | ekwo doc show <document>' +
       ' | ekwo doc approve <document>' +
+      ' | ekwo doc accept <document> [--by <who> --at <date>] | ekwo doc decline <document> [--at <date>] | ekwo doc answer undo <document>' +
       ' | ekwo doc pdf <document> [--factur-x --out <file> --page-size A4|Letter --labels <file.json>]',
   );
 }
@@ -339,7 +394,10 @@ async function docList(args: ParsedArgs, deps: BooksDeps): Promise<number> {
       ],
       result.documents.map((d) => [
         text(d['document_date']), text(d['doc_type']), text(d['number']), text(d['contact_name']),
-        `${text(d['state'])}/${text(d['payment_state'])}`, text(d['amount_total']), text(d['amount_residual']),
+        d['quote_status'] === undefined || d['quote_status'] === null
+          ? `${text(d['state'])}/${text(d['payment_state'])}`
+          : text(d['quote_status']),
+        text(d['amount_total']), text(d['amount_residual']),
         text(d['currency_code']), dim(text(d['id'])),
       ]),
     );

@@ -190,7 +190,11 @@ ${bold('Connecting')} ${dim('(every command)')}
               draft books nothing. pdf <document> — the PDF of a sale invoice
               or credit note, from the books, in its company's colour. approve
               <document> — approve a draft, as it stands, for an agent to post
-              where agents post in review. ${dim('ekwo invoice is the old name of doc, kept; ekwo document is its whole word.')}
+              where agents post in review. accept <document> [--by <who>
+              --at <date>] | decline <document> [--at <date>] | answer undo
+              <document> — the other party's answer to a quote or an order,
+              a dated fact; its status is derived (draft, sent, accepted,
+              declined, expired). ${dim('ekwo invoice is the old name of doc, kept; ekwo document is its whole word.')}
   ${cyan('post')}        <document> — book it, through post_document(). --dry-run shows
               the entry the database would write, and writes nothing.
   ${cyan('cancel')}      <document> — undo a posted invoice, and say how: back to draft

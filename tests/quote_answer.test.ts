@@ -10,7 +10,19 @@
 
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import {
+  QUOTE_STATUSES,
+  QUOTE_STATUS_LABEL_KEYS,
+  SCHEMA_FEATURES,
+  acceptDocument,
+  getDocument,
+  listDocuments,
+  quoteStatusLabel,
+  undoDocumentAnswer,
+} from '../packages/core/src/index.js';
+import { INVOICE_LABELS } from '../packages/formats/invoice-pdf/src/index.js';
 import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
+import { backendFor, record } from './mcp/helpers.js';
 import { newCompany, newContact, newDocument, type Fixture } from './helpers/factory.js';
 import { somePack } from './helpers/packs.js';
 
@@ -185,5 +197,53 @@ describe('an agent answers in the mode its company chose', () => {
     const id = await quote();
     expect(await asAgent(`select decline_document($1)`, [id], 'autopilot')).toBeNull();
     expect(await statusOf(id)).toBe('declined');
+  });
+});
+
+describe('through @ekwo-ai/core, as the MCP server and the command line call it', () => {
+  // The client asks for the answer only on a schema that says it has it
+  // (`SCHEMA_FEATURES.quote_answer`). Until the release that brings it
+  // redefines `ekwo_schema_version()`, this database says the version it will
+  // be for these tests, and says its own again after them.
+  let definition: string;
+  beforeAll(async () => {
+    definition = (
+      await one<{ definition: string }>(db, `select pg_get_functiondef('ekwo.ekwo_schema_version()'::regprocedure) as definition`)
+    ).definition;
+    await db.query(
+      `create or replace function ekwo.ekwo_schema_version() returns text language sql immutable as $$ select '${SCHEMA_FEATURES.quote_answer.since}'::text $$`,
+    );
+  });
+  afterAll(async () => {
+    await db.query(definition);
+  });
+
+  it('records the answer and reads it back with the status the database derived', async () => {
+    const backend = backendFor(db, fx.ownerId);
+    const id = await quote();
+    const accepted = record(await acceptDocument(backend, { document_id: id, accepted_by: 'The buyer' }));
+    expect(record(accepted['document'])).toMatchObject({ id, quote_status: 'accepted', accepted_by: 'The buyer' });
+    expect(String(accepted['note'])).toMatch(/nothing is booked/);
+
+    const read = record(await getDocument(backend, { document_id: id }));
+    expect(record(read['document'])['quote_status']).toBe('accepted');
+
+    await undoDocumentAnswer(backend, { document_id: id });
+    const listed = record(await listDocuments(backend, { company_id: fx.companyId, limit: 500 }));
+    const byId = new Map((listed['documents'] as Record<string, unknown>[]).map((d) => [d['id'], d]));
+    expect(byId.get(id)).toMatchObject({ quote_status: 'draft', accepted_at: null, accepted_by: null, declined_at: null });
+    // A document no answer is given to says so with null, not with a guess.
+    const invoice = await quote({ docType: 'sale_invoice' });
+    expect(record(record(await getDocument(backend, { document_id: invoice }))['document'])['quote_status']).toBeNull();
+  });
+
+  it('names every status the database derives, in the words of each language', async () => {
+    const derived = await rows<{ status: string }>(db, `select distinct quote_status(d) as status from documents d where quote_status(d) is not null`);
+    for (const { status } of derived) expect(QUOTE_STATUSES).toContain(status);
+    for (const [language, labels] of Object.entries(INVOICE_LABELS)) {
+      for (const status of QUOTE_STATUSES) {
+        expect(quoteStatusLabel(status, language), `${language} ${status}`).toBe(labels[QUOTE_STATUS_LABEL_KEYS[status]]);
+      }
+    }
   });
 });

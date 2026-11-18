@@ -141,6 +141,11 @@ export const DOCUMENT = [
   'reversed_document_id',
   'entry_id',
   'sent_at::text',
+  // The answer to a quote or an order (schema 0.26.0; left out of the read
+  // below it, `SCHEMA_FEATURES.quote_answer`).
+  'accepted_at::text',
+  'accepted_by',
+  'declined_at::text',
 ];
 
 /**

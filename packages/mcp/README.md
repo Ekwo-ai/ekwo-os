@@ -266,6 +266,8 @@ Every write names its company explicitly.
 | `create_document` | A draft invoice, credit note or quote, with its lines. With `client_ref`, calling twice creates once |
 | `update_document_lines` | Replaces the lines of a **draft** |
 | `post_document` | Books it, in review or autopilot ([below](#review-or-autopilot)): in `review`, only once a person approved the draft as it stands, refused with `approval_required` otherwise; in `autopilot`, directly. `dry_run: true` returns the entry the database would write, and writes nothing, in both |
+| `accept_document` / `decline_document` | Records on a sale quote or a purchase order that the other party accepted it (`accepted_at`, `accepted_by`) or declined it (`declined_at`): a dated fact, nothing booked. `get_document` and `list_documents` then say `quote_status` — `draft`, `sent`, `accepted`, `declined`, `expired` or `cancelled` — derived by the database's `quote_status()`. Where the `crm` module holds a deal that carries the quote, the database moves the deal: won on an acceptance, lost on a refusal when no other quote of the deal is still alive. Held to `agent_posting` as a posting is |
+| `undo_document_answer` | Takes back an answer recorded by mistake; a deal it had closed opens again |
 | `cancel_document` | Undoes a posted invoice, and says how in `undone_by`: back to `draft` where its country's `posted_edit_policy` allows it and nothing about it has left (`unpost_document()`), otherwise a `credit_note` that names it, posted and matched against it, and the invoice cancelled (`cancel_document()`), with `why` the draft was ruled out. A credit note is dated on the invoice's day while that period is open; otherwise the caller gives a date. A date, or `credit_note: true`, asks for the credit note |
 | `reverse_entry` | Undoes a posted entry keyed by hand: its mirror, posted under the next number and matched against it. Same rule for the date |
 | `record_payment` | Books money in or out and matches it against open invoices — or, with `document_id`, against that document alone, which then names the contact and the direction. With `client_ref`, recording twice records once |
@@ -300,7 +302,7 @@ with posted entries, those the company's settings or an enabled module point
 at, and those somebody pinned with `pin_accounts`. `include_all` returns the
 whole chart, and every write tool still accepts any account of it.
 
-`post_document`, `cancel_document`, `reverse_entry`, `record_payment`,
+`post_document`, `accept_document`, `decline_document`, `undo_document_answer`, `cancel_document`, `reverse_entry`, `record_payment`,
 `update_document_lines`, `unreconcile`, `settle_from_statement`, `lock_period`, `opening_balance`, `import_books`,
 `close_fiscal_year`, `reopen_fiscal_year`, `close_fiscal_year_finally`, `revoke_invitation`, `remove_member`,
 `set_member_role`, `revoke_api_key` and `revoke_share` are annotated destructive in the protocol, so a client can ask
