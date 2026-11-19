@@ -22,7 +22,6 @@ somewhere has already run it.
   a schema without the table or one of its columns, the pack is described
   without `charts`, never with an error. No migration; `SCHEMA_MIN` stays
   0.19.0.
-||||||| parent of 5c098017 (fix(cli): leave alone the migrations of another product sharing the database)
 
 ### Fixed
 
