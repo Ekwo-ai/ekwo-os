@@ -88,6 +88,8 @@ export interface Status {
   appliedCount: number;
   pending: Migration[];
   unknown: string[];
+  /** Another product's rows in the same history — informative only. */
+  foreign: string[];
   instance: InstanceRow | undefined;
   admins: number;
   companies: CompanySummary[];
@@ -117,6 +119,7 @@ export async function status(db: SqlClient, migrations: Migration[]): Promise<St
       appliedCount: gap.applied.length,
       pending: gap.pending,
       unknown: gap.unknown,
+      foreign: gap.foreign,
       instance: undefined,
       admins: 0,
       companies: [],
@@ -227,6 +230,7 @@ export async function status(db: SqlClient, migrations: Migration[]): Promise<St
     appliedCount: gap.applied.length,
     pending: gap.pending,
     unknown: gap.unknown,
+    foreign: gap.foreign,
     instance,
     admins,
     companies: companies.map((c) => ({

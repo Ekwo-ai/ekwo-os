@@ -14,6 +14,8 @@ import { afterEach, describe, expect, it } from 'vitest';
 import {
   appliedVersions,
   applyMigrations,
+  foreignNote,
+  isEkwoVersion,
   listMigrations,
   migrationGap,
   parseMigrationFile,
@@ -115,6 +117,66 @@ describe('applying them', () => {
     const gap = await migrationGap(db, migrations);
     expect(gap.unknown).toEqual(['20991231235959']);
     expect(gap.pending).toHaveLength(0);
+  });
+
+  it('leaves alone the rows of another product sharing the database', async () => {
+    const db = await open();
+    const migrations = await listMigrations(migrationsPath);
+    await applyMigrations(db, migrations);
+    // What the Nexgen OS customer app records next to Ekwo OS in one Postgres.
+    await db.query(
+      `insert into supabase_migrations.schema_migrations (version, name) values
+         ('customer_app_0001_customer_app', null),
+         ('customer_app_0015_meters', null),
+         ('customer_app_connector_lynx', null)`,
+    );
+
+    const gap = await migrationGap(db, migrations);
+    expect(gap.unknown).toEqual([]);
+    expect(gap.foreign).toEqual([
+      'customer_app_0001_customer_app',
+      'customer_app_0015_meters',
+      'customer_app_connector_lynx',
+    ]);
+    expect(gap.pending).toHaveLength(0);
+    expect(foreignNote(gap.foreign)).toBe(
+      '3 migration(s) of another product in this database, left alone',
+    );
+
+    // Migrating over them applies nothing and keeps them.
+    const again = await applyMigrations(db, migrations);
+    expect(again.applied).toHaveLength(0);
+    expect(await appliedVersions(db)).toContain('customer_app_connector_lynx');
+  });
+
+  it('still refuses a newer Ekwo history next to another product', async () => {
+    const db = await open();
+    const migrations = await listMigrations(migrationsPath);
+    await applyMigrations(db, migrations);
+    await db.query(
+      `insert into supabase_migrations.schema_migrations (version, name) values
+         ('customer_app_0001_customer_app', null),
+         ('20991231235959', 'from_the_future')`,
+    );
+
+    const gap = await migrationGap(db, migrations);
+    expect(gap.unknown).toEqual(['20991231235959']);
+    expect(gap.foreign).toEqual(['customer_app_0001_customer_app']);
+  });
+});
+
+describe('telling an Ekwo version from another product', () => {
+  it('reads a 14-digit timestamp as Ekwo', () => {
+    expect(isEkwoVersion('20261108120000')).toBe(true);
+  });
+
+  it('reads anything else as another product', () => {
+    expect(isEkwoVersion('')).toBe(false);
+    expect(isEkwoVersion('2026110812000')).toBe(false); // 13 digits
+    expect(isEkwoVersion('202611081200001')).toBe(false); // 15 digits
+    expect(isEkwoVersion('20261108120000_x')).toBe(false);
+    expect(isEkwoVersion('customer_app_0001_customer_app')).toBe(false);
+    expect(isEkwoVersion('customer_app_connector_lynx')).toBe(false);
   });
 });
 

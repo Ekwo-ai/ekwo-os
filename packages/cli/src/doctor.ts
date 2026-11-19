@@ -23,7 +23,7 @@ import {
   type ExpectedObjects,
 } from './inventory.js';
 import type { Migration } from './migrations.js';
-import { migrationGap } from './migrations.js';
+import { foreignNote, migrationGap } from './migrations.js';
 import { FORMER_SOCLE_SCHEMA, SOCLE_SCHEMA } from '@ekwo-ai/core';
 import { EXPOSE_SOCLE_LINE, socleSchemaOf } from './socle.js';
 import type { SqlClient } from './sql.js';
@@ -102,12 +102,18 @@ export async function doctor(
 
 async function checkMigrations(db: SqlClient, migrations: Migration[]): Promise<Check> {
   const gap = await migrationGap(db, migrations);
+  // Another product's rows in the same history: one informative line, under
+  // whatever the check concludes about Ekwo's own migrations.
+  const foreign = gap.foreign.length > 0 ? [foreignNote(gap.foreign)] : [];
   if (gap.unknown.length > 0) {
     return {
       name: 'migrations',
       severity: 'warning',
       summary: `the database is ahead of this CLI by ${gap.unknown.length} migration(s)`,
-      details: gap.unknown.map((v) => `${v} is applied but not shipped here — upgrade the CLI`),
+      details: [
+        ...gap.unknown.map((v) => `${v} is applied but not shipped here — upgrade the CLI`),
+        ...foreign,
+      ],
     };
   }
   if (gap.pending.length > 0) {
@@ -115,13 +121,14 @@ async function checkMigrations(db: SqlClient, migrations: Migration[]): Promise<
       name: 'migrations',
       severity: 'problem',
       summary: `${gap.pending.length} migration(s) pending`,
-      details: gap.pending.map((m) => m.file),
+      details: [...gap.pending.map((m) => m.file), ...foreign],
     };
   }
   return {
     name: 'migrations',
     severity: 'ok',
     summary: `${gap.applied.length} applied, none pending`,
+    ...(foreign.length > 0 ? { details: foreign } : {}),
   };
 }
 

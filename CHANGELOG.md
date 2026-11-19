@@ -22,6 +22,21 @@ somewhere has already run it.
   a schema without the table or one of its columns, the pack is described
   without `charts`, never with an error. No migration; `SCHEMA_MIN` stays
   0.19.0.
+||||||| parent of 5c098017 (fix(cli): leave alone the migrations of another product sharing the database)
+
+### Fixed
+
+- **Another product's migrations in the same database are left alone.** When
+  Ekwo OS shares one Postgres with another product that records its own rows
+  in `supabase_migrations.schema_migrations` (`customer_app_0001_…`,
+  `customer_app_connector_lynx`), `ekwo migrate`, `ekwo doctor` and
+  `ekwo status` no longer count them as a newer installation. A row is Ekwo's
+  when it has the shape of a migration version, the rule
+  `parseMigrationFile` already applies to filenames (`isEkwoVersion`); the
+  others go to the new `Gap.foreign` and print one informative line —
+  "N migration(s) of another product in this database, left alone". An
+  unknown Ekwo timestamp is still refused: a release never migrates over a
+  newer Ekwo schema.
 
 ## [0.27.0] — 2026-11-19
 

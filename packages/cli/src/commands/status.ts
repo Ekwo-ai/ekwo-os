@@ -6,7 +6,7 @@ import { boolFlag, rejectUnknownFlags, type ParsedArgs } from '../args.js';
 import { migrationsDir } from '../bundle.js';
 import { describeCertification } from '../pack/certification.js';
 import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
-import { listMigrations, type Migration } from '../migrations.js';
+import { foreignNote, listMigrations, type Migration } from '../migrations.js';
 import { allModuleMigrations, listModules } from '../module/read.js';
 import { isInteractive } from '../prompt.js';
 import { SCHEMA_MIN } from '../schema.js';
@@ -76,6 +76,7 @@ export async function statusCommand(args: ParsedArgs, deps: CommandDeps = {}): P
       line();
       warn(`${report.unknown.length} migration(s) applied here are not in this release.`);
     }
+    if (report.foreign.length > 0) note(dim(foreignNote(report.foreign)));
 
     heading('Instance');
     if (report.instance === undefined) {

@@ -18,7 +18,7 @@
 import { boolFlag, rejectUnknownFlags, type ParsedArgs } from '../args.js';
 import { migrationsDir, seedDir } from '../bundle.js';
 import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
-import { applyMigrations, listMigrations, migrationGap } from '../migrations.js';
+import { applyMigrations, foreignNote, listMigrations, migrationGap } from '../migrations.js';
 import { applyModuleMigrations } from './module.js';
 import { allModuleMigrations, listModules } from '../module/read.js';
 import { isInteractive } from '../prompt.js';
@@ -64,6 +64,7 @@ export async function migrateCommand(args: ParsedArgs, deps: CommandDeps = {}): 
 
     heading('Migrations');
     note(dim(`${gap.applied.length} applied, ${gap.pending.length} pending`));
+    if (gap.foreign.length > 0) note(dim(foreignNote(gap.foreign)));
 
     if (gap.unknown.length > 0) {
       warn(
@@ -71,7 +72,12 @@ export async function migrateCommand(args: ParsedArgs, deps: CommandDeps = {}): 
           'it was installed by a newer version. Upgrade the CLI before migrating.',
       );
       for (const version of gap.unknown) note(dim(`  ${version}`));
-      setResult({ applied: [], pending: gap.pending.map((m) => m.file), unknown: gap.unknown });
+      setResult({
+        applied: [],
+        pending: gap.pending.map((m) => m.file),
+        unknown: gap.unknown,
+        foreign: gap.foreign,
+      });
       return 1;
     }
 

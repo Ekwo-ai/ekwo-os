@@ -88,8 +88,33 @@ export async function appliedVersions(db: SqlClient): Promise<string[]> {
 export interface Gap {
   applied: string[];
   pending: Migration[];
-  /** Versions in the database that this release does not ship — a newer installation. */
+  /**
+   * Ekwo-shaped versions in the database that this release does not ship —
+   * a newer installation, which this release must not migrate over.
+   */
   unknown: string[];
+  /**
+   * Rows another product sharing the same database recorded in the same
+   * history table (`customer_app_0001_…`). They are left alone: not Ekwo's
+   * to apply, to refuse on, or to remove.
+   */
+  foreign: string[];
+}
+
+/**
+ * Whether a history row has the shape of an Ekwo migration version.
+ *
+ * The rule is the migration filename itself (`parseMigrationFile`): a version
+ * is Ekwo's when it would name a migration file of its own. Anything else —
+ * another product's naming, an empty string — belongs to someone else.
+ */
+export function isEkwoVersion(version: string): boolean {
+  return parseMigrationFile(`${version}_history.sql`)?.version === version;
+}
+
+/** The informative line every command prints for `Gap.foreign` — never an error. */
+export function foreignNote(foreign: readonly string[]): string {
+  return `${foreign.length} migration(s) of another product in this database, left alone`;
 }
 
 /** What separates the database from the migrations this CLI carries. */
@@ -98,10 +123,12 @@ export async function migrationGap(db: SqlClient, all: Migration[]): Promise<Gap
   const applied = await appliedVersions(db);
   const appliedSet = new Set(applied);
   const shipped = new Set(all.map((m) => m.version));
+  const notShipped = applied.filter((v) => !shipped.has(v));
   return {
     applied,
     pending: all.filter((m) => !appliedSet.has(m.version)),
-    unknown: applied.filter((v) => !shipped.has(v)),
+    unknown: notShipped.filter(isEkwoVersion),
+    foreign: notShipped.filter((v) => !isEkwoVersion(v)),
   };
 }
 

@@ -263,6 +263,8 @@ export {
   applyMigrations,
   appliedVersions,
   ensureHistory,
+  foreignNote,
+  isEkwoVersion,
   listMigrations,
   migrationGap,
   parseMigrationFile,
