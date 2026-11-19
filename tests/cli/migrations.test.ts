@@ -123,7 +123,7 @@ describe('applying them', () => {
     const db = await open();
     const migrations = await listMigrations(migrationsPath);
     await applyMigrations(db, migrations);
-    // What the Nexgen OS customer app records next to Ekwo OS in one Postgres.
+    // What another product records next to Ekwo OS in one Postgres.
     await db.query(
       `insert into supabase_migrations.schema_migrations (version, name) values
          ('customer_app_0001_customer_app', null),
