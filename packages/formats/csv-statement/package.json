@@ -1,6 +1,6 @@
 {
   "name": "@ekwo-ai/csv-statement",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "description": "Reads a bank, payment-account or card statement exported as CSV, described by a column profile the caller gives, into plain objects in TypeScript: account, balances and lines, amounts as decimal strings, and what does not add up. One reader for every bank, no bank written in it. Zero dependencies.",
   "keywords": [
     "csv",

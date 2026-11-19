@@ -9,6 +9,8 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+## [0.27.0] — 2026-11-19
+
 ### Added
 
 - **The deal a document belongs to, read from the document's side.**
@@ -26,6 +28,16 @@ somewhere has already run it.
   null — never an error: a module's migrations are not counted by
   `ekwo_schema_version()`, so the core asks for the function, not for a
   version. `SCHEMA_MIN` stays 0.19.0.
+
+### Changed
+
+- **The schema is 0.27.0 (`20261119070000`); the floor of the packages stays
+  at 0.19.0.** The socle received no other migration in this release; the
+  one migration of the `crm` module adds a function, which the packages ask
+  the database for by name.
+- **The two tests that call every function on every row of another person
+  carry a time limit of their own**, 240 seconds, since their duration grows
+  with the schema. Nothing a user runs changes.
 
 ## [0.26.0] — 2026-11-18
 
