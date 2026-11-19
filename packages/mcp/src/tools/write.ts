@@ -798,7 +798,10 @@ export const CreateCompanyInput = z.object({
     .length(2)
     .optional()
     .describe("Language the books are kept in — it decides the labels of the chart. Left out, the country pack's."),
-  chart_code: z.string().optional().describe('Which chart, where the country offers several.'),
+  chart_code: z
+    .string()
+    .optional()
+    .describe('Which chart, where the country offers several. describe_pack lists the charts of each country with their audience and which one is the default.'),
   fiscal_year: z.number().int().min(1900).max(2200).optional().describe('Calendar year the first financial year opens in. Default this year.'),
   fiscal_year_start: isoDate
     .optional()

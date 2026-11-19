@@ -256,7 +256,7 @@ Every write names its company explicitly.
 | `get_preferences` | What you prefer, and the language chain to read labels with |
 | `list_invitations` | Who has been invited into a company and not yet joined |
 | `list_api_keys` | The machine keys of a company, and what each may do |
-| `describe_pack` | Which country packs this installation holds: their version, how much anyone has read them, the register of texts each was built from — title, official publisher, link and the day it was opened — and, for a proven pack, its evidence: per scope, the kind of filing, the year, what was reproduced and what was not tested |
+| `describe_pack` | Which country packs this installation holds: their version, how much anyone has read them, the register of texts each was built from — title, official publisher, link and the day it was opened — and, for a proven pack, its evidence: per scope, the kind of filing, the year, what was reproduced and what was not tested; and the charts of accounts each country offers, with their audience, for `create_company`'s `chart_code` |
 | `status` | Schema version, instance, connection, companies |
 | `create_contact` | A customer, supplier or other third party |
 | `merge_contacts` | Joins two contacts that are one party: everything naming the absorbed one, posted lines and issued documents included, names the kept one, whose empty fields are filled; the absorbed one is retired. Refused by name for two different VAT or registration numbers, a contact merged before, or a matching that would span two parties |

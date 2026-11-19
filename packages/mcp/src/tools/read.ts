@@ -910,10 +910,34 @@ export async function describePack(
     // No column, nothing to say: the pack is described as before.
   }
 
+  // The charts of accounts each country offers, default first. A schema that
+  // lacks the table or one of its columns answers without `charts`, never
+  // with an error.
+  let charts: Map<unknown, Row[]> | null = null;
+  try {
+    const rows = await backend.select<Row>({
+      table: 'chart_templates',
+      columns: columns.CHART_TEMPLATE,
+      where: [{ column: 'country', op: 'in', value: packs.map((pack) => String(pack['country'])) }],
+      order: [{ column: 'is_default', ascending: false }, { column: 'code' }],
+    });
+    charts = new Map();
+    for (const { country, ...chart } of rows) {
+      charts.set(country, [...(charts.get(country) ?? []), chart]);
+    }
+  } catch {
+    // No table, nothing to say: the pack is described without its charts.
+  }
+
   return {
-    packs: packs.map((pack) => ({ ...pack, einvoicing_fiscalisation: fiscalisation.get(pack['country']) ?? null })),
+    packs: packs.map((pack) => ({
+      ...pack,
+      einvoicing_fiscalisation: fiscalisation.get(pack['country']) ?? null,
+      ...(charts === null ? {} : { charts: charts.get(pack['country']) ?? [] }),
+    })),
     count: packs.length,
     note:
+      'charts are the charts of accounts the country offers — it may offer several, for instance one for companies and one for associations and foundations, or one for small entities — each with its audience, the default first; create_company takes the chosen one as chart_code. An empty statements means that chart has no financial statement of its own yet, only the generic ones by account type. ' +
       'einvoicing_fiscalisation is the fiscalisation regime of the country, or null where it has none. Its kind is chained — a record the invoicing software keeps for every invoice, with the hash, the QR code and the sentence the invoice carries; einvoicing_fiscalise writes one — or clearance — every invoice validated by the authority before it is issued, nothing chained; clearance says where the verification link comes from and, as ISO 8601 durations, how long the issuer may cancel and the buyer reject; einvoicing_clearance records a submission and its answer — or reporting — the documents\' data reported to the authority, nothing chained, written by the brick its format names. mandatory_from is when it binds, with turnover_above where the law phases it by size, and exemption the dated thresholds below which a taxpayer is exempted; announced_from, with announced_by and announced_on, is a day only announced, with no text in force, and binds nobody yet. submission says how records reach the authority, cadence the periods where the law sets them, reported what is reported and by whom. certification_status is what somebody claims, not a certificate: community means nobody has read it, maintained means the maintainers keep it current and nobody has reviewed it, proven means a maintained pack reproduced, after the books of a real company were imported, the statements that company filed and the administration accepted — it proves the cases that company uses, never every regime of the country, and `evidence` lists per scope the kind of filing, the financial year, what was reproduced and what was not tested — reviewed means the named professional in certified_by read it on certified_at. `sources` is the register the pack declares — each entry is a text, its official publisher, an absolute link and the day it was opened — and it holds no copy of the law itself. A tax and a box of the declaration each carry their own article in legal_reference and name the register entry it is in; a link that no longer answers is the register being stale, never the rule being wrong.',
   };
 }

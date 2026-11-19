@@ -516,3 +516,21 @@ export const COUNTRY_PACK = [
   'evidence',
   'installed_at::text',
 ];
+
+/**
+ * `chart_templates` — the charts of accounts a country offers, each with the
+ * audience it is published for. `statements` empty means the chart has no
+ * financial statement of its own yet; `source_key` names the entry of the
+ * pack's register where `legal_reference` can be read.
+ */
+export const CHART_TEMPLATE = [
+  'country',
+  'code',
+  'name',
+  'audience',
+  'is_default',
+  'statements',
+  'certification_status',
+  'legal_reference',
+  'source_key',
+];

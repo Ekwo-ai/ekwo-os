@@ -20,7 +20,7 @@ import { sourcesOf } from '../../packages/cli/src/index.js';
 import { readTools, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase } from '../helpers/db.js';
 import { newCompany, type Fixture } from '../helpers/factory.js';
-import { allPacks, somePack } from '../helpers/packs.js';
+import { allPacks, packWhere, somePack } from '../helpers/packs.js';
 import { backendFor, list, record } from './helpers.js';
 
 let db: PGlite;
@@ -111,6 +111,55 @@ describe('describe_pack', () => {
     const none = record(await readTools.describePack(member, { country: 'ZZ' }));
     expect(none['count']).toBe(0);
     expect(String(none['note'])).toMatch(/No pack is loaded for ZZ/);
+  });
+
+  it('lists every chart a country offers, with its audience, the default first', async () => {
+    // The charts come from the pack that offers more than one, never from a
+    // country named here.
+    const pack = packWhere('that offers more than one chart', (p) => p.charts.length > 1);
+    const answer = record(await readTools.describePack(member, { country: pack.manifest.country }));
+    const charts = list(list(answer['packs'])[0]!['charts']);
+
+    const expected = [...pack.charts].sort(
+      (a, b) => Number(b.is_default) - Number(a.is_default) || (a.code < b.code ? -1 : a.code > b.code ? 1 : 0),
+    );
+    expect(charts.map((chart) => chart['code'])).toEqual(expected.map((chart) => chart.code));
+    expect(charts[0]!['is_default']).toBe(true);
+    for (const chart of charts) {
+      const declared = pack.charts.find((candidate) => candidate.code === chart['code'])!;
+      expect(chart['name'], declared.code).toBe(declared.name);
+      expect(chart['audience'], declared.code).toBe(declared.audience);
+      expect([...(chart['statements'] as string[])].sort(), declared.code).toEqual([...declared.statements].sort());
+      expect(chart['source_key'], declared.code).toBe(declared.source);
+      expect(Object.keys(chart).sort(), declared.code).toEqual([
+        'audience',
+        'certification_status',
+        'code',
+        'is_default',
+        'legal_reference',
+        'name',
+        'source_key',
+        'statements',
+      ]);
+    }
+    expect(String(answer['note'])).toMatch(/chart_code/);
+  });
+
+  it('describes the pack without charts where the charts cannot be read', async () => {
+    // An installation whose schema lacks the table, or one of its columns,
+    // still answers: the read of the charts fails, and the pack is described
+    // as before, never with an error.
+    const older: Backend = Object.assign(Object.create(member) as Backend, {
+      select: (query: Parameters<Backend['select']>[0]) =>
+        query.table === 'chart_templates'
+          ? Promise.reject(new Error('relation "chart_templates" does not exist'))
+          : member.select(query),
+    });
+    const answer = record(await readTools.describePack(older, { country: somePack.manifest.country }));
+    expect(answer['count']).toBe(1);
+    const row = list(answer['packs'])[0]!;
+    expect(row['name']).toBe(somePack.manifest.name);
+    expect('charts' in row).toBe(false);
   });
 
   it('is read under the policy of the table, not as the owner of the database', async () => {

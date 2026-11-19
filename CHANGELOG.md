@@ -9,6 +9,20 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Added
+
+- **`describe_pack` lists the charts of accounts a country offers.** Each
+  pack in the answer carries `charts`, read from `chart_templates`: `code`,
+  `name`, `audience`, `is_default`, `statements`, `certification_status`,
+  `legal_reference` and `source_key`, the default first, then by code. A
+  country may offer several — one for companies and one for associations and
+  foundations, a small-entity chart — and `create_company` takes the chosen
+  one as `chart_code`, whose description now points there. An empty
+  `statements` means the chart has no financial statement of its own yet. On
+  a schema without the table or one of its columns, the pack is described
+  without `charts`, never with an error. No migration; `SCHEMA_MIN` stays
+  0.19.0.
+
 ## [0.27.0] — 2026-11-19
 
 ### Added
