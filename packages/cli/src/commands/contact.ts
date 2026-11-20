@@ -1,17 +1,21 @@
 /**
  * `ekwo contact add`, `ekwo contact list`, `ekwo contact duplicates`,
- * `ekwo contact merge` and `ekwo contact statement` — `createContact()`,
- * `searchContacts()`, `suggestDuplicateContacts()`, `mergeContacts()` and
- * `contactStatement()` of the core, which are the MCP server's
- * `create_contact`, `search_contacts`, `suggest_duplicate_contacts`,
- * `merge_contacts` and `contact_statement`.
+ * `ekwo contact merge`, `ekwo contact statement` and
+ * `ekwo contact certificate add|list` — `createContact()`,
+ * `searchContacts()`, `suggestDuplicateContacts()`, `mergeContacts()`,
+ * `contactStatement()`, `recordTaxCertificate()` and `listTaxCertificates()`
+ * of the core, which are the MCP server's `create_contact`,
+ * `search_contacts`, `suggest_duplicate_contacts`, `merge_contacts`,
+ * `contact_statement`, `record_tax_certificate` and `list_tax_certificates`.
  */
 
 import {
   CONTACT_TYPES,
   contactStatement,
   createContact,
+  listTaxCertificates,
   mergeContacts,
+  recordTaxCertificate,
   resolveContact,
   searchContacts,
   suggestDuplicateContacts,
@@ -29,9 +33,11 @@ const LIST_FLAGS = [...BOOKS_FLAGS, 'query', 'type', 'vat', 'limit'] as const;
 const MERGE_FLAGS = [...BOOKS_FLAGS] as const;
 const DUPLICATES_FLAGS = [...BOOKS_FLAGS] as const;
 const STATEMENT_FLAGS = [...BOOKS_FLAGS, 'from', 'to'] as const;
+const CERTIFICATE_ADD_FLAGS = [...CREATE_FLAGS, 'from', 'to', 'territory', 'note'] as const;
+const CERTIFICATE_LIST_FLAGS = [...BOOKS_FLAGS] as const;
 
 const USAGE =
-  'usage: ekwo contact add <name> [--type --vat --email --country --terms --ref] | ekwo contact list [--query --type --vat] | ekwo contact duplicates | ekwo contact merge <keep> <absorb> | ekwo contact statement <name|id> --from <date> [--to <date>]';
+  'usage: ekwo contact add <name> [--type --vat --email --country --terms --ref] | ekwo contact list [--query --type --vat] | ekwo contact duplicates | ekwo contact merge <keep> <absorb> | ekwo contact statement <name|id> --from <date> [--to <date>] | ekwo contact certificate add <name|id> <reference> --from <date> [--to <date> --territory <code> --note --ref] | ekwo contact certificate list [<name|id>]';
 
 const ADD_FIELDS = [
   'name', 'contact_type', 'vat_number', 'registration_number', 'identifiers', 'email', 'phone', 'country',
@@ -53,6 +59,8 @@ export async function contactCommand(args: ParsedArgs, deps: BooksDeps = {}): Pr
   if (action === 'duplicates') return duplicates(args, deps);
   if (action === 'merge') return merge(args, deps);
   if (action === 'statement') return statement(args, deps);
+  if (action === 'certificate' && args.positional[1] === 'add') return certificateAdd(args, deps);
+  if (action === 'certificate' && args.positional[1] === 'list') return certificateList(args, deps);
   throw new UsageError(USAGE);
 }
 
@@ -222,5 +230,70 @@ async function statement(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   }
   pairs([['balance', result.closing_balance]]);
   note(dim('Debit minus credit, in the currency of the company: positive is what the contact owes.'));
+  return 0;
+}
+
+async function certificateAdd(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, CERTIFICATE_ADD_FLAGS);
+  const [wanted, reference] = [args.positional[2], args.positional[3]];
+  if (wanted === undefined || reference === undefined) {
+    throw new UsageError(
+      'missing_argument: the contact and the number the certificate carries. `ekwo contact certificate add "<name|id>" <reference> --from <date>`.',
+    );
+  }
+  const from = stringFlag(args, 'from');
+  if (from === undefined) {
+    throw new UsageError('missing_argument: --from, the first day the certificate covers.');
+  }
+  const { backend, company } = await openBooks(args, deps);
+  const contact = await resolveContact(backend, company.id, wanted);
+  const result = (await recordTaxCertificate(
+    backend,
+    given({
+      company_id: company.id,
+      contact_id: contact.id,
+      reference,
+      valid_from: from,
+      valid_to: stringFlag(args, 'to'),
+      territory_code: stringFlag(args, 'territory'),
+      note: stringFlag(args, 'note'),
+      client_ref: stringFlag(args, 'ref'),
+    }),
+  )) as { certificate: Record<string, unknown>; replayed?: boolean };
+  setResult(result);
+
+  heading(`Certificate of ${contact.name}`);
+  const c = result.certificate;
+  if (result.replayed === true) note(dim(`already recorded under the reference ${String(c['client_ref'])}; nothing was written`));
+  pairs([
+    ['reference', String(c['reference'])],
+    ['territory', c['territory_code'] === null ? dim('every place of supply') : String(c['territory_code'])],
+    ['covers', `${String(c['valid_from'])} to ${c['valid_to'] === null ? 'no end' : String(c['valid_to'])}`],
+  ]);
+  return 0;
+}
+
+async function certificateList(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, CERTIFICATE_LIST_FLAGS);
+  const wanted = args.positional[2];
+  const { backend, company } = await openBooks(args, deps);
+  const contact = wanted === undefined ? undefined : await resolveContact(backend, company.id, wanted);
+  const result = (await listTaxCertificates(
+    backend,
+    given({ company_id: company.id, contact_id: contact?.id }),
+  )) as { certificates: Record<string, unknown>[]; count: number };
+  setResult(result);
+
+  heading(contact === undefined ? `Certificates held, in ${company.name}` : `Certificates of ${contact.name}`);
+  if (result.certificates.length === 0) note(dim('None.'));
+  else {
+    const cell = (value: unknown): string => (value === null || value === undefined ? '' : String(value));
+    table(
+      [{ title: 'contact' }, { title: 'reference' }, { title: 'territory' }, { title: 'from' }, { title: 'to' }],
+      result.certificates.map((c) => [
+        cell(c['contact_name']), cell(c['reference']), cell(c['territory_code']), cell(c['valid_from']), cell(c['valid_to']),
+      ]),
+    );
+  }
   return 0;
 }

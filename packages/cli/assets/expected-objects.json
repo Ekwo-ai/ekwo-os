@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261120100100",
+  "migration": "20261121070200",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -1470,6 +1470,55 @@
           {
             "name": "value",
             "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "contact_tax_certificates",
+        "columns": [
+          {
+            "name": "client_ref",
+            "type": "text"
+          },
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "contact_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "note",
+            "type": "text"
+          },
+          {
+            "name": "reference",
+            "type": "text"
+          },
+          {
+            "name": "territory_code",
+            "type": "text"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "valid_from",
+            "type": "date"
+          },
+          {
+            "name": "valid_to",
+            "type": "date"
           }
         ]
       },
@@ -4972,6 +5021,10 @@
         "arguments": ""
       },
       {
+        "name": "buyer_certificate_for",
+        "arguments": "p_document_id uuid"
+      },
+      {
         "name": "caller_companies",
         "arguments": ""
       },
@@ -5329,6 +5382,10 @@
       },
       {
         "name": "documents_guard_posted",
+        "arguments": ""
+      },
+      {
+        "name": "documents_hold_buyer_certificate",
         "arguments": ""
       },
       {
@@ -6540,6 +6597,16 @@
         "command": "all"
       },
       {
+        "table": "contact_tax_certificates",
+        "name": "contact_tax_certificates_select",
+        "command": "select"
+      },
+      {
+        "table": "contact_tax_certificates",
+        "name": "contact_tax_certificates_write",
+        "command": "all"
+      },
+      {
         "table": "contacts",
         "name": "contacts_select",
         "command": "select"
@@ -7161,6 +7228,18 @@
         "name": "contact_patterns_set_updated_at"
       },
       {
+        "table": "contact_tax_certificates",
+        "name": "contact_tax_certificates_audit"
+      },
+      {
+        "table": "contact_tax_certificates",
+        "name": "contact_tax_certificates_contact_id_not_merged"
+      },
+      {
+        "table": "contact_tax_certificates",
+        "name": "contact_tax_certificates_set_updated_at"
+      },
+      {
         "table": "contacts",
         "name": "contacts_audit"
       },
@@ -7291,6 +7370,10 @@
       {
         "table": "documents",
         "name": "documents_guard_posted"
+      },
+      {
+        "table": "documents",
+        "name": "documents_hold_buyer_certificate"
       },
       {
         "table": "documents",
@@ -8414,6 +8497,22 @@
         },
         {
           "name": "contact_patterns",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
+          "name": "contact_tax_certificates",
           "anon": [],
           "authenticated": [
             "delete",
@@ -9695,6 +9794,17 @@
           "service_role": []
         },
         {
+          "name": "buyer_certificate_for",
+          "arguments": "p_document_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "caller_companies",
           "arguments": "",
           "anon": [],
@@ -10571,6 +10681,14 @@
         },
         {
           "name": "documents_guard_posted",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "documents_hold_buyer_certificate",
           "arguments": "",
           "trigger": true,
           "anon": [],

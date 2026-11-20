@@ -183,7 +183,11 @@ ${bold('Connecting')} ${dim('(every command)')}
               names the second, posted lines and issued documents included,
               names the first, and the second is retired. By name or id;
               statement <name|id> --from <date> [--to <date>] — what went
-              through their accounts, the balance it runs to, what is open.
+              through their accounts, the balance it runs to, what is open;
+              certificate add <name|id> <reference> --from <date> [--to <date>
+              --territory <code>] | certificate list [<name|id>] — a resale or
+              exemption certificate the buyer handed over, which a sale under
+              a tax that applies on one needs before it posts.
   ${cyan('doc')}         new | line add <document> — a draft and its lines; list | show
               <document> — what exists, and what is still owed. One object: a
               sale invoice, a bill, a quote or a credit note, with --type. A

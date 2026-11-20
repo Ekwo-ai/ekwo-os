@@ -113,6 +113,7 @@ export {
   type PackAnalysis,
   type PackAnalysisAggregate,
   type PackGolden,
+  type PackGoldenCertificate,
   type PackGoldenContact,
   type PackGoldenDocument,
   type PackGoldenPayment,

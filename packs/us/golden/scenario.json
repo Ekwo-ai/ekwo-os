@@ -16,7 +16,7 @@
   "statements": ["US-SX-BS", "US-SX-IS"],
   "contacts": [
     { "ref": "cust-retail",   "name": "Sierra Vista Outfitters, Inc.",  "type": "customer", "country": "US", "territory": "US-CA" },
-    { "ref": "cust-reseller", "name": "Pacific Rim Distribution LLC",   "type": "customer", "country": "US", "territory": "US-CA" },
+    { "ref": "cust-reseller", "name": "Pacific Rim Distribution LLC",   "type": "customer", "country": "US", "territory": "US-CA", "certificates": [ { "reference": "SR-EXAMPLE-000001", "territory": "US-CA", "valid_from": "2026-06-01" } ] },
     { "ref": "cust-ny",       "name": "Hudson Yards Provisioning Corp.","type": "customer", "country": "US", "territory": "US-NY" },
     { "ref": "cust-or",       "name": "Willamette Valley Trading Co.",  "type": "customer", "country": "US", "territory": "US-OR" },
     { "ref": "cust-federal",  "name": "Federal Agency Purchasing Office","type": "customer", "country": "US", "territory": "US-CA" },
@@ -55,7 +55,7 @@
     },
     {
       "ref": "S3", "type": "sale_invoice", "contact": "cust-reseller", "date": "2026-08-05",
-      "why": "A sale for resale, against a resale certificate the seller holds. It is in total sales on line 1 and deducted on line 4 of Section A, which is box 32 of the form: one base posting naming two boxes, neither of them a sum of the other. Whether the certificate is valid is a fact about a document in a drawer, which the core records nowhere.",
+      "why": "A sale for resale, against a resale certificate the seller holds. It is in total sales on line 1 and deducted on line 4 of Section A, which is box 32 of the form: one base posting naming two boxes, neither of them a sum of the other. The certificate is recorded on the reseller, valid from before the sale and given under California law, which is what lets the invoice post at all: without it the sale is refused, no_buyer_certificate.",
       "lines": [
         { "name": "Wholesale lot, resale certificate on file", "quantity": 1, "unit_price": 9000, "tax": "US-CA-S-RESALE", "account": "4040" }
       ]

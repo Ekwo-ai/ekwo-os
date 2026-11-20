@@ -61,7 +61,7 @@ export async function namesOf(
  */
 export async function createdBefore(
   backend: Backend,
-  table: 'contacts' | 'documents' | 'payments',
+  table: 'contacts' | 'documents' | 'payments' | 'contact_tax_certificates',
   company: string,
   clientRef: string | undefined,
   columns: string[],

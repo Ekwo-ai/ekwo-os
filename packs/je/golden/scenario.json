@@ -56,7 +56,8 @@
       "ref": "cust-ise",
       "name": "Esplanade Fund Services Ltd (International Services Entity)",
       "type": "customer",
-      "country": "JE"
+      "country": "JE",
+      "certificates": [ { "reference": "ISE-0000-EXAMPLE", "valid_from": "2026-01-01" } ]
     },
     {
       "ref": "cust-gb",
