@@ -19,6 +19,17 @@ the ledger agree with the invoice by a figure that means nothing.
 
 ## Decision
 
+**It records a document issued elsewhere; it never corrects Ekwo.** A stated
+tax carries the figure printed on a document another system issued — a
+supplier's invoice, an electronic invoice received through Peppol, an import
+from another accounting system, the invoices of a billing system a connector
+copies. A document Ekwo issues itself states nothing and is computed by Ekwo;
+stating a tax there to move a total is not what the field is for. There is
+therefore no company setting: whether a document carries a stated tax is
+decided by its source, document by document. This follows EN 16931, which
+lets an invoice round its tax line by line and tolerates the rounding
+difference between the stated and the recomputed tax.
+
 **The stated tax is a fact of the line.** `document_lines.stated_tax_amount`
 is the tax the source states for the line, in the document's currency. It is
 optional and written where the line is written — `create_document()`,
