@@ -1037,7 +1037,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Create a company',
       description:
-        'Creates a company on a country pack: its chart of accounts, its journals and its taxes are copied in, its first financial year is opened on the month that country opens one on, and you become its first member. Creating a company is an instance-level act — it needs an instance administrator, and being one is not the same as being on anybody\u2019s books. Ask the user for the country rather than guessing: the wrong answer is a whole chart of accounts.',
+        'Creates a company on a country pack: its chart of accounts, its journals and its taxes are copied in, its first financial year is opened on the month that country opens one on, and you become its first member. Creating a company is an instance-level act — it needs an instance administrator, and being one is not the same as being on anybody\u2019s books. Ask the user for the country rather than guessing: the wrong answer is a whole chart of accounts — and for the territory, where the pack requires one (a state of the United States).',
       inputSchema: write.CreateCompanyInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     },
@@ -1049,7 +1049,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Change the company itself',
       description:
-        'Changes what a company says about itself on its documents: the names it goes by, its address and identifiers, its logo and the colour, logo side and typeface of its invoice PDF, whether its invoices print the late payment mention of its country, the pattern of its document numbers, its stated capital, its activity code and the bank account customers are asked to pay into — and agent_posting, how agents post its documents, which you only ever make stricter. Only the fields you name change. It touches nothing in the ledger, and it needs company.write — the owner preset, not the accountant one.',
+        'Changes what a company says about itself on its documents: the names it goes by, its address and identifiers, the territory it is established in below its country, its logo and the colour, logo side and typeface of its invoice PDF, whether its invoices print the late payment mention of its country, the pattern of its document numbers, its stated capital, its activity code and the bank account customers are asked to pay into — and agent_posting, how agents post its documents, which you only ever make stricter. Only the fields you name change. It touches nothing in the ledger, and it needs company.write — the owner preset, not the accountant one.',
       inputSchema: write.UpdateCompanyProfileInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },

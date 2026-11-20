@@ -119,6 +119,13 @@ per cent on the wrong return. Where each party is comes from
 `companies.territory_code`, `contacts.territory_code` and
 `documents.supply_territory_code`, and the golden year sets all three.
 
+**A company names its state, because no default would be right.** The pack
+says `"territory_required": true`: `ekwo init --country us` and `ekwo company
+new` ask which state the company is established in, with nothing preselected,
+and refuse to go on without one when there is nobody to ask (`--territory
+US-CA`). Every tax of this pack is a state's, and a company known only as `US`
+could post none of the Californian codes.
+
 `US-CA-S-SHIPPED` names the seller and where the goods went against it:
 `"supply_vs_seller": "other"` says the sale is shipped *out of* the seller's
 state, which is what section 6396 exempts — so the code is refused on a

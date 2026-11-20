@@ -596,6 +596,10 @@
           ],
           "description": "Deprecated by tax_report.json's period_default, which asks the same question of the form a cadence belongs to rather than of the country. Still read where a pack written before the move carries it; a pack that says both and says two different things is refused."
         },
+        "territory_required": {
+          "type": "boolean",
+          "description": "True where a company of this country has to name the territory it is established in, among the territories inside the country in supabase/seed/00_territories.sql: the taxes of the pack are levied below the country, and none of them can be told to apply without it. create_company() and ekwo init then refuse a company that names none, and propose none. Absent or false, the country is the answer, which is every country of the common system of VAT."
+        },
         "region": {
           "type": [
             "string",

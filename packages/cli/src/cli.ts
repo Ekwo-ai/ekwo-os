@@ -438,6 +438,8 @@ ${bold('ekwo init')}
                             month the country pack opens a year on; required
                             when the pack names none.
   --language <xx>           Language of the books. Defaults to the country pack's.
+  --territory <code>        Where the company is established below its country,
+                            US-CA. Required where the pack says so.
   --bank-identifier <v>     The main bank account, in the scheme of the country: an IBAN,
                             a routing number and an account number, a sort code and
                             an account number… ekwo pack describe <cc> names it.
@@ -480,7 +482,8 @@ ${bold('ekwo company')}
                             administrator of the installation (--as-user, the
                             only one by default), who becomes its owner. The
                             refusals of init: --chart, --language and
-                            --fiscal-year-start where the pack offers a choice.
+                            --fiscal-year-start where the pack offers a choice,
+                            --territory where it requires one.
                             --currency and --fiscal-year as for init.
   list                      The companies this installation holds, with their
                             country, currency, language, chart and pack.

@@ -2,9 +2,10 @@
  * The questions a company is created with, asked the same way wherever one is.
  *
  * `ekwo init` creates the first company of an installation and `ekwo company
- * new` every other one, and both ask the same five things: the country, the
- * first day of the financial year, the currency, the chart of accounts and the
- * language of the books. The answers come from the flags, then from a terminal
+ * new` every other one, and both ask the same things: the country, the
+ * first day of the financial year, the currency, the chart of accounts, the
+ * language of the books, and — where the pack requires it — the territory the
+ * company is established in. The answers come from the flags, then from a terminal
  * when there is one, then from the pack when it gives only one; and when there
  * is a choice and nobody to make it, the answer is a refusal naming the flag.
  * They were written in `init.ts` first; they live here so a second company is
@@ -23,6 +24,7 @@ import {
   countryLanguage,
   countryLanguages,
   installedPacks,
+  territoryRequired,
   type ChartChoice,
 } from './bootstrap.js';
 import { askRequired, choose, NotInteractiveError } from './prompt.js';
@@ -195,6 +197,45 @@ export async function chooseLanguage(
           ? required('--language', `the language of the books (${languages.map((l) => l.code).join(', ')})`)
           : (packLanguage ?? required('--language', 'the language of the books')))
   ).toLowerCase();
+}
+
+/**
+ * Where the company is established, below its country — US-CA, CA-ON — when
+ * the country's taxes are levied there.
+ *
+ * Asked only where the pack says the answer is required
+ * (`country_defaults.territory_required`); everywhere else the country is the
+ * answer and nothing is asked, unless `--territory` names one. Where it is
+ * required nothing is preselected: any one state offered as the answer to
+ * press Enter on would be a state somebody did not choose. Outside an
+ * interactive session `--territory` is then required, and the refusal lists
+ * the territories the reference table holds inside the country. Whether the
+ * code lies within the country is `create_company()`'s judgement, and the
+ * database's for `ekwo init`.
+ */
+export async function chooseTerritory(
+  db: SqlClient,
+  args: ParsedArgs,
+  country: string,
+  interactive: boolean,
+): Promise<string | undefined> {
+  const given = stringFlag(args, 'territory');
+  if (given !== undefined) return given.toUpperCase();
+  if (!(await territoryRequired(db, country))) return undefined;
+  const territories = await db.query<{ code: string; name: string }>(
+    'select code, name from territories where parent_code = $1 order by code',
+    [country],
+  );
+  if (interactive) {
+    return choose(
+      `Territory of ${country} the company is established in?`,
+      territories.map((t) => ({ value: t.code, label: t.name })),
+    );
+  }
+  return required(
+    '--territory',
+    `the territory of ${country} the company is established in (${territories.map((t) => t.code).join(', ')})`,
+  );
 }
 
 export function required(flag: string, what: string): never {

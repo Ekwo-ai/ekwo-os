@@ -100,6 +100,7 @@ export function compilePack(pack: Pack): string {
   out.push(...documentRules(pack, country));
   out.push(...finalClose(pack, country));
   out.push(...otherComprehensiveIncome(pack, country));
+  out.push(...territoryRequired(pack, country));
   out.push(...taxPayee(pack, country));
 
   return `${out.join('\n')}\n`;
@@ -1009,6 +1010,20 @@ function otherComprehensiveIncome(pack: Pack, country: string): string[] {
     `  other_comprehensive_income_source_key      = ${text(rule.source ?? null)}`,
     ` where country = ${text(country)};`,
   ];
+}
+
+/**
+ * Whether a company of the country has to name the territory it is
+ * established in — `defaults.territory_required`, into the column that
+ * `20261121070100` added.
+ *
+ * Written only when the pack says it, like `final_close`: a pack that says
+ * nothing keeps a seed that runs on a schema from before the column, which
+ * would only ever have received its default.
+ */
+function territoryRequired(pack: Pack, country: string): string[] {
+  if (pack.manifest.defaults['territory_required'] !== true) return [];
+  return ['', `update country_defaults set territory_required = true where country = ${text(country)};`];
 }
 
 /**

@@ -791,8 +791,21 @@ describe('a supply measured against the territory of its seller', () => {
 
   // A seller known only by its country has no level to be compared at. The
   // seller condition of the pack's own tax is lifted on the company's copy, so
-  // that what is refused is the relation and not the territory.
+  // that what is refused is the relation and not the territory — and so is the
+  // pack's requirement that a company name one, which a company the installer
+  // or an import wrote never met.
   it('refuses a seller known only by the country, by name', async () => {
+    const { country } = await one<{ country: string }>(
+      db,
+      `select fiscal_country as country from companies where id = $1`,
+      [companyId],
+    );
+    const { required } = await one<{ required: boolean }>(
+      db,
+      `select territory_required as required from country_defaults where country = $1`,
+      [country],
+    );
+    await db.query(`update country_defaults set territory_required = false where country = $1`, [country]);
     await db.query(`update companies set territory_code = null where id = $1`, [companyId]);
     await db.query(
       `update taxes set applies_seller_territory = null where company_id = $1 and code = $2`,
@@ -809,6 +822,7 @@ describe('a supply measured against the territory of its seller', () => {
         `update taxes set applies_seller_territory = $3 where company_id = $1 and code = $2`,
         [companyId, relational.code, sellerTerritory],
       );
+      await db.query(`update country_defaults set territory_required = $2 where country = $1`, [country, required]);
     }
   });
 });

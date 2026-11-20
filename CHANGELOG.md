@@ -116,6 +116,23 @@ somewhere has already run it.
   certificates under `certificates` on the contact; the five scenarios that
   sell under such a tax (ae, ci, cn, je, us) now carry theirs, and no figure
   of any golden moves.
+- **A company names the territory it is established in, and a pack can
+  require it.** `companies.territory_code` decides which taxes that name a
+  territory reach a sale, and no route a person takes could write it.
+  `create_company()` takes `p_territory_code`, a last argument with a default
+  (`20261121070100_a_company_names_its_territory`: the function is dropped and
+  created again with the same grants, and a call by position or by name is
+  unchanged); `ekwo init` and `ekwo company new` take `--territory`; the MCP
+  tools `create_company` and `update_company_profile` take `territory` and
+  `territory_code`. A territory outside the company's country is refused on
+  every route (`territory_outside_country`). A pack says
+  `defaults.territory_required` where a company has to name one —
+  `country_defaults.territory_required`, false everywhere else — and a company
+  of that country is then refused without one (`territory_required`, the
+  territories listed), asked for it interactively with nothing preselected,
+  and refused taking it back to none. The pack us requires it (0.13.0): every
+  tax it carries is a state's. The output of `init` and `company new` gains
+  `company.territory`.
 
 ### Fixed
 

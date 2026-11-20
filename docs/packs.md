@@ -1090,7 +1090,9 @@ worked out from itself, or two worked out from each other — is refused by
 `defaults.region` is the other half of the same story: where tax follows the
 buyer's province or state, `companies.region` and `contacts.region` hold it
 (ISO 3166-2 without the country prefix). The core never chooses a tax for
-anyone, in any country.
+anyone, in any country. A province a company has to name for its taxes to
+apply is a territory, below: `defaults.territory_required` says it has to be
+named.
 
 ## Where a tax applies: `applies_when` on a tax
 
@@ -1160,6 +1162,27 @@ pack never sets it.
   went and not where the invoice was addressed — and failing that the buyer's
   territory, because a supply nobody said anything else about is delivered to
   the person who bought it.
+
+**A company says where it is, and a pack can require it.** The company's
+`territory_code` is written by `create_company()` (`p_territory_code`), by
+`ekwo init` and `ekwo company new` (`--territory US-CA`), by the MCP tools
+`create_company` (`territory`) and `update_company_profile`
+(`territory_code`). One outside the company's country is refused,
+`territory_outside_country`, on every route. Where none of the pack's taxes
+can be told to apply without it — the United States, where every tax is a
+state's — the pack says so in `defaults`:
+
+```json
+"defaults": { "currency": "USD", "territory_required": true, … }
+```
+
+and a company of that country that names no territory is refused,
+`territory_required`, with the territories inside the country listed;
+interactively, `ekwo init` and `ekwo company new` ask, with nothing
+preselected. Once named it can move to another territory of the country and
+not back to none. `ekwo pack check` refuses the field on a country with no
+territory inside it in `territories`. Absent, the country is the answer and
+nothing is asked.
 
 **The engine refuses; it does not choose, and it keeps what it saw.**
 `post_document()` writes the three answers on the document —

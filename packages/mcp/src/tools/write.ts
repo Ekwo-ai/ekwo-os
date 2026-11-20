@@ -826,6 +826,13 @@ export const CreateCompanyInput = z.object({
   fiscal_year_start: isoDate
     .optional()
     .describe('First day of it. Left out, the month the country pack opens a year on — and a pack that names none is a refusal, not a January.'),
+  territory: z
+    .string()
+    .min(2)
+    .optional()
+    .describe(
+      'Where the company is established below its country, as ISO 3166-2 with the country prefix: US-CA. Required where the pack says so (territory_required, the refusal lists them) — ask the user, never pick one. Left out elsewhere: the country is the answer.',
+    ),
 });
 
 export async function createCompany(
@@ -841,6 +848,9 @@ export async function createCompany(
       p_chart_code: args.chart_code ?? null,
       p_fiscal_year: args.fiscal_year ?? null,
       p_fiscal_year_start: args.fiscal_year_start ?? null,
+      // Named only when given, so that an installation from before the
+      // argument is called as it was.
+      ...(args.territory === undefined ? {} : { p_territory_code: args.territory.toUpperCase() }),
     }),
     'the company could not be created. Creating one is an instance-level act: it needs an instance administrator',
   );
@@ -875,6 +885,14 @@ export const UpdateCompanyProfileInput = z.object({
   address_line2: z.string().nullable().optional(),
   postal_code: z.string().nullable().optional(),
   city: z.string().nullable().optional(),
+  territory_code: z
+    .string()
+    .min(2)
+    .nullable()
+    .optional()
+    .describe(
+      'Where it is established below its country, ISO 3166-2 with the country prefix: US-CA. The taxes that name a territory are judged on it when a document is posted. One outside its country is refused (territory_outside_country), and so is taking it back to none where the pack requires one.',
+    ),
   email: z.string().nullable().optional(),
   phone: z.string().nullable().optional(),
   website: z.string().nullable().optional(),

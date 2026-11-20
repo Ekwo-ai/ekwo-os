@@ -64,6 +64,13 @@ const WORDS_OF_A_PACK = '20261029010000_a_pack_names_the_words_of_its_invoices.s
 const OTHER_COMPREHENSIVE_INCOME = '20261121070000_other_comprehensive_income_closes_apart.sql';
 
 /**
+ * A file after the move that adds a column the pack seeds write, beside a
+ * function written for the socle in `ekwo`: only its `alter table` of the
+ * country model is taken.
+ */
+const TERRITORY_REQUIRED = '20261121070100_a_company_names_its_territory.sql';
+
+/**
  * The command line's PostgREST client, signed in as `userId`, against a
  * stand-in for PostgREST that serves a schema by its profile header and
  * answers 404 for a function its schema does not hold, as PostgREST does.
@@ -94,13 +101,15 @@ describe('an installation before the move: the socle in public, ekwo created and
     // `ekwo`, and an installation before the move has run none of them.
     const fromTheMove = (await migrationFiles()).filter((file) => file >= THE_MOVE);
     // Today's seeds are loaded all the same, and the pack seeds write
-    // `country_defaults.invoice_labels` and the columns of other comprehensive
-    // income, which files after the move add to `ekwo`: they are added here to
-    // the socle in `public`, as nothing else.
+    // `country_defaults.invoice_labels`, the columns of other comprehensive
+    // income and `territory_required`, which files after the move add to
+    // `ekwo`: they are added here to the socle in `public`, as nothing else.
     const migrations = join(repoRoot, 'supabase', 'migrations');
-    const columns = (await readFile(join(migrations, OTHER_COMPREHENSIVE_INCOME), 'utf8')).match(
-      /^alter table ekwo\.country_defaults[\s\S]*?;$/gm,
-    ) ?? [];
+    const columns = (
+      await Promise.all(
+        [OTHER_COMPREHENSIVE_INCOME, TERRITORY_REQUIRED].map((file) => readFile(join(migrations, file), 'utf8')),
+      )
+    ).flatMap((sql) => sql.match(/^alter table ekwo\.country_defaults[\s\S]*?;$/gm) ?? []);
     const beforeSeeds = [await readFile(join(migrations, WORDS_OF_A_PACK), 'utf8'), ...columns]
       .join('\n')
       .replaceAll('ekwo.country_defaults', 'public.country_defaults');
