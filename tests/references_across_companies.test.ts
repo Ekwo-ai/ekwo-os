@@ -49,6 +49,9 @@ const LATER = [
   // Makes the reference of a payment on account to its entry composite with
   // scope_references_to_company(), which MIGRATION defines.
   '20261022110100_the_return_reads_the_vat_scheme.sql',
+  // Replaces document_tax_summary as 20261020072000 left it, which reads the
+  // column base_includes_tax that migration adds.
+  '20261120100000_a_document_keeps_the_tax_its_source_states.sql',
 ];
 
 let db: PGlite;

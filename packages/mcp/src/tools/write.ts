@@ -354,6 +354,10 @@ const LineInput = z.object({
     .record(z.string().min(1), z.string().min(1))
     .optional()
     .describe('What the electronic invoice format of the country asks of this line that no other field says, by the name its brick reads — describe_pack lists the names its format reads (line_attributes, tax_attributes). The product fills in the names the line leaves out; the line wins over the pack.'),
+  stated_tax_amount: z
+    .union([z.string(), z.number()])
+    .optional()
+    .describe("The tax the source document states for this line, as a decimal string — for a received invoice or a billing system that rounds the tax line by line. Left out, Ekwo computes the tax of the group. Give it on every line of a tax group or on none; posting accepts it within one unit of the currency per line of Ekwo's figure (0.01 per line in a currency with cents) and refuses it beyond, stated_tax_out_of_tolerance."),
 });
 
 export const CreateDocumentInput = z.object({

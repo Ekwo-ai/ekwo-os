@@ -527,6 +527,11 @@ export interface DocumentLine {
   unit_price_includes_tax: boolean;
   /** The gross the line was quoted at. Null where the price excludes the tax. */
   amount_incl_tax: Decimal | null;
+  /**
+   * The tax the source of the document states for this line (decision 0099).
+   * Null where it states none; absent on a schema before 0.28.0.
+   */
+  stated_tax_amount?: Decimal | null;
 }
 
 /** One row of the `document_line_items` view: a line with its EN 16931 item terms. */
@@ -557,6 +562,11 @@ export interface DocumentLineItem {
   unit_price_includes_tax: boolean;
   /** The gross the line was quoted at. Null where the price excludes the tax. */
   amount_incl_tax: Decimal | null;
+  /**
+   * The tax the source of the document states for this line (decision 0099).
+   * Null where it states none; absent on a schema before 0.28.0.
+   */
+  stated_tax_amount?: Decimal | null;
 }
 
 /** One row of `trial_balance(company_id, from, to)`. */

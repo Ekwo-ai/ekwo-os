@@ -439,6 +439,11 @@ it gates nothing, and the server sends nothing to Ekwo to give it.
 - **Dates are ISO**, `2026-06-15`. Identifiers are uuids.
 - **Totals are computed by the database.** `create_document` returns the draft
   with the totals the schema derived, not with anything the caller supplied.
+  The one figure a caller may give is the tax its source states for a line,
+  `stated_tax_amount`, for a supplier or a billing system that rounds the tax
+  line by line: on every line of a tax group, it is the group's tax, accepted
+  at posting within one unit of the currency per line of the computed one and
+  refused beyond it, `stated_tax_out_of_tolerance` (decision 0099).
 - **Refusals travel unchanged.** `period_locked:`, `entry_unbalanced:`,
   `document_total_mismatch:` and the rest arrive with the message the database
   raised, plus one sentence saying what it means. They are answers, not

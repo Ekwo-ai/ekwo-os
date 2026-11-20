@@ -249,6 +249,20 @@ export const SCHEMA_FEATURES = {
     columns: ['documents.accepted_at', 'documents.accepted_by', 'documents.declined_at'],
     functions: ['accept_document', 'decline_document', 'undo_document_answer', 'quote_statuses'],
   },
+  /**
+   * The tax the source of a document states for a line — a supplier or a
+   * billing system that rounds the tax line by line — kept within one unit of
+   * the currency per line of Ekwo's computation, and what the totals, the
+   * posting and the PDF read for its group
+   * (`20261120100000_a_document_keeps_the_tax_its_source_states`, decision
+   * 0099). Below it, the column is absent from a read and a line that states
+   * its tax is refused by name.
+   */
+  stated_tax: {
+    since: '0.28.0',
+    columns: ['document_lines.stated_tax_amount'],
+    functions: ['stated_tax_tolerance'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

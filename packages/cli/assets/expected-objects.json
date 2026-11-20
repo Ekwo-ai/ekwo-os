@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "0.27.0",
-  "migration": "20261119070000",
+  "schemaVersion": "0.28.0",
+  "migration": "20261120100100",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -2154,6 +2154,10 @@
           {
             "name": "sequence",
             "type": "integer"
+          },
+          {
+            "name": "stated_tax_amount",
+            "type": "numeric(16,2)"
           },
           {
             "name": "tax_id",
@@ -4888,6 +4892,10 @@
         "arguments": "p_schema text"
       },
       {
+        "name": "assert_stated_taxes",
+        "arguments": "p_document_id uuid"
+      },
+      {
         "name": "assert_writes_into_known_company",
         "arguments": "p_company_id uuid"
       },
@@ -5349,6 +5357,10 @@
       },
       {
         "name": "documents_refuse_replaced_tax",
+        "arguments": ""
+      },
+      {
+        "name": "documents_refuse_stated_tax",
         "arguments": ""
       },
       {
@@ -6050,6 +6062,10 @@
       {
         "name": "significant_words",
         "arguments": "p_text text, p_minimum_length integer"
+      },
+      {
+        "name": "stated_tax_tolerance",
+        "arguments": "p_company_id uuid, p_currency_code text, p_lines integer"
       },
       {
         "name": "statement_account_matches",
@@ -7291,6 +7307,10 @@
       {
         "table": "documents",
         "name": "documents_refuse_replaced_tax"
+      },
+      {
+        "table": "documents",
+        "name": "documents_refuse_stated_tax"
       },
       {
         "table": "documents",
@@ -9497,6 +9517,17 @@
           "service_role": []
         },
         {
+          "name": "assert_stated_taxes",
+          "arguments": "p_document_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "assert_writes_into_known_company",
           "arguments": "p_company_id uuid",
           "anon": [],
@@ -10602,6 +10633,14 @@
         },
         {
           "name": "documents_refuse_replaced_tax",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "documents_refuse_stated_tax",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -12450,6 +12489,17 @@
         {
           "name": "significant_words",
           "arguments": "p_text text, p_minimum_length integer",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "stated_tax_tolerance",
+          "arguments": "p_company_id uuid, p_currency_code text, p_lines integer",
           "anon": [],
           "authenticated": [
             "execute"

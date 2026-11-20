@@ -13,6 +13,7 @@ import {
   SCHEMA_FEATURES,
   SCHEMA_MIN,
   backendSupports,
+  createDocument,
   generalLedger,
   missingFeatures,
   onSocle,
@@ -39,11 +40,13 @@ describe('supports()', () => {
 
   it('lists what a version lacks, in the order the features are declared', () => {
     expect(missingFeatures(SCHEMA_MIN)).toEqual(Object.keys(SCHEMA_FEATURES));
-    expect(missingFeatures('0.20.0')).toEqual(['documents_in_one_statement', 'agent_posting', 'invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile', 'portfolio_overview', 'quote_answer']);
-    expect(missingFeatures('0.21.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile', 'portfolio_overview', 'quote_answer']);
-    expect(missingFeatures('0.24.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile', 'portfolio_overview', 'quote_answer']);
-    expect(missingFeatures('0.25.0')).toEqual(['subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile', 'portfolio_overview', 'quote_answer']);
-    expect(missingFeatures('0.26.0')).toEqual([]);
+    expect(missingFeatures('0.20.0')).toEqual(['documents_in_one_statement', 'agent_posting', 'invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile', 'portfolio_overview', 'quote_answer', 'stated_tax']);
+    expect(missingFeatures('0.21.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile', 'portfolio_overview', 'quote_answer', 'stated_tax']);
+    expect(missingFeatures('0.24.0')).toEqual(['invoice_labels_by_pack', 'late_payment_mention', 'contact_statement', 'create_bank_account', 'archive_in_pages', 'subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile', 'portfolio_overview', 'quote_answer', 'stated_tax']);
+    expect(missingFeatures('0.25.0')).toEqual(['subledger', 'ledger_by_contact', 'filing_short_name', 'statement_profile', 'portfolio_overview', 'quote_answer', 'stated_tax']);
+    expect(missingFeatures('0.26.0')).toEqual(['stated_tax']);
+    expect(missingFeatures('0.27.0')).toEqual(['stated_tax']);
+    expect(missingFeatures('0.28.0')).toEqual([]);
   });
 });
 
@@ -132,6 +135,21 @@ describe('onSocle() on a database older than a feature', () => {
     expect(calls).not.toContain('approve_document');
     expect(await backendSupports(backend, 'tax_payee_name_i18n')).toBe(true);
     expect(await backendSupports(backend, 'documents_in_one_statement')).toBe(false);
+  });
+
+  it('refuses the stated tax of a line by name below 0.28.0, before anything is written', async () => {
+    const { inner, calls } = recorder('0.27.0');
+    const backend = onSocle(inner, socle);
+    await expect(
+      createDocument(backend, {
+        company_id: 'c',
+        doc_type: 'sale_invoice',
+        contact_id: 'k',
+        document_date: '2026-06-15',
+        lines: [{ name: 'Line', unit_price: '10.00', tax_id: 't', stated_tax_amount: '0.61' }],
+      }),
+    ).rejects.toThrow(/^schema_too_old_for: the stated tax of a line needs schema 0\.28\.0 \(stated_tax\), and this database is at 0\.27\.0/);
+    expect(calls).not.toContain('create_document');
   });
 
   it('reads the general ledger as before, and refuses by name what 0.26.0 brought to it', async () => {

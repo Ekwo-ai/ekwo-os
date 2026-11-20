@@ -147,11 +147,12 @@ no move, and there is deliberately no counterpart to them.
 | `document_lines.account_id` | | `CompteNum` |
 | `document_lines.vat_category` | BT-151 line VAT category code | |
 | `document_lines.vat_rate` | BT-152 line VAT rate | |
+| `document_lines.stated_tax_amount` | *(the tax the source states for the line, where it rounds line by line; decision 0099)* | |
 | `document_tax_summary` (view) | BG-23 VAT breakdown, one row per tax: two taxes of one category and rate are one group of the standard | |
 | `document_tax_summary.vat_category` | BT-118 category code, as the lines carry it | |
 | `document_tax_summary.tax_rate` | BT-119 category rate, as the lines carry it | |
 | `document_tax_summary.base_amount` | BT-116 category taxable amount | |
-| `document_tax_summary.tax_charged` | BT-117 category tax amount: what the buyer is charged, nothing where the tax is self-assessed | |
+| `document_tax_summary.tax_charged` | BT-117 category tax amount: what the buyer is charged, nothing where the tax is self-assessed — the tax the source states, where every line of the group states one (decision 0099) | |
 | `document_tax_summary.tax_amount` | *(the tax the return reports, which a reverse charge has and its invoice does not)* | |
 | `document_tax_summary.exemption_code` | BT-121 exemption reason code | |
 | `document_tax_summary.exemption_reason` | BT-120 exemption reason text | |

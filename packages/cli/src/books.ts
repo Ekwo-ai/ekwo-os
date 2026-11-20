@@ -134,6 +134,7 @@ export const LINE_FIELDS = [
   'tax_id',
   'tax_code',
   'attributes',
+  'stated_tax_amount',
 ] as const;
 
 /** The short keys `--line` accepts, and the field each one is. */
@@ -147,6 +148,7 @@ const LINE_KEYS: Record<string, (typeof LINE_FIELDS)[number]> = {
   product: 'product_code',
   account: 'account_code',
   tax: 'tax_code',
+  stated_tax: 'stated_tax_amount',
 };
 
 /**

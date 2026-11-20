@@ -300,6 +300,7 @@ export const DOCUMENT_LINE = [
   'unit_price_includes_tax',
   'amount_incl_tax::text',
   'attributes',
+  'stated_tax_amount::text',
 ];
 
 export const ENTRY = [

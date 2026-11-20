@@ -55,6 +55,9 @@ const SNAPSHOT = [
   // Replaces document_legal_mentions again, for the company's late payment
   // switch, with the same legal_mention_treatments().
   '20261029010100_a_late_payment_mention_is_the_companys_choice.sql',
+  // Replaces document_tax_summary and document_line_items again, for the tax
+  // the source of a document states, reading the snapshot as they do.
+  '20261120100000_a_document_keeps_the_tax_its_source_states.sql',
 ];
 
 /** The treatments each condition of a legal mention covers — the vocabulary of `applies_when`, as the schema documents it. */

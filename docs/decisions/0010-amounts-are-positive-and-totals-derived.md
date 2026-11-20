@@ -41,7 +41,9 @@ its own.
 
 **Tax is rounded once per tax group, on the rounded basis** — EN 16931
 BR-CO-14, and what every validator checks. Not per line, which accumulates
-drift; not on the document total, which loses the breakdown.
+drift; not on the document total, which loses the breakdown. A document whose source rounded line by line keeps
+the tax that source states, within one unit per line
+([0099](0099-a-document-keeps-the-tax-its-source-states.md)).
 
 **A missing tax is a missing tax, never zero per cent.** A line with no
 `tax_id` produces a base line with no declaration box. Defaulting to zero

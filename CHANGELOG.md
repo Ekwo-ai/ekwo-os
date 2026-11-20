@@ -11,6 +11,32 @@ somewhere has already run it.
 
 ### Added
 
+- **A document keeps the tax its source states, within a rounding.** A
+  supplier or a billing system that rounds the tax line by line (EN 16931
+  allows it) states a tax a cent or two away from Ekwo's, rounded once per
+  group; such a document could not be reproduced. A line now carries
+  `stated_tax_amount`, optional, written by `create_document()`,
+  `replace_document_lines()`, the MCP tools that write lines and
+  `--line stated_tax=…`. When every line of a tax group states it, the
+  group's tax is their sum: `document_tax_summary.tax_amount` and
+  `tax_charged` carry it, and with them the totals, the tax lines of the
+  entry and their declaration boxes, the PDF and the electronic invoice. The
+  base stays the base; the difference is booked nowhere. Posting accepts it
+  within one unit of the currency per line of Ekwo's computation —
+  `stated_tax_tolerance(company, currency, lines)` — and refuses beyond it,
+  `stated_tax_out_of_tolerance`, a group stated on some lines only,
+  `stated_tax_partial`, and a stated tax on a price that holds its tax,
+  `stated_tax_on_inclusive_price`. `document_tax_summary` appends
+  `tax_amount_computed`, `stated_tax_amount` and `line_count`;
+  `document_line_items` appends `stated_tax_amount`. `cancel_document()`
+  gives back the tax the invoice stated. A document that states nothing
+  computes exactly as before. Migration
+  `20261120100000_a_document_keeps_the_tax_its_source_states`, schema 0.28.0
+  (`20261120100100_schema_version_0_28_0`), feature `stated_tax` of
+  `SCHEMA_FEATURES`: below it, the column is left out of a read and a line
+  that states its tax is refused by name, `schema_too_old_for`.
+  `SCHEMA_MIN` stays 0.19.0. Decision 0099.
+
 - **The terms of use of Ekwo Cloud, `TERMS.md`.** The agreement for the hosted
   service at cloud.ekwo.ai: who it is with, the plans and how they are paid
   and cancelled, the ownership of company data and the means to leave with

@@ -10,7 +10,7 @@
  */
 
 import { labelsFor, type InvoiceLabels } from '@ekwo-ai/invoice-pdf';
-import { BooksError, backendSupports, type Backend, type Filter, type Row } from './backend.js';
+import { BooksError, backendSupports, schemaTooOldFor, type Backend, type Filter, type Row, type SocleBackend } from './backend.js';
 import * as columns from './columns.js';
 import { amountIn, moneyFields } from './format.js';
 import type { DocType, QuoteStatus } from '../types.js';
@@ -78,6 +78,14 @@ export interface LineArgs {
    * country pack's.
    */
   attributes?: Record<string, string> | undefined;
+  /**
+   * The tax the source of the document states for this line, in the
+   * document's currency — a supplier or a billing system that rounds the tax
+   * line by line. Optional. When every line of a tax group states it, the
+   * group's tax is their sum, accepted at posting within one unit of the
+   * currency per line of Ekwo's computation (decision 0099).
+   */
+  stated_tax_amount?: string | number | undefined;
 }
 
 export interface CreateDocumentArgs {
@@ -200,6 +208,8 @@ interface ResolvedLine {
   tax_id: string | null;
   /** The line's own; the database adds the product's it does not carry. */
   attributes: Record<string, string>;
+  /** Only where the caller gave it, so a schema without the column is never sent the key. */
+  stated_tax_amount?: string;
 }
 
 function isSale(docType: DocType): boolean {
@@ -229,6 +239,13 @@ async function resolveLineInputs(
   docType: DocType,
   lines: LineArgs[],
 ): Promise<ResolvedLine[]> {
+  // The stated tax of a line is written by a function of the schema that, on
+  // an older schema, would drop the key without a word: refused there by name.
+  if (lines.some((line) => line.stated_tax_amount !== undefined) && !(await backendSupports(backend, 'stated_tax'))) {
+    const installed = (await (backend as SocleBackend).schemaVersion()) ?? 'an older version';
+    throw schemaTooOldFor('stated_tax', installed, 'the stated tax of a line');
+  }
+
   const [accounts, taxes, products] = await Promise.all([
     idsByCode(
       backend,
@@ -297,6 +314,7 @@ async function resolveLineInputs(
           ? (typeof productTax === 'string' ? productTax : null)
           : (taxes.get(line.tax_code) ?? null)),
       attributes: line.attributes ?? {},
+      ...(line.stated_tax_amount === undefined ? {} : { stated_tax_amount: amountIn(line.stated_tax_amount) }),
     };
   });
 }
