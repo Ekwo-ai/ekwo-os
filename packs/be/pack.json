@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "BE",
   "name": "Belgium",
-  "version": "1.25.0",
+  "version": "1.26.0",
   "schema_min": "20261029010000",
   "seed_sequence": 10,
-  "released_at": "2026-11-06",
+  "released_at": "2026-11-20",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -388,7 +388,11 @@
       "name": "PCMN — associations et fondations",
       "accounts": "accounts.asbl.csv",
       "audience": "nonprofits",
-      "statements": [],
+      "statements": [
+        "BE-ASBL-ABBR-BS",
+        "BE-ASBL-ABBR-IS",
+        "BE-ASBL-ABBR-AF"
+      ],
       "certification": {
         "status": "community",
         "sources": [

@@ -1339,6 +1339,1030 @@
           ]
         }
       ]
+    },
+    {
+      "code": "BE-ASBL-ABBR-BS",
+      "kind": "balance_sheet",
+      "framework": "BE-GAAP",
+      "name": "Bilan — associations et fondations, schéma abrégé",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe 7 — associations et fondations, comptes annuels selon le schéma abrégé ou le microschéma : bilan",
+      "source": "comptes-annuels",
+      "result_in_progress": "combined",
+      "result_in_progress_name": "Résultat de l'exercice en cours",
+      "lines": [
+        {
+          "code": "20",
+          "parent": "20/58",
+          "name": "Frais d'établissement",
+          "sequence": 10,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "20",
+              "code_to": "20"
+            }
+          ]
+        },
+        {
+          "code": "21/28",
+          "parent": "20/58",
+          "name": "ACTIFS IMMOBILISÉS",
+          "sequence": 20,
+          "is_total": true,
+          "plus": [
+            "21",
+            "22/27",
+            "28"
+          ]
+        },
+        {
+          "code": "21",
+          "parent": "21/28",
+          "name": "Immobilisations incorporelles",
+          "sequence": 30,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "21",
+              "code_to": "21"
+            }
+          ]
+        },
+        {
+          "code": "22/27",
+          "parent": "21/28",
+          "name": "Immobilisations corporelles",
+          "sequence": 40,
+          "is_total": true,
+          "plus": [
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27"
+          ]
+        },
+        {
+          "code": "22",
+          "parent": "22/27",
+          "name": "Terrains et constructions",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22",
+              "code_to": "22"
+            }
+          ]
+        },
+        {
+          "code": "23",
+          "parent": "22/27",
+          "name": "Installations, machines et outillage",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "23",
+              "code_to": "23"
+            }
+          ]
+        },
+        {
+          "code": "24",
+          "parent": "22/27",
+          "name": "Mobilier et matériel roulant",
+          "sequence": 70,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "24",
+              "code_to": "24"
+            }
+          ]
+        },
+        {
+          "code": "25",
+          "parent": "22/27",
+          "name": "Location-financement et droits similaires",
+          "sequence": 80,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "25",
+              "code_to": "25"
+            }
+          ]
+        },
+        {
+          "code": "26",
+          "parent": "22/27",
+          "name": "Autres immobilisations corporelles",
+          "sequence": 90,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "26",
+              "code_to": "26"
+            }
+          ]
+        },
+        {
+          "code": "27",
+          "parent": "22/27",
+          "name": "Immobilisations en cours et acomptes versés",
+          "sequence": 100,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "27",
+              "code_to": "27"
+            }
+          ]
+        },
+        {
+          "code": "28",
+          "parent": "21/28",
+          "name": "Immobilisations financières",
+          "sequence": 110,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "28",
+              "code_to": "28"
+            }
+          ]
+        },
+        {
+          "code": "29/58",
+          "parent": "20/58",
+          "name": "ACTIFS CIRCULANTS",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "29",
+            "3",
+            "40/41",
+            "50/53",
+            "54/58",
+            "490/1"
+          ]
+        },
+        {
+          "code": "29",
+          "parent": "29/58",
+          "name": "Créances à plus d'un an",
+          "sequence": 130,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "29",
+              "code_to": "29"
+            }
+          ]
+        },
+        {
+          "code": "3",
+          "parent": "29/58",
+          "name": "Stocks et commandes en cours d'exécution",
+          "sequence": 140,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "3",
+              "code_to": "3"
+            }
+          ]
+        },
+        {
+          "code": "40/41",
+          "parent": "29/58",
+          "name": "Créances à un an au plus",
+          "sequence": 150,
+          "is_total": true,
+          "plus": [
+            "40",
+            "41"
+          ]
+        },
+        {
+          "code": "40",
+          "parent": "40/41",
+          "name": "Créances commerciales",
+          "sequence": 160,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "40",
+              "code_to": "40"
+            }
+          ]
+        },
+        {
+          "code": "41",
+          "parent": "40/41",
+          "name": "Autres créances",
+          "sequence": 170,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "41",
+              "code_to": "41",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "499",
+              "code_to": "499",
+              "side": "debit",
+              "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "45",
+              "code_to": "48",
+              "side": "debit",
+              "sequence": 30
+            }
+          ]
+        },
+        {
+          "code": "50/53",
+          "parent": "29/58",
+          "name": "Placements de trésorerie",
+          "sequence": 180,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "50",
+              "code_to": "53"
+            }
+          ]
+        },
+        {
+          "code": "54/58",
+          "parent": "29/58",
+          "name": "Valeurs disponibles",
+          "sequence": 190,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "54",
+              "code_to": "58"
+            }
+          ]
+        },
+        {
+          "code": "490/1",
+          "parent": "29/58",
+          "name": "Comptes de régularisation",
+          "sequence": 200,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "490",
+              "code_to": "491"
+            }
+          ]
+        },
+        {
+          "code": "20/58",
+          "name": "TOTAL DE L'ACTIF",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "20",
+            "21/28",
+            "29/58"
+          ]
+        },
+        {
+          "code": "10/15",
+          "parent": "10/49",
+          "name": "FONDS SOCIAL",
+          "sequence": 220,
+          "is_total": true,
+          "plus": [
+            "10",
+            "12",
+            "13",
+            "14",
+            "15"
+          ]
+        },
+        {
+          "code": "10",
+          "parent": "10/15",
+          "name": "Fonds de l'association ou de la fondation",
+          "sequence": 230,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "10",
+              "code_to": "11"
+            }
+          ]
+        },
+        {
+          "code": "12",
+          "parent": "10/15",
+          "name": "Plus-values de réévaluation",
+          "sequence": 300,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "12",
+              "code_to": "12"
+            }
+          ]
+        },
+        {
+          "code": "13",
+          "parent": "10/15",
+          "name": "Fonds affectés et autres réserves",
+          "sequence": 310,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "13",
+              "code_to": "13"
+            }
+          ]
+        },
+        {
+          "code": "14",
+          "parent": "10/15",
+          "name": "Bénéfice (Perte) reporté(e)",
+          "sequence": 400,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "14",
+              "code_to": "14"
+            }
+          ]
+        },
+        {
+          "code": "15",
+          "parent": "10/15",
+          "name": "Subsides en capital",
+          "sequence": 410,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "15",
+              "code_to": "15"
+            }
+          ]
+        },
+        {
+          "code": "16",
+          "parent": "10/49",
+          "name": "PROVISIONS ET IMPÔTS DIFFÉRÉS",
+          "sequence": 420,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "16",
+              "code_to": "16"
+            }
+          ]
+        },
+        {
+          "code": "17/49",
+          "parent": "10/49",
+          "name": "DETTES",
+          "sequence": 430,
+          "is_total": true,
+          "plus": [
+            "17",
+            "42/48",
+            "492/3"
+          ]
+        },
+        {
+          "code": "17",
+          "parent": "17/49",
+          "name": "Dettes à plus d'un an",
+          "sequence": 440,
+          "is_total": true,
+          "plus": [
+            "170/4",
+            "175",
+            "176",
+            "178/9"
+          ]
+        },
+        {
+          "code": "170/4",
+          "parent": "17",
+          "name": "Dettes financières",
+          "sequence": 450,
+          "is_total": true,
+          "plus": [
+            "172/3",
+            "174/0"
+          ]
+        },
+        {
+          "code": "172/3",
+          "parent": "170/4",
+          "name": "Etablissements de crédit, dettes de location-financement et dettes assimilées",
+          "sequence": 460,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "172",
+              "code_to": "173"
+            }
+          ]
+        },
+        {
+          "code": "174/0",
+          "parent": "170/4",
+          "name": "Autres emprunts",
+          "sequence": 470,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "170",
+              "code_to": "171",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "174",
+              "code_to": "174",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "175",
+          "parent": "17",
+          "name": "Dettes commerciales",
+          "sequence": 480,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "175",
+              "code_to": "175"
+            }
+          ]
+        },
+        {
+          "code": "176",
+          "parent": "17",
+          "name": "Acomptes sur commandes",
+          "sequence": 490,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "176",
+              "code_to": "176"
+            }
+          ]
+        },
+        {
+          "code": "178/9",
+          "parent": "17",
+          "name": "Autres dettes",
+          "sequence": 500,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "177",
+              "code_to": "179"
+            }
+          ]
+        },
+        {
+          "code": "42/48",
+          "parent": "17/49",
+          "name": "Dettes à un an au plus",
+          "sequence": 510,
+          "is_total": true,
+          "plus": [
+            "42",
+            "43",
+            "44",
+            "46",
+            "45",
+            "47/48"
+          ]
+        },
+        {
+          "code": "42",
+          "parent": "42/48",
+          "name": "Dettes à plus d'un an échéant dans l'année",
+          "sequence": 520,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "42",
+              "code_to": "42"
+            }
+          ]
+        },
+        {
+          "code": "43",
+          "parent": "42/48",
+          "name": "Dettes financières",
+          "sequence": 530,
+          "is_total": true,
+          "plus": [
+            "430/8",
+            "439"
+          ]
+        },
+        {
+          "code": "430/8",
+          "parent": "43",
+          "name": "Etablissements de crédit",
+          "sequence": 540,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "430",
+              "code_to": "438"
+            }
+          ]
+        },
+        {
+          "code": "439",
+          "parent": "43",
+          "name": "Autres emprunts",
+          "sequence": 550,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "439",
+              "code_to": "439"
+            }
+          ]
+        },
+        {
+          "code": "44",
+          "parent": "42/48",
+          "name": "Dettes commerciales",
+          "sequence": 560,
+          "is_total": true,
+          "plus": [
+            "440/4",
+            "441"
+          ]
+        },
+        {
+          "code": "440/4",
+          "parent": "44",
+          "name": "Fournisseurs",
+          "sequence": 570,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "440",
+              "code_to": "440",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "442",
+              "code_to": "449",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "441",
+          "parent": "44",
+          "name": "Effets à payer",
+          "sequence": 580,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "441",
+              "code_to": "441"
+            }
+          ]
+        },
+        {
+          "code": "46",
+          "parent": "42/48",
+          "name": "Acomptes sur commandes",
+          "sequence": 590,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "46",
+              "code_to": "46",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "45",
+          "parent": "42/48",
+          "name": "Dettes fiscales, salariales et sociales",
+          "sequence": 600,
+          "is_total": true,
+          "plus": [
+            "450/3",
+            "454/9"
+          ]
+        },
+        {
+          "code": "450/3",
+          "parent": "45",
+          "name": "Impôts",
+          "sequence": 610,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "450",
+              "code_to": "453",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "454/9",
+          "parent": "45",
+          "name": "Rémunérations et charges sociales",
+          "sequence": 620,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "454",
+              "code_to": "459",
+              "side": "credit"
+            }
+          ]
+        },
+        {
+          "code": "47/48",
+          "parent": "42/48",
+          "name": "Autres dettes",
+          "sequence": 630,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "47",
+              "code_to": "48",
+              "side": "credit",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "499",
+              "code_to": "499",
+              "side": "credit",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "492/3",
+          "parent": "17/49",
+          "name": "Comptes de régularisation",
+          "sequence": 640,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "492",
+              "code_to": "493"
+            }
+          ]
+        },
+        {
+          "code": "10/49",
+          "name": "TOTAL DU PASSIF",
+          "sequence": 650,
+          "is_total": true,
+          "plus": [
+            "10/15",
+            "16",
+            "17/49"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "BE-ASBL-ABBR-IS",
+      "kind": "income_statement",
+      "framework": "BE-GAAP",
+      "name": "Compte de résultats — associations et fondations, schéma abrégé",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe 7 — associations et fondations, comptes annuels selon le schéma abrégé ou le microschéma : compte de résultats",
+      "source": "comptes-annuels",
+      "lines": [
+        {
+          "code": "9900",
+          "name": "Marge brute d'exploitation",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "70",
+              "code_to": "74",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "60",
+              "code_to": "61",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "62",
+          "name": "Rémunérations, charges sociales et pensions",
+          "sequence": 20,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "62",
+              "code_to": "62"
+            }
+          ]
+        },
+        {
+          "code": "630",
+          "name": "Amortissements et réductions de valeur sur frais d'établissement, immobilisations incorporelles et corporelles",
+          "sequence": 30,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "630",
+              "code_to": "630"
+            }
+          ]
+        },
+        {
+          "code": "631/4",
+          "name": "Réductions de valeur sur stocks, commandes en cours d'exécution et créances commerciales : dotations (reprises)",
+          "sequence": 40,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "631",
+              "code_to": "634"
+            }
+          ]
+        },
+        {
+          "code": "635/8",
+          "name": "Provisions pour risques et charges : dotations (utilisations et reprises)",
+          "sequence": 50,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "635",
+              "code_to": "638"
+            }
+          ]
+        },
+        {
+          "code": "640/8",
+          "name": "Autres charges d'exploitation",
+          "sequence": 60,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "640",
+              "code_to": "648"
+            }
+          ]
+        },
+        {
+          "code": "649",
+          "name": "Charges d'exploitation portées à l'actif au titre de frais de restructuration",
+          "sequence": 70,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "649",
+              "code_to": "649"
+            }
+          ]
+        },
+        {
+          "code": "9901",
+          "name": "Bénéfice (Perte) d'exploitation",
+          "sequence": 80,
+          "is_total": true,
+          "plus": [
+            "9900"
+          ],
+          "minus": [
+            "62",
+            "630",
+            "631/4",
+            "635/8",
+            "640/8",
+            "649"
+          ]
+        },
+        {
+          "code": "75/76B",
+          "name": "Produits financiers",
+          "sequence": 90,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "75",
+              "code_to": "76"
+            }
+          ]
+        },
+        {
+          "code": "65/66B",
+          "name": "Charges financières",
+          "sequence": 100,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "65",
+              "code_to": "66"
+            }
+          ]
+        },
+        {
+          "code": "9903",
+          "name": "Résultat positif (négatif) de l'exercice avant impôts",
+          "sequence": 110,
+          "is_total": true,
+          "plus": [
+            "9901",
+            "75/76B"
+          ],
+          "minus": [
+            "65/66B"
+          ]
+        },
+        {
+          "code": "67/77",
+          "name": "Impôts sur le résultat",
+          "sequence": 120,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "67",
+              "code_to": "67",
+              "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "77",
+              "code_to": "77",
+              "sequence": 20
+            }
+          ]
+        },
+        {
+          "code": "9904",
+          "name": "Bénéfice (Perte) de l'exercice",
+          "sequence": 130,
+          "is_total": true,
+          "plus": [
+            "9903"
+          ],
+          "minus": [
+            "67/77"
+          ]
+        },
+        {
+          "code": "789",
+          "name": "Prélèvement sur les réserves immunisées",
+          "sequence": 140,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "78",
+              "code_to": "78"
+            }
+          ]
+        },
+        {
+          "code": "689",
+          "name": "Transfert aux réserves immunisées",
+          "sequence": 150,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "68",
+              "code_to": "68"
+            }
+          ]
+        },
+        {
+          "code": "9905",
+          "name": "Bénéfice (Perte) de l'exercice à affecter",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "9904",
+            "789"
+          ],
+          "minus": [
+            "689"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "BE-ASBL-ABBR-AF",
+      "kind": "allocation",
+      "framework": "BE-GAAP",
+      "name": "Affectations et prélèvements — associations et fondations, schéma abrégé",
+      "legal_reference": "Arrêté royal du 29 avril 2019, annexe 7 — associations et fondations, comptes annuels selon le schéma abrégé ou le microschéma : affectations et prélèvements",
+      "source": "comptes-annuels",
+      "lines": [
+        {
+          "code": "14P",
+          "name": "Résultat positif (négatif) de l'exercice antérieur reporté",
+          "sequence": 10,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "790",
+              "code_to": "790"
+            }
+          ]
+        },
+        {
+          "code": "791/2",
+          "name": "Prélèvements sur les capitaux propres",
+          "sequence": 20,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "791",
+              "code_to": "792"
+            }
+          ]
+        },
+        {
+          "code": "691/4",
+          "name": "Affectations aux fonds affectés",
+          "sequence": 30,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "691",
+              "code_to": "692"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "694",
+              "code_to": "694"
+            }
+          ]
+        },
+        {
+          "code": "14",
+          "name": "Résultat positif (négatif) à reporter",
+          "sequence": 40,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "693",
+              "code_to": "693"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "793",
+              "code_to": "793"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

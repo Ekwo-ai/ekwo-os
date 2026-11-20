@@ -118,6 +118,35 @@ receptions (50 %) together, nor `664100`, which holds fines beside interest on
 late payment: a company says which amount, or which account of its own, falls
 under which rule.
 
+## The annual accounts of an association: the chart `asbl`
+
+Since 1.26.0 the chart of associations and foundations reports on its own
+scheme: annex 7 of the royal decree of 29 April 2019 (`comptes-annuels`),
+"associations et fondations — comptes annuels selon le schéma abrégé ou le
+microschéma", in three statements — `BE-ASBL-ABBR-BS`, `BE-ASBL-ABBR-IS` and
+`BE-ASBL-ABBR-AF`. A company created on the chart `asbl` is offered these as
+its own, and the generic framework beside them. The French and Dutch labels
+are those of the decree; German and English are translations.
+
+The assets, the debts and the operating lines of the income statement are
+those of the abbreviated scheme of companies, line for line. What differs:
+
+| Rubric | What the chart `asbl` puts there |
+|---|---|
+| 10/15 Fonds social | I. Fonds de l'association ou de la fondation (10: the starting patrimony and the permanent means), III. Plus-values de réévaluation (12), IV. Fonds affectés et autres réserves (13), V. Bénéfice (perte) reporté(e) (14, where the result of the year in progress is shown until the close), VI. Subsides en capital (15) |
+| Income statement | The same lines; the gross operating margin takes 70 to 74 less 60 and 61, so the contributions, gifts, legacies and subsidies of 73 are in it, as rubric I. D. of the decree says |
+| Affectations et prélèvements | A.2 the result brought forward (790), B. the drawings on the funds (791/2), C. the allocations to the allocated funds (691, 692, and 694 below), D. the result to carry forward (693, 793) |
+
+| Choice | Why |
+|---|---|
+| Rubric VII is one line, 16 | As in the abbreviated scheme of companies of this pack: the chart carries 160 to 163, and none of the accounts of VII.B (subsidies and legacies to repay) or VII.C (deferred taxes). |
+| Account 694, "Affectation au patrimoine", is printed under C | The scheme has no rubric for an allocation to the fund of the association; C is the one rubric of annex 7 that carries the result to the fonds social. |
+| No `xbrl` keys | The filing of associations with the National Bank uses models of its own, which no format library of this repository writes yet. |
+| Annex 8 is not carried | The statement of receipts and expenses of an association that keeps simplified accounts is not double entry; the chart `asbl` is. |
+
+The chart's certification stays `community`: nobody has compared these
+statements with the accounts an association filed.
+
 ## The analysis: what `analysis.json` reads
 
 Since 1.20.0 the pack says which of its accounts make the aggregates of an

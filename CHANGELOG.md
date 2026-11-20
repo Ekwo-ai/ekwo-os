@@ -59,6 +59,21 @@ somewhere has already run it.
   a schema without the table or one of its columns, the pack is described
   without `charts`, never with an error. No migration; `SCHEMA_MIN` stays
   0.19.0.
+- **The Belgian chart of associations reports on the scheme of associations.**
+  The chart `asbl` of the pack be, for associations and foundations, had no
+  financial statement of its own and drew only the generic ones by account
+  type. It now declares three, from annex 7 of the royal decree of 29 April
+  2019 — the abbreviated scheme and microscheme of associations and
+  foundations: `BE-ASBL-ABBR-BS`, `BE-ASBL-ABBR-IS` and `BE-ASBL-ABBR-AF`. The
+  assets, the debts and the income statement follow the abbreviated scheme of
+  companies; the equity is the fonds social — the fund of the association, the
+  revaluation surpluses, the allocated funds and other reserves, the result
+  brought forward, the capital subsidies — and the appropriations are those of
+  the annex. French and Dutch labels are the decree's; German and English are
+  translated. A company on the chart is offered them as its own, beside the
+  generic framework, and `describe_pack` lists them under the chart. The pack
+  be becomes 1.26.0; the chart's certification stays `community`. No
+  migration.
 
 ### Fixed
 
