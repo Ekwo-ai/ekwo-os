@@ -11,6 +11,17 @@ somewhere has already run it.
 
 ### Added
 
+- **The terms of use of Ekwo Cloud, `TERMS.md`.** The agreement for the hosted
+  service at cloud.ekwo.ai: who it is with, the plans and how they are paid
+  and cancelled, the ownership of company data and the means to leave with
+  it, what the service is not, liability, and the law that applies. It names
+  the licence of Ekwo OS and where the corresponding source of the running
+  version is published, which is how the hosted service honours AGPL-3.0
+  §13. Ekwo OS on a project of one's own stays governed by its licence and
+  `DISCLAIMER.md` alone.
+
+### Added
+
 - **`describe_pack` lists the charts of accounts a country offers.** Each
   pack in the answer carries `charts`, read from `chart_templates`: `code`,
   `name`, `audience`, `is_default`, `statements`, `certification_status`,
