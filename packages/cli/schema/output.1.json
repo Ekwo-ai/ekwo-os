@@ -592,6 +592,35 @@
           "count": { "type": "integer" }
         }
       },
+      "contact certificate add": {
+        "$comment": "recordTaxCertificate() of @ekwo-ai/core — the MCP server's record_tax_certificate: the row of contact_tax_certificates as recorded, and replayed: true when --ref named one recorded before.",
+        "type": "object",
+        "required": ["certificate"],
+        "properties": {
+          "certificate": {
+            "type": "object",
+            "required": ["id", "contact_id", "reference", "territory_code", "valid_from", "valid_to"],
+            "properties": {
+              "id": { "type": "string" },
+              "contact_id": { "type": "string" },
+              "reference": { "type": "string" },
+              "territory_code": { "type": ["string", "null"] },
+              "valid_from": { "type": "string" },
+              "valid_to": { "type": ["string", "null"] }
+            }
+          },
+          "replayed": { "type": "boolean" }
+        }
+      },
+      "contact certificate list": {
+        "$comment": "listTaxCertificates() of @ekwo-ai/core — the MCP server's list_tax_certificates: the certificates the buyers handed over, each with contact_name beside contact_id.",
+        "type": "object",
+        "required": ["certificates", "count"],
+        "properties": {
+          "certificates": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "count": { "type": "integer" }
+        }
+      },
       "doc new": { "$ref": "#/$defs/documentAnswer" },
       "doc line add": { "$ref": "#/$defs/documentAnswer" },
       "invoice new": { "$ref": "#/$defs/documentAnswer" },

@@ -345,7 +345,8 @@ describe('every command answers --json with one document of the published shape'
     expect(paid.exitCode).toBe(0);
     // The profile of the account's CSV statements, kept on the account: given
     // to a first import, read by the next, read and forgotten by `ekwo bank`.
-    // This database says the version that keeps it, for these commands only.
+    // This database says the version that keeps it, and holds a buyer's
+    // certificates, for these commands only.
     const [versioned] = (
       await root.query<{ definition: string }>(
         `select pg_get_functiondef(p.oid) as definition from pg_proc p where p.proname = 'ekwo_schema_version'`,
@@ -353,7 +354,7 @@ describe('every command answers --json with one document of the published shape'
     ).rows;
     const schemaOfVersion = versioned?.definition.match(/FUNCTION ([a-z_]+)\.ekwo_schema_version/)?.[1] ?? 'public';
     await root.query(
-      `create or replace function ${schemaOfVersion}.ekwo_schema_version() returns text language sql immutable as $$ select '0.26.0'::text $$`,
+      `create or replace function ${schemaOfVersion}.ekwo_schema_version() returns text language sql immutable as $$ select '0.28.0'::text $$`,
     );
     try {
       const csvProfile = { delimiter: ',', dateFormat: 'YYYY-MM-DD', decimalSeparator: '.', columns: { date: 'Date', amount: 'Amount', balance: 'Balance', reference: 'Id' } };
@@ -376,6 +377,13 @@ describe('every command answers --json with one document of the published shape'
       const refused = await asPerson(['import', 'csv', second, '--bank-account', bankAccount]);
       expect(refused.exitCode).not.toBe(0);
       expect(refused.error).toMatchObject({ message: expect.stringContaining('--csv-profile') });
+      // A certificate the buyer handed over, recorded once under its reference.
+      const certificate = await asPerson(['contact', 'certificate', 'add', 'Client Example', 'EXAMPLE-0001', '--from', '2026-01-01', '--ref', 'cert-1']);
+      expect(certificate.data).toMatchObject({ certificate: { reference: 'EXAMPLE-0001', territory_code: null, valid_to: null } });
+      const again = await asPerson(['contact', 'certificate', 'add', 'Client Example', 'EXAMPLE-0001', '--from', '2026-01-01', '--ref', 'cert-1']);
+      expect(again.data).toMatchObject({ replayed: true });
+      const certificates = await asPerson(['contact', 'certificate', 'list', 'Client Example']);
+      expect(certificates.data).toMatchObject({ count: 1, certificates: [{ contact_name: 'Client Example' }] });
       const set = await asPerson(['bank', 'profile', bankAccount, profilePath]);
       expect(set.data).toMatchObject({ bank_account: { statement_profile: csvProfile } });
     } finally {

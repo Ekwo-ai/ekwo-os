@@ -50,7 +50,8 @@
       "ref": "client-conv",
       "name": "Minière de Bondoukou SA",
       "type": "customer",
-      "country": "CI"
+      "country": "CI",
+      "certificates": [ { "reference": "ATT-EXO-2026-0042", "valid_from": "2026-01-01" } ]
     },
     {
       "ref": "client-fr",

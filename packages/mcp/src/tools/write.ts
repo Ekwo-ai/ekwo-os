@@ -53,6 +53,7 @@ export {
   lockPeriod,
   mergeContacts,
   postDocument,
+  recordTaxCertificate,
   reconcile,
   reconcileMany,
   reconcileWithDifference,
@@ -90,6 +91,21 @@ export const CreateContactInput = z.object({
   address_line1: z.string().min(1).optional(),
   postal_code: z.string().min(1).optional(),
   city: z.string().min(1).optional(),
+  client_ref: z.string().min(1).max(200).optional().describe('Your own reference for this creation. Calling again with the same one returns what was created the first time (`replayed: true`) instead of creating a second — use it whenever a call might be repeated after a timeout.'),
+});
+
+export const RecordTaxCertificateInput = z.object({
+  company_id: companyId,
+  contact_id: uuid.describe('The buyer who handed the certificate over, from search_contacts.'),
+  reference: z.string().min(1).describe('The number the certificate carries, as written on it.'),
+  territory_code: z
+    .string()
+    .min(2)
+    .optional()
+    .describe('The territory under whose law it was given — a state, a province, a country — as the taxes of the pack name territories (US-CA). Left out, it covers every place of supply.'),
+  valid_from: isoDate.describe('The first day it covers. A sale dated earlier is not covered by it.'),
+  valid_to: isoDate.optional().describe('The last day it covers, where it has one: an expiry printed on it, or the day the buyer withdrew it.'),
+  note: z.string().min(1).optional().describe('What was checked, where the paper is kept.'),
   client_ref: z.string().min(1).max(200).optional().describe('Your own reference for this creation. Calling again with the same one returns what was created the first time (`replayed: true`) instead of creating a second — use it whenever a call might be repeated after a timeout.'),
 });
 

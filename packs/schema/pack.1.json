@@ -1931,6 +1931,39 @@
             "null"
           ],
           "description": "Sub-ledger code, which a French FEC carries."
+        },
+        "certificates": {
+          "type": "array",
+          "description": "The certificates this party handed over, recorded on it before the first document: a sale under a tax whose conditions include buyer_certificate is refused at posting without one that covers it.",
+          "items": {
+            "$ref": "#/$defs/golden_certificate"
+          }
+        }
+      }
+    },
+    "golden_certificate": {
+      "type": "object",
+      "description": "A certificate a party of the scenario handed over: a row of contact_tax_certificates. Fictional, like the party.",
+      "required": [
+        "reference",
+        "valid_from"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The number the certificate carries."
+        },
+        "territory": {
+          "$ref": "#/$defs/territory",
+          "description": "The territory under whose law it was given. Left out for a certificate that names none."
+        },
+        "valid_from": {
+          "$ref": "#/$defs/date"
+        },
+        "valid_to": {
+          "$ref": "#/$defs/date"
         }
       }
     },

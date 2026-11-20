@@ -974,6 +974,17 @@ export interface PackGoldenContact {
   territory: string | null;
   vat_number: string | null;
   auxiliary_code: string | null;
+  /** Certificates the party handed over, recorded before the first document. */
+  certificates: PackGoldenCertificate[];
+}
+
+/** A certificate a party of the scenario handed over: a row of `contact_tax_certificates`. */
+export interface PackGoldenCertificate {
+  reference: string;
+  /** Territory under whose law it was given; null where it names none. */
+  territory: string | null;
+  valid_from: string;
+  valid_to: string | null;
 }
 
 export interface PackGoldenDocument {
@@ -2744,6 +2755,12 @@ function normaliseGolden(raw: Record<string, unknown>): PackGolden {
       territory: (c['territory'] as string | undefined) ?? null,
       vat_number: (c['vat_number'] as string | undefined) ?? null,
       auxiliary_code: (c['auxiliary_code'] as string | undefined) ?? null,
+      certificates: ((c['certificates'] ?? []) as Record<string, unknown>[]).map((k) => ({
+        reference: String(k['reference']),
+        territory: (k['territory'] as string | undefined) ?? null,
+        valid_from: String(k['valid_from']),
+        valid_to: (k['valid_to'] as string | undefined) ?? null,
+      })),
     })),
     documents: ((raw['documents'] ?? []) as Record<string, unknown>[]).map((d) => ({
       ref: String(d['ref']),

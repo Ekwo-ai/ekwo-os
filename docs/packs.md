@@ -872,17 +872,32 @@ next country would want a second operator. The amount a threshold is set at and
 the contents a certificate must have are in the article the tax already cites,
 which is where a reviewer reads them.
 
-**Nothing in the core reads it**, exactly like `treatment`: it documents the
-tax so that an application can put the question to a human being instead of
-pretending to answer it, and what the tax *does* is said by its postings. It
-compiles to `tax_templates.conditions` and stops there, the way `source_key`
-does — this is the pack's transcription of a country's rule, not a property of
-the tax a company went on to edit, and `taxes` carries `country` and `code`,
-which is the join.
+**The core reads one word of it, `buyer_certificate`**, and only to refuse:
+the other four document the tax so that an application can put the question
+to a human being instead of pretending to answer it, exactly like
+`treatment`, and what the tax *does* is said by its postings. It compiles to
+`tax_templates.conditions` and stops there, the way `source_key` does — this
+is the pack's transcription of a country's rule, not a property of the tax a
+company went on to edit, and `taxes` carries `country` and `code`, which is
+the join.
 
-**What it does not record is the evidence itself** — a certificate held on a
-contact, a running total per territory. A pack states the code a bookkeeper
-reaches for once the answer is known, and says what the question was.
+**A certificate is evidence a company holds, so it is recorded on the
+contact** — `contact_tax_certificates`: the reference it carries, the
+territory under whose law it was given, and the days it covers. A sale
+invoice a line of which carries a tax conditioned on `buyer_certificate` is
+refused at posting, `no_buyer_certificate`, unless its buyer holds one valid
+on the document's date and, where the certificate names a territory, for the
+place of supply. A credit note is not held to it, nor is a purchase, on which
+the company is the buyer. What the certificate must contain is still in the
+article the tax cites: the core holds the fact that it was handed over, and
+never judges the paper. A golden scenario that sells under such a tax gives
+the party its certificate (`certificates` on the contact, see "Golden
+scenario").
+
+**What it does not record is the rest of the evidence** — a running total per
+territory, a buyer's status, a proof of transport. A pack states the code a
+bookkeeper reaches for once the answer is known, and says what the question
+was.
 
 ## Which declaration a box belongs to
 
@@ -1838,6 +1853,20 @@ buyer's territory nor the country. `packs/us/` uses all three, because the
 Californian codes are conditioned on a Californian delivery and the year has
 sales into three other states. A pack whose country taxes uniformly leaves all
 three out and nothing changes.
+
+**A party hands over its certificates under `certificates`**, where the
+scenario sells under a tax whose `conditions` include `buyer_certificate`: such
+a sale posts only once its buyer holds one that covers it, so the scenario
+records it before the first document, as a business would.
+
+```json
+{ "ref": "cust-reseller", "name": "…", "type": "customer", "country": "US", "territory": "US-CA",
+  "certificates": [ { "reference": "SR-EXAMPLE-000001", "territory": "US-CA", "valid_from": "2026-06-01" } ] }
+```
+
+`reference` and `valid_from` are required; `territory` is left out for a
+certificate that names none, and `valid_to` for one that has no end. The
+reference is fictional, like the party.
 
 **Three expectation files** sit beside the scenario and are generated, never
 written by hand, and a fourth where the pack has an analysis section:

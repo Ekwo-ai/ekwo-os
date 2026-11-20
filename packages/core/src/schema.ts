@@ -263,6 +263,17 @@ export const SCHEMA_FEATURES = {
     columns: ['document_lines.stated_tax_amount'],
     functions: ['stated_tax_tolerance'],
   },
+  /**
+   * The certificates a buyer handed over, held on the contact, and the sale
+   * under a tax that turns on one refused without one that covers it
+   * (`20261121070200_a_buyer_certificate_is_held_on_the_contact`). Below it,
+   * recording or listing a certificate is refused by name.
+   */
+  buyer_certificates: {
+    since: '0.28.0',
+    columns: ['contact_tax_certificates.reference'],
+    functions: ['buyer_certificate_for'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

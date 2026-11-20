@@ -204,6 +204,7 @@ bank charge that pays no item.
 | [`company_vat_schemes`](#company_vat_schemes) | The VAT scheme a company is on, from the first day of a financial year until the next row. No row: the company has not said, and files exactly as it did before schemes existed — no default and no guess. The forms and cadences it implies are written into company_filing_periods, which stays the one place a cadence is recorded. |
 | [`contact_merges`](#contact_merges) | Every merge of two contacts, by merge_contacts() (decision 0074): the contact absorbed, the one kept, who merged them and when, what moved and what was filled. Written by merge_contacts() and by nothing else — no role may insert — so the guards of a posted line and of an issued document read a row here, written in the same transaction, as the exemption that lets contact_id move from the absorbed contact to the kept one. |
 | [`contact_patterns`](#contact_patterns) | How a counterparty shows up on this company's statements: one row per learned or declared motif, of four closed kinds. Read by suggest_contacts(), written by confirm_contact(). The core still chooses no contact for anybody — it answers with candidates and says why. |
+| [`contact_tax_certificates`](#contact_tax_certificates) | A certificate a buyer handed the company, which a tax conditioned on buyer_certificate (tax_templates.conditions) depends on: a resale certificate, an exemption certificate, a declaration of intent. post_document() refuses a sale invoice under such a tax unless its contact holds one valid on the document's date (no_buyer_certificate). The paper itself is an attachment; what it must contain is in the article the tax cites, and nothing here reads it. |
 | [`contacts`](#contacts) | Third parties. `contact_type` is explicit rather than two hidden counters. |
 | [`country_defaults`](#country_defaults) | Which template account plays which role, per country. |
 | [`country_packs`](#country_packs) | Country packs loaded in this installation, with their version and certification. |
@@ -991,6 +992,31 @@ END)`
 - `CHECK ((success_count >= 0))`
 - `CHECK ((success_count <= usage_count))`
 - `CHECK ((usage_count >= 0))`
+- `PRIMARY KEY (id)`
+
+### `contact_tax_certificates`
+
+A certificate a buyer handed the company, which a tax conditioned on buyer_certificate (tax_templates.conditions) depends on: a resale certificate, an exemption certificate, a declaration of intent. post_document() refuses a sale invoice under such a tax unless its contact holds one valid on the document's date (no_buyer_certificate). The paper itself is an attachment; what it must contain is in the article the tax cites, and nothing here reads it.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `contact_id` | `uuid` | not null — The buyer who handed it over. A merge of contacts moves it to the contact kept, as every row that names a contact. |
+| `reference` | `text` | not null — The number or reference the certificate carries, as written on it. Not unique: a buyer may hand over a renewed certificate under the same number. |
+| `territory_code` | `text` | The territory under whose law the certificate was given, a code of territories: a sale is covered where its place of supply lies inside it. Null for a certificate that names none, which covers every place of supply. |
+| `valid_from` | `date` | not null — The first day the certificate covers: a sale dated earlier is not covered by it. |
+| `valid_to` | `date` | The last day it covers, where it has one — an expiry printed on it, or the day the buyer withdrew it. Null while it stands. |
+| `note` | `text` | Free text: what was checked, where the paper is kept. |
+| `client_ref` | `text` | A reference chosen by whoever recorded the row, unique per company where given, so that a caller repeating the recording after a dropped connection finds the first one instead of making a second. It means nothing to the books. |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK (((client_ref IS NULL) OR ((client_ref = btrim(client_ref)) AND ((length(client_ref) >= 1) AND (length(client_ref) <= 200)))))`
+- `CHECK (((valid_to IS NULL) OR (valid_to >= valid_from)))`
+- `CHECK ((btrim(reference) <> ''::text))`
 - `PRIMARY KEY (id)`
 
 ### `contacts`
@@ -2259,7 +2285,7 @@ Reference taxes per country, with their period of validity.
 | `cash_basis_transition_account_code` | `text` | Account the tax waits on between the invoice and its payment, by code in the chart of this country. Only read when cash_basis is true. |
 | `name_i18n` | `jsonb` | not null — Label by language, from packs/<cc>/i18n/. A translation of the same tax, never a different rate or a different rule. |
 | `source_key` | `text` | Key of the entry in country_packs.sources where this tax's legal_reference can be read. Null where the pack names none. |
-| `conditions` | `tax_condition[]` | not null — What this tax turns on that the ledger cannot see, from a closed vocabulary: buyer_certificate, buyer_status, transport_evidence, seller_threshold, supply_nature. It says what the question is, never how to answer it — there is no value, no operator and no expression here, and the article that sets a threshold or prescribes a certificate is in legal_reference. Written by the generated seed; read by nothing in the ledger. |
+| `conditions` | `tax_condition[]` | not null — What this tax turns on that the ledger cannot see, from a closed vocabulary: buyer_certificate, buyer_status, transport_evidence, seller_threshold, supply_nature. It says what the question is, never how to answer it — there is no value, no operator and no expression here, and the article that sets a threshold or prescribes a certificate is in legal_reference. Written by the generated seed. buyer_certificate is read when a sale invoice is posted, against contact_tax_certificates; the other words are read by nothing in the ledger. |
 | `applies_seller_territory` | `text` | Territory the seller has to be in for this tax to apply, from `applies_when.seller_in` of the pack. Null means the tax says nothing about the seller. |
 | `applies_buyer_territory` | `text` | Territory the buyer has to be in, from `applies_when.buyer_in`. Null means the tax says nothing about the buyer. |
 | `applies_supply_territory` | `text` | Territory the supply has to take place in, from `applies_when.supply_in`. A sale is taxed where the goods are delivered, which is why this is not the same column as the buyer's. |
@@ -2596,6 +2622,7 @@ Constraints:
 | `bank_accounts_read_identifier()` | Keeps iban, account_scheme and account_identifier saying one thing: an IBAN fills the identifier, an identifier of the iban scheme fills iban, and no other scheme ever writes iban. |
 | `bank_statement_movement(p_statement_id uuid)` | The sum of the lines a statement lists or holds, each counted once. What balance_end_computed adds to balance_start. |
 | `bank_transactions_guard()` | Keeps a statement line honest about whether it is settled. state moves between pending and ignored by hand; reconciled and entry_id are written by settle_from_statement() alone, under the setting ekwo.settling_statement, honoured for a caller holding reconcile.write (bank_transaction_settled_by_rpc otherwise, and on an insert that arrives settled). A line pointing at an entry keeps its amount, day, currency and bank account (bank_transaction_settled). When the entry is gone, the foreign key nulls entry_id and the line is pending again. The installer passes. |
+| `buyer_certificate_for(p_document_id uuid)` | The certificate of contact_tax_certificates that covers a document: handed over by its contact, valid on its document_date, and either naming no territory or one the place of supply (document_territory(..., 'supply')) lies inside. The most recent when several do; null when none does. |
 | `caller_companies()` | The companies the current caller is on — the question is_company_member() answers, asked once for all of them, over the only companies where its answer can be yes. What a row level security policy compares company_id against, inside a sub-select, so that it is worked out once per statement instead of once per row. |
 | `can_write_company(p_company_id uuid)` | Whether the current caller may write the books of a company. One capability, not a role, and false rather than NULL for a stranger. |
 | `cancel_document(p_document_id uuid, p_date date)` | Undoes a posted invoice: writes its credit note — the same lines, taxes, accounts, attributes, contact, currency, rate and analytic split — naming it in reversed_document_id, posts it through post_document(), matches the two entries and marks the invoice cancelled. Returns the credit note. Dated on the invoice's booking day while that period is open, and otherwise refused until a date is given (reversal_date_needed). Refused for a document that is not a posted invoice, is already cancelled or credited, or is settled in part or in full (unreconcile() first). |
@@ -2681,6 +2708,7 @@ Constraints:
 | `documents_default_payee_iban()` | A sales document with no payee account takes the company's default bank account, whatever scheme it is written in. A purchase document never does: the payee there is somebody else. |
 | `documents_guard_language()` | Fills documents.language from the customer, then the company, then the country pack when a document is created, keeps a draft in step with the customer it is addressed to, and refuses document_language_frozen on anything that is no longer a draft. |
 | `documents_guard_posted()` | Once a document has left draft: it is not deleted, no column moves but the closed list of what happens to a document after it is issued — amount_paid (to the figure the matching gives, and no other), payment_state, sent_at, peppol_status, peppol_message_id — and its state has two ways out: posted to cancelled, taken by cancel_document() and held to a posted credit note of the matching type that names it and settles it in full, for a caller holding documents.post (document_cancelled_by_hand otherwise); and posted to draft, taken by unpost_document(). Refuses document_posted, by name, to everybody. Becoming posted is held to what post_document() writes (document_posted_by_hand otherwise), and nobody inserts a document that is already posted (document_born_posted). One exemption (decision 0074): contact_id alone, from the absorbed contact to the kept one, in the transaction in which merge_contacts() recorded that merge in contact_merges, written to the trail as document_contact_merged. |
+| `documents_hold_buyer_certificate()` | Refuses to post a sale invoice a line of which carries a tax conditioned on buyer_certificate (tax_templates.conditions) when buyer_certificate_for() finds no certificate its contact handed over that covers it (no_buyer_certificate). The one word of conditions the core reads; a credit note and a purchase are not held to it. |
 | `documents_match_credit_note_on_posting()` | As a credit note that names its invoice (reversed_document_id) is posted, matches its third-party lines with the invoice's through match_reversal() — for what both still have open, so a credit note for part of an invoice settles that part — when the invoice is posted, of the matching kind, in the same currency at the same rate, and the caller may match (may_match_on_posting()). Decision 0073. |
 | `documents_need_a_contact()` | Refuses document_without_contact for a document that leaves draft, or is written in another state, without a contact. A draft may wait for its contact; nothing after it does. |
 | `documents_posting_mode()` | Holds an agent's posting of a document, and its answer to a quote or an order (accepted_at, declined_at), to agent_posting_mode(): autopilot_forbidden when the key or the session is in autopilot in a company that is review_only; in review, approval_required unless a person approved the document as it stood (approve_document()) since it last went back to draft. Every posting by an agent writes document_posted_by_agent on the audit trail, every answer document_answered_by_agent: the mode, the company's setting, the session, and in review the approval; the key is the row's api_key_id. A rehearsal is not held to it. |

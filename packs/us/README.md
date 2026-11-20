@@ -170,7 +170,7 @@ under reporting code D10 effective 1 October 2025, which makes 10.75 per cent.
 It carries no others and it never will: choosing between them is a question
 about a delivery address, which is a feed and not a pack.
 
-**Two exemptions the pack states and cannot check.** A sale for resale is
+**Two exemptions the pack states, one of them held to its evidence.** A sale for resale is
 untaxed because the buyer gave the seller a resale certificate — section 6091
 presumes every receipt taxable until they do — and a seller has to collect in a
 state where they have economic nexus, which since *South Dakota v. Wayfair* is
@@ -186,9 +186,14 @@ no ledger holds, `buyer_status` on the sale to the United States, and
 `transport_evidence` on the sale shipped out of state. Five words and not one
 figure: there is no threshold amount and no certificate number anywhere in this
 pack, because a field that could carry the test would be a pack that executes.
-What is still nowhere is the evidence itself — no place on a contact for a
-certificate and its validity, no place anywhere for a rolling total per
-territory — and that is on the list in
+The resale certificate itself has a place: it is recorded on the contact
+that handed it over (`contact_tax_certificates`, `ekwo contact certificate
+add`), with the state it was given under and the days it covers, and a sale
+under `US-CA-S-RESALE` is refused at posting, `no_buyer_certificate`, until
+its buyer holds one valid on the date of the sale for a Californian place of
+supply. The golden scenario records the reseller's before its first sale.
+What is still nowhere is the rolling total per territory a threshold is
+measured on, and that is on the list in
 [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).
 
 **The EN 16931 categories are the part of this pack that means least.** The

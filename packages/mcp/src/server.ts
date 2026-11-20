@@ -290,6 +290,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   register(
+    'list_tax_certificates',
+    {
+      title: 'Certificates the buyers handed over',
+      description:
+        'The certificates the buyers of a company handed over — resale certificates, exemption certificates, declarations of intent — with the contact, the reference, the territory under whose law each was given and the days it covers, the most recent first. A sale invoice under a tax that applies on such a certificate (its conditions in describe_pack include buyer_certificate) posts only if its buyer holds one that covers the document\'s date and place of supply; post_document is refused with no_buyer_certificate otherwise.',
+      inputSchema: read.ListTaxCertificatesInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.listTaxCertificates(backend, args)),
+  );
+
+  register(
     'list_documents',
     {
       title: 'List documents',
@@ -725,6 +737,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     },
     async (args) => guard(() => write.createContact(backend, args)),
+  );
+
+  register(
+    'record_tax_certificate',
+    {
+      title: 'Record a certificate a buyer handed over',
+      description:
+        'Records on a contact a certificate they handed over — a resale certificate, an exemption certificate, a declaration of intent — with the number it carries, the territory under whose law it was given (left out, it covers every place of supply) and the days it covers. A sale invoice under a tax whose conditions include buyer_certificate is refused at posting (no_buyer_certificate) unless its buyer holds one valid on the document\'s date for its place of supply. Record only a certificate the user says they hold, with the figures written on it; never record one to get an invoice posted. Whether a certificate is good enough is in the article the tax cites, and the user\'s accountant answers it.',
+      inputSchema: write.RecordTaxCertificateInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    },
+    async (args) => guard(() => write.recordTaxCertificate(backend, args)),
   );
 
   register(

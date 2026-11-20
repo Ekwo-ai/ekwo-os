@@ -2,7 +2,7 @@
  * Contacts: the people and the companies the books name.
  */
 
-import { BooksError, type Backend, type Filter, type Row } from './backend.js';
+import { BooksError, backendSupports, schemaTooOldFor, type Backend, type Filter, type Row, type SocleBackend } from './backend.js';
 import * as columns from './columns.js';
 import { money, moneyFields } from './format.js';
 import { createdBefore, only } from './shared.js';
@@ -261,4 +261,94 @@ export async function contactStatement(
     lines,
     count: lines.length,
   };
+}
+
+/** The columns of a certificate a buyer handed over, as every reader answers it. */
+export const TAX_CERTIFICATE = [
+  'id',
+  'client_ref',
+  'contact_id',
+  'reference',
+  'territory_code',
+  'valid_from::text',
+  'valid_to::text',
+  'note',
+  'created_at',
+];
+
+/** Refuses by name, below the schema that holds certificates, rather than failing on a missing table. */
+async function certificatesHeld(backend: Backend, what: string): Promise<void> {
+  if (await backendSupports(backend, 'buyer_certificates')) return;
+  const installed = (await (backend as SocleBackend).schemaVersion()) ?? 'an older version';
+  throw schemaTooOldFor('buyer_certificates', installed, what);
+}
+
+export interface RecordTaxCertificateArgs {
+  company_id: string;
+  /** The buyer who handed it over. */
+  contact_id: string;
+  /** The number the certificate carries, as written on it. */
+  reference: string;
+  /** The territory under whose law it was given; left out, it covers every place of supply. */
+  territory_code?: string | undefined;
+  /** The first day it covers. */
+  valid_from: string;
+  /** The last day it covers, where it has one. */
+  valid_to?: string | undefined;
+  note?: string | undefined;
+  /** Your own reference. Recording twice under one reference records once. */
+  client_ref?: string | undefined;
+}
+
+/**
+ * Records a certificate a buyer handed over — a resale certificate, an
+ * exemption certificate, a declaration of intent — on the contact, in
+ * `contact_tax_certificates`. A sale invoice under a tax whose pack says it
+ * applies on such a certificate is refused at posting (`no_buyer_certificate`)
+ * unless its buyer holds one valid on the document's date and, where the
+ * certificate names a territory, for the place of supply. What the certificate
+ * must contain is in the article the tax cites; the database holds the fact
+ * that it was handed over, and the refusals are its own.
+ */
+export async function recordTaxCertificate(backend: Backend, args: RecordTaxCertificateArgs): Promise<unknown> {
+  await certificatesHeld(backend, 'recording a certificate');
+  const before = await createdBefore(backend, 'contact_tax_certificates', args.company_id, args.client_ref, TAX_CERTIFICATE);
+  if (before !== undefined) return { certificate: before, replayed: true };
+  const row: Row = Object.fromEntries(Object.entries(args).filter(([, value]) => value !== undefined));
+  const created = only(
+    await backend.insert<Row>('contact_tax_certificates', [row], TAX_CERTIFICATE),
+    'the certificate could not be recorded',
+  );
+  return { certificate: created };
+}
+
+export interface ListTaxCertificatesArgs {
+  company_id: string;
+  /** Only the certificates of this contact; every contact's when absent. */
+  contact_id?: string | undefined;
+}
+
+/**
+ * The certificates the buyers of a company handed over, the most recent first
+ * for each contact, with the contact's name beside its id.
+ */
+export async function listTaxCertificates(backend: Backend, args: ListTaxCertificatesArgs): Promise<unknown> {
+  await certificatesHeld(backend, 'listing the certificates');
+  const where: Filter[] = [{ column: 'company_id', op: 'eq', value: args.company_id }];
+  if (args.contact_id !== undefined) where.push({ column: 'contact_id', op: 'eq', value: args.contact_id });
+  const found = await backend.select<Row>({
+    table: 'contact_tax_certificates',
+    columns: TAX_CERTIFICATE,
+    where,
+    order: [{ column: 'contact_id' }, { column: 'valid_from', ascending: false }],
+    limit: 500,
+  });
+  const ids = [...new Set(found.map((row) => String(row['contact_id'])))];
+  const named =
+    ids.length === 0
+      ? []
+      : await backend.select<Row>({ table: 'contacts', columns: ['id', 'name'], where: [{ column: 'id', op: 'in', value: ids }] });
+  const nameOf = new Map(named.map((contact) => [String(contact['id']), String(contact['name'])]));
+  const certificates = found.map((row) => ({ ...row, contact_name: nameOf.get(String(row['contact_id'])) ?? null }));
+  return { certificates, count: certificates.length };
 }

@@ -26,6 +26,7 @@ const READ_TOOLS = [
   'search_contacts',
   'suggest_duplicate_contacts',
   'contact_statement',
+  'list_tax_certificates',
   'search_products',
   'list_documents',
   'get_document',
@@ -64,6 +65,7 @@ const READ_TOOLS = [
 const WRITE_TOOLS = [
   'create_contact',
   'merge_contacts',
+  'record_tax_certificate',
   'create_product',
   'pin_accounts',
   'update_product',
