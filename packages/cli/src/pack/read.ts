@@ -1682,6 +1682,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   issues.push(...territoryReferences(taxes, territories));
   issues.push(...sellerTerritory(manifest, taxes, territories));
   issues.push(...supplyVsSeller(manifest, taxes, territories));
+  issues.push(...territoryRequired(manifest, territories));
   const regimes = new Map<string, VatRegime>();
   for (const tax of taxes) {
     if (tax.applies_seller_territory === null) continue;
@@ -4434,6 +4435,31 @@ function supplyVsSeller(manifest: Manifest, taxes: PackTax[], territories: Terri
     });
   }
   return issues;
+}
+
+/**
+ * A pack that requires its companies to name a territory has to offer one.
+ *
+ * `defaults.territory_required` makes `create_company()` and `ekwo init`
+ * refuse a company of the country that names no territory inside it, and the
+ * list they offer is the reference table's. A country with no territory
+ * inside it there would refuse every company it is asked for.
+ */
+function territoryRequired(manifest: Manifest, territories: Territory[]): Issue[] {
+  if (manifest.defaults['territory_required'] !== true) return [];
+  const country = manifest.country;
+  const inside = territories.some(
+    (territory) => territory.code !== country && territoryWithin(territory.code, country, territories),
+  );
+  if (inside) return [];
+  return [
+    {
+      path: 'pack.json defaults.territory_required',
+      message:
+        `a company of ${country} would have to name a territory inside ${country}, and territories ` +
+        'carries none. Add them to supabase/seed/00_territories.sql first',
+    },
+  ];
 }
 
 function crossReferences(manifest: Manifest, charts: PackChart[], taxes: PackTax[]): Issue[] {

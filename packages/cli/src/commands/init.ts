@@ -46,6 +46,7 @@ import {
   chooseCurrency,
   chooseFiscalYearStart,
   chooseLanguage,
+  chooseTerritory,
   required,
 } from '../company-choices.js';
 import { describeCertification, needsWarning } from '../pack/certification.js';
@@ -77,6 +78,7 @@ export const INIT_FLAGS = [
   'fiscal-year-start',
   'currency',
   'language',
+  'territory',
   'vat-period',
   'filing-period',
   'iban',
@@ -106,6 +108,7 @@ const COMPANY_ONLY_FLAGS = [
   'fiscal-year-start',
   'currency',
   'language',
+  'territory',
   'vat-period',
   'filing-period',
   'iban',
@@ -184,6 +187,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
     const currencyCode = await chooseCurrency(db, args, country, interactive);
     const { chartCode, charts } = await chooseChart(db, args, country, interactive);
     const language = await chooseLanguage(db, args, country, interactive);
+    const territory = await chooseTerritory(db, args, country, interactive);
 
     // How often the company files each declaration it is subject to. The third
     // question of the same family as the currency and the language, and the one
@@ -355,6 +359,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
       currencyCode,
       language,
       ...(chartCode === undefined ? {} : { chartCode }),
+      ...(territory === undefined ? {} : { territory }),
       filingPeriods,
       bankAccount,
     });
@@ -389,6 +394,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
         language: outcome.language,
         chart: outcome.chartCode ?? null,
         packVersion: outcome.packVersion ?? null,
+        territory: territory ?? null,
       },
       fiscalYear: {
         name: outcome.fiscalYearName,

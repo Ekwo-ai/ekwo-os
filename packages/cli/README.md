@@ -74,7 +74,9 @@ npx -y ekwo-os@latest init \
 With `--yes` nobody is asked anything, so **`ekwo init` refuses rather than
 choosing for you**: no country without `--country`, and `--chart`,
 `--language` or `--fiscal-year-start` wherever the country's pack offers more
-than one answer. Each refusal lists the values the pack accepts.
+than one answer, and `--territory` (`US-CA`) wherever it requires the company
+to name the state or province it is established in. Each refusal lists the
+values the pack accepts.
 `ekwo pack describe <cc>` (in a clone) or the country's page on
 [ekwo.ai/countries](https://ekwo.ai/countries/) says which a country needs.
 
@@ -474,6 +476,7 @@ the connection string: copy it from the dashboard, Connect → Session pooler.
 | `--fiscal-year <year>` | Calendar year of the first financial year. Defaults to this year. |
 | `--fiscal-year-start <date>` | The day that year opens, as `YYYY-MM-DD`. Needed only where the pack names no usual opening month (`defaults.fiscal_year_default`). |
 | `--currency <code>` | Currency of the company. Defaults to the pack's `defaults.currency`. |
+| `--territory <code>` | Where the company is established below its country, ISO 3166-2 with the prefix: `US-CA`. Required where the pack says `territory_required` (the United States); elsewhere left out, the country being the answer. One outside the country is refused. |
 | `--language <xx>` | Language of the books, two letters. Defaults to `country_defaults.language_default`, which the pack fills. It decides which label of the pack lands on each account; the others are kept in `name_i18n`. |
 | `--bank-identifier <value>` | Creates the main bank account, wired to the bank journal and its ledger account. What it is written in is the country's: an IBAN, an ABA routing number and an account number (`"021000021 123456789"`), a sort code and an account number, a BSB, an IFSC, a CLABE… `ekwo pack describe <cc>` names it, and it is checked. A country whose pack declares none is asked for an account number as the bank wrote it. `--iban` is the old spelling and is refused where the banks do not use IBANs. Omitted, no bank account is created and `ekwo doctor` says so. |
 | `--bic <bic>` | Optional, on that account, for a bank that has one. |
@@ -485,7 +488,8 @@ the connection string: copy it from the dashboard, Connect → Session pooler.
 | `--no-company` | Install without a company: schema, every pack, the modules, the first administrator, and no country on the instance row. The flags that only describe a company are refused with it. Then `ekwo company new`, once per company. |
 
 `ekwo company new <name>` takes `--country`, `--chart`, `--language`,
-`--currency`, `--fiscal-year` and `--fiscal-year-start` as `init` does, and
+`--territory`, `--currency`, `--fiscal-year` and `--fiscal-year-start` as
+`init` does, and
 `--as-user <uuid>`: the administrator of the installation it is created as,
 who becomes its owner — the only one, when there is exactly one.
 

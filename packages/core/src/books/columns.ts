@@ -24,6 +24,7 @@ export const COMPANY = [
   'city',
   'country',
   'region',
+  'territory_code',
   'email',
   'phone',
   'website',

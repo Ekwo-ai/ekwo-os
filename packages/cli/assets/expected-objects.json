@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261120100100",
+  "migration": "20261121070100",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -1888,6 +1888,10 @@
           {
             "name": "tax_receivable_code",
             "type": "text"
+          },
+          {
+            "name": "territory_required",
+            "type": "boolean"
           },
           {
             "name": "vat_period_default",
@@ -5044,6 +5048,10 @@
         "arguments": ""
       },
       {
+        "name": "companies_territory_within_country",
+        "arguments": ""
+      },
+      {
         "name": "companies_vat_period_is_a_filing_period",
         "arguments": ""
       },
@@ -5181,7 +5189,7 @@
       },
       {
         "name": "create_company",
-        "arguments": "p_name text, p_country character, p_currency_code character, p_language character, p_chart_code text, p_fiscal_year integer, p_fiscal_year_start date, p_owner_user_id uuid"
+        "arguments": "p_name text, p_country character, p_currency_code character, p_language character, p_chart_code text, p_fiscal_year integer, p_fiscal_year_start date, p_owner_user_id uuid, p_territory_code text"
       },
       {
         "name": "create_document",
@@ -7063,6 +7071,10 @@
       {
         "table": "companies",
         "name": "companies_set_updated_at"
+      },
+      {
+        "table": "companies",
+        "name": "companies_territory_within_country"
       },
       {
         "table": "companies",
@@ -9874,6 +9886,14 @@
           ]
         },
         {
+          "name": "companies_territory_within_country",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "companies_vat_period_is_a_filing_period",
           "arguments": "",
           "trigger": true,
@@ -10212,7 +10232,7 @@
         },
         {
           "name": "create_company",
-          "arguments": "p_name text, p_country character, p_currency_code character, p_language character, p_chart_code text, p_fiscal_year integer, p_fiscal_year_start date, p_owner_user_id uuid",
+          "arguments": "p_name text, p_country character, p_currency_code character, p_language character, p_chart_code text, p_fiscal_year integer, p_fiscal_year_start date, p_owner_user_id uuid, p_territory_code text",
           "anon": [],
           "authenticated": [
             "execute"
