@@ -370,10 +370,13 @@ describe('the generic framework, on any chart', () => {
     expect(generic['A-TOT']).toBeCloseTo(generic['EL-TOT']!, 2);
   });
 
-  it('works on a chart that declares no statement of its own', async () => {
-    // The Belgian association chart ships without the NBB association scheme,
-    // and this is what makes it usable anyway: eighteen account types are a
-    // balance sheet on any chart, including one with no legal codes at all.
+  it('draws the accounts of an association on its own scheme, and on the generic one', async () => {
+    // The Belgian association chart reports on the abbreviated scheme of
+    // associations and foundations (annex 7 of the royal decree of 29 April
+    // 2019): the assets and debts of the company scheme, and a fund of the
+    // association where a company has its contribution and reserves. The
+    // generic framework stays offered beside it: eighteen account types are a
+    // balance sheet on any chart.
     const company = await one<{ id: string }>(
       db,
       `insert into companies (name, country, fiscal_country, currency_code)
@@ -423,15 +426,34 @@ describe('the generic framework, on any chart', () => {
     ]);
     expect(left).toEqual([]);
 
-    // And the association is offered the generic framework and nothing else,
-    // because its chart declares no scheme.
+    // Its own scheme: the result of the year in progress sits on rubric 14,
+    // where the close will put it, the two sides agree, and every account
+    // with a balance reaches a line.
+    const asblBs = await amounts(company.id, 'BE-ASBL-ABBR-BS', from, to);
+    const asblIs = await amounts(company.id, 'BE-ASBL-ABBR-IS', from, to);
+    expect(asblIs['9905']).toBeCloseTo(300, 2);
+    expect(asblBs['14']).toBeCloseTo(300, 2);
+    expect(asblBs['10/15']).toBeCloseTo(300, 2);
+    expect(asblBs['20/58']).toBeCloseTo(asblBs['10/49']!, 2);
+    expect(asblBs['20/58']).toBeCloseTo(bs['A-TOT']!, 2);
+    for (const code of ['BE-ASBL-ABBR-BS', 'BE-ASBL-ABBR-IS']) {
+      const unmapped = await rows(db, 'select * from unmapped_accounts($1, $2, $3, $4)', [company.id, code, from, to]);
+      expect(unmapped, code).toEqual([]);
+    }
+
+    // The association is offered the schemes of its chart as its own, the
+    // generic framework beside them, and never the schemes of companies.
     const offered = await rows<{ code: string; is_default: boolean }>(
       db,
       'select code, is_default from available_statements($1)',
       [company.id],
     );
-    expect(offered.map((s) => s.code)).toEqual(['IFRS-SME-BS', 'IFRS-SME-IS']);
-    expect(offered.every((s) => s.is_default === false)).toBe(true);
+    expect(offered.filter((s) => s.is_default).map((s) => s.code).sort()).toEqual([
+      'BE-ASBL-ABBR-AF',
+      'BE-ASBL-ABBR-BS',
+      'BE-ASBL-ABBR-IS',
+    ]);
+    expect(offered.filter((s) => !s.is_default).map((s) => s.code).sort()).toEqual(['IFRS-SME-BS', 'IFRS-SME-IS']);
   });
 
   it('marks the schemes a chart declares, and offers the generic ones beside them', async () => {
