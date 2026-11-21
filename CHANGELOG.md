@@ -74,6 +74,28 @@ somewhere has already run it.
   a schema without the table or one of its columns, the pack is described
   without `charts`, never with an error. No migration; `SCHEMA_MIN` stays
   0.19.0.
+- **A buyer's certificate is held on the contact, and a sale that needs one
+  waits for it.** A pack may say that a tax applies on a certificate the buyer
+  hands over — `conditions: ["buyer_certificate"]`, a resale certificate, an
+  exemption certificate, a declaration of intent — and until now the word
+  documented the question while nothing recorded the answer: such a sale
+  posted whether the seller held the paper or not.
+  `contact_tax_certificates` records it on the contact: the reference it
+  carries, the territory under whose law it was given (none: every place of
+  supply) and the days it covers. A sale invoice a line of which carries such
+  a tax is refused at posting, `no_buyer_certificate`, unless its buyer holds
+  one valid on the document's date and, where it names a territory, for the
+  place of supply; `buyer_certificate_for(document)` answers which one covers
+  it. A credit note and a purchase are not held to it
+  (`20261121070200_a_buyer_certificate_is_held_on_the_contact`, additive;
+  `SCHEMA_FEATURES.buyer_certificates`, since 0.28.0). The table follows a
+  merge of contacts and leaves with the company in its archive. The MCP tools
+  `record_tax_certificate` and `list_tax_certificates`, `ekwo contact
+  certificate add|list` and `recordTaxCertificate()` / `listTaxCertificates()`
+  of the core write and read it. A golden scenario records a party's
+  certificates under `certificates` on the contact; the five scenarios that
+  sell under such a tax (ae, ci, cn, je, us) now carry theirs, and no figure
+  of any golden moves.
 
 ### Fixed
 

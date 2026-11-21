@@ -227,6 +227,7 @@ Every write names its company explicitly.
 | `search_contacts` | Customers and suppliers, by name, type or VAT number |
 | `suggest_duplicate_contacts` | The contacts that are probably one party, strongest first, one row per contact to absorb — the rows of one kept contact being one party: the contact to keep, a score, the evidence (the same VAT or registration number, the same bank account, the words of the name weighed by how few contacts carry them) and the simplest name the group carries, proposed for the kept contact. Writes nothing; `merge_contacts` joins a pair the user confirms |
 | `contact_statement` | The statement of account of one contact over a period: the balance carried forward, each posted line of their receivable and payable accounts with its running balance and how far it is matched, and the closing balance |
+| `list_tax_certificates` | The certificates the buyers handed over — resale, exemption, declarations of intent — with the territory each was given under and the days it covers |
 | `search_products` | The catalogue: code, unit, price, account and tax of what is sold and bought |
 | `list_documents` | Invoices, credit notes and quotes, filtered |
 | `get_document` | One document with its lines and the entry it produced |
@@ -259,6 +260,7 @@ Every write names its company explicitly.
 | `describe_pack` | Which country packs this installation holds: their version, how much anyone has read them, the register of texts each was built from — title, official publisher, link and the day it was opened — and, for a proven pack, its evidence: per scope, the kind of filing, the year, what was reproduced and what was not tested; and the charts of accounts each country offers, with their audience, for `create_company`'s `chart_code` |
 | `status` | Schema version, instance, connection, companies |
 | `create_contact` | A customer, supplier or other third party |
+| `record_tax_certificate` | Records on a contact a certificate they handed over: its reference, the territory under whose law it was given and the days it covers. A sale under a tax that applies on such a certificate posts only once its buyer holds one that covers it (`no_buyer_certificate`) |
 | `merge_contacts` | Joins two contacts that are one party: everything naming the absorbed one, posted lines and issued documents included, names the kept one, whose empty fields are filled; the absorbed one is retired. Refused by name for two different VAT or registration numbers, a contact merged before, or a matching that would span two parties |
 | `create_product` | A catalogue row: code, name, unit, price, account, tax |
 | `update_product` | Changes one, or retires it with `active: false` |

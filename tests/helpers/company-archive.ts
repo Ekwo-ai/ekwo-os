@@ -109,6 +109,13 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
   });
   const replayed = await replayScenario(db, companyId, golden);
   await db.query(`update contacts set notes = $2 where company_id = $1`, [companyId, tag]);
+  // A certificate a buyer handed over, on the first party of the scenario:
+  // the scenarios of most packs sell under no tax that asks for one.
+  await db.query(
+    `insert into contact_tax_certificates (company_id, contact_id, reference, valid_from, note)
+     values ($1, $2, 'EXAMPLE-0001', $3::date, $4)`,
+    [companyId, replayed.contacts.get(golden.contacts[0]!.ref), golden.fiscalYear.start, tag],
+  );
 
   // The bank, a statement and two lines of it.
   const journal = await one<{ id: string; default_account_id: string | null }>(

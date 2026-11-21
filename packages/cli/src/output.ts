@@ -121,6 +121,10 @@ export function commandLabel(args: ParsedArgs): string {
     if (action === 'answer') return `${command} answer ${args.positional[1]}`;
     return `${command} line ${args.positional[1]}`;
   }
+  // `contact certificate add|list`: a noun and its verb.
+  if (command === 'contact' && action === 'certificate' && args.positional[1] !== undefined) {
+    return `contact certificate ${args.positional[1]}`;
+  }
   // `crm card set` and `crm deal open|move`: a noun and its verb. `crm card
   // <contact>` is a verb followed by a contact.
   if (command === 'crm' && (action === 'deal' || (action === 'card' && args.positional[1] === 'set')) && args.positional[1] !== undefined) {

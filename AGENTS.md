@@ -188,6 +188,7 @@ reach and whether you may write; without that box ticked, you read.
 | The contacts that are probably one party | `ekwo contact duplicates` | `suggest_duplicate_contacts` |
 | One party created twice, joined | `ekwo contact merge <keep> <absorb>` | `merge_contacts` |
 | What a customer owes, line by line | `ekwo contact statement "<name>" --from <date> --to <date>` | `contact_statement` |
+| A certificate a buyer handed over (resale, exemption), which a sale under a tax that applies on one needs | `ekwo contact certificate add "<name>" <reference> --from <date> [--territory <code>]`, `ekwo contact certificate list` | `record_tax_certificate`, `list_tax_certificates` |
 | Accounts and tax codes | the country's set-up page | `list_accounts`, `describe_pack` |
 | A draft invoice | `ekwo doc new --contact <name> --line "name=…,price=…,account=<code>,tax=<code>" --ref <yours>` | `create_document` |
 | The answer to a quote or an order, and its status | `ekwo doc accept <doc> --by <who>`, `ekwo doc decline <doc>`, `ekwo doc answer undo <doc>` | `accept_document`, `decline_document`, `undo_document_answer` |

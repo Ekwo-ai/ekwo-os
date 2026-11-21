@@ -52,6 +52,9 @@ const LATER = [
   // Replaces document_tax_summary as 20261020072000 left it, which reads the
   // column base_includes_tax that migration adds.
   '20261120100000_a_document_keeps_the_tax_its_source_states.sql',
+  // Names contacts by a composite key, and attaches the guard of a merged
+  // contact with refuse_merged_contacts_in(), which 20261019090000 defines.
+  '20261121070200_a_buyer_certificate_is_held_on_the_contact.sql',
 ];
 
 let db: PGlite;

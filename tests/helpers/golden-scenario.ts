@@ -84,6 +84,22 @@ export async function replayScenario(
         auxiliaryCode: contact.auxiliary_code,
       }),
     );
+    // What the party handed over, before any document needs it: a sale under
+    // a tax that turns on a buyer's certificate is refused without one.
+    for (const certificate of contact.certificates) {
+      await db.query(
+        `insert into contact_tax_certificates (company_id, contact_id, reference, territory_code, valid_from, valid_to)
+         values ($1, $2, $3, $4, $5::date, $6::date)`,
+        [
+          companyId,
+          contacts.get(contact.ref),
+          certificate.reference,
+          certificate.territory,
+          certificate.valid_from,
+          certificate.valid_to,
+        ],
+      );
+    }
   }
 
   // In the order the scenario lists them, which is the order a business did

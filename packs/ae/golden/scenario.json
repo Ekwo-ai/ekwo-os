@@ -62,7 +62,8 @@
       "ref": "cust-hc",
       "name": "Ruwais Petrochemical Trading LLC",
       "type": "customer",
-      "country": "AE"
+      "country": "AE",
+      "certificates": [ { "reference": "DCL-HC-2026-014", "valid_from": "2026-01-01" } ]
     },
     {
       "ref": "supp-ae",

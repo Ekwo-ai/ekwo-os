@@ -33,7 +33,8 @@
       "ref": "client-cn",
       "name": "上海明远贸易有限公司",
       "type": "customer",
-      "country": "CN"
+      "country": "CN",
+      "certificates": [ { "reference": "JS-MZ-2026-0007", "valid_from": "2026-01-01" } ]
     },
     {
       "ref": "client-foreign",

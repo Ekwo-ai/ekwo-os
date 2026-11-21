@@ -47,6 +47,7 @@ export {
   listAnalyticAxes,
   listDocuments,
   listStatements,
+  listTaxCertificates,
   searchContacts,
   subledger,
   suggestDuplicateContacts,
@@ -213,6 +214,11 @@ export const SuggestDuplicateContactsInput = z.object({
     .min(1)
     .optional()
     .describe('Propose only among the contacts of these types; every contact when absent.'),
+});
+
+export const ListTaxCertificatesInput = z.object({
+  company_id: companyId,
+  contact_id: uuid.optional().describe('Only the certificates of this contact, from search_contacts. Every buyer\'s when absent.'),
 });
 
 export const ContactStatementInput = z.object({
