@@ -514,6 +514,39 @@
             }
           }
         },
+        "other_comprehensive_income": {
+          "type": "object",
+          "description": "The income and expense accounts that are other comprehensive income — presented below the result and accumulated in equity of their own, never in retained earnings — and the balance-sheet account they close to, with the article that says so. close_fiscal_year() leaves them out of the result of the year and books them, summed, on that account; a balance sheet drawn before the close puts them there too. Left out, every income and expense account is part of the result. Compiled into country_defaults.other_comprehensive_income_heads and its three neighbours. ekwo pack check refuses a head that catches no account of a chart, a head that catches an account carried forward, and an account to close to that is not carried forward. Named after the notion, never after a country.",
+          "required": [
+            "accounts",
+            "closes_to",
+            "legal_reference"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "accounts": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/code"
+              },
+              "description": "Heads of the codes that are other comprehensive income. A head catches the code it names and every code that begins with it, so an account a company adds under it is caught too."
+            },
+            "closes_to": {
+              "$ref": "#/$defs/code",
+              "description": "Code of the balance-sheet account other comprehensive income closes to: accumulated other comprehensive income, or whatever reserve the country names."
+            },
+            "legal_reference": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The article that keeps these accounts out of the result and says where they accumulate, cited as the country cites it."
+            },
+            "source": {
+              "$ref": "#/$defs/source_ref"
+            }
+          }
+        },
         "tax_payee": {
           "type": "object",
           "description": "The administration a declaration of this country is paid to: the payee of the debt settle_filing() carries to roles.tax_payable. tax_payee() creates the company's contact for it under this name, booking to that account, so a settlement always names somebody and its payment can be matched to it. Left out where the pack has not read who collects the tax; a settlement then names nobody unless a contact already books to the account. Compiled into country_defaults.tax_payee_name.",

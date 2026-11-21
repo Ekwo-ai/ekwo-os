@@ -22,7 +22,7 @@
  */
 
 import { describeCertification } from './certification.js';
-import { finalCloseOf, sourcesOf, taxPayeeOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackReport, type PackSource, type PackStatement, type PackTax } from './read.js';
+import { finalCloseOf, otherComprehensiveIncomeOf, sourcesOf, taxPayeeOf, type FrameworkPack, type Pack, type PackEvidence, type PackLabels, type PackReport, type PackSource, type PackStatement, type PackTax } from './read.js';
 import { compileCorporateTaxSection } from './corporate-tax.js';
 import { compileTurnoverTaxSection } from './turnover-tax.js';
 import { compileVatSchemesSection } from './vat-schemes.js';
@@ -99,6 +99,7 @@ export function compilePack(pack: Pack): string {
   out.push(...defaults(pack, country));
   out.push(...documentRules(pack, country));
   out.push(...finalClose(pack, country));
+  out.push(...otherComprehensiveIncome(pack, country));
   out.push(...taxPayee(pack, country));
 
   return `${out.join('\n')}\n`;
@@ -984,6 +985,28 @@ function finalClose(pack: Pack, country: string): string[] {
     `  final_close_due             = ${text(rule.due)},`,
     `  final_close_legal_reference = ${text(rule.legal_reference)},`,
     `  final_close_source_key      = ${text(rule.source ?? null)}`,
+    ` where country = ${text(country)};`,
+  ];
+}
+
+/**
+ * The accounts that are other comprehensive income and the account they close
+ * to, with the article behind it — `defaults.other_comprehensive_income`, into
+ * the four `country_defaults` columns that `20261121070000` added.
+ *
+ * Written only when the pack says it, like `final_close`: a pack that declares
+ * nothing keeps a seed that runs on a schema from before the columns.
+ */
+function otherComprehensiveIncome(pack: Pack, country: string): string[] {
+  const rule = otherComprehensiveIncomeOf(pack.manifest);
+  if (rule === null) return [];
+  return [
+    '',
+    'update country_defaults set',
+    `  other_comprehensive_income_heads           = ${array(rule.accounts)},`,
+    `  other_comprehensive_income_closes_to       = ${text(rule.closes_to)},`,
+    `  other_comprehensive_income_legal_reference = ${text(rule.legal_reference)},`,
+    `  other_comprehensive_income_source_key      = ${text(rule.source ?? null)}`,
     ` where country = ${text(country)};`,
   ];
 }

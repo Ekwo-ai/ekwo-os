@@ -676,7 +676,7 @@
           "name": "Other comprehensive income",
           "sequence": 210,
           "sign": -1,
-          "legal_reference": "17 CFR 210.5-03.21 — other comprehensive income is presented, net of tax, below net income. The accounts behind it are closed to retained earnings by close_fiscal_year() like every other income account, which is not where generally accepted accounting principles put them; the gap is written up in docs/international.md.",
+          "legal_reference": "17 CFR 210.5-03.21 — other comprehensive income is presented, net of tax, below net income. The accounts behind it are not part of net income, and close_fiscal_year() closes them to accumulated other comprehensive income (3420), as defaults.other_comprehensive_income declares.",
           "source": "reg-s-x",
           "rules": [
             {

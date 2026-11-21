@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261120100100",
+  "migration": "20261121070000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -1783,6 +1783,22 @@
           },
           {
             "name": "opening_journal_code",
+            "type": "text"
+          },
+          {
+            "name": "other_comprehensive_income_closes_to",
+            "type": "text"
+          },
+          {
+            "name": "other_comprehensive_income_heads",
+            "type": "text[]"
+          },
+          {
+            "name": "other_comprehensive_income_legal_reference",
+            "type": "text"
+          },
+          {
+            "name": "other_comprehensive_income_source_key",
             "type": "text"
           },
           {
@@ -5802,6 +5818,10 @@
       {
         "name": "opening_journal_id",
         "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "other_comprehensive_income_account",
+        "arguments": "p_company_id uuid, p_code text"
       },
       {
         "name": "pack_upgrade",
@@ -11801,6 +11821,17 @@
         {
           "name": "opening_journal_id",
           "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "other_comprehensive_income_account",
+          "arguments": "p_company_id uuid, p_code text",
           "anon": [],
           "authenticated": [
             "execute"
