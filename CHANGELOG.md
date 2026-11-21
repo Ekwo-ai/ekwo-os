@@ -11,6 +11,21 @@ somewhere has already run it.
 
 ### Added
 
+- **France: the chart of associations and foundations, `association`.** The
+  French pack (1.24.0) carries a second chart, audience `nonprofits`, for the
+  private non-profit entities of règlement ANC n° 2018-06: the general chart
+  of the pack less the accounts of capital, with the accounts of its article
+  320-2 — the equity without and with right of return, the endowments, the
+  dedicated and deferred funds (19, 689, 789), the bequests and donations,
+  the resources of public generosity (754), the financial contributions (755),
+  the membership fees (756), and the voluntary contributions in kind (86, 87),
+  kept `off_balance` so that they reach neither the result nor the balance
+  sheet. 495 accounts, named by the recueil of the ANC in its version of 1
+  January 2026 (source `anc-2018-06`). `ekwo init --chart association`,
+  `chart_code: "association"` and `describe_pack` offer it. It names no
+  statement yet and reports on the generic framework, which all of its
+  accounts reach; certification `community`. No migration.
+
 - **A document keeps the tax its source states, within a rounding.** A
   supplier or a billing system that rounds the tax line by line (EN 16931
   allows it) states a tax a cent or two away from Ekwo's, rounded once per

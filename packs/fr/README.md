@@ -267,6 +267,44 @@ The research tax credit is not taxable income (same paragraph): the rule
 `699100` from the result the estimate starts from. Both 699 and 695 sit on
 line HK of form 2052, so the income statement is unchanged by the choice.
 
+## The chart of associations and foundations: `association`
+
+Since 1.24.0 the pack carries a second chart, `association`, audience
+`nonprofits`, for the private non-profit entities of règlement ANC n° 2018-06
+(associations, foundations, endowment funds). Article 320-1 of the regulation
+says such an entity uses the chart of règlement ANC n° 2014-03 "sous réserve
+des comptes spécifiques énumérés à l'article 320-2". The chart is exactly
+that: the `default` chart of this pack, less what an entity without capital
+never holds, with the accounts of article 320-2 as the recueil of the ANC
+prints them in its version of 1 January 2026 (source `anc-2018-06`). A
+company is created on it with `ekwo init --chart association` or
+`chart_code: "association"`.
+
+| What | Accounts |
+|---|---|
+| Left out | `101` Capital, `104` Primes liées au capital social, `108` Compte de l'exploitant (article 320-2 gives 108 another meaning), `456` and `457`, the operations on the capital and the dividends, and `734`, since 73 is "Concours publics" here |
+| Equity | `102` Fonds propres sans droit de reprise, `103` avec droit de reprise, their subdivisions, `1051` and `1052`, `106800` Réserves pour projet de l'entité, `108` Dotations consomptibles |
+| Dedicated and deferred funds | `19`: `191` Fonds reportés liés aux legs ou donations, `194` to `196` the dedicated funds, and on the income statement `689` and `789`, the transfers to them and their use |
+| Bequests and donations | `152`, `204`, `24`, `294`, `461`, `466`, `622640`, `652100`, `653100`, `681640`, `757100`, `781640` |
+| Resources of the entity | `706300` Parrainages, `707300` Ventes de dons en nature, `730000` Concours publics, `753` Versements des fondateurs, `754` Ressources liées à la générosité du public, `755` Contributions financières, `756` Cotisations, `758300` |
+| Voluntary contributions in kind | `86` and `87`, of type `off_balance`: an entry debits 86 and credits 87 for the same amount, and neither reaches the result nor the balance sheet, as the regulation presents them at the foot of the income statement |
+
+Article 320-2 also renames eleven headings the general chart carries — `10`,
+`41`, `45`, `455`, `653`, `68`, `73`, `755`, `758`, `781` and `106800`. The
+chart uses its wording. A four- or five-digit account of the article is
+padded to the six digits of this pack (`75411` Dons manuels is `754110`). The
+English labels are keyed by code, as every pack's are, so these eleven codes
+read in English as in the `default` chart.
+
+| Not carried yet | Why |
+|---|---|
+| The bilan and the compte de résultat of the regulation | The chart names no statement: a company on it reports on the generic framework, which every one of its accounts reaches. Statements of its own come next. |
+| The compte de résultat par origine et par destination and the compte d'emploi annuel des ressources collectées auprès du public | They are drawn up from the analytic accounts of the entity, which no pack names. |
+| An analysis | `analysis.json` is written for the `default` chart. |
+
+The chart's certification is `community`: no accountant has compared these
+books with the accounts an association filed.
+
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
 The section carries only rules cited to an official source. A rule that is missing makes an estimate too high or too low

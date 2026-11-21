@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "FR",
   "name": "France",
-  "version": "1.23.0",
+  "version": "1.24.0",
   "schema_min": "20261023124650",
   "seed_sequence": 11,
-  "released_at": "2026-11-06",
+  "released_at": "2026-11-21",
   "certification": {
     "status": "proven",
     "evidence": [
@@ -431,6 +431,28 @@
       ],
       "legal_reference": "Règlement ANC 2022-06 — plan comptable général",
       "source": "anc-2022-06"
+    },
+    {
+      "code": "association",
+      "name": "PCG — associations et fondations",
+      "accounts": "accounts.association.csv",
+      "audience": "nonprofits",
+      "statements": [],
+      "certification": {
+        "status": "community",
+        "sources": [
+          {
+            "key": "anc-2018-06",
+            "title": "Règlement ANC n° 2018-06 du 5 décembre 2018 relatif aux comptes annuels des personnes morales de droit privé à but non lucratif — recueil des normes comptables du secteur non lucratif, version du 1er janvier 2026",
+            "publisher": "Autorité des normes comptables",
+            "url": "https://www.anc.gouv.fr/files/anc/files/1_Normes_fran%C3%A7aises/Plans%20comptables/2026/Recueil-non-lucratif-2026.pdf",
+            "consulted_on": "2026-11-21",
+            "kind": "regulation"
+          }
+        ]
+      },
+      "legal_reference": "Règlement ANC n° 2018-06, art. 320-1 et 320-2 — le plan de comptes du règlement ANC n° 2014-03, sous réserve des comptes spécifiques aux personnes morales de droit privé à but non lucratif",
+      "source": "anc-2018-06"
     }
   ],
   "documents": {
