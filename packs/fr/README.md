@@ -298,12 +298,39 @@ read in English as in the `default` chart.
 
 | Not carried yet | Why |
 |---|---|
-| The bilan and the compte de résultat of the regulation | The chart names no statement: a company on it reports on the generic framework, which every one of its accounts reaches. Statements of its own come next. |
 | The compte de résultat par origine et par destination and the compte d'emploi annuel des ressources collectées auprès du public | They are drawn up from the analytic accounts of the entity, which no pack names. |
 | An analysis | `analysis.json` is written for the `default` chart. |
 
 The chart's certification is `community`: no accountant has compared these
 books with the accounts an association filed.
+
+### The bilan and the compte de résultat: `FR-ASSOC-BS` and `FR-ASSOC-IS`
+
+Since 1.25.0 the chart `association` reports on its own bilan and compte de
+résultat, `FR-ASSOC-BS` and `FR-ASSOC-IS`, instead of the generic framework
+alone (which stays offered beside them). Both follow the skeleton every chart
+of this pack uses — actif immobilisé and circulant, fonds propres, dettes;
+produits and charges d'exploitation, financiers, exceptionnels — grouped more
+broadly than the liasse fiscale forms `FR-2050`/`FR-2052`, since the
+association files no liasse. Article 320-2's rubrics are each their own line:
+
+| Rubric of article 320-2 | Line |
+|---|---|
+| Fonds propres sans droit de reprise | `P102` |
+| Fonds propres avec droit de reprise | `P103` |
+| Dotations (consomptibles) | `P108`, the non consomptibles are counted inside `P102` |
+| Fonds reportés (legs ou donations) | `P191`, split into `P191A` Legs ou donations and `P191B` Donations temporaires d'usufruit |
+| Fonds dédiés | `P194` to `P196`, one line per origin |
+| Générosité du public | `P196` on the bilan (the dedicated fund carried on it), `PR754` on the compte de résultat (754 and the quotes-parts of 755200) |
+| Cotisations | `PR756` |
+| Subventions d'exploitation | `PR74` |
+| Contributions volontaires en nature | `CVN_EMPLOIS` (86) and `CVN_RESSOURCES` (87) on the compte de résultat, as the regulation's annex to it — neither reaches a total, since the two classes are `off_balance` and never reach the bilan |
+
+`result_in_progress` is `alone`: rubric `P12` carries the result of the year
+in progress and nothing else, as on `FR-2050`.
+
+The chart's certification stays `community`: no accountant has compared these
+statements with the accounts an association filed.
 
 ## Corporate income tax: what `corporate_tax.json` leaves out
 
