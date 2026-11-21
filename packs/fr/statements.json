@@ -6,7 +6,8 @@
       "kind": "balance_sheet",
       "framework": "FR-PCG",
       "name": "Bilan — liasse fiscale 2050 et 2051",
-      "legal_reference": "Formulaires 2050-SD et 2051-SD, millésime 2026 ; règlement ANC 2022-06", "source": "liasse-2050",
+      "legal_reference": "Formulaires 2050-SD et 2051-SD, millésime 2026 ; règlement ANC 2022-06",
+      "source": "liasse-2050",
       "result_in_progress": "alone",
       "lines": [
         {
@@ -1218,7 +1219,8 @@
       "kind": "income_statement",
       "framework": "FR-PCG",
       "name": "Compte de résultat — liasse fiscale 2052 et 2053",
-      "legal_reference": "Formulaires 2052-SD et 2053-SD, millésime 2026 ; règlement ANC 2022-06", "source": "liasse-2050",
+      "legal_reference": "Formulaires 2052-SD et 2053-SD, millésime 2026 ; règlement ANC 2022-06",
+      "source": "liasse-2050",
       "lines": [
         {
           "code": "FA",
@@ -1992,6 +1994,1330 @@
           ],
           "minus": [
             "HM"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "FR-ASSOC-BS",
+      "kind": "balance_sheet",
+      "framework": "FR-PCG",
+      "name": "Bilan de l'association",
+      "legal_reference": "Règlement ANC n° 2018-06 du 5 décembre 2018, art. 320-2 — comptes annuels des personnes morales de droit privé à but non lucratif, recueil du secteur non lucratif, version du 1er janvier 2026",
+      "source": "anc-2018-06",
+      "result_in_progress": "alone",
+      "lines": [
+        {
+          "code": "A10",
+          "name": "Immobilisations incorporelles",
+          "sequence": 10,
+          "parent": "AI",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "20",
+              "code_to": "20"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "280",
+              "code_to": "280"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "290",
+              "code_to": "290"
+            }
+          ]
+        },
+        {
+          "code": "A20",
+          "name": "Immobilisations corporelles",
+          "sequence": 20,
+          "parent": "AI",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "21",
+              "code_to": "21"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "281",
+              "code_to": "281"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "291",
+              "code_to": "291"
+            }
+          ]
+        },
+        {
+          "code": "A22",
+          "name": "Immobilisations mises en concession",
+          "sequence": 30,
+          "parent": "AI",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "22",
+              "code_to": "22"
+            }
+          ]
+        },
+        {
+          "code": "A23",
+          "name": "Immobilisations en cours, avances et acomptes",
+          "sequence": 40,
+          "parent": "AI",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "23",
+              "code_to": "23"
+            }
+          ]
+        },
+        {
+          "code": "A24",
+          "name": "Biens reçus par legs ou donations destinés à être cédés",
+          "sequence": 50,
+          "parent": "AI",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "24",
+              "code_to": "24"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "294",
+              "code_to": "294"
+            }
+          ]
+        },
+        {
+          "code": "A26",
+          "name": "Participations et créances rattachées à des participations",
+          "sequence": 60,
+          "parent": "AI",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "26",
+              "code_to": "26"
+            }
+          ]
+        },
+        {
+          "code": "A27",
+          "name": "Autres immobilisations financières",
+          "sequence": 70,
+          "parent": "AI",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "27",
+              "code_to": "27"
+            }
+          ]
+        },
+        {
+          "code": "AI",
+          "name": "TOTAL (I) — ACTIF IMMOBILISÉ",
+          "sequence": 80,
+          "parent": "ATOT",
+          "is_total": true,
+          "plus": [
+            "A10",
+            "A20",
+            "A22",
+            "A23",
+            "A24",
+            "A26",
+            "A27"
+          ]
+        },
+        {
+          "code": "A31",
+          "name": "Stocks et en-cours de production",
+          "sequence": 90,
+          "parent": "AC",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "31",
+              "code_to": "35"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "37",
+              "code_to": "37"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "39",
+              "code_to": "39"
+            }
+          ]
+        },
+        {
+          "code": "A41",
+          "name": "Clients, adhérents, usagers et comptes rattachés",
+          "sequence": 100,
+          "parent": "AC",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "411",
+              "code_to": "411"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "413",
+              "code_to": "413"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "416",
+              "code_to": "416"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "418",
+              "code_to": "418"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "491",
+              "code_to": "491"
+            }
+          ]
+        },
+        {
+          "code": "A46",
+          "name": "Autres créances",
+          "sequence": 110,
+          "parent": "AC",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "409",
+              "code_to": "409"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "441",
+              "code_to": "441"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "445660",
+              "code_to": "445670"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "445800",
+              "code_to": "445860"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "461",
+              "code_to": "462"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "465",
+              "code_to": "465"
+            }
+          ]
+        },
+        {
+          "code": "A50",
+          "name": "Valeurs mobilières de placement",
+          "sequence": 120,
+          "parent": "AC",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "50",
+              "code_to": "50"
+            }
+          ]
+        },
+        {
+          "code": "A51",
+          "name": "Disponibilités",
+          "sequence": 130,
+          "parent": "AC",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "51",
+              "code_to": "54"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "58",
+              "code_to": "59"
+            }
+          ]
+        },
+        {
+          "code": "A48",
+          "name": "Charges constatées d'avance",
+          "sequence": 140,
+          "parent": "AC",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "486",
+              "code_to": "486"
+            }
+          ]
+        },
+        {
+          "code": "AC",
+          "name": "TOTAL (II) — ACTIF CIRCULANT",
+          "sequence": 150,
+          "parent": "ATOT",
+          "is_total": true,
+          "plus": [
+            "A31",
+            "A41",
+            "A46",
+            "A50",
+            "A51",
+            "A48"
+          ]
+        },
+        {
+          "code": "ATOT",
+          "name": "TOTAL GÉNÉRAL DE L'ACTIF",
+          "sequence": 160,
+          "is_total": true,
+          "plus": [
+            "AI",
+            "AC"
+          ]
+        },
+        {
+          "code": "P102",
+          "name": "Fonds propres sans droit de reprise",
+          "sequence": 170,
+          "parent": "FA",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "102",
+              "code_to": "102"
+            }
+          ]
+        },
+        {
+          "code": "P103",
+          "name": "Fonds propres avec droit de reprise",
+          "sequence": 180,
+          "parent": "FA",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "103",
+              "code_to": "103"
+            }
+          ]
+        },
+        {
+          "code": "P105",
+          "name": "Écarts de réévaluation",
+          "sequence": 190,
+          "parent": "FA",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "105",
+              "code_to": "105"
+            }
+          ]
+        },
+        {
+          "code": "P106",
+          "name": "Réserves",
+          "sequence": 200,
+          "parent": "FA",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "106",
+              "code_to": "106"
+            }
+          ]
+        },
+        {
+          "code": "P108",
+          "name": "Dotations consomptibles",
+          "sequence": 210,
+          "parent": "FA",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "108",
+              "code_to": "108"
+            }
+          ]
+        },
+        {
+          "code": "P11",
+          "name": "Report à nouveau",
+          "sequence": 220,
+          "parent": "FA",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "110000",
+              "code_to": "110000"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "119000",
+              "code_to": "119000"
+            }
+          ]
+        },
+        {
+          "code": "P12",
+          "name": "RÉSULTAT DE L'EXERCICE",
+          "sequence": 230,
+          "parent": "FA",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "120000",
+              "code_to": "120000"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "129000",
+              "code_to": "129000"
+            }
+          ]
+        },
+        {
+          "code": "P13",
+          "name": "Subventions d'investissement",
+          "sequence": 240,
+          "parent": "FA",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "13",
+              "code_to": "13"
+            }
+          ]
+        },
+        {
+          "code": "P14",
+          "name": "Provisions réglementées",
+          "sequence": 250,
+          "parent": "FA",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "14",
+              "code_to": "14"
+            }
+          ]
+        },
+        {
+          "code": "FA",
+          "name": "TOTAL (I) — FONDS ASSOCIATIFS ET RÉSERVES",
+          "sequence": 260,
+          "parent": "PTOT",
+          "is_total": true,
+          "plus": [
+            "P102",
+            "P103",
+            "P105",
+            "P106",
+            "P108",
+            "P11",
+            "P12",
+            "P13",
+            "P14"
+          ]
+        },
+        {
+          "code": "P15",
+          "name": "Provisions pour risques et charges",
+          "sequence": 270,
+          "parent": "PTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "15",
+              "code_to": "15"
+            }
+          ]
+        },
+        {
+          "code": "P191A",
+          "name": "Legs ou donations",
+          "sequence": 280,
+          "parent": "P191",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "191100",
+              "code_to": "191100"
+            }
+          ]
+        },
+        {
+          "code": "P191B",
+          "name": "Donations temporaires d'usufruit",
+          "sequence": 290,
+          "parent": "P191",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "191200",
+              "code_to": "191200"
+            }
+          ]
+        },
+        {
+          "code": "P191",
+          "name": "Fonds reportés liés aux legs ou donations",
+          "sequence": 300,
+          "parent": "P19",
+          "is_total": true,
+          "plus": [
+            "P191A",
+            "P191B"
+          ]
+        },
+        {
+          "code": "P194",
+          "name": "Fonds dédiés sur subventions d'exploitation",
+          "sequence": 310,
+          "parent": "P19",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "194",
+              "code_to": "194"
+            }
+          ]
+        },
+        {
+          "code": "P195",
+          "name": "Fonds dédiés sur contributions financières d'autres organismes",
+          "sequence": 320,
+          "parent": "P19",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "195",
+              "code_to": "195"
+            }
+          ]
+        },
+        {
+          "code": "P196",
+          "name": "Fonds dédiés sur ressources liées à la générosité du public",
+          "sequence": 330,
+          "parent": "P19",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "196",
+              "code_to": "196"
+            }
+          ]
+        },
+        {
+          "code": "P19",
+          "name": "TOTAL — FONDS DÉDIÉS OU REPORTÉS",
+          "sequence": 340,
+          "parent": "PTOT",
+          "is_total": true,
+          "plus": [
+            "P191",
+            "P194",
+            "P195",
+            "P196"
+          ]
+        },
+        {
+          "code": "D401",
+          "name": "Fournisseurs et comptes rattachés",
+          "sequence": 350,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "401",
+              "code_to": "401"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "403",
+              "code_to": "403"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "408",
+              "code_to": "408"
+            }
+          ]
+        },
+        {
+          "code": "D404",
+          "name": "Dettes sur immobilisations et comptes rattachés",
+          "sequence": 360,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "404",
+              "code_to": "405"
+            }
+          ]
+        },
+        {
+          "code": "D16",
+          "name": "Emprunts et dettes financières",
+          "sequence": 370,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "161",
+              "code_to": "161"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "163100",
+              "code_to": "163100"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "164000",
+              "code_to": "164000"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "165",
+              "code_to": "165"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "166",
+              "code_to": "166"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "167",
+              "code_to": "167"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "168800",
+              "code_to": "168800"
+            }
+          ]
+        },
+        {
+          "code": "D171",
+          "name": "Dettes rattachées à des participations",
+          "sequence": 380,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "171",
+              "code_to": "171"
+            }
+          ]
+        },
+        {
+          "code": "D181",
+          "name": "Comptes de liaison des établissements et sociétés en participation",
+          "sequence": 390,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "181",
+              "code_to": "181"
+            }
+          ]
+        },
+        {
+          "code": "D419",
+          "name": "Avances et acomptes reçus des clients, adhérents et usagers",
+          "sequence": 400,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "419",
+              "code_to": "419"
+            }
+          ]
+        },
+        {
+          "code": "D42",
+          "name": "Personnel et comptes rattachés",
+          "sequence": 410,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "42",
+              "code_to": "42"
+            }
+          ]
+        },
+        {
+          "code": "D43",
+          "name": "Sécurité sociale et autres organismes sociaux",
+          "sequence": 420,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "43",
+              "code_to": "43"
+            }
+          ]
+        },
+        {
+          "code": "D44",
+          "name": "État et autres collectivités publiques",
+          "sequence": 430,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "442",
+              "code_to": "442"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "444",
+              "code_to": "444"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "445200",
+              "code_to": "445200"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "445510",
+              "code_to": "445510"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "445710",
+              "code_to": "445710"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "445870",
+              "code_to": "445870"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "447",
+              "code_to": "448"
+            }
+          ]
+        },
+        {
+          "code": "D45",
+          "name": "Confédération, fédération, union, entités affiliées",
+          "sequence": 440,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "45",
+              "code_to": "45"
+            }
+          ]
+        },
+        {
+          "code": "D46",
+          "name": "Dettes des legs ou donations et autres dettes diverses",
+          "sequence": 450,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "466",
+              "code_to": "468"
+            }
+          ]
+        },
+        {
+          "code": "D47",
+          "name": "Comptes transitoires ou d'attente",
+          "sequence": 460,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "47",
+              "code_to": "47"
+            }
+          ]
+        },
+        {
+          "code": "D487",
+          "name": "Produits constatés d'avance",
+          "sequence": 470,
+          "parent": "DTOT",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "487",
+              "code_to": "487"
+            }
+          ]
+        },
+        {
+          "code": "DTOT",
+          "name": "TOTAL — DETTES",
+          "sequence": 480,
+          "parent": "PTOT",
+          "is_total": true,
+          "plus": [
+            "D401",
+            "D404",
+            "D16",
+            "D171",
+            "D181",
+            "D419",
+            "D42",
+            "D43",
+            "D44",
+            "D45",
+            "D46",
+            "D47",
+            "D487"
+          ]
+        },
+        {
+          "code": "PTOT",
+          "name": "TOTAL GÉNÉRAL DU PASSIF",
+          "sequence": 490,
+          "is_total": true,
+          "plus": [
+            "FA",
+            "P15",
+            "P19",
+            "DTOT"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "FR-ASSOC-IS",
+      "kind": "income_statement",
+      "framework": "FR-PCG",
+      "name": "Compte de résultat de l'association",
+      "legal_reference": "Règlement ANC n° 2018-06 du 5 décembre 2018, art. 320-2 — comptes annuels des personnes morales de droit privé à but non lucratif, recueil du secteur non lucratif, version du 1er janvier 2026",
+      "source": "anc-2018-06",
+      "lines": [
+        {
+          "code": "PR70",
+          "name": "Ventes et prestations de services",
+          "sequence": 10,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "70",
+              "code_to": "70"
+            }
+          ]
+        },
+        {
+          "code": "PR71",
+          "name": "Production stockée",
+          "sequence": 20,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "71",
+              "code_to": "71"
+            }
+          ]
+        },
+        {
+          "code": "PR72",
+          "name": "Production immobilisée",
+          "sequence": 30,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "72",
+              "code_to": "72"
+            }
+          ]
+        },
+        {
+          "code": "PR73",
+          "name": "Concours publics",
+          "sequence": 40,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "73",
+              "code_to": "73"
+            }
+          ]
+        },
+        {
+          "code": "PR74",
+          "name": "Subventions d'exploitation",
+          "sequence": 50,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "74",
+              "code_to": "74"
+            }
+          ]
+        },
+        {
+          "code": "PR754",
+          "name": "Générosité du public",
+          "sequence": 60,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "754",
+              "code_to": "754"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "755200",
+              "code_to": "755200"
+            }
+          ]
+        },
+        {
+          "code": "PR7551",
+          "name": "Contributions financières d'autres organismes",
+          "sequence": 70,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "755100",
+              "code_to": "755100"
+            }
+          ]
+        },
+        {
+          "code": "PR756",
+          "name": "Cotisations",
+          "sequence": 80,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "756",
+              "code_to": "756"
+            }
+          ]
+        },
+        {
+          "code": "PR75X",
+          "name": "Autres produits de gestion courante",
+          "sequence": 90,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "751",
+              "code_to": "753"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "757",
+              "code_to": "758"
+            }
+          ]
+        },
+        {
+          "code": "PR78",
+          "name": "Reprises sur amortissements, dépréciations, provisions et transferts de charges (exploitation)",
+          "sequence": 100,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "781",
+              "code_to": "781"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "791",
+              "code_to": "791"
+            }
+          ]
+        },
+        {
+          "code": "PR789",
+          "name": "Utilisation des fonds dédiés et reportés",
+          "sequence": 110,
+          "parent": "PE",
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "789",
+              "code_to": "789"
+            }
+          ]
+        },
+        {
+          "code": "PE",
+          "name": "TOTAL (I) — PRODUITS D'EXPLOITATION",
+          "sequence": 120,
+          "is_total": true,
+          "plus": [
+            "PR70",
+            "PR71",
+            "PR72",
+            "PR73",
+            "PR74",
+            "PR754",
+            "PR7551",
+            "PR756",
+            "PR75X",
+            "PR78",
+            "PR789"
+          ]
+        },
+        {
+          "code": "CH60",
+          "name": "Achats",
+          "sequence": 130,
+          "parent": "CE",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "60",
+              "code_to": "60"
+            }
+          ]
+        },
+        {
+          "code": "CH6162",
+          "name": "Services extérieurs et autres services extérieurs",
+          "sequence": 140,
+          "parent": "CE",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "61",
+              "code_to": "62"
+            }
+          ]
+        },
+        {
+          "code": "CH63",
+          "name": "Impôts, taxes et versements assimilés",
+          "sequence": 150,
+          "parent": "CE",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "63",
+              "code_to": "63"
+            }
+          ]
+        },
+        {
+          "code": "CH64",
+          "name": "Charges de personnel",
+          "sequence": 160,
+          "parent": "CE",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "64",
+              "code_to": "64"
+            }
+          ]
+        },
+        {
+          "code": "CH65",
+          "name": "Autres charges de gestion courante",
+          "sequence": 170,
+          "parent": "CE",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "65",
+              "code_to": "65"
+            }
+          ]
+        },
+        {
+          "code": "CH681",
+          "name": "Dotations aux amortissements, dépréciations et provisions (exploitation)",
+          "sequence": 180,
+          "parent": "CE",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "681",
+              "code_to": "681"
+            }
+          ]
+        },
+        {
+          "code": "CH689",
+          "name": "Report en fonds dédiés et reportés",
+          "sequence": 190,
+          "parent": "CE",
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "689",
+              "code_to": "689"
+            }
+          ]
+        },
+        {
+          "code": "CE",
+          "name": "TOTAL (II) — CHARGES D'EXPLOITATION",
+          "sequence": 200,
+          "is_total": true,
+          "plus": [
+            "CH60",
+            "CH6162",
+            "CH63",
+            "CH64",
+            "CH65",
+            "CH681",
+            "CH689"
+          ]
+        },
+        {
+          "code": "RESEXP",
+          "name": "1 — RÉSULTAT D'EXPLOITATION (I − II)",
+          "sequence": 210,
+          "is_total": true,
+          "plus": [
+            "PE"
+          ],
+          "minus": [
+            "CE"
+          ]
+        },
+        {
+          "code": "PRFIN",
+          "name": "Produits financiers",
+          "sequence": 220,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "76",
+              "code_to": "76"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "786",
+              "code_to": "786"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "796",
+              "code_to": "796"
+            }
+          ]
+        },
+        {
+          "code": "CHFIN",
+          "name": "Charges financières",
+          "sequence": 230,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "66",
+              "code_to": "66"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "686",
+              "code_to": "686"
+            }
+          ]
+        },
+        {
+          "code": "RESFIN",
+          "name": "2 — RÉSULTAT FINANCIER",
+          "sequence": 240,
+          "is_total": true,
+          "plus": [
+            "PRFIN"
+          ],
+          "minus": [
+            "CHFIN"
+          ]
+        },
+        {
+          "code": "RESCOUR",
+          "name": "3 — RÉSULTAT COURANT AVANT IMPÔTS",
+          "sequence": 250,
+          "is_total": true,
+          "plus": [
+            "RESEXP",
+            "RESFIN"
+          ]
+        },
+        {
+          "code": "PREXC",
+          "name": "Produits exceptionnels",
+          "sequence": 260,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "77",
+              "code_to": "77"
+            }
+          ]
+        },
+        {
+          "code": "CHEXC",
+          "name": "Charges exceptionnelles",
+          "sequence": 270,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "67",
+              "code_to": "67"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "687",
+              "code_to": "687"
+            }
+          ]
+        },
+        {
+          "code": "RESEXC",
+          "name": "4 — RÉSULTAT EXCEPTIONNEL",
+          "sequence": 280,
+          "is_total": true,
+          "plus": [
+            "PREXC"
+          ],
+          "minus": [
+            "CHEXC"
+          ]
+        },
+        {
+          "code": "CH69",
+          "name": "Participation des salariés et impôts sur les bénéfices",
+          "sequence": 290,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "69",
+              "code_to": "69"
+            }
+          ]
+        },
+        {
+          "code": "RESNET",
+          "name": "RÉSULTAT DE L'EXERCICE",
+          "sequence": 300,
+          "is_total": true,
+          "plus": [
+            "RESCOUR",
+            "RESEXC"
+          ],
+          "minus": [
+            "CH69"
+          ]
+        },
+        {
+          "code": "CVN_EMPLOIS",
+          "name": "Évaluation des contributions volontaires en nature — I. Emplois des contributions volontaires en nature",
+          "sequence": 310,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "86",
+              "code_to": "86"
+            }
+          ]
+        },
+        {
+          "code": "CVN_RESSOURCES",
+          "name": "Évaluation des contributions volontaires en nature — II. Contributions volontaires en nature",
+          "sequence": 320,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "87",
+              "code_to": "87"
+            }
           ]
         }
       ]
