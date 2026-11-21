@@ -57,6 +57,13 @@ const THE_MOVE = '20261028040000_the_socle_moves_to_its_schema.sql';
 const WORDS_OF_A_PACK = '20261029010000_a_pack_names_the_words_of_its_invoices.sql';
 
 /**
+ * A file after the move that adds a column the pack seeds write, beside a
+ * function written for the socle in `ekwo`: only its `alter table` of the
+ * country model is taken.
+ */
+const TERRITORY_REQUIRED = '20261121070100_a_company_names_its_territory.sql';
+
+/**
  * The command line's PostgREST client, signed in as `userId`, against a
  * stand-in for PostgREST that serves a schema by its profile header and
  * answers 404 for a function its schema does not hold, as PostgREST does.
@@ -87,10 +94,16 @@ describe('an installation before the move: the socle in public, ekwo created and
     // `ekwo`, and an installation before the move has run none of them.
     const fromTheMove = (await migrationFiles()).filter((file) => file >= THE_MOVE);
     // Today's seeds are loaded all the same, and the pack seeds write
-    // `country_defaults.invoice_labels`, which a file after the move adds to
-    // `ekwo`: it is added here to the socle in `public`, as nothing else.
+    // `country_defaults.invoice_labels` and `territory_required`, which files
+    // after the move add to `ekwo`: they are added here to the socle in
+    // `public`, as nothing else.
     const migrations = join(repoRoot, 'supabase', 'migrations');
-    const beforeSeeds = (await readFile(join(migrations, WORDS_OF_A_PACK), 'utf8')).replaceAll('ekwo.country_defaults', 'public.country_defaults');
+    const columns = (await readFile(join(migrations, TERRITORY_REQUIRED), 'utf8')).match(
+      /^alter table ekwo\.country_defaults[\s\S]*?;$/gm,
+    ) ?? [];
+    const beforeSeeds = [await readFile(join(migrations, WORDS_OF_A_PACK), 'utf8'), ...columns]
+      .join('\n')
+      .replaceAll('ekwo.country_defaults', 'public.country_defaults');
     db = await freshDatabase({ withoutMigrations: fromTheMove, beforeSeeds });
     ({ ownerId: owner } = await newCompany(db));
   });

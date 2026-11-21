@@ -129,7 +129,11 @@
         "currency": { "type": "string" },
         "language": { "type": "string" },
         "chart": { "type": ["string", "null"] },
-        "packVersion": { "type": ["string", "null"] }
+        "packVersion": { "type": ["string", "null"] },
+        "territory": {
+          "type": ["string", "null"],
+          "$comment": "Where the company is established below its country (US-CA); null where the country is the answer."
+        }
       }
     },
     "fiscalYear": {

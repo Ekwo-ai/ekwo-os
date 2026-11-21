@@ -65,6 +65,11 @@ export interface BootstrapOptions {
   /** Chart of accounts to install. Left out, the pack's default chart. */
   chartCode?: string | undefined;
   /**
+   * Where the company is established below its country (US-CA). Left out,
+   * none — and a pack that requires one is a refusal, as in `create_company()`.
+   */
+  territory?: string | undefined;
+  /**
    * How often the company files its periodic return. Left out, the cadence
    * the pack proposes; left out by the pack too, the column stays null and
    * nothing here invents one.
@@ -559,6 +564,16 @@ export async function bootstrap(
   const vatPeriod =
     periodicReturn === undefined ? undefined : filingPeriods[periodicReturn.code];
 
+  // Where the company is established below its country. The database refuses
+  // a territory outside the country; a pack that requires one is refused
+  // here, before anything is written, in the words `create_company()` uses.
+  const territory = options.territory?.toUpperCase();
+  if (territory === undefined && (await territoryRequired(db, country))) {
+    throw new Error(
+      `territory_required: a company of ${country} names the territory it is established in. Pass --territory.`,
+    );
+  }
+
   const existingCompany = await first<{ id: string; currency_code: string }>(
     db,
     'select id, currency_code from companies where name = $1 order by created_at limit 1',
@@ -571,10 +586,10 @@ export async function bootstrap(
       // `vat_period` is not written here. It is a mirror of the row
       // `company_filing_periods` carries for the periodic return, and writing
       // both would be the one fact decided in two places.
-      `insert into companies (name, country, fiscal_country, currency_code, language)
-       values ($1, $2, $2, $3, $4)
+      `insert into companies (name, country, fiscal_country, currency_code, language, territory_code)
+       values ($1, $2, $2, $3, $4, $5)
        returning id`,
-      [options.company, country, currencyCode, language],
+      [options.company, country, currencyCode, language, territory ?? null],
     );
     if (created === undefined) throw new Error('company_insert_failed: no row returned');
     companyId = created.id;
@@ -819,4 +834,18 @@ export async function ensureBankAccount(
   );
 
   return { id, outcome, label, identifier: read.identifier, accountCode };
+}
+
+/**
+ * Whether the pack requires a company of the country to name its territory,
+ * read through the row as JSON so that a database from before the column
+ * answers no rather than an error.
+ */
+export async function territoryRequired(db: SqlClient, country: string): Promise<boolean> {
+  const rows = await db.query<{ required: boolean | null }>(
+    `select (to_jsonb(d) ->> 'territory_required')::boolean as required
+       from country_defaults d where d.country = $1`,
+    [country],
+  );
+  return rows[0]?.required === true;
 }

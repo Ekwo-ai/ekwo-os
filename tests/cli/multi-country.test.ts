@@ -261,6 +261,39 @@ describe('ekwo init --no-company, then ekwo company new in two countries', () =>
     expect(await db.query('select id from companies where name = $1', ['Example Three'])).toEqual([]);
   });
 
+  it('asks for the territory where the pack requires one, and writes it', async () => {
+    const [rooted] = packsWhere('that requires a territory', (pack) => pack.manifest.defaults['territory_required'] === true);
+    const inside = await db.query<{ code: string }>(
+      'select code from territories where parent_code = $1 order by code limit 1',
+      [rooted!.manifest.country],
+    );
+    const territory = inside[0]!.code;
+
+    const refused = await json(db, cwd, [
+      'company', 'new', 'Example Rooted', '--yes', '--country', rooted!.manifest.country, ...companyFlags(rooted!),
+    ]);
+    expect(refused.exitCode).toBe(EXIT_USAGE);
+    expect(refused.error?.message).toContain('--territory');
+    expect(refused.error?.message).toContain(territory);
+    expect(await db.query('select id from companies where name = $1', ['Example Rooted'])).toEqual([]);
+
+    const created = await json(db, cwd, [
+      'company', 'new', 'Example Rooted', '--yes', '--country', rooted!.manifest.country,
+      '--territory', territory.toLowerCase(), ...companyFlags(rooted!),
+    ]);
+    expect(created.exitCode).toBe(0);
+    expect((created.data as { company: { territory: string | null } }).company.territory).toBe(territory);
+    expect(await db.query('select territory_code from companies where name = $1', ['Example Rooted'])).toEqual([
+      { territory_code: territory },
+    ]);
+
+    // And a pack that requires none asks nothing: the two companies above
+    // were created without the flag, and have no territory.
+    expect(
+      await db.query('select territory_code from companies where name in ($1, $2)', ['Example North', 'Example South']),
+    ).toEqual([{ territory_code: null }, { territory_code: null }]);
+  });
+
   it('is refused by the database for somebody who is not an administrator', async () => {
     const stranger = await makeAuthUser(db, 'stranger@example.test');
     const refused = await json(db, cwd, [

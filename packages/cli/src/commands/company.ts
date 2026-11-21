@@ -57,6 +57,7 @@ import {
   chooseCountry,
   chooseFiscalYearStart,
   chooseLanguage,
+  chooseTerritory,
 } from '../company-choices.js';
 
 export const COMPANY_FLAGS = [
@@ -67,6 +68,7 @@ export const COMPANY_FLAGS = [
   'country',
   'chart',
   'language',
+  'territory',
   'currency',
   'fiscal-year',
   'fiscal-year-start',
@@ -250,6 +252,7 @@ async function newCommand(db: SqlClient, args: ParsedArgs, interactive: boolean)
   const fiscalYearStart = await chooseFiscalYearStart(db, args, country, fiscalYear, interactive);
   const { chartCode } = await chooseChart(db, args, country, interactive);
   const language = await chooseLanguage(db, args, country, interactive);
+  const territory = await chooseTerritory(db, args, country, interactive);
   const currency = stringFlag(args, 'currency')?.toUpperCase();
   const actor = await resolveAdministrator(db, stringFlag(args, 'as-user'));
 
@@ -257,11 +260,20 @@ async function newCommand(db: SqlClient, args: ParsedArgs, interactive: boolean)
   note(dim(`as ${actor}, an administrator of the installation`));
 
   const created = await asUser(db, actor, () =>
-    first<{ id: string; currency_code: string; language: string }>(
+    first<{ id: string; currency_code: string; language: string; territory_code: string | null }>(
       db,
-      `select id, currency_code, language
-         from create_company($1, $2, $3, $4, $5, $6, $7::date)`,
-      [name, country, currency ?? null, language, chartCode ?? null, fiscalYear, fiscalYearStart ?? null],
+      // The territory is named only when there is one, so that a company
+      // created without one calls the function as an installation from before
+      // the argument still has it.
+      territory === undefined
+        ? `select id, currency_code, language, null::text as territory_code
+             from create_company($1, $2, $3, $4, $5, $6, $7::date)`
+        : `select id, currency_code, language, territory_code
+             from create_company($1, $2, $3, $4, $5, $6, $7::date, null, $8)`,
+      [
+        name, country, currency ?? null, language, chartCode ?? null, fiscalYear, fiscalYearStart ?? null,
+        ...(territory === undefined ? [] : [territory]),
+      ],
     ),
   );
   if (created === undefined) throw new Error('create_company() answered nothing');
@@ -282,6 +294,7 @@ async function newCommand(db: SqlClient, args: ParsedArgs, interactive: boolean)
   line();
   pairs([
     ['company', `${name} (${country}, ${created.currency_code}, ${created.language})`],
+    ...(created.territory_code === null ? [] : [['territory', created.territory_code] as [string, string]]),
     ['id', created.id],
     ['chart of accounts', pack?.chart_code ?? 'unknown'],
     ['country pack', pack?.version ?? 'none recorded'],
@@ -299,6 +312,7 @@ async function newCommand(db: SqlClient, args: ParsedArgs, interactive: boolean)
       language: created.language,
       chart: pack?.chart_code ?? null,
       packVersion: pack?.version ?? null,
+      territory: created.territory_code,
     },
     fiscalYear:
       year === undefined ? null : { name: year.name, start: year.start_date, end: year.end_date },
@@ -665,6 +679,8 @@ function usage(): string {
   --country <cc>     new: which pack. No default; the refusal lists the packs held here.
   --chart <code>     new: required where the country offers several charts.
   --language <xx>    new: required where the pack publishes several languages.
+  --territory <code> new: where it is established below its country, US-CA. Required
+                     where the pack says so; the refusal lists the territories.
   --currency <ccy>   new: left out, the pack's.
   --fiscal-year <y>  new: the calendar year the first financial year opens in. This year.
   --fiscal-year-start <d>
