@@ -11,6 +11,21 @@ somewhere has already run it.
 
 ### Added
 
+- **France: the association chart reports on its own bilan and compte de
+  résultat.** The chart `association` of the French pack (1.25.0) named no
+  statement and reported on the generic framework alone; it now carries
+  `FR-ASSOC-BS` and `FR-ASSOC-IS`, règlement ANC n° 2018-06, art. 320-2 —
+  the generic framework stays offered beside them. The bilan gives article
+  320-2's rubrics their own line: fonds propres sans et avec droit de
+  reprise, dotations, fonds reportés (legs ou donations), fonds dédiés by
+  origin, including the one on ressources liées à la générosité du public.
+  The compte de résultat separates cotisations (756), générosité du public
+  (754, 755200) and subventions d'exploitation (74) from the rest, and
+  carries the voluntary contributions in kind (86, 87) as the regulation's
+  memo to it, off every total since the two classes stay `off_balance` and
+  never reach the bilan. `result_in_progress` is `alone`, as on `FR-2050`.
+  Certification stays `community`. No migration.
+
 - **France: the chart of associations and foundations, `association`.** The
   French pack (1.24.0) carries a second chart, audience `nonprofits`, for the
   private non-profit entities of règlement ANC n° 2018-06: the general chart
