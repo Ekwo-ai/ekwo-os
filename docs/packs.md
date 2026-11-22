@@ -53,7 +53,8 @@ packs/generic/         a pack with no country: statements and an analysis by acc
     "accounts": "accounts.csv", "default": true, "audience": "companies",
     "statements": ["BE-BNB-ABBR-BS", "BE-BNB-ABBR-IS", "BE-BNB-ABBR-AF"] },
   { "code": "asbl", "name": "PCMN — associations et fondations",
-    "accounts": "accounts.asbl.csv", "audience": "nonprofits", "statements": [],
+    "accounts": "accounts.asbl.csv", "audience": "nonprofits",
+    "statements": ["BE-ASBL-ABBR-BS", "BE-ASBL-ABBR-IS", "BE-ASBL-ABBR-AF"],
     "certification": { "status": "community" } }
 ]
 ```
@@ -71,6 +72,17 @@ role codes and tax posting accounts are not in *every* chart it ships.
 `ekwo init --chart <code>` picks one; without the flag, an interactive install
 asks only when the pack offers several, and a non-interactive one refuses and
 lists them. `ekwo status` prints the chart each company keeps its books on.
+
+**`audience` says who keeps books on a chart**: `companies` for the default
+one, `nonprofits` for associations and foundations, or a profession. The core
+does nothing with it; the installer shows it, and the MCP tool `describe_pack`
+lists every chart of a country with its audience and its statements, the
+default first — which is how an agent answers "is there a chart for
+associations in this country?" without guessing. `create_company` and
+`ekwo company new` take the chosen one as `chart_code` / `--chart`. The
+Belgian chart `asbl` and the French chart `association` are the two charts for
+`nonprofits` today; each reports on statements of its own
+([below](#a-chart-reports-on-its-own-statements)).
 
 ## Financial statements
 
@@ -97,6 +109,28 @@ the only way two lines may share an account.
 `sign` multiplies the debit-minus-credit balance so the line reads the way the
 scheme prints it: `1` on an asset or an expense, `-1` on a liability, equity or
 income line.
+
+### A chart reports on its own statements
+
+`statements` on a chart names the schemes it reports on, and they are the
+ones `list_statements` marks `is_default` for a company on that chart. A chart
+for associations needs schemes of its own because its accounts are not a
+company's: its funds take the place of capital and reserves, and some codes
+mean something else — French account 755 is the financial contributions an
+association receives on the chart of associations, where the general chart
+has it as the share of the result of operations made in common. So the chart `asbl` of the Belgian pack reports on
+`BE-ASBL-ABBR-BS`, `BE-ASBL-ABBR-IS` and `BE-ASBL-ABBR-AF`, the abbreviated
+scheme of associations and foundations, and the chart `association` of the
+French pack on `FR-ASSOC-BS` and `FR-ASSOC-IS`, the bilan and compte de
+résultat of règlement ANC n° 2018-06. Each is written from the chart's own
+accounts, never by pointing at the company schemes.
+
+A chart with `"statements": []` reports on the generic framework alone, which
+any chart reaches through its account types; a chart with statements of its
+own is offered the generic framework beside them. `ekwo pack check` refuses a
+chart that names a statement the pack does not hold, and every account of the
+chart that can be posted to — headings and `off_balance` accounts aside — has
+to reach a line of one of its statements, as on the default chart.
 
 `xbrl` is the **fact key** of the line in the taxonomy the country files in,
 and it is optional: null where nothing could be verified. The three Belgian
@@ -306,7 +340,7 @@ Packs (…)
   be  Belgium 1.15.0 · 2 chart(s), 706 accounts · 22 taxes · 3 statements · fr, nl, de, en · certification maintained · golden: 12 documents, 4 payments, 4 period(s)
           filing — BE-VAT-PERIODIC (31 boxes) · cadence: month · deadline: in the pack · file: vat-consignment · settles to: 451900
           default (default) — PCMN — plan comptable minimum normalisé, 355 accounts, BE-BNB-ABBR-BS, BE-BNB-ABBR-IS, BE-BNB-ABBR-AF
-          asbl — PCMN — associations et fondations, 351 accounts, generic statements only
+          asbl — PCMN — associations et fondations, 351 accounts, BE-ASBL-ABBR-BS, BE-ASBL-ABBR-IS, BE-ASBL-ABBR-AF
   …
 ```
 
