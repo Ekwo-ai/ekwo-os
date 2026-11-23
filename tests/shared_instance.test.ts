@@ -862,6 +862,15 @@ const READS_IDS_INSIDE: Record<string, { reads: string[]; writesOnly?: string[];
   // The stages a move writes into the activity it logs, read from the deal it
   // moves under row level security; nothing in the jsonb it takes is read.
   'crm.place_deal': { reads: [], writesOnly: ['from_stage_id', 'to_stage_id'] },
+  // The keys it names are those of the answer it builds; the jsonb it takes
+  // is the activity's payload, handed to crm.log_activity() unread.
+  'crm.log_activity_by_email': { reads: [], writesOnly: ['contact_id', 'organisation_id'] },
+  // A list of contacts, each read under row level security and inside the
+  // company named: one of Alice's counts as nobody's.
+  'crm.interactions_of': {
+    reads: [],
+    calls: (id) => [{ sql: `select count(*)::int as n from crm.interactions_of($1, array[$2::uuid])`, params: [bobBooks, id] }],
+  },
 };
 
 describe('the other person, signed in', () => {

@@ -444,6 +444,11 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     deal.id,
     quote.id,
   ]);
+  // A generic e-mail domain the company added for itself travels with it.
+  await db.query(
+    `insert into crm.generic_email_domains (company_id, domain, kind) values ($1, $2, 'provider')`,
+    [companyId, `coworking-${tag}.example`.toLowerCase().replace(/[^a-z0-9.-]/g, '-')],
+  );
 
   // A sixth module: what the company agreed with the same party — a template,
   // a contract made from it, a schedule, an amendment, and the document one
