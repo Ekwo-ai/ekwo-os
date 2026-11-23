@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "IN",
   "name": "India",
-  "version": "0.2.0",
-  "schema_min": "20261011120000",
+  "version": "0.3.0",
+  "schema_min": "20261123070912",
   "seed_sequence": 108,
   "released_at": "2026-09-26",
   "certification": {
@@ -290,6 +290,7 @@
   "documents": {
     "numbering": "gapless",
     "number_format": "{CODE}-{NNNN}",
+    "number_shape": { "max_length": 16, "characters": ["letters", "digits", "-", "/"] },
     "tax_point": "invoice_date",
     "posted_edit_policy": "reversal_only",
     "references": {

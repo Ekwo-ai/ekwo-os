@@ -55,6 +55,9 @@ const LATER = [
   // Names contacts by a composite key, and attaches the guard of a merged
   // contact with refuse_merged_contacts_in(), which 20261019090000 defines.
   '20261121070200_a_buyer_certificate_is_held_on_the_contact.sql',
+  // Guards companies.number_format and journals.number_prefix, which
+  // 20261020160000 adds.
+  '20261123070913_a_company_numbers_within_its_shape.sql',
 ];
 
 let db: PGlite;

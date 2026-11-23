@@ -101,6 +101,7 @@ export function compilePack(pack: Pack): string {
   out.push(...finalClose(pack, country));
   out.push(...otherComprehensiveIncome(pack, country));
   out.push(...territoryRequired(pack, country));
+  out.push(...numberShape(pack, country));
   out.push(...taxPayee(pack, country));
 
   return `${out.join('\n')}\n`;
@@ -1024,6 +1025,29 @@ function otherComprehensiveIncome(pack: Pack, country: string): string[] {
 function territoryRequired(pack: Pack, country: string): string[] {
   if (pack.manifest.defaults['territory_required'] !== true) return [];
   return ['', `update country_defaults set territory_required = true where country = ${text(country)};`];
+}
+
+/**
+ * The shape the law gives a document number — `documents.number_shape`, into
+ * the column that `20261123070912` added.
+ *
+ * Written only when the pack says it, like `territory_required`: a pack that
+ * says nothing keeps a seed that runs on a schema from before the column.
+ */
+function numberShape(pack: Pack, country: string): string[] {
+  const shape = pack.documents.number_shape;
+  if (shape === null) return [];
+  // In one order whatever the order of the pack, so a seed changes only when
+  // the shape does.
+  const ordered = {
+    ...(shape.max_length === undefined ? {} : { max_length: shape.max_length }),
+    ...(shape.characters === undefined ? {} : { characters: shape.characters }),
+    ...(shape.never_restarts === undefined ? {} : { never_restarts: shape.never_restarts }),
+  };
+  return [
+    '',
+    `update country_defaults set number_shape = ${text(JSON.stringify(ordered))}::jsonb where country = ${text(country)};`,
+  ];
 }
 
 /**

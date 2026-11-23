@@ -71,6 +71,12 @@ const OTHER_COMPREHENSIVE_INCOME = '20261121070000_other_comprehensive_income_cl
 const TERRITORY_REQUIRED = '20261121070100_a_company_names_its_territory.sql';
 
 /**
+ * Another: the shape a pack gives a document number, `number_shape`, which
+ * the seeds of the packs that declare one write.
+ */
+const NUMBER_SHAPE = '20261123070912_a_pack_gives_a_number_its_shape.sql';
+
+/**
  * The command line's PostgREST client, signed in as `userId`, against a
  * stand-in for PostgREST that serves a schema by its profile header and
  * answers 404 for a function its schema does not hold, as PostgREST does.
@@ -102,12 +108,12 @@ describe('an installation before the move: the socle in public, ekwo created and
     const fromTheMove = (await migrationFiles()).filter((file) => file >= THE_MOVE);
     // Today's seeds are loaded all the same, and the pack seeds write
     // `country_defaults.invoice_labels`, the columns of other comprehensive
-    // income and `territory_required`, which files after the move add to
+    // income, `territory_required` and `number_shape`, which files after the move add to
     // `ekwo`: they are added here to the socle in `public`, as nothing else.
     const migrations = join(repoRoot, 'supabase', 'migrations');
     const columns = (
       await Promise.all(
-        [OTHER_COMPREHENSIVE_INCOME, TERRITORY_REQUIRED].map((file) => readFile(join(migrations, file), 'utf8')),
+        [OTHER_COMPREHENSIVE_INCOME, TERRITORY_REQUIRED, NUMBER_SHAPE].map((file) => readFile(join(migrations, file), 'utf8')),
       )
     ).flatMap((sql) => sql.match(/^alter table ekwo\.country_defaults[\s\S]*?;$/gm) ?? []);
     const beforeSeeds = [await readFile(join(migrations, WORDS_OF_A_PACK), 'utf8'), ...columns]

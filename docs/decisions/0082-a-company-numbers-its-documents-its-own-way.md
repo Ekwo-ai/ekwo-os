@@ -42,10 +42,12 @@ screen that offers the company's pattern beside the pack's read it there.
 
 - Null in both columns is the pack, as before: no company changes number
   until it says so.
-- The pack states no constraint on the shape of a number yet. Where a
-  country prescribes one — digits only, a maximum length, a series
-  registered with the authority before use — the pack will declare it and
-  the company's pattern will be checked against it.
+- Where a country prescribes the shape of a number — a maximum length, the
+  characters it is written with, a series that never restarts — the pack
+  declares it in `documents.number_shape`, and the company's pattern and its
+  journals' prefixes are checked against it (`20261123070912`,
+  `20261123070913`). A series
+  registered with the authority before use is not said yet.
 - A document that returns to draft after a change gives its number back only
   if its number is the last one the current pattern would print.
 
@@ -53,3 +55,6 @@ screen that offers the company's pattern beside the pack's read it there.
 
 - `supabase/migrations/20261020160000_a_company_numbers_its_documents_its_own_way.sql`
 - `tests/company_numbering.test.ts`
+- `supabase/migrations/20261123070912_a_pack_gives_a_number_its_shape.sql`
+- `supabase/migrations/20261123070913_a_company_numbers_within_its_shape.sql`
+- `tests/number_shape.test.ts`

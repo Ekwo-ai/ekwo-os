@@ -81,6 +81,7 @@ export {
   GENERIC_PACK,
   declaredSeedSequences,
   listPacks,
+  numberShapeRefusal,
   packsDir,
   parseCsv,
   readFrameworkPack,
@@ -117,6 +118,7 @@ export {
   type PackGoldenContact,
   type PackGoldenDocument,
   type PackGoldenPayment,
+  type PackNumberShape,
 } from './pack/read.js';
 export {
   CATEGORY_CODES,

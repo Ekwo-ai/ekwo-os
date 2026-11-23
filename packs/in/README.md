@@ -200,6 +200,10 @@ GSTR-4.
   for a financial year. Declared `gapless`, `{CODE}-{NNNN}`, never restarting:
   the core's `_per_year` counters restart in January, and an Indian financial
   year starts on 1 April.
+  The pack also says the shape the rule gives a number (`number_shape`): sixteen
+  characters at most, written with letters, digits, `-` and `/`. A company's
+  own pattern, or a journal's prefix, that would print a longer number or
+  another character is refused.
 - **Tax point**: `invoice_date`, s. 12 and s. 13 CGST Act. The payment branch
   (advances for services) needs a prepayment document Ekwo does not have.
 - **Posted documents**: `reversal_only` — credit and debit notes under s. 34,

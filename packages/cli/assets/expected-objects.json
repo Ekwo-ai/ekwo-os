@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261121070200",
+  "migration": "20261123070913",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -1813,6 +1813,10 @@
           {
             "name": "number_format",
             "type": "text"
+          },
+          {
+            "name": "number_shape",
+            "type": "jsonb"
           },
           {
             "name": "numbering_gapless",
@@ -5109,6 +5113,10 @@
         "arguments": ""
       },
       {
+        "name": "companies_number_format_fits_its_country",
+        "arguments": ""
+      },
+      {
         "name": "companies_number_format_is_valid",
         "arguments": ""
       },
@@ -5741,6 +5749,10 @@
         "arguments": "p_company_id uuid, p_from date, p_to date"
       },
       {
+        "name": "journals_number_prefix_fits_its_country",
+        "arguments": ""
+      },
+      {
         "name": "journals_number_prefix_is_its_own",
         "arguments": ""
       },
@@ -5867,6 +5879,14 @@
       {
         "name": "number_counter",
         "arguments": "p_format text, p_number text"
+      },
+      {
+        "name": "number_shape_of",
+        "arguments": "p_company_id uuid"
+      },
+      {
+        "name": "number_shape_refusal",
+        "arguments": "p_shape jsonb, p_format text, p_code text"
       },
       {
         "name": "numbering_rules",
@@ -7153,6 +7173,10 @@
       },
       {
         "table": "companies",
+        "name": "companies_number_format_fits_its_country"
+      },
+      {
+        "table": "companies",
         "name": "companies_number_format_is_valid"
       },
       {
@@ -7574,6 +7598,10 @@
       {
         "table": "journals",
         "name": "journals_audit"
+      },
+      {
+        "table": "journals",
+        "name": "journals_number_prefix_fits_its_country"
       },
       {
         "table": "journals",
@@ -9997,6 +10025,14 @@
           "service_role": []
         },
         {
+          "name": "companies_number_format_fits_its_country",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "companies_number_format_is_valid",
           "arguments": "",
           "trigger": true,
@@ -11580,6 +11616,14 @@
           ]
         },
         {
+          "name": "journals_number_prefix_fits_its_country",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
           "name": "journals_number_prefix_is_its_own",
           "arguments": "",
           "trigger": true,
@@ -11915,6 +11959,28 @@
         {
           "name": "number_counter",
           "arguments": "p_format text, p_number text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "number_shape_of",
+          "arguments": "p_company_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "number_shape_refusal",
+          "arguments": "p_shape jsonb, p_format text, p_code text",
           "anon": [],
           "authenticated": [
             "execute"

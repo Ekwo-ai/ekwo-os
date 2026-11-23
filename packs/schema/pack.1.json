@@ -873,6 +873,31 @@
           "type": "string",
           "description": "Pattern of a document number: {CODE} the series, {YYYY} or {YY} the year, {MM} the month, {NNNN} the counter zero-padded to as many N as are written, with literal text between them. Nothing reads it yet — next_entry_number() produces CODE/YYYY/NNNN — and a pack declares what its numbers look like so a numbering engine that consumes a pattern changes no number when it arrives."
         },
+        "number_shape": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "What the law of this country prescribes about the shape of a document number, where it prescribes something, cited by references.numbering. A company's own pattern, and the prefix of each of its journals, are refused when the number they print does not fit; the pack's own number_format, printed with the codes of its journals, has to fit too. Leave it out where the law leaves the shape to the seller, which is most countries.",
+          "properties": {
+            "max_length": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "The longest a document number may be, in characters, counter at the width of its padding."
+            },
+            "characters": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^(letters|digits|[^\\p{L}\\p{N}\\s{}])$"
+              },
+              "description": "The only characters a document number may be written with: letters, digits, and each other character allowed named alone, such as \"-\" or \"/\"."
+            },
+            "never_restarts": {
+              "type": "boolean",
+              "description": "True where the series of a journal runs on from one year to the next: a pattern that carries the year, which restarts the counter with it, is refused."
+            }
+          }
+        },
         "legal_payment_days": {
           "type": [
             "integer",

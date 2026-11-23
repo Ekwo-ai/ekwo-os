@@ -589,10 +589,28 @@ const NO_REFERENCE: PackRuleReference = { legal_reference: null, source: null };
  * legal payment term or an e-invoicing profile invented for a country that
  * has not spoken would be one country's law printed on another's invoice.
  */
+/**
+ * The shape a country's law gives a document number: how long it may be,
+ * which characters it may be written with, and whether its series runs on
+ * from one year to the next. Each field is absent where the law says nothing
+ * about it. Cited by `references.numbering`, like the rest of the numbering.
+ */
+export interface PackNumberShape {
+  max_length?: number;
+  /** `letters`, `digits`, or one other character allowed, named alone. */
+  characters?: string[];
+  never_restarts?: boolean;
+}
+
 export interface PackDocumentRules {
   /** True where the law forbids a hole in the sequence. Null if unsaid. */
   numbering_gapless: boolean | null;
   number_format: string | null;
+  /**
+   * What the law prescribes about the shape of a document number, where it
+   * prescribes something; null where it leaves the shape to the seller.
+   */
+  number_shape: PackNumberShape | null;
   legal_payment_days: number | null;
   late_payment_reference: string | null;
   /** invoice_date | delivery_date | payment_date. */
@@ -1694,6 +1712,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   issues.push(...sellerTerritory(manifest, taxes, territories));
   issues.push(...supplyVsSeller(manifest, taxes, territories));
   issues.push(...territoryRequired(manifest, territories));
+  issues.push(...numberShape(manifest, documents));
   const regimes = new Map<string, VatRegime>();
   for (const tax of taxes) {
     if (tax.applies_seller_territory === null) continue;
@@ -3009,6 +3028,7 @@ function normaliseDocumentRules(manifest: Manifest): PackDocumentRules {
   return {
     numbering_gapless: numbering === undefined ? null : GAPLESS_NUMBERING.has(numbering),
     number_format: (documents['number_format'] as string | undefined) ?? null,
+    number_shape: (documents['number_shape'] as PackNumberShape | undefined) ?? null,
     legal_payment_days: (documents['legal_payment_days'] as number | null | undefined) ?? null,
     late_payment_reference: (documents['late_payment_reference'] as string | null | undefined) ?? null,
     tax_point_rule: (documents['tax_point'] as string | undefined) ?? null,
@@ -4497,6 +4517,78 @@ function territoryRequired(manifest: Manifest, territories: Territory[]): Issue[
         'carries none. Add them to supabase/seed/00_territories.sql first',
     },
   ];
+}
+
+/**
+ * Why a document number does not fit the shape the law gives it, or null.
+ *
+ * The one reading of a shape on this side, kept to what the database's
+ * `number_shape_refusal()` asks of a company's pattern: the number printed with
+ * the series in `{CODE}`, the counter at the width of its padding, has to be
+ * short enough and written with the characters allowed, and a series that runs
+ * on from one year to the next cannot carry the year.
+ */
+export function numberShapeRefusal(shape: PackNumberShape, format: string, code: string): string | null {
+  if (shape.never_restarts === true && /\{(YYYY|YY)\}/.test(format)) {
+    return `${format} carries the year, and the series of a document number runs on from one year to the next`;
+  }
+  const printed = format
+    .replaceAll('{CODE}', code)
+    .replaceAll('{YYYY}', '2000')
+    .replaceAll('{YY}', '00')
+    .replaceAll('{MM}', '01')
+    .replace(/\{(N+)\}/g, (_token, run: string) => '0'.repeat(run.length));
+  if (shape.max_length !== undefined && printed.length > shape.max_length) {
+    return `${printed} is ${printed.length} characters long, and a document number is at most ${shape.max_length}`;
+  }
+  if (shape.characters !== undefined) {
+    const allowed = shape.characters;
+    const refused = [...printed].find(
+      (character) =>
+        !(
+          (allowed.includes('letters') && /\p{L}/u.test(character)) ||
+          (allowed.includes('digits') && /[0-9]/.test(character)) ||
+          allowed.includes(character)
+        ),
+    );
+    if (refused !== undefined) {
+      return `${printed} is written with "${refused}", and a document number is written with ${allowed.join(', ')} only`;
+    }
+  }
+  return null;
+}
+
+/**
+ * A pack that gives a document number a shape gives itself one that fits.
+ *
+ * `documents.number_shape` makes the database refuse a company's pattern, or
+ * a journal's prefix, whose numbers do not fit. The pack's own pattern is what
+ * every company of the country numbers with until it says otherwise, so it is
+ * judged here, printed with the code of each journal the pack carries — and a
+ * shape that names a character twice, or none, is no shape at all.
+ */
+function numberShape(manifest: Manifest, documents: PackDocumentRules): Issue[] {
+  const shape = documents.number_shape;
+  if (shape === null) return [];
+  const path = 'pack.json documents.number_shape';
+  if (Object.keys(shape).length === 0) {
+    return [{ path, message: 'says nothing: leave it out where the law leaves the shape of a number to the seller' }];
+  }
+  const issues: Issue[] = [];
+  if (shape.characters !== undefined && new Set(shape.characters).size !== shape.characters.length) {
+    issues.push({ path: `${path}.characters`, message: 'names a character twice' });
+  }
+  if (documents.number_format === null) {
+    issues.push({ path, message: 'gives a number a shape, and documents.number_format gives it no pattern to judge' });
+    return issues;
+  }
+  for (const journal of manifest.journals) {
+    const refusal = numberShapeRefusal(shape, documents.number_format, journal.code);
+    if (refusal !== null) {
+      issues.push({ path: 'pack.json documents.number_format', message: `journal ${journal.code}: ${refusal}` });
+    }
+  }
+  return issues;
 }
 
 function crossReferences(manifest: Manifest, charts: PackChart[], taxes: PackTax[]): Issue[] {

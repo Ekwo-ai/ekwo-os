@@ -2,8 +2,8 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "EC",
   "name": "Ecuador",
-  "version": "0.3.0",
-  "schema_min": "20261023124650",
+  "version": "0.4.0",
+  "schema_min": "20261123070912",
   "seed_sequence": 101,
   "released_at": "2026-10-23",
   "certification": {
@@ -142,6 +142,7 @@
   "documents": {
     "numbering": "gapless",
     "number_format": "{CODE}-{NNNNNNNNN}",
+    "number_shape": { "never_restarts": true },
     "legal_payment_days": null,
     "late_payment_reference": null,
     "tax_point": "delivery_date",

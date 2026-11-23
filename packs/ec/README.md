@@ -159,6 +159,13 @@ period ends owing tax (box 601); the second period is built so its purchases
 outweigh its sales, to exercise box 602 (crédito tributario, saldo a favor)
 rather than only box 601.
 
+## The number of a document
+
+The Reglamento de Comprobantes de Venta, arts. 17 and 18, numbers a voucher in
+one sequence that does not restart each year. The pack says so
+(`number_shape`, `never_restarts`): its own pattern, `{CODE}-{NNNNNNNNN}`,
+carries no year, and a company that would give its numbers one is refused.
+
 ## What the core could not say
 
 See [`docs/international.md`](../../docs/international.md#what-the-packs-do-not-say-yet).

@@ -1366,6 +1366,31 @@ engine consumes a format it produces the same numbers it always did.
 `ekwo pack check` refuses a token nobody defined and a pattern with no
 counter, or with two.
 
+**The shape of a number.** Most laws leave the shape of a document number to
+the seller, and a company may number its own way (decision 0082). Where the
+law prescribes a shape, `documents.number_shape` says so, cited by
+`references.numbering` like the rest of the numbering:
+
+```json
+"number_shape": { "max_length": 16, "characters": ["letters", "digits", "-", "/"] }
+```
+
+| Field | Says |
+|---|---|
+| `max_length` | the longest a number may be, in characters, the counter at the width of its padding |
+| `characters` | the only characters a number may be written with: `letters`, `digits`, and each other character allowed, named alone |
+| `never_restarts` | `true` where a series runs on from one year to the next, so a pattern that carries the year is refused |
+
+Each field is left out where the law says nothing of it, and the section is
+left out where the law says nothing at all. It compiles to
+`country_defaults.number_shape` and needs `schema_min` of `20261123070912` or
+later. The database refuses a company's pattern, or a journal's prefix, whose
+numbers do not fit (`number_shape_refused`, naming the journal); `ekwo pack
+check` refuses a pack whose own `number_format`, printed with the code of each
+of its journals, does not fit its own shape. India gives the length and the
+characters (rule 46(b) of the CGST Rules), Ecuador a series that never
+restarts.
+
 **The first financial year.** `defaults.fiscal_year_default` is the month a
 company's first year is offered to open on: `calendar` for 1 January, or one
 of the eleven other months by name, `february` to `december`. It is a

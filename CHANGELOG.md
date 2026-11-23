@@ -11,6 +11,23 @@ somewhere has already run it.
 
 ### Added
 
+- **A pack gives a document number the shape its law prescribes.** Most laws
+  leave the shape of the number to the seller; where one does not, the pack
+  says so in `documents.number_shape` — `max_length`, `characters` (`letters`,
+  `digits`, and each other character allowed) and `never_restarts` — and
+  `country_defaults.number_shape` carries it (`20261123070912`, and the two guards in `20261123070913`,
+  additive).
+  A company's own pattern, and a journal's prefix, whose numbers do not fit
+  are refused with `number_shape_refused`, the journal and the country named;
+  `ekwo pack check` refuses a pack whose own `number_format`, printed with the
+  code of each of its journals, does not fit its own shape. India (0.3.0):
+  sixteen characters at most, letters, digits, `-` and `/`, rule 46(b) of the
+  CGST Rules. Ecuador (0.4.0): a series that never restarts, Reglamento de
+  Comprobantes de Venta, arts. 17 and 18. Where a pack says nothing, nothing
+  changes. A company and its journals inserted by the installer, from the pack
+  or by an archive being restored are not judged: the rule is asked when a
+  pattern or a prefix is changed.
+
 - **France: the association chart reports on its own bilan and compte de
   résultat.** The chart `association` of the French pack (1.25.0) named no
   statement and reported on the generic framework alone; it now carries
