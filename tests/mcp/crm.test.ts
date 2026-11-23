@@ -9,13 +9,15 @@
  * the company's, read and never named.
  */
 
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { BooksError, SCHEMA_FEATURES, crmDealOfDocument } from '../../packages/core/src/index.js';
 import { buildServer, installedModules, type Backend } from '../../packages/mcp/src/index.js';
-import { asUser, freshDatabase, one, rows } from '../helpers/db.js';
+import { asUser, freshDatabase, one, repoRoot, rows } from '../helpers/db.js';
 import { newCompany } from '../helpers/factory.js';
 import { backendFor, record } from './helpers.js';
 
@@ -422,5 +424,20 @@ describe('crm_log_activity by e-mail', () => {
         `alter function crm.log_activity_by_email_hidden(uuid, text, crm.activity_kind, text, text, uuid, text, timestamptz, text, jsonb, text, text, text) rename to log_activity_by_email`,
       );
     }
+  });
+});
+
+describe('the README of the module', () => {
+  it('lists the crm tools the server offers, each with its title', async () => {
+    const { tools } = await client.listTools();
+    const offered = tools
+      .filter((tool) => tool.name.startsWith('crm_'))
+      .map((tool) => `${tool.name}: ${tool.title ?? tool.annotations?.title ?? ''}`)
+      .sort();
+    const readme = await readFile(join(repoRoot, 'modules', 'crm', 'README.md'), 'utf8');
+    const written = [...readme.matchAll(/^\| `(crm_[a-z_]+)` \| ([^|]+) \|/gm)]
+      .map((row) => `${row[1]}: ${String(row[2]).trim()}`)
+      .sort();
+    expect(written).toEqual(offered);
   });
 });

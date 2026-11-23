@@ -22,6 +22,25 @@ somewhere has already run it.
   the inherited statement does not carry. A rule by code outranks a rule by
   type in `pack check` as it does in `financial_statement()`.
   [`docs/packs.md`](docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
+- **CRM: cards build themselves from e-mail.** An activity named by an
+  e-mail address finds or creates its contact, then the organisation of its
+  domain — the one whose own address is at the domain, else the one most of
+  its people belong to, else a new one named by the domain — and a card for
+  each (`crm.log_activity_by_email()`, `crm.contact_from_email()`, module
+  migration `crm/20261123150000`, additive). `crm.generic_email_domains` lists
+  the domains that never name an organisation — personal mailboxes, tools,
+  providers — as data: the module ships its rows, an installation and a
+  company add their own. The same `(source, source_ref)` twice writes and
+  creates nothing. A card's first and last interaction are computed from its
+  activities by `crm.interactions_of()` and given by `crm.card_of()`; nothing
+  stores them. `merge_contacts()` stays the only way two contacts become one.
+  The MCP tool `crm_log_activity` takes `email` and `name` instead of
+  `contact_id`, and `ekwo crm log --email`; on a database whose module has not
+  received the function, `email` is refused by name, `crm_not_migrated`.
+  The module's README lists its tools as the server offers them, and
+  [`docs/crm-agents.md`](docs/crm-agents.md) connects a team of agents to
+  the CRM through MCP.
+
 - **A pack gives a document number the shape its law prescribes.** Most laws
   leave the shape of the number to the seller; where one does not, the pack
   says so in `documents.number_shape` — `max_length`, `characters` (`letters`,
