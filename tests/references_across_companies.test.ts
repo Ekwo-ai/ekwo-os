@@ -58,6 +58,9 @@ const LATER = [
   // Guards companies.number_format and journals.number_prefix, which
   // 20261020160000 adds.
   '20261123070913_a_company_numbers_within_its_shape.sql',
+  // Recreates the triggers and views over the amounts as the migrations
+  // above leave them, so it comes after all of them.
+  '20261123203000_an_amount_holds_the_decimals_of_its_currency.sql',
 ];
 
 let db: PGlite;

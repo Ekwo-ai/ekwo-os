@@ -484,7 +484,7 @@ describe('every command answers --json with one document of the published shape'
     expect((await asPerson(['line', 'differences', 'list'])).exitCode).toBe(0);
     const matched = await asPerson(['line', 'match', anonymousLine, shortLine, '--difference', 'rounding']);
     expect(matched.command).toBe('line match');
-    expect(matched.data).toMatchObject({ matching: { difference: '0.50' } });
+    expect(amountValue((matched.data as { matching: Record<string, unknown> }).matching['difference'])).toBe('0.5');
 
     // The analytic plan, and the result of each value of an axis.
     await root.query(`insert into analytic_axes (company_id, code, name) values ($1, 'PROJECT', 'Project')`, [keyed.rows[0]?.company_id]);

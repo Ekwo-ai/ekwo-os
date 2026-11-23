@@ -56,6 +56,9 @@ const READS_THE_COLUMN = [
   // Replaces document_tax_summary again, for the tax the source of a
   // document states, and reads the column as the view before it did.
   '20261120100000_a_document_keeps_the_tax_its_source_states.sql',
+  // Recreates the document views as the migrations above leave them, the
+  // column included, so it comes after all of them.
+  '20261123203000_an_amount_holds_the_decimals_of_its_currency.sql',
 ];
 
 let db: PGlite;

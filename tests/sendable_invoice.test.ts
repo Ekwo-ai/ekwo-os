@@ -58,6 +58,9 @@ const SNAPSHOT = [
   // Replaces document_tax_summary and document_line_items again, for the tax
   // the source of a document states, reading the snapshot as they do.
   '20261120100000_a_document_keeps_the_tax_its_source_states.sql',
+  // Recreates document_header, document_line_items and document_tax_summary
+  // as the migrations above leave them, so it comes after all of them.
+  '20261123203000_an_amount_holds_the_decimals_of_its_currency.sql',
 ];
 
 /** The treatments each condition of a legal mention covers — the vocabulary of `applies_when`, as the schema documents it. */
