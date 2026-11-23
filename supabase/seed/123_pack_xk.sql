@@ -26,7 +26,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('XK', 'Kosova', '0.3.0', date '2026-10-23', '20261023124650', 'community', null, null, '7cf76a9651495fddb5356d9bba41f0a16abdc4b76b1bdc77c0771141a85de15a', '[{"key":"ligji-tvsh","title":"Ligji Nr. 05/L-037 për Tatimin mbi Vlerën e Shtuar (Gazeta Zyrtare e Republikës së Kosovës, Nr. 23, 17 gusht 2015)","publisher":"Kuvendi i Republikës së Kosovës — Administrata Tatimore e Kosovës","url":"https://www.atk-ks.org/wp-content/uploads/2017/07/LIGJI_NR._05_L-037__PER_TATIMIN_MBI_VLEREN_E_SHTUAR_SHTOJCA.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"udhezimi-tvsh","title":"Udhëzimi Administrativ MF-Nr. 03/2015 për zbatimin e Ligjit Nr. 05/L-037 për Tatimin mbi Vlerën e Shtuar","publisher":"Ministria e Financave e Republikës së Kosovës","url":"https://gzk.rks-gov.net/ActDocumentDetail.aspx?ActID=11079","consulted_on":"2026-09-26","kind":"regulation"},{"key":"tv-form","title":"Formulari i deklarimit dhe pagesës së TVSH-së (TV-E-3), me shënimet e ATK-së për plotësimin e tij","publisher":"Administrata Tatimore e Kosovës","url":"https://www.atk-ks.org/wp-content/uploads/2017/10/TV1.pdf","consulted_on":"2026-09-26","kind":"form"},{"key":"edi-portal","title":"EDI — Sistemi Elektronik i Deklarimit i Administratës Tatimore të Kosovës","publisher":"Administrata Tatimore e Kosovës","url":"https://edi.atk-ks.org/","consulted_on":"2026-09-26","kind":"portal"},{"key":"ligji-kontabiliteti","title":"Ligji Nr. 06/L-032 për Kontabilitet, Raportim Financiar dhe Auditim (Gazeta Zyrtare e Republikës së Kosovës, Nr. 3, 19 prill 2018)","publisher":"Kuvendi i Republikës së Kosovës — Këshilli Kosovar për Raportim Financiar (KKRF)","url":"https://cps.rks-gov.net/wp-content/uploads/2020/09/LAW_NO._06_L-032___ON_ACCOUNTING_FINANCIAL_REPORTING_AND_AUDITING-2.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"ifrs-sme","title":"IFRS for SMEs Accounting Standard","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes-accounting-standard/","consulted_on":"2026-09-26","kind":"standard"}]'::jsonb)
+  ('XK', 'Kosova', '0.3.0', date '2026-10-23', '20261023124650', 'community', null, null, 'be71525c875035231214f40b734672b9ee521695fab5878ce7bc7e2473e0ded3', '[{"key":"ligji-tvsh","title":"Ligji Nr. 05/L-037 për Tatimin mbi Vlerën e Shtuar (Gazeta Zyrtare e Republikës së Kosovës, Nr. 23, 17 gusht 2015)","publisher":"Kuvendi i Republikës së Kosovës — Administrata Tatimore e Kosovës","url":"https://www.atk-ks.org/wp-content/uploads/2017/07/LIGJI_NR._05_L-037__PER_TATIMIN_MBI_VLEREN_E_SHTUAR_SHTOJCA.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"udhezimi-tvsh","title":"Udhëzimi Administrativ MF-Nr. 03/2015 për zbatimin e Ligjit Nr. 05/L-037 për Tatimin mbi Vlerën e Shtuar","publisher":"Ministria e Financave e Republikës së Kosovës","url":"https://gzk.rks-gov.net/ActDocumentDetail.aspx?ActID=11079","consulted_on":"2026-09-26","kind":"regulation"},{"key":"tv-form","title":"Formulari i deklarimit dhe pagesës së TVSH-së (TV-E-3), me shënimet e ATK-së për plotësimin e tij","publisher":"Administrata Tatimore e Kosovës","url":"https://www.atk-ks.org/wp-content/uploads/2017/10/TV1.pdf","consulted_on":"2026-09-26","kind":"form"},{"key":"edi-portal","title":"EDI — Sistemi Elektronik i Deklarimit i Administratës Tatimore të Kosovës","publisher":"Administrata Tatimore e Kosovës","url":"https://edi.atk-ks.org/","consulted_on":"2026-09-26","kind":"portal"},{"key":"ligji-kontabiliteti","title":"Ligji Nr. 06/L-032 për Kontabilitet, Raportim Financiar dhe Auditim (Gazeta Zyrtare e Republikës së Kosovës, Nr. 3, 19 prill 2018)","publisher":"Kuvendi i Republikës së Kosovës — Këshilli Kosovar për Raportim Financiar (KKRF)","url":"https://cps.rks-gov.net/wp-content/uploads/2020/09/LAW_NO._06_L-032___ON_ACCOUNTING_FINANCIAL_REPORTING_AND_AUDITING-2.pdf","consulted_on":"2026-09-26","kind":"law"},{"key":"ifrs-sme","title":"IFRS for SMEs Accounting Standard","publisher":"IFRS Foundation","url":"https://www.ifrs.org/issued-standards/ifrs-for-smes-accounting-standard/","consulted_on":"2026-09-26","kind":"standard"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -447,7 +447,6 @@ delete from statement_line_rules r
             ('XK-IFRS-BS', 'A-C-REC', 10),
             ('XK-IFRS-BS', 'A-C-OTH', 10),
             ('XK-IFRS-BS', 'A-C-OTH', 20),
-            ('XK-IFRS-BS', 'A-C-OTH', 30),
             ('XK-IFRS-BS', 'A-C-CASH', 10),
             ('XK-IFRS-BS', 'E-CAP', 10),
             ('XK-IFRS-BS', 'E-RET', 10),
@@ -456,17 +455,14 @@ delete from statement_line_rules r
             ('XK-IFRS-BS', 'E-RESULT', 30),
             ('XK-IFRS-BS', 'E-RESULT', 40),
             ('XK-IFRS-BS', 'E-RESULT', 50),
-            ('XK-IFRS-BS', 'E-RESULT', 60),
             ('XK-IFRS-BS', 'L-NC', 10),
             ('XK-IFRS-BS', 'L-C-PAY', 10),
             ('XK-IFRS-BS', 'L-C-OTH', 10),
             ('XK-IFRS-BS', 'L-C-OTH', 20),
-            ('XK-IFRS-BS', 'L-C-OTH', 30),
             ('XK-IFRS-IS', 'REV', 10),
             ('XK-IFRS-IS', 'COST', 10),
             ('XK-IFRS-IS', 'OTH-INC', 10),
             ('XK-IFRS-IS', 'OPEX', 10),
-            ('XK-IFRS-IS', 'OPEX', 20),
             ('XK-IFRS-IS', 'DEPR', 10)
    );
 
@@ -476,32 +472,28 @@ insert into statement_line_rules
 select v.statement_code, v.line_code, v.sequence, v.rule_kind, v.code_from,
        v.code_to, v.account_type::account_type, v.balance_side
   from (values
-    ('XK-IFRS-BS', 'A-NC-FIX', 10, 'code_range', '0100', '0299', null, 'any'),
-    ('XK-IFRS-BS', 'A-NC-OTH', 10, 'code_range', '0300', '0399', null, 'any'),
-    ('XK-IFRS-BS', 'A-C-REC', 10, 'code_range', '1100', '1130', null, 'any'),
-    ('XK-IFRS-BS', 'A-C-OTH', 10, 'code_range', '1000', '1050', null, 'any'),
-    ('XK-IFRS-BS', 'A-C-OTH', 20, 'code_range', '1200', '1220', null, 'any'),
-    ('XK-IFRS-BS', 'A-C-OTH', 30, 'code_range', '1450', '1490', null, 'any'),
-    ('XK-IFRS-BS', 'A-C-CASH', 10, 'code_range', '1300', '1330', null, 'any'),
-    ('XK-IFRS-BS', 'E-CAP', 10, 'code_range', '3000', '3050', null, 'any'),
-    ('XK-IFRS-BS', 'E-RET', 10, 'account_code', '3100', null, null, 'any'),
-    ('XK-IFRS-BS', 'E-RESULT', 10, 'code_range', '4000', '4050', null, 'any'),
-    ('XK-IFRS-BS', 'E-RESULT', 20, 'code_range', '4200', '4250', null, 'any'),
-    ('XK-IFRS-BS', 'E-RESULT', 30, 'code_range', '5000', '5040', null, 'any'),
-    ('XK-IFRS-BS', 'E-RESULT', 40, 'code_range', '6000', '6220', null, 'any'),
-    ('XK-IFRS-BS', 'E-RESULT', 50, 'code_range', '6900', '6920', null, 'any'),
-    ('XK-IFRS-BS', 'E-RESULT', 60, 'code_range', '7000', '7060', null, 'any'),
-    ('XK-IFRS-BS', 'L-NC', 10, 'code_range', '2400', '2440', null, 'any'),
-    ('XK-IFRS-BS', 'L-C-PAY', 10, 'code_range', '2000', '2020', null, 'any'),
-    ('XK-IFRS-BS', 'L-C-OTH', 10, 'code_range', '2100', '2200', null, 'any'),
-    ('XK-IFRS-BS', 'L-C-OTH', 20, 'account_code', '2250', null, null, 'any'),
-    ('XK-IFRS-BS', 'L-C-OTH', 30, 'account_code', '2300', null, null, 'any'),
-    ('XK-IFRS-IS', 'REV', 10, 'code_range', '4000', '4050', null, 'any'),
-    ('XK-IFRS-IS', 'COST', 10, 'code_range', '5000', '5040', null, 'any'),
-    ('XK-IFRS-IS', 'OTH-INC', 10, 'code_range', '4200', '4250', null, 'any'),
-    ('XK-IFRS-IS', 'OPEX', 10, 'code_range', '6000', '6220', null, 'any'),
-    ('XK-IFRS-IS', 'OPEX', 20, 'code_range', '7000', '7060', null, 'any'),
-    ('XK-IFRS-IS', 'DEPR', 10, 'code_range', '6900', '6920', null, 'any')
+    ('XK-IFRS-BS', 'A-NC-FIX', 10, 'account_type', null, null, 'asset_fixed', 'any'),
+    ('XK-IFRS-BS', 'A-NC-OTH', 10, 'account_type', null, null, 'asset_non_current', 'any'),
+    ('XK-IFRS-BS', 'A-C-REC', 10, 'account_type', null, null, 'asset_receivable', 'any'),
+    ('XK-IFRS-BS', 'A-C-OTH', 10, 'account_type', null, null, 'asset_current', 'any'),
+    ('XK-IFRS-BS', 'A-C-OTH', 20, 'account_type', null, null, 'asset_prepayments', 'any'),
+    ('XK-IFRS-BS', 'A-C-CASH', 10, 'account_type', null, null, 'asset_cash', 'any'),
+    ('XK-IFRS-BS', 'E-CAP', 10, 'account_type', null, null, 'equity', 'any'),
+    ('XK-IFRS-BS', 'E-RET', 10, 'account_type', null, null, 'equity_retained', 'any'),
+    ('XK-IFRS-BS', 'E-RESULT', 10, 'account_type', null, null, 'income', 'any'),
+    ('XK-IFRS-BS', 'E-RESULT', 20, 'account_type', null, null, 'income_other', 'any'),
+    ('XK-IFRS-BS', 'E-RESULT', 30, 'account_type', null, null, 'expense', 'any'),
+    ('XK-IFRS-BS', 'E-RESULT', 40, 'account_type', null, null, 'expense_direct_cost', 'any'),
+    ('XK-IFRS-BS', 'E-RESULT', 50, 'account_type', null, null, 'expense_depreciation', 'any'),
+    ('XK-IFRS-BS', 'L-NC', 10, 'account_type', null, null, 'liability_non_current', 'any'),
+    ('XK-IFRS-BS', 'L-C-PAY', 10, 'account_type', null, null, 'liability_payable', 'any'),
+    ('XK-IFRS-BS', 'L-C-OTH', 10, 'account_type', null, null, 'liability_current', 'any'),
+    ('XK-IFRS-BS', 'L-C-OTH', 20, 'account_type', null, null, 'liability_credit_card', 'any'),
+    ('XK-IFRS-IS', 'REV', 10, 'account_type', null, null, 'income', 'any'),
+    ('XK-IFRS-IS', 'COST', 10, 'account_type', null, null, 'expense_direct_cost', 'any'),
+    ('XK-IFRS-IS', 'OTH-INC', 10, 'account_type', null, null, 'income_other', 'any'),
+    ('XK-IFRS-IS', 'OPEX', 10, 'account_type', null, null, 'expense', 'any'),
+    ('XK-IFRS-IS', 'DEPR', 10, 'account_type', null, null, 'expense_depreciation', 'any')
   ) as v (statement_code, line_code, sequence, rule_kind, code_from, code_to,
           account_type, balance_side)
 on conflict (statement_code, line_code, sequence) do update set
