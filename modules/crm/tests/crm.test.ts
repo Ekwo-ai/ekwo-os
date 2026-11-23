@@ -1,7 +1,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, expectError, freshDatabase, one, rows } from '../../../tests/helpers/db.js';
-import { newCompany } from '../../../tests/helpers/factory.js';
+import { amountValue, newCompany } from '../../../tests/helpers/factory.js';
 import {
   CRM_ACTIVITY_KINDS,
   CRM_PRIORITIES,
@@ -190,9 +190,9 @@ describe('a deal', () => {
       const currency = await one<{ currency_code: string }>(db, `select currency_code from companies where id = $1`, [
         companyId,
       ]);
+      expect(amountValue(deal['amount'])).toBe('12000');
       expect(deal).toMatchObject({
         stage_id: stages['Lead'],
-        amount: '12000.00',
         currency_code: currency.currency_code,
         closed_at: null,
         closed_outcome: null,

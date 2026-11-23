@@ -1,7 +1,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
-import { newCompany, newContact, newDocument, type Fixture } from './helpers/factory.js';
+import { amountSql, newCompany, newContact, newDocument, type Fixture } from './helpers/factory.js';
 import { newMember, plainSale, refusalAs } from './helpers/integrity.js';
 
 // Decision 0074: two contacts of one company are merged — every reference of
@@ -390,7 +390,7 @@ describe('the kept contact holds the history of both', () => {
     );
     expect(after).toEqual({ debit_line_id: invoice, credit_line_id: paid, matching_number: matching.matching_number });
     expect(
-      await rows(db, `select contact_id, matched_amount from entry_lines where id = any($1) order by debit desc`, [[invoice, paid]]),
+      await rows(db, `select contact_id, ${amountSql('matched_amount', 'company_id')} as matched_amount from entry_lines where id = any($1) order by debit desc`, [[invoice, paid]]),
     ).toEqual([
       { contact_id: keep, matched_amount: '300.00' },
       { contact_id: keep, matched_amount: '300.00' },

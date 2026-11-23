@@ -692,11 +692,17 @@ async function checkStatements(db: SqlClient): Promise<Check> {
     declared: string;
     computed: string;
   }>(
+    // Written with the decimals of the account's currency, never with the
+    // scale the column happens to hold: an amount is a bare numeric.
     `select c.name as company, s.statement_date::text,
-            s.balance_end_declared::text as declared,
-            s.balance_end_computed::text as computed
+            to_char(s.balance_end_declared, m.mask) as declared,
+            to_char(s.balance_end_computed, m.mask) as computed
        from bank_statements s
        join companies c on c.id = s.company_id
+       left join bank_accounts a on a.id = s.bank_account_id
+       cross join lateral (
+         select amount_text_format(rounding_of(s.company_id, a.currency_code)) as mask
+       ) m
       where not s.is_consistent
       order by s.statement_date`,
   );

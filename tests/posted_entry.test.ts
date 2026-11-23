@@ -19,7 +19,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Pack } from '../packages/cli/src/index.js';
 import { asUser, freshDatabase, one, rows } from './helpers/db.js';
-import { accountId, newCompany, newInstanceAdmin, newUser } from './helpers/factory.js';
+import { amountSql, accountId, newCompany, newInstanceAdmin, newUser } from './helpers/factory.js';
 import { roleOf, somePack } from './helpers/packs.js';
 
 /** The decision under test, per table. Generated columns follow from frozen ones. */
@@ -283,7 +283,7 @@ describe('what has to keep working', () => {
       await db.query(`update entries set description = 'Rewritten while a draft' where id = $1`, [draft]);
       await db.query(`select post_entry($1)`, [draft]);
     });
-    expect(await one(db, `select state, total_debit::text from entries where id = $1`, [draft])).toEqual({ state: 'posted', total_debit: '250.00' });
+    expect(await one(db, `select state, ${amountSql('total_debit', 'company_id')} as total_debit from entries where id = $1`, [draft])).toEqual({ state: 'posted', total_debit: '250.00' });
 
     const abandoned = await entry({ post: false });
     await asUser(db, accountant, () => db.query(`delete from entries where id = $1`, [abandoned]));
@@ -298,7 +298,7 @@ describe('what has to keep working', () => {
     // writes two columns of a posted line, and that is the list.
     const matched = await rows<{ matched_amount: string; matching_number: string | null }>(
       db,
-      `select matched_amount::text, matching_number from entry_lines where entry_id in ($1, $2) and account_id = $3`,
+      `select ${amountSql('matched_amount', 'company_id')} as matched_amount, matching_number from entry_lines where entry_id in ($1, $2) and account_id = $3`,
       [original, reversal, receivable],
     );
     expect(matched.map((row) => row.matched_amount)).toEqual(['100.00', '100.00']);

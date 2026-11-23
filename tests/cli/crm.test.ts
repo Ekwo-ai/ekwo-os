@@ -18,7 +18,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { EXIT_REFUSED, EXIT_USAGE, run, validate, type OutputDocument } from '../../packages/cli/src/index.js';
 import { asUser, freshDatabase, one, repoRoot, rows } from '../helpers/db.js';
 import { SCHEMA_FEATURES } from '../../packages/core/src/index.js';
-import { newCompany, newUser } from '../helpers/factory.js';
+import { amountValue, newCompany, newUser } from '../helpers/factory.js';
 import { ANON_KEY, FAKE_URL, fakeSupabase, type FakeSupabase } from './fake-supabase.js';
 
 const PASSWORD = 'correct horse battery staple';
@@ -163,7 +163,8 @@ describe('ekwo crm', () => {
     const opened = await ekwo(['crm', 'deal', 'open', pipelineId, 'Northwind Trading', '--title', 'Annual subscription', '--amount', '12000']);
     expect(opened.command).toBe('crm deal open');
     const deal = (opened.data as { deal: Row }).deal;
-    expect(deal).toMatchObject({ stage_id: stages['Lead'], amount: '12000.00', currency_code: currency });
+    expect(deal).toMatchObject({ stage_id: stages['Lead'], currency_code: currency });
+    expect(amountValue(deal['amount'])).toBe('12000');
 
     const board = await ekwo(['crm', 'board', pipelineId]);
     expect(board.command).toBe('crm board');

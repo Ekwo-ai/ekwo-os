@@ -38,7 +38,7 @@ import { runStdio } from '../../packages/mcp/src/index.js';
 import { ask, askSecret, confirm } from '../../packages/cli/src/prompt.js';
 import { table } from '../../packages/cli/src/ui.js';
 import { asUser, expectError, freshDatabase, repoRoot } from '../helpers/db.js';
-import { newCompany, newContact, newDocument, newUser } from '../helpers/factory.js';
+import { amountValue, newCompany, newContact, newDocument, newUser } from '../helpers/factory.js';
 import { roleOf, somePack } from '../helpers/packs.js';
 import { ANON_KEY, FAKE_URL, fakeSupabase } from './fake-supabase.js';
 import { adapt, emptyDatabase, fakeFetch, makeAuthUser, type Queryable } from './helpers.js';
@@ -432,7 +432,8 @@ describe('every command answers --json with one document of the published shape'
     );
     await root.query(`select post_entry(entry_id) from entry_lines where id = $1`, [anonymousLine]);
     const suggested = await asPerson(['line', 'contacts', 'suggest', '--line', anonymousLine]);
-    expect(suggested.data).toMatchObject({ count: 1, lines: [{ line_id: anonymousLine, side: 'debit', amount: '7.00' }] });
+    expect(suggested.data).toMatchObject({ count: 1, lines: [{ line_id: anonymousLine, side: 'debit' }] });
+    expect(amountValue((suggested.data as { lines: Record<string, unknown>[] }).lines[0]?.['amount'])).toBe('7');
     expect((await asPerson(['line', 'contact', 'set', anonymousLine, 'Client Example'])).exitCode).toBe(0);
     // Left unnamed on purpose, then taken back (decision 0072).
     const unnamed = await root.query<{ id: string }>(

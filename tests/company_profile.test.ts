@@ -9,7 +9,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
-import { newCompany, newContact, newDocument, newUser } from './helpers/factory.js';
+import { amountValue, amountSql, newCompany, newContact, newDocument, newUser } from './helpers/factory.js';
 
 let db: PGlite;
 let companyId: string;
@@ -51,7 +51,7 @@ describe('the capital a company states', () => {
     await db.query(`update companies set share_capital = 61500 where id = $1`, [companyId]);
     const stored = await one<{ share_capital: string; share_capital_currency: string; currency_code: string }>(
       db,
-      `select share_capital::text, share_capital_currency, currency_code from companies where id = $1`,
+      `select ${amountSql('share_capital', 'id')} as share_capital, share_capital_currency, currency_code from companies where id = $1`,
       [companyId],
     );
     expect(stored.share_capital).toBe('61500.00');
@@ -181,7 +181,7 @@ describe('document_header', () => {
     expect(header['seller_name']).toBe('Profil SRL');
     expect(header['buyer_name']).toBe('Cliente du profil');
     expect(header['payee_iban']).toBe('BE68539007547034');
-    expect(header['seller_share_capital']).toBe('61500.00');
+    expect(amountValue(header['seller_share_capital'])).toBe('61500');
     // The country of a document is the company's fiscal country, and the rules
     // are the pack's — asserted against the row rather than against a value
     // typed here.

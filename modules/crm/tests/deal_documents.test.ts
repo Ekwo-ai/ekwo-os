@@ -1,7 +1,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, expectError, freshDatabase, one, rows } from '../../../tests/helpers/db.js';
-import { newCompany } from '../../../tests/helpers/factory.js';
+import { amountValue, newCompany } from '../../../tests/helpers/factory.js';
 import { somePack } from '../../../tests/helpers/packs.js';
 
 // The deal carries the commercial status; the quote carries its dated facts.
@@ -265,10 +265,11 @@ describe('the deal of a document', () => {
     await answer(`select accept_document($1, 'The buyer')`, document);
 
     const read = await dealOfDocument(companyId, document);
+    expect(amountValue(read?.['amount'])).toBe('12000');
     expect(read).toEqual({
       id: deal,
       title: 'Annual subscription',
-      amount: '12000.00',
+      amount: expect.any(String),
       currency_code: expect.any(String),
       stage: { id: stages['Won'], name: 'Won', outcome: 'won' },
       closed_at: expect.any(String),

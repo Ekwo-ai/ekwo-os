@@ -1,7 +1,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, expectError, freshDatabase, one, rows } from '../../../tests/helpers/db.js';
-import { newCompany } from '../../../tests/helpers/factory.js';
+import { amountValue, newCompany } from '../../../tests/helpers/factory.js';
 
 // A member that keeps its books in another currency than the group's is
 // translated by the closing rate method: what it owns and owes at the closing
@@ -153,10 +153,16 @@ describe('the translated balances', () => {
     );
     const byType = Object.fromEntries(member.map((row) => [row.account_type, row]));
 
-    expect(byType.asset_cash).toMatchObject({ balance: '1000.00', rate_kind: 'closing', translated: '1111.11' });
-    expect(byType.asset_receivable).toMatchObject({ balance: '500.00', rate_kind: 'closing', translated: '555.56' });
-    expect(byType.income).toMatchObject({ balance: '-500.00', rate_kind: 'average', translated: '-588.24' });
-    expect(byType.equity).toMatchObject({ balance: '-1000.00', rate_kind: 'entry', translated: '-1250.00' });
+    // Balances as values: the member's lines were written as whole numbers.
+    const read = (row: Translated | undefined) => ({
+      balance: amountValue(row?.balance),
+      rate_kind: row?.rate_kind,
+      translated: amountValue(row?.translated),
+    });
+    expect(read(byType.asset_cash)).toEqual({ balance: '1000', rate_kind: 'closing', translated: '1111.11' });
+    expect(read(byType.asset_receivable)).toEqual({ balance: '500', rate_kind: 'closing', translated: '555.56' });
+    expect(read(byType.income)).toEqual({ balance: '-500', rate_kind: 'average', translated: '-588.24' });
+    expect(read(byType.equity)).toEqual({ balance: '-1000', rate_kind: 'entry', translated: '-1250' });
   });
 
   it('end the member with its translation difference, which brings its translated balance back to zero', async () => {
@@ -177,7 +183,9 @@ describe('the translated balances', () => {
     const parent = all.filter((row) => row.company_id === parentId);
     expect(parent.length).toBeGreaterThan(0);
     for (const row of parent) {
-      expect(row).toMatchObject({ rate_kind: 'none', translated: row.balance, integrated: row.balance });
+      expect(row).toMatchObject({ rate_kind: 'none' });
+      expect(amountValue(row.translated)).toBe(amountValue(row.balance));
+      expect(amountValue(row.integrated)).toBe(amountValue(row.balance));
     }
     expect(parent.some((row) => row.rate_kind === 'translation_difference')).toBe(false);
   });

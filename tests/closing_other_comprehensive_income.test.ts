@@ -20,7 +20,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { readPack } from '../packages/cli/src/index.js';
 import { asUser, freshDatabase, one, repoRoot, rows } from './helpers/db.js';
 import { defaultChartOf, packWhere, roleOf } from './helpers/packs.js';
-import { newCompany, type Fixture } from './helpers/factory.js';
+import { amountSql, newCompany, type Fixture } from './helpers/factory.js';
 
 interface Declared {
   accounts: string[];
@@ -103,7 +103,7 @@ async function close(fx: Fixture): Promise<Record<string, unknown>> {
 async function balances(fx: Fixture): Promise<Record<string, string>> {
   const found = await rows<{ code: string; balance: string }>(
     db,
-    `select account_code as code, closing_balance::text as balance
+    `select account_code as code, ${amountSql('closing_balance', '$1::uuid')} as balance
        from trial_balance($1, date '2026-01-01', date '2026-12-31')
       where closing_balance <> 0`,
     [fx.companyId],
