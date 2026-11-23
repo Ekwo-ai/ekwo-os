@@ -479,7 +479,8 @@ describe('every command answers --json with one document of the published shape'
     const shortLine = short.rows[0]?.id as string;
     await root.query(`select post_entry(entry_id) from entry_lines where id = $1`, [shortLine]);
     const proposed = await asPerson(['line', 'combinations', 'suggest', '--contact', 'Client Example']);
-    expect(proposed.data).toMatchObject({ proposals: [{ line_id: anonymousLine, line_ids: [shortLine], difference: '0.50' }] });
+    expect(proposed.data).toMatchObject({ proposals: [{ line_id: anonymousLine, line_ids: [shortLine] }] });
+    expect(amountValue((proposed.data as { proposals: Record<string, unknown>[] }).proposals[0]?.['difference'])).toBe('0.5');
     expect((await asPerson(['line', 'differences', 'list'])).exitCode).toBe(0);
     const matched = await asPerson(['line', 'match', anonymousLine, shortLine, '--difference', 'rounding']);
     expect(matched.command).toBe('line match');

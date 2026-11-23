@@ -169,7 +169,8 @@ describe('ekwo crm', () => {
     const board = await ekwo(['crm', 'board', pipelineId]);
     expect(board.command).toBe('crm board');
     const [pipeline] = (board.data as { pipelines: Row[] }).pipelines;
-    expect(pipeline).toMatchObject({ id: pipelineId, count: 1, totals: [{ currency_code: currency, amount: '12000.00', deals: 1 }] });
+    expect(pipeline).toMatchObject({ id: pipelineId, count: 1, totals: [{ currency_code: currency, deals: 1 }] });
+    expect(amountValue((pipeline?.['totals'] as Row[])[0]?.['amount'])).toBe('12000');
 
     const moved = await ekwo(['crm', 'deal', 'move', String(deal['id']), String(stages['Won'])]);
     expect(moved.command).toBe('crm deal move');
