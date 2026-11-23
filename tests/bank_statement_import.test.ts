@@ -240,8 +240,17 @@ describe('a fortnight, then the month that contains it, then the month again', (
     });
     expect(lines[1]).toMatchObject({ amount: '-450.50', description: 'Invoice 2026-0107 thank you', structured_reference: null });
     // A counterparty that has no IBAN is still the counterparty: what the
-    // statement wrote is kept, because it is what recognising it compares.
-    expect(lines[4]).toMatchObject({ amount: '-920.00', counterpart_iban: '9999999920000123456' });
+    // statement wrote is kept, because it is what recognising it compares —
+    // as an account number, never in the column named after an IBAN.
+    expect(lines[4]).toMatchObject({ amount: '-920.00', counterpart_iban: null });
+    expect(
+      await one(
+        db,
+        `select counterpart_account_scheme, counterpart_account_identifier
+           from bank_transactions where company_id = $1 and amount = -920`,
+        [fx.companyId],
+      ),
+    ).toEqual({ counterpart_account_scheme: 'account-number', counterpart_account_identifier: '9999999920000123456' });
     // The three transactions of the batch, each with its own reference.
     expect(lines.slice(5, 8).map((line) => [line.amount, line.reference])).toEqual([
       ['100.00', 'ZZ26031700006-1'],

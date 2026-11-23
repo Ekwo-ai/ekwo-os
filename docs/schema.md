@@ -186,6 +186,7 @@ bank charge that pays no item.
 | [`attachments`](#attachments) | Files attached to any record. `entity_type` is constrained rather than free text. An invoice or a receipt goes on its document; an entry takes a file only when no document posted it (trigger attachments_guard_document). |
 | [`audit_log`](#audit_log) | Append-only record of every change to the configuration and reference data of a company, and of the acts that change the state of a document, a payment, a financial year or a pack. Written by trigger, never by a client, and no client rewrites it: no role is granted update, delete or truncate, and triggers refuse them. The owner of the database is bound only while it leaves those triggers enabled. |
 | [`bank_accounts`](#bank_accounts) | Bank and card accounts, each mapped to a ledger account and a journal. |
+| [`bank_identifier_schemes`](#bank_identifier_schemes) | The closed list of schemes a bank account or a bank is identified in. identifies says which: an account (iban, aba-routing-account, bsb-account, ifsc-account, …, account-number for a number as the bank gave it) or the institution that keeps it (bic, aba, sort-code, bsb, ifsc, transit-institution, zengin-bank-branch). The account schemes are the keys of BANK_ACCOUNT_SCHEMES in @ekwo-ai/core. Every scheme column of the socle references this table; a scheme is added by a migration together with its reader. |
 | [`bank_statement_lines`](#bank_statement_lines) | Which lines a statement lists. A line is stored once, in bank_transactions, under the first statement that brought it; a later statement that overlaps the first lists the same line here instead of duplicating it, and its closing balance is proved over the list. |
 | [`bank_statements`](#bank_statements) | Imported statements. `is_consistent` compares the declared closing balance with the sum of the lines. |
 | [`bank_transactions`](#bank_transactions) | Statement lines. `amount` is signed; `raw` keeps whatever the source sent. |
@@ -521,7 +522,7 @@ Bank and card accounts, each mapped to a ledger account and a journal.
 | `company_id` | `uuid` | not null |
 | `name` | `text` | not null |
 | `iban` | `text` |  |
-| `bic` | `text` |  |
+| `bic` | `text` | Deprecated by bank_scheme and bank_identifier, and mirrored with them: the BIC when bank_scheme is bic, null otherwise. Still readable and writable; a write here writes the pair. |
 | `bank_name` | `text` |  |
 | `currency_code` | `character(3)` | not null |
 | `account_id` | `uuid` |  |
@@ -532,10 +533,31 @@ Bank and card accounts, each mapped to a ledger account and a journal.
 | `account_scheme` | `text` | The scheme account_identifier is written in, as the country pack names it. Null on a free-text account number. |
 | `account_identifier` | `text` | What identifies the account at its bank, in the canonical form of its scheme: the parts in order, one space between them. An IBAN is one such identifier and has its own column too, kept for what already reads it. |
 | `statement_profile` | `jsonb` | How the CSV statements of this account are laid out: the CsvStatementProfile of @ekwo-ai/csv-statement (delimiter, date format, decimal mark, which column says what). Written by the core when a CSV import given a profile succeeds, or set on the account; read when a CSV is imported without one. Optional: null until somebody describes the lay-out, and never used by the other statement formats. |
+| `bank_scheme` | `text` | The scheme bank_identifier is written in: a code of bank_identifier_schemes that identifies an institution — bic, aba, sort-code, bsb, ifsc, … Null together with bank_identifier. |
+| `bank_identifier` | `text` | The bank that keeps the account, in the scheme bank_scheme names. Holds the BIC as bic did when the scheme is bic. |
 
 Constraints:
 
+- `CHECK (((bank_scheme IS NULL) = (bank_identifier IS NULL)))`
 - `PRIMARY KEY (id)`
+
+### `bank_identifier_schemes`
+
+The closed list of schemes a bank account or a bank is identified in. identifies says which: an account (iban, aba-routing-account, bsb-account, ifsc-account, …, account-number for a number as the bank gave it) or the institution that keeps it (bic, aba, sort-code, bsb, ifsc, transit-institution, zengin-bank-branch). The account schemes are the keys of BANK_ACCOUNT_SCHEMES in @ekwo-ai/core. Every scheme column of the socle references this table; a scheme is added by a migration together with its reader.
+
+| Column | Type | Notes |
+|---|---|---|
+| `code` | `text` | not null |
+| `identifies` | `text` | not null |
+| `label` | `text` | not null |
+| `check_digits` | `text` | The check a value of this scheme carries, read by bank_identifier_problem(): iso7064-mod97-10 (IBAN), aba-3-7-1 (ABA routing number), clabe-3-7-1 (CLABE). Null where the scheme carries none. |
+| `created_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((check_digits = ANY (ARRAY['iso7064-mod97-10'::text, 'aba-3-7-1'::text, 'clabe-3-7-1'::text])))`
+- `CHECK ((identifies = ANY (ARRAY['account'::text, 'institution'::text])))`
+- `PRIMARY KEY (code)`
 
 ### `bank_statement_lines`
 
@@ -564,9 +586,10 @@ Imported statements. `is_consistent` compares the declared closing balance with 
 | `bank_account_id` | `uuid` | not null |
 | `name` | `text` |  |
 | `statement_date` | `date` | not null |
-| `balance_start` | `numeric` | not null |
-| `balance_end_declared` | `numeric` | not null |
-| `balance_end_computed` | `numeric` | not null |
+| `balance_start` | `numeric(16,2)` | not null |
+| `balance_end_declared` | `numeric(16,2)` | not null |
+| `balance_end_computed` | `numeric(16,2)` | not null |
+| `is_consistent` | `boolean` | generated |
 | `state` | `bank_statement_state` | not null |
 | `source` | `text` |  |
 | `created_at` | `timestamp with time zone` | not null |
@@ -577,7 +600,6 @@ Imported statements. `is_consistent` compares the declared closing balance with 
 | `source_format` | `text` | What the statement was read from, as the reader named it — camt.053.001.08. Null on a statement entered by hand. |
 | `source_file_name` | `text` | The name of the file the statement was first imported from, when the caller gave one. |
 | `source_checksum` | `text` | The checksum of the file the statement was first imported from, as the caller computed it — the core never sees the bytes. Kept so that the file can be recognised later; not what makes an import idempotent, because the same statement arrives in files that differ by a timestamp. |
-| `is_consistent` | `boolean` | generated |
 
 Constraints:
 
@@ -596,11 +618,11 @@ Statement lines. `amount` is signed; `raw` keeps whatever the source sent.
 | `sequence` | `integer` | not null |
 | `transaction_date` | `date` | not null |
 | `value_date` | `date` |  |
-| `amount` | `numeric` | not null |
+| `amount` | `numeric(16,2)` | not null |
 | `currency_code` | `character(3)` | not null |
 | `description` | `text` |  |
 | `counterpart_name` | `text` |  |
-| `counterpart_iban` | `text` |  |
+| `counterpart_iban` | `text` | Deprecated by counterpart_account_scheme and counterpart_account_identifier, and mirrored with them: the account when its scheme is iban, null otherwise. Still readable and writable; a write here writes the pair. |
 | `reference` | `text` |  |
 | `structured_reference` | `text` |  |
 | `contact_id` | `uuid` |  |
@@ -610,9 +632,12 @@ Statement lines. `amount` is signed; `raw` keeps whatever the source sent.
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
 | `import_key` | `text` | What makes an imported line the same line when its statement is replayed or overlapped: `ref:` and a digest when the bank gave the movement a reference, `fp:` and a digest of everything the statement says about it, with its occurrence among identical lines, when it did not. Unique per bank account, and written by import_bank_statement() only. Null on a line entered by hand. |
+| `counterpart_account_scheme` | `text` | The scheme counterpart_account_identifier is written in, as the statement gave it: a code of bank_identifier_schemes that identifies an account. Null together with counterpart_account_identifier. |
+| `counterpart_account_identifier` | `text` | The account on the other side of the line, in the scheme counterpart_account_scheme names. Compared with contacts.account_identifier to recognise who paid. |
 
 Constraints:
 
+- `CHECK (((counterpart_account_scheme IS NULL) = (counterpart_account_identifier IS NULL)))`
 - `PRIMARY KEY (id)`
 
 ### `book_imports`
@@ -739,7 +764,7 @@ Legal entities kept in this instance. One instance may hold several.
 | `region` | `text` | Province or state, ISO 3166-2 without the country prefix: QC, BC, CA. Null in a country that taxes uniformly. |
 | `trade_name` | `text` | The name the company trades under, when it is not the statutory one. A renderer shows this and keeps legal_name for the footer. |
 | `logo_url` | `text` | Where the logo is, as a URL or a storage path. The core stores no file: an accounting schema that held binaries would be backing up images with the ledger. |
-| `share_capital` | `numeric` | Capital to be stated on documents where the law requires it. Null where it does not, which is not zero. |
+| `share_capital` | `numeric(16,2)` | Capital to be stated on documents where the law requires it. Null where it does not, which is not zero. |
 | `share_capital_currency` | `character(3)` | Currency the capital is expressed in. Filled with the company's own currency when it is left empty, and never with a currency written into the schema. |
 | `activity_code` | `text` | The company's activity in the register of its country — NACE, APE, SIC. Text, because the registers are not numbers and not the same length. |
 | `activity_scheme` | `text` | Which register activity_code belongs to. A code without its scheme cannot be looked up. |
@@ -967,9 +992,9 @@ How a counterparty shows up on this company's statements: one row per learned or
 | `kind` | `contact_pattern_kind` | not null |
 | `value` | `text` | The account identifier as the statement wrote it, the spelling of the name, or the keyword. Null exactly when the kind is amount_range. An account identifier is not assumed to be an IBAN: half the world does not have one, and the scheme it is written in is a question the rest of this schema cannot answer yet. |
 | `exclude_words` | `text[]` | Words that disqualify a line the keyword would otherwise claim. Only a description_keyword carries them. |
-| `amount_min` | `numeric` |  |
-| `amount_max` | `numeric` |  |
-| `amount_typical` | `numeric` | The amount most often seen inside the band. Never a condition — it orders two candidates that are otherwise equal. |
+| `amount_min` | `numeric(16,2)` |  |
+| `amount_max` | `numeric(16,2)` |  |
+| `amount_typical` | `numeric(16,2)` | The amount most often seen inside the band. Never a condition — it orders two candidates that are otherwise equal. |
 | `currency_code` | `character(3)` |  |
 | `usage_count` | `integer` | not null — How many times this motif has been in front of a decision. |
 | `success_count` | `integer` | not null — How many of those decisions confirmed the contact it names. |
@@ -1046,8 +1071,8 @@ Third parties. `contact_type` is explicit rather than two hidden counters.
 | `payment_terms_days` | `smallint` | not null |
 | `receivable_account_id` | `uuid` |  |
 | `payable_account_id` | `uuid` |  |
-| `iban` | `text` |  |
-| `bic` | `text` |  |
+| `iban` | `text` | Deprecated by account_scheme and account_identifier, and mirrored with them: the account when its scheme is iban, null otherwise. Still readable and writable; a write here writes the pair. |
+| `bic` | `text` | Deprecated by bank_scheme and bank_identifier, and mirrored with them: the BIC when bank_scheme is bic, null otherwise. Still readable and writable; a write here writes the pair. |
 | `peppol_scheme` | `text` | Scheme of the electronic address this party is reached at (EN 16931 BT-49-1): a code of the Electronic Address Scheme list. A fact of the party's registration, never derived from its VAT or registration number. |
 | `peppol_identifier` | `text` | The electronic address itself (EN 16931 BT-49), in the scheme peppol_scheme names. |
 | `active` | `boolean` | not null |
@@ -1061,9 +1086,15 @@ Third parties. `contact_type` is explicit rather than two hidden counters.
 | `merged_into` | `uuid` | The contact this one was merged into by merge_contacts(), which moved every reference of this one onto it (decision 0074). Null for a contact in use. A merged contact is inactive, stays as the record of what was imported, and is named by no row again. |
 | `analytic_value_id` | `uuid` | The analytic value the lines of a document naming this contact start with, at 100 %, on an axis the product left free; a contact that has none takes its parent's, one level up. Pre-fills the line, never constrains it. |
 | `identifiers` | `jsonb` | not null — Every identifier of the party that has no column of its own, by the code of its scheme: {"<scheme>": "<identifier>"}, as companies.identifiers. Empty, not null, where there is none. |
+| `account_scheme` | `text` | The scheme account_identifier is written in: a code of bank_identifier_schemes that identifies an account — iban, aba-routing-account, bsb-account, ifsc-account, … Null together with account_identifier. |
+| `account_identifier` | `text` | The account this party pays from or is paid into, in the scheme account_scheme names. Read by contact_candidates() to recognise the party on a statement line. |
+| `bank_scheme` | `text` | The scheme bank_identifier is written in: a code of bank_identifier_schemes that identifies an institution. Null together with bank_identifier. |
+| `bank_identifier` | `text` | The bank that keeps this party's account, in the scheme bank_scheme names. |
 
 Constraints:
 
+- `CHECK (((account_scheme IS NULL) = (account_identifier IS NULL)))`
+- `CHECK (((bank_scheme IS NULL) = (bank_identifier IS NULL)))`
 - `CHECK (((client_ref IS NULL) OR ((client_ref = btrim(client_ref)) AND ((length(client_ref) >= 1) AND (length(client_ref) <= 200)))))`
 - `CHECK (((country IS NULL) OR (country ~ '^[A-Z]{2}$'::text)))`
 - `CHECK (((jsonb_typeof(identifiers) = 'object'::text) AND (NOT (identifiers ? ''::text)) AND (NOT jsonb_path_exists(identifiers, '$.*?(@.type() != "string" || @ like_regex "^\\s*$")'::jsonpath))))`
@@ -1252,7 +1283,7 @@ What a company paid on account of a declaration during its period: which instalm
 | `period_end` | `date` | not null |
 | `sequence` | `smallint` | not null |
 | `paid_on` | `date` | not null |
-| `amount` | `numeric` | not null |
+| `amount` | `numeric(18,2)` | not null |
 | `entry_id` | `uuid` |  |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
@@ -1275,7 +1306,7 @@ Analytic split of a document line, one row per value, share in percent. Copied o
 | `document_line_id` | `uuid` | not null |
 | `analytic_value_id` | `uuid` | not null |
 | `percentage` | `numeric(7,3)` | not null |
-| `amount` | `numeric` | The share of the line's untaxed amount in the document's currency, derived by the database. The shares of one axis are rounded in the order of their codes, so a whole split adds up to its line. |
+| `amount` | `numeric(16,2)` | The share of the line's untaxed amount in the document's currency, derived by the database. The shares of one axis are rounded in the order of their codes, so a whole split adds up to its line. |
 | `created_at` | `timestamp with time zone` | not null |
 
 Constraints:
@@ -1304,16 +1335,16 @@ Lines of a document. A product line carries its base, its account and its tax (t
 | `account_id` | `uuid` |  |
 | `vat_category` | `text` | EN 16931 BT-151 as the line carries it. Derived from the tax while the document is a draft and frozen when it is posted, so a pack upgrade that recategorises a tax cannot rewrite an invoice that has been sent. Never keyed. |
 | `vat_rate` | `numeric(7,4)` | EN 16931 BT-152 as the line carries it: the percentage of the tax, derived while the document is a draft and frozen when it is posted, so a later change of rate cannot rewrite an invoice that has been sent. Null where the tax is not a percentage. Never keyed. |
-| `amount_untaxed` | `numeric` | quantity x unit_price less the discount, rounded once at the decimals of the document's currency. Written by a trigger on every insert and update, so it is derived and never keyed in. |
+| `amount_untaxed` | `numeric(16,2)` | quantity x unit_price less the discount, rounded once at the decimals of the document's currency. Written by a trigger on every insert and update, so it is derived and never keyed in. |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
 | `product_id` | `uuid` | The catalogue row this line was filled in from, when there was one. Nullable for ever: free text is how most invoices are written. |
 | `description` | `text` | Item description, EN 16931 BT-154. `name` is BT-153. |
 | `unit_price_includes_tax` | `boolean` | not null — The unit price of this line was quoted with the tax in it. Derived from the tax while the document is a draft and frozen when it is posted, like BT-151 and BT-152, so a later change to the tax cannot rewrite an invoice that has been sent. |
-| `amount_incl_tax` | `numeric` | quantity x unit_price less the discount, tax included, as the line was quoted. Null where the price excludes the tax, which is every line of every pack but a retail one. |
+| `amount_incl_tax` | `numeric(16,2)` | quantity x unit_price less the discount, tax included, as the line was quoted. Null where the price excludes the tax, which is every line of every pack but a retail one. |
 | `attributes` | `jsonb` | not null — What an electronic invoice format asks of this line that no other column says, by the name the format's brick reads: {"<name>": "<value>"}, as products.attributes. Wins over the country pack's line_attributes and tax_attributes for this line. Pre-filled from the product with the names the line does not carry; frozen with the document once posted. Empty, not null, where there is none. |
 | `base_includes_tax` | `boolean` | not null — The tax of this line is computed inside its own base. Derived from the tax while the document is a draft and kept when it is posted, like unit_price_includes_tax, so a later change to the tax cannot rewrite an invoice that has been sent. |
-| `stated_tax_amount` | `numeric` | The tax the source of the document states for this line, in the document's currency — a supplier or a billing system that rounds the tax line by line. Optional; null computes the tax as always. When every product line of a tax group states it, the group's tax is the sum, accepted within one unit of the currency per line of Ekwo's computation (stated_tax_tolerance) and refused at posting beyond it. Decision 0099. |
+| `stated_tax_amount` | `numeric(16,2)` | The tax the source of the document states for this line, in the document's currency — a supplier or a billing system that rounds the tax line by line. Optional; null computes the tax as always. When every product line of a tax group states it, the group's tax is the sum, accepted within one unit of the currency per line of Ekwo's computation (stated_tax_tolerance) and refused at posting beyond it. Decision 0099. |
 
 Constraints:
 
@@ -1408,13 +1439,14 @@ Sales and purchase invoices, credit notes, quotes and orders. `state` is the doc
 | `payment_terms` | `text` |  |
 | `payment_means_code` | `text` |  |
 | `payment_reference` | `text` |  |
-| `payee_iban` | `text` |  |
+| `payee_iban` | `text` | Deprecated by payee_account_scheme and payee_account_identifier, and mirrored with them: BT-84 when its scheme is iban, null otherwise. Still readable and writable; a write here writes the pair. |
 | `note` | `text` |  |
 | `currency_code_tax` | `character(3)` |  |
-| `amount_untaxed` | `numeric` | not null |
-| `amount_tax` | `numeric` | not null |
-| `amount_total` | `numeric` | not null |
-| `amount_paid` | `numeric` | not null — Derived from reconciliations on the third-party lines of the document's entry: document_amount_paid(). Once the document is posted, any other figure is refused. |
+| `amount_untaxed` | `numeric(16,2)` | not null |
+| `amount_tax` | `numeric(16,2)` | not null |
+| `amount_total` | `numeric(16,2)` | not null |
+| `amount_paid` | `numeric(16,2)` | not null — Derived from reconciliations on the third-party lines of the document's entry: document_amount_paid(). Once the document is posted, any other figure is refused. |
+| `amount_residual` | `numeric(16,2)` | generated |
 | `reversed_document_id` | `uuid` |  |
 | `entry_id` | `uuid` |  |
 | `sent_at` | `timestamp with time zone` |  |
@@ -1432,7 +1464,8 @@ Sales and purchase invoices, credit notes, quotes and orders. `state` is the doc
 | `accepted_at` | `timestamp with time zone` | When the other party accepted this quote or order. Written by accept_document(), cleared by undo_document_answer(); never set together with declined_at, and only on a sale_quote or a purchase_order. Nothing is booked. |
 | `accepted_by` | `text` | Who accepted it, in the words of whoever recorded it: a name, a role, a reference to a signed copy. Free text, set only with accepted_at. |
 | `declined_at` | `timestamp with time zone` | When the other party declined this quote or order. Written by decline_document(), cleared by undo_document_answer(); never set together with accepted_at, and only on a sale_quote or a purchase_order. |
-| `amount_residual` | `numeric` | generated |
+| `payee_account_scheme` | `text` | The scheme payee_account_identifier is written in (EN 16931 BT-84 carries an identifier, not an IBAN): a code of bank_identifier_schemes that identifies an account. A sales document without one takes the company's default bank account, with its scheme. Null together with payee_account_identifier. |
+| `payee_account_identifier` | `text` | The account the document asks to be paid into, EN 16931 BT-84 "Payment account identifier", in the scheme payee_account_scheme names. |
 
 Constraints:
 
@@ -1441,6 +1474,7 @@ Constraints:
 - `CHECK (((accepted_at IS NULL) OR (declined_at IS NULL)))`
 - `CHECK (((client_ref IS NULL) OR ((client_ref = btrim(client_ref)) AND ((length(client_ref) >= 1) AND (length(client_ref) <= 200)))))`
 - `CHECK (((state = 'draft'::doc_state) OR (contact_id IS NOT NULL)))`
+- `CHECK (((payee_account_scheme IS NULL) = (payee_account_identifier IS NULL)))`
 - `CHECK (((state <> 'posted'::doc_state) OR (number IS NOT NULL)))`
 - `CHECK ((exchange_rate > (0)::numeric))`
 - `PRIMARY KEY (id)`
@@ -1463,15 +1497,15 @@ Journal entries. A document and its entry are two layers joined by a foreign key
 | `document_id` | `uuid` |  |
 | `reversed_entry_id` | `uuid` |  |
 | `currency_code` | `character(3)` |  |
-| `total_debit` | `numeric` | not null — Derived from entry_lines by trigger; the lines are authoritative. |
-| `total_credit` | `numeric` | not null |
+| `total_debit` | `numeric(16,2)` | not null — Derived from entry_lines by trigger; the lines are authoritative. |
+| `total_credit` | `numeric(16,2)` | not null |
+| `is_balanced` | `boolean` | generated |
 | `posted_at` | `timestamp with time zone` |  |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
 | `kind` | `entry_kind` | not null — normal, opening or closing. Written by opening_balance(), close_fiscal_year() and reopen_fiscal_year(), and by nothing else. |
 | `module_code` | `text` | Which module wrote this entry, or null for an entry of the socle. Set by post_module_entry(). |
 | `module_ref` | `text` | What the entry is for, in the module's own words — `depreciation:2026-03` , `disposal:<uuid>`. Unique per company and module, which is what makes a module's posting idempotent. |
-| `is_balanced` | `boolean` | generated |
 
 Constraints:
 
@@ -1490,7 +1524,7 @@ Analytic split of a ledger line. One row per value, share in percent.
 | `entry_line_id` | `uuid` | not null |
 | `analytic_value_id` | `uuid` | not null |
 | `percentage` | `numeric(7,3)` | not null |
-| `amount` | `numeric` | The share of the line's balance (debit minus credit) in the company's currency, derived by the database. The shares of one axis are rounded in the order of their codes, so a whole split adds up to its line. |
+| `amount` | `numeric(16,2)` | The share of the line's balance (debit minus credit) in the company's currency, derived by the database. The shares of one axis are rounded in the order of their codes, so a whole split adds up to its line. |
 | `created_at` | `timestamp with time zone` | not null |
 
 Constraints:
@@ -1511,18 +1545,19 @@ Ledger lines. Amounts are always positive; a reversal flips the side, it never n
 | `account_id` | `uuid` | not null |
 | `sequence` | `integer` | not null |
 | `name` | `text` |  |
-| `debit` | `numeric` | not null |
-| `credit` | `numeric` | not null |
+| `debit` | `numeric(16,2)` | not null |
+| `credit` | `numeric(16,2)` | not null |
+| `balance` | `numeric(16,2)` | generated |
 | `currency_code` | `character(3)` |  |
-| `amount_currency` | `numeric` | The amount of this line in its own currency, written whenever that currency is not the company's. Positive like debit and credit; the side carries the sign. |
+| `amount_currency` | `numeric(16,2)` | The amount of this line in its own currency, written whenever that currency is not the company's. Positive like debit and credit; the side carries the sign. |
 | `contact_id` | `uuid` |  |
 | `date_maturity` | `date` |  |
 | `tax_id` | `uuid` |  |
 | `tax_line` | `boolean` | not null |
 | `declaration_box` | `text` | VAT-return box this line feeds, copied from the tax posting that produced it. |
-| `box_amount` | `numeric` | Amount to report in that box, in the sign the form expects. A line of a cash-basis tax carries the amount with no box: it is computed when the document is posted and waits for the matching that names the box it is finally reported in. |
+| `box_amount` | `numeric(16,2)` | Amount to report in that box, in the sign the form expects. A line of a cash-basis tax carries the amount with no box: it is computed when the document is posted and waits for the matching that names the box it is finally reported in. |
 | `matching_number` | `text` | Reconciliation letter shared by matched lines. Exported as EcritureLet in the FEC. |
-| `matched_amount` | `numeric` | not null |
+| `matched_amount` | `numeric(16,2)` | not null |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
 | `posting_type` | `tax_posting_type` | Which tax posting wrote this line: base, tax, or tax_on_base, from tax_postings.posting_type. Null on a line no tax posting wrote — a counterpart, a payment, a closing line — and null on a line written before this column existed whose posting could not be identified beyond doubt; tax_id tells the two apart. It is what makes a base line and a tax_on_base line of the same tax on the same account distinguishable, which tax_id and tax_line together cannot do. |
@@ -1530,7 +1565,6 @@ Ledger lines. Amounts are always positive; a reversal flips the side, it never n
 | `declared_on` | `date` | not null — The day this line counts for a tax return: its tax_point_date where the posting engine worked one out, the date of its entry otherwise (declared_on_of()). Written by the trigger entry_lines_set_declared_on on every insert and on every change of what it derives from — never typed: a value written by hand on a draft is replaced by the rule's, and on a posted line refused by entry_lines_guard_posted. The period of a return is read on this column, through declared_lines(). |
 | `declaration_boxes` | `text[]` | Every box of the declaration this line is summed into, frozen when the line was written from the posting that wrote it: declaration_boxes_of() of its tax, its box and its side. Its first element is not necessarily declaration_box; the list is sorted. Null exactly where declaration_box is, except on a line restored from an archive written before 20261011160431, which vat_return() reads through the postings of today. Written by entry_lines_box_from_posting(), never by hand. |
 | `report_code` | `text` | The declaration form the posting that wrote this line is on, frozen with declaration_boxes. Null where the posting names no form, which is the single return of a country that files one. |
-| `balance` | `numeric` | generated |
 
 Constraints:
 
@@ -1821,7 +1855,7 @@ Money in and out. Amounts are positive; `direction` carries the sign.
 | `company_id` | `uuid` | not null |
 | `direction` | `payment_direction` | not null |
 | `payment_date` | `date` | not null |
-| `amount` | `numeric` | not null |
+| `amount` | `numeric(16,2)` | not null |
 | `currency_code` | `character(3)` | not null |
 | `contact_id` | `uuid` |  |
 | `journal_id` | `uuid` | not null |
@@ -1910,7 +1944,7 @@ One row per pairing of a debit with a credit. Full matching is the sum of partia
 | `company_id` | `uuid` | not null |
 | `debit_line_id` | `uuid` | not null |
 | `credit_line_id` | `uuid` | not null |
-| `amount` | `numeric` | not null |
+| `amount` | `numeric(16,2)` | not null |
 | `matching_number` | `text` | not null |
 | `matched_at` | `date` | not null |
 | `created_at` | `timestamp with time zone` | not null |
@@ -2389,15 +2423,15 @@ The tax on turnover of a period as post_turnover_tax() computed and posted it: t
 | `regime_code` | `text` | not null |
 | `period_start` | `date` | not null |
 | `period_end` | `date` | not null |
-| `turnover` | `numeric` | not null |
-| `window_turnover` | `numeric` | not null |
+| `turnover` | `numeric(18,2)` | not null |
+| `window_turnover` | `numeric(18,2)` | not null |
 | `window_months_counted` | `integer` | not null |
 | `base` | `numeric` | not null |
 | `bracket_sequence` | `integer` | not null |
 | `nominal_rate` | `numeric(9,4)` | not null |
-| `deduction` | `numeric` | not null |
+| `deduction` | `numeric(18,2)` | not null |
 | `effective_rate` | `numeric` | not null |
-| `tax` | `numeric` | not null |
+| `tax` | `numeric(18,2)` | not null |
 | `entry_id` | `uuid` |  |
 | `filing_id` | `uuid` |  |
 | `created_at` | `timestamp with time zone` | not null |
@@ -2418,9 +2452,9 @@ The brackets of a regime of turnover_tax_regimes, dated: the highest base each t
 | `valid_from` | `date` | not null |
 | `valid_to` | `date` |  |
 | `sequence` | `integer` | not null |
-| `up_to` | `numeric` |  |
+| `up_to` | `numeric(18,2)` |  |
 | `nominal_rate` | `numeric(9,4)` | not null |
-| `deduction` | `numeric` | not null |
+| `deduction` | `numeric(18,2)` | not null |
 | `legal_reference` | `text` | not null |
 | `source_key` | `text` |  |
 
@@ -2492,7 +2526,7 @@ Up to which amount a company may be on a scheme: a measure from a closed vocabul
 | `sequence` | `integer` | not null |
 | `measure` | `text` | not null |
 | `activity` | `text` | not null |
-| `amount` | `numeric` | not null |
+| `amount` | `numeric(18,2)` | not null |
 | `currency_code` | `character(3)` | not null |
 | `valid_from` | `date` | not null |
 | `valid_to` | `date` |  |
@@ -2541,7 +2575,7 @@ The payments on account a scheme asks for during the year a return covers: in wh
 | `base_report_code` | `text` | not null |
 | `base_box` | `text` | not null |
 | `base_kind` | `text` | not null |
-| `minimum_base` | `numeric` |  |
+| `minimum_base` | `numeric(18,2)` |  |
 | `legal_reference` | `text` | not null |
 | `source_key` | `text` |  |
 
@@ -2623,6 +2657,7 @@ Constraints:
 | `auto_settle(p_company_id uuid, p_from date, p_to date, p_apply boolean)` | Walks the pending statement lines of a period and settles the ones a single piece of evidence identifies — a reference, or an exact amount with one candidate. Everything else comes back with the reason it was left: a combination, a partial payment, an internal transfer, nothing open that fits, or a refusal the database made, quoted. With p_apply false it changes nothing and says what it would do. |
 | `available_statements(p_company_id uuid, p_at date)` | Statements a company may ask for: those of its country and chart, plus the generic framework. `is_default` marks the ones its chart declares. |
 | `bank_accounts_read_identifier()` | Keeps iban, account_scheme and account_identifier saying one thing: an IBAN fills the identifier, an identifier of the iban scheme fills iban, and no other scheme ever writes iban. |
+| `bank_identifier_problem(p_scheme text, p_value text)` | Why a value breaks its scheme, or null when it holds. Reads the scheme first, from bank_identifier_schemes: an account scheme is read by read_bank_account_identifier() (ISO 7064 mod 97-10 for an IBAN, the 3-7-1 weighted sum for an ABA routing number, …), a BIC by the shape of ISO 9362, an ABA routing number by its weighted sum. A scheme whose check this release does not hold answers null: its value is stored as written. Never refuses a value for not being an IBAN. |
 | `bank_statement_movement(p_statement_id uuid)` | The sum of the lines a statement lists or holds, each counted once. What balance_end_computed adds to balance_start. |
 | `bank_transactions_guard()` | Keeps a statement line honest about whether it is settled. state moves between pending and ignored by hand; reconciled and entry_id are written by settle_from_statement() alone, under the setting ekwo.settling_statement, honoured for a caller holding reconcile.write (bank_transaction_settled_by_rpc otherwise, and on an insert that arrives settled). A line pointing at an entry keeps its amount, day, currency and bank account (bank_transaction_settled). When the entry is gone, the foreign key nulls entry_id and the line is pending again. The installer passes. |
 | `buyer_certificate_for(p_document_id uuid)` | The certificate of contact_tax_certificates that covers a document: handed over by its contact, valid on its document_date, and either naming no territory or one the place of supply (document_territory(..., 'supply')) lies inside. The most recent when several do; null when none does. |
@@ -2710,7 +2745,7 @@ Constraints:
 | `document_to_answer(p_document_id uuid)` | The document an answer is recorded on, or the refusal by name: unknown_document (absent, or outside the companies where the caller holds documents.read), not_allowed (documents.write), document_not_answerable (neither a sale_quote nor a purchase_order), document_cancelled. The first lines of accept_document(), decline_document() and undo_document_answer(). |
 | `document_version(p_document_id uuid)` | A digest of a document and its lines as they stand, every column but updated_at: what approve_document() approves, and what a posting by an agent in review compares to it. Any change to the draft gives another. Null for a document the caller cannot read. |
 | `documents_allocate_included_tax(p_document_id uuid)` | Turns the gross of every tax group quoted with the tax in it into a base: the tax rounded once on the group (BR-CO-14), as tax_amount_of() computes it, the base the gross less that tax, shared over the lines in proportion to their gross with the remainder on the last. Refuses a group that is half inclusive, by name. |
-| `documents_default_payee_iban()` | A sales document with no payee account takes the company's default bank account, whatever scheme it is written in. A purchase document never does: the payee there is somebody else. |
+| `documents_default_payee_iban()` | A sales document with no payee account takes the company's default bank account into payee_account_scheme and payee_account_identifier (BT-84), with the scheme it is written in; documents_payee_mirror then writes payee_iban when that scheme is iban. A purchase document never does: the payee there is somebody else. |
 | `documents_guard_language()` | Fills documents.language from the customer, then the company, then the country pack when a document is created, keeps a draft in step with the customer it is addressed to, and refuses document_language_frozen on anything that is no longer a draft. |
 | `documents_guard_posted()` | Once a document has left draft: it is not deleted, no column moves but the closed list of what happens to a document after it is issued — amount_paid (to the figure the matching gives, and no other), payment_state, sent_at, peppol_status, peppol_message_id — and its state has two ways out: posted to cancelled, taken by cancel_document() and held to a posted credit note of the matching type that names it and settles it in full, for a caller holding documents.post (document_cancelled_by_hand otherwise); and posted to draft, taken by unpost_document(). Refuses document_posted, by name, to everybody. Becoming posted is held to what post_document() writes (document_posted_by_hand otherwise), and nobody inserts a document that is already posted (document_born_posted). One exemption (decision 0074): contact_id alone, from the absorbed contact to the kept one, in the transaction in which merge_contacts() recorded that merge in contact_merges, written to the trail as document_contact_merged. |
 | `documents_hold_buyer_certificate()` | Refuses to post a sale invoice a line of which carries a tax conditioned on buyer_certificate (tax_templates.conditions) when buyer_certificate_for() finds no certificate its contact handed over that covers it (no_buyer_certificate). The one word of conditions the core reads; a credit note and a purchase are not held to it. |
@@ -2812,6 +2847,7 @@ Constraints:
 | `member_capabilities(p_company_id uuid, p_user_id uuid)` | The capabilities one member effectively holds on one company, preset and adjustments resolved. Reading another member's needs members.manage. |
 | `member_holds(p_member company_members, p_capability text)` | Whether one membership holds one capability: revoked beats granted, granted beats the preset. The one place a person's rights on a company are decided — has_capability(), member_capabilities() and key_holds() all ask it. False, never NULL. |
 | `merge_contacts(p_keep uuid, p_absorb uuid)` | Merges two contacts of one company (decision 0074): every reference of p_absorb — every foreign key to contacts, read from the catalogue, posted lines and issued documents included, the branches whose parent it was, the files attached to it — moves onto p_keep in one transaction; its learned motifs are folded into the kept contact's; the kept contact's empty fields are filled from the absorbed one, never overwritten; and the absorbed contact is retired, inactive with merged_into = p_keep, never deleted. Needs contacts.write and reconcile.write. Refuses unknown_contact, same_contact, already_merged, different_identifiers (two VAT or registration numbers), matching_across_parties and not_allowed by name. Recorded in contact_merges, which the two guards of what was posted read in this transaction alone, and written to the trail as contacts_merged, with line_contact_merged and document_contact_merged for each posted row moved. Answers the row of contact_merges: the two contacts, who merged them, what moved, table by table, and what was filled. |
+| `mirror_bank_identifier()` | Holds a deprecated column (iban, bic, counterpart_iban, payee_iban) and the scheme and value that replace it saying one thing. Its arguments: the old column, the scheme column, the value column, and the scheme the old column means. A write to the old column writes the pair in that scheme; a write to the pair writes the old column when the scheme is that one and clears it otherwise; a write to both that disagrees is refused, bank_identifier_disagrees. The pattern of companies.vat_period and company_filing_periods. |
 | `module_enabled(p_company_id uuid, p_code text)` | The helper a module's row level security policies call: this module is enabled on this company and the caller is a member of it. One call, and the answer to a stranger is no. |
 | `module_entry_id(p_company_id uuid, p_module_code text, p_ref text)` | The entry a module already posted under a reference, or null. What a module reads before deciding it has work to do. |
 | `module_functions_follow_the_socle(p_schema text)` | Gives every function of a module's schema that carries no search_path one of its own — the module's schema, then ekwo — and the same to the SQL helpers of the socle the module's policies fold in, so that what runs under a request served with the module's profile finds the socle. Called by the installer after a module's migrations; answers how many were set. Owner only. |
@@ -3034,9 +3070,9 @@ One planned period of depreciation. `entry_id` is the entry that booked it, and 
 | `sequence` | `integer` | not null |
 | `period_start` | `date` | not null |
 | `period_end` | `date` | not null |
-| `amount` | `numeric` | not null |
-| `accumulated` | `numeric` | not null |
-| `net_book_value` | `numeric` | not null |
+| `amount` | `numeric(16,2)` | not null |
+| `accumulated` | `numeric(16,2)` | not null |
+| `net_book_value` | `numeric(16,2)` | not null |
 | `entry_id` | `uuid` |  |
 | `posted_at` | `timestamp with time zone` |  |
 | `created_at` | `timestamp with time zone` | not null |
@@ -3062,13 +3098,13 @@ What leaving the books cost or earned: one row per fixed asset, written by fixed
 | `asset_id` | `uuid` | not null |
 | `company_id` | `uuid` | not null |
 | `disposal_date` | `date` | not null |
-| `proceeds` | `numeric` | not null |
+| `proceeds` | `numeric(16,2)` | not null |
 | `counterpart_account_id` | `uuid` |  |
 | `contact_id` | `uuid` |  |
-| `cost` | `numeric` | not null |
-| `accumulated` | `numeric` | not null |
-| `net_book_value` | `numeric` | not null |
-| `result` | `numeric` | not null |
+| `cost` | `numeric(16,2)` | not null |
+| `accumulated` | `numeric(16,2)` | not null |
+| `net_book_value` | `numeric(16,2)` | not null |
+| `result` | `numeric(16,2)` | not null |
 | `entry_id` | `uuid` |  |
 | `created_at` | `timestamp with time zone` | not null |
 
@@ -3097,8 +3133,8 @@ One fixed asset: what it cost, how it is depreciated, and the three accounts tha
 | `product_id` | `uuid` |  |
 | `acquisition_date` | `date` | not null |
 | `in_service_date` | `date` |  |
-| `cost` | `numeric` | not null |
-| `residual_value` | `numeric` | not null |
+| `cost` | `numeric(16,2)` | not null |
+| `residual_value` | `numeric(16,2)` | not null |
 | `method` | `fixed_assets.depreciation_method` | not null |
 | `duration_months` | `integer` | not null |
 | `coefficient` | `numeric(7,3)` | Multiplier of the straight-line rate under a declining balance. France 1,25 / 1,75 / 2,25 by duration; Belgium doubles the rate. Required by a check constraint for that method, because a declining balance with no coefficient is a straight line nobody asked for. |
@@ -3188,7 +3224,7 @@ What one account is expected to carry over one period, in the sign a business sa
 | `account_id` | `uuid` | not null |
 | `period_start` | `date` | not null |
 | `period_end` | `date` | not null |
-| `amount` | `numeric` | not null |
+| `amount` | `numeric(16,2)` | not null |
 | `note` | `text` |  |
 | `created_at` | `timestamp with time zone` | not null |
 | `updated_at` | `timestamp with time zone` | not null |
@@ -3382,7 +3418,7 @@ One agreement with one party of the books: what it is about, which side the comp
 | `renewal` | `contracts.renewal` | not null |
 | `notice_days` | `integer` | How many days before the next term — or before the end, where it does not renew — notice has to be given. The notice deadline of contracts.deadlines is that day. |
 | `currency_code` | `character(3)` | not null — The currency of its value and of the documents it issues. The company's own when the contract was created without one. |
-| `total_value` | `numeric` | What the contract is worth over its term, excluding tax, as the parties said it. A figure of the agreement, never added to the books. |
+| `total_value` | `numeric(18,2)` | What the contract is worth over its term, excluding tax, as the parties said it. A figure of the agreement, never added to the books. |
 | `attachment_id` | `uuid` | The signed file: an attachment of the socle, with its checksum, of the same company. The file itself is filed on the other party (entity_type contact). |
 | `template_id` | `uuid` | The template it was made from, if any. |
 | `notes` | `text` | What somebody — a member, an agent — wrote about the contract: its risks, what to watch. |
@@ -3632,7 +3668,7 @@ A piece of business with one contact, moving through the stages of one pipeline.
 | `stage_id` | `uuid` | not null |
 | `contact_id` | `uuid` | not null — Who the deal is with: an organisation, or a person of one. Winning it makes the organisation at the root of the contact's chain a customer. |
 | `title` | `text` | not null |
-| `amount` | `numeric` |  |
+| `amount` | `numeric(18,2)` |  |
 | `currency_code` | `character(3)` |  |
 | `expected_on` | `date` |  |
 | `external_url` | `text` | Where the deal is described elsewhere: a proposal, a tender, a thread. |
