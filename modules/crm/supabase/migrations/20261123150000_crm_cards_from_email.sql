@@ -281,8 +281,12 @@ begin
    order by c.is_company, c.active desc, c.created_at, c.id
    limit 1;
 
-  if found and v_contact.is_company then
+  -- The organisation: the contact itself when it is one, the one a person on
+  -- file already belongs to, else the one of the domain — never a generic one.
+  if v_contact.id is not null and v_contact.is_company then
     v_org := v_contact.id;
+  elsif v_contact.id is not null and v_contact.parent_id is not null then
+    v_org := v_contact.parent_id;
   elsif not v_generic then
     v_org := crm.organisation_of_domain(p_company_id, v_domain);
   end if;

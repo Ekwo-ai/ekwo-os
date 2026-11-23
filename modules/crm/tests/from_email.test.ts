@@ -153,6 +153,30 @@ describe('an activity named by an address', () => {
     expect(info).toMatchObject({ contact_id: org, organisation_id: org, contact_created: false });
   });
 
+  it('leaves a person on file in the organisation it already belongs to', async () => {
+    const { org, person } = await asOwner(async () => {
+      const org = (
+        await one<{ id: string }>(
+          db,
+          `insert into contacts (company_id, name, is_company, contact_type) values ($1, 'Holding Group', true, 'other') returning id`,
+          [companyId],
+        )
+      ).id;
+      const person = (
+        await one<{ id: string }>(
+          db,
+          `insert into contacts (company_id, name, is_company, contact_type, parent_id, email)
+           values ($1, 'Noor Haddad', false, 'other', $2, 'noor@subsidiary-brand.example') returning id`,
+          [companyId, org],
+        )
+      ).id;
+      return { org, person };
+    });
+    const r = await byEmail('noor@subsidiary-brand.example');
+    expect(r).toMatchObject({ contact_id: person, organisation_id: org, contact_created: false, organisation_created: false });
+    expect(await rows(db, `select id from contacts where company_id = $1 and name = 'subsidiary-brand.example'`, [companyId])).toEqual([]);
+  });
+
   it('refuses a text that holds no address, by name', async () => {
     const refused = await asOwner(() =>
       expectError(db, `select crm.log_activity_by_email($1, 'nobody at all', 'email_in')`, [companyId]),
