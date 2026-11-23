@@ -178,6 +178,10 @@ ${bold('Connecting')} ${dim('(every command)')}
                             Needed to create a user.
 
   ${cyan('contact')}     add <name> | list — the people and companies the books name;
+              add takes --account-scheme <scheme> --account <identifier> and
+              --bank-scheme <scheme> --bank <identifier>, schemes of
+              bank_identifier_schemes (iban, aba-routing-account, bsb-account,
+              ifsc-account…; bic, aba, bsb, ifsc…), never assumed;
               duplicates — the pairs that are probably one party, with the
               one to keep and the evidence; merge <keep> <absorb> — one party created twice: everything that
               names the second, posted lines and issued documents included,

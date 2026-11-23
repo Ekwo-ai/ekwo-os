@@ -91,6 +91,10 @@ export const CreateContactInput = z.object({
   address_line1: z.string().min(1).optional(),
   postal_code: z.string().min(1).optional(),
   city: z.string().min(1).optional(),
+  account_scheme: z.string().min(1).optional().describe('The scheme of the account the party pays from or into, a code of bank_identifier_schemes: iban, aba-routing-account, sort-code-account, bsb-account, ifsc-account, clabe, zengin, transit-institution-account, account-number. Given together with account_identifier; never assumed to be iban.'),
+  account_identifier: z.string().min(1).optional().describe('The account itself, in the scheme account_scheme names. Recognises the party on a statement line.'),
+  bank_scheme: z.string().min(1).optional().describe('The scheme of the party\'s bank: bic, aba, sort-code, bsb, ifsc, transit-institution, zengin-bank-branch. Given together with bank_identifier.'),
+  bank_identifier: z.string().min(1).optional().describe('The bank itself, in the scheme bank_scheme names.'),
   client_ref: z.string().min(1).max(200).optional().describe('Your own reference for this creation. Calling again with the same one returns what was created the first time (`replayed: true`) instead of creating a second — use it whenever a call might be repeated after a timeout.'),
 });
 
@@ -633,7 +637,9 @@ export const CreateBankTransactionInput = z.object({
   amount: z.union([z.string(), z.number()]).describe('Signed: positive is money in, negative is money out.'),
   description: z.string().min(1).optional(),
   counterpart_name: z.string().min(1).optional(),
-  counterpart_iban: z.string().min(1).optional(),
+  counterpart_iban: z.string().min(1).optional().describe('Deprecated: the counterpart account when it is an IBAN. Prefer counterpart_account_scheme and counterpart_account_identifier.'),
+  counterpart_account_scheme: z.string().min(1).optional().describe('The scheme of the account on the other side of the line, a code of bank_identifier_schemes (iban, aba-routing-account, bsb-account, ifsc-account, …). Given together with counterpart_account_identifier.'),
+  counterpart_account_identifier: z.string().min(1).optional().describe('The account on the other side of the line, in the scheme counterpart_account_scheme names. Recognises who paid.'),
   reference: z.string().min(1).optional(),
   structured_reference: z.string().min(1).optional().describe('A structured communication, e.g. +++000/0000/00000+++ or RF…'),
   statement_id: uuid.optional(),
@@ -659,6 +665,13 @@ export async function createBankTransaction(
           description: args.description ?? null,
           counterpart_name: args.counterpart_name ?? null,
           counterpart_iban: args.counterpart_iban ?? null,
+          // Only when given: a database without the pair still takes the line.
+          ...(args.counterpart_account_scheme === undefined && args.counterpart_account_identifier === undefined
+            ? {}
+            : {
+                counterpart_account_scheme: args.counterpart_account_scheme ?? null,
+                counterpart_account_identifier: args.counterpart_account_identifier ?? null,
+              }),
           reference: args.reference ?? null,
           structured_reference: args.structured_reference ?? null,
           contact_id: args.contact_id ?? null,

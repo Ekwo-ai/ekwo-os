@@ -95,8 +95,14 @@ export interface InvoiceLine {
 export interface PaymentInstructions {
   /** UNTDID 4461 code (BT-81). Defaults to `"58"` (SEPA credit transfer) when an IBAN is given. */
   meansCode?: string;
-  /** Payee IBAN (BT-84). */
+  /** Payee IBAN (BT-84), when the account is identified by an IBAN. */
   iban?: string;
+  /**
+   * Payee account (BT-84) in any other scheme — an ABA routing number and an
+   * account, a BSB and an account, an IFSC and an account — written as
+   * `ProprietaryID`. Ignored when `iban` is given.
+   */
+  accountId?: string;
   /** Payee BIC (BT-86). Omitted from the XML below the EN 16931 level. */
   bic?: string;
   /** Remittance information (BT-83). */

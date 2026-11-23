@@ -55,6 +55,7 @@ export const FRENCH_LABELS: InvoiceLabels = {
   paymentTerms: 'Conditions',
   paymentReference: 'Référence',
   iban: 'IBAN',
+  account: 'Compte',
   bic: 'BIC',
   note: 'Remarque',
   page: 'Page {page} sur {pages}',

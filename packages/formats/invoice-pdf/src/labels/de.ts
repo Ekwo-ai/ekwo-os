@@ -55,6 +55,7 @@ export const GERMAN_LABELS: InvoiceLabels = {
   paymentTerms: 'Bedingungen',
   paymentReference: 'Verwendungszweck',
   iban: 'IBAN',
+  account: 'Konto',
   bic: 'BIC',
   note: 'Hinweis',
   page: 'Seite {page} von {pages}',

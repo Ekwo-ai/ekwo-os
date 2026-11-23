@@ -89,6 +89,12 @@ export const CONTACT = [
   'receivable_account_id',
   'payable_account_id',
   'active',
+  // The account the party pays from or into, and its bank: a scheme and a
+  // value each (SCHEMA_FEATURES.account_identifier_pairs).
+  'account_scheme',
+  'account_identifier',
+  'bank_scheme',
+  'bank_identifier',
 ];
 
 export const TAX = [
@@ -220,6 +226,11 @@ export const DOCUMENT_HEADER = [
   'note',
   'payee_iban',
   'payee_bic',
+  // BT-84 in any scheme, and the bank of the account (account_identifier_pairs).
+  'payee_account_scheme',
+  'payee_account_identifier',
+  'payee_bank_scheme',
+  'payee_bank_identifier',
   'seller_name',
   'seller_legal_name',
   'seller_legal_form',
@@ -352,6 +363,8 @@ export const BANK_ACCOUNT = [
   'account_scheme',
   'account_identifier',
   'bic',
+  'bank_scheme',
+  'bank_identifier',
   'bank_name',
   'currency_code',
   'account_id',
@@ -373,6 +386,8 @@ export const BANK_TRANSACTION = [
   'description',
   'counterpart_name',
   'counterpart_iban',
+  'counterpart_account_scheme',
+  'counterpart_account_identifier',
   'reference',
   'structured_reference',
   'contact_id',

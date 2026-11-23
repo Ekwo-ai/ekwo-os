@@ -55,6 +55,7 @@ export const DUTCH_LABELS: InvoiceLabels = {
   paymentTerms: 'Voorwaarden',
   paymentReference: 'Referentie',
   iban: 'IBAN',
+  account: 'Rekening',
   bic: 'BIC',
   note: 'Opmerking',
   page: 'Pagina {page} van {pages}',

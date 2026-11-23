@@ -349,7 +349,10 @@ function writeFacturX(source: EinvoiceSource): WrittenEinvoice {
   // Payment: a means is a code the books hold or nothing. An account without
   // a code is not written, because the brick would call it a transfer.
   const means = text(header['payment_means_code']);
-  const iban = text(header['payee_iban']);
+  // BT-84 is a payment account identifier in any scheme. The pair is read
+  // first; a database without it has payee_iban alone, which is an IBAN.
+  const payee = payeeAccount(header);
+  const iban = payee?.value ?? null;
   const terms = text(header['payment_terms']);
   const reference = text(header['payment_reference']);
   if (iban !== null && means === null) {
@@ -362,7 +365,11 @@ function writeFacturX(source: EinvoiceSource): WrittenEinvoice {
     invoice.payment = {};
     if (means !== null) {
       invoice.payment.meansCode = means;
-      if (iban !== null) invoice.payment.iban = iban;
+      if (payee !== null) {
+        if (payee.scheme === 'iban') invoice.payment.iban = payee.value;
+        else invoice.payment.accountId = payee.value;
+      }
+      // payee_bic is the bank's identifier when its scheme is bic, and null otherwise.
       const bic = text(header['payee_bic']);
       if (bic !== null) invoice.payment.bic = bic;
     }
@@ -601,4 +608,17 @@ export function einvoiceFormat(profile: string | null | undefined): EinvoiceForm
     );
   }
   return format;
+}
+
+/**
+ * The account a document asks to be paid into (EN 16931 BT-84) and its
+ * scheme: `payee_account_scheme` and `payee_account_identifier` where the
+ * schema has them, `payee_iban` — an IBAN by its name — where it does not.
+ * Never an IBAN by default when the header named another scheme.
+ */
+export function payeeAccount(header: Record<string, unknown>): { scheme: string; value: string } | null {
+  const value = text(header['payee_account_identifier']);
+  if (value !== null) return { scheme: text(header['payee_account_scheme']) ?? 'account-number', value };
+  const iban = text(header['payee_iban']);
+  return iban === null ? null : { scheme: 'iban', value: iban };
 }

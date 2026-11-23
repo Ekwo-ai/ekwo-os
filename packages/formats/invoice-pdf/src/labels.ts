@@ -64,6 +64,7 @@ export const ENGLISH_LABELS: InvoiceLabels = {
   paymentTerms: 'Terms',
   paymentReference: 'Reference',
   iban: 'IBAN',
+  account: 'Account',
   bic: 'BIC',
   note: 'Note',
   page: 'Page {page} of {pages}',

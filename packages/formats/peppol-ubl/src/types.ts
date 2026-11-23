@@ -58,10 +58,18 @@ export interface DocumentHeaderRow {
   payment_means_code?: string | null;
   /** BT-83. */
   payment_reference?: string | null;
-  /** BT-84. */
+  /** BT-84, when the account is an IBAN. Deprecated by payee_account_identifier. */
   payee_iban?: string | null;
-  /** BT-86. */
+  /** BT-86, when the bank is identified by a BIC. */
   payee_bic?: string | null;
+  /** The scheme of BT-84: iban, aba-routing-account, bsb-account, ifsc-account, … */
+  payee_account_scheme?: string | null;
+  /** BT-84 in the scheme payee_account_scheme names; read before payee_iban. */
+  payee_account_identifier?: string | null;
+  /** The scheme of BT-86: bic, aba, bsb, ifsc, … */
+  payee_bank_scheme?: string | null;
+  /** The bank in the scheme payee_bank_scheme names; BT-86 is payee_bic, its mirror when the scheme is bic. */
+  payee_bank_identifier?: string | null;
 
   /** BT-10. */
   buyer_reference?: string | null;

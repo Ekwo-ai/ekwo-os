@@ -55,6 +55,7 @@ const HEADER = [
   'amount_untaxed::text', 'amount_tax::text', 'amount_total::text', 'amount_paid::text', 'amount_residual::text',
   'payment_terms', 'payment_means_code', 'payment_reference', 'buyer_reference', 'order_reference',
   'contract_reference', 'project_reference', 'note', 'payee_iban', 'payee_bic',
+  'payee_account_scheme', 'payee_account_identifier',
   'seller_name', 'seller_legal_name', 'seller_legal_form', 'seller_vat_number', 'seller_registration_number',
   'seller_address_line1', 'seller_address_line2', 'seller_postal_code', 'seller_city', 'seller_country',
   'seller_region', 'seller_email', 'seller_phone', 'seller_website', 'seller_logo_url',

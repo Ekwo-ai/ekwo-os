@@ -274,6 +274,36 @@ export const SCHEMA_FEATURES = {
     columns: ['contact_tax_certificates.reference'],
     functions: ['buyer_certificate_for'],
   },
+  /**
+   * Every account of the books as a scheme and a value: the account and the
+   * bank of a contact, the bank of a company's account, the counterpart of a
+   * statement line and the payee of a document (BT-84), each in a scheme of
+   * `bank_identifier_schemes`, the IBAN and BIC columns mirrored with them
+   * (`20261123203300_an_account_is_a_scheme_and_a_value`). Below it, the
+   * pairs are absent from a read and the IBAN and BIC columns are all there
+   * is; writing a pair is refused by name.
+   */
+  account_identifier_pairs: {
+    since: '0.28.0',
+    columns: [
+      'contacts.account_scheme',
+      'contacts.account_identifier',
+      'contacts.bank_scheme',
+      'contacts.bank_identifier',
+      'bank_accounts.bank_scheme',
+      'bank_accounts.bank_identifier',
+      'bank_transactions.counterpart_account_scheme',
+      'bank_transactions.counterpart_account_identifier',
+      'documents.payee_account_scheme',
+      'documents.payee_account_identifier',
+      'document_header.payee_account_scheme',
+      'document_header.payee_account_identifier',
+      'document_header.payee_bank_scheme',
+      'document_header.payee_bank_identifier',
+      'bank_identifier_schemes.code',
+    ],
+    functions: ['bank_identifier_problem'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

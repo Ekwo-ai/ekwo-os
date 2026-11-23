@@ -28,6 +28,18 @@ export interface CreateContactArgs {
   address_line1?: string | undefined;
   postal_code?: string | undefined;
   city?: string | undefined;
+  /**
+   * The scheme of the account the party pays from or into, a code of
+   * `bank_identifier_schemes` (`iban`, `aba-routing-account`, `bsb-account`,
+   * `ifsc-account`, …), given together with `account_identifier`.
+   */
+  account_scheme?: string | undefined;
+  /** The account itself, in the scheme `account_scheme` names. */
+  account_identifier?: string | undefined;
+  /** The scheme of the party's bank (`bic`, `aba`, `bsb`, `ifsc`, …), given together with `bank_identifier`. */
+  bank_scheme?: string | undefined;
+  /** The bank itself, in the scheme `bank_scheme` names. */
+  bank_identifier?: string | undefined;
   /** Your own reference. Creating twice under one reference creates once. */
   client_ref?: string | undefined;
 }

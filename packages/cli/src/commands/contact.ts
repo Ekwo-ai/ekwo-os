@@ -28,7 +28,7 @@ import { BOOKS_FLAGS, CREATE_FLAGS, given, openBooks, stdinDocument, today, type
 import { setResult } from '../output.js';
 import { dim, heading, note, pairs, step, table } from '../ui.js';
 
-const ADD_FLAGS = [...CREATE_FLAGS, 'type', 'vat', 'email', 'country', 'terms', 'aux', 'address', 'postal-code', 'city'] as const;
+const ADD_FLAGS = [...CREATE_FLAGS, 'type', 'vat', 'email', 'country', 'terms', 'aux', 'address', 'postal-code', 'city', 'account-scheme', 'account', 'bank-scheme', 'bank'] as const;
 const LIST_FLAGS = [...BOOKS_FLAGS, 'query', 'type', 'vat', 'limit'] as const;
 const MERGE_FLAGS = [...BOOKS_FLAGS] as const;
 const DUPLICATES_FLAGS = [...BOOKS_FLAGS] as const;
@@ -37,11 +37,12 @@ const CERTIFICATE_ADD_FLAGS = [...CREATE_FLAGS, 'from', 'to', 'territory', 'note
 const CERTIFICATE_LIST_FLAGS = [...BOOKS_FLAGS] as const;
 
 const USAGE =
-  'usage: ekwo contact add <name> [--type --vat --email --country --terms --ref] | ekwo contact list [--query --type --vat] | ekwo contact duplicates | ekwo contact merge <keep> <absorb> | ekwo contact statement <name|id> --from <date> [--to <date>] | ekwo contact certificate add <name|id> <reference> --from <date> [--to <date> --territory <code> --note --ref] | ekwo contact certificate list [<name|id>]';
+  'usage: ekwo contact add <name> [--type --vat --email --country --terms --account-scheme <scheme> --account <identifier> --bank-scheme <scheme> --bank <identifier> --ref] | ekwo contact list [--query --type --vat] | ekwo contact duplicates | ekwo contact merge <keep> <absorb> | ekwo contact statement <name|id> --from <date> [--to <date>] | ekwo contact certificate add <name|id> <reference> --from <date> [--to <date> --territory <code> --note --ref] | ekwo contact certificate list [<name|id>]';
 
 const ADD_FIELDS = [
   'name', 'contact_type', 'vat_number', 'registration_number', 'identifiers', 'email', 'phone', 'country',
-  'payment_terms_days', 'auxiliary_code', 'address_line1', 'postal_code', 'city', 'client_ref',
+  'payment_terms_days', 'auxiliary_code', 'address_line1', 'postal_code', 'city',
+  'account_scheme', 'account_identifier', 'bank_scheme', 'bank_identifier', 'client_ref',
 ] as const;
 
 function contactType(value: string | undefined): ContactType | undefined {
@@ -81,8 +82,22 @@ async function add(args: ParsedArgs, deps: BooksDeps): Promise<number> {
     address_line1: stringFlag(args, 'address') ?? input['address_line1'],
     postal_code: stringFlag(args, 'postal-code') ?? input['postal_code'],
     city: stringFlag(args, 'city') ?? input['city'],
+    // The party's account and bank, each a scheme of bank_identifier_schemes
+    // and a value; a scheme is never assumed, an IBAN included.
+    account_scheme: stringFlag(args, 'account-scheme') ?? input['account_scheme'],
+    account_identifier: stringFlag(args, 'account') ?? input['account_identifier'],
+    bank_scheme: stringFlag(args, 'bank-scheme') ?? input['bank_scheme'],
+    bank_identifier: stringFlag(args, 'bank') ?? input['bank_identifier'],
     client_ref: stringFlag(args, 'ref') ?? input['client_ref'],
   });
+  for (const [scheme, value, flag] of [
+    ['account_scheme', 'account_identifier', 'account'],
+    ['bank_scheme', 'bank_identifier', 'bank'],
+  ] as const) {
+    if ((fields[scheme] === undefined) !== (fields[value] === undefined)) {
+      throw new UsageError(`missing_argument: --${flag}-scheme and --${flag} go together: a ${flag} identifier is read in the scheme named beside it.`);
+    }
+  }
   if (typeof fields.name !== 'string' || fields.name.length === 0) {
     throw new UsageError('missing_argument: the name of the contact. `ekwo contact add "<name>"`, or `name` under --stdin.');
   }

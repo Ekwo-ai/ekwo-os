@@ -55,6 +55,7 @@ export const SPANISH_LABELS: InvoiceLabels = {
   paymentTerms: 'Condiciones',
   paymentReference: 'Referencia',
   iban: 'IBAN',
+  account: 'Cuenta',
   bic: 'BIC',
   note: 'Nota',
   page: 'Página {page} de {pages}',

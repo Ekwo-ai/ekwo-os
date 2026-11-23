@@ -655,6 +655,9 @@ export async function renderInvoicePdf(input: InvoicePdfInput, options: InvoiceP
       [labels.paymentTerms, text(header.payment_terms)],
       [labels.dueDate, text(header.due_date) === null ? null : f.date(text(header.due_date) as string)],
       [labels.iban, text(header.payee_iban) === null ? null : groupIban(text(header.payee_iban) as string)],
+      // An account in any other scheme, as its scheme writes it: a routing
+      // number and an account, a BSB and an account, an IFSC and an account.
+      [labels.account, text(header.payee_iban) === null ? text(header.payee_account_identifier) : null],
       [labels.bic, text(header.payee_bic)],
       [labels.paymentReference, text(header.payment_reference)],
     ] as const) {

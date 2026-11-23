@@ -54,6 +54,10 @@ export interface DocumentHeaderRow {
   note?: string | null;
   payee_iban?: string | null;
   payee_bic?: string | null;
+  /** The scheme of BT-84: iban, aba-routing-account, bsb-account, ifsc-account, … */
+  payee_account_scheme?: string | null;
+  /** BT-84 in its scheme. Printed under `account` when the scheme is not iban. */
+  payee_account_identifier?: string | null;
 
   seller_name: string | null;
   seller_legal_name?: string | null;
@@ -247,6 +251,8 @@ export interface InvoiceLabels {
   paymentTerms: string;
   paymentReference: string;
   iban: string;
+  /** A payment account in a scheme other than IBAN (BT-84). */
+  account: string;
   bic: string;
   note: string;
   /** `{page}` and `{pages}` are replaced. */

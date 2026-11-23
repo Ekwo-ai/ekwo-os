@@ -167,11 +167,11 @@ export function generateCiiXml(invoice: Invoice, options: GenerateOptions = {}):
 
   const p = invoice.payment;
   const paymentMeans =
-    !minimum && p && (p.iban || p.meansCode)
+    !minimum && p && (p.iban || p.accountId || p.meansCode)
       ? `
       <ram:SpecifiedTradeSettlementPaymentMeans>
         <ram:TypeCode>${escapeXml(p.meansCode ?? '58')}</ram:TypeCode>
-        ${p.iban ? `<ram:PayeePartyCreditorFinancialAccount><ram:IBANID>${escapeXml(p.iban.replace(/\s/g, ''))}</ram:IBANID></ram:PayeePartyCreditorFinancialAccount>` : ''}
+        ${p.iban ? `<ram:PayeePartyCreditorFinancialAccount><ram:IBANID>${escapeXml(p.iban.replace(/\s/g, ''))}</ram:IBANID></ram:PayeePartyCreditorFinancialAccount>` : p.accountId ? `<ram:PayeePartyCreditorFinancialAccount><ram:ProprietaryID>${escapeXml(p.accountId)}</ram:ProprietaryID></ram:PayeePartyCreditorFinancialAccount>` : ''}
         ${p.bic && carriesEn16931(profile) ? `<ram:PayeeSpecifiedCreditorFinancialInstitution><ram:BICID>${escapeXml(p.bic)}</ram:BICID></ram:PayeeSpecifiedCreditorFinancialInstitution>` : ''}
       </ram:SpecifiedTradeSettlementPaymentMeans>`
       : '';

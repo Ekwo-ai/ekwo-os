@@ -372,7 +372,14 @@ export function buildModel(given: PeppolUblInput, options: PeppolUblOptions): Do
     optionalAmount(header.amount_residual, 'the amount due') ?? subtract(taxInclusive, prepaid ?? ZERO);
 
   const meansCode = text(header.payment_means_code);
-  const iban = identifier(header.payee_iban)?.toUpperCase() ?? null;
+  // BT-84 is a payment account identifier, of any scheme: the pair first, an
+  // IBAN folded as one, any other account written as its scheme writes it.
+  const accountScheme = text(header.payee_account_scheme);
+  const accountValue = text(header.payee_account_identifier);
+  const iban =
+    accountValue !== null && accountScheme !== 'iban'
+      ? accountValue
+      : (identifier(accountValue ?? header.payee_iban)?.toUpperCase() ?? null);
   const bic = identifier(header.payee_bic)?.toUpperCase() ?? null;
   const reference = text(header.payment_reference);
 
