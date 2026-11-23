@@ -23,9 +23,11 @@ import { ROUNDING_VECTOR } from './helpers/rounding-vector.js';
  *      the same vector.
  *   2. The lookup reads the two columns and refuses, by name, everything it
  *      cannot answer. It invents no currency and no country.
- *   3. A whole ledger works in a currency with no decimals: a document, its
- *      entry, a payment, the matching, the declaration and the balance, all of
- *      them to the unit of that currency and never to a hundredth of it.
+ *   3. A whole ledger works in a currency with no decimals and in one with
+ *      three: a document, its entry, a payment, the matching, the declaration,
+ *      the balance and the closing, all of them to the unit of that currency —
+ *      never to a hundredth of a unit that has none, and never cut to a
+ *      hundredth when the currency counts thousandths.
  *   4. Nothing in the live schema rounds to two decimals on its own any more.
  */
 
@@ -43,26 +45,31 @@ beforeAll(async () => {
   await installFixturePack(db, THREE_DECIMAL);
 
   zeroOwner = await newUser(db, 'zeroland@example.test');
+  zeroCompany = await companyIn(ZERO_DECIMAL.country, 'Zeroland SRL');
+}, 180_000);
+
+/** A company of a fixture country, its chart installed, its owner a member, its 2026 year open. */
+async function companyIn(country: string, name: string): Promise<string> {
   const company = await one<{ id: string }>(
     db,
     `insert into companies (name, country, fiscal_country, currency_code, language)
-     select 'Zeroland SRL', $1, $1, d.currency_code, d.language_default
+     select $2, $1, $1, d.currency_code, d.language_default
        from country_defaults d where d.country = $1
      returning id`,
-    [ZERO_DECIMAL.country],
+    [country, name],
   );
-  zeroCompany = company.id;
   await db.query(
     `insert into company_members (company_id, user_id, role) values ($1, $2, 'owner')`,
-    [zeroCompany, zeroOwner],
+    [company.id, zeroOwner],
   );
-  await db.query(`select install_country_template($1, $2)`, [zeroCompany, ZERO_DECIMAL.country]);
+  await db.query(`select install_country_template($1, $2)`, [company.id, country]);
   await db.query(
     `insert into fiscal_years (company_id, name, start_date, end_date)
      values ($1, 'Exercice 2026', date '2026-01-01', date '2026-12-31')`,
-    [zeroCompany],
+    [company.id],
   );
-}, 180_000);
+  return company.id;
+}
 
 afterAll(async () => {
   await db.close();
@@ -208,18 +215,64 @@ describe('the lookup', () => {
   });
 });
 
-describe('a whole ledger in a currency with no decimals', () => {
+/**
+ * The whole ledger of one company, from a document to the closing of its
+ * year, in a currency that is not written with two decimals.
+ *
+ * The same scenario runs twice: in a currency with no decimals, where a
+ * hundredth would be a fraction of a unit nobody can pay, and in one with
+ * three, where the thousandth the engine computes has to reach the books
+ * intact. Every figure is asserted as the text the database returns, and that
+ * text holds exactly the decimals of the currency — the column no longer adds
+ * or removes any (`20261123203000_an_amount_holds_the_decimals_of_its_currency`).
+ */
+interface Scenario {
+  pack: typeof ZERO_DECIMAL;
+  label: string;
+  /** The price of the one line, given with more decimals than the currency has. */
+  unitPrice: number;
+  untaxed: string;
+  tax: string;
+  total: string;
+}
+
+const SCENARIOS: Scenario[] = [
+  // 1234.5 is the half a two-decimal engine would have kept as 1234.50;
+  // 1235 at 21 % is 259.35, which in this currency is 259.
+  { pack: ZERO_DECIMAL, label: 'no decimals', unitPrice: 1234.5, untaxed: '1235', tax: '259', total: '1494' },
+  // 1234.5675 rounds half up to 1234.568; at 21 % that is 259.25928, so 259.259.
+  // A column of scale 2 would have kept 1234.57, 259.26 and 1493.83.
+  {
+    pack: THREE_DECIMAL,
+    label: 'three decimals',
+    unitPrice: 1234.5675,
+    untaxed: '1234.568',
+    tax: '259.259',
+    total: '1493.827',
+  },
+];
+
+/** A zero, as the text of a side of an entry line that carries nothing. */
+const isZeroText = (text: string): boolean => /^0(\.0+)?$/.test(text);
+
+describe.each(SCENARIOS)('a whole ledger in a currency with $label', (scenario) => {
+  const { pack } = scenario;
+  const decimals = pack.decimals;
+  let companyId: string;
   let documentId: string;
 
-  it('rounds a document line, its tax and its total to the unit', async () => {
-    const customer = await newContact(db, zeroCompany, { name: 'Cliente', country: ZERO_DECIMAL.country });
-    documentId = await newDocument(db, zeroCompany, {
+  beforeAll(async () => {
+    companyId = scenario.pack === ZERO_DECIMAL ? zeroCompany : await companyIn(pack.country, `${pack.currencyName} SA`);
+  });
+
+  it('rounds a document line, its tax and its total to the currency', async () => {
+    const customer = await newContact(db, companyId, { name: 'Cliente', country: pack.country });
+    documentId = await newDocument(db, companyId, {
       docType: 'sale_invoice',
-      number: 'SAL-ZY-0001',
+      number: `SAL-${pack.country}-0001`,
       contactId: customer,
       date: '2026-06-15',
-      // 1234.5 is the half a two-decimal engine would have kept as 1234.50.
-      lines: [{ name: 'Prestation', unitPrice: 1234.5, taxCode: `${ZERO_DECIMAL.country}-S-21`, accountCode: '700000' }],
+      lines: [{ name: 'Prestation', unitPrice: scenario.unitPrice, taxCode: `${pack.country}-S-21`, accountCode: '700000' }],
     });
 
     const line = await one<{ amount_untaxed: string }>(
@@ -227,7 +280,7 @@ describe('a whole ledger in a currency with no decimals', () => {
       `select amount_untaxed from document_lines where document_id = $1`,
       [documentId],
     );
-    expect(line.amount_untaxed).toBe('1235.00');
+    expect(line.amount_untaxed).toBe(scenario.untaxed);
 
     const document = await one<{ untaxed: string; tax: string; total: string; currency_code: string }>(
       db,
@@ -235,31 +288,37 @@ describe('a whole ledger in a currency with no decimals', () => {
          from documents where id = $1`,
       [documentId],
     );
-    // 1235 at 21 % is 259.35, which in this currency is 259.
     expect(document).toEqual({
-      untaxed: '1235.00',
-      tax: '259.00',
-      total: '1494.00',
-      currency_code: ZERO_DECIMAL.currency,
+      untaxed: scenario.untaxed,
+      tax: scenario.tax,
+      total: scenario.total,
+      currency_code: pack.currency,
     });
   });
 
-  it('books an entry whose every line is a whole unit, and balances', async () => {
+  it('books an entry whose every line is in the currency’s unit, and balances', async () => {
     await db.query(`select post_document($1)`, [documentId]);
-    expect(await ledgerOf(db, documentId)).toEqual([
-      { code: '700000', debit: '0.00', credit: '1235.00', box: '03', box_amount: '1235.00', tax_line: false },
-      { code: '451000', debit: '0.00', credit: '259.00', box: '54', box_amount: '259.00', tax_line: true },
-      { code: '400000', debit: '1494.00', credit: '0.00', box: null, box_amount: null, tax_line: false },
+    const ledger = await ledgerOf(db, documentId);
+    expect(ledger.map((l) => ({ ...l, debit: isZeroText(l.debit) ? '0' : l.debit, credit: isZeroText(l.credit) ? '0' : l.credit }))).toEqual([
+      { code: '700000', debit: '0', credit: scenario.untaxed, box: '03', box_amount: scenario.untaxed, tax_line: false },
+      { code: '451000', debit: '0', credit: scenario.tax, box: '54', box_amount: scenario.tax, tax_line: true },
+      { code: '400000', debit: scenario.total, credit: '0', box: null, box_amount: null, tax_line: false },
     ]);
+    const entry = await one<{ total_debit: string; total_credit: string; is_balanced: boolean }>(
+      db,
+      `select total_debit, total_credit, is_balanced from entries where document_id = $1`,
+      [documentId],
+    );
+    expect(entry).toEqual({ total_debit: scenario.total, total_credit: scenario.total, is_balanced: true });
   });
 
   it('settles it to the unit, matches it, and leaves nothing open', async () => {
     const bank = await one<{ id: string }>(
       db,
       `select id from journals where company_id = $1 and journal_type = 'bank' limit 1`,
-      [zeroCompany],
+      [companyId],
     );
-    const customer = await one<{ id: string }>(
+    const customer = await one<{ contact_id: string }>(
       db,
       `select contact_id from documents where id = $1`,
       [documentId],
@@ -268,82 +327,91 @@ describe('a whole ledger in a currency with no decimals', () => {
       db,
       `insert into payments (company_id, direction, payment_date, amount, journal_id, contact_id,
                              bank_account_id)
-       values ($1, 'inbound', date '2026-06-30', 1494, $2, $3,
+       values ($1, 'inbound', date '2026-06-30', $4::numeric, $2, $3,
                (select id from bank_accounts where company_id = $1 limit 1))
        returning id`,
-      [zeroCompany, bank.id, (customer as unknown as { contact_id: string }).contact_id],
+      [companyId, bank.id, customer.contact_id, scenario.total],
     );
     await db.query(`select post_payment($1)`, [payment.id]);
 
-    const receivable = await accountId(db, zeroCompany, '400000');
+    const receivable = await accountId(db, companyId, '400000');
     const open = await rows<{ id: string }>(
       db,
       `select l.id from entry_lines l
         where l.company_id = $1 and l.account_id = $2
         order by l.debit desc`,
-      [zeroCompany, receivable],
+      [companyId, receivable],
     );
     expect(open).toHaveLength(2);
     await db.query(`select reconcile($1, $2)`, [open[0]!.id, open[1]!.id]);
 
-    const document = await one<{ amount_paid: string; amount_residual: string; payment_state: string }>(
+    const document = await one<{ amount_paid: string; residual_is_zero: boolean; payment_state: string }>(
       db,
-      `select amount_paid, amount_residual, payment_state::text from documents where id = $1`,
+      `select amount_paid, amount_residual = 0 as residual_is_zero, payment_state::text
+         from documents where id = $1`,
       [documentId],
     );
     expect(document).toEqual({
-      amount_paid: '1494.00',
-      amount_residual: '0.00',
+      amount_paid: scenario.total,
+      residual_is_zero: true,
       payment_state: 'paid',
     });
 
     const ageing = await rows(
       db,
       `select * from aged_balance($1, date '2026-12-31', 'receivable')`,
-      [zeroCompany],
+      [companyId],
     );
     expect(ageing).toEqual([]);
   });
 
-  it('declares whole units, and a trial balance of whole units', async () => {
+  it('declares in the currency’s unit, and keeps a trial balance in it', async () => {
     const boxes = await rows<{ box: string; amount: string }>(
       db,
       `select box, amount::text from vat_return($1, date '2026-01-01', date '2026-12-31')
         where kind <> 'total' order by box`,
-      [zeroCompany],
+      [companyId],
     );
     expect(boxes).toEqual([
-      { box: '03', amount: '1235' },
-      { box: '54', amount: '259' },
+      { box: '03', amount: scenario.untaxed },
+      { box: '54', amount: scenario.tax },
     ]);
 
-    // Nothing anywhere carries a hundredth of a unit this currency has no name
-    // for. `numeric` prints the scale it holds, so a fraction would show.
+    // Nothing anywhere carries a digit below the unit of this currency, and
+    // nothing lost one: the receivable was settled to the last thousandth.
     const fractions = await rows<{ code: string; balance: string }>(
       db,
       `select account_code as code, closing_balance::text as balance
          from trial_balance($1, date '2026-01-01', date '2026-12-31')
-        where closing_balance <> trunc(closing_balance)
-           or debit <> trunc(debit) or credit <> trunc(credit)
+        where closing_balance <> trunc(closing_balance, $2)
+           or debit <> trunc(debit, $2) or credit <> trunc(credit, $2)
         order by 1`,
-      [zeroCompany],
+      [companyId, decimals],
     );
     expect(fractions).toEqual([]);
+
+    const income = await one<{ balance: string }>(
+      db,
+      `select (-closing_balance)::text as balance
+         from trial_balance($1, date '2026-01-01', date '2026-12-31') where account_code = '700000'`,
+      [companyId],
+    );
+    expect(income.balance).toBe(scenario.untaxed);
   });
 
-  it('closes the year on a whole unit, and says so in the currency’s own shape', async () => {
+  it('closes the year on its unit, and says so in the currency’s own shape', async () => {
     const year = await one<{ id: string }>(
       db,
       `select id from fiscal_years where company_id = $1`,
-      [zeroCompany],
+      [companyId],
     );
     const result = await one<{ close: { result: string; result_kind: string } }>(
       db,
       `select close_fiscal_year($1) as close`,
       [year.id],
     );
-    // The mask carries no decimals, because the currency has none.
-    expect(result.close.result).toBe('1235');
+    // The mask carries the decimals of the currency, and no more.
+    expect(result.close.result).toBe(scenario.untaxed);
     expect(result.close.result_kind).toBe('profit');
   });
 });
@@ -371,25 +439,54 @@ describe('a currency with three decimals', () => {
     expect(three.decimals).toBe(3);
   });
 
-  it('is held at two decimals by the columns, which is the next piece of work', async () => {
-    // Every monetary column of this schema is `numeric(16, 2)`, so a third
-    // decimal is rounded away on the way in — by the column, silently, and not
-    // by `round_amount`. The engine is right and the storage is not yet, and
-    // this test is here so that the gap is visible rather than discovered.
-    // Widening the columns rewrites the text of every amount the schema
-    // returns, which is a migration of its own; `docs/decisions/0011-an-amount-is-rounded-at-its-currency.md` names it.
+  it('is held at three decimals by the columns, as `round_amount` gives it', async () => {
+    // Every money column used to be `numeric(16, 2)`, so a third decimal was
+    // rounded away on the way in — by the column, silently, after the engine
+    // had rounded correctly. Decision 0011 named the gap and
+    // `20261123203000_an_amount_holds_the_decimals_of_its_currency` closed it:
+    // a money column is a bare `numeric`, and `round_amount` is the only rule.
+    const money = await rows<{ col: string; type: string }>(
+      db,
+      `select n.nspname || '.' || c.relname || '.' || a.attname as col,
+              format_type(a.atttypid, a.atttypmod) as type
+         from pg_attribute a
+         join pg_class c on c.oid = a.attrelid and c.relkind in ('r', 'v')
+         join pg_namespace n on n.oid = c.relnamespace
+        where a.attnum > 0 and not a.attisdropped
+          and a.atttypid = 'numeric'::regtype
+          and (n.nspname, c.relname, a.attname) in (
+                ('ekwo', 'entry_lines', 'debit'), ('ekwo', 'entry_lines', 'credit'),
+                ('ekwo', 'entry_lines', 'balance'), ('ekwo', 'documents', 'amount_total'),
+                ('ekwo', 'documents', 'amount_residual'), ('ekwo', 'payments', 'amount'),
+                ('ekwo', 'document_header', 'amount_total'))
+        order by 1`,
+    );
+    expect(money).toHaveLength(7);
+    expect(money.filter((m) => m.type !== 'numeric')).toEqual([]);
+
+    // And no column anywhere is still an amount at two decimals.
+    const scaleTwo = await rows<{ col: string }>(
+      db,
+      `select table_schema || '.' || table_name || '.' || column_name as col
+         from information_schema.columns
+        where data_type = 'numeric' and numeric_scale = 2
+          and table_schema not in ('pg_catalog', 'information_schema')`,
+    );
+    expect(scaleTwo).toEqual([]);
+
     await db.exec('begin');
     await db.query(
-      `create temporary table rounding_scale_probe (amount numeric(16, 2)) on commit drop`,
+      `create temporary table rounding_scale_probe on commit drop as
+         select debit from ekwo.entry_lines with no data`,
     );
-    const stored = await one<{ amount: string }>(
+    // The type the column has, carried by the probe: what the column keeps.
+    const stored = await one<{ debit: string }>(
       db,
-      `insert into rounding_scale_probe (amount)
-       values (round_amount(1.2345, row(3, 'half_up')::money_rounding)) returning amount::text`,
+      `insert into rounding_scale_probe (debit)
+       values (round_amount(1.2345, row(3, 'half_up')::money_rounding))
+       returning debit::text`,
     );
-    // 1.235 at two decimals, rounded by the column and not by the rule: the
-    // third decimal the engine computed is gone.
-    expect(stored.amount).toBe('1.24');
+    expect(stored.debit).toBe('1.235');
     await db.exec('rollback');
   });
 });
