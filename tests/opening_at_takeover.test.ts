@@ -17,7 +17,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
-import { newCompany, newContact, newDocument, type Fixture } from './helpers/factory.js';
+import { amountSql, newCompany, newContact, newDocument, type Fixture } from './helpers/factory.js';
 
 let db: PGlite;
 let fx: Fixture;
@@ -127,7 +127,7 @@ describe('an opening on the day the books were taken over', () => {
     // The two lines the items carry wait on the suspense account.
     const lines = await rows<{ code: string; debit: string; credit: string; contact_id: string | null }>(
       db,
-      `select a.code, l.debit::text, l.credit::text, l.contact_id
+      `select a.code, ${amountSql('l.debit', 'l.company_id')} as debit, ${amountSql('l.credit', 'l.company_id')} as credit, l.contact_id
          from entry_lines l join accounts a on a.id = l.account_id
         where l.entry_id = $1 order by l.sequence`,
       [entryId],
@@ -144,7 +144,7 @@ describe('an opening on the day the books were taken over', () => {
       db,
       `select d.doc_type::text, d.number, d.payment_reference, d.supplier_reference,
               d.document_date::text, d.accounting_date::text, d.due_date::text,
-              d.state::text, d.amount_total::text, d.amount_tax::text, d.payment_state::text,
+              d.state::text, ${amountSql('d.amount_total', 'd.company_id')} as amount_total, ${amountSql('d.amount_tax', 'd.company_id')} as amount_tax, d.payment_state::text,
               j.journal_type::text as journal
          from documents d join journals j on j.id = d.journal_id
         where d.company_id = $1 order by d.number`,
@@ -172,7 +172,7 @@ describe('an opening on the day the books were taken over', () => {
     // against the suspense account — no revenue, no tax, nothing re-booked.
     const ledger = await rows<{ code: string; debit: string; credit: string; contact_id: string | null; due: string | null; tax: boolean }>(
       db,
-      `select a.code, l.debit::text, l.credit::text, l.contact_id, l.date_maturity::text as due,
+      `select a.code, ${amountSql('l.debit', 'l.company_id')} as debit, ${amountSql('l.credit', 'l.company_id')} as credit, l.contact_id, l.date_maturity::text as due,
               l.tax_id is not null or l.declaration_box is not null as tax
          from documents d
          join entry_lines l on l.entry_id = d.entry_id
@@ -264,7 +264,7 @@ describe('an opening on the day the books were taken over', () => {
     );
     const invoice = await one<{ payment_state: string; amount_residual: string }>(
       db,
-      `select payment_state::text, amount_residual::text from documents where company_id = $1 and number = 'F2026-0101'`,
+      `select payment_state::text, ${amountSql('amount_residual', 'company_id')} as amount_residual from documents where company_id = $1 and number = 'F2026-0101'`,
       [fx.companyId],
     );
     expect(invoice).toEqual({ payment_state: 'paid', amount_residual: '0.00' });

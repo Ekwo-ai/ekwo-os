@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { compilePack, packsDir, readPack } from '../packages/cli/src/index.js';
 import { expectError, freshDatabase, one, rows } from './helpers/db.js';
-import { newCompany, newContact, newDocument } from './helpers/factory.js';
+import { amountSql, newCompany, newContact, newDocument } from './helpers/factory.js';
 import { allPacks, somePack } from './helpers/packs.js';
 
 /**
@@ -206,7 +206,7 @@ describe('an established company, graded on its trailing year', () => {
     expect(posted.tax).toBe('400.00');
     const lines = await rows<{ code: string; debit: string; credit: string }>(
       db,
-      `select a.code, l.debit::text, l.credit::text
+      `select a.code, ${amountSql('l.debit', 'l.company_id')} as debit, ${amountSql('l.credit', 'l.company_id')} as credit
          from entry_lines l join accounts a on a.id = l.account_id
         where l.entry_id = $1 order by l.sequence`,
       [posted.entry_id],
@@ -409,13 +409,14 @@ describe('the file in a pack', () => {
     expect(
       await rows<{ up_to: string | null; nominal_rate: string; deduction: string }>(
         db,
-        `select up_to::text, nominal_rate::text, deduction::text from turnover_tax_brackets
+        `select trim_scale(up_to)::text as up_to, nominal_rate::text, trim_scale(deduction)::text as deduction
+           from turnover_tax_brackets
           where country = $1 and regime_code = 'ZZ-TT' order by sequence`,
         [somePack.manifest.country],
       ),
     ).toEqual([
-      { up_to: '180000.00', nominal_rate: '4.0000', deduction: '0.00' },
-      { up_to: null, nominal_rate: '7.3000', deduction: '5940.00' },
+      { up_to: '180000', nominal_rate: '4.0000', deduction: '0' },
+      { up_to: null, nominal_rate: '7.3000', deduction: '5940' },
     ]);
     expect(
       (await one<{ periodic: boolean }>(

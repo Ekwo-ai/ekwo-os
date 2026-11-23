@@ -20,7 +20,7 @@ import { join } from 'node:path';
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, freshDatabase, one, repoRoot } from './helpers/db.js';
-import { newCompany, newContact, newUser } from './helpers/factory.js';
+import { amountSql, newCompany, newContact, newUser } from './helpers/factory.js';
 import { packWhere, roleOf } from './helpers/packs.js';
 
 const MIGRATION = join(repoRoot, 'supabase', 'migrations', '20261028152338_a_purchase_arrives_from_the_phone.sql');
@@ -93,7 +93,7 @@ describe('receive_purchase_document()', () => {
     const document = await one<Record<string, unknown>>(
       db,
       `select d.doc_type, d.state, d.contact_id, d.client_ref, d.document_date::text as day,
-              d.currency_code = c.currency_code as company_currency, d.amount_total::text as total,
+              d.currency_code = c.currency_code as company_currency, ${amountSql('d.amount_total', 'd.company_id')} as total,
               (select count(*)::int from document_lines l where l.document_id = d.id) as lines
          from documents d join companies c on c.id = d.company_id where d.id = $1`,
       [id],

@@ -237,10 +237,12 @@ export interface LedgerLine {
  * A money column is a bare `numeric` and prints the scale its value holds —
  * `0` for a zero written as such, `1210.00` for an amount rounded to the cent.
  * A test that asserts an amount asserts it through this, or as a value, and
- * never on how the column happens to store it.
+ * never on how the column happens to store it. An amount in another currency
+ * than the company's names that currency.
  */
-export function amountSql(amount: string, companyId: string): string {
-  return `to_char(${amount}, amount_text_format(rounding_of(${companyId})))`;
+export function amountSql(amount: string, companyId: string, currencyCode?: string): string {
+  const rounding = currencyCode === undefined ? `rounding_of(${companyId})` : `rounding_of(${companyId}, ${currencyCode})`;
+  return `to_char(${amount}, amount_text_format(${rounding}))`;
 }
 
 /**

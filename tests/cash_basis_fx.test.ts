@@ -7,6 +7,7 @@ import { compilePack, packsDir, readPack } from '../packages/cli/src/index.js';
 import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
 import { allPacks, packWhere, packsWhere, roleOf } from './helpers/packs.js';
 import {
+  amountSql,
   accountId,
   newCompany,
   newContact,
@@ -36,7 +37,7 @@ interface Line {
 async function ledger(documentId: string): Promise<Line[]> {
   return rows<Line>(
     db,
-    `select a.code, l.debit, l.credit, l.declaration_box as box, l.box_amount, l.tax_line,
+    `select a.code, ${amountSql('l.debit', 'l.company_id')} as debit, ${amountSql('l.credit', 'l.company_id')} as credit, l.declaration_box as box, ${amountSql('l.box_amount', 'l.company_id')} as box_amount, l.tax_line,
             e.entry_date::text as entry_date
        from entry_lines l
        join accounts a on a.id = l.account_id
@@ -51,7 +52,7 @@ async function ledger(documentId: string): Promise<Line[]> {
 async function ownEntry(documentId: string): Promise<Line[]> {
   return rows<Line>(
     db,
-    `select a.code, l.debit, l.credit, l.declaration_box as box, l.box_amount, l.tax_line,
+    `select a.code, ${amountSql('l.debit', 'l.company_id')} as debit, ${amountSql('l.credit', 'l.company_id')} as credit, l.declaration_box as box, ${amountSql('l.box_amount', 'l.company_id')} as box_amount, l.tax_line,
             e.entry_date::text as entry_date
        from entry_lines l
        join accounts a on a.id = l.account_id
@@ -565,7 +566,7 @@ describe('a document in a currency that is not the company’s', () => {
 
     const lines = await rows<{ code: string; debit: string; credit: string; currency: string; amount_currency: string }>(
       db,
-      `select a.code, l.debit, l.credit, l.currency_code as currency, l.amount_currency
+      `select a.code, ${amountSql('l.debit', 'l.company_id')} as debit, ${amountSql('l.credit', 'l.company_id')} as credit, l.currency_code as currency, ${amountSql('l.amount_currency', 'l.company_id', 'l.currency_code')} as amount_currency
          from entry_lines l join accounts a on a.id = l.account_id
          join documents d on d.entry_id = l.entry_id
         where d.id = $1 order by l.sequence`,

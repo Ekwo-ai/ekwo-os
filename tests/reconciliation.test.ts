@@ -93,7 +93,8 @@ describe('reconcile', () => {
 
     const pairs = await rows<{ amount: string }>(
       db,
-      `select amount from reconciliations where debit_line_id = $1 order by amount`,
+      `select ${amountSql('amount', 'company_id')} as amount
+         from reconciliations where debit_line_id = $1 order by reconciliations.amount`,
       [receivableLineId],
     );
     expect(pairs.map((p) => p.amount)).toEqual(['400.00', '810.00']);

@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { compilePack, packsDir, readPack } from '../packages/cli/src/index.js';
 import { asUser, expectError, freshDatabase, one, readMigration, repoRoot, rows, withoutTrigger } from './helpers/db.js';
-import { accountId, ledgerOf, newCompany, newContact, newDocument, taxId, type Fixture } from './helpers/factory.js';
+import { amountSql, accountId, ledgerOf, newCompany, newContact, newDocument, taxId, type Fixture } from './helpers/factory.js';
 import { allPacks, somePack } from './helpers/packs.js';
 
 // The generalised tax engine. Two things are proved here:
@@ -206,7 +206,7 @@ describe('post_document — a Belgian company car', () => {
       debit: string;
     }>(
       db,
-      `select l.sequence, l.posting_type::text as posting_type, l.tax_line, l.debit::text as debit
+      `select l.sequence, l.posting_type::text as posting_type, l.tax_line, ${amountSql('l.debit', 'l.company_id')} as debit
          from entry_lines l
          join entries e on e.id = l.entry_id
          join documents d on d.id = e.document_id

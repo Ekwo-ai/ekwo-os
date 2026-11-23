@@ -596,7 +596,7 @@ describe('reconcile_with_difference()', () => {
     ]);
     const onLoss = await one<{ debit: string }>(
       db,
-      `select debit from entry_lines where entry_id = $1 and account_id = $2`,
+      `select ${amountSql('debit', 'company_id')} as debit from entry_lines where entry_id = $1 and account_id = $2`,
       [lost.adjustment_entry_id, loss],
     );
     expect(onLoss.debit).toBe('1.00');

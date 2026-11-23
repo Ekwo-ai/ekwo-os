@@ -1,7 +1,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, freshDatabase, one, rows } from './helpers/db.js';
-import { newCompany, newContact, newDocument, type Fixture } from './helpers/factory.js';
+import { amountSql, newCompany, newContact, newDocument, type Fixture } from './helpers/factory.js';
 import { newMember, refusalAs } from './helpers/integrity.js';
 
 // Issue #93: a payout of a payment provider (the invoice less the fee it kept)
@@ -117,7 +117,7 @@ interface Line {
 async function linesOf(entryId: string): Promise<Line[]> {
   return rows<Line>(
     db,
-    `select a.code, l.debit, l.credit, l.tax_line, l.declaration_box as box, l.box_amount
+    `select a.code, ${amountSql('l.debit', 'l.company_id')} as debit, ${amountSql('l.credit', 'l.company_id')} as credit, l.tax_line, l.declaration_box as box, ${amountSql('l.box_amount', 'l.company_id')} as box_amount
        from entry_lines l join accounts a on a.id = l.account_id
       where l.entry_id = $1 order by l.sequence`,
     [entryId],

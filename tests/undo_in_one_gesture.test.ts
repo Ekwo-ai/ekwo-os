@@ -27,7 +27,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Pack } from '../packages/cli/src/index.js';
 import { asUser, freshDatabase, one, rows } from './helpers/db.js';
-import { accountId, newCompany, newContact, newDocument, newUser } from './helpers/factory.js';
+import { amountSql, accountId, newCompany, newContact, newDocument, newUser } from './helpers/factory.js';
 import { thirdPartyLine } from './helpers/golden-scenario.js';
 import { packWhere, roleOf } from './helpers/packs.js';
 
@@ -147,8 +147,8 @@ const cancel = (id: string, date: string | null = null) =>
     one<Record<string, unknown>>(
       db,
       `select id, doc_type, number, state, payment_state, reversed_document_id, entry_id,
-              document_date::text, amount_untaxed::text, amount_tax::text, amount_total::text,
-              amount_residual::text, currency_code, contact_id
+              document_date::text, amount_untaxed::text, amount_tax::text, ${amountSql('amount_total', 'company_id')} as amount_total,
+              ${amountSql('amount_residual', 'company_id')} as amount_residual, currency_code, contact_id
          from cancel_document($1, $2::date)`,
       [id, date],
     ),
@@ -213,7 +213,7 @@ describe('reverse_entry', () => {
     // Every line on its account, the other side.
     const mirrored = await rows<{ sequence: number; account_id: string; debit: string; credit: string }>(
       db,
-      `select sequence, account_id, debit::text, credit::text from entry_lines where entry_id = $1 order by sequence`,
+      `select sequence, account_id, ${amountSql('debit', 'company_id')} as debit, ${amountSql('credit', 'company_id')} as credit from entry_lines where entry_id = $1 order by sequence`,
       [reversal.id],
     );
     expect(mirrored).toEqual([
@@ -229,7 +229,7 @@ describe('reverse_entry', () => {
     // The receivable is matched in full, on both sides, under one letter.
     const matched = await rows<{ matched_amount: string; matching_number: string | null }>(
       db,
-      `select matched_amount::text, matching_number from entry_lines
+      `select ${amountSql('matched_amount', 'company_id')} as matched_amount, matching_number from entry_lines
         where entry_id in ($1, $2) and account_id = $3`,
       [original, reversal.id, receivable],
     );
@@ -430,7 +430,7 @@ describe('cancel_document', () => {
     const invoiceId = await invoice();
     const original = await one<Record<string, unknown>>(
       db,
-      `select number, entry_id, amount_untaxed::text, amount_tax::text, amount_total::text, currency_code, contact_id
+      `select number, entry_id, amount_untaxed::text, amount_tax::text, ${amountSql('amount_total', 'company_id')} as amount_total, currency_code, contact_id
          from documents where id = $1`,
       [invoiceId],
     );
@@ -465,7 +465,7 @@ describe('cancel_document', () => {
 
     // The invoice: cancelled, reversed, nothing owed, its number and entry as they were.
     expect(
-      await one(db, `select state, payment_state, amount_residual::text, number, entry_id from documents where id = $1`, [invoiceId]),
+      await one(db, `select state, payment_state, ${amountSql('amount_residual', 'company_id')} as amount_residual, number, entry_id from documents where id = $1`, [invoiceId]),
     ).toEqual({
       state: 'cancelled',
       payment_state: 'reversed',
