@@ -457,5 +457,48 @@ function runGolden(pack: Pack, golden: PackGolden): void {
       expect(total.debit).toBe(total.credit);
       expect(Number(total.debit)).toBeGreaterThan(0);
     });
+
+    it('stores no amount finer than its currency: the columns hold what the engine rounded, nothing more', async () => {
+      // Amount columns carry no scale of their own, so nothing cuts a stray
+      // decimal any more. Every path that writes one has to round it to the
+      // currency first; one that forgets leaves a row here.
+      const finer = await rows<{ place: string; n: number }>(
+        db,
+        `with company as (select $2::int as decimals),
+              stored as (
+                select 'entries' as place, scale(trim_scale(v)) as s, (select decimals from company) as allowed
+                  from entries e, unnest(array[e.total_debit, e.total_credit]) v
+                 where e.company_id = $1
+                union all
+                select 'entry_lines', scale(trim_scale(v)), (select decimals from company)
+                  from entry_lines l join entries e on e.id = l.entry_id,
+                       unnest(array[l.debit, l.credit, l.matched_amount]) v
+                 where e.company_id = $1
+                union all
+                select 'entry_lines.amount_currency', scale(trim_scale(l.amount_currency)), c.decimal_places
+                  from entry_lines l join entries e on e.id = l.entry_id
+                  join currencies c on c.code = l.currency_code
+                 where e.company_id = $1
+                union all
+                select 'documents', scale(trim_scale(v)), c.decimal_places
+                  from documents d join currencies c on c.code = d.currency_code,
+                       unnest(array[d.amount_untaxed, d.amount_tax, d.amount_total, d.amount_paid]) v
+                 where d.company_id = $1
+                union all
+                select 'document_lines', scale(trim_scale(v)), c.decimal_places
+                  from document_lines dl join documents d on d.id = dl.document_id
+                  join currencies c on c.code = d.currency_code,
+                       unnest(array[dl.amount_untaxed, dl.amount_incl_tax]) v
+                 where d.company_id = $1
+                union all
+                select 'payments', scale(trim_scale(p.amount)), c.decimal_places
+                  from payments p join currencies c on c.code = p.currency_code
+                 where p.company_id = $1
+              )
+         select place, count(*)::int as n from stored where s > allowed group by place order by place`,
+        [companyId, decimals],
+      );
+      expect(finer).toEqual([]);
+    });
   });
 }
