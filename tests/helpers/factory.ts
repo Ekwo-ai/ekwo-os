@@ -229,13 +229,26 @@ export interface LedgerLine {
 }
 
 /** The ledger lines of the entry a document produced, in sequence order. */
+/**
+ * The lines of a document's entry, each amount written in the company's
+ * currency by `amount_text_format()` — the text a person reads, with the
+ * decimals of that currency. A money column is a bare `numeric` and prints
+ * the scale its value holds (a zero side is `0`); the assertion is on the
+ * amount, not on how the column happens to store it.
+ */
 export async function ledgerOf(db: PGlite, documentId: string): Promise<LedgerLine[]> {
   return rows<LedgerLine>(
     db,
-    `select a.code, l.debit, l.credit, l.declaration_box as box, l.box_amount, l.tax_line
+    `select a.code,
+            to_char(l.debit, m.mask) as debit,
+            to_char(l.credit, m.mask) as credit,
+            l.declaration_box as box,
+            to_char(l.box_amount, m.mask) as box_amount,
+            l.tax_line
        from entry_lines l
        join accounts a on a.id = l.account_id
        join entries e on e.id = l.entry_id
+       cross join lateral (select amount_text_format(rounding_of(l.company_id)) as mask) m
       where e.document_id = $1
       order by l.sequence`,
     [documentId],
