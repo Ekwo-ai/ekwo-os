@@ -86,7 +86,15 @@ export interface CrmTimelineArgs {
 
 export interface CrmLogActivityArgs {
   company_id: string;
-  contact_id: string;
+  /** The contact, by id. Or leave it out and name `email`. */
+  contact_id?: string | undefined;
+  /**
+   * The contact by an e-mail address instead of an id: the contact and its
+   * organisation are found, or created, by `crm.contact_from_email()`.
+   */
+  email?: string | undefined;
+  /** The name of a contact created from `email`. The address when left out. */
+  name?: string | undefined;
   kind: CrmActivityKind;
   subject?: string | undefined;
   body?: string | undefined;
@@ -216,11 +224,36 @@ export async function crmUpsertCard(
   return { card };
 }
 
-/** `crm.log_activity()`: one activity, written once per `(source, source_ref)`. */
-export async function crmLogActivity(backend: Backend, args: CrmLogActivityArgs): Promise<{ activity: Row }> {
-  const activity = await callOne(backend, 'log_activity', {
-    p_company_id: args.company_id,
-    p_contact_id: args.contact_id,
+/**
+ * How an activity named by an address found its contact: the contact and its
+ * organisation, whether either was created, and whether the activity was a
+ * replay of one already kept.
+ */
+export interface CrmEmailResolution {
+  contact_id: string;
+  organisation_id: string | null;
+  address?: string;
+  domain?: string;
+  generic_domain?: boolean;
+  contact_created: boolean;
+  organisation_created: boolean;
+  replayed: boolean;
+}
+
+/**
+ * `crm.log_activity()`: one activity, written once per `(source, source_ref)`.
+ *
+ * Named by `email` rather than `contact_id`, it is `crm.log_activity_by_email()`
+ * — the contact and the organisation of its domain found or created, never
+ * an organisation for a generic domain — and `resolved` says what was found.
+ * That function came with a later migration of the module; a database
+ * whose module has not received it refuses by name, `crm_not_migrated`.
+ */
+export async function crmLogActivity(
+  backend: Backend,
+  args: CrmLogActivityArgs,
+): Promise<{ activity: Row; resolved?: CrmEmailResolution }> {
+  const common = {
     p_kind: args.kind,
     p_subject: orNull(args.subject),
     p_body: orNull(args.body),
@@ -231,8 +264,36 @@ export async function crmLogActivity(backend: Backend, args: CrmLogActivityArgs)
     p_payload: orNull(args.payload),
     p_source: orNull(args.source),
     p_source_ref: orNull(args.source_ref),
-  });
-  return { activity };
+  };
+  if (args.contact_id !== undefined) {
+    const activity = await callOne(backend, 'log_activity', {
+      p_company_id: args.company_id,
+      p_contact_id: args.contact_id,
+      ...common,
+    });
+    return { activity };
+  }
+  if (args.email === undefined || args.email.trim() === '') {
+    throw new BooksError('crm_bad_activity: an activity names its contact, by contact_id or by email');
+  }
+  let answer: Row;
+  try {
+    answer = await callOne(backend, 'log_activity_by_email', {
+      p_company_id: args.company_id,
+      p_email: args.email,
+      ...common,
+      p_name: orNull(args.name),
+    });
+  } catch (error) {
+    if (functionAbsent(error, 'log_activity_by_email')) {
+      throw new BooksError(
+        'crm_not_migrated: this database\'s crm module does not find a contact by e-mail yet; name contact_id, or run `ekwo module migrate crm`',
+      );
+    }
+    throw error;
+  }
+  const { activity, ...resolved } = answer as Row & { activity: Row };
+  return { activity, resolved: resolved as unknown as CrmEmailResolution };
 }
 
 /** `crm.join_segment()`: in, or back in, with the membership remembered. */

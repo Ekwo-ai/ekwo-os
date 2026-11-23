@@ -372,3 +372,55 @@ describe('crmDealOfDocument over PostgREST', () => {
     await expect(crmDealOfDocument(refusing(refused), args)).rejects.toThrow(/crm_not_allowed/);
   });
 });
+
+describe('crm_log_activity by e-mail', () => {
+  it('finds or creates the contact and its organisation, and a replay writes nothing', async () => {
+    const args = {
+      company_id: companyId,
+      email: 'Mary Major <mary@lakeside-tools.example>',
+      name: 'Mary Major',
+      kind: 'email_in',
+      subject: 'Pricing question',
+      source: 'mailbox',
+      source_ref: '<mcp-1@lakeside>',
+    };
+    const first = await call('crm_log_activity', args);
+    const resolved = record(first['resolved']);
+    expect(resolved).toMatchObject({
+      domain: 'lakeside-tools.example',
+      generic_domain: false,
+      contact_created: true,
+      organisation_created: true,
+      replayed: false,
+    });
+    expect(record(first['activity'])).toMatchObject({ contact_id: resolved['contact_id'], kind: 'email_in' });
+
+    const again = await call('crm_log_activity', args);
+    expect(record(again['resolved'])).toMatchObject({ contact_id: resolved['contact_id'], contact_created: false, replayed: true });
+    expect(record(again['activity'])['id']).toBe(record(first['activity'])['id']);
+
+    const card = record(await call('crm_card', { company_id: companyId, contact_id: resolved['organisation_id'] }));
+    expect(record(card['card'])).toMatchObject({ interactions: 1 });
+  });
+
+  it('still logs by contact_id, and refuses an activity that names no contact', async () => {
+    const logged = await call('crm_log_activity', { company_id: companyId, contact_id: personId, kind: 'note', subject: 'By id' });
+    expect(logged['resolved']).toBeUndefined();
+    await expect(call('crm_log_activity', { company_id: companyId, kind: 'note' })).rejects.toThrow(/crm_bad_activity/);
+  });
+
+  it('refuses email by name on a database whose module cannot resolve it yet', async () => {
+    await db.query(
+      `alter function crm.log_activity_by_email(uuid, text, crm.activity_kind, text, text, uuid, text, timestamptz, text, jsonb, text, text, text) rename to log_activity_by_email_hidden`,
+    );
+    try {
+      await expect(
+        call('crm_log_activity', { company_id: companyId, email: 'old@older-schema.example', kind: 'email_in' }),
+      ).rejects.toThrow(/crm_not_migrated/);
+    } finally {
+      await db.query(
+        `alter function crm.log_activity_by_email_hidden(uuid, text, crm.activity_kind, text, text, uuid, text, timestamptz, text, jsonb, text, text, text) rename to log_activity_by_email`,
+      );
+    }
+  });
+});

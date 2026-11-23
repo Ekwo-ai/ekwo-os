@@ -191,6 +191,18 @@ describe('ekwo crm', () => {
     expect(timeline.data).toMatchObject({ count: 1, activities: [{ kind: 'email_in', subject: 'Re: the quote' }] });
   });
 
+  it('log --email finds or creates the contact and its organisation, and a replay writes nothing', async () => {
+    const args = ['crm', 'log', '--email', 'sam@riverbend-mills.example', '--name', 'Sam Rivers', '--kind', 'email_in', '--source', 'mailbox', '--source-ref', '<cli-1@riverbend>'];
+    const first = await ekwo(args);
+    expect(first.exitCode).toBe(0);
+    expect(first.data).toMatchObject({ resolved: { contact_created: true, organisation_created: true, domain: 'riverbend-mills.example' } });
+    const again = await ekwo(args);
+    expect(again.data).toMatchObject({ resolved: { replayed: true, contact_created: false } });
+    expect(await one(pg, `select name from contacts where email = 'sam@riverbend-mills.example'`)).toEqual({ name: 'Sam Rivers' });
+    const both = await ekwo(['crm', 'log', 'Ada Lovelace', '--email', 'ada@northwind.example', '--kind', 'note']);
+    expect(both.exitCode).toBe(EXIT_USAGE);
+  });
+
   it('segments, join and leave', async () => {
     const segment = await asUser(pg, owner, () =>
       one<{ id: string }>(pg, `insert into crm.segments (company_id, kind, name, slug) values ($1, 'cohort', 'Fair 2026', 'fair-2026') returning id`, [companyId]),

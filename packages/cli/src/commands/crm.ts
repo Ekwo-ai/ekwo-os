@@ -64,7 +64,7 @@ const SEGMENTS_FLAGS = [...BOOKS_FLAGS] as const;
 const BOARD_FLAGS = [...BOOKS_FLAGS, 'closed'] as const;
 const TIMELINE_FLAGS = [...BOOKS_FLAGS, 'deal', 'since', 'kind', 'limit'] as const;
 const LOG_FLAGS = [
-  ...BOOKS_FLAGS, 'kind', 'subject', 'body', 'deal', 'actor', 'at', 'link', 'source', 'source-ref',
+  ...BOOKS_FLAGS, 'kind', 'subject', 'body', 'deal', 'actor', 'at', 'link', 'source', 'source-ref', 'email', 'name',
 ] as const;
 const SEGMENT_FLAGS = [...BOOKS_FLAGS, 'by', 'note'] as const;
 const LEAVE_FLAGS = [...BOOKS_FLAGS] as const;
@@ -81,6 +81,7 @@ const USAGE =
   ' | ekwo crm board [<pipeline-id>] [--closed]' +
   ' | ekwo crm timeline <contact> [--deal <deal-id> --since <moment> --kind <kind>… --limit <n>]' +
   ' | ekwo crm log <contact> --kind <kind> [--subject --body --deal --actor --at --link --source --source-ref]' +
+  ' | ekwo crm log --email <address> [--name <name>] --kind <kind> […] (the contact and its organisation found or created by the address)' +
   ' | ekwo crm join <segment-id> <contact> [--by --note]' +
   ' | ekwo crm leave <segment-id> <contact>' +
   ' | ekwo crm deal open <pipeline-id> <contact> --title <title> [--amount --currency --expected --url --owner]' +
@@ -372,11 +373,17 @@ async function log(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   rejectUnknownFlags(args, LOG_FLAGS);
   const kind = oneOf(CRM_ACTIVITY_KINDS, required(stringFlag(args, 'kind'), 'what happened', `--kind ${KINDS}`), 'kind') as (typeof CRM_ACTIVITY_KINDS)[number];
   const deal = stringFlag(args, 'deal');
+  const email = stringFlag(args, 'email');
+  if (email !== undefined && args.positional[1] !== undefined) {
+    throw new UsageError('bad_value: name the contact, or --email, not both.');
+  }
   const { backend, company } = await openBooks(args, deps);
-  const contact = await contactOf(backend, company.id, args.positional[1]);
+  const contact = email === undefined ? await contactOf(backend, company.id, args.positional[1]) : undefined;
   const result = await crmLogActivity(backend, given({
     company_id: company.id,
-    contact_id: contact.id,
+    contact_id: contact?.id,
+    email,
+    name: stringFlag(args, 'name'),
     kind,
     subject: stringFlag(args, 'subject'),
     body: stringFlag(args, 'body'),
@@ -390,7 +397,17 @@ async function log(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   setResult(result);
 
   heading('Activity');
-  step(`${text(result.activity['kind'])} with ${contact.name}, ${text(result.activity['occurred_at'])} ${dim(text(result.activity['id']))}`);
+  const who = contact?.name ?? email ?? '';
+  step(`${text(result.activity['kind'])} with ${who}, ${text(result.activity['occurred_at'])} ${dim(text(result.activity['id']))}`);
+  const resolved = result.resolved;
+  if (resolved !== undefined) {
+    if (resolved.replayed) note(dim('Already kept: nothing written.'));
+    if (resolved.contact_created) step(`contact created ${dim(resolved.contact_id)}`);
+    if (resolved.organisation_created && resolved.organisation_id !== null) {
+      step(`organisation created for ${text(resolved.domain)} ${dim(resolved.organisation_id)}`);
+    }
+    if (resolved.generic_domain === true) note(dim(`${text(resolved.domain)} is a generic domain: no organisation.`));
+  }
   return 0;
 }
 

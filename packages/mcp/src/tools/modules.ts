@@ -1198,7 +1198,7 @@ const CRM: ModuleToolset = {
       title: 'One contact, whole',
       effect: 'read',
       description:
-        'Everything on one contact in one object: the contact as the books hold it (its contact_type says whether it is a prospect — other — or a customer), its organisation, its card (null when it has none yet), the segments it is in now, the open deals with it — for an organisation, with its people too — and its 20 latest activities. Read this before writing anything about a contact. A contact of another company is refused, crm_unknown_contact.',
+        'Everything on one contact in one object: the contact as the books hold it (its contact_type says whether it is a prospect — other — or a customer), its organisation, its card (null when it has none yet) with first_interaction_at, last_interaction_at and interactions — computed from the e-mails, calls, meetings and messages logged, an organisation\'s with its people\'s — the segments it is in now, the open deals with it — for an organisation, with its people too — and its 20 latest activities. Read this before writing anything about a contact. A contact of another company is refused, crm_unknown_contact.',
       input: z.object({ company_id: companyId, contact_id: contactId }),
       async run(backend, args) {
         return inSchema('crm', () =>
@@ -1340,10 +1340,12 @@ const CRM: ModuleToolset = {
       description:
         'Writes one thing that happened with a contact — a note, an e-mail sent or received, a call, a meeting, a message, a signal read elsewhere, an enrichment, a task — optionally about one of the company\'s deals, and moves the card\'s last activity. kind is one of ' +
         words(CRM_ACTIVITY_KINDS) +
-        '. When the activity was read from somewhere else, name source (the mailbox, the network, the calendar) and source_ref (its identifier there, a message-id): the same pair a second time writes nothing and returns the activity already kept, so an import can run twice. A source_ref without its source is refused, crm_bad_activity. Log what the user did or told you; never invent an exchange that did not happen.',
+        '. Name the contact by contact_id, or by email (an address, or "Name <address>") with an optional name: the contact at that address is found, or created, and so is the organisation of its domain — the one whose own address is at the domain, else the one most of its people belong to, else a new one named by the domain, which the user renames. A generic domain (a personal mailbox, a tool, a provider — the module\'s list, which the installation and the company extend) never makes an organisation; resolved says what was found or created. When the activity was read from somewhere else, name source (the mailbox, the network, the calendar) and source_ref (its identifier there, a message-id): the same pair a second time writes nothing, creates nothing and returns the activity already kept, so an import can run twice. A source_ref without its source is refused, crm_bad_activity; a database whose crm module cannot find a contact by e-mail yet refuses email, crm_not_migrated. Two contacts that turn out to be one party are joined by merge_contacts, never by logging. Log what the user did or told you; never invent an exchange that did not happen.',
       input: z.object({
         company_id: companyId,
-        contact_id: contactId,
+        contact_id: contactId.optional().describe('The contact. Or leave it out and name email.'),
+        email: z.string().min(3).optional().describe('The contact by its e-mail address instead of contact_id: found or created, with the organisation of its domain.'),
+        name: z.string().optional().describe('The name of a contact created from email. The address when left out.'),
         kind: activityKind.describe(`What happened: one of ${words(CRM_ACTIVITY_KINDS)}.`),
         subject: z.string().optional(),
         body: z.string().optional(),
@@ -1359,7 +1361,9 @@ const CRM: ModuleToolset = {
         return inSchema('crm', () =>
           crmLogActivity(backend, {
             company_id: args['company_id'] as unknown as string,
-            contact_id: args['contact_id'] as unknown as string,
+            contact_id: args['contact_id'],
+            email: args['email'],
+            name: args['name'],
             kind: args['kind'] as unknown as (typeof CRM_ACTIVITY_KINDS)[number],
             subject: args['subject'],
             body: args['body'],
