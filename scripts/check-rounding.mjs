@@ -58,6 +58,10 @@ const ALLOWED = new Map([
     'supabase/migrations/20261120100000_a_document_keeps_the_tax_its_source_states.sql',
     'the same view, replaced again for the tax a source states: the same widening of the same percentage',
   ],
+  [
+    'supabase/migrations/20261123203000_an_amount_holds_the_decimals_of_its_currency.sql',
+    'the same view, dropped and recreated with its definition unchanged so that the amount columns under it could lose their scale: the same widening of the same percentage',
+  ],
 ]);
 
 /** `-- …` comments stripped, so a call quoted in a comment is not a finding. */
